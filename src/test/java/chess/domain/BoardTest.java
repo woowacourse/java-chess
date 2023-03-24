@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
 
@@ -374,5 +375,26 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.validateTurn(blackTurn, Square.of(File.A, Rank.TWO)))
                 .isInstanceOf(InvalidTurnException.class);
+    }
+
+    @Test
+    @DisplayName("왕이 잡히면 왕이 잡혔다고 표시된다.")
+    void is_king_caught_true() {
+        board.move(Square.of(File.C, Rank.TWO), Square.of(File.C, Rank.FOUR));
+        board.move(Square.of(File.D, Rank.SEVEN), Square.of(File.D, Rank.FIVE));
+        board.move(Square.of(File.D, Rank.ONE), Square.of(File.A, Rank.FOUR));
+        board.move(Square.of(File.D, Rank.FIVE), Square.of(File.C, Rank.FOUR));
+        board.move(Square.of(File.A, Rank.FOUR), Square.of(File.E, Rank.EIGHT));
+
+        assertThat(board.isKingCaught()).isTrue();
+    }
+
+    @Test
+    @DisplayName("왕이 잡히지 않으면 왕이 잡히지 않았다고 표시된다.")
+    void is_king_caught_false() {
+        board.move(Square.of(File.C, Rank.TWO), Square.of(File.C, Rank.FOUR));
+        board.move(Square.of(File.D, Rank.SEVEN), Square.of(File.D, Rank.FIVE));
+
+        assertThat(board.isKingCaught()).isFalse();
     }
 }

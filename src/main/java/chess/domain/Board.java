@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int KING_NUMBER = 2;
+
     private final Map<Square, Piece> board;
 
     private Board(final Map<Square, Piece> board) {
@@ -118,6 +120,12 @@ public class Board {
     private void movePiece(final Square current, final Square destination) {
         board.put(destination, getPiece(current));
         board.remove(current);
+    }
+
+    public boolean isKingCaught() {
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .count() < 2;
     }
 
     public Map<Square, Piece> getBoard() {
