@@ -1,4 +1,4 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
 import chess.domain.chess.ChessGame;
@@ -37,10 +37,10 @@ class MoveTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = move.checkCommand(command);
+        State state = move.checkCommand(command);
 
         // then
-        assertThat(status)
+        assertThat(state)
                 .isInstanceOf(End.class);
     }
 

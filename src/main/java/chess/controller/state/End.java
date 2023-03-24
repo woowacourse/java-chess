@@ -1,10 +1,10 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
 
-public final class End implements Status {
+public final class End implements State {
     @Override
-    public Status checkCommand(final Command command) {
+    public State checkCommand(final Command command) {
         throw new IllegalArgumentException("게임이 끝났습니다.");
     }
 

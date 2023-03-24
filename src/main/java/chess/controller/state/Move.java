@@ -1,4 +1,4 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
 import chess.domain.chess.ChessGame;
@@ -8,7 +8,7 @@ import chess.domain.position.PositionConverter;
 
 import java.util.List;
 
-public final class Move implements Status {
+public final class Move implements State {
     public static final int SOURCE_INDEX = 1;
     public static final int TARGET_INDEX = 2;
 
@@ -21,7 +21,7 @@ public final class Move implements Status {
     }
 
     @Override
-    public Status checkCommand(final Command command) {
+    public State checkCommand(final Command command) {
         if (command.isStart()) {
             throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
         }
@@ -32,7 +32,7 @@ public final class Move implements Status {
         return move(command);
     }
 
-    private Status move(final Command command) {
+    private State move(final Command command) {
         final List<String> commands = command.getCommands();
         final Position source = PositionConverter.convert(commands.get(SOURCE_INDEX));
         final Position target = PositionConverter.convert(commands.get(TARGET_INDEX));

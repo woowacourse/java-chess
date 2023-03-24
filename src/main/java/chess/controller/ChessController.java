@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.controller.status.Start;
-import chess.controller.status.Status;
+import chess.controller.state.Start;
+import chess.controller.state.State;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -24,15 +24,15 @@ public class ChessController {
         });
     }
 
-    private void play(final ChessGame chessGame, Consumer<Status> consumer) {
-        Status gameStatus = new Start(chessGame);
+    private void play(final ChessGame chessGame, Consumer<State> consumer) {
+        State gameStatus = new Start(chessGame);
         while (gameStatus.isRun()) {
             gameStatus = getStatus(gameStatus);
             consumer.accept(gameStatus);
         }
     }
 
-    private Status getStatus(Status gameStatus) {
+    private State getStatus(State gameStatus) {
         try {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);

@@ -1,6 +1,6 @@
 package chess.view;
 
-import static chess.controller.status.CommandType.*;
+import static chess.controller.state.CommandType.*;
 
 public final class OutputView {
 

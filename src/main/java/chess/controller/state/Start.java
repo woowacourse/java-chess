@@ -1,10 +1,10 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.TeamColor;
 
-public final class Start implements Status {
+public final class Start implements State {
 
     private final ChessGame chessGame;
 
@@ -13,7 +13,7 @@ public final class Start implements Status {
     }
 
     @Override
-    public Status checkCommand(final Command command) {
+    public State checkCommand(final Command command) {
         if (command.isEnd()) {
             return new End();
         }

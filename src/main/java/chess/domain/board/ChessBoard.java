@@ -58,7 +58,6 @@ public final class ChessBoard {
         return isObstructed(target, unitPosition, currentPosition);
     }
 
-
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
     }
