@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 public interface GameService {
 
-    void updateMovement(final Position source, final Position dest, final long gameId);
+    void updateMovement(final Position source, final Position dest, final long gameId, final boolean isDestDeleteNeeded);
 
     void updateGameStatusEnd(final long gameId);
 

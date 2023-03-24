@@ -89,7 +89,7 @@ public class ChessBoard {
             source, dest);
     }
 
-    private boolean hasOtherPieceInDestination(final Position dest) {
+    public boolean hasOtherPieceInDestination(final Position dest) {
         return piecesByPosition.containsKey(dest);
     }
 

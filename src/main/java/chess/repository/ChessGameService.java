@@ -13,8 +13,13 @@ public class ChessGameService implements GameService {
         this.pieceDao = pieceDao;
     }
 
-    public void updateMovement(final Position source, final Position dest, final long gameId) {
-        pieceDao.deleteByPositionAndGameId(dest, gameId);
+    public void updateMovement(final Position source,
+        final Position dest,
+        final long gameId,
+        final boolean isDestDeleteNeeded) {
+        if (isDestDeleteNeeded) {
+            pieceDao.deleteByPositionAndGameId(dest, gameId);
+        }
         pieceDao.updatePositionByPositionAndGameId(source, gameId, dest);
     }
 

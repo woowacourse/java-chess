@@ -18,7 +18,7 @@ class ChessGameTest {
     class TestGameService implements GameService {
 
         @Override
-        public void updateMovement(Position source, Position dest, long gameId) {
+        public void updateMovement(Position source, Position dest, long gameId, boolean isDestDeleteNeeded) {
         }
 
         @Override

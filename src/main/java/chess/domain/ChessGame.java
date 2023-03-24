@@ -45,8 +45,9 @@ public class ChessGame {
         if (isEnd()) {
             throw new IllegalArgumentException(GAME_END_NO_MOVE_ERROR_MESSAGE);
         }
+        boolean hadOtherPieceInDest = chessBoard.hasOtherPieceInDestination(dest);
         chessBoard.move(source, dest, teamColor);
-        saveMovement(source, dest);
+        saveMovement(source, dest, hadOtherPieceInDest);
         if (isEnd()) {
             endGame();
             return;
@@ -62,9 +63,9 @@ public class ChessGame {
         return !chessBoard.isKingDead();
     }
 
-    private void saveMovement(final Position source, final Position dest) {
+    private void saveMovement(final Position source, final Position dest, final boolean hadOtherPieceInDest) {
         if (chessBoard.isSourceMoved(source)) {
-            gameService.updateMovement(source, dest, gameId);
+            gameService.updateMovement(source, dest, gameId, hadOtherPieceInDest);
         }
     }
 
