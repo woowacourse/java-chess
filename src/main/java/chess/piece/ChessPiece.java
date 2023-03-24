@@ -36,6 +36,13 @@ public abstract class ChessPiece {
         return side;
     }
 
+    public double getScore(Side compareSide) {
+        if (compareSide.equals(side)) {
+            return shape.getScore();
+        }
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

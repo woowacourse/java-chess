@@ -98,6 +98,34 @@ public class ChessBoard {
         return kingCount != 2;
     }
 
+    public double calculateScore(Side side) {
+        double scoreSum = 0;
+        for (int horizontal = 1; horizontal <= 8; horizontal++) {
+            scoreSum = getScoreSumByCol(scoreSum, horizontal, side);
+        }
+        return scoreSum;
+    }
+
+    private double getScoreSumByCol(double scoreSum, int horizontal, Side side) {
+        double pawnCountByCol = 0;
+        for (int vertical = 1; vertical <= 8; vertical++) {
+            ChessPiece chessPiece = chessBoard.get(Position.initPosition(horizontal, vertical));
+            pawnCountByCol += checkPawnCount(chessPiece, side);
+            scoreSum += chessPiece.getScore(side);
+        }
+        if (pawnCountByCol >= 2) {
+            scoreSum -= (pawnCountByCol / 2);
+        }
+        return scoreSum;
+    }
+
+    private double checkPawnCount(ChessPiece chessPiece, Side side) {
+        if (chessPiece.getShape().equals(Shape.PAWN) && chessPiece.getSide().equals(side)) {
+            return 1;
+        }
+        return 0;
+    }
+
     public ChessPiece getChessPieceByPosition(Position position) {
         return chessBoard.get(position);
     }

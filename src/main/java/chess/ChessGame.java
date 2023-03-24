@@ -46,4 +46,8 @@ public class ChessGame {
     public boolean isGameEnd(ChessBoard chessBoard) {
         return chessBoard.checkKingIsDead();
     }
+
+    public double takeScore(Side side) {
+        return chessBoard.calculateScore(side);
+    }
 }

@@ -5,8 +5,8 @@ import chess.piece.Side;
 import chess.position.MovablePosition;
 import chess.position.Position;
 import java.util.List;
-import view.InputView;
-import view.OutputView;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public class ChessController {
     private static final int MOVE_COMMAND_SIZE = 3;
@@ -50,7 +50,7 @@ public class ChessController {
             if (command.size() == MOVE_COMMAND_SIZE) {
                 moveChessPieceByCondition(command, side);
                 OutputView.printChessBoard(chessBoard.getChessBoard());
-                return true;
+                return !chessBoard.checkKingIsDead();
             }
             return false;
         } catch (IllegalArgumentException e) {
@@ -73,5 +73,9 @@ public class ChessController {
             return;
         }
         throw new IllegalArgumentException(CANNOT_MOVE_POSITION_ERROR);
+    }
+
+    public void endPhase() {
+        OutputView.printScore(chessGame.takeScore(Side.WHITE), chessGame.takeScore(Side.BLACK));
     }
 }
