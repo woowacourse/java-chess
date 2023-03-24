@@ -1,8 +1,10 @@
 package chess.controller;
 
 import chess.controller.mapper.request.ChessGameCommandMapper;
+import chess.controller.mapper.response.GameResultFormatter;
 import chess.controller.mapper.response.ChessBoardStateFormatter;
 import chess.domain.game.command.ChessGameCommand;
+import chess.domain.game.result.GameResult;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.ReadyGame;
 import chess.domain.piece.Piece;
@@ -28,9 +30,10 @@ public final class ChessController {
 
         do {
             chessGame = play(chessGame);
+            printChessGameResult(chessGame);
         } while (chessGame.isRunnableGame());
 
-
+        printResult(chessGame);
     }
 
     private ChessGame play(ChessGame chessGame) {
@@ -45,9 +48,7 @@ public final class ChessController {
 
     private ChessGame playByCommand(ChessGame chessGame, List<String> commandInputs) {
         ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
-        ChessGame updateGame = command.execute(chessGame);
-        printChessGameResult(updateGame);
-        return updateGame;
+        return command.execute(chessGame);
     }
 
     private void printChessGameResult(ChessGame chessGame) {
@@ -56,5 +57,12 @@ public final class ChessController {
                 ChessBoardStateFormatter.convertToConsoleViewBoard(piecesPosition);
 
         outputView.printChessState(consoleViewBoard);
+    }
+
+    private void printResult(ChessGame chessGame) {
+        GameResult gameResult = chessGame.calculateResult();
+        List<String> results = GameResultFormatter.convertToGameResult(gameResult);
+
+        outputView.printResult(results);
     }
 }

@@ -1,8 +1,10 @@
 package chess.domain.game.state.finished;
 
 import chess.domain.game.state.ChessGame;
+import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public abstract class FinishedGame implements ChessGame {
 
@@ -10,7 +12,7 @@ public abstract class FinishedGame implements ChessGame {
 
     private final ChessBoard chessBoard;
 
-    public FinishedGame(ChessBoard chessBoard) {
+    protected FinishedGame(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
@@ -37,5 +39,10 @@ public abstract class FinishedGame implements ChessGame {
     @Override
     public ChessGame startGame() {
         throw new IllegalStateException(GAME_ALREADY_END);
+    }
+
+    @Override
+    public Map<Position, Piece> getPiecesPosition() {
+        return this.chessBoard.getPiecesPosition();
     }
 }

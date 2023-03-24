@@ -5,6 +5,7 @@ import chess.domain.game.command.ChessGameCommand;
 import chess.domain.game.command.EndCommand;
 import chess.domain.game.command.MoveCommand;
 import chess.domain.game.command.StartCommand;
+import chess.domain.game.command.StatusCommand;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public final class ChessGameCommandMapper {
 
         if (commandType == ChessCommandType.END) {
             return new EndCommand();
+        }
+
+        if (commandType == ChessCommandType.STATUS) {
+            return new StatusCommand();
         }
 
         return convertToMoveCommand(commandInputs);

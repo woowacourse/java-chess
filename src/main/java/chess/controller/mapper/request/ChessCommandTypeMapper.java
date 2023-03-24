@@ -7,6 +7,7 @@ public enum ChessCommandTypeMapper {
     START(ChessCommandType.START,"start"),
     MOVE(ChessCommandType.MOVE,"move"),
     END(ChessCommandType.END,"end"),
+    STATUS(ChessCommandType.STATUS,"status"),
     ;
 
     private final ChessCommandType command;

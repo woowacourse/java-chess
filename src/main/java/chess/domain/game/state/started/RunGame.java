@@ -3,6 +3,7 @@ package chess.domain.game.state.started;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.finished.EndGame;
 import chess.domain.game.state.finished.EndScoreGame;
+import chess.domain.game.state.finished.PauseGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.PieceMove;
@@ -101,6 +102,10 @@ public class RunGame extends StartedGame {
 
     @Override
     public ChessGame endGame() {
+        return new PauseGame(chessBoard);
+    }
+
+    private ChessGame endWithWinner() {
         return new EndGame(chessBoard);
     }
 

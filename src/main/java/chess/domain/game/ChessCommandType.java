@@ -4,5 +4,6 @@ public enum ChessCommandType {
     START,
     MOVE,
     END,
+    STATUS,
     ;
 }

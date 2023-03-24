@@ -13,6 +13,8 @@ public final class OutputView {
 
     public void printChessState(List<List<String>> chessBoardState) {
         StringBuilder chessBoardView = new StringBuilder();
+        chessBoardView.append(System.lineSeparator());
+
         for (List<String> ranks : chessBoardState) {
             appendRankSymbols(chessBoardView, ranks);
             chessBoardView.append(System.lineSeparator());
@@ -24,6 +26,12 @@ public final class OutputView {
     private void appendRankSymbols(StringBuilder chessBoardView, List<String> ranks) {
         for (String symbol : ranks) {
             chessBoardView.append(symbol);
+        }
+    }
+
+    public void printResult(List<String> results) {
+        for (String result : results) {
+            System.out.println(result);
         }
     }
 

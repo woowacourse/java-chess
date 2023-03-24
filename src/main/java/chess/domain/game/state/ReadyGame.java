@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import chess.domain.game.result.GameResult;
 import chess.domain.game.state.started.RunGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
@@ -41,6 +42,11 @@ public class ReadyGame implements ChessGame {
 
     @Override
     public Map<Position, Piece> getPiecesPosition() {
+        throw new IllegalStateException(NOT_START_GAME);
+    }
+
+    @Override
+    public GameResult calculateResult() {
         throw new IllegalStateException(NOT_START_GAME);
     }
 }

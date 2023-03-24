@@ -1,13 +1,15 @@
 package chess.domain.game.state.finished;
 
+import chess.domain.game.result.GameResult;
+import chess.domain.game.result.MatchResult;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;
 import chess.domain.position.File;
-import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,7 +51,24 @@ public class EndScoreGame extends FinishedGame {
     }
 
     @Override
-    public Map<Position, Piece> getPiecesPosition() {
-        return null;
+    public GameResult calculateResult() {
+        Map<Camp, Double> scoreByCamp = new ConcurrentHashMap<>();
+        MatchResult matchResult = matchByScore();
+
+        scoreByCamp.put(Camp.WHITE, whiteCampScore);
+        scoreByCamp.put(Camp.BLACK, blackCampScore);
+        return new GameResult(matchResult, scoreByCamp);
+    }
+
+    private MatchResult matchByScore() {
+        if (whiteCampScore > blackCampScore) {
+            return MatchResult.WHITE_WIN;
+        }
+
+        if (blackCampScore > whiteCampScore) {
+            return MatchResult.BLACK_WIN;
+        }
+
+        return MatchResult.DRAW;
     }
 }

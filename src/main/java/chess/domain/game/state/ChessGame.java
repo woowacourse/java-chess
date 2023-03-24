@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import chess.domain.game.result.GameResult;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface ChessGame {
     ChessGame status();
 
     Map<Position, Piece> getPiecesPosition();
+
+    GameResult calculateResult();
 }
