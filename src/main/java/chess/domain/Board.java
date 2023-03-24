@@ -66,10 +66,6 @@ public class Board {
         }
     }
 
-    public Piece getPieceAtPosition(final Position position) {
-        return board.get(position);
-    }
-
     public void checkBetweenRoute(final Position source, final Position destination) {
         Direction direction = source.calculateDirection(destination);
         Position move = source.addDirection(direction);
@@ -113,23 +109,6 @@ public class Board {
         board.put(source, Empty.create());
     }
 
-    private boolean isEmpty(final Position position) {
-        return board.get(position).isEmpty();
-    }
-
-    private boolean isSameColor(final Position position, final Color color) {
-        return board.get(position).isSameColor(color);
-    }
-
-    public List<Piece> findAllByRank(Rank rank) {
-        List<Piece> result = new ArrayList<>();
-        for (File file : File.values()) {
-            Position position = Position.from(file, rank);
-            result.add(board.get(position));
-        }
-        return result;
-    }
-
     public double calculatePoint(Color color) {
         double pointSum = 0;
         for (File file : File.values()) {
@@ -149,5 +128,26 @@ public class Board {
             }
         }
         return pointSum;
+    }
+
+    private boolean isEmpty(final Position position) {
+        return board.get(position).isEmpty();
+    }
+
+    private boolean isSameColor(final Position position, final Color color) {
+        return board.get(position).isSameColor(color);
+    }
+
+    public List<Piece> findAllByRank(Rank rank) {
+        List<Piece> result = new ArrayList<>();
+        for (File file : File.values()) {
+            Position position = Position.from(file, rank);
+            result.add(board.get(position));
+        }
+        return result;
+    }
+
+    public Piece getPieceAtPosition(final Position position) {
+        return board.get(position);
     }
 }

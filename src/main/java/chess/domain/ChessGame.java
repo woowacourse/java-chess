@@ -40,12 +40,6 @@ public class ChessGame {
         turn = turn.reverse();
     }
 
-    private void checkCatchKing(Position destination) {
-        if (board.getPieceAtPosition(destination).getType() == PieceType.KING) {
-            status = GameStatus.CATCH;
-        }
-    }
-
     private void checkPieceCanMove(final Position source, final Position destination) {
         board.validateSourcePiece(source, turn);
         Piece sourcePiece = board.getPieceAtPosition(source);
@@ -54,6 +48,12 @@ public class ChessGame {
         board.checkSameColor(destination, turn);
         checkRoute(source, destination, sourcePiece);
         checkPawnMove(source, destination, sourcePiece);
+    }
+
+    private void checkCatchKing(Position destination) {
+        if (board.getPieceAtPosition(destination).getType() == PieceType.KING) {
+            status = GameStatus.CATCH;
+        }
     }
     
     private void checkPawnMove(final Position source, final Position destination, final Piece sourcePiece) {
@@ -67,7 +67,17 @@ public class ChessGame {
             board.checkBetweenRoute(source, destination);
         }
     }
-    
+
+    public Map<Color, Double> status() {
+        if (status == GameStatus.START) {
+            throw new IllegalStateException("게임이 시작되지 않았습니다.");
+        }
+        Map<Color, Double> status = new HashMap<>();
+        status.put(Color.WHITE, board.calculatePoint(Color.WHITE));
+        status.put(Color.BLACK, board.calculatePoint(Color.BLACK));
+        return status;
+    }
+
     public void end() {
         if (status != GameStatus.MOVE) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
@@ -85,16 +95,6 @@ public class ChessGame {
     
     public Board getBoard() {
         return board;
-    }
-
-    public Map<Color, Double> status() {
-        if (status == GameStatus.START) {
-            throw new IllegalStateException("게임이 시작되지 않았습니다.");
-        }
-        Map<Color, Double> status = new HashMap<>();
-        status.put(Color.WHITE, board.calculatePoint(Color.WHITE));
-        status.put(Color.BLACK, board.calculatePoint(Color.BLACK));
-        return status;
     }
 
     public Color getTurn() {
