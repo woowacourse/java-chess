@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.board.Board;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessGame {
 
@@ -48,6 +49,25 @@ public class ChessGame {
         scores.put(Team.BLACK, board.calculateScore(Team.BLACK));
 
         return scores;
+    }
+
+    public Optional<Team> findWinner(Map<Team, Score> scores) {
+        Score whiteScore = scores.get(Team.WHITE);
+        Score blackScore = scores.get(Team.BLACK);
+
+        return getWinner(whiteScore, blackScore);
+    }
+
+    private Optional<Team> getWinner(Score whiteScore, Score blackScore) {
+        int result = whiteScore.compareTo(blackScore);
+
+        if (result == 1) {
+            return Optional.of(Team.WHITE);
+        }
+        if (result == -1) {
+            return Optional.of(Team.BLACK);
+        }
+        return Optional.empty();
     }
 
     public Board getBoard() {

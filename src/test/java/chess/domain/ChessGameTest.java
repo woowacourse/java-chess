@@ -52,4 +52,32 @@ class ChessGameTest {
                 () -> assertThat(scoreAllTeam.get(Team.BLACK)).isEqualTo(score)
         );
     }
+
+    @Test
+    @DisplayName("흰팀이 우승자이다.")
+    void findWinner_white() {
+        chessGame.movePiece(new Position(2, 3), new Position(4, 3));
+        chessGame.movePiece(new Position(7, 4), new Position(5, 4));
+        chessGame.movePiece(new Position(4, 3), new Position(5, 4));
+        Map<Team, Score> score = chessGame.getScoreAllTeam();
+        assertThat(chessGame.findWinner(score).get()).isEqualTo(Team.WHITE);
+    }
+
+    @Test
+    @DisplayName("검은팀이 우승자이다.")
+    void findWinner_black() {
+        chessGame.movePiece(new Position(2, 1), new Position(3, 1));
+        chessGame.movePiece(new Position(7, 4), new Position(5, 4));
+        chessGame.movePiece(new Position(2, 3), new Position(4, 3));
+        chessGame.movePiece(new Position(5, 4), new Position(4, 3));
+        Map<Team, Score> score = chessGame.getScoreAllTeam();
+        assertThat(chessGame.findWinner(score).get()).isEqualTo(Team.BLACK);
+    }
+
+    @Test
+    @DisplayName("무승부이다.")
+    void findWinner_none() {
+        Map<Team, Score> score = chessGame.getScoreAllTeam();
+        assertThat(chessGame.findWinner(score).isEmpty()).isTrue();
+    }
 }
