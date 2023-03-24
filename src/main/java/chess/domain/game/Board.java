@@ -15,6 +15,7 @@ public class Board {
     private static final Piece EMPTY_PIECE = Piece.empty();
 
     private final Map<Position, Piece> piecePosition = ChessPosition.initialPiecePositions();
+    private Turn turn = new Turn();
 
     public void movePiece(Position origin, Position destination) {
         validateMoveRequest(origin, destination);
@@ -24,11 +25,15 @@ public class Board {
                 piecePosition.get(destination));
         piecePosition.put(destination, movedPiece);
         piecePosition.put(origin, Piece.empty());
+        turn = turn.changeTurn();
     }
 
     private void validateMoveRequest(Position origin, Position destination) {
         if (piecePosition.get(origin) == EMPTY_PIECE) {
             throw new ChessGameException("이동할 말이 없습니다.");
+        }
+        if (!piecePosition.get(origin).isSameColor(turn.getCurrentTurn())) {
+            throw new ChessGameException("상대 말을 움직일 수 없습니다.");
         }
         checkPath(origin, destination);
     }

@@ -1,6 +1,8 @@
 package chess.domain;
 
+import static chess.domain.PositionFixture.A2;
 import static chess.domain.PositionFixture.A3;
+import static chess.domain.PositionFixture.A4;
 import static chess.domain.PositionFixture.A5;
 import static chess.domain.PositionFixture.A7;
 import static chess.domain.PositionFixture.B2;
@@ -104,8 +106,33 @@ class BoardTest {
 
         assertDoesNotThrow(() -> {
             board.movePiece(B2, B4);
+            board.movePiece(A7, A5);
             board.movePiece(C1, A3);
+            board.movePiece(A5, A4);
             board.movePiece(D1, C1);
         });
+    }
+
+    @Test
+    void 빈_말은_이동할_수_없다() {
+        //given
+        Board board = new Board();
+
+        //expect
+        assertThatThrownBy(() -> board.movePiece(A3, A4))
+                .isInstanceOf(ChessGameException.class)
+                .hasMessage("이동할 말이 없습니다.");
+    }
+
+    @Test
+    void 같은_색_말을_연속해서_움직일_수_없다() {
+        //given
+        Board board = new Board();
+        board.movePiece(B2, B4);
+
+        //expect
+        assertThatThrownBy(() -> board.movePiece(A2, A4))
+                .isInstanceOf(ChessGameException.class)
+                .hasMessage("상대 말을 움직일 수 없습니다.");
     }
 }
