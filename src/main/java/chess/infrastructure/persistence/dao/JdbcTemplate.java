@@ -27,11 +27,11 @@ public class JdbcTemplate {
         }
     }
 
-    public Long saveAndGetId(final String sql, final String... params) {
+    public Long saveAndGetId(final String sql, final Object... params) {
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setString(i + 1, params[i]);
+                preparedStatement.setObject(i + 1, params[i]);
             }
             preparedStatement.executeUpdate();
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -44,10 +44,10 @@ public class JdbcTemplate {
         }
     }
 
-    public void executeUpdate(final String sql, final String... params) {
+    public void executeUpdate(final String sql, final Object... params) {
         execute(sql, (connection, preparedStatement) -> {
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setString(i + 1, params[i]);
+                preparedStatement.setObject(i + 1, params[i]);
             }
             preparedStatement.executeUpdate();
         });
@@ -55,11 +55,11 @@ public class JdbcTemplate {
 
     public <T> Optional<T> findOne(final String query,
                                    final RowMapper<T> rowMapper,
-                                   final String... params) {
+                                   final Object... params) {
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setString(i + 1, params[i]);
+                preparedStatement.setObject(i + 1, params[i]);
             }
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
@@ -73,11 +73,11 @@ public class JdbcTemplate {
 
     public <T> List<T> findAll(final String query,
                                final RowMapper<T> rowMapper,
-                               final String... params) {
+                               final Object... params) {
         try (final Connection connection = connection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setString(i + 1, params[i]);
+                preparedStatement.setObject(i + 1, params[i]);
             }
             final ResultSet resultSet = preparedStatement.executeQuery();
             final List<T> entities = new ArrayList<>();
