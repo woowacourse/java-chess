@@ -45,6 +45,10 @@ public class ChessGame {
         chessDao.save(moveDto);
     }
 
+    public boolean isGameOver() {
+        return board.isGameOver();
+    }
+
     public void clear() {
         board = new Board();
         chessDao.deleteAll();

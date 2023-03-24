@@ -166,4 +166,21 @@ public class ChessGameTest {
         // then
         assertThat(chessGame.isInitialized()).isFalse();
     }
+
+    @Test
+    void 왕이_잡히는_경우_게임이_종료된다() {
+        // given
+        final ChessGame chessGame = new ChessGame(mockChessDao);
+        chessGame.initialize();
+        chessGame.move(new MoveDto("e2", "e4"));
+        chessGame.move(new MoveDto("e7", "e5"));
+        chessGame.move(new MoveDto("d1", "h5"));
+        chessGame.move(new MoveDto("f7", "f5"));
+
+        // when
+        chessGame.move(new MoveDto("h5", "e8"));
+
+        // then
+        assertThat(chessGame.isGameOver()).isTrue();
+    }
 }

@@ -143,15 +143,3 @@ graph TD
         Empty -.-> Piece
     end
 ```
-
-```mermaid
----
-title: 보드의 구조
----
-graph BT
-    AbstractBoard --> Board
-    InitialState --> AbstractBoard
-    InitializedState --> AbstractBoard
-    PlayState --> InitializedState
-    EndState --> InitializedState
-```

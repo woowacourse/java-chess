@@ -36,6 +36,7 @@ public class ChessGameController {
         Command command = EMPTY;
         while (command != END) {
             command = play(chessGame);
+            command = checkGameOver(chessGame, command);
         }
         OutputView.printGameEnd();
     }
@@ -84,5 +85,13 @@ public class ChessGameController {
         }
         chessGame.clear();
         OutputView.printGameClear();
+    }
+
+    private Command checkGameOver(final ChessGame chessGame, final Command command) {
+        if (chessGame.isGameOver()) {
+            OutputView.printStatus(chessGame.getResult());
+            return END;
+        }
+        return command;
     }
 }
