@@ -34,7 +34,7 @@ class BoardTest {
 
         // when & then
         assertThatThrownBy(
-            () -> board.switchPosition(source, destination)
+            () -> board.isMovable(source, destination)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
