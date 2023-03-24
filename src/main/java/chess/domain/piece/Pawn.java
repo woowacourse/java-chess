@@ -114,6 +114,11 @@ public class Pawn implements Piece {
     }
 
     @Override
+    public Type type() {
+        return type;
+    }
+
+    @Override
     public Side side() {
         return side;
     }

@@ -27,6 +27,11 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public Type type() {
+        return linearPiece.type();
+    }
+
+    @Override
     public Side side() {
         return linearPiece.side();
     }

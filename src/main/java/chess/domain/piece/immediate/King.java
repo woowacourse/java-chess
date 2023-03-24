@@ -27,6 +27,11 @@ public class King implements Piece {
     }
 
     @Override
+    public Type type() {
+        return immediatePiece.type();
+    }
+
+    @Override
     public Side side() {
         return immediatePiece.side();
     }

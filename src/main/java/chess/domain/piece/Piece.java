@@ -10,6 +10,8 @@ public interface Piece {
 
     String name();
 
+    Type type();
+
     Side side();
 
     double price();
