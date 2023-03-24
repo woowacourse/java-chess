@@ -30,8 +30,12 @@ public final class Score {
         return pieceScoreMapper.get(pieceType);
     }
 
-    public Score sum(final Score score) {
-        return new Score(score.value + this.value);
+    public Score sum(final Score addition) {
+        return new Score(addition.value + this.value);
+    }
+
+    public Score subtract(final Score subtrahend) {
+        return new Score(this.value - subtrahend.value);
     }
 
     public Score multiply(final double value) {

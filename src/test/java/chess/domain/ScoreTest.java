@@ -42,4 +42,13 @@ class ScoreTest {
 
         assertThat(multiply.getValue()).isEqualTo(5);
     }
+
+    @Test
+    @DisplayName("Score에 숫자를 빼는 기능 추가")
+    void test_subtract() {
+        final Score score = new Score(10);
+        final Score subtrahend = new Score(20);
+
+        assertThat(score.subtract(subtrahend)).isEqualTo(new Score(-10));
+    }
 }
