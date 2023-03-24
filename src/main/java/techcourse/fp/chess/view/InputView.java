@@ -12,7 +12,13 @@ public final class InputView {
         this.scanner = scanner;
     }
 
-    public CommandRequest readCommand() {
+
+    public String readStartOrEndCommand() {
+        return scanner.nextLine().trim();
+    }
+
+
+    public CommandRequest readMoveOrEndCommand() {
         final String input = scanner.nextLine();
 
         final List<String> split = List.of(input.split(" "));

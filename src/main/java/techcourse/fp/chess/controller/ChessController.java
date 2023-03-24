@@ -13,34 +13,42 @@ public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Board board = BoardFactory.generate();
     private final Map<Command, CommandRunner> commandMapper = new EnumMap<>(Command.class);
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
 
-        commandMapper.put(Command.START, this::start);
         commandMapper.put(Command.MOVE, this::move);
-        commandMapper.put(Command.END, this::end);
+        commandMapper.put(Command.END, CommandRunner.end);
     }
 
     public void run() {
         outputView.printInitialMessage();
 
+        if (Command.createStartOrEnd(inputView.readStartOrEndCommand()) == Command.START) {
+            startGame();
+        }
+
+        outputView.printEndMessage();
+    }
+
+    private void startGame() {
+        final Board board = BoardFactory.generate();
+        outputView.printBoard(BoardResponse.create(board.getBoard()));
         Command command = Command.EMPTY;
         while (command != Command.END) {
-            command = play();
+            command = play(board);
         }
     }
 
-    private Command play() {
+    private Command play(final Board board) {
         try {
-            final CommandRequest commandRequest = inputView.readCommand();
-            Command command = Command.from(commandRequest.getMessage());
+            final CommandRequest commandRequest = inputView.readMoveOrEndCommand();
+            Command command = Command.createMoveOrEnd(commandRequest.getMessage());
 
             final CommandRunner commandRunner = commandMapper.get(command);
-            commandRunner.execute(commandRequest);
+            commandRunner.execute(commandRequest, board);
 
             return command;
         } catch (IllegalArgumentException | IllegalStateException exception) {
@@ -49,24 +57,13 @@ public final class ChessController {
         }
     }
 
-    private void start(CommandRequest commandRequest) {
-        try {
-            outputView.printBoard(BoardResponse.create(board.getBoard()));
-        } catch (IllegalArgumentException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-        }
-    }
 
-    private void move(final CommandRequest commandRequest) {
+    private void move(final CommandRequest commandRequest, Board board) {
         try {
             board.move(commandRequest.getSource(), commandRequest.getTarget());
             outputView.printBoard(BoardResponse.create(board.getBoard()));
         } catch (IllegalArgumentException | IllegalStateException exception) {
             outputView.printErrorMessage(exception.getMessage());
         }
-    }
-
-    private void end(final CommandRequest commandRequest) {
-        outputView.printEndMessage();
     }
 }
