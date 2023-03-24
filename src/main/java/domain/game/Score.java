@@ -15,6 +15,10 @@ public class Score {
         return new Score(firstScore.number + secondScore.number);
     }
 
+    public static Score subtract(Score firstScore, Score secondScore) {
+        return new Score(firstScore.number - secondScore.number);
+    }
+
     @Override
     public boolean equals(Object scoreToCompare) {
         if (scoreToCompare instanceof Score) {

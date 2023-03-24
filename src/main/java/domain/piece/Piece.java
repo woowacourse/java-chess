@@ -44,4 +44,14 @@ public abstract class Piece {
         }
         throw new IllegalStateException("서버 내부 에러 - Neutral한 Piece는 상대편을 확인할 수 없습니다.");
     }
+
+    public boolean isSameSideOf(Side side) {
+        if (this.side.equals(WHITE)) {
+            return side.equals(WHITE);
+        }
+        if (this.side.equals(BLACK)) {
+            return side.equals(BLACK);
+        }
+        throw new IllegalStateException("서버 내부 에러 - Neutral한 Piece는 상대편을 확인할 수 없습니다.");
+    }
 }

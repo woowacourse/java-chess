@@ -12,7 +12,6 @@ import static domain.game.Rank.THREE;
 import static domain.game.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import controller.mapper.RankMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,13 +31,22 @@ class PositionTest {
         assertThat(increment).isEqualTo(new Movement(3, 5));
     }
 
-    @DisplayName("현재 position rank와 parameter로 들어온 rank의 동등여부를 반환한다.")
+    @DisplayName("현재 Position의 rank와 입력 받은 rank의 동등여부를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"2, TWO ,true", "3, TWO, false"})
-    void shouldReturnIsEqualRankBetweenSourcePositionAndParameterRankWhenInput(String sourceRank, Rank targetRank,
-                                                                               boolean result) {
-        Position position = Position.of(A, RankMapper.convertTextToRank(sourceRank));
+    @CsvSource(value = {"TWO, TWO ,true", "THREE, TWO, false"})
+    void shouldReturnIsEqualRankBetweenPositionAndParameterRankWhenInput(Rank sourceRank, Rank targetRank,
+                                                                         boolean result) {
+        Position position = Position.of(A, sourceRank);
         assertThat(position.hasRankOf(targetRank)).isEqualTo(result);
+    }
+
+    @DisplayName("현재 Position의 file과 입력 받은 file의 동등여부를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"A, A ,true", "B, A, false"})
+    void shouldReturnIsEqualFileBetweenPositionAndParameterFileWhenInput(File sourceFile, File targetFile,
+                                                                         boolean result) {
+        Position position = Position.of(sourceFile, ONE);
+        assertThat(position.hasFileOf(targetFile)).isEqualTo(result);
     }
 
 

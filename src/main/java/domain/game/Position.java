@@ -43,8 +43,12 @@ public final class Position {
         return new Movement(fileIncrement, rankIncrement);
     }
 
-    public boolean hasRankOf(Rank defaultRank) {
-        return rank == defaultRank;
+    public boolean hasRankOf(Rank rank) {
+        return this.rank == rank;
+    }
+
+    public boolean hasFileOf(File file) {
+        return this.file == file;
     }
 
     public List<Position> getPath(Position targetPosition) {

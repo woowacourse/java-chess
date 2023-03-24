@@ -5,10 +5,18 @@ import static domain.game.Side.WHITE;
 
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
+import domain.piece.PieceCategory;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Game {
+    private static final double PAWN_ON_SAME_FILE_PENALTY = 0.5;
+    private static final int LOWER_LIMIT_PAWN_PENALTY = 2;
+    private static final int NO_PENALTY = 0;
+
     private final Map<Position, Piece> chessBoard;
     private Side sideOfTurn;
 
@@ -102,9 +110,54 @@ public class Game {
     }
 
     private Score calculateScoreOf(Side side) {
-        Score scoreExceptPawns = calculateScoreExceptPawnsOf(side);
-        Score scoreOfPawns = calculatePawnsScoreOf(side);
-        return scoreExceptPawns.add(scoreOfPawns);
+        Score scoreBeforeCheckPawnsOnSameFile = calculateAllPiecesScoreOf(side);
+        Score scoreToSubtractForSameFilePawnsOf = calculateScoreToSubtractForSameFilePawnsOf(side);
+        return Score.subtract(scoreBeforeCheckPawnsOnSameFile, scoreToSubtractForSameFilePawnsOf);
+    }
+
+    private Score calculateAllPiecesScoreOf(Side side) {
+        return this.chessBoard.values().stream()
+                .filter(piece -> !piece.isEmptyPiece() && piece.isSameSideOf(side))
+                .map(Piece::getScore)
+                .reduce((Score::add))
+                .orElseThrow(() -> new IllegalStateException("서버 내부 에러 - 점수를 계산할 수 없습니다."));
+    }
+
+    private Score calculateScoreToSubtractForSameFilePawnsOf(Side side) {
+        List<Position> positionsOfPawns = collectPawnsPositionsOf(side);
+        int countOfPawnsHaveSameFile = Arrays.stream(File.values())
+                .mapToInt(file -> getCountOfPawnsHaveSameAboutEachFile(positionsOfPawns, file))
+                .sum();
+        return new Score(PAWN_ON_SAME_FILE_PENALTY * countOfPawnsHaveSameFile);
+    }
+
+    private List<Position> collectPawnsPositionsOf(Side side) {
+        PieceCategory pawnCategoryBySide = getPawnCategoryOf(side);
+        return this.chessBoard.entrySet().stream()
+                .filter(positionPieceEntry -> positionPieceEntry.getValue().getCategory()
+                        .equals(pawnCategoryBySide))
+                .map(Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    private int getCountOfPawnsHaveSameAboutEachFile(List<Position> positionsOfPawns, File file) {
+        int countOfPawnsOnThisFile = (int) positionsOfPawns.stream()
+                .filter(position -> position.hasFileOf(file))
+                .count();
+        if (countOfPawnsOnThisFile >= LOWER_LIMIT_PAWN_PENALTY) {
+            return countOfPawnsOnThisFile;
+        }
+        return NO_PENALTY;
+    }
+
+    private PieceCategory getPawnCategoryOf(Side side) {
+        if (side.equals(WHITE)) {
+            return PieceCategory.WHITE_PAWN;
+        }
+        if (side.equals(BLACK)) {
+            return PieceCategory.BLACK_PAWN;
+        }
+        throw new IllegalStateException("서버 내부 에러 - Pawn은 White 또는 Black 진영이어야 합니다.");
     }
 }
 

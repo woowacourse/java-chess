@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
-    private static final Score SCORE = new Score(3);
+    private static final Score SCORE = new Score(0);
 
     private King(Side side) {
         super(side);
