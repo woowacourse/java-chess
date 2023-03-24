@@ -92,4 +92,12 @@ public class Square {
                 .map(rank -> new Square(file, rank))
                 .collect(Collectors.toList());
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

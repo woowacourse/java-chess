@@ -28,4 +28,12 @@ public enum RankInputRenderer {
                 .orElseThrow(IllegalArgumentException::new)
                 .output;
     }
+
+    static public String renderRank(Rank rank) {
+        return Arrays.stream(values())
+                .filter(value -> value.output.equals(rank))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new)
+                .input;
+    }
 }

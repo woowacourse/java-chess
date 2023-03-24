@@ -28,4 +28,12 @@ public enum FileInputRenderer {
                 .orElseThrow(IllegalArgumentException::new)
                 .output;
     }
+
+    static public String renderFile(File file) {
+        return Arrays.stream(values())
+                .filter(value -> value.output.equals(file))
+                .findAny()
+                .orElseThrow(IllegalAccessError::new)
+                .input;
+    }
 }
