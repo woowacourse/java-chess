@@ -1,6 +1,7 @@
 package controller.command;
 
-public class End implements Command {
+public class Status implements Command {
+
     @Override
     public boolean isStart() {
         return false;
@@ -13,11 +14,11 @@ public class End implements Command {
 
     @Override
     public boolean isStatus() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnd() {
-        return true;
+        return false;
     }
 }
