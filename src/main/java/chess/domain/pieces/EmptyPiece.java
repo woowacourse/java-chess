@@ -10,7 +10,6 @@ import java.util.List;
 
 public final class EmptyPiece extends Piece {
 
-    static final String INVALID_TEAM = "[ERROR] EmptyPiece 의 팀은 NEUTRALITY 여야 합니다.";
     private static final String EMPTY_NAME = ".";
 
     public EmptyPiece(final Team team) {
@@ -27,7 +26,7 @@ public final class EmptyPiece extends Piece {
     @Override
     public void validateTeam(final Team team) {
         if (team != Team.NEUTRALITY) {
-            throw new IllegalArgumentException(INVALID_TEAM);
+            throw new IllegalArgumentException(INVALID_EMPTY_TEAM);
         }
     }
 

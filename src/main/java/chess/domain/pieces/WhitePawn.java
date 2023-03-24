@@ -26,7 +26,7 @@ public class WhitePawn extends Piece {
     @Override
     public void validateTeam(Team team) {
         if (team != WHITE) {
-            throw new IllegalStateException("현재 기물은 화이트팀만 가능합니다.");
+            throw new IllegalStateException("[ERROR] 현재 기물은 화이트팀만 가능합니다.");
         }
     }
 

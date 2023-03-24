@@ -31,7 +31,7 @@ public class Bishop extends Piece {
     @Override
     public void validateTeam(Team team) {
         if (team == Team.NEUTRALITY) {
-            throw new IllegalStateException("중립팀은 emptyPiece 만 가능합니다");
+            throw new IllegalStateException(INVALID_NOT_EMPTY_TEAM);
         }
     }
 

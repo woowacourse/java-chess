@@ -8,6 +8,8 @@ import chess.domain.pieces.component.Team;
 import java.util.List;
 
 public abstract class Piece {
+    protected static final String INVALID_EMPTY_TEAM = "[ERROR] EmptyPiece 의 팀은 NEUTRALITY 여야 합니다.";
+    protected static final String INVALID_NOT_EMPTY_TEAM = "[ERROR] EmptyPiece이 아니면 NEUTRALITY 을 가질 수 없습니다.";
 
     protected final Team team;
     protected Name name;
