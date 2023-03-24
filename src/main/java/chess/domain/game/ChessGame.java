@@ -1,9 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.initial.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.team.Team;
-import chess.domain.board.initial.BoardFactory;
 
 import java.util.HashMap;
 

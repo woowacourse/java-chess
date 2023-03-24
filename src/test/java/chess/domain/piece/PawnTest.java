@@ -3,7 +3,6 @@ package chess.domain.piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
 import static chess.domain.piece.Direction.DOWN;
 import static chess.domain.piece.Direction.LEFT_DOWN;
 import static chess.domain.piece.Direction.RIGHT_DOWN;

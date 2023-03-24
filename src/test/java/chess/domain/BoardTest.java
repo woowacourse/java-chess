@@ -1,12 +1,12 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.initial.BoardFactory;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.board.initial.BoardFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
