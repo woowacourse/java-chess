@@ -20,6 +20,8 @@ public class MovablePointFinder {
 
         onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.UP), Direction.UP);
         onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.DOWN), Direction.DOWN);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.LEFT), Direction.LEFT);
+        onCaseOfDirection(fromPoint, movablePoints, movableRange.get(Direction.RIGHT), Direction.RIGHT);
         movablePoints = onCaseOfPointOutOfBoard(pieceStatus, movablePoints);
 
         onCaseOfPieceBetWeenPath(pieceStatus, movablePoints, toPoint, piece);
@@ -57,6 +59,8 @@ public class MovablePointFinder {
             try {
                 if (direction == Direction.UP) movablePoint = movablePoint.up();
                 if (direction == Direction.DOWN) movablePoint = movablePoint.down();
+                if (direction == Direction.LEFT) movablePoint = movablePoint.left();
+                if (direction == Direction.RIGHT) movablePoint = movablePoint.right();
                 movablePoints.add(movablePoint);
             } catch (PointOutOfBoardException ignored) {}
         }

@@ -33,6 +33,14 @@ public class Point {
         return new Point(file, rank.down());
     }
 
+    public Point left() {
+        return new Point(file.left(), rank);
+    }
+
+    public Point right() {
+        return new Point(file.right(), rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

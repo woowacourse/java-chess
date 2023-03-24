@@ -255,7 +255,7 @@ class BoardTest {
             }
 
             @Test
-            @DisplayName("주위에 장기말이 없을 때, 폰을 위쪽 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
+            @DisplayName("주위에 장기말이 없을 때, 폰을 아래 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
             void pawnMoveToInvalidDirection() {
                 List<List<Piece>> boardStatus = Arrays.asList(
                         Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1

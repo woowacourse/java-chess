@@ -2,12 +2,9 @@ package domain.piece;
 
 import domain.point.Direction;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class Piece {
-    public abstract String getSymbol();
-
     public boolean isEmpty() {
         return this.getClass() == Empty.class;
     }
@@ -20,13 +17,15 @@ public abstract class Piece {
         return this.getClass() == BlackPawn.class;
     }
 
+    public boolean isOppositeWith(Piece piece) {
+        return (isWhite() && piece.isBlack()) || (isBlack() && piece.isWhite());
+    }
+
     public abstract Map<Direction, Integer> getMovableRange();
 
     public abstract boolean isWhite();
 
     public abstract boolean isBlack();
 
-    public boolean isOppositeWith(Piece piece) {
-        return (isWhite() && piece.isBlack()) || (isBlack() && piece.isWhite());
-    }
+    public abstract String getSymbol();
 }

@@ -29,9 +29,9 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크 값입니다."));
     }
 
-    private static Rank findByIndexFromBottom(int indexFromBottomOfNewRank) {
+    private static Rank findByIndexFromBottom(int index) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.indexFromBottom == indexFromBottomOfNewRank)
+                .filter(rank -> rank.indexFromBottom == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크의 인덱스입니다."));
     }
