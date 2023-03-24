@@ -32,7 +32,8 @@ public class InputView {
         final List<String> commands = Arrays.stream(scanner.nextLine().split(INPUT_COMMAND_DELIM))
                                             .collect(Collectors.toList());
 
-        if (Command.isStatus(commands.get(IndexCommand.START_COMMAND_INDEX.value()))) {
+        if (Command.isStatus(commands.get(IndexCommand.START_COMMAND_INDEX.value())) ||
+        Command.isEnd(commands.get(IndexCommand.START_COMMAND_INDEX.value()))) {
             return commands;
         }
 
@@ -48,5 +49,15 @@ public class InputView {
         }
 
         return commands;
+    }
+
+    public static String readNewGameCommand() {
+        return scanner.nextLine();
+    }
+
+    public static long readLoadGameCommand() {
+        final String command = scanner.nextLine();
+
+        return Long.parseLong(command);
     }
 }

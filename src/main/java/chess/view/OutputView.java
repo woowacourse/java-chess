@@ -86,4 +86,10 @@ public class OutputView {
         System.out.println("승자는 : " + color.name());
         System.out.println("점수는 : " + winnerScore.value());
     }
+
+    public static void printGameCandidates(List<Long> gameIds) {
+        System.out.println(gameIds.stream()
+                                  .map(String::valueOf)
+                                  .collect(Collectors.joining(", ")));
+    }
 }

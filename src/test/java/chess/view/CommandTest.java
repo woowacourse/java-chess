@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CommandTest {
 
-
     @Test
     @DisplayName("isEnd() : end 명령어가 들어오면 true를 반환한다.")
     void test_isFinish() throws Exception {

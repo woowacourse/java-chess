@@ -7,7 +7,11 @@ public enum Command {
     START("start"),
     MOVE("move"),
     END("end"),
-    STATUS("status");
+    STATUS("status"),
+    NEW_GAME("1"),
+    LOAD_GAME("2")
+
+    ;
 
     private final String value;
 
@@ -41,6 +45,18 @@ public enum Command {
     public static boolean isStatus(final String command) {
         return Arrays.stream(values())
                      .filter(it -> it == STATUS)
+                     .anyMatch(it -> it.value.equals(command));
+    }
+
+    public static boolean isNewGame(final String command) {
+        return Arrays.stream(values())
+                     .filter(it -> it == NEW_GAME)
+                     .anyMatch(it -> it.value.equals(command));
+    }
+
+    public static boolean isLoadGame(final String command) {
+        return Arrays.stream(values())
+                     .filter(it -> it == LOAD_GAME)
                      .anyMatch(it -> it.value.equals(command));
     }
 }
