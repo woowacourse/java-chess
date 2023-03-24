@@ -1,16 +1,13 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
-import chess.domain.InitialPiece;
 import chess.domain.position.Position;
 import chess.dto.ChessBoardDto;
 import chess.dto.CommandRequest;
-import chess.repository.ChessGameDao;
+import chess.repository.GameGenerationService;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Optional;
 
 public class ChessController {
 
@@ -20,12 +17,12 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private ChessGame chessGame;
-    private final ChessGameDao chessGameDao;
+    private final GameGenerationService gameGenerationService;
 
-    public ChessController() {
+    public ChessController(final GameGenerationService gameGenerationService) {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.chessGameDao = new ChessGameDao();
+        this.gameGenerationService = gameGenerationService;
     }
 
     public void run() {
@@ -39,7 +36,7 @@ public class ChessController {
         while (isNotStarted) {
             isNotStarted = repeatStartRequest();
         }
-        createGame();
+        chessGame = gameGenerationService.createGame();
         printBoard();
     }
 
@@ -59,21 +56,6 @@ public class ChessController {
         }
     }
 
-    private void createGame() {
-        Optional<ChessGame> game = chessGameDao.findLastGame();
-        if (game.isPresent()) {
-            chessGame = game.get();
-            return;
-        }
-        createNewGame();
-    }
-
-    private void createNewGame() {
-        ChessGame newGame = new ChessGame(new ChessBoard(InitialPiece.getPiecesWithPosition()));
-        chessGame = chessGameDao.save(newGame);
-        chessGame.saveAllPieces();
-    }
-
     private void printBoard() {
         outputView.printBoard(ChessBoardDto.from(chessGame.getChessBoard()));
     }
@@ -83,7 +65,6 @@ public class ChessController {
         while ((request = repeatProgressRequest()).getCommand() != Command.END) {
             progressMoveCommand(request);
             progressStatusCommand(request);
-            endGame();
         }
     }
 
@@ -115,7 +96,6 @@ public class ChessController {
     private void progressMoveCommand(CommandRequest request) {
         if (request.getCommand() == Command.MOVE) {
             progressMove(request);
-            chessGameDao.updateTurn(chessGame.getGameId(), chessGame.getTeamColor());
         }
     }
 
@@ -141,12 +121,6 @@ public class ChessController {
             outputView.printWinner(chessGame.findWinningTeam().name());
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception);
-        }
-    }
-
-    private void endGame() {
-        if (!chessGame.isPlaying()) {
-            chessGameDao.updateStatus(chessGame.getGameId(), true);
         }
     }
 

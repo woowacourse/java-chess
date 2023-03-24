@@ -5,6 +5,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.repository.ChessGameDao;
+import chess.repository.GameService;
+import chess.repository.PieceDao;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +28,8 @@ class ChessGameTest {
             Position.from("B2"), InitialPiece.BLACK_PAWN.getPiece());
 
         ChessBoard chessBoard = new ChessBoard(new HashMap<>(boardForTest));
-        chessGame = new ChessGame(chessBoard);
+        GameService chessGameService = new GameService(new ChessGameDao(), new PieceDao());
+        chessGame = new ChessGame(chessBoard, chessGameService);
     }
 
     @DisplayName("King 이 잡히면 게임이 종료된다.")
@@ -33,7 +37,7 @@ class ChessGameTest {
     void 킹_잡히면_게임_종료() {
         chessGame.move(Position.from("A2"), Position.from("C4"));
 
-        assertThat(chessGame.isPlaying()).isFalse();
+        assertThat(chessGame.isEnd()).isTrue();
     }
 
     @DisplayName("King 이 잡혔을 때 우승팀을 반환한다.")

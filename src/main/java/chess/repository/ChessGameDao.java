@@ -2,6 +2,7 @@ package chess.repository;
 
 import chess.domain.ChessGame;
 import chess.domain.TeamColor;
+import chess.dto.ChessGameDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,28 +18,29 @@ public class ChessGameDao {
         connection = ConnectionProvider.getConnection();
     }
 
-    public ChessGame save(final ChessGame game) {
+    public long save(final ChessGame game) {
         String queryStatement = "INSERT INTO game (turn, is_end) VALUES(?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryStatement,
-                Statement.RETURN_GENERATED_KEYS);
+                Statement.RETURN_GENERATED_KEYS); // queryAndReturnGeneratedKeys
             preparedStatement.setString(1, convertTeamColorToString(game.getTeamColor()));
-            preparedStatement.setBoolean(2, !game.isPlaying());
+            preparedStatement.setBoolean(2, game.isEnd());
             preparedStatement.executeUpdate();
 
             ResultSet keys = preparedStatement.getGeneratedKeys();
+            long generatedGameId = 1L;
             if (keys.next()) {
-                game.updateNewGameId(keys.getLong(1));
+                generatedGameId = keys.getLong(1);
             }
-            return game;
+            return generatedGameId;
         } catch (SQLException e) {
             System.err.println("INSERT 오류 " + e.getMessage());
             throw new RuntimeException();
         }
     }
 
-    public boolean updateStatus(final long gameId, final boolean isEnd) {
+    public boolean updateStatus(final long gameId, final boolean isEnd) { // update
         String queryStatement = "UPDATE game SET is_end = ? WHERE game_id = ?";
 
         try {
@@ -58,7 +60,7 @@ public class ChessGameDao {
         return false;
     }
 
-    public boolean updateTurn(final long gameId, final TeamColor color) {
+    public boolean updateTurn(final long gameId, final TeamColor color) { // update
         String queryStatement = "UPDATE game SET turn = ? WHERE game_id = ?";
 
         try {
@@ -78,7 +80,7 @@ public class ChessGameDao {
         return false;
     }
 
-    public Optional<ChessGame> findLastGame() {
+    public Optional<ChessGameDto> findLastGame() { // queryOne
         String queryStatement = "SELECT * FROM game WHERE is_end IS FALSE ORDER BY game_id DESC LIMIT 1";
 
         try {
@@ -86,8 +88,7 @@ public class ChessGameDao {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(ChessGame.fromDatabase(resultSet.getLong("game_id"),
-                    convertStringToTeamColor(resultSet.getString("turn"))));
+                return Optional.of(new ChessGameDto(resultSet.getLong("game_id"), convertStringToTeamColor(resultSet.getString("turn"))));
             }
             return Optional.empty();
         } catch (SQLException e) {
