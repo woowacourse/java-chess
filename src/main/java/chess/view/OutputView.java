@@ -30,6 +30,10 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
     }
 
+    public void guideEndGame() {
+        System.out.println("> 체스 게임이 종료되었습니다.");
+    }
+
     public void printCurrentCamp(final Camp camp) {
         final String currentCampMessage = String.format(PLAY_CAMP_FORMAT, CampMessageConverter.convert(camp));
 

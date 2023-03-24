@@ -37,7 +37,7 @@ public class ChessGame {
     }
 
     public boolean isGameOnGoing() {
-        return chessBoard.canPlayGame(turn.oppositeCamp());
+        return chessBoard.canPlayGame(turn.findPlayer());
     }
 
     public PieceScore getScoreByCamp(final Camp camp) {
@@ -46,6 +46,10 @@ public class ChessGame {
 
     public Camp getCurrentCamp() {
         return turn.findPlayer();
+    }
+
+    public Camp getWinnerCamp() {
+        return turn.oppositeCamp();
     }
 
     public ChessBoardResponse getChessBoard() {

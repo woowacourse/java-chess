@@ -52,29 +52,40 @@ public class ChessController {
 
     private void printChessBoard(final GameState gameState, final ChessGame chessGame) {
         if (isPrintChessBoard(gameState)) {
-            outputView.printCurrentCamp(chessGame.getCurrentCamp());
-            outputView.printChessBoard(chessGame.getChessBoard());
+            printChessBoard(chessGame);
+        }
+        if (!gameState.isPrintable() && !gameState.isPlay()) {
+            outputView.guideEndGame();
         }
         if (isPrintScoreAndGameResult(gameState)) {
-            final ChessGameResultResponse chessGameResultResponse = makeChessGameResultResponse(chessGame);
-
-            outputView.printChessGameResult(chessGameResultResponse);
+            printScoreAndResult(chessGame);
         }
-    }
-
-    private ChessGameResultResponse makeChessGameResultResponse(final ChessGame chessGame) {
-        final PieceScore blackPieceScore = chessGame.getScoreByCamp(Camp.BLACK);
-        final PieceScore whitePieceScore = chessGame.getScoreByCamp(Camp.WHITE);
-        final Camp winner = chessGame.getCurrentCamp();
-
-        return new ChessGameResultResponse(blackPieceScore, whitePieceScore, winner);
     }
 
     private boolean isPrintChessBoard(final GameState gameState) {
         return gameState.isPlay() && gameState.isPrintable();
     }
 
+    private void printChessBoard(final ChessGame chessGame) {
+        outputView.printCurrentCamp(chessGame.getCurrentCamp());
+        outputView.printChessBoard(chessGame.getChessBoard());
+    }
+
+    private void printScoreAndResult(final ChessGame chessGame) {
+        final ChessGameResultResponse chessGameResultResponse = makeChessGameResultResponse(chessGame);
+
+        outputView.printChessGameResult(chessGameResultResponse);
+    }
+
     private boolean isPrintScoreAndGameResult(final GameState gameState) {
         return !gameState.isPlay() && gameState.isPrintable();
+    }
+
+    private ChessGameResultResponse makeChessGameResultResponse(final ChessGame chessGame) {
+        final PieceScore blackPieceScore = chessGame.getScoreByCamp(Camp.BLACK);
+        final PieceScore whitePieceScore = chessGame.getScoreByCamp(Camp.WHITE);
+        final Camp winner = chessGame.getWinnerCamp();
+
+        return new ChessGameResultResponse(blackPieceScore, whitePieceScore, winner);
     }
 }
