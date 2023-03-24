@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static chess.domain.Color.BLACK;
@@ -177,6 +178,30 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), true),
                 Arguments.of(List.of(), false)
+        );
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("providePiecesAndScore")
+    void 두_진영의_점수를_계산한다(final List<Piece> pieces, final double blackScore, final double whiteScore) {
+        final Board board = Board.from(new TestPiecesFactory(pieces));
+
+        Map<Color, Double> scoreByColor = board.calculateScoreByColor();
+
+        assertSoftly(softly -> {
+            softly.assertThat(scoreByColor.get(BLACK)).isEqualTo(blackScore);
+            softly.assertThat(scoreByColor.get(WHITE)).isEqualTo(whiteScore);
+        });
+    }
+
+    private static Stream<Arguments> providePiecesAndScore() {
+        return Stream.of(
+                Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), 0, 0),
+                Arguments.of(List.of(new Queen(E, EIGHT, BLACK), new Rook(E, ONE, WHITE)), 9, 5),
+                Arguments.of(List.of(new Knight(E, EIGHT, BLACK), new Bishop(E, ONE, WHITE)), 2.5, 3),
+                Arguments.of(List.of(new Pawn(E, SEVEN, BLACK), new Pawn(E, SIX, BLACK),
+                        new Pawn(E, TWO, WHITE)), 1, 1)
         );
     }
 }

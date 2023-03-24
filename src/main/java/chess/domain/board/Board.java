@@ -5,7 +5,9 @@ import chess.domain.Position;
 import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
 
@@ -58,6 +60,14 @@ public class Board {
 
     public boolean hasTwoKings() {
         return pieces.hasTwoKings();
+    }
+
+
+    public Map<Color, Double> calculateScoreByColor() {
+        final HashMap<Color, Double> scoreByColor = new HashMap<>();
+        scoreByColor.put(Color.BLACK, pieces.calculateScore(Color.BLACK));
+        scoreByColor.put(Color.WHITE, pieces.calculateScore(Color.WHITE));
+        return scoreByColor;
     }
 
     public List<Piece> getPieces() {
