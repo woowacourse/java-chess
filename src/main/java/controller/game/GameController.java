@@ -9,6 +9,7 @@ import static controller.game.Command.MOVE;
 import static controller.game.Command.MOVE_COMMAND_LENGTH;
 import static controller.game.Command.STANDARD_COMMAND_LENGTH;
 import static controller.game.Command.START;
+import static controller.game.Command.STATUS;
 import static controller.game.Command.TARGET_SQUARE_INDEX;
 
 import java.util.EnumMap;
@@ -29,6 +30,7 @@ public class GameController {
         actions.put(START, this::start);
         actions.put(MOVE, this::move);
         actions.put(END, this::end);
+        actions.put(STATUS, this::status);
     }
 
     public void gameStart(long roomId) {
@@ -41,8 +43,6 @@ public class GameController {
         while (command != END) {
             command = play(roomId);
         }
-        List<ScoreDto> scoreDto = chessService.calculateFinalScore();
-        OutputView.printScores(scoreDto);
         chessService.end(roomId);
     }
 
@@ -77,6 +77,12 @@ public class GameController {
         String targetSquareInput = inputs.get(TARGET_SQUARE_INDEX);
         chessService.move(roomId, currentSquareInput, targetSquareInput);
         OutputView.printChessBoard(chessService.getChessBoard());
+    }
+
+    private void status(long ignored, List<String> inputs) {
+        Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
+        List<ScoreDto> scoreDto = chessService.calculateFinalScore();
+        OutputView.printScores(scoreDto);
     }
 
     private void end(long ignored, List<String> inputs) {

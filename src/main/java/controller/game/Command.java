@@ -6,6 +6,7 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
+    STATUS("status"),
     EMPTY("");
 
     public static final int COMMAND_INDEX = 0;
