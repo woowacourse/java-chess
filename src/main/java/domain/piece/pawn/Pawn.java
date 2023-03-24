@@ -10,7 +10,7 @@ import domain.piece.Direction;
 import domain.piece.Piece;
 import domain.piece.jumper.Jumper;
 
-public class Pawn extends Jumper {
+public class Pawn extends Piece {
     private static final List<Direction> MOVABLE_DIRECTION_FORWARD = List.of(
         Direction.NORTH
     );
