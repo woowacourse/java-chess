@@ -28,6 +28,7 @@ public class GameRoomService {
     }
 
     public void saveGameInfo(GameInfoDto gameInfoDto) {
+        chessDao.deleteBoardById(gameId);
         chessDao.updateCurrentTurn(gameId, gameInfoDto.getCurrentTurn());
         chessDao.saveBoard(gameId, gameInfoDto.getBoardDtos());
     }

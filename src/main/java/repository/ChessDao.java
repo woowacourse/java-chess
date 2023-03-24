@@ -23,4 +23,6 @@ public interface ChessDao {
     String findCurrentTurnByGameName(String gameName);
 
     void updateCurrentTurn(long gameId, String currentTurn);
+
+    void deleteBoardById(long gameId);
 }

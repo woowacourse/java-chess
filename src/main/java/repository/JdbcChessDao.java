@@ -161,6 +161,18 @@ public class JdbcChessDao implements ChessDao {
         }
     }
 
+    @Override
+    public void deleteBoardById(long gameId) {
+        final String query = "DELETE from board`` WHERE g_id = ?";
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
     public List<MoveHistoryDto> findMoveHistoryByGameId(long game_id) {
         final String query = "SELECT source, target, pieceOnTarget FROM moveHistory WHERE g_id = ?";
         try (Connection connection = connector.getConnection();

@@ -72,4 +72,24 @@ class JdbcChessDaoTest {
 
         assertThat(boardDto).containsExactlyInAnyOrderElementsOf(boardDto);
     }
+
+    @Test
+    @DisplayName("gameId를 전달 받아 해당하는 board를 삭제한다.")
+    void deleteBoardById() {
+        long gameId = jdbcChessDao.addGame("테스트");
+        List<BoardDto> boardDtos = List.of(
+                new BoardDto("a2", "PAWN", "WHITE"),
+                new BoardDto("a3", "QUEEN", "BLACK"),
+                new BoardDto("a4", "KNIGHT", "BLACK"),
+                new BoardDto("a5", "EMPTY", "NONE"),
+                new BoardDto("a6", "KING", "WHITE"),
+                new BoardDto("a7", "KING", "BLACK")
+        );
+        jdbcChessDao.saveBoard(gameId, boardDtos);
+
+        jdbcChessDao.deleteBoardById(gameId);
+
+        List<BoardDto> boardDto = jdbcChessDao.findBoardByGameName("테스트");
+        assertThat(boardDto).isEmpty();
+    }
 }
