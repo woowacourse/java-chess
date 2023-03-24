@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessDB;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.dto.BoardDto;
@@ -20,6 +21,12 @@ public class StartController implements Controller {
     public Response execute(Request request) {
         try {
             validate(request);
+            ChessDB chessDB = new ChessDB();
+            if (chessDB.existBoard()) {
+                Game game = Game.of(chessDB.getBoardData());
+                GameSession.makeSession(game);
+                return new Response(ResponseType.START, makeBoardDto(game));
+            }
             Game newGame = Game.of(BoardGenerator.makeBoard());
             GameSession.makeSession(newGame);
             return new Response(ResponseType.START, makeBoardDto(newGame));

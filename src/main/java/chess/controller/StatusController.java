@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.dao.ChessDB;
+import chess.domain.dto.BoardSaveDto;
 import chess.domain.dto.ResultDto;
 import chess.domain.game.Game;
 import chess.domain.game.GameSession;
@@ -20,6 +22,8 @@ public class StatusController implements Controller {
         try {
             validate(request);
             Game game = GameSession.getGame();
+            ChessDB chessDB = new ChessDB();
+            chessDB.saveBoard(BoardSaveDto.from(game.getBoard()));
             return new Response(ResponseType.STATUS, makeGameResultDto(game));
         } catch (IllegalArgumentException | IllegalStateException e) {
             return new Response(ResponseType.FAIL, e.getMessage());

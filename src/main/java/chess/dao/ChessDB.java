@@ -117,5 +117,20 @@ public class ChessDB {
         }
     }
 
+    public boolean existBoard() {
+        final var query = "SELECT * FROM piece";
+        try (var connection = getConnection();
+             var preparedStatement = connection.prepareStatement(query)) {
+
+            var resultSet = preparedStatement.executeQuery();
+            int i = 0;
+            while (resultSet.next()) {
+                i++;
+            }
+            return i == 64;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

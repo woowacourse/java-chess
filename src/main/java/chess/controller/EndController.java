@@ -1,5 +1,8 @@
 package chess.controller;
 
+import chess.dao.ChessDB;
+import chess.domain.dto.BoardSaveDto;
+import chess.domain.game.Game;
 import chess.domain.game.GameSession;
 
 public class EndController implements Controller {
@@ -16,7 +19,9 @@ public class EndController implements Controller {
     public Response execute(Request request) {
         validate(request);
         if (GameSession.existGame()) {
-            GameSession.getGame();
+            Game game = GameSession.getGame();
+            ChessDB chessDB = new ChessDB();
+            chessDB.saveBoard(BoardSaveDto.from(game.getBoard()));
         }
         return new Response(ResponseType.END);
     }
