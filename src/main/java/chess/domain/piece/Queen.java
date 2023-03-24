@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
-import chess.domain.piece.info.Team;
 
 public class Queen extends Piece {
 
     public Queen(final Team team) {
-        super(team);
+        super(team, Role.QUEEN);
     }
 
     @Override

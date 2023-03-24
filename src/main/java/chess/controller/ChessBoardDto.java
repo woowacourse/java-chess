@@ -5,14 +5,9 @@ import static chess.controller.ChessBoardDto.ChessViewGenerator.generateSquareVi
 
 import chess.domain.ChessBoard;
 import chess.domain.Square;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.info.Team;
+import chess.domain.piece.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,23 +50,22 @@ public class ChessBoardDto {
         }
 
         private static String generatePieceView(final Piece piece) {
-            final Class<? extends Piece> pieceClass = piece.getClass();
-            if (pieceClass == Pawn.class) {
+            if (piece.isSameRole(Role.PAWN)) {
                 return "p";
             }
-            if (pieceClass == Rook.class) {
+            if (piece.isSameRole(Role.ROOK)) {
                 return "r";
             }
-            if (pieceClass == Bishop.class) {
+            if (piece.isSameRole(Role.BISHOP)) {
                 return "b";
             }
-            if (pieceClass == Knight.class) {
+            if (piece.isSameRole(Role.KNIGHT)) {
                 return "n";
             }
-            if (pieceClass == King.class) {
+            if (piece.isSameRole(Role.KING)) {
                 return "k";
             }
-            if (pieceClass == Queen.class) {
+            if (piece.isSameRole(Role.QUEEN)) {
                 return "q";
             }
             return ".";

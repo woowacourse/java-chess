@@ -8,7 +8,7 @@ public class Blank extends Piece {
     private static final Piece BLANK = new Blank();
 
     private Blank() {
-        super(Team.EMPTY);
+        super(Team.NONE, Role.BLANK);
     }
 
     public static Piece getInstance() {

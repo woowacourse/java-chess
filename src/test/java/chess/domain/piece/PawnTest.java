@@ -2,8 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Turn;
-import chess.domain.piece.info.Team;
+import chess.domain.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -17,8 +16,8 @@ class PawnTest {
     @CsvSource(value = {"c:4", "c:3"}, delimiter = ':')
     void should_true반환_when_WHITE_팀일때_움직일_수_있는_위치라면(String rank, int file) {
         //given
-        Position source = Position.of(Rank.C, File.TWO);
-        Position destination = Position.of(Rank.from(rank), File.from(file));
+        Position source = Position.of(File.C, Rank.TWO);
+        Position destination = Position.of(File.from(rank), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when
@@ -32,8 +31,8 @@ class PawnTest {
     @CsvSource(value = {"c:6", "c:5"}, delimiter = ':')
     void should_true반환_when_BLACK_팀일때_움직일_수_있는_위치라면(String rank, int file) {
         //given
-        Position source = Position.of(Rank.C, File.SEVEN);
-        Position destination = Position.of(Rank.from(rank), File.from(file));
+        Position source = Position.of(File.C, Rank.SEVEN);
+        Position destination = Position.of(File.from(rank), Rank.from(file));
         Pawn pawn = new Pawn(Team.BLACK);
 
         //when
@@ -47,8 +46,8 @@ class PawnTest {
     @CsvSource(value = {"c:2", "c:1", "d:3"}, delimiter = ':')
     void should_false반환_when_움직일_수_없는_위치라면(String rank, int file) {
         //given
-        Position source = Position.of(Rank.C, File.TWO);
-        Position destination = Position.of(Rank.from(rank), File.from(file));
+        Position source = Position.of(File.C, Rank.TWO);
+        Position destination = Position.of(File.from(rank), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when
@@ -61,10 +60,9 @@ class PawnTest {
     @Test
     void should_false반환_when_움직인_기록이_있을_때_2칸을_움직이려하면() {
         //given
-        Position source = Position.of(Rank.C, File.TWO);
-        Position destination = Position.of(Rank.C, File.FOUR);
+        Position source = Position.of(File.C, Rank.THREE);
+        Position destination = Position.of(File.C, Rank.FIVE);
         Pawn pawn = new Pawn(Team.WHITE);
-        pawn.addTrace(new Turn(), source);
 
         //when
         boolean actual = pawn.canMove(source, destination);
@@ -77,8 +75,8 @@ class PawnTest {
     @CsvSource(value = {"b:3", "d:3"}, delimiter = ':')
     void should_ture반환_when_팀이_WHITE일때_공격할_수_있는_위치라면(String rank, int file) {
         //given
-        Position source = Position.of(Rank.C, File.TWO);
-        Position destination = Position.of(Rank.from(rank), File.from(file));
+        Position source = Position.of(File.C, Rank.TWO);
+        Position destination = Position.of(File.from(rank), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when
@@ -92,8 +90,8 @@ class PawnTest {
     @CsvSource(value = {"b:1", "d:1"}, delimiter = ':')
     void should_ture반환_when_팀이_BLACK일때_공격할_수_있는_위치라면(String rank, int file) {
         //given
-        Position source = Position.of(Rank.C, File.TWO);
-        Position destination = Position.of(Rank.from(rank), File.from(file));
+        Position source = Position.of(File.C, Rank.TWO);
+        Position destination = Position.of(File.from(rank), Rank.from(file));
         Pawn pawn = new Pawn(Team.BLACK);
 
         //when
@@ -107,8 +105,8 @@ class PawnTest {
     @CsvSource(value = {"c:2", "c:3", "c:4", "c:1"}, delimiter = ':')
     void should_false반환_when_공격할_수_없는_위치라면(String rank, int file) {
         //given
-        Position source = Position.of(Rank.C, File.TWO);
-        Position destination = Position.of(Rank.from(rank), File.from(file));
+        Position source = Position.of(File.C, Rank.TWO);
+        Position destination = Position.of(File.from(rank), Rank.from(file));
         Pawn pawn = new Pawn(Team.WHITE);
 
         //when

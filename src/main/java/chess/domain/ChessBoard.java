@@ -1,6 +1,7 @@
 package chess.domain;
 
-import chess.domain.piece.info.Team;
+import chess.domain.piece.Role;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.math.BigInteger;
 import java.util.List;
@@ -90,7 +91,7 @@ public class ChessBoard {
     }
 
     private void executeMove(final Position source, final Position destination) {
-        findSquareByPosition(source).moveTo(turn, findSquareByPosition(destination));
+        findSquareByPosition(source).moveTo(findSquareByPosition(destination));
     }
 
     public boolean isKingDead() {
@@ -101,5 +102,44 @@ public class ChessBoard {
 
     public List<Square> getSquares() {
         return squares;
+    }
+
+    public double calculateScore(final Team team) {
+        double heavyPiecesScore = calculateHeavyPiecesScore(team);
+        double pawnScore = calculatePawnScore(team);
+        return heavyPiecesScore + pawnScore;
+    }
+
+    private double calculateHeavyPiecesScore(final Team team) {
+        return squares.stream()
+                .filter(square -> square.isSameTeam(team))
+                .filter(square -> !square.hasSameRole(Role.PAWN))
+                .mapToDouble(Square::getScore)
+                .sum();
+    }
+
+    private double calculatePawnScore(final Team team) {
+        double pawnScore = 0;
+        for (File file : File.values()) {
+            pawnScore += calculatePawnScoreOfFile(file, team);
+        }
+        return pawnScore;
+    }
+
+    private double calculatePawnScoreOfFile(final File file, final Team team) {
+        double pawnScore = squares.stream()
+                .filter(square -> square.isSameTeam(team))
+                .filter(square -> square.isSameFile(file))
+                .filter(square -> square.hasSameRole(Role.PAWN))
+                .mapToDouble(Square::getScore)
+                .sum();
+        if (pawnScore > 1) {
+            return pawnScore / 2;
+        }
+        return pawnScore;
+    }
+
+    public Team previousTeam() {
+        return turn.findCurrentEnemyTeam();
     }
 }

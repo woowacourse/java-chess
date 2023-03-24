@@ -6,7 +6,7 @@ import chess.domain.piece.info.Team;
 public class Rook extends Piece {
 
     public Rook(final Team team) {
-        super(team);
+        super(team, Role.ROOK);
     }
 
     @Override
