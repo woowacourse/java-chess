@@ -1,19 +1,19 @@
-CREATE TABLE board
+CREATE TABLE chess_game
 (
     `id`    INT         NOT NULL AUTO_INCREMENT,
-    `turn`  VARCHAR(10) NOT NULL,
-    `state` VARCHAR(10) NOT NULL,
+    `turn`  VARCHAR(20) NOT NULL,
+    `state` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`id`)
 );
 
 CREATE TABLE piece
 (
-    `id`       INT         NOT NULL AUTO_INCREMENT,
-    `board_id` INT         NOT NULL,
-    `color`    VARCHAR(10) NOT NULL,
-    `type`     VARCHAR(10) NOT NULL,
-    `file`     VARCHAR(10) NOT NULL,
-    `rank`     VARCHAR(10) NOT NULL,
+    `id`            INT         NOT NULL AUTO_INCREMENT,
+    `chess_game_id` INT         NOT NULL,
+    `color`         VARCHAR(20) NOT NULL,
+    `type`          VARCHAR(20) NOT NULL,
+    `file`          VARCHAR(20) NOT NULL,
+    `rank`          VARCHAR(20) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`board_id`) REFERENCES `board` (`id`)
+    FOREIGN KEY (`chess_game_id`) REFERENCES `chess_game` (`id`)
 );
