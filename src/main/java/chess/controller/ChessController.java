@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.Score;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -52,10 +51,9 @@ public class ChessController {
         game.checkGameNotFinished();
     }
     private void displayGameStatus(ChessGame game) {
-        Runnable runnable=()->{
+        game.displayGameStatus(()->{
             outputView.printGameStatus(game.makeScoreBoard(), game.judgeWinner());
-        };
-        game.displayGameStatus(runnable);
+        });
     }
 
     private void finishGame(ChessGame game) {

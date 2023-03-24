@@ -6,7 +6,6 @@ import chess.domain.state.FinishedState;
 import chess.domain.state.GameState;
 import chess.domain.state.ReadyState;
 import chess.domain.state.RunningState;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
