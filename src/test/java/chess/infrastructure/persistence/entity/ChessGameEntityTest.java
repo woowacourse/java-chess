@@ -31,15 +31,14 @@ class ChessGameEntityTest {
         // then
         assertAll(
                 () -> assertThat(chessGameEntity.id()).isNull(),
-                () -> assertThat(chessGameEntity.turn()).isEqualTo("WHITE"),
-                () -> assertThat(chessGameEntity.winner()).isNull()
+                () -> assertThat(chessGameEntity.turn()).isEqualTo("WHITE")
         );
     }
 
     @Test
     void ChessGame_을_생성할_수_있다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, GameState.END.name(), null, "BLACK");
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(1L, GameState.END.name(), "BLACK");
 
         // when
         final ChessGame chessGame = ChessGameMapper.toDomain(chessGameEntity, new ArrayList<>());

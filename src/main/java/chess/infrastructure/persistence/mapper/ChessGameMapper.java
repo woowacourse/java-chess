@@ -16,18 +16,9 @@ public class ChessGameMapper {
 
     public static ChessGameEntity fromDomain(final ChessGame chessGame) {
         final Long id = chessGame.id();
-        if (chessGame.playable()) {
-            return new ChessGameEntity(
-                    id,
-                    chessGame.state().name(),
-                    chessGame.turnColor().name(),
-                    null);
-        }
-        return new ChessGameEntity(
-                id,
+        return new ChessGameEntity(id,
                 chessGame.state().name(),
-                null,
-                chessGame.winColor().name());
+                chessGame.turnColor().name());
     }
 
     public static ChessGame toDomain(final ChessGameEntity chessGame, final List<PieceEntity> pieces) {
@@ -41,6 +32,8 @@ public class ChessGameMapper {
                     board,
                     new Turn(Color.valueOf(chessGame.turn())));
         }
-        return ChessGame.end(chessGame.id(), board, Color.valueOf(chessGame.winner()));
+        return ChessGame.end(chessGame.id(),
+                board,
+                new Turn(Color.valueOf(chessGame.turn())));
     }
 }

@@ -15,18 +15,15 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private final GameState state;
     private final Turn turn;
-    private final Color winner;
 
     private ChessGame(final Long id,
                       final ChessBoard chessBoard,
                       final GameState state,
-                      final Turn turn,
-                      final Color winner) {
+                      final Turn turn) {
         this.id = id;
         this.chessBoard = chessBoard;
         this.state = state;
         this.turn = turn;
-        this.winner = winner;
     }
 
     public static ChessGame start(final ChessBoard chessBoard) {
@@ -34,25 +31,24 @@ public class ChessGame {
                 null,
                 chessBoard,
                 GameState.RUN,
-                new Turn(Color.WHITE),
-                null);
+                new Turn(Color.WHITE));
     }
 
     public static ChessGame resume(final Long id, final ChessBoard chessBoard, final Turn turn) {
-        return new ChessGame(id, chessBoard, GameState.RUN, turn, null);
+        return new ChessGame(id, chessBoard, GameState.RUN, turn);
     }
 
-    public static ChessGame end(final Long id, final ChessBoard chessBoard, final Color winner) {
-        return new ChessGame(id, chessBoard, GameState.END, null, winner);
+    public static ChessGame end(final Long id, final ChessBoard chessBoard, final Turn winner) {
+        return new ChessGame(id, chessBoard, GameState.END, winner);
     }
 
     public ChessGame movePiece(final PiecePosition source, final PiecePosition destination) {
         validateRunning();
-        chessBoard.movePiece(turn, source, destination);
-        if (killEnemyKing()) {
-            return ChessGame.end(id, chessBoard, turn.color());
+        final ChessBoard movedBoard = chessBoard.movePiece(turn, source, destination);
+        if (killEnemyKing(movedBoard)) {
+            return ChessGame.end(id, movedBoard, turn);
         }
-        return ChessGame.resume(id, chessBoard, turn.change());
+        return ChessGame.resume(id, movedBoard, turn.change());
     }
 
     private void validateRunning() {
@@ -61,7 +57,7 @@ public class ChessGame {
         }
     }
 
-    private boolean killEnemyKing() {
+    private boolean killEnemyKing(final ChessBoard chessBoard) {
         return !chessBoard.existKingByColor(turn.enemyColor());
     }
 
@@ -73,7 +69,7 @@ public class ChessGame {
         if (state != GameState.END) {
             throw new IllegalArgumentException("아직 게임이 끝나지 않았습니다.");
         }
-        return winner;
+        return turnColor();
     }
 
     public List<Piece> pieces() {

@@ -29,14 +29,14 @@ public class ChessBoard {
         return new ChessBoard(pieces);
     }
 
-    public void movePiece(final Turn turn,
-                          final PiecePosition source,
-                          final PiecePosition destination) {
+    public ChessBoard movePiece(final Turn turn,
+                                final PiecePosition source,
+                                final PiecePosition destination) {
         final Piece fromPiece = findByPosition(source);
         final Piece destinationPiece = findNullableByPosition(destination);
         validateMissMatchSelect(turn, fromPiece);
         validateNonBlock(fromPiece, destination, destinationPiece);
-        move(fromPiece, destination, destinationPiece);
+        return move(fromPiece, destination, destinationPiece);
     }
 
     private void validateMissMatchSelect(final Turn turn, final Piece from) {
@@ -59,13 +59,15 @@ public class ChessBoard {
                 .anyMatch(this::existByPosition);
     }
 
-    private void move(final Piece fromPiece, final PiecePosition destination, final Piece destinationPiece) {
+    private ChessBoard move(final Piece fromPiece, final PiecePosition destination, final Piece destinationPiece) {
         final Piece movedPiece = fromPiece.move(destination, destinationPiece);
-        pieces.remove(fromPiece);
+        final List<Piece> movedPieces = new ArrayList<>(pieces);
+        movedPieces.remove(fromPiece);
         if (destinationPiece != null) {
-            pieces.remove(destinationPiece);
+            movedPieces.remove(destinationPiece);
         }
-        pieces.add(movedPiece);
+        movedPieces.add(movedPiece);
+        return new ChessBoard(movedPieces);
     }
 
     private boolean existByPosition(final PiecePosition piecePosition) {

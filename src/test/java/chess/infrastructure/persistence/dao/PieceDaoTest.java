@@ -40,7 +40,7 @@ class PieceDaoTest {
     void setUp() {
         pieceDao.deleteAll();
         chessGameDao.deleteAll();
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece","WHITE", null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece","WHITE");
         chessGameDao.save(chessGameEntity);
         chessGameId = chessGameEntity.id();
     }

@@ -34,7 +34,7 @@ class ChessGameDaoTest {
     @Test
     void ChessGameEntity_를_저장한다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", Color.WHITE.name());
 
         // when
         chessGameDao.save(chessGameEntity);
@@ -43,41 +43,39 @@ class ChessGameDaoTest {
         final ChessGameEntity byId = chessGameDao.findById(chessGameEntity.id()).get();
         assertAll(
                 () -> assertThat(byId.id()).isNotNull(),
-                () -> assertThat(byId.turn()).isEqualTo(chessGameEntity.turn()),
-                () -> assertThat(byId.winner()).isEqualTo(chessGameEntity.winner())
+                () -> assertThat(byId.turn()).isEqualTo(chessGameEntity.turn())
         );
     }
 
     @Test
     void 업데이트_할_수_있다() {
         // given
-        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity = new ChessGameEntity(null, "MovePiece", Color.WHITE.name());
         chessGameDao.save(chessGameEntity);
 
         // when
-        final ChessGameEntity update = new ChessGameEntity(chessGameEntity.id(), "MovePiece", Color.BLACK.name(), null);
+        final ChessGameEntity update = new ChessGameEntity(chessGameEntity.id(), "MovePiece", Color.BLACK.name());
         chessGameDao.update(update);
 
         // then
         final ChessGameEntity result = chessGameDao.findById(update.id()).get();
         assertAll(
                 () -> assertThat(result.id()).isEqualTo(update.id()),
-                () -> assertThat(result.turn()).isEqualTo("BLACK"),
-                () -> assertThat(result.winner()).isNull()
+                () -> assertThat(result.turn()).isEqualTo("BLACK")
         );
     }
 
     @Test
     void 업데이트_시_하나만_업데이트_되어야_한다() {
         // given
-        final ChessGameEntity chessGameEntity1 = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
-        final ChessGameEntity chessGameEntity2 = new ChessGameEntity(null, "MovePiece", Color.WHITE.name(), null);
+        final ChessGameEntity chessGameEntity1 = new ChessGameEntity(null, "MovePiece", Color.WHITE.name());
+        final ChessGameEntity chessGameEntity2 = new ChessGameEntity(null, "MovePiece", Color.WHITE.name());
         chessGameDao.save(chessGameEntity1);
         chessGameDao.save(chessGameEntity2);
 
         // when
         final ChessGameEntity update =
-                new ChessGameEntity(chessGameEntity1.id(), "MovePiece", Color.BLACK.name(), null);
+                new ChessGameEntity(chessGameEntity1.id(), "MovePiece", Color.BLACK.name());
         chessGameDao.update(update);
 
         // then
@@ -86,8 +84,7 @@ class ChessGameDaoTest {
         Assertions.assertAll(
                 () -> assertThat(result.id()).isEqualTo(update.id()),
                 () -> assertThat(result.turn()).isEqualTo("BLACK"),
-                () -> assertThat(noUpdate.turn()).isEqualTo("WHITE"),
-                () -> assertThat(result.winner()).isNull()
+                () -> assertThat(noUpdate.turn()).isEqualTo("WHITE")
         );
     }
 }
