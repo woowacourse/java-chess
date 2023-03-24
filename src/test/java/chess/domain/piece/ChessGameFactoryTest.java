@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import chess.domain.game.ChessGameFactory;
 import chess.domain.game.Position;

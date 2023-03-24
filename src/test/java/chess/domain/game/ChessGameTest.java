@@ -1,9 +1,6 @@
-package chess.domain;
+package chess.domain.game;
 
-import chess.domain.game.ChessGame;
-import chess.domain.game.File;
-import chess.domain.game.Position;
-import chess.domain.game.Rank;
+import chess.domain.PositionFixtures;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;

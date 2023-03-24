@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Team;
+import chess.domain.PositionFixtures;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.InitialBlackPawn;
 import chess.domain.piece.pawn.InitialWhitePawn;

@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameFactory;
-import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -64,7 +63,7 @@ public final class ChessController {
             throw new IllegalArgumentException("체스 게임은 이미 진행되고 있습니다.");
         }
         chessGame = ChessGameFactory.generate();
-        outputView.printBoard(BoardDto.create(chessGame.getBoard()));
+        outputView.printBoard(chessGame.getBoard());
         return MOVE;
     }
 
@@ -73,7 +72,7 @@ public final class ChessController {
             throw new IllegalArgumentException("체스 게임은 아직 시작하지 않았습니다.");
         }
         chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
-        outputView.printBoard(BoardDto.create(chessGame.getBoard()));
+        outputView.printBoard(chessGame.getBoard());
         return MOVE;
     }
 

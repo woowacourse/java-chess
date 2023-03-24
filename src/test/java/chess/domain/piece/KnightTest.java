@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Knight;
+import chess.domain.PositionFixtures;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

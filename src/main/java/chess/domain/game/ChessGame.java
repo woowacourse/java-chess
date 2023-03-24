@@ -4,6 +4,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
+import chess.dto.BoardDto;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
 public final class ChessGame {
 
     private static final int BOARD_LENGTH = 8;
-    public static final double BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
+    public static final double TOTAL_BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
     private final Map<Position, Piece> board;
     private Turn turn;
@@ -23,7 +24,7 @@ public final class ChessGame {
     }
 
     public static ChessGame from(final Map<Position, Piece> board) {
-        if (board.size() != BOARD_SIZE) {
+        if (board.size() != TOTAL_BOARD_SIZE) {
             throw new IllegalArgumentException(
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
         }
@@ -76,7 +77,7 @@ public final class ChessGame {
         return piece;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Map.copyOf(board);
+    public BoardDto getBoard() {
+        return BoardDto.from(Map.copyOf(board));
     }
 }
