@@ -1,6 +1,6 @@
 package chess.domain.chessGame;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import java.util.Map;
 

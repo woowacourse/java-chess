@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.moveRule.MoveRule;
 import chess.domain.position.Position;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
@@ -69,6 +70,13 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public boolean isPiece() {
         return true;
+    }
+
+    @Override
+    public void addPieceType(Map<PieceType, Integer> pieceCounter) {
+        PieceType pieceType = pieceData.getPieceType();
+        int pieceCount = pieceCounter.getOrDefault(pieceType, 0);
+        pieceCounter.put(pieceType, pieceCount + 1);
     }
 
     @Override

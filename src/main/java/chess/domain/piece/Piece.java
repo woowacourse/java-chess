@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import java.util.Map;
 
 public interface Piece {
     Piece move(Position currentPosition, Position nextPosition, Piece pieceOfNextPosition);
@@ -22,4 +23,6 @@ public interface Piece {
     boolean isPiece();
 
     boolean isSliding();
+
+    void addPieceType(Map<PieceType, Integer> pieceCounter);
 }

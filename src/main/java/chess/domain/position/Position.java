@@ -112,6 +112,10 @@ public class Position {
         return rank.equals(other);
     }
 
+    public boolean isSameFile(File other) {
+        return file.equals(other);
+    }
+
     public boolean isInvalid() {
         return rank == null || file == null;
     }
