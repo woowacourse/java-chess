@@ -33,7 +33,7 @@ public class ColumnPiece {
     private final List<Piece> pieces;
 
     public ColumnPiece(final List<Piece> pieces) {
-        this.pieces = pieces;
+        this.pieces = List.copyOf(pieces);
     }
 
 
