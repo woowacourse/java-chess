@@ -1,10 +1,8 @@
 package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.model.piece.type.Bishop;
-import chess.model.piece.type.InitialPawn;
 import chess.model.piece.type.King;
 import chess.model.piece.type.Knight;
 import chess.model.piece.type.Pawn;
@@ -12,7 +10,6 @@ import chess.model.piece.type.Queen;
 import chess.model.piece.type.Rook;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
