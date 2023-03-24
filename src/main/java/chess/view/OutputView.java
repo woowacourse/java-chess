@@ -30,7 +30,7 @@ public class OutputView {
         for (final File file : File.values()) {
             final Position position = Position.of(file, rank);
             final Piece piece = chessBoard.get(position);
-            System.out.printf(PieceName.findNameByPiece(piece));
+            System.out.printf(PieceName.findByPiece(piece));
         }
         System.out.println();
     }

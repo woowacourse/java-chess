@@ -11,6 +11,7 @@ import chess.domain.piece.Rook;
 import chess.domain.team.Team;
 
 import java.util.Map;
+import java.util.function.Function;
 
 public class PieceName {
 
@@ -24,16 +25,16 @@ public class PieceName {
             Empty.class, "."
     );
 
-    public static String findNameByPiece(Piece piece) {
+    private static final Map<Team, Function<String, String>> changeByTeam = Map.of(
+            Team.WHITE, String::toLowerCase,
+            Team.BLACK, String::toUpperCase,
+            Team.NONE, name -> name
+    );
+
+    public static String findByPiece(Piece piece) {
+        final Team team = piece.team();
         final String initialName = pieceName.get(piece.getClass());
 
-        return changeNameByTeam(initialName, piece.team());
-    }
-
-    private static String changeNameByTeam(final String name, final Team team) {
-        if (Team.WHITE == team) {
-            return name.toLowerCase();
-        }
-        return name.toUpperCase();
+        return changeByTeam.get(team).apply(initialName);
     }
 }
