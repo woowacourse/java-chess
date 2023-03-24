@@ -196,4 +196,9 @@ public class ChessBoard {
         Piece piece = type.createPiece(camp);
         board.put(square, piece);
     }
+
+    public void cancelMove(Square origin, Square moved, Piece captured) {
+        board.put(origin, board.get(moved));
+        board.put(moved, captured);
+    }
 }

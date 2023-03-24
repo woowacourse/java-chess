@@ -1,6 +1,7 @@
 package controller.game;
 
 
+import static controller.game.Command.CANCEL;
 import static controller.game.Command.COMMAND_INDEX;
 import static controller.game.Command.CURRENT_SQUARE_INDEX;
 import static controller.game.Command.EMPTY;
@@ -31,7 +32,10 @@ public class GameController {
         actions.put(MOVE, this::move);
         actions.put(END, this::end);
         actions.put(STATUS, this::status);
+        actions.put(CANCEL, this::cancelMove);
     }
+
+
 
     public void gameStart(long roomId) {
         GameInfoDto gameInfo = chessService.getGameInfo(roomId);
@@ -87,5 +91,11 @@ public class GameController {
 
     private void end(long ignored, List<String> inputs) {
         Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
+    }
+
+    private void cancelMove(long gameId, List<String> inputs) {
+        Command.validateCommandLength(inputs.size(), STANDARD_COMMAND_LENGTH);
+        chessService.cancelMove(gameId);
+        OutputView.printChessBoard(chessService.getChessBoard());
     }
 }

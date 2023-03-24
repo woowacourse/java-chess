@@ -11,6 +11,7 @@ import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.type.Type;
 import dto.BoardDto;
 import dto.GameInfoDto;
 import dto.MoveHistoryDto;
@@ -50,6 +51,25 @@ public class ChessService {
         saveGameInfo(roomId, generateGameInfoDto());
         MoveHistoryDto moveHistoryDto = MoveHistoryDto.of(currentSquare, targetSquare, pieceOnTarget);
         gameDao.saveMoveHistory(roomId, moveHistoryDto);
+    }
+
+    public void cancelMove(long roomId) {
+        List<MoveHistoryDto> lastTwoMoveHistories = gameDao.findLastTwoMoveHistories(roomId);
+        for (MoveHistoryDto moveHistoryDto : lastTwoMoveHistories) {
+            String parsedOrigin = moveHistoryDto.getSource();
+            String parsedMoved = moveHistoryDto.getTarget();
+            Piece piece = Type.find(moveHistoryDto.getPiece()).createPiece(currentCamp);
+            Square originSquare = Square.of(
+                    File.findFile(parsedOrigin.charAt(0)),
+                    Rank.findRank(parsedOrigin.charAt(1)));
+            Square movedSquare = Square.of(
+                    File.findFile(parsedMoved.charAt(0)),
+                    Rank.findRank(parsedMoved.charAt(1)));
+            chessBoard.cancelMove(originSquare, movedSquare, piece);
+            currentCamp = currentCamp.fetchOppositeCamp();
+        }
+        gameDao.deleteLatestTwoHistory(roomId);
+        saveGameInfo(roomId, generateGameInfoDto());
     }
 
     public void end(long roomId) {
