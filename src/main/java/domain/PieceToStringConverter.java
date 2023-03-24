@@ -5,9 +5,9 @@ import java.util.Map;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.empty.Empty;
-import domain.piece.jumper.Knight;
-import domain.piece.pawn.Pawn;
+import domain.piece.nonslider.Empty;
+import domain.piece.nonslider.Knight;
+import domain.piece.nonslider.Pawn;
 import domain.piece.slider.Bishop;
 import domain.piece.slider.King;
 import domain.piece.slider.Queen;
@@ -16,12 +16,15 @@ import domain.piece.slider.Rook;
 public class PieceToStringConverter {
     private static final Map<Piece, String> piecesAndStrings = new HashMap<>();
 
-    public static String convert(Piece piece) {
+    private PieceToStringConverter() {
         init();
+    }
+
+    public static String convert(Piece piece) {
         return piecesAndStrings.get(piece);
     }
 
-    private static void init() {
+    public static void init() {
         piecesAndStrings.put(new Empty(), ".");
         piecesAndStrings.put(new King(Camp.WHITE), "k");
         piecesAndStrings.put(new King(Camp.BLACK), "K");
