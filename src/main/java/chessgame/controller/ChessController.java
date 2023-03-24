@@ -1,5 +1,7 @@
 package chessgame.controller;
 
+import java.util.Optional;
+
 import chessgame.domain.Game;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -36,19 +38,19 @@ public class ChessController {
     }
 
     private Command readCommand() {
-        Command command;
+        Optional<Command> command;
         do {
             command = generateCommand();
-        } while (command == null);
-        return command;
+        } while (command.isEmpty());
+        return command.get();
     }
 
-    private Command generateCommand() {
+    private Optional<Command> generateCommand() {
         try {
-            return Command.of(inputView.readCommand());
+            return Optional.of(Command.of(inputView.readCommand()));
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
-            return null;
+            return Optional.empty();
         }
     }
 
