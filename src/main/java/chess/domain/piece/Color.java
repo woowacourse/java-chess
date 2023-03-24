@@ -3,12 +3,14 @@ package chess.domain.piece;
 import java.util.function.Function;
 
 public enum Color {
-    WHITE(String::toLowerCase),
-    BLACK(String::toUpperCase);
+    WHITE("백", String::toLowerCase),
+    BLACK("흑", String::toUpperCase);
 
+    private final String name;
     private final Function<String, String> formatConverter;
 
-    Color(Function<String, String> formatConverter) {
+    Color(String name, Function<String, String> formatConverter) {
+        this.name = name;
         this.formatConverter = formatConverter;
     }
 
@@ -29,5 +31,9 @@ public enum Color {
             return Color.BLACK;
         }
         return Color.WHITE;
+    }
+
+    public String getName() {
+        return name;
     }
 }

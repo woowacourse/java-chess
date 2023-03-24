@@ -1,8 +1,10 @@
 package chess.domain.chessGame;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -32,7 +34,11 @@ public class ChessGame {
     }
 
     public Map<Position, String> getPrintingBoard(){
-        return board.getPrintingBoard();
+        return chessGameState.getPrintingBoard(board);
+    }
+
+    public Map<Color, Double> getScores(){
+        return chessGameState.getScores(board);
     }
 
 }

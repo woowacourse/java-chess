@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.piece.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -35,6 +36,13 @@ public class OutputView {
         for (File file : File.values()) {
             String name = pieceNames.get(Position.of(file, rank));
             System.out.print(name);
+        }
+    }
+
+    public static void printScores(Map<Color, Double> scores) {
+        System.out.println("각 팀의 점수");
+        for(Color color : scores.keySet()){
+            System.out.println(color.getName() + " : " + scores.get(color));
         }
     }
 }

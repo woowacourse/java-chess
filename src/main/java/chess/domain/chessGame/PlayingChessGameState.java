@@ -4,6 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayingChessGameState implements ChessGameState {
@@ -54,5 +57,13 @@ public class PlayingChessGameState implements ChessGameState {
     @Override
     public Map<Position, String> getPrintingBoard(Board board) {
         return board.getPrintingBoard();
+    }
+
+    @Override
+    public Map<Color, Double> getScores(Board board) {
+        Map<Color, Double> scores = new EnumMap<>(Color.class);
+        scores.put(Color.WHITE, board.calculateScoreByColor(Color.WHITE));
+        scores.put(Color.BLACK, board.calculateScoreByColor(Color.BLACK));
+        return scores;
     }
 }

@@ -1,8 +1,10 @@
 package chess.domain.chessGame;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class ReadyChessGameState implements ChessGameState {
@@ -28,6 +30,11 @@ public class ReadyChessGameState implements ChessGameState {
 
     @Override
     public Map<Position, String> getPrintingBoard(Board board) {
+        throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+    }
+
+    @Override
+    public Map<Color, Double> getScores(Board board) {
         throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
     }
 }

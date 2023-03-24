@@ -4,6 +4,7 @@ import chess.domain.chessGame.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.CommandType;
 import chess.domain.command.MoveCommand;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
@@ -18,6 +19,7 @@ public class ChessGameController {
         commandMapper.put(CommandType.START, this::start);
         commandMapper.put(CommandType.MOVE, this::move);
         commandMapper.put(CommandType.END, this::end);
+        commandMapper.put(CommandType.STATUS, this::printScores);
     }
 
     public void play() {
@@ -66,14 +68,12 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getPrintingBoard());
     }
 
-/*
-    private void printScore(ChessGame chessGame){
-        int whiteScore = chessGame.
-
-        OutputView.printScore(whiteScore, blackScore);
+    private void printScores(ChessGame chessGame, Command command){
+        Map<Color, Double> scores = chessGame.getScores();
+        OutputView.printScores(scores);
     }
 
- */
+
 }
 
 interface CommandAction {
