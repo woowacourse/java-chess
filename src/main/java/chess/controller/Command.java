@@ -26,10 +26,6 @@ enum Command {
         return getInitialCommand(START, inputCommand);
     }
 
-    public static Command createPlayingCommand(final String inputCommand) {
-        return getCommand(MOVE, inputCommand);
-    }
-
     private static Command getInitialCommand(final Command possibleCommand, final String inputCommand) {
         return Arrays.stream(values())
                 .filter(command -> command == possibleCommand || command == END)
@@ -38,6 +34,10 @@ enum Command {
                 .orElseThrow(() -> new IllegalArgumentException(
                         possibleCommand.value + " 또는 " + END.value + " 를 입력해주세요.")
                 );
+    }
+
+    public static Command createPlayingCommand(final String inputCommand) {
+        return getCommand(MOVE, inputCommand);
     }
 
     private static Command getCommand(final Command possibleCommand, final String inputCommand) {
