@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +12,8 @@ public class Position {
     private static final Map<Integer, Position> cache = new HashMap<>();
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
-    public static final int TWO_SQUARE = 2;
     public static final int ONE_SQUARE = 1;
+    public static final int TWO_SQUARE = 2;
 
     private final File file;
     private final Rank rank;
@@ -40,10 +38,7 @@ public class Position {
     }
 
     public boolean isNear(Position other) {
-        if (getMaxDistance(other) <= ONE_SQUARE) {
-            return true;
-        }
-        return false;
+        return getMaxDistance(other) <= ONE_SQUARE;
     }
 
     public boolean isStraightEqual(Position other) {
@@ -88,8 +83,12 @@ public class Position {
         return route;
     }
 
-    public Position move(Direction fileDirection, Direction rankDirection) {
-        return Position.of(fileDirection.move(this.file), rankDirection.move(this.rank, 1));
+    public Position moveRankDown() {
+        return Position.of(file, rank.move(-1));
+    }
+
+    public Position moveRankUp() {
+        return Position.of(file, rank.move(1));
     }
 
     public List<Integer> getCoordinate() {

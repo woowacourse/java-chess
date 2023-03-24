@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
-
 import java.util.Arrays;
 
 public enum Rank {
@@ -52,11 +50,10 @@ public enum Rank {
     }
 
     public Rank moveOnceToOther(Rank other) {
-        Direction direction = getDirection(other);
-        if (direction.equals(Direction.PLUS)) {
+        if (other.index > this.index) {
             return next();
         }
-        if (direction.equals(Direction.MINUS)) {
+        if (other.index < this.index) {
             return prev();
         }
         return this;
@@ -64,16 +61,6 @@ public enum Rank {
 
     public int getRankIndex() {
         return MAX_RANK - index;
-    }
-
-    private Direction getDirection(Rank other) {
-        if (other.index > this.index) {
-            return Direction.PLUS;
-        }
-        if (other.index < this.index) {
-            return Direction.MINUS;
-        }
-        return Direction.ZERO;
     }
 
     private Rank prev() {

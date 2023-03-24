@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
-
 import java.util.Arrays;
 
 public enum File {
@@ -40,11 +38,10 @@ public enum File {
     }
 
     public File moveOnceToOther(File other) {
-        Direction direction = getDirection(other);
-        if (direction.equals(Direction.PLUS)) {
+        if (other.index > this.index) {
             return next();
         }
-        if (direction.equals(Direction.MINUS)) {
+        if (other.index < this.index) {
             return prev();
         }
         return this;
@@ -56,16 +53,6 @@ public enum File {
 
     public int getFileIndex() {
         return index;
-    }
-
-    private Direction getDirection(File other) {
-        if (other.index > this.index) {
-            return Direction.PLUS;
-        }
-        if (other.index < this.index) {
-            return Direction.MINUS;
-        }
-        return Direction.ZERO;
     }
 
     private File next() {
