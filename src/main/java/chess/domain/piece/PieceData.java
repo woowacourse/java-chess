@@ -35,6 +35,10 @@ public class PieceData {
         return color;
     }
 
+    protected PieceType getPieceType() {
+        return pieceType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
