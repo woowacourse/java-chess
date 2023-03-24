@@ -76,7 +76,7 @@ public class ChessController {
     }
 
     private void loadGame() {
-        chessGame.load(chessGameDao.findBoard(), chessGameDao.findGameState());
+        chessGame.load(chessGameDao::findBoard, chessGameDao::findGameState);
         OutputView.printLoadMessage();
         OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
