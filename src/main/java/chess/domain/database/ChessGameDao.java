@@ -13,6 +13,7 @@ import java.util.Map;
 import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Game;
+import chess.domain.Turn;
 import chess.domain.User;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -23,14 +24,19 @@ import chess.domain.square.Square;
 public final class ChessGameDao {
 
     private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
+    private final String database;
+
+    public ChessGameDao(final String database) {
+        this.database = database;
+    }
+
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + database + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
@@ -85,7 +91,7 @@ public final class ChessGameDao {
                     throw new IllegalStateException("기물을 불러오지 못했습니다.");
                 }
             }
-            return new ChessGame(new Board(board), turn);
+            return new ChessGame(new Board(board), new Turn(turn));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

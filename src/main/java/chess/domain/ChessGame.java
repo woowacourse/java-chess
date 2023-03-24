@@ -18,9 +18,9 @@ public class ChessGame {
         this.turn = new Turn();
     }
 
-    public ChessGame(Board board, int turn) {
+    public ChessGame(Board board, Turn turn) {
         this.board = board;
-        this.turn = new Turn(turn);
+        this.turn = turn;
     }
 
     public void move(final Square current, final Square destination) {

@@ -18,7 +18,7 @@ import chess.view.dto.SquareDto;
 
 public class ChessController {
 
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = new ChessGameDao("chess");
 
     public void run() {
         User user = null;
