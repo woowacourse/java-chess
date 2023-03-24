@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.fixture.FixturePosition;
 import chess.piece.Bishop;
+import chess.piece.BlackPawn;
 import chess.piece.EmptyPiece;
 import chess.piece.King;
 import chess.piece.Knight;
@@ -566,5 +568,43 @@ class ChessBoardTest {
 
         // when & then
         assertThat(chessBoard.isGameOver()).isFalse();
+    }
+
+    @Test
+    void calculateScore메서드는_검은색_팀의_점수를_첫번째_요소로_가진_리스트이다() {
+        // given
+        piecePosition.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
+        piecePosition.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
+        piecePosition.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
+        piecePosition.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
+        piecePosition.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
+        piecePosition.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
+        piecePosition.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
+
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+        // when
+        List<Integer> scores = chessBoard.calculateScore();
+
+        // then
+        assertThat(scores.get(0)).isEqualTo(18);
+    }
+
+    @Test
+    void calculateScore메서드는_흰색_팀의_점수를_두번째_요소로_가진_리스트이다() {
+        // given
+        piecePosition.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
+        piecePosition.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
+        piecePosition.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
+        piecePosition.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
+        piecePosition.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
+        piecePosition.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
+        piecePosition.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
+
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+        // when
+        List<Integer> scores = chessBoard.calculateScore();
+
+        // then
+        assertThat(scores.get(1)).isEqualTo(17);
     }
 }

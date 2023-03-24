@@ -1,13 +1,16 @@
 package chess.board;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import chess.game.PieceScore;
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
+import chess.piece.Team;
 
 public class ChessBoard {
 
@@ -161,6 +164,21 @@ public class ChessBoard {
                 .filter(Piece::isKing)
                 .count();
         return numberOfKing != 2;
+    }
+
+    public List<Integer> calculateScore() {
+        final List<Integer> scores = new ArrayList<>();
+        int score = 0;
+        for (final Team team : Team.values()) {
+            for (final Piece piece : piecePosition.values()) {
+                if (team == piece.getTeam()) {
+                    score += PieceScore.from(piece.getType());
+                }
+            }
+            scores.add(score);
+            score = 0;
+        }
+        return scores;
     }
 
     public Map<Position, Piece> getPiecePosition() {
