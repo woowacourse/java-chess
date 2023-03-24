@@ -73,4 +73,15 @@ public final class Squares {
                 .mapToDouble(square -> square.getScore(color))
                 .sum();
     }
+
+    public double getScoreFromFile(Color color, int file) {
+        return squares.get(file).getScore(color);
+    }
+
+    public boolean hasPawnAtFile(Color color, int file) {
+        Square square = squares.get(file);
+
+        return square.equalsColor(color) &&
+                square.pieceKind() == Kind.PAWN;
+    }
 }

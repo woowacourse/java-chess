@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Board {
 
@@ -69,15 +70,34 @@ public final class Board {
         return new ArrayList<>(board);
     }
 
-    public double calculateWhiteScore() {
-        return board.stream()
-                .mapToDouble(squares -> squares.calculateScore(Color.WHITE))
+    private double calculateFileScore(final Color color, final int file) {
+        double sum = board.stream()
+                .mapToDouble(squares -> squares.getScoreFromFile(color, file))
                 .sum();
+
+        return sum - calculatePawnScore(color, file);
     }
 
-    public double calculateBlackScore() {
-        return board.stream()
-                .mapToDouble(squares -> squares.calculateScore(Color.BLACK))
-                .sum();
+    private double calculatePawnScore(Color color, int file) {
+        final int count = countPawn(color, file);
+        if (count == 1) {
+            return 0;
+        }
+        return count * 0.5;
+    }
+
+    public double calculateTotalScore(final Color color) {
+        double sum = 0;
+        for (int i = 0; i < board.size(); i++) {
+            sum = sum + calculateFileScore(color, i);
+        }
+
+        return sum;
+    }
+
+    private int countPawn(final Color color, final int file) {
+        return (int) board.stream()
+                .filter(squares -> squares.hasPawnAtFile(color, file))
+                .count();
     }
 }
