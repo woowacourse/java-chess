@@ -42,4 +42,9 @@ public class Bishop extends Piece {
         return isDifferentCamp(target.camp);
     }
 
+    @Override
+    public double sumPointsOf(final List<Position> existingPositions) {
+        return (type.getPoint()) * (existingPositions.size());
+    }
+
 }

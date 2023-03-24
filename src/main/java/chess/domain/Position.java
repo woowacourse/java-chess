@@ -64,6 +64,10 @@ public class Position {
         return this.rank == rank;
     }
 
+    public boolean isInSameFile(Position other) {
+        return this.file == other.file;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

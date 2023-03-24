@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.CheckablePaths;
 import chess.domain.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,20 @@ public class PawnTest {
     void 공격_가능_확인_상대말() {
         assertThat(WHITE_ROOK.canAttack(WHITE_START_POSITION, WHITE_START_POSITION.findNextPosition(NORTH_EAST),
                 BLACK_BISHOP)).isTrue();
+    }
+
+    @DisplayName("위치 정보를 전달받아 점수를 계산한다.")
+    @Test
+    void 점수_계산() {
+        assertThat(WHITE_PAWN.sumPointsOf(List.of(Position.of(2, 1), Position.of(3, 2), Position.of(4, 3))))
+                .isEqualTo(3);
+    }
+
+    @DisplayName("세로줄에 폰이 연속될 경우 점수를 다르게 계산한다.")
+    @Test
+    void 점수_계산_연속폰() {
+        assertThat(WHITE_PAWN.sumPointsOf(List.of(Position.of(2, 1), Position.of(1, 2), Position.of(1, 3))))
+                .isEqualTo(2);
     }
 
     @DisplayName("폰은 대각선이 아닌 이동 방향으로만 빈 위치로 이동 가능하다.")

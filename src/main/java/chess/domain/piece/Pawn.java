@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    public static final double CONTINUOUS_PAWNS_POINT = 0.5;
     private static final int WHITE_START_RANK = 2;
     private static final int BLACK_START_RANK = 7;
-
     private final List<Direction> directions;
 
     public Pawn(Camp camp) {
@@ -40,6 +40,20 @@ public class Pawn extends Piece {
         return new CheckablePaths(paths);
     }
 
+    private boolean isStartRank(final Position current) {
+        if (camp == Camp.WHITE) {
+            return current.isInExpectedRank(WHITE_START_RANK);
+        }
+        return current.isInExpectedRank(BLACK_START_RANK);
+    }
+
+    private Direction getForwardDirectionByColor() {
+        if (camp == Camp.WHITE) {
+            return Direction.NORTH;
+        }
+        return Direction.SOUTH;
+    }
+
     @Override
     public boolean canMoveToEmpty(final Position source, final Position dest) {
         // TODO 0:6 같은 값도 허용하는 문제 해결 (이동 패턴까지 확인)
@@ -64,18 +78,30 @@ public class Pawn extends Piece {
         return direction == Direction.SOUTH_EAST || direction == Direction.SOUTH_WEST;
     }
 
-    private boolean isStartRank(final Position current) {
-        if (camp == Camp.WHITE) {
-            return current.isInExpectedRank(WHITE_START_RANK);
+    @Override
+    public double sumPointsOf(final List<Position> existingPositions) {
+        if (existingPositions.isEmpty()) {
+            return 0;
         }
-        return current.isInExpectedRank(BLACK_START_RANK);
+        return calculatePoints(existingPositions.size(), countSameFilePositions(existingPositions));
     }
 
-    private Direction getForwardDirectionByColor() {
-        if (camp == Camp.WHITE) {
-            return Direction.NORTH;
-        }
-        return Direction.SOUTH;
+    private double calculatePoints(int totalPositionCounts, int sameFilePositionCounts) {
+        double defaultPoints = (type.getPoint()) * (totalPositionCounts - sameFilePositionCounts);
+        double decreasedPoints = CONTINUOUS_PAWNS_POINT * (sameFilePositionCounts);
+        return defaultPoints + decreasedPoints;
+    }
+
+    private int countSameFilePositions(final List<Position> existingPositions) {
+        return (int) existingPositions.stream()
+                .filter(position -> hasSameFilePosition(position, existingPositions))
+                .count();
+    }
+
+    private boolean hasSameFilePosition(Position self, List<Position> existingPositions) {
+        return existingPositions.stream()
+                .filter(position -> !position.equals(self))
+                .anyMatch(position -> position.isInSameFile(self));
     }
 
 }

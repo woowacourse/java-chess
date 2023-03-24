@@ -41,4 +41,9 @@ public class Rook extends Piece {
         return isDifferentCamp(target.camp);
     }
 
+    @Override
+    public double sumPointsOf(final List<Position> existingPositions) {
+        return (type.getPoint()) * (existingPositions.size());
+    }
+    
 }

@@ -2,7 +2,9 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ChessBoard {
@@ -87,6 +89,24 @@ public class ChessBoard {
 
     private void switchCampTurn() {
         currentTurnCamp = currentTurnCamp.transfer();
+    }
+
+    public double calculateScoreByCamp(Camp camp) {
+        return positionsByPiece().entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isSameCamp(camp))
+                .map(entry -> calculatePieceScore(entry.getKey(), entry.getValue()))
+                .reduce(0.0, Double::sum);
+    }
+
+    private double calculatePieceScore(Piece piece, List<Position> existingPositions) {
+        return piece.sumPointsOf(existingPositions);
+    }
+
+    private Map<Piece, List<Position>> positionsByPiece() {
+        return piecesByPosition.keySet()
+                .stream()
+                .collect(Collectors.groupingBy(piecesByPosition::get));
     }
 
     public Map<Position, Piece> piecesByPosition() {

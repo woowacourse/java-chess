@@ -101,4 +101,13 @@ class ChessBoardTest {
                 .isEqualTo(new Pawn(Camp.WHITE));
     }
 
+    @DisplayName("진영 별 남아있는 말에 따른 점수를 합산한다.")
+    @Test
+    void 진영_별_점수_합산() {
+        for (Camp camp : Camp.values()) {
+            assertThat(chessBoard.calculateScoreByCamp(camp))
+                    .isEqualTo(38);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Camp;
 import chess.domain.CheckablePaths;
 import chess.domain.Position;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -21,8 +22,14 @@ public abstract class Piece {
 
     public abstract boolean canAttack(Position source, Position dest, Piece target);
 
+    public abstract double sumPointsOf(List<Position> existingPositions);
+
     public boolean isDifferentCamp(Camp other) {
         return this.camp != other;
+    }
+
+    public boolean isSameCamp(final Camp camp) {
+        return this.camp == camp;
     }
 
     public Camp getColor() {
