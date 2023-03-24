@@ -4,9 +4,12 @@ import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
 
+import java.util.List;
 import java.util.Map;
 
 public final class ChessGame {
+    private static final int ALL_KING_ALIVE_COUNT = 2;
+
     private final ChessBoard chessBoard;
     private CampType currentCamp;
 
@@ -17,6 +20,11 @@ public final class ChessGame {
     public void setUp(final Position source, final Position target, final CampType currentCamp) {
         this.currentCamp = currentCamp;
         play(source, target);
+    }
+
+    public boolean isKingAlive() {
+        List<Piece> aliveKings = chessBoard.getAliveKings();
+        return aliveKings.size() == ALL_KING_ALIVE_COUNT;
     }
 
     private void play(final Position source, final Position target) {

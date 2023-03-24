@@ -38,7 +38,7 @@ public final class ChessBoardFactory {
         return chessBoardFactory;
     }
 
-    public Map<Position, Piece> createBoard() {
+    Map<Position, Piece> createBoard() {
         final Map<Position, Piece> board = new HashMap<>();
         createWhiteArea(board);
         createBlackArea(board);
