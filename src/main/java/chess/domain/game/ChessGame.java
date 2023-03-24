@@ -30,9 +30,13 @@ public class ChessGame {
         } catch (IllegalPieceMoveException e) {
             throw new ChessGameException(e.getMessage(), e);
         }
+        if (board.isKingDead()) {
+            end();
+        }
     }
 
     public List<List<Piece>> getPieces() {
+        gameState = gameState.run();
         return board.getPieces();
     }
 
