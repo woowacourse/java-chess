@@ -455,4 +455,34 @@ public class BoardTest {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    void 킹이_잡혔는지_판단할_수_있다() {
+        /*
+
+        ........        ........
+        ........        ........
+        ........        ........
+        ........        ........
+        ........  -->   ........
+        K.......        q.......
+        ........        ........
+        q..k....        ...k....
+
+         */
+
+        boardMap.put(Position.of(A, ONE), new Queen(WHITE));
+        boardMap.put(Position.of(D, ONE), new King(WHITE));
+        boardMap.put(Position.of(A, THREE), new King(BLACK));
+        final Board board = new Board(boardMap);
+
+        board.move(Position.of(A, ONE), Position.of(A, THREE));
+
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(board.isKingCaptured(WHITE)).isFalse();
+        softAssertions.assertThat(board.isKingCaptured(BLACK)).isTrue();
+        softAssertions.assertThat(board.isKingCaptured()).isTrue();
+
+        softAssertions.assertAll();
+    }
 }

@@ -21,6 +21,7 @@ public class ChessGame {
         checkTurn(source);
         board.move(source, target);
         changeTurn();
+        checkKingCaptured();
     }
 
     private void checkPlayable() {
@@ -38,6 +39,12 @@ public class ChessGame {
 
     private void changeTurn() {
         turn = turn.change();
+    }
+
+    private void checkKingCaptured() {
+        if (board.isKingCaptured()) {
+            end();
+        }
     }
 
     public void start() {

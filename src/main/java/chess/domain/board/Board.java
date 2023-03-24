@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -75,6 +76,16 @@ public class Board {
                 .filter(position -> board.get(position).isPawn())
                 .filter(position -> board.get(position).side() == side)
                 .collect(Collectors.groupingBy(Position::fileIndex, Collectors.counting()));
+    }
+
+    public boolean isKingCaptured() {
+        return isKingCaptured(Side.WHITE) || isKingCaptured(Side.BLACK);
+    }
+
+    public boolean isKingCaptured(final Side side) {
+        return board.values().stream()
+                .filter(piece -> piece.side() == side)
+                .noneMatch(piece -> piece.type() == Type.KING);
     }
 
     public boolean isAllyPosition(final Position position, final Position otherPosition) {
