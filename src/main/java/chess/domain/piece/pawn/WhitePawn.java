@@ -11,14 +11,15 @@ import java.util.List;
 
 public final class WhitePawn extends Pawn {
 
-    private WhitePawn(final Team team, final MovingStrategies movingStrategies) {
-        super(team, movingStrategies);
+    private WhitePawn(final Team team, final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
+        super(team, movingStrategies, attackStrategies);
     }
 
     public static WhitePawn create() {
-        final List<MovingStrategy> movingStrategies = List.of(
-                MoveUp.instance(), MoveLeftUp.instance(), MoveRightUp.instance());
-        return new WhitePawn(Team.WHITE, new MovingStrategies(movingStrategies));
+        final List<MovingStrategy> movingStrategies = List.of(MoveUp.instance(), MoveLeftUp.instance(), MoveRightUp.instance());
+        final List<MovingStrategy> attackStrategies = List.of(MoveLeftUp.instance(), MoveRightUp.instance());
+
+        return new WhitePawn(Team.WHITE, new MovingStrategies(movingStrategies), new AttackStrategies(attackStrategies));
     }
 
     @Override

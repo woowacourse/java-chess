@@ -27,9 +27,4 @@ public final class MoveRightUp implements MovingStrategy {
         final int rankOrder = currentPosition.getRankOrder() + 1;
         return Position.of(File.of(fileOrder), Rank.of(rankOrder));
     }
-
-    @Override
-    public boolean isAttackStrategy() {
-        return true;
-    }
 }

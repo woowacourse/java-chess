@@ -18,15 +18,15 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public abstract List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam);
-
     public final List<Position> findPath(final Position source, final Position target, final Team targetTeam) {
         final MovingStrategy movingStrategy = movingStrategies.findStrategy(source, target);
-        if (targetTeam.isSameColor(this.team)) {
+        if (targetTeam.isSameColor(team)) {
             throw new IllegalStateException("아군의 기물이 존재하는 곳으로는 이동할 수 없습니다.");
         }
         return calculatePath(movingStrategy, source, target, targetTeam);
     }
+
+    public abstract List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam);
 
     public abstract boolean isInitialPawn();
 
