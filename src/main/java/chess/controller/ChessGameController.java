@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.chessGame.ChessGame;
-import chess.domain.chessGame.ReadyChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.CommandType;
 import chess.domain.command.MoveCommand;
@@ -21,61 +20,62 @@ public class ChessGameController {
         commandMapper.put(CommandType.END, this::end);
     }
 
-    public void run() {
-        ChessGame chessGame = new ReadyChessGame();
-        playChessGame(chessGame);
-    }
-
-    private void playChessGame(ChessGame chessGame) {
+    public void play() {
+        ChessGame chessGame = new ChessGame();
         OutputView.printStartMessage();
         do {
-            chessGame = executeCorrectCommand(chessGame);
+            executeCorrectCommand(chessGame);
         } while (chessGame.isPlaying());
     }
 
-    private ChessGame executeCorrectCommand(ChessGame chessGame) {
-        ChessGame newChessGame = null;
+    private void executeCorrectCommand(ChessGame chessGame) {
         try {
             List<String> inputCommand = InputView.inputCommand();
-            newChessGame = executeCommand(chessGame, inputCommand);
+            executeCommand(chessGame, inputCommand);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return executeCorrectCommand(chessGame);
+            executeCorrectCommand(chessGame);
         }
-        return newChessGame;
     }
 
-    private ChessGame executeCommand(ChessGame chessGame, List<String> commands) {
+    private void executeCommand(ChessGame chessGame, List<String> commands) {
         CommandType commandType = CommandType.getCommandType(commands);
         Command command = commandType.getCommand(commands);
         CommandAction commandAction = commandMapper.get(commandType);
-        return commandAction.execute(chessGame, command);
+        commandAction.execute(chessGame, command);
     }
 
-    public ChessGame start(ChessGame chessGame, Command command) {
-        ChessGame newChessGame = chessGame.start();
-        printBoard(newChessGame);
-        return newChessGame;
+    private void start(ChessGame chessGame, Command command) {
+        chessGame.start();
+        printBoard(chessGame);
     }
 
-    public ChessGame move(ChessGame chessGame, Command command) {
+    private void move(ChessGame chessGame, Command command) {
         MoveCommand moveCommand = (MoveCommand) command;
         String currentPosition = moveCommand.getCurrentPosition();
         String nextPosition = moveCommand.getNextPosition();
-        ChessGame newChessGame = chessGame.move(currentPosition, nextPosition);
-        printBoard(newChessGame);
-        return newChessGame;
+        chessGame.move(currentPosition, nextPosition);
+        printBoard(chessGame);
     }
 
-    public ChessGame end(ChessGame chessGame, Command command) {
-        return chessGame.end();
+    private void end(ChessGame chessGame, Command command) {
+        chessGame.end();
     }
 
-    public void printBoard(ChessGame chessGame) {
+    private void printBoard(ChessGame chessGame) {
         OutputView.printBoard(chessGame.getPrintingBoard());
     }
+
+/*
+    private void printScore(ChessGame chessGame){
+        int whiteScore = chessGame.
+
+        OutputView.printScore(whiteScore, blackScore);
+    }
+
+ */
 }
 
 interface CommandAction {
-    ChessGame execute(ChessGame chessGame, Command command);
+    void execute(ChessGame chessGame, Command command);
 }

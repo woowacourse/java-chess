@@ -1,17 +1,38 @@
 package chess.domain.chessGame;
 
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public interface ChessGame {
-    ChessGame start();
+public class ChessGame {
+    private ChessGameState chessGameState = new ReadyChessGameState();
+    private final Board board;
 
-    ChessGame move(String currentPosition, String nextPosition);
+    public ChessGame(){
+        board = new Board();
+    }
 
-    ChessGame end();
+    public void start() {
+        chessGameState = chessGameState.start();
+    }
 
-    boolean isPlaying();
+    public void move(String currentPosition, String nextPosition){
+        Piece movingPiece = board.findPieceByPosition(Position.from(currentPosition));
+        chessGameState.validateMove(currentPosition, nextPosition, movingPiece);
+        board.move(Position.from(currentPosition), Position.from(nextPosition));
+    }
 
-    Map<Position, String> getPrintingBoard();
+    public void end(){
+        chessGameState = chessGameState.end();
+    }
+
+    public boolean isPlaying(){
+        return chessGameState.isPlaying();
+    }
+
+    public Map<Position, String> getPrintingBoard(){
+        return board.getPrintingBoard();
+    }
+
 }
-

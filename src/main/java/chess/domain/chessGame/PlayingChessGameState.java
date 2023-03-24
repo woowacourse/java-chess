@@ -6,28 +6,21 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class PlayingChessGame implements ChessGame {
-    private final Board board;
+public class PlayingChessGameState implements ChessGameState {
     private Color turnColor = Color.WHITE;
 
-    public PlayingChessGame(Board board) {
-        this.board = board;
-    }
-
     @Override
-    public ChessGame start() {
+    public ChessGameState start() {
         throw new IllegalArgumentException("이미 플레이중인 게임입니다.");
     }
 
     @Override
-    public ChessGame move(String currentPositionSymbol, String nextPositionSymbol) {
+    public void validateMove(String currentPositionSymbol, String nextPositionSymbol, Piece movingPiece) {
         Position currentPosition = Position.from(currentPositionSymbol);
         Position nextPosition = Position.from(nextPositionSymbol);
         checkCurrentAndNextPosition(currentPosition, nextPosition);
-        checkTurn(currentPosition);
-        board.move(currentPosition, nextPosition);
+        checkTurn(movingPiece);
         turnColor = turnColor.getOppositeColor();
-        return this;
     }
 
     //TODO 올바른 포지션 체크 예외를 포지션 객체에서 하게 리팩토링 필요
@@ -42,16 +35,15 @@ public class PlayingChessGame implements ChessGame {
         }
     }
 
-    private void checkTurn(Position currentPosition) {
-        Piece movingPiece = board.findPieceByPosition(currentPosition);
+    private void checkTurn(Piece movingPiece) {
         if (movingPiece.isOpponent(turnColor)) {
             throw new IllegalArgumentException("상대방 기물의 턴입니다.");
         }
     }
 
     @Override
-    public ChessGame end() {
-        return new EndChessGame();
+    public ChessGameState end() {
+        return new EndChessGameState();
     }
 
     @Override
@@ -60,7 +52,7 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> getPrintingBoard() {
+    public Map<Position, String> getPrintingBoard(Board board) {
         return board.getPrintingBoard();
     }
 }
