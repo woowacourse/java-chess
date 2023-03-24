@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.game.File;
 import domain.game.Position;
 import domain.game.Rank;
+import domain.game.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -110,5 +111,12 @@ class QueenTest {
         Queen whiteQueen = Queen.createOfWhite();
         List<Position> path = whiteQueen.collectPath(Position.of(D, FIVE), Position.of(A, FIVE));
         assertThat(path).containsExactlyInAnyOrder(Position.of(C, FIVE), Position.of(B, FIVE));
+    }
+
+    @DisplayName("점수를 요청하면 9점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf9WhenRequestScore() {
+        Queen whiteQueen = Queen.createOfWhite();
+        assertThat(whiteQueen.getScore()).isEqualTo(new Score(9));
     }
 }

@@ -4,6 +4,7 @@ import static domain.game.Side.BLACK;
 import static domain.game.Side.WHITE;
 
 import domain.game.Position;
+import domain.game.Score;
 import domain.game.Side;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public abstract class Piece {
     public abstract boolean isEmptyPiece();
 
     public abstract PieceCategory getCategory();
+
+    public abstract Score getScore();
 
     public boolean isSameSideWith(Piece targetPiece) {
         return this.side == targetPiece.side;

@@ -2,9 +2,12 @@ package domain.piece;
 
 import domain.game.Movement;
 import domain.game.Position;
+import domain.game.Score;
 import domain.game.Side;
 
 public class Queen extends Piece {
+    private static final Score SCORE = new Score(9);
+
     private Queen(Side side) {
         super(side);
     }
@@ -37,5 +40,10 @@ public class Queen extends Piece {
             return PieceCategory.WHITE_QUEEN;
         }
         return PieceCategory.BLACK_QUEEN;
+    }
+
+    @Override
+    public Score getScore() {
+        return SCORE;
     }
 }

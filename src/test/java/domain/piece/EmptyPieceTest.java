@@ -38,4 +38,12 @@ class EmptyPieceTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - Neutral side는 상대편을 확인할 수 없습니다.");
     }
+
+    @DisplayName("점수를 요청하면 예외가 발생한다.")
+    @Test
+    void shouldThrowExceptionWhenRequestScore() {
+        assertThatThrownBy(() -> new EmptyPiece().getScore())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("서버 내부 에러 - EmptyPiece는 점수를 계산할 수 없습니다.");
+    }
 }

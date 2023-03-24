@@ -41,7 +41,8 @@ public class Bishop extends Piece {
         }
         return PieceCategory.BLACK_BISHOP;
     }
-
+    
+    @Override
     public Score getScore() {
         return SCORE;
     }

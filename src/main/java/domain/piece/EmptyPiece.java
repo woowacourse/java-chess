@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.game.Position;
+import domain.game.Score;
 import domain.game.Side;
 import java.util.List;
 
@@ -27,5 +28,10 @@ public class EmptyPiece extends Piece {
     @Override
     public PieceCategory getCategory() {
         return PieceCategory.EMPTY_PIECE;
+    }
+
+    @Override
+    public Score getScore() {
+        throw new IllegalStateException("서버 내부 에러 - EmptyPiece는 점수를 계산할 수 없습니다.");
     }
 }

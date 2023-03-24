@@ -2,11 +2,14 @@ package domain.piece;
 
 import domain.game.Movement;
 import domain.game.Position;
+import domain.game.Score;
 import domain.game.Side;
 import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
+    private static final Score SCORE = new Score(3);
+
     private King(Side side) {
         super(side);
     }
@@ -44,5 +47,10 @@ public class King extends Piece {
             return PieceCategory.WHITE_KING;
         }
         return PieceCategory.BLACK_KING;
+    }
+
+    @Override
+    public Score getScore() {
+        return SCORE;
     }
 }

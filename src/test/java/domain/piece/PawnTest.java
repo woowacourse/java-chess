@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.game.File;
 import domain.game.Position;
 import domain.game.Rank;
+import domain.game.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -124,6 +125,13 @@ public class PawnTest {
                 assertThat(path).isEmpty();
             }
         }
+
+        @DisplayName("점수를 요청하면 1점을 반환한다.")
+        @Test
+        void shouldReturnScoreOf1WhenRequestScore() {
+            Pawn whitePawn = Pawn.createOfWhite();
+            assertThat(whitePawn.getScore()).isEqualTo(new Score(1));
+        }
     }
 
     @Nested
@@ -224,6 +232,13 @@ public class PawnTest {
                 List<Position> path = pawn.collectPath(Position.of(B, SEVEN), Position.of(A, SIX));
                 assertThat(path).isEmpty();
             }
+        }
+
+        @DisplayName("점수를 요청하면 1점을 반환한다.")
+        @Test
+        void shouldReturnScoreOf1WhenRequestScore() {
+            Pawn blackPawn = Pawn.createOfBlack();
+            assertThat(blackPawn.getScore()).isEqualTo(new Score(1));
         }
     }
 }
