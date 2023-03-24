@@ -16,14 +16,14 @@ import java.util.Optional;
 
 public class Board {
 
+    public static Board generate() {
+        return new Board(initBoard());
+    }
+
     private final Map<Square, Piece> board;
 
     private Board(final Map<Square, Piece> board) {
         this.board = board;
-    }
-
-    public static Board generate() {
-        return new Board(initBoard());
     }
 
     private static Map<Square, Piece> initBoard() {

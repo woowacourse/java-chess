@@ -23,7 +23,6 @@ public class Rook extends Piece {
         return generateRoute(directionVector, source, destination);
     }
 
-
     private DirectionVector findDirectionVector(final Square source, final Square destination) {
         final int distanceX = destination.calculateDistanceX(source);
         final int distanceY = destination.calculateDistanceY(source);

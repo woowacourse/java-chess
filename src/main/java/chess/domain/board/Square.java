@@ -26,23 +26,6 @@ public class Square {
         }
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Square square = (Square) o;
-        return file == square.file && rank == square.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
-
     public int calculateDistanceX(final Square square) {
         return this.file.calculateDistance(square.file);
     }
@@ -60,5 +43,22 @@ public class Square {
             return rank == Rank.SEVEN;
         }
         return rank == Rank.TWO;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Square square = (Square) o;
+        return file == square.file && rank == square.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }

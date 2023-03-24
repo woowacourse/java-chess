@@ -15,15 +15,15 @@ public enum ChessStartCommand {
         this.input = input;
     }
 
-    @Override
-    public String toString() {
-        return input;
-    }
-
     public static ChessStartCommand from(final String input) {
         return Arrays.stream(ChessStartCommand.values())
                 .filter(chessStartCommand -> chessStartCommand.input.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(format("%s나 %s 중 입력해야 합니다.", START, END)));
+    }
+
+    @Override
+    public String toString() {
+        return input;
     }
 }
