@@ -1,4 +1,4 @@
-package chess.infra;
+package chess.infra.connection;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
