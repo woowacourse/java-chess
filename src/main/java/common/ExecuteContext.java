@@ -9,7 +9,7 @@ public class ExecuteContext {
         while (result == null) {
             try {
                 result = executeStrategy.get();
-            } catch (IllegalArgumentException exception) {
+            } catch (final RuntimeException exception) {
                 System.out.println(exception.getMessage());
             }
         }

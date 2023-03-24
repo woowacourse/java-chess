@@ -14,10 +14,8 @@ public class TransactionContext {
     private Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
+        } catch (final SQLException exception) {
+            throw new IllegalStateException(exception);
         }
     }
 
@@ -26,9 +24,9 @@ public class TransactionContext {
         try {
             connection.setAutoCommit(false);
             return transactionStrategy.execute(connection);
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             rollback(connection);
-            throw new RuntimeException(e);
+            throw new IllegalStateException(exception);
         } finally {
             commit(connection);
             close(connection);
@@ -38,24 +36,24 @@ public class TransactionContext {
     private static void rollback(final Connection connection) {
         try {
             connection.rollback();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        } catch (SQLException exception) {
+            throw new IllegalStateException(exception);
         }
     }
 
     private static void close(final Connection connection) {
         try {
             connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException exception) {
+            throw new IllegalStateException(exception);
         }
     }
 
     private static void commit(final Connection connection) {
         try {
             connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException exception) {
+            throw new IllegalStateException(exception);
         }
     }
 }

@@ -5,21 +5,32 @@ import domain.Board;
 import domain.ChessGame;
 import domain.Location;
 import domain.type.Color;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
 
-    private static final String INVALID_INPUT_ERROR_MESSAGE = "입력이 잘못 되었습니다. 다시 입력해 주세요.";
     private final ChessGame chessGame;
     private final InputView inputView;
     private final OutputView outputView;
+    private final Map<Command, CommandAction> commandMapper = new EnumMap<>(Command.class);
 
     public ChessController(final ChessGame chessGame, final InputView inputView, final OutputView outputView) {
         this.chessGame = chessGame;
         this.inputView = inputView;
         this.outputView = outputView;
+        putCommandActions();
+    }
+
+    private void putCommandActions() {
+        commandMapper.put(Command.START, ignore -> start());
+        commandMapper.put(Command.END, ignore -> end());
+        commandMapper.put(Command.STATUS, ignore -> status());
+        commandMapper.put(Command.ENTER, ignore -> enter());
+        commandMapper.put(Command.MOVE, this::move);
     }
 
     public void play() {
@@ -35,23 +46,36 @@ public class ChessController {
 
     private boolean command(final List<String> commands) {
         final Command command = Command.find(commands.get(0));
-        if (command.equals(Command.END)) {
-            chessGame.save();
-            return false;
-        }
-        if (command.equals(Command.START)) {
-            chessGame.initialize(inputView.getBoardId());
-            return true;
-        }
-        if (command.equals(Command.STATUS)) {
-            calculateScore();
-            return true;
-        }
-        if (command.equals(Command.ENTER)) {
-            chessGame.findPreviousGame(inputView.getBoardId());
-            return true;
-        }
-        return move(commands);
+        final CommandAction commandAction = commandMapper.get(command);
+        return commandAction.execute(commands);
+    }
+
+    private boolean start() {
+        chessGame.initialize(inputView.getBoardId());
+        return true;
+    }
+
+    private boolean end() {
+        chessGame.save();
+        return false;
+    }
+
+    private boolean enter() {
+        chessGame.findPreviousGame(inputView.getBoardId());
+        return true;
+    }
+
+    private boolean status() {
+        calculateScore();
+        return true;
+    }
+
+    private void calculateScore() {
+        final double whiteScore = chessGame.calculateWhiteScore();
+        final double blackScore = chessGame.calculateBlackScore();
+        final Color color = chessGame.judgeResult();
+        outputView.printScore(whiteScore, blackScore);
+        outputView.printResult(color);
     }
 
     private boolean move(final List<String> commands) {
@@ -68,20 +92,8 @@ public class ChessController {
     private Location mapToLocation(final String location) {
         final String columnInput = location.substring(0, 1);
         final String rowInput = location.substring(1);
-        try {
-            final int col = ColumnConverter.findColumn(columnInput);
-            final int row = Integer.parseInt(rowInput);
-            return Location.of(col, row);
-        } catch (Exception exception) {
-            throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
-        }
-    }
-
-    private void calculateScore() {
-        final double whiteScore = chessGame.calculateWhiteScore();
-        final double blackScore = chessGame.calculateBlackScore();
-        final Color color = chessGame.judgeResult();
-        outputView.printScore(whiteScore, blackScore);
-        outputView.printResult(color);
+        final int col = ColumnConverter.findColumn(columnInput);
+        final int row = Integer.parseInt(rowInput);
+        return Location.of(col, row);
     }
 }

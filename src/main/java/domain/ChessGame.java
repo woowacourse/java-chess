@@ -39,7 +39,8 @@ public class ChessGame {
 
     private Color convert(final Piece piece) {
         if (piece.isSameType(PieceType.KING)) {
-            return piece.getColor().reverse();
+            final Color pieceColor = piece.getColor();
+            return pieceColor.reverse();
         }
         color = color.reverse();
         return Color.NONE;
