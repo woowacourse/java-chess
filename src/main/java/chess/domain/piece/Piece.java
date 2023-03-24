@@ -42,6 +42,10 @@ public class Piece {
         return movable.canAttack(source, target);
     }
 
+    public boolean isKing() {
+        return pieceType == PieceType.KING;
+    }
+
     private boolean validatePawnMove(final Position source, final Position target, final boolean isTargetExist) {
         if (isPawnFirstMove(source)) {
             return !isTargetExist;
