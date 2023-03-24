@@ -2,17 +2,17 @@ package chess.domain.pieces;
 
 import chess.domain.board.Position;
 import chess.domain.direction.Route;
-import chess.domain.direction.Vector;
+import chess.domain.direction.Direction;
 import java.util.List;
 
 public class Rook extends Piece {
 
     private static final int MOVE_MAX_RANGE = 8;
-    private static final List<Vector> ROOK_MOVE_VECTOR = List.of(
-        Vector.NORTH,
-        Vector.EAST,
-        Vector.WEST,
-        Vector.SOUTH
+    private static final List<Direction> ROOK_MOVE_DIRECTION = List.of(
+        Direction.NORTH,
+        Direction.EAST,
+        Direction.WEST,
+        Direction.SOUTH
     );
 
     public Rook(final Team team) {
@@ -27,12 +27,12 @@ public class Rook extends Piece {
 
     @Override
     public Route generateRoute(final Position source, final Position destination) {
-        Vector direction = findDirection(source, destination);
+        Direction direction = findDirection(source, destination);
         return Route.generateRouteFromOtherPiece(direction, source, destination);
     }
 
     private void validateMoveDirection(final Position source, final Position destination) {
-        ROOK_MOVE_VECTOR.stream()
+        ROOK_MOVE_DIRECTION.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("ROOK은 사방으로만 움직일 수 있습니다."));
@@ -46,8 +46,8 @@ public class Rook extends Piece {
         }
     }
 
-    private Vector findDirection(final Position source, final Position destination) {
-        return ROOK_MOVE_VECTOR.stream()
+    private Direction findDirection(final Position source, final Position destination) {
+        return ROOK_MOVE_DIRECTION.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
             .get();

@@ -2,16 +2,16 @@ package chess.domain.pieces;
 
 import chess.domain.board.Position;
 import chess.domain.direction.Route;
-import chess.domain.direction.Vector;
+import chess.domain.direction.Direction;
 import java.util.List;
 
 public class Bishop extends Piece {
 
-    private final static List<Vector> BISHOP_MOVE_VECTOR = List.of(
-        Vector.NORTH_EAST,
-        Vector.NORTH_WEST,
-        Vector.SOUTH_EAST,
-        Vector.SOUTH_WEST
+    private final static List<Direction> BISHOP_MOVE_DIRECTION = List.of(
+        Direction.NORTH_EAST,
+        Direction.NORTH_WEST,
+        Direction.SOUTH_EAST,
+        Direction.SOUTH_WEST
     );
     private static final int MOVE_MAX_RANGE = 8;
 
@@ -27,12 +27,12 @@ public class Bishop extends Piece {
 
     @Override
     public Route generateRoute(final Position source, final Position destination) {
-        Vector direction = findDirection(source, destination);
+        Direction direction = findDirection(source, destination);
         return Route.generateRouteFromOtherPiece(direction, source, destination);
     }
 
     private void validateMoveDirection(final Position source, final Position destination) {
-        BISHOP_MOVE_VECTOR.stream()
+        BISHOP_MOVE_DIRECTION.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Bishop은 대각선으로만 움직일 수 있습니다."));
@@ -46,8 +46,8 @@ public class Bishop extends Piece {
         }
     }
 
-    private Vector findDirection(final Position source, final Position destination) {
-        return BISHOP_MOVE_VECTOR.stream()
+    private Direction findDirection(final Position source, final Position destination) {
+        return BISHOP_MOVE_DIRECTION.stream()
             .filter(vector -> vector.isSameDirection(source, destination))
             .findFirst()
             .get();

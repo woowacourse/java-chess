@@ -15,7 +15,7 @@ public class Route {
         this.route = route;
     }
 
-    public static Route generateRouteFromOtherPiece(Vector direction, Position source, Position destination) {
+    public static Route generateRouteFromOtherPiece(Direction direction, Position source, Position destination) {
         List<Position> route = new ArrayList<>();
 
         Row row = source.nextRow(direction.getRow());

@@ -3,7 +3,7 @@ package chess.domain.direction;
 import chess.domain.board.Position;
 import java.util.List;
 
-public enum Vector {
+public enum Direction {
     NORTH(0, 1),
     SOUTH(0, -1),
     WEST(-1, 0),
@@ -18,7 +18,7 @@ public enum Vector {
     final int col;
     final int row;
 
-    Vector(final int col, final int row) {
+    Direction(final int col, final int row) {
         this.col = col;
         this.row = row;
     }
