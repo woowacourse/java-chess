@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Piece {
-    private final PieceState pieceState;
+    private final MoveRule moveRule;
     private final Color color;
 
     public Piece(MoveRule moveRule, Color color) {
-        this.pieceState = new PieceState(moveRule);
+        this.moveRule = moveRule;
         this.color = color;
     }
 
     public List<Position> move(Position currentPosition, Position nextPosition) {
-        return pieceState.move(currentPosition, nextPosition);
+        return moveRule.move(currentPosition, nextPosition);
     }
 
     public boolean isOpponent(Piece other) {
@@ -31,12 +31,16 @@ public class Piece {
         return this.color == color;
     }
 
-    public String formatName() {
-        return pieceState.formatName(color);
+    public boolean isPawn() {
+        return moveRule.isPawnMove();
     }
 
-    public boolean isPawn() {
-        return pieceState.isPawn();
+    public PieceType getPieceType() {
+        return moveRule.pieceType();
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override
@@ -44,18 +48,18 @@ public class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Objects.equals(pieceState, piece.pieceState) && color == piece.color;
+        return Objects.equals(moveRule.getClass(), piece.moveRule.getClass()) && color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceState, color);
+        return Objects.hash(moveRule.getClass(), color);
     }
 
     @Override
     public String toString() {
         return "Piece{" +
-                "pieceState=" + pieceState +
+                "moveRule=" + moveRule +
                 ", color=" + color +
                 '}';
     }

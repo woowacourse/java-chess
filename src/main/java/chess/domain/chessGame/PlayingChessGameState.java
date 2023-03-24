@@ -1,6 +1,7 @@
 package chess.domain.chessGame;
 
 import chess.domain.Board;
+import chess.domain.PieceDto;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -17,7 +18,7 @@ public class PlayingChessGameState implements ChessGameState {
     }
 
     @Override
-    public Map<Position, String> move(String currentPositionSymbol, String nextPositionSymbol) {
+    public Map<Position, PieceDto> move(String currentPositionSymbol, String nextPositionSymbol) {
         Position currentPosition = Position.of(currentPositionSymbol);
         Position nextPosition = Position.of(nextPositionSymbol);
         Color thisTurn = currentTurn;
@@ -41,7 +42,7 @@ public class PlayingChessGameState implements ChessGameState {
     }
 
     @Override
-    public Map<Position, String> getPrintingBoard() {
+    public Map<Position, PieceDto> getPrintingBoard() {
         return board.getPrintingBoard();
     }
 }

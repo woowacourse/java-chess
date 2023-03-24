@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.PieceDto;
 import chess.domain.chessGame.ChessGameState;
 import chess.domain.position.Position;
 import chess.view.OutputView;
@@ -15,7 +16,7 @@ public class MoveCommandExecute implements CommandExecute {
 
     @Override
     public ChessGameState execute(String current, String next) {
-        Map<Position, String> board = chessGameState.move(current, next);
+        Map<Position, PieceDto> board = chessGameState.move(current, next);
         OutputView.getInstance().printBoard(board);
         return chessGameState;
     }

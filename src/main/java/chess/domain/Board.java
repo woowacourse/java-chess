@@ -20,7 +20,7 @@ public class Board {
         initializePiece();
     }
 
-    public Map<Position, String> move(Position currentPosition, Position nextPosition, Color thisTurn) {
+    public Map<Position, PieceDto> move(Position currentPosition, Position nextPosition, Color thisTurn) {
         Piece currentPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
         List<Position> routePositions = currentPiece.move(currentPosition, nextPosition);
         validateThisTurnColor(thisTurn, currentPiece);
@@ -38,7 +38,7 @@ public class Board {
         }
     }
 
-    private Map<Position, String> moveGeneralPiece(Position nextPosition, Piece piece, List<Position> routePositions) {
+    private Map<Position, PieceDto> moveGeneralPiece(Position nextPosition, Piece piece, List<Position> routePositions) {
         validateMiddlePathConflict(routePositions);
         if (piece.isFriendly(board.get(nextPosition))) {
             throw new IllegalArgumentException("이동 위치에 아군기물이 있어 이동할 수 없습니다.");
@@ -46,7 +46,7 @@ public class Board {
         return getPrintingBoard();
     }
 
-    private Map<Position, String> movePawn(Position currentPosition, Position nextPosition, List<Position> routePositions) {
+    private Map<Position, PieceDto> movePawn(Position currentPosition, Position nextPosition, List<Position> routePositions) {
         Piece currentPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
         Piece destinationPiece = board.getOrDefault(nextPosition, BlankPiece.getInstance());
         validateMiddlePathConflict(routePositions);
@@ -61,13 +61,13 @@ public class Board {
         throw new IllegalArgumentException("해당위치에 이동할 수 없습니다. 폰은 적군 기물이 있어야 대각선 이동이, 다른 기물이 없어야 직선이동이 가능합니다.");
     }
 
-    public Map<Position, String> getPrintingBoard() {
-        Map<Position, String> pieceNames = new HashMap<>();
+    public Map<Position, PieceDto> getPrintingBoard() {
+        Map<Position, PieceDto> pieceDtos = new HashMap<>();
         for (Map.Entry<Position, Piece> entry : board.entrySet()) {
             Piece piece = entry.getValue();
-            pieceNames.put(entry.getKey(), piece.formatName());
+            pieceDtos.put(entry.getKey(), new PieceDto(piece));
         }
-        return pieceNames;
+        return pieceDtos;
     }
 
     private void initializePiece() {

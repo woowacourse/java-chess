@@ -35,11 +35,6 @@ public class BlankPiece extends Piece {
     }
 
     @Override
-    public String formatName() {
-        return super.formatName();
-    }
-
-    @Override
     public boolean isPawn() {
         return false;
     }
