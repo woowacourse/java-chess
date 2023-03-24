@@ -1,13 +1,20 @@
 package controller;
 
+import controller.adapter.inward.Command;
+import controller.adapter.inward.CommandArguments;
+import controller.adapter.inward.CoordinateAdapter;
+import controller.adapter.outward.RenderingAdapter;
 import domain.board.ChessGame;
-import domain.piece.Coordinate;
+import domain.piece.move.Coordinate;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
-public final class ChessController {
+public class ChessController {
 
     public static final int START_COORDINATE_INDEX = 1;
     public static final int END_COORDINATE_INDEX = 2;
@@ -15,53 +22,85 @@ public final class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    private final Map<Command, BiConsumer<ChessGame, CommandArguments>> commander;
+
+    public ChessController(
+            final InputView inputView,
+            final OutputView outputView
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.commander = new HashMap<>();
+        initializeCommander();
+    }
+
+    private void initializeCommander() {
+        commander.put(Command.START, this::start);
+        commander.put(Command.END, this::end);
+        commander.put(Command.MOVE, this::move);
+        commander.put(Command.STATUS, this::status);
     }
 
     public void run() {
-        try {
-            startChessGame();
-        } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e.getMessage());
-        }
+        ChessGame chessGame = setupGame();
+        repeat(() -> interact(chessGame));
+        printGameResult(chessGame);
     }
 
-    private void startChessGame() {
-        outputView.printGameStartMessage();
+    private ChessGame setupGame() {
         ChessGame chessGame = new ChessGame();
-        Command command = Command.of(inputView.readCommand());
-        if (command.isStart()) {
-            startInteractionLoop(chessGame);
-        }
-        outputView.printGameEndMessage();
+        outputView.printGameStartMessage();
+        return chessGame;
     }
 
-    private void startInteractionLoop(final ChessGame chessGame) {
+    private void repeat(Runnable target) {
         try {
-            doOneInteraction(chessGame);
+            target.run();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
-            startInteractionLoop(chessGame);
+            repeat(target);
         }
     }
 
-    private void doOneInteraction(final ChessGame chessGame) {
+    private void printGameResult(final ChessGame chessGame) {
+        String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
+        String winningColorMessage = RenderingAdapter.convertWinningColor(chessGame.getWinningColor());
+        outputView.printGameResult(gameResultMessage);
+        outputView.printWinner(winningColorMessage);
+    }
+
+    private void interact(final ChessGame chessGame) {
         Command command;
         do {
-            outputView.printBoard(chessGame);
-            List<String> frontCommand = inputView.readCommand();
-            command = Command.of(frontCommand);
-            moveByCommand(chessGame, command, frontCommand);
-        } while (command.isNotEnd());
+            List<String> pureArguments = inputView.readCommand();
+            command = Command.of(pureArguments);
+            CommandArguments commandArguments = CommandArguments.of(pureArguments);
+            commander.get(command).accept(chessGame, commandArguments);
+        } while (command.isNotEnd() && chessGame.isGameNotOver());
     }
 
-    private void moveByCommand(final ChessGame chessGame, final Command command, final List<String> frontCommand) {
-        if (command.isMove()) {
-            Coordinate startCoordinate = CoordinateAdapter.convert(frontCommand.get(START_COORDINATE_INDEX));
-            Coordinate endCoordinate = CoordinateAdapter.convert(frontCommand.get(END_COORDINATE_INDEX));
-            chessGame.move(startCoordinate, endCoordinate);
-        }
+    private void start(final ChessGame chessGame, final CommandArguments ignored) {
+        printBoard(chessGame);
+    }
+
+    private void end(final ChessGame chessGame, final CommandArguments ignored) {
+        printGameResult(chessGame);
+    }
+
+    private void move(final ChessGame chessGame, final CommandArguments arguments) {
+        Coordinate startCoordinate = CoordinateAdapter.convert(arguments.getArgumentOf(START_COORDINATE_INDEX));
+        Coordinate endCoordinate = CoordinateAdapter.convert(arguments.getArgumentOf(END_COORDINATE_INDEX));
+        chessGame.move(startCoordinate, endCoordinate);
+        printBoard(chessGame);
+    }
+
+    private void status(final ChessGame chessGame, final CommandArguments ignored) {
+        outputView.printGameStatus(RenderingAdapter.unpackGameResult(chessGame.collectPoint()));
+        printBoard(chessGame);
+    }
+
+    private void printBoard(final ChessGame chessGame) {
+        String boardMessage = RenderingAdapter.unpackBoard(chessGame.getBoard());
+        outputView.printBoard(boardMessage);
     }
 }

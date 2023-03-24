@@ -1,77 +1,108 @@
 package domain.board;
 
-import domain.piece.Coordinate;
-import domain.square.EmptySquare;
-import domain.square.Square;
+import domain.piece.move.Coordinate;
+import domain.piece.move.Situation;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
+import domain.piece.Color;
+import domain.piece.Piece;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class Board {
 
-    public static final int RANK_SIZE = 8;
-    public static final int FILE_SIZE = 8;
+    private static final int KING_COUNT = 2;
 
-    private final List<Rank> ranks;
+    private final Map<Coordinate, Piece> squareLocations;
 
     public Board() {
-        this.ranks = initializeRanks();
+        this(BoardInitialImage.getCachedBoard());
     }
 
-    private List<Rank> initializeRanks() {
-        List<Rank> ranks = new ArrayList<>();
-        for (int row = 0; row < RANK_SIZE; row++) {
-            ranks.add(new Rank(row, FILE_SIZE));
+    public Board(final Map<Coordinate, Piece> squareLocations) {
+        this.squareLocations = squareLocations;
+    }
+
+    public Piece findSquare(final Coordinate target) {
+        return squareLocations.get(target);
+    }
+
+    public void replaceSquare(final Coordinate target, final Piece piece) {
+        if (piece.isPawn()) {
+            replaceSquareIfIsPawn(target, piece);
+            return;
         }
-        return ranks;
-    }
-    
-    public Square findSquare(final Coordinate target) {
-        Rank rankWithTargetSquare = ranks.get(target.getRow());
-        return rankWithTargetSquare.findSquare(target.getCol());
+        squareLocations.put(target, piece);
     }
 
-    public void replaceSquare(final Coordinate target, final Square square) {
-        Rank rankWithTargetSquare = ranks.get(target.getRow());
-        rankWithTargetSquare.replaceSquare(target.getCol(), square);
+    private void replaceSquareIfIsPawn(final Coordinate target, final Piece piece) {
+        if (piece.hasSameColorWith(Color.BLACK)) {
+            squareLocations.put(target, new BlackPawn(Color.BLACK));
+            return;
+        }
+        squareLocations.put(target, new WhitePawn(Color.WHITE));
     }
 
     public void replaceWithEmptySquare(final Coordinate target) {
-        Rank rankWithTargetSquare = ranks.get(target.getRow());
-        rankWithTargetSquare.replaceSquare(target.getCol(), new EmptySquare());
+        squareLocations.put(target, Piece.ofEmpty());
     }
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
         validateOverBoardSize(start, end);
-        return ranks.get(start.getRow())
-                .isMovableAt(start, end);
+        Situation situation = Situation.of(findSquare(start), findSquare(end));
+        return findSquare(start).isMovable(start, end, situation);
     }
 
     private void validateOverBoardSize(final Coordinate start, final Coordinate end) {
-        validateOverRankSize(start);
-        validateOverFileSize(start);
-        validateOverRankSize(end);
-        validateOverFileSize(end);
+        if (squareLocations.containsKey(start) && squareLocations.containsKey(end)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 보드 좌표 범위를 벗어났습니다.");
     }
 
-    private static void validateOverRankSize(final Coordinate target) {
-        if (target.getRow() >= RANK_SIZE || target.getRow() < 0) {
-            throw new IllegalArgumentException("[ERROR] 보드 Y축 좌표 범위를 벗어났습니다.");
-        }
+    public double collectPointFor(final Color color) {
+        double purePoint = collectPurePointFor(color);
+        return reducePointIfPawnsExistStraight(color, purePoint);
     }
 
-    private static void validateOverFileSize(final Coordinate target) {
-        if (target.getCol() >= FILE_SIZE || target.getCol() < 0) {
-            throw new IllegalArgumentException("[ERROR] 보드 X축 좌표 범위를 벗어났습니다.");
-        }
+    private double collectPurePointFor(final Color color) {
+        return squareLocations.values().stream()
+                .filter(square -> square.hasSameColorWith(color))
+                .map(Piece::getPoint)
+                .reduce(Double::sum)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 보드가 초기화되지 않아 점수를 계산할 수 없습니다"));
+    }
+
+    private double reducePointIfPawnsExistStraight(final Color color, final double purePoint) {
+        Map<Integer, Long> pawnCountForEachFile = makePawnCountForEachFile(color);
+
+        return purePoint - pawnCountForEachFile.values().stream()
+                .filter(col -> col >= 2)
+                .map(col -> col * 0.5)
+                .reduce(Double::sum)
+                .orElse(0.0);
+    }
+
+    private Map<Integer, Long> makePawnCountForEachFile(final Color color) {
+        return squareLocations.entrySet().stream()
+                .filter(entry -> entry.getValue().hasSameColorWith(color))
+                .filter(entry -> entry.getValue().isPawn())
+                .collect(Collectors.groupingBy(entry -> entry.getKey().getCol(), Collectors.counting()));
     }
 
     public boolean isSquareEmptyAt(final Coordinate target) {
-        return !ranks.get(target.getRow())
-                .isExistSquare(target.getCol());
+        return squareLocations.get(target)
+                .hasSameColorWith(Color.NEUTRAL);
     }
 
-    public List<Rank> getRanks() {
-        return ranks;
+    public boolean allKingAlive() {
+        return squareLocations.values().stream()
+                .filter(Piece::isKing)
+                .count() == KING_COUNT;
+    }
+
+    public Map<Coordinate, Piece> getSquareLocations() {
+        return squareLocations;
     }
 }

@@ -1,82 +1,92 @@
 package domain.board;
 
-import domain.square.Camp;
-import domain.square.ConcreteSquare;
-import domain.square.EmptySquare;
-import domain.square.Square;
-import domain.piece.Bishop;
-import domain.piece.BlackPawn;
-import domain.piece.King;
-import domain.piece.Knight;
+import domain.piece.move.Coordinate;
+import domain.piece.nonsliding.King;
+import domain.piece.nonsliding.Knight;
+import domain.piece.pawn.BlackInitPawn;
+import domain.piece.pawn.WhiteInitPawn;
+import domain.piece.sliding.Bishop;
+import domain.piece.sliding.Queen;
+import domain.piece.sliding.Rook;
+import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.piece.WhitePawn;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.Map;
 
 public final class BoardInitialImage {
 
-    public static final int RANK_SIZE = 8;
+    public static final int FILE_SIZE = 8;
     public static final int EMPTY_RANK_SIZE = 4;
 
-    private static final List<List<Square>> boardImage;
+    private static final Map<Coordinate, Piece> initializedBoardImage;
+    private static Coordinate iterator;
 
     static {
-        boardImage = makeBoardImage();
+        initializedBoardImage = new HashMap<>();
+        makeBoardImage();
     }
 
-    private static List<List<Square>> makeBoardImage() {
-        List<List<Square>> boardImage = new ArrayList<>();
-        boardImage.add(makeFrontRank(Camp.WHITE));
-        boardImage.add(makeWhiteBackRank());
-        boardImage.addAll(makeEmptyRanks());
-        boardImage.add(makeBlackBackRank());
-        boardImage.add(makeFrontRank(Camp.BLACK));
-        return boardImage;
+    private static void makeBoardImage() {
+        setUpIterator();
+        makeKingExistRank(Color.WHITE);
+        makeWhitePawnExistRank();
+        makeEmptyRanks();
+        makeBlackPawnExistRank();
+        makeKingExistRank(Color.BLACK);
     }
 
-    private static List<List<Square>> makeEmptyRanks() {
-        return IntStream.range(0, EMPTY_RANK_SIZE)
-                .mapToObj(i -> makeEmptyRank())
-                .collect(Collectors.toList());
+    private static void setUpIterator() {
+        iterator = new Coordinate(0, 0);
     }
 
-    private static List<Square> makeFrontRank(final Camp camp) {
+    private static void makeKingExistRank(final Color color) {
         List<Piece> frontPieces = List.of(
-                new Rook(), new Knight(), new Bishop(),
-                new Queen(), new King(), new Bishop(),
-                new Knight(), new Rook()
+                new Rook(color), new Knight(color), new Bishop(color), new Queen(color),
+                new King(color), new Bishop(color), new Knight(color), new Rook(color)
         );
-
-        return frontPieces.stream()
-                .map(pieceType -> new ConcreteSquare(pieceType, camp))
-                .collect(Collectors.toList());
+        for (Piece piece : frontPieces) {
+            initializedBoardImage.put(iterator, piece);
+            updateIterator();
+        }
     }
 
-    private static List<Square> makeEmptyRank() {
-        return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new EmptySquare())
-                .collect(Collectors.toList());
+    private static void makeWhitePawnExistRank() {
+        for (int file = 0; file < FILE_SIZE; file++) {
+            initializedBoardImage.put(iterator, new WhiteInitPawn(Color.WHITE));
+            updateIterator();
+        }
     }
 
-    private static List<Square> makeWhiteBackRank() {
-        return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new ConcreteSquare(new WhitePawn(), Camp.WHITE))
-                .collect(Collectors.toList());
+    private static void makeEmptyRanks() {
+        for (int rank = 0; rank < EMPTY_RANK_SIZE; rank++) {
+            makeEmptyRank();
+        }
     }
 
-    private static List<Square> makeBlackBackRank() {
-        return IntStream.range(0, RANK_SIZE)
-                .mapToObj(i -> new ConcreteSquare(new BlackPawn(), Camp.BLACK))
-                .collect(Collectors.toList());
+    private static void makeEmptyRank() {
+        for (int file = 0; file < FILE_SIZE; file++) {
+            initializedBoardImage.put(iterator, Piece.ofEmpty());
+            updateIterator();
+        }
     }
 
-    public static Square getPieceByCoordinate(final int row, final int col) {
-        return boardImage.get(row)
-                .get(col);
+    private static void makeBlackPawnExistRank() {
+        for (int file = 0; file < FILE_SIZE; file++) {
+            initializedBoardImage.put(iterator, new BlackInitPawn(Color.BLACK));
+            updateIterator();
+        }
+    }
+
+    private static void updateIterator() {
+        int updatedRow = iterator.getRow() + (iterator.getCol() + 1) / FILE_SIZE;
+        int updatedCol = (iterator.getCol() + 1) % FILE_SIZE;
+
+        iterator = new Coordinate(updatedRow, updatedCol);
+    }
+
+    public static Map<Coordinate, Piece> getCachedBoard() {
+        return new HashMap<>(initializedBoardImage);
     }
 }
