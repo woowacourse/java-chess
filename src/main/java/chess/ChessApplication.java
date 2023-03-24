@@ -1,10 +1,10 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.repository.ChessGameDao;
-import chess.repository.GameGenerationService;
-import chess.repository.JdbcTemplate;
-import chess.repository.PieceDao;
+import chess.dao.ChessGameDao;
+import chess.service.GameGenerationService;
+import chess.dao.JdbcTemplate;
+import chess.dao.PieceDao;
 
 public class ChessApplication {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.service;
 
 import chess.domain.TeamColor;
 import chess.domain.position.Position;

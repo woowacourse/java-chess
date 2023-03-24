@@ -1,7 +1,9 @@
-package chess.repository;
+package chess.service;
 
 import chess.domain.TeamColor;
 import chess.domain.position.Position;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 
 public class ChessGameService implements GameService {
 

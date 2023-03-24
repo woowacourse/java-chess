@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.position.Position;
 import chess.dto.GameScoreDto;
-import chess.repository.GameService;
+import chess.service.GameService;
 
 public class ChessGame {
 

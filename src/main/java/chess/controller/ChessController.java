@@ -4,7 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.ChessBoardDto;
 import chess.dto.CommandRequest;
-import chess.repository.GameGenerationService;
+import chess.service.GameGenerationService;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;

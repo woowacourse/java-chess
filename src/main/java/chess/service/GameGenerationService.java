@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.service;
 
 import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
@@ -6,6 +6,8 @@ import chess.domain.InitialPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.ChessGameDto;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 import java.util.Map;
 import java.util.Optional;
 
