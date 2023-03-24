@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SuppressWarnings({"NonAsciiCharacters","SpellCheckingInspection"})
 class KingTest {
@@ -23,7 +23,7 @@ class KingTest {
         Position end = Position.of(endColumn, endRank);
         Color colorOfDestination = Color.NONE;
 
-        assertThatThrownBy(() -> king.isMovable(start, end, colorOfDestination))
+        assertThatThrownBy(() -> king.checkMovable(start, end, colorOfDestination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("King이 이동할 수 있는 방향이 아닙니다");
     }
@@ -35,7 +35,7 @@ class KingTest {
         Position end = Position.of(Column.C, Rank.FIVE);
         Color colorOfDestination = Color.BLACK;
 
-        assertThatThrownBy(() -> king.isMovable(start, end, colorOfDestination))
+        assertThatThrownBy(() -> king.checkMovable(start, end, colorOfDestination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("King은 도착점에 아군이 있으면 이동할 수 없습니다");
 
@@ -47,8 +47,7 @@ class KingTest {
         Position end = Position.of(Column.C, Rank.FIVE);
         Color colorOfDestination = Color.NONE;
 
-        assertThat(king.isMovable(start, end, colorOfDestination))
-                .isTrue();
+        assertDoesNotThrow(() -> king.checkMovable(start, end, colorOfDestination));
 
     }
 
