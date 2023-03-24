@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import static chess.domain.game.state.GameState.INIT;
-import static chess.domain.game.state.GameState.START;
 import static java.lang.String.format;
 
 import chess.domain.board.Board;
@@ -23,7 +22,7 @@ public class ChessGame {
 
     public void start() {
         gameState.start();
-        gameState = START;
+        gameState = gameState.load();
     }
 
     public double calculateScore(final Color color) {
@@ -75,5 +74,9 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }
