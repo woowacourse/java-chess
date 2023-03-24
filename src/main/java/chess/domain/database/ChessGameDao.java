@@ -10,6 +10,7 @@ import java.util.Map;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.User;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.square.File;
@@ -35,11 +36,11 @@ public final class ChessGameDao {
     }
 
     public void save(ChessGame chessGame) {
-        String saveQuery = "INSERT INTO Board (game_id, turn, piece_file, piece_rank, piece_type, piece_team) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Board (game_id, turn, piece_file, piece_rank, piece_type, piece_team) VALUES (?, ?, ?, ?, ?, ?)";
         Map<Square, Piece> board = chessGame.getBoard();
         for (Square square : board.keySet()) {
             try (Connection connection = getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(saveQuery)
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)
             ) {
                 int gameId = 101;
                 int turn = 1;
@@ -62,9 +63,9 @@ public final class ChessGameDao {
     }
 
     public ChessGame select() {
-        final String selectQuery = "SELECT * FROM Board WHERE game_id = ? and turn = ?";
+        final String query = "SELECT * FROM Board WHERE game_id = ? and turn = ?";
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)
+             PreparedStatement preparedStatement = connection.prepareStatement(query)
         ) {
             Map<Square, Piece> board = new HashMap<>();
             preparedStatement.setInt(1, 101);
@@ -86,6 +87,37 @@ public final class ChessGameDao {
             return new ChessGame(new Board(board));
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public User getUserById(String id) {
+        final String query = "SELECT * FROM User WHERE user_id = ?";
+        try (
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            String userId = resultSet.getString("user_id");
+            String nickname = resultSet.getString("nickname");
+            return new User(userId, nickname);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("등록되지 않은 아이디입니다.");
+        }
+    }
+
+    public void addUser(User user) {
+        final String query = "INSERT INTO User (user_id, nickname) VALUES (?, ?)";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.setString(2, user.getNickname());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("아이디 등록에 실패했습니다.");
         }
     }
 }

@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public enum Command {
 
+    LOGIN("login"),
+    REGISTER("register"),
     START("start"),
     END("end"),
     MOVE("move"),

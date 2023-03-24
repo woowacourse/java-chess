@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.User;
+import chess.domain.database.ChessGameDao;
 import chess.domain.piece.Team;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
@@ -12,9 +14,24 @@ import chess.view.dto.SquareDto;
 
 public class ChessController {
 
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGameDao chessGameDao = new ChessGameDao();
 
     public void run() {
+        User user = null;
+        while (user == null) {
+            OutputView.printLoginMessage();
+            Command loginCommand = readLoginCommand();
+            if (loginCommand == Command.LOGIN) {
+                user = login();
+            }
+            if (loginCommand == Command.REGISTER) {
+                try {
+                    user = register();
+                } catch (IllegalArgumentException e) {
+                    OutputView.printErrorMessage(e.getMessage());
+                }
+            }
+        }
         OutputView.printStartMessage();
         OutputView.printCommandMessage();
         Command initialCommand = readInitialCommand();
@@ -22,8 +39,52 @@ public class ChessController {
             return;
         }
         if (initialCommand == Command.START) {
-            playGame();
+            ChessGame chessGame = chessGameDao.select();
+            playGame(chessGame);
         }
+    }
+
+    private User login() {
+        OutputView.printIdMessage();
+        String id = InputView.readNext();
+        try {
+            return chessGameDao.getUserById(id);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
+        return null;
+    }
+
+    private User register() {
+        OutputView.printIdInputMessage();
+        String id = InputView.readNext();
+        try {
+            chessGameDao.getUserById(id);
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        } catch (IllegalArgumentException e) {
+            OutputView.printNicknameInputMessage();
+            String nickname = InputView.readNext();
+            chessGameDao.addUser(new User(id, nickname));
+            return chessGameDao.getUserById(id);
+        }
+    }
+
+    private Command readLoginCommand() {
+        Command command = InputView.readCommand();
+        try {
+            validateLoginCommand(command);
+            return command;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readLoginCommand();
+        }
+    }
+
+    private void validateLoginCommand(Command command) {
+        if (command == Command.LOGIN || command == Command.REGISTER) {
+            return;
+        }
+        throw new IllegalArgumentException("아이디가 있으시다면 login, 아이디가 없으시다면 register를 입력해주세요.");
     }
 
     private Command readInitialCommand() {
@@ -46,17 +107,19 @@ public class ChessController {
         }
     }
 
-    private void playGame() {
+    private void playGame(ChessGame chessGame) {
         OutputView.printGameStatus(chessGame.getGameStatus());
         while (true) {
             Command command = readPlayCommand();
             if (command == Command.END) {
+                chessGameDao.save(chessGame);
                 break;
             }
             if (command == Command.MOVE) {
                 SquareDto current = readSquare();
                 SquareDto destination = readSquare();
-                move(current, destination);
+                move(chessGame, current, destination);
+                chessGameDao.save(chessGame);
                 if (chessGame.isKingDead()) {
                     break;
                 }
@@ -100,7 +163,7 @@ public class ChessController {
         }
     }
 
-    private void move(final SquareDto currentDto, final SquareDto destinationDto) {
+    private void move(final ChessGame chessGame, final SquareDto currentDto, final SquareDto destinationDto) {
         if (currentDto == null || destinationDto == null) {
             return;
         }

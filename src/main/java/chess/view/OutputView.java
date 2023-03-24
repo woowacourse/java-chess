@@ -13,6 +13,22 @@ public class OutputView {
         System.out.println(message);
     }
 
+    public static void printLoginMessage() {
+        printMessage("로그인 : login");
+        printMessage("회원가입 : register");
+    }
+
+    public static void printIdMessage() {
+        System.out.print("id : ");
+    }
+    public static void printIdInputMessage() {
+        System.out.print("사용하고 싶은 id를 입력하세요 : ");
+    }
+
+    public static void printNicknameInputMessage() {
+        System.out.print("사용하고 싶은 닉네임을 입력하세요 : ");
+    }
+
     public static void printStartMessage() {
         printMessage("체스 게임을 시작합니다.");
     }
@@ -50,4 +66,5 @@ public class OutputView {
     public static void printBlackPoint(double point) {
         System.out.println("흑의 기물 점수: " + point);
     }
+
 }

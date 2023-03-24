@@ -18,6 +18,10 @@ public class InputView {
         }
     }
 
+    public static String readNext() {
+        return scanner.next();
+    }
+
     public static SquareDto readSquare() {
         String square = scanner.next();
         return SquareDto.of(square);
