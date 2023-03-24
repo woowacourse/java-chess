@@ -10,7 +10,8 @@ import java.util.List;
 public class OutputView {
 
     private static final String GAME_START = "> 체스 게임을 시작합니다.";
-    private static final String GAME_COMMAND_MOVE_DESCRIPTION = MOVE.getCommand() + "source위치 target위치 - 예. move b2 b3";
+    private static final String GAME_COMMAND_MOVE_DESCRIPTION =
+            MOVE.getCommand() + " source위치 target위치 - 예. move b2 b3";
     private static final String GAME_COMMAND_REQUEST = String.format(
             "> 게임 시작: %s\n> 게임 종료: %s\n> 게임 이동: %s\n> 어플리케이션 종료: %s",
             START.getCommand(), END.getCommand(), GAME_COMMAND_MOVE_DESCRIPTION, EXIT.getCommand()
