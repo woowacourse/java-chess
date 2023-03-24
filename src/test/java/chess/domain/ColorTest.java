@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ColorTest {
 
     @ParameterizedTest
-    @CsvSource({"BLACK, WHITE", "WHITE, BLACK", "BLANK, BLANK"})
+    @CsvSource({"BLACK, WHITE", "WHITE, BLACK", "NOTHING, NOTHING"})
     void 반대_색_혹은_빈_색을_반환한다(final Color color, final Color expectedColor) {
         final Color actualColor = color.getOppositeColor();
 
