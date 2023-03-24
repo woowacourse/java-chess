@@ -8,22 +8,22 @@ import org.jetbrains.annotations.Nullable;
 
 public class Position {
 
-    private static final Map<Integer, Position> CACHE;
+    private static final Map<String, Position> CACHE;
 
     static {
-        final Map<Integer, Position> positions = new HashMap<>();
+        final Map<String, Position> positions = new HashMap<>();
 
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                positions.put(getKey(rank, file), new Position(file, rank));
+                positions.put(getCacheKey(file, rank), new Position(file, rank));
             }
         }
 
         CACHE = positions;
     }
 
-    private static int getKey(final Rank rank, final File file) {
-        return (rank.index() - Board.LOWER_BOUNDARY) * Board.UPPER_BOUNDARY + file.index();
+    private static String getCacheKey(final File file, final Rank rank) {
+        return file.symbol() + rank.index();
     }
 
     private final File file;
@@ -35,7 +35,7 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        return CACHE.get(getKey(rank, file));
+        return CACHE.get(getCacheKey(file, rank));
     }
 
     public @Nullable Position move(final MovePattern movePattern) {
