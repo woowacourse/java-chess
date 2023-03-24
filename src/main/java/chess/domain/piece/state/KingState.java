@@ -31,4 +31,9 @@ public class KingState implements MoveState {
     public PieceType getType() {
         return pieceType;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

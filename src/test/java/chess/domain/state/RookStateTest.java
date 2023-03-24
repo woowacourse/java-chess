@@ -45,4 +45,10 @@ class RookStateTest {
         //expect
         assertThat(rookState.getScore()).isEqualTo(5, withPrecision(0.0001));
     }
+
+    @Test
+    void 룩은_킹이_아니다() {
+        //expect
+        assertFalse(rookState.isKing());
+    }
 }

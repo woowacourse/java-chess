@@ -45,4 +45,10 @@ class BishopStateTest {
         //expect
         assertThat(bishopState.getScore()).isEqualTo(3, withPrecision(0.0001));
     }
+
+    @Test
+    void 비숍은_킹이_아니다() {
+        //expect
+        assertFalse(bishopState.isKing());
+    }
 }

@@ -54,4 +54,8 @@ public class Piece {
     public double getScore() {
         return moveState.getScore();
     }
+
+    public boolean isKing() {
+        return moveState.isKing();
+    }
 }

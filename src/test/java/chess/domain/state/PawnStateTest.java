@@ -80,4 +80,10 @@ class PawnStateTest {
         //expect
         assertThat(initialPawnState.getScore()).isEqualTo(1, withPrecision(0.0001));
     }
+
+    @Test
+    void 폰은_킹이_아니다() {
+        //expect
+        assertFalse(initialPawnState.isKing());
+    }
 }

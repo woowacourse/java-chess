@@ -45,4 +45,10 @@ class KingStateTest {
         //expect
         assertThat(kingState.getScore()).isEqualTo(0, withPrecision(0.0001));
     }
+
+    @Test
+    void 킹은_킹이다() {
+        //expect
+        assertTrue(kingState.isKing());
+    }
 }

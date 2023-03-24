@@ -46,4 +46,10 @@ class KnightStateTest {
         //expect
         assertThat(knightState.getScore()).isEqualTo(2.5, withPrecision(0.0001));
     }
+
+    @Test
+    void 나이트는_킹이_아니다() {
+        //expect
+        assertFalse(knightState.isKing());
+    }
 }

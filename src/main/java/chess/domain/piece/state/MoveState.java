@@ -16,4 +16,8 @@ public interface MoveState {
     }
 
     PieceType getType();
+
+    default boolean isKing() {
+        return false;
+    }
 }
