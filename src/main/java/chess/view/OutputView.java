@@ -2,7 +2,9 @@ package chess.view;
 
 import chess.domain.game.Position;
 import chess.domain.piece.*;
+import chess.domain.userAccess.room.Room;
 
+import java.util.List;
 import java.util.Map;
 
 import static chess.view.PieceView.*;
@@ -95,7 +97,7 @@ public class OutputView {
     }
 
     public void printInputStatusMessage() {
-        System.out.println("게임이 끝났습니다.\n" + "점수와 결과를 보고 싶으면 status를 입력해주세요.");
+        System.out.println("게임이 끝났습니다.\n" + "점수와 결과를 보고싶으면 status를 입력해주세요. 보고싶지 않으면 end를 입력해주세요.");
     }
 
     public void printStatus(double blackScore, double whiteScore) {
@@ -113,11 +115,11 @@ public class OutputView {
     }
 
     private void printWhoIsWin(double blackScore, double whiteScore) {
-        if (blackScore == whiteScore) {
+        if (Double.compare(blackScore, whiteScore) == 0) {
             System.out.println("비겼습니다.");
             return;
         }
-        if (blackScore > whiteScore) {
+        if (Double.compare(blackScore, whiteScore) > 0) {
             System.out.println("블랙팀이 이겼습니다.");
             return;
         }
@@ -126,5 +128,28 @@ public class OutputView {
 
     public void printExceptionMessage(Exception exception) {
         System.out.println(exception.getMessage());
+        System.out.println();
+    }
+
+    public void printInputIdMessage() {
+        System.out.println("아이디를 입력해주세요.");
+    }
+
+    public void printMakeNewRoomMessage() {
+        System.out.println("저장된 게임이 없어 새로운 게임을 만듭니다.");
+    }
+
+    public void printSavedRooms(List<Room> rooms) {
+        for (Room room : rooms) {
+            System.out.println(room.roomId() + "번 방");
+        }
+    }
+
+    public void printSelectRoomMessage() {
+        System.out.println("재시작하려면 게임 방의 숫자를 입력해주세요.\n" + "새로운 게임을 만들고 싶으시면 0을 입력해주세요.");
+    }
+
+    public void printWantSaveGame() {
+        System.out.println("게임을 저장하시려면 y 아니면 n을 입력해주세요.");
     }
 }
