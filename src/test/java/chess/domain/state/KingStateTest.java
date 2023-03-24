@@ -51,4 +51,10 @@ class KingStateTest {
         //expect
         assertTrue(kingState.isKing());
     }
+
+    @Test
+    void 제자리로_움직이면_움직일_수_없다() {
+        //expect
+        assertFalse(kingState.canMove(0, 0, DIFFERENT_COLOR));
+    }
 }

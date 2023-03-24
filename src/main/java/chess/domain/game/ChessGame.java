@@ -25,13 +25,17 @@ public class ChessGame {
 
     public void move(Position origin, Position destination) {
         gameState = gameState.run();
+        movePiece(origin, destination);
+        if (board.isKingDead()) {
+            end();
+        }
+    }
+
+    private void movePiece(Position origin, Position destination) {
         try {
             board.movePiece(origin, destination);
         } catch (IllegalPieceMoveException e) {
             throw new ChessGameException(e.getMessage(), e);
-        }
-        if (board.isKingDead()) {
-            end();
         }
     }
 

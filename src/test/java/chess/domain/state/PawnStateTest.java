@@ -86,4 +86,10 @@ class PawnStateTest {
         //expect
         assertFalse(initialPawnState.isKing());
     }
+
+    @Test
+    void 움직인_폰의_타입을_가져와도_폰이다() {
+        //expect
+        assertSame(initialPawnState.getType(), movedPawnState.getType());
+    }
 }
