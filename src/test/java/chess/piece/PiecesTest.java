@@ -1,4 +1,4 @@
-package chess;
+package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,9 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
-import chess.piece.AllPiecesGenerator;
-import chess.piece.Pieces;
-import chess.piece.Side;
 import chess.piece.type.Knight;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
