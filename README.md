@@ -89,9 +89,13 @@ stateDiagram
     ChessGame --> WaitingState
     state WaitingState {
         [*] --> startGame
+        [*] --> saveGame
+        [*] --> loadGame
         [*] --> movePiece
         [*] --> getBoard
         startGame --> [*]
+        saveGame --> Exception
+        loadGame --> [*]
         movePiece --> Exception
         getBoard --> Exception
     }
@@ -102,9 +106,13 @@ stateDiagram
     ChessGame --> RunningState
     state RunningState {
         [*] --> startGame
+        [*] --> saveGame
+        [*] --> loadGame
         [*] --> movePiece
         [*] --> getBoard
         startGame --> Exception
+        saveGame --> [*]
+        loadGame --> Exception
         movePiece --> [*]
         getBoard --> [*]
     }
@@ -115,12 +123,51 @@ stateDiagram
     ChessGame --> EndState
     state EndState {
         [*] --> startGame
+        [*] --> saveGame
+        [*] --> loadGame
         [*] --> movePiece
         [*] --> getBoard
         startGame --> Exception
+        saveGame --> Exception
+        loadGame --> Exception
         movePiece --> Exception
-        getBoard --> Exception
+        getBoard --> [*]
     }
+```
+DB 설정 파일 (src/main/resources/db_config.txt)
+```
+URL=jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC
+USERNAME=root
+PASSWORD=root
+```
+
+DB Schema
+```mermaid
+classDiagram
+class board {
+   int(11) x
+   int(11) y
+   varchar(10) role
+   varchar(10) team
+}
+class game_state {
+varchar(15) state
+}
+```
+DDL
+```sql
+create table board
+(
+    x    int         not null,
+    y    int         not null,
+    role varchar(10) not null,
+    team varchar(10) not null
+);
+
+create table game_state
+(
+  state varchar(15) not null
+);
 ```
 
 ## 기능 요구 사항
