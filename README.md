@@ -62,18 +62,19 @@ graph TD
     ChessController --> ChessGameService
     
     ChessGameService --> Board
-    CHessGameService --> BoardResult
+    ChessGameService --> BoardResult
     
-    Board --> BoardFactory
-
-    Position --> Rank
-    Position --> File
+    Board --> BoardResult
+    Board --> BoardInitializer
 
     Board --> Position
     Board --> PIECE
     PIECE --> Color
     PIECE --> PieceType
-
+    
+    Position --> Rank
+    Position --> File
+    
     subgraph PIECE
         direction BT
         Pawn -.-> Piece
