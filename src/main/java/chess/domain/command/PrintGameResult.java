@@ -78,6 +78,11 @@ public class PrintGameResult implements CommandStatus {
     }
 
     @Override
+    public boolean isExistPreviousGame(Long gameId) {
+        throw new IllegalStateException("[ERROR] 게임 결과 출력 상태에서는 이전 게임이 존재하는지 확인할 수 없습니다.");
+    }
+
+    @Override
     public boolean isEnd() {
         return false;
     }

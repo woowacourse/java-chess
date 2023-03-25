@@ -43,6 +43,10 @@ public class CommandManager {
         this.commandStatus = commandStatus.end();
     }
 
+    public boolean isExistPreviousGame(Long gameId) {
+        return commandStatus.isExistPreviousGame(gameId);
+    }
+
     public boolean isEnd() {
         return commandStatus.isEnd();
     }

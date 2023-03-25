@@ -46,6 +46,11 @@ public class Init implements CommandStatus {
     }
 
     @Override
+    public boolean isExistPreviousGame(Long gameId) {
+        return chessGameDao.isExistPreviousChessGame(gameId);
+    }
+
+    @Override
     public boolean isEnd() {
         return false;
     }

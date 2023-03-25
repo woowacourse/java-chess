@@ -17,6 +17,8 @@ public interface CommandStatus {
 
     CommandStatus printGameResult();
 
+    boolean isExistPreviousGame(Long gameId);
+
     boolean isEnd();
 
     boolean canPrintGameResult();
