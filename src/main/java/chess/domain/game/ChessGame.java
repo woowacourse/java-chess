@@ -26,6 +26,7 @@ public final class ChessGame {
     private final Map<Position, Piece> board;
     private Turn turn;
 
+
     private ChessGame(final Map<Position, Piece> board, final Turn turn) {
         this.board = board;
         this.turn = turn;

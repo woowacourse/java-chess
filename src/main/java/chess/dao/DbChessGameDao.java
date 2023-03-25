@@ -35,6 +35,7 @@ public class DbChessGameDao implements ChessDao {
 
     @Override
     public void save(final ChessGame chessGame) {
+        delete();
         final String sql = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, last_turn) VALUES (?, ?, ?, ?, ?)";
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -53,7 +54,7 @@ public class DbChessGameDao implements ChessDao {
     }
 
     @Override
-    public ChessGame find() {
+    public ChessGame loadGame() {
         final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -61,7 +62,7 @@ public class DbChessGameDao implements ChessDao {
             final Map<Position, Piece> board = new HashMap<>();
             Turn turn = null;
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 final PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
                 final File file = File.valueOf(resultSet.getString("piece_file"));
                 final Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
@@ -70,7 +71,6 @@ public class DbChessGameDao implements ChessDao {
 
                 board.put(Position.of(file, rank), PieceMapper.get(pieceType, team));
             }
-
             return ChessGame.from(board, turn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -78,7 +78,25 @@ public class DbChessGameDao implements ChessDao {
     }
 
     @Override
-    public void update(final ChessGame chessGame) {
+    public boolean hasHistory() {
+        final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    @Override
+    public void delete() {
+        final String sql = "delete from chess_game";
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

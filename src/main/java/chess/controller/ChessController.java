@@ -68,6 +68,11 @@ public final class ChessController {
         if (chessGame != null) {
             throw new IllegalArgumentException("체스 게임은 이미 진행되고 있습니다.");
         }
+        if (dao.hasHistory()) {
+            chessGame = dao.loadGame();
+            outputView.printBoard(chessGame.getBoard());
+            return MOVE;
+        }
         chessGame = ChessGameFactory.generate();
         outputView.printBoard(chessGame.getBoard());
         return MOVE;
@@ -79,6 +84,7 @@ public final class ChessController {
         }
         chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
         if (chessGame.isKingDead()) {
+            dao.delete();
             outputView.printWinner(chessGame.getWinner());
             return END;
         }
@@ -87,6 +93,7 @@ public final class ChessController {
     }
 
     private GameCommand status(final List<String> strings) {
+        dao.delete();
         outputView.printTotalScore(chessGame.calculateScore());
         outputView.printEndMessage();
         return END;
@@ -94,6 +101,7 @@ public final class ChessController {
 
     private GameCommand end(final List<String> input) {
         outputView.printEndMessage();
+        dao.save(chessGame);
         return END;
     }
 }

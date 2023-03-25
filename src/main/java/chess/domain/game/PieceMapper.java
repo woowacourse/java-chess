@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
@@ -31,6 +32,7 @@ public class PieceMapper {
         CACHE.put(PieceType.INITIAL_WHITE_PAWN, piece -> InitialWhitePawn.instance());
         CACHE.put(PieceType.BLACK_PAWN, piece -> BlackPawn.instance());
         CACHE.put(PieceType.WHITE_PAWN, piece -> WhitePawn.instance());
+        CACHE.put(PieceType.EMPTY, piece -> Empty.instance());
     }
 
     public static Piece get(final PieceType pieceType, final Team team) {

@@ -6,7 +6,9 @@ public interface ChessDao {
 
     void save(final ChessGame chessGame);
 
-    ChessGame find();
+    ChessGame loadGame();
 
-    void update(final ChessGame chessGame);
+    boolean hasHistory();
+
+    void delete();
 }
