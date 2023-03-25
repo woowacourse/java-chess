@@ -7,6 +7,8 @@ import chess.piece.Side;
 
 public class ChessGame {
 
+    private static final double PAWN_DEDUCATION_SCORE = 0.5;
+
     private final Board board;
     private Side turnToMove;
     private GameStatus gameStatus;
@@ -58,6 +60,13 @@ public class ChessGame {
 
     public void exit() {
         gameStatus = GameStatus.END;
+    }
+
+    public double calculateScoreBySide(Side side) {
+        double scoreBySide = board.getScoreBySide(side);
+        final long exceedingPawnCount = board.getCountOfPawnsOnSameFileBySide(side);
+        scoreBySide = scoreBySide - exceedingPawnCount * PAWN_DEDUCATION_SCORE;
+        return scoreBySide;
     }
 
     public GameStatus status() {
