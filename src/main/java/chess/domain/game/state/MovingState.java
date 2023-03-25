@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 public class MovingState implements GameState {
 
+    private static final String MOVING_STATE_NAME = "moving";
     private static final MovingState INSTANCE = new MovingState();
 
     private MovingState() {
@@ -24,5 +25,10 @@ public class MovingState implements GameState {
     @Override
     public GameState run() {
         return this;
+    }
+
+    @Override
+    public String getStateName() {
+        return MOVING_STATE_NAME;
     }
 }

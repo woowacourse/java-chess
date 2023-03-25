@@ -7,4 +7,6 @@ public interface GameState {
     GameState end();
 
     GameState run();
+
+    String getStateName();
 }
