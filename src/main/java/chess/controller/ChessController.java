@@ -45,7 +45,7 @@ public final class ChessController {
             command = commandDto.getCommand();
         }
     }
-
+    
     private CommandDto readCommand(final List<Command> possibleCommands) {
         CommandDto commandDto;
         do {
@@ -62,6 +62,7 @@ public final class ChessController {
             chessGameDao.save(chessGame);
         }
         OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
+        OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
@@ -80,7 +81,6 @@ public final class ChessController {
 
         if (chessGame.isGameEnd()) {
             OutputView.printFinishMessage();
-            chessGameDao.delete();
             return readCommand(List.of(STATUS, END));
         }
         return readCommand(List.of(MOVE, STATUS, END));
@@ -91,6 +91,11 @@ public final class ChessController {
         OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
         OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
         OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
+
+        if (chessGame.isGameEnd()) {
+            chessGameDao.delete();
+            return readCommand(List.of(END));
+        }
         return readCommand(List.of(MOVE, STATUS, END));
     }
 }
