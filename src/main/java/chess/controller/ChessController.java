@@ -22,16 +22,6 @@ import static chess.domain.game.Command.MOVE;
 import static chess.domain.game.Command.START;
 import static chess.domain.game.Command.STATUS;
 
-/*
-- [ ] 시작을 했을 때 DB에서 저장된 체스 게임의 정보를 읽어온다.
-    - [ ] 새로운 게임
-    - [ ] 기존 게임이 있는 경우
-- [ ] 게임을 진행한다
-    - [ ] 각 팀의 턴이 존재한다.
-    - [ ] 말이 움직인다.
-    - [ ] 점수를 계산한다.
-- [ ] 게임을 종료한다
- */
 public class ChessController {
 
     private final InputView inputView;
@@ -72,6 +62,10 @@ public class ChessController {
             Command command = readValidateInput(this::readCommand);
             chessGame.receiveCommand(command);
         }
+
+        renderChessBoard();
+        printStatus(chessGame);
+        System.out.println("게임 종료" + chessGame.getCurrentTeam() + "의 패배!");
     }
 
     private void renderCurrentTeam() {
@@ -101,8 +95,6 @@ public class ChessController {
         if (!chessGame.isEnd()) {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
-
-//        chessGameDao.update(chessGame);
     }
 
     private void move(final List<String> commands) {
@@ -125,6 +117,10 @@ public class ChessController {
         }
 
         Command.validateCommandSize(commands.size(), STATUS);
+        printStatus(chessGame);
+    }
+
+    private void printStatus(final ChessGame chessGame) {
         Team team = chessGame.getCurrentTeam();
         BigDecimal currentScore = chessGame.getScore(team);
         outputView.printStatus(team, currentScore.longValue());

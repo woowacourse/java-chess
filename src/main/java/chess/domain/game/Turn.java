@@ -19,8 +19,8 @@ public class Turn {
     }
 
     public Turn(Team team) {
-        this.order = List.of(Team.BLACK, Team.WHITE);
-        this.currentIndex = this.order.indexOf(team);
+        this.order = List.of(Team.WHITE, Team.BLACK);
+        this.currentIndex = order.indexOf(team);
     }
 
 

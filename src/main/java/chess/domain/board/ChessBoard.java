@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private static final BigDecimal PAWN_REDUCE_NUMBER = BigDecimal.valueOf(0.5);
+    public static final int DEFAULT_KING_COUNT = 2;
 
     private final Map<Position, Piece> piecePosition;
 
@@ -131,5 +132,11 @@ public class ChessBoard {
 
     public Piece get(final Position from) {
         return piecePosition.get(from);
+    }
+    
+    public boolean isEnd() {
+        return piecePosition.values().stream()
+                .filter(piece -> piece.getType() == PieceType.KING)
+                .count() < DEFAULT_KING_COUNT;
     }
 }

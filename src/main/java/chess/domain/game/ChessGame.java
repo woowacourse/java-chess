@@ -3,9 +3,7 @@ package chess.domain.game;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
-import chess.exception.KingDiedException;
 
 import java.math.BigDecimal;
 
@@ -28,23 +26,23 @@ public class ChessGame {
     }
 
     public void movePiece(final Position from, final Position to) {
+        validateStatus();
         Piece currentPiece = chessBoard.get(from);
         if (!turn.isCurrent(currentPiece.getTeam())) {
             throw new IllegalArgumentException(turn.getCurrentTeam() + "의 차례입니다.");
         }
-        Piece piece = chessBoard.movePiece(from, to);
-        validateKing(piece);
+        chessBoard.movePiece(from, to);
         turn.next();
     }
 
-    private void validateKing(final Piece piece) {
-        if (piece.getType() == PieceType.KING) {
-            throw new KingDiedException(piece.getTeam());
+    private void validateStatus() {
+        if (this.isEnd()) {
+            throw new IllegalStateException("이미 종료된 게임입니다.");
         }
     }
 
     public boolean isEnd() {
-        return gameStatus == IDLE;
+        return gameStatus == IDLE || chessBoard.isEnd();
     }
 
     public BigDecimal getScore(Team team) {

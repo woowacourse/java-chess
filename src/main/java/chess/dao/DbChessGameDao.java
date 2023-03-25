@@ -24,27 +24,15 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
-CREATE TABLE chess_game {
-    piece_type VARCHAR(255) NOT NULL,
-    piece_file VARCHAR(255) NOT NULL,
-    piece_rank VARCHAR(255) NOT NULL,
-    piece_team VARCHAR(255) NOT NULL,
-    turn VARCHAR(255) NOT NULL,
-}
-
-DELETE FROM chess_game;
- */
 public class DbChessGameDao implements ChessGameDao {
 
-    private static final String SERVER = "localhost:3306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
+    private static final String SERVER = "localhost:3306";
+    private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "12345678"; // MySQL 서버 비밀번호
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "12345678";
 
     public Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
@@ -115,14 +103,14 @@ public class DbChessGameDao implements ChessGameDao {
                 return new Pawn(pieceTeam);
             case ROOK:
                 return new Rook(pieceTeam);
-            case EMPTY:
-                return new EmptyPiece();
             case QUEEN:
                 return new Queen(pieceTeam);
             case BISHOP:
                 return new Bishop(pieceTeam);
             case KNIGHT:
                 return new Knight(pieceTeam);
+            case EMPTY:
+                return new EmptyPiece();
             default:
                 throw new UnsupportedOperationException();
         }
