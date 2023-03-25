@@ -213,4 +213,31 @@ class BoardTest {
         assertThatThrownBy(board::findWinner)
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @ParameterizedTest
+    @MethodSource("isEndDummy")
+    @DisplayName("게임이 끝났는지 확인한다.")
+    void isEnd(final Map<Square, Piece> pieces, final boolean expected) {
+        // given
+        Board board = BoardFactory.create(pieces);
+
+        // expected
+        assertThat(board.isEnd()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> isEndDummy() {
+        return Stream.of(
+                Arguments.of(
+                        Map.of(
+                                Square.of(File.A, Rank.TWO), Role.KING.create(Team.from(Color.WHITE)),
+                                Square.of(File.A, Rank.THREE), Role.KING.create(Team.from(Color.BLACK))
+                        ), false
+                ), Arguments.of(
+                        Map.of(
+                                Square.of(File.A, Rank.TWO), Role.KING.create(Team.from(Color.WHITE)),
+                                Square.of(File.A, Rank.THREE), Role.PAWN.create(Team.from(Color.BLACK))
+                        ), true
+                )
+        );
+    }
 }
