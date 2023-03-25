@@ -3,6 +3,7 @@ package controller;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import domain.piece.Camp;
 import dto.CommandRequestDto;
 import service.ChessService;
 import view.InputView;
@@ -15,10 +16,6 @@ public class ChessController {
         Command.END, ignored -> end(),
         Command.MOVE, this::move,
         Command.STATUS, ignored -> fetchScore());
-
-    private void fetchScore() {
-
-    }
 
     public ChessController() {
         chessService = new ChessService();
@@ -41,7 +38,6 @@ public class ChessController {
 
     private void executeCommand() {
         do {
-            OutputView.printChessBoard(chessService.getChessBoard());
             CommandRequestDto commandRequestDto = InputView.requestCommand();
             commandsAndExecutions.get(commandRequestDto.getCommand()).accept(commandRequestDto);
         } while (chessService.isOngoing());
@@ -49,14 +45,20 @@ public class ChessController {
 
     private void start() {
         chessService.start();
+        OutputView.printChessBoard(chessService.toBoardDto());
     }
 
     private void end() {
         chessService.end();
     }
 
-    private  void move(CommandRequestDto commandRequestDto) {
+    private void move(CommandRequestDto commandRequestDto) {
         chessService.move(commandRequestDto);
+        OutputView.printChessBoard(chessService.toBoardDto());
+    }
+
+    private void fetchScore() {
+         OutputView.printScore(chessService.toScoreDto());
     }
 }
 

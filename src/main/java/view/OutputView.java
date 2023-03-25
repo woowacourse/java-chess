@@ -3,7 +3,10 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 
+import org.w3c.dom.ls.LSOutput;
+
 import dto.BoardResponseDto;
+import dto.ScoreResponseDto;
 
 public class OutputView {
     private OutputView() {
@@ -27,6 +30,10 @@ public class OutputView {
         for (String rank : board) {
             System.out.println(rank);
         }
+    }
+
+    public static void printScore(ScoreResponseDto scoreResponseDto) {
+        scoreResponseDto.getScore().forEach((camp, score) -> System.out.println(camp + " : " + score));
     }
 
     public static void printErrorMessage(RuntimeException e) {

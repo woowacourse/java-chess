@@ -1,7 +1,11 @@
 package service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import domain.PieceToScoreConverter;
 import domain.PieceToStringConverter;
@@ -10,8 +14,10 @@ import domain.board.File;
 import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
+import domain.piece.Piece;
 import dto.BoardResponseDto;
 import dto.CommandRequestDto;
+import dto.ScoreResponseDto;
 
 public class ChessService {
     private static final int FILE_INDEX = 0;
@@ -68,6 +74,54 @@ public class ChessService {
 
     public BoardResponseDto toBoardDto() {
         return new BoardResponseDto(chessBoard.getBoard());
+    }
+
+    public ScoreResponseDto toScoreDto() {
+        Map<Camp, Double> score = calculateScore();
+        return new ScoreResponseDto(score);
+    }
+
+    private Map<Camp, Double> calculateScore() {
+        HashMap<Camp, Double> campAndScores = new HashMap<>();
+        calculateScore(campAndScores, Camp.WHITE, Piece::isWhite);
+        calculateScore(campAndScores, Camp.BLACK, Piece::isBlack);
+        return campAndScores;
+    }
+
+    private void calculateScore(HashMap<Camp, Double> campAndScores, Camp camp, Predicate<Piece> predicate) {
+        campAndScores.put(camp, chessBoard.getBoard()
+            .values()
+            .stream()
+            .filter(predicate)
+            .mapToDouble(PieceToScoreConverter::convert)
+            .sum() - calculatePawnDisadvantage(predicate));
+    }
+
+    private double calculatePawnDisadvantage(Predicate<Piece> predicate) {
+        double disadvantage = 0;
+        Map<Integer, List<Square>> collect = chessBoard.getBoard()
+            .keySet()
+            .stream()
+            .filter(square -> predicate.test(chessBoard.getBoard().get(square)))
+            .collect(Collectors.groupingBy(square -> square.toCoordinate().get(FILE_INDEX)));
+
+        Map<Integer, Long> collect1 = collect.entrySet().stream().collect(
+            Collectors.toMap(
+                Map.Entry::getKey,
+                entry -> entry.getValue()
+                    .stream()
+                    .filter(square -> PieceToScoreConverter.convert(chessBoard.getBoard().get(square)) == 1)
+                    .count() - 1
+            )
+        );
+
+        for (Long value : collect1.values()) {
+            if (value >= 1) {
+                disadvantage -= 0.5 * value;
+            }
+        }
+
+        return disadvantage;
     }
 
     public boolean isOngoing() {
