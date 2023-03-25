@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.dao.dto.ChessGameDto;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.GameState;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,7 +19,7 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ChessGameDaoImplTest {
 
-    private final JdbcTemplate jdbcTemplate = new JdbcTemplate(new ConnectionManager());
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
     @AfterEach
     void clear() {
@@ -26,8 +28,8 @@ class ChessGameDaoImplTest {
 
     @Test
     void 체스_게임을_저장한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create());
-        final ChessGameDao chessGameDao = new ChessGameDaoImpl(jdbcTemplate);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGameDao chessGameDao = new ChessGameDaoImpl();
 
         chessGameDao.save(chessGame);
 
@@ -36,17 +38,28 @@ class ChessGameDaoImplTest {
     }
 
     @Test
+    void 체스_게임을_조회한다() {
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGameDao chessGameDao = new ChessGameDaoImpl();
+        chessGameDao.save(chessGame);
+        final Optional<ChessGameDto> chessGameDto = chessGameDao.findLatest();
+
+        final Optional<ChessGameDto> findChessGame = chessGameDao.findById(chessGameDto.get().getId());
+
+        assertThat(findChessGame.get().getTurn()).isEqualTo("WHITE");
+    }
+
+    @Test
     void 체스_게임_목록을_확인한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create());
-        final ChessGameDao chessGameDao = new ChessGameDaoImpl(jdbcTemplate);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGameDao chessGameDao = new ChessGameDaoImpl();
         chessGameDao.save(chessGame);
 
         final List<ChessGameDto> chessGames = chessGameDao.findAll();
 
         assertAll(
                 () -> assertThat(chessGames).hasSize(1),
-                () -> assertThat(chessGames.get(0).getTurn()).isEqualTo("WHITE"),
-                () -> assertThat(chessGames.get(0).getState()).isEqualTo("INIT")
+                () -> assertThat(chessGames.get(0).getTurn()).isEqualTo("WHITE")
         );
     }
 }

@@ -4,16 +4,14 @@ public class ChessGameDto {
 
     private final Long id;
     private final String turn;
-    private final String state;
 
-    public ChessGameDto(final Long id, final String turn, final String state) {
+    public ChessGameDto(final Long id, final String turn) {
         this.id = id;
         this.turn = turn;
-        this.state = state;
     }
 
-    public static ChessGameDto of(final Long id, final String turn, final String state) {
-        return new ChessGameDto(id, turn, state);
+    public static ChessGameDto of(final Long id, final String turn) {
+        return new ChessGameDto(id, turn);
     }
 
     public Long getId() {
@@ -22,9 +20,5 @@ public class ChessGameDto {
 
     public String getTurn() {
         return turn;
-    }
-
-    public String getState() {
-        return state;
     }
 }
