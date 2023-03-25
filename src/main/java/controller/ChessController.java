@@ -88,8 +88,8 @@ public class ChessController {
     }
 
     private void move(final ChessGame chessGame, final CommandArguments arguments) {
-        Coordinate startCoordinate = CoordinateAdapter.convert(arguments.getArgumentOf(START_COORDINATE_INDEX));
-        Coordinate endCoordinate = CoordinateAdapter.convert(arguments.getArgumentOf(END_COORDINATE_INDEX));
+        Coordinate startCoordinate = CoordinateAdapter.convert(arguments.getRawStartCoordinate());
+        Coordinate endCoordinate = CoordinateAdapter.convert(arguments.getRawEndCoordinate());
         chessGame.move(startCoordinate, endCoordinate);
         printBoard(chessGame);
     }

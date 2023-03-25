@@ -4,6 +4,9 @@ import java.util.List;
 
 public class CommandArguments {
 
+    public static final int START_COORDINATE_INDEX = 0;
+    public static final int END_COORDINATE_INDEX = 1;
+
     private final List<String> arguments;
 
     private CommandArguments(final List<String> arguments) {
@@ -14,10 +17,11 @@ public class CommandArguments {
             return new CommandArguments(arguments);
     }
 
-    public String getArgumentOf(final int index) {
-        if (index < 0 || index >= arguments.size()) {
-            throw new IllegalArgumentException("[ERROR] 명령 인자가 존재하지 않습니다.");
-        }
-        return arguments.get(index);
+    public String getRawStartCoordinate() {
+        return arguments.get(START_COORDINATE_INDEX);
+    }
+
+    public String getRawEndCoordinate() {
+        return arguments.get(END_COORDINATE_INDEX);
     }
 }
