@@ -2,10 +2,12 @@ package dao;
 
 import domain.piece.move.Coordinate;
 
+import java.util.List;
+
 public interface ChessGameDao {
 
     void create(final Coordinate start, final Coordinate end);
-    Coordinate read();
+    List<Coordinate> read();
     void update(final Coordinate start, final Coordinate end);
     void delete();
 }

@@ -5,6 +5,8 @@ import domain.piece.move.Coordinate;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbChessGameDao implements ChessGameDao {
 
@@ -54,8 +56,28 @@ CREATE TABLE chess_game (
     }
 
     @Override
-    public Coordinate read() {
-        return null;
+    public List<Coordinate> read() {
+        final List<Coordinate> resultCoordinates = new ArrayList<>();
+        final var query = "SELECT * FROM chess_game";
+
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int startRow = Integer.parseInt(resultSet.getString("start_row"));
+                int startCol = Integer.parseInt(resultSet.getString("start_col"));
+                int endRow = Integer.parseInt(resultSet.getString("end_row"));
+                int endCol = Integer.parseInt(resultSet.getString("end_col"));
+
+                resultCoordinates.add(new Coordinate(startRow, startCol));
+                resultCoordinates.add(new Coordinate(endRow, endCol));
+            }
+        } catch (final SQLException e) {
+            System.err.println("조회 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return resultCoordinates;
     }
 
     @Override
