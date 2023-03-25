@@ -12,9 +12,6 @@ public class White implements State {
 
     @Override
     public State run(Command command, Board board) {
-        if (command.isStart()) {
-            throw new UnsupportedOperationException("start를 입력할 수 없습니다.");
-        }
         if (command.isEnd()) {
             return new End();
         }

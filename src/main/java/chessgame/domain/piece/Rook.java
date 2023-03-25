@@ -4,12 +4,13 @@ import chessgame.domain.Team;
 import chessgame.domain.point.Point;
 
 public class Rook implements Piece {
-    private static final String ORIGINAL_NAME = "r";
-    public static final double ROOK_SCORE = 5;
+
+    private final PieceType pieceType;
 
     private final Team team;
 
     private Rook(Team team) {
+        this.pieceType = PieceType.ROOK;
         this.team = team;
     }
 
@@ -44,11 +45,11 @@ public class Rook implements Piece {
 
     @Override
     public double getScore() {
-        return ROOK_SCORE;
+        return pieceType.getScore();
     }
 
     @Override
     public String toString() {
-        return ORIGINAL_NAME;
+        return pieceType.getName();
     }
 }
