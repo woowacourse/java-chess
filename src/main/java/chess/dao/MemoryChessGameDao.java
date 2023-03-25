@@ -24,14 +24,4 @@ public class MemoryChessGameDao implements ChessGameDao {
         this.board = board;
         this.gameState = gameState;
     }
-
-    @Override
-    public void deleteAllBoard() {
-        this.board = null;
-    }
-
-    @Override
-    public void deleteGameState() {
-        this.gameState = null;
-    }
 }

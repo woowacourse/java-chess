@@ -9,8 +9,4 @@ public interface ChessGameDao {
     GameState findGameState();
 
     void saveChessGame(Board board, GameState gameState);
-
-    void deleteAllBoard();
-
-    void deleteGameState();
 }

@@ -71,7 +71,7 @@ public class MySQLChessGameDao implements ChessGameDao {
         final String query = "SELECT * FROM game_state";
         return jdbcContext.select(query, resultSet -> {
             validateEmptyResultSet(resultSet);
-            RunningStateEnum state = RunningStateEnum.valueOf(resultSet.getString("state"));
+            RunningStateMapper state = RunningStateMapper.valueOf(resultSet.getString("state"));
             return state.gameState;
         });
     }
@@ -84,6 +84,8 @@ public class MySQLChessGameDao implements ChessGameDao {
 
     @Override
     public void saveChessGame(Board board, GameState gameState) {
+        deleteAllBoard();
+        deleteGameState();
         saveBoard(board.getBoard());
         saveGameState(gameState);
     }
@@ -108,22 +110,20 @@ public class MySQLChessGameDao implements ChessGameDao {
 
     private void saveGameState(GameState gameState) {
         String query = "INSERT INTO game_state VALUES(?)";
-        jdbcContext.insert(query, RunningStateEnum.ofState(gameState).name());
+        jdbcContext.insert(query, RunningStateMapper.map(gameState).name());
     }
 
-    @Override
     public void deleteAllBoard() {
         String query = "DELETE FROM board";
         jdbcContext.update(query);
     }
 
-    @Override
     public void deleteGameState() {
         String query = "DELETE FROM game_state";
         jdbcContext.update(query);
     }
 
-    private enum RunningStateEnum {
+    private enum RunningStateMapper {
         WHITE_TURN(WhiteTurnState.STATE),
         BLACK_TURN(BlackTurnState.STATE),
         WHITE_CHECKED(WhiteCheckedState.STATE),
@@ -131,13 +131,13 @@ public class MySQLChessGameDao implements ChessGameDao {
 
         final GameState gameState;
 
-        RunningStateEnum(GameState gameState) {
+        RunningStateMapper(GameState gameState) {
             this.gameState = gameState;
         }
 
-        public static RunningStateEnum ofState(GameState gameState) {
+        public static RunningStateMapper map(GameState gameState) {
             return Arrays.stream(values())
-                    .filter(runningStateEnum -> runningStateEnum.isSameState(gameState))
+                    .filter(runningStateMapper -> runningStateMapper.isSameState(gameState))
                     .findAny()
                     .orElseThrow(IllegalArgumentException::new);
         }

@@ -69,8 +69,6 @@ public class ChessController {
     }
 
     private void saveGame() {
-        chessGameDao.deleteAllBoard();
-        chessGameDao.deleteGameState();
         chessGame.save(chessGameDao::saveChessGame);
         OutputView.printSaveMessage();
     }
