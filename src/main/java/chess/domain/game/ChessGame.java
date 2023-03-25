@@ -7,11 +7,13 @@ import java.util.List;
 
 public class ChessGame {
 
+    private long id;
     private State state;
     private Turn turn;
     private final Board board;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final long id, final Board board) {
+        this.id = id;
         this.state = State.RUN;
         this.board = board;
         this.turn = Turn.WHITE;
@@ -28,6 +30,10 @@ public class ChessGame {
         this.state = State.END;
     }
 
+    private void clear() {
+        this.state = State.CLEAR;
+    }
+
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
         checkTurn(source);
@@ -41,7 +47,7 @@ public class ChessGame {
 
     private void endGameIfKingDeath(final boolean kingDeath) {
         if (kingDeath) {
-            end();
+            clear();
         }
     }
 
@@ -74,6 +80,18 @@ public class ChessGame {
 
     public boolean isStart() {
         return state.isStart();
+    }
+
+    public boolean isClear() {
+        return state.isClear();
+    }
+
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Board getBoard() {
