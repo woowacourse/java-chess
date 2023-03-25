@@ -18,11 +18,11 @@ class QueenTest {
     @DisplayName("8방향으로 어디든 갈 수있다")
     @ParameterizedTest(name = "{index} : {0} => {1}")
     @MethodSource("parametersProvider1")
-    void move_success(Square src, Square dest) {
+    void move_success(Square source, Square destination) {
         Queen queen = new Queen(TeamColor.WHITE);
-        List<Square> actual = queen.findRoutes(src, dest);
+        List<Square> actual = queen.findRoutes(source, destination);
 
-        Assertions.assertThat(actual).contains(dest);
+        Assertions.assertThat(actual).contains(destination);
         Assertions.assertThat(actual.size()).isEqualTo(7);
     }
 
@@ -42,10 +42,10 @@ class QueenTest {
     @DisplayName("8방향이 아닌 곳은 갈 수 없다.")
     @ParameterizedTest(name = "{index} : {0} !=> {1}")
     @MethodSource("parametersProvider2")
-    void move_fail(Square src, Square dest) {
+    void move_fail(Square source, Square destination) {
         Queen queen = new Queen(TeamColor.WHITE);
 
-        Assertions.assertThatThrownBy(() -> queen.findRoutes(src, dest))
+        Assertions.assertThatThrownBy(() -> queen.findRoutes(source, destination))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("해당 방향으로 갈 수 없습니다.");
     }

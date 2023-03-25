@@ -17,7 +17,7 @@ public abstract class Piece {
         return teamColor.isBlack();
     }
 
-    public abstract List<Square> findRoutes(Square src, Square dest);
+    public abstract List<Square> findRoutes(Square source, Square destination);
 
     public PieceInfo getPieceType() {
         return pieceInfo;

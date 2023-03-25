@@ -16,7 +16,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public List<Square> findRoutes(Square src, Square dest) {
+    public List<Square> findRoutes(Square source, Square destination) {
         throw new IllegalStateException("기물이 존재하지 않습니다.");
     }
 

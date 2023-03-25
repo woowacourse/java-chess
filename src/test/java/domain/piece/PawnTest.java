@@ -29,9 +29,9 @@ class PawnTest {
             @DisplayName("앞으로 1~2칸 또는 대각선으로 갈 수 있다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider1")
-            void move_success(Square src, Square dest, List<Square> expected) {
+            void move_success(Square source, Square destination, List<Square> expected) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
-                List<Square> actual = pawn.findRoutes(src, dest);
+                List<Square> actual = pawn.findRoutes(source, destination);
 
                 Assertions.assertThat(actual).isEqualTo(expected);
             }
@@ -56,9 +56,9 @@ class PawnTest {
             @DisplayName("앞으로 1~2칸 또는 대각선외에는 갈 수 없다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider2")
-            void move_fail(Square src, Square dest) {
+            void move_fail(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
-                Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
+                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
@@ -81,11 +81,11 @@ class PawnTest {
             @DisplayName("앞으로 1칸 또는 대각선으로 갈 수 있다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider1")
-            void move_success(Square src, Square dest) {
+            void move_success(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
-                List<Square> actual = pawn.findRoutes(src, dest);
+                List<Square> actual = pawn.findRoutes(source, destination);
 
-                Assertions.assertThat(actual).isEqualTo(List.of(dest));
+                Assertions.assertThat(actual).isEqualTo(List.of(destination));
             }
 
             Stream<Arguments> parametersProvider1() {
@@ -99,11 +99,11 @@ class PawnTest {
             @DisplayName("앞으로 1칸 또는 대각선외에는 갈 수 없다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider2")
-            void move_fail(Square src, Square dest) {
+            void move_fail(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
                 pawn.changeState();
 
-                Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
+                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
@@ -128,9 +128,9 @@ class PawnTest {
             @DisplayName("아래로 1~2칸 또는 대각선으로 갈 수 있다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider1")
-            void move_success(Square src, Square dest, List<Square> expected) {
+            void move_success(Square source, Square destination, List<Square> expected) {
                 Pawn pawn = new Pawn(TeamColor.BLACK);
-                List<Square> actual = pawn.findRoutes(src, dest);
+                List<Square> actual = pawn.findRoutes(source, destination);
 
                 Assertions.assertThat(actual).isEqualTo(expected);
             }
@@ -155,10 +155,10 @@ class PawnTest {
             @DisplayName("아래로 1~2칸 또는 대각선외에는 갈 수 없다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider2")
-            void move_fail(Square src, Square dest) {
+            void move_fail(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.BLACK);
 
-                Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
+                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
@@ -181,11 +181,11 @@ class PawnTest {
             @DisplayName("아래로 1칸 또는 대각선으로 갈 수 있다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider1")
-            void move_success(Square src, Square dest) {
+            void move_success(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.BLACK);
-                List<Square> actual = pawn.findRoutes(src, dest);
+                List<Square> actual = pawn.findRoutes(source, destination);
 
-                Assertions.assertThat(actual).isEqualTo(List.of(dest));
+                Assertions.assertThat(actual).isEqualTo(List.of(destination));
             }
 
             Stream<Arguments> parametersProvider1() {
@@ -199,11 +199,11 @@ class PawnTest {
             @DisplayName("아래로 1칸 또는 대각선외에는 갈 수 없다.")
             @ParameterizedTest(name = "{index} : {0} => {1}")
             @MethodSource("parametersProvider2")
-            void move_fail(Square src, Square dest) {
+            void move_fail(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.BLACK);
                 pawn.changeState();
 
-                Assertions.assertThatThrownBy(() -> pawn.findRoutes(src, dest))
+                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 목적지로 갈 수 없습니다.");
             }

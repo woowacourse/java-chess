@@ -47,15 +47,15 @@ class SquareTest {
 
     @ParameterizedTest(name = "{index} : 두 Square의 벡터를 구한다")
     @MethodSource("parametersProvider1")
-    void calculateVector(Square src, Square dest, Direction expected) {
-        Direction actual = dest.calculateVector(src);
+    void calculateVector(Square source, Square destination, Direction expected) {
+        Direction actual = destination.calculateVector(source);
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "{index} : next_success")
     @MethodSource("parametersProvider2")
-    void next_success(Square src, Direction vector, Square expected) {
-        Square actual = src.add(vector);
+    void next_success(Square source, Direction vector, Square expected) {
+        Square actual = source.add(vector);
         assertThat(actual).isEqualTo(expected);
     }
 

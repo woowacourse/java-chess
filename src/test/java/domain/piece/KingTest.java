@@ -18,11 +18,11 @@ class KingTest {
     @DisplayName("8방향으로 한칸 갈 수있다")
     @ParameterizedTest(name = "{index} : {0} => {1}")
     @MethodSource("parametersProvider1")
-    void move_success(Square src, Square dest) {
+    void move_success(Square source, Square destination) {
         King king = new King(TeamColor.WHITE);
-        List<Square> actual = king.findRoutes(src, dest);
+        List<Square> actual = king.findRoutes(source, destination);
 
-        Assertions.assertThat(actual).isEqualTo(List.of(dest));
+        Assertions.assertThat(actual).isEqualTo(List.of(destination));
     }
 
     static Stream<Arguments> parametersProvider1() {
@@ -41,9 +41,9 @@ class KingTest {
     @DisplayName("한칸 이상 움직일 수 없다.")
     @ParameterizedTest(name = "{index} : {0} !=> {1}")
     @MethodSource("parametersProvider2")
-    void move_fail(Square src, Square dest, String expectedMessage) {
+    void move_fail(Square source, Square destination, String expectedMessage) {
         King king = new King(TeamColor.WHITE);
-        Assertions.assertThatThrownBy(() -> king.findRoutes(src, dest))
+        Assertions.assertThatThrownBy(() -> king.findRoutes(source, destination))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(expectedMessage);
     }

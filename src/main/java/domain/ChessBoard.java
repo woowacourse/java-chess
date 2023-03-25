@@ -85,9 +85,9 @@ public class ChessBoard {
         return locationInfo.get(square);
     }
 
-    public void update(Square source, Square target) {
+    public void update(Square source, Square destination) {
         Piece sourcePiece = locationInfo.get(source);
-        locationInfo.replace(target, sourcePiece);
+        locationInfo.replace(destination, sourcePiece);
         locationInfo.replace(source, Blank.getInstance());
     }
 

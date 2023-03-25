@@ -16,14 +16,14 @@ class RuleTest {
         Rule rule = new Rule();
         Piece white = new Piece(TeamColor.WHITE, null) {
             @Override
-            public List<Square> findRoutes(Square src, Square dest) {
+            public List<Square> findRoutes(Square source, Square destination) {
                 return null;
             }
         };
 
         Piece black = new Piece(TeamColor.BLACK, null) {
             @Override
-            public List<Square> findRoutes(Square src, Square dest) {
+            public List<Square> findRoutes(Square source, Square destination) {
                 return null;
             }
         };

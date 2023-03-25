@@ -18,46 +18,46 @@ public class ChessGame {
         return chessBoard.find(square);
     }
 
-    public void move(Square src, Square dest) {
-        Piece piece = chessBoard.find(src);
+    public void move(Square source, Square destination) {
+        Piece piece = chessBoard.find(source);
         rule.validateOrder(piece);
-        List<Square> routes = piece.findRoutes(src, dest);
+        List<Square> routes = piece.findRoutes(source, destination);
 
-        checkPawn(src, dest, piece);
-        go(src, dest, piece, routes);
+        checkPawn(source, destination, piece);
+        go(source, destination, piece, routes);
         rule.nextOrder();
     }
 
-    private void checkPawn(Square src, Square dest, Piece piece) {
+    private void checkPawn(Square source, Square destination, Piece piece) {
         if (piece.isPawn()) {
             Pawn pawn = (Pawn) piece;
-            validatePawnMove(pawn, src, dest);
+            validatePawnMove(pawn, source, destination);
             pawn.changeState();
         }
     }
 
-    private void validatePawnMove(Pawn pawn, Square src, Square dest) {
-        if (pawn.isDiagonal(src, dest) && !canKill(dest, pawn, dest)) {
+    private void validatePawnMove(Pawn pawn, Square source, Square destination) {
+        if (pawn.isDiagonal(source, destination) && !canKill(destination, pawn, destination)) {
             throw new IllegalArgumentException("대각선으로 갈 수 없습니다.");
         }
-        if (pawn.isLinear(src, dest) && chessBoard.hasPiece(dest)) {
+        if (pawn.isLinear(source, destination) && chessBoard.hasPiece(destination)) {
             throw new IllegalArgumentException("폰은 기물이 있으면 앞으로 갈 수 없습니다.");
         }
     }
 
-    private boolean canKill(Square dest, Piece piece, Square route) {
-        return route == dest && chessBoard.hasPiece(route) && piece.isDifferentTeam(chessBoard.find(dest));
+    private boolean canKill(Square destination, Piece piece, Square route) {
+        return route == destination && chessBoard.hasPiece(route) && piece.isDifferentTeam(chessBoard.find(destination));
     }
 
-    private void go(Square src, Square dest, Piece piece, List<Square> routes) {
+    private void go(Square source, Square destination, Piece piece, List<Square> routes) {
         for (Square route : routes) {
-            validateBlock(dest, piece, route);
+            validateBlock(destination, piece, route);
         }
-        chessBoard.update(src, dest);
+        chessBoard.update(source, destination);
     }
 
-    private void validateBlock(Square dest, Piece piece, Square route) {
-        if (chessBoard.hasPiece(route) && !canKill(dest, piece, route)) {
+    private void validateBlock(Square destination, Piece piece, Square route) {
+        if (chessBoard.hasPiece(route) && !canKill(destination, piece, route)) {
             throw new IllegalArgumentException("중간에 기물이 있어 이동할 수 없습니다.");
         }
     }
