@@ -45,7 +45,7 @@ public final class ChessController {
             command = commandDto.getCommand();
         }
     }
-    
+
     private CommandDto readCommand(final List<Command> possibleCommands) {
         CommandDto commandDto;
         do {

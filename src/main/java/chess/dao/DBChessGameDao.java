@@ -2,15 +2,8 @@ package chess.dao;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
@@ -26,7 +19,7 @@ public class DBChessGameDao implements ChessGameDao {
 
     /*
 
-CREATE TABLE chess_game(
+    CREATE TABLE chess_game(
         position_column INT not null,
         position_row INT not null,
         piece_type VARCHAR(255) not null,
@@ -96,19 +89,16 @@ CREATE TABLE chess_game(
 
                 final int column = resultSet.getInt("position_column");
                 final int row = resultSet.getInt("position_row");
+
                 final Position position = new Position(column, row);
+                final PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
+                final Team team = Team.valueOf(resultSet.getString("piece_team"));
 
-                final String pieceTypeString = resultSet.getString("piece_type");
-                final PieceType pieceType = PieceType.valueOf(pieceTypeString);
+                if(turn == null){
+                    turn = Team.valueOf(resultSet.getString("turn"));
+                }
 
-                final String pieceTeamString = resultSet.getString("piece_team");
-                final Team team = Team.valueOf(pieceTeamString);
-
-                final String turnString = resultSet.getString("turn");
-
-                Piece piece = extractPiece(pieceType, team);
-                turn = Team.valueOf(turnString);
-
+                final Piece piece = PieceMapper.toPiece(pieceType, team);
                 board.put(position, piece);
             }
         } catch (final SQLException e) {
@@ -119,27 +109,6 @@ CREATE TABLE chess_game(
         }
 
         return new ChessGame(new Board(board), turn);
-    }
-
-    private Piece extractPiece(final PieceType pieceType, final Team team) {
-        switch (pieceType) {
-            case KING:
-                return King.from(team);
-            case QUEEN:
-                return Queen.from(team);
-            case BISHOP:
-                return Bishop.from(team);
-            case KNIGHT:
-                return Knight.from(team);
-            case ROOK:
-                return Rook.from(team);
-            case PAWN:
-                return Pawn.from(team);
-            case EMPTY:
-                return new EmptyPiece();
-            default:
-                throw new UnsupportedOperationException("그런 말은 없습니다.");
-        }
     }
 
     @Override
