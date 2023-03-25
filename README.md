@@ -30,6 +30,21 @@
 - [ ] 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다. (선택)
 - [ ] 사용자별로 체스 게임 기록을 관리한다. (선택)
 
+```
+  CREATE TABLE chess_game(
+  position_column INT not null,
+  position_row INT not null,
+  piece_type VARCHAR(255) not null,
+  piece_team VARCHAR(255) not null,
+  turn VARCHAR(255) not null,
+  constraint chess_game_pk primary key(position_column, position_row)
+  );
+
+  INSERT INTO chess_game(position_column, position_row, piece_type, piece_team, turn) VALUES(?,?,?,?,?);
+  SELECT * FROM chess_game;
+  DELETE FROM chess_game;
+```
+
 ### ChessGame
 
 - [x] 어느 진영이 게임할 순서인지 확인
@@ -62,6 +77,9 @@
 - [x] 각 말은 자신의 점수를 앎
     - [x] Queen 은 9점, Rook 은 5점, Bishop 은 3점, Knight 는 2.5점, Pawn 은 1점
     - [x] King 은 잡히는 경우 경기가 끝나기 때문에 점수가 존재하지 않음
+- [ ] Pawn 의 특수한 룰을 구현
+    - [ ] 승진
+    - [ ] 앙파상
 
 ### ObstacleStrategy
 
