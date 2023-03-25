@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
-import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -16,7 +15,7 @@ public class BoardMapTest {
     @DisplayName("두 위치의 기물이 같은 팀인지 알 수 있다")
     @Test
     void isSameTeam() {
-        BoardMap boardMap = new BoardMap(AbstractTestFixture.INITIAL_BOARD);
+        BoardMap boardMap = BoardMap.from(AbstractTestFixture.INITIAL_BOARD);
 
         Position position = new Position(File.A, Rank.ONE);
         Position other = new Position(File.B, Rank.ONE);
@@ -29,7 +28,7 @@ public class BoardMapTest {
     @DisplayName("어떤 위치에 기물이 존재하는지 알 수 있다")
     @Test
     void hasPieceAtPosition() {
-        BoardMap boardMap = new BoardMap(AbstractTestFixture.INITIAL_BOARD);
+        BoardMap boardMap = BoardMap.from(AbstractTestFixture.INITIAL_BOARD);
 
         Position whiteRookPosition = new Position(File.A, Rank.ONE);
         Position emptyPosition = new Position(File.B, Rank.FIVE);
@@ -38,13 +37,13 @@ public class BoardMapTest {
         assertThat(boardMap.hasPieceAt(emptyPosition)).isFalse();
     }
 
-    @DisplayName("한 파일에 조건에 맞는 기물이 몇 개인지 센다")
+    @DisplayName("한 파일에 폰이 몇 개인지 센다")
     @Test
-    void countPiecesMetCondition_inAFile() {
-        BoardMap boardMap = new BoardMap(AbstractTestFixture.INITIAL_BOARD);
+    void countPawns_inAFile() {
+        BoardMap boardMap = BoardMap.from(AbstractTestFixture.INITIAL_BOARD);
 
-        long count = boardMap.count(File.B, piece -> piece.getType().equals(PieceType.PAWN));
-        
+        long count = boardMap.countPawnsIn(File.B);
+
         assertThat(count).isEqualTo(2);
     }
 }

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.BoardMap;
 import chess.domain.exception.IllegalMoveException;
 import chess.domain.move.Move;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 public class PositionPiece {
@@ -57,7 +58,34 @@ public class PositionPiece {
         }
     }
 
-    public Position getPosition() {
-        return position;
+    public boolean isAt(Position position) {
+        return this.position.equals(position);
+    }
+
+    public boolean isAt(File file) {
+        return this.position.hasFile(file);
+    }
+
+    public boolean isEmpty() {
+        return moves.isEmpty();
+    }
+
+    public boolean isSameTeamWith(PositionPiece positionPiece) {
+        return moves.isSameTeamWith(positionPiece.moves);
+    }
+
+    public boolean hasType(PieceType pieceType) {
+        return moves.getType().equals(pieceType);
+    }
+
+    public double scoreConsidering(BoardMap map) {
+        if (moves.getType().equals(PieceType.PAWN)) {
+            long pawnCount = map.countPawnsIn(position.getFile());
+            if (pawnCount > 1) {
+                return 0.5;
+            }
+            return 1;
+        }
+        return moves.score();
     }
 }
