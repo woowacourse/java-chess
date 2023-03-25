@@ -11,4 +11,8 @@ public interface GameState {
     String getStateName();
 
     boolean isStarted();
+
+    default boolean notStarted() {
+        return !isStarted();
+    }
 }
