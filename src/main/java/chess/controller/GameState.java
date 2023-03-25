@@ -6,7 +6,7 @@ public enum GameState {
     READY("start"),
     RUNNING("move"),
     END("end"),
-    STATUS("status");
+    CHECKING("status");
 
     private final String commandHead;
 

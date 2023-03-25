@@ -14,7 +14,7 @@ public class ChessController {
     private final Map<GameState, GameAction> actionByGameState = Map.of(
             GameState.READY, this::start,
             GameState.RUNNING, this::move,
-            GameState.STATUS, this::status,
+            GameState.CHECKING, this::status,
             GameState.END, this::end
     );
 
