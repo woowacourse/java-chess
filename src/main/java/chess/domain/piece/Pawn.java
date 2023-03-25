@@ -44,7 +44,7 @@ public final class Pawn extends Piece {
             return true;
         }
 
-        return isForwardMove(rankGap);
+        return isForwardMove(rankGap, fileGap);
     }
 
     private boolean isDiagonalMove(final int rankGap, final int fileGap) {
@@ -52,7 +52,10 @@ public final class Pawn extends Piece {
                 || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
     }
 
-    private boolean isForwardMove(final int rankGap) {
+    private boolean isForwardMove(final int rankGap,final int fileGap) {
+        if (fileGap != 0) {
+            return false;
+        }
         if ((isBlack() && rankGap == -1)
                 || (!isBlack() && rankGap == 1)) {
             return true;

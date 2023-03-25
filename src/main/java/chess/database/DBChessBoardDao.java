@@ -53,7 +53,7 @@ public final class DBChessBoardDao implements ChessGameDao {
     public List<Position> select() {
         List<Position> positions = new ArrayList<>();
 
-        var query = "SELECT * FROM move_position";
+        var query = "SELECT * FROM move_position ORDER BY seq ASC";
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             var resultSet = preparedStatement.executeQuery();
