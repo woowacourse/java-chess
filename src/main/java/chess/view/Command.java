@@ -5,6 +5,7 @@ import java.util.Arrays;
 public enum Command {
     START("start"),
     END("end"),
+    STATUS("status"),
     MOVE("move");
 
     private final String command;
