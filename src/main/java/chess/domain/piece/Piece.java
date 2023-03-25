@@ -5,6 +5,7 @@ import chess.domain.chessboard.SquareCoordinate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.IntFunction;
 
 public abstract class Piece implements SquareState {
@@ -26,8 +27,8 @@ public abstract class Piece implements SquareState {
     }
 
     @Override
-    public boolean isDifferentTeam(final Team team) {
-        return !this.team.equals(team);
+    public boolean isSameTeam(final Team team) {
+        return this.team.equals(team);
     }
 
     @Override
@@ -99,5 +100,18 @@ public abstract class Piece implements SquareState {
 
     protected final void throwCanNotMoveException() {
         throw new IllegalArgumentException(this.getClass().getSimpleName() + "(은)는 해당 좌표로 이동할 수 없습니다.");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return team == piece.team;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team);
     }
 }

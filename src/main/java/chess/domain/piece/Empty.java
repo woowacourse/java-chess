@@ -19,8 +19,8 @@ public final class Empty implements SquareState {
     }
 
     @Override
-    public boolean isDifferentTeam(final Team team) {
-        return true;
+    public boolean isSameTeam(final Team team) {
+        return false;
     }
 
     @Override
