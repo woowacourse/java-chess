@@ -86,4 +86,17 @@ public enum Direction {
     public boolean isDiagonal() {
         return x != 0 && y != 0;
     }
+
+    public Direction getDirectionBeforeMoveSideways() {
+        if (y == 2) {
+            return UP;
+        }
+        if (y == -2) {
+            return DOWN;
+        }
+        if (x == 2) {
+            return RIGHT;
+        }
+        return LEFT;
+    }
 }
