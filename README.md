@@ -40,10 +40,19 @@
 
 ## DAO
 
-- [ ] 체스 게임 불러오기 시(`load`) 이전 게임에서의 모든 MOVE 명령어를 조회한다.
-- [ ] 체스 게임 시작 시(`start`) 저장되어있는 모든 MOVE 명령어를 삭제한다.
-- [ ] 체스 게임 진행 시 MOVE 명령어를 저장한다.
-- [ ] 체스 게임의 승패가 정해지면 저장되어있는 모든 MOVE 명령어를 삭제한다.
+- [x] 체스 게임 불러오기 시(`load`) 이전 게임에서의 모든 MOVE 명령어를 조회한다.
+- [x] 체스 게임 시작 시(`start`) 저장되어있는 모든 MOVE 명령어를 삭제한다.
+- [x] 체스 게임 진행 시 MOVE 명령어를 저장한다.
+- [x] 체스 게임의 승패가 정해지면 저장되어있는 모든 MOVE 명령어를 삭제한다.
+
+### DB 설정
+
+- `docker-compose`로 `mysql` 실행 가능
+- `DB` 정보
+  - `dababase : chess`
+  - `username : user`
+  - `password : password`
+- `db/mysql/init/create-table.sql`에서 초기 테이블 세팅
 
 ## InputView
 
