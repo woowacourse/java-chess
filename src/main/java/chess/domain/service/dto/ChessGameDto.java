@@ -45,7 +45,7 @@ public class ChessGameDto {
         for (GeneratePieceDto generatePieceDto : generatePieceDtos) {
             String file = generatePieceDto.getFile();
             String rank = generatePieceDto.getRank();
-            Position position = new Position(File.of(file), Rank.of(Integer.parseInt(rank)));
+            Position position = new Position(File.of(Integer.parseInt(file)), Rank.of(Integer.parseInt(rank)));
             String type = generatePieceDto.getType();
             String side = generatePieceDto.getSide();
             addPiece(pieces, position, type, side);
