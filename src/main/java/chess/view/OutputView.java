@@ -1,7 +1,5 @@
 package chess.view;
 
-import chess.domain.pieces.component.Name;
-
 import java.util.List;
 
 public class OutputView {
@@ -13,11 +11,9 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(List<List<Name>> pieceNames) {
-        for(List<Name> names : pieceNames){
-            for(Name name : names){
-                System.out.print(name.getName());
-            }
+    public static void printBoard(List<List<String>> pieceNames) {
+        for (List<String> names : pieceNames) {
+            names.forEach(System.out::println);
             System.out.println();
         }
     }

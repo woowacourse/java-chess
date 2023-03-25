@@ -2,8 +2,8 @@ package chess.domain.pieces;
 
 import chess.domain.Direction;
 import chess.domain.board.Position;
-import chess.domain.pieces.component.Name;
 import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ public abstract class Piece {
     protected static final String INVALID_NOT_EMPTY_TEAM = "[ERROR] EmptyPiece이 아니면 NEUTRALITY 을 가질 수 없습니다.";
 
     protected final Team team;
-    protected Name name;
+    protected Type type;
     protected List<Direction> directions;
 
     public Piece(final Team team) {
         this.team = team;
     }
 
-    public Name getName() {
-        return name;
+    public Type getType() {
+        return type;
     }
 
     public Team getTeam() {

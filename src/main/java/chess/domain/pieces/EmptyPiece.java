@@ -2,26 +2,21 @@ package chess.domain.pieces;
 
 import chess.domain.Direction;
 import chess.domain.board.Position;
-import chess.domain.pieces.component.Name;
 import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class EmptyPiece extends Piece {
 
-    private static final String EMPTY_NAME = ".";
-
     public EmptyPiece(final Team team) {
         super(team);
         this.directions = new ArrayList<>();
         validateTeam(team);
-        initialName();
+        this.type = Type.NO_PIECE;
     }
 
-    private void initialName() {
-        this.name = new Name(EMPTY_NAME);
-    }
 
     @Override
     public void validateTeam(final Team team) {

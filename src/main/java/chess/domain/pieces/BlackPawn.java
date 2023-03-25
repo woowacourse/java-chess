@@ -2,8 +2,8 @@ package chess.domain.pieces;
 
 import chess.domain.Direction;
 import chess.domain.board.Position;
-import chess.domain.pieces.component.Name;
 import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 
 import java.util.List;
 
@@ -14,13 +14,12 @@ public class BlackPawn extends Piece {
 
     private static final int TWO_STEP = 2;
     private static final int ONE_STEP = 1;
-    private static final String BLACK_PAWN_NAME = "P";
 
     public BlackPawn() {
         super(BLACK);
         this.directions = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
         validateTeam(team);
-        this.name = new Name(BLACK_PAWN_NAME);
+        this.type = Type.PAWN;
     }
 
     @Override
