@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
+    public Path findMovablePositions(final Position source, final Board board) {
         throw new UnsupportedOperationException("지원하지 않는 메서드입니다.");
     }
 

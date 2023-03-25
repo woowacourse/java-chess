@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -45,7 +46,7 @@ public class Board {
         return board;
     }
 
-    public List<Position> findMovablePositions(final Position source) {
+    public Path findMovablePositions(final Position source) {
         return getPiece(source).findMovablePositions(source, this);
     }
 

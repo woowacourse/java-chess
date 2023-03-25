@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public abstract class Piece {
 
     protected abstract void validate(final Type type, final Side side);
 
-    public abstract List<Position> findMovablePositions(final Position source, final Board board);
+    public abstract Path findMovablePositions(final Position source, final Board board);
 
     public boolean isWhite() {
         return side.isWhite();

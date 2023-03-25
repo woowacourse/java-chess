@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -14,13 +15,13 @@ public abstract class LinearPiece extends Piece {
     }
 
     @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
+    public Path findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
 
         for (MovePattern movePattern : movePatterns) {
             movablePositions.addAll(findMovablePositionsByMovePattern(source, board, movePattern));
         }
-        return movablePositions;
+        return new Path(movablePositions);
     }
 
     private List<Position> findMovablePositionsByMovePattern(final Position source, final Board board,

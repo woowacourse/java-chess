@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.movepattern.BlackPawnMovePattern;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.movepattern.WhitePawnMovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -35,14 +36,14 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
+    public Path findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
 
         for (MovePattern movePattern : movePatterns) {
             movablePositions.addAll(findMovablePositionsByMovePattern(source, movePattern, board));
             movablePositions.addAll(findMovablePositionsByDoubleMove(source, board, movePattern));
         }
-        return movablePositions;
+        return new Path(movablePositions);
     }
 
     private List<Position> findMovablePositionsByDoubleMove(final Position source, final Board board,

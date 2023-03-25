@@ -2,8 +2,8 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Side;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class ChessGame {
 
@@ -38,8 +38,8 @@ public class ChessGame {
         checkPlayable();
         checkTurn(source);
         boolean kingDeath = board.isKing(target);
-        final List<Position> movablePositions = board.findMovablePositions(source);
-        checkMovable(movablePositions, target);
+        final Path path = board.findMovablePositions(source);
+        path.checkMovable(target);
         board.move(source, target);
         endGameIfKingDeath(kingDeath);
         changeTurn();
@@ -62,12 +62,6 @@ public class ChessGame {
             return;
         }
         throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-    }
-
-    private void checkMovable(final List<Position> movablePositions, final Position target) {
-        if (!movablePositions.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
     }
 
     private void changeTurn() {
