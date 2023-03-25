@@ -6,7 +6,6 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -64,7 +63,11 @@ public class Board {
     }
 
     public boolean isKingDead(final Color color) {
-        return !board.containsValue(King.from(color));
+        return !isKingALive(color);
+    }
+
+    private boolean isKingALive(final Color color){
+        return board.containsValue(King.from(color));
     }
 
     public Map<Position, Piece> getBoard() {
