@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.Color.*;
 import static chess.domain.File.A;
 import static chess.domain.File.E;
 import static chess.domain.Rank.*;
@@ -102,6 +101,41 @@ class ChessGameTest {
                 Arguments.of(List.of(new Knight(E, EIGHT, BLACK), new Bishop(E, ONE, WHITE)), 2.5, 3),
                 Arguments.of(List.of(new Pawn(E, SEVEN, BLACK), new Pawn(E, SIX, BLACK),
                         new Pawn(E, TWO, WHITE)), 1, 1)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePiecesAndScoreWinnerColor")
+    void 점수가_높은_색을_반환한다(final List<Piece> pieces, final Color expectedColor) {
+        final ChessGame chessGame = ChessGame.from(new TestPiecesFactory(pieces));
+
+        Color actualColor = chessGame.findScoreWinner();
+
+        assertThat(actualColor).isEqualTo(expectedColor);
+    }
+
+    private static Stream<Arguments> providePiecesAndScoreWinnerColor() {
+        return Stream.of(
+                Arguments.of(List.of(new Queen(E, EIGHT, BLACK), new Rook(E, ONE, WHITE)), BLACK),
+                Arguments.of(List.of(new Knight(E, EIGHT, BLACK), new Bishop(E, ONE, WHITE)), WHITE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePiecesAndDrawColor")
+    void 점수가_같으면_아무것도_아닌_색을_반환한다(final List<Piece> pieces, final Color expectedColor) {
+        final ChessGame chessGame = ChessGame.from(new TestPiecesFactory(pieces));
+
+        Color actualColor = chessGame.findScoreWinner();
+
+        assertThat(actualColor).isEqualTo(expectedColor);
+    }
+
+    private static Stream<Arguments> providePiecesAndDrawColor() {
+        return Stream.of(
+                Arguments.of(List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)), NOTHING),
+                Arguments.of(List.of(new Pawn(E, SEVEN, BLACK), new Pawn(E, SIX, BLACK),
+                        new Pawn(E, TWO, WHITE)), NOTHING)
         );
     }
 }
