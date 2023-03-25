@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class Piece {
-    private final MoveRule moveRule;
+    protected final MoveRule moveRule;
     private final Color color;
+    private final PieceType pieceType;
 
     public Piece(MoveRule moveRule, Color color) {
         this.moveRule = moveRule;
         this.color = color;
+        this.pieceType = moveRule.pieceType();
     }
 
     public List<Position> move(Position currentPosition, Position nextPosition) {
@@ -41,6 +43,10 @@ public class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return this.pieceType.getScore();
     }
 
     @Override

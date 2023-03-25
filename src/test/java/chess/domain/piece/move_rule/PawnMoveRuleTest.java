@@ -19,14 +19,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PawnMoveRuleTest {
     private Piece blackPiece;
     private Piece whitePiece;
-    private MoveRule blackMoveRule = PawnMoveRule.of(Color.BLACK);
-    private MoveRule whiteMoveRule = PawnMoveRule.of(Color.WHITE);
+    private PawnMoveRule blackMoveRule = PawnMoveRule.getInstance(Color.BLACK);
+    private PawnMoveRule whiteMoveRule = PawnMoveRule.getInstance(Color.WHITE);
     private Map<Position, Piece> board;
 
     @BeforeAll
     void setUp() {
-        blackPiece = new Piece(blackMoveRule, Color.BLACK);
-        whitePiece = new Piece(whiteMoveRule, Color.WHITE);
+        blackPiece = new Piece(PawnMoveRule.getInstance(Color.BLACK), Color.BLACK);
+        whitePiece = new Piece(PawnMoveRule.getInstance(Color.WHITE), Color.WHITE);
     }
 
     @BeforeEach

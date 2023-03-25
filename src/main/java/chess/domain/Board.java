@@ -11,13 +11,18 @@ import chess.domain.position.Rank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> board;
 
     public Board() {
-        board = new HashMap<>();
+        this.board = new HashMap<>();
         initializePiece();
+    }
+
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public Map<Position, PieceDto> move(Position currentPosition, Position nextPosition, Color thisTurn) {
@@ -29,7 +34,43 @@ public class Board {
             return movePawn(currentPosition, nextPosition, routePositions);
         }
 
-        return moveGeneralPiece(nextPosition, currentPiece, routePositions);
+        return moveGeneralPiece(currentPosition, nextPosition, routePositions);
+    }
+
+    public List<Double> calculateScore() {
+        double blackScore = getColorPiecesScore(Color.BLACK) - (0.5D * verticalSamePawnCount(Color.BLACK));
+        double whiteScore = getColorPiecesScore(Color.WHITE) - (0.5D * verticalSamePawnCount(Color.WHITE));
+        return List.of(blackScore, whiteScore);
+    }
+
+    private double getColorPiecesScore(Color color) {
+        return board.values().stream().filter(p -> p.isSameColor(color))
+                .map(Piece::getScore)
+                .reduce(0D, Double::sum);
+    }
+
+    private Long verticalSamePawnCount(Color color) {
+        long verticalPawnCount = 0;
+        List<Position> pawnPositions = getPawnWithColor(color);
+
+        for (File file : File.values()) {
+            long count = pawnPositions.stream()
+                    .filter(p -> p.isSameFile(file))
+                    .count();
+            if (count >= 2) {
+                verticalPawnCount += count;
+            }
+        }
+        return verticalPawnCount;
+    }
+
+    private List<Position> getPawnWithColor(Color color) {
+        return board.entrySet().stream()
+                .filter(entry -> {
+                    Piece piece = entry.getValue();
+                    return piece.isPawn() && piece.isSameColor(color);})
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     private void validateThisTurnColor(Color thisTurn, Piece piece) {
@@ -38,11 +79,15 @@ public class Board {
         }
     }
 
-    private Map<Position, PieceDto> moveGeneralPiece(Position nextPosition, Piece piece, List<Position> routePositions) {
+    private Map<Position, PieceDto> moveGeneralPiece(Position currentPosition, Position nextPosition, List<Position> routePositions) {
         validateMiddlePathConflict(routePositions);
-        if (piece.isFriendly(board.get(nextPosition))) {
+
+        Piece currentPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
+        Piece nextPiece = board.getOrDefault(nextPosition, BlankPiece.getInstance());
+        if (currentPiece.isFriendly(nextPiece)) {
             throw new IllegalArgumentException("이동 위치에 아군기물이 있어 이동할 수 없습니다.");
         }
+        updateMovedPiece(currentPosition, nextPosition, currentPiece);
         return getPrintingBoard();
     }
 
@@ -80,7 +125,7 @@ public class Board {
 
     private void initializePawnLinePieces(Rank rank, Color color) {
         for (File file : File.values()) {
-            board.put(Position.of(file, rank), new Piece(PawnMoveRule.of(color), color));
+            board.put(Position.of(file, rank), new Piece(PawnMoveRule.getInstance(color), color));
         }
     }
 

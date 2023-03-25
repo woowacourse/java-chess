@@ -5,6 +5,7 @@ import chess.domain.PieceDto;
 import chess.domain.position.Position;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class ReadyChessGameState implements ChessGameState {
@@ -13,6 +14,11 @@ public class ReadyChessGameState implements ChessGameState {
 
     @Override
     public Map<Position, PieceDto> move(String currentPosition, String nextPosition) {
+        throw new IllegalStateException(GAME_NOT_START_ERROR_MESSAGE);
+    }
+
+    @Override
+    public List<Double> calculateScore() {
         throw new IllegalStateException(GAME_NOT_START_ERROR_MESSAGE);
     }
 

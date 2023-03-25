@@ -10,6 +10,8 @@ import java.util.Map;
 public class OutputView {
     public static final int RANK_INDEX = 0;
     public static final int FILE_INDEX = 1;
+    public static final int BLACK_SOCRE_INDEX = 0;
+    public static final int WHITE_SCORE_INDEX = 1;
     private static OutputView instance;
 
     private OutputView() {
@@ -41,6 +43,21 @@ public class OutputView {
         }
 
         printPieces(board);
+    }
+
+    public void printStatus(List<Double> score) {
+        double blackScore = score.get(BLACK_SOCRE_INDEX);
+        double whiteScore = score.get(WHITE_SCORE_INDEX);
+
+        System.out.println("흰색 진영 점수:" + whiteScore + " 검은색 진영 점수:" + blackScore);
+        double diff = whiteScore - blackScore;
+        if (diff > 0) {
+            System.out.println("흰색 진영이 " + diff + "점 앞서고 있습니다.");
+        }
+        if (diff < 0) {
+            System.out.println("검은색 진영이 " + -diff + "점 앞서고 있습니다.");
+        }
+        System.out.println();
     }
 
     private void setPrintingSymbol(List<Integer> coordinate, List<String> oneLine, PieceDto pieceDto) {

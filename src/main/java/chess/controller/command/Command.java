@@ -8,7 +8,8 @@ import java.util.function.Function;
 public enum Command {
     START("start", StartCommandExecute::new),
     MOVE("move", MoveCommandExecute::new),
-    END("end", EndCommandExecute::new);
+    END("end", EndCommandExecute::new),
+    STATUS("status", StatusCommandExecute::new);
 
     private final String command;
     private final Function<ChessGameState, CommandExecute> executorGenerator;
