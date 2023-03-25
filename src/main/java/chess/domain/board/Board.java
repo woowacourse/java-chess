@@ -1,8 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.game.Status;
+import chess.domain.game.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Move;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Board {
+
+    private static final long INITIAL_KING_COUNT = 2;
 
     private final Map<Position, Piece> pieces;
 
@@ -72,8 +75,15 @@ public class Board {
         }
     }
 
-    public Status getStatus() {
-        return Status.from(pieces);
+    public boolean isEndOfGame() {
+        long kingCount = pieces.values().stream()
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .count();
+        return kingCount != INITIAL_KING_COUNT;
+    }
+
+    public GameResult getResult() {
+        return GameResult.from(pieces);
     }
 
     public Map<Position, Piece> getPieces() {

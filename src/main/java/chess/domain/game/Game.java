@@ -35,6 +35,10 @@ public class Game {
         turn = turn.change();
     }
 
+    public boolean isEndOfGame() {
+        return board.isEndOfGame();
+    }
+
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
@@ -43,7 +47,7 @@ public class Game {
         return turn.name();
     }
 
-    public Status getStatus() {
-        return board.getStatus();
+    public GameResult getResult() {
+        return board.getResult();
     }
 }

@@ -69,11 +69,15 @@ public class ChessGameController {
             throw new IllegalArgumentException("게임이 진행중입니다.");
         }
         if (commandType == CommandType.STATUS) {
-            outputView.printStatus(game.getStatus());
+            outputView.printStatus(game.getResult());
         }
         if (commandType == CommandType.MOVE) {
             MoveRequest moveRequest = request.getMoveRequest();
             game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
+            if (game.isEndOfGame()) {
+                outputView.printFinalWinner(game.getResult());
+                return CommandType.END;
+            }
         }
         return commandType;
     }

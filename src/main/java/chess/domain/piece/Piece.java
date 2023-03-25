@@ -35,8 +35,8 @@ public class Piece {
         return this.color == turn;
     }
 
-    public boolean isPawn() {
-        return type == PieceType.PAWN;
+    public boolean isSameType(PieceType type) {
+        return this.type == type;
     }
 
     public PieceType getType() {

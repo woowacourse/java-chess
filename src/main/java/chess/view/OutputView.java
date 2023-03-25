@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.controller.dto.PieceResponse;
-import chess.domain.game.Status;
+import chess.domain.game.GameResult;
 import chess.domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;
@@ -51,17 +51,21 @@ public class OutputView {
         }
     }
 
-    public void printStatus(Status status) {
-        printColorStatus(status, Color.WHITE);
-        printColorStatus(status, Color.BLACK);
-        printWinner(status.getWinner());
+    public void printFinalWinner(GameResult gameResult) {
+        System.out.println(gameResult.getWinner().name() + "의 승리입니다.");
     }
 
-    private void printColorStatus(Status status, Color color) {
-        System.out.println(color.name() + ": " + status.getScore(color).getValue());
+    public void printStatus(GameResult gameResult) {
+        printColorStatus(gameResult, Color.WHITE);
+        printColorStatus(gameResult, Color.BLACK);
+        printCurrentWinner(gameResult.getWinner());
     }
 
-    private void printWinner(Color winner) {
+    private void printColorStatus(GameResult gameResult, Color color) {
+        System.out.println(color.name() + ": " + gameResult.getScore(color).getValue());
+    }
+
+    private void printCurrentWinner(Color winner) {
         if (winner == Color.NONE) {
             System.out.println("현재 동점입니다.");
             return;

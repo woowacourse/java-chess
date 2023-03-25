@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.mapping;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class Score {
 
     private static int getDuplicatedPawnSize(Map<Position, Piece> pieces) {
         Map<Integer, List<Piece>> fileToPawn = pieces.entrySet().stream()
-                .filter(positionToPiece -> positionToPiece.getValue().isPawn())
+                .filter(positionToPiece -> positionToPiece.getValue().isSameType(PieceType.PAWN))
                 .collect(groupingBy(positionPieceEntry -> positionPieceEntry.getKey().getFileIndex(),
                         mapping(Entry::getValue, Collectors.toList())));
 
