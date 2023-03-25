@@ -54,11 +54,11 @@ public class ChessGameService {
         return boardResult.calculatePoints(color);
     }
 
-    public Map<Position, Piece> board(){
-        return board.getBoard();
-    }
-
     public boolean isKingDead() {
         return board.isKingDead(Color.WHITE) || board.isKingDead(Color.BLACK);
+    }
+
+    public Map<Position, Piece> board(){
+        return board.getBoard();
     }
 }
