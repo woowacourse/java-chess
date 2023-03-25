@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.dao.ChessGameDao;
+import chess.dao.MoveDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.BoardResult;
@@ -14,15 +14,15 @@ import java.util.Map;
 public class ChessGameService {
 
     private Board board;
-    private final ChessGameDao chessGameDao;
+    private final MoveDao moveDao;
 
     public ChessGameService() {
         this.board = BoardInitializer.initialize();
-        this.chessGameDao = new ChessGameDao();
+        this.moveDao = new MoveDao();
     }
 
     public void load() {
-        final List<MoveDto> moves = chessGameDao.restart();
+        final List<MoveDto> moves = moveDao.restart();
         for (MoveDto move : moves) {
             final String source = move.getSource();
             final String target = move.getTarget();
@@ -34,11 +34,11 @@ public class ChessGameService {
     public void move(final String source, final String target) {
         board.move(source, target);
         MoveDto moveDto = new MoveDto(source, target);
-        chessGameDao.save(moveDto);
+        moveDao.save(moveDto);
     }
 
     public void start() {
-        chessGameDao.clear();
+        moveDao.clear();
     }
 
     public double whiteScore() {

@@ -5,15 +5,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessGameDao {
+public class MoveDao {
 
     private final Connection connection;
 
-    public ChessGameDao() {
+    public MoveDao() {
         this.connection = ConnectionGenerator.getConnection();
     }
 
