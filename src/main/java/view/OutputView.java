@@ -1,6 +1,7 @@
 package view;
 
 import dto.ChessBoardDto;
+import dto.ScoreDto;
 
 import java.util.List;
 
@@ -8,7 +9,8 @@ public final class OutputView {
 
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
+        System.out.println("> 새 게임 시작 : new");
+        System.out.println("> 게임 불러오기 : load");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
         System.out.println("> 게임 점수 : status");
@@ -42,23 +44,11 @@ public final class OutputView {
         }
     }
 
-    public static void printScore(final double whiteScore, final double blackScore) {
-        final String result = findWinner(whiteScore, blackScore);
+    public static void printScore(final ScoreDto scoreDto) {
 
-        System.out.printf("White : %.1f%n", whiteScore);
-        System.out.printf("Black : %.1f%n", blackScore);
-        System.out.println(result);
+        System.out.printf("White : %.1f%n", scoreDto.getWhiteScore());
+        System.out.printf("Black : %.1f%n", scoreDto.getBlackScore());
+        System.out.println(scoreDto.getWinner());
     }
-
-    private static String findWinner(final double whiteScore, final double blackScore) {
-        if (whiteScore > blackScore) {
-            return "White Win";
-        }
-        if (whiteScore == blackScore) {
-            return "Draw";
-        }
-        return "Black Win";
-    }
-
 
 }
