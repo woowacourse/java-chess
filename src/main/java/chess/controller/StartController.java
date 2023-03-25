@@ -21,9 +21,8 @@ public class StartController implements Controller {
     public Response execute(Request request) {
         try {
             validate(request);
-            ChessDB chessDB = new ChessDB();
-            if (chessDB.existBoard()) {
-                Game game = Game.of(chessDB.getBoardData());
+            if (ChessDB.existBoard()) {
+                Game game = Game.of(ChessDB.getBoardData());
                 GameSession.makeSession(game);
                 return new Response(ResponseType.START, makeBoardDto(game));
             }

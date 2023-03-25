@@ -4,9 +4,9 @@ import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.exception.IllegalPieceMoveException;
 import chess.domain.piece.BishopPiece;
+import chess.domain.piece.InitPawnPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;
-import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
@@ -67,7 +67,7 @@ public class BoardTest {
         //then
         assertThat(pieces)
                 .allSatisfy((piece) -> assertThat(piece)
-                        .isExactlyInstanceOf(PawnPiece.class)
+                        .isExactlyInstanceOf(InitPawnPiece.class)
                 )
                 .hasSize(8);
 

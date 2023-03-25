@@ -32,7 +32,11 @@ public class ChessDB {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    public Connection getConnection() {
+    private ChessDB() {
+
+    }
+
+    private static Connection getConnection() {
         // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
@@ -43,7 +47,7 @@ public class ChessDB {
         }
     }
 
-    public Board getBoardData() {
+    public static Board getBoardData() {
         final var query = "SELECT * FROM piece";
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
@@ -63,7 +67,7 @@ public class ChessDB {
         }
     }
 
-    private Piece makePieceOf(String pieceType, String color) {
+    private static Piece makePieceOf(String pieceType, String color) {
         PieceType type = PieceType.valueOf(pieceType);
         Color pieceColor = Color.valueOf(color);
 
@@ -88,7 +92,7 @@ public class ChessDB {
         throw new UnsupportedOperationException();
     }
 
-    public void saveBoard(BoardSaveDto dto) {
+    public static void saveBoard(BoardSaveDto dto) {
         delete();
         final var query = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
         Map<String, HashMap<String, SavePieceDto>> data = dto.getData();
@@ -110,7 +114,7 @@ public class ChessDB {
         }
     }
 
-    public void delete() {
+    public static void delete() {
         final var query = "DELETE FROM piece";
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
@@ -120,7 +124,7 @@ public class ChessDB {
         }
     }
 
-    public boolean existBoard() {
+    public static boolean existBoard() {
         final var query = "SELECT * FROM piece";
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
