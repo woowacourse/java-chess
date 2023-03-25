@@ -167,4 +167,21 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 폰은 대각으로 이동할 때만 적 기물이 있는 위치로 이동할 수 있습니다.");
     }
+
+    @Test
+    @DisplayName("한 파일 위에 다른 폰과 함께 존재하는 폰이 몇 개인지 반환한다.")
+    void getCountOfPawnsOnSameFileBySide() {
+        // given
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Pawn(new Position(File.A, Rank.ONE), Side.WHITE),
+                new Pawn(new Position(File.A, Rank.THREE), Side.WHITE),
+
+                new Pawn(new Position(File.B, Rank.ONE), Side.WHITE),
+                new Pawn(new Position(File.B, Rank.THREE), Side.WHITE),
+                new Pawn(new Position(File.B, Rank.SEVEN), Side.WHITE)
+        )));
+
+        // when, then
+        assertThat(fixedBoard.getCountOfPawnsOnSameFileBySide(Side.WHITE)).isEqualTo(3);
+    }
 }
