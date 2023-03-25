@@ -77,6 +77,16 @@ public class ChessGame {
         return scoreBySide;
     }
 
+    public Side getWinner() {
+        if (GameStatus.END == gameStatus) {
+            throw new IllegalArgumentException("[ERROR] 아직 게임이 진행중입니다.");
+        }
+        if (turnToMove == Side.BLACK) {
+            return Side.WHITE;
+        }
+        return Side.BLACK;
+    }
+
     public GameStatus status() {
         return this.gameStatus;
     }
