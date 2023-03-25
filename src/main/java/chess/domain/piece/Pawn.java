@@ -10,12 +10,12 @@ public final class Pawn extends Piece {
 
     private boolean isMoved = false;
 
-    public Pawn(Camp camp) {
+    public Pawn(final Camp camp) {
         super(camp, PieceSymbol.PAWN);
     }
 
     @Override
-    public PieceMove getMovement(Position from, Position to) {
+    public PieceMove getMovement(final Position from, final Position to) {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 
@@ -27,7 +27,7 @@ public final class Pawn extends Piece {
         return new InvalidMove();
     }
 
-    private PieceMove decidePawnMove(int rankGap, int fileGap) {
+    private PieceMove decidePawnMove(final int rankGap, final int fileGap) {
         if (isDiagonalMove(rankGap, fileGap)) {
             return new PawnCatchMove();
         }
@@ -36,7 +36,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    boolean isPieceRule(Position from, Position to) {
+    boolean isPieceRule(final Position from, final Position to) {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 
@@ -47,12 +47,12 @@ public final class Pawn extends Piece {
         return isForwardMove(rankGap);
     }
 
-    private boolean isDiagonalMove(int rankGap, int fileGap) {
+    private boolean isDiagonalMove(final int rankGap, final int fileGap) {
         return (isBlack() && rankGap == -1 && Math.abs(fileGap) == 1)
                 || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
     }
 
-    private boolean isForwardMove(int rankGap) {
+    private boolean isForwardMove(final int rankGap) {
         if ((isBlack() && rankGap == -1)
                 || (!isBlack() && rankGap == 1)) {
             return true;

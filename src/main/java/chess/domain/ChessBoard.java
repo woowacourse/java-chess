@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ChessBoard {
+public final class ChessBoard {
 
     public static final double DEDUCT_PAWN_SCORE = 0.5;
     public static final int INITIAL_VALUE = 0;
     private final Map<Position, Piece> board;
 
-    public ChessBoard(Map<Position, Piece> board) {
+    public ChessBoard(final Map<Position, Piece> board) {
         this.board = board;
     }
 
@@ -29,21 +29,21 @@ public class ChessBoard {
                 .count();
     }
 
-    public boolean isKingLiveByCamp(Camp camp) {
+    public boolean isKingLiveByCamp(final Camp camp) {
         return board.values().stream()
                 .anyMatch(piece -> piece.isMyCamp(camp) && piece.isKing());
     }
 
-    public void movePieceOn(Position fromPosition, Position toPosition) {
+    public void movePieceOn(final Position fromPosition, final Position toPosition) {
         board.put(toPosition, board.get(fromPosition));
         board.put(fromPosition, new Empty());
     }
 
-    public Piece choosePiece(Position position) {
+    public Piece choosePiece(final Position position) {
         return board.get(position);
     }
 
-    public List<Piece> choiceBetweenPiece(List<Position> betweenPosition) {
+    public List<Piece> choiceBetweenPiece(final List<Position> betweenPosition) {
         List<Piece> betweenPiece = new ArrayList<>();
         for (Position position : betweenPosition) {
             betweenPiece.add(board.get(position));
@@ -51,7 +51,7 @@ public class ChessBoard {
         return betweenPiece;
     }
 
-    public double calculateTotalScoreByCamp(Camp camp) {
+    public double calculateTotalScoreByCamp(final Camp camp) {
         double sum = INITIAL_VALUE;
         for (File file : File.values()) {
             sum += calculateOneLine(camp, file);
@@ -60,7 +60,7 @@ public class ChessBoard {
         return sum;
     }
 
-    private List<Position> getLineByFile(File file) {
+    private List<Position> getLineByFile(final File file) {
         List<Position> positions = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             positions.add(new Position(file, rank));
@@ -68,7 +68,7 @@ public class ChessBoard {
         return positions;
     }
 
-    private Map<Camp, List<Piece>> divideByCamp(List<Position> positions) {
+    private Map<Camp, List<Piece>> divideByCamp(final List<Position> positions) {
         List<Piece> pieces = new ArrayList<>();
         for (Position position : positions) {
             pieces.add(board.get(position));
@@ -83,7 +83,7 @@ public class ChessBoard {
         return calculateByPawnCount(divideByCamp(getLineByFile(file)), camp);
     }
 
-    private double calculateByPawnCount(Map<Camp, List<Piece>> groupingByCamp, Camp camp) {
+    private double calculateByPawnCount(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
         int pawnCount = countPawn(groupingByCamp, camp);
 
         if (pawnCount != 1) {

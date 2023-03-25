@@ -18,7 +18,7 @@ public final class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printChessState(Map<Position, Piece> piecePoint) {
+    public static void printChessState(final Map<Position, Piece> piecePoint) {
         StringBuilder chessBoardView = new StringBuilder();
         for (Position position : piecePoint.keySet()) {
             Piece piece = piecePoint.get(position);
@@ -31,13 +31,13 @@ public final class OutputView {
         System.out.println(chessBoardView);
     }
 
-    private static void checkLineBreak(StringBuilder chessBoardView) {
+    private static void checkLineBreak(final StringBuilder chessBoardView) {
         if (chessBoardView.length() % (CHESS_BOARD_WIDTH + LINE_BREAK_INDEX) == 0) {
             chessBoardView.append(System.lineSeparator());
         }
     }
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.println(message);
     }
 

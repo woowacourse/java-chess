@@ -16,18 +16,18 @@ public enum Rank {
 
     private final int order;
 
-    Rank(int order) {
+    Rank(final int order) {
         this.order = order;
     }
 
-    public Rank move(int step) {
+    public Rank move(final int step) {
         return Arrays.stream(Rank.values())
                 .filter(it -> it.order == this.order + step)
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public int subtractOrder(Rank other) {
+    public int subtractOrder(final Rank other) {
         return this.order - other.order;
     }
 }

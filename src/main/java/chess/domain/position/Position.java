@@ -50,7 +50,7 @@ public final class Position {
         return Objects.hash(file, rank);
     }
 
-    public Position move(int fileStep, int rankStep) {
+    public Position move(final int fileStep, final int rankStep) {
         File newFile = file.move(fileStep);
         Rank newRank = rank.move(rankStep);
         return Position.of(newFile, newRank);

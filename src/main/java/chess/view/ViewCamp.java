@@ -18,11 +18,11 @@ public enum ViewCamp {
         this.camp = camp;
     }
 
-    public static String getCampName(Camp camp) {
+    public static String getCampName(final Camp camp) {
         return Arrays.stream(ViewCamp.values())
-                .filter(viewCamp -> viewCamp.camp==camp)
+                .filter(viewCamp -> viewCamp.camp == camp)
                 .findFirst()
-                .orElseThrow(()->new IllegalArgumentException("올바르지 않은 명령어 입니다."))
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어 입니다."))
                 .name;
     }
 }

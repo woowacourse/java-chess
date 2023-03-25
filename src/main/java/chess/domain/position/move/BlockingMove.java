@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 public final class BlockingMove implements PieceMove {
 
     @Override
-    public boolean isMovable(Piece piece, boolean isLastPiece) {
+    public boolean isMovable(final Piece piece, final boolean isLastPiece) {
         if (isLastPiece) {
             return true;
         }

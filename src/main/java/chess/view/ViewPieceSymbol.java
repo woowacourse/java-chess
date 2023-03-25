@@ -18,12 +18,12 @@ public enum ViewPieceSymbol {
     private final PieceSymbol pieceSymbol;
     private final String viewSymbol;
 
-    ViewPieceSymbol(PieceSymbol pieceSymbol, String viewSymbol) {
+    ViewPieceSymbol(final PieceSymbol pieceSymbol, final String viewSymbol) {
         this.pieceSymbol = pieceSymbol;
         this.viewSymbol = viewSymbol;
     }
 
-    public static String getViewSymbolBy(PieceSymbol pieceSymbol, boolean upperFlag) {
+    public static String getViewSymbolBy(final PieceSymbol pieceSymbol, final boolean upperFlag) {
         String viewSymbol = Arrays.stream(ViewPieceSymbol.values())
                 .filter(it -> it.pieceSymbol == pieceSymbol)
                 .findFirst()
@@ -33,7 +33,7 @@ public enum ViewPieceSymbol {
         return applyUpperFlag(viewSymbol, upperFlag);
     }
 
-    private static String applyUpperFlag(String viewSymbol, boolean upperFlag) {
+    private static String applyUpperFlag(final String viewSymbol, final boolean upperFlag) {
         if (upperFlag) {
             return viewSymbol.toUpperCase();
         }

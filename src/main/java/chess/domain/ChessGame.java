@@ -17,12 +17,12 @@ public final class ChessGame {
     private final ChessBoard chessBoard;
     private Turn turnCamp;
 
-    public ChessGame(ChessBoard chessBoard, Turn turnCamp) {
+    public ChessGame(final ChessBoard chessBoard, final Turn turnCamp) {
         this.turnCamp = turnCamp;
         this.chessBoard = chessBoard;
     }
 
-    public void move(Position fromPosition, Position toPosition) {
+    public void move(final Position fromPosition, final Position toPosition) {
         validateBeforeMoveTo(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
@@ -36,32 +36,32 @@ public final class ChessGame {
         changeTurn();
     }
 
-    private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
+    private PieceMove getPieceMove(final Position fromPosition, final Position toPosition) {
         Piece fromPiece = chessBoard.choosePiece(fromPosition);
 
         return fromPiece.getMovement(fromPosition, toPosition);
     }
 
-    public void validateBeforeMoveTo(Position fromPosition, Position toPosition) {
+    public void validateBeforeMoveTo(final Position fromPosition, final Position toPosition) {
         validatePickExistPiece(chessBoard.choosePiece(fromPosition));
         validateTurnCamp(chessBoard.choosePiece(fromPosition));
         validateSameCamp(chessBoard.choosePiece(fromPosition), chessBoard.choosePiece(toPosition));
         validateEqualPosition(fromPosition, toPosition);
     }
 
-    private void validateTurnCamp(Piece fromPiece) {
+    private void validateTurnCamp(final Piece fromPiece) {
         if (!turnCamp.isMyTurn(fromPiece)) {
             throw new IllegalArgumentException(TURN_MISMATCHED_ERROR_MESSAGE);
         }
     }
 
-    private void validatePickExistPiece(Piece fromPiece) {
+    private void validatePickExistPiece(final Piece fromPiece) {
         if (fromPiece.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CHOICE_ERROR_MESSAGE);
         }
     }
 
-    private void validateSameCamp(Piece fromPiece, Piece toPiece) {
+    private void validateSameCamp(final Piece fromPiece, final Piece toPiece) {
         if (fromPiece.isEmpty()) {
             return;
         }
@@ -70,13 +70,13 @@ public final class ChessGame {
         }
     }
 
-    private void validateEqualPosition(Position fromPosition, Position toPosition) {
+    private void validateEqualPosition(final Position fromPosition, final Position toPosition) {
         if (fromPosition.equals(toPosition)) {
             throw new IllegalArgumentException(SAME_POSITION_ERROR_MESSAGE);
         }
     }
 
-    public void validateLastMovable(Piece piece, PieceMove pieceMove, boolean lastPiece) {
+    public void validateLastMovable(final Piece piece, final PieceMove pieceMove, final boolean lastPiece) {
         if (!pieceMove.isMovable(piece, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }

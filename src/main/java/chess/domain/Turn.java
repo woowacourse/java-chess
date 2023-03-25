@@ -7,11 +7,11 @@ public class Turn {
 
     private final Camp turnCamp;
 
-    public Turn(Camp camp) {
+    public Turn(final Camp camp) {
         this.turnCamp = camp;
     }
 
-    public Turn convert(Turn turn) {
+    public Turn convert(final Turn turn) {
         if (turn.turnCamp == Camp.BLACK) {
             return new Turn(Camp.WHITE);
         }

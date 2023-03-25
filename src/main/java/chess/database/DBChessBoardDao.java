@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBChessBoardDao implements ChessGameDao {
+public final class DBChessBoardDao implements ChessGameDao {
 
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
@@ -30,7 +30,7 @@ public class DBChessBoardDao implements ChessGameDao {
     }
 
     @Override
-    public void save(Position fromPosition, Position toPosition) {
+    public void save(final Position fromPosition,final Position toPosition) {
         File fromMoveFile = fromPosition.getFile();
         Rank fromMoveRank = fromPosition.getRank();
         File toMoveFile = toPosition.getFile();

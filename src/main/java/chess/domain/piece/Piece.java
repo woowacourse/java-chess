@@ -11,7 +11,7 @@ public abstract class Piece {
     private final Camp camp;
     private final PieceSymbol pieceSymbol;
 
-    Piece(Camp camp, PieceSymbol pieceSymbol) {
+    Piece(final Camp camp, final PieceSymbol pieceSymbol) {
         this.camp = camp;
         this.pieceSymbol = pieceSymbol;
     }
@@ -28,7 +28,7 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isSameCamp(Piece other) {
+    public boolean isSameCamp(final Piece other) {
         if (other.camp == Camp.NEUTRAL) {
             return false;
         }
@@ -36,13 +36,13 @@ public abstract class Piece {
         return camp == other.camp;
     }
 
-    public boolean isMyCamp(Camp other) {
+    public boolean isMyCamp(final Camp other) {
         return camp == other;
     }
 
-    public abstract PieceMove getMovement(Position from, Position to);
+    public abstract PieceMove getMovement(final Position from, Position to);
 
-    abstract boolean isPieceRule(Position from, Position to);
+    abstract boolean isPieceRule(final Position from,final Position to);
 
     @Override
     public boolean equals(Object o) {

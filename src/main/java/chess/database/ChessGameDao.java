@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ChessGameDao {
 
-    void save(Position fromPosition, Position toPosition);
+    void save(final Position fromPosition, final Position toPosition);
 
     List<Position> select();
 }

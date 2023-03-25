@@ -23,7 +23,7 @@ public final class ChessController {
     private final DBChessBoardDao dbChessBoardDao;
     private final ChessGame game;
 
-    public ChessController(ChessGame game, DBChessBoardDao dbChessBoardDao) {
+    public ChessController(final ChessGame game, final DBChessBoardDao dbChessBoardDao) {
         this.game = game;
         this.dbChessBoardDao = dbChessBoardDao;
         initController();
@@ -55,13 +55,13 @@ public final class ChessController {
         }
     }
 
-    private void getNotation(List<Position> positions, ChessGame game) {
+    private void getNotation(final List<Position> positions, final ChessGame game) {
         for (int i = 0; i < positions.size(); i += POSITION_SET_INDEX) {
             game.move(positions.get(i), positions.get(i + 1));
         }
     }
 
-    private ChessCommand play(ChessGame game) {
+    private ChessCommand play(final ChessGame game) {
         try {
             List<String> commands = InputView.readCommand();
             ChessCommand command = ChessCommand.from(commands.get(COMMAND_INDEX));
@@ -74,13 +74,13 @@ public final class ChessController {
         }
     }
 
-    private void start(List<String> commands,ChessGame game) {
+    private void start(final List<String> commands, final ChessGame game) {
 
         ChessCommand.validateStartCommand(commands);
         printBoard(game.getChessBoard());
     }
 
-    private void move(List<String> commands,ChessGame game) {
+    private void move(final List<String> commands, final ChessGame game) {
         ChessCommand.validatePlayingCommand(commands);
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
@@ -89,19 +89,19 @@ public final class ChessController {
         printBoard(game.getChessBoard());
     }
 
-    private void status(List<String> commands,ChessGame game) {
+    private void status(final List<String> commands, final ChessGame game) {
         ChessCommand.validateStatusCommand(commands);
         OutputView.printStatusScore(game.getWhiteScore(), game.getBlackScore());
     }
 
-    private Position toPosition(String positionInput) {
+    private Position toPosition(final String positionInput) {
         String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
         String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
 
         return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
     }
 
-    private void printBoard(ChessBoard chessBoard) {
+    private void printBoard(final ChessBoard chessBoard) {
         OutputView.printChessState(chessBoard.getBoard());
     }
 }

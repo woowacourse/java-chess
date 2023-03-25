@@ -6,5 +6,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface GameAction {
-    void execute(List<String> commands, ChessGame chessGame);
+    void execute(final List<String> commands, final ChessGame chessGame);
 }
