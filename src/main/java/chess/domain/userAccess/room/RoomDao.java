@@ -43,6 +43,22 @@ public class RoomDao {
         }
     }
 
+    public Room findRoomByRoomIdAndUser(int roomId, User user) {
+        try {
+            String query = "SELECT * FROM room WHERE roomId = ? and user_id = ?";
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            preparedStatement.setString(2, user.userId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            String commands = resultSet.getString("commands");
+            return new Room(roomId, user.userId(), commands);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 방 이름입니다.");
+        }
+    }
+
     public List<Room> findRoomsByUser(User user) {
         try {
             String query = "SELECT * FROM room WHERE user_id = ?";
