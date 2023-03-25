@@ -75,34 +75,6 @@ class PositionTest {
         assertThat(compareResult).isEqualTo(expectedCompare);
     }
 
-    @DisplayName("가로 기준으로 방향을 찾는다.")
-    @ParameterizedTest
-    @CsvSource(value = {"0:-1", "1:-1", "2:0", "3:1", "4:1"}, delimiter = ':')
-    void findRowDirection(final int rowValue, final int expectDirection) {
-        // given
-        final Row row = Row.from(rowValue);
-
-        // when
-        final int direction = POSITION_2_2.findDirection(row);
-
-        // then
-        assertThat(direction).isEqualTo(expectDirection);
-    }
-
-    @DisplayName("세로 기준으로 방향을 찾는다.")
-    @ParameterizedTest
-    @CsvSource(value = {"0:-1", "1:-1", "2:0", "3:1", "4:1"}, delimiter = ':')
-    void findColumnDirection(final int columnValue, final int expectDirection) {
-        // given
-        final Column column = Column.from(columnValue);
-
-        // when
-        final int direction = POSITION_2_2.findDirection(column);
-
-        // then
-        assertThat(direction).isEqualTo(expectDirection);
-    }
-
     @DisplayName("방향으로 움직이다")
     @ParameterizedTest
     @MethodSource("moveDirectionDummy")

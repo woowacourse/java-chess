@@ -41,13 +41,10 @@ public class Position implements Comparable<Position> {
         return this.column.diff(otherColumn);
     }
 
-    public int findDirection(final Row otherRow) {
-        return row.findDirection(otherRow);
+    public int diff(final Position otherPosition) {
+        return Math.abs(row.diff(otherPosition.row)) + Math.abs(column.diff(otherPosition.column));
     }
 
-    public int findDirection(final Column othreColumn) {
-        return column.findDirection(othreColumn);
-    }
     public boolean isRangeOk(final Direction direction) {
         return row.isMovable(direction) && column.isMovable(direction);
     }
@@ -71,7 +68,7 @@ public class Position implements Comparable<Position> {
 
     @Override
     public String toString() {
-        return "(" + row + "," + column + ")";
+        return row.getType() + column.getType();
     }
 
     @Override
