@@ -11,6 +11,7 @@ import chess.domain.pieces.PieceType;
 import chess.domain.pieces.Score;
 import chess.domain.position.Position;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -48,7 +49,16 @@ public final class Board {
         return kingCount == ALL_KING_ALIVE_COUNT;
     }
 
-    public Score scoreOf(final Team team) {
+    public Map<Team, Score> scores() {
+        Map<Team, Score> scores = new HashMap<>();
+
+        scores.put(Team.WHITE, scoreOf(Team.WHITE));
+        scores.put(Team.BLACK, scoreOf(Team.BLACK));
+
+        return scores;
+    }
+
+    private Score scoreOf(final Team team) {
         return IntStream.range(0, Position.getMaxIndex())
                 .mapToObj(column -> IntStream.range(0, Position.getMaxIndex())
                         .mapToObj(row -> Position.of(row, column))

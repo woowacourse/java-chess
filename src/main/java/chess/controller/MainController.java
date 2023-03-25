@@ -2,16 +2,18 @@ package chess.controller;
 
 import static chess.view.Command.END;
 import static chess.view.Command.MOVE;
+import static chess.view.Command.SCORE;
 import static chess.view.Command.START;
 import static chess.view.InputView.readCommand;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printError;
 import static chess.view.OutputView.printFinishMessage;
 import static chess.view.OutputView.printGameStart;
+import static chess.view.OutputView.printScores;
 
-import chess.domain.position.Position;
 import chess.domain.board.Board;
 import chess.domain.board.BoardMaker;
+import chess.domain.position.Position;
 import chess.view.Command;
 import java.util.List;
 import java.util.function.Supplier;
@@ -31,6 +33,7 @@ public final class MainController {
             final Board board = new Board(new BoardMaker());
             printBoard(board.getBoard());
             while (repeatUntilValidAction(() -> playChess(board)));
+            printScores(board.scores());
         }
         printFinishMessage();
     }
@@ -58,6 +61,9 @@ public final class MainController {
             validateInputSize(inputs);
             movePiece(board, inputs);
             return board.isKingAlive();
+        }
+        if (command == SCORE) {
+            printScores(board.scores());
         }
         return true;
     }

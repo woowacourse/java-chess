@@ -103,7 +103,7 @@ class BoardTest {
     @Test
     @DisplayName("검은색 팀의 점수를 계산한다")
     void 검은색_팀의_점수를_계산한다() {
-        Score scoreOfBlackTeam = board.scoreOf(Team.BLACK);
+        Score scoreOfBlackTeam = board.scores().get(Team.BLACK);
 
         assertThat(scoreOfBlackTeam).isEqualTo(new Score(38.0));
     }
@@ -111,7 +111,7 @@ class BoardTest {
     @Test
     @DisplayName("흰색 팀의 점수를 계산한다")
     void 흰색_팀의_점수를_계산한다() {
-        var scoreOfWhiteTeam = board.scoreOf(Team.WHITE);
+        Score scoreOfWhiteTeam = board.scores().get(Team.WHITE);
 
         assertThat(scoreOfWhiteTeam).isEqualTo(new Score(38.0));
     }
@@ -133,8 +133,11 @@ class BoardTest {
         board.movePiece(Position.toPosition("h7"), Position.toPosition("h5"));
         board.movePiece(Position.toPosition("g4"), Position.toPosition("h5"));
 
-        Score scoreOfWhiteTeam = board.scoreOf(Team.WHITE);
+        Map<Team, Score> scores = board.scores();
 
-        assertThat(scoreOfWhiteTeam).isEqualTo(new Score(37.0));
+        assertAll(
+                () -> assertThat(scores.get(Team.WHITE)).isEqualTo(new Score(37.0)),
+                () -> assertThat(scores.get(Team.BLACK)).isEqualTo(new Score(37.0))
+        );
     }
 }
