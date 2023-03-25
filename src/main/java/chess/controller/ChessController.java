@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.database.DBChessBoardDao;
+import chess.Service.ChessService;
 import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.position.Position;
@@ -17,15 +17,14 @@ public final class ChessController {
     private static final int TO_POSITION_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    public static final int POSITION_SET_INDEX = 2;
 
     private final Map<ChessCommand, GameAction> commandMapper = new EnumMap<>(ChessCommand.class);
-    private final DBChessBoardDao dbChessBoardDao;
-    private final ChessGame game;
+    private final ChessService chessService;
+    private ChessGame game;
 
-    public ChessController(final ChessGame game, final DBChessBoardDao dbChessBoardDao) {
+    public ChessController(final ChessGame game, final ChessService chessService) {
         this.game = game;
-        this.dbChessBoardDao = dbChessBoardDao;
+        this.chessService = chessService;
         initController();
     }
 
@@ -39,26 +38,13 @@ public final class ChessController {
 
     public void run() {
         OutputView.printStartPrefix();
-        List<Position> positions = dbChessBoardDao.select();
-        checkPlay(positions);
+        game = chessService.checkNotation(game);
+
         ChessCommand gameCommand = ChessCommand.WAIT;
         while (game.isKingsLive() && gameCommand != ChessCommand.END) {
             gameCommand = play(game);
         }
         OutputView.printWinner(game.getWinnerCamp());
-    }
-
-    private void checkPlay(final List<Position> positions) {
-        if (positions != null) {
-            OutputView.printReStart();
-            getNotation(positions, game);
-        }
-    }
-
-    private void getNotation(final List<Position> positions, final ChessGame game) {
-        for (int i = 0; i < positions.size(); i += POSITION_SET_INDEX) {
-            game.move(positions.get(i), positions.get(i + 1));
-        }
     }
 
     private ChessCommand play(final ChessGame game) {
@@ -84,8 +70,10 @@ public final class ChessController {
         ChessCommand.validatePlayingCommand(commands);
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
+
         game.move(toPosition(fromInput), toPosition(toInput));
-        dbChessBoardDao.save(toPosition(fromInput), toPosition(toInput));
+
+        chessService.saveGame(toPosition(fromInput), toPosition(toInput));
         printBoard(game.getChessBoard());
     }
 
