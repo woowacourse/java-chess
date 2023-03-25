@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessJdbcDao implements ChessDao {
-
     private final JdbcTemplate jdbcTemplate;
 
     public ChessJdbcDao(final JdbcTemplate jdbcTemplate) {
@@ -24,7 +23,7 @@ public class ChessJdbcDao implements ChessDao {
 
     @Override
     public List<MoveDto> findAll() {
-        return jdbcTemplate.query("SELECT * FROM move", (resultSet) -> {
+        return jdbcTemplate.query("SELECT * FROM move", resultSet -> {
             final List<MoveDto> result = new ArrayList<>();
             while (resultSet.next()) {
                 final String source = resultSet.getString("source");

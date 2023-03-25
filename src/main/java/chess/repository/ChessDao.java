@@ -4,8 +4,7 @@ import chess.dto.MoveDto;
 import java.util.List;
 
 public interface ChessDao {
-
-    void save(MoveDto moveDto);
+    void save(final MoveDto moveDto);
 
     List<MoveDto> findAll();
 

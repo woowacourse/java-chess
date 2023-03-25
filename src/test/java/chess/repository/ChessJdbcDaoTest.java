@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class ChessJdbcDaoTest {
-
     private static TestConnectionPool connectionPool;
     private static JdbcTemplate jdbcTemplate;
     private static ChessDao chessDao;
@@ -26,12 +25,12 @@ class ChessJdbcDaoTest {
         connectionPool = new TestConnectionPool();
         jdbcTemplate = new JdbcTemplate(connectionPool);
         chessDao = new ChessJdbcDao(jdbcTemplate);
-        final String testTableGenerateQuery = "CREATE TABLE IF NOT EXISTS move (\n"
-                + "    id     INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,\n"
-                + "    source VARCHAR(2) NOT NULL,\n"
-                + "    target VARCHAR(2) NOT NULL\n"
+        final String query = "CREATE TABLE IF NOT EXISTS move ("
+                + "    id     INT        NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                + "    source VARCHAR(2) NOT NULL,"
+                + "    target VARCHAR(2) NOT NULL"
                 + ");";
-        jdbcTemplate.executeUpdate(testTableGenerateQuery);
+        jdbcTemplate.executeUpdate(query);
     }
 
     @BeforeEach
