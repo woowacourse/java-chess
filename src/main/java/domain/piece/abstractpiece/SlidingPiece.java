@@ -2,6 +2,7 @@ package domain.piece.abstractpiece;
 
 import domain.piece.Color;
 import domain.position.Position;
+import domain.position.Route;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
@@ -14,7 +15,17 @@ public abstract class SlidingPiece extends Piece {
         super(color, pieceType);
     }
 
-    protected final List<Position> findPositions(final Position source, final Position target, final Position direction) {
+    @Override
+    public final Route findRoute(final Position source, final Position target) {
+        validateMovable(source, target);
+        final Position direction = findDirection(source, target);
+
+        return new Route(findPositions(source, target, direction));
+    }
+
+    protected abstract int getMoveCoordinate(final int diffY);
+
+    private List<Position> findPositions(final Position source, final Position target, final Position direction) {
         final List<Position> positions = new ArrayList<>();
         Position position = source.move(direction);
 
@@ -25,13 +36,11 @@ public abstract class SlidingPiece extends Piece {
         return positions;
     }
 
-    protected final Position findDirection(final Position source, final Position target) {
+    private Position findDirection(final Position source, final Position target) {
         final int moveX = getMoveCoordinate(target.diffX(source));
         final int moveY = getMoveCoordinate(target.diffY(source));
 
         return Position.of(moveX, moveY);
     }
-
-    protected abstract int getMoveCoordinate(final int diffY);
 
 }

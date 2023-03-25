@@ -2,22 +2,12 @@ package domain.piece;
 
 import domain.piece.abstractpiece.SlidingPiece;
 import domain.position.Position;
-import domain.position.Route;
 import domain.type.PieceType;
 
 public final class Queen extends SlidingPiece {
 
     public Queen(final Color color) {
         super(color, PieceType.QUEEN);
-    }
-
-    @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
-
-        final Position direction = findDirection(source, target);
-
-        return new Route(findPositions(source, target, direction));
     }
 
     @Override
