@@ -1,14 +1,13 @@
 package chess.domain.database;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.sql.Connection;
 
-import chess.domain.Board;
-import chess.domain.ChessGame;
-import chess.domain.Turn;
-import chess.domain.User;
+import chess.domain.board.Board;
+import chess.domain.game.ChessGame;
+import chess.domain.game.Turn;
+import chess.domain.game.User;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;

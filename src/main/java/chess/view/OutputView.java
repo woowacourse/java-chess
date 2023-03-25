@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.List;
 
-import chess.domain.Game;
+import chess.domain.dto.GameDto;
 import chess.domain.dto.GameStatusDto;
 import chess.domain.piece.Team;
 
@@ -28,6 +28,7 @@ public class OutputView {
     public static void printIdMessage() {
         System.out.print("id를 입력해주세요. : ");
     }
+
     public static void printIdInputMessage() {
         System.out.print("사용하고 싶은 id를 입력하세요 : ");
     }
@@ -47,13 +48,13 @@ public class OutputView {
         System.out.println("진행 중이던 게임이 없습니다. 게임을 새로 시작합니다.");
     }
 
-    public static void printGames(List<Game> games) {
+    public static void printGames(List<GameDto> gameDtos) {
         printMessage("진행 중인 게임 목록");
-        games.forEach(OutputView::printGame);
+        gameDtos.forEach(OutputView::printGame);
     }
 
-    private static void printGame(Game game) {
-        System.out.printf("게임 번호 : %s, 게임 생성 일시 : %s%n", game.getGameId(), game.getCreatedAt());
+    private static void printGame(GameDto gameDto) {
+        System.out.printf("게임 번호 : %s, 게임 생성 일시 : %s%n", gameDto.getGameId(), gameDto.getCreatedAt());
     }
 
     public static void printStartMessage() {

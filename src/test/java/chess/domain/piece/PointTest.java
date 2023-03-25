@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -19,6 +19,35 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PointTest {
+
+    private static Stream<Arguments> makePiece() {
+        return Stream.of(
+                Arguments.of(
+                        new Pawn(Team.WHITE),
+                        1
+                ),
+                Arguments.of(
+                        new Rook(Team.WHITE),
+                        5
+                ),
+                Arguments.of(
+                        new Knight(Team.WHITE),
+                        2.5
+                ),
+                Arguments.of(
+                        new Bishop(Team.WHITE),
+                        3
+                ),
+                Arguments.of(
+                        new King(Team.WHITE),
+                        0
+                ),
+                Arguments.of(
+                        new Queen(Team.WHITE),
+                        9
+                )
+        );
+    }
 
     @Test
     @DisplayName("시작 보드 상황은 각각 38점을 가진다.")
@@ -80,34 +109,5 @@ class PointTest {
                 Square.of(File.A, Rank.ONE), piece
         );
         assertThat(calculatePointByTeam(WHITE, board)).isEqualTo(point);
-    }
-
-    private static Stream<Arguments> makePiece() {
-        return Stream.of(
-                Arguments.of(
-                        new Pawn(Team.WHITE),
-                        1
-                ),
-                Arguments.of(
-                        new Rook(Team.WHITE),
-                        5
-                ),
-                Arguments.of(
-                        new Knight(Team.WHITE),
-                        2.5
-                ),
-                Arguments.of(
-                        new Bishop(Team.WHITE),
-                        3
-                ),
-                Arguments.of(
-                        new King(Team.WHITE),
-                        0
-                ),
-                Arguments.of(
-                        new Queen(Team.WHITE),
-                        9
-                )
-        );
     }
 }

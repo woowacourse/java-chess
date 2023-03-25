@@ -1,6 +1,6 @@
 package chess.domain.dto;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;

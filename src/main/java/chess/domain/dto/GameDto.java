@@ -1,11 +1,11 @@
-package chess.domain;
+package chess.domain.dto;
 
-public class Game {
+public class GameDto {
 
     private final String gameId;
     private final String createdAt;
 
-    public Game(String gameId, String createdAt) {
+    public GameDto(String gameId, String createdAt) {
         this.gameId = gameId;
         this.createdAt = createdAt;
     }

@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.domain.Board;
-import chess.domain.ChessGame;
-import chess.domain.Game;
-import chess.domain.Turn;
-import chess.domain.User;
+import chess.domain.board.Board;
+import chess.domain.dto.GameDto;
+import chess.domain.game.ChessGame;
+import chess.domain.game.Turn;
+import chess.domain.game.User;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.square.File;
@@ -115,8 +115,8 @@ public final class ChessGameDao {
     public User getUserById(String id) {
         final String query = "SELECT * FROM User WHERE user_id = ?";
         try (
-            Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -145,7 +145,7 @@ public final class ChessGameDao {
         }
     }
 
-    public List<Game> getGamesById(String id) {
+    public List<GameDto> getGamesById(String id) {
         final String query = "SELECT * FROM Game WHERE user_id = ? ORDER BY created_at DESC";
         try (
                 Connection connection = getConnection();
@@ -153,14 +153,14 @@ public final class ChessGameDao {
         ) {
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<Game> games = new ArrayList<>();
+            List<GameDto> gameDtos = new ArrayList<>();
             while (resultSet.next()) {
                 String gameId = String.valueOf(resultSet.getLong("game_id"));
                 String createdAt = resultSet.getTimestamp("created_at").toString();
-                Game game = new Game(gameId, createdAt);
-                games.add(game);
+                GameDto gameDto = new GameDto(gameId, createdAt);
+                gameDtos.add(gameDto);
             }
-            return games;
+            return gameDtos;
         } catch (SQLException e) {
             throw new IllegalArgumentException("게임을 불러오는데 실패했습니다.");
         }

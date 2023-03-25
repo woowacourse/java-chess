@@ -3,11 +3,11 @@ package chess.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.domain.ChessGame;
-import chess.domain.Game;
-import chess.domain.User;
 import chess.domain.database.ChessGameDao;
 import chess.domain.database.Database;
+import chess.domain.dto.GameDto;
+import chess.domain.game.ChessGame;
+import chess.domain.game.User;
 import chess.domain.piece.Team;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
@@ -159,27 +159,27 @@ public class ChessController {
     }
 
     private void playExistGame(User user) {
-        List<Game> games = chessGameDao.getGamesById(user.getId());
-        if (games.isEmpty()) {
+        List<GameDto> gameDtos = chessGameDao.getGamesById(user.getId());
+        if (gameDtos.isEmpty()) {
             OutputView.printNoGameExistMessage();
             playNewGame(user.getId());
             return;
         }
-        playExistGame(games);
+        playExistGame(gameDtos);
     }
 
-    private void playExistGame(List<Game> games) {
-        OutputView.printGames(games);
-        List<String> gameIds = getGameIds(games);
+    private void playExistGame(List<GameDto> gameDtos) {
+        OutputView.printGames(gameDtos);
+        List<String> gameIds = getGameIds(gameDtos);
         String gameId = readGameIdUntilIdIsValid(gameIds);
         int lastTurn = chessGameDao.getLastTurnById(gameId);
         ChessGame chessGame = chessGameDao.getGameById(gameId, lastTurn);
         playGame(gameId, chessGame);
     }
 
-    private List<String> getGameIds(List<Game> games) {
-        return games.stream()
-                .map(Game::getGameId)
+    private List<String> getGameIds(List<GameDto> gameDtos) {
+        return gameDtos.stream()
+                .map(GameDto::getGameId)
                 .collect(Collectors.toList());
     }
 

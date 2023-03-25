@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +65,6 @@ public class Board {
     private void checkDestination(final Square current, final Square destination, final Direction direction) {
         if (hasPiece(destination)) {
             checkEnemy(current, destination);
-            killEnemy(destination);
             return;
         }
         checkPawn(current, direction);
@@ -81,10 +80,6 @@ public class Board {
         Piece currentPiece = getPiece(current);
         Piece destinationPiece = getPiece(destination);
         return !currentPiece.isEnemy(destinationPiece);
-    }
-
-    private void killEnemy(final Square destination) {
-        board.remove(destination);
     }
 
     private void checkPawn(final Square current, final Direction direction) {
