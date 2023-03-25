@@ -11,6 +11,7 @@ public enum GameCommand {
     INIT,
     START,
     MOVE,
+    STATUS,
     END;
 
     public static final String INVALID_COMMAND_MESSAGE = "잘못된 커맨드를 입력하였습니다.";

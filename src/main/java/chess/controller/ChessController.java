@@ -15,6 +15,7 @@ import static chess.controller.GameCommand.INIT;
 import static chess.controller.GameCommand.MOVE;
 import static chess.controller.GameCommand.SOURCE_INDEX;
 import static chess.controller.GameCommand.START;
+import static chess.controller.GameCommand.STATUS;
 import static chess.controller.GameCommand.TARGET_INDEX;
 import static chess.controller.GameCommand.from;
 import static chess.controller.GameCommand.getPosition;
@@ -36,6 +37,7 @@ public final class ChessController {
     private void initGameStatusMap() {
         gameStatusMap.put(START, this::start);
         gameStatusMap.put(MOVE, this::move);
+        gameStatusMap.put(STATUS, this::status);
         gameStatusMap.put(END, this::end);
     }
 
@@ -78,6 +80,12 @@ public final class ChessController {
         }
         outputView.printBoard(chessGame.getBoard());
         return MOVE;
+    }
+
+    private GameCommand status(final List<String> strings) {
+        outputView.printTotalScore(chessGame.calculateScore());
+        outputView.printEndMessage();
+        return END;
     }
 
     private GameCommand end(final List<String> input) {

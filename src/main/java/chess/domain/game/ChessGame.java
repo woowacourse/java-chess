@@ -7,6 +7,7 @@ import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
 import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
 
 import java.util.List;
 import java.util.Map;
@@ -82,6 +83,10 @@ public final class ChessGame {
             return BlackPawn.instance();
         }
         return piece;
+    }
+
+    public ScoreDto calculateScore() {
+        return ScoreDto.from(calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
     }
 
     public double calculateScoreByTeam(final Team team) {

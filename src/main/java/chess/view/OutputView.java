@@ -2,6 +2,9 @@ package chess.view;
 
 import chess.domain.piece.Team;
 import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
+
+import java.util.Optional;
 
 public final class OutputView {
 
@@ -31,6 +34,16 @@ public final class OutputView {
 
     public void printEndMessage() {
         System.out.println("체스 게임을 종료합니다.");
+    }
+
+    public void printTotalScore(final ScoreDto score) {
+        final Optional<Team> winnerOptional = score.whosWinner();
+        if (winnerOptional.isEmpty()) {
+            System.out.println("무승부입니다!");
+            return;
+        }
+        final Team winner = winnerOptional.get();
+        System.out.printf("%s가 이겼습니다ㅏ. 점수 : %f\n", winner.name(), score.getScore().get(winner));
     }
 
     public void printErrorMessage(final String exceptionMessage) {
