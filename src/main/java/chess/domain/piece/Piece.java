@@ -2,15 +2,19 @@ package chess.domain.piece;
 
 import chess.domain.position.Move;
 
-public abstract class Piece {
+public class Piece {
 
     protected final Color color;
+    protected final PieceType type;
 
-    public Piece(Color color) {
+    public Piece(Color color, PieceType type) {
         this.color = color;
+        this.type = type;
     }
 
-    public abstract boolean isValidMove(Move move, Piece targetPiece);
+    public boolean canMove(Move move, Piece targetPiece) {
+        return type.getMoveStrategy().canMove(move);
+    }
 
     public boolean isSameColor(Piece target) {
         if (target == null) {
@@ -23,7 +27,9 @@ public abstract class Piece {
         return this.color == turn;
     }
 
-    public abstract PieceType getType();
+    public PieceType getType() {
+        return type;
+    }
 
     public Color getColor() {
         return color;

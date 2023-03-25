@@ -4,7 +4,6 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.position.Move;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +12,7 @@ public class PieceTest {
     private static class PieceImplement extends Piece {
 
         public PieceImplement(Color color) {
-            super(color);
-        }
-
-        @Override
-        public boolean isValidMove(Move move, Piece targetPiece) {
-            return false;
+            super(color, PieceType.BISHOP);
         }
 
         @Override

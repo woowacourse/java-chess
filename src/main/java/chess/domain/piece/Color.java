@@ -1,17 +1,12 @@
 package chess.domain.piece;
 
 public enum Color {
-    BLACK {
-        @Override
-        public Color change() {
+    BLACK, WHITE;
+
+    public Color change() {
+        if (this == BLACK) {
             return WHITE;
         }
-    }, WHITE {
-        @Override
-        public Color change() {
-            return BLACK;
-        }
-    };
-
-    public abstract Color change();
+        return BLACK;
+    }
 }

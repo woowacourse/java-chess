@@ -81,13 +81,6 @@
 ```mermaid
 classDiagram
     Piece <-- Pawn
-    Piece <-- Knight
-    Piece <-- King
-    Piece <-- Queen
-    Piece <-- Bishop
-    Piece <-- Rook
-
-    <<abstract>> Piece
 ```
 
 ## 우아한테크코스 코드리뷰

@@ -10,11 +10,11 @@ public class Pawn extends Piece {
     private static final int INITIAL_BLACK_RANK = 7;
 
     public Pawn(Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override
-    public boolean isValidMove(Move move, Piece targetPiece) {
+    public boolean canMove(Move move, Piece targetPiece) {
         if (isAttack(targetPiece)) {
             return canAttack(move);
         }
@@ -71,10 +71,5 @@ public class Pawn extends Piece {
 
     private boolean isUpward() {
         return color == Color.WHITE;
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.PAWN;
     }
 }

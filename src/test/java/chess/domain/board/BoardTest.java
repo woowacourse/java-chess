@@ -5,9 +5,9 @@ import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -120,8 +120,7 @@ public class BoardTest {
         Map<Position, Piece> pieces = board.getPieces();
         assertThat(pieces.get(source))
                 .isNull();
-        assertThat(pieces.get(target3))
-                .isNotNull()
-                .isInstanceOf(Knight.class);
+        assertThat(pieces.get(target3).getType())
+                .isSameAs(PieceType.KNIGHT);
     }
 }

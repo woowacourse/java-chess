@@ -53,7 +53,7 @@ public class Board {
     }
 
     private void validatePieceMove(Piece sourcePiece, Piece targetPiece, Move move) {
-        if (!sourcePiece.isValidMove(move, targetPiece)) {
+        if (!sourcePiece.canMove(move, targetPiece)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
     }
