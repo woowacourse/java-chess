@@ -33,3 +33,4 @@ out/
 
 ## db ##
 /main/java/chess/db/
+.ibd
