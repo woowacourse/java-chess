@@ -60,15 +60,19 @@ public class InputView {
         return gameCommand.equals(GameCommand.MOVE.getText()) && splitGameCommandSize != CORRECT_MOVE_SPLIT_SIZE;
     }
 
-    public String inputStatusCommand() {
+    public String inputCommandAfterGameEnd() {
         final String input = scanner.nextLine();
-        validateStatusCommand(input);
+        validateCommandAfterGameEnd(input);
         return input;
     }
 
-    private void validateStatusCommand(final String input) {
-        if (!input.equals("status")) {
+    private void validateCommandAfterGameEnd(final String input) {
+        if (isWrongEndOrStatusCommandFormat(input)) {
             throw new IllegalArgumentException("[ERROR] 잘못된 명령어입니다.");
         }
+    }
+
+    private boolean isWrongEndOrStatusCommandFormat(final String input) {
+        return !(input.equals(GameCommand.STATUS.getText()) || input.equals(GameCommand.END.getText()));
     }
 }
