@@ -29,10 +29,13 @@ public class ChessController {
     public void run() {
         final ChessGame chessGame = setUp();
 
-        while(!(chessGame.status() == GameStatus.END)) {
+        while(!(chessGame.status() == GameStatus.END || chessGame.status() == GameStatus.KING_DEAD)) {
             repeatByRunnable(() -> handleCommand(chessGame));
         }
-        repeatByRunnable(() -> handleCommandAfterGameEnd(chessGame));
+        if (chessGame.status() == GameStatus.KING_DEAD) {
+            OutputView.printKingDeadMessage();
+            repeatByRunnable(() -> handleCommandAfterGameEnd(chessGame));
+        }
     }
 
     private ChessGame setUp() {

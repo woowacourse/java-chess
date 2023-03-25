@@ -7,7 +7,7 @@ import chess.piece.Side;
 
 public class ChessGame {
 
-    private static final double PAWN_DEDUCATION_SCORE = 0.5;
+    private static final double PAWN_DEDUCTION_SCORE = 0.5;
 
     private final Board board;
     private Side turnToMove;
@@ -63,7 +63,7 @@ public class ChessGame {
         if (board.isKingExist(turnToMove)) {
             return;
         }
-        gameStatus = GameStatus.END;
+        gameStatus = GameStatus.KING_DEAD;
     }
 
     public void exit() {
@@ -73,13 +73,13 @@ public class ChessGame {
     public double calculateScoreBySide(Side side) {
         double scoreBySide = board.getScoreBySide(side);
         final long exceedingPawnCount = board.getCountOfPawnsOnSameFileBySide(side);
-        scoreBySide = scoreBySide - exceedingPawnCount * PAWN_DEDUCATION_SCORE;
+        scoreBySide = scoreBySide - exceedingPawnCount * PAWN_DEDUCTION_SCORE;
         return scoreBySide;
     }
 
     public Side getWinner() {
-        if (GameStatus.END != gameStatus) {
-            throw new IllegalArgumentException("[ERROR] 아직 게임이 진행중입니다.");
+        if (GameStatus.KING_DEAD != gameStatus) {
+            throw new IllegalArgumentException("[ERROR] 킹이 죽지 않아 승자가 가려지지 않았습니다..");
         }
         if (turnToMove == Side.BLACK) {
             return Side.WHITE;
