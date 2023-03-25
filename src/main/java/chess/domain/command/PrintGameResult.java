@@ -4,6 +4,7 @@ import java.util.List;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
+import chess.dao.ChessGameDao;
 import chess.dao.JdbcChessGameDao;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
@@ -19,10 +20,12 @@ public class PrintGameResult implements CommandStatus {
 
     private final ChessGame chessGame;
     private final ResultCalculator resultCalculator;
+    private final ChessGameDao chessGameDao;
 
-    public PrintGameResult(final ChessGame chessGame) {
+    public PrintGameResult(final ChessGame chessGame, final ChessGameDao chessGameDao) {
         this.chessGame = chessGame;
         this.resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        this.chessGameDao = chessGameDao;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class PrintGameResult implements CommandStatus {
         for (Piece piece : pieces.getPieces()) {
             chessGameDao.savePiece(piece, gameId);
         }
-        return new Play(new ChessGame(gameId, board, Turn.WHITE));
+        return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
     }
 
     @Override
@@ -46,7 +49,7 @@ public class PrintGameResult implements CommandStatus {
         }
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
-        return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()));
+        return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()), chessGameDao);
     }
 
     private void checkTurn(Position sorucePosition) {

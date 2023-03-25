@@ -4,6 +4,7 @@ import java.util.List;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
+import chess.dao.ChessGameDao;
 import chess.dao.JdbcChessGameDao;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
@@ -19,18 +20,19 @@ public class Play implements CommandStatus {
 
     private final ChessGame chessGame;
     private final ResultCalculator resultCalculator;
+    private final ChessGameDao chessGameDao;
 
-    public Play(final ChessGame chessGame) {
+    public Play(final ChessGame chessGame, ChessGameDao chessGameDao) {
         this.chessGame = chessGame;
         this.resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        this.chessGameDao = chessGameDao;
     }
 
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        JdbcChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
         Long gameId = chessGameDao.saveNewChessGame();
-        return new Play(new ChessGame(gameId, board, Turn.WHITE));
+        return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class Play implements CommandStatus {
         }
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
-        return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()));
+        return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()), chessGameDao);
     }
 
     private void checkTurn(Position sorucePosition) {
@@ -73,7 +75,7 @@ public class Play implements CommandStatus {
         resultCalculator.saveTotalScoreBySide(Side.WHITE, chessGame.getTotalScoreBySide(Side.WHITE));
         resultCalculator.saveTotalScoreBySide(Side.BLACK, chessGame.getTotalScoreBySide(Side.BLACK));
         resultCalculator.saveGameResultBySide();
-        return new PrintGameResult(chessGame);
+        return new PrintGameResult(chessGame, chessGameDao);
     }
 
     @Override

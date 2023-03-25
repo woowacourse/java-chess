@@ -4,6 +4,7 @@ import java.util.List;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
+import chess.dao.ChessGameDao;
 import chess.dao.JdbcChessGameDao;
 import chess.domain.service.ChessGame;
 import chess.domain.board.Board;
@@ -16,12 +17,17 @@ import chess.domain.position.Position;
 
 public class Init implements CommandStatus {
 
+    private final ChessGameDao chessGameDao;
+
+    public Init(ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
+
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        JdbcChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
         Long gameId = chessGameDao.saveNewChessGame();
-        return new Play(new ChessGame(gameId, board, Turn.WHITE));
+        return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
     }
 
     @Override
