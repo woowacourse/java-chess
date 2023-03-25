@@ -50,6 +50,14 @@ public abstract class Piece {
         return pieceType.getScore();
     }
 
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
