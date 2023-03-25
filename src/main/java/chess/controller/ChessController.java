@@ -38,7 +38,7 @@ public class ChessController {
             state = state.start();
         }
         if (command.isMove()) {
-            state = state.next(command.getSource(), command.getTarget());
+            state = state.move(command.getSource(), command.getTarget());
         }
         if (command.isStatus()) {
             state = state.status();

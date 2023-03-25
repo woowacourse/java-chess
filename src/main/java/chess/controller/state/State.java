@@ -14,7 +14,7 @@ public abstract class State {
         throw new IllegalStateException("게임을 시작할 수 없는 상태입니다.");
     }
 
-    public State next(final Square source, final Square target) {
+    public State move(final Square source, final Square target) {
         throw new IllegalStateException("다음 턴으로 넘길 수 없는 상태입니다.");
     }
 

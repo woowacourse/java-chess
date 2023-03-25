@@ -11,7 +11,7 @@ public class Running extends State {
     }
 
     @Override
-    public State next(final Square source, final Square target) {
+    public State move(final Square source, final Square target) {
         game().move(source, target);
         OutputView.printChessBoard(game().getPieces());
 
