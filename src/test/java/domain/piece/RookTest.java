@@ -69,6 +69,19 @@ class RookTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    @DisplayName("기본점수가 5점이다.")
+    void getScoreTest() {
+        // given
+        Rook rook = new Rook(Color.WHITE);
+
+        // when
+        double score = rook.getScore();
+
+        // then
+        assertThat(score).isEqualTo(5);
+    }
+
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
                 Arguments.of(new Path(Position.of(3, 3), Position.of(5, 3))),

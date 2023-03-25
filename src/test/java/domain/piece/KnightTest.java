@@ -72,6 +72,19 @@ class KnightTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    @DisplayName("기본점수가 2.5점이다.")
+    void getScoreTest() {
+        // given
+        Knight knight = new Knight(Color.WHITE);
+
+        // when
+        double score = knight.getScore();
+
+        // then
+        assertThat(score).isEqualTo(2.5);
+    }
+
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
                 Arguments.of(new Path(Position.of(4,4), Position.of(6, 3))),

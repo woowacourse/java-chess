@@ -55,6 +55,19 @@ class QueenTest {
         assertThat(result).isTrue();
     }
 
+    @Test
+    @DisplayName("기본점수가 9점이다.")
+    void getScoreTest() {
+        // given
+        Queen queen = new Queen(Color.WHITE);
+
+        // when
+        double score = queen.getScore();
+
+        // then
+        assertThat(score).isEqualTo(9);
+    }
+
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
                 Arguments.of(new Path(Position.of(3, 3), Position.of(5, 3))),

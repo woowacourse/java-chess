@@ -69,6 +69,19 @@ class BishopTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    @DisplayName("기본점수가 3점이다.")
+    void getScoreTest() {
+        // given
+        Bishop bishop = new Bishop(Color.WHITE);
+
+        // when
+        double score = bishop.getScore();
+
+        // then
+        assertThat(score).isEqualTo(3);
+    }
+
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
                 Arguments.of(new Path(Position.of(3, 3), Position.of(5,5))),

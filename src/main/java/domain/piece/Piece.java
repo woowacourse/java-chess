@@ -13,13 +13,6 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public String getName() {
-        if (isBlack()) {
-            return name.getBlack();
-        }
-        return name.getWhite();
-    }
-
     public boolean isBlack() {
         return color == Color.BLACK;
     }
@@ -28,8 +21,6 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-//    public abstract boolean isMovablePath(Position start, List<Position> path);
-
     public abstract boolean isMovablePath(Position start, Path path);
 
     protected abstract boolean isMovableDirection(Position start, Position nextPosition);
@@ -37,4 +28,15 @@ public abstract class Piece {
     protected abstract boolean isMovableDistance(int distance);
 
     public abstract boolean isPawn();
+
+    public String getName() {
+        if (isBlack()) {
+            return name.getBlack();
+        }
+        return name.getWhite();
+    }
+
+    public double getScore() {
+        return name.getScore();
+    }
 }
