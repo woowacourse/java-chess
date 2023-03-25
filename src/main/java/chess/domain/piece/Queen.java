@@ -7,7 +7,12 @@ public class Queen extends Piece {
     public Queen(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.QUEEN;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.QUEEN;

@@ -9,6 +9,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public Point point() {
+        return Point.BISHOP;
+    }
+
+    @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.BISHOP;
     }

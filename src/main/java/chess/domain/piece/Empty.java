@@ -7,7 +7,12 @@ public class Empty extends Piece {
     public Empty(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.EMPTY;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.EMPTY;

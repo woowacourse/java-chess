@@ -9,7 +9,12 @@ public class King extends Piece {
     public King(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.KING;
+    }
+
     @Override
     public boolean isMovable(Piece targetPiece) {
         int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);

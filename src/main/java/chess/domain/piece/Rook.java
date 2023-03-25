@@ -7,7 +7,12 @@ public class Rook extends Piece {
     public Rook(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.ROOK;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.ROOK;

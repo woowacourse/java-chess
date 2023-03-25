@@ -20,6 +20,8 @@ public abstract class Piece {
         this.coordinate = coordinate;
     }
 
+    public abstract Point point();
+
     public abstract SymbolMatcher symbol();
 
     public abstract boolean isMovable(Piece targetPiece);
@@ -60,6 +62,10 @@ public abstract class Piece {
     }
     
     public boolean isKnight() {
+        return false;
+    }
+
+    public boolean isPawn(){
         return false;
     }
 

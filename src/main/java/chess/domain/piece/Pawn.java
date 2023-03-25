@@ -10,7 +10,12 @@ public class Pawn extends Piece {
     public Pawn(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.PAWN;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.PAWN;
@@ -23,7 +28,12 @@ public class Pawn extends Piece {
         int subtractedRow = subtractCoordinate.get(ROW_INDEX);
         return isPawnMovable(targetPiece, subtractedRow, subtractedColumn);
     }
-    
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
     private boolean isPawnMovable(Piece targetPiece, int subtractedRow, int subtractedColumn) {
         if (isOutOfMovementRadius(targetPiece,subtractedRow, subtractedColumn)) {
             return false;

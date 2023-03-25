@@ -7,7 +7,12 @@ public class Knight extends Piece {
     public Knight(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.KNIGHT;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.KNIGHT;
