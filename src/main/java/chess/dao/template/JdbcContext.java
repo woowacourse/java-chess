@@ -1,18 +1,13 @@
 package chess.dao.template;
 
+import chess.dao.ConnectionProvider;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcContext {
     private static final String DATABASE_CONNECTION_EXCEPTION_MESSAGE = "[ERROR] 데이터베이스의 연결에 문제가 발생했습니다.";
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
 
     public void update(String query) {
         workWithStatementStrategy(c -> c.prepareStatement(query));
@@ -33,8 +28,7 @@ public class JdbcContext {
     }
 
     private void workWithStatementStrategy(StatementStrategy statementStrategy) {
-        try (Connection c = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
-                PASSWORD);
+        try (Connection c = ConnectionProvider.getConnection();
              PreparedStatement ps = statementStrategy.makePreparedStatement(c)) {
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -43,8 +37,7 @@ public class JdbcContext {
     }
 
     private <T> T workWithStatementStrategy(StatementStrategy statementStrategy, RowMapper<T> rowMapper) {
-        try (Connection c = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
-                PASSWORD);
+        try (Connection c = ConnectionProvider.getConnection();
              PreparedStatement ps = statementStrategy.makePreparedStatement(c);
              ResultSet resultSet = ps.executeQuery()) {
             return rowMapper.mapRow(resultSet);

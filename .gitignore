@@ -32,3 +32,4 @@ out/
 .vscode/
 
 .gitmessage
+src/main/resources/db_config.txt
