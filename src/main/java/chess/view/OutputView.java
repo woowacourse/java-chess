@@ -1,8 +1,8 @@
 package chess.view;
 
 import chess.controller.dto.BoardDto;
-import chess.controller.dto.TeamDto;
 import chess.controller.dto.StatusDto;
+import chess.controller.dto.TeamDto;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public final class OutputView {
 
     public static void printTurn(final TeamDto teamDto) {
         String turn = teamDto.getTeam();
-        if(turn.isBlank()){
+        if (turn.isBlank()) {
             return;
         }
         System.out.println("> " + turn + " 기물을 움직일 차례입니다.");

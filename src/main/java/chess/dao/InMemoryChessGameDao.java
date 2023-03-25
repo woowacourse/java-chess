@@ -2,7 +2,7 @@ package chess.dao;
 
 import chess.domain.ChessGame;
 
-public class InMemoryChessGameDao implements ChessGameDao{
+public class InMemoryChessGameDao implements ChessGameDao {
 
     private ChessGame chessGame;
 

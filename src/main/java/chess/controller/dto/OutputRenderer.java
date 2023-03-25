@@ -1,5 +1,6 @@
 package chess.controller.dto;
 
+import chess.domain.BoardProvider;
 import chess.domain.piece.PieceProvider;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
@@ -28,20 +29,24 @@ public class OutputRenderer {
         TEAM_TO_STRING.put(Team.EMPTY, " ");
     }
 
-    public static BoardDto toBoardDto(final List<? extends List<? extends PieceProvider>> board) {
-        List<List<String>> boardDto = stringifyPieces(board);
-        return new BoardDto(boardDto);
+    public static BoardDto toBoardDto(final BoardProvider board) {
+        return new BoardDto(stringifyBoard(board));
     }
 
-    private static List<List<String>> stringifyPieces(final List<? extends List<? extends PieceProvider>> board) {
+    private static List<List<String>> stringifyBoard(BoardProvider board) {
         List<List<String>> boardDto = new ArrayList<>();
-        for (List<? extends PieceProvider> line : board) {
+        int lineSize = board.getLineSize();
+
+        List<PieceProvider> pieces = new ArrayList<>(board.getPieces());
+        for (int i = 0; i < lineSize; i++) {
+            int startPoint = i * lineSize;
+            List<PieceProvider> line = new ArrayList<>(pieces.subList(startPoint, startPoint + lineSize));
             boardDto.add(stringifyLine(line));
         }
         return boardDto;
     }
 
-    private static List<String> stringifyLine(final List<? extends PieceProvider> line) {
+    private static List<String> stringifyLine(final List<PieceProvider> line) {
         return line.stream()
                 .map(OutputRenderer::stringifySign)
                 .collect(Collectors.toList());

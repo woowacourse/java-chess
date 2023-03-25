@@ -12,10 +12,10 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public final class BoardGenerator {
 
@@ -29,7 +29,7 @@ public final class BoardGenerator {
 
 
     public static Board createBoard() {
-        HashMap<Position, Piece> board = new LinkedHashMap<>();
+        Map<Position, Piece> board = new TreeMap<>();
         board.putAll(initializePiecesOfEdgeLine(Team.BLACK, BLACK_EDGE_ROW));
         board.putAll(initializePawns(Team.BLACK, BLACK_PAWN_INITIAL_ROW));
         board.putAll(initializeEmptyPieces());

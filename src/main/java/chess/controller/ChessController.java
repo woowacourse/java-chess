@@ -57,11 +57,11 @@ public final class ChessController {
 
     public CommandDto start(final CommandDto commandDto) {
         ChessGame chessGame = chessGameDao.select();
-        if(chessGame == null){
+        if (chessGame == null) {
             chessGame = ChessGame.create();
             chessGameDao.save(chessGame);
         }
-        OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.board()));
+        OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
@@ -73,7 +73,7 @@ public final class ChessController {
         Position targetPosition = new Position(target.get(0), target.get(1));
         errorController.tryCatchStrategy(() -> {
             chessGame.movePiece(sourcePosition, targetPosition);
-            OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.board()));
+            OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
             OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
             chessGameDao.update(chessGame);
         });

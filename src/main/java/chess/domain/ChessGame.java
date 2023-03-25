@@ -1,11 +1,7 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-
-import java.util.List;
-import java.util.Map;
 
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.EMPTY;
@@ -69,12 +65,6 @@ public final class ChessGame {
         return EMPTY;
     }
 
-    public List<List<Piece>> board() {
-        return board.getBoard();
-    }
-
-
-
     public double getTotalScore(final Team team) {
         double basicScore = board.getScores(team)
                 .stream()
@@ -98,7 +88,7 @@ public final class ChessGame {
         return turn;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.board();
+    public Board getBoard() {
+        return board;
     }
 }

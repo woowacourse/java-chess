@@ -18,10 +18,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
-public class DBChessGameDao implements ChessGameDao{
+public class DBChessGameDao implements ChessGameDao {
 
 
     /*
@@ -60,7 +60,7 @@ CREATE TABLE chess_game(
 
     @Override
     public void save(final ChessGame chessGame) {
-        final Map<Position, Piece> board = chessGame.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard().getBoard();
         for (final Map.Entry<Position, Piece> entry : board.entrySet()) {
             final Position position = entry.getKey();
             final Piece piece = entry.getValue();
@@ -84,7 +84,7 @@ CREATE TABLE chess_game(
 
     @Override
     public ChessGame select() {
-        final Map<Position, Piece> board = new HashMap<>();
+        final Map<Position, Piece> board = new TreeMap<>();
         Team turn = null;
 
         final var query = "SELECT * FROM chess_game;";
