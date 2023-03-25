@@ -1,11 +1,14 @@
 package chess.domain.game;
 
+import chess.dao.ChessDao;
+import chess.dao.DbChessGameDao;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
+import chess.dto.outputView.PrintBoardDto;
 import chess.dto.outputView.PrintTotalScoreDto;
 import chess.dto.outputView.PrintWinnerDto;
 
@@ -25,11 +28,14 @@ public final class ChessGame {
     public static final double TOTAL_BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
     private final Map<Position, Piece> board;
+    private final ChessDao dao;
     private Turn turn;
+
 
 
     private ChessGame(final Map<Position, Piece> board, final Turn turn) {
         this.board = board;
+        this.dao = new DbChessGameDao();
         this.turn = turn;
     }
 
@@ -147,8 +153,8 @@ public final class ChessGame {
         return new PrintWinnerDto(team);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Map.copyOf(board);
+    public PrintBoardDto getBoard() {
+        return new PrintBoardDto(Map.copyOf(board));
     }
 
     public Team getTurn() {

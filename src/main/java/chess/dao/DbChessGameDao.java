@@ -9,6 +9,7 @@ import chess.domain.game.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
+import chess.dto.outputView.PrintBoardDto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,11 +36,11 @@ public class DbChessGameDao implements ChessDao {
 
     @Override
     public void save(final ChessGame chessGame) {
-        delete();
         final String sql = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, last_turn) VALUES (?, ?, ?, ?, ?)";
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            final Map<Position, Piece> board = chessGame.getBoard();
+            final PrintBoardDto tmp = chessGame.getBoard();
+            final Map<Position, Piece> board = tmp.getBoard();
             for (Map.Entry<Position, Piece> entry : board.entrySet()) {
                 preparedStatement.setString(1, entry.getValue().getPieceType().name());
                 preparedStatement.setString(2, entry.getKey().getFile().name());
@@ -91,7 +92,7 @@ public class DbChessGameDao implements ChessDao {
 
     @Override
     public void delete() {
-        final String sql = "delete from chess_game";
+        final String sql = "DELETE FROM chess_game";
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
