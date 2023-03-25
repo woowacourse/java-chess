@@ -59,6 +59,9 @@ class ChessGameTest {
         chessGame.movePiece(new Position(2, 3), new Position(4, 3));
         chessGame.movePiece(new Position(7, 4), new Position(5, 4));
         chessGame.movePiece(new Position(4, 3), new Position(5, 4));
+        chessGame.movePiece(new Position(8, 2), new Position(6, 3));
+        chessGame.movePiece(new Position(5, 4), new Position(6, 3));
+
         Map<Team, Score> score = chessGame.getScoreAllTeam();
         assertThat(chessGame.findWinner(score).get()).isEqualTo(Team.WHITE);
     }
@@ -67,9 +70,11 @@ class ChessGameTest {
     @DisplayName("검은팀이 우승자이다.")
     void findWinner_black() {
         chessGame.movePiece(new Position(2, 1), new Position(3, 1));
-        chessGame.movePiece(new Position(7, 4), new Position(5, 4));
-        chessGame.movePiece(new Position(2, 3), new Position(4, 3));
-        chessGame.movePiece(new Position(5, 4), new Position(4, 3));
+        chessGame.movePiece(new Position(7, 3), new Position(5, 3));
+        chessGame.movePiece(new Position(2, 2), new Position(4, 2));
+        chessGame.movePiece(new Position(5, 3), new Position(4, 2));
+        chessGame.movePiece(new Position(1, 2), new Position(3, 3));
+        chessGame.movePiece(new Position(4, 2), new Position(3, 3));
         Map<Team, Score> score = chessGame.getScoreAllTeam();
         assertThat(chessGame.findWinner(score).get()).isEqualTo(Team.BLACK);
     }
