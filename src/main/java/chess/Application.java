@@ -1,6 +1,6 @@
 package chess;
 
-import chess.board.ChessBoard;
+import chess.domain.board.ChessBoard;
 import chess.controller.ChessController;
 
 public class Application {

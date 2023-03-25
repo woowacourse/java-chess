@@ -1,7 +1,11 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.*;
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceMatcher;
+import chess.domain.piece.SymbolMatcher;
+import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Coordinate;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +26,7 @@ public class RowPieces implements Comparable<RowPieces> {
 
     @Override
     public int compareTo(RowPieces o) {
-        Piece firstPiece = pieces.get(FIRST_PIECE_INDEX);
+        Piece firstPiece = this.pieces.get(FIRST_PIECE_INDEX);
         Piece otherPiece = o.pieces.get(FIRST_PIECE_INDEX);
         return firstPiece.compareTo(otherPiece);
     }
@@ -58,7 +62,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     private void switchPiece(Piece newPiece, Coordinate coordinate) {
-        pieces.set(coordinate.columnIndex(), newPiece);
+        this.pieces.set(coordinate.columnIndex(), newPiece);
     }
 
     private Empty createEmpty(Coordinate coordinate) {
@@ -70,7 +74,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     public boolean hasCoordinate(Coordinate coordinate) {
-        return pieces.stream().anyMatch(
+        return this.pieces.stream().anyMatch(
             piece -> piece.hasCoordinate(coordinate)
         );
     }

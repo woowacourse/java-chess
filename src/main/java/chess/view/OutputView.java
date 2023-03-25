@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.board.RowPieces;
-import chess.piece.Piece;
-import chess.piece.SymbolMatcher;
-import chess.piece.Team;
+import chess.domain.board.RowPieces;
+import chess.domain.piece.Piece;
+import chess.domain.piece.SymbolMatcher;
+import chess.domain.piece.Team;
 
 import java.util.List;
 import java.util.stream.Collectors;

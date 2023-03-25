@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
 
 public class Knight extends Piece {
     public Knight(Team team, Coordinate coordinate) {

@@ -1,6 +1,6 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +30,6 @@ public class ChessBoard {
     }
 
     public void move(Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
-        System.out.println(destinationCoordinate);
         RowPieces sourceRowPieces = findRowPiecesByCoordinate(sourceCoordinate);
         RowPieces destinationRowPieces = findRowPiecesByCoordinate(destinationCoordinate);
 

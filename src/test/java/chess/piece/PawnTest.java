@@ -1,6 +1,12 @@
 package chess.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.SymbolMatcher;
+import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

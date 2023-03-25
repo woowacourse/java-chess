@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
 
 public class King extends Piece {
     private static final int MAX_DIFFERENCE_OF_KING = 1;

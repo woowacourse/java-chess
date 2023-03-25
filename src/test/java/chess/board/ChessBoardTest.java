@@ -1,10 +1,11 @@
 package chess.board;
 
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Rook;
-import chess.piece.Team;
-import chess.piece.coordinate.Coordinate;
+import chess.domain.board.ChessBoard;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Coordinate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
