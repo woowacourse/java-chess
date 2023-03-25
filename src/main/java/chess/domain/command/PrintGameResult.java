@@ -13,6 +13,7 @@ import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
+import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.position.Position;
 import chess.domain.service.ChessGame;
 
@@ -33,7 +34,7 @@ public class PrintGameResult implements CommandStatus {
         Board board = new Board(new Pieces());
         Long gameId = chessGameDao.saveNewChessGame();
         for (Piece piece : board.getPieces()) {
-            chessGameDao.savePiece(piece, gameId);
+            chessGameDao.savePiece(new SavePieceDto(piece, gameId));
         }
         return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
     }

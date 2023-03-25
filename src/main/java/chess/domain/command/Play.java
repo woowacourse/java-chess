@@ -13,6 +13,7 @@ import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
+import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.position.Position;
 import chess.domain.service.ChessGame;
 import chess.domain.service.dto.ChessGameDto;
@@ -34,7 +35,7 @@ public class Play implements CommandStatus {
         Board board = new Board(new Pieces());
         Long gameId = chessGameDao.saveNewChessGame();
         for (Piece piece : board.getPieces()) {
-            chessGameDao.savePiece(piece, gameId);
+            chessGameDao.savePiece(new SavePieceDto(piece, gameId));
         }
         return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
     }
@@ -50,6 +51,10 @@ public class Play implements CommandStatus {
         chessGame.checkPieceMoveCondition(sourcePosition, targetPosition);
         if (chessGame.isTargetPieceOppositeKing(sourcePosition, targetPosition)) {
             return gameEnd(sourcePosition, targetPosition);
+        }
+        if (chessGame.isOnlyMove(targetPosition)) {
+            Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
+            chessGameDao.updatePiece();
         }
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
