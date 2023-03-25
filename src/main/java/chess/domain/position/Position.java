@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import chess.domain.math.UnitVector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class Position {
@@ -8,24 +10,36 @@ public final class Position {
     private static final int COLUMN_INDEX = 0;
     private static final int ASCII_SMALL_A = 97;
     private static final int ROW_INDEX = 1;
-    private static final int BOARD_MAX_ROW = 8;
+    private static final int MAX_INDEX = 8;
+    private static final List<Position> CACHE = new ArrayList<>();
+
+    static {
+        for (int row = 0; row < MAX_INDEX; row++) {
+            for (int column = 0; column < MAX_INDEX; column++) {
+                CACHE.add(new Position(row, column));
+            }
+        }
+    }
 
     private final Row row;
     private final Column column;
 
-    public Position(final Row row, final Column column) {
+    private Position(final int row, final int column) {
+        this.row = new Row(row);
+        this.column = new Column(column);
+    }
+
+    private Position(final Row row, final Column column) {
         this.row = row;
         this.column = column;
     }
 
-    public Position(final Position otherPosition) {
-        this.row = otherPosition.row;
-        this.column = otherPosition.column;
+    public static Position of(final int row, final int column) {
+        return CACHE.get(CACHE.indexOf(new Position(new Row(row), new Column(column))));
     }
 
-    public Position(final int row, final int column) {
-        this.row = new Row(row);
-        this.column = new Column(column);
+    public static Position from(final Position position) {
+        return CACHE.get(CACHE.indexOf(position));
     }
 
     public Position move(final UnitVector unitVector) {
@@ -42,7 +56,7 @@ public final class Position {
         int column = Math.abs(columnValue - ASCII_SMALL_A);
 
         char rowValue = value.charAt(ROW_INDEX);
-        int row = Math.abs(Character.getNumericValue(rowValue) - BOARD_MAX_ROW);
+        int row = Math.abs(Character.getNumericValue(rowValue) - MAX_INDEX);
 
         return new Position(row, column);
     }

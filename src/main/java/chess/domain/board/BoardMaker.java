@@ -37,32 +37,32 @@ public class BoardMaker {
     }
 
     private void putBlackPiecesExceptPawn(final Map<Position, Piece> board) {
-        board.put(new Position(MIN_ROW, 0), new Rook(Team.BLACK));
-        board.put(new Position(MIN_ROW, 1), new Knight(Team.BLACK));
-        board.put(new Position(MIN_ROW, 2), new Bishop(Team.BLACK));
-        board.put(new Position(MIN_ROW, 3), new Queen(Team.BLACK));
-        board.put(new Position(MIN_ROW, 4), new King(Team.BLACK));
-        board.put(new Position(MIN_ROW, 5), new Bishop(Team.BLACK));
-        board.put(new Position(MIN_ROW, 6), new Knight(Team.BLACK));
-        board.put(new Position(MIN_ROW, 7), new Rook(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 0), new Rook(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 1), new Knight(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 2), new Bishop(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 3), new Queen(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 4), new King(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 5), new Bishop(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 6), new Knight(Team.BLACK));
+        board.put(Position.of(MIN_ROW, 7), new Rook(Team.BLACK));
     }
 
     private void putPawns(final Map<Position, Piece> board) {
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            board.put(new Position(ROW_OF_BLACK_PAWNS, column), new BlackPawn());
-            board.put(new Position(ROW_OF_WHITE_PAWNS, column), new WhitePawn());
+            board.put(Position.of(ROW_OF_BLACK_PAWNS, column), new BlackPawn());
+            board.put(Position.of(ROW_OF_WHITE_PAWNS, column), new WhitePawn());
         }
     }
 
     private void putWhitePiecesExceptPawn(final Map<Position, Piece> board) {
-        board.put(new Position(MAX_ROW, 0), new Rook(Team.WHITE));
-        board.put(new Position(MAX_ROW, 1), new Knight(Team.WHITE));
-        board.put(new Position(MAX_ROW, 2), new Bishop(Team.WHITE));
-        board.put(new Position(MAX_ROW, 3), new Queen(Team.WHITE));
-        board.put(new Position(MAX_ROW, 4), new King(Team.WHITE));
-        board.put(new Position(MAX_ROW, 5), new Bishop(Team.WHITE));
-        board.put(new Position(MAX_ROW, 6), new Knight(Team.WHITE));
-        board.put(new Position(MAX_ROW, 7), new Rook(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 0), new Rook(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 1), new Knight(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 2), new Bishop(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 3), new Queen(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 4), new King(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 5), new Bishop(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 6), new Knight(Team.WHITE));
+        board.put(Position.of(MAX_ROW, 7), new Rook(Team.WHITE));
     }
 
     private void putEmptyPieces(final Map<Position, Piece> board) {
@@ -73,7 +73,7 @@ public class BoardMaker {
 
     private void putEmptyPieces(final int row, final Map<Position, Piece> board) {
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            board.put(new Position(row, column), new EmptyPiece());
+            board.put(Position.of(row, column), new EmptyPiece());
         }
     }
 }

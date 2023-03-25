@@ -19,80 +19,80 @@ class DirectionTest {
 
     @Test
     void findDirection_up() {
-        var current = new Position(1, 0);
-        var target = new Position(0, 0);
+        var current = Position.of(1, 0);
+        var target = Position.of(0, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(UP);
     }
 
     @Test
     void findDirection_down() {
-        var current = new Position(0, 0);
-        var target = new Position(1, 0);
+        var current = Position.of(0, 0);
+        var target = Position.of(1, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(DOWN);
     }
 
     @Test
     void findDirection_left() {
-        var current = new Position(1, 1);
-        var target = new Position(1, 0);
+        var current = Position.of(1, 1);
+        var target = Position.of(1, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(LEFT);
     }
 
     @Test
     void findDirection_right() {
-        var current = new Position(1, 0);
-        var target = new Position(1, 1);
+        var current = Position.of(1, 0);
+        var target = Position.of(1, 1);
 
         assertThat(computeDirection(current, target)).isEqualTo(RIGHT);
     }
 
     @Test
     void findDirection_upLeft() {
-        var current = new Position(1, 1);
-        var target = new Position(0, 0);
+        var current = Position.of(1, 1);
+        var target = Position.of(0, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(UP_LEFT);
     }
 
     @Test
     void findDirection_upRight() {
-        var current = new Position(1, 0);
-        var target = new Position(0, 1);
+        var current = Position.of(1, 0);
+        var target = Position.of(0, 1);
 
         assertThat(computeDirection(current, target)).isEqualTo(UP_RIGHT);
     }
 
     @Test
     void findDirection_downLeft() {
-        var current = new Position(0, 1);
-        var target = new Position(1, 0);
+        var current = Position.of(0, 1);
+        var target = Position.of(1, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(DOWN_LEFT);
     }
 
     @Test
     void findDirection_downRight() {
-        var current = new Position(0, 0);
-        var target = new Position(1, 1);
+        var current = Position.of(0, 0);
+        var target = Position.of(1, 1);
 
         assertThat(computeDirection(current, target)).isEqualTo(DOWN_RIGHT);
     }
 
     @Test
     void findDirection_knight_case1() {
-        var current = new Position(1, 2);
-        var target = new Position(0, 0);
+        var current = Position.of(1, 2);
+        var target = Position.of(0, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(KNIGHT);
     }
 
     @Test
     void findDirection_knight_case2() {
-        var current = new Position(2, 1);
-        var target = new Position(0, 0);
+        var current = Position.of(2, 1);
+        var target = Position.of(0, 0);
 
         assertThat(computeDirection(current, target)).isEqualTo(KNIGHT);
     }

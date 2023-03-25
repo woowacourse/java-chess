@@ -69,7 +69,7 @@ public final class Board {
     private List<Piece> getOnRoutePieces(final Position currentPosition, final Position targetPosition, final UnitVector unitVector) {
         List<Piece> foundPieces = new ArrayList<>();
 
-        Position pieceFinder = new Position(currentPosition).move(unitVector);
+        Position pieceFinder = Position.from(currentPosition).move(unitVector);
         while (!pieceFinder.equals(targetPosition)) {
             foundPieces.add(findPieceAt(pieceFinder));
             pieceFinder = pieceFinder.move(unitVector);

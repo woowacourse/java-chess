@@ -37,7 +37,7 @@ class BoardMakerTest {
         int row = 0;
 
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            Position targetPosition = new Position(row, column);
+            Position targetPosition = Position.of(row, column);
             Piece foundPiece = board.get(targetPosition);
 
             assertAll(
@@ -53,7 +53,7 @@ class BoardMakerTest {
         int row = 1;
 
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            Position targetPosition = new Position(row, column);
+            Position targetPosition = Position.of(row, column);
             Piece foundPiece = board.get(targetPosition);
 
             assertThat(foundPiece).isInstanceOf(BlackPawn.class);
@@ -66,7 +66,7 @@ class BoardMakerTest {
         int row = 6;
 
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            Position targetPosition = new Position(row, column);
+            Position targetPosition = Position.of(row, column);
             Piece foundPiece = board.get(targetPosition);
 
             assertAll(
@@ -82,7 +82,7 @@ class BoardMakerTest {
         int row = 7;
 
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            Position targetPosition = new Position(row, column);
+            Position targetPosition = Position.of(row, column);
             Piece foundPiece = board.get(targetPosition);
 
             assertThat(foundPiece).isNotInstanceOf(WhitePawn.class);
@@ -93,7 +93,7 @@ class BoardMakerTest {
     @ValueSource(ints = {2, 3, 4, 5})
     void 두_번째에서_다섯_번째_행에는_EmptyPiece가_들어간다(final int row) {
         for (int column = MIN_COLUMN; column < MAX_COLUMN; column++) {
-            Position targetPosition = new Position(row, column);
+            Position targetPosition = Position.of(row, column);
             Piece foundPiece = board.get(targetPosition);
 
             assertThat(foundPiece).isInstanceOf(EmptyPiece.class);

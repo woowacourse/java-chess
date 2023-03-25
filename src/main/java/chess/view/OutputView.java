@@ -31,7 +31,7 @@ public final class OutputView {
 
     private static void appendColumns(final Map<Position, Piece> board, final StringBuilder stringBuilder, final int row) {
         for (int column = 0; column < 8; column++) {
-            Piece piece = board.get(new Position(row, column));
+            Piece piece = board.get(Position.of(row, column));
             char renderResult = render(piece, piece.getTeam());
             stringBuilder.append(renderResult);
         }
