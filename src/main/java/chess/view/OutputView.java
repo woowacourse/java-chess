@@ -45,7 +45,7 @@ public class OutputView {
 		for (Rank rank : ranks) {
 			values.add(rank.value());
 		}
-		values.sort(Comparator.naturalOrder());
+		values.sort(Comparator.reverseOrder());
 		final List<Rank> sortedRanks = new ArrayList<>();
 		for (Integer value : values) {
 			sortedRanks.add(Rank.from(value));
