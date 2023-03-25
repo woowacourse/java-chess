@@ -36,6 +36,9 @@ public class Initialize extends GameCommand {
         if (commandType == GameCommandType.MOVE) {
             return new Move(chessBoard, commandInput);
         }
+        if (commandType == GameCommandType.STATUS) {
+            return new Status(chessBoard);
+        }
         return new GameEnd(chessBoard);
     }
 

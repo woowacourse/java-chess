@@ -1,29 +1,24 @@
 package controller.command;
 
 import domain.chessGame.ChessBoard;
-import domain.position.Position;
+import domain.chessGame.ScoreCalculator;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
 
-public class Move extends GameCommand {
+public class Status extends GameCommand {
 
     private final ChessBoard chessBoard;
-    private final List<String> commandInput;
 
-    public Move(ChessBoard chessBoard, List<String> commandInput) {
+    public Status(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
-        this.commandInput = commandInput;
     }
 
     @Override
     public Command execute() {
-        Position start = Position.of(commandInput.get(1));
-        Position end = Position.of(commandInput.get(2));
-
-        chessBoard.movePiece(start, end);
-        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
+        ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard.getBlackPieces(), chessBoard.getWhitePieces());
+        OutputView.printStatusResult(scoreCalculator.getBlackScore(), scoreCalculator.getWhiteScore());
         return readNextCommand();
     }
 
