@@ -50,7 +50,7 @@ public class ChessGame {
     }
 
     private void checkCorrectTurnByColor(Position start) {
-        Color colorOfStartPiece = chessBoard.findColorOfPieceInPosition(start);
+        Color colorOfStartPiece = chessBoard.findPieceInBoardByPosition(start).getColor();
         if(colorOfStartPiece.isOpponent(turn)) {
             throw new IllegalArgumentException("상대편의 기물을 움직일 수 없습니다");
         }

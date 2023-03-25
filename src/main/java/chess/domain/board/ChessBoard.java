@@ -21,9 +21,11 @@ public class ChessBoard {
         this.chessBoard.putAll(chessBoard);
     }
 
-    public Color findColorOfPieceInPosition(final Position position) {
-        Piece pieceInPosition = findPieceInBoardByPosition(position);
-        return pieceInPosition.getColor();
+    public Piece findPieceInBoardByPosition(final Position position) {
+        if (!chessBoard.containsKey(position)) {
+            throw new IllegalArgumentException("해당하는 위치가 체스 보드에 존재하지 않습니다");
+        }
+        return chessBoard.get(position);
     }
 
     public void move(Position start, Position end) {
@@ -31,13 +33,6 @@ public class ChessBoard {
         validateMove(start, end, pieceToMove);
 
         movePieceToDestination(start, end, pieceToMove);
-    }
-
-    private Piece findPieceInBoardByPosition(final Position position) {
-        if (!chessBoard.containsKey(position)) {
-            throw new IllegalArgumentException("해당하는 위치가 체스 보드에 존재하지 않습니다");
-        }
-        return chessBoard.get(position);
     }
 
     private void validateMove(final Position start, final Position end, final Piece pieceToMove) {
