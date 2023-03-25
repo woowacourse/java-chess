@@ -1,4 +1,4 @@
-package domain.jdbc;
+package jdbc;
 
 import domain.ChessGame;
 import domain.chessboard.ChessBoard;
@@ -7,6 +7,7 @@ import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import domain.piece.Color;
+import jdbc.ChessGameDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

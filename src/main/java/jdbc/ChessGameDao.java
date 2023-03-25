@@ -1,4 +1,4 @@
-package domain.jdbc;
+package jdbc;
 
 import domain.ChessGame;
 import domain.chessboard.ChessBoard;
