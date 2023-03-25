@@ -1,8 +1,8 @@
 package chess.game;
 
-import chess.domain.Position;
-import chess.domain.Role;
-import chess.domain.Team;
+import chess.domain.board.Position;
+import chess.domain.piece.Role;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 
 import java.util.Map;

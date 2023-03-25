@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static java.util.stream.Collectors.toList;
 

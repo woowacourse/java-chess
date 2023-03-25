@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Team;
+import chess.domain.piece.Team;
 import chess.dto.SquareResponse;
 
 import java.util.List;

@@ -1,14 +1,15 @@
-package chess.domain;
+package chess.domain.board;
 
-import static chess.domain.Role.BISHOP;
-import static chess.domain.Role.KING;
-import static chess.domain.Role.KNIGHT;
-import static chess.domain.Role.PAWN;
-import static chess.domain.Role.QUEEN;
-import static chess.domain.Role.ROOK;
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.piece.Role.BISHOP;
+import static chess.domain.piece.Role.KING;
+import static chess.domain.piece.Role.KNIGHT;
+import static chess.domain.piece.Role.PAWN;
+import static chess.domain.piece.Role.QUEEN;
+import static chess.domain.piece.Role.ROOK;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 
+import chess.domain.piece.Role;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;

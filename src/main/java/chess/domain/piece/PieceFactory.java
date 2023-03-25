@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Role;
-import chess.domain.Team;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;

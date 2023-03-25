@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.Role;
-import chess.domain.Team;
+import chess.domain.board.Position;
 import chess.strategy.PawnStrategy;
 
 public class Pawn extends Piece {

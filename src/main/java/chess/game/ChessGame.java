@@ -2,10 +2,10 @@ package chess.game;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Position;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import chess.dto.SquareResponse;
 

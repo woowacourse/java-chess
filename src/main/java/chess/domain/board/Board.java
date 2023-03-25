@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.piece.Role;
+import chess.domain.piece.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.game.GameScore;
