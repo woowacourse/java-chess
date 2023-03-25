@@ -117,4 +117,9 @@ public class BoardTest {
     void 점수를_계산할_수_있다() {
         Assertions.assertThat(board.calculateScore(Side.WHITE)).isEqualTo(38);
     }
+
+    @Test
+    void 승리자를_계산할_수_있다() {
+        Assertions.assertThat(board.calculateWinner()).isEqualTo(Side.NEUTRALITY);
+    }
 }

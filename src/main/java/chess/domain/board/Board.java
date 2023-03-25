@@ -9,6 +9,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class Board {
     public static final int UPPER_BOUNDARY = 8;
     private static final int OVER_COUNT = 2;
     public static final int DIVIDE_VALUE = 2;
+    public static final int ALL_KING_LIVE = 2;
 
     private final Map<Position, Piece> board;
 
@@ -105,5 +107,35 @@ public class Board {
             return piece.getScore();
         }
         return 0;
+    }
+
+    public Side calculateWinner() {
+        List<Piece> kings = new ArrayList<>();
+
+        checkKingLive(kings);
+        if (kings.size() == ALL_KING_LIVE) {
+            return Side.NEUTRALITY;
+        }
+        return kings.get(0).getSide();
+    }
+
+    private void checkKingLive(final List<Piece> pieces) {
+        for (int file = LOWER_BOUNDARY; file <= UPPER_BOUNDARY; file++) {
+            addKingByRank(pieces, file);
+        }
+    }
+
+    private void addKingByRank(final List<Piece> pieces, final int file) {
+        for (int rank = LOWER_BOUNDARY; rank <= UPPER_BOUNDARY; rank++) {
+            final Piece piece = getPiece(Position.of(File.getFile(file), Rank.getRank(rank)));
+
+            addKingIfKingLive(pieces, piece);
+        }
+    }
+
+    private void addKingIfKingLive(final List<Piece> pieces, final Piece piece) {
+        if (piece.isKing()) {
+            pieces.add(piece);
+        }
     }
 }

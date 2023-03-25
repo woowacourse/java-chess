@@ -3,7 +3,6 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;
-
 import java.util.List;
 
 public class ChessGame {
@@ -91,7 +90,12 @@ public class ChessGame {
         return board.calculateScore(Side.BLACK);
     }
     public Side calculateWinner() {
-        return Side.calculateWinner(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
+        final Side winner = board.calculateWinner();
+
+        if (winner.isNeutrality()) {
+            return Side.calculateWinner(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
+        }
+        return winner;
     }
 
     private void checkCalculable() {
