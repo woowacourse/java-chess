@@ -32,7 +32,7 @@ class PlayersTest {
     @DisplayName("모든 킹이 살아 있다면 true를 반환한다.")
     void everyKingAlive() {
         // when, then
-        Assertions.assertThat(players.everyKingAlive())
+        Assertions.assertThat(players.notEveryKingAlive())
                 .isTrue();
     }
 

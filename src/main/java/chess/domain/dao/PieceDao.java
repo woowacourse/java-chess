@@ -16,4 +16,6 @@ public interface PieceDao {
 
     void deletePieceByColor(Piece piece, Color color);
 
+    void deleteAll();
+
 }
