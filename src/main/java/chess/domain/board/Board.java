@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.PieceScore.PAWN_WITHOUT_SAME_FILE;
+import static chess.domain.PieceScore.PAWN_WITH_SAME_FILE;
 
 import chess.domain.Position;
 import chess.domain.Score;
@@ -102,7 +102,7 @@ public class Board {
                 .filter(count -> count > 1)
                 .reduce(0L, Long::sum);
 
-        return score.subtract(new Score(PAWN_WITHOUT_SAME_FILE.getScore() * countForRecalculation));
+        return score.subtract(new Score(PAWN_WITH_SAME_FILE.getScore() * countForRecalculation));
     }
 
     public boolean hasKing(Team team) {
