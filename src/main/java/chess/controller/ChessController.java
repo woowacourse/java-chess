@@ -44,7 +44,7 @@ public class ChessController {
     private void playChessGame(final ChessGame chessGame) {
         try {
             final ExecuteCommand executeCommand = inputView.readExecuteCommand();
-            executeCommand.execute(chessGame, outputView);
+            executeCommand.execute(chessGame, chessGameService, pieceService, outputView);
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printErrorMessage(e.getMessage());
         }
@@ -52,7 +52,9 @@ public class ChessController {
 
     private void checkKing(final ChessGame chessGame) {
         if (chessGame.isKingDied()) {
-            chessGame.done();
+            chessGame.end();
+            pieceService.deleteAll(chessGame.getId());
+            chessGameService.delete(chessGame.getId());
             outputView.printDoneMessage();
         }
     }

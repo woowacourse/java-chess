@@ -31,4 +31,12 @@ public class ChessGameService {
         return chessGameDao.findLatest()
                 .orElseThrow(() -> new IllegalArgumentException("진행중인 게임이 존재하지 않습니다."));
     }
+
+    public void update(final ChessGame chessGame) {
+        chessGameDao.update(chessGame);
+    }
+
+    public void delete(final Long id) {
+        chessGameDao.delete(id);
+    }
 }

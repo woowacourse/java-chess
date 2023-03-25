@@ -20,11 +20,6 @@ public class ChessGame {
         this.gameState = gameState;
     }
 
-    public void start() {
-        gameState.start();
-        gameState = gameState.load();
-    }
-
     public double calculateScore(final Color color) {
         return gameState.calculateScoreOfColor(color, this);
     }
@@ -37,10 +32,6 @@ public class ChessGame {
     public void end() {
         gameState.end();
         gameState = gameState.terminate();
-    }
-
-    public void done() {
-        gameState = gameState.done();
     }
 
     public void movePiece(final Square source, final Square destination) {
@@ -70,6 +61,10 @@ public class ChessGame {
 
     public boolean isKingDied() {
         return board.isKingDied(gameState.getTurnColor());
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Board getBoard() {
