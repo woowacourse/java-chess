@@ -1,24 +1,22 @@
 package chessgame.controller;
 
-import chessgame.domain.Board;
-import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Command;
 import chessgame.domain.Game;
+import chessgame.service.ChessService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
-import dao.BoardDao;
 
 import java.sql.SQLException;
 
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final BoardDao boardDao;
+    private final ChessService chessService;
 
-    public ChessController(InputView inputView, OutputView outputView, BoardDao boardDao) {
+    public ChessController(InputView inputView, OutputView outputView, ChessService chessService) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.boardDao = boardDao;
+        this.chessService = chessService;
     }
 
     public void run() {
@@ -26,16 +24,13 @@ public class ChessController {
         playGame(game);
     }
 
-    public Game setGame(){
+    public Game setGame() {
         try {
+            outputView.printSetGameMessage();
             String gameName = inputView.readGameName();
-            Game readGame = boardDao.read(gameName);
-            if(readGame==null){
-                return new Game(new Board(ChessBoardFactory.create()),gameName);
-            }
-            readGame.setDbState(boardDao.findTurnByGame(gameName));
-            return readGame;
-        }catch(SQLException e){
+            return chessService.setGame(gameName);
+        } catch (SQLException e) {
+            outputView.printErrorMsg(e.getMessage());
             return null;
         }
     }
@@ -49,15 +44,14 @@ public class ChessController {
         if (game.isEndByKing()) {
             outputView.printWinner(game.winTeam());
         }
-
         saveGame(game);
     }
 
     private void saveGame(Game game) {
         try {
-            boardDao.remove(game.getName());
-            boardDao.save(game.board(),game.getName(),game.getTurn());
-        }catch (SQLException e){
+            chessService.save(game);
+        } catch (SQLException e) {
+            outputView.printErrorMsg(e.getMessage());
         }
     }
 

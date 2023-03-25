@@ -1,7 +1,6 @@
 package dao;
 
 import chessgame.domain.Board;
-import chessgame.domain.Command;
 import chessgame.domain.Game;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.File;
@@ -22,7 +21,7 @@ public class BoardDao {
     public Connection getConnection() {
         // 드라이버 연결
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE , USERNAME, PASSWORD);
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE, USERNAME, PASSWORD);
         } catch (final SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
@@ -30,19 +29,19 @@ public class BoardDao {
         }
     }
 
-    public void save(Board board,String gameName, State turn) {
-        Map<Point,Piece> boardMap = board.getBoard();
+    public void save(Board board, String gameName, State turn) {
+        Map<Point, Piece> boardMap = board.getBoard();
         Connection connection = getConnection();
         try {
             insertGame(gameName, turn, connection);
-            insertBoard(boardMap,gameName, connection);
+            insertBoard(boardMap, gameName, connection);
             connection.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void insertGame(String gameName, State turn, Connection connection) throws SQLException{
+    private void insertGame(String gameName, State turn, Connection connection) throws SQLException {
         final String query = "insert into game (name, team_turn) values (?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, gameName);
@@ -51,11 +50,10 @@ public class BoardDao {
         preparedStatement.close();
     }
 
-    private void insertBoard(Map<Point,Piece> boardMap, String gameName, Connection connection) throws SQLException{
+    private void insertBoard(Map<Point, Piece> boardMap, String gameName, Connection connection) throws SQLException {
         final String query = "insert into board (board_name, piece_file, piece_rank, piece_type, piece_team) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-        for(Point point : boardMap.keySet()){
+        for (Point point : boardMap.keySet()) {
             preparedStatement.setString(1, gameName);
             preparedStatement.setString(2, point.getFile().toString());
             preparedStatement.setString(3, point.getRank().toString());
@@ -66,54 +64,58 @@ public class BoardDao {
         preparedStatement.close();
     }
 
-    public Game read(String gameName) throws SQLException{
-        Map<Point, Piece> board = new HashMap<>();
-        Connection connection = getConnection();
+    public Game read(String gameName) {
         final String query = "SELECT * FROM Board where board_name = ?";
 
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, gameName);
-
-                final var resultSet = preparedStatement.executeQuery();
-                if(!resultSet.next()){
-                    return null;
-                }
-                do {
-                    File file = File.valueOf(resultSet.getString("piece_file"));
-                    Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
-                    String name = resultSet.getString("piece_type");
-                    String team = resultSet.getString("piece_team");
-                    Piece piece = PieceConveter.getPiece(name,team);
-
-                    board.put(Point.of(file,rank),piece);
-                }while (resultSet.next());
-                preparedStatement.execute();
-
+        Connection connection = getConnection();
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return makeGame(makeBoard(resultSet), gameName);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        connection.close();
+    }
+
+    private Map<Point, Piece> makeBoard(ResultSet resultSet) throws SQLException {
+        Map<Point, Piece> board = new HashMap<>();
+        while (resultSet.next()) {
+            File file = File.valueOf(resultSet.getString("piece_file"));
+            Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
+            String name = resultSet.getString("piece_type");
+            String team = resultSet.getString("piece_team");
+            Piece piece = PieceConveter.getPiece(name, team);
+
+            board.put(Point.of(file, rank), piece);
+        }
+        return board;
+    }
+
+    private Game makeGame(Map<Point, Piece> board, String gameName) {
+        if (board.isEmpty()) {
+            return null;
+        }
         return new Game(new Board(board), gameName);
     }
 
-    public void remove(String gameName) throws SQLException{
-        Connection connection = getConnection();
+    public void remove(String gameName) {
         final String query = "delete from game where name = ?";
 
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        Connection connection = getConnection();
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.execute();
+            connection.close();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        connection.close();
     }
 
-    public String findTurnByGame(String gameName) throws SQLException{
-        Connection connection = getConnection();
+    public String findTurnByGame(String gameName) {
         final String query = "select team_turn from game where name = ?";
 
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        Connection connection = getConnection();
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();

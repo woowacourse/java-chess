@@ -12,10 +12,11 @@ public class Game {
     private final Board board;
     private State state;
     private State turn;
-    private String name;
+    private final String name;
 
-    public Game(Board board,String gameName) {
+    public Game(Board board, String gameName) {
         this.state = new Ready();
+        this.turn = new Ready();
         this.board = board;
         this.name = gameName;
     }
@@ -27,16 +28,16 @@ public class Game {
     public void setState(Command command) {
         state = state.run(command, board);
 
-        if(!state.isEnd()){
+        if (!state.isEnd()) {
             turn = state;
         }
     }
 
-    public void setDbState(String team){
-        if(team.equals("White")) {
+    public void setDbState(String team) {
+        if (team.equals("White")) {
             state = new White();
         }
-        if(team.equals("Black")){
+        if (team.equals("Black")) {
             state = new Black();
         }
     }
@@ -63,11 +64,11 @@ public class Game {
         return score;
     }
 
-    public State getTurn(){
+    public State getTurn() {
         return turn;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 }

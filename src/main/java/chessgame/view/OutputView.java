@@ -71,4 +71,8 @@ public class OutputView {
         }
         System.out.println(Collections.max(scoreBoard.keySet()) + "팀이 이기고 있습니다.");
     }
+
+    public void printSetGameMessage() {
+        System.out.println("호출할 체스게임 이름을 입력해주세요. (존재하지 않는 경우 새로운 게임이 시작됩니다.)");
+    }
 }
