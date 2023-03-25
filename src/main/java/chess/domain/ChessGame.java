@@ -6,7 +6,6 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.validateMove.SourceMoveValidator;
 import chess.domain.validateMove.ValidateData;
-import chess.renderer.CampRenderer;
 import chess.room.Move;
 import chess.room.Room;
 import chess.room.RoomDao;
@@ -36,7 +35,6 @@ public class ChessGame {
         if (canMove(source, target)) {
             chessboard.swapPiece(source, target);
             turn = turn.getOpposite();
-            System.out.println(CampRenderer.getCampOutput(turn));
             return;
         }
         throw new IllegalArgumentException(CANT_MOVE_MESSAGE);
@@ -87,7 +85,6 @@ public class ChessGame {
     public void resumeNotation() throws SQLException {
         for (Move note : room.getNotation()) {
             moveOnePiece(note.getSource(), note.getTarget());
-            System.out.println(CampRenderer.getCampOutput(turn));
         }
     }
 
