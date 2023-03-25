@@ -11,7 +11,7 @@ import java.util.Map;
 
 public final class BoardToString {
 
-    public static final String EMPTY_POSITION = ".";
+    private static final String EMPTY_POSITION = ".";
 
     private BoardToString() {
     }

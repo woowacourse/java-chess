@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 public final class InputView {
 
-    public static final String DELIMITER = " ";
+    private static final String DELIMITER = " ";
     private static final Scanner scanner = new Scanner(System.in);
-    public static final int START_END_COMMAND_NECESSARY_WORD = 1;
-    public static final int MOVE_COMMAND_NECESSARY_WORD = 3;
+    private static final int START_END_COMMAND_NECESSARY_WORD = 1;
+    private static final int MOVE_COMMAND_NECESSARY_WORD = 3;
 
     private InputView() {
     }

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public final class ChessBoard {
 
-    public static final int KING_NECESSARY_COUNT = 2;
+    private static final int KING_NECESSARY_COUNT = 2;
 
     private final Map<Position, Piece> chessBoard;
 

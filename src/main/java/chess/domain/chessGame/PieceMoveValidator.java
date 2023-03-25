@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class PieceMoveValidator {
 
-    public static final int NO_OBSTACLES_COUNT = 0;
+    private static final int NO_OBSTACLES_COUNT = 0;
 
     private final Map<Position, Piece> chessBoard;
 

@@ -18,6 +18,10 @@ import java.util.function.Supplier;
 
 public final class ChessController {
 
+    private static final String BLACK_TEAM = "검은색";
+    private static final String WHITE_TEAM = "흰색";
+    private static final String DRAW = "무승부";
+
     public void run() {
         OutputView.printStartMessage();
         CommandDto commandDto = repeat(InputView::readInitialCommand);
@@ -110,12 +114,12 @@ public final class ChessController {
     private String getWinner(double blackScore, double whiteScore) {
         Color winningColor = getWinningColor(blackScore, whiteScore);
         if (winningColor == Color.BLACK) {
-            return "검은색";
+            return BLACK_TEAM;
         }
         if (winningColor == Color.WHITE) {
-            return "흰색";
+            return WHITE_TEAM;
         }
-        return "무승부";
+        return DRAW;
     }
 
     private Color getWinningColor(double blackScore, double whiteScore) {

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public final class Position {
 
-    public static final int POSITION_STRING_LENGTH = 2;
+    private static final int POSITION_STRING_LENGTH = 2;
 
     private static final Map<Integer, Position> cache = new HashMap<>();
 
