@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class ChessGameDaoTest {
 
-    private final ChessGameDao chessGameDao = new ChessGameDao("chess_test");
+    private final ChessGameDao chessGameDao = new ChessGameDao(Database.TEST);
 
     @BeforeEach
     void setUp() {

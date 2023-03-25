@@ -40,6 +40,10 @@ public class ChessGame {
         return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
     }
 
+    public boolean isBothKingAlive() {
+        return board.hasKing(Team.WHITE) && board.hasKing(Team.BLACK);
+    }
+
     public Team getWinner() {
         if (board.hasKing(Team.WHITE) && board.hasKing(Team.BLACK)) {
             throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");

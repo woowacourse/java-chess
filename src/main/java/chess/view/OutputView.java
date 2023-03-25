@@ -14,8 +14,12 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printLoginMessage() {
+    public static void printWelcomeMessage() {
         System.out.println("체스 게임에 오신 걸 환영합니다!");
+    }
+
+    public static void printLoginMessage() {
+        System.out.println();
         printMessage("로그인 : login");
         printMessage("회원가입 : register");
         System.out.println();
@@ -85,6 +89,7 @@ public class OutputView {
     public static void printWinner(Team winner) {
         if (winner == Team.WHITE) {
             System.out.println("백이 승리했습니다!");
+            return;
         }
         System.out.println("흑이 승리했습니다!");
     }

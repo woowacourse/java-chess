@@ -30,8 +30,8 @@ public final class ChessGameDao {
 
     private final String database;
 
-    public ChessGameDao(final String database) {
-        this.database = database;
+    public ChessGameDao(final Database database) {
+        this.database = database.getName();
     }
 
     public Connection getConnection() {
