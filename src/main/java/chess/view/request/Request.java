@@ -14,10 +14,6 @@ public class Request {
         this.userId = userId;
     }
 
-    public List<String> commands() {
-        return commands;
-    }
-
     public List<String> getCommands() {
         return commands;
     }

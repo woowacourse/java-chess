@@ -110,13 +110,21 @@ public class ChessGameService {
 
     public String joinGame(String userId, int boardId) {
         String status = chessGameDao.findStatusByBoardId(boardId);
+        validateExistGame(status);
+        String user = chessGameDao.findUserIdByBoardId(boardId);
+        validateOwner(userId, user);
+        return status;
+    }
+
+    private void validateExistGame(String status) {
         if (status == null) {
             throw new ChessGameException("존재하지 않는 게임입니다");
         }
-        String user = chessGameDao.findUserIdByBoardId(boardId);
+    }
+
+    private void validateOwner(String userId, String user) {
         if (!user.equals(userId)) {
             throw new ChessGameException("자신의 게임이 아닙니다");
         }
-        return status;
     }
 }

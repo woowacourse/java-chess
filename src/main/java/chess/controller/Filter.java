@@ -16,18 +16,26 @@ public class Filter {
     }
 
     public void validateRequest(Request request) {
-        if (isRequiresUserId(request.getCommands().get(COMMAND_TYPE)) && request.getUserId() == null) {
+        if (isRequiresUserId(request.getCommands().get(COMMAND_TYPE)) && hasNoUser(request)) {
             throw new IllegalArgumentException("유저 아이디가 필요합니다.");
         }
-        if (isRequiresBoardId(request.getCommands().get(COMMAND_TYPE)) && request.getBoardId() == UNSET_BOARD_ID) {
+        if (isRequiresBoardId(request.getCommands().get(COMMAND_TYPE)) && hasNoGameId(request)) {
             throw new IllegalArgumentException("게임 아이디가 필요합니다.");
         }
     }
 
-
     private boolean isRequiresUserId(String path) {
         return requiresUserId.stream()
                 .anyMatch(path::contains);
+    }
+
+    private boolean hasNoUser(Request request) {
+        return request.getUserId() == null;
+    }
+
+
+    private boolean hasNoGameId(Request request) {
+        return request.getBoardId() == UNSET_BOARD_ID;
     }
 
     private boolean isRequiresBoardId(String path) {
