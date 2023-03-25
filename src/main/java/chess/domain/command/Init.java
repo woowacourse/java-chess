@@ -5,7 +5,7 @@ import java.util.List;
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
 import chess.dao.JdbcChessGameDao;
-import chess.domain.ChessGame;
+import chess.domain.service.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
 import chess.domain.board.ResultCalculator;
@@ -25,7 +25,7 @@ public class Init implements CommandStatus {
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        return new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        return new Play(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
     }
 
     @Override

@@ -2,16 +2,12 @@ package chess.domain.command;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.ChessGame;
-import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
 import chess.domain.board.ResultCalculator;
 import chess.domain.board.ScoreBySide;
-import chess.domain.piece.Pieces;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.command.End;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

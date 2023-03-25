@@ -2,14 +2,10 @@ package chess.domain.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.dao.JdbcChessGameDao;
-import chess.domain.ChessGame;
+import chess.domain.service.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.board.GameResultBySide;
-import chess.domain.board.ResultCalculator;
-import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Pieces;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -25,7 +21,7 @@ class PrintGameResultTest {
     void start() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
 
         // when
         CommandStatus newPlay = printGameResult.start();
@@ -40,7 +36,7 @@ class PrintGameResultTest {
     void move() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
         Position sourcePosition = new Position(File.A, Rank.TWO);
         Position targetPosition = new Position(File.A, Rank.FOUR);
 
@@ -58,7 +54,7 @@ class PrintGameResultTest {
     void end() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
 
         // when, then
         assertThat(printGameResult.end()).isInstanceOf(End.class);
@@ -69,7 +65,7 @@ class PrintGameResultTest {
     void getPieces() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
 
         // when, then
         assertThatThrownBy(() -> printGameResult.getPieces())
@@ -82,7 +78,7 @@ class PrintGameResultTest {
     void getTurnDisplayName() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
 
         // when, then
         assertThatThrownBy(() -> printGameResult.getTurnDisplayName())
@@ -95,7 +91,7 @@ class PrintGameResultTest {
     void getScoreBySide() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
 
         // when, then
         Assertions.assertDoesNotThrow(() -> printGameResult.getScoreBySide());
@@ -106,7 +102,7 @@ class PrintGameResultTest {
     void getGameResultBySide() {
         // given
         Board board = new Board(new Pieces());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
 
         // when, then
         Assertions.assertDoesNotThrow(() -> printGameResult.getGameResultBySide());

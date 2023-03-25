@@ -1,13 +1,10 @@
 package chess.domain.command;
 
 import java.util.List;
-import java.util.Map;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
-import chess.domain.ChessGame;
 import chess.domain.board.*;
-import chess.domain.piece.Side;
 import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 

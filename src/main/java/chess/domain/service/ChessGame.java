@@ -1,9 +1,10 @@
-package chess.domain;
+package chess.domain.service;
 
 import java.util.List;
 
 import chess.dao.ChessGameDao;
 import chess.domain.board.*;
+import chess.domain.command.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;
@@ -13,20 +14,20 @@ public class ChessGame {
     private final Long id;
 
     private final Board board;
-    private final ResultCalculator resultCalculator;
+    private final Turn turn;
     private final ChessGameDao chessGameDao;
 
-    public ChessGame(Board board, ChessGameDao chessGameDao) {
+    public ChessGame(Board board, Turn turn, ChessGameDao chessGameDao) {
         this.id = chessGameDao.saveNewChessGame();
         this.board = board;
-        this.resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        this.turn = turn;
         this.chessGameDao = chessGameDao;
         savePiece();
     }
 
     private void savePiece() {
         for (Piece piece : board.getPieces()) {
-            chessGameDao.savePiece(piece);
+            chessGameDao.savePiece(piece, id);
         }
     }
 
@@ -42,15 +43,8 @@ public class ChessGame {
         return board.findPieceByPosition(sourcePosition);
     }
 
-    public void saveScoreBySide() {
-        Score whiteScore = board.calculateSideScore(Side.WHITE);
-        Score blackScore = board.calculateSideScore(Side.BLACK);
-        resultCalculator.saveTotalScoreBySide(Side.WHITE, whiteScore);
-        resultCalculator.saveTotalScoreBySide(Side.BLACK, blackScore);
-    }
-
-    public void saveGameResultBySide() {
-        resultCalculator.saveGameResultBySide();
+    public Score getTotalScoreBySide(Side side) {
+        return board.calculateSideScore(side);
     }
 
     public boolean isTargetPieceOppositeKing(Position sourcePosition, Position targetPosition) {
@@ -61,15 +55,15 @@ public class ChessGame {
         return board.getPieces();
     }
 
-    public ResultCalculator getResultCalculator() {
-        return resultCalculator;
+    public boolean isCorrectTurn(Side side) {
+        return turn.isCorrectTurn(side);
     }
 
-    public ScoreBySide getScoreBySide() {
-        return resultCalculator.getScoreBySide();
+    public Turn turnChange() {
+        return turn.change();
     }
 
-    public GameResultBySide getGameResultBySide() {
-        return resultCalculator.getGameResultBySide();
+    public String getTurnDisplayName() {
+        return turn.getDisplayName();
     }
 }

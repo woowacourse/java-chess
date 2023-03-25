@@ -4,19 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.dao.JdbcChessGameDao;
-import chess.domain.ChessGame;
+import chess.domain.service.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.board.GameResultBySide;
-import chess.domain.board.ResultCalculator;
-import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Pieces;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.command.CommandStatus;
-import chess.domain.command.End;
-import chess.domain.command.Init;
-import chess.domain.command.Play;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +22,7 @@ class InitTest {
     @BeforeEach
     void init() {
         final Board board = new Board(new Pieces());
-        chessGame = new ChessGame(board, JdbcChessGameDao.getInstance());
+        chessGame = new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance());
     }
 
 
