@@ -29,19 +29,10 @@ public class ChessController {
 
     private void executeState() {
         try {
-            final Command command = inputCommand();
+            final Command command = InputView.readCommand();
             executeCommand(command);
-        } catch (final IllegalStateException e) {
+        } catch (final Exception e) {
             System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
-        }
-    }
-
-    private Command inputCommand() {
-        try {
-            return InputView.readCommand();
-        } catch (final IllegalArgumentException e) {
-            System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
-            return inputCommand();
         }
     }
 
