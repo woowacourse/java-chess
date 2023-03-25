@@ -96,7 +96,7 @@ public class Board {
 
     public boolean isChecked(Team team) {
         Position kingPosition = getKingPosition(team);
-        return isAnyMovable(team.opposite(), kingPosition);
+        return isAnyMovableTo(team.opposite(), kingPosition);
     }
 
     private Position getKingPosition(Team team) {
@@ -107,7 +107,7 @@ public class Board {
                 .getKey();
     }
 
-    private boolean isAnyMovable(Team team, Position target) {
+    private boolean isAnyMovableTo(Team team, Position target) {
         return squares.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
                 .anyMatch(entry -> canMove(entry.getKey(), target));
