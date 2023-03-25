@@ -28,21 +28,38 @@ public class JdbcContext {
     }
 
     private void workWithStatementStrategy(StatementStrategy statementStrategy) {
-        try (Connection c = ConnectionProvider.getConnection();
-             PreparedStatement ps = statementStrategy.makePreparedStatement(c)) {
+        Connection c = ConnectionProvider.getConnection();
+        try (PreparedStatement ps = statementStrategy.makePreparedStatement(c)) {
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
+        } finally {
+            ConnectionProvider.close(c);
         }
     }
 
     private <T> T workWithStatementStrategy(StatementStrategy statementStrategy, RowMapper<T> rowMapper) {
-        try (Connection c = ConnectionProvider.getConnection();
-             PreparedStatement ps = statementStrategy.makePreparedStatement(c);
+        Connection c = ConnectionProvider.getConnection();
+        try (PreparedStatement ps = statementStrategy.makePreparedStatement(c);
              ResultSet resultSet = ps.executeQuery()) {
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
             throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
+        } finally {
+            ConnectionProvider.close(c);
+        }
+    }
+
+    public void transaction(Runnable runnable) {
+        ConnectionProvider.startTransaction();
+        try {
+            runnable.run();
+        } catch (Exception e) {
+            ConnectionProvider.rollback();
+            throw e;
+        } finally {
+            ConnectionProvider.commit();
+            ConnectionProvider.endTransaction();
         }
     }
 }

@@ -84,10 +84,12 @@ public class MySQLChessGameDao implements ChessGameDao {
 
     @Override
     public void saveChessGame(Board board, GameState gameState) {
-        deleteAllBoard();
-        deleteGameState();
-        saveBoard(board.getBoard());
-        saveGameState(gameState);
+        jdbcContext.transaction(() -> {
+            deleteAllBoard();
+            deleteGameState();
+            saveBoard(board.getBoard());
+            saveGameState(gameState);
+        });
     }
 
     private void saveBoard(Map<Position, Piece> board) {
