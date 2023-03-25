@@ -16,7 +16,7 @@ public class InputView {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int RANK_INDEX = 1;
-    private static final String NUMERIC_REGEX = "[0-9]";
+    private static final String NUMERIC_REGEX = "[0-9]+";
 
     private final Scanner scanner;
 
@@ -75,5 +75,17 @@ public class InputView {
         List<String> splitPosition = Arrays.asList(position.split(""));
         String rank = splitPosition.get(RANK_INDEX);
         return !rank.matches(NUMERIC_REGEX);
+    }
+
+    public String inputPreviousGameId() {
+        String previousGameId = scanner.nextLine();
+        validateInputGameId(previousGameId);
+        return previousGameId;
+    }
+
+    private void validateInputGameId(String inputGameId) {
+        if (!inputGameId.matches(NUMERIC_REGEX)) {
+            throw new IllegalArgumentException("[ERROR] 찾으려는 게임 ID는 숫자여야합니다.");
+        }
     }
 }
