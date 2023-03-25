@@ -13,15 +13,15 @@ public class OutputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public void printErrorMessage(final Exception e) {
+    public static void printErrorMessage(final Exception e) {
         System.out.println(e.getMessage() + LINE_SEPARATOR);
     }
 
-    public void printStartMessage() {
+    public static void printStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
     }
 
-    public void printBoard(final Board board) {
+    public static void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder(LINE_SEPARATOR);
         final Map<Position, Piece> boardMap = board.getBoard();
 
@@ -36,12 +36,12 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void printScore(final Double whiteScore, final Double blackScore) {
+    public static void printScore(final Double whiteScore, final Double blackScore) {
         System.out.println(String.format("White팀 점수: %.1f점", whiteScore));
         System.out.println(String.format("Black팀 점수: %.1f점", blackScore));
     }
 
-    public void printWinner(Side side) {
+    public static void printWinner(Side side) {
         if (side.isWhite()) {
             System.out.println("White팀 승리!!");
             return;

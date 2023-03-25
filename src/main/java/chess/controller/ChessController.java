@@ -23,13 +23,9 @@ public class ChessController {
     public static final int RANK_INDEX = 1;
 
     private final Map<Command, BiConsumer<ChessGame, String[]>> commands = new EnumMap<>(Command.class);
-    private final InputView inputView;
-    private final OutputView outputView;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController() {
         putCommands();
-        this.inputView = inputView;
-        this.outputView = outputView;
     }
 
     private void putCommands() {
@@ -50,8 +46,8 @@ public class ChessController {
     private void status(ChessGame chessGame) {
         final Double whiteScore = chessGame.calculateWhiteScore();
         final Double blackScore = chessGame.calculateBlackScore();
-        outputView.printScore(whiteScore, blackScore);
-        outputView.printWinner(Side.calculateWinner(whiteScore, blackScore));
+        OutputView.printScore(whiteScore, blackScore);
+        OutputView.printWinner(Side.calculateWinner(whiteScore, blackScore));
     }
 
     private void moveOrNot(ChessGame chessGame, String[] splitCommand) {
@@ -74,28 +70,28 @@ public class ChessController {
         final Board board = BoardFactory.generateBoard();
         final ChessGame chessGame = new ChessGame(board);
 
-        outputView.printStartMessage();
+        OutputView.printStartMessage();
         while (chessGame.isRunnable()) {
             printChessBoard(chessGame);
             executeCommand(chessGame);
         }
-        outputView.printScore(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
-        outputView.printWinner(chessGame.calculateWinner());
+        OutputView.printScore(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
+        OutputView.printWinner(chessGame.calculateWinner());
     }
 
     private void printChessBoard(final ChessGame chessGame) {
         if (chessGame.isStart()) {
-            outputView.printBoard(chessGame.getBoard());
+            OutputView.printBoard(chessGame.getBoard());
         }
     }
 
     private void executeCommand(final ChessGame chessGame) {
         try {
-            final String[] splitCommand = inputView.readCommand().split(" ");
+            final String[] splitCommand = InputView.readCommand().split(" ");
             final Command command = Command.findByString(splitCommand[COMMAND_INDEX]);
             commands.get(command).accept(chessGame, splitCommand);
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e);
+            OutputView.printErrorMessage(e);
             executeCommand(chessGame);
         }
     }
