@@ -6,6 +6,7 @@ create table chess.chess_board
 (
     user_id  varchar(100) null,
     chess_id int auto_increment,
+    status   varchar(10)  null,
     constraint chess_board_pk
         primary key (chess_id)
 );
@@ -29,6 +30,7 @@ create table chess_test.chess_board
 (
     user_id  varchar(100) null,
     chess_id int auto_increment,
+    status   varchar(10)  null,
     constraint chess_board_pk
         primary key (chess_id)
 );
