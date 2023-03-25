@@ -17,6 +17,7 @@ public class PlayGround {
         System.out.println("printAllAnonymous");
 
         numbers.forEach(new Consumer<Integer>() {
+
             public void accept(Integer value) {
                 System.out.println(value);
             }
