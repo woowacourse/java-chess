@@ -76,16 +76,4 @@ public class InputView {
         String rank = splitPosition.get(RANK_INDEX);
         return !rank.matches(NUMERIC_REGEX);
     }
-
-    public String inputPreviousGameId() {
-        String previousGameId = scanner.nextLine();
-        validateInputGameId(previousGameId);
-        return previousGameId;
-    }
-
-    private void validateInputGameId(String inputGameId) {
-        if (!inputGameId.matches(NUMERIC_REGEX)) {
-            throw new IllegalArgumentException("[ERROR] 찾으려는 게임 ID는 숫자여야합니다.");
-        }
-    }
 }
