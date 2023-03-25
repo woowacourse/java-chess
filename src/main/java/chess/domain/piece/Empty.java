@@ -4,7 +4,7 @@ import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.List;
 
-public final class Empty implements PieceState {
+public final class Empty implements SquareState {
 
     private static final String EMPTY_EXCEPTION = "빈칸은 해당 동작을 수행할 수 없습니다.";
 
@@ -34,7 +34,7 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public void validateRoute(final List<PieceState> routeSquares) {
+    public void validateRoute(final List<SquareState> routeSquares) {
         throw new UnsupportedOperationException(EMPTY_EXCEPTION);
     }
 }

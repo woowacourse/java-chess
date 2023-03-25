@@ -3,10 +3,11 @@ package chess.domain.piece;
 import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.IntFunction;
 
-public abstract class Piece implements PieceState {
+public abstract class Piece implements SquareState {
 
     protected final Team team;
 
@@ -65,7 +66,7 @@ public abstract class Piece implements PieceState {
         for (int i = 1; i <= direction * distance; i++) {
             route.add(coordinateFunction.apply(direction * i));
         }
-        return route;
+        return Collections.unmodifiableList(route);
     }
 
     private int directionByDistance(final int distance) {
@@ -76,9 +77,9 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public void validateRoute(final List<PieceState> routeSquares) {
+    public void validateRoute(final List<SquareState> routeSquares) {
         final int lastIndex = routeSquares.size() - 1;
-        final PieceState lastSquare = routeSquares.get(lastIndex);
+        final SquareState lastSquare = routeSquares.get(lastIndex);
         if (lastSquare.isSameTeam(this)) {
             throwCanNotMoveException();
         }
@@ -86,7 +87,7 @@ public abstract class Piece implements PieceState {
         checkSquaresEmpty(routeSquares.subList(0, lastIndex));
     }
 
-    protected final void checkSquaresEmpty(final List<PieceState> squares) {
+    protected final void checkSquaresEmpty(final List<SquareState> squares) {
         final int notEmptyCount = (int) squares.stream()
                 .filter(square -> !square.isEmpty())
                 .count();

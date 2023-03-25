@@ -2,7 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceState;
+import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void validateRoute(final List<PieceState> routeSquares) {
+    public void validateRoute(final List<SquareState> routeSquares) {
         if (isEnemyOnDiagonal) {
             validateMoveToDiagonal(routeSquares.get(0));
             isMoved = true;
@@ -70,8 +70,8 @@ public final class Pawn extends Piece {
         isMoved = true;
     }
 
-    private void validateMoveToDiagonal(final PieceState pieceState) {
-        if (pieceState.isSameTeam(this) || pieceState.isEmpty()) {
+    private void validateMoveToDiagonal(final SquareState squareState) {
+        if (squareState.isSameTeam(this) || squareState.isEmpty()) {
             throwCanNotMoveException();
         }
     }

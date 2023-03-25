@@ -2,7 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
-import chess.domain.piece.PieceState;
+import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -23,7 +23,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final SquareCoordinate c1 = SquareCoordinate.of("c1");
         final SquareCoordinate c2 = SquareCoordinate.of("c2");
-        final List<PieceState> route = List.of(new Pawn(Team.BLACK));
+        final List<SquareState> route = List.of(new Pawn(Team.BLACK));
         pawn.findRoute(c1, c2);
 
         //when & then
@@ -37,7 +37,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final SquareCoordinate c1 = SquareCoordinate.of("c1");
         final SquareCoordinate c2 = SquareCoordinate.of("c2");
-        final List<PieceState> route = List.of(new Empty());
+        final List<SquareState> route = List.of(new Empty());
         pawn.findRoute(c1, c2);
 
         //when & then
@@ -51,7 +51,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final SquareCoordinate c1 = SquareCoordinate.of("c1");
         final SquareCoordinate b2 = SquareCoordinate.of("b2");
-        final List<PieceState> route = List.of(new Empty());
+        final List<SquareState> route = List.of(new Empty());
         pawn.findRoute(c1, b2);
 
         //when & then
@@ -65,7 +65,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final SquareCoordinate c1 = SquareCoordinate.of("c1");
         final SquareCoordinate b2 = SquareCoordinate.of("b2");
-        final List<PieceState> route = List.of(new Pawn(Team.BLACK));
+        final List<SquareState> route = List.of(new Pawn(Team.BLACK));
         pawn.findRoute(c1, b2);
 
         //when & then
@@ -79,7 +79,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(team);
         final SquareCoordinate b1 = SquareCoordinate.of("b1");
         final SquareCoordinate b2 = SquareCoordinate.of("b2");
-        final List<PieceState> route1 = List.of(new Empty());
+        final List<SquareState> route1 = List.of(new Empty());
 
         final SquareCoordinate b4 = SquareCoordinate.of("b4");
 
@@ -97,7 +97,7 @@ class PawnTest {
         //given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final List<PieceState> route = List.of(new Pawn(team));
+        final List<SquareState> route = List.of(new Pawn(team));
 
         //when & then
         assertThatThrownBy(() -> pawn.validateRoute(route))
@@ -109,7 +109,7 @@ class PawnTest {
         //given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final List<PieceState> route = List.of(new Empty());
+        final List<SquareState> route = List.of(new Empty());
 
         //when & then
         assertDoesNotThrow(() -> pawn.validateRoute(route));

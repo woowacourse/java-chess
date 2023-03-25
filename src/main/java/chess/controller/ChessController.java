@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.view.Command;
 import chess.view.InputView;
@@ -46,7 +47,12 @@ public final class ChessController {
 
     private void startGame(final ChessGame chessGame) {
         chessGame.start();
-        OutputView.printChessBoard(chessGame.getChessBoard());
+        showChessBoard(chessGame.getChessBoard());
+    }
+
+    private void showChessBoard(final ChessBoard chessBoard) {
+        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.toString(chessBoard);
+        OutputView.printChessBoard(convertedChessBoard);
     }
 
     private void movePiece(final ChessGame chessGame) {
@@ -54,6 +60,6 @@ public final class ChessController {
         final SquareCoordinate to = SquareCoordinate.of(InputView.getCoordinate());
 
         chessGame.move(from, to);
-        OutputView.printChessBoard(chessGame.getChessBoard());
+        showChessBoard(chessGame.getChessBoard());
     }
 }

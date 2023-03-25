@@ -4,7 +4,7 @@ import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.List;
 
-public interface PieceState {
+public interface SquareState {
 
     boolean isEmpty();
 
@@ -16,5 +16,5 @@ public interface PieceState {
 
     List<SquareCoordinate> findRoute(final SquareCoordinate from, final SquareCoordinate to);
 
-    void validateRoute(final List<PieceState> routeSquares);
+    void validateRoute(final List<SquareState> routeSquares);
 }

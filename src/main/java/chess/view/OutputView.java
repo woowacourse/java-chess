@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.dto.ChessBoardDto;
+import chess.controller.ChessBoardFormatter;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ public final class OutputView {
         System.out.println("게임 이동: move source target위치 - 예. move b2 b3");
     }
 
-    public static void printChessBoard(final ChessBoardDto chessBoardDto) {
-        List<String> chessBoard = chessBoardDto.getChessBoardMark();
+    public static void printChessBoard(final ChessBoardFormatter chessBoardMarkConverter) {
+        List<String> chessBoard = chessBoardMarkConverter.getChessBoardMark();
 
         for (int i = 0; i < chessBoard.size(); i++) {
             int rankCount = chessBoard.size() - i;

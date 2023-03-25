@@ -2,7 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
-import chess.domain.piece.PieceState;
+import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -55,7 +55,7 @@ class BishopTest {
         //given
         final Team team = Team.BLACK;
         final Bishop bishop = new Bishop(team);
-        final List<PieceState> route = List.of(new Empty(), new Empty(), new Pawn(team));
+        final List<SquareState> route = List.of(new Empty(), new Empty(), new Pawn(team));
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.validateRoute(route))
@@ -67,7 +67,7 @@ class BishopTest {
         //given
         final Team team = Team.BLACK;
         final Bishop bishop = new Bishop(team);
-        final List<PieceState> route = List.of(new Empty(), new Pawn(team), new Empty());
+        final List<SquareState> route = List.of(new Empty(), new Pawn(team), new Empty());
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.validateRoute(route))
@@ -79,7 +79,7 @@ class BishopTest {
         //given
         final Team team = Team.BLACK;
         final Bishop bishop = new Bishop(team);
-        final List<PieceState> route = List.of(new Empty(), new Empty(), new Empty());
+        final List<SquareState> route = List.of(new Empty(), new Empty(), new Empty());
 
         //when & then
         assertDoesNotThrow(() -> bishop.validateRoute(route));
@@ -89,7 +89,7 @@ class BishopTest {
     void 비숍은_도착지에_다른팀의_기물이_있으면_예외가_발생하지_않는다() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        final List<PieceState> route = List.of(new Empty(), new Empty(), new Pawn(Team.WHITE));
+        final List<SquareState> route = List.of(new Empty(), new Empty(), new Pawn(Team.WHITE));
 
         //when & then
         assertDoesNotThrow(() -> bishop.validateRoute(route));

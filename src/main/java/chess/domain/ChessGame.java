@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
-import chess.dto.ChessBoardDto;
 
 public final class ChessGame {
 
@@ -39,7 +38,7 @@ public final class ChessGame {
         return state != GameState.END;
     }
 
-    public ChessBoardDto getChessBoard() {
-        return ChessBoardDto.from(chessBoard);
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 }

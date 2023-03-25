@@ -2,7 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceState;
+import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
 
 import java.util.List;
@@ -29,9 +29,9 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public void validateRoute(final List<PieceState> routeSquares) {
+    public void validateRoute(final List<SquareState> routeSquares) {
         final int lastIndex = routeSquares.size() - 1;
-        final PieceState lastSquare = routeSquares.get(lastIndex);
+        final SquareState lastSquare = routeSquares.get(lastIndex);
 
         if (lastSquare.isSameTeam(this)) {
             throwCanNotMoveException();

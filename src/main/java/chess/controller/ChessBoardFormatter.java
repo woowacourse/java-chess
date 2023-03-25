@@ -1,28 +1,28 @@
-package chess.dto;
+package chess.controller;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.piece.PieceState;
+import chess.domain.piece.SquareState;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class ChessBoardDto {
+public final class ChessBoardFormatter {
     public static final int RANK_SIZE = 8;
 
     private final List<String> chessBoardMark;
 
-    private ChessBoardDto(final List<String> gameStatus) {
-        this.chessBoardMark = gameStatus;
+    private ChessBoardFormatter(final List<String> chessBoardMark) {
+        this.chessBoardMark = chessBoardMark;
     }
 
-    public static ChessBoardDto from(final ChessBoard chessBoard) {
-        return new ChessBoardDto(getChessBoardMark(chessBoard));
+    public static ChessBoardFormatter toString(final ChessBoard chessBoard) {
+        return new ChessBoardFormatter(getChessBoardMark(chessBoard));
     }
 
     private static List<String> getChessBoardMark(final ChessBoard chessBoard) {
         final List<String> currentChessBoardMark = new ArrayList<>();
-        final List<PieceState> squares = chessBoard.getSquares();
+        final List<SquareState> squares = chessBoard.getSquares();
 
         for (int rank = 0; rank < squares.size(); rank += RANK_SIZE) {
             currentChessBoardMark.add(makeRankMark(squares.subList(rank, rank + RANK_SIZE)));
@@ -32,9 +32,9 @@ public final class ChessBoardDto {
         return currentChessBoardMark;
     }
 
-    private static String makeRankMark(final List<PieceState> rank) {
+    private static String makeRankMark(final List<SquareState> rank) {
         StringBuilder currentRank = new StringBuilder();
-        for (PieceState square : rank) {
+        for (SquareState square : rank) {
             currentRank.append(SquareMark.getMarkBySquare(square));
         }
         return currentRank.toString();

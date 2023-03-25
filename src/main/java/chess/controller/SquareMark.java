@@ -1,7 +1,7 @@
-package chess.dto;
+package chess.controller;
 
 import chess.domain.piece.Empty;
-import chess.domain.piece.PieceState;
+import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
 import chess.domain.piece.state.*;
 
@@ -17,21 +17,21 @@ public enum SquareMark {
     KING("K", King.class);
 
     private final String mark;
-    private final Class<? extends PieceState> pieceClass;
+    private final Class<? extends SquareState> pieceClass;
 
-    SquareMark(final String mark, final Class<? extends PieceState> pieceClass) {
+    SquareMark(final String mark, final Class<? extends SquareState> pieceClass) {
         this.mark = mark;
         this.pieceClass = pieceClass;
     }
 
-    public static String getMarkBySquare(final PieceState pieceState) {
-        final String squareMark = getSquareMarkByPiece(pieceState);
+    public static String getMarkBySquare(final SquareState squareState) {
+        final String squareMark = getSquareMarkByPiece(squareState);
 
         if (EMPTY.mark.equals(squareMark)) {
             return EMPTY.mark;
         }
 
-        return getMarkByTeam(squareMark, pieceState.getTeam());
+        return getMarkByTeam(squareMark, squareState.getTeam());
     }
 
     private static String getMarkByTeam(final String squareMark, final Team team) {
@@ -41,9 +41,9 @@ public enum SquareMark {
         return squareMark;
     }
 
-    private static String getSquareMarkByPiece(final PieceState pieceState) {
+    private static String getSquareMarkByPiece(final SquareState squareState) {
         return Arrays.stream(SquareMark.values())
-                .filter(squareMark -> pieceState.getClass() == squareMark.pieceClass)
+                .filter(squareMark -> squareState.getClass() == squareMark.pieceClass)
                 .map(SquareMark::getMark)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 종류의 기물입니다."));
