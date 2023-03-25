@@ -1,6 +1,7 @@
 package controller;
 
 import controller.command.Command;
+import controller.command.End;
 import controller.command.Move;
 import controller.mapper.PieceMapper;
 import domain.game.Game;
@@ -45,12 +46,19 @@ public class ChessController {
         if (command.isEnd()) {
             return command;
         }
+        moveByPositionsOfMoveCommand(game, command);
+        if (game.isEnd()) {
+            return new End();
+        }
+        printChessBoardOf(game);
+        return command;
+    }
+
+    private static void moveByPositionsOfMoveCommand(Game game, Command command) {
         Move moveCommand = (Move) command;
         Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
         Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
         game.move(sourcePosition, targetPosition);
-        printChessBoardOf(game);
-        return command;
     }
 
     private void printChessBoardOf(Game game) {
