@@ -1,7 +1,11 @@
 package chess.domain;
 
+import chess.domain.dao.PieceDao;
+import chess.domain.dao.PieceDaoImpl;
+
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -97,10 +101,15 @@ public class Players {
         validateMovingRoute(sourcePosition, targetPosition);
 
         Player findPlayer = findPlayerByPosition(sourcePosition);
-        Position changedPosition = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
+        Piece changedPiece = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
 
         Player anotherPlayer = getAnotherPlayer(findPlayer);
-        anotherPlayer.removePiece(changedPosition);
+
+        PieceDao dao = new PieceDaoImpl();
+
+        dao.updatePosition(changedPiece, sourcePosition);
+        anotherPlayer.removePiece(targetPosition)
+                .ifPresent(piece -> dao.deletePieceByColor(piece, anotherPlayer.getColor()));
     }
 
     private Player getAnotherPlayer(final Player findPlayer) {
@@ -128,8 +137,8 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
     }
 
-    public boolean everyKingAlive() {
-        return players.stream().noneMatch(Player::isKingDead);
+    public boolean notEveryKingAlive() {
+        return players.stream().anyMatch(Player::isKingDead);
     }
 
     public String getWinnerColorName() {
