@@ -6,8 +6,8 @@ import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
-import chess.domain.square.Side;
 import chess.domain.square.Square;
+import chess.domain.square.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -33,9 +33,11 @@ public class ChessController {
     public void run() {
         showStartMessage();
 
-        while (chessGame.isRunning()) {
+        while (!chessGame.isEnd()) {
             repeatIfExceptionOccur(this::play);
         }
+        Team winnerTeam = chessGame.getWinner();
+        outputView.showWinner(winnerTeam);
     }
 
     private void repeatIfExceptionOccur(Runnable runnable) {
@@ -59,14 +61,14 @@ public class ChessController {
     }
 
     public void move(final List<String> parameters) {
+        showBoard();
         Square sourceSquare = convertSquare(parameters.get(SOURCE_SQUARE_INDEX));
         Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
         chessGame.move(sourceSquare, targetSquare);
-        showBoard();
     }
 
     public void calculate() {
-        Map<Side, Double> status = chessGame.status();
+        Map<Team, Double> status = chessGame.status();
         outputView.printStatuses(status);
     }
 
