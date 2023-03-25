@@ -41,28 +41,6 @@ public class PositionTest {
         );
     }
 
-    @Test
-    @DisplayName("대상 Position을 받아서 현재 Position과의 Slope를 구한다. - 0.5")
-    void getSlope_Zero_Five() {
-        // given
-        final Position position = new Position(File.C, Rank.TWO);
-        final Position targetPosition = new Position(File.D, Rank.FOUR);
-
-        // when, then
-        assertThat(position.getSlope(targetPosition)).isEqualTo(0.5);
-    }
-
-    @Test
-    @DisplayName("대상 Position을 받아서 현재 Position과의 Slope를 구한다. - 2.0")
-    void getSlope_Two() {
-        // given
-        final Position position = new Position(File.D, Rank.FOUR);
-        final Position targetPosition = new Position(File.B, Rank.THREE);
-
-        // when, then
-        assertThat(position.getSlope(targetPosition)).isEqualTo(2.0);
-    }
-
     @ParameterizedTest
     @MethodSource("getMoveCountCase")
     @DisplayName("이동할 횟수를 반환한다.")

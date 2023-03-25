@@ -19,15 +19,6 @@ public class Position {
         return Direction.of(fileDiff, rankDiff);
     }
 
-    public double getSlope(Position targetPosition) {
-        final int fileValueDiff = file.getValueDiff(targetPosition.file);
-        final int rankValueDiff = rank.getValueDiff(targetPosition.rank);
-        if (rankValueDiff == 0) {
-            throw new IllegalArgumentException("[ERROR] 0으로 나눌 수 없습니다.");
-        }
-        return Math.abs((double) fileValueDiff / rankValueDiff);
-    }
-
     public int getMoveCount(final Position targetPosition, final Direction direction) {
         if (direction.isHorizontal()) {
             return Math.abs(file.getValueDiff(targetPosition.file));
