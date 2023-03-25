@@ -19,11 +19,21 @@ public final class Position {
         return new Position(row, column);
     }
 
-    public static Position from(final String rowColumn) {
-        final Row row = Row.from(String.valueOf(rowColumn.charAt(0)));
-        final Column column = Column.from(String.valueOf(rowColumn.charAt(1)));
+    public static Position from(final String command) {
+        validateCommandLength(command);
+
+        final Row row = Row.from(String.valueOf(command.charAt(0)));
+        final Column column = Column.from(String.valueOf(command.charAt(1)));
 
         return new Position(row, column);
+    }
+
+    private static void validateCommandLength(final String rowColumn) {
+        int totalLength = 2;
+
+        if (rowColumn.length() != totalLength) {
+            throw new IllegalArgumentException("유효한 입력이 아닙니다.");
+        }
     }
 
     public Position move(int row, int column) {
