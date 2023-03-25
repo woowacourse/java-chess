@@ -12,11 +12,11 @@ public final class UserDao {
     }
 
     public void addUser(User user) {
-        jdbcTemplate.executeUpdate("INSERT INTO user VALUES(?, ?)", user.userId(), user.name());
+        jdbcTemplate.executeUpdate("INSERT INTO user_dao VALUES(?, ?)", user.userId(), user.name());
     }
 
     public User findByUserId(String userId) {
-        return jdbcTemplate.query("SELECT * FROM user WHERE user_id = ?", getUserRowMapper(), userId);
+        return jdbcTemplate.query("SELECT * FROM user_dao WHERE user_id = ?", getUserRowMapper(), userId);
     }
 
     private RowMapper<User> getUserRowMapper() {
@@ -32,10 +32,10 @@ public final class UserDao {
     }
 
     public void update(User user, String name) {
-        jdbcTemplate.executeUpdate("UPDATE user SET name = ? WHERE user_id = ?", name, user.userId());
+        jdbcTemplate.executeUpdate("UPDATE user_dao SET name = ? WHERE user_id = ?", name, user.userId());
     }
 
     public void delete(String userId) {
-        jdbcTemplate.executeUpdate("DELETE FROM user WHERE user_id = ?", userId);
+        jdbcTemplate.executeUpdate("DELETE FROM user_dao WHERE user_id = ?", userId);
     }
 }
