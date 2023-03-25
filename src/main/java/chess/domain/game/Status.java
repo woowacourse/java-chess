@@ -9,19 +9,16 @@ public class Status {
 
     private final Score whiteScore;
     private final Score blackScore;
-    private final Color winner;
 
-    private Status(Score whiteScore, Score blackScore, Color winner) {
+    private Status(Score whiteScore, Score blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
-        this.winner = winner;
     }
 
     public static Status from(Map<Position, Piece> pieces) {
         Score whiteScore = Score.calculate(pieces, Color.WHITE);
         Score blackScore = Score.calculate(pieces, Color.BLACK);
-        Color winner = Score.judgeWinner(blackScore, whiteScore);
-        return new Status(whiteScore, blackScore, winner);
+        return new Status(whiteScore, blackScore);
     }
 
     public Score getScore(Color color) {
@@ -32,6 +29,6 @@ public class Status {
     }
 
     public Color getWinner() {
-        return winner;
+        return Score.judgeWinner(blackScore, whiteScore);
     }
 }
