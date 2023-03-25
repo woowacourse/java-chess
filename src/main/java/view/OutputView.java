@@ -45,4 +45,8 @@ public final class OutputView {
     public static void printError(String message) {
         System.out.println(message);
     }
+
+    public static void printEndedGameMessage() {
+        System.out.println("게임을 종료합니다.");
+    }
 }

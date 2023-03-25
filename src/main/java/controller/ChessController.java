@@ -23,6 +23,7 @@ public final class ChessController {
             OutputView.printBoard(chessGame.getPieces());
             play();
         }
+        OutputView.printEndedGameMessage();
     }
 
     private StartCommand inputStartCommand() {
@@ -54,16 +55,18 @@ public final class ChessController {
         if (END.equals(command.getMoveCommand())) {
             return false;
         }
-        movePieceWithHandling(command);
+        boolean isEndedGame = movePieceWithHandling(command);
+        boolean keepGame = !isEndedGame;
         OutputView.printBoard(chessGame.getPieces());
-        return true;
+        return keepGame;
     }
 
-    private void movePieceWithHandling(final MoveCommandParser command) {
+    private boolean movePieceWithHandling(final MoveCommandParser command) {
         try {
-            chessGame.movePiece(command.getSource(), command.getDestination());
+            return chessGame.movePiece(command.getSource(), command.getDestination());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
+            return false;
         }
     }
 

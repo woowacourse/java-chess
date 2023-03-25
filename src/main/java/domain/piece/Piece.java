@@ -20,6 +20,10 @@ public abstract class Piece {
         return team.equals(Team.BLACK);
     }
 
+    public boolean isEndGameIfDead() {
+        return false;
+    }
+
     public boolean isWhite() {
         return !isBlack();
     }

@@ -24,8 +24,9 @@ public final class ChessGame {
         return board.getPieces();
     }
 
-    public void movePiece(final Position source, final Position destination) {
-        board.move(source, destination, thisTurn);
+    public boolean movePiece(final Position source, final Position destination) {
+        boolean endedGame = board.move(source, destination, thisTurn);
         thisTurn = thisTurn.otherTeam();
+        return endedGame;
     }
 }

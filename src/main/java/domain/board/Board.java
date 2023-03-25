@@ -22,17 +22,16 @@ public final class Board {
         return new Board(board);
     }
 
-    public void move(Position source, Position destination, Team thisTurn) {
+    public boolean move(Position source, Position destination, Team thisTurn) {
         Piece piece = getPiece(source);
         validateTeam(piece, thisTurn);
         validateRoute(source, destination, piece);
 
         if (board.containsKey(destination)) {
-            killDestination(source, destination, piece);
+            return killDestination(source, destination, piece);
         }
-        if (!board.containsKey(destination)) {
-            moveDestination(source, destination, piece);
-        }
+        moveDestination(source, destination, piece);
+        return false;
     }
 
     private Piece getPiece(final Position source) {
@@ -71,10 +70,12 @@ public final class Board {
                 piece.isBlack() == board.get(destination).isBlack();
     }
 
-    private void killDestination(final Position source, final Position destination, final Piece piece) {
+    private boolean killDestination(final Position source, final Position destination, final Piece piece) {
         if (piece.isEatable(source, destination)) {
+            Piece deadPiece = board.get(destination);
+            boolean endedGame = deadPiece.isEndGameIfDead();
             board.put(destination, board.remove(source));
-            return;
+            return endedGame;
         }
 
         throw new IllegalArgumentException(INVALID_MOVEMENT);

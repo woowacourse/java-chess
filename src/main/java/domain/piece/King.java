@@ -25,4 +25,9 @@ public final class King extends Piece {
     public boolean isEatable(final Position source, final Position destination) {
         return isMovable(source, destination);
     }
+
+    @Override
+    public boolean isEndGameIfDead() {
+        return true;
+    }
 }
