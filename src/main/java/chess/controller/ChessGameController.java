@@ -10,11 +10,12 @@ import java.util.List;
 public class ChessGameController {
 
     private static final String END_COMMAND = "end";
-    private static final int COMMAND_INDEX = 0;
+    private static final String STATUS_COMMAND = "status";
+    private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
+    private static final int COMMAND_INDEX = 0;
     private static final int SELECTED_PIECE = 1;
     private static final int DESTINATION = 2;
-    private static final String START_COMMAND = "start";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -31,11 +32,13 @@ public class ChessGameController {
 
         List<String> inputCommand = inputView.readGameCommand();
 
-        playChess(chessGame, inputCommand);
+        chessGame = playChess(chessGame, inputCommand);
+
+        outputView.printWin(chessGame.calculateScore());
     }
 
-    private void playChess(ChessGame chessGame, List<String> inputCommand) {
-        while (isNotEnd(inputCommand) && !chessGame.isGameOver()) {
+    private ChessGame playChess(ChessGame chessGame, List<String> inputCommand) {
+        while (isNotEnd(inputCommand)) {
             try {
                 chessGame = createNewChessGame(chessGame, inputCommand);
                 tryChessMove(chessGame, inputCommand);
@@ -49,10 +52,12 @@ public class ChessGameController {
                 inputCommand = inputView.readGameCommand();
             }
         }
+        return chessGame;
     }
 
     private boolean isNotEnd(final List<String> inputCommand) {
-        return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
+        return !(inputCommand.get(COMMAND_INDEX).equals(END_COMMAND)
+            || inputCommand.get(COMMAND_INDEX).equals(STATUS_COMMAND));
     }
 
     private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
