@@ -17,4 +17,16 @@ public class Request {
     public List<String> commands() {
         return commands;
     }
+
+    public List<String> getCommands() {
+        return commands;
+    }
+
+    public int getBoardId() {
+        return boardId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
 }
