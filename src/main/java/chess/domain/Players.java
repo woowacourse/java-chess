@@ -5,7 +5,6 @@ import chess.domain.dao.PieceDaoImpl;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 

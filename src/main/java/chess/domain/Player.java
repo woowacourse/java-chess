@@ -42,15 +42,10 @@ public class Player {
             throw new IllegalArgumentException("상대 기물 위치로만 이동할 수 있습니다.");
         }
 
-        Piece findPiece = findPiece(findPosition);
+        Piece findPiece = pieces.findPiece(findPosition);
         findPiece.move(allPosition, targetPosition, color);
         return findPiece;
     }
-
-    private Piece findPiece(final Position findPosition) {
-        return pieces.findPiece(findPosition);
-    }
-
 
     public boolean isKingDead() {
         return pieces.getPieces().stream().noneMatch(piece -> piece.isSameShape(Shape.KING));
