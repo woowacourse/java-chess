@@ -4,7 +4,6 @@ import chess.domain.game.constant.ChessPosition;
 import chess.domain.game.exception.ChessGameException;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -40,23 +39,25 @@ public class Board {
 
     private void checkPath(Position origin, Position destination) {
         List<Position> straightPath = origin.createStraightPath(destination);
-        for (Position position : straightPath) {
-            if (piecePosition.get(position) != EMPTY_PIECE) {
-                throw new ChessGameException("경로에 말이 있습니다.");
-            }
+        boolean alreadyExist = straightPath.stream()
+                .map(piecePosition::get)
+                .anyMatch(piece -> piece != EMPTY_PIECE);
+        if (alreadyExist) {
+            throw new ChessGameException("말이 있는 경로로는 이동할 수 없습니다.");
         }
     }
 
     public List<List<Piece>> getPieces() {
-        List<List<Piece>> response = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            List<Piece> pieceResponses = Arrays.stream(File.values())
-                    .map(file -> Position.of(file, rank))
-                    .map(piecePosition::get)
-                    .collect(Collectors.toList());
-            response.add(pieceResponses);
-        }
-        return response;
+        return Arrays.stream(Rank.values())
+                .map(this::getRankPieces)
+                .collect(Collectors.toList());
+    }
+
+    private List<Piece> getRankPieces(Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> Position.of(file, rank))
+                .map(piecePosition::get)
+                .collect(Collectors.toList());
     }
 
     public Map<Color, Double> getStatus() {
