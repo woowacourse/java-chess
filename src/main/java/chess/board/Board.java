@@ -94,6 +94,16 @@ public class Board {
         }
     }
 
+    public long getCountOfPawnsOnSameFileBySide(Side side) {
+        long countOfPawnsOnSameFile = 0;
+        for (File file : File.values()) {
+            final long pawnCountByFile = pieces.getPawnCountByFile(file, side);
+            long exceedingPawnCount = Math.max(pawnCountByFile - 1, 0);
+            countOfPawnsOnSameFile += exceedingPawnCount;
+        }
+        return countOfPawnsOnSameFile;
+    }
+
     public List<Piece> getPieces() {
         return pieces.getPieces();
     }
