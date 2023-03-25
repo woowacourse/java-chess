@@ -1,5 +1,7 @@
-package chess.domain.state;
+package chess.controller;
 
+import chess.domain.state.State;
+import chess.domain.state.StateProcessor;
 import chess.dto.CommandDto;
 import chess.view.Command;
 
@@ -18,8 +20,8 @@ public final class CommandProcessor {
         return new CommandProcessor(new HashMap<>());
     }
 
-    public void register(Command command, Function<CommandDto, State> consumer) {
-        commands.put(command, consumer);
+    public void register(Command command, Function<CommandDto, State> function) {
+        commands.put(command, function);
     }
 
     public void execute(StateProcessor stateProcessor, CommandDto commandDto) {
