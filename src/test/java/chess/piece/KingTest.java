@@ -22,17 +22,17 @@ class KingTest {
     @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo() {
-        Piece piece = new King(Color.WHITE);
+        Piece piece = King.from(Color.WHITE);
 
         assertThatThrownBy(
-                () -> piece.searchPathTo(F1, H1, new King(Color.BLACK)))
+                () -> piece.searchPathTo(F1, H1, King.from(Color.BLACK)))
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo2() {
-        Piece piece = new King(Color.WHITE);
+        Piece piece = King.from(Color.WHITE);
 
         Path path = piece.searchPathTo(E1, E2, null);
 
@@ -44,9 +44,9 @@ class KingTest {
     @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
     @Test
     void test_searchPathTo3() {
-        Piece piece = new King(Color.WHITE);
+        Piece piece = King.from(Color.WHITE);
 
-        Path path = piece.searchPathTo(E1, E2, new Queen(Color.BLACK));
+        Path path = piece.searchPathTo(E1, E2, Queen.from(Color.BLACK));
 
         assertThat(path)
                 .extracting("positions", InstanceOfAssertFactories.list(Position.class))

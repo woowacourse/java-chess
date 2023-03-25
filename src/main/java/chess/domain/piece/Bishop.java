@@ -16,7 +16,7 @@ public final class Bishop extends Piece {
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(
             Movement.UP_RIGHT, Movement.UP_LEFT, Movement.DOWN_RIGHT, Movement.DOWN_LEFT);
 
-    public Bishop(final Color color) {
+    private Bishop(final Color color) {
         super(color, BISHOP);
     }
 

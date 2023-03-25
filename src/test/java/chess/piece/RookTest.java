@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.path.Path;
-import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
@@ -54,7 +53,7 @@ class RookTest {
         Rook rook = Rook.from(WHITE);
 
         assertThatThrownBy(
-                () -> rook.searchPathTo(E5, E1, new King(WHITE)))
+                () -> rook.searchPathTo(E5, E1, King.from(WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

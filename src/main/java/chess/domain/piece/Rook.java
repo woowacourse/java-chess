@@ -19,7 +19,7 @@ public final class Rook extends Piece {
     private static final Rook WHITE_ROOK = new Rook(WHITE);
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(UP, DOWN, RIGHT, LEFT);
 
-    public Rook(final Color color) {
+    private Rook(final Color color) {
         super(color, ROOK);
     }
 

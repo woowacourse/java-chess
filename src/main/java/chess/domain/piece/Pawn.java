@@ -31,7 +31,7 @@ public final class Pawn extends Piece {
             WHITE, 2
     );
 
-    public Pawn(final Color color) {
+    private Pawn(final Color color) {
         super(color, PAWN);
     }
 

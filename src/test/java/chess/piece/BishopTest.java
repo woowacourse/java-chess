@@ -34,7 +34,7 @@ class BishopTest {
         @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
         @Test
         void test_searchPathTo() {
-            Piece bishop = new Bishop(Color.WHITE);
+            Piece bishop = Bishop.from(Color.WHITE);
             Path path = bishop.searchPathTo(C1, G5, null);
 
             assertThat(path)
@@ -45,7 +45,7 @@ class BishopTest {
         @DisplayName("정상 위치로 이동 시 경로를 반환할 수 있다.")
         @Test
         void test_searchPathTo2() {
-            Bishop bishop = new Bishop(Color.BLACK);
+            Bishop bishop = Bishop.from(Color.BLACK);
 
             Path path = bishop.searchPathTo(F8, A3, null);
 
@@ -58,10 +58,10 @@ class BishopTest {
     @DisplayName("비정상 경로를 받으면 예외 처리한다.")
     @Test
     void test_searchPathTo4() {
-        Bishop bishop = new Bishop(Color.WHITE);
+        Bishop bishop = Bishop.from(Color.WHITE);
 
         assertThatThrownBy(
-                () -> bishop.searchPathTo(C1, E1, new King(Color.WHITE)))
+                () -> bishop.searchPathTo(C1, E1, King.from(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

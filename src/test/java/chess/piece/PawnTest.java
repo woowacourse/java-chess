@@ -28,7 +28,7 @@ class PawnTest {
         @DisplayName("초기 위치에서 1칸 앞으로 전진할 수 있다..")
         @Test
         void test_searchPathTo() {
-            Pawn pawn = new Pawn(Color.WHITE);
+            Pawn pawn = Pawn.from(Color.WHITE);
 
             Path path = pawn.searchPathTo(INITIAL_POSITION, A3, null);
 
@@ -41,7 +41,7 @@ class PawnTest {
         @Test
         void test_searchPathTo2() {
 
-            Pawn pawn = new Pawn(Color.WHITE);
+            Pawn pawn = Pawn.from(Color.WHITE);
 
             Path path = pawn.searchPathTo(INITIAL_POSITION, A4, null);
 
@@ -53,9 +53,9 @@ class PawnTest {
         @DisplayName("대각선으로 이동하는 경우, 다른 색 말이 도착지에 있으면 이동할 수 있다.")
         @Test
         void test_searchPathTo3() {
-            Pawn pawn = new Pawn(Color.WHITE);
+            Pawn pawn = Pawn.from(Color.WHITE);
 
-            Path path = pawn.searchPathTo(INITIAL_POSITION, B3, new Pawn(Color.BLACK));
+            Path path = pawn.searchPathTo(INITIAL_POSITION, B3, Pawn.from(Color.BLACK));
 
             assertThat(path)
                     .extracting("positions", InstanceOfAssertFactories.list(Position.class))
@@ -65,17 +65,17 @@ class PawnTest {
         @DisplayName("대각선으로 이동하는 경우, 같은 색 말이 도착지에 있으면 이동할 수 없다.")
         @Test
         void test_searchPathTo4() {
-            Pawn pawn = new Pawn(Color.WHITE);
+            Pawn pawn = Pawn.from(Color.WHITE);
 
             assertThatThrownBy(() ->
-                    pawn.searchPathTo(INITIAL_POSITION, B3, new Pawn(Color.WHITE)))
+                    pawn.searchPathTo(INITIAL_POSITION, B3, Pawn.from(Color.WHITE)))
                     .isInstanceOf(IllegalStateException.class);
         }
 
         @DisplayName("초기 위치가 아니면 2칸 이동할 수 없다.")
         @Test
         void test_searchPathTo5() {
-            Pawn pawn = new Pawn(Color.WHITE);
+            Pawn pawn = Pawn.from(Color.WHITE);
 
             assertThatThrownBy(() ->
                     pawn.searchPathTo(B4, B6, null))

@@ -18,7 +18,7 @@ public final class King extends Piece {
             Movement.UP, Movement.DOWN, Movement.RIGHT, Movement.LEFT,
             Movement.UP_RIGHT, Movement.UP_LEFT, Movement.DOWN_RIGHT, Movement.DOWN_LEFT);
 
-    public King(final Color color) {
+    private King(final Color color) {
         super(color, KING);
     }
 

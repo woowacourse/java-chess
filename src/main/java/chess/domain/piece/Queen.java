@@ -17,7 +17,7 @@ public final class Queen extends Piece {
             Movement.UP, Movement.DOWN, Movement.RIGHT, Movement.LEFT,
             Movement.UP_RIGHT, Movement.UP_LEFT, Movement.DOWN_RIGHT, Movement.DOWN_LEFT);
 
-    public Queen(final Color color) {
+    private Queen(final Color color) {
         super(color, QUEEN);
     }
 

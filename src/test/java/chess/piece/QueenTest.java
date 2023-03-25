@@ -30,7 +30,7 @@ class QueenTest {
     @Test
     void test_searchPathTo() {
 
-        Piece queen = new Queen(Color.WHITE);
+        Piece queen = Queen.from(Color.WHITE);
 
         Path path = queen.searchPathTo(E1, E8, null);
 
@@ -43,7 +43,7 @@ class QueenTest {
     @Test
     void test_searchPathTo2() {
 
-        Queen queen = new Queen(Color.WHITE);
+        Queen queen = Queen.from(Color.WHITE);
 
         Path path = queen.searchPathTo(E1, H4, null);
 
@@ -56,7 +56,7 @@ class QueenTest {
     @Test
     void test_searchPathTo3() {
 
-        Queen queen = new Queen(Color.WHITE);
+        Queen queen = Queen.from(Color.WHITE);
 
         Path path = queen.searchPathTo(E5, E1, null);
 
@@ -69,10 +69,10 @@ class QueenTest {
     @Test
     void test_searchPathTo4() {
 
-        Queen queen = new Queen(Color.WHITE);
+        Queen queen = Queen.from(Color.WHITE);
 
         assertThatThrownBy(
-                () -> queen.searchPathTo(E5, E1, new King(Color.WHITE)))
+                () -> queen.searchPathTo(E5, E1, King.from(Color.WHITE)))
                 .isInstanceOf(IllegalStateException.class);
     }
 }
