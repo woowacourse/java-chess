@@ -1,4 +1,4 @@
-package chess.controller.resposne;
+package chess.view.resposne;
 
 public class StatusResponse {
 

@@ -1,9 +1,5 @@
 package chess.controller;
 
-import chess.controller.request.Input;
-import chess.controller.resposne.Output;
-import chess.controller.resposne.PieceResponse;
-import chess.controller.resposne.StatusResponse;
 import chess.domain.game.ChessGame;
 import chess.domain.game.command.BoardQuery;
 import chess.domain.game.command.Command;
@@ -13,14 +9,18 @@ import chess.domain.game.command.StartCommand;
 import chess.domain.game.command.StatusQuery;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.view.InputView;
+import chess.view.OutputView;
+import chess.view.resposne.PieceResponse;
+import chess.view.resposne.StatusResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessController {
 
-    private final Output output;
-    private final Input input;
+    private final OutputView output;
+    private final InputView input;
     private final ChessGame chessGame;
     private final Map<String, Action> actions = Map.of(
             "start", new Action(ignored -> start()),
@@ -29,7 +29,7 @@ public class ChessController {
             "status", new Action(ignored -> printStatus()));
 
 
-    public ChessController(Output output, Input input) {
+    public ChessController(OutputView output, InputView input) {
         this.output = output;
         this.input = input;
         chessGame = new ChessGame();
@@ -90,9 +90,13 @@ public class ChessController {
 
     private List<List<PieceResponse>> makeBoardResponse(List<List<Piece>> boardResult) {
         return boardResult.stream()
-                .map(row -> row.stream()
-                        .map(PieceResponse::from)
-                        .collect(Collectors.toList()))
+                .map(this::makeRankResponse)
+                .collect(Collectors.toList());
+    }
+
+    private List<PieceResponse> makeRankResponse(List<Piece> row) {
+        return row.stream()
+                .map(PieceResponse::from)
                 .collect(Collectors.toList());
     }
 

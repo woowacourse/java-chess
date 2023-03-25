@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.controller.resposne.Output;
-import chess.controller.resposne.PieceResponse;
-import chess.controller.resposne.StatusResponse;
+import chess.view.resposne.Output;
+import chess.view.resposne.PieceResponse;
+import chess.view.resposne.StatusResponse;
 import java.util.List;
 
 public class OutputView implements Output {

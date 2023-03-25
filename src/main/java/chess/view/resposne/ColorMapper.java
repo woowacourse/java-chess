@@ -1,4 +1,4 @@
-package chess.controller.resposne;
+package chess.view.resposne;
 
 import chess.domain.piece.Color;
 import java.util.Arrays;
