@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.coordinate.Coordinate;
+import chess.view.SymbolMatcher;
 
 public class Bishop extends Piece {
     public Bishop(Team team, Coordinate coordinate) {

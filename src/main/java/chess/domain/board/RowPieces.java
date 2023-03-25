@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceMatcher;
-import chess.domain.piece.SymbolMatcher;
+import chess.view.SymbolMatcher;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
 

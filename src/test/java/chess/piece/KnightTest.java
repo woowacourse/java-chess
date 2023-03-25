@@ -4,7 +4,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.domain.piece.SymbolMatcher;
+import chess.view.SymbolMatcher;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayNameGeneration;

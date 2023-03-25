@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.domain.board.RowPieces;
 import chess.domain.piece.Piece;
-import chess.domain.piece.SymbolMatcher;
 import chess.domain.piece.Team;
 
 import java.util.List;

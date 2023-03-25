@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.coordinate.Coordinate;
+import chess.view.SymbolMatcher;
 
 public class Rook extends Piece {
     public Rook(Team team, Coordinate coordinate) {
