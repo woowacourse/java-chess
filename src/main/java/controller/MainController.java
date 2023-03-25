@@ -6,17 +6,17 @@ import static controller.command.CommandConverter.MOVE_COMMAND_SOURCE_INDEX;
 import java.util.List;
 import java.util.function.Supplier;
 
-import domain.ChessBoard;
-import domain.Square;
-
-import view.InputView;
-import view.OutputView;
 import controller.command.CommandConverter;
 import controller.command.CommandType;
 import controller.command.EndCommand;
 import controller.command.GameCommand;
 import controller.command.MoveCommand;
 import controller.command.StartCommand;
+import controller.command.StatusCommand;
+import domain.ChessBoard;
+import domain.Square;
+import view.InputView;
+import view.OutputView;
 
 public class MainController {
     private final InputView inputView;
@@ -76,6 +76,9 @@ public class MainController {
         }
         if (commandType == CommandType.START) {
             return new StartCommand(outputView, chessBoard);
+        }
+        if (commandType == CommandType.STATUS) {
+            return new StatusCommand(outputView, chessBoard);
         }
         return new EndCommand();
     }

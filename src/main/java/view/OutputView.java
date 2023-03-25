@@ -55,4 +55,10 @@ public class OutputView {
         System.out.printf("[ERROR]: %s\n", message);
     }
 
+    public void printScore(ChessBoard chessBoard){
+        System.out.printf("Black의 점수 : " + chessBoard.getBlackScore());
+        System.out.println();
+        System.out.printf("White의 점수 : " + chessBoard.getWhiteScore());
+        System.out.println();
+    }
 }
