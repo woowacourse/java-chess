@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
-import chess.piece.sliding.Queen;
+import chess.piece.type.Queen;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

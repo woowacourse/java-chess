@@ -1,12 +1,13 @@
-package chess.piece.nonsliding;
+package chess.piece.type;
 
 import chess.board.Position;
 import chess.piece.Direction;
 import chess.piece.Side;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class King extends NonSlidingPiece {
+public class King extends Piece {
 
     private final List<Direction> directions;
 
@@ -37,8 +38,18 @@ public class King extends NonSlidingPiece {
     }
 
     @Override
+    public List<Position> getPaths(Position targetPosition) {
+        return Collections.emptyList();
+    }
+
+    @Override
     public King move(final Position positionToMove) {
         return new King(positionToMove, this.side);
+    }
+
+    @Override
+    public boolean canPassThrough() {
+        return false;
     }
 
 }

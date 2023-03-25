@@ -1,4 +1,4 @@
-package chess.piece.nonsliding;
+package chess.piece.type;
 
 import chess.board.Position;
 import chess.piece.Direction;
@@ -6,7 +6,7 @@ import chess.piece.Side;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight extends NonSlidingPiece {
+public class Knight extends Piece {
 
     private static final int FORWARD_MOVING_COUNT = 2;
     private final List<Direction> directions;
@@ -51,5 +51,10 @@ public class Knight extends NonSlidingPiece {
     @Override
     public Knight move(final Position positionToMove) {
         return new Knight(positionToMove, this.side);
+    }
+
+    @Override
+    public boolean canPassThrough() {
+        return true;
     }
 }

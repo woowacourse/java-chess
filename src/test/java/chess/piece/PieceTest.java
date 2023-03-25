@@ -5,8 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
-import chess.piece.sliding.Bishop;
-import chess.piece.sliding.Rook;
+import chess.piece.type.Bishop;
+import chess.piece.type.Piece;
+import chess.piece.type.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

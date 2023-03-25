@@ -1,6 +1,7 @@
-package chess.piece;
+package chess.piece.type;
 
 import chess.board.Position;
+import chess.piece.Side;
 import java.util.List;
 
 public abstract class Piece {

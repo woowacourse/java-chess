@@ -1,8 +1,8 @@
 package chess.board;
 
 import chess.piece.Direction;
-import chess.piece.Pawn;
-import chess.piece.Piece;
+import chess.piece.type.Pawn;
+import chess.piece.type.Piece;
 import chess.piece.Pieces;
 import chess.piece.Side;
 import java.util.List;

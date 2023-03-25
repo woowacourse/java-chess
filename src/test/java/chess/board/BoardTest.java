@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.AllPiecesGenerator;
-import chess.piece.Pawn;
+import chess.piece.type.Pawn;
 import chess.piece.Pieces;
-import chess.piece.sliding.Rook;
+import chess.piece.type.Rook;
 import chess.piece.Side;
 import java.util.List;
 import org.assertj.core.api.Assertions;
