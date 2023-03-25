@@ -17,7 +17,7 @@ public final class StartController implements Controller {
         if (command.isEnd()) {
             return new EndController();
         }
-        if (command.isMove()) {
+        if (!command.isStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
         runnable.run();

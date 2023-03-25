@@ -13,9 +13,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class StartControllerTest {
 
-    @Test
     @DisplayName(value = "게임이 시작 상태일 때 사용자가 입력한 명령어가 move면 예외가 발생한다.")
-    void checkCommandFailWhenMove() {
+    void checkCommandMove() {
         // given
         final StartController startController = new StartController(new ChessGame());
         final Command command = new Command(CommandType.MOVE, List.of("move a2"));
@@ -27,9 +26,22 @@ class StartControllerTest {
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
 
+    @DisplayName(value = "게임이 시작 상태일 때 사용자가 입력한 명령어가 status면 예외가 발생한다.")
+    void checkCommandStatus() {
+        // given
+        final StartController startController = new StartController(new ChessGame());
+        final Command command = new Command(CommandType.STATUS, List.of("status"));
+
+        // when, then
+        assertThatThrownBy(() -> startController.checkCommand(command, () -> {
+        }))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 시작되지 않았습니다.");
+    }
+
     @Test
     @DisplayName(value = "게임이 시작 상태일 때 사용자가 입력한 명령어가 end면 게임이 종료된다.")
-    void checkCommand() {
+    void checkCommandEnd() {
         // given
         final StartController startController = new StartController(new ChessGame());
         final Command command = new Command(CommandType.END, List.of("end"));
