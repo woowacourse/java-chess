@@ -8,7 +8,7 @@ import java.util.Optional;
 import domain.Square;
 
 public class Queen extends Piece {
-
+    private static final PieceType QUEEN = PieceType.QUEEN;
     private static final List<DirectionVector> directions = List.of(DirectionVector.values());
 
     public Queen(TeamColor teamColor) {
@@ -28,12 +28,12 @@ public class Queen extends Piece {
 
     private Optional<DirectionVector> findDirection(Vector vector) {
         return directions.stream()
-            .filter(direction -> direction.isSameDirection(vector))
-            .findAny();
+                .filter(direction -> direction.isSameDirection(vector))
+                .findAny();
     }
 
     private List<Square> getSquaresToDestination(Square src, Vector vector,
-        DirectionVector direction) {
+                                                 DirectionVector direction) {
         int maxStep = vector.getMaxLength();
         List<Square> result = new ArrayList<>();
         for (int step = 1; step <= maxStep; step++) {
@@ -41,5 +41,15 @@ public class Queen extends Piece {
             result.add(next);
         }
         return Collections.unmodifiableList(result);
+    }
+
+    @Override
+    public double score() {
+        return QUEEN.getValue();
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return QUEEN;
     }
 }

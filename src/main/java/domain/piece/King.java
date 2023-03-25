@@ -7,7 +7,7 @@ import java.util.Optional;
 import domain.Square;
 
 public class King extends Piece {
-
+    private static final PieceType KING = PieceType.KING;
     private static final List<DirectionVector> directions = List.of(DirectionVector.values());
     private static final int STEP_SIZE = 1;
 
@@ -28,7 +28,17 @@ public class King extends Piece {
 
     private Optional<DirectionVector> findDirection(Vector vector) {
         return directions.stream()
-            .filter(direction -> direction.isSameDirection(vector))
-            .findAny();
+                .filter(direction -> direction.isSameDirection(vector))
+                .findAny();
+    }
+
+    @Override
+    public double score() {
+        return KING.getValue();
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return KING;
     }
 }
