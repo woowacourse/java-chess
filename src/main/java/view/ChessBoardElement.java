@@ -14,6 +14,7 @@ public enum ChessBoardElement {
     BISHOP(PieceType.BISHOP, "b"),
     ROOK(PieceType.ROOK, "r"),
     PAWN(PieceType.PAWN, "p"),
+    INIT_PAWN(PieceType.INIT_PAWN, "p"),
     EMPTY(EmptyType.EMPTY, ".");
 
     private final Type type;

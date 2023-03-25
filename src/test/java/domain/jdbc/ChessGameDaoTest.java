@@ -3,9 +3,13 @@ package domain.jdbc;
 import domain.ChessGame;
 import domain.chessboard.ChessBoard;
 import domain.chessboard.SquareStatus;
+import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
+import domain.coordinate.PositionFactory;
+import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.OutputView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,13 +43,31 @@ public class ChessGameDaoTest {
         ChessGame insertionChessGame = new ChessGame(ChessBoard.generate());
         ChessGame chessGame = chessGameDao.selectNewGame(insertionChessGame);
 
-        boolean allMatch = chessGameEquals(insertionChessGame, chessGame);
+        boolean equals = chessBoardEquals(insertionChessGame, chessGame);
 
         assertThat(insertionChessGame.getColorTurn()).isEqualTo(chessGame.getColorTurn());
-        assertThat(allMatch).isTrue();
+        assertThat(equals).isTrue();
     }
 
-    private boolean chessGameEquals(ChessGame insertionChessGame, ChessGame chessGame) {
+    @Test
+    @DisplayName("이미 있는 Chess Game 의 정보를 가져온다.")
+    void selectGame() {
+        // Given
+        ChessGame insertionChessGame = new ChessGame(ChessBoard.generate());
+        MovePosition movePosition = MovePosition.of(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
+        insertionChessGame.move(movePosition);
+        String saveId = chessGameDao.save(insertionChessGame);
+
+        // When
+        ChessGame chessGame = chessGameDao.select(saveId);
+        boolean equals = chessBoardEquals(insertionChessGame, chessGame);
+
+        // Then
+        assertThat(chessGame.getColorTurn()).isEqualTo(Color.BLACK);
+        assertThat(equals).isTrue();
+    }
+
+    private boolean chessBoardEquals(ChessGame insertionChessGame, ChessGame chessGame) {
         boolean allMatch = true;
 
         for (int x = 0; x < 8; x++) {

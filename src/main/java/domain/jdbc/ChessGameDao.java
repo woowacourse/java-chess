@@ -59,7 +59,7 @@ public class ChessGameDao implements JdbcDao {
     @Override
     public String save(ChessGame chessGame) {
         try (final Connection connection = getConnection()) {
-            saveChessGame(connection);
+            saveChessGame(connection, chessGame.getColorTurn());
             String currentId = getLastInsertId(connection);
             savePieces(chessGame.getChessBoard(), connection, currentId);
             return currentId;
@@ -76,12 +76,12 @@ public class ChessGameDao implements JdbcDao {
         }
     }
 
-    private void saveChessGame(Connection connection) throws SQLException {
+    private void saveChessGame(Connection connection, Color color) throws SQLException {
         PreparedStatement chessGameSave = connection.prepareStatement(
                 "INSERT INTO chess_game(turn) VALUES(?)"
         );
 
-        chessGameSave.setString(1, Color.WHITE.name());
+        chessGameSave.setString(1, color.name());
         chessGameSave.executeUpdate();
     }
 
@@ -125,12 +125,12 @@ public class ChessGameDao implements JdbcDao {
     }
 
     @Override
-    public ChessGame select(String id) { // join 해서, 가져온다
+    public ChessGame select(String id) {
         String query1 = "SELECT turn FROM chess_game where id = ?";
         String query2 = "SELECT x, y, piece_type, piece_color FROM chess_board WHERE game_id = ?";
         try (Connection connection = getConnection()){
-            PreparedStatement p1 = getConnection().prepareStatement(query1); // chess game 을 가져옴
-            PreparedStatement p2 = getConnection().prepareStatement(query2); // chess piece 를 가져옴
+            PreparedStatement p1 = getConnection().prepareStatement(query1);
+            PreparedStatement p2 = getConnection().prepareStatement(query2);
             ChessBoard chessBoard = ChessBoard.generateEmptyBoard();
             p1.setString(1, id);
             p2.setString(1, id);
