@@ -54,7 +54,7 @@ class TurnTest {
         Turn turn = new Turn();
 
         //when
-        int currentTurn = turn.getTurn();
+        int currentTurn = turn.getValue();
 
         //then
         assertEquals(1, currentTurn);
@@ -67,7 +67,7 @@ class TurnTest {
 
         //when
         turn = turn.changeTurn();
-        int currentTurn = turn.getTurn();
+        int currentTurn = turn.getValue();
 
         //then
         assertEquals(2, currentTurn);

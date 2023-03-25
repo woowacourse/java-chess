@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 
 public class Turn {
 
-    private final int turn;
+    private final int value;
     private final Color currentTurn;
 
     public Turn() {
@@ -15,9 +15,9 @@ public class Turn {
         this(currentTurn, 1);
     }
 
-    public Turn(Color currentTurn, int turn) {
+    public Turn(Color currentTurn, int value) {
         this.currentTurn = currentTurn;
-        this.turn = turn;
+        this.value = value;
     }
 
     public Color getCurrentTurn() {
@@ -26,12 +26,12 @@ public class Turn {
 
     public Turn changeTurn() {
         if (currentTurn == Color.WHITE) {
-            return new Turn(Color.BLACK, turn + 1);
+            return new Turn(Color.BLACK, value + 1);
         }
-        return new Turn(Color.WHITE, turn + 1);
+        return new Turn(Color.WHITE, value + 1);
     }
 
-    public int getTurn() {
-        return turn;
+    public int getValue() {
+        return value;
     }
 }
