@@ -36,12 +36,12 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printScore(final Double whiteScore, final Double blackScore) {
+    public void printScore(final Double whiteScore, final Double blackScore) {
         System.out.println(String.format("White팀 점수: %.1f점", whiteScore));
         System.out.println(String.format("Black팀 점수: %.1f점", blackScore));
     }
 
-    public static void printWinner(Side side) {
+    public void printWinner(Side side) {
         if (side.isWhite()) {
             System.out.println("White팀 승리!!");
             return;
