@@ -1,5 +1,8 @@
 package dao;
 
+import domain.game.Board;
+import domain.game.ChessGame;
+import domain.game.GameState;
 import domain.game.PieceType;
 import domain.piece.*;
 
@@ -50,9 +53,11 @@ public class BoardDao {
         }
     }
 
-    public Map<Position, Piece> loadGame() {
+    public ChessGame loadGame() {
         Map<Position, Piece> board = new HashMap<>();
         final String loadQuery = "select piece_type, side, last_turn, piece_rank, piece_file from chess_board";
+        Side lastTurn = null;
+
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
 
@@ -62,12 +67,13 @@ public class BoardDao {
                 Position position = Position.of(resultSet.getString("piece_file"), resultSet.getString("piece_rank"));
                 Piece piece = new PieceFactory().create(PieceType.valueOf(resultSet.getString("piece_type")), Side.valueOf(resultSet.getString("side")));
                 board.put(position, piece);
+                lastTurn = Side.valueOf(resultSet.getString("last_turn"));
             }
 
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-        return board;
+        return new ChessGame(new Board(board), lastTurn, GameState.RUN);
     }
 
     public void delete() {
