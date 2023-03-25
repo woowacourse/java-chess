@@ -29,6 +29,10 @@ public class Position {
         return rankPosition.findByRank(rank);
     }
 
+    public static RankPosition findRankPositionByFile(final File file) {
+        return CACHE.get(file);
+    }
+
     public Distance differ(final Position other) {
         final int differRank = this.rank.differ(other.rank);
         final int differFile = this.file.differ(other.file);
