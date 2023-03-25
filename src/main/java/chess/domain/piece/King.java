@@ -16,6 +16,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
+
+    @Override
     public boolean isMovable(Piece targetPiece) {
         int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);
         int columnDistance = calculateRowOrColumnDistance(targetPiece, COLUMN_INDEX);

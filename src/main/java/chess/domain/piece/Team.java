@@ -46,4 +46,14 @@ public enum Team {
     public boolean isSameTeam(Team otherTeam) {
         return this == otherTeam;
     }
+
+    public static Team winnerOf(double blackPoint, double whitePoint) {
+        if (blackPoint > whitePoint) {
+            return Team.BLACK;
+        }
+        if (blackPoint < whitePoint) {
+            return Team.WHITE;
+        }
+        return Team.EMPTY;
+    }
 }

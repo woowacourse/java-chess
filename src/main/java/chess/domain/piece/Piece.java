@@ -65,9 +65,7 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isPawn(Team team){
-        return false;
-    }
+    public abstract boolean isSameTeamAndPawn(Team team);
 
     public boolean hasCoordinate(Coordinate coordinate) {
         return this.coordinate.equals(coordinate);

@@ -3,12 +3,10 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceMatcher;
-import chess.domain.piece.coordinate.Column;
-import chess.view.SymbolMatcher;
 import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Column;
 import chess.domain.piece.coordinate.Coordinate;
-
-import java.math.BigDecimal;
+import chess.view.SymbolMatcher;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,12 +26,12 @@ public class RowPieces implements Comparable<RowPieces> {
         this.pieces = pieces;
     }
 
-    public BigDecimal sumPiecePoints(Team team) {
+    public double sumPiecePoints(Team team) {
         List<Piece> piecesByTeam = makePiecesByTeam(team);
-        BigDecimal sum = BigDecimal.valueOf(0);
+        double sum = 0;
 
         for (Piece piece : piecesByTeam) {
-            sum.add(piece.point().valueOfPoint());
+            sum += piece.point().valueOfPoint();
         }
         return sum;
     }
@@ -45,7 +43,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     public boolean checkPawnByColumn(Column column, Team team) {
-        return pieces.get(Column.indexFromColumn(column) - INDEX_NUMBER_APPLIER).isPawn(team);
+        return pieces.get(Column.indexFromColumn(column) - INDEX_NUMBER_APPLIER).isSameTeamAndPawn(team);
     }
 
     @Override

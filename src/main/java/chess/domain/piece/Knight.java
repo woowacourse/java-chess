@@ -17,6 +17,11 @@ public class Knight extends Piece {
     public SymbolMatcher symbol() {
         return SymbolMatcher.KNIGHT;
     }
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
     
     @Override
     public boolean isMovable(Piece targetPiece) {

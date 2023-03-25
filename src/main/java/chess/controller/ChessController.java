@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -12,10 +13,29 @@ public class ChessController {
         OutputView.noticeGameStart();
         List<String> command = InputView.repeat(InputView::inputCommand);
         commandMoveCase(chessBoard, command);
+        commandStatusCase(chessBoard, command);
         if (isCommandEnd(command)) {
             return;
         }
         commandStartCase(command);
+    }
+
+    private void commandStatusCase(ChessBoard chessBoard, List<String> splitedCommand) {
+        if (isCommandStatus(splitedCommand)) {
+            status(chessBoard);
+        }
+    }
+
+    private void status(ChessBoard chessBoard) {
+        double whiteTeamPoint = chessBoard.calculateFinalPointsByTeam(Team.WHITE);
+        double blackTeamPoint = chessBoard.calculateFinalPointsByTeam(Team.BLACK);
+        Team winningTeam = Team.winnerOf(blackTeamPoint, whiteTeamPoint);
+        OutputView.printPresentStatus(whiteTeamPoint, blackTeamPoint, winningTeam);
+        runChessGame(chessBoard);
+    }
+
+    private boolean isCommandStatus(List<String> splitedCommand) {
+        return Command.STATUS.equals(InputView.extractCommand(splitedCommand));
     }
 
     private void commandMoveCase(ChessBoard chessBoard, List<String> splitedCommand) {

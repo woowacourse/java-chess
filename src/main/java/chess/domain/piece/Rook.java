@@ -17,6 +17,11 @@ public class Rook extends Piece {
     public SymbolMatcher symbol() {
         return SymbolMatcher.ROOK;
     }
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
     
     @Override
     public boolean isMovable(Piece targetPiece) {

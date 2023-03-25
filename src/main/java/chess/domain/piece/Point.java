@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import java.math.BigDecimal;
-
 public enum Point {
     QUEEN(9),
     ROOK(5),
@@ -11,13 +9,13 @@ public enum Point {
     KING(0),
     EMPTY(0);
 
-    private final BigDecimal point;
+    private final double point;
 
     Point(double point) {
-        this.point = BigDecimal.valueOf(point);
+        this.point = point;
     }
 
-    public BigDecimal valueOfPoint() {
+    public double valueOfPoint() {
         return point;
     }
 }

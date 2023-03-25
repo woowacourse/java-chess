@@ -48,7 +48,7 @@ public class InputView {
     private static void validateStartOrEndCommandForm(String inputCommand) {
         String[] splitedInputCommand = inputCommand.split(" ");
         if (isCorrectCommand(splitedInputCommand[0])) {
-            throw new IllegalArgumentException("start, end, move 명령만 입력할 수 있습니다.");
+            throw new IllegalArgumentException("start, end, move, status 명령만 입력할 수 있습니다.");
         }
 
         if ("move".equals(splitedInputCommand[0]) && (splitedInputCommand.length != 3)) {
@@ -58,7 +58,7 @@ public class InputView {
     }
 
     private static boolean isCorrectCommand(String command) {
-        return !List.of("start", "end", "move").contains(command);
+        return !List.of("start", "end", "move","status").contains(command);
     }
 
     public static <T> T repeat(Supplier<T> inputProcess) {

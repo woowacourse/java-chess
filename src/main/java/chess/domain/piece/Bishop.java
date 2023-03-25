@@ -17,7 +17,12 @@ public class Bishop extends Piece {
     public SymbolMatcher symbol() {
         return SymbolMatcher.BISHOP;
     }
-    
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
+
     @Override
     public boolean isMovable(Piece targetPiece) {
         int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);

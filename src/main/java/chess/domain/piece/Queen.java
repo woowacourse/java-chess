@@ -17,6 +17,11 @@ public class Queen extends Piece {
     public SymbolMatcher symbol() {
         return SymbolMatcher.QUEEN;
     }
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
     
     @Override
     public boolean isMovable(Piece targetPiece) {
