@@ -22,4 +22,12 @@ public class Move {
         return FileInputRenderer.renderFile(target.getFile())
                 + RankInputRenderer.renderRank(target.getRank());
     }
+
+    public Square getSource() {
+        return source;
+    }
+
+    public Square getTarget() {
+        return target;
+    }
 }

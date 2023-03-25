@@ -11,6 +11,7 @@ import chess.renderer.FileInputRenderer;
 import chess.renderer.RankInputRenderer;
 import chess.view.OutputView;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class MoveOperator extends Operator {
@@ -24,7 +25,7 @@ public class MoveOperator extends Operator {
     }
 
     @Override
-    public boolean operate(List<String> command) {
+    public boolean operate(List<String> command) throws SQLException {
         if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.MOVE)) {
             Operator next = new EndOperator(chessController, chessGame);
             return next.operate(command);

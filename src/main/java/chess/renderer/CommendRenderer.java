@@ -8,7 +8,8 @@ public enum CommendRenderer {
     START("start", CommandType.START),
     END("end", CommandType.END),
     MOVE("move", CommandType.MOVE),
-    STATUS("status", CommandType.STATUS);
+    STATUS("status", CommandType.STATUS),
+    RESUME("resume", CommandType.RESUME);
     private final String value;
     private final CommandType commandType;
 

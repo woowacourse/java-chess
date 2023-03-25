@@ -19,12 +19,13 @@ public class RoomDao {
         }
     }
 
-    public static void addRoom(String name) throws SQLException {
+    public static Room addRoom(String name) throws SQLException {
         final String query = "insert into room(name) values(?)";
         final Connection connection = getConnection();
         final PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
+        return FindByName(name);
     }
 
     public static Room FindByName(String name) throws SQLException {
@@ -37,5 +38,13 @@ public class RoomDao {
             return new Room(resultSet.getInt(1));
         }
         throw new SQLException("해당하는 방이 없습니다");
+    }
+
+    public static void deleteRoom(int roomId) throws SQLException {
+        final String query = "delete from room where id = ?";
+        final Connection connection = getConnection();
+        final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, roomId);
+        preparedStatement.executeUpdate();
     }
 }

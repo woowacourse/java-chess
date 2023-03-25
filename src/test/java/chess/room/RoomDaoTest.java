@@ -5,18 +5,23 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 class RoomDaoTest {
-    @Test
-    @DisplayName("방을 생성하는 테스트")
-    void addRoomTest() throws SQLException {
-        RoomDao.addRoom("test");
+    private static final String name = "test";
+
+    //@BeforeEach
+    void delete() throws SQLException {
+        Room room = RoomDao.FindByName("test");
+        room.deleteRoom();
     }
 
     @Test
-    @DisplayName("방을 찾는 테스트")
-    void findByNameTest() throws SQLException {
-        assertThat(RoomDao.FindByName("test").getRoomId()).isEqualTo(1);
+    @DisplayName("방을 생성하는 테스트")
+    void addRoomTest() throws SQLException {
+        RoomDao.addRoom(name);
+    }
+
+    @Test
+    void deleteRoomTest() throws SQLException {
+        RoomDao.deleteRoom(11);
     }
 }

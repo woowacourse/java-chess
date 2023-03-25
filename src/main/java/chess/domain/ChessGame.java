@@ -6,12 +6,19 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.validateMove.SourceMoveValidator;
 import chess.domain.validateMove.ValidateData;
+import chess.renderer.CampRenderer;
+import chess.room.Move;
+import chess.room.Room;
+import chess.room.RoomDao;
+
+import java.sql.SQLException;
 
 public class ChessGame {
     private static final String CANT_MOVE_MESSAGE = "이동할 수 없는 위치입니다";
     private static final String NOT_YOUR_PIECE_MESSAGE = "해당 위치에는 당신의 Piece가 없습니다.";
     private final Chessboard chessboard;
     private Camp turn;
+    private Room room;
 
     public ChessGame() {
         chessboard = new Chessboard();
@@ -19,11 +26,17 @@ public class ChessGame {
         turn = Camp.WHITE;
     }
 
-    public void move(Square source, Square target) {
+    public void move(Square source, Square target) throws SQLException {
         validateTurn(source);
+        moveOnePiece(source, target);
+        room.updateMove(source, target);
+    }
+
+    private void moveOnePiece(Square source, Square target) {
         if (canMove(source, target)) {
             chessboard.swapPiece(source, target);
             turn = turn.getOpposite();
+            System.out.println(CampRenderer.getCampOutput(turn));
             return;
         }
         throw new IllegalArgumentException(CANT_MOVE_MESSAGE);
@@ -53,7 +66,32 @@ public class ChessGame {
         return turn;
     }
 
-    public boolean canKeepGoing() {
-        return this.getChessboard().isKingSurvive();
+    public boolean canKeepGoing() throws SQLException {
+        if (getChessboard().isKingSurvive()) {
+            return true;
+        }
+        room.deleteRoom();
+        return false;
+    }
+
+    public boolean isRoom(String name) throws SQLException {
+        try {
+            this.room = RoomDao.FindByName(name);
+            return true;
+        } catch (SQLException e) {
+            this.room = RoomDao.addRoom(name);
+            return false;
+        }
+    }
+
+    public void resumeNotation() throws SQLException {
+        for (Move note : room.getNotation()) {
+            moveOnePiece(note.getSource(), note.getTarget());
+            System.out.println(CampRenderer.getCampOutput(turn));
+        }
+    }
+
+    public void deleteNotation() throws SQLException {
+        room.deleteNotation();
     }
 }

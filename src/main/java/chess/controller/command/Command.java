@@ -3,6 +3,8 @@ package chess.controller.command;
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
 
+import java.sql.SQLException;
+
 public abstract class Command {
     protected final ChessController chessController;
 
@@ -10,5 +12,5 @@ public abstract class Command {
         this.chessController = chessController;
     }
 
-    abstract public boolean operate(ChessGame chessGame);
+    abstract public boolean operate(ChessGame chessGame) throws SQLException;
 }

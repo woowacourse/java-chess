@@ -4,5 +4,6 @@ public enum CommandType {
     START,
     END,
     MOVE,
-    STATUS;
+    STATUS,
+    RESUME;
 }

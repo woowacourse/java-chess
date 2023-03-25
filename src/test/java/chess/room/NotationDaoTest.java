@@ -22,4 +22,10 @@ class NotationDaoTest {
     void findByRoomIdTest() throws SQLException {
         NotationDao.findByRoomId(1);
     }
+
+    @Test
+    @DisplayName("기보를 지우는 테스트")
+    void deleteNotationTest() throws SQLException {
+        NotationDao.deleteByRoomId(11);
+    }
 }

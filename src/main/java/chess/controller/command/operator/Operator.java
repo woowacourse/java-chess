@@ -3,6 +3,7 @@ package chess.controller.command.operator;
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public abstract class Operator {
@@ -14,5 +15,5 @@ public abstract class Operator {
         this.chessGame = chessGame;
     }
 
-    abstract public boolean operate(List<String> command);
+    abstract public boolean operate(List<String> command) throws SQLException;
 }

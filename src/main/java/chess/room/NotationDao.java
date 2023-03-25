@@ -47,6 +47,19 @@ public class NotationDao {
         return notation;
     }
 
+    public static int findLastTurn(int roomId) throws SQLException {
+        int turn = 1;
+        String query = "select turn from notation where room_id =?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, roomId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            turn = resultSet.getInt(1);
+        }
+        return turn;
+    }
+
     private static Move makeMove(ResultSet resultSet) throws SQLException {
         return new Move(makeSquare(resultSet.getString(1))
                 , makeSquare(resultSet.getString(2)));
@@ -55,5 +68,13 @@ public class NotationDao {
     private static Square makeSquare(String fileAndRank) {
         return new Square(FileInputRenderer.renderString(String.valueOf(fileAndRank.charAt(0))),
                 RankInputRenderer.renderString(String.valueOf(fileAndRank.charAt(1))));
+    }
+
+    public static void deleteByRoomId(int roomId) throws SQLException {
+        final String query = "delete from notation where room_id = ?";
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, roomId);
+        preparedStatement.executeUpdate();
     }
 }

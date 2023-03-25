@@ -7,6 +7,7 @@ import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.validator.ValidateType;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StartCommand extends Command {
@@ -15,7 +16,7 @@ public class StartCommand extends Command {
     }
 
     @Override
-    public boolean operate(ChessGame chessGame) {
+    public boolean operate(ChessGame chessGame) throws SQLException {
         Operator operator = new StartOperator(chessController, chessGame);
         return operator.operate(InputView.requestCommand(List.of(ValidateType.START)));
     }

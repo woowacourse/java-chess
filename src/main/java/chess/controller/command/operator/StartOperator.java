@@ -7,6 +7,7 @@ import chess.domain.ChessGame;
 import chess.renderer.CommendRenderer;
 import chess.view.OutputView;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StartOperator extends Operator {
@@ -18,11 +19,12 @@ public class StartOperator extends Operator {
     }
 
     @Override
-    public boolean operate(List<String> command) {
+    public boolean operate(List<String> command) throws SQLException {
         if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.START)) {
             Operator next = new StatusOperator(chessController, chessGame);
             return next.operate(command);
         }
+        chessGame.deleteNotation();
         chessController.setCommend(new RunningCommand(chessController));
         OutputView.printChessBoard(chessGame.getChessboard());
         return true;
