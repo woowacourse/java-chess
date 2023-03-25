@@ -45,7 +45,7 @@ public class RoomDao {
 
     public Room findRoomByRoomIdAndUser(int roomId, User user) {
         try {
-            String query = "SELECT * FROM room WHERE roomId = ? and user_id = ?";
+            String query = "SELECT * FROM room WHERE room_Id = ? and user_id = ?";
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, roomId);
