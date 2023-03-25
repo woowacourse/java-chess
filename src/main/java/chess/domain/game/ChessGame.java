@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.game.exception.ChessGameException;
 import chess.domain.game.state.GameState;
+import chess.domain.game.state.MovingState;
 import chess.domain.game.state.StartState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -16,6 +17,13 @@ public class ChessGame {
 
     public ChessGame() {
         gameState = StartState.getInstance();
+    }
+
+    public ChessGame(List<List<Position>> moves, GameState gameState) {
+        this.gameState = MovingState.getInstance();
+        board = new Board();
+        moves.forEach(move -> move(move.get(0), move.get(1)));
+        this.gameState = gameState;
     }
 
     public void start() {
@@ -51,5 +59,10 @@ public class ChessGame {
     public Map<Color, Double> getStatus() {
         gameState = gameState.run();
         return board.getStatus();
+    }
+
+    public Turn getTurn() {
+        gameState = gameState.run();
+        return board.getTurn();
     }
 }

@@ -15,7 +15,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.game.exception.ChessGameException;
+import chess.domain.game.state.EndState;
 import chess.domain.piece.Color;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -125,5 +127,25 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.move(A2, A5))
                 .isInstanceOf(ChessGameException.class)
                 .hasMessage("잘못된 기물 움직임 요청입니다.");
+    }
+
+    @Test
+    void 움직임을_바탕으로_보드를_생성할_수_있다() {
+        //given
+        List<List<Position>> positions = List.of(
+                List.of(E2, E4),
+                List.of(D7, D5),
+                List.of(E1, E2),
+                List.of(D5, D4),
+                List.of(E2, E3),
+                List.of(D4, E3)
+        );
+        ChessGame chessGame = new ChessGame(positions, EndState.getInstance());
+
+        //when
+        //then
+        assertThatThrownBy(() -> chessGame.move(E3, D4))
+                .isInstanceOf(ChessGameException.class)
+                .hasMessage("게임이 종료되었습니다.");
     }
 }

@@ -70,4 +70,8 @@ public class Board {
                 .filter(Piece::isKing)
                 .count() != 2;
     }
+
+    public Turn getTurn() {
+        return turn;
+    }
 }
