@@ -14,7 +14,7 @@ public class End implements GameState {
     }
 
     @Override
-    public void execute(final Position source, final Position target) {
+    public void executeAndSave(final Position source, final Position target) {
         // 게임이 끝난 상태에서는 실행 할 수 없음.
     }
 

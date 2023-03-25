@@ -11,25 +11,35 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.controller.GameCommand;
-import chess.model.ChessGame;
+import chess.dao.MoveDao;
+import chess.dao.MoveDaoImpl;
+import chess.dao.MoveFindAllStrategy;
+import chess.dao.MoveTruncator;
 import chess.model.board.NoWhiteKingChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.pawn.WhitePawn;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PlayingTest {
+class PlayingTest extends MoveTruncator {
+
+    private GameState playing;
+    private MoveDao moveDao;
+
+    @BeforeEach
+    void init() {
+        moveDao = new MoveDaoImpl();
+        playing = ProgressState.of(START, moveDao);
+    }
 
     @Test
     @DisplayName("GameCommand가 Start이면 End가 반환된다.")
     void givenEnd_thenReturnEnd() {
-        // given
-        final GameState playing = ProgressState.from(START);
-
         // when
         final GameState end = playing.changeState(END);
 
@@ -40,9 +50,6 @@ class PlayingTest {
     @Test
     @DisplayName("GameCommand가 Start이면 예외가 발생한다.")
     void givenStart_thenFail() {
-        // given
-        final GameState playing = ProgressState.from(START);
-
         // when, then
         assertThatThrownBy(() -> playing.changeState(START))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -51,9 +58,6 @@ class PlayingTest {
     @Test
     @DisplayName("GameCommand가 Status이면 예외가 발생한다.")
     void givenStatus_thenFail() {
-        // given
-        final GameState playing = ProgressState.from(START);
-
         // when
         final GameState status = playing.changeState(STATUS);
 
@@ -64,9 +68,6 @@ class PlayingTest {
     @ParameterizedTest(name = "{0}를 받으면 {1}이 반환된다.")
     @MethodSource("modifyStateParameters")
     void givenGameCommand_thenReturnGameState(final GameCommand command, final Class<GameState> state) {
-        // given
-        final Playing playing = new Playing(new ChessGame());
-
         // when, then
         assertThat(playing.changeState(command).getClass()).isEqualTo(state);
     }
@@ -80,18 +81,16 @@ class PlayingTest {
     }
 
     @Test
-    @DisplayName("excute() 호출하면 move()가 수행된다.")
-    void execute_whenCall_thenSuccess() {
-        // given
-        final Playing playing = new Playing(new ChessGame());
-
+    @DisplayName("excuteAndSave() 호출하면 move()가 수행된다.")
+    void executeAndSave_whenCall_thenSuccess() {
         // when
-        playing.execute(A2, A4);
+        playing.executeAndSave(A2, A4);
 
         // then
         assertAll(
                 () -> assertThat(playing.getBoard().get(A4).getClass()).isEqualTo(WhitePawn.class),
-                () -> assertThat(playing.getBoard().get(A2).getClass()).isEqualTo(Empty.class)
+                () -> assertThat(playing.getBoard().get(A2).getClass()).isEqualTo(Empty.class),
+                () -> assertThat(moveDao.findAll(new MoveFindAllStrategy())).hasSize(1)
         );
     }
 
@@ -100,7 +99,7 @@ class PlayingTest {
     void isGameEnd_whenGameEnd_thenReturnEnd() {
         // given
         final NoWhiteKingChessGame noWhiteKingChessGame = NoWhiteKingChessGame.create();
-        final GameState playing = new Playing(noWhiteKingChessGame.getChessGame());
+        final GameState playing = new Playing(noWhiteKingChessGame.getChessGame(), new MoveDaoImpl());
 
         // when
         final GameState result = playing.isGameEnd();
@@ -112,13 +111,18 @@ class PlayingTest {
     @Test
     @DisplayName("게임이 끝나지 않았으면 자기자신을 반환한다.")
     void isGameEnd_whenNotEndGame_thenReturnEnd() {
-        // given
-        final GameState playing = new Playing(new ChessGame());
-
         // when
         final GameState result = playing.isGameEnd();
 
         // then
         assertThat(result).isSameAs(playing);
+    }
+
+    @Test
+    @DisplayName("calculateScores()를 요청하면 예외를 발생시킨다")
+    void calculateScores_whenCall_thenFail() {
+        // when, then
+        assertThatThrownBy(() -> playing.calculateScores())
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

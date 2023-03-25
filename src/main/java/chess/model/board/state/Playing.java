@@ -1,18 +1,21 @@
 package chess.model.board.state;
 
+import chess.dao.MoveDao;
+import chess.dao.MoveSaveStrategy;
 import chess.model.ChessGame;
 import chess.model.Scores;
 import chess.model.position.Position;
 
 public class Playing extends ProgressState {
 
-    protected Playing(final ChessGame chessGame) {
-        super(chessGame);
+    public Playing(final ChessGame chessGame, final MoveDao moveDao) {
+        super(chessGame, moveDao);
     }
 
     @Override
-    public void execute(final Position source, final Position target) {
-        chessGame.moveAndSaveRecord(source, target);
+    public void executeAndSave(final Position source, final Position target) {
+        chessGame.move(source, target);
+        moveDao.save(new MoveSaveStrategy(source, target));
     }
 
     @Override

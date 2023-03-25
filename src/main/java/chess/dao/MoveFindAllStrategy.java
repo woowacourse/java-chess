@@ -9,7 +9,7 @@ import java.util.List;
 public class MoveFindAllStrategy implements QueryStrategy {
 
     @Override
-    public void save(final PreparedStatement preparedStatement) throws SQLException {
+    public void save(final PreparedStatement preparedStatement) {
         throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
     }
 

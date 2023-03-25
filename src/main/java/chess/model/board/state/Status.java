@@ -1,13 +1,14 @@
 package chess.model.board.state;
 
+import chess.dao.MoveDao;
 import chess.model.ChessGame;
 import chess.model.Scores;
 import chess.model.position.Position;
 
 public class Status extends ProgressState {
 
-    protected Status(final ChessGame chessGame) {
-        super(chessGame);
+    public Status(final ChessGame chessGame, final MoveDao moveDao) {
+        super(chessGame, moveDao);
     }
 
     @Override
@@ -16,7 +17,7 @@ public class Status extends ProgressState {
     }
 
     @Override
-    public void execute(final Position source, final Position target) {
+    public void executeAndSave(final Position source, final Position target) {
         // 상태 정보를 표현할 때 사용할 수 없음
     }
 

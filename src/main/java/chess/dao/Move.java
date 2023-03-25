@@ -1,6 +1,8 @@
 package chess.dao;
 
+import chess.model.position.File;
 import chess.model.position.Position;
+import chess.model.position.Rank;
 
 public class Move {
 
@@ -22,5 +24,22 @@ public class Move {
 
     public String getTarget() {
         return target;
+    }
+
+    public Position toSourcePosition() {
+        return toPosition(source);
+    }
+
+    public Position toTargetPosition() {
+        return toPosition(target);
+    }
+
+    private Position toPosition(final String move) {
+        final File file = File.valueOf(move.substring(0, 1));
+
+        final int rankValue = Integer.parseInt(move.substring(1, 2));
+        final Rank rank = Rank.findRank(rankValue);
+
+        return Position.of(file, rank);
     }
 }

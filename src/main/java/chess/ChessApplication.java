@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.dao.MoveDaoImpl;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Scanner;
@@ -13,6 +14,6 @@ public class ChessApplication {
         final OutputView outputView = new OutputView();
 
         final ChessController chessController = new ChessController(inputView, outputView);
-        chessController.start();
+        chessController.start(new MoveDaoImpl());
     }
 }

@@ -7,6 +7,8 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.dao.MoveDaoImpl;
+import chess.dao.MoveTruncator;
 import chess.model.Score;
 import chess.model.Scores;
 import chess.model.piece.PieceColor;
@@ -14,13 +16,13 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StatusTest {
+class StatusTest extends MoveTruncator {
 
     @Test
     @DisplayName("calculateScores() 호출하면 첨수가 반환된다.")
     void calculateScores_whenCall_thenReturnScores() {
         // given
-        final GameState status = ProgressState.from(STATUS);
+        final GameState status = ProgressState.of(STATUS, new MoveDaoImpl());
 
         // when
         final Scores scores = status.calculateScores();

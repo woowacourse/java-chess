@@ -51,9 +51,10 @@ import static chess.model.board.PositionFixture.H7;
 import static chess.model.piece.PieceColor.BLACK;
 import static chess.model.piece.PieceColor.WHITE;
 
+import chess.dao.MoveTruncator;
 import chess.model.position.Position;
 
-public class PawnBoard {
+public class PawnBoard extends MoveTruncator {
 
     /**
      * ........

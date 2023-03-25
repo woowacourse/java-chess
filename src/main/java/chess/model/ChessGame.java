@@ -2,9 +2,6 @@ package chess.model;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.dao.MoveDao;
-import chess.dao.MoveDaoImpl;
-import chess.dao.MoveSaveStrategy;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
@@ -21,15 +18,9 @@ public class ChessGame {
         this.turn = new Turn();
     }
 
-    public void moveAndSaveRecord(final Position source, final Position target) {
+    public void move(final Position source, final Position target) {
         board.move(source, target, turn.findCurrentPlayer());
-        saveRecord(source, target);
         turn.next();
-    }
-
-    private static void saveRecord(final Position source, final Position target) {
-        final MoveDao moveDao = new MoveDaoImpl();
-        moveDao.save(new MoveSaveStrategy(source, target));
     }
 
     public boolean isGameEnd() {

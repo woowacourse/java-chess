@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.MoveDao;
 import chess.model.Scores;
 import chess.model.board.state.GameState;
 import chess.model.board.state.ProgressState;
@@ -18,23 +19,23 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-    public void start() {
+    public void start(final MoveDao moveDao) {
         inputView.printGameStartMessage();
-        doGame();
+        doGame(moveDao);
     }
 
-    private void doGame() {
-        GameState state = retry(this::getGameState);
+    private void doGame(final MoveDao moveDao) {
+        GameState state = retry(()  -> getGameState(moveDao));
         retry(this::progressGame, state);
     }
 
-    private GameState getGameState() {
+    private GameState getGameState(final MoveDao moveDao) {
         final GameCommand gameCommand = retry(inputView::readGameCommand);
-        return getGameState(gameCommand);
+        return getGameState(gameCommand, moveDao);
     }
 
-    private GameState getGameState(final GameCommand gameCommand) {
-        GameState state = ProgressState.from(gameCommand);
+    private GameState getGameState(final GameCommand gameCommand, final MoveDao moveDao) {
+        GameState state = ProgressState.of(gameCommand, moveDao);
         printBoardStatus(state);
         return state;
     }
@@ -65,7 +66,7 @@ public class ChessController {
 
     private static GameState applyCommandAndExecute(GameState state, final MoveRequest moveRequest) {
         state = state.changeState(moveRequest.getGameCommand());
-        state.execute(moveRequest.getSource(), moveRequest.getTarget());
+        state.executeAndSave(moveRequest.getSource(), moveRequest.getTarget());
         return state;
     }
 
