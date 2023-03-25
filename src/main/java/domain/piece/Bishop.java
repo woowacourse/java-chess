@@ -6,6 +6,10 @@ import domain.type.PieceType;
 
 public final class Bishop extends SlidingPiece {
 
+    private static final int STAY = 0;
+    private static final int MIN_DIFF = -1;
+    private static final int MAX_DIFF = 1;
+
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
     }
@@ -17,11 +21,11 @@ public final class Bishop extends SlidingPiece {
 
     @Override
     protected int getMoveCoordinate(final int diff) {
-        if (diff < 0) {
-            return -1;
+        if (diff < STAY) {
+            return MIN_DIFF;
         }
 
-        return 1;
+        return MAX_DIFF;
     }
 
 }

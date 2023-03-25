@@ -14,7 +14,7 @@ public abstract class PawnFeature extends Piece {
     }
 
     protected final boolean isPawnMovable(final int direction, final int diffY, final int diffX) {
-        return diffY == direction && (-1 <= diffX && diffX <= 1);
+        return diffY == direction && (WHITE_DIRECTION <= diffX && diffX <= BLACK_DIRECTION);
     }
 
     protected final int chooseDirection() {

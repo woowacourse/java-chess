@@ -6,6 +6,8 @@ import domain.type.PieceType;
 
 public final class Rook extends SlidingPiece {
 
+    private static final int STAY = 0;
+
     public Rook(final Color color) {
         super(color, PieceType.ROOK);
     }
@@ -16,7 +18,7 @@ public final class Rook extends SlidingPiece {
     }
 
     public int getMoveCoordinate(final int diff) {
-        return Integer.compare(diff, 0);
+        return Integer.compare(diff, STAY);
     }
 
 }

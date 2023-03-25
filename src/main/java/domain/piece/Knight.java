@@ -6,6 +6,9 @@ import domain.type.PieceType;
 
 public final class Knight extends JumperPiece {
 
+    private static final int MIN_DIFF = 1;
+    private static final int MAX_DIFF = 2;
+
     public Knight(final Color color) {
         super(color, PieceType.KNIGHT);
     }
@@ -15,7 +18,7 @@ public final class Knight extends JumperPiece {
         int diffY = Math.abs(target.diffY(source));
         int diffX = Math.abs(target.diffX(source));
 
-        return (diffX == 1 && diffY == 2) || (diffX == 2 && diffY == 1);
+        return (diffX == MIN_DIFF && diffY == MAX_DIFF) || (diffX == MAX_DIFF && diffY == MIN_DIFF);
     }
 
 }

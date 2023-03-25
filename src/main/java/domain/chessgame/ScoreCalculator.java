@@ -45,10 +45,14 @@ public enum ScoreCalculator {
     }
 
     private static double convertSameColumn(final long pawnCount) {
-        if (pawnCount > 1) {
+        if (hasMultiPawn(pawnCount)) {
             return pawnCount * PAWN.score;
         }
         return pawnCount;
+    }
+
+    private static boolean hasMultiPawn(final long pawnCount) {
+        return pawnCount > 1;
     }
 
     private static ScoreCalculator from(final Type type) {
