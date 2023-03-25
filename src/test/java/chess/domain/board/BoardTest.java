@@ -15,7 +15,9 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class BoardTest extends AbstractTestFixture {
 
@@ -129,5 +131,27 @@ public class BoardTest extends AbstractTestFixture {
         var position = createPosition("D,TWO");
 
         assertThat(board.hasPositionTeamOf(position, Team.WHITE)).isTrue();
+    }
+
+    @DisplayName("시작할 때 한 팀의 기본 점수는 38점이다")
+    @Test
+    void getScoreOfTeam_onStart() {
+        var board = BoardFactory.createBoard();
+
+        assertThat(board.score(Team.BLACK)).isEqualTo(38);
+    }
+
+    @DisplayName("폰이 한 파일 안에 있으면 0.5점씩 계산한다.")
+    @Test
+    void getScoreOfTeam() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.ONE), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.TWO), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.FOUR), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.FIVE), new Knight(Team.WHITE))
+        ));
+
+        assertThat(board.score(Team.WHITE)).isEqualTo(5);
     }
 }

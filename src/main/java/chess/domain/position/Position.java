@@ -48,6 +48,10 @@ public class Position {
         return new Directions(DOWN.repeat(Math.abs(difference)));
     }
 
+    public boolean hasFile(File file) {
+        return this.file.equals(file);
+    }
+
     public int getFileIndex() {
         return file.getIndex();
     }

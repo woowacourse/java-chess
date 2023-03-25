@@ -1,13 +1,18 @@
 package chess.domain.board;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.exception.IllegalMoveException;
 import chess.domain.game.Team;
 import chess.domain.move.Move;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 public class Board {
@@ -81,5 +86,49 @@ public class Board {
 
     public Map<Position, Piece> getPieces() {
         return new HashMap<>(pieces);
+    }
+
+    public double score(Team team) {
+        return Arrays.stream(File.values())
+                .mapToDouble(file -> score(team, file))
+                .sum();
+    }
+
+    private double score(Team team, File file) {
+        List<Piece> pieces = findPiecesIn(file).stream()
+                .filter(piece -> piece.hasTeam(team))
+                .collect(Collectors.toList());
+        return scoreExceptPawns(pieces) + scorePawns(pieces);
+    }
+
+    private List<Piece> findPiecesIn(File file) {
+        return pieces.entrySet().stream()
+                .filter(it -> it.getKey().hasFile(file))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+    }
+
+    private double scoreExceptPawns(List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> !piece.getType().equals(PieceType.PAWN))
+                .mapToDouble(Piece::score)
+                .sum();
+    }
+
+    private double scorePawns(List<Piece> pieces) {
+        List<Piece> pawns = findPawnsIn(pieces);
+        double score = pawns.stream()
+                .mapToDouble(Piece::score)
+                .sum();
+        if (pawns.size() > 1) {
+            return score / 2;
+        }
+        return score;
+    }
+
+    private List<Piece> findPawnsIn(List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> piece.getType().equals(PieceType.PAWN))
+                .collect(Collectors.toList());
     }
 }
