@@ -9,9 +9,12 @@ import java.util.stream.Collectors;
 public class InputView {
     private static final String SPLIT_DELIMITER = " ";
 
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public Command readCommand() {
+    private InputView() {
+    }
+
+    public static Command readCommand() {
         final List<String> commands = splitAsList(scanner.nextLine());
         return new Command(commands);
     }

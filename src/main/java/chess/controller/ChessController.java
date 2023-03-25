@@ -10,20 +10,17 @@ import chess.view.OutputView;
 
 public class ChessController {
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
-    private final InputView inputView;
-    private final OutputView outputView;
+
     private Game game;
     private State state;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessController() {
         this.game = new Game();
         this.state = new Ready();
     }
 
     public void run() {
-        outputView.printGameStartMessage();
+        OutputView.printGameStartMessage();
 
         while (state.isRunning()) {
             executeState();
@@ -41,7 +38,7 @@ public class ChessController {
 
     private Command inputCommand() {
         try {
-            return inputView.readCommand();
+            return InputView.readCommand();
         } catch (final IllegalArgumentException e) {
             System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
             return inputCommand();
@@ -52,7 +49,7 @@ public class ChessController {
         if (command.isStart()) {
             state = state.start();
             game = new Game();
-            outputView.printChessBoard(game.getPieces());
+            OutputView.printChessBoard(game.getPieces());
         }
         if (command.isMove()) {
             state = state.next();
@@ -63,7 +60,7 @@ public class ChessController {
             final double whiteScore = game.calculateScore(Camp.WHITE);
             final double blackScore = game.calculateScore(Camp.BLACK);
             final Camp winner = game.judgeWinner();
-            outputView.printStatus(whiteScore, blackScore, winner);
+            OutputView.printStatus(whiteScore, blackScore, winner);
         }
         if (command.isEnd()) {
             state = state.end();
@@ -73,7 +70,7 @@ public class ChessController {
     private void playTurn(final Command command) {
         try {
             game.move(command.getSource(), command.getTarget());
-            outputView.printChessBoard(game.getPieces());
+            OutputView.printChessBoard(game.getPieces());
         } catch (final IllegalArgumentException e) {
             System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
         }

@@ -13,7 +13,10 @@ import java.util.List;
 public class OutputView {
     private static final int BOARD_LINE_SIZE = 8;
 
-    public void printGameStartMessage() {
+    private OutputView() {
+    }
+
+    public static void printGameStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 상태 : status");
@@ -21,7 +24,7 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(final List<Piece> pieces) {
+    public static void printChessBoard(final List<Piece> pieces) {
         for (int i = 1; i < pieces.size() + 1; i++) {
             final Piece piece = pieces.get(i - 1);
             String initial = getPieceInitial(piece);
@@ -60,13 +63,13 @@ public class OutputView {
         return initial;
     }
 
-    private void printNewLine(final int i) {
+    private static void printNewLine(final int i) {
         if (i % BOARD_LINE_SIZE == 0) {
             System.out.println();
         }
     }
 
-    public void printStatus(final double whiteScore, final double blackScore, final Camp winner) {
+    public static void printStatus(final double whiteScore, final double blackScore, final Camp winner) {
         System.out.println("White 진영 점수: " + whiteScore);
         System.out.println("Black 진영 점수: " + blackScore);
         System.out.println("게임 결과: " + winner.getName());
