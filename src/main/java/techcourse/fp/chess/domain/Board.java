@@ -52,7 +52,7 @@ public final class Board {
 
     public Color findWinner() {
         if (!isGameEnd()) {
-            throw new IllegalArgumentException("아직 게임이 끝나지 않았습니다.");
+            throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");
         }
         return turn.getPreviousTurn();
     }
