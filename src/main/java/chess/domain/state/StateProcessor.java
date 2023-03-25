@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.cache.PieceCache;
 import chess.domain.Board;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.dto.CommandDto;
@@ -44,5 +45,13 @@ public final class StateProcessor {
 
     public State end() {
         return state.end();
+    }
+
+    public State identity() {
+        return state;
+    }
+
+    public double status(Color color) {
+        return state.calculateScore(color);
     }
 }
