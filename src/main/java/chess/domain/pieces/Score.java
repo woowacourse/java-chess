@@ -27,6 +27,10 @@ public class Score {
         return new Score(this.score.add(otherScore.score));
     }
 
+    public Score subtract(final double subtracter) {
+        return new Score(this.score.subtract(new BigDecimal(subtracter)));
+    }
+
     public BigDecimal getScore() {
         return score;
     }
