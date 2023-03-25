@@ -7,15 +7,8 @@ import chess.domain.board.Rank;
 import chess.domain.game.ChessGame;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Turn;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 
 import java.sql.Connection;
@@ -46,15 +39,15 @@ public class DbChessGameDao implements ChessGameDao {
     public void save(final ChessGame chessGame) {
         Map<Position, Piece> piecePosition = chessGame.getChessBoard().getPiecePosition();
         for (final Map.Entry<Position, Piece> positionPieceEntry : piecePosition.entrySet()) {
-            final var query = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, turn) VALUES (?, ?, ?, ?, ?)";
+            final var query = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, game_status, turn) VALUES (?, ?, ?, ?, ?, ?)";
             try (final var connection = getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, positionPieceEntry.getValue().getType().name());
                 preparedStatement.setString(2, positionPieceEntry.getKey().getFile().name());
                 preparedStatement.setString(3, positionPieceEntry.getKey().getRank().name());
                 preparedStatement.setString(4, positionPieceEntry.getValue().getTeam().name());
-                preparedStatement.setString(5, chessGame.getCurrentTeam().name());
-
+                preparedStatement.setString(5, chessGame.getStatus().name());
+                preparedStatement.setString(6, chessGame.getCurrentTeam().name());
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
@@ -66,8 +59,9 @@ public class DbChessGameDao implements ChessGameDao {
     public ChessGame select() {
         Map<Position, Piece> pieces = new HashMap<>(64);
         Team turn = null;
+        GameStatus gameStatus = GameStatus.IDLE;
 
-        final var query = "SELECT piece_type, piece_file, piece_rank, piece_team, turn FROM chess_game";
+        final var query = "SELECT piece_type, piece_file, piece_rank, piece_team, turn, game_status FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
@@ -76,6 +70,7 @@ public class DbChessGameDao implements ChessGameDao {
                 Rank pieceRank = Rank.valueOf(resultSet.getString("piece_rank"));
                 Team pieceTeam = Team.valueOf(resultSet.getString("piece_team"));
                 turn = Team.valueOf(resultSet.getString("turn"));
+                gameStatus = GameStatus.valueOf(resultSet.getString("game_status"));
                 PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
 
                 Position position = Position.of(pieceFile, pieceRank);
@@ -92,28 +87,11 @@ public class DbChessGameDao implements ChessGameDao {
 
         ChessBoard chessBoard = ChessBoard.createBoardByRule(pieces);
 
-        return new ChessGame(chessBoard, new Turn(turn), GameStatus.START);
+        return new ChessGame(chessBoard, new Turn(turn), gameStatus);
     }
 
     private Piece extractPiece(final Team pieceTeam, final PieceType pieceType) {
-        switch (pieceType) {
-            case KING:
-                return new King(pieceTeam);
-            case PAWN:
-                return new Pawn(pieceTeam);
-            case ROOK:
-                return new Rook(pieceTeam);
-            case QUEEN:
-                return new Queen(pieceTeam);
-            case BISHOP:
-                return new Bishop(pieceTeam);
-            case KNIGHT:
-                return new Knight(pieceTeam);
-            case EMPTY:
-                return new EmptyPiece();
-            default:
-                throw new UnsupportedOperationException();
-        }
+        return pieceType.getInstance(pieceTeam);
     }
 
     @Override
