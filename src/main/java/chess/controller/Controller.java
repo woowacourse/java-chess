@@ -19,7 +19,6 @@ public final class Controller {
         this.resultProcessor = resultProcessor;
     }
 
-
     public void run() {
         OutputView.printStartMessage();
 
@@ -27,6 +26,7 @@ public final class Controller {
 
         while (stateProcessor.isNotEnd()) {
             retryOnError(() -> {
+                printStateInformation();
                 CommandDto command = InputView.inputGameState();
                 commandProcessor.execute(stateProcessor, command);
                 resultProcessor.execute(command);
@@ -40,10 +40,28 @@ public final class Controller {
         commandProcessor.register(Command.STATUS, command -> stateProcessor.identity());
         commandProcessor.register(Command.MOVE, stateProcessor::move);
 
-        resultProcessor.register(Command.STATUS, () -> OutputView.printScore(ScoreDto.of(stateProcessor.status(Color.BLACK), stateProcessor.status(Color.WHITE))));
-        resultProcessor.register(Command.END, () -> OutputView.printScore(ScoreDto.of(stateProcessor.status(Color.BLACK), stateProcessor.status(Color.WHITE))));
+        resultProcessor.register(Command.STATUS, this::printStatus);
+        resultProcessor.register(Command.END, OutputView::printEnd);
         resultProcessor.register(Command.START, () -> OutputView.printChessBoard(stateProcessor.getBoard()));
         resultProcessor.register(Command.MOVE, () -> OutputView.printChessBoard(stateProcessor.getBoard()));
+    }
+
+    private void printStatus() {
+        if (stateProcessor.isGameEnd()) {
+            OutputView.printScore(ScoreDto.of(stateProcessor.status(Color.BLACK), stateProcessor.status(Color.WHITE), stateProcessor.getColor()));
+        }
+        if (stateProcessor.isNotGameEnd()) {
+            OutputView.printScore(ScoreDto.of(stateProcessor.status(Color.BLACK), stateProcessor.status(Color.WHITE)));
+        }
+    }
+
+    private void printStateInformation() {
+        if (stateProcessor.getColor() != Color.EMPTY && stateProcessor.isNotGameEnd()) {
+            OutputView.printColor(stateProcessor.getColor());
+        }
+        if (stateProcessor.isGameEnd()) {
+            OutputView.printGameEnd();
+        }
     }
 
     private void retryOnError(Runnable runnable) {
