@@ -15,7 +15,9 @@ public class OutputView {
     }
 
     public static void printGameCommandInputMessage() {
-        printMessage("> 게임 시작 : start" + NEWLINE
+        printMessage(
+                "> 이전 게임 재시작 : restart 이전 게임 ID - 예. restart 1" + NEWLINE
+                + "> 게임 시작 : start" + NEWLINE
                 + "> 게임 종료 : end" + NEWLINE
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + NEWLINE
                 + "> 게임 점수 및 결과 출력 : status");
