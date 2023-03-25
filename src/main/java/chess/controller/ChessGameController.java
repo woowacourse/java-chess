@@ -88,9 +88,10 @@ public final class ChessGameController {
 
     private void initializeChessBoard() {
         PieceDao dao = new PieceDaoImpl();
+        Pieces pieces = new Pieces();
 
-        Pieces whitePieces = getDbWhitePieces(dao);
-        Pieces blackPieces = getDbBlackPieces(dao);
+        Pieces whitePieces = getDbWhitePieces(dao, pieces);
+        Pieces blackPieces = getDbBlackPieces(dao, pieces);
 
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
@@ -98,20 +99,20 @@ public final class ChessGameController {
         this.players = Players.of(whitePlayer, blackPlayer);
     }
 
-    private Pieces getDbWhitePieces(PieceDao dao) {
+    private Pieces getDbWhitePieces(PieceDao dao, Pieces pieces) {
         List<Piece> dbWhitePieces = dao.findPieceByColor(Color.WHITE);
         if (dbWhitePieces.isEmpty()) {
-            Pieces whitePieces = Pieces.createWhitePieces();
+            Pieces whitePieces = pieces.createWhitePieces();
             insertAll(dao, whitePieces, Color.WHITE);
             return whitePieces;
         }
         return Pieces.from(dbWhitePieces);
     }
 
-    private Pieces getDbBlackPieces(PieceDao dao) {
+    private Pieces getDbBlackPieces(PieceDao dao, Pieces pieces) {
         List<Piece> dbBlackPieces = dao.findPieceByColor(Color.BLACK);
         if (dbBlackPieces.isEmpty()) {
-            Pieces blackPieces = Pieces.createBlackPieces(Pieces.createWhitePieces());
+            Pieces blackPieces = pieces.createBlackPieces();
             insertAll(dao, blackPieces, Color.BLACK);
             return blackPieces;
         }
