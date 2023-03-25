@@ -5,6 +5,7 @@ import java.util.List;
 
 enum Command {
     START("start"),
+    LOAD("load"),
     MOVE("move"),
     STATUS("status"),
     END("end"),
@@ -23,30 +24,20 @@ enum Command {
     }
 
     public static Command createInitCommand(final String inputCommand) {
-        return getInitialCommand(START, inputCommand);
-    }
-
-    private static Command getInitialCommand(final Command possibleCommand, final String inputCommand) {
-        return Arrays.stream(values())
-                .filter(command -> command == possibleCommand || command == END)
-                .filter(command -> command.value.equals(inputCommand))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        possibleCommand.value + " 또는 " + END.value + " 를 입력해주세요.")
-                );
+        return getCommand(START, LOAD, inputCommand);
     }
 
     public static Command createPlayingCommand(final String inputCommand) {
-        return getCommand(MOVE, inputCommand);
+        return getCommand(MOVE, STATUS, inputCommand);
     }
 
-    private static Command getCommand(final Command possibleCommand, final String inputCommand) {
+    private static Command getCommand(final Command firstCommand, final Command secondCommand, final String inputCommand) {
         return Arrays.stream(values())
-                .filter(command -> command == possibleCommand || command == STATUS || command == END)
+                .filter(command -> command == firstCommand || command == secondCommand || command == END)
                 .filter(command -> command.value.equals(inputCommand))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        possibleCommand.value + ", " + STATUS.value + ", " + END.value + " 중 하나를 입력해주세요.")
+                        firstCommand.value + ", " + secondCommand.value + ", " + END.value + " 중 하나를 입력해주세요.")
                 );
     }
 

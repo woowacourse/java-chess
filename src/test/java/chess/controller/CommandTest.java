@@ -23,7 +23,7 @@ public class CommandTest {
         // expect
         assertThatThrownBy(() -> Command.createInitCommand("move"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("start 또는 end 를 입력해주세요.");
+                .hasMessage("start, load, end 중 하나를 입력해주세요.");
     }
 
     @Test

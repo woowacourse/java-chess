@@ -39,8 +39,9 @@ public class ChessGameDao {
             while (resultSet.next()) {
                 final String source = resultSet.getString("source");
                 final String target = resultSet.getString("target");
+                MoveDto moveDto = new MoveDto(source, target);
 
-                result.add(new MoveDto(source, target));
+                result.add(moveDto);
             }
             return result;
         } catch (final SQLException error) {
@@ -49,11 +50,12 @@ public class ChessGameDao {
     }
 
     public void clear() {
-        final String query = "DELETE FROM MOVE";
+        final String query = "DELETE FROM move";
 
-        try (final Statement statement = connection.createStatement()) {
-            statement.executeQuery(query);
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
         } catch (final SQLException error) {
+            System.out.println(error);
             throw new IllegalArgumentException("기보 초기화 중 에러가 발생했습니다");
         }
     }

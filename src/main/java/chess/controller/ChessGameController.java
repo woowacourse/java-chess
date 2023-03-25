@@ -1,6 +1,7 @@
 package chess.controller;
 
 import static chess.controller.Command.END;
+import static chess.controller.Command.LOAD;
 import static chess.controller.Command.MOVE;
 import static chess.controller.Command.MOVE_COMMAND_INDEX;
 import static chess.controller.Command.MOVE_SOURCE_INDEX;
@@ -32,9 +33,13 @@ public class ChessGameController {
     private Command getInitCommand(final ChessGameService chessGameService) {
         final Command command = createInitCommand();
         if (command == START) {
-            OutputView.printBoard(chessGameService.board());
+            chessGameService.start();
+        }
+        if (command == LOAD) {
+            chessGameService.load();
         }
 
+        OutputView.printBoard(chessGameService.board());
         return command;
     }
 

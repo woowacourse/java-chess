@@ -40,6 +40,8 @@ public class OutputView {
 
     public static void printGameStart() {
         System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 새 게임 시작 : start");
+        System.out.println("> 저장된 게임 시작 : load");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 점수 확인 : status");
         System.out.println("> 게임 종료 : end");

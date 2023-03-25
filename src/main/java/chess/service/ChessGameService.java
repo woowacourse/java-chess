@@ -21,7 +21,7 @@ public class ChessGameService {
         this.chessGameDao = new ChessGameDao();
     }
 
-    public void restart() {
+    public void load() {
         final List<MoveDto> moves = chessGameDao.restart();
         for (MoveDto move : moves) {
             final String source = move.getSource();
@@ -37,8 +37,7 @@ public class ChessGameService {
         chessGameDao.save(moveDto);
     }
 
-    public void clear() {
-        board.clear();
+    public void start() {
         chessGameDao.clear();
     }
 

@@ -18,7 +18,7 @@
 - [x] 화이트가 기물을 먼저 움직인다.
 - [x] 킹이 잡히면 게임이 종료된다.
 - [x] 남아있는 말에 대한 점수를 계산할 수 있다.
-- [ ] 데이터베이스에 행마를 저장하는 기능
+- [x] 데이터베이스에 행마를 저장하는 기능
 
 **보드**
 
@@ -59,10 +59,12 @@ graph TD
     ChessController --> InputView
     ChessController --> OutputView
 
-    ChessController --> Board
+    ChessController --> ChessGameService
+    
+    ChessGameService --> Board
+    CHessGameService --> BoardResult
     
     Board --> BoardFactory
-    Board --> BoardResult
 
     Position --> Rank
     Position --> File
