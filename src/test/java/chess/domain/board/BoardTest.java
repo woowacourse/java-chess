@@ -100,4 +100,32 @@ class BoardTest {
         //then
         assertThat(v).isEqualTo(1.5);
     }
+
+    @Test
+    @DisplayName("킹이 남은 쪽이 승리한다.")
+    void kingWinTest() {
+        //given
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(A1, new King(Color.WHITE));
+        pieces.put(A2, new Knight(Color.BLACK));
+        Board board = new Board(pieces);
+        //when
+        Color color = board.computeWinner();
+        //then
+        assertThat(color).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    @DisplayName("킹이 둘다 남았다면 NONE을 반환한다.")
+    void kingNoneTest() {
+        //given
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(A1, new King(Color.WHITE));
+        pieces.put(A2, new King(Color.BLACK));
+        Board board = new Board(pieces);
+        //when
+        Color color = board.computeWinner();
+        //then
+        assertThat(color).isEqualTo(Color.NONE);
+    }
 }

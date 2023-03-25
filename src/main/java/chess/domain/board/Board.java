@@ -19,6 +19,8 @@ public final class Board {
 
     private static final int STACKED_PAWN = 2;
     private static final double STACKED_PAWN_SCORE = 0.5;
+    private static final int KINS_ALIVE = 2;
+    private static final int WINNER_COLOR_INDEX = 0;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -148,10 +150,10 @@ public final class Board {
                 .map(Piece::getColor)
                 .collect(Collectors.toList());
 
-        if (kingColors.size() == 2) {
+        if (kingColors.size() == KINS_ALIVE) {
             return Color.NONE;
         }
-        return kingColors.get(0);
+        return kingColors.get(WINNER_COLOR_INDEX);
     }
 
     private Piece getPiece(Position position) {

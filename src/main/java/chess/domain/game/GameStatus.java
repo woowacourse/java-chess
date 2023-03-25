@@ -23,4 +23,6 @@ public interface GameStatus {
     double computeScore(Color color);
 
     Color getTurn();
+
+    Color computeWinner();
 }

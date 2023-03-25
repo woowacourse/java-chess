@@ -39,6 +39,10 @@ public final class ChessGame {
         return gameStatus.computeScore(color);
     }
 
+    public Color computeWinner() {
+        return gameStatus.computeWinner();
+    }
+
     public Map<Position, Piece> getBoard() {
         return gameStatus.getBoard();
     }

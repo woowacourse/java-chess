@@ -63,4 +63,9 @@ public final class Running implements GameStatus {
     public Color getTurn() {
         return turn;
     }
+
+    @Override
+    public Color computeWinner() {
+        return board.computeWinner();
+    }
 }

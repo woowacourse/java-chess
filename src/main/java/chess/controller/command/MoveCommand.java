@@ -3,6 +3,7 @@ package chess.controller.command;
 import chess.dao.ChessGameDao;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.property.Color;
 import chess.view.OutputView;
 import chess.view.PositionParser;
 
@@ -48,5 +49,9 @@ public final class MoveCommand implements Command {
         chessGame.playTurn(source, target);
         chessGameDao.updateGame(chessGame, source, target);
         outputView.printBoard(chessGame.getBoard());
+        if (chessGame.computeWinner() != Color.NONE) {
+            outputView.printWinner(chessGame.computeWinner());
+            chessGame.end();
+        }
     }
 }

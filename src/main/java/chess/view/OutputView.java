@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
 import chess.mapper.KindMapper;
 
 import java.util.Arrays;
@@ -73,5 +74,9 @@ public final class OutputView {
 
     public void printGuideMessage() {
         System.out.println("명령어를 다시 입력하세요");
+    }
+
+    public void printWinner(final Color color) {
+        System.out.printf("%s팀이 승리하였습니다!", color.name());
     }
 }

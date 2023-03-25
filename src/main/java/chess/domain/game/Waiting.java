@@ -52,4 +52,9 @@ public final class Waiting implements GameStatus {
     public Color getTurn() {
         throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
     }
+
+    @Override
+    public Color computeWinner() {
+        throw new UnsupportedOperationException("시작한 후에 승자를 결정할 수 있습니다.");
+    }
 }
