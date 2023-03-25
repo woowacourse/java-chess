@@ -26,6 +26,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public double score() {
+        return 2.5;
+    }
+
+    @Override
     public PieceType getType() {
         return PieceType.KNIGHT;
     }

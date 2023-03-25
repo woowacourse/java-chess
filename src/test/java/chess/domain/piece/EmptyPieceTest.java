@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,5 +51,13 @@ class EmptyPieceTest {
 
         assertThat(emptyPiece.isSameTeamWith(new Pawn(Team.WHITE))).isFalse();
         assertThat(emptyPiece.isSameTeamWith(new Pawn(Team.BLACK))).isFalse();
+    }
+
+    @DisplayName("기본점수가 0점이다")
+    @Test
+    void scoreIsZero() {
+        Piece emptyPiece = EmptyPiece.create();
+
+        Assertions.assertThat(emptyPiece.score()).isEqualTo(0);
     }
 }

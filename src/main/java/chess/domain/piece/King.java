@@ -26,6 +26,11 @@ public class King extends Piece {
     }
 
     @Override
+    public double score() {
+        return 0;
+    }
+
+    @Override
     public PieceType getType() {
         return PieceType.KING;
     }

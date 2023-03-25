@@ -51,6 +51,11 @@ public class Pawn extends Piece {
         return this;
     }
 
+    @Override
+    public double score() {
+        return 1;
+    }
+
     private boolean isUntouched() {
         return moves.size() == UNTOUCHED_MOVE_SIZE;
     }

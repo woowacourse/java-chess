@@ -36,4 +36,12 @@ public class QueenTest extends AbstractTestFixture {
 
         assertThat(queen.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
     }
+
+    @DisplayName("기본점수가 9점이다")
+    @Test
+    void scoreIsNine() {
+        Queen queen = new Queen(Team.WHITE);
+
+        assertThat(queen.score()).isEqualTo(9);
+    }
 }

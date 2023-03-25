@@ -22,6 +22,11 @@ public class Rook extends InfinitePiece {
     }
 
     @Override
+    public double score() {
+        return 5;
+    }
+
+    @Override
     public PieceType getType() {
         return PieceType.ROOK;
     }

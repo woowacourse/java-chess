@@ -26,6 +26,11 @@ public class Queen extends InfinitePiece {
     }
 
     @Override
+    public double score() {
+        return 9;
+    }
+
+    @Override
     public PieceType getType() {
         return PieceType.QUEEN;
     }

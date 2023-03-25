@@ -34,4 +34,12 @@ public class RookTest extends AbstractTestFixture {
         assertThat(rook.hasMove(createMove(LEFT, UP))).isFalse();
         assertThat(rook.hasMove(createMove(RIGHT, RIGHT, DOWN, DOWN))).isFalse();
     }
+
+    @DisplayName("기본점수가 5점이다")
+    @Test
+    void scoreIsFive() {
+        Rook rook = new Rook(Team.WHITE);
+
+        assertThat(rook.score()).isEqualTo(5);
+    }
 }
