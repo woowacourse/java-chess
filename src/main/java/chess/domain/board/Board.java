@@ -23,10 +23,6 @@ public class Board {
         return new Board(board);
     }
 
-    public static Board create() {
-        return new Board(new HashMap<>());
-    }
-
     public void move(final String source, final String target) {
         final Position sourcePosition = Position.from(source);
         final Position targetPosition = Position.from(target);
