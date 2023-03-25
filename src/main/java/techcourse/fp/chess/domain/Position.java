@@ -19,6 +19,10 @@ public final class Position {
         return new Position(file, rank);
     }
 
+    public static Position createByName(final String fileName, final String rankName) {
+        return new Position(File.createByName(fileName), Rank.createByName(rankName));
+    }
+
     public boolean isOnDiagonal(final Position target) {
         return Math.abs(getFileOrder() - target.getFileOrder()) == ONE_SPACE
                 && Math.abs(getRankOrder() - target.getRankOrder()) == ONE_SPACE;
@@ -52,6 +56,10 @@ public final class Position {
 
     public File getFile() {
         return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

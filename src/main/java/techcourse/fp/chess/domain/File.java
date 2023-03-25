@@ -25,6 +25,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 file값을 입력하셨습니다."));
     }
 
+    public static File createByName(final String name) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 file값을 입력하셨습니다."));
+    }
+
     public int getOrder() {
         return order;
     }

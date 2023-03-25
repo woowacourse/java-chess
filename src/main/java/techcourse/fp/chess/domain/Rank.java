@@ -25,6 +25,13 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값을 입력하셨습니다."));
     }
 
+    public static Rank createByName(final String name) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.name().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값을 입력하셨습니다."));
+    }
+
     public int getOrder() {
         return order;
     }

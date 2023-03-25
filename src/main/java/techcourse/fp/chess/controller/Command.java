@@ -4,13 +4,15 @@ import java.util.List;
 
 public enum Command {
     START,
+    LOAD,
     END,
+    SAVE,
     MOVE,
     STATUS,
     EMPTY;
 
     public static Command createInitCommand(String input) {
-        final List<Command> rightCommands = List.of(START, END);
+        final List<Command> rightCommands = List.of(START, END, LOAD);
         
         return createSpecficCommand(input, rightCommands);
     }
@@ -23,7 +25,7 @@ public enum Command {
     }
 
     public static Command createInPlayCommand(String input) {
-        final List<Command> rightCommands = List.of(MOVE, END, STATUS);
+        final List<Command> rightCommands = List.of(MOVE, END, STATUS, SAVE);
 
         return createSpecficCommand(input, rightCommands);
     }

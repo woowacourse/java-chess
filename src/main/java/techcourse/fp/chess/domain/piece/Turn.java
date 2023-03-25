@@ -32,4 +32,8 @@ public class Turn {
     public Color getPreviousTurn() {
         return values.get(order).getOtherSide();
     }
+
+    public Color getCurrentTurn() {
+        return values.get(order);
+    }
 }
