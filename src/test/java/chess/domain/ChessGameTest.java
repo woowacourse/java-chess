@@ -1,9 +1,9 @@
 package chess.domain;
 
 import chess.TestPiecesFactory;
-import chess.domain.board.maker.EmptyPiecesFactory;
-import chess.domain.board.maker.StartingPiecesFactory;
 import chess.domain.piece.*;
+import chess.domain.piecesfactory.EmptyPiecesFactory;
+import chess.domain.piecesfactory.StartingPiecesFactory;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;

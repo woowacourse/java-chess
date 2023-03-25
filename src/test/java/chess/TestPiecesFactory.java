@@ -1,7 +1,7 @@
 package chess;
 
-import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piecesfactory.PiecesFactory;
 
 import java.util.ArrayList;
 import java.util.List;

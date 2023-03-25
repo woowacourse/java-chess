@@ -2,8 +2,8 @@ package chess.domain.board;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piecesfactory.PiecesFactory;
 
 import java.util.HashMap;
 import java.util.List;

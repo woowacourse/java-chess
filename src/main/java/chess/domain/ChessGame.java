@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.maker.PiecesFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piecesfactory.PiecesFactory;
 
 import java.util.List;
 import java.util.Map;

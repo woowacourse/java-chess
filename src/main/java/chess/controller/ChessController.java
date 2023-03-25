@@ -3,8 +3,8 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.board.maker.EmptyPiecesFactory;
-import chess.domain.board.maker.StartingPiecesFactory;
+import chess.domain.piecesfactory.EmptyPiecesFactory;
+import chess.domain.piecesfactory.StartingPiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
