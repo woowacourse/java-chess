@@ -9,26 +9,25 @@ import chess.dto.domaintocontroller.GameStatus;
 
 import java.util.Set;
 
-public final class ChessReady extends ChessState {
+public final class ChessGameOver extends ChessState {
 
-    ChessReady(final ChessGame chessGame) {
+    ChessGameOver(final ChessGame chessGame) {
         super(chessGame);
     }
 
     @Override
     public ChessState start() {
-        final ChessGame newChessGame = ChessGame.createWith(new StartingPiecesGenerator());
-        return new ChessRunning(newChessGame);
+        return new ChessRunning(ChessGame.createWith(new StartingPiecesGenerator()));
     }
 
     @Override
     public ChessState move(final Position sourcePosition, final Position targetPosition) {
-        throw new IllegalStateException(ExceptionCode.GAME_NOT_INITIALIZED.name());
+        throw new IllegalStateException(ExceptionCode.GAME_OVER_STATE.name());
     }
 
     @Override
     public GameStatus status() {
-        throw new IllegalStateException(ExceptionCode.GAME_NOT_INITIALIZED.name());
+        return chessGame.getStatus();
     }
 
     @Override
@@ -38,7 +37,7 @@ public final class ChessReady extends ChessState {
 
     @Override
     public Set<Piece> getExistingPieces() {
-        throw new IllegalStateException(ExceptionCode.GAME_NOT_INITIALIZED.name());
+        return chessGame.getExistingPieces();
     }
 
     @Override

@@ -1,9 +1,10 @@
 package chess.domain.state;
 
-import chess.controller.command.Command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.maker.PiecesGenerator;
+import chess.domain.position.Position;
+import chess.dto.domaintocontroller.GameStatus;
 
 import java.util.Set;
 
@@ -19,7 +20,13 @@ public abstract class ChessState {
         return new ChessReady(ChessGame.createWith(piecesGenerator));
     }
 
-    public abstract ChessState process(Command command);
+    public abstract ChessState start();
+
+    public abstract ChessState move(final Position sourcePosition, final Position targetPosition);
+
+    public abstract ChessState end();
+
+    public abstract GameStatus status();
 
     public abstract Set<Piece> getExistingPieces();
 

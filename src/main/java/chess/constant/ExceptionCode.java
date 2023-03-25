@@ -15,7 +15,8 @@ public enum ExceptionCode {
     GAME_NOT_INITIALIZED,
     INVALID_COMMAND,
     GAME_ALREADY_RUNNING,
-    INVALID_TURN;
+    INVALID_TURN,
+    GAME_OVER_STATE;
 
     private static final Map<String, ExceptionCode> CODE_BY_NAME = new HashMap<>();
 
