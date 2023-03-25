@@ -56,12 +56,20 @@ public class ChessController {
         final String[] target = splitPosition(splitCommand, TARGET_INDEX);
 
         final Position sourcePosition = Position.of(File.getFile(source[FILE_INDEX]),
-                Rank.getRank(Integer.parseInt(source[RANK_INDEX])));
+                Rank.getRank(parseRank(source)));
         final Position targetPosition = Position.of(File.getFile(target[FILE_INDEX]),
-                Rank.getRank(Integer.parseInt(target[RANK_INDEX])));
+                Rank.getRank(parseRank(target)));
 
         chessGame.moveOrNot(sourcePosition, targetPosition);
         chessGameService.update(chessGame, sourcePosition, targetPosition);
+    }
+
+    private int parseRank(final String[] source) {
+        try {
+            return Integer.parseInt(source[RANK_INDEX]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("올바른 위치를 입력해주세요.");
+        }
     }
 
     private String[] splitPosition(final String[] splitCommand, final int index) {
