@@ -100,7 +100,7 @@ public class Board {
                 .filter(count -> count > 1)
                 .reduce(0L, Long::sum);
 
-        return score.add(new Score(-0.5 * countForRecalculation));
+        return score.subtract(new Score(0.5 * countForRecalculation));
     }
 
     public boolean hasKing(Team team) {

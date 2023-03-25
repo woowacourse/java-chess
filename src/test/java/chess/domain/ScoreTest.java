@@ -17,6 +17,14 @@ public class ScoreTest {
         assertThat(score.add(new Score(2.5))).isEqualTo(new Score(5.5));
     }
 
+    @Test
+    @DisplayName("점수를 뺀다.")
+    void subtractScore() {
+        Score score = new Score(3);
+
+        assertThat(score.subtract(new Score(2.5))).isEqualTo(new Score(0.5));
+    }
+
     @ParameterizedTest
     @DisplayName("점수를 비교한다.")
     @CsvSource(value = {"10:9:1", "9:10:-1", "10:10:0"}, delimiter = ':')
