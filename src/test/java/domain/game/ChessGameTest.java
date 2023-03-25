@@ -82,7 +82,7 @@ class ChessGameTest {
         chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
         chessGame.move(Position.of("d", "2"), Position.of("e", "1"));
         //when
-        assertThat(chessGame.isExitGame()).isEqualTo(true);
+        assertThat(chessGame.isPlayable()).isEqualTo(true);
         //then
     }
 
@@ -91,7 +91,7 @@ class ChessGameTest {
     void kingAliveTest() {
 
         chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
-        assertThat(chessGame.isExitGame()).isEqualTo(false);
+        assertThat(chessGame.isPlayable()).isEqualTo(false);
     }
 
 }

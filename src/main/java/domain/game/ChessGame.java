@@ -26,8 +26,8 @@ public class ChessGame {
         currentTurn = currentTurn.nextSide();
     }
 
-    public boolean isExitGame() {
-        return state == GameState.END;
+    public boolean isPlayable() {
+        return state == GameState.RUN;
     }
 
     public Map<Side, Double> calculateScores() {
