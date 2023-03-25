@@ -4,8 +4,8 @@ import java.util.List;
 
 public class CommandArguments {
 
-    public static final int START_COORDINATE_INDEX = 0;
-    public static final int END_COORDINATE_INDEX = 1;
+    public static final int START_COORDINATE_INDEX = 1;
+    public static final int END_COORDINATE_INDEX = 2;
 
     private final List<String> arguments;
 
