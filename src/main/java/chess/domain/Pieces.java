@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
@@ -30,51 +31,56 @@ public final class Pieces {
         this.pieces = pieces;
     }
 
-    public static Pieces createBlackPieces(final Pieces whitePieces) {
-        List<Piece> pawns = getBlackPawns(whitePieces);
-        List<Piece> piecesWithoutPawns = getPiecesWithoutPawn(whitePieces);
+    public Pieces() {
+        this.pieces = Collections.emptyList();
+    }
+
+    public Pieces createBlackPieces() {
+        Pieces pieces = Pieces.from(this.pieces);
+        List<Piece> pawns = getBlackPawns(pieces);
+        List<Piece> piecesWithoutPawns = getPiecesWithoutPawn(pieces);
         return getBlackPieces(pawns, piecesWithoutPawns);
     }
 
-    private static List<Piece> getBlackPawns(final Pieces whitePieces) {
+    private List<Piece> getBlackPawns(final Pieces whitePieces) {
         return whitePieces.pieces.stream()
                 .filter(piece -> piece.isSameShape(Shape.PAWN))
                 .map(piece -> piece.getNewPiece(LAST_FILE_OF_BLACK))
                 .collect(Collectors.toList());
     }
 
-    private static List<Piece> getPiecesWithoutPawn(final Pieces whitePieces) {
+    private List<Piece> getPiecesWithoutPawn(final Pieces whitePieces) {
         return whitePieces.pieces.stream()
                 .filter(piece -> !piece.isSameShape(Shape.PAWN))
                 .map(piece -> piece.getNewPiece(FIRST_FILE_OF_BLACK))
                 .collect(Collectors.toList());
     }
 
-    private static Pieces getBlackPieces(final List<Piece> pawns, final List<Piece> piecesWithoutPawns) {
+    private Pieces getBlackPieces(final List<Piece> pawns, final List<Piece> piecesWithoutPawns) {
         List<Piece> pieceList = Stream.concat(pawns.stream(), piecesWithoutPawns.stream())
                 .collect(Collectors.toList());
         return new Pieces(pieceList);
     }
 
-    public static Pieces createWhitePieces() {
+    public Pieces createWhitePieces() {
         List<Piece> pieceList = new ArrayList<>();
         addWhitePieces(pieceList);
         return new Pieces(pieceList);
     }
 
-    private static void addWhitePieces(final List<Piece> pieceList) {
+    private void addWhitePieces(final List<Piece> pieceList) {
         makeRookAndBishopAndKnight(pieceList);
         makePawns(pieceList, LAST_FILE_OF_WHITE);
         makeQueenAndKing(pieceList);
     }
 
-    private static void makePawns(final List<Piece> pieceList, final int rank) {
+    private void makePawns(final List<Piece> pieceList, final int rank) {
         for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
             pieceList.add(Piece.from(rank, (char) file, Shape.PAWN));
         }
     }
 
-    private static void makeRookAndBishopAndKnight(final List<Piece> pieceList) {
+    private void makeRookAndBishopAndKnight(final List<Piece> pieceList) {
         final Deque<Shape> whitePieceNames = new ArrayDeque<>(
                 List.of(ROOK,KNIGHT,BISHOP)
         );
@@ -85,14 +91,14 @@ public final class Pieces {
         }
     }
 
-    private static void addPiecePairs(final List<Piece> pieceList, final int frontPosition, final Shape shape) {
+    private void addPiecePairs(final List<Piece> pieceList, final int frontPosition, final Shape shape) {
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) frontPosition, shape));
 
         int backPosition = FIRST_RANK + LAST_RANK - frontPosition;
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) backPosition, shape));
     }
 
-    private static void makeQueenAndKing(final List<Piece> pieceList) {
+    private void makeQueenAndKing(final List<Piece> pieceList) {
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, QUEEN_DEFAULT_RANK_POSITION, Shape.QUEEN));
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, KING_DEFAULT_RANK_POSITION, Shape.KING));
     }
