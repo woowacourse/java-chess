@@ -1,5 +1,6 @@
 package chess.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.board.Board;
@@ -10,6 +11,9 @@ import chess.controller.GameStatus;
 import chess.piece.AllPiecesGenerator;
 import chess.piece.Pieces;
 import chess.piece.Side;
+import chess.piece.type.Knight;
+import chess.piece.type.Pawn;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +49,25 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.movePiece(whitePiecePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 상대방의 말은 이동시킬 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("한 파일 위에 폰이 여러개 존재한다면, 해당 폰은 개당 0.5점으로 계산한다.")
+    void calculateScoreBySide() {
+        // given
+        Board fixedBoard = new Board(new Pieces(() -> List.of(
+                new Pawn(new Position(File.A, Rank.ONE), Side.WHITE),
+                new Pawn(new Position(File.A, Rank.THREE), Side.WHITE),
+
+                new Pawn(new Position(File.B, Rank.TWO), Side.WHITE),
+                new Pawn(new Position(File.B, Rank.THREE), Side.WHITE),
+                new Pawn(new Position(File.B, Rank.SEVEN), Side.WHITE),
+
+                new Knight(new Position(File.B, Rank.ONE), Side.WHITE)
+        )));
+        final ChessGame chessGame = new ChessGame(fixedBoard, Side.WHITE, GameStatus.START);
+
+        // when, then
+        assertThat(chessGame.calculateScoreBySide(Side.WHITE)).isEqualTo(5);
     }
 }
