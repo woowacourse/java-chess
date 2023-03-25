@@ -36,4 +36,9 @@ public final class King extends Piece {
     public double appendPieceScore(double source, boolean ignore) {
         return source + KING_SCORE;
     }
+
+    @Override
+    public boolean isEndCondition() {
+        return true;
+    }
 }

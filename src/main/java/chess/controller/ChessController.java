@@ -47,7 +47,8 @@ public final class ChessController {
     }
 
     private ChessGame playByCommand(ChessGame chessGame, List<String> commandInputs) {
-        ChessGameCommand command = ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
+        ChessGameCommand command =
+                ChessGameCommandMapper.convertToChessGameCommand(commandInputs);
         return command.execute(chessGame);
     }
 
@@ -61,7 +62,8 @@ public final class ChessController {
 
     private void printResult(ChessGame chessGame) {
         GameResult gameResult = chessGame.calculateResult();
-        List<String> results = GameResultFormatter.convertToGameResult(gameResult);
+        List<String> results =
+                GameResultFormatter.convertToGameResult(gameResult);
 
         outputView.printResult(results);
     }

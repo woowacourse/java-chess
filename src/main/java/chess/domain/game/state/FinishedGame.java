@@ -9,7 +9,7 @@ public abstract class FinishedGame implements ChessGame {
 
     private static final String GAME_ALREADY_END = "이미 게임이 종료 되었습니다.";
 
-    private final ChessBoard chessBoard;
+    protected final ChessBoard chessBoard;
 
     protected FinishedGame(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;

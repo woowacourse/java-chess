@@ -21,10 +21,20 @@ public class RunGame extends StartedGame {
     public ChessGame move(Position fromPosition, Position toPosition) {
         validateBeforeMove(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
-
         validateMovable(chessBoard.isPieceExist(toPosition), pieceMove);
+
+        if (isKingRemoved(toPosition)) {
+            chessBoard.movePiece(fromPosition, toPosition);
+            return new EndGame(chessBoard);
+        }
+
         chessBoard.movePiece(fromPosition, toPosition);
         return new RunGame(chessBoard, turnCamp.convert());
+    }
+
+    private boolean isKingRemoved(Position toPosition) {
+        return chessBoard.isPieceExist(toPosition)
+                && chessBoard.peekPiece(toPosition).isEndCondition();
     }
 
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
@@ -99,10 +109,6 @@ public class RunGame extends StartedGame {
     @Override
     public ChessGame endGame() {
         return new PauseGame(chessBoard);
-    }
-
-    private ChessGame endWithWinner() {
-        return new EndGame(chessBoard);
     }
 
     @Override

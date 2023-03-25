@@ -31,7 +31,13 @@ public abstract class Piece {
     public abstract PieceMove getMovement(Position from, Position to);
 
     protected abstract boolean isPieceRule(Position from, Position to);
+
+    // TODO: 2023/03/24 Score 포장
     public abstract double appendPieceScore(double source, boolean isSamePieceInSameFile);
+
+    public boolean isEndCondition() {
+        return false;
+    }
 
     @Override
     public boolean equals(Object o) {

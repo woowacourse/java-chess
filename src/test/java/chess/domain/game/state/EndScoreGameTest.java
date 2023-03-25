@@ -30,10 +30,9 @@ class EndScoreGameTest {
         pieceByPosition.put(Position.of(File.D, Rank.TWO), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.A, Rank.ONE), new Rook(Camp.WHITE));
         pieceByPosition.put(Position.of(File.B, Rank.ONE), new Knight(Camp.WHITE));
-
         ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
-        EndScoreGame endScoreGame = new EndScoreGame(chessBoard);
+        ChessGame endScoreGame = new EndScoreGame(chessBoard);
 
         assertThat(endScoreGame).extracting("whiteCampScore")
                 .isEqualTo(11.5d);
@@ -44,18 +43,17 @@ class EndScoreGameTest {
     void calculateChessScoreWhenPawnInSameFileTest() {
         Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
         pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
-        pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.B, Rank.THREE), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.C, Rank.TWO), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.D, Rank.TWO), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.A, Rank.ONE), new Rook(Camp.WHITE));
         pieceByPosition.put(Position.of(File.B, Rank.ONE), new Knight(Camp.WHITE));
-
         ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
-        EndScoreGame endScoreGame = new EndScoreGame(chessBoard);
+        ChessGame endScoreGame = new EndScoreGame(chessBoard);
 
         assertThat(endScoreGame).extracting("whiteCampScore")
-                .isEqualTo(10.5d);
+                .isEqualTo(11.5d);
     }
 
     @Test
@@ -63,17 +61,17 @@ class EndScoreGameTest {
     void calculateResultWithScoreTest() {
         Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
         pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
-        pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.A, Rank.THREE), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.C, Rank.TWO), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.D, Rank.TWO), new Pawn(Camp.WHITE));
         pieceByPosition.put(Position.of(File.A, Rank.ONE), new Rook(Camp.WHITE));
         pieceByPosition.put(Position.of(File.B, Rank.ONE), new Knight(Camp.WHITE));
         ChessBoard chessBoard = new ChessBoard(pieceByPosition);
-        EndScoreGame endScoreGame = new EndScoreGame(chessBoard);
+        ChessGame endScoreGame = new EndScoreGame(chessBoard);
 
         GameResult gameResult = endScoreGame.calculateResult();
 
-        assertThat(gameResult.peekScoreOfCamp(Camp.WHITE)).isEqualTo(10.5d);
+        assertThat(gameResult.peekScoreOfCamp(Camp.WHITE)).isEqualTo(9.5d);
         assertThat(gameResult.peekScoreOfCamp(Camp.BLACK)).isEqualTo(0d);
 
         assertThat(gameResult.getMatchResult()).isEqualTo(MatchResult.WHITE_WIN);
