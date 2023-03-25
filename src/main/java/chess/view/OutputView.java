@@ -33,4 +33,8 @@ public class OutputView {
         System.out.println(CampRenderer.getCampOutput(camp) + SCORE_DELIMITER + chessboard.countScore(camp));
         System.out.println();
     }
+
+    public static void printError(Exception error) {
+        System.out.println(error);
+    }
 }

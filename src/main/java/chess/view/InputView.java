@@ -1,9 +1,6 @@
 package chess.view;
 
-import chess.view.validator.InputRequest;
-import chess.view.validator.InputValidator;
-import chess.view.validator.ResumeValidator;
-import chess.view.validator.ValidateType;
+import chess.view.validator.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +17,9 @@ public class InputView {
 
     public static String printInputRoom() {
         System.out.println(INPUT_ROOM_MESSAGE);
-        return scanner.nextLine();
+        List<String> input = List.of(scanner.nextLine());
+        new RoomValidator().validate(new InputRequest(List.of(ValidateType.ROOM), input));
+        return input.get(0);
     }
 
     public static void printResume() {

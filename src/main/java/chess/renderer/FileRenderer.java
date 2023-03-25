@@ -4,7 +4,7 @@ import chess.domain.board.File;
 
 import java.util.Arrays;
 
-public enum FileInputRenderer {
+public enum FileRenderer {
     A("a", File.A),
     B("b", File.B),
     C("c", File.C),
@@ -13,27 +13,27 @@ public enum FileInputRenderer {
     F("f", File.F),
     G("g", File.G),
     H("h", File.H);
-    private final String input;
-    private final File output;
+    private final String string;
+    private final File file;
 
-    FileInputRenderer(String input, File output) {
-        this.input = input;
-        this.output = output;
+    FileRenderer(String string, File file) {
+        this.string = string;
+        this.file = file;
     }
 
     static public File renderString(String input) {
         return Arrays.stream(values())
-                .filter(value -> value.input.equals(input))
+                .filter(value -> value.string.equals(input))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new)
-                .output;
+                .file;
     }
 
     static public String renderFile(File file) {
         return Arrays.stream(values())
-                .filter(value -> value.output.equals(file))
+                .filter(value -> value.file.equals(file))
                 .findAny()
                 .orElseThrow(IllegalAccessError::new)
-                .input;
+                .string;
     }
 }

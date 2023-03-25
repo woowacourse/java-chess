@@ -18,4 +18,8 @@ public class InputRequest {
     public boolean contains(ValidateType validateType) {
         return validateTypes.contains(validateType);
     }
+
+    public int size() {
+        return this.value.get(0).length();
+    }
 }

@@ -3,11 +3,15 @@ package chess;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.room.NotationDao;
+import chess.room.RoomDao;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.sql.SQLException;
 import java.util.stream.Stream;
 
 class SquareTest {
@@ -29,5 +33,12 @@ class SquareTest {
                 Arguments.arguments("f", "1", File.F, Rank.ONE),
                 Arguments.arguments("g", "1", File.G, Rank.ONE)
         );
+    }
+
+    @Test
+    void t() throws SQLException {
+        int i = 19;
+        NotationDao.deleteByRoomId(i);
+        RoomDao.deleteRoom(i);
     }
 }

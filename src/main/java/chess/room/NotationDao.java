@@ -1,8 +1,8 @@
 package chess.room;
 
 import chess.domain.board.Square;
-import chess.renderer.FileInputRenderer;
-import chess.renderer.RankInputRenderer;
+import chess.renderer.FileRenderer;
+import chess.renderer.RankRenderer;
 
 import java.sql.*;
 
@@ -66,8 +66,8 @@ public class NotationDao {
     }
 
     private static Square makeSquare(String fileAndRank) {
-        return new Square(FileInputRenderer.renderString(String.valueOf(fileAndRank.charAt(0))),
-                RankInputRenderer.renderString(String.valueOf(fileAndRank.charAt(1))));
+        return new Square(FileRenderer.renderString(String.valueOf(fileAndRank.charAt(0))),
+                RankRenderer.renderString(String.valueOf(fileAndRank.charAt(1))));
     }
 
     public static void deleteByRoomId(int roomId) throws SQLException {

@@ -5,5 +5,6 @@ public enum ValidateType {
     PLAY,
     OUT_OF_RANGE,
     MOVE_SIZE,
-    RESUME;
+    RESUME,
+    ROOM;
 }

@@ -7,8 +7,8 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.renderer.CommendRenderer;
-import chess.renderer.FileInputRenderer;
-import chess.renderer.RankInputRenderer;
+import chess.renderer.FileRenderer;
+import chess.renderer.RankRenderer;
 import chess.view.OutputView;
 
 import java.sql.SQLException;
@@ -36,8 +36,8 @@ public class MoveOperator extends Operator {
     }
 
     private Square makeSquare(String fileRank) {
-        File file = FileInputRenderer.renderString(String.valueOf(fileRank.charAt(0)));
-        Rank rank = RankInputRenderer.renderString(String.valueOf(fileRank.charAt(1)));
+        File file = FileRenderer.renderString(String.valueOf(fileRank.charAt(0)));
+        Rank rank = RankRenderer.renderString(String.valueOf(fileRank.charAt(1)));
         return new Square(file, rank);
     }
 }

@@ -1,8 +1,8 @@
 package chess.room;
 
 import chess.domain.board.Square;
-import chess.renderer.FileInputRenderer;
-import chess.renderer.RankInputRenderer;
+import chess.renderer.FileRenderer;
+import chess.renderer.RankRenderer;
 
 public class Move {
     private final Square source;
@@ -14,13 +14,13 @@ public class Move {
     }
 
     public String getSourceString() {
-        return FileInputRenderer.renderFile(source.getFile())
-                + RankInputRenderer.renderRank(source.getRank());
+        return FileRenderer.renderFile(source.getFile())
+                + RankRenderer.renderRank(source.getRank());
     }
 
     public String getTargetString() {
-        return FileInputRenderer.renderFile(target.getFile())
-                + RankInputRenderer.renderRank(target.getRank());
+        return FileRenderer.renderFile(target.getFile())
+                + RankRenderer.renderRank(target.getRank());
     }
 
     public Square getSource() {
