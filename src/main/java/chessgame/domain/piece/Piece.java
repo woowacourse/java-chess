@@ -29,6 +29,8 @@ public abstract class Piece {
 
     public abstract Optional<Camp> camp();
 
+    public abstract double score();
+
     protected boolean isFirstMove() {
         return isFirstMove;
     }

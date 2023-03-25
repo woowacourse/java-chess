@@ -9,12 +9,13 @@ import static chessgame.domain.coordinate.Inclination.*;
 
 public class Rook extends PieceType {
 
+    private static final double SCORE = 5;
     private static final List<Inclination> availableInclinations = List.of(
             POSITIVE_INFINITY, NEGATIVE_INFINITY, ZERO, MINUS_ZERO
     );
 
     public Rook() {
-        super(PieceTypeSymbol.ROOK);
+        super(PieceTypeSymbol.ROOK, SCORE);
     }
 
     @Override

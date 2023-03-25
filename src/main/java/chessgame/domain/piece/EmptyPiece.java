@@ -38,6 +38,11 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
+    public double score() {
+        return 0;
+    }
+
+    @Override
     public boolean isSameCamp(final Camp camp) {
         return false;
     }

@@ -10,10 +10,11 @@ import static chessgame.domain.coordinate.Inclination.ONE;
 
 public class Bishop extends PieceType {
 
+    private static final double SCORE = 3;
     private static final List<Inclination> availableInclinations = List.of(ONE, MINUS_ONE);
 
     public Bishop() {
-        super(PieceTypeSymbol.BISHOP);
+        super(PieceTypeSymbol.BISHOP, SCORE);
     }
 
     @Override

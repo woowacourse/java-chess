@@ -5,6 +5,7 @@ import chessgame.domain.piecetype.Pawn;
 import chessgame.domain.piecetype.PieceType;
 import chessgame.domain.piecetype.PieceTypeSymbol;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class ConcretePiece extends Piece {
@@ -51,6 +52,11 @@ public class ConcretePiece extends Piece {
     }
 
     @Override
+    public boolean isSameCamp(final Camp camp) {
+        return this.camp.equals(camp);
+    }
+
+    @Override
     public Optional<PieceType> piece() {
         return Optional.of(pieceType);
     }
@@ -61,7 +67,20 @@ public class ConcretePiece extends Piece {
     }
 
     @Override
-    public boolean isSameCamp(final Camp camp) {
-        return this.camp.equals(camp);
+    public double score() {
+        return pieceType.score();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConcretePiece that = (ConcretePiece) o;
+        return Objects.equals(pieceType, that.pieceType) && camp == that.camp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, camp);
     }
 }

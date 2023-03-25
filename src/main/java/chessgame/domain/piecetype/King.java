@@ -9,12 +9,13 @@ import static chessgame.domain.coordinate.Inclination.*;
 
 public class King extends PieceType {
 
+    private static final double SCORE = 0;
     private static final List<Inclination> availableInclinations = List.of(
             POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
     );
 
     public King() {
-        super(PieceTypeSymbol.KING);
+        super(PieceTypeSymbol.KING, SCORE);
     }
 
     @Override

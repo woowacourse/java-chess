@@ -4,10 +4,11 @@ import chessgame.domain.coordinate.Coordinate;
 
 public abstract class Pawn extends PieceType {
 
+    private static final double SCORE = 1;
     private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.PAWN;
 
     public Pawn() {
-        super(PieceTypeSymbol.PAWN);
+        super(PieceTypeSymbol.PAWN, SCORE);
     }
 
     public abstract boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,
