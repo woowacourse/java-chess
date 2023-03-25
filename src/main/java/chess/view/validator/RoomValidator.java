@@ -11,7 +11,7 @@ public class RoomValidator implements InputValidator {
     }
 
     @Override
-    public void validate(InputRequest inputRequest) {
+    public void validate(final InputRequest inputRequest) {
         if (inputRequest.contains(ValidateType.ROOM)) {
             validateInput(inputRequest);
         }
@@ -19,7 +19,7 @@ public class RoomValidator implements InputValidator {
         next.validate(inputRequest);
     }
 
-    private static void validateInput(InputRequest inputRequest) {
+    private static void validateInput(final InputRequest inputRequest) {
         if (inputRequest.size() > ROOM_NUMBER_LIMIT) {
             throw new IllegalArgumentException(ROOM_NAME_LIMIT_MESSAGE);
         }

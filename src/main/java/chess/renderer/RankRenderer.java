@@ -16,12 +16,12 @@ public enum RankRenderer {
     private final String string;
     private final Rank rank;
 
-    RankRenderer(String string, Rank rank) {
+    RankRenderer(final String string, final Rank rank) {
         this.string = string;
         this.rank = rank;
     }
 
-    static public Rank renderString(String input) {
+    static public Rank renderString(final String input) {
         return Arrays.stream(values())
                 .filter(value -> value.string.equals(input))
                 .findAny()
@@ -29,7 +29,7 @@ public enum RankRenderer {
                 .rank;
     }
 
-    static public String renderRank(Rank rank) {
+    static public String renderRank(final Rank rank) {
         return Arrays.stream(values())
                 .filter(value -> value.rank.equals(rank))
                 .findAny()

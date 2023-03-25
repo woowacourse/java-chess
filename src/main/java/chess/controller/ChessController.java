@@ -17,7 +17,7 @@ public class ChessController {
     }
 
     public void run() throws SQLException {
-        ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame();
         createRoom(chessGame);
         boolean keepPlaying = catchException(chessGame);
         while (keepPlaying) {
@@ -25,8 +25,8 @@ public class ChessController {
         }
     }
 
-    private void createRoom(ChessGame chessGame) throws SQLException {
-        boolean isRoom = catchRoomException(chessGame);
+    private void createRoom(final ChessGame chessGame) throws SQLException {
+        final boolean isRoom = catchRoomException(chessGame);
         InputView.printStartChess();
         if (isRoom) {
             this.command = new ResumeCommand(this);
@@ -35,25 +35,25 @@ public class ChessController {
         InputView.endCommand();
     }
 
-    private boolean catchRoomException(ChessGame chessGame) throws SQLException {
+    private boolean catchRoomException(final ChessGame chessGame) throws SQLException {
         try {
             return chessGame.isRoom(InputView.printInputRoom());
-        } catch (IllegalArgumentException errorMessage) {
+        } catch (final IllegalArgumentException errorMessage) {
             OutputView.printError(errorMessage);
             return catchRoomException(chessGame);
         }
     }
 
-    private boolean catchException(ChessGame chessGame) throws SQLException {
+    private boolean catchException(final ChessGame chessGame) throws SQLException {
         try {
             return command.operate(chessGame);
-        } catch (IllegalArgumentException errorMassage) {
+        } catch (final IllegalArgumentException errorMassage) {
             OutputView.printError(errorMassage);
         }
         return true;
     }
 
-    public void setCommend(Command command) {
+    public void setCommend(final Command command) {
         this.command = command;
     }
 }

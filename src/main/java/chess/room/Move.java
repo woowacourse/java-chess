@@ -8,7 +8,7 @@ public class Move {
     private final Square source;
     private final Square target;
 
-    public Move(Square source, Square target) {
+    public Move(final Square source, final Square target) {
         this.source = source;
         this.target = target;
     }

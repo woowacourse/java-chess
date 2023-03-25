@@ -11,12 +11,12 @@ public class EndOperator extends Operator {
 
     private static final String NO_COMMAND_MESSAGE = "해당되는 명령어가 없습니다.";
 
-    public EndOperator(ChessController chessController, ChessGame chessGame) {
+    public EndOperator(final ChessController chessController, final ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
-    public boolean operate(List<String> command) {
+    public boolean operate(final List<String> command) {
         if (CommendRenderer.isSame(command.get(0), CommandType.END)) {
             return false;
         }

@@ -14,12 +14,12 @@ public enum PieceType {
     private final Function<Camp, Piece> expression;
     private final double score;
 
-    PieceType(Function<Camp, Piece> expression, double score) {
+    PieceType(final Function<Camp, Piece> expression, final double score) {
         this.expression = expression;
         this.score = score;
     }
 
-    public Piece createPiece(Camp camp) {
+    public Piece createPiece(final Camp camp) {
         return this.expression.apply(camp);
     }
 

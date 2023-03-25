@@ -23,7 +23,7 @@ public class NotationDao {
         }
     }
 
-    public static void addNotation(int roomId, int turn, Move move) throws SQLException {
+    public static void addNotation(final int roomId, final int turn, final Move move) throws SQLException {
         String query = "insert into notation values(?,?,?,?)";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -34,7 +34,7 @@ public class NotationDao {
         preparedStatement.executeUpdate();
     }
 
-    public static Notation findByRoomId(int roomId) throws SQLException {
+    public static Notation findByRoomId(final int roomId) throws SQLException {
         String query = "select source,target from notation where room_id = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -47,7 +47,7 @@ public class NotationDao {
         return notation;
     }
 
-    public static int findLastTurn(int roomId) throws SQLException {
+    public static int findLastTurn(final int roomId) throws SQLException {
         int turn = 1;
         String query = "select turn from notation where room_id =?";
         Connection connection = getConnection();
@@ -60,17 +60,17 @@ public class NotationDao {
         return turn;
     }
 
-    private static Move makeMove(ResultSet resultSet) throws SQLException {
+    private static Move makeMove(final ResultSet resultSet) throws SQLException {
         return new Move(makeSquare(resultSet.getString(1))
                 , makeSquare(resultSet.getString(2)));
     }
 
-    private static Square makeSquare(String fileAndRank) {
+    private static Square makeSquare(final String fileAndRank) {
         return new Square(FileRenderer.renderString(String.valueOf(fileAndRank.charAt(0))),
                 RankRenderer.renderString(String.valueOf(fileAndRank.charAt(1))));
     }
 
-    public static void deleteByRoomId(int roomId) throws SQLException {
+    public static void deleteByRoomId(final int roomId) throws SQLException {
         final String query = "delete from notation where room_id = ?";
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);

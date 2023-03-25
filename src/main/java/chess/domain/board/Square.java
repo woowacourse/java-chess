@@ -10,49 +10,49 @@ public class Square {
     private final File file;
     private final Rank rank;
 
-    public Square(File file, Rank rank) {
+    public Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public boolean isSameRank(Square targetSquare) {
+    public boolean isSameRank(final Square targetSquare) {
         return this.rank == targetSquare.rank;
     }
 
-    public boolean isSameFile(Square targetSquare) {
+    public boolean isSameFile(final Square targetSquare) {
         return this.file == targetSquare.file;
     }
 
-    public int calculateRankDistance(Square targetSquare) {
+    public int calculateRankDistance(final Square targetSquare) {
         return this.rank.calculateDistance(targetSquare.rank);
     }
 
-    public int calculateFileDistance(Square targetSquare) {
+    public int calculateFileDistance(final Square targetSquare) {
         return this.file.calculateDistance(targetSquare.file);
     }
 
-    public int calculateRankDifference(Square targetSquare) {
+    public int calculateRankDifference(final Square targetSquare) {
         return this.rank.calculateDifference(targetSquare.rank);
     }
 
-    public List<Square> getSquaresInSameRank(Square square) {
+    public List<Square> getSquaresInSameRank(final Square square) {
         return file.getFilesInRange(square.file)
                 .stream()
                 .map(file -> new Square(file, rank))
                 .collect(Collectors.toList());
     }
 
-    public List<Square> getSquaresInSameFile(Square square) {
+    public List<Square> getSquaresInSameFile(final Square square) {
         return rank.getRanksInRange(square.rank)
                 .stream()
                 .map(rank -> new Square(file, rank))
                 .collect(Collectors.toList());
     }
 
-    public List<Square> getDiagonalSquares(Square square) {
-        List<Square> squares = new ArrayList<>();
-        List<File> files = file.getFilesInRange(square.file);
-        List<Rank> ranks = rank.getRanksInRange(square.rank);
+    public List<Square> getDiagonalSquares(final Square square) {
+        final List<Square> squares = new ArrayList<>();
+        final List<File> files = file.getFilesInRange(square.file);
+        final List<Rank> ranks = rank.getRanksInRange(square.rank);
 
         for (int i = 0, end = files.size(); i < end; i++) {
             squares.add(new Square(files.get(i), ranks.get(i)));
@@ -61,10 +61,10 @@ public class Square {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Square square = (Square) o;
+        final Square square = (Square) o;
         return Objects.equals(file, square.file) && Objects.equals(rank, square.rank);
     }
 
@@ -87,7 +87,7 @@ public class Square {
                 .collect(Collectors.toList());
     }
 
-    static private List<Square> getRankSquares(File file) {
+    static private List<Square> getRankSquares(final File file) {
         return Arrays.stream(Rank.values())
                 .map(rank -> new Square(file, rank))
                 .collect(Collectors.toList());

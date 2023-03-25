@@ -4,12 +4,12 @@ import chess.controller.ChessController;
 import chess.domain.ChessGame;
 
 public class EndCommand extends Command {
-    public EndCommand(ChessController chessController) {
+    public EndCommand(final ChessController chessController) {
         super(chessController);
     }
 
     @Override
-    public boolean operate(ChessGame chessGame) {
+    public boolean operate(final ChessGame chessGame) {
         return false;
     }
 }

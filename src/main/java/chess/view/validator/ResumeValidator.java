@@ -13,7 +13,7 @@ public class ResumeValidator implements InputValidator {
     }
 
     @Override
-    public void validate(InputRequest inputRequest) {
+    public void validate(final InputRequest inputRequest) {
         if (inputRequest.contains(ValidateType.RESUME)) {
             validateInput(inputRequest);
         }
@@ -21,7 +21,7 @@ public class ResumeValidator implements InputValidator {
         next.validate(inputRequest);
     }
 
-    private static void validateInput(InputRequest inputRequest) {
+    private static void validateInput(final InputRequest inputRequest) {
         inputRequest.getValue()
                 .stream()
                 .filter(input -> input.equals(START_INPUT) || input.equals(RESUME_INPUT) || input.equals(END_INPUT))

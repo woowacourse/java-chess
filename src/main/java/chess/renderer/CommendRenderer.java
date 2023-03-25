@@ -13,12 +13,12 @@ public enum CommendRenderer {
     private final String value;
     private final CommandType commandType;
 
-    CommendRenderer(String value, CommandType commandType) {
+    CommendRenderer(final String value, final CommandType commandType) {
         this.value = value;
         this.commandType = commandType;
     }
 
-    public static CommandType render(String input) {
+    public static CommandType render(final String input) {
         return Arrays.stream(values())
                 .filter(commendType -> commendType.value.equals(input))
                 .findFirst()
@@ -26,7 +26,7 @@ public enum CommendRenderer {
                 .commandType;
     }
 
-    public static boolean isSame(String input, CommandType commandType) {
+    public static boolean isSame(final String input, final CommandType commandType) {
         return render(input).equals(commandType);
     }
 }

@@ -13,14 +13,14 @@ import java.util.List;
 public class ResumeOperator extends Operator {
     private static final int COMMAND_INDEX = 0;
 
-    public ResumeOperator(ChessController chessController, ChessGame chessGame) {
+    public ResumeOperator(final ChessController chessController, final ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
-    public boolean operate(List<String> command) throws SQLException {
+    public boolean operate(final List<String> command) throws SQLException {
         if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.RESUME)) {
-            Operator next = new StartOperator(chessController, chessGame);
+            final Operator next = new StartOperator(chessController, chessGame);
             return next.operate(command);
         }
         chessController.setCommend(new RunningCommand(chessController));

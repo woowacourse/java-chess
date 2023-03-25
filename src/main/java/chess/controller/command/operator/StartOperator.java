@@ -14,12 +14,12 @@ public class StartOperator extends Operator {
 
     private static final int COMMAND_INDEX = 0;
 
-    public StartOperator(ChessController chessController, ChessGame chessGame) {
+    public StartOperator(final ChessController chessController, final ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
-    public boolean operate(List<String> command) throws SQLException {
+    public boolean operate(final List<String> command) throws SQLException {
         if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.START)) {
             Operator next = new StatusOperator(chessController, chessGame);
             return next.operate(command);

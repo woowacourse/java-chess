@@ -4,7 +4,7 @@ import chess.domain.board.Square;
 
 public class Empty extends Piece {
 
-    public Empty(Camp camp) {
+    public Empty(final Camp camp) {
         super(camp);
     }
 
@@ -14,7 +14,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(final Square source, final Square target) {
         return false;
     }
 }

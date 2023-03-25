@@ -11,7 +11,7 @@ public class Pawn extends Piece {
     private static final int SELF_SQUARE = 0;
     private static final int NEXT_SQUARE = 1;
 
-    public Pawn(Camp camp) {
+    public Pawn(final Camp camp) {
         super(camp);
     }
 
@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(final Square source, final Square target) {
 
         if (isWhite()) {
             return canMoveWhite(source, target);
@@ -30,14 +30,14 @@ public class Pawn extends Piece {
         return canMoveBlack(source, target);
     }
 
-    private boolean canMoveBlack(Square source, Square target) {
+    private boolean canMoveBlack(final Square source, final Square target) {
         if (source.calculateRankDifference(target) >= SELF_SQUARE) {
             return false;
         }
         return canBlackFirstMove(source, target);
     }
 
-    private boolean canMoveWhite(Square source, Square target) {
+    private boolean canMoveWhite(final Square source, final Square target) {
 
         if (source.calculateRankDifference(target) <= SELF_SQUARE) {
             return false;
@@ -45,9 +45,9 @@ public class Pawn extends Piece {
         return canWhiteFirstMove(source, target);
     }
 
-    private boolean canBlackFirstMove(Square source, Square target) {
-        int rankDifference = source.calculateRankDifference(target);
-        int fileDistance = source.calculateFileDistance(target);
+    private boolean canBlackFirstMove(final Square source, final Square target) {
+        final int rankDifference = source.calculateRankDifference(target);
+        final int fileDistance = source.calculateFileDistance(target);
 
         if (source.isRankSeven()) {
             return rankDifference >= BLACK_MAX_MOVABLE_RANK && fileDistance == SELF_SQUARE ||
@@ -57,9 +57,9 @@ public class Pawn extends Piece {
         return rankDifference == BLACK_MIN_MOVABLE_RANK && fileDistance <= NEXT_SQUARE;
     }
 
-    private static boolean canWhiteFirstMove(Square source, Square target) {
-        int rankDifference = source.calculateRankDifference(target);
-        int fileDistance = source.calculateFileDistance(target);
+    private static boolean canWhiteFirstMove(final Square source, final Square target) {
+        final int rankDifference = source.calculateRankDifference(target);
+        final int fileDistance = source.calculateFileDistance(target);
 
         if (source.isRankTwo()) {
             return rankDifference <= WHITE_MAX_MOVABLE_RANK && fileDistance == SELF_SQUARE ||

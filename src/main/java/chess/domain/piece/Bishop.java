@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Square;
 
 public class Bishop extends Piece {
-    public Bishop(Camp camp) {
+    public Bishop(final Camp camp) {
         super(camp);
     }
 
@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(final Square source, final Square target) {
         return source.calculateFileDistance(target)
                 == source.calculateRankDistance(target);
     }

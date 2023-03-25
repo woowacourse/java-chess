@@ -5,7 +5,7 @@ import chess.domain.board.Square;
 public class King extends Piece {
     private static final int MOVABLE_DISTANCE = 1;
 
-    public King(Camp camp) {
+    public King(final Camp camp) {
         super(camp);
     }
 
@@ -15,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(final Square source, final Square target) {
         return (source.calculateRankDistance(target) == MOVABLE_DISTANCE) ||
                 (source.calculateFileDistance(target) == MOVABLE_DISTANCE);
     }

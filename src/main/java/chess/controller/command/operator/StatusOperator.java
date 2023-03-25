@@ -13,14 +13,14 @@ public class StatusOperator extends Operator {
 
     private static final int COMMAND_INDEX = 0;
 
-    public StatusOperator(ChessController chessController, ChessGame chessGame) {
+    public StatusOperator(final ChessController chessController, final ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
-    public boolean operate(List<String> command) throws SQLException {
+    public boolean operate(final List<String> command) throws SQLException {
         if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.STATUS)) {
-            Operator next = new MoveOperator(chessController, chessGame);
+            final Operator next = new MoveOperator(chessController, chessGame);
             return next.operate(command);
         }
         OutputView.printScore(chessGame.getChessboard(), chessGame.getTurn());

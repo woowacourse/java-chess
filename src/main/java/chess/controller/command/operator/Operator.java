@@ -10,10 +10,10 @@ public abstract class Operator {
     protected final ChessController chessController;
     protected final ChessGame chessGame;
 
-    public Operator(ChessController chessController, ChessGame chessGame) {
+    public Operator(final ChessController chessController, final ChessGame chessGame) {
         this.chessController = chessController;
         this.chessGame = chessGame;
     }
 
-    abstract public boolean operate(List<String> command) throws SQLException;
+    abstract public boolean operate(final List<String> command) throws SQLException;
 }

@@ -10,7 +10,7 @@ public class Notation {
         this.notation = new ArrayList<>();
     }
 
-    public void add(Move move) {
+    public void add(final Move move) {
         notation.add(move);
     }
 

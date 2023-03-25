@@ -12,7 +12,7 @@ public class PlayValidator implements InputValidator {
     }
 
     @Override
-    public void validate(InputRequest inputRequest) {
+    public void validate(final InputRequest inputRequest) {
         if (inputRequest.contains(ValidateType.PLAY)) {
             validateInput(inputRequest);
             next.validate(inputRequest);
@@ -22,7 +22,7 @@ public class PlayValidator implements InputValidator {
         next.validate(inputRequest);
     }
 
-    private void validateInput(InputRequest inputRequest) {
+    private void validateInput(final InputRequest inputRequest) {
         String input = inputRequest.getValue().get(0);
         if (input.equals(END_INPUT) || input.equals(STATUS_INPUT)) {
             this.next = new SuccessValidator();

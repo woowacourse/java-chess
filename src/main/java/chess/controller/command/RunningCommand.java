@@ -11,13 +11,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RunningCommand extends Command {
-    public RunningCommand(ChessController chessController) {
+    public RunningCommand(final ChessController chessController) {
         super(chessController);
     }
 
     @Override
-    public boolean operate(ChessGame chessGame) throws SQLException {
-        Operator operator = new StatusOperator(chessController, chessGame);
+    public boolean operate(final ChessGame chessGame) throws SQLException {
+        final Operator operator = new StatusOperator(chessController, chessGame);
         return operator.operate(InputView.requestCommand(List.of(ValidateType.PLAY,
                 ValidateType.MOVE_SIZE,
                 ValidateType.OUT_OF_RANGE)));

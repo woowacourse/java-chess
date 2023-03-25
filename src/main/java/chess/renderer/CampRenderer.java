@@ -9,12 +9,12 @@ public enum CampRenderer {
     WHITE("흰");
     private final String output;
 
-    CampRenderer(String output) {
+    CampRenderer(final String output) {
         this.output = output;
     }
 
 
-    public static String getCampOutput(Camp camp) {
+    public static String getCampOutput(final Camp camp) {
         return renderPiece(camp).output;
     }
 

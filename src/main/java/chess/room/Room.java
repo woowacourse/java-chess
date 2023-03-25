@@ -9,7 +9,7 @@ public class Room {
     private final int roomId;
     private int turn;
 
-    public Room(int roomId) {
+    public Room(final int roomId) {
         this.roomId = roomId;
         turn = 1;
     }
@@ -20,7 +20,7 @@ public class Room {
         return notation.getNotation();
     }
 
-    public void updateMove(Square source, Square target) throws SQLException {
+    public void updateMove(final Square source, final Square target) throws SQLException {
         NotationDao.addNotation(roomId, turn, new Move(source, target));
         turn++;
     }

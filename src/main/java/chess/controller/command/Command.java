@@ -8,9 +8,9 @@ import java.sql.SQLException;
 public abstract class Command {
     protected final ChessController chessController;
 
-    public Command(ChessController chessController) {
+    public Command(final ChessController chessController) {
         this.chessController = chessController;
     }
 
-    abstract public boolean operate(ChessGame chessGame) throws SQLException;
+    abstract public boolean operate(final ChessGame chessGame) throws SQLException;
 }

@@ -21,29 +21,29 @@ public class Chessboard {
         }
     }
 
-    private void putFile(File file) {
-        for (Rank rank : Rank.values()) {
+    private void putFile(final File file) {
+        for (final Rank rank : Rank.values()) {
             board.put(new Square(file, rank), new Empty(Camp.NONE));
         }
     }
 
-    public void putPiece(Rank rank, List<Piece> pieces) {
-        List<File> values = Arrays.asList(File.values());
+    public void putPiece(final Rank rank, final List<Piece> pieces) {
+        final List<File> values = Arrays.asList(File.values());
         for (int i = 0, end = values.size(); i < end; i++) {
             board.put(new Square(values.get(i), rank), pieces.get(i));
         }
     }
 
-    public Piece getPieceAt(Square square) {
+    public Piece getPieceAt(final Square square) {
         return board.get(square);
     }
 
-    public void swapPiece(Square source, Square target) {
+    public void swapPiece(final Square source, final Square target) {
         board.put(target, board.get(source));
         board.put(source, PieceType.EMPTY.createPiece(Camp.NONE));
     }
 
-    public boolean isEmptyInRoute(Square source, Square target) {
+    public boolean isEmptyInRoute(final Square source, final Square target) {
         return getMovableRoute(source, target)
                 .stream()
                 .filter(square -> board.get(square).getPieceType() != PieceType.EMPTY)
@@ -51,7 +51,7 @@ public class Chessboard {
                 .isEmpty();
     }
 
-    private List<Square> getMovableRoute(Square source, Square target) {
+    private List<Square> getMovableRoute(final Square source, final Square target) {
         if (source.isSameFile(target)) {
             return source.getSquaresInSameFile(target);
         }
@@ -63,27 +63,27 @@ public class Chessboard {
         return source.getDiagonalSquares(target);
     }
 
-    public double countScore(Camp camp) {
+    public double countScore(final Camp camp) {
         return board.values().stream()
                 .filter(piece -> piece.isCamp(camp))
                 .map(Piece::getScore)
                 .reduce(0.0, Double::sum) - calculatePawn(camp);
     }
 
-    private double calculatePawn(Camp camp) {
+    private double calculatePawn(final Camp camp) {
         return Square.getEachFileSquares()
                 .stream()
                 .map(squares -> multiplePawnScore(countPawnOnFile(squares, camp)))
                 .reduce(0.0, Double::sum);
     }
 
-    private int countPawnOnFile(List<Square> squares, Camp camp) {
+    private int countPawnOnFile(final List<Square> squares, final Camp camp) {
         return (int) squares.stream()
                 .filter(square -> board.get(square).isSamePieceType(PieceType.PAWN) && board.get(square).isCamp(camp))
                 .count();
     }
 
-    private double multiplePawnScore(int count) {
+    private double multiplePawnScore(final int count) {
         if (count == 1) {
             return 0;
         }

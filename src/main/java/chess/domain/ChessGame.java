@@ -25,13 +25,13 @@ public class ChessGame {
         turn = Camp.WHITE;
     }
 
-    public void move(Square source, Square target) throws SQLException {
+    public void move(final Square source, final Square target) throws SQLException {
         validateTurn(source);
         moveOnePiece(source, target);
         room.updateMove(source, target);
     }
 
-    private void moveOnePiece(Square source, Square target) {
+    private void moveOnePiece(final Square source, final Square target) {
         if (canMove(source, target)) {
             chessboard.swapPiece(source, target);
             turn = turn.getOpposite();
@@ -40,7 +40,7 @@ public class ChessGame {
         throw new IllegalArgumentException(CANT_MOVE_MESSAGE);
     }
 
-    private void validateTurn(Square square) {
+    private void validateTurn(final Square square) {
         Piece pieceAtSquare = chessboard.getPieceAt(square);
 
         if (pieceAtSquare.isOpposite(turn)) {
@@ -72,7 +72,7 @@ public class ChessGame {
         return false;
     }
 
-    public boolean isRoom(String name) throws SQLException {
+    public boolean isRoom(final String name) throws SQLException {
         try {
             this.room = RoomDao.FindByName(name);
             return true;

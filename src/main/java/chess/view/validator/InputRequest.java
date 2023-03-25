@@ -6,7 +6,7 @@ public class InputRequest {
     private final List<String> value;
     private final List<ValidateType> validateTypes;
 
-    public InputRequest(List<ValidateType> validateTypes, List<String> input) {
+    public InputRequest(final List<ValidateType> validateTypes, final List<String> input) {
         this.value = input;
         this.validateTypes = validateTypes;
     }

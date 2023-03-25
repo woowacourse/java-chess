@@ -11,13 +11,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ResumeCommand extends Command {
-    public ResumeCommand(ChessController chessController) {
+    public ResumeCommand(final ChessController chessController) {
         super(chessController);
     }
 
     @Override
-    public boolean operate(ChessGame chessGame) throws SQLException {
-        Operator operator = new ResumeOperator(chessController, chessGame);
+    public boolean operate(final ChessGame chessGame) throws SQLException {
+        final Operator operator = new ResumeOperator(chessController, chessGame);
         return operator.operate(InputView.requestCommand(List.of(ValidateType.RESUME)));
     }
 }

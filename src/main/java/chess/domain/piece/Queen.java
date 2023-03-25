@@ -13,15 +13,15 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(final Square source, final Square target) {
         return isStraight(source, target) || isDiagonal(source, target);
     }
 
-    private boolean isDiagonal(Square source, Square target) {
+    private boolean isDiagonal(final Square source, final Square target) {
         return source.calculateFileDistance(target) == source.calculateRankDistance(target);
     }
 
-    private boolean isStraight(Square source, Square target) {
+    private boolean isStraight(final Square source, final Square target) {
         return source.isSameFile(target) || source.isSameRank(target);
     }
 }

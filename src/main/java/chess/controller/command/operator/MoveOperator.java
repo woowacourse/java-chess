@@ -20,12 +20,12 @@ public class MoveOperator extends Operator {
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
-    public MoveOperator(ChessController chessController, ChessGame chessGame) {
+    public MoveOperator(final ChessController chessController, final ChessGame chessGame) {
         super(chessController, chessGame);
     }
 
     @Override
-    public boolean operate(List<String> command) throws SQLException {
+    public boolean operate(final List<String> command) throws SQLException {
         if (!CommendRenderer.isSame(command.get(COMMAND_INDEX), CommandType.MOVE)) {
             Operator next = new EndOperator(chessController, chessGame);
             return next.operate(command);
@@ -35,9 +35,9 @@ public class MoveOperator extends Operator {
         return chessGame.canKeepGoing();
     }
 
-    private Square makeSquare(String fileRank) {
-        File file = FileRenderer.renderString(String.valueOf(fileRank.charAt(0)));
-        Rank rank = RankRenderer.renderString(String.valueOf(fileRank.charAt(1)));
+    private Square makeSquare(final String fileRank) {
+        final File file = FileRenderer.renderString(String.valueOf(fileRank.charAt(0)));
+        final Rank rank = RankRenderer.renderString(String.valueOf(fileRank.charAt(1)));
         return new Square(file, rank);
     }
 }

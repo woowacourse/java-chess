@@ -34,13 +34,13 @@ public class InputView {
         System.out.println(END_MESSAGE);
     }
 
-    public static List<String> requestCommand(List<ValidateType> validateTypes) {
+    public static List<String> requestCommand(final List<ValidateType> validateTypes) {
         List<String> input = List.of(scanner.nextLine().split(" "));
         validate(input, validateTypes);
         return input;
     }
 
-    private static void validate(List<String> input, List<ValidateType> validateTypes) {
+    private static void validate(final List<String> input, final List<ValidateType> validateTypes) {
         InputValidator validator = new ResumeValidator();
         validator.validate(new InputRequest(validateTypes, input));
     }

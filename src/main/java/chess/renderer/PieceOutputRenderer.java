@@ -17,12 +17,12 @@ public enum PieceOutputRenderer {
 
     private final String value;
 
-    PieceOutputRenderer(String value) {
+    PieceOutputRenderer(final String value) {
         this.value = value;
     }
 
-    public static String getPieceName(Piece piece) {
-        PieceOutputRenderer renderedPiece = renderPiece(piece.getPieceType());
+    public static String getPieceName(final Piece piece) {
+        final PieceOutputRenderer renderedPiece = renderPiece(piece.getPieceType());
 
         if (piece.isWhite()) {
             return renderedPiece.value;
@@ -31,7 +31,7 @@ public enum PieceOutputRenderer {
         return renderedPiece.value.toUpperCase();
     }
 
-    private static PieceOutputRenderer renderPiece(PieceType pieceType) {
+    private static PieceOutputRenderer renderPiece(final PieceType pieceType) {
         return Arrays.stream(values())
                 .filter(value -> value.name().equals(pieceType.name()))
                 .findFirst()

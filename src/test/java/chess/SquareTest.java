@@ -37,7 +37,7 @@ class SquareTest {
 
     @Test
     void t() throws SQLException {
-        int i = 19;
+        int i = 1;
         NotationDao.deleteByRoomId(i);
         RoomDao.deleteRoom(i);
     }

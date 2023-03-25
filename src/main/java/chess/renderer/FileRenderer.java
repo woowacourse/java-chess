@@ -16,12 +16,12 @@ public enum FileRenderer {
     private final String string;
     private final File file;
 
-    FileRenderer(String string, File file) {
+    FileRenderer(final String string, final File file) {
         this.string = string;
         this.file = file;
     }
 
-    static public File renderString(String input) {
+    static public File renderString(final String input) {
         return Arrays.stream(values())
                 .filter(value -> value.string.equals(input))
                 .findAny()
@@ -29,7 +29,7 @@ public enum FileRenderer {
                 .file;
     }
 
-    static public String renderFile(File file) {
+    static public String renderFile(final File file) {
         return Arrays.stream(values())
                 .filter(value -> value.file.equals(file))
                 .findAny()

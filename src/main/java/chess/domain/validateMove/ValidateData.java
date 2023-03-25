@@ -10,7 +10,7 @@ public class ValidateData {
     private final Square target;
     private final Chessboard chessboard;
 
-    public ValidateData(Square source, Square target, Chessboard chessboard) {
+    public ValidateData(final Square source, final Square target, final Chessboard chessboard) {
         this.source = source;
         this.target = target;
         this.chessboard = chessboard;
@@ -28,11 +28,11 @@ public class ValidateData {
         return getSourcePiece().canMove(source, target);
     }
 
-    public boolean isSourceNotTypeOf(PieceType pieceType) {
+    public boolean isSourceNotTypeOf(final PieceType pieceType) {
         return !getSourcePiece().getPieceType().equals(pieceType);
     }
 
-    public boolean isTargetTypeOf(PieceType pieceType) {
+    public boolean isTargetTypeOf(final PieceType pieceType) {
         return getTargetPiece().getPieceType().equals(pieceType);
     }
 
