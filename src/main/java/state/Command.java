@@ -1,11 +1,11 @@
-package status;
+package state;
 
-enum Command {
+public enum Command {
     START,
     END,
     MOVE;
 
-    private static final String INVALID_GAME_OPTION = "start 또는 end만 입력해야 합니다.";
+    private static final String INVALID_GAME_OPTION = "start, move, end만 입력해야 합니다.";
 
     public static Command from(final String command) {
         try {
