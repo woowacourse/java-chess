@@ -133,7 +133,7 @@ public final class ChessGameDao {
         }
     }
 
-    public Running load(Long gameId) {
+    public Running findGameById(Long gameId) {
         String turn = findTurnById(gameId);
         Map<Position, Piece> board = new HashMap<>();
 
@@ -164,9 +164,23 @@ public final class ChessGameDao {
             if (resultSet.next()) {
                 return resultSet.getString("turn");
             }
-            return null;
+            throw new IllegalArgumentException("불러올 수 없는 게임 번호입니다.");
         } catch (SQLException e) {
             throw new IllegalArgumentException("불러올 수 없는 게임 번호입니다.");
+        }
+    }
+
+    public void deleteGameById(Long gameId) {
+        String sql = "DELETE game, board " +
+                "FROM game " +
+                "JOIN board ON game.game_id = board.game_id " +
+                "WHERE game.game_id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("삭제할 수 없는 게임 번호입니다.");
         }
     }
 }

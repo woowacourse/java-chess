@@ -25,7 +25,7 @@ public final class LoadCommand implements Command {
 
     @Override
     public void execute(ChessGame chessGame) {
-        Running gameLoaded = chessGameDao.load(parameters);
+        Running gameLoaded = chessGameDao.findGameById(parameters);
         chessGame.setGameId(parameters);
         chessGame.load(gameLoaded);
         outputView.printBoard(chessGame.getBoard());

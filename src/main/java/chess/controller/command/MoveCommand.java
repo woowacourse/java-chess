@@ -51,6 +51,7 @@ public final class MoveCommand implements Command {
         outputView.printBoard(chessGame.getBoard());
         if (chessGame.computeWinner() != Color.NONE) {
             outputView.printWinner(chessGame.computeWinner());
+            chessGameDao.deleteGameById(chessGame.getGameId());
             chessGame.end();
         }
     }

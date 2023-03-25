@@ -1,9 +1,12 @@
 package chess.controller;
 
 import chess.controller.command.Command;
+import chess.controller.command.CommandFactory;
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 public final class ChessController {
 
@@ -27,7 +30,8 @@ public final class ChessController {
 
     private void repeatTurns(ChessGame chessGame) {
         try {
-            Command command = inputView.inputCommand();
+            List<String> input = inputView.inputCommand();
+            Command command = CommandFactory.from(input);
             command.execute(chessGame);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);

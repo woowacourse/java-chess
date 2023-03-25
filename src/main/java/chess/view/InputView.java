@@ -1,8 +1,5 @@
 package chess.view;
 
-import chess.controller.command.Command;
-import chess.controller.command.CommandFactory;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,10 +14,9 @@ public final class InputView {
         this.scanner = scanner;
     }
 
-    public Command inputCommand() {
+    public List<String> inputCommand() {
         String input = scanner.nextLine();
-        List<String> commands = generateCommandsForm(input);
-        return CommandFactory.from(commands);
+        return generateCommandsForm(input);
     }
 
     private List<String> generateCommandsForm(final String input) {
