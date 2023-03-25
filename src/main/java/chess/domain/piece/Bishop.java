@@ -4,10 +4,11 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Set;
 
 public final class Bishop extends Piece {
 
-    private static final List<Direction> BISHOP_MOVABLE_DIRECTIONS = List.of(Direction.DIAGONAL);
+    private static final Set<Direction> BISHOP_MOVABLE_DIRECTIONS = Set.of(Direction.DIAGONAL);
 
     public Bishop(Color color) {
         super(PieceType.BISHOP, color);
