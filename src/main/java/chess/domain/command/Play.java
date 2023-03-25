@@ -7,9 +7,6 @@ import chess.controller.dto.ScoreBySideDto;
 import chess.dao.JdbcChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.board.GameResultBySide;
-import chess.domain.board.ResultCalculator;
-import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
@@ -27,7 +24,7 @@ public class Play implements CommandStatus {
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        return new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        return new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
     }
 
     @Override

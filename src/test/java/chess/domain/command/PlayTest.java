@@ -20,7 +20,7 @@ class PlayTest {
     void start() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when
         CommandStatus newPlay = play.start();
@@ -35,7 +35,7 @@ class PlayTest {
     void move() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
         Position sourcePosition = new Position(File.A, Rank.TWO);
         Position targetPosition = new Position(File.A, Rank.FOUR);
 
@@ -53,7 +53,7 @@ class PlayTest {
     void end() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when, then
         assertThat(play.end()).isInstanceOf(End.class);
@@ -64,7 +64,7 @@ class PlayTest {
     void printGameResult() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when, then
         assertThat(play.printGameResult()).isInstanceOf(PrintGameResult.class);
@@ -75,7 +75,7 @@ class PlayTest {
     void getPieces() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when, then
         Assertions.assertDoesNotThrow(() -> play.getPieces());
@@ -86,7 +86,7 @@ class PlayTest {
     void getTurnDisplayName() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when, then
         assertThat(play.getTurnDisplayName()).isEqualTo("white");
@@ -97,7 +97,7 @@ class PlayTest {
     void getScoreBySide() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when, then
         Assertions.assertDoesNotThrow(() -> play.getScoreBySide());
@@ -108,7 +108,7 @@ class PlayTest {
     void getGameResultBySide() {
         // given
         Board board = new Board(new Pieces());
-        Play play = new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
+        Play play = new Play(new ChessGame(board, JdbcChessGameDao.getInstance()), Turn.WHITE);
 
         // when, then
         Assertions.assertDoesNotThrow(() -> play.getGameResultBySide());

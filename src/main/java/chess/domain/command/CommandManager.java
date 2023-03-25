@@ -9,12 +9,9 @@ import chess.controller.dto.ScoreBySideDto;
 import chess.dao.JdbcChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.board.GameResultBySide;
-import chess.domain.board.ResultCalculator;
-import chess.domain.board.ScoreBySide;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
-import chess.domain.piece.Piece;
 
 public class CommandManager {
 
@@ -29,7 +26,7 @@ public class CommandManager {
 
     public CommandManager() {
         Board board = new Board(new Pieces());
-        this.commandStatus = new Init(new ChessGame(board, new JdbcChessGameDao()));
+        this.commandStatus = new Init(new ChessGame(board, JdbcChessGameDao.getInstance()));
     }
 
     public void execute(Commands commands) {

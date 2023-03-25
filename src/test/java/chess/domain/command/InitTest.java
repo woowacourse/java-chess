@@ -29,7 +29,7 @@ class InitTest {
     @BeforeEach
     void init() {
         final Board board = new Board(new Pieces());
-        chessGame = new ChessGame(board, new JdbcChessGameDao());
+        chessGame = new ChessGame(board, JdbcChessGameDao.getInstance());
     }
 
 
