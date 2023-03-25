@@ -13,8 +13,11 @@ public class StartCommand extends Command{
 
     @Override
     public Command execute(List<String> input) {
-        commandType.validate(input);
-        return new MoveCommand(new ChessGame(BoardFactory.createBoard()), CommandType.MOVE);
+        CommandType inputCommandType = CommandType.from(input);
+        if (inputCommandType != CommandType.START) {
+            throw new IllegalArgumentException("잘못된 명령어를 입력했습니다.");
+        }
+        return new MoveCommand(new ChessGame(BoardFactory.createBoard()));
     }
 
     @Override
