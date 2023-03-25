@@ -2,6 +2,9 @@ package chess.controller.resposne;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceType;
 import chess.view.resposne.PieceMapper;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -14,11 +17,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PieceMapperTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"PAWN, p", "ROOK, r", "KNIGHT, n", "BISHOP, b", "QUEEN, q", "KING, k", "EMPTY, ."})
+    @CsvSource(value = {"PAWN, p", "ROOK, r", "KNIGHT, n", "BISHOP, b", "QUEEN, q", "KING, k"})
     void getPieceName(PieceType pieceType, String expected) {
         //given
+        Piece piece = PieceFactory.getInstance(pieceType, Color.WHITE);
         //when
-        String result = PieceMapper.getPieceName(pieceType);
+        String result = PieceMapper.getPieceName(piece);
 
         //then
         assertEquals(result, expected);
