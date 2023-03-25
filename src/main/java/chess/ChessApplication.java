@@ -36,7 +36,6 @@ public class ChessApplication {
 			printErrorMessage(e.getMessage());
 			start(board);
 		}
-
 	}
 
 	private static void play(final Board board) {
@@ -50,10 +49,8 @@ public class ChessApplication {
 			operateCommand(board, command);
 		} catch (IllegalArgumentException e) {
 			printErrorMessage(e.getMessage());
-		} finally {
 			play(board);
 		}
-
 	}
 
 	private static void operateCommand(Board board, Command command) {
