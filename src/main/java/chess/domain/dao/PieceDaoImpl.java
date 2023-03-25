@@ -70,6 +70,13 @@ public class PieceDaoImpl implements PieceDao {
         });
     }
 
+    public void deleteAll() {
+        String query = "DELETE FROM piece";
+        processQuery(query, preparedStatement -> {
+            preparedStatement.execute();
+        });
+    }
+
     private void processQuery(String query, QueryProcessor queryProcessor) {
         try (final Connection connection = dbConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
