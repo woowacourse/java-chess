@@ -4,8 +4,7 @@ import chess.dao.ChessDao;
 import chess.dao.DbChessGameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameFactory;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.IOViewResolver;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -24,15 +23,13 @@ import static chess.controller.GameCommand.getPosition;
 
 public final class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final IOViewResolver viewResolver;
     private final Map<GameCommand, Function<List<String>, GameCommand>> gameStatusMap;
     private final ChessDao dao;
     private ChessGame chessGame;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessController(final IOViewResolver viewResolver) {
+        this.viewResolver = viewResolver;
         this.gameStatusMap = new EnumMap<>(GameCommand.class);
         this.dao = new DbChessGameDao();
         initGameStatusMap();
@@ -46,7 +43,7 @@ public final class ChessController {
     }
 
     public void process() {
-        outputView.printInitialMessage();
+        viewResolver.printInitialMessage();
         GameCommand gameCommand = INIT;
         while (!gameCommand.isEnd()) {
             gameCommand = play(gameCommand);
@@ -55,11 +52,11 @@ public final class ChessController {
 
     private GameCommand play(final GameCommand gameCommand) {
         try {
-            final List<String> input = inputView.readCommand();
+            final List<String> input = viewResolver.readCommand();
             final GameCommand newGameCommand = from(input);
             return gameStatusMap.get(newGameCommand).apply(input);
         } catch (IllegalArgumentException | IllegalStateException exception) {
-            outputView.printErrorMessage(exception.getMessage());
+            viewResolver.printErrorMessage(exception.getMessage());
             return gameCommand;
         }
     }
@@ -70,11 +67,11 @@ public final class ChessController {
         }
         if (dao.hasHistory()) {
             chessGame = dao.loadGame();
-            outputView.printBoard(chessGame.getBoard());
+            viewResolver.printBoard(chessGame.getBoard());
             return MOVE;
         }
         chessGame = ChessGameFactory.generate();
-        outputView.printBoard(chessGame.getBoard());
+        viewResolver.printBoard(chessGame.getBoard());
         return MOVE;
     }
 
@@ -85,22 +82,22 @@ public final class ChessController {
         chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
         if (chessGame.isKingDead()) {
             dao.delete();
-            outputView.printWinner(chessGame.getWinner());
+            viewResolver.printWinner(chessGame.getWinner());
             return END;
         }
-        outputView.printBoard(chessGame.getBoard());
+        viewResolver.printBoard(chessGame.getBoard());
         return MOVE;
     }
 
     private GameCommand status(final List<String> strings) {
         dao.delete();
-        outputView.printTotalScore(chessGame.calculateScore());
-        outputView.printEndMessage();
+        viewResolver.printTotalScore(chessGame.calculateScore());
+        viewResolver.printEndMessage();
         return END;
     }
 
     private GameCommand end(final List<String> input) {
-        outputView.printEndMessage();
+        viewResolver.printEndMessage();
         dao.save(chessGame);
         return END;
     }
