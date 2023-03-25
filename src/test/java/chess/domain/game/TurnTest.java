@@ -47,4 +47,29 @@ class TurnTest {
         //then
         assertEquals(Color.WHITE, turn.getCurrentTurn());
     }
+
+    @Test
+    void getTurn을_통해_현재_턴을_구할_수_있다() {
+        //given
+        Turn turn = new Turn();
+
+        //when
+        int currentTurn = turn.getTurn();
+
+        //then
+        assertEquals(1, currentTurn);
+    }
+
+    @Test
+    void getTurn을_통해_현재_턴을_구할_수_있다2() {
+        //given
+        Turn turn = new Turn();
+
+        //when
+        turn = turn.changeTurn();
+        int currentTurn = turn.getTurn();
+
+        //then
+        assertEquals(2, currentTurn);
+    }
 }
