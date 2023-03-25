@@ -25,8 +25,6 @@ public interface GameState {
 
     Team getWinner();
 
-    boolean hasWinner();
-
     boolean isChecked();
 
     void saveGame(Runnable runnable);

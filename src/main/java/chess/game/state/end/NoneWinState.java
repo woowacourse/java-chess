@@ -13,16 +13,11 @@ public class NoneWinState extends EndState {
 
     @Override
     public Team getWinner() {
-        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+        return Team.NONE;
     }
 
     @Override
     public List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier) {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
-    }
-
-    @Override
-    public boolean hasWinner() {
-        return false;
     }
 }

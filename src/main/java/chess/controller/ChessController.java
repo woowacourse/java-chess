@@ -91,9 +91,7 @@ public class ChessController {
         while (!chessGame.isEnd()) {
             printError(this::gameLoop);
         }
-        if (chessGame.hasWinner()) {
-            OutputView.printWinner(chessGame.getWinner());
-        }
+        OutputView.printWinner(chessGame.getWinner());
     }
 
     private void printError(Runnable runnable) {

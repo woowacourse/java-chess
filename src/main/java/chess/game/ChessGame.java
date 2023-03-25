@@ -92,10 +92,6 @@ public class ChessGame {
         return gameState.getWinner();
     }
 
-    public boolean hasWinner() {
-        return gameState.hasWinner();
-    }
-
     public void checkCheckmate() {
         Team turn = gameState.getTurn();
         if (isChecked() && board.isChecked(turn)) {

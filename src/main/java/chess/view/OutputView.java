@@ -88,7 +88,9 @@ public class OutputView {
     }
 
     public static void printWinner(Team winner) {
-        System.out.println(getTeamName(winner) + " 팀이 체크메이트로 승리했습니다.");
+        if (winner != Team.NONE) {
+            System.out.println(getTeamName(winner) + " 팀이 체크메이트로 승리했습니다.");
+        }
     }
 
     public static void printCheckWarning(Team team) {
@@ -98,11 +100,9 @@ public class OutputView {
 
     public static void printSaveMessage() {
         System.out.println("진행사항을 저장했습니다.");
-        System.out.println();
     }
 
     public static void printLoadMessage() {
         System.out.println("진행사항을 불러왔습니다.");
-        System.out.println();
     }
 }

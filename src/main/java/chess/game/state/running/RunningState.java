@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 public abstract class RunningState implements GameState {
     protected static final String RUNNING_STATE_EXCEPTION_MESSAGE = "[ERROR] 잘못된 게임의 상태 입니다.(상태: 진행중)";
 
-    protected RunningState() {
+    RunningState() {
     }
 
     @Override
@@ -40,11 +40,6 @@ public abstract class RunningState implements GameState {
 
     @Override
     public Team getWinner() {
-        throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
-    }
-
-    @Override
-    public boolean hasWinner() {
         throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
     }
 

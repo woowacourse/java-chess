@@ -4,6 +4,9 @@ import chess.domain.Team;
 
 public abstract class CheckedState extends RunningState {
 
+    CheckedState() {
+    }
+
     public static CheckedState createCheckedState(Team team) {
         if (team == Team.WHITE) {
             return WhiteCheckedState.STATE;
