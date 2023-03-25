@@ -29,7 +29,8 @@ public class ChessApplication {
 		try {
 			Command.ofStart(inputCommand);
 			final Map<Position, Piece> chessBoard = board.board();
-			OutputView.printBoard(chessBoard, ranks(), files());
+
+			printBoard(chessBoard, ranks(), files());
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e.getMessage());
 			start(board);

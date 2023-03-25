@@ -1,5 +1,7 @@
 package chess.view;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +14,43 @@ public class OutputView {
 
 	public static void printBoard(final Map<Position, Piece> chessBoard, final List<Rank> ranks,
 		final List<File> files) {
-		for (final Rank rank : ranks) {
+		for (final Rank rank : sortRank(ranks)) {
 			printEachPosition(chessBoard, files, rank);
 		}
 	}
 
 	private static void printEachPosition(final Map<Position, Piece> chessBoard, final List<File> files, final Rank rank) {
-		for (final File file : files) {
+		for (final File file : sortFile(files)) {
 			final Position position = Position.of(file, rank);
 			System.out.print(chessBoard.get(position).name());
 		}
 		System.out.println();
+	}
+
+	private static List<File> sortFile(final List<File> files){
+		final List<Character> values = new ArrayList<>();
+		for (File file : files) {
+			values.add(file.value());
+		}
+		values.sort(Comparator.naturalOrder());
+		final List<File> sortedFiles = new ArrayList<>();
+		for (Character value : values) {
+			sortedFiles.add(File.from(value));
+		}
+		return sortedFiles;
+	}
+
+	private static List<Rank> sortRank(final List<Rank> ranks){
+		final List<Integer> values = new ArrayList<>();
+		for (Rank rank : ranks) {
+			values.add(rank.value());
+		}
+		values.sort(Comparator.naturalOrder());
+		final List<Rank> sortedRanks = new ArrayList<>();
+		for (Integer value : values) {
+			sortedRanks.add(Rank.from(value));
+		}
+		return sortedRanks;
 	}
 
 	public static void printErrorMessage(String errorMessage) {

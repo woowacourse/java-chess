@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public enum File {
@@ -30,16 +29,7 @@ public enum File {
 	}
 
 	public static List<File> files() {
-		final List<Character> values = new ArrayList<>();
-		for (File file : File.values()) {
-			values.add(file.value);
-		}
-		values.sort(Comparator.naturalOrder());
-		final List<File> files = new ArrayList<>();
-		for (Character val : values) {
-			files.add(File.from(val));
-		}
-		return files;
+		return new ArrayList<>(List.of(values()));
 	}
 
 	public File nextFile(final int unit) {

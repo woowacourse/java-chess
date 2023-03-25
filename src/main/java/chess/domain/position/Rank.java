@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public enum Rank {
@@ -30,16 +29,7 @@ public enum Rank {
 	}
 
 	public static List<Rank> ranks() {
-		final List<Integer> values = new ArrayList<>();
-		for (Rank rank : Rank.values()) {
-			values.add(rank.value);
-		}
-		values.sort(Comparator.naturalOrder());
-		final List<Rank> ranks = new ArrayList<>();
-		for (Integer val : values) {
-			ranks.add(Rank.from(val));
-		}
-		return ranks;
+		return new ArrayList<>(List.of(values()));
 	}
 
 	public Rank nextRank(final int unit) {
