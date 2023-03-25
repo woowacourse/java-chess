@@ -10,6 +10,7 @@ public enum CommandActionMapper {
     START("start", ChessController::start),
     MOVE("move", ChessController::move),
     END("end", ChessController::end),
+    STATUS("status", ChessController::status),
     EXIT("exit", ChessController::forceQuit);
 
     private static final Map<String, CommandAction> actionByCommand = Arrays.stream(values())

@@ -22,6 +22,9 @@ public class ChessController {
     public AppStatus move(CommandRequest commandRequest) {
         chessGame.move(commandRequest);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
+        if (chessGame.isOver()) {
+            // TODO 메시지 출력
+        }
         return AppStatus.RUNNING;
     }
 
@@ -29,6 +32,12 @@ public class ChessController {
         chessGame.end(commandRequest);
         chessGame = new ChessGame();
         OutputView.printGuideMessage();
+        return AppStatus.RUNNING;
+    }
+
+    public AppStatus status(CommandRequest commandRequest) {
+        // TODO game에서 명령어 검증
+        // TODO 게임 결과 출력
         return AppStatus.RUNNING;
     }
 

@@ -1,10 +1,13 @@
 package chess.domain;
 
+import static chess.domain.piece.PieceFixture.BLACK_KING;
+import static chess.domain.piece.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -108,6 +111,21 @@ class ChessBoardTest {
             assertThat(chessBoard.calculateScoreByCamp(camp))
                     .isEqualTo(38);
         }
+    }
+
+    @DisplayName("상대 진영의 킹을 잡으면 해당 체스판은 종료된다.")
+    @Test
+    void 킹_체크_시_종료() {
+        Position source = Position.of(1, 1);
+        Position destination = Position.of(2, 2);
+        ChessBoard fakeChessBoard = new ChessBoard(new HashMap<>(Map.of(
+                source, WHITE_PAWN,
+                destination, BLACK_KING)
+        ));
+
+        boolean isOver = fakeChessBoard.move(source, destination);
+
+        assertThat(isOver).isTrue();
     }
 
 }

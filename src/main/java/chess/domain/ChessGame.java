@@ -21,15 +21,23 @@ public class ChessGame {
 
     public void move(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
-        chessBoard.move(
+        boolean isOver = chessBoard.move(
                 Position.from(commandRequest.getSourceCoordinate()),
                 Position.from(commandRequest.getDestinationCoordinate())
         );
+        // TODO over 됐을 때의 턴(이긴 진영) 확인
+        if (isOver) {
+            gameStatus = GameStatus.OVER;
+        }
     }
 
     public void end(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
         gameStatus = GameStatus.READY;
+    }
+
+    public boolean isOver() {
+        return gameStatus == GameStatus.OVER;
     }
 
     public Map<Position, Piece> readBoard() {

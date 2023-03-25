@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +15,28 @@ public class ChessBoard {
     private static final String WRONG_PIECE_COLOR_ERROR_MESSAGE = "자신 팀의 말만 이동시킬 수 있습니다.";
     private static final String WRONG_ATTACK_ERROR_MESSAGE = "선택한 말로 공격할 수 없습니다.";
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
-    private final Map<Position, Piece> piecesByPosition = PieceInitializer.createPiecesWithPosition();
+    private final Map<Position, Piece> piecesByPosition;
     private Camp currentTurnCamp;
 
     public ChessBoard() {
+        this.piecesByPosition = PieceInitializer.createPiecesWithPosition();
         this.currentTurnCamp = Camp.WHITE;
     }
 
-    public void move(Position source, Position destination) {
+    public ChessBoard(final Map<Position, Piece> piecesByPosition) {
+        this.piecesByPosition = piecesByPosition;
+        this.currentTurnCamp = Camp.WHITE;
+    }
+
+    public boolean move(Position source, Position destination) {
         Piece movingPiece = findPieceAtSourcePosition(source);
         CheckablePaths checkablePaths = movingPiece.findCheckablePaths(source);
         Path pathToDestination = checkablePaths.findPathContainingPosition(destination);
-        progressIfPossible(pathToDestination, source, destination, movingPiece);
-        switchCampTurn();
+        boolean isOver = progressIfPossible(pathToDestination, source, destination, movingPiece);
+        if (!isOver) {
+            switchCampTurn();
+        }
+        return isOver;
     }
 
     private Piece findPieceAtSourcePosition(final Position source) {
@@ -40,12 +50,23 @@ public class ChessBoard {
         return piece;
     }
 
-    private void progressIfPossible(final Path pathToDestination, final Position source, final Position destination,
-                                    final Piece movingPiece) {
+    private boolean progressIfPossible(final Path pathToDestination, final Position source, final Position destination,
+                                       final Piece movingPiece) {
         validateObstacle(pathToDestination, destination);
         validateMove(source, destination, movingPiece);
+        boolean isKingAttacked = isKingAt(destination);
         piecesByPosition.put(destination, movingPiece);
         piecesByPosition.remove(source);
+        return isKingAttacked;
+    }
+
+    // TODO null 대신 EMPTY 말 저장
+    private boolean isKingAt(Position position) {
+        Piece target = piecesByPosition.get(position);
+        if (target == null) {
+            return false;
+        }
+        return target.getType() == PieceType.KING;
     }
 
     private void validateObstacle(final Path path, final Position destination) {
