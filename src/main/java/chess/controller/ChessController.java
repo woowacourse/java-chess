@@ -38,7 +38,7 @@ public class ChessController {
 
     public AppStatus status(CommandRequest commandRequest) {
         GameResultResponse gameResult = chessGame.computeResult(commandRequest);
-        // TODO 게임 결과 출력
+        OutputView.printGameResult(gameResult);
         return AppStatus.RUNNING;
     }
 
