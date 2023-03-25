@@ -24,7 +24,7 @@ public class PositionConvertor {
         final int fileIndex = position.charAt(0) - 'a' + 1;
         final int rankIndex = Character.getNumericValue(position.charAt(1));
 
-        return Position.of(File.from(fileIndex), Rank.of(rankIndex));
+        return Position.of(File.from(fileIndex), Rank.from(rankIndex));
     }
 
     private void validate(List<String> commands) {

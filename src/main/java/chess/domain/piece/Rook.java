@@ -13,12 +13,4 @@ public final class Rook extends Piece {
 
         return (from.getRank() == to.getRank()) || (from.getFile() == to.getFile());
     }
-
-    @Override
-    public String toString() {
-        return "Rook{" +
-                "team=" + team +
-                ", pieceType=" + pieceType +
-                '}';
-    }
 }

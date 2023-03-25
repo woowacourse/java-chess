@@ -12,7 +12,6 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-
         if (team == Team.WHITE) {
             return isWhitePawnMovable(from, to);
         }
@@ -25,7 +24,6 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhitePawnMovable(final Position from, final Position to) {
-
         final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
         final int rankInterval = getRankInterval(to.getRank(), from.getRank());
 
@@ -41,7 +39,6 @@ public final class Pawn extends Piece {
     }
 
     private boolean isBlackPawnMovable(final Position from, final Position to) {
-
         final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
         final int rankInterval = getRankInterval(from.getRank(), to.getRank());
 

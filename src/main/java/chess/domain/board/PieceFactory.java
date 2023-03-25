@@ -23,12 +23,12 @@ public class PieceFactory {
         List<Team> teams = List.of(Team.BLACK, Team.WHITE);
 
         for (final Team team : teams) {
-            createPawn(result, Rank.from(team, true), team);
-            createRook(result, Rank.from(team, false), team);
-            createKnight(result, Rank.from(team, false), team);
-            createBishop(result, Rank.from(team, false), team);
-            createQueen(result, Rank.from(team, false), team);
-            createKing(result, Rank.from(team, false), team);
+            createPawn(result, Rank.of(team, true), team);
+            createRook(result, Rank.of(team, false), team);
+            createKnight(result, Rank.of(team, false), team);
+            createBishop(result, Rank.of(team, false), team);
+            createQueen(result, Rank.of(team, false), team);
+            createKing(result, Rank.of(team, false), team);
         }
 
         return result;

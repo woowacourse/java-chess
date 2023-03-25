@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Turn {
 
-    public static final int DEFAULT_TEAM_SIZE = 2;
-    public static final int START_INDEX = 0;
+    private static final int DEFAULT_TEAM_SIZE = 2;
+    private static final int START_INDEX = 0;
 
     private final List<Team> order;
     private int currentIndex;

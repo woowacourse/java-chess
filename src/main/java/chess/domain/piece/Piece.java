@@ -25,4 +25,12 @@ public abstract class Piece {
     public PieceType getType() {
         return this.pieceType;
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "team=" + team +
+                ", pieceType=" + pieceType +
+                '}';
+    }
 }

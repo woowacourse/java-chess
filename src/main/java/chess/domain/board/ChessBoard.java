@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private static final BigDecimal PAWN_REDUCE_NUMBER = BigDecimal.valueOf(0.5);
-    public static final int DEFAULT_KING_COUNT = 2;
+    private static final int DEFAULT_KING_COUNT = 2;
 
     private final Map<Position, Piece> piecePosition;
 
@@ -45,12 +45,6 @@ public class ChessBoard {
         return toPiece;
     }
 
-    private void move(final Position from, final Position to) {
-        final Piece fromPiece = piecePosition.get(from);
-        piecePosition.put(from, new EmptyPiece());
-        piecePosition.put(to, fromPiece);
-    }
-
     private void validateMovable(final Position from, final Position to) {
         final Piece fromPiece = piecePosition.get(from);
         if (!fromPiece.isMovable(from, to)) {
@@ -72,6 +66,12 @@ public class ChessBoard {
                 });
     }
 
+    private void move(final Position from, final Position to) {
+        final Piece fromPiece = piecePosition.get(from);
+        piecePosition.put(from, new EmptyPiece());
+        piecePosition.put(to, fromPiece);
+    }
+
     public BigDecimal calculateScore(final Team team) {
         BigDecimal ordinalScore = getOrdinalScore(team);
         BigDecimal pawnDifferenceScore = getPawnSubScore(team);
@@ -79,34 +79,25 @@ public class ChessBoard {
     }
 
     private BigDecimal getPawnSubScore(final Team team) {
-
         List<Position> pawnPositions = toPawnPositions(team);
         return calculatePawnSubScore(pawnPositions);
     }
 
     private BigDecimal calculatePawnSubScore(final List<Position> pawnPositions) {
-        BigDecimal sum = getReduceNumber(pawnPositions);
-
-        if (sum.equals(PAWN_REDUCE_NUMBER)) {
-            return BigDecimal.ZERO;
-        }
-
-        return sum;
-    }
-
-    private BigDecimal getReduceNumber(final List<Position> pawnPositions) {
-        BigDecimal sum = PAWN_REDUCE_NUMBER;
+        BigDecimal result = BigDecimal.ZERO;
 
         List<File> files = pawnPositions.stream()
                 .map(Position::getFile)
                 .collect(Collectors.toList());
 
         for (final File file : files) {
-            if (Collections.frequency(files, file) != 1) {
-                sum = sum.add(sum);
+            int pawnCount = Collections.frequency(files, file);
+            if (pawnCount != 1) {
+                result = result.add(PAWN_REDUCE_NUMBER.multiply(BigDecimal.valueOf(pawnCount)));
             }
         }
-        return sum;
+
+        return result;
     }
 
     private List<Position> toPawnPositions(Team team) {
@@ -126,17 +117,17 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalStateException(team + "은 점수를 계산할 수 없습니다."));
     }
 
+    public boolean isEnd() {
+        return piecePosition.values().stream()
+                .filter(piece -> piece.getType() == PieceType.KING)
+                .count() < DEFAULT_KING_COUNT;
+    }
+
     public Map<Position, Piece> getPiecePosition() {
         return Map.copyOf(piecePosition);
     }
 
     public Piece get(final Position from) {
         return piecePosition.get(from);
-    }
-    
-    public boolean isEnd() {
-        return piecePosition.values().stream()
-                .filter(piece -> piece.getType() == PieceType.KING)
-                .count() < DEFAULT_KING_COUNT;
     }
 }
