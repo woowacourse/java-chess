@@ -5,9 +5,13 @@ import static chess.view.PositionConverter.convertToTargetPosition;
 
 import chess.domain.ChessGame;
 import chess.domain.Position;
+import chess.domain.Score;
+import chess.domain.Team;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Map;
+import java.util.Optional;
 
 public class ChessController {
 
@@ -40,8 +44,8 @@ public class ChessController {
         while (onGoing) {
             outputView.printBoard(chessGame.getBoard());
             String command = inputCommand();
-            onGoing = !GameCommand.isEnd(command);
             play(chessGame, command);
+            onGoing = !isGameOver(chessGame) && !GameCommand.isEnd(command);
         }
     }
 
@@ -49,6 +53,13 @@ public class ChessController {
         if (GameCommand.isEnd(command)) {
             return;
         }
+        if (GameCommand.isStatus(command)) {
+            Map<Team, Score> scores = chessGame.getScoreAllTeam();
+            Optional<Team> winner = chessGame.findWinner(scores);
+            outputView.printStatus(scores, winner);
+            return;
+        }
+
         Position source = convertToSourcePosition(command);
         Position target = convertToTargetPosition(command);
         movePiece(chessGame, source, target);
@@ -60,6 +71,16 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
         }
+    }
+
+    private boolean isGameOver(ChessGame chessGame) {
+        if (chessGame.isOver()) {
+            Map<Team, Score> scores = chessGame.getScoreAllTeam();
+            Optional<Team> winner = chessGame.findWinner(scores);
+            outputView.printWinner(winner);
+            return true;
+        }
+        return false;
     }
 
     private String inputCommand() {

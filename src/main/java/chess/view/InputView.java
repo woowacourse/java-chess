@@ -20,7 +20,7 @@ public class InputView {
     public String readCommand() {
         String input = scanner.nextLine();
 
-        if (GameCommand.isEnd(input)) {
+        if (GameCommand.isEnd(input) || GameCommand.isStatus(input)) {
             return input;
         }
 
@@ -30,7 +30,7 @@ public class InputView {
         return commands.get(1) + commands.get(2);
     }
 
-    private static void validateCommands(List<String> commands) {
+    private void validateCommands(List<String> commands) {
         validateBlank(commands);
         validateMoveCommand(commands.get(0));
         validateCommandSize(commands);

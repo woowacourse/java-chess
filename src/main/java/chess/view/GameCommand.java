@@ -3,7 +3,8 @@ package chess.view;
 public enum GameCommand {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String command;
 
@@ -21,6 +22,10 @@ public enum GameCommand {
 
     public static boolean isMove(String command) {
         return MOVE.command.equals(command);
+    }
+
+    public static boolean isStatus(String command) {
+        return STATUS.command.equals(command);
     }
 
     public String getCommand() {
