@@ -14,12 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ChessBoardTest {
 
-    public static final Rook ROOK_BLACK = new Rook(Team.BLACK);
-    public static final Knight KNIGHT_BLACK = new Knight(Team.BLACK);
-    public static final Bishop BISHOP_BLACK = new Bishop(Team.BLACK);
-    public static final Queen QUEEN_BLACK = new Queen(Team.BLACK);
-    public static final King KING_BLACK = new King(Team.BLACK);
-    public static final Pawn PAWN_BLACK = new Pawn(Team.BLACK);
+    private static final Rook ROOK_BLACK = new Rook(Team.BLACK);
+    private static final Knight KNIGHT_BLACK = new Knight(Team.BLACK);
+    private static final Bishop BISHOP_BLACK = new Bishop(Team.BLACK);
+    private static final Queen QUEEN_BLACK = new Queen(Team.BLACK);
+    private static final King KING_BLACK = new King(Team.BLACK);
+    private static final Pawn PAWN_BLACK = new Pawn(Team.BLACK);
 
     @Test
     void 체스판은_64개의_스퀘어를_가진다() {
