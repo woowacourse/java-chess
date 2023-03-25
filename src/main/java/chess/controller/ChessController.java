@@ -34,6 +34,9 @@ public class ChessController {
     private Map<Command, ChessAction> cretateCommandActionMap(ChessGame game) {
         Map<Command, ChessAction> actionMap = new HashMap<>();
         actionMap.put(Command.START, new ChessAction(ignore -> startGame(game)));
+        actionMap.put(Command.LOAD, new ChessAction(ignore -> enterLoad(game)));
+        actionMap.put(Command.CONTINUE, new ChessAction(ignore -> loadGame(game)));
+        actionMap.put(Command.CANCEL, new ChessAction(ignore -> cancelLoad(game)));
         actionMap.put(Command.MOVE, new ChessAction(commands -> movePiece(game, commands)));
         actionMap.put(Command.STATUS, new ChessAction(ignore -> displayGameStatus(game)));
         actionMap.put(Command.END, new ChessAction(ignore -> finishGame(game)));
@@ -42,7 +45,18 @@ public class ChessController {
 
     private void startGame(ChessGame game) {
         game.startGame();
-        // TODO: 2023-03-24 DB game 생성
+    }
+
+    private void enterLoad(ChessGame game) {
+        game.enterLoad();
+    }
+
+    private void loadGame(ChessGame game) {
+        game.loadGame();
+    }
+
+    private void cancelLoad(ChessGame game) {
+        game.cancelLoad();
     }
 
     private void movePiece(ChessGame game, List<String> commands) {
@@ -52,8 +66,9 @@ public class ChessController {
         // TODO: 2023-03-24 DB 접근
         game.checkGameNotFinished();
     }
+
     private void displayGameStatus(ChessGame game) {
-        game.displayGameStatus(()->{
+        game.displayGameStatus(() -> {
             outputView.printGameStatus(game.makeScoreBoard(), game.judgeWinner());
         });
     }

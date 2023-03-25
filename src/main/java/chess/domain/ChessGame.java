@@ -4,6 +4,7 @@ import chess.domain.piece.info.Team;
 import chess.domain.position.Position;
 import chess.domain.state.FinishedState;
 import chess.domain.state.GameState;
+import chess.domain.state.LoadingState;
 import chess.domain.state.ReadyState;
 import chess.domain.state.RunningState;
 import java.util.HashMap;
@@ -34,6 +35,28 @@ public class ChessGame {
         });
     }
 
+    public void enterLoad() {
+        state.enterLoad(() -> {
+            state = LoadingState.STATE;
+        });
+    }
+
+    public void loadGame() {
+        state.loadGame(() -> {
+            //TODO DB 불러오기
+        });
+    }
+
+    public void cancelLoad() {
+        state.cancelLoad(() -> {
+            state = ReadyState.STATE;
+        });
+    }
+
+    public void displayGameStatus(Runnable runnable) {
+        state.displayGameStatus(runnable);
+    }
+
     public Map<Team, Score> makeScoreBoard() {
         Map<Team, Score> scoreBoard = new HashMap<>();
         Team.RealTeams.forEach(
@@ -51,10 +74,6 @@ public class ChessGame {
             return Team.BLACK;
         }
         return Team.EMPTY;
-    }
-
-    public void displayGameStatus(Runnable runnable) {
-        state.displayGameStatus(runnable);
     }
 
     public void finishGame() {
