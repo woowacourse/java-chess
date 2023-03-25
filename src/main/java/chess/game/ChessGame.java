@@ -1,24 +1,23 @@
 package chess.game;
 
-import static java.util.stream.Collectors.toList;
-
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
-import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.dto.SquareResponse;
 
 import java.util.List;
 import java.util.Objects;
+
+import static java.util.stream.Collectors.toList;
 
 public class ChessGame {
 
     private final Board board;
     private Turn turn;
 
-    public ChessGame() {
-        this.board = new Board(BoardFactory.create());
+    public ChessGame(Board board) {
+        this.board = board;
         this.turn = new Turn(Team.WHITE);
     }
 
