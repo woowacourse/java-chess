@@ -40,8 +40,8 @@ public final class BoardGenerator {
 
     private static Map<Position, Piece> initializeEmptyPieces() {
         Map<Position, Piece> positionsAndPieces = new LinkedHashMap<>();
-        for (int column = 0; column < LINE_SIZE; column++) {
-            for (int row = EMPTY_START_ROW; row <= EMPTY_END_ROW; row++) {
+        for (int row = EMPTY_END_ROW; row >= EMPTY_START_ROW; row--) {
+            for (int column = 0; column < LINE_SIZE; column++) {
                 positionsAndPieces.put(new Position(column, row), new EmptyPiece());
             }
         }
