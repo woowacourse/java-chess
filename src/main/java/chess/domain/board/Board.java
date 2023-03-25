@@ -83,7 +83,7 @@ public class Board {
     }
 
     public GameResult getResult() {
-        return GameResult.from(pieces);
+        return new GameResult(pieces);
     }
 
     public Map<Position, Piece> getPieces() {
