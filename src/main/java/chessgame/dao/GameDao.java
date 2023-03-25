@@ -8,17 +8,17 @@ import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
 import chessgame.domain.state.State;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chessgame.dao.ConnectionGenerator.getConnection;
-
 public class GameDao {
 
-    public void save(Board board, String gameName, State turn) {
+    public void save(Board board, String gameName, State turn, Connection connection) {
         Map<Point, Piece> boardMap = board.getBoard();
-        Connection connection = getConnection();
         try {
             insertGame(gameName, turn, connection);
             insertBoard(boardMap, gameName, connection);
@@ -51,10 +51,9 @@ public class GameDao {
         preparedStatement.close();
     }
 
-    public Game read(String gameName) {
+    public Game read(String gameName, Connection connection) {
         final String query = "SELECT * FROM Board where board_name = ?";
 
-        Connection connection = getConnection();
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -85,10 +84,9 @@ public class GameDao {
         return new Game(new Board(board), gameName);
     }
 
-    public void remove(String gameName) {
+    public void remove(String gameName, Connection connection) {
         final String query = "delete from game where name = ?";
 
-        Connection connection = getConnection();
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.execute();
@@ -98,10 +96,9 @@ public class GameDao {
         }
     }
 
-    public String findTurnByGame(String gameName) {
+    public String findTurnByGame(String gameName, Connection connection) {
         final String query = "select team_turn from game where name = ?";
 
-        Connection connection = getConnection();
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();

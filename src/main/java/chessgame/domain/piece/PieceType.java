@@ -1,12 +1,12 @@
 package chessgame.domain.piece;
 
 public enum PieceType {
-    KING("k",0),
-    QUEEN("q",9),
-    BISHOP("b",3),
-    KNIGHT("n",2.5),
-    PAWN("p",1),
-    ROOK("r",5);
+    KING("k", 0),
+    QUEEN("q", 9),
+    BISHOP("b", 3),
+    KNIGHT("n", 2.5),
+    PAWN("p", 1),
+    ROOK("r", 5);
 
     private String name;
     private double score;
@@ -15,10 +15,12 @@ public enum PieceType {
         this.name = name;
         this.score = score;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public double getScore(){
+
+    public double getScore() {
         return score;
     }
 }

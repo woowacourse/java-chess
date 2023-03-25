@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
+    private static final double SAME_PAWN_CALCULATE_RATIO = 0.5;
     private final Map<Point, Piece> board;
 
     public Board(Map<Point, Piece> board) {
@@ -115,7 +116,7 @@ public class Board {
                     .count();
             sameFilePawn = countSameFilePawn(sameFilePawn, countPawn);
         }
-        return sameFilePawn * 0.5;
+        return sameFilePawn * SAME_PAWN_CALCULATE_RATIO;
     }
 
     private static double countSameFilePawn(double sameFilePawn, double countPawn) {

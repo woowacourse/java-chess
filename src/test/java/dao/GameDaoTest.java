@@ -1,5 +1,6 @@
 package dao;
 
+import chessgame.dao.ConnectionGenerator;
 import chessgame.dao.GameDao;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
@@ -11,42 +12,47 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class GameDaoTest {
     private final GameDao gameDao = new GameDao();
+    private final Connection connection = ConnectionGenerator.getConnection();
     private static final String gameName = "test";
+
     @BeforeEach
-    void delete(){
-        gameDao.remove(gameName);
+    void before() {
+        gameDao.remove(gameName, connection);
     }
 
     @Test
     void save() {
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(() -> gameDao.save(board, gameName, new White()));
+        Assertions.assertThatNoException().isThrownBy(() -> gameDao.save(board, gameName, new White(), connection));
     }
 
     @Test
-    void readNull(){
-        Assertions.assertThatNoException().isThrownBy(()->assertThat(gameDao.read(gameName)).isNull());
+    void readNull() {
+        Assertions.assertThatNoException().isThrownBy(() -> assertThat(gameDao.read(gameName, connection)).isNull());
     }
+
     @Test
-    void read(){
+    void read() {
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(()-> gameDao.save(board,gameName,new White()));
-        Assertions.assertThatNoException().isThrownBy(()->assertThat(gameDao.read(gameName)).isNotNull());
+        Assertions.assertThatNoException().isThrownBy(() -> gameDao.save(board, gameName, new White(), connection));
+        Assertions.assertThatNoException().isThrownBy(() -> assertThat(gameDao.read(gameName, connection)).isNotNull());
     }
 
     @Test
-    void remove(){
+    void remove() {
         Board board = new Board(ChessBoardFactory.create());
 
-        gameDao.save(board,gameName, new White());
+        gameDao.save(board, gameName, new White(), connection);
 
-        Assertions.assertThatNoException().isThrownBy(()-> gameDao.remove(gameName));
+        Assertions.assertThatNoException().isThrownBy(() -> gameDao.remove(gameName, connection));
     }
 
     @Nested
@@ -56,16 +62,16 @@ class GameDaoTest {
 
         @Test
         void Should_FindWhite_WhenWhiteTurn() {
-            gameDao.save(board, gameName, new White());
+            gameDao.save(board, gameName, new White(), connection);
 
-            Assertions.assertThat(gameDao.findTurnByGame(gameName)).isEqualTo("White");
+            Assertions.assertThat(gameDao.findTurnByGame(gameName, connection)).isEqualTo("White");
         }
 
         @Test
         void Should_FindBlack_WhenBlackTurn() {
-            gameDao.save(board, gameName, new Black());
+            gameDao.save(board, gameName, new Black(), connection);
 
-            Assertions.assertThat(gameDao.findTurnByGame(gameName)).isEqualTo("Black");
+            Assertions.assertThat(gameDao.findTurnByGame(gameName, connection)).isEqualTo("Black");
         }
     }
 }
