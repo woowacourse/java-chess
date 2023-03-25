@@ -2,8 +2,8 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.square.Color;
-import chess.domain.square.Side;
 import chess.domain.square.Square;
+import chess.domain.square.Team;
 import chess.domain.state.State;
 import chess.domain.state.WaitingStart;
 
@@ -21,13 +21,13 @@ public class ChessGame {
     }
 
     public void move(final Square sourceSquare, final Square targetSquare) {
-        state.move(sourceSquare, targetSquare);
+        this.state = state.move(sourceSquare, targetSquare);
     }
 
-    public Map<Side, Double> status() {
+    public Map<Team, Double> status() {
         return Map.of(
-                Side.from(Color.WHITE), state.calculateScore(Side.from(Color.WHITE)),
-                Side.from(Color.BLACK), state.calculateScore(Side.from(Color.BLACK))
+                Team.from(Color.WHITE), state.calculateScore(Team.from(Color.WHITE)),
+                Team.from(Color.BLACK), state.calculateScore(Team.from(Color.BLACK))
         );
     }
 
@@ -39,7 +39,11 @@ public class ChessGame {
         return state.getBoard();
     }
 
-    public boolean isRunning() {
-        return state.isRunning();
+    public boolean isEnd() {
+        return state.isEnd();
+    }
+
+    public Team getWinner() {
+        return state.getWinner();
     }
 }
