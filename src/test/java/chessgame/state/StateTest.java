@@ -60,12 +60,11 @@ public class StateTest {
         State state = new White();
 
         @Test
-        @DisplayName("start 입력시 예외가 발생한다.")
+        @DisplayName("start 입력시 White상태가 유지된다.")
         void Should_ThrowException_When_WhiteState() {
             Board board = new Board(ChessBoardFactory.create());
-            assertThatThrownBy(() -> state.run(Command.of("start"), board))
-                    .isInstanceOf(UnsupportedOperationException.class)
-                    .hasMessage("start를 입력할 수 없습니다.");
+            assertThat(state.run(Command.of("start"), board))
+                    .isInstanceOf(White.class);
         }
 
         @Test
@@ -103,12 +102,11 @@ public class StateTest {
         State state = new Black();
 
         @Test
-        @DisplayName("start 입력시 예외가 발생한다.")
+        @DisplayName("start 입력시 상태가 유지된다.")
         void Should_ThrowException_When_BlackState() {
             Board board = new Board(ChessBoardFactory.create());
-            assertThatThrownBy(() -> state.run(Command.of("start"), board))
-                    .isInstanceOf(UnsupportedOperationException.class)
-                    .hasMessage("start를 입력할 수 없습니다.");
+            assertThat(state.run(Command.of("start"), board))
+                    .isInstanceOf(Black.class);
         }
 
         @Test
