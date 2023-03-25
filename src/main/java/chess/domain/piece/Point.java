@@ -17,11 +17,7 @@ public enum Point {
         this.point = BigDecimal.valueOf(point);
     }
 
-    public BigDecimal sum(Point otherPoint) {
-        return this.point.add(otherPoint.point);
-    }
-
-    public BigDecimal subtract(BigDecimal sum) {
-        return sum.subtract(this.point);
+    public BigDecimal valueOfPoint() {
+        return point;
     }
 }

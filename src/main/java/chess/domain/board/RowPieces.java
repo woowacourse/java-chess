@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceMatcher;
-import chess.domain.piece.Point;
 import chess.domain.piece.coordinate.Column;
 import chess.view.SymbolMatcher;
 import chess.domain.piece.Team;
@@ -12,6 +11,7 @@ import chess.domain.piece.coordinate.Coordinate;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class RowPieces implements Comparable<RowPieces> {
 
@@ -28,20 +28,24 @@ public class RowPieces implements Comparable<RowPieces> {
         this.pieces = pieces;
     }
 
-    public BigDecimal sumPiecePoints() {
-        Point firstPoint = pieces().get(0).point();
-        Point secondPoint = pieces().get(1).point();
-        BigDecimal sum = firstPoint.sum(secondPoint);
-        for (int i = 2; i < pieces.size(); i++) {
-            Point previousPoint = pieces.get(i - 1).point();
-            Point presentPoint = pieces.get(i).point();
-            sum = presentPoint.subtract(sum).add(presentPoint.sum(previousPoint));
+    public BigDecimal sumPiecePoints(Team team) {
+        List<Piece> piecesByTeam = makePiecesByTeam(team);
+        BigDecimal sum = BigDecimal.valueOf(0);
+
+        for (Piece piece : piecesByTeam) {
+            sum.add(piece.point().valueOfPoint());
         }
         return sum;
     }
 
-    public boolean checkPawnByColumn(Column column) {
-        return pieces.get(Column.indexFromColumn(column) - INDEX_NUMBER_APPLIER).isPawn();
+    private List<Piece> makePiecesByTeam(Team team) {
+        return pieces.stream()
+            .filter(piece -> piece.isSameTeam(team))
+            .collect(Collectors.toList());
+    }
+
+    public boolean checkPawnByColumn(Column column, Team team) {
+        return pieces.get(Column.indexFromColumn(column) - INDEX_NUMBER_APPLIER).isPawn(team);
     }
 
     @Override

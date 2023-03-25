@@ -30,8 +30,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
+    public boolean isPawn(Team team) {
+        return this.team.equals(team);
     }
 
     private boolean isPawnMovable(Piece targetPiece, int subtractedRow, int subtractedColumn) {

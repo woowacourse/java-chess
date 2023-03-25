@@ -12,7 +12,7 @@ public abstract class Piece {
     protected static final int ROW_INDEX = 1;
     protected static final int COLUMN_INDEX = 0;
 
-    private final Team team;
+    protected final Team team;
     private final Coordinate coordinate;
 
     protected Piece(Team team, Coordinate coordinate) {
@@ -65,7 +65,7 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isPawn(){
+    public boolean isPawn(Team team){
         return false;
     }
 
