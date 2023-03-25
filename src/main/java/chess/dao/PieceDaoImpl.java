@@ -35,7 +35,23 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public Optional<PieceDto> findByFileAndRank(final Long chessGameId, final File file, final Rank rank) {
-        return Optional.empty();
+        final String query = "select * from piece as p where p.chess_game_id = ? and p.file = ? and p.rank = ?";
+        final List<String> parameters = List.of(String.valueOf(chessGameId), file.name(), rank.name());
+
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            if (resultSet.next()) {
+                final PieceDto pieceDto = PieceDto.of(
+                        resultSet.getLong(1),
+                        resultSet.getLong(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6)
+                );
+                return Optional.of(pieceDto);
+            }
+            return Optional.empty();
+        }, parameters);
     }
 
     @Override

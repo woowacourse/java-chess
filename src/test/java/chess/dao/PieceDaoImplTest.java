@@ -8,13 +8,17 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.dto.ChessGameDto;
 import chess.dao.dto.PieceDto;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -54,6 +58,28 @@ class PieceDaoImplTest {
                 () -> assertThat(pieces.get(0).getFile()).isEqualTo("A"),
                 () -> assertThat(pieces.get(0).getRank()).isEqualTo("TWO")
         );
+    }
 
+    @Nested
+    class findByFileAndRank_메서드는 {
+
+        @Test
+        void 파일과_랭크에_해당하는_기물이_존재하면_기물을_조회한다() {
+            final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+            pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
+
+            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), File.A, Rank.TWO);
+
+            assertThat(piece).isNotEmpty();
+        }
+
+        @Test
+        void 파일과_랭크에_해당하는_기물이_존재하지_않으면_기물을_조회하지_않는다() {
+            final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+
+            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), File.A, Rank.TWO);
+
+            assertThat(piece).isEmpty();
+        }
     }
 }
