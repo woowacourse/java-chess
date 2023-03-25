@@ -2,6 +2,7 @@ package chess.domain;
 
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
 import static java.lang.Math.*;
 
 import chess.domain.piece.Pawn;
@@ -106,5 +107,30 @@ public class Board {
 
     public Map<Square, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public double calculateTotalScoreBy(Team team) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().getTeam() == team)
+                .mapToDouble(entry -> calculateScore(entry.getKey(), entry.getValue()))
+                .sum();
+    }
+
+    private double calculateScore(Square square, Piece piece) {
+        if (piece.isSameType(PAWN) || piece.isSameType(INITIAL_PAWN)) {
+            if (countPawnByFileAndTeam(square, piece) > 1) {
+                return 0.5;
+            }
+        }
+
+        return piece.score();
+    }
+
+    private long countPawnByFileAndTeam(Square square, Piece piece) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getKey().getFile() == square.getFile())
+                .filter(entry -> entry.getValue().isSameType(PAWN) || entry.getValue().isSameType(INITIAL_PAWN))
+                .filter(entry -> entry.getValue().getTeam() == piece.getTeam())
+                .count();
     }
 }

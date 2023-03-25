@@ -30,4 +30,8 @@ public abstract class Piece {
         }
         return name;
     }
+
+    public final double score() {
+        return pieceType.getScore();
+    }
 }

@@ -84,6 +84,31 @@ class BoardTest {
         assertThat(board.isSameColor(of(source), team)).isEqualTo(expected);
     }
 
+    @DisplayName("팀의 남아있는 말들로 점수를 계산한다.")
+    @Test
+    void calculate_score() {
+        board.move(of("a2"), of("a4"));
+        board.move(of("b7"), of("b5"));
+        board.move(of("a4"), of("b5"));
+        board.move(of("b2"), of("b4"));
+        board.move(of("a1"), of("a7"));
+
+
+        assertThat(board.calculateTotalScoreBy(Team.WHITE)).isEqualTo(37.0);
+        assertThat(board.calculateTotalScoreBy(Team.BLACK)).isEqualTo(36.0);
+    }
+
+    @DisplayName("세로줄에 같은 팀의 Pawn이 있으면 Pawn의 점수는 0.5점으로 한다.")
+    @Test
+    void calculate_score_by_Pawn() {
+        board.move(of("a2"), of("a4"));
+        board.move(of("b7"), of("b5"));
+        board.move(of("a4"), of("b5"));
+
+        assertThat(board.calculateTotalScoreBy(Team.WHITE)).isEqualTo(37.0);
+        assertThat(board.calculateTotalScoreBy(Team.BLACK)).isEqualTo(37.0);
+    }
+
     private Square of(String input) {
         File file = File.findFileBy(input.split("")[0]);
         Rank rank = Rank.findRankBy(input.split("")[1]);
