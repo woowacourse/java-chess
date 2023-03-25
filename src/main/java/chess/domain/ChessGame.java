@@ -21,6 +21,10 @@ public class ChessGame {
         return new ChessGame(Board.from(PieceCache.create()), Color.WHITE);
     }
 
+    public static ChessGame restart(Board board, Color color) {
+        return new ChessGame(board, color);
+    }
+
     public ChessGame next() {
         if (color == Color.WHITE) {
             return new ChessGame(board, Color.BLACK);
