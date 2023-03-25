@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import techcourse.fp.chess.dao.ChessGameDao;
 import techcourse.fp.chess.domain.BoardFactory;
 import techcourse.fp.chess.domain.ChessGame;
 import techcourse.fp.chess.domain.piece.Color;
+import techcourse.fp.chess.dto.request.ChessGameRequest;
 import techcourse.fp.chess.dto.request.CommandRequest;
 import techcourse.fp.chess.dto.response.BoardResponse;
 import techcourse.fp.chess.dto.response.ScoreResponse;
@@ -18,23 +20,34 @@ public final class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private final Map<Command, CommandRunner> commandMapper = new EnumMap<>(Command.class);
+    private final Map<Command, InitCommandRunner> initCommandMapper = new EnumMap<>(Command.class);
+    private final ChessGameDao chessGameDao;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView, final ChessGameDao chessGameDao) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameDao = chessGameDao;
+
+        initCommandMapper.put(Command.START, this::createNewGame);
+        initCommandMapper.put(Command.LOAD, this::loadGame);
+        initCommandMapper.put(Command.END, InitCommandRunner.end);
 
         commandMapper.put(Command.MOVE, this::move);
         commandMapper.put(Command.STATUS, this::checkStatus);
+        commandMapper.put(Command.SAVE, this::save);
         commandMapper.put(Command.END, CommandRunner.end);
     }
 
     public void run() {
         outputView.printInitialMessage();
 
-        final Command command = getInitialCommand();
+        Command command = getInitialCommand();
 
-        if (command == Command.START) {
-            startGame();
+        final InitCommandRunner initCommandRunner = initCommandMapper.get(command);
+        final ChessGame chessGame = initCommandRunner.execute();
+
+        while (command != Command.END) {
+            command = play(chessGame);
         }
 
         outputView.printEndMessage();
@@ -49,15 +62,24 @@ public final class ChessController {
         }
     }
 
-    private void startGame() {
+    private ChessGame createNewGame() {
         final ChessGame chessGame = new ChessGame(BoardFactory.generate());
         outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
-        Command command = Command.EMPTY;
+        return chessGame;
+    }
 
-        while (command != Command.END) {
-            command = play(chessGame);
+    private ChessGame loadGame() {
+        try {
+            final String s = inputView.readInitCommand();
+            final ChessGame chessGame = chessGameDao.findById(Integer.parseInt(s));
+            outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
+            return chessGame;
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
+            return loadGame();
         }
     }
+
 
     private Command play(final ChessGame chessGame) {
         try {
@@ -93,6 +115,13 @@ public final class ChessController {
             outputView.printErrorMessage(exception.getMessage());
         }
     }
+
+    private void save(final CommandRequest commandRequest, final ChessGame chessGame) {
+        final String gameName = inputView.readSaveGameName();
+        chessGameDao.save(ChessGameRequest.create(chessGame, gameName));
+        outputView.printSaveSuccessMessage();
+    }
+
 
     private void checkStatus(final CommandRequest commandRequest, final ChessGame chessGame) {
         List<ScoreResponse> scores = new ArrayList<>();

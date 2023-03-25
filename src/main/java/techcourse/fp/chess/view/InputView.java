@@ -16,6 +16,11 @@ public final class InputView {
         return scanner.nextLine().trim();
     }
 
+    public String readSaveGameName() {
+        System.out.println("저장할 게임의 이름을 입력해주세요.");
+        return scanner.nextLine();
+    }
+
     public CommandRequest readInPlayCommand() {
         final String input = scanner.nextLine();
 

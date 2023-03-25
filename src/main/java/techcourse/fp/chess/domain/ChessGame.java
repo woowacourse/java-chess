@@ -31,4 +31,8 @@ public class ChessGame {
     public double findScoreByColor(Color color) {
         return ScoreCalculator.calculate(board.getBoard(), color);
     }
+
+    public Color getTurn() {
+        return board.getTurn();
+    }
 }

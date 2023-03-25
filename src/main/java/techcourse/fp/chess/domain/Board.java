@@ -77,4 +77,8 @@ public final class Board {
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
     }
+
+    public Color getTurn() {
+        return turn.getCurrentTurn();
+    }
 }
