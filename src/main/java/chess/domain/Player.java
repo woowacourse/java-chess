@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -36,17 +37,14 @@ public class Player {
         return pieces.hasPosition(findPosition);
     }
 
-    public Position movePiece(
-            final List<Position> allPosition,
-            final Position findPosition,
-            final Position targetPosition
-    ) {
+    public Piece movePiece(final List<Position> allPosition, final Position findPosition, final Position targetPosition) {
         if (pieces.hasPosition(targetPosition)) {
             throw new IllegalArgumentException("상대 기물 위치로만 이동할 수 있습니다.");
         }
 
         Piece findPiece = findPiece(findPosition);
-        return findPiece.move(allPosition, targetPosition, color);
+        findPiece.move(allPosition, targetPosition, color);
+        return findPiece;
     }
 
     private Piece findPiece(final Position findPosition) {
@@ -58,8 +56,8 @@ public class Player {
         return pieces.getPieces().stream().noneMatch(piece -> piece.isSameShape(Shape.KING));
     }
 
-    public void removePiece(final Position removalPosition) {
-        pieces.remove(removalPosition);
+    public Optional<Piece> removePiece(final Position removalPosition) {
+        return pieces.remove(removalPosition);
     }
 
     public Score getTotalScore() {

@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -118,8 +119,14 @@ public final class Pieces {
                 .anyMatch(piece -> piece.isSamePosition(findPosition));
     }
 
-    public void remove(final Position changedPosition) {
-        pieces.removeIf(piece -> piece.isSamePosition(changedPosition));
+    public Optional<Piece> remove(final Position changedPosition) {
+        Optional<Piece> findPiece = pieces.stream()
+                .filter(piece -> piece.isSamePosition(changedPosition))
+                .findFirst();
+
+        findPiece.ifPresent(pieces::remove);
+
+        return findPiece;
     }
 
     public List<Piece> getPieces() {
