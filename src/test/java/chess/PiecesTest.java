@@ -114,11 +114,29 @@ class PiecesTest {
                 new Queen(new Position(File.E, Rank.ONE), Side.WHITE),
                 new Knight(new Position(File.B, Rank.ONE), Side.WHITE),
                 new Knight(new Position(File.B, Rank.EIGHT), Side.BLACK)));
-        
+
         // when
         final double whiteSideScore = pieces.getSumOfScoreBySide(Side.WHITE);
 
         // then
         assertThat(whiteSideScore).isEqualTo(16.5);
+    }
+
+    @Test
+    @DisplayName("파일 A 위에 있는 흰색 진영의 폰 개수를 반환한다.")
+    void getPawnCountByFile() {
+        // given
+        final Pieces pieces = new Pieces(() -> List.of(
+                new Pawn(new Position(File.A, Rank.ONE), Side.WHITE),
+                new Pawn(new Position(File.A, Rank.TWO), Side.WHITE),
+                new Pawn(new Position(File.A, Rank.FIVE), Side.WHITE),
+                new Pawn(new Position(File.B, Rank.TWO), Side.WHITE),
+                new Pawn(new Position(File.A, Rank.EIGHT), Side.BLACK)));
+
+        // when
+        final long countOfWhitePawnOnFileA = pieces.getPawnCountByFile(File.A, Side.WHITE);
+
+        // then
+        assertThat(countOfWhitePawnOnFileA).isEqualTo(3);
     }
 }
