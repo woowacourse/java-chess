@@ -17,7 +17,7 @@ public final class InitPawn extends PawnFeature {
     public Route findRoute(final Position source, final Position target) {
         validateMovable(source, target);
 
-        return new Route(getRoute(source, target));
+        return new Route(findPositions(source, target));
     }
 
     @Override
@@ -30,7 +30,7 @@ public final class InitPawn extends PawnFeature {
         return isPawnMovable(direction, diffY, diffX) || diffY == direction * 2 && diffX == 0;
     }
 
-    private List<Position> getRoute(final Position source, final Position target) {
+    private List<Position> findPositions(final Position source, final Position target) {
         if (target.diffY(source) == chooseDirection()) {
             return Collections.emptyList();
         }
