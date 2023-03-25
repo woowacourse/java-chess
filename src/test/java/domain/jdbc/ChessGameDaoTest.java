@@ -9,7 +9,6 @@ import domain.coordinate.PositionFactory;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import view.OutputView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ChessGameDaoTest {
 
     private static final String CHESS_GAME_ID = Integer.toString(Integer.MAX_VALUE);
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameChessGameDao chessGameDao = new ChessGameChessGameDao();
 
     @Test
     @DisplayName("Connection 을 확인한다.")
@@ -38,31 +37,16 @@ public class ChessGameDaoTest {
     }
 
     @Test
-    @DisplayName("생성한 Chess Game 의 정보를 가져온다.")
-    void selectNewGame() {
-        ChessGame insertionChessGame = new ChessGame(ChessBoard.generate());
-        ChessGame chessGame = chessGameDao.selectNewGame(insertionChessGame);
-
-        boolean equals = chessBoardEquals(insertionChessGame, chessGame);
-
-        assertThat(insertionChessGame.getColorTurn()).isEqualTo(chessGame.getColorTurn());
-        assertThat(equals).isTrue();
-    }
-
-    @Test
-    @DisplayName("이미 있는 Chess Game 의 정보를 가져온다.")
+    @DisplayName("Chess Game 의 정보를 가져온다.")
     void selectGame() {
-        // Given
         ChessGame insertionChessGame = new ChessGame(ChessBoard.generate());
         MovePosition movePosition = MovePosition.of(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
         insertionChessGame.move(movePosition);
         String saveId = chessGameDao.save(insertionChessGame);
 
-        // When
         ChessGame chessGame = chessGameDao.select(saveId);
         boolean equals = chessBoardEquals(insertionChessGame, chessGame);
 
-        // Then
         assertThat(chessGame.getColorTurn()).isEqualTo(Color.BLACK);
         assertThat(equals).isTrue();
     }

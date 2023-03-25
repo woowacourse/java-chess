@@ -24,12 +24,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class ChessGameDao implements JdbcDao {
+public class ChessGameChessGameDao implements JdbcChessGameDao {
 
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
@@ -119,53 +118,67 @@ public class ChessGameDao implements JdbcDao {
     }
 
     @Override
-    public ChessGame selectNewGame(ChessGame chessGame) {
-        String id = save(chessGame);
-        return select(id);
-    }
-
-    @Override
     public ChessGame select(String id) {
-        String query1 = "SELECT turn FROM chess_game where id = ?";
-        String query2 = "SELECT x, y, piece_type, piece_color FROM chess_board WHERE game_id = ?";
         try (Connection connection = getConnection()){
-            PreparedStatement p1 = getConnection().prepareStatement(query1);
-            PreparedStatement p2 = getConnection().prepareStatement(query2);
-            ChessBoard chessBoard = ChessBoard.generateEmptyBoard();
-            p1.setString(1, id);
-            p2.setString(1, id);
-            ResultSet resultSet = p2.executeQuery();
-
-            while (resultSet.next()) {
-                int x = Integer.parseInt(resultSet.getString("x"));
-                int y = Integer.parseInt(resultSet.getString("y"));
-                String pieceType = resultSet.getString("piece_type");
-                String pieceColor = resultSet.getString("piece_color");
-                Color color = Color.fromName(pieceColor);
-                List<Type> types = new ArrayList<>(List.of(PieceType.values()));
-                types.addAll(List.of(EmptyType.values()));
-                Type resultType = types.stream()
-                        .filter(type -> pieceType.equals(type.name()))
-                        .findFirst()
-                        .orElseThrow(IllegalAccessError::new);
-                chessBoard.findSquare(Position.of(x, y)).bePiece(new Square(squareStatusMapper.get(resultType).apply(color)));
-            }
-
-            resultSet = p1.executeQuery();
-            String turn = null;
-
-            if (resultSet.next()) {
-                turn = resultSet.getString("turn");
-            }
-
-            return new ChessGame(Color.fromName(turn), chessBoard);
+            Color turn = getTurn(id, connection);
+            ChessBoard chessBoard = getChessBoard(id, connection);
+            return new ChessGame(turn, chessBoard);
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
     }
 
+    private Color getTurn(String id, Connection connection) throws SQLException {
+        PreparedStatement selectChessGame = connection.prepareStatement("SELECT turn FROM chess_game where id = ?");
+        selectChessGame.setString(1, id);
+        ResultSet selectChessGameSet = selectChessGame.executeQuery();
+        String turn = null;
+
+        if (selectChessGameSet.next()) {
+            turn = selectChessGameSet.getString("turn");
+        }
+
+        return Color.fromName(turn);
+    }
+
+    private ChessBoard getChessBoard(String id, Connection connection) throws SQLException {
+        PreparedStatement selectChessBoard = connection.prepareStatement(
+                "SELECT x, y, piece_type, piece_color FROM chess_board WHERE game_id = ?"
+        );
+        ChessBoard chessBoard = ChessBoard.generateEmptyBoard();
+        selectChessBoard.setString(1, id);
+        ResultSet selectChessBoardSet = selectChessBoard.executeQuery();
+        return getChessBoardByQueryResult(chessBoard, selectChessBoardSet);
+    }
+
+    private ChessBoard getChessBoardByQueryResult(ChessBoard chessBoard, ResultSet selectChessBoardSet) throws SQLException {
+        while (selectChessBoardSet.next()) {
+            int x = Integer.parseInt(selectChessBoardSet.getString("x"));
+            int y = Integer.parseInt(selectChessBoardSet.getString("y"));
+            String pieceType = selectChessBoardSet.getString("piece_type");
+            String pieceColor = selectChessBoardSet.getString("piece_color");
+            Position position = Position.of(x, y);
+            chessBoard.findSquare(position).bePiece(getSquare(pieceType, pieceColor));
+        }
+
+        return chessBoard;
+    }
+
+    private Square getSquare(String pieceType, String pieceColor) {
+        Color color = Color.fromName(pieceColor);
+
+        List<Type> types = new ArrayList<>(List.of(PieceType.values()));
+        types.addAll(List.of(EmptyType.values()));
+
+        Type resultType = types.stream()
+                .filter(type -> pieceType.equals(type.name()))
+                .findFirst()
+                .orElseThrow(IllegalAccessError::new);
+        return new Square(squareStatusMapper.get(resultType).apply(color));
+    }
+
     @Override
-    public void update() { // update 는 이제, turn, (Position, Square)
+    public void update(String id, ChessGame chessGame) {
 
     }
 

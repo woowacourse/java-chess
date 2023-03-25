@@ -2,15 +2,13 @@ package domain.jdbc;
 
 import domain.ChessGame;
 
-public interface JdbcDao {
+public interface JdbcChessGameDao {
 
     String save(ChessGame chessGame);
 
-    ChessGame selectNewGame(ChessGame chessGame);
-
     ChessGame select(String id);
 
-    void update();
+    void update(String id, ChessGame chessGame);
 
     void delete();
 }
