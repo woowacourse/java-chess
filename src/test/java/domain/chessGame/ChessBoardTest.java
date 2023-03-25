@@ -2,7 +2,6 @@ package domain.chessGame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.entry;
 
 import domain.piece.Bishop;
 import domain.piece.BlackPawn;
