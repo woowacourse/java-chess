@@ -55,11 +55,10 @@ public final class OutputView {
     }
 
     public void printGameInfos(final List<ChessGameInfo> info) {
-        System.out.println("id - 게임 이름                              - 차례      -  저장일자");
+        System.out.printf("%-5s %-20s %-10s %-15s\n", "id", "게임명", "차례","저장 일자");
         for (ChessGameInfo chessGameInfo : info) {
-            System.out.printf("%s - %-20s                - %s      -  %s", chessGameInfo.getId(), chessGameInfo.getName(),
+            System.out.printf("%-5s %-20s %-10s %-15s\n", chessGameInfo.getId(), chessGameInfo.getName(),
                     chessGameInfo.getTurn(), chessGameInfo.getCreateTime());
-            System.out.println();
         }
 
         System.out.println("실행하길 원하는 게임의 id를 입력해주세요");
