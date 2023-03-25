@@ -1,7 +1,5 @@
 package chess.dao;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.PieceType.KING;
@@ -70,7 +68,7 @@ class PieceDaoImplTest {
             final PieceDaoImpl pieceDao = new PieceDaoImpl();
             pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
 
-            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+            final Optional<PieceDto> piece = pieceDao.findBySquare(chessGameDto.getId(), A_TWO);
 
             assertThat(piece).isNotEmpty();
         }
@@ -79,7 +77,7 @@ class PieceDaoImplTest {
         void 파일과_랭크에_해당하는_기물이_존재하지_않으면_기물을_조회하지_않는다() {
             final PieceDaoImpl pieceDao = new PieceDaoImpl();
 
-            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+            final Optional<PieceDto> piece = pieceDao.findBySquare(chessGameDto.getId(), A_TWO);
 
             assertThat(piece).isEmpty();
         }
@@ -89,11 +87,11 @@ class PieceDaoImplTest {
     void 기물의_색과_타입을_수정한다() {
         final PieceDaoImpl pieceDao = new PieceDaoImpl();
         pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
-        final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+        final Optional<PieceDto> piece = pieceDao.findBySquare(chessGameDto.getId(), A_TWO);
 
-        pieceDao.update(piece.get().getId(), BLACK, KING);
+        pieceDao.update(chessGameDto.getId(), A_TWO, new Piece(BLACK, KING));
 
-        final Optional<PieceDto> updatePiece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+        final Optional<PieceDto> updatePiece = pieceDao.findBySquare(chessGameDto.getId(), A_TWO);
         assertAll(
                 () -> assertThat(updatePiece).isNotEmpty(),
                 () -> assertThat(updatePiece.get().getId()).isEqualTo(piece.get().getId()),
@@ -108,9 +106,9 @@ class PieceDaoImplTest {
     void 기물을_삭제한다() {
         final PieceDaoImpl pieceDao = new PieceDaoImpl();
         pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
-        final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+        final Optional<PieceDto> piece = pieceDao.findBySquare(chessGameDto.getId(), A_TWO);
 
-        pieceDao.delete(piece.get().getId());
+        pieceDao.delete(chessGameDto.getId(), A_TWO);
 
         final List<PieceDto> pieces = pieceDao.findAllByChessGameId(chessGameDto.getId());
         assertThat(pieces).hasSize(0);

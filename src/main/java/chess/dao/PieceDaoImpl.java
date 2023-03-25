@@ -30,8 +30,10 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public Optional<PieceDto> findByFileAndRank(final Long chessGameId, final File file, final Rank rank) {
-        final String query = "select * from piece as p where p.chess_game_id = ? and p.file = ? and p.rank = ?";
+    public Optional<PieceDto> findBySquare(final Long chessGameId, final Square square) {
+        final String query = "select * from piece where chess_game_id = ? and file = ? and `rank` = ?";
+        final File file = square.getFile();
+        final Rank rank = square.getRank();
         final List<String> parameters = List.of(String.valueOf(chessGameId), file.name(), rank.name());
 
         return jdbcTemplate.executeQuery(query, resultSet -> {
@@ -52,7 +54,7 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public List<PieceDto> findAllByChessGameId(final Long chessGameId) {
-        final String query = "select * from piece as p where p.chess_game_id = ?";
+        final String query = "select * from piece where chess_game_id = ?";
         final List<String> parameters = List.of(String.valueOf(chessGameId));
 
         return jdbcTemplate.executeQuery(query, resultSet -> {
@@ -74,16 +76,24 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void update(final Long id, final Color color, final PieceType pieceType) {
-        final String query = "update piece set color = ?, type = ? where id = ?";
-        final List<String> parameters = List.of(color.name(), pieceType.name(), String.valueOf(id));
+    public void update(final Long chessGameId, final Square square, final Piece piece) {
+        final String query = "update piece set color = ?, type = ? where chess_game_id = ? and file = ? and `rank` = ?";
+        final File file = square.getFile();
+        final Rank rank = square.getRank();
+        final Color color = piece.getColor();
+        final PieceType pieceType = piece.getPieceType();
+        final List<String> parameters = List.of(
+                color.name(), pieceType.name(), String.valueOf(chessGameId), file.name(), rank.name()
+        );
         jdbcTemplate.executeUpdate(query, parameters);
     }
 
     @Override
-    public void delete(final Long id) {
-        final String query = "delete from piece where id = ?";
-        final List<String> parameters = List.of(String.valueOf(id));
+    public void delete(final Long chessGameId, final Square square) {
+        final String query = "delete from piece where chess_game_id = ? and file = ? and `rank` = ?";
+        final File file = square.getFile();
+        final Rank rank = square.getRank();
+        final List<String> parameters = List.of(String.valueOf(chessGameId), file.name(), rank.name());
         jdbcTemplate.executeUpdate(query, parameters);
     }
 }
