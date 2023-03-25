@@ -22,8 +22,6 @@ public class Coordinate {
     }
 
     public int compareByColumn(Coordinate otherCoordinate){
-        System.out.println("otherCorNum : " +otherCoordinate.column.ordinal());
-        System.out.println("thisCorNum : "+this.column.ordinal());
         return Integer.compare(otherCoordinate.column.ordinal(),this.column.ordinal());
     }
     

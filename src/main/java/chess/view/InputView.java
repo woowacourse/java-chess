@@ -3,9 +3,11 @@ package chess.view;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -21,11 +23,11 @@ public class InputView {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
     }
 
-    public static String[] inputCommand() {
+    public static List<String> inputCommand() {
         try {
             String inputCommand = bufferedReader.readLine();
             validateInputCommand(inputCommand);
-            return inputCommand.split(" ");
+            return Arrays.stream(inputCommand.split(" ")).collect(Collectors.toList());
         } catch (IOException e) {
             return inputCommand();
         }
@@ -67,23 +69,24 @@ public class InputView {
         }
     }
 
-    public static String extractCommand(String[] input) {
-        return input[COMMAND_INDEX];
+    public static String extractCommand(List<String> input) {
+        return input.get(COMMAND_INDEX);
     }
 
-    public static String[] extractSource(String[] coordinates) {
-        return coordinates[SOURCE_COORDINATE_INDEX].split("");
+    public static List<String> extractSource(List<String> sourceCoordinates) {
+        return Arrays.stream(sourceCoordinates.get(SOURCE_COORDINATE_INDEX).split("")).collect(Collectors.toList());
     }
 
-    public static String[] extractDestination(String[] coordinates) {
-        return coordinates[DESTINATION_COORDINATE_INDEX].split("");
+    public static List<String> extractDestination(List<String> destinationCoordinates) {
+        return Arrays.stream(destinationCoordinates.get(DESTINATION_COORDINATE_INDEX).split(""))
+            .collect(Collectors.toList());
     }
 
-    public static String extractColumn(String[] coordinate) {
-        return coordinate[COLUMN_INDEX];
+    public static String extractColumn(List<String> coordinate) {
+        return coordinate.get(COLUMN_INDEX);
     }
 
-    public static String extractRow(String[] coordinate) {
-        return coordinate[ROW_INDEX];
+    public static String extractRow(List<String> coordinate) {
+        return coordinate.get(ROW_INDEX);
     }
 }
