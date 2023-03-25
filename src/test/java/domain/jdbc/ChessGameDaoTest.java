@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessGameDaoTest {
 
@@ -65,6 +66,17 @@ public class ChessGameDaoTest {
 
         assertThat(chessGameAfterUpdate.getColorTurn()).isEqualTo(chessGame.getColorTurn());
         assertThat(equals).isTrue();
+    }
+
+    @Test
+    @DisplayName("Chess Game 을 delete 한다.")
+    void deleteGame() {
+        String saveId = chessGameDao.save(new ChessGame(ChessBoard.generate()));
+        chessGameDao.delete(saveId);
+
+        assertThatThrownBy(() -> chessGameDao.select(saveId))
+                .isInstanceOf(RuntimeException.class);
+
     }
 
     private boolean chessBoardEquals(ChessGame insertionChessGame, ChessGame chessGame) {

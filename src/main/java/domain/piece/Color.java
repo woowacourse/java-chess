@@ -10,14 +10,14 @@ public enum Color {
         return Arrays.stream(values())
                 .filter(value -> value != this && value != NONE)
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(IllegalStateException::new);
     }
 
     public static Color fromName(String name) {
         return Arrays.stream(values())
                 .filter(value -> value.name().equals(name))
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(IllegalStateException::new);
     }
 
     public boolean isWhite() {

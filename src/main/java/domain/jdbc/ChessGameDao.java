@@ -35,6 +35,7 @@ public class ChessGameDao implements JdbcChessGameDao {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    private static final int CHESS_BOARD_SIZE = 8;
 
     private static final Map<Type, Function<Color, SquareStatus>> squareStatusMapper = Map.of(
             EmptyType.EMPTY, color -> new Empty(),
@@ -45,7 +46,7 @@ public class ChessGameDao implements JdbcChessGameDao {
             PieceType.KNIGHT, Knight::new,
             PieceType.QUEEN, Queen::new,
             PieceType.ROOK, Rook::new
-    );
+    ); // 이건 따로 분리해야 할까요?
 
     public Connection getConnection() {
         try {
@@ -67,7 +68,7 @@ public class ChessGameDao implements JdbcChessGameDao {
         }
     }
 
-    public String getLastInsertId(Connection connection) {
+    private String getLastInsertId(Connection connection) {
         try {
             return getId(connection);
         } catch (SQLException exception) {
@@ -123,8 +124,8 @@ public class ChessGameDao implements JdbcChessGameDao {
             Color turn = getTurn(id, connection);
             ChessBoard chessBoard = getChessBoard(id, connection);
             return new ChessGame(turn, chessBoard);
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+        } catch (SQLException | IllegalStateException exception) {
+            throw new RuntimeException(exception.getMessage());
         }
     }
 
@@ -180,38 +181,55 @@ public class ChessGameDao implements JdbcChessGameDao {
     @Override
     public void update(String id, ChessGame chessGameAfterProcess) {
         ChessGame chessGameBySelect = select(id);
-        String q1 = "UPDATE chess_game SET turn = ? WHERE id = ?";
-        String q2 = "UPDATE chess_board SET piece_type = ?, piece_color = ? WHERE x = ? and y = ? and game_id = ?";
 
         try (Connection connection = getConnection()){
-            PreparedStatement p1 = connection.prepareStatement(q1);
-            PreparedStatement p2 = connection.prepareStatement(q2);
-            p1.setString(1, chessGameAfterProcess.getColorTurn().name());
-            p1.setString(2, id);
-            p1.executeUpdate();
-            p2.setString(5, id);
+            updateChessGameTurn(id, chessGameAfterProcess, connection);
+            updateChessBoard(id, chessGameAfterProcess, chessGameBySelect, connection);
+        } catch (SQLException | IllegalStateException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
 
-            for (int x = 0; x < 8; x++) {
-                for (int y = 0; y < 8; y++) {
-                    Position findPosition = Position.of(x, y);
-                    Square square1 = new Square(chessGameBySelect.getChessBoard()
-                            .findSquare(findPosition)
-                            .getSquareStatus());
-                    Square square2 = new Square(chessGameAfterProcess.getChessBoard()
-                            .findSquare(findPosition)
-                            .getSquareStatus());
+    private void updateChessGameTurn(String id, ChessGame chessGameAfterProcess, Connection connection) throws SQLException {
+        PreparedStatement chessGameTurnUpdate = connection.prepareStatement(
+                "UPDATE chess_game SET turn = ? WHERE id = ?"
+        );
+        chessGameTurnUpdate.setString(1, chessGameAfterProcess.getColorTurn().name());
+        chessGameTurnUpdate.setString(2, id);
+        chessGameTurnUpdate.executeUpdate();
+    }
 
-                    if (isNotSameSquare(square1, square2)) {
-                        p2.setString(1, square2.getType().name());
-                        p2.setString(2, square2.getColor().name());
-                        p2.setString(3, Integer.toString(x));
-                        p2.setString(4, Integer.toString(y));
-                        p2.executeUpdate();
-                    }
-                }
-            }
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+    private void updateChessBoard(String id, ChessGame chessGameAfterProcess, ChessGame chessGameBySelect, Connection connection) throws SQLException {
+        PreparedStatement chessBoardUpdate = connection.prepareStatement(
+                "UPDATE chess_board SET piece_type = ?, piece_color = ? WHERE x = ? and y = ? and game_id = ?"
+        );
+        chessBoardUpdate.setString(5, id);
+
+        for (int x = 0; x < CHESS_BOARD_SIZE; x++) {
+            updateEachColumnInRow(chessBoardUpdate, x, chessGameAfterProcess, chessGameBySelect);
+        }
+    }
+
+    private void updateEachColumnInRow(PreparedStatement chessBoardUpdate, int x, ChessGame chessGameAfterProcess, ChessGame chessGameBySelect) throws SQLException {
+        for (int y = 0; y < CHESS_BOARD_SIZE; y++) {
+            Position findPosition = Position.of(x, y);
+            Square square1 = new Square(chessGameBySelect.getChessBoard()
+                    .findSquare(findPosition)
+                    .getSquareStatus());
+            Square square2 = new Square(chessGameAfterProcess.getChessBoard()
+                    .findSquare(findPosition)
+                    .getSquareStatus());
+            updateIfNotSameSquare(chessBoardUpdate, x, y, square1, square2);
+        }
+    }
+
+    private void updateIfNotSameSquare(PreparedStatement chessBoardUpdate, int x, int y, Square square1, Square square2) throws SQLException {
+        if (isNotSameSquare(square1, square2)) {
+            chessBoardUpdate.setString(1, square2.getType().name());
+            chessBoardUpdate.setString(2, square2.getColor().name());
+            chessBoardUpdate.setString(3, Integer.toString(x));
+            chessBoardUpdate.setString(4, Integer.toString(y));
+            chessBoardUpdate.executeUpdate();
         }
     }
 
@@ -229,8 +247,14 @@ public class ChessGameDao implements JdbcChessGameDao {
     }
 
     @Override
-    public void delete() { // cascade 로 생성해서, 그냥 delete game id
-
+    public void delete(String id) {
+        try (Connection connection = getConnection()) {
+            PreparedStatement deleteChessGame = connection.prepareStatement("DELETE FROM chess_game WHERE id = ?");
+            deleteChessGame.setString(1, id);
+            deleteChessGame.executeUpdate();
+        } catch (SQLException | IllegalStateException exception) {
+            throw new IllegalStateException(exception.getMessage());
+        }
     }
 
 }

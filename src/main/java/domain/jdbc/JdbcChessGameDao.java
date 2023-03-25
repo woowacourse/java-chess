@@ -10,5 +10,5 @@ public interface JdbcChessGameDao {
 
     void update(String id, ChessGame chessGame);
 
-    void delete();
+    void delete(String id);
 }
