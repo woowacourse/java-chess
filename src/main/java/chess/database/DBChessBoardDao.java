@@ -73,4 +73,15 @@ public final class DBChessBoardDao implements ChessGameDao {
         }
         return positions;
     }
+
+    @Override
+    public void delete() {
+        var query = "TRUNCATE move_position";
+        try (var connection= getConnection();
+        var preparedStatement=connection.prepareStatement(query)){
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

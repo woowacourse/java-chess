@@ -9,4 +9,6 @@ public interface ChessGameDao {
     void save(final Position fromPosition, final Position toPosition);
 
     List<Position> select();
+
+    void delete();
 }

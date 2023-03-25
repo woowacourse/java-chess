@@ -44,6 +44,7 @@ public final class ChessController {
         while (game.isKingsLive() && gameCommand != ChessCommand.END) {
             gameCommand = play(game);
         }
+        chessService.deleteData(game.isKingsLive());
         OutputView.printWinner(game.getWinnerCamp());
     }
 

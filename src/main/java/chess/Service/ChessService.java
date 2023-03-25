@@ -29,4 +29,10 @@ public class ChessService {
         }
         return game;
     }
+
+    public void deleteData(boolean isKingLive) {
+        if (!isKingLive) {
+            dbChessBoardDao.delete();
+        }
+    }
 }
