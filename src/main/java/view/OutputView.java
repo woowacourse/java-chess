@@ -78,4 +78,8 @@ public final class OutputView {
         }
         System.out.println(SAME_SCORE_MESSAGE);
     }
+
+    public static void printExceptionMessage(String message) {
+        System.out.println(message);
+    }
 }

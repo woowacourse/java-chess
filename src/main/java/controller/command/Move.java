@@ -19,12 +19,27 @@ public class Move extends GameCommand {
 
     @Override
     public Command execute() {
+        try {
+            validateCommandInputSize();
+            executeMove();
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+        }
+        return readNextCommand();
+    }
+
+    private void executeMove() {
         Position start = Position.of(commandInput.get(1));
         Position end = Position.of(commandInput.get(2));
 
         chessBoard.movePiece(start, end);
         OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
-        return readNextCommand();
+    }
+
+    private void validateCommandInputSize() {
+        if (commandInput.size() != 3) {
+            throw new IllegalArgumentException("[ERROR] Move 명령어 입력이 적합한 형식이 아닙니다.");
+        }
     }
 
     @Override

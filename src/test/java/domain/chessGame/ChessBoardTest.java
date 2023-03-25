@@ -84,8 +84,8 @@ class ChessBoardTest {
 
         Map<Position, Piece> setupBoard = Map.of(
                 Position.of(2, 2), new Rook(Color.WHITE),
-                Position.of(4, 2), new Rook(Color.BLACK),
-                Position.of(6, 2), new Rook(Color.BLACK));
+                Position.of(4, 2), new Rook(Color.WHITE),
+                Position.of(4, 4), new Bishop(Color.WHITE));
 
         @Test
         @DisplayName("출발 좌표에 말이 존재하지 않는 경우 예외가 발생한다.")
@@ -121,7 +121,7 @@ class ChessBoardTest {
             // given
             ChessBoard chessBoard = new ChessBoard(setupBoard);
             Position start = Position.of(4, 2);
-            Position end = Position.of(6, 2);
+            Position end = Position.of(4, 4);
 
             // then
             assertThatThrownBy(() -> chessBoard.movePiece(start, end))

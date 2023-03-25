@@ -21,7 +21,7 @@ public enum ColumnToNumber {
         try {
             return convertAlphabetToColumnNumber(alphabet).getNumber();
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("[ERROR] 사용할 수 없는 명령어를 입력했습니다.");
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 열 좌표값입니다.");
         }
     }
 

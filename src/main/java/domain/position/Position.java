@@ -32,10 +32,17 @@ public final class Position {
     }
 
     public static Position of(String inputPoint) {
+        validateInputPointSize(inputPoint);
         int row = RowToNumber.of(inputPoint.charAt(ROW_INDEX));
         int column = ColumnToNumber.of(inputPoint.charAt(COLUMN_INDEX));
 
         return Position.of(row, column);
+    }
+
+    private static void validateInputPointSize(String inputPoint) {
+        if(inputPoint.length() != 2) {
+            throw new IllegalArgumentException("[ERROR] 입력된 좌표값 길이가 적절하지 않습니다.");
+        }
     }
 
     public static Position of(int row, int column) {
