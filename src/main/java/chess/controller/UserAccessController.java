@@ -60,7 +60,9 @@ public class UserAccessController {
         if (roomId == NEW_ROOM_COMMAND) {
             return makeNewRoomToPlay(user);
         }
-        return userAccessService.findUserSelectionRoom(roomId, user);
+        Room room = userAccessService.findUserSelectionRoom(roomId, user);
+        outputView.printPlaySavedRoomMessage();
+        return room;
     }
 
     private MoveCommand startChessGame(Room room) {
