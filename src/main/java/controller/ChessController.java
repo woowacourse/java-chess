@@ -16,9 +16,6 @@ import java.util.function.BiConsumer;
 
 public class ChessController {
 
-    public static final int START_COORDINATE_INDEX = 1;
-    public static final int END_COORDINATE_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
 
