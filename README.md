@@ -1,5 +1,20 @@
 # 기능목록
 
+## DB 정보
+
+chess 라는 schema 를 통해서 실제 게임을 관리합니다  
+chess_test 라는 schema 를 통해서 테스트를 관리합니다
+
+```java
+System.getenv("password");
+```
+
+를 통해서 mysql 패스워드를 관리합니다  
+env 에 password 로 패스워드를 등록해주세요
+
+script.sql  
+에 테이블 생성 스크립트가 있습니다
+
 ## 2단계
 
 - view
