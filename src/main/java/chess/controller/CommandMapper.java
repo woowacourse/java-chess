@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandMapper<K, V> {
-
     private final Map<K, V> commandMapper = new HashMap<>();
 
     public CommandMapper(final Map<K, V> commandMapper) {

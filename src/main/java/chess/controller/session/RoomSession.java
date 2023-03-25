@@ -1,7 +1,6 @@
 package chess.controller.session;
 
 public class RoomSession {
-
     private static RoomSession INSTANCE = new RoomSession();
 
     private ThreadLocal<Room> session = new ThreadLocal<>();

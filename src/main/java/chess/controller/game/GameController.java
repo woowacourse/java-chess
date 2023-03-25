@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 public class GameController implements Controller {
-
     private final CommandMapper<GameCommand, GameAction> commandMapper;
 
     public GameController() {

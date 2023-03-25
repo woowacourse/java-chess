@@ -8,7 +8,6 @@ import chess.controller.session.UserSession;
 import java.util.Map;
 
 public class ControllerFactory {
-
     private static final Controller INSTANCE;
 
     static {

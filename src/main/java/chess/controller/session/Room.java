@@ -1,7 +1,6 @@
 package chess.controller.session;
 
 public class Room {
-
     private final int id;
     private final String name;
 

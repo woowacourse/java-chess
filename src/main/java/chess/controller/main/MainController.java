@@ -8,7 +8,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class MainController implements Controller {
-
     private final UserSession userSession;
     private final RoomSession roomSession;
     private final CommandMapper<MainCommand, Controller> commandMapper;
