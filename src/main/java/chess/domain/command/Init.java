@@ -16,16 +16,12 @@ import chess.domain.position.Position;
 
 public class Init implements CommandStatus {
 
-    private final ChessGame chessGame;
-
-    public Init(ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
-
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        return new Play(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
+        JdbcChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
+        Long gameId = chessGameDao.saveNewChessGame();
+        return new Play(new ChessGame(gameId, board, Turn.WHITE));
     }
 
     @Override
