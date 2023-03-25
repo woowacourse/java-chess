@@ -2,20 +2,22 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 
+import java.util.List;
+
 public abstract class Command {
 
-    private final ChessGame chessGame;
-    private final GameCommand gameCommand;
+    protected final ChessGame chessGame;
+    protected final CommandType commandType;
 
-    protected Command(ChessGame chessGame, GameCommand gameCommand) {
+    protected Command(ChessGame chessGame, CommandType commandType) {
         this.chessGame = chessGame;
-        this.gameCommand = gameCommand;
+        this.commandType = commandType;
     }
 
-    public abstract void execute();
+    public abstract Command execute(List<String> input);
 
-    public boolean isSameType(GameCommand gameCommand) {
-        return this.gameCommand == gameCommand;
+    public boolean isSameType(CommandType commandType) {
+        return this.commandType == commandType;
     }
 
     public ChessGame getChessGame() {
