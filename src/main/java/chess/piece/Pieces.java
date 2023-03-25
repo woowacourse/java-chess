@@ -4,6 +4,7 @@ import chess.board.Position;
 import chess.piece.type.Piece;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pieces {
 
@@ -41,5 +42,22 @@ public class Pieces {
             throw new IllegalArgumentException("[ERROR] 지우려고 하는 기물이 존재하지 않습니다.");
         }
         pieces.remove(pieceToRemove);
+    }
+
+    public double getSumOfScoreBySide(final Side side) {
+        List<Piece> piecesBySide = getPiecesBySide(side);
+        return scoreBySide(piecesBySide);
+    }
+
+    private List<Piece> getPiecesBySide(final Side side) {
+        return pieces.stream()
+                .filter(piece -> piece.getSide() == side)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private double scoreBySide(final List<Piece> piecesOfTeam) {
+        return piecesOfTeam.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 }
