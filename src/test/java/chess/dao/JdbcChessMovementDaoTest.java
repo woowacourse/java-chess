@@ -41,10 +41,7 @@ class JdbcChessMovementDaoTest {
     @BeforeEach
     void beforeEach() {
         dao = new JdbcChessMovementDao(connection);
-    }
 
-    @AfterEach
-    void afterEach() {
         try (final PreparedStatement preparedStatement = connection.prepareStatement("TRUNCATE TABLE movement")) {
             preparedStatement.execute();
         } catch (SQLException e) {
