@@ -9,7 +9,7 @@ import java.util.function.BiPredicate;
 public enum Situation {
 
     COLLEAGUE((x, y) -> x.getColor() == y.getColor()),
-    ENEMY((x, y) -> x.getColor() != Color.NEUTRAL && x.getColor() != y.getColor()),
+    ENEMY((x, y) -> y.getColor() != Color.NEUTRAL && x.getColor() != y.getColor()),
     NEUTRAL((x, y) -> y.getColor() == Color.NEUTRAL)
     ;
 
