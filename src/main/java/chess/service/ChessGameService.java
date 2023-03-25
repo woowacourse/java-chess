@@ -33,12 +33,14 @@ public class ChessGameService {
         if (findResponseDto == null) {
             return null;
         }
-        return new ChessGame(findResponseDto.getId(), new Board(pieceDao.findAllById(TEMPORAL_ID)));
+        return new ChessGame(findResponseDto.getId(),
+                new Board(pieceDao.findAllById(TEMPORAL_ID)), findResponseDto.getTurn());
     }
 
     public ChessGame save() {
-        final Long id = chessGameDao.save(new SaveRequestDto(Turn.WHITE));
-        final ChessGame chessGame = new ChessGame(id, BoardFactory.generateBoard());
+        Turn turn = Turn.WHITE;
+        final Long id = chessGameDao.save(new SaveRequestDto(turn));
+        final ChessGame chessGame = new ChessGame(id, BoardFactory.generateBoard(), turn);
         final Map<Position, Piece> board = chessGame.getBoard().getBoard();
 
         for (final Map.Entry<Position, Piece> entry : board.entrySet()) {

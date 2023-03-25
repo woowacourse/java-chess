@@ -7,16 +7,16 @@ import java.util.List;
 
 public class ChessGame {
 
-    private long id;
+    private final long id;
     private State state;
     private Turn turn;
     private final Board board;
 
-    public ChessGame(final long id, final Board board) {
+    public ChessGame(final long id, final Board board, Turn turn) {
         this.id = id;
         this.state = State.RUN;
         this.board = board;
-        this.turn = Turn.WHITE;
+        this.turn = turn;
     }
 
     public void start() {

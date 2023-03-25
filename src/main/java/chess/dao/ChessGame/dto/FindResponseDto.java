@@ -15,4 +15,8 @@ public class FindResponseDto {
     public Long getId() {
         return id;
     }
+
+    public Turn getTurn() {
+        return turn;
+    }
 }
