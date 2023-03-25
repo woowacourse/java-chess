@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
+    private static final int BISHOP_SCORE = 3;
+
     private final List<Direction> directions;
 
     public Bishop(final Position position, final Side side) {
@@ -51,5 +53,10 @@ public class Bishop extends Piece {
     @Override
     public boolean canPassThrough() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return BISHOP_SCORE;
     }
 }

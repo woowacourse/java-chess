@@ -9,6 +9,8 @@ import java.util.List;
 
 public class King extends Piece {
 
+    private static final int KING_SCORE = 0;
+
     private final List<Direction> directions;
 
     public King(final Position position, final Side side) {
@@ -52,4 +54,8 @@ public class King extends Piece {
         return false;
     }
 
+    @Override
+    public double getScore() {
+        return KING_SCORE;
+    }
 }

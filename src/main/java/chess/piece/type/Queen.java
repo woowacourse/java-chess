@@ -8,7 +8,10 @@ import java.util.List;
 
 public class Queen extends Piece {
 
+    private static final int QUEEN_SCORE = 9;
+
     private final List<Direction> directions;
+
     public Queen(final Position position, final Side side) {
         super(position, side);
         this.directions = initDirections();
@@ -54,5 +57,10 @@ public class Queen extends Piece {
     @Override
     public boolean canPassThrough() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return QUEEN_SCORE;
     }
 }

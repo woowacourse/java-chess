@@ -12,8 +12,10 @@ public class Pawn extends Piece {
     private static final int FIRST_MOVE_TWO_SPACES = 2;
     private static final int WHITE_PAWN_INITIAL_RANK = 2;
     private static final int BLACK_PAWN_INITIAL_RANK = 7;
+    private static final int PAWN_SCORE = 1;
 
     private final List<Direction> directions;
+
 
     public Pawn(final Position position, final Side side) {
         super(position, side);
@@ -83,5 +85,10 @@ public class Pawn extends Piece {
     @Override
     public boolean canPassThrough() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return PAWN_SCORE;
     }
 }

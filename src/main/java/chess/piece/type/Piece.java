@@ -45,4 +45,6 @@ public abstract class Piece {
     public Side getSide() {
         return side;
     }
+
+    public abstract double getScore();
 }

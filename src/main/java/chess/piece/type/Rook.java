@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Rook extends Piece {
 
+    private static final int ROOK_SCORE = 5;
+
     private final List<Direction> directions;
 
     public Rook(final Position position, final Side side) {
@@ -51,5 +53,10 @@ public class Rook extends Piece {
     @Override
     public boolean canPassThrough() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return ROOK_SCORE;
     }
 }

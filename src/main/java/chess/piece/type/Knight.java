@@ -9,6 +9,8 @@ import java.util.List;
 public class Knight extends Piece {
 
     private static final int FORWARD_MOVING_COUNT = 2;
+    private static final double KNIGHT_SCORE = 2.5;
+
     private final List<Direction> directions;
 
     public Knight(final Position position, final Side side) {
@@ -56,5 +58,10 @@ public class Knight extends Piece {
     @Override
     public boolean canPassThrough() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return KNIGHT_SCORE;
     }
 }
