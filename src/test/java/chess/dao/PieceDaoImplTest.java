@@ -27,16 +27,16 @@ import org.junit.jupiter.api.Test;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PieceDaoImplTest {
 
-    private final JdbcTemplate jdbcTemplate = new JdbcTemplate(new ConnectionManager());
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
     private ChessGameDto chessGameDto;
 
     @BeforeEach
     void setUp() {
-        final String query = "insert into chess_game(turn, state) values(?, ?)";
-        final List<String> parameters = List.of("WHITE", "INIT");
+        final String query = "insert into chess_game(turn) values(?)";
+        final List<String> parameters = List.of("WHITE");
         jdbcTemplate.executeUpdate(query, parameters);
 
-        final ChessGameDaoImpl chessGameDao = new ChessGameDaoImpl(jdbcTemplate);
+        final ChessGameDaoImpl chessGameDao = new ChessGameDaoImpl();
         chessGameDto = chessGameDao.findAll().get(0);
     }
 
@@ -48,7 +48,7 @@ class PieceDaoImplTest {
 
     @Test
     void 체스_기물을_저장한다() {
-        final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+        final PieceDaoImpl pieceDao = new PieceDaoImpl();
         pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
 
         final List<PieceDto> pieces = pieceDao.findAllByChessGameId(chessGameDto.getId());
@@ -67,7 +67,7 @@ class PieceDaoImplTest {
 
         @Test
         void 파일과_랭크에_해당하는_기물이_존재하면_기물을_조회한다() {
-            final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+            final PieceDaoImpl pieceDao = new PieceDaoImpl();
             pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
 
             final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
@@ -77,7 +77,7 @@ class PieceDaoImplTest {
 
         @Test
         void 파일과_랭크에_해당하는_기물이_존재하지_않으면_기물을_조회하지_않는다() {
-            final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+            final PieceDaoImpl pieceDao = new PieceDaoImpl();
 
             final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
 
@@ -87,7 +87,7 @@ class PieceDaoImplTest {
 
     @Test
     void 기물의_색과_타입을_수정한다() {
-        final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+        final PieceDaoImpl pieceDao = new PieceDaoImpl();
         pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
         final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
 
@@ -106,7 +106,7 @@ class PieceDaoImplTest {
 
     @Test
     void 기물을_삭제한다() {
-        final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+        final PieceDaoImpl pieceDao = new PieceDaoImpl();
         pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
         final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
 

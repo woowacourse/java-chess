@@ -13,11 +13,7 @@ import java.util.Optional;
 
 public class PieceDaoImpl implements PieceDao {
 
-    private final JdbcTemplate jdbcTemplate;
-
-    public PieceDaoImpl(final JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
     @Override
     public void save(final Long chessGameId, final Square square, final Piece piece) {

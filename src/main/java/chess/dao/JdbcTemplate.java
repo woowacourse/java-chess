@@ -8,11 +8,7 @@ import java.util.List;
 
 public class JdbcTemplate {
 
-    private final ConnectionManager connectionManager;
-
-    public JdbcTemplate(final ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
-    }
+    private static final ConnectionManager connectionManager = new ConnectionManager();
 
     public void executeUpdate(final String query, final List<String> parameters) {
         try (final Connection connection = connectionManager.getConnection();
