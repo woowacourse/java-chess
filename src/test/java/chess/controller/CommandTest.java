@@ -18,7 +18,7 @@ public class CommandTest {
         final List<String> commands = List.of("invalid");
 
         // expect
-        assertThatThrownBy(() -> Command.from(commands))
+        assertThatThrownBy(() -> ChessGameCommand.from(commands))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 명령어를 입력해주세요.");
     }
@@ -29,17 +29,17 @@ public class CommandTest {
         final List<String> commands = List.of("start");
 
         // when
-        final Command command = Command.from(commands);
+        final ChessGameCommand command = ChessGameCommand.from(commands);
 
         // expect
-        assertThat(command).isEqualTo(Command.START);
+        assertThat(command).isEqualTo(ChessGameCommand.START);
     }
 
     @Test
     void 명령어가_올바른_길이가_아니라면_예외를_던진다() {
         // given
         final List<String> invalidCommands = List.of("move", "e2", "e4", "e6");
-        final Command command = Command.from(invalidCommands);
+        final ChessGameCommand command = ChessGameCommand.from(invalidCommands);
 
         // expect
         assertThatThrownBy(() -> command.validateCommandsSize(invalidCommands))

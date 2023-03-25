@@ -1,5 +1,6 @@
 package chess.repository;
 
+import chess.db.JdbcTemplate;
 import chess.dto.MoveDto;
 import java.util.ArrayList;
 import java.util.List;

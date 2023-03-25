@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,13 +7,14 @@ import java.sql.SQLException;
 
 public class JdbcTemplate {
 
-    private final Connection connection;
+    private final ConnectionPool connectionPool;
 
-    public JdbcTemplate(final Connection connection) {
-        this.connection = connection;
+    public JdbcTemplate(final ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
     }
 
     public void executeUpdate(final String query, final Object... parameters) {
+        final Connection connection = connectionPool.getConnection();
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 1; i <= parameters.length; i++) {
                 preparedStatement.setObject(i, parameters[i - 1]);
@@ -24,8 +25,12 @@ public class JdbcTemplate {
         }
     }
 
-    public <T> T query(final String query, final RowMapper<T> rowMapper) {
+    public <T> T query(final String query, final RowMapper<T> rowMapper, final Object... parameters) {
+        final Connection connection = connectionPool.getConnection();
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            for (int i = 1; i <= parameters.length; i++) {
+                preparedStatement.setObject(i, parameters[i - 1]);
+            }
             final ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {

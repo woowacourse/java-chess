@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,20 +12,15 @@ public class ConnectionGenerator {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final String URL = "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION;
-    private static Connection CONNECTION;
-
-    static {
-        try {
-            CONNECTION = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            throw new DatabaseConnectionFailException();
-        }
-    }
 
     private ConnectionGenerator() {
     }
 
     public static Connection getConnection() {
-        return CONNECTION;
+        try {
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            throw new DatabaseConnectionFailException();
+        }
     }
 }

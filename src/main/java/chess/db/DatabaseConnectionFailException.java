@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.db;
 
 public class DatabaseConnectionFailException extends RuntimeException {
 

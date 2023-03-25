@@ -1,10 +1,10 @@
-package chess.repository;
+package chess.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class TestConnection {
+public class TestConnectionPool implements ConnectionPool {
 
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "testchess";
@@ -12,7 +12,7 @@ public class TestConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final String URL = "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION;
-    private static Connection CONNECTION;
+    private static final Connection CONNECTION;
 
     static {
         try {
@@ -22,10 +22,19 @@ public class TestConnection {
         }
     }
 
-    private TestConnection() {
+    public TestConnectionPool() {
     }
 
-    public static Connection getConnection() {
+    @Override
+    public Connection getConnection() {
         return CONNECTION;
+    }
+
+    public void closeConnection() {
+        try {
+            CONNECTION.close();
+        } catch (SQLException e) {
+            throw new DatabaseConnectionFailException();
+        }
     }
 }
