@@ -76,6 +76,10 @@ public final class Position {
         return this.row == 2;
     }
 
+    public boolean isSameColumn(int column) {
+        return this.column == column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
