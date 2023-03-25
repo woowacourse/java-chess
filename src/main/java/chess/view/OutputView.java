@@ -118,11 +118,8 @@ public class OutputView {
     }
 
     public void printErrorMessage(final RuntimeException exception) {
-        try {
-            final ExceptionCode code = ExceptionCode.findByName(exception.getMessage());
-            System.out.println(EXCEPTION_MESSAGE_SIGN + EXCEPTION_MESSAGES.get(code));
-        } catch (NullPointerException e) {
-            System.out.println(exception.getMessage());
-        }
+        final String exceptionCodeName = exception.getMessage();
+        final ExceptionCode code = ExceptionCode.findByName(exceptionCodeName);
+        System.out.println(EXCEPTION_MESSAGE_SIGN + EXCEPTION_MESSAGES.getOrDefault(code, exceptionCodeName));
     }
 }
