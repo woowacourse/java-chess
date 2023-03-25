@@ -33,5 +33,13 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
+    }
+
     public abstract boolean isMovableRoute(List<Position> routeFromStartToEnd);
 }

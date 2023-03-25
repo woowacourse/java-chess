@@ -6,7 +6,8 @@ public enum GameCommand {
 
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    STATUS("status");
 
     private final String command;
 

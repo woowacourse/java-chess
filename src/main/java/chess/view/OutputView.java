@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.dto.response.ChessBoardDto;
+import chess.dto.response.StatusDto;
 
 import java.util.List;
 
@@ -33,5 +34,12 @@ public final class OutputView {
 
     public static void printExceptionMessage(String message) {
         System.out.println(message);
+    }
+
+    public static void printStatus(StatusDto statusDto) {
+        System.out.println("검은색 점수 : " + statusDto.getBlackScore());
+        System.out.println("흰색 점수 : " + statusDto.getWhiteScore());
+        System.out.println("승자 : " + statusDto.getWinner());
+        System.out.println();
     }
 }
