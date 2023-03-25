@@ -12,29 +12,19 @@ public class Board {
     private static final int SIDE_LENGTH = 8;
 
     private final Pieces pieces;
-    private Side turnToMove;
 
-    public Board(final Pieces pieces, Side firstTurn) {
+    public Board(final Pieces pieces) {
         this.pieces = pieces;
-        this.turnToMove = firstTurn;
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
         final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
-        checkTurnToMoveBySide(sourcePiece.getSide());
         checkSameSidePieceOnTargetPosition(sourcePiece, targetPosition);
         checkPath(targetPosition, sourcePiece);
         checkPieceMovable(sourcePosition, targetPosition);
         checkOppositeSidePieceOnTargetPosition(sourcePiece, targetPosition);
         final Piece movedPiece = sourcePiece.move(targetPosition);
         pieces.synchronizeMovedPiece(sourcePiece, movedPiece);
-        changeTurnToMove();
-    }
-
-    private void checkTurnToMoveBySide(final Side sourcePieceSide) {
-        if (sourcePieceSide != turnToMove) {
-            throw new IllegalArgumentException("[ERROR] 상대방의 말은 이동시킬 수 없습니다.");
-        }
     }
 
     private void checkPieceMovable(final Position sourcePosition, final Position targetPosition) {
@@ -104,19 +94,16 @@ public class Board {
         }
     }
 
-    private void changeTurnToMove() {
-        if (turnToMove == Side.BLACK) {
-            turnToMove = Side.WHITE;
-            return;
-        }
-        turnToMove = Side.BLACK;
-    }
-
     public List<Piece> getPieces() {
         return pieces.getPieces();
     }
 
     public int getSideLength() {
         return SIDE_LENGTH;
+    }
+
+    public Side getPieceSide(Position position) {
+        final Piece piece = pieces.findPieceByPosition(position);
+        return piece.getSide();
     }
 }

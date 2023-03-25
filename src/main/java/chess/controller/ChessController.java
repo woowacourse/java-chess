@@ -5,6 +5,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import chess.board.dto.BoardDto;
+import chess.game.ChessGame;
 import chess.view.GameCommand;
 import chess.piece.AllPiecesGenerator;
 import chess.piece.Pieces;
@@ -26,13 +27,59 @@ public class ChessController {
     }
 
     public void run() {
-        GameStatus gameStatus = GameStatus.INIT;
-        final Board board = setUp();
+        final ChessGame chessGame = setUp();
 
-        while(!(gameStatus == GameStatus.END)) {
-            final GameStatus finalGameStatus = gameStatus;
-            gameStatus = repeatUntilReturnValue(() -> handleCommand(finalGameStatus, board));
+        while(!(chessGame.status() == GameStatus.END)) {
+            repeatByRunnable(() -> handleCommand(chessGame));
         }
+    }
+
+    private ChessGame setUp() {
+        Board board = new Board(new Pieces(new AllPiecesGenerator()));
+        OutputView.printGameStartMessage();
+        OutputView.printGameCommandInputMessage();
+        return new ChessGame(board, Side.WHITE, GameStatus.INIT);
+    }
+
+    private Runnable repeatByRunnable(Runnable runnable) {
+        try {
+            runnable.run();
+            return runnable;
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return repeatByRunnable(runnable);
+        }
+    }
+
+    private void handleCommand(final ChessGame chessGame) {
+        final List<String> splitGameCommand = inputGameCommand();
+        final GameCommand gameCommand = GameCommand.of(splitGameCommand.get(0));
+        if (GameCommand.START == gameCommand) {
+            handleStartCommand(chessGame);
+        }
+        if (GameCommand.MOVE == gameCommand) {
+            handleMoveCommand(chessGame, splitGameCommand);
+        }
+        if (GameCommand.END == gameCommand) {
+            chessGame.exit();
+        }
+    }
+
+    private void handleStartCommand(final ChessGame chessGame) {
+        chessGame.start();
+        OutputView.printBoard(new BoardDto(chessGame.getBoard()));
+    }
+
+    private void handleMoveCommand(final ChessGame chessGame, final List<String> splitGameCommand) {
+        final Position sourcePosition = generatePosition(splitGameCommand.get(SOURCE_POSITION_INDEX));
+        final Position targetPosition = generatePosition(splitGameCommand.get(TARGET_POSITION_INDEX));
+
+        chessGame.movePiece(sourcePosition, targetPosition);
+        OutputView.printBoard(new BoardDto(chessGame.getBoard()));
+    }
+
+    private List<String> inputGameCommand() {
+        return repeatUntilReturnValue(inputView::inputGameCommand);
     }
 
     private <T> T repeatUntilReturnValue(Supplier<T> supplier) {
@@ -41,59 +88,6 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return repeatUntilReturnValue(supplier);
-        }
-    }
-
-    private Board setUp() {
-        Board board = new Board(new Pieces(new AllPiecesGenerator()), Side.WHITE);
-        OutputView.printGameStartMessage();
-        OutputView.printGameCommandInputMessage();
-        return board;
-    }
-
-    private GameStatus handleCommand(GameStatus gameStatus, final Board board) {
-        final List<String> splitGameCommand = inputGameCommand();
-        final GameCommand gameCommand = GameCommand.of(splitGameCommand.get(0));
-
-        if (GameCommand.START == gameCommand) {
-            return handleStartCommand(gameStatus, board);
-        }
-        if (GameCommand.MOVE == gameCommand) {
-            return handleMoveCommand(gameStatus, board, splitGameCommand);
-        }
-        return GameStatus.END;
-    }
-
-    private List<String> inputGameCommand() {
-        return repeatUntilReturnValue(inputView::inputGameCommand);
-    }
-
-    private GameStatus handleStartCommand(GameStatus gameStatus, final Board board) {
-        checkGameAlreadyStart(gameStatus);
-        gameStatus = GameStatus.START;
-        OutputView.printBoard(new BoardDto(board));
-        return gameStatus;
-    }
-
-    private void checkGameAlreadyStart(final GameStatus gameStatus) {
-        if (gameStatus == GameStatus.START) {
-            throw new IllegalArgumentException("[ERROR] 게임 플레이 중에는 다시 시작할 수 없습니다.");
-        }
-    }
-
-    private GameStatus handleMoveCommand(GameStatus gameStatus, final Board board, final List<String> moveCommand) {
-        checkGameNotStart(gameStatus);
-        final Position sourcePosition = generatePosition(moveCommand.get(SOURCE_POSITION_INDEX));
-        final Position targetPosition = generatePosition(moveCommand.get(TARGET_POSITION_INDEX));
-
-        board.movePiece(sourcePosition, targetPosition);
-        OutputView.printBoard(new BoardDto(board));
-        return gameStatus;
-    }
-
-    private void checkGameNotStart(final GameStatus gameStatus) {
-        if (gameStatus != GameStatus.START) {
-            throw new IllegalArgumentException("[ERROR] 게임 시작 이후에 말을 이동할 수 있습니다.");
         }
     }
 
