@@ -8,10 +8,12 @@ import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import domain.piece.Color;
 import jdbc.ChessGameDao;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessGameDaoTest {
 
-    private static final String CHESS_GAME_ID = Integer.toString(Integer.MAX_VALUE);
     private final ChessGameDao chessGameDao = new ChessGameDao();
 
     @Test
@@ -35,7 +36,10 @@ public class ChessGameDaoTest {
     @Test
     @DisplayName("새로운 Chess Game 방을 만든다.")
     void saveChessGame() {
-        chessGameDao.save(new ChessGame(ChessBoard.generate()));
+        String saveId = chessGameDao.save(new ChessGame(ChessBoard.generate()));
+
+        assertThat(saveId).isNotNull();
+        rollBack(saveId);
     }
 
     @Test
@@ -51,6 +55,7 @@ public class ChessGameDaoTest {
 
         assertThat(chessGame.getColorTurn()).isEqualTo(Color.BLACK);
         assertThat(equals).isTrue();
+        rollBack(saveId);
     }
 
     @Test
@@ -67,6 +72,7 @@ public class ChessGameDaoTest {
 
         assertThat(chessGameAfterUpdate.getColorTurn()).isEqualTo(chessGame.getColorTurn());
         assertThat(equals).isTrue();
+        rollBack(saveId);
     }
 
     @Test
@@ -77,7 +83,25 @@ public class ChessGameDaoTest {
 
         assertThatThrownBy(() -> chessGameDao.select(saveId))
                 .isInstanceOf(RuntimeException.class);
+        rollBack(saveId);
+    }
 
+    private void rollBackAutoIncrement(String id) {
+        try (Connection connection = chessGameDao.getConnection()) {
+            PreparedStatement rollBackId = connection.prepareStatement("ALTER TABLE chess_game auto_increment = " + id);
+            rollBackId.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void rollBack(String saveId) {
+        try {
+            chessGameDao.delete(saveId);
+        } catch (RuntimeException ignored) {
+        }
+
+        rollBackAutoIncrement(saveId);
     }
 
     private boolean chessBoardEquals(ChessGame insertionChessGame, ChessGame chessGame) {
