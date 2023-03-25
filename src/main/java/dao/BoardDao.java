@@ -5,6 +5,7 @@ import domain.game.ChessGame;
 import domain.game.GameState;
 import domain.game.PieceType;
 import domain.piece.*;
+import dto.ChessGameResponseDto;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -28,9 +29,9 @@ public class BoardDao {
         }
     }
 
-    public void save(Map<Position, Piece> chessBoard, Side lastTurn, boolean gameStatus) {
-        final String saveQuery = "INSERT INTO chess_board(piece_type, side, last_turn, piece_rank, piece_file, status) VALUES(?,?,?,?,?,?)";
-        for (Map.Entry<Position, Piece> pieces : chessBoard.entrySet()) {
+    public void save(Map<Position, Piece> board, Side currentTurn) {
+        final String saveQuery = "INSERT INTO chess_board(piece_type, side, last_turn, piece_rank, piece_file) VALUES(?,?,?,?,?)";
+        for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
             File file = pieces.getKey().getFile();
             Rank rank = pieces.getKey().getRank();
             PieceType pieceType = pieces.getValue().getPieceType();
@@ -41,10 +42,9 @@ public class BoardDao {
 
                 preparedStatement.setString(1, pieceType.name());
                 preparedStatement.setString(2, pieceSide.name());
-                preparedStatement.setString(3, lastTurn.name());
+                preparedStatement.setString(3, currentTurn.name());
                 preparedStatement.setString(4, rank.getText());
                 preparedStatement.setString(5, file.getText());
-                preparedStatement.setBoolean(6, gameStatus);
 
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class BoardDao {
         }
     }
 
-    public ChessGame loadGame() {
+    public ChessGameResponseDto loadGame() {
         Map<Position, Piece> board = new HashMap<>();
         final String loadQuery = "select piece_type, side, last_turn, piece_rank, piece_file from chess_board";
         Side lastTurn = null;
@@ -73,7 +73,7 @@ public class BoardDao {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-        return new ChessGame(new Board(board), lastTurn, GameState.RUN);
+        return ChessGameResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
     }
 
     public void delete() {
@@ -88,7 +88,6 @@ public class BoardDao {
     }
 
     public boolean hasGame() {
-        Map<Position, Piece> board = new HashMap<>();
         final String loadQuery = "select last_turn from chess_board";
 
         try (Connection connection = getConnection()) {

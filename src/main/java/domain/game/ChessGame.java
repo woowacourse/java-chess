@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.piece.Piece;
 import domain.piece.Position;
 import domain.piece.Side;
 
@@ -42,5 +43,17 @@ public class ChessGame {
             return GameState.END;
         }
         return GameState.RUN;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getChessBoard();
+    }
+
+    public Side getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public GameState getState() {
+        return state;
     }
 }
