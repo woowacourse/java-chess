@@ -1,7 +1,7 @@
 package chess.controller.state;
 
+import chess.domain.game.Camp;
 import chess.domain.game.Game;
-import chess.domain.piece.Camp;
 import chess.view.OutputView;
 
 public class KingDead extends State {

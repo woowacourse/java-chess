@@ -1,7 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.game.Camp;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

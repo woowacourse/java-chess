@@ -15,10 +15,10 @@ public enum Rank {
 
     public static final char OFFSET_LETTER = '1';
 
-    private final int y;
+    private final int value;
 
-    Rank(final int y) {
-        this.y = y;
+    Rank(final int value) {
+        this.value = value;
     }
 
     public static Rank findRankByLetter(final char letter) {
@@ -27,24 +27,24 @@ public enum Rank {
 
     public static Rank findRank(final int rankIndex) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.getRank() == rankIndex)
+                .filter(rank -> rank.getValue() == rankIndex)
                 .findFirst()
                 .orElseThrow();
     }
 
     public boolean canMove(final Move move) {
-        return 0 <= y + move.getRank()
-                && y + move.getRank() <= 7;
+        return 0 <= value + move.getY()
+                && value + move.getY() <= 7;
     }
 
     public Rank moveRank(final Move move) {
         if (!canMove(move)) {
             throw new IllegalArgumentException("랭크를 움직일 수 없습니다.");
         }
-        return findRank(y + move.getRank());
+        return findRank(value + move.getY());
     }
 
-    public int getRank() {
-        return y;
+    public int getValue() {
+        return value;
     }
 }

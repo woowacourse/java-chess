@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.List;
 
 public class King extends Piece {
@@ -32,8 +33,8 @@ public class King extends Piece {
 
     private boolean isNotSlidingMove(final Piece target) {
         final Move move = calculateMove(target);
-        return position().getFile() == target.position().getFile() - move.getFile()
-                && position().getRank() == target.position().getRank() - move.getRank();
+        return position().getX() == target.position().getX() - move.getX()
+                && position().getY() == target.position().getY() - move.getY();
     }
 
     @Override

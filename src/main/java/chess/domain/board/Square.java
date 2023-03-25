@@ -12,15 +12,15 @@ public class Square {
     }
 
     public Square nextSquare(final Move move) {
-        if (move.equals(Move.UP_UP) || move.equals(Move.DOWN_DOWN)) {
-            final int nextFile = this.getFile() + Integer.signum(move.getFile());
-            final int nextRank = this.getRank() + Integer.signum(move.getRank());
+        if (move == Move.UP_UP || move == Move.DOWN_DOWN) {
+            final int nextFile = this.getX() + Integer.signum(move.getX());
+            final int nextRank = this.getY() + Integer.signum(move.getY());
 
             return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
         }
 
-        final int nextFile = this.getFile() + move.getFile();
-        final int nextRank = this.getRank() + move.getRank();
+        final int nextFile = this.getX() + move.getX();
+        final int nextRank = this.getY() + move.getY();
 
         return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
     }
@@ -42,12 +42,12 @@ public class Square {
         return Objects.hash(file, rank);
     }
 
-    public int getFile() {
-        return file.getFile();
+    public int getX() {
+        return file.getValue();
     }
 
-    public int getRank() {
-        return rank.getRank();
+    public int getY() {
+        return rank.getValue();
     }
 
     public Rank rank() {

@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.game;
 
 public enum Camp {
     WHITE("White"),

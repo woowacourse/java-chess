@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.Square;
-import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.List;
@@ -29,8 +28,7 @@ public class Game {
     }
 
     public double calculateScore(final Camp camp) {
-        final List<Piece> pieces = getPieces();
-        final double score = sumPiecesScore(camp, pieces);
+        final double score = sumPiecesScore(camp);
         final int verticalPawnCount = board.countVerticalPawn(camp);
 
         return score
@@ -38,8 +36,8 @@ public class Game {
                 + PieceType.VERTICAL_PAWN.value() * verticalPawnCount;
     }
 
-    private double sumPiecesScore(final Camp camp, final List<Piece> pieces) {
-        return pieces.stream()
+    private double sumPiecesScore(final Camp camp) {
+        return getPieces().stream()
                 .filter(piece -> piece.isSameCamp(camp))
                 .mapToDouble(piece -> piece.pieceType().value())
                 .sum();

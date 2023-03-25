@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.List;
 
 public class Knight extends Piece {

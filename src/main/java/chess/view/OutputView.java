@@ -1,7 +1,7 @@
 package chess.view;
 
+import chess.domain.game.Camp;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Camp;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 
 public class Empty extends Piece {
     private static final Empty empty = new Empty();

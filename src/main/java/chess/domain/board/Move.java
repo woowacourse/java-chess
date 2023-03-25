@@ -25,53 +25,53 @@ public enum Move {
     RIGHT_RIGHT_UP(2, 1),
     RIGHT_RIGHT_DOWN(2, -1);
 
-    private final int file;
-    private final int rank;
+    private final int x;
+    private final int y;
 
-    Move(final int file, final int rank) {
-        this.file = file;
-        this.rank = rank;
+    Move(final int x, final int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public static Move calculateMove(final Square source, final Square target) {
-        final int fileMovement = target.getFile() - source.getFile();
-        final int rankMovement = target.getRank() - source.getRank();
+        final int fileMovement = target.getX() - source.getX();
+        final int rankMovement = target.getY() - source.getY();
 
-        final Move complexMove = findComplexMoveElseEmpty(fileMovement, rankMovement);
-        if (complexMove != EMPTY) {
-            return complexMove;
+        final Move moveOnValues = findMatchingMoveOnValuesElseEmpty(fileMovement, rankMovement);
+        if (moveOnValues != EMPTY) {
+            return moveOnValues;
         }
 
-        return findUnitMoveElseEmpty(fileMovement, rankMovement);
+        return findSameDirectionMoveElseEmpty(fileMovement, rankMovement);
     }
 
-    private static Move findComplexMoveElseEmpty(final int fileMovement, final int rankMovement) {
+    private static Move findMatchingMoveOnValuesElseEmpty(final int fileMovement, final int rankMovement) {
         return Arrays.stream(Move.values())
-                .filter(move -> isSameMovement(fileMovement, rankMovement, move))
+                .filter(move -> isSameMovement(move, fileMovement, rankMovement))
                 .findFirst()
                 .orElse(EMPTY);
     }
 
-    private static boolean isSameMovement(final int fileMovement, final int rankMovement, final Move move) {
-        return move.file == fileMovement && move.rank == rankMovement;
+    private static boolean isSameMovement(final Move move, final int fileMovement, final int rankMovement) {
+        return move.x == fileMovement && move.y == rankMovement;
     }
 
-    private static Move findUnitMoveElseEmpty(final int fileMovement, final int rankMovement) {
+    private static Move findSameDirectionMoveElseEmpty(final int fileMovement, final int rankMovement) {
         return Arrays.stream(Move.values())
-                .filter(move -> isSameDirection(fileMovement, rankMovement, move))
+                .filter(move -> isSameDirection(move, fileMovement, rankMovement))
                 .findFirst()
                 .orElse(EMPTY);
     }
 
-    private static boolean isSameDirection(final int directionFile, final int directionRank, final Move move) {
-        return move.file == Integer.signum(directionFile) && move.rank == Integer.signum(directionRank);
+    private static boolean isSameDirection(final Move move, final int directionFile, final int directionRank) {
+        return move.x == Integer.signum(directionFile) && move.y == Integer.signum(directionRank);
     }
 
-    public int getFile() {
-        return file;
+    public int getX() {
+        return x;
     }
 
-    public int getRank() {
-        return rank;
+    public int getY() {
+        return y;
     }
 }

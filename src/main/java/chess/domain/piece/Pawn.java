@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -87,8 +88,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isNotSlidingMove(final Square targetSquare, final Move move) {
-        return (targetSquare.getFile() == position().getFile() + move.getFile())
-                && (targetSquare.getRank() == position().getRank() + move.getRank());
+        return (targetSquare.getX() == position().getX() + move.getX())
+                && (targetSquare.getY() == position().getY() + move.getY());
     }
 
     @Override

@@ -4,6 +4,7 @@ import chess.domain.board.File;
 import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.Objects;
 
 public abstract class Piece {
