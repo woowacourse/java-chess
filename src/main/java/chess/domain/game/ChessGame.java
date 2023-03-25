@@ -29,6 +29,10 @@ public class ChessGame {
         switchTurn();
     }
 
+    public Score calculateScore() {
+        return Score.fromBoard(board);
+    }
+
     public boolean isGameOver() {
         return generateKingCount() < GAME_KING_COUNT;
     }

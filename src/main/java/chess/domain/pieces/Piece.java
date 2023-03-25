@@ -38,6 +38,10 @@ public abstract class Piece {
         return team.isBlackTeam();
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
