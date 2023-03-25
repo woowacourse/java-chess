@@ -13,4 +13,10 @@ public class InputView {
         System.out.println("게임 현황 : status");
         return scanner.nextLine();
     }
+
+    public static String readInitCommand() {
+        System.out.println("이전 게임을 이어서 하시려면 continue를 입력해 주세요.");
+        System.out.println("새로운 게임을 하시려면 new를 입력해 주세요.");
+        return scanner.nextLine();
+    }
 }

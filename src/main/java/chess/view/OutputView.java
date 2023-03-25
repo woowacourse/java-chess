@@ -52,4 +52,24 @@ public class OutputView {
         }
         System.out.println("Draw!!");
     }
+
+    public static void printNonContinueMessage() {
+        System.out.println("저장된 게임이 없습니다.");
+    }
+
+    public static void printContinueMessage() {
+        System.out.println("게임을 이어합니다.");
+    }
+
+    public static void printNewGameMessage() {
+        System.out.println("새로운 게임을 시작합니다.");
+    }
+
+    public static void printKingDie(final Side side) {
+        if (side.isWhite()) {
+            System.out.println("Black팀 King이 잡혔습니다.");
+            return;
+        }
+        System.out.println("White팀 King이 잡혔습니다.");
+    }
 }
