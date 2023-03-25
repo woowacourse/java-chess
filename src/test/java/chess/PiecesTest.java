@@ -7,10 +7,13 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import chess.piece.AllPiecesGenerator;
-import chess.piece.type.Pawn;
-import chess.piece.type.Piece;
 import chess.piece.Pieces;
 import chess.piece.Side;
+import chess.piece.type.Knight;
+import chess.piece.type.Pawn;
+import chess.piece.type.Piece;
+import chess.piece.type.Queen;
+import chess.piece.type.Rook;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -100,5 +103,22 @@ class PiecesTest {
 
         // then
         assertThat(piecesAfterRemove.size()).isEqualTo(piecesBeforeRemove.size() - 1);
+    }
+
+    @Test
+    @DisplayName("흰색 진영의 남아 있는 기물들에 따라 점수를 계산한다.")
+    void getSumOfScoreBySide() {
+        // given
+        final Pieces pieces = new Pieces(() -> List.of(
+                new Rook(new Position(File.A, Rank.ONE), Side.WHITE),
+                new Queen(new Position(File.E, Rank.ONE), Side.WHITE),
+                new Knight(new Position(File.B, Rank.ONE), Side.WHITE),
+                new Knight(new Position(File.B, Rank.EIGHT), Side.BLACK)));
+        
+        // when
+        final double whiteSideScore = pieces.getSumOfScoreBySide(Side.WHITE);
+
+        // then
+        assertThat(whiteSideScore).isEqualTo(16.5);
     }
 }
