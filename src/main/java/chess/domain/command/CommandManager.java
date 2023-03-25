@@ -13,6 +13,7 @@ import chess.domain.position.Position;
 public class CommandManager {
 
     private final Map<GameCommand, Consumer<Commands>> executionByGameCommand = Map.of(
+            GameCommand.RESTART, this::restart,
             GameCommand.START, none -> start(),
             GameCommand.MOVE, this::move,
             GameCommand.END, none -> end(),

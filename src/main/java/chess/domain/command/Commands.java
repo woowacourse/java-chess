@@ -29,7 +29,7 @@ public class Commands {
         if (gameCommand == GameCommand.MOVE && commands.size() != 3) {
             throw new IllegalArgumentException("[ERROR] move 명령어는 소스 위치와 타겟 위치를 모두 입력해야 합니다.");
         }
-        if (gameCommand == GameCommand.FIND_PREVIOUS_GAME && commands.size() != 2) {
+        if (gameCommand == GameCommand.RESTART && commands.size() != 2) {
             throw new IllegalArgumentException("[ERROR] restart 명령어는 이전 게임 ID를 형식에 맞게 정확히 입력해야합니다.");
         }
     }
