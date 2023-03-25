@@ -1,21 +1,21 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
 import static chessgame.domain.coordinate.Inclination.MINUS_ONE;
 import static chessgame.domain.coordinate.Inclination.ONE;
 
-public class Bishop extends PieceType {
+public class Bishop extends Piece {
 
     private static final double SCORE = 3;
     private static final List<Inclination> availableInclinations = List.of(ONE, MINUS_ONE);
 
     public Bishop(final Camp camp) {
-        super(PieceTypeSymbol.BISHOP, camp, SCORE);
+        super(PieceType.BISHOP, camp, SCORE);
     }
 
     @Override

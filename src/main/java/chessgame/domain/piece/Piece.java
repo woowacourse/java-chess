@@ -1,16 +1,16 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
-public abstract class PieceType {
+public abstract class Piece {
 
-    private final PieceTypeSymbol pieceTypeSymbol;
+    private final PieceType pieceType;
     private final Camp camp;
     private final double score;
 
-    protected PieceType(final PieceTypeSymbol pieceTypeSymbol, final Camp camp, final double score) {
-        this.pieceTypeSymbol = pieceTypeSymbol;
+    protected Piece(final PieceType pieceType, final Camp camp, final double score) {
+        this.pieceType = pieceType;
         this.camp = camp;
         this.score = score;
     }
@@ -26,15 +26,15 @@ public abstract class PieceType {
     public abstract boolean canReap();
 
     public boolean isEmpty() {
-        return pieceTypeSymbol.isEmpty();
+        return pieceType.isEmpty();
     }
 
     public boolean isSameCamp(final Camp camp) {
         return this.camp.equals(camp);
     }
 
-    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
-        return this.pieceTypeSymbol.equals(otherType);
+    public boolean isSameTypeWith(final PieceType otherType) {
+        return this.pieceType.equals(otherType);
     }
 
     public Camp camp() {

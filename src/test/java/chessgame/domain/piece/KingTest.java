@@ -1,7 +1,7 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

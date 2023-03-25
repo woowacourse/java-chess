@@ -1,12 +1,12 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
-public class Empty extends PieceType {
+public class Empty extends Piece {
 
     public Empty() {
-        super(PieceTypeSymbol.EMPTY, Camp.EMPTY, 0);
+        super(PieceType.EMPTY, Camp.EMPTY, 0);
     }
 
     @Override

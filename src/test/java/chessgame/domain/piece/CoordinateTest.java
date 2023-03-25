@@ -1,4 +1,4 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;

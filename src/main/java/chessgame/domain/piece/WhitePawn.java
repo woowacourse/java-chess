@@ -1,8 +1,8 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 

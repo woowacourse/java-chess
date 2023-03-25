@@ -1,22 +1,26 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
 import static chessgame.domain.coordinate.Inclination.*;
 
-public class Queen extends PieceType {
+public class Knight extends Piece {
 
-    private static final double SCORE = 9;
+    private static final double SCORE = 2.5;
     private static final List<Inclination> availableInclinations = List.of(
-            POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
+            TWO, MINUS_TWO, HALF, MINUS_HALF
+    );
+    private static final List<Coordinate> availableCoordinateDifferences = List.of(
+            Coordinate.fromOnBoard(1, 2),
+            Coordinate.fromOnBoard(2, 1)
     );
 
-    public Queen(final Camp camp) {
-        super(PieceTypeSymbol.QUEEN, camp, SCORE);
+    public Knight(final Camp camp) {
+        super(PieceType.KNIGHT, camp, SCORE);
     }
 
     @Override
@@ -24,7 +28,8 @@ public class Queen extends PieceType {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
+        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate)) &&
+                availableCoordinateDifferences.contains(startCoordinate.minusWithAbsoluteValue(endCoordinate));
     }
 
     @Override
@@ -37,6 +42,6 @@ public class Queen extends PieceType {
 
     @Override
     public boolean canReap() {
-        return false;
+        return true;
     }
 }

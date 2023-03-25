@@ -1,14 +1,14 @@
 package chessgame.view;
 
-import chessgame.domain.piece.Camp;
-import chessgame.domain.piecetype.*;
+import chessgame.domain.chessgame.Camp;
+import chessgame.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PieceMapper {
 
-    private static final Map<Class<? extends PieceType>, String> mapper = new HashMap<>();
+    private static final Map<Class<? extends Piece>, String> mapper = new HashMap<>();
 
     static {
         mapper.put(Rook.class, "r");
@@ -19,7 +19,7 @@ public class PieceMapper {
         mapper.put(Pawn.class, "p");
     }
 
-    public static String getTarget(final PieceType piece) {
+    public static String getTarget(final Piece piece) {
         String message = mapper.keySet()
                                .stream()
                                .filter(pieceType -> pieceType.isInstance(piece))
@@ -29,7 +29,7 @@ public class PieceMapper {
         return makeUpperCaseIfCampIsBlack(piece, message);
     }
 
-    private static String makeUpperCaseIfCampIsBlack(final PieceType piece, final String message) {
+    private static String makeUpperCaseIfCampIsBlack(final Piece piece, final String message) {
         if (piece.isEmpty() && piece.isSameCamp(Camp.BLACK)) {
             return message.toUpperCase();
         }

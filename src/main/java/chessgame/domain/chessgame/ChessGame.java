@@ -1,7 +1,6 @@
 package chessgame.domain.chessgame;
 
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Camp;
 
 public class ChessGame {
 

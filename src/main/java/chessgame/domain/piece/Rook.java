@@ -1,14 +1,14 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
 import static chessgame.domain.coordinate.Inclination.*;
 
-public class Rook extends PieceType {
+public class Rook extends Piece {
 
     private static final double SCORE = 5;
     private static final List<Inclination> availableInclinations = List.of(
@@ -16,7 +16,7 @@ public class Rook extends PieceType {
     );
 
     public Rook(final Camp camp) {
-        super(PieceTypeSymbol.ROOK, camp, SCORE);
+        super(PieceType.ROOK, camp, SCORE);
     }
 
     @Override

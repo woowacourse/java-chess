@@ -74,14 +74,13 @@ classDiagram
   ChessController --> OutputView
   ChessController --> ChessGame
   ChessGame --> Board
-  ChessGame --> ChessResult
+  ChessGame --> Result
   Board --> Coordinate
   Board --> Piece
   Board --> DirectionVector
   Board --> BoardInitialImage
-  Piece --> PieceType
   Piece --> Camp
-  PieceType --> PieceTypeSymbol
+  Piece --> PieceType
 ```
 
 

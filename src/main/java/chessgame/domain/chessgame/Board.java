@@ -1,33 +1,32 @@
 package chessgame.domain.chessgame;
 
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Camp;
-import chessgame.domain.piecetype.Empty;
-import chessgame.domain.piecetype.PieceType;
+import chessgame.domain.piece.Empty;
+import chessgame.domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
 
-    private final Map<Coordinate, PieceType> board;
+    private final Map<Coordinate, Piece> board;
 
     public Board() {
         board = initialize();
     }
 
-    public Map<Coordinate, PieceType> initialize() {
+    public Map<Coordinate, Piece> initialize() {
         return new HashMap<>(BoardInitialImage.generate());
     }
 
     public boolean checkCamp(final Coordinate coordinate, final Camp camp) {
-        PieceType startPiece = board.get(coordinate);
+        Piece startPiece = board.get(coordinate);
         return startPiece.isSameCamp(camp);
     }
 
     public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (isMovable(startCoordinate, endCoordinate)) {
-            PieceType startPiece = board.get(startCoordinate);
+            Piece startPiece = board.get(startCoordinate);
             board.put(startCoordinate, new Empty());
             board.put(endCoordinate, startPiece);
 //            startPiece.checkMoved();
@@ -49,8 +48,8 @@ public class Board {
 
     private boolean isMovableByRule(final Coordinate startCoordinate,
                                     final Coordinate endCoordinate) {
-        PieceType startPiece = board.get(startCoordinate);
-        PieceType targetPiece = board.get(endCoordinate);
+        Piece startPiece = board.get(startCoordinate);
+        Piece targetPiece = board.get(endCoordinate);
 
         if (isPieceEmptyAt(endCoordinate)) {
             return startPiece.isReachableByRule(startCoordinate, endCoordinate);
@@ -59,12 +58,12 @@ public class Board {
     }
 
     private boolean isPieceEmptyAt(final Coordinate coordinate) {
-        PieceType startPiece = board.get(coordinate);
+        Piece startPiece = board.get(coordinate);
         return startPiece.isEmpty();
     }
 
     private boolean isNotBlocked(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        PieceType startPiece = board.get(startCoordinate);
+        Piece startPiece = board.get(startCoordinate);
 
         if (startPiece.canReap()) {
             return true;
@@ -84,7 +83,7 @@ public class Board {
         return indexCoordinate.equals(endCoordinate);
     }
 
-    public Map<Coordinate, PieceType> getBoard() {
+    public Map<Coordinate, Piece> getBoard() {
         return board;
     }
 }

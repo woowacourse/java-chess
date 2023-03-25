@@ -1,15 +1,15 @@
-package chessgame.domain.piecetype;
+package chessgame.domain.piece;
 
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Camp;
+import chessgame.domain.chessgame.Camp;
 
-public abstract class Pawn extends PieceType {
+public abstract class Pawn extends Piece {
 
     private static final double SCORE = 1;
-    private static final PieceTypeSymbol PIECE_TYPE_SYMBOL = PieceTypeSymbol.PAWN;
+    private static final PieceType PIECE_TYPE_SYMBOL = PieceType.PAWN;
 
     public Pawn(final Camp camp) {
-        super(PieceTypeSymbol.PAWN, camp, SCORE);
+        super(PieceType.PAWN, camp, SCORE);
     }
 
     public abstract boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,
@@ -22,7 +22,7 @@ public abstract class Pawn extends PieceType {
                                                  final Coordinate endCoordinate);
 
     @Override
-    public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
+    public boolean isSameTypeWith(final PieceType otherType) {
         return PIECE_TYPE_SYMBOL == otherType;
     }
 
