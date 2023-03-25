@@ -33,4 +33,10 @@ public class OutputView {
     public static void printErrorMessage(final Exception e) {
         System.out.println(e.getMessage());
     }
+
+    public static void printStatusCommandInputMessage() {
+        printMessage("> 게임 결과 확인 : status" + NEWLINE
+                + "> 게임 종료 : end"
+        );
+    }
 }
