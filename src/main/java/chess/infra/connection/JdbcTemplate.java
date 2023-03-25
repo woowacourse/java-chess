@@ -30,10 +30,8 @@ public class JdbcTemplate {
                 preparedStatement.setObject(i, parameters[i - 1]);
             }
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println(resultSet);
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
-            System.out.println(e);
             throw new IllegalArgumentException("입력이 올바르지 않습니다.");
         }
     }
