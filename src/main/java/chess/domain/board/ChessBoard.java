@@ -50,6 +50,18 @@ public class ChessBoard {
         if (!fromPiece.isMovable(from, to)) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
+        final Piece toPiece = piecePosition.get(to);
+        if (fromPiece.getType() == PieceType.PAWN && isDiagonal(from, to) && toPiece.getTeam() != fromPiece.getTeam()) {
+            throw new PieceCannotMoveException(fromPiece.getType());
+        }
+    }
+
+    private boolean isDiagonal(final Position from, final Position to) {
+
+        final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
+        final int rankInterval = Rank.calculateInterval(from.getRank(), to.getRank());
+
+        return fileInterval == rankInterval;
     }
 
     private void validateAlly(final Piece fromPiece, final Piece toPiece) {
