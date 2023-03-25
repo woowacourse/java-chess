@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.game.ChessGame;
+import chess.service.ChessGameService;
 import chess.view.OutputView;
 
 public interface Controller {
-    void execute(ChessGame chessGame, OutputView outputView);
+    void execute(ChessGameService chessGameService, OutputView outputView);
 }

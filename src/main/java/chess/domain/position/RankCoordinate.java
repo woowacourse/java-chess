@@ -46,6 +46,10 @@ public enum RankCoordinate {
         return result;
     }
 
+    public int getRowNumber() {
+        return rowNumber;
+    }
+
     public int calculateGap(RankCoordinate other) {
         return rowNumber - other.rowNumber;
     }

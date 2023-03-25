@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.board.BoardFactory;
+import chess.dao.ChessGameJdbcDao;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Color;
+import chess.service.ChessGameService;
 import chess.view.ChessRequest;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,40 +15,56 @@ public class ChessController {
 
     private final OutputView outputView;
     private final InputView inputView;
-    private final ChessGame chessGame;
+    private final ChessGameService chessGameService;
 
-    private static final Map<GameCommand, Function<List<String>, Controller>> commands =
-            new EnumMap<>(GameCommand.class);
+    private static final Map<GameCommand, Function<List<String>, Controller>> commands = new EnumMap<>(
+            GameCommand.class);
 
     static {
         commands.put(GameCommand.START, ignored -> new StartController());
         commands.put(GameCommand.END, ignored -> new EndController());
         commands.put(GameCommand.MOVE, MoveController::new);
         commands.put(GameCommand.STATUS, ignored -> new StatusController());
+        commands.put(GameCommand.CLEAR, ignored -> new ClearController());
     }
 
     public ChessController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.chessGame = new ChessGame(BoardFactory.createBoard(), Color.WHITE);
+        this.chessGameService = new ChessGameService(new ChessGame(), new ChessGameJdbcDao());
     }
 
     public void run() {
         outputView.printStart();
-        while (chessGame.isRunning()) {
-            play();
+        GameCommand gameCommand = GameCommand.EMPTY;
+        while (gameCommand != GameCommand.END) {
+            gameCommand = play();
+            gameCommand = checkGameEnd(chessGameService, gameCommand);
         }
     }
 
-    private void play() {
+    private GameCommand play() {
         try {
             ChessRequest chessRequest = inputView.readGameCommand();
-            GameCommand gameCommand = GameCommand.of(chessRequest.getCommand());
+            GameCommand gameCommand = chessRequest.getCommand();
             Controller controller = commands.get(gameCommand).apply(chessRequest.getParameter());
-            controller.execute(chessGame, outputView);
+            controller.execute(chessGameService, outputView);
+            return gameCommand;
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            play();
+            return play();
         }
+    }
+
+    //왕이 죽었나 체크하는 부분입니다. 왕이 죽으면 게임을 끝내고, 출력을 하고 싶은데 마땅한 방법을 찾기가 힘드네요..
+    //그래서 컨트롤러에 매번 체크하는 방식으로 만들었습니다..
+    private GameCommand checkGameEnd(ChessGameService service, GameCommand gameCommand) {
+        if (service.isGameEnd()) {
+            outputView.printStatus(service.getGameResult());
+            outputView.printWinner(service.getGameResult());
+            outputView.printEnd();
+            return GameCommand.END;
+        }
+        return gameCommand;
     }
 }
