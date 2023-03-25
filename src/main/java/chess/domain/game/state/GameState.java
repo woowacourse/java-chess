@@ -9,4 +9,6 @@ public interface GameState {
     GameState run();
 
     String getStateName();
+
+    boolean isStarted();
 }

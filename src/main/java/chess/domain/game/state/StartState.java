@@ -33,4 +33,9 @@ public class StartState implements GameState {
     public String getStateName() {
         return START_STATE_NAME;
     }
+
+    @Override
+    public boolean isStarted() {
+        return false;
+    }
 }

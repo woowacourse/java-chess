@@ -48,7 +48,9 @@ public class ChessGame {
     }
 
     public List<List<Piece>> getPieces() {
-        gameState = gameState.run();
+        if (!gameState.isStarted()) {
+            throw new ChessGameException("게임이 시작되지 않았습니다.");
+        }
         return board.getPieces();
     }
 
@@ -57,7 +59,9 @@ public class ChessGame {
     }
 
     public Map<Color, Double> getStatus() {
-        gameState = gameState.run();
+        if (!gameState.isStarted()) {
+            throw new ChessGameException("게임이 시작되지 않았습니다.");
+        }
         return board.getStatus();
     }
 
