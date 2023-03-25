@@ -16,23 +16,6 @@ import java.util.TreeMap;
 
 public final class DBChessGameDao implements ChessGameDao {
 
-    /*
-
-    CREATE TABLE chess_game(
-        position_column INT not null,
-        position_row INT not null,
-        piece_type VARCHAR(255) not null,
-        piece_team VARCHAR(255) not null,
-        turn VARCHAR(255) not null,
-        constraint chess_game_pk primary key(position_column, position_row)
-    );
-
-    INSERT INTO chess_game(position_column, position_row, piece_type, piece_team, turn) VALUES(?,?,?,?,?);
-    SELECT * FROM chess_game;
-    DELETE FROM chess_game;
-
-    */
-
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -48,7 +31,6 @@ public final class DBChessGameDao implements ChessGameDao {
             return null;
         }
     }
-
 
     @Override
     public void save(final ChessGame chessGame) {
