@@ -28,7 +28,9 @@ public class Play implements CommandStatus {
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        return new Play(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
+        JdbcChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
+        Long gameId = chessGameDao.saveNewChessGame();
+        return new Play(new ChessGame(gameId, board, Turn.WHITE));
     }
 
     @Override
@@ -40,7 +42,7 @@ public class Play implements CommandStatus {
         }
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
-        return new Play(new ChessGame(currentBoard, chessGame.turnChange(), JdbcChessGameDao.getInstance()));
+        return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()));
     }
 
     private void checkTurn(Position sorucePosition) {

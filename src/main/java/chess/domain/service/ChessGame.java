@@ -2,8 +2,8 @@ package chess.domain.service;
 
 import java.util.List;
 
-import chess.dao.ChessGameDao;
-import chess.domain.board.*;
+import chess.domain.board.Board;
+import chess.domain.board.Score;
 import chess.domain.command.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
@@ -15,20 +15,11 @@ public class ChessGame {
 
     private final Board board;
     private final Turn turn;
-    private final ChessGameDao chessGameDao;
 
-    public ChessGame(Board board, Turn turn, ChessGameDao chessGameDao) {
-        this.id = chessGameDao.saveNewChessGame();
+    public ChessGame(Long id, Board board, Turn turn) {
+        this.id = id;
         this.board = board;
         this.turn = turn;
-        this.chessGameDao = chessGameDao;
-        savePiece();
-    }
-
-    private void savePiece() {
-        for (Piece piece : board.getPieces()) {
-            chessGameDao.savePiece(piece, id);
-        }
     }
 
     public void checkPieceMoveCondition(Position sourcePosition, Position targetPosition) {
@@ -65,5 +56,9 @@ public class ChessGame {
 
     public String getTurnDisplayName() {
         return turn.getDisplayName();
+    }
+
+    public Long getId() {
+        return id;
     }
 }
