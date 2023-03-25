@@ -29,6 +29,18 @@ public class UserAccessService {
         return newUser;
     }
 
+    public boolean havaSavedRoom(User user) {
+        List<Room> rooms = findRoomsByUser(user);
+        if (rooms.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public Room findUserSelectionRoom(int roomId, User user) {
+        return roomDao.findRoomByRoomIdAndUser(roomId, user);
+    }
+
     public List<Room> findRoomsByUser(User user) {
         List<Room> rooms = roomDao.findRoomsByUser(user);
         return Collections.unmodifiableList(rooms);
