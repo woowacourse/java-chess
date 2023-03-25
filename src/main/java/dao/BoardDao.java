@@ -87,4 +87,22 @@ public class BoardDao {
         }
     }
 
+    public boolean hasGame() {
+        Map<Position, Piece> board = new HashMap<>();
+        final String loadQuery = "select last_turn from chess_board";
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
 }
