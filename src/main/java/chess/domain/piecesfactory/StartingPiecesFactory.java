@@ -37,7 +37,6 @@ public class StartingPiecesFactory implements PiecesFactory {
         startingPieces.addAll(makeStatingPawns(color));
         startingPieces.addAll(makeStartingKing(color));
         startingPieces.addAll(makeStartingQueen(color));
-        System.out.println();
         return startingPieces;
     }
 
