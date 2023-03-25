@@ -3,8 +3,6 @@ package chess.domain;
 import static chess.domain.color.Color.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +10,7 @@ import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import chess.initial.BoardFactory;
 
 public class Board {
@@ -125,17 +121,5 @@ public class Board {
 
 	public Map<Position, Piece> board() {
 		return board;
-	}
-
-	public List<File> files() {
-		final List<File> files = Arrays.asList(File.values());
-		files.sort(Comparator.naturalOrder());
-		return files;
-	}
-
-	public List<Rank> ranks() {
-		final List<Rank> ranks = Arrays.asList(Rank.values());
-		ranks.sort(Comparator.naturalOrder());
-		return ranks;
 	}
 }

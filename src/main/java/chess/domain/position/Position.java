@@ -29,8 +29,8 @@ public final class Position {
 	}
 
 	public Position setNextPosition(final Direction unit) {
-		File newFile = file.setNextFile(unit.dx());
-		Rank newRank = rank.setNextRank(unit.dy());
+		File newFile = file.nextFile(unit.dx());
+		Rank newRank = rank.nextRank(unit.dy());
 		return Position.of(newFile, newRank);
 	}
 
@@ -39,7 +39,7 @@ public final class Position {
 	}
 
 	public char fileValue() {
-		return file.fileValue();
+		return file.value();
 	}
 
 	public Rank rank() {
@@ -47,7 +47,7 @@ public final class Position {
 	}
 
 	public int rankValue() {
-		return rank.rankValue();
+		return rank.value();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -15,31 +16,37 @@ public enum Rank {
 	TWO(2),
 	ONE(1);
 
-	private final int rank;
+	private final int value;
 
-	Rank(final int rank) {
-		this.rank = rank;
+	Rank(final int value) {
+		this.value = value;
 	}
 
 	public static Rank from(final int value) {
 		return Arrays.stream(Rank.values())
-			.filter((rank) -> value == rank.rank)
+			.filter((rank) -> value == rank.value)
 			.findFirst()
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public Rank setNextRank(final int unit) {
-		return from((rank + unit));
-
-	}
-
-	public int rankValue() {
-		return rank;
-	}
-
 	public static List<Rank> ranks() {
-		final List<Rank> ranks = Arrays.asList(Rank.values());
-		ranks.sort(Comparator.naturalOrder());
+		final List<Integer> values = new ArrayList<>();
+		for (Rank rank : Rank.values()) {
+			values.add(rank.value);
+		}
+		values.sort(Comparator.naturalOrder());
+		final List<Rank> ranks = new ArrayList<>();
+		for (Integer val : values) {
+			ranks.add(Rank.from(val));
+		}
 		return ranks;
+	}
+
+	public Rank nextRank(final int unit) {
+		return from((value + unit));
+	}
+
+	public int value() {
+		return value;
 	}
 }

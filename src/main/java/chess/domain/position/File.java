@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -15,30 +16,37 @@ public enum File {
 	G('g'),
 	H('h');
 
-	private final char file;
+	private final char value;
 
-	File(final char file) {
-		this.file = file;
+	File(final char value) {
+		this.value = value;
 	}
 
 	public static File from(final char value) {
 		return Arrays.stream(File.values())
-			.filter((file) -> value == file.file)
+			.filter((file) -> value == file.value)
 			.findFirst()
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public File setNextFile(final int unit) {
-		return from((char)(file + unit));
-	}
-
-	public char fileValue() {
-		return file;
-	}
-
-	public static List<File> files(){
-		final List<File> files = Arrays.asList(File.values());
-		files.sort(Comparator.naturalOrder());
+	public static List<File> files() {
+		final List<Character> values = new ArrayList<>();
+		for (File file : File.values()) {
+			values.add(file.value);
+		}
+		values.sort(Comparator.naturalOrder());
+		final List<File> files = new ArrayList<>();
+		for (Character val : values) {
+			files.add(File.from(val));
+		}
 		return files;
+	}
+
+	public File nextFile(final int unit) {
+		return from((char)(value + unit));
+	}
+
+	public char value() {
+		return value;
 	}
 }
