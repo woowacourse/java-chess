@@ -23,12 +23,12 @@ class PieceTest {
 
         //then
         Assertions.assertAll(
-                () -> assertThat(king.getName()).isEqualTo("K"),
-                () -> assertThat(queen.getName()).isEqualTo("Q"),
-                () -> assertThat(knight.getName()).isEqualTo("N"),
-                () -> assertThat(bishop.getName()).isEqualTo("B"),
-                () -> assertThat(rook.getName()).isEqualTo("R"),
-                () -> assertThat(pawn.getName()).isEqualTo("P"));
+                () -> assertThat(king.getName()).isEqualTo("King"),
+                () -> assertThat(queen.getName()).isEqualTo("Queen"),
+                () -> assertThat(knight.getName()).isEqualTo("Knight"),
+                () -> assertThat(bishop.getName()).isEqualTo("Bishop"),
+                () -> assertThat(rook.getName()).isEqualTo("Rook"),
+                () -> assertThat(pawn.getName()).isEqualTo("Pawn"));
     }
 
     @DisplayName("기물들은 팀을 가진다")
