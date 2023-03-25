@@ -4,6 +4,7 @@ import java.util.List;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
+import chess.dao.JdbcChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
@@ -26,8 +27,7 @@ public class PrintGameResult implements CommandStatus {
     @Override
     public CommandStatus start() {
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        return new Play(new ChessGame(board, resultCalculator), Turn.WHITE);
+        return new Play(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
     }
 
     @Override

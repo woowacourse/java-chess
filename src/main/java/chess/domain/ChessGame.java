@@ -2,6 +2,7 @@ package chess.domain;
 
 import java.util.List;
 
+import chess.dao.ChessGameDao;
 import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
@@ -9,12 +10,24 @@ import chess.domain.position.Position;
 
 public class ChessGame {
 
+    private final Long id;
+
     private final Board board;
     private final ResultCalculator resultCalculator;
+    private final ChessGameDao chessGameDao;
 
-    public ChessGame(Board board, ResultCalculator resultCalculator) {
+    public ChessGame(Board board, ChessGameDao chessGameDao) {
+        this.id = chessGameDao.saveNewChessGame();
         this.board = board;
-        this.resultCalculator = resultCalculator;
+        this.resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
+        this.chessGameDao = chessGameDao;
+        savePiece();
+    }
+
+    private void savePiece() {
+        for (Piece piece : board.getPieces()) {
+            chessGameDao.savePiece(piece);
+        }
     }
 
     public void checkPieceMoveCondition(Position sourcePosition, Position targetPosition) {

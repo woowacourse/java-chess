@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.dao.JdbcChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
@@ -24,8 +25,7 @@ class PrintGameResultTest {
     void start() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
 
         // when
         CommandStatus newPlay = printGameResult.start();
@@ -40,8 +40,7 @@ class PrintGameResultTest {
     void move() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
         Position sourcePosition = new Position(File.A, Rank.TWO);
         Position targetPosition = new Position(File.A, Rank.FOUR);
 
@@ -59,8 +58,7 @@ class PrintGameResultTest {
     void end() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
 
         // when, then
         assertThat(printGameResult.end()).isInstanceOf(End.class);
@@ -71,8 +69,7 @@ class PrintGameResultTest {
     void getPieces() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
 
         // when, then
         assertThatThrownBy(() -> printGameResult.getPieces())
@@ -85,8 +82,7 @@ class PrintGameResultTest {
     void getTurnDisplayName() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
 
         // when, then
         assertThatThrownBy(() -> printGameResult.getTurnDisplayName())
@@ -99,8 +95,7 @@ class PrintGameResultTest {
     void getScoreBySide() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
 
         // when, then
         Assertions.assertDoesNotThrow(() -> printGameResult.getScoreBySide());
@@ -111,8 +106,7 @@ class PrintGameResultTest {
     void getGameResultBySide() {
         // given
         Board board = new Board(new Pieces());
-        ResultCalculator resultCalculator = new ResultCalculator(new ScoreBySide(), new GameResultBySide());
-        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, resultCalculator), Turn.WHITE);
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(board, new JdbcChessGameDao()), Turn.WHITE);
 
         // when, then
         Assertions.assertDoesNotThrow(() -> printGameResult.getGameResultBySide());

@@ -6,6 +6,13 @@ import java.util.function.Consumer;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
+import chess.dao.JdbcChessGameDao;
+import chess.domain.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.GameResultBySide;
+import chess.domain.board.ResultCalculator;
+import chess.domain.board.ScoreBySide;
+import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 
@@ -21,7 +28,8 @@ public class CommandManager {
     private CommandStatus commandStatus;
 
     public CommandManager() {
-        this.commandStatus = new Init();
+        Board board = new Board(new Pieces());
+        this.commandStatus = new Init(new ChessGame(board, new JdbcChessGameDao()));
     }
 
     public void execute(Commands commands) {
