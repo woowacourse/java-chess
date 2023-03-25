@@ -12,9 +12,13 @@
 graph TD
     ChessController --> InputView
     ChessController --> OutputView
-    ChessController --> ExecuteCommand
-
+    ChessController --> ChessGameService
+    ChessController --> PieceService
     ChessController --> ChessGame
+
+    ChessGameService --> ChessGameDao
+    PieceService --> PieceDao
+
     ChessGame --> Board
 
     Square --> File
