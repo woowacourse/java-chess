@@ -1,4 +1,4 @@
-package boardStrategy;
+package chess.boardStrategy;
 
 import chess.boardstrategy.BoardStrategy;
 import chess.domain.board.Column;
