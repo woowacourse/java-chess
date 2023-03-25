@@ -18,6 +18,7 @@ import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
 import chess.domain.position.Position;
 import chess.domain.service.ChessGame;
+import chess.domain.service.dto.UpdateTurnDto;
 
 public class PrintGameResult implements CommandStatus {
 
@@ -57,6 +58,7 @@ public class PrintGameResult implements CommandStatus {
         piecePositionUpdateWhenTakePiece(sourcePosition, targetPosition);
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
+        chessGameDao.updateTurn(new UpdateTurnDto(chessGame.getId(), chessGame.turnChange()));
         return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()), chessGameDao);
     }
 

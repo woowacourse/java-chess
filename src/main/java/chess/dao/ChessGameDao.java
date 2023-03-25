@@ -7,6 +7,7 @@ import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
 import chess.domain.piece.dto.GeneratePieceDto;
 import chess.domain.service.dto.ChessGameDto;
+import chess.domain.service.dto.UpdateTurnDto;
 
 public interface ChessGameDao {
 
@@ -23,4 +24,6 @@ public interface ChessGameDao {
     void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, FindPiecePositionDto findPiecePositionDto);
 
     void deletePieceByPosition(FindPiecePositionDto findPiecePositionDto);
+
+    void updateTurn(UpdateTurnDto updateTurnDto);
 }

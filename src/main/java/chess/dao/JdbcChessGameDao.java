@@ -10,6 +10,7 @@ import chess.domain.piece.dto.GeneratePieceDto;
 import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
 import chess.domain.service.dto.ChessGameDto;
+import chess.domain.service.dto.UpdateTurnDto;
 
 public class JdbcChessGameDao implements ChessGameDao {
 
@@ -180,19 +181,18 @@ public class JdbcChessGameDao implements ChessGameDao {
         }
     }
 
-//    @Override
-//    public void findPreviousChessGame(Long gameId) {
-//        final String query = "SELECT * FROM chess_game WHERE game_id = ?";
-//
-//        try (final Connection connection = getConnection();
-//             final PreparedStatement preparedStatement = connection.prepareStatement(query);
-//        ) {
-//            preparedStatement.setLong(1, gameId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    @Override
+    public void updateTurn(UpdateTurnDto updateTurnDto) {
+        final String query = "UPDATE chess_game SET turn = ? WHERE game_id = ?";
 
-
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, updateTurnDto.getTurn());
+            preparedStatement.setLong(2, updateTurnDto.getGameId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
