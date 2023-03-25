@@ -92,14 +92,9 @@ public class ChessGame {
         return board;
     }
 
-    public Double calculateWhiteScore() {
+    public Double calculateScore(Side side) {
         checkCalculable();
-        return board.calculateScore(Side.WHITE);
-    }
-
-    public Double calculateBlackScore() {
-        checkCalculable();
-        return board.calculateScore(Side.BLACK);
+        return board.calculateScore(side);
     }
 
     public Side calculateWinner() {

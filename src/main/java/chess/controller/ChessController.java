@@ -45,8 +45,8 @@ public class ChessController {
     }
 
     private void status(ChessGame chessGame) {
-        final Double whiteScore = chessGame.calculateWhiteScore();
-        final Double blackScore = chessGame.calculateBlackScore();
+        final Double whiteScore = chessGame.calculateScore(Side.WHITE);
+        final Double blackScore = chessGame.calculateScore(Side.BLACK);
         OutputView.printScore(whiteScore, blackScore);
         OutputView.printWinner(Side.calculateWinner(whiteScore, blackScore));
     }
@@ -92,7 +92,7 @@ public class ChessController {
 
             chessGameService.delete();
             OutputView.printKingDie(winner);
-            OutputView.printScore(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
+            OutputView.printScore(chessGame.calculateScore(Side.WHITE), chessGame.calculateScore(Side.BLACK));
             OutputView.printWinner(winner);
         }
     }
