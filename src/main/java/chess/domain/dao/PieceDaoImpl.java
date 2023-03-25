@@ -15,6 +15,13 @@ import java.util.List;
 public class PieceDaoImpl implements PieceDao {
 
     private final DBConnection dbConnection = new DBConnection();
+    private final RowMapper pieceMapper = rs -> {
+        String shape = rs.getString("shape");
+        int rank = rs.getInt("rank");
+        char file = rs.getString("file").charAt(0);
+
+        return Piece.from(rank, file, Shape.valueOf(shape));
+    };
 
     @Override
     public void create(final Piece piece, final Color color) {
@@ -30,21 +37,14 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public List<Piece> findPieceByColor(final Color color) {
-        List<Piece> pieces = new ArrayList<>();
+        final List<Piece>[] pieces = new List[]{new ArrayList<>()};
         String query = "SELECT * FROM piece WHERE color = ?";
         processQuery(query, preparedStatement -> {
             preparedStatement.setString(1, color.name());
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) { // TODO: RowMapper 사용
-                String shape = rs.getString("shape");
-                int rank = rs.getInt("rank");
-                char file = rs.getString("file").charAt(0);
-
-                Piece piece = Piece.from(rank, file, Shape.valueOf(shape));
-                pieces.add(piece);
-            }
+            pieces[0] = getResults(rs, pieceMapper);
         });
-        return pieces;
+        return pieces[0];
     }
 
     @Override
@@ -85,4 +85,14 @@ public class PieceDaoImpl implements PieceDao {
             throw new RuntimeException(e);
         }
     }
+
+    private List<Piece> getResults(ResultSet rs, RowMapper rowMapper) throws SQLException {
+        List<Piece> results = new ArrayList<>();
+        while (rs.next()) {
+            Piece result = rowMapper.run(rs);
+            results.add(result);
+        }
+        return results;
+    }
+
 }
