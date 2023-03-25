@@ -61,4 +61,9 @@ public abstract class Pawn extends Piece {
     private boolean isValidFirstMove(final List<Piece> otherPieces) {
         return !isMoved && (otherPieces.size() == MIN_MOVABLE_DISTANCE || otherPieces.size() > MAX_MOVABLE_DISTANCE);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

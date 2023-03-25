@@ -25,4 +25,9 @@ public final class EmptyPiece extends Piece {
     public void validateMove(final Direction correctDirection, final List<Piece> onRoutePieces) {
         throw new IllegalArgumentException(INVALID_MOVE);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

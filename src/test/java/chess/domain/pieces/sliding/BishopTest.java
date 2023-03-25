@@ -4,6 +4,7 @@ import static chess.domain.pieces.Piece.INVALID_DIRECTION;
 import static chess.domain.pieces.Piece.INVALID_MOVE_EXIST_ALLY;
 import static chess.domain.pieces.sliding.SlidingPiece.INVALID_TEAM;
 import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -98,5 +99,11 @@ class BishopTest {
         assertThatNoException().isThrownBy(
                 () -> bishop.validateMove(Direction.UP_RIGHT, pieces)
         );
+    }
+
+    @Test
+    @DisplayName("킹이 아니다")
+    void 킹이_아니다() {
+        assertThat(bishop.isKing()).isFalse();
     }
 }

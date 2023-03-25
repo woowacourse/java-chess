@@ -16,4 +16,9 @@ public final class Knight extends NonSlidingPiece {
         validateDirection(correctDirection);
         validateOnRoutePiecesExistAlly(onRoutePieces);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

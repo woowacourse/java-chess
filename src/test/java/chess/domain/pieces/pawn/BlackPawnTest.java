@@ -124,4 +124,10 @@ class BlackPawnTest {
                 () -> blackPawn.validateMove(Direction.DOWN, List.of(new EmptyPiece(), new EmptyPiece()))
         ).withMessage(INVALID_DEFAULT_DISTANCE);
     }
+
+    @Test
+    @DisplayName("킹이 아니다")
+    void 킹이_아니다() {
+        assertThat(blackPawn.isKing()).isFalse();
+    }
 }

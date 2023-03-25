@@ -25,4 +25,9 @@ public abstract class SlidingPiece extends Piece {
         validateDirection(correctDirection);
         validateOnRoutePiecesExistAlly(onRoutePieces);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

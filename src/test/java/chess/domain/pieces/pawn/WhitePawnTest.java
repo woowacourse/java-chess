@@ -125,4 +125,9 @@ class WhitePawnTest {
         ).withMessage(INVALID_DEFAULT_DISTANCE);
     }
 
+    @Test
+    @DisplayName("킹이 아니다")
+    void 킹이_아니다() {
+        assertThat(whitePawn.isKing()).isFalse();
+    }
 }

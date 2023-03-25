@@ -66,4 +66,35 @@ class BoardTest {
                 () -> board.movePiece(currentPosition, targetPosition)
         ).withMessage(INVALID_TARGET_POSITION);
     }
+
+    @Test
+    @DisplayName("킹이 모두 살아 있으면 true를 반환한다.")
+    void 킹이_모두_살아_있으면_false를_반환한다() {
+        assertThat(board.isKingAlive()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 죽으면 false를 반환한다")
+    void 킹이_죽으면_false를_반환한다() {
+        Position e2 = Position.toPosition("e2");
+        Position e4 = Position.toPosition("e4");
+        board.movePiece(e2, e4);
+
+        Position f7 = Position.toPosition("f7");
+        Position f5 = Position.toPosition("f5");
+        board.movePiece(f7, f5);
+
+        Position e1 = Position.toPosition("e1");
+        board.movePiece(e1, e2);
+
+        Position f4 = Position.toPosition("f4");
+        board.movePiece(f5, f4);
+
+        Position e3 = Position.toPosition("e3");
+        board.movePiece(e2, e3);
+
+        board.movePiece(f4, e3);
+
+        assertThat(board.isKingAlive()).isFalse();
+    }
 }

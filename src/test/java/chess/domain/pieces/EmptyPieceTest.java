@@ -42,4 +42,10 @@ class EmptyPieceTest {
                 () -> emptyPiece.validateMove(Direction.UP, List.of(new EmptyPiece()))
         ).withMessage(INVALID_MOVE);
     }
+
+    @Test
+    @DisplayName("킹이 아니다")
+    void 킹이_아니다() {
+        assertThat(emptyPiece.isKing()).isFalse();
+    }
 }

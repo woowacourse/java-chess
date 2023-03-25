@@ -14,6 +14,7 @@ public final class Board {
 
     static final String INVALID_TARGET_POSITION = "위치가 중복되었습니다.";
     private static final Team DEFAULT_START_TEAM = Team.WHITE;
+    private static final int ALL_KING_ALIVE_COUNT = 2;
 
     private final Map<Position, Piece> board;
     private Turn turn;
@@ -32,6 +33,14 @@ public final class Board {
         validateMove(currentPosition, targetPosition, currentPositionPiece);
 
         move(currentPosition, targetPosition);
+    }
+
+    public boolean isKingAlive() {
+        long kingCount = board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return kingCount == ALL_KING_ALIVE_COUNT;
     }
 
     private void validateNotEquals(final Position currentPosition, final Position targetPosition) {

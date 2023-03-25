@@ -57,7 +57,7 @@ public final class MainController {
         if (command == MOVE) {
             validateInputSize(inputs);
             movePiece(board, inputs);
-            printBoard(board.getBoard());
+            return board.isKingAlive();
         }
         return true;
     }
@@ -67,6 +67,7 @@ public final class MainController {
         Position targetPosition = Position.toPosition(inputs.get(TARGET_POSITION_INDEX));
 
         board.movePiece(currentPosition, targetPosition);
+        printBoard(board.getBoard());
     }
 
     private void validateInputSize(final List<String> inputs) {

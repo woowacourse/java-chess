@@ -53,6 +53,8 @@ public abstract class Piece {
         return team.isAlly(otherTeam);
     }
 
+    abstract public boolean isKing();
+
     public final Team getTeam() {
         return team;
     }
