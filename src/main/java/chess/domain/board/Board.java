@@ -54,10 +54,6 @@ public class Board {
         pieces.add(movedPiece);
     }
 
-    public boolean hasPieces() {
-        return !pieces.isEmpty();
-    }
-
     public boolean hasTwoKings() {
         return pieces.hasTwoKings();
     }

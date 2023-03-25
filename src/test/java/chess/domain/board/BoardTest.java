@@ -148,23 +148,6 @@ class BoardTest {
     }
 
     @ParameterizedTest
-    @MethodSource("providePieces")
-    void 빈_보드인지_확인한다(final List<Piece> pieces, final boolean expected) {
-        final Board board = Board.from(new TestPiecesFactory(pieces));
-
-        final boolean actual = board.hasPieces();
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> providePieces() {
-        return Stream.of(
-                Arguments.of(List.of(), false),
-                Arguments.of(List.of(new Queen(D, EIGHT, BLACK)), true)
-        );
-    }
-
-    @ParameterizedTest
     @MethodSource("provideKings")
     void 왕이_두_개인지_확인한다(final List<Piece> pieces, final boolean expected) {
         final Board board = Board.from(new TestPiecesFactory(pieces));
