@@ -18,8 +18,8 @@ class CommandArgumentsTest {
                 Collections.emptyList()
         );
 
-        assertThatThrownBy(() -> commandArguments.getArgumentOf(0))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(commandArguments::getRawEndCoordinate)
+                .isInstanceOf(IndexOutOfBoundsException.class);
     }
 
     @Test
@@ -29,18 +29,7 @@ class CommandArgumentsTest {
                 List.of("b2", "b3")
         );
 
-        assertThat(commandArguments.getArgumentOf(0))
+        assertThat(commandArguments.getRawStartCoordinate())
                 .isEqualTo("b2");
-    }
-
-    @Test
-    @DisplayName("명령 인자가 여러 개일 때, 개수 이상으로 가져오려고 하면 예외를 발생시킨다")
-    void getArgumentOfWhenSeveral() {
-        CommandArguments commandArguments = CommandArguments.of(
-                List.of("b2", "b3")
-        );
-
-        assertThatThrownBy(() -> commandArguments.getArgumentOf(2))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 }
