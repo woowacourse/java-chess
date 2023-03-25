@@ -35,6 +35,10 @@ public class Piece {
         return this.color == color;
     }
 
+    public boolean isNotSameColor(Color color) {
+        return !isSameColor(color);
+    }
+
     @Override
     public String toString() {
         return "Piece{" +
