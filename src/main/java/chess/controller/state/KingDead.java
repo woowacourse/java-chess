@@ -1,19 +1,21 @@
 package chess.controller.state;
 
+import chess.domain.game.Game;
 import chess.domain.piece.Camp;
+import chess.view.OutputView;
 
 public class KingDead extends State {
-    KingDead(final Camp turn) {
-        super(turn);
+    KingDead(final Game game) {
+        super(game);
     }
 
     @Override
-    public Running next() {
-        throw new IllegalStateException("다음 차례를 진행할 수 없는 상태입니다.");
-    }
+    public State status() {
+        final double whiteScore = game().calculateScore(Camp.WHITE);
+        final double blackScore = game().calculateScore(Camp.BLACK);
+        final Camp winner = game().judgeWinner();
+        OutputView.printStatus(whiteScore, blackScore, winner);
 
-    @Override
-    public KingDead kingDead() {
         return this;
     }
 }

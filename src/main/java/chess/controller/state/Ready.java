@@ -1,24 +1,16 @@
 package chess.controller.state;
 
-import chess.domain.piece.Camp;
+import chess.domain.game.Game;
+import chess.view.OutputView;
 
 public class Ready extends State {
-    public Ready() {
-        super(Camp.WHITE);
+    public Ready(final Game game) {
+        super(game);
     }
 
     @Override
     public Running start() {
-        return new Running(turn());
-    }
-
-    @Override
-    public End end() {
-        return new End(turn());
-    }
-
-    @Override
-    public State status() {
-        throw new IllegalStateException("상태를 볼 수 없는 상태입니다.");
+        OutputView.printChessBoard(game().getPieces());
+        return new Running(game());
     }
 }

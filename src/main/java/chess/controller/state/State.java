@@ -1,36 +1,33 @@
 package chess.controller.state;
 
-import chess.domain.piece.Camp;
+import chess.domain.board.Square;
+import chess.domain.game.Game;
 
 public abstract class State {
-    private final Camp turn;
+    private final Game game;
 
-    State(final Camp turn) {
-        this.turn = turn;
+    State(final Game game) {
+        this.game = game;
     }
 
     public Running start() {
         throw new IllegalStateException("게임을 시작할 수 없는 상태입니다.");
     }
 
-    public Running next() {
+    public State next(final Square source, final Square target) {
         throw new IllegalStateException("다음 턴으로 넘길 수 없는 상태입니다.");
     }
 
-    public KingDead kingDead() {
-        throw new IllegalStateException("게임을 끝낼 수 없는 상태입니다.");
-    }
-
     public State status() {
-        return this;
+        throw new IllegalStateException("상태를 볼 수 없는 상태입니다.");
     }
 
     public End end() {
-        return new End(turn);
+        return new End(game);
     }
 
-    public Camp turn() {
-        return turn;
+    protected Game game() {
+        return game;
     }
 
     public boolean isRunning() {
