@@ -35,11 +35,14 @@ public class ChessGameController {
     }
 
     private void playChess(ChessGame chessGame, List<String> inputCommand) {
-        while (isNotEnd(inputCommand)) {
+        while (isNotEnd(inputCommand) && !chessGame.isGameOver()) {
             try {
                 chessGame = createNewChessGame(chessGame, inputCommand);
                 tryChessMove(chessGame, inputCommand);
                 outputView.printBoard(chessGame.getBoard());
+                if (chessGame.isGameOver()) {
+                    break;
+                }
                 inputCommand = inputView.readGameCommand();
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());

@@ -37,4 +37,21 @@ public abstract class Piece {
     public boolean isBlackTeam() {
         return team.isBlackTeam();
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return team == piece.team && pieceType == piece.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, pieceType);
+    }
 }

@@ -2,11 +2,17 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.pieces.King;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.Team;
 import java.util.Collections;
 import java.util.Map;
 
 public class ChessGame {
+
+    private static final Piece WHITE_TEAM_KING = new King(Team.WHITE);
+    private static final Piece BLACK_TEAM_KING = new King(Team.BLACK);
+    private static final int GAME_KING_COUNT = 2;
 
     private final Board board;
     private Turn turn;
@@ -21,6 +27,16 @@ public class ChessGame {
         board.isMovable(source, destination);
         board.switchPosition(source, destination);
         switchTurn();
+    }
+
+    public boolean isGameOver() {
+        return generateKingCount() < GAME_KING_COUNT;
+    }
+
+    private long generateKingCount() {
+        return board.getBoard().values().stream()
+            .filter(p -> p.equals(WHITE_TEAM_KING) || p.equals(BLACK_TEAM_KING))
+            .count();
     }
 
     public Map<Position, Piece> getBoard() {
