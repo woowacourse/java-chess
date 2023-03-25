@@ -19,16 +19,12 @@ public class ChessService {
         return readGame;
     }
 
-    public void save(Game game) throws SQLException{
-        removeGame(game);
-        saveGame(game);
-    }
 
-    private void removeGame(Game game) {
+    public void removeGame(Game game) {
         gameDao.remove(game.getName());
     }
 
-    private void saveGame(Game game) {
+    public void saveGame(Game game) {
         gameDao.save(game.board(),game.getName(),game.getTurn());
     }
 }

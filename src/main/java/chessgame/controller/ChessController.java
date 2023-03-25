@@ -43,16 +43,15 @@ public class ChessController {
         } while (!game.isEnd());
         if (game.isEndByKing()) {
             outputView.printWinner(game.winTeam());
+            chessService.removeGame(game);
+            return;
         }
         saveGame(game);
     }
 
     private void saveGame(Game game) {
-        try {
-            chessService.save(game);
-        } catch (SQLException e) {
-            outputView.printErrorMsg(e.getMessage());
-        }
+        chessService.removeGame(game);
+        chessService.saveGame(game);
     }
 
     private void eachTurn(Game game) {
