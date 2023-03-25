@@ -1,23 +1,18 @@
 package view;
 
-import domain.piece.Piece;
-import domain.piece.Position;
-import domain.piece.Rank;
-import domain.piece.Side;
+import domain.piece.*;
 
 import java.util.Map;
 
 public class OutputView {
     public void printChessBoard(Map<Position, Piece> chessBoard) {
-        Rank currentRank = Rank.EIGHT;
-        for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
-            if (!currentRank.equals(positionPieceEntry.getKey().getRank())) {
-                currentRank = currentRank.previousRank();
-                System.out.println();
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                Piece piece = chessBoard.get(Position.of(file.getText(), rank.getText()));
+                System.out.print(piece.getCategory().getPieceValue());
             }
-            System.out.print(positionPieceEntry.getValue().getCategory().getPieceValue());
+            System.out.println();
         }
-        System.out.println();
         System.out.println();
     }
 
