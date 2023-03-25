@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.request.MoveRequest;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 
 import java.util.List;
 
