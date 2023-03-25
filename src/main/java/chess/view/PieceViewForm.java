@@ -25,12 +25,14 @@ public enum PieceViewForm {
 
     public static String parseToName(final Piece piece) {
         final PieceViewForm findPieceForm = Arrays.stream(PieceViewForm.values())
-                .filter(pieceForm -> pieceForm.type == piece.getPieceType())
+                .filter(pieceForm -> piece.isSamePieceType(pieceForm.type))
                 .findFirst()
                 .orElseThrow();
+
         if (piece.isSameColor(Color.BLACK)) {
             return String.valueOf(findPieceForm.name);
         }
+
         return String.valueOf(Character.toLowerCase(findPieceForm.name));
     }
 }
