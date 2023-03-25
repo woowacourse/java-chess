@@ -14,4 +14,8 @@ public interface ChessGameDao {
     Optional<ChessGameDto> findLatest();
 
     List<ChessGameDto> findAll();
+
+    void update(final ChessGame chessGame);
+
+    void delete(final Long id);
 }

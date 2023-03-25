@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static chess.util.SquareFixture.B_THREE;
+import static chess.util.SquareFixture.B_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -61,5 +63,36 @@ class ChessGameDaoImplTest {
                 () -> assertThat(chessGames).hasSize(1),
                 () -> assertThat(chessGames.get(0).getTurn()).isEqualTo("WHITE")
         );
+    }
+
+    @Test
+    void 체스_게임_턴을_수정한다() {
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
+        final ChessGameDao chessGameDao = new ChessGameDaoImpl();
+        chessGameDao.save(chessGame);
+        final Optional<ChessGameDto> latestChessGame = chessGameDao.findLatest();
+        chessGame.setId(latestChessGame.get().getId());
+        chessGame.move(B_TWO, B_THREE);
+
+        chessGameDao.update(chessGame);
+
+        final Optional<ChessGameDto> updateChessGame = chessGameDao.findById(chessGame.getId());
+        assertAll(
+                () -> assertThat(updateChessGame).isNotEmpty(),
+                () -> assertThat(updateChessGame.get().getTurn()).isEqualTo("BLACK")
+        );
+    }
+
+    @Test
+    void 체스_게임을_삭제한다() {
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
+        final ChessGameDao chessGameDao = new ChessGameDaoImpl();
+        chessGameDao.save(chessGame);
+        final Optional<ChessGameDto> latestChessGame = chessGameDao.findLatest();
+
+        chessGameDao.delete(latestChessGame.get().getId());
+
+        final List<ChessGameDto> chessGames = chessGameDao.findAll();
+        assertThat(chessGames).hasSize(0);
     }
 }

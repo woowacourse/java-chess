@@ -72,4 +72,20 @@ public class ChessGameDaoImpl implements ChessGameDao {
             return result;
         }, Collections.emptyList());
     }
+
+    @Override
+    public void update(final ChessGame chessGame) {
+        final String query = "update chess_game set turn = ? where id = ?";
+        final GameState gameState = chessGame.getGameState();
+        final List<String> parameters = List.of(gameState.getTurnColor().name(), String.valueOf(chessGame.getId()));
+
+        jdbcTemplate.executeUpdate(query, parameters);
+    }
+
+    @Override
+    public void delete(final Long id) {
+        final String query = "delete from chess_game where id = ?";
+        final List<String> parameters = List.of(String.valueOf(id));
+        jdbcTemplate.executeUpdate(query, parameters);
+    }
 }
