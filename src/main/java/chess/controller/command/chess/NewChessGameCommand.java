@@ -17,14 +17,19 @@ public class NewChessGameCommand implements ChessGameCommand {
             final PieceService pieceService,
             final OutputView outputView
     ) {
+        final ChessGame chessGame = savedChessGame(chessGameService, pieceService);
+        outputView.printChessBoard(ChessBoardDto.from(chessGame));
+        return chessGame;
+    }
+
+    private ChessGame savedChessGame(final ChessGameService chessGameService, final PieceService pieceService) {
         final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
         chessGameService.save(chessGame);
 
         final ChessGameDto chessGameDto = chessGameService.findLatest();
         chessGame.setId(chessGameDto.getId());
-        pieceService.saveAll(chessGameDto.getId(), chessGame.getBoard());
+        pieceService.saveAll(chessGame.getId(), chessGame.getBoard());
 
-        outputView.printChessBoard(ChessBoardDto.from(chessGame));
         return chessGame;
     }
 }

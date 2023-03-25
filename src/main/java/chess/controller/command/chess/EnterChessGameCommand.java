@@ -25,11 +25,14 @@ public class EnterChessGameCommand implements ChessGameCommand {
             final PieceService pieceService,
             final OutputView outputView
     ) {
-        final ChessGameDto chessGameDto = chessGameService.findById(chessGameId);
-        final List<PieceDto> pieceDtos = pieceService.findAllByChessGameId(chessGameId);
-        final ChessGame chessGame = ChessGameFactory.create(chessGameDto, pieceDtos);
-
+        final ChessGame chessGame = searchChessGame(chessGameService, pieceService);
         outputView.printChessBoard(ChessBoardDto.from(chessGame));
         return chessGame;
+    }
+
+    private ChessGame searchChessGame(final ChessGameService chessGameService, final PieceService pieceService) {
+        final ChessGameDto chessGameDto = chessGameService.findById(chessGameId);
+        final List<PieceDto> pieceDtos = pieceService.findAllByChessGameId(chessGameId);
+        return ChessGameFactory.create(chessGameDto, pieceDtos);
     }
 }

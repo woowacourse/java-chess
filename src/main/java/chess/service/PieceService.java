@@ -28,15 +28,19 @@ public class PieceService {
 
     public void move(final ChessGame chessGame, final Square source, final Square destination) {
         final Optional<PieceDto> searchPiece = pieceDao.findBySquare(chessGame.getId(), destination);
-        final Board board = chessGame.getBoard();
-        final Piece destinationPiece = board.findPieceOf(destination)
-                .orElseThrow(() -> new IllegalStateException("데이터가 존재하지 않습니다."));
+        final Piece destinationPiece = getDestinationPiece(chessGame, destination);
         if (searchPiece.isEmpty()) {
             pieceDao.save(chessGame.getId(), destination, destinationPiece);
         } else {
             pieceDao.update(chessGame.getId(), destination, destinationPiece);
         }
         pieceDao.delete(chessGame.getId(), source);
+    }
+
+    private Piece getDestinationPiece(final ChessGame chessGame, final Square destination) {
+        final Board board = chessGame.getBoard();
+        return board.findPieceOf(destination)
+                .orElseThrow(() -> new IllegalStateException("데이터가 존재하지 않습니다."));
     }
 
     public void deleteAll(final Long chessGameId) {

@@ -31,10 +31,6 @@ public class GameState {
         executeState.end();
     }
 
-    public GameState load() {
-        return new GameState(turn, StartState.CACHE);
-    }
-
     public GameState nextTurnByMove() {
         return new GameState(turn.reverse(), StartState.CACHE);
     }
@@ -53,9 +49,5 @@ public class GameState {
 
     public Color getTurnColor() {
         return turn;
-    }
-
-    public ExecuteState getExecuteState() {
-        return executeState;
     }
 }

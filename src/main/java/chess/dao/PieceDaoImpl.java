@@ -26,14 +26,16 @@ public class PieceDaoImpl implements PieceDao {
         final List<String> parameters = List.of(
                 String.valueOf(chessGameId), color.name(), pieceType.name(), file.name(), rank.name()
         );
+
         jdbcTemplate.executeUpdate(query, parameters);
     }
 
     @Override
     public Optional<PieceDto> findBySquare(final Long chessGameId, final Square square) {
-        final String query = "select * from piece where chess_game_id = ? and file = ? and `rank` = ?";
         final File file = square.getFile();
         final Rank rank = square.getRank();
+
+        final String query = "select * from piece where chess_game_id = ? and file = ? and `rank` = ?";
         final List<String> parameters = List.of(String.valueOf(chessGameId), file.name(), rank.name());
 
         return jdbcTemplate.executeQuery(query, resultSet -> {
@@ -77,23 +79,27 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void update(final Long chessGameId, final Square square, final Piece piece) {
-        final String query = "update piece set color = ?, type = ? where chess_game_id = ? and file = ? and `rank` = ?";
         final File file = square.getFile();
         final Rank rank = square.getRank();
         final Color color = piece.getColor();
         final PieceType pieceType = piece.getPieceType();
+
+        final String query = "update piece set color = ?, type = ? where chess_game_id = ? and file = ? and `rank` = ?";
         final List<String> parameters = List.of(
                 color.name(), pieceType.name(), String.valueOf(chessGameId), file.name(), rank.name()
         );
+
         jdbcTemplate.executeUpdate(query, parameters);
     }
 
     @Override
     public void delete(final Long chessGameId, final Square square) {
-        final String query = "delete from piece where chess_game_id = ? and file = ? and `rank` = ?";
         final File file = square.getFile();
         final Rank rank = square.getRank();
+
+        final String query = "delete from piece where chess_game_id = ? and file = ? and `rank` = ?";
         final List<String> parameters = List.of(String.valueOf(chessGameId), file.name(), rank.name());
+
         jdbcTemplate.executeUpdate(query, parameters);
     }
 
@@ -101,6 +107,7 @@ public class PieceDaoImpl implements PieceDao {
     public void deleteAll(final Long chessGameId) {
         final String query = "delete from piece where chess_game_id = ?";
         final List<String> parameters = List.of(String.valueOf(chessGameId));
+
         jdbcTemplate.executeUpdate(query, parameters);
     }
 }
