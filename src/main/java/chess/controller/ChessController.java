@@ -1,10 +1,8 @@
 package chess.controller;
 
+import chess.database.DBChessBoardDao;
 import chess.domain.ChessBoard;
-import chess.domain.ChessBoardMaker;
 import chess.domain.ChessGame;
-import chess.domain.Turn;
-import chess.domain.piece.Camp;
 import chess.domain.position.Position;
 import chess.view.*;
 
@@ -19,14 +17,15 @@ public final class ChessController {
     private static final int TO_POSITION_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    public static final int POSITION_SET_INDEX = 2;
 
     private final Map<ChessCommand, GameAction> commandMapper = new EnumMap<>(ChessCommand.class);
-    private final OutputView outputView;
-    private final InputView inputView;
+    private final DBChessBoardDao dbChessBoardDao;
+    private final ChessGame game;
 
-    public ChessController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessController(ChessGame game, DBChessBoardDao dbChessBoardDao) {
+        this.game = game;
+        this.dbChessBoardDao = dbChessBoardDao;
         initController();
     }
 
@@ -39,24 +38,38 @@ public final class ChessController {
     }
 
     public void run() {
-        outputView.printStartPrefix();
-        ChessGame game = new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE));
+        OutputView.printStartPrefix();
+        List<Position> positions = dbChessBoardDao.select();
+        checkPlay(positions);
         ChessCommand gameCommand = ChessCommand.WAIT;
         while (game.isKingsLive() && gameCommand != ChessCommand.END) {
             gameCommand = play(game);
         }
-        outputView.printWinner(game.getWinnerCamp());
+        OutputView.printWinner(game.getWinnerCamp());
+    }
+
+    private void checkPlay(final List<Position> positions) {
+        if (positions != null) {
+            OutputView.printReStart();
+            getNotation(positions, game);
+        }
+    }
+
+    private void getNotation(List<Position> positions, ChessGame game) {
+        for (int i = 0; i < positions.size(); i += POSITION_SET_INDEX) {
+            game.move(positions.get(i), positions.get(i + 1));
+        }
     }
 
     private ChessCommand play(ChessGame game) {
         try {
-            List<String> commands = inputView.readCommand();
+            List<String> commands = InputView.readCommand();
             ChessCommand command = ChessCommand.from(commands.get(COMMAND_INDEX));
             GameAction gameAction = commandMapper.get(command);
-            gameAction.execute(commands,game);
+            gameAction.execute(commands, game);
             return command;
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return ChessCommand.WAIT;
         }
     }
@@ -72,12 +85,13 @@ public final class ChessController {
         String fromInput = commands.get(FROM_POSITION_INDEX);
         String toInput = commands.get(TO_POSITION_INDEX);
         game.move(toPosition(fromInput), toPosition(toInput));
+        dbChessBoardDao.save(toPosition(fromInput), toPosition(toInput));
         printBoard(game.getChessBoard());
     }
 
     private void status(List<String> commands,ChessGame game) {
         ChessCommand.validateStatusCommand(commands);
-        outputView.printStatusScore(game.getWhiteScore(), game.getBlackScore());
+        OutputView.printStatusScore(game.getWhiteScore(), game.getBlackScore());
     }
 
     private Position toPosition(String positionInput) {
@@ -88,6 +102,6 @@ public final class ChessController {
     }
 
     private void printBoard(ChessBoard chessBoard) {
-        outputView.printChessState(chessBoard.getBoard());
+        OutputView.printChessState(chessBoard.getBoard());
     }
 }

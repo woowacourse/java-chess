@@ -55,4 +55,12 @@ public final class Position {
         Rank newRank = rank.move(rankStep);
         return Position.of(newFile, newRank);
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }
