@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.controller.dto.ChessBoardDto;
+import chess.controller.dto.ChessResultDto;
 import chess.controller.dto.PieceDto;
 import chess.controller.dto.PositionDto;
 
@@ -17,6 +18,15 @@ public final class OutputView {
             "> 게임 시작 : %s\n" +
             "> 게임 종료 : %s\n" +
             "> 게임 이동 : %s source위치 target위치 - 예. move b2 b3";
+    private static final String RESULT_MESSAGE = "> 체스 게임 결과입니다.\n" +
+            "> 백진영 (WHITE) : %.1f\n" +
+            "> 흑진영 (BLACK) : %.1f\n" +
+            "> 승리한 팀 : %s\n";
+
+    private static final String DRAW = "DRAW!";
+    private static final String WHITE = "WHITE";
+    private static final String BLACK = "BLACK";
+
 
     public static void print(final String message) {
         System.out.println(message);
@@ -35,6 +45,13 @@ public final class OutputView {
         print(boardMessage.toString());
     }
 
+    public static void printChessResult(final ChessResultDto chessResultDto) {
+        final double whiteScore = chessResultDto.getWhiteScore();
+        final double blackScore = chessResultDto.getBlackScore();
+        final String winnerCamp = getWinnerCamp(whiteScore, blackScore);
+        print(String.format(RESULT_MESSAGE, whiteScore, blackScore, winnerCamp));
+    }
+
     private static String makeFileMessage(final ChessBoardDto chessBoardDto, final int rank) {
         final StringBuilder fileMessage = new StringBuilder();
         for (int file = 0; file < BOARD_SIZE; file++) {
@@ -50,5 +67,15 @@ public final class OutputView {
             return PieceName.findMessage(board.get(positionDto));
         }
         return BLANK;
+    }
+
+    private static String getWinnerCamp(final double whiteScore, final double blackScore) {
+        if (whiteScore == blackScore) {
+            return DRAW;
+        }
+        if (whiteScore < blackScore) {
+            return BLACK;
+        }
+        return WHITE;
     }
 }
