@@ -11,15 +11,8 @@ public class Commands {
 
     public Commands(List<String> inputs){
         this.command = Command.getCommand(inputs);
-        validate(inputs);
         inputs.remove(0);
         this.args = inputs;
-    }
-
-    private void validate(List<String> inputs) {
-        if (command == MOVE && inputs.size() != 3) {
-            throw new IllegalArgumentException("move a2 a3 형식으로 입력하세요.");
-        }
     }
 
     public Command getCommand() {
@@ -33,4 +26,21 @@ public class Commands {
     public List<String> getArgs() {
         return args;
     }
+
+    public String getMovablePiece() {
+        validateMove();
+        return args.get(0);
+    }
+
+    public String getTargetPosition() {
+        validateMove();
+        return args.get(1);
+    }
+
+    private void validateMove() {
+        if (command != MOVE) {
+            throw new IllegalStateException("MOVE 커맨드가 아닙니다.");
+        }
+    }
+
 }
