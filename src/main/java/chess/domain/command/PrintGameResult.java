@@ -27,14 +27,8 @@ public class PrintGameResult implements CommandStatus {
 
     @Override
     public CommandStatus start() {
-        Pieces pieces = new Pieces();
-        Board board = new Board(pieces);
-        JdbcChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
-        Long gameId = chessGameDao.saveNewChessGame();
-        for (Piece piece : pieces.getPieces()) {
-            chessGameDao.savePiece(piece, gameId);
-        }
-        return new Play(new ChessGame(gameId, board, Turn.WHITE));
+        Board board = new Board(new Pieces());
+        return new Play(new ChessGame(board, Turn.WHITE, JdbcChessGameDao.getInstance()));
     }
 
     @Override
@@ -46,7 +40,7 @@ public class PrintGameResult implements CommandStatus {
         }
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
-        return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()));
+        return new Play(new ChessGame(currentBoard, chessGame.turnChange(), JdbcChessGameDao.getInstance()));
     }
 
     private void checkTurn(Position sorucePosition) {
