@@ -99,3 +99,28 @@ graph TD
 - [x] 체스판을 출력한다.
 - [x] 점수를 출력한다.
 - [x] 승리팀을 출력한다.
+
+### ChessGameDao
+- [x] chess_game을 저장할 수 있다.
+- [x] chess_game을 찾을 수 있다.
+- [x] 턴을 변경할 수 있다.
+- [x] 삭제할 수 있다.
+
+### DB 테이블
+```sql
+create table chess_game(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    turn VARCHAR(16) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE piece (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    chess_game_id BIGINT NOT NULL,
+    piece_file int NOT NULL,
+    piece_rank int NOT NULL,
+    side VARCHAR(16) NOT NULL,
+    type VARCHAR(16) NOT NULL,
+    PRIMARY KEY (id)
+);
+```
