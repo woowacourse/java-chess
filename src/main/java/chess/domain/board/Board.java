@@ -50,12 +50,10 @@ public final class Board {
     }
 
     public Map<Team, Score> scores() {
-        Map<Team, Score> scores = new HashMap<>();
-
-        scores.put(Team.WHITE, scoreOf(Team.WHITE));
-        scores.put(Team.BLACK, scoreOf(Team.BLACK));
-
-        return scores;
+        return new HashMap<>() {{
+            put(Team.WHITE, scoreOf(Team.WHITE));
+            put(Team.BLACK, scoreOf(Team.BLACK));
+        }};
     }
 
     private Score scoreOf(final Team team) {
