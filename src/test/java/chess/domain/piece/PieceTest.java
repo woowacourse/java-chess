@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +47,13 @@ public class PieceTest {
 
         assertThat(piece.isRightTurn(WHITE)).isTrue();
         assertThat(piece.isRightTurn(BLACK)).isFalse();
+    }
+
+    @DisplayName("점수를 확인할 수 있다")
+    @Test
+    void getValue() {
+        Piece piece = new PieceImplement(WHITE);
+
+        assertThat(piece.getScore()).isEqualTo(Score.valueOf(3));
     }
 }

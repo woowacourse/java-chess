@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.Score;
 import chess.domain.position.Move;
 
 public class Piece {
@@ -27,11 +28,19 @@ public class Piece {
         return this.color == turn;
     }
 
+    public boolean isPawn() {
+        return type == PieceType.PAWN;
+    }
+
     public PieceType getType() {
         return type;
     }
 
     public Color getColor() {
         return color;
+    }
+
+    public Score getScore() {
+        return type.getScore();
     }
 }
