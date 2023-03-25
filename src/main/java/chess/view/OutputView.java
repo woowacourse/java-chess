@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.mapper.KindMapper;
 
 import java.util.Arrays;
 import java.util.Collections;

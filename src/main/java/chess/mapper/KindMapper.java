@@ -1,4 +1,4 @@
-package chess.view;
+package chess.mapper;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public final class Commands {
+public final class CommandFactory {
 
     private enum CommandType {
         START,
@@ -25,7 +25,7 @@ public final class Commands {
 
     private static final Map<CommandType, Function<List<String>, Command>> commands = new EnumMap<>(CommandType.class);
 
-    private Commands() {
+    private CommandFactory() {
     }
 
     static {

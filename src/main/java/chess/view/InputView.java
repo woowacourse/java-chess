@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.controller.command.Command;
-import chess.controller.command.Commands;
+import chess.controller.command.CommandFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +20,7 @@ public final class InputView {
     public Command inputCommand() {
         String input = scanner.nextLine();
         List<String> commands = generateCommandsForm(input);
-        return Commands.from(commands);
+        return CommandFactory.from(commands);
     }
 
     private List<String> generateCommandsForm(final String input) {

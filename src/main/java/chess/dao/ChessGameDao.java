@@ -7,7 +7,7 @@ import chess.domain.game.Running;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Kind;
-import chess.dto.PositionStringMapper;
+import chess.mapper.PositionStringMapper;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -47,8 +47,7 @@ public final class ChessGameDao {
             }
             return null;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new IllegalArgumentException("게임 번호가 유효하지 않습니다.");
         }
     }
 
@@ -71,7 +70,7 @@ public final class ChessGameDao {
                         preparedStatement.setLong(4, gameId);
                         preparedStatement.executeUpdate();
                     } catch (SQLException e) {
-                        System.out.println(e.getMessage());
+                        throw new IllegalArgumentException("게임을 저장할 수 없습니다.");
                     }
                 }
         );
@@ -92,16 +91,14 @@ public final class ChessGameDao {
         deleteSource(mappingSource, gameId);
     }
 
-    private void deleteSource(final String mappingSource, final Long gameId) {
-        String sql = "DELETE FROM board " +
-                "WHERE position = ?" +
-                "AND game_id = ?";
+    private void updateTurn(final Long gameId, final String turn) {
+        String sql = "UPDATE game SET turn = ? WHERE game_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, mappingSource);
+            preparedStatement.setString(1, turn);
             preparedStatement.setLong(2, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException("턴 저장에 오류가 발생했습니다.");
         }
     }
 
@@ -119,18 +116,20 @@ public final class ChessGameDao {
             preparedStatement.setString(6, piece.getColor().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
         }
     }
 
-    private void updateTurn(final Long gameId, final String turn) {
-        String sql = "UPDATE game SET turn = ? WHERE game_id = ?";
+    private void deleteSource(final String mappingSource, final Long gameId) {
+        String sql = "DELETE FROM board " +
+                "WHERE position = ?" +
+                "AND game_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, turn);
+            preparedStatement.setString(1, mappingSource);
             preparedStatement.setLong(2, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
         }
     }
 
@@ -153,8 +152,7 @@ public final class ChessGameDao {
 
             return new Running(new Board(board), Color.valueOf(turn));
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new IllegalArgumentException("불러올 수 없는 게임 번호입니다.");
         }
     }
 
@@ -168,7 +166,7 @@ public final class ChessGameDao {
             }
             return null;
         } catch (SQLException e) {
-            return null;
+            throw new IllegalArgumentException("불러올 수 없는 게임 번호입니다.");
         }
     }
 }

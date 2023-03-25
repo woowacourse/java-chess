@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.mapper;
 
 import chess.domain.board.Position;
 
