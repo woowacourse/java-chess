@@ -59,4 +59,16 @@ public class InputView {
     private boolean isWrongMoveCommandFormat(final int splitGameCommandSize, final String gameCommand) {
         return gameCommand.equals(GameCommand.MOVE.getText()) && splitGameCommandSize != CORRECT_MOVE_SPLIT_SIZE;
     }
+
+    public String inputStatusCommand() {
+        final String input = scanner.nextLine();
+        validateStatusCommand(input);
+        return input;
+    }
+
+    private void validateStatusCommand(final String input) {
+        if (!input.equals("status")) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 명령어입니다.");
+        }
+    }
 }
