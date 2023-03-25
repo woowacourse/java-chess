@@ -18,4 +18,12 @@ public class InputView {
         List<String> commands = Arrays.asList(scanner.nextLine().split(" ", -1));
         return new Request(commands, boardId, userId);
     }
+
+    public void setBoardId(int boardId) {
+        this.boardId = boardId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
