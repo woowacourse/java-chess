@@ -7,8 +7,8 @@ import java.util.List;
 
 public class StartCommand extends Command{
 
-    public StartCommand(CommandType commandType) {
-        super(null, commandType);
+    public StartCommand() {
+        super(null, CommandType.START);
     }
 
     @Override

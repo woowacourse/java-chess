@@ -19,14 +19,14 @@ class StartCommandTest {
 
     @Test
     void StartCommand의_타입을_확인할_수_있다() {
-        StartCommand startCommand = new StartCommand(CommandType.START);
+        StartCommand startCommand = new StartCommand();
 
         assertThat(startCommand.isSameType(CommandType.START)).isTrue();
     }
 
     @Test
     void StartCommand의_ChessGame판을_확인하면_예외가_발생한다() {
-        StartCommand startCommand = new StartCommand(CommandType.START);
+        StartCommand startCommand = new StartCommand();
 
         assertThatThrownBy(startCommand::getChessGame)
                 .isInstanceOf(IllegalArgumentException.class)
@@ -36,7 +36,7 @@ class StartCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"start", "start ", " start", "Start", " start  "})
     void start를_입력받으면_MoveCommand_객체가_반환된다(String command) {
-        StartCommand startCommand = new StartCommand(CommandType.START);
+        StartCommand startCommand = new StartCommand();
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .filter(x -> !x.isEmpty())
@@ -50,7 +50,7 @@ class StartCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"start1", "star"})
     void start를_입력받지_않으면_예외가_발생한다(String command) {
-        StartCommand startCommand = new StartCommand(CommandType.START);
+        StartCommand startCommand = new StartCommand();
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
@@ -63,7 +63,7 @@ class StartCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"start  2", "sta rt"})
     void start명령어는_명령어만_입력_가능하다(String command) {
-        StartCommand startCommand = new StartCommand(CommandType.START);
+        StartCommand startCommand = new StartCommand();
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
