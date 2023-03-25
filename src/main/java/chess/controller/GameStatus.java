@@ -33,12 +33,12 @@ public enum GameStatus {
     }
 
     private static boolean isCodeNotExist(final String code) {
-        final boolean isCodeExist = Arrays.stream(values())
-                                          .anyMatch((gameStatus) -> Objects.equals(code, gameStatus.code));
-        return !isCodeExist;
+        return Arrays.stream(values())
+                     .noneMatch((gameStatus) -> Objects.equals(code, gameStatus.code));
     }
 
     public boolean isPlaying() {
         return this != GameStatus.END;
     }
 }
+

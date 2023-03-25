@@ -4,7 +4,6 @@ import chess.controller.ChessBoardDto;
 import chess.controller.PieceDto;
 
 import java.util.List;
-import java.util.Objects;
 
 public class OutputView {
 
@@ -24,44 +23,26 @@ public class OutputView {
         final List<List<PieceDto>> pieceDtos = chessBoardDto.getPieceDtos();
 
         printBlankLine();
+
         for (List<PieceDto> rank : pieceDtos) {
             printOneRank(rank);
         }
     }
 
     private void printOneRank(final List<PieceDto> rank) {
-        for (PieceDto piece : rank) {
-            final String type = piece.getType();
-            final String team = piece.getSide();
-
-            printPiece(type, team);
+        for (PieceDto pieceDto : rank) {
+            printPiece(pieceDto);
         }
 
         printBlankLine();
     }
 
-    private void printPiece(final String type, final String team) {
-        printLetter(type, team);
+    private void printPiece(final PieceDto pieceDto) {
+        System.out.print(pieceDto.getOutputFormat());
     }
 
     public void printInvalidMoveMessage() {
         System.out.println("이동할 수 없습니다.");
-    }
-
-    private void printLetter(final String letter, final String team) {
-        if (Objects.equals(team, "BLACK")) {
-            printBlackPiece(letter);
-            return;
-        }
-        printWhitePiece(letter);
-    }
-
-    private void printBlackPiece(final String letter) {
-        System.out.print(letter.toUpperCase());
-    }
-
-    private void printWhitePiece(final String letter) {
-        System.out.print(letter.toLowerCase());
     }
 
     private void printBlankLine() {
