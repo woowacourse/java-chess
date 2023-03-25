@@ -9,7 +9,7 @@ import chess.model.piece.type.Empty;
 import chess.model.position.Distance;
 import chess.model.position.File;
 import chess.model.position.Position;
-import chess.model.position.Rank;
+import chess.model.position.RankPosition;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private static final int IS_PLACED = 1;
-    private static final int IS_NOT_PLACED = 0;
+    private static final long MULTIPLE_PAWN_COUNT = 2L;
 
     private final Map<Position, Piece> board;
 
@@ -120,27 +119,22 @@ public class ChessBoard {
     }
 
     private PieceScore calculatePawnOffsetScoreByFile(final File file, final Camp camp) {
-        final Position endPosition = Position.of(file, Rank.EIGHTH);
-        Position targetPosition = Position.of(file, Rank.FIRST);
-        int count = 0;
-
-        while (!targetPosition.equals(endPosition)) {
-            count += findSameFilePawn(camp, targetPosition);
-            targetPosition = targetPosition.findNextPosition(Direction.NORTH);
-        }
+        final RankPosition rankPosition = Position.findRankPositionByFile(file);
+        final long count = countPawn(camp, rankPosition);
 
         return calculatePawnOffsetScoreByFilePawnCount(count);
     }
 
-    private int findSameFilePawn(final Camp camp, final Position targetPosition) {
-        if (board.get(targetPosition).isPawn() && board.get(targetPosition).isSameTeam(camp)) {
-            return IS_PLACED;
-        }
-        return IS_NOT_PLACED;
+    private long countPawn(final Camp camp, final RankPosition rankPosition) {
+        return rankPosition.getPositions().stream()
+                .map(board::get)
+                .filter(Piece::isPawn)
+                .filter(piece -> piece.isSameTeam(camp))
+                .count();
     }
 
-    private PieceScore calculatePawnOffsetScoreByFilePawnCount(final int count) {
-        if (count < 2) {
+    private PieceScore calculatePawnOffsetScoreByFilePawnCount(final long count) {
+        if (count < MULTIPLE_PAWN_COUNT) {
             return PieceScore.ZERO;
         }
 
