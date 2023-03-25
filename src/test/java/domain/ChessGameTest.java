@@ -153,7 +153,7 @@ class ChessGameTest {
     void blackWinByScore() {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
-        chessBoard.findSquare(PositionFactory.createPosition("a2")).beEmpty();
+        chessBoard.findSquare(PositionFactory.createPosition("a2")).liftPiece();
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
@@ -183,8 +183,8 @@ class ChessGameTest {
     void threePawninColumn() {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
-        chessBoard.findSquare(PositionFactory.createPosition("a3")).bePiece(new Square(new Pawn(WHITE)));
-        chessBoard.findSquare(PositionFactory.createPosition("a4")).bePiece(new Square(new Pawn(WHITE)));
+        chessBoard.findSquare(PositionFactory.createPosition("a3")).putPiece(new Square(new Pawn(WHITE)));
+        chessBoard.findSquare(PositionFactory.createPosition("a4")).putPiece(new Square(new Pawn(WHITE)));
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
@@ -214,7 +214,7 @@ class ChessGameTest {
     void blackWin() {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
-        chessBoard.findSquare(PositionFactory.createPosition("e1")).beEmpty();
+        chessBoard.findSquare(PositionFactory.createPosition("e1")).liftPiece();
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
@@ -240,7 +240,7 @@ class ChessGameTest {
     void whiteWin() {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
-        chessBoard.findSquare(PositionFactory.createPosition("e8")).beEmpty();
+        chessBoard.findSquare(PositionFactory.createPosition("e8")).liftPiece();
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When

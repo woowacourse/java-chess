@@ -103,7 +103,7 @@ public class ChessBoard {
     }
 
     private boolean isPawnOfThisColor(Square square, Color color) {
-        return square.isSameType(PieceType.PAWN) && square.isSameColor(color);
+        return square.isPawn() && square.isSameColor(color);
     }
 
     private void putIfExistPawn(Map<Integer, Integer> numberOfPawnInColumn, int column, boolean isPawn) {

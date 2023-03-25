@@ -9,7 +9,6 @@ import domain.chessboard.StatusResult;
 import domain.coordinate.MovePosition;
 import domain.coordinate.Route;
 import domain.piece.Color;
-import domain.piece.PieceType;
 
 public class ChessGame {
 
@@ -70,13 +69,13 @@ public class ChessGame {
     }
 
     private void checkPawn(final MovePosition movePosition, final Square startPoint, final Square endPoint) {
-        if (startPoint.getType().equals(PieceType.PAWN)) {
+        if (startPoint.isPawn()) {
             validatePawnDestination(movePosition, endPoint);
         }
     }
 
     private void validatePawnDestination(final MovePosition movePosition, final Square endPoint) {
-        if (isDiagonallyMovable(movePosition, endPoint) || isStraightMovable(movePosition, endPoint)) { // 대각인 경우, 상대방의 기물만 존재하면 됨
+        if (isDiagonallyMovable(movePosition, endPoint) || isStraightMovable(movePosition, endPoint)) {
             return;
         }
 
@@ -84,7 +83,6 @@ public class ChessGame {
     }
 
     private boolean isStraightMovable(final MovePosition movePosition, final Square endPoint) {
-
         return endPoint.isSameType(EmptyType.EMPTY) && movePosition.isStraight();
     }
 
@@ -99,8 +97,8 @@ public class ChessGame {
     }
 
     private static void movePiece(final Square startPoint, final Square endPoint) {
-        endPoint.bePiece(startPoint);
-        startPoint.beEmpty();
+        endPoint.putPiece(startPoint);
+        startPoint.liftPiece();
     }
 
     public StatusResult getStatusResult() {

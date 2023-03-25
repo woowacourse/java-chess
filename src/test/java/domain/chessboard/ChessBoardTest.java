@@ -67,9 +67,9 @@ public class ChessBoardTest {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
         chessBoard.findSquare(PositionFactory.createPosition("a3"))
-                .bePiece(new Square(new Pawn(WHITE)));
+                .putPiece(new Square(new Pawn(WHITE)));
         chessBoard.findSquare(PositionFactory.createPosition("a4"))
-                .bePiece(new Square(new Pawn(WHITE)));
+                .putPiece(new Square(new Pawn(WHITE)));
 
         // When&Then
         assertThat(chessBoard.calculateColorScore(WHITE)).isEqualTo(38.5);
@@ -110,7 +110,7 @@ public class ChessBoardTest {
     void blackNotExistKing() {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
-        chessBoard.findSquare(PositionFactory.createPosition("e8")).beEmpty();
+        chessBoard.findSquare(PositionFactory.createPosition("e8")).liftPiece();
 
         // When&Then
         assertThat(chessBoard.isNotTwoKing()).isTrue();
@@ -132,7 +132,7 @@ public class ChessBoardTest {
     void whiteNotExistKing() {
         // Given
         ChessBoard chessBoard = ChessBoard.generate();
-        chessBoard.findSquare(PositionFactory.createPosition("e1")).beEmpty();
+        chessBoard.findSquare(PositionFactory.createPosition("e1")).liftPiece();
 
         // When&Then
         assertThat(chessBoard.isNotTwoKing()).isTrue();
