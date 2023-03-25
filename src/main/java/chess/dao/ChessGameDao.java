@@ -2,7 +2,7 @@ package chess.dao;
 
 import java.util.List;
 
-import chess.domain.piece.dto.FindPieceDto;
+import chess.domain.piece.dto.FindPiecePositionDto;
 import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
 import chess.domain.piece.dto.GeneratePieceDto;
@@ -20,5 +20,7 @@ public interface ChessGameDao {
 
     ChessGameDto findChessGameByGameId(Long gameId);
 
-    void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, FindPieceDto findPieceDto);
+    void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, FindPiecePositionDto findPiecePositionDto);
+
+    void deletePieceByPosition(FindPiecePositionDto findPiecePositionDto);
 }

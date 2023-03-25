@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.command.Turn;
-import chess.domain.piece.dto.FindPieceDto;
+import chess.domain.piece.dto.FindPiecePositionDto;
 import chess.domain.piece.dto.GeneratePieceDto;
 import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
@@ -136,7 +136,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, FindPieceDto findPieceDto) {
+    public void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, FindPiecePositionDto findPiecePositionDto) {
         final String query =
                 "UPDATE piece " +
                 "SET piece_rank = ?, piece_file = ? " +
@@ -147,12 +147,33 @@ public class JdbcChessGameDao implements ChessGameDao {
         ) {
             preparedStatement.setString(1, updatePiecePositionDto.getRank());
             preparedStatement.setString(2, updatePiecePositionDto.getFile());
-            preparedStatement.setLong(3, findPieceDto.getGameId());
-            preparedStatement.setString(4, findPieceDto.getRank());
-            preparedStatement.setString(5, findPieceDto.getFile());
+            preparedStatement.setLong(3, findPiecePositionDto.getGameId());
+            preparedStatement.setString(4, findPiecePositionDto.getRank());
+            preparedStatement.setString(5, findPiecePositionDto.getFile());
             int updateCount = preparedStatement.executeUpdate();
             if (updateCount > 1) {
                 throw new SQLException("[ERROR] 포지션 업데이트 되는 기물이 2개 이상입니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deletePieceByPosition(FindPiecePositionDto findPiecePositionDto) {
+        final String query =
+                "DELETE FROM piece WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
+
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setLong(1, findPiecePositionDto.getGameId());
+            preparedStatement.setString(2, findPiecePositionDto.getRank());
+            preparedStatement.setString(3, findPiecePositionDto.getFile());
+
+            int updateCount = preparedStatement.executeUpdate();
+            if (updateCount > 1) {
+                throw new SQLException("[ERROR] 삭제하려는 포지션에 해당하는 기물이 2개 이상입니다.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
