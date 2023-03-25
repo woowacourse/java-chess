@@ -101,6 +101,7 @@ public class ChessGame {
         checkCalculable();
         return board.calculateScore(Side.BLACK);
     }
+
     public Side calculateWinner() {
         final Side winner = board.calculateWinner();
 
