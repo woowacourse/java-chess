@@ -22,4 +22,11 @@ public class EmptyPiece extends Piece {
     public boolean canJump() {
         return false;
     }
+
+    @Override
+    public Piece nextPiece() {
+        return this;
+    }
+
+
 }

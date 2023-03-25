@@ -22,7 +22,7 @@ public class OutputView {
     }
 
     private void printPiece(PieceDto pieceDto) {
-        System.out.print(formatByColor(pieceDto.getPieceType(), pieceDto.getPieceColor()));
+        System.out.print(formatByColor(pieceDto.getPieceName(), pieceDto.getPieceColor()));
     }
 
     private String formatByColor(String pieceType, String pieceColor) {

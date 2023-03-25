@@ -7,8 +7,10 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.PositionFixture.A2;
+import static chess.domain.PositionFixture.A3;
 import static chess.domain.PositionFixture.A4;
 import static chess.domain.PositionFixture.B3;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class PawnPieceTest {
 
+    private InitPawnPiece initPawnPiece;
     private PawnPiece pawnPiece;
     private Piece sameColorPiece;
     private Piece oppositePiece;
@@ -23,6 +26,7 @@ public class PawnPieceTest {
 
     @BeforeEach
     void setting() {
+        initPawnPiece = new InitPawnPiece(Color.WHITE);
         pawnPiece = new PawnPiece(Color.WHITE);
         sameColorPiece = new PawnPiece(Color.WHITE);
         oppositePiece = new PawnPiece(Color.BLACK);
@@ -30,21 +34,20 @@ public class PawnPieceTest {
     }
 
     @Test
-    void 폰은_초기상태에_앞으로_두칸_갈_수_있다() {
-
+    void 폰은_초기상태에_앞으로_한칸_갈_수_있다() {
         //expect
-        assertTrue(() -> pawnPiece.canMove(A2, A4, emptyPiece));
+        assertTrue(() -> initPawnPiece.canMove(A2, A4, emptyPiece));
+        assertFalse(() -> pawnPiece.canMove(A2, A4, emptyPiece));
     }
 
     @Test
-    void 폰은_딱_한번_앞으로_두_칸_전진할_수_있다() {
+    void Init_폰은__앞으로_두_칸전진할_수_있다() {
         // given, when
-        boolean firstMove = pawnPiece.canMove(A2, A4, emptyPiece);
-        boolean secondResult = pawnPiece.canMove(A2, A4, emptyPiece);
+        InitPawnPiece initPawnPiece = new InitPawnPiece(Color.WHITE);
+        boolean firstMove = initPawnPiece.canMove(A2, A4, emptyPiece);
 
         // then
         assertTrue(firstMove);
-        assertFalse(secondResult);
     }
 
     @Test
@@ -68,6 +71,43 @@ public class PawnPieceTest {
                     assertFalse(result2);
                 }
         );
+    }
 
+    @Test
+    void 흰색_폰은_rank_가_커지는_방향으로만_이동가능하다() {
+        //given
+        PawnPiece pawnPiece1 = new PawnPiece(Color.WHITE);
+
+        //when
+        boolean result1 = pawnPiece1.canMove(A2, A3, emptyPiece);
+        boolean result2 = pawnPiece1.canMove(A3, A2, emptyPiece);
+
+        //then
+        assertTrue(result1);
+        assertFalse(result2);
+    }
+
+    @Test
+    void 검정_폰은_rank_가_작아지_방향으로만_이동가능하다() {
+        //given
+        PawnPiece pawnPiece1 = new PawnPiece(Color.BLACK);
+
+        //when
+        boolean result1 = pawnPiece1.canMove(A3, A2, emptyPiece);
+        boolean result2 = pawnPiece1.canMove(A2, A3, emptyPiece);
+
+        //then
+        assertTrue(result1);
+        assertFalse(result2);
+    }
+
+    @Test
+    void InitPawn_은_이동_후_Pawn_을_반환한다() {
+        //given
+        InitPawnPiece initPawnPiece1 = new InitPawnPiece(Color.BLACK);
+        Piece piece = initPawnPiece1.nextPiece();
+
+        //then
+        assertThat(piece).isInstanceOf(PawnPiece.class);
     }
 }

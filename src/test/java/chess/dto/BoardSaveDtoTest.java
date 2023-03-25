@@ -3,7 +3,8 @@ package chess.dto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.dto.BoardSaveDto;
-import chess.domain.dto.PieceDto;
+import chess.domain.dto.SavePieceDto;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,11 @@ public class BoardSaveDtoTest {
         Board board = BoardGenerator.makeBoard();
         BoardSaveDto from = BoardSaveDto.from(board);
 
-        Map<String, HashMap<String, PieceDto>> data = from.getData();
+        Map<String, HashMap<String, SavePieceDto>> data = from.getData();
 
-        PieceDto a = data.get("A").get("ONE");
-        System.out.println(a.getPieceColor());
-        System.out.println(a.getPieceType());
+        SavePieceDto a = data.get("A").get("ONE");
+
+        Assertions.assertThat(a.getPieceColor()).isEqualTo("WHITE");
+        Assertions.assertThat(a.getPieceType()).isEqualTo("ROOK");
     }
 }

@@ -5,10 +5,11 @@ import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.board.Board;
 import chess.domain.dto.BoardSaveDto;
-import chess.domain.dto.PieceDto;
+import chess.domain.dto.SavePieceDto;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.InitPawnPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;
 import chess.domain.piece.PawnPiece;
@@ -63,7 +64,7 @@ public class ChessDB {
     }
 
     private Piece makePieceOf(String pieceType, String color) {
-        PieceType type = PieceType.getTypeOf(pieceType);
+        PieceType type = PieceType.valueOf(pieceType);
         Color pieceColor = Color.valueOf(color);
 
         switch (type) {
@@ -79,6 +80,8 @@ public class ChessDB {
                 return new BishopPiece(pieceColor);
             case PAWN:
                 return new PawnPiece(pieceColor);
+            case INIT_PAWN:
+                return new InitPawnPiece(pieceColor);
             case EMPTY:
                 return EmptyPiece.getInstance();
         }
@@ -88,12 +91,12 @@ public class ChessDB {
     public void saveBoard(BoardSaveDto dto) {
         delete();
         final var query = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
-        Map<String, HashMap<String, PieceDto>> data = dto.getData();
+        Map<String, HashMap<String, SavePieceDto>> data = dto.getData();
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             for (String hello : data.keySet()) {
                 for (String hello2 : data.get(hello).keySet()) {
-                    PieceDto pieceDto = data.get(hello).get(hello2);
+                    SavePieceDto pieceDto = data.get(hello).get(hello2);
                     preparedStatement.setString(1, hello2);
                     preparedStatement.setString(2, hello);
                     preparedStatement.setString(3, pieceDto.getPieceType());

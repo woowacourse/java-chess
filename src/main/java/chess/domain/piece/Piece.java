@@ -15,6 +15,8 @@ public abstract class Piece {
 
     public abstract boolean canJump();
 
+    public abstract Piece nextPiece();
+
     public Color getColor() {
         return color;
     }

@@ -4,11 +4,11 @@ import chess.domain.piece.Piece;
 
 public class PieceDto {
 
-    private final String pieceType;
     private final String pieceColor;
+    private final String pieceName;
 
-    private PieceDto(String pieceType, String pieceColor) {
-        this.pieceType = pieceType;
+    private PieceDto(String pieceName, String pieceColor) {
+        this.pieceName = pieceName;
         this.pieceColor = pieceColor;
     }
 
@@ -19,13 +19,13 @@ public class PieceDto {
     @Override
     public String toString() {
         return "PieceResponse{" +
-                "pieceType='" + pieceType + '\'' +
+                "pieceType='" + pieceName + '\'' +
                 ", pieceColor='" + pieceColor + '\'' +
                 '}';
     }
 
-    public String getPieceType() {
-        return pieceType;
+    public String getPieceName() {
+        return pieceName;
     }
 
     public String getPieceColor() {

@@ -2,9 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 
-public class PawnPiece extends Piece {
-    public PawnPiece(Color color) {
-        super(color, PieceType.PAWN);
+public class InitPawnPiece extends Piece {
+
+    public InitPawnPiece(Color color) {
+        super(color, PieceType.INIT_PAWN);
     }
 
     @Override
@@ -32,8 +33,9 @@ public class PawnPiece extends Piece {
         return checkMove(x, y, piece);
     }
 
+
     private boolean checkMove(int x, int y, Piece piece) {
-        if (isStraightMove(x, y, 1)) {
+        if (isStraightMove(x, y, 2)) {
             return piece.color == Color.NONE;
         }
         if (isOneDiagonalMove(x, y)) {
@@ -57,6 +59,6 @@ public class PawnPiece extends Piece {
 
     @Override
     public Piece nextPiece() {
-        return this;
+        return new PawnPiece(color);
     }
 }

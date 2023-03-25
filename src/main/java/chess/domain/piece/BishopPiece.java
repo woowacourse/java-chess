@@ -18,4 +18,9 @@ public class BishopPiece extends Piece {
     public boolean canJump() {
         return false;
     }
+
+    @Override
+    public Piece nextPiece() {
+        return this;
+    }
 }

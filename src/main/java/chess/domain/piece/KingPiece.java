@@ -22,4 +22,9 @@ public class KingPiece extends Piece {
     public boolean canJump() {
         return false;
     }
+
+    @Override
+    public Piece nextPiece() {
+        return this;
+    }
 }

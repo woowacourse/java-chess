@@ -30,7 +30,7 @@ public class Board {
 
     private Map<Position, Piece> movedBoard(Position origin, Position destination) {
         HashMap<Position, Piece> movedBoard = new HashMap<>(piecePosition);
-        movedBoard.put(destination, piecePosition.get(origin));
+        movedBoard.put(destination, piecePosition.get(origin).nextPiece());
         movedBoard.put(origin, EmptyPiece.getInstance());
         return movedBoard;
     }

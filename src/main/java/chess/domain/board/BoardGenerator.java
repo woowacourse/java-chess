@@ -6,9 +6,9 @@ import chess.domain.Rank;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.InitPawnPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;
-import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
@@ -55,7 +55,7 @@ public class BoardGenerator {
     private static Map<Position, Piece> makePawns(Color color, Rank rank) {
         Map<Position, Piece> result = new HashMap<>();
         for (File file : File.values()) {
-            result.put(Position.of(file, rank), new PawnPiece(color));
+            result.put(Position.of(file, rank), new InitPawnPiece(color));
         }
         return result;
     }
