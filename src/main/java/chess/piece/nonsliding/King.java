@@ -4,7 +4,6 @@ import chess.board.Position;
 import chess.piece.Direction;
 import chess.piece.Side;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class King extends NonSlidingPiece {
@@ -17,7 +16,16 @@ public class King extends NonSlidingPiece {
     }
 
     private List<Direction> initDirections() {
-        return new ArrayList<>(Arrays.asList(Direction.values()));
+        List<Direction> directions = new ArrayList<>();
+        directions.add(Direction.UP);
+        directions.add(Direction.DOWN);
+        directions.add(Direction.LEFT);
+        directions.add(Direction.RIGHT);
+        directions.add(Direction.UP_RIGHT);
+        directions.add(Direction.UP_LEFT);
+        directions.add(Direction.DOWN_RIGHT);
+        directions.add(Direction.DOWN_LEFT);
+        return directions;
     }
 
     @Override

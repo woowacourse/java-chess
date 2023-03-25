@@ -25,4 +25,9 @@ public abstract class SlidingPiece extends Piece {
         }
         return paths;
     }
+
+    @Override
+    public boolean canPassThrough() {
+        return false;
+    }
 }

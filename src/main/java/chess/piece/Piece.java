@@ -23,6 +23,8 @@ public abstract class Piece {
 
     public abstract List<Position> getPaths(Position targetPosition);
 
+    public abstract boolean canPassThrough();
+
     public boolean isSameSide(Piece piece) {
         return this.side == piece.side;
     }

@@ -10,7 +10,15 @@ public enum Direction {
     DOWN(0, -1),
     DOWN_LEFT(-1, -1),
     LEFT(-1, 0),
-    UP_LEFT(-1, 1);
+    UP_LEFT(-1, 1),
+    UP_UP_RIGHT(1, 2),
+    UP_UP_LEFT(-1, 2),
+    RIGHT_RIGHT_UP(2, 1),
+    RIGHT_RIGHT_DOWN(2, -1),
+    DOWN_DOWN_RIGHT(1, -2),
+    DOWN_DOWN_LEFT(-1, -2),
+    LEFT_LEFT_UP(-2, 1),
+    LEFT_LEFT_DOWN(-2, -1);
 
     private final int x;
     private final int y;
@@ -20,11 +28,43 @@ public enum Direction {
         this.y = y;
     }
 
-    public static Direction from(int xPoint, int yPoint) {
+    public static Direction of(int xDiff, int yDiff) {
+        if (xDiff == 0) {
+            if (yDiff > 0) {
+                return UP;
+            }
+            if (yDiff < 0) {
+                return DOWN;
+            }
+        }
+        if (yDiff == 0) {
+            if (xDiff > 0) {
+                return RIGHT;
+            }
+            if (xDiff < 0) {
+                return LEFT;
+            }
+        }
+        if (xDiff / yDiff == 1) {
+            if (xDiff > 0) {
+                return UP_RIGHT;
+            }
+            return DOWN_LEFT;
+        }
+        if (xDiff / yDiff == -1) {
+            if (xDiff > 0) {
+                return DOWN_RIGHT;
+            }
+            return UP_LEFT;
+        }
+        return ofKnight(xDiff, yDiff);
+    }
+
+    private static Direction ofKnight(final int xDiff, final int yDiff) {
         return Arrays.stream(values())
-                .filter(value -> value.x == xPoint && value.y == yPoint)
+                .filter(direction -> direction.x == xDiff && direction.y == yDiff)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(""));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 방향입니다."));
     }
 
     public int getNextXPoint(int xPoint) {

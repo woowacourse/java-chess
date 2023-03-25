@@ -63,6 +63,9 @@ public class Board {
     }
 
     private void checkPath(final Position targetPosition, final Piece sourcePiece) {
+        if (sourcePiece.canPassThrough()) {
+            return;
+        }
         final List<Position> paths = sourcePiece.getPaths(targetPosition);
         for (Position pathPosition : paths) {
             checkPieceExistOnPath(pathPosition);

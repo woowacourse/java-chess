@@ -77,4 +77,9 @@ public class Pawn extends Piece {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean canPassThrough() {
+        return false;
+    }
 }

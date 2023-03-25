@@ -40,7 +40,7 @@ public enum Rank {
     }
 
     public int getValueDiff(Rank targetRank) {
-        return Math.abs(targetRank.value - this.value);
+        return targetRank.value - this.value;
     }
 
     public int getValue() {

@@ -16,4 +16,9 @@ public abstract class NonSlidingPiece extends Piece {
     public List<Position> getPaths(Position targetPosition) {
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean canPassThrough() {
+        return true;
+    }
 }

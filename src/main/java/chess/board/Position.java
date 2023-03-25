@@ -14,9 +14,9 @@ public class Position {
     }
 
     public Direction getDirectionTo(Position targetPosition) {
-        final int file = this.file.getDirectionTo(targetPosition.file);
-        final int rank = this.rank.getDirectionTo(targetPosition.rank);
-        return Direction.from(file, rank);
+        final int fileDiff = file.getValueDiff(targetPosition.file);
+        final int rankDiff = rank.getValueDiff(targetPosition.rank);
+        return Direction.of(fileDiff, rankDiff);
     }
 
     public double getSlope(Position targetPosition) {
@@ -30,13 +30,13 @@ public class Position {
 
     public int getMoveCount(final Position targetPosition, final Direction direction) {
         if (direction.isHorizontal()) {
-            return file.getValueDiff(targetPosition.file);
+            return Math.abs(file.getValueDiff(targetPosition.file));
         }
         if (direction.isVertical()) {
-            return rank.getValueDiff(targetPosition.rank);
+            return Math.abs(rank.getValueDiff(targetPosition.rank));
         }
         if (direction.isDiagonal()) {
-            return file.getValueDiff(targetPosition.file);
+            return Math.abs(file.getValueDiff(targetPosition.file));
         }
         return 0;
     }

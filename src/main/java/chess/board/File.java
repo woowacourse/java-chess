@@ -49,7 +49,7 @@ public enum File {
     }
 
     public int getValueDiff(File targetFile) {
-        return Math.abs(targetFile.value - this.value);
+        return targetFile.value - this.value;
     }
 
     public static int length() {
