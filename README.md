@@ -11,21 +11,31 @@
 
 ### 입력
 
-- [x] 게임 시작 혹은 종료 명령을 입력한다
+- [x] 게임 시작 혹은 종료, 상태 명령을 입력한다
 - [x] 게임 이동 명령을 입력한다
 
 ### 출력
 
 - [x] 체스판을 출력한다
   - [x] 체스판의 각 행을 출력한다
+- [ ] 현재 체스 상태를 출력한다
+- [ ] 체스 결과를 출력한다
 
 ### 도메인
 
 - 게임
-  - [x] 체스판을 초기화할 수 있다
-  - [x] 차례를 초기화할 수 있다
-  - [x] 차례를 판단할 수 있다
-    - [x] 차례가 맞다면 말을 움직이는 명령을 한다
+- [x] 체스판을 초기화할 수 있다
+- [x] 차례를 초기화할 수 있다
+- [x] 차례를 판단할 수 있다
+  - [x] 차례가 맞다면 말을 움직이는 명령을 한다
+- [ ] 킹이 잡히면 게임을 종료시킨다
+- [ ] 게임의 상태를 가져올 수 있다
+
+- 게임 상태
+- [ ] 현재 게임 보드의 상태에 따른 각 팀의 점수를 구할 수 있다
+  - [ ] 점수 계산 규칙은 다음과 같다
+    - queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점
+    - pawn의 기본 점수는 1점, 세로줄에 같은 색의 pawn이 있다면 0.5점으로 계산
 
 - 체스판
 - [x] 칸들을 알고 있다
@@ -62,7 +72,9 @@ classDiagram
   ChessController --> Command
   ChessController --> InputView
   ChessController --> OutputView
-  ChessController --> Board
+  ChessController --> ChessGame
+  ChessGame --> Board
+  ChessGame --> ChessResult
   Board --> Coordinate
   Board --> Piece
   Board --> DirectionVector
@@ -78,4 +90,3 @@ classDiagram
 - `Coordinate`는 column 값을 알고 있는데, 굳이 파라미터로 받아야 하나? getter를 써서 column 값을 가져오면 안되나?
 - `Coordinate` 에서 row, col이 양수인지, 음수인지, 그리고 0인지 체크하는 메소드가 존재하는데 이건 getter와 다름없지 않나?
 - `Pawn`을 위해서 Typecast를 했는데, 추상화 레벨을 깨는 것이 아닌가? 그런데 인터페이스에 메소드를 정의하느니, 이것이 더 좋은 방법이 아닐까?
-
