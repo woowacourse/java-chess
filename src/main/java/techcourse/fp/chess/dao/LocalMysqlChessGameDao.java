@@ -124,7 +124,7 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
 
 
     @Override
-    public List<ChessGameInfo> findInfo() {
+    public List<ChessGameInfo> findInfos() {
         final String query = "SELECT * FROM chess_game;";
 
         try (final Connection connection = getConnection()) {

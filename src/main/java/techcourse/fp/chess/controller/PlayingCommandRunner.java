@@ -4,9 +4,9 @@ import techcourse.fp.chess.domain.ChessGame;
 import techcourse.fp.chess.dto.request.CommandRequest;
 
 @FunctionalInterface
-public interface CommandRunner {
+public interface PlayingCommandRunner {
 
-    CommandRunner end = (commandRequest, board) -> {};
+    PlayingCommandRunner end = (commandRequest, board) -> {};
 
     void execute(CommandRequest commandRequest, ChessGame chessGame);
 }

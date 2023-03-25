@@ -19,8 +19,8 @@ public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Map<Command, CommandRunner> commandMapper = new EnumMap<>(Command.class);
-    private final Map<Command, InitCommandRunner> initCommandMapper = new EnumMap<>(Command.class);
+    private final Map<Command, PlayingCommandRunner> playingCommandMapper = new EnumMap<>(Command.class);
+    private final Map<Command, StartCommandRunner> startCommandMapper = new EnumMap<>(Command.class);
     private final ChessGameDao chessGameDao;
 
     public ChessController(final InputView inputView, final OutputView outputView, final ChessGameDao chessGameDao) {
@@ -28,14 +28,21 @@ public final class ChessController {
         this.outputView = outputView;
         this.chessGameDao = chessGameDao;
 
-        initCommandMapper.put(Command.START, this::createNewGame);
-        initCommandMapper.put(Command.LOAD, this::loadGame);
-        initCommandMapper.put(Command.END, InitCommandRunner.end);
+        initStartCommandMapper();
+        initPlayingCommandMapper();
+    }
 
-        commandMapper.put(Command.MOVE, this::move);
-        commandMapper.put(Command.STATUS, this::checkStatus);
-        commandMapper.put(Command.SAVE, this::save);
-        commandMapper.put(Command.END, CommandRunner.end);
+    private void initStartCommandMapper() {
+        startCommandMapper.put(Command.START, this::createNewGame);
+        startCommandMapper.put(Command.LOAD, this::loadGame);
+        startCommandMapper.put(Command.END, StartCommandRunner.end);
+    }
+
+    private void initPlayingCommandMapper() {
+        playingCommandMapper.put(Command.MOVE, this::move);
+        playingCommandMapper.put(Command.STATUS, this::checkStatus);
+        playingCommandMapper.put(Command.SAVE, this::save);
+        playingCommandMapper.put(Command.END, PlayingCommandRunner.end);
     }
 
     public void run() {
@@ -43,7 +50,7 @@ public final class ChessController {
 
         Command command = getInitialCommand();
 
-        final InitCommandRunner initCommandRunner = initCommandMapper.get(command);
+        final StartCommandRunner initCommandRunner = startCommandMapper.get(command);
         final ChessGame chessGame = initCommandRunner.execute();
 
         while (command != Command.END) {
@@ -70,7 +77,7 @@ public final class ChessController {
 
     private ChessGame loadGame() {
         try {
-            outputView.printGameInfos(chessGameDao.findInfo());
+            outputView.printGameInfos(chessGameDao.findInfos());
 
             final String id = inputView.readInitCommand();
             final ChessGame chessGame = chessGameDao.findById(Integer.parseInt(id));
@@ -103,7 +110,7 @@ public final class ChessController {
         final CommandRequest commandRequest = inputView.readInPlayCommand();
         Command command = Command.createInPlayCommand(commandRequest.getMessage());
 
-        final CommandRunner commandRunner = commandMapper.get(command);
+        final PlayingCommandRunner commandRunner = playingCommandMapper.get(command);
         commandRunner.execute(commandRequest, chessGame);
 
         return command;

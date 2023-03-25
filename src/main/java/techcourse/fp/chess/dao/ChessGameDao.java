@@ -11,5 +11,5 @@ public interface ChessGameDao {
 
     ChessGame findById(long id);
 
-    List<ChessGameInfo> findInfo();
+    List<ChessGameInfo> findInfos();
 }

@@ -3,9 +3,9 @@ package techcourse.fp.chess.controller;
 import techcourse.fp.chess.domain.ChessGame;
 
 @FunctionalInterface
-public interface InitCommandRunner {
+public interface StartCommandRunner {
 
-    InitCommandRunner end = () -> null;
+    StartCommandRunner end = () -> null;
 
     ChessGame execute();
 
