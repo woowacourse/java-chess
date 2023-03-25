@@ -130,6 +130,10 @@ public class ChessBoard {
                 .collect(Collectors.groupingBy(piecesByPosition::get));
     }
 
+    public Camp currentTurn() {
+        return currentTurnCamp;
+    }
+
     public Map<Position, Piece> piecesByPosition() {
         return new HashMap<>(piecesByPosition);
     }

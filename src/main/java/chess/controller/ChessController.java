@@ -3,6 +3,7 @@ package chess.controller;
 import chess.controller.converter.BoardConverter;
 import chess.domain.ChessGame;
 import chess.dto.CommandRequest;
+import chess.dto.GameResultResponse;
 import chess.view.OutputView;
 
 public class ChessController {
@@ -36,7 +37,7 @@ public class ChessController {
     }
 
     public AppStatus status(CommandRequest commandRequest) {
-        // TODO game에서 명령어 검증
+        GameResultResponse gameResult = chessGame.computeResult(commandRequest);
         // TODO 게임 결과 출력
         return AppStatus.RUNNING;
     }

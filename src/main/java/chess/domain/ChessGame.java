@@ -3,6 +3,7 @@ package chess.domain;
 import chess.controller.GameStatus;
 import chess.domain.piece.Piece;
 import chess.dto.CommandRequest;
+import chess.dto.GameResultResponse;
 import java.util.Map;
 
 public class ChessGame {
@@ -25,7 +26,6 @@ public class ChessGame {
                 Position.from(commandRequest.getSourceCoordinate()),
                 Position.from(commandRequest.getDestinationCoordinate())
         );
-        // TODO over 됐을 때의 턴(이긴 진영) 확인
         if (isOver) {
             gameStatus = GameStatus.OVER;
         }
@@ -38,6 +38,15 @@ public class ChessGame {
 
     public boolean isOver() {
         return gameStatus == GameStatus.OVER;
+    }
+
+    public GameResultResponse computeResult(CommandRequest commandRequest) {
+        gameStatus.validateCommand(commandRequest.getCommand());
+        return new GameResultResponse(
+                chessBoard.calculateScoreByCamp(Camp.WHITE),
+                chessBoard.calculateScoreByCamp(Camp.BLACK),
+                chessBoard.currentTurn().name()
+        );
     }
 
     public Map<Position, Piece> readBoard() {
