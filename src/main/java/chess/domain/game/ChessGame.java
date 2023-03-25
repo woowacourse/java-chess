@@ -4,14 +4,15 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.pawn.WhitePawn;
 import chess.dto.BoardDto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toMap;
+import static chess.domain.piece.pawn.Pawn.DEGRADED_SCORE;
+import static java.util.stream.Collectors.groupingBy;
 
 
 public final class ChessGame {
@@ -81,87 +82,26 @@ public final class ChessGame {
         return piece;
     }
 
-    public void foo(final Team team) {
-        final double sum = board.values()
+    public double calculateScoreByTeam(final Team team) {
+        final double totalScore = board.values()
                 .stream()
                 .filter(piece -> piece.isSameTeamWith(team))
                 .mapToDouble(Piece::getScore)
                 .sum();
 
-        final Map<File, Piece> pawnStatus = board.entrySet()
+        final Map<File, Long> pieceCountByFile = board.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isPawn())
                 .filter(entry -> entry.getValue().isSameTeamWith(team))
-                .collect(toMap(entry -> entry.getKey().getFile(), Map.Entry::getValue));
+                .collect(groupingBy(e -> e.getKey().getFile(), Collectors.counting()));
 
-//                        .map(e -> e.getKey().getFile()))
-//                .collect(groupingBy(File::name));
-//                .collect(Collectors.toMap(File::ordinal, (a, b) -> ));
-
-       /* final double sum = teamEntries.stream()
-                .mapToDouble(entry -> entry.getValue().getScore())
+        final double totalMinusScore = pieceCountByFile.values()
+                .stream()
+                .filter(entries -> entries >= COUNT_OF_PAWN_DEGRADE_SCORE)
+                .mapToDouble(entries -> entries * DEGRADED_SCORE)
                 .sum();
 
-        final Map<Integer, List<Map.Entry<Position, Piece>>> collect = teamEntries.stream()
-                .filter(entry -> entry.getValue().isPawn())
-
-//                .collect(Collectors.groupingBy(entry -> entry.getKey().getFileOrder()));
-
-
-
-        final int pawnSize = collect.size();
-
-        final long count = collect.stream()
-                .distinct()
-                .count();
-
-        sum -= (pawnSize - count);*/
-    }
-
-    /**
-     *
-     * key - value
-     * file - pawnCount
-     * 1 - 3
-     * 2 - 1
-     * 3 - 2
-     */
-
-    public double calculateScoreByTeam(final Team team) {
-        double totalSum = 0.0;
-        for (final File file : File.values()) {
-            totalSum += calculateScoreOfFile(team, file);
-        }
-        return totalSum;
-    }
-
-    private double calculateScoreOfFile(final Team team, final File file) {
-        double sum = 0.0;
-        int pawnCount = 0;
-        for (final Rank rank : Rank.values()) {
-            final Position position = Position.of(file, rank);
-            final Piece piece = board.get(position);
-            pawnCount = getPawnCount(pawnCount, piece);
-            sum = getSum(team, sum, piece);
-        }
-        if (pawnCount >= COUNT_OF_PAWN_DEGRADE_SCORE) {
-            sum -= pawnCount * Pawn.DEGRADED_SCORE;
-        }
-        return sum;
-    }
-
-    private int getPawnCount(int pawnCount, final Piece piece) {
-        if (piece.isPawn()) {
-            pawnCount++;
-        }
-        return pawnCount;
-    }
-
-    private double getSum(final Team team, double sum, final Piece piece) {
-        if (piece.isSameTeamWith(team)) {
-            sum += piece.getScore();
-        }
-        return sum;
+        return totalScore - totalMinusScore;
     }
 
     public BoardDto getBoard() {

@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
-    private final Rook rook = Rook.create(Team.BLACK);
+    private final Rook rook = Rook.instance(Team.BLACK);
 
     @DisplayName("시작 지점과 목적 지점 사이의 모든 경로를 반환한다.")
     @Test

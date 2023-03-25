@@ -48,10 +48,10 @@ public final class ChessGameFactory {
     }
 
     private static void initRook(final Map<Position, Piece> board) {
-        board.put(Position.of(File.A, Rank.ONE), Rook.create(Team.WHITE));
-        board.put(Position.of(File.H, Rank.ONE), Rook.create(Team.WHITE));
-        board.put(Position.of(File.A, Rank.EIGHT), Rook.create(Team.BLACK));
-        board.put(Position.of(File.H, Rank.EIGHT), Rook.create(Team.BLACK));
+        board.put(Position.of(File.A, Rank.ONE), Rook.instance(Team.WHITE));
+        board.put(Position.of(File.H, Rank.ONE), Rook.instance(Team.WHITE));
+        board.put(Position.of(File.A, Rank.EIGHT), Rook.instance(Team.BLACK));
+        board.put(Position.of(File.H, Rank.EIGHT), Rook.instance(Team.BLACK));
     }
 
     private static void initKnight(final Map<Position, Piece> board) {

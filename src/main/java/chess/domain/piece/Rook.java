@@ -21,7 +21,7 @@ public final class Rook extends SlidingPiece {
         super(team, PieceType.ROOK, strategies);
     }
 
-    public static Rook create(final Team team) {
+    public static Rook instance(final Team team) {
         if (team.isBlack()) {
             return BLACK;
         }
