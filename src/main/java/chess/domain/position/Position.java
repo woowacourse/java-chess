@@ -51,7 +51,7 @@ public final class Position {
         return rows.stream()
                 .flatMap(row -> columns.stream()
                         .map(column -> Position.of(row, column)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public static List<Position> getRouteOf(Position start, Position end) {

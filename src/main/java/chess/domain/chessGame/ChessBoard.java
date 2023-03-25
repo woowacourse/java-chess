@@ -48,6 +48,6 @@ public final class ChessBoard {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return new HashMap<>(chessBoard);
     }
 }

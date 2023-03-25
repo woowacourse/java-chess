@@ -47,7 +47,7 @@ public final class Referee {
         return rows.stream()
                 .filter(row -> colorFilteredChessBoard.containsKey(Position.of(row, column)))
                 .map(row -> colorFilteredChessBoard.get(Position.of(row, column)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private double getColumnScore(List<Piece> piecesInOneColumn) {
