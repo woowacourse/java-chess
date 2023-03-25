@@ -52,7 +52,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 상황 : status");
-        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + NEW_LINE);
     }
 
     public static void printBoard(final List<Piece> pieces) {
@@ -111,8 +111,12 @@ public class OutputView {
 
     private static String printWinnerMessage(final Color color) {
         if (color == Color.NOTHING) {
-            return "현재 동점입니다.%n";
+            return "현재 동점입니다." + NEW_LINE;
         }
         return String.format("현재 %s 진영이 이기고 있습니다.%n", MESSAGE_BY_COLOR.get(color));
+    }
+
+    public static void printErrorMessage(final String message) {
+        System.out.println(message + NEW_LINE);
     }
 }

@@ -13,6 +13,7 @@ public class InputView {
     }
 
     public static List<String> readGameCommand() {
-        return List.of(scanner.nextLine().trim().split(DELIMITER));
+        final String input = scanner.nextLine();
+        return List.of(input.trim().split(DELIMITER));
     }
 }

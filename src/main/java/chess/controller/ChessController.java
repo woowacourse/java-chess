@@ -33,7 +33,7 @@ public class ChessController {
             chessGame = gameAction.execute(command, chessGame);
             return chessGame;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return chessGame;
         }
     }
@@ -43,7 +43,7 @@ public class ChessController {
             try {
                 return new Command(InputView.readGameCommand());
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                OutputView.printErrorMessage(e.getMessage());
             }
         }
     }
