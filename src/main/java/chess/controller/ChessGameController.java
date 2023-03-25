@@ -1,16 +1,19 @@
 package chess.controller;
 
-import static chess.controller.Command.CLEAR;
-import static chess.controller.Command.EMPTY;
-import static chess.controller.Command.END;
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.MOVE_SOURCE_INDEX;
-import static chess.controller.Command.MOVE_TARGET_INDEX;
-import static chess.controller.Command.START;
-import static chess.controller.Command.STATUS;
+import static chess.controller.ChessGameCommand.CLEAR;
+import static chess.controller.ChessGameCommand.EMPTY;
+import static chess.controller.ChessGameCommand.END;
+import static chess.controller.ChessGameCommand.MOVE;
+import static chess.controller.ChessGameCommand.MOVE_SOURCE_INDEX;
+import static chess.controller.ChessGameCommand.MOVE_TARGET_INDEX;
+import static chess.controller.ChessGameCommand.START;
+import static chess.controller.ChessGameCommand.STATUS;
 
+import chess.db.FixedConnectionPool;
+import chess.db.JdbcTemplate;
 import chess.dto.MoveDto;
-import chess.repository.ChessDaoGenerator;
+import chess.repository.ChessDao;
+import chess.repository.ChessJdbcDao;
 import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -20,20 +23,27 @@ import java.util.Map;
 
 public class ChessGameController {
 
-    private final Map<Command, ChessGameAction> commandMapper = new EnumMap<>(Command.class);
+    private final Map<ChessGameCommand, ChessGameAction> commandMapper = new EnumMap<>(ChessGameCommand.class);
 
     public ChessGameController() {
-        commandMapper.put(START, (chessGame, commands) -> start(chessGame));
-        commandMapper.put(MOVE, this::move);
-        commandMapper.put(STATUS, (chessGame, ignore) -> status(chessGame));
-        commandMapper.put(CLEAR, (chessGame, ignore) -> clear(chessGame));
-        commandMapper.put(END, ChessGameAction.EMPTY);
+        this.commandMapper.putAll(mappingCommand());
+    }
+
+    private Map<ChessGameCommand, ChessGameAction> mappingCommand() {
+        return Map.of(
+                START, (chessGame, commands) -> start(chessGame),
+                MOVE, this::move,
+                STATUS, (chessGame, ignore) -> status(chessGame),
+                CLEAR, (chessGame, ignore) -> clear(chessGame),
+                END, ChessGameAction.EMPTY
+        );
     }
 
     public void run() {
         OutputView.printGameStart();
-        final ChessGame chessGame = new ChessGame(ChessDaoGenerator.getChessDao());
-        Command command = EMPTY;
+        final ChessDao chessDao = new ChessJdbcDao(new JdbcTemplate(FixedConnectionPool.getInstance()));
+        final ChessGame chessGame = new ChessGame(chessDao);
+        ChessGameCommand command = EMPTY;
         while (command != END) {
             command = play(chessGame);
             command = checkGameOver(chessGame, command);
@@ -41,10 +51,10 @@ public class ChessGameController {
         OutputView.printGameEnd();
     }
 
-    private Command play(final ChessGame chessGame) {
+    private ChessGameCommand play(final ChessGame chessGame) {
         try {
             final List<String> commands = InputView.readCommand();
-            final Command command = Command.from(commands);
+            final ChessGameCommand command = ChessGameCommand.from(commands);
             command.validateCommandsSize(commands);
             final ChessGameAction chessGameAction = commandMapper.get(command);
             chessGameAction.execute(chessGame, commands);
@@ -87,7 +97,7 @@ public class ChessGameController {
         OutputView.printGameClear();
     }
 
-    private Command checkGameOver(final ChessGame chessGame, final Command command) {
+    private ChessGameCommand checkGameOver(final ChessGame chessGame, final ChessGameCommand command) {
         if (chessGame.isGameOver()) {
             OutputView.printStatus(chessGame.getResult());
             return END;

@@ -3,7 +3,7 @@ package chess.controller;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Command {
+public enum ChessGameCommand {
     START(1),
     MOVE(3),
     STATUS(1),
@@ -14,7 +14,7 @@ public enum Command {
 
     private final int size;
 
-    Command(final int size) {
+    ChessGameCommand(final int size) {
         this.size = size;
     }
 
@@ -24,7 +24,7 @@ public enum Command {
 
     private static final String INVALID_COMMAND_MESSAGE = "올바른 명령어를 입력해주세요.";
 
-    public static Command from(final List<String> commands) {
+    public static ChessGameCommand from(final List<String> commands) {
         return Arrays.stream(values())
                 .filter(command -> command != EMPTY)
                 .filter(command -> command.name().equalsIgnoreCase(commands.get(COMMAND_INDEX)))
