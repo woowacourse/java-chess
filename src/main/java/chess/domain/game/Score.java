@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Score {
 
-    private static final double DUPLICATED_PAWN_SCORE = 0.5;
+    private static final double DUPLICATED_PAWN_DEDUCTION_SCORE = 0.5;
 
     private final double value;
 
@@ -45,13 +45,12 @@ public class Score {
     }
 
     private static double calculateSum(Map<Position, Piece> pieces) {
-        double sum = pieces.values().stream()
+        double pieceScore = pieces.values().stream()
                 .map(piece -> piece.getScore().value)
                 .mapToDouble(i -> i)
                 .sum();
-        int duplicatedPawnSize = getDuplicatedPawnSize(pieces);
-        sum -= duplicatedPawnSize * DUPLICATED_PAWN_SCORE;
-        return sum;
+        double deductionScore = getDuplicatedPawnSize(pieces) * DUPLICATED_PAWN_DEDUCTION_SCORE;
+        return pieceScore - deductionScore;
     }
 
     private static int getDuplicatedPawnSize(Map<Position, Piece> pieces) {
