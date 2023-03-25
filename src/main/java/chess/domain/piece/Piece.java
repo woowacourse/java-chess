@@ -36,6 +36,10 @@ public abstract class Piece {
         return side;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     protected abstract void validate(final Type type, final Side side);
 
     public abstract List<Position> findMovablePositions(final Position source, final Board board);

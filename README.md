@@ -106,6 +106,12 @@ graph TD
 - [x] 턴을 변경할 수 있다.
 - [x] 삭제할 수 있다.
 
+### PieceDao
+- [x] piece를 저장할 수 있다.
+- [x] piece를 삭제할 수 있다.
+- [x] 모든 피스(보드)를 찾을 수 있다.
+- [x] 피스를 삭제할 수 있다.
+
 ### DB 테이블
 ```sql
 create table chess_game(
