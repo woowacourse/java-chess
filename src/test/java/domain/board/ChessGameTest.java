@@ -149,18 +149,18 @@ class ChessGameTest {
     @Test
     @DisplayName("같은 팀이 아니라면 기물을 잡을 수 있다")
     void catchPossibleWhenNotSameColor() {
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(
                 new Coordinate(0, 0),
                 new WhitePawn(Color.WHITE)
         );
-        mockedSquareLocations.put(
+        mockedPieceLocations.put(
                 new Coordinate(1, 1),
                 new BlackPawn(Color.BLACK)
         );
 
         ChessGame mockedChessGame = new ChessGame(
-                new Board(mockedSquareLocations)
+                new Board(mockedPieceLocations)
         );
 
         assertThatCode(() -> mockedChessGame.move(
@@ -183,18 +183,18 @@ class ChessGameTest {
     @Test
     @DisplayName("킹을 잡으면 게임이 끝난다")
     void catchKingGameOver() {
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(
                 new Coordinate(0, 0),
                 new King(Color.WHITE)
         );
-        mockedSquareLocations.put(
+        mockedPieceLocations.put(
                 new Coordinate(1, 1),
                 new King(Color.BLACK)
         );
 
         ChessGame mockedChessGame = new ChessGame(
-                new Board(mockedSquareLocations)
+                new Board(mockedPieceLocations)
         );
         mockedChessGame.move(
                 new Coordinate(0, 0),
@@ -207,18 +207,18 @@ class ChessGameTest {
     @Test
     @DisplayName("각 진영의 최하 점수를 계산할 수 있다")
     void collectPointWhenZero() {
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(
                 new Coordinate(0, 0),
                 new King(Color.WHITE)
         );
-        mockedSquareLocations.put(
+        mockedPieceLocations.put(
                 new Coordinate(1, 1),
                 new King(Color.BLACK)
         );
 
         ChessGame mockedChessGame = new ChessGame(
-                new Board(mockedSquareLocations)
+                new Board(mockedPieceLocations)
         );
 
         assertThat(mockedChessGame.collectPoint())
@@ -229,18 +229,18 @@ class ChessGameTest {
     @Test
     @DisplayName("공동 우승자를 반환할 수 있다")
     void getWinningColorTwo() {
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(
                 new Coordinate(0, 0),
                 new King(Color.WHITE)
         );
-        mockedSquareLocations.put(
+        mockedPieceLocations.put(
                 new Coordinate(1, 1),
                 new King(Color.BLACK)
         );
 
         ChessGame mockedChessGame = new ChessGame(
-                new Board(mockedSquareLocations)
+                new Board(mockedPieceLocations)
         );
 
         assertThat(mockedChessGame.getWinningColor())
@@ -250,18 +250,18 @@ class ChessGameTest {
     @Test
     @DisplayName("단독 우승자를 반환할 수 있다")
     void getWinningColorOne() {
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(
                 new Coordinate(0, 0),
                 new WhitePawn(Color.WHITE)
         );
-        mockedSquareLocations.put(
+        mockedPieceLocations.put(
                 new Coordinate(1, 1),
                 new King(Color.BLACK)
         );
 
         ChessGame mockedChessGame = new ChessGame(
-                new Board(mockedSquareLocations)
+                new Board(mockedPieceLocations)
         );
 
         assertThat(mockedChessGame.getWinningColor())

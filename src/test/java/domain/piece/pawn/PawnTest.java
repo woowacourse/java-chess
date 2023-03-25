@@ -138,11 +138,11 @@ class PawnTest {
         Coordinate startCoordinate = new Coordinate(0, 0);
         Coordinate endCoordinate = new Coordinate(1, 1);
 
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
-        mockedSquareLocations.put(endCoordinate, new BlackPawn(Color.BLACK));
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
+        mockedPieceLocations.put(endCoordinate, new BlackPawn(Color.BLACK));
 
-        Board mockedBoard = new Board(mockedSquareLocations);
+        Board mockedBoard = new Board(mockedPieceLocations);
         ChessGame mockedChessGame = new ChessGame(mockedBoard);
 
         assertThatCode(() -> mockedChessGame.move(startCoordinate, endCoordinate))
@@ -155,11 +155,11 @@ class PawnTest {
         Coordinate startCoordinate = new Coordinate(0, 1);
         Coordinate endCoordinate = new Coordinate(1, 0);
 
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
-        mockedSquareLocations.put(endCoordinate, new BlackPawn(Color.BLACK));
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
+        mockedPieceLocations.put(endCoordinate, new BlackPawn(Color.BLACK));
 
-        Board mockedBoard = new Board(mockedSquareLocations);
+        Board mockedBoard = new Board(mockedPieceLocations);
         ChessGame mockedChessGame = new ChessGame(mockedBoard);
 
         assertThatCode(() -> mockedChessGame.move(startCoordinate, endCoordinate))
@@ -172,11 +172,11 @@ class PawnTest {
         Coordinate startCoordinate = new Coordinate(0, 1);
         Coordinate endCoordinate = new Coordinate(1, 0);
 
-        Map<Coordinate, Piece> mockedSquareLocations = new HashMap<>();
-        mockedSquareLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
-        mockedSquareLocations.put(endCoordinate, new WhitePawn(Color.WHITE));
+        Map<Coordinate, Piece> mockedPieceLocations = new HashMap<>();
+        mockedPieceLocations.put(startCoordinate, new WhitePawn(Color.WHITE));
+        mockedPieceLocations.put(endCoordinate, new WhitePawn(Color.WHITE));
 
-        Board mockedBoard = new Board(mockedSquareLocations);
+        Board mockedBoard = new Board(mockedPieceLocations);
         ChessGame mockedChessGame = new ChessGame(mockedBoard);
 
         assertThatThrownBy(() -> mockedChessGame.move(startCoordinate, endCoordinate))

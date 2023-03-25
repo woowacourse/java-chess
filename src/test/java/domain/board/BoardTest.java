@@ -94,17 +94,17 @@ class BoardTest {
     @Test
     @DisplayName("폰은 점수가 1점이다")
     void pawnPointTest() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(
                 new Coordinate(0, 0),
                 new WhitePawn(Color.WHITE)
         );
-        mockSquareLocations.put(
+        mockPieceLocations.put(
                 new Coordinate(1, 1),
                 new BlackPawn(Color.BLACK)
         );
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(1);
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(1);
@@ -113,17 +113,17 @@ class BoardTest {
     @Test
     @DisplayName("나이트는 점수가 2.5점이다")
     void knightPointTest() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(
                 new Coordinate(0, 0),
                 new Knight(Color.WHITE)
         );
-        mockSquareLocations.put(
+        mockPieceLocations.put(
                 new Coordinate(1, 1),
                new Knight((Color.BLACK))
         );
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(2.5);
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(2.5);
@@ -132,17 +132,17 @@ class BoardTest {
     @Test
     @DisplayName("비숍은 점수가 3점이다")
     void bishopPointTest() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(
                 new Coordinate(0, 0),
                 new Bishop(Color.WHITE)
         );
-        mockSquareLocations.put(
+        mockPieceLocations.put(
                 new Coordinate(1, 1),
                 new Bishop(Color.BLACK)
         );
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(3);
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(3);
@@ -151,17 +151,17 @@ class BoardTest {
     @Test
     @DisplayName("룩은 점수가 5점이다")
     void rookPointTest() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(
                 new Coordinate(0, 0),
                 new Rook(Color.WHITE)
         );
-        mockSquareLocations.put(
+        mockPieceLocations.put(
                 new Coordinate(1, 1),
                 new Rook(Color.BLACK)
         );
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(5);
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(5);
@@ -170,17 +170,17 @@ class BoardTest {
     @Test
     @DisplayName("퀸은 점수가 9점이다")
     void queenPointTest() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(
                 new Coordinate(0, 0),
                 new Queen(Color.WHITE)
         );
-        mockSquareLocations.put(
+        mockPieceLocations.put(
                 new Coordinate(1, 1),
                 new Queen(Color.BLACK)
         );
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(9);
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(9);
@@ -189,15 +189,15 @@ class BoardTest {
     @ParameterizedTest(name = "화이트 폰이 일렬로 {0}개 놓이는 경우 점수가 0.5씩 부여된다")
     @ValueSource(ints = {2, 3, 4, 5, 6, 7, 8})
     void whitePawnTestWhenStraightExist(final int pawnCount) {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
         for (int i = 0; i < pawnCount; i++) {
-            mockSquareLocations.put(
+            mockPieceLocations.put(
                     new Coordinate(i, 0),
                     new WhitePawn(Color.WHITE)
             );
         }
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(pawnCount * 0.5);
     }
@@ -205,15 +205,15 @@ class BoardTest {
     @ParameterizedTest(name = "블랙 폰이 일렬로 {0}개 놓이는 경우 점수가 0.5씩 부여된다")
     @ValueSource(ints = {2, 3, 4, 5, 6, 7, 8})
     void blackPawnTestWhenStraightExist(final int pawnCount) {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
         for (int i = 0; i < pawnCount; i++) {
-            mockSquareLocations.put(
+            mockPieceLocations.put(
                     new Coordinate(i, 0),
                     new BlackPawn(Color.BLACK)
             );
         }
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(pawnCount * 0.5);
     }
@@ -221,11 +221,11 @@ class BoardTest {
     @Test
     @DisplayName("킹이 두 개 있는지를 판단할 수 있다")
     void judgeKingAlive() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(new Coordinate(0, 0), new King(Color.WHITE));
-        mockSquareLocations.put(new Coordinate(1, 1), new King(Color.BLACK));
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(new Coordinate(0, 0), new King(Color.WHITE));
+        mockPieceLocations.put(new Coordinate(1, 1), new King(Color.BLACK));
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.allKingAlive()).isTrue();
     }
@@ -233,20 +233,20 @@ class BoardTest {
     @Test
     @DisplayName("킹이 두개가 아니라면 판단할 수 있다")
     void judgeKingDead() {
-        Map<Coordinate, Piece> mockSquareLocations = new HashMap<>();
-        mockSquareLocations.put(new Coordinate(0, 0), new King(Color.WHITE));
+        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
+        mockPieceLocations.put(new Coordinate(0, 0), new King(Color.WHITE));
 
-        Board board = new Board(mockSquareLocations);
+        Board board = new Board(mockPieceLocations);
 
         assertThat(board.allKingAlive()).isFalse();
     }
 
     @ParameterizedTest(name = "({0}, {1})에 기물은 존재하지 않는다")
     @CsvSource(value =  {"2:0", "5:0", "2:7", "5:7"}, delimiter = ':')
-    void isEmptySquare(int row, int col) {
+    void isEmptyPiece(int row, int col) {
         Board board = new Board();
         Coordinate coordinate = new Coordinate(row, col);
 
-        assertThat(board.isSquareEmptyAt(coordinate)).isTrue();
+        assertThat(board.isPieceEmptyAt(coordinate)).isTrue();
     }
 }

@@ -17,7 +17,7 @@ public class RenderingAdapter {
     public static final String GAME_SCORE_FORMAT = "%s : %.1f";
 
     public static String unpackBoard(final Board board) {
-        Map<Coordinate, Piece> squareLocations = board.getSquareLocations();
+        Map<Coordinate, Piece> squareLocations = board.getPieceLocations();
         return unpackSquareLocations(squareLocations);
     }
 

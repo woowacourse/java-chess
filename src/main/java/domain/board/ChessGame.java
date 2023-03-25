@@ -61,9 +61,9 @@ public final class ChessGame {
 
     public void move(final Coordinate start, final Coordinate end) {
         validate(start, end);
-        Piece findPiece = board.findSquare(start);
-        board.replaceWithEmptySquare(start);
-        board.replaceSquare(end, findPiece);
+        Piece findPiece = board.findPiece(start);
+        board.replaceWithEmptyPiece(start);
+        board.replacePiece(end, findPiece);
         turn.invert();
     }
 
@@ -75,14 +75,14 @@ public final class ChessGame {
     }
 
     private void validateTurn(final Coordinate start) {
-        Piece findPiece = board.findSquare(start);
+        Piece findPiece = board.findPiece(start);
         if (turn.isNotFor(findPiece)) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
         }
     }
 
     private void validateNotEmpty(final Coordinate start) {
-        if (board.isSquareEmptyAt(start)) {
+        if (board.isPieceEmptyAt(start)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 없습니다.");
         }
     }
@@ -95,7 +95,7 @@ public final class ChessGame {
     }
 
     private void validateNotBlocked(final Coordinate start, final Coordinate end) {
-        Piece piece = board.findSquare(start);
+        Piece piece = board.findPiece(start);
         if (piece.canJump() || isNotBlockedWhenCantReap(start, end)) {
             return;
         }
@@ -106,7 +106,7 @@ public final class ChessGame {
         Coordinate directionVector = DirectionVector.calculate(start, end);
         Coordinate indexCoordinate = start.add(directionVector);
 
-        while (board.isSquareEmptyAt(indexCoordinate) &&
+        while (board.isPieceEmptyAt(indexCoordinate) &&
                 !indexCoordinate.equals(end)) {
             indexCoordinate = indexCoordinate.add(directionVector);
         }
