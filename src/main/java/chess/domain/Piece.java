@@ -44,6 +44,10 @@ public class Piece {
         return position.equals(findPosition);
     }
 
+    public boolean isSamePiece(Piece changedPiece) {
+        return this.equals(changedPiece);
+    }
+
     public Piece getNewPiece(final int file) {
         return new Piece(position.changePosition(file), this.shape);
     }
@@ -88,4 +92,5 @@ public class Piece {
                 ", shape=" + shape +
                 '}';
     }
+
 }

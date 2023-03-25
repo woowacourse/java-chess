@@ -23,10 +23,6 @@ public class Commands {
         return command.isNotEnd();
     }
 
-    public List<String> getArgs() {
-        return args;
-    }
-
     public String getMovablePiece() {
         validateMove();
         return args.get(0);
