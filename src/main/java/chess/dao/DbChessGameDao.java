@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.game.ChessGame;
 import chess.domain.game.File;
 import chess.domain.game.PieceMapper;
 import chess.domain.game.Position;
@@ -9,7 +8,8 @@ import chess.domain.game.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
-import chess.dto.outputView.PrintBoardDto;
+import chess.dto.game.ChessGameLoadDto;
+import chess.dto.game.ChessGameSaveDto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,18 +35,16 @@ public class DbChessGameDao implements ChessDao {
     }
 
     @Override
-    public void save(final ChessGame chessGame) {
+    public void save(final ChessGameSaveDto dto) {
         final String sql = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, last_turn) VALUES (?, ?, ?, ?, ?)";
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            final PrintBoardDto tmp = chessGame.getBoard();
-            final Map<Position, Piece> board = tmp.getBoard();
-            for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-                preparedStatement.setString(1, entry.getValue().getPieceType().name());
-                preparedStatement.setString(2, entry.getKey().getFile().name());
-                preparedStatement.setString(3, entry.getKey().getRank().name());
-                preparedStatement.setString(4, entry.getValue().getTeam().name());
-                preparedStatement.setString(5, chessGame.getTurn().name());
+            for (int i = 0; i < dto.getSize(); i++) {
+                preparedStatement.setString(1, dto.getPiece_type().get(i));
+                preparedStatement.setString(2, dto.getPiece_file().get(i));
+                preparedStatement.setString(3, dto.getPiece_rank().get(i));
+                preparedStatement.setString(4, dto.getPiece_team().get(i));
+                preparedStatement.setString(5, dto.getLast_turn().get(i));
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -55,7 +53,7 @@ public class DbChessGameDao implements ChessDao {
     }
 
     @Override
-    public ChessGame loadGame() {
+    public ChessGameLoadDto loadGame() {
         final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -72,7 +70,7 @@ public class DbChessGameDao implements ChessDao {
 
                 board.put(Position.of(file, rank), PieceMapper.get(pieceType, team));
             }
-            return ChessGame.from(board, turn);
+            return ChessGameLoadDto.from(board, turn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

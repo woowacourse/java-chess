@@ -4,6 +4,8 @@ import chess.controller.GameCommand;
 import chess.dao.ChessDao;
 import chess.dao.DbChessGameDao;
 import chess.domain.game.ChessGame;
+import chess.dto.game.ChessGameLoadDto;
+import chess.dto.game.ChessGameSaveDto;
 import chess.dto.outputView.PrintBoardDto;
 import chess.dto.outputView.PrintTotalScoreDto;
 import chess.dto.outputView.PrintWinnerDto;
@@ -33,11 +35,12 @@ public final class ChessGameService {
 
     public void save() {
         dao.delete();
-        dao.save(chessGame);
+        dao.save(new ChessGameSaveDto(chessGame));
     }
 
     public void initChessGame() {
-        chessGame = dao.loadGame();
+        final ChessGameLoadDto chessGameLoadDto = dao.loadGame();
+        chessGame = ChessGame.from(chessGameLoadDto.getBoard(), chessGameLoadDto.getTurn());
     }
 
     public void initChessGame(final ChessGame chessGame) {
@@ -65,7 +68,7 @@ public final class ChessGameService {
     }
 
     public PrintBoardDto getBoard() {
-        return chessGame.getBoard();
+        return chessGame.printBoard();
     }
 
     public void checkStart() {

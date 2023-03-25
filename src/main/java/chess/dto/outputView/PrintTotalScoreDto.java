@@ -14,7 +14,7 @@ public final class PrintTotalScoreDto {
     }
 
     public static PrintTotalScoreDto from(final double whiteScore, final double blackScore) {
-        return new PrintTotalScoreDto(Map.of(chess.domain.piece.Team.WHITE, whiteScore, chess.domain.piece.Team.BLACK, blackScore));
+        return new PrintTotalScoreDto(Map.of(Team.WHITE, whiteScore, Team.BLACK, blackScore));
     }
 
     public Optional<Team> whosWinner() {

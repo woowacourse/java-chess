@@ -153,8 +153,12 @@ public final class ChessGame {
         return new PrintWinnerDto(team);
     }
 
-    public PrintBoardDto getBoard() {
+    public PrintBoardDto printBoard() {
         return new PrintBoardDto(Map.copyOf(board));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 
     public Team getTurn() {

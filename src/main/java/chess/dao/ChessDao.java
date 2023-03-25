@@ -1,12 +1,13 @@
 package chess.dao;
 
-import chess.domain.game.ChessGame;
+import chess.dto.game.ChessGameLoadDto;
+import chess.dto.game.ChessGameSaveDto;
 
 public interface ChessDao {
 
-    void save(final ChessGame chessGame);
+    void save(final ChessGameSaveDto dto);
 
-    ChessGame loadGame();
+    ChessGameLoadDto loadGame();
 
     boolean hasHistory();
 

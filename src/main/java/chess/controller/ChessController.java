@@ -65,7 +65,6 @@ public final class ChessController {
         if (chessGameService.hasHistory()) {
             chessGameService.initChessGame();
             ioViewResolver.outputViewResolve(chessGameService.getBoard());
-
             return MOVE;
         }
         chessGameService.initChessGame(ChessGameFactory.generate());
