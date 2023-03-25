@@ -1,14 +1,16 @@
-package chess.controller;
+package chess.controller.game;
 
-import static chess.controller.ChessGameCommand.CLEAR;
-import static chess.controller.ChessGameCommand.EMPTY;
-import static chess.controller.ChessGameCommand.END;
-import static chess.controller.ChessGameCommand.MOVE;
-import static chess.controller.ChessGameCommand.MOVE_SOURCE_INDEX;
-import static chess.controller.ChessGameCommand.MOVE_TARGET_INDEX;
-import static chess.controller.ChessGameCommand.START;
-import static chess.controller.ChessGameCommand.STATUS;
+import static chess.controller.game.GameCommand.CLEAR;
+import static chess.controller.game.GameCommand.EMPTY;
+import static chess.controller.game.GameCommand.END;
+import static chess.controller.game.GameCommand.MOVE;
+import static chess.controller.game.GameCommand.MOVE_SOURCE_INDEX;
+import static chess.controller.game.GameCommand.MOVE_TARGET_INDEX;
+import static chess.controller.game.GameCommand.START;
+import static chess.controller.game.GameCommand.STATUS;
 
+import chess.controller.CommandMapper;
+import chess.controller.Controller;
 import chess.db.FixedConnectionPool;
 import chess.db.JdbcTemplate;
 import chess.dto.MoveDto;
@@ -17,33 +19,33 @@ import chess.repository.ChessJdbcDao;
 import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChessGameController {
+public class GameController implements Controller {
 
-    private final Map<ChessGameCommand, ChessGameAction> commandMapper = new EnumMap<>(ChessGameCommand.class);
+    private final CommandMapper<GameCommand, GameAction> commandMapper;
 
-    public ChessGameController() {
-        this.commandMapper.putAll(mappingCommand());
+    public GameController() {
+        this.commandMapper = new CommandMapper<>(mappingCommand());
     }
 
-    private Map<ChessGameCommand, ChessGameAction> mappingCommand() {
+    private Map<GameCommand, GameAction> mappingCommand() {
         return Map.of(
                 START, (chessGame, commands) -> start(chessGame),
                 MOVE, this::move,
                 STATUS, (chessGame, ignore) -> status(chessGame),
                 CLEAR, (chessGame, ignore) -> clear(chessGame),
-                END, ChessGameAction.EMPTY
+                END, GameAction.EMPTY
         );
     }
 
+    @Override
     public void run() {
         OutputView.printGameStart();
         final ChessDao chessDao = new ChessJdbcDao(new JdbcTemplate(FixedConnectionPool.getInstance()));
         final ChessGame chessGame = new ChessGame(chessDao);
-        ChessGameCommand command = EMPTY;
+        GameCommand command = EMPTY;
         while (command != END) {
             command = play(chessGame);
             command = checkGameOver(chessGame, command);
@@ -51,13 +53,13 @@ public class ChessGameController {
         OutputView.printGameEnd();
     }
 
-    private ChessGameCommand play(final ChessGame chessGame) {
+    private GameCommand play(final ChessGame chessGame) {
         try {
             final List<String> commands = InputView.readCommand();
-            final ChessGameCommand command = ChessGameCommand.from(commands);
+            final GameCommand command = GameCommand.from(commands);
             command.validateCommandsSize(commands);
-            final ChessGameAction chessGameAction = commandMapper.get(command);
-            chessGameAction.execute(chessGame, commands);
+            final GameAction gameAction = commandMapper.getValue(command);
+            gameAction.execute(chessGame, commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printException(e.getMessage());
@@ -97,7 +99,7 @@ public class ChessGameController {
         OutputView.printGameClear();
     }
 
-    private ChessGameCommand checkGameOver(final ChessGame chessGame, final ChessGameCommand command) {
+    private GameCommand checkGameOver(final ChessGame chessGame, final GameCommand command) {
         if (chessGame.isGameOver()) {
             OutputView.printStatus(chessGame.getResult());
             return END;

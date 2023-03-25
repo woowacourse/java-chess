@@ -1,11 +1,11 @@
-package chess.controller;
+package chess.controller.main;
 
 import java.util.Arrays;
 
 public enum MainCommand {
     EMPTY,
     USER,
-    GAME,
+    ROOM,
     START,
     END,
     ;
