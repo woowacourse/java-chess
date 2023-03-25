@@ -70,8 +70,10 @@ public final class ChessController {
 
     private ChessGame loadGame() {
         try {
-            final String s = inputView.readInitCommand();
-            final ChessGame chessGame = chessGameDao.findById(Integer.parseInt(s));
+            outputView.printGameInfos(chessGameDao.findInfo());
+
+            final String id = inputView.readInitCommand();
+            final ChessGame chessGame = chessGameDao.findById(Integer.parseInt(id));
             outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
             return chessGame;
         } catch (Exception e) {

@@ -3,6 +3,7 @@ package techcourse.fp.chess.view;
 import java.util.List;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.dto.response.BoardResponse;
+import techcourse.fp.chess.dto.response.ChessGameInfo;
 import techcourse.fp.chess.dto.response.ScoreResponse;
 
 public final class OutputView {
@@ -51,5 +52,16 @@ public final class OutputView {
         for (ScoreResponse response : scores) {
             System.out.println(response.getColor() +" " + response.getScore() + "점");
         }
+    }
+
+    public void printGameInfos(final List<ChessGameInfo> info) {
+        System.out.println("id - 게임 이름                              - 차례      -  저장일자");
+        for (ChessGameInfo chessGameInfo : info) {
+            System.out.printf("%s - %-20s                - %s      -  %s", chessGameInfo.getId(), chessGameInfo.getName(),
+                    chessGameInfo.getTurn(), chessGameInfo.getCreateTime());
+            System.out.println();
+        }
+
+        System.out.println("실행하길 원하는 게임의 id를 입력해주세요");
     }
 }

@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.ChessGame;
@@ -17,6 +20,7 @@ import techcourse.fp.chess.domain.piece.PieceFactory;
 import techcourse.fp.chess.domain.piece.PieceType;
 import techcourse.fp.chess.domain.piece.Turn;
 import techcourse.fp.chess.dto.request.ChessGameRequest;
+import techcourse.fp.chess.dto.response.ChessGameInfo;
 
 public class LocalMysqlChessGameDao implements ChessGameDao {
 
@@ -115,6 +119,35 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
 
         } catch (SQLException e) {
             return null;
+        }
+    }
+
+
+    @Override
+    public List<ChessGameInfo> findInfo() {
+        final String query = "SELECT * FROM chess_game;";
+
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement ps = connection.prepareStatement(query);
+            final ResultSet resultSet = ps.executeQuery();
+
+            List<ChessGameInfo> chessGameInfos = new ArrayList<>();
+
+            while (resultSet.next()) {
+                final long id = resultSet.getLong("id");
+                final String name = resultSet.getString("name");
+
+                final String turn = resultSet.getString("turn");
+                final Timestamp createAt = resultSet.getTimestamp("created_at");
+
+                chessGameInfos.add(new ChessGameInfo(id, name, turn, createAt.toLocalDateTime()));
+            }
+
+            return chessGameInfos;
+
+
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }
