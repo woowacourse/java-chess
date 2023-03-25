@@ -19,38 +19,40 @@ public class ChessController {
     }
 
     private void commandMoveCase(ChessBoard chessBoard, List<String> splitedCommand) {
-        if (isCommandMove(splitedCommand)){
+        if (isCommandMove(splitedCommand)) {
             move(chessBoard, splitedCommand);
         }
     }
 
     private boolean isCommandMove(List<String> splitedCommand) {
-        return "move".equals(InputView.extractCommand(splitedCommand));
+        return Command.MOVE.equals(InputView.extractCommand(splitedCommand));
     }
 
     private void move(ChessBoard chessBoard, List<String> splitedCommand) {
         List<String> source = InputView.extractSource(splitedCommand);
         List<String> destination = InputView.extractDestination(splitedCommand);
-        Coordinate sourceCoordinate = Coordinate.createCoordinate(InputView.extractRow(source),InputView.extractColumn(source));
-        Coordinate destinationCoordinate = Coordinate.createCoordinate(InputView.extractRow(destination),InputView.extractColumn(destination));
+        Coordinate sourceCoordinate = Coordinate.createCoordinate(InputView.extractRow(source),
+            InputView.extractColumn(source));
+        Coordinate destinationCoordinate = Coordinate.createCoordinate(InputView.extractRow(destination),
+            InputView.extractColumn(destination));
 
-        chessBoard.move(sourceCoordinate,destinationCoordinate);
+        chessBoard.move(sourceCoordinate, destinationCoordinate);
         OutputView.printChessBoard(chessBoard.chessBoard());
         runChessGame(chessBoard);
     }
 
     private boolean isCommandEnd(List<String> splitedCommand) {
-        return "end".equals(InputView.extractCommand(splitedCommand));
+        return Command.END.equals(InputView.extractCommand(splitedCommand));
     }
 
     private void commandStartCase(List<String> splitedCommand) {
-        if (isCommandStart(splitedCommand)){
+        if (isCommandStart(splitedCommand)) {
             runNewChessGame();
         }
     }
 
     private boolean isCommandStart(List<String> splitedCommand) {
-        return "start".equals(InputView.extractCommand(splitedCommand));
+        return Command.START.equals(InputView.extractCommand(splitedCommand));
     }
 
     private void runNewChessGame() {

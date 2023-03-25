@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.controller.Command;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -69,8 +70,9 @@ public class InputView {
         }
     }
 
-    public static String extractCommand(List<String> input) {
-        return input.get(COMMAND_INDEX);
+    public static Command extractCommand(List<String> input) {
+        String inputCommand = input.get(COMMAND_INDEX);
+        return Command.of(inputCommand);
     }
 
     public static List<String> extractSource(List<String> sourceCoordinates) {
