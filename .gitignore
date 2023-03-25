@@ -32,4 +32,4 @@ out/
 .vscode/
 
 ## db ##
-/main/java/chess/db/mysql/data/chess
+/main/java/chess/db/
