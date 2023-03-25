@@ -103,11 +103,10 @@ public class Players {
         Player findPlayer = findPlayerByPosition(sourcePosition);
         Piece changedPiece = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
 
-        Player anotherPlayer = getAnotherPlayer(findPlayer);
-
         PieceDao dao = new PieceDaoImpl();
-
         dao.updatePosition(changedPiece, sourcePosition);
+
+        Player anotherPlayer = getAnotherPlayer(findPlayer);
         anotherPlayer.removePiece(targetPosition)
                 .ifPresent(piece -> dao.deletePieceByColor(piece, anotherPlayer.getColor()));
     }
