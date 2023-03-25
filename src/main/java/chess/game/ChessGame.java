@@ -74,7 +74,7 @@ public class ChessGame {
     }
 
     public double getTeamScore(Team team) {
-        return gameState.getTeamScore(() -> board.getTeamScore(team));
+        return gameState.getTeamScore(() -> board.getTeamScore(team).getScore());
     }
 
     public Team getTurn() {

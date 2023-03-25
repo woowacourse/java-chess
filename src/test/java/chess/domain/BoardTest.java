@@ -15,7 +15,6 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BoardTest {
@@ -198,32 +197,14 @@ class BoardTest {
         Board board = new Board(squares);
 
         // when
-        double blackScore = board.getTeamScore(Team.BLACK);
-        double whiteScore = board.getTeamScore(Team.WHITE);
+        Score blackScore = board.getTeamScore(Team.BLACK);
+        Score whiteScore = board.getTeamScore(Team.WHITE);
 
         // then
-        assertThat(blackScore)
+        assertThat(blackScore.getScore())
                 .isEqualTo(20);
-        assertThat(whiteScore)
+        assertThat(whiteScore.getScore())
                 .isEqualTo(19.5);
-    }
-    
-    @ParameterizedTest
-    @CsvSource({"1,1","2,1","3,1.5","4,2","5,2.5"})
-    @DisplayName("같은 세로줄에 폰이 있으면 각 0.5점씩 계산되어야 한다.")
-    void getTeamScore_Same_X_Pawn(int pawnCount, double expect) {
-        // given
-        Map<Position, Piece> squares = BoardFactory.createEmptyBoard();
-        for (int i = 1; i <= pawnCount; i++) {
-            squares.put(Position.of(0, i), Pawn.of(Team.WHITE));
-        }
-        Board board = new Board(squares);
-        // when
-        double whiteScore = board.getTeamScore(Team.WHITE);
-
-        // then
-        assertThat(whiteScore)
-                .isEqualTo(expect);
     }
 
     @Test

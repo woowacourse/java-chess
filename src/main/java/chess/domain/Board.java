@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 public class Board {
@@ -87,39 +88,10 @@ public class Board {
                 .allMatch(piece -> piece.isRoleOf(Role.EMPTY));
     }
 
-    public double getTeamScore(Team team) {
-        double withoutPawnScore = getScoreWithoutPawn(team);
-        double pawnScore = getPawnScore(team);
-        return withoutPawnScore + pawnScore;
-    }
-
-    private double getScoreWithoutPawn(Team team) {
-        return squares.values().stream()
-                .filter(piece -> piece.isSameTeam(team))
-                .filter(piece -> !piece.isRoleOf(Role.PAWN))
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private double getPawnScore(Team team) {
-        Map<Integer, Long> pawnCountByX = getPawnCountByX(team);
-        return pawnCountByX.values().stream()
-                .mapToDouble(this::calculatePawnScore)
-                .sum();
-    }
-
-    private Map<Integer, Long> getPawnCountByX(Team team) {
+    public Score getTeamScore(Team team) {
         return squares.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
-                .filter(entry -> entry.getValue().isRoleOf(Role.PAWN))
-                .collect(groupingBy(entry -> entry.getKey().getX(), counting()));
-    }
-
-    private double calculatePawnScore(Long pawnCount) {
-        if (pawnCount == 1) {
-            return Role.PAWN.getScore();
-        }
-        return pawnCount * Role.PAWN.getScore() / 2.0;
+                .collect(collectingAndThen(toMap(Entry::getKey, Entry::getValue), Score::of));
     }
 
     public boolean isChecked(Team team) {
