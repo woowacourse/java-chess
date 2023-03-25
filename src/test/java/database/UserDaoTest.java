@@ -2,7 +2,8 @@ package database;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.SQLException;
+import chess.infra.connection.JdbcTemplate;
+import chess.infra.connection.TestConnectionPool;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,34 +12,24 @@ import org.junit.jupiter.api.TestMethodOrder;
 @TestMethodOrder(OrderAnnotation.class)
 class UserDaoTest {
 
-    private final UserDao userDao = new UserDao();
+    private final UserDao userDao = new UserDao(new JdbcTemplate(new TestConnectionPool()));
 
     @Test
     @Order(1)
-    void connection() {
-        try (var connection = userDao.getConnection()) {
-            assertThat(connection).isNotNull();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    @Order(2)
     void addUser() {
         var user = new User("test1", "name1");
         userDao.addUser(user);
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     void update() {
         var user = userDao.findByUserId("test1");
         userDao.update(user, "name2");
     }
 
     @Test
-    @Order(4)
+    @Order(3)
     void findByUserId() {
         var user = userDao.findByUserId("test1");
 
@@ -46,7 +37,7 @@ class UserDaoTest {
     }
 
     @Test
-    @Order(5)
+    @Order(4)
     void delete() {
         userDao.delete("test1");
     }
