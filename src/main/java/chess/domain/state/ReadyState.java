@@ -32,6 +32,10 @@ public class ReadyState implements GameState {
         throw new IllegalArgumentException("입력된 명령어가 올바르지 않습니다.");
     }
 
+    public boolean isRunning() {
+        return false;
+    }
+
     public boolean isFinished() {
         return false;
     }

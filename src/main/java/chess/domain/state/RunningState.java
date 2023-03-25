@@ -32,6 +32,10 @@ public class RunningState implements GameState {
         runnable.run();
     }
 
+    public boolean isRunning() {
+        return true;
+    }
+
     public boolean isFinished() {
         return false;
     }

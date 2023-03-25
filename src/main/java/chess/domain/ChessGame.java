@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.info.Team;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.state.FinishedState;
 import chess.domain.state.GameState;
@@ -8,7 +9,9 @@ import chess.domain.state.LoadingState;
 import chess.domain.state.ReadyState;
 import chess.domain.state.RunningState;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ChessGame {
 
@@ -25,31 +28,41 @@ public class ChessGame {
         return new ChessGame(chessBoard, ReadyState.STATE);
     }
 
+    public boolean isRunningOrFinished() {
+        return state.isFinished() || state.isRunning();
+    }
+
     public boolean isFinished() {
         return state.isFinished();
     }
 
-    public void startGame() {
+    public void startGame(Runnable runnable) {
         state.startGame(() -> {
+            runnable.run();
             state = RunningState.STATE;
         });
     }
 
-    public void enterLoad() {
+    public void enterLoad(Runnable runnable) {
         state.enterLoad(() -> {
             state = LoadingState.STATE;
+            runnable.run();
         });
     }
 
-    public void loadGame() {
+    public void loadGame(Supplier<List<Path>> supplier) {
         state.loadGame(() -> {
-            //TODO DB 불러오기
+            List<Path> paths = supplier.get();
+            paths.forEach((path) ->
+                chessBoard.move(path.getSource(), path.getDestination()));
+            state = RunningState.STATE;
         });
     }
 
-    public void cancelLoad() {
+    public void cancelLoad(Runnable runnable) {
         state.cancelLoad(() -> {
             state = ReadyState.STATE;
+            runnable.run();
         });
     }
 
@@ -90,10 +103,8 @@ public class ChessGame {
         });
     }
 
-    public void checkGameNotFinished() {
-        if (chessBoard.isKingDead()) {
-            state = FinishedState.STATE;
-        }
+    public Team findWinner() {
+        return chessBoard.findWinner();
     }
 
     public ChessBoard getChessBoard() {

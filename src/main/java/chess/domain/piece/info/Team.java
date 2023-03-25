@@ -24,7 +24,7 @@ public enum Team {
         return EMPTY;
     }
 
-    private boolean isRealTeam() {
+    public boolean isRealTeam() {
         return !this.equals(Team.EMPTY);
     }
 

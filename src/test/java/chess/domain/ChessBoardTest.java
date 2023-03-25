@@ -171,10 +171,10 @@ class ChessBoardTest {
             chessBoard.move(enemyQueenMiddle, enemyQueenEnd);
 
             //when
-            final boolean actual = chessBoard.isKingDead();
+            final Team actual = chessBoard.findWinner();
 
             //then
-            assertThat(actual).isTrue();
+            assertThat(actual).isEqualTo(Team.BLACK);
         }
     }
 

@@ -26,9 +26,8 @@ public class ChessBoard {
         validateAllyPiece(startPosition);
         validateNotExistAllyAt(endPosition);
         validateNotBlocked(startPosition, endPosition);
-        if (canAttack(startPosition, endPosition) || canMove(startPosition, endPosition)) {
-            executeMove(startPosition, endPosition);
-        }
+        validateCanMove(startPosition, endPosition);
+        executeMove(startPosition, endPosition);
     }
 
     private void validateAllyPiece(final Position startPosition) {
@@ -79,6 +78,12 @@ public class ChessBoard {
             .isEmpty();
     }
 
+    private void validateCanMove(Position startPosition, Position endPosition) {
+        if (!(canAttack(startPosition, endPosition) || canMove(startPosition, endPosition))) {
+            throw new IllegalArgumentException("이동할 수 없는 좌표입니다.");
+        }
+    }
+
     private boolean canAttack(final Position startPosition, final Position endPosition) {
         final Square userSquare = findSquareByPosition(startPosition);
         final Square targetSquare = findSquareByPosition(endPosition);
@@ -96,10 +101,21 @@ public class ChessBoard {
         turn = turn.next();
     }
 
-    public boolean isKingDead() {
+    // TODO: 2023-03-25 Team getter 없애기
+    public Team findWinner() {
+        if (isAllKingAlive()) {
+            return Team.EMPTY;
+        }
+        return squares.stream()
+            .filter(Square::isKing).findFirst()
+            .orElseThrow(() -> new IllegalStateException("체스판에 킹이 없습니다.")).getPiece()
+            .getTeam();
+    }
+
+    private boolean isAllKingAlive() {
         return squares.stream()
             .filter(Square::isKing)
-            .count() < NUMBER_OF_PLAYER;
+            .count() == NUMBER_OF_PLAYER;
     }
 
     public Score calculateScoreByTeam(Team team) {

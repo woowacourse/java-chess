@@ -13,8 +13,7 @@ public class InputView {
     public InputView(final Scanner scanner) {
         this.scanner = scanner;
     }
-
-
+    
     public List<String> readCommands() {
         return Arrays.stream(scanner.nextLine().trim().toLowerCase().split(" "))
             .collect(Collectors.toUnmodifiableList());

@@ -457,12 +457,12 @@ GameState<|--FinishedState
 
 ## 입력(InputView)
 
-- [ ] 게임 시작 전 명령을 입력 받는다.
+- [x] 게임 시작 전 명령을 입력 받는다.
     - [x] 새 게임 명령 : start로 새 게임을 실행한다.
-    - [ ] 불러오기 명령 : load로 로딩 상태로 넘어간다.
-- [ ] 로딩 상태에서 명령을 입력받는다.
-    - [ ] 이어하기 명령 : continue 이전에 중단된 게임을 이어한다.
-    - [ ] 취소 명령 : cancel로 이전 상태로 돌아간다.
+    - [x] 불러오기 명령 : load로 로딩 상태로 넘어간다.
+- [x] 로딩 상태에서 명령을 입력받는다.
+    - [x] 이어하기 명령 : continue 이전에 중단된 게임을 이어한다.
+    - [x] 취소 명령 : cancel로 이전 상태로 돌아간다.
 - [x] 게임 중 명령을 입력 받는다.
     - [x] 이동 명령 : move source위치 target위치을 실행해 이동한다.
     - [x] 종료 명령 : end로 프로그램을 종료한다.
@@ -488,7 +488,7 @@ GameState<|--FinishedState
 #### 게임의 상태(GameState)
 
 - [x] ReadyState 준비 상태
-- [ ] LoadingState DB로부터 데이터를 불러오는 상태
+- [x] LoadingState DB로부터 데이터를 불러오는 상태
 - [x] RunningState 게임이 진행되고 있는 상태
 - [x] FinishedState 게임이 중단/종료된 상태
 

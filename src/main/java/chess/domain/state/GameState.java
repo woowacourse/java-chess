@@ -16,5 +16,6 @@ public interface GameState {
 
     void finishGame(Runnable runnable);
 
+    boolean isRunning();
     boolean isFinished();
 }

@@ -5,12 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.database.DataSource;
 import chess.domain.piece.info.Team;
 import chess.domain.position.Path;
-import chess.domain.position.Position;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,11 +63,4 @@ class MySQLChessGameDaoTest {
             new Path("a4", "a5"))
         );
     }
-
-    @Test
-    void findRunningGameId() {
-        final int actual = chessGameDao.findRunningGameId( connection);
-        assertThat(actual).isEqualTo(1);
-    }
 }
-

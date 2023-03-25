@@ -1,8 +1,12 @@
 package chess.controller;
 
+import chess.database.dao.ChessGameDao;
 import chess.domain.ChessGame;
+import chess.domain.piece.info.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,14 +19,21 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameDao chessGameDao;
+    private final Connection connection;
+    private int gameId;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView,
+        final ChessGameDao chessGameDao, final Connection connection) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameDao = chessGameDao;
+        this.connection = connection;
     }
 
     public void run() {
         ChessGame game = ChessGame.createGame();
+        outputView.printReadyMessage();
         outputView.printGameGuide();
         Map<Command, ChessAction> actionMap = cretateCommandActionMap(game);
 
@@ -44,27 +55,47 @@ public class ChessController {
     }
 
     private void startGame(ChessGame game) {
-        game.startGame();
+        game.startGame(() -> {
+            chessGameDao.insertGame(connection);
+            gameId = chessGameDao.selectLastInsertedID(connection);
+        });
     }
 
     private void enterLoad(ChessGame game) {
-        game.enterLoad();
+        game.enterLoad(() -> {
+            gameId = chessGameDao.findRunningGameId(connection);
+            if (gameId < 0) {
+                outputView.printCannotLoadMessage();
+                cancelLoad(game);
+                return;
+            }
+            outputView.printLoadGuide();
+        });
     }
 
     private void loadGame(ChessGame game) {
-        game.loadGame();
+        game.loadGame(() -> chessGameDao.findAllHistoryById(gameId, connection));
     }
 
     private void cancelLoad(ChessGame game) {
-        game.cancelLoad();
+        game.cancelLoad(()->outputView.printGameGuide());
     }
 
     private void movePiece(ChessGame game, List<String> commands) {
         String source = commands.get(SOURCE_POSITION_INDEX);
         String destination = commands.get(DEST_POSITION_INDEX);
         game.executeMove(source, destination);
-        // TODO: 2023-03-24 DB 접근
-        game.checkGameNotFinished();
+        chessGameDao.insertMoveHistory(gameId, source, destination, connection);
+        checkGameNotFinished(game);
+    }
+
+    private void checkGameNotFinished(ChessGame game) {
+        Team winner = game.findWinner();
+        if (winner.isRealTeam()) {
+            outputView.printWinner(winner);
+            chessGameDao.updateStateToFinished(gameId, winner, connection);
+            finishGame(game);
+        }
     }
 
     private void displayGameStatus(ChessGame game) {
@@ -74,7 +105,12 @@ public class ChessController {
     }
 
     private void finishGame(ChessGame game) {
-        game.finishGame();
+        try {
+            game.finishGame();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void gameLoop(Map<Command, ChessAction> actionMap, ChessGame game) {
@@ -82,8 +118,10 @@ public class ChessController {
             List<String> commands = inputView.readCommands();
             Command command = extractCommand(commands);
             actionMap.getOrDefault(command, ChessAction.INVALID_ACTION).execute(commands);
-            outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
-        } catch (IllegalArgumentException e) {
+            if (game.isRunningOrFinished()) {
+                outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
+            }
+        } catch (Exception e) {
             outputView.printError(e.getMessage());
             gameLoop(actionMap, game);
         }

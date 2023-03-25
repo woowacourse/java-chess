@@ -9,7 +9,6 @@ import java.util.List;
 
 public class MySQLChessGameDao implements ChessGameDao {
 
-    @Override
     public int findRunningGameId(final Connection connection) {
         final String query = "SELECT game_id FROM game WHERE state='running'";
         try (final var preparedStatement = connection.prepareStatement(query)) {
@@ -23,7 +22,6 @@ public class MySQLChessGameDao implements ChessGameDao {
         }
     }
 
-    @Override
     public List<Path> findAllHistoryById(final int gameId, final Connection connection) {
         final String query = "SELECT source, destination FROM moveHistory WHERE game_id=?";
         try (
@@ -43,7 +41,6 @@ public class MySQLChessGameDao implements ChessGameDao {
         }
     }
 
-    @Override
     public void insertGame(final Connection connection) {
         final String query = "INSERT INTO game VALUES();";
         try (final var preparedStatement = connection.prepareStatement(query)) {
@@ -53,7 +50,6 @@ public class MySQLChessGameDao implements ChessGameDao {
         }
     }
 
-    @Override
     public void insertMoveHistory(final int gameId, final String source, final String destination,
         final Connection connection) {
         final String query = "INSERT INTO moveHistory(game_id, source, destination) VALUES(?,?,?)";
@@ -67,7 +63,6 @@ public class MySQLChessGameDao implements ChessGameDao {
         }
     }
 
-    @Override
     public void updateStateToFinished(final int gameId, final Team team,
         final Connection connection) {
         final var query = "UPDATE game SET state = 'finished', winner=? WHERE game_id = ?";
@@ -80,7 +75,6 @@ public class MySQLChessGameDao implements ChessGameDao {
         }
     }
 
-    @Override
     public int selectLastInsertedID(final Connection connection) {
         final String query = "SELECT LAST_INSERT_ID()";
         try (final var preparedStatement = connection.prepareStatement(query)) {
