@@ -39,11 +39,11 @@ public final class Pawn extends Piece {
             return List.of(target);
         }
 
-        if (!result.contains(target)) {
-            throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
+        if (result.contains(target)) {
+            return result;
         }
 
-        return result;
+        throw new IllegalArgumentException("이동 할 수 없는 위치 입니다.");
     }
 
     private static boolean isSingleMoveAble(final Position source, final Position target, final boolean isEmptyTargetPiece, final int columnDistance) {
