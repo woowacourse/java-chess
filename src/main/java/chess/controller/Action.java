@@ -5,6 +5,6 @@ import java.util.List;
 @FunctionalInterface
 public interface Action {
 
-    void execute(final List<String> list);
+    void execute(final Commands commands);
 
 }
