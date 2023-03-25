@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.dto.request.MoveRequest;
+import chess.dto.request.MoveRequest;
 import chess.domain.strategy.bishop.BishopStrategy;
 import chess.domain.strategy.king.KingStrategy;
 import chess.domain.strategy.knight.KnightStrategy;
@@ -8,7 +8,6 @@ import chess.domain.strategy.pawn.PawnStrategy;
 import chess.domain.strategy.queen.QueenStrategy;
 import chess.domain.strategy.rook.RookStrategy;
 
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 public enum Shape {
