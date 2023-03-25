@@ -15,6 +15,10 @@ public class Score {
         this.score = score;
     }
 
+    public Score(final Double score) {
+        this.score = new BigDecimal(score);
+    }
+
     public Score add(final Score otherScore) {
         return new Score(this.score.add(otherScore.score));
     }
