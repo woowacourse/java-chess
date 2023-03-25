@@ -3,6 +3,7 @@ package domain.game;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Position;
+import domain.piece.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class ChessGameTest {
     @BeforeEach
     void setUp() {
         chessBoard = new ChessBoardGenerator().generate();
-        chessGame = new ChessGame(new Board(chessBoard));
+        chessGame = new ChessGame(new Board(chessBoard), Side.WHITE, GameState.RUN);
     }
 
     @DisplayName("b2b4로 입력이 들어오면 white pawn은 b4로 움직인다.")
@@ -77,7 +78,7 @@ class ChessGameTest {
         //given
         chessBoard.put(Position.of("d", "2"), Pawn.createOfBlack());
         Board board = new Board(chessBoard);
-        chessGame = new ChessGame(board);
+        chessGame = new ChessGame(board, Side.WHITE, GameState.RUN);
         chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
         chessGame.move(Position.of("d", "2"), Position.of("e", "1"));
         //when

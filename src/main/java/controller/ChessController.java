@@ -3,8 +3,10 @@ package controller;
 import domain.game.Board;
 import domain.game.ChessBoardGenerator;
 import domain.game.ChessGame;
+import domain.game.GameState;
 import domain.piece.Position;
 import domain.piece.Side;
+import service.ChessGameService;
 import view.InputView;
 import view.OutputView;
 
@@ -22,14 +24,21 @@ public class ChessController {
     private static final int TARGET_FILE_INDEX = 2;
     private static final int TARGET_RANK_INDEX = 3;
 
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final ChessGameService chessGameService;
+
+    public ChessController(InputView inputView, OutputView outputView, ChessGameService chessGameService) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.chessGameService = chessGameService;
+    }
 
     public void run() {
         this.outputView.printGameGuideMessage();
         repeatByRunnable(inputView::requestStartCommand);
         Board chessBoard = new Board(new ChessBoardGenerator().generate());
-        ChessGame chessGame = new ChessGame(chessBoard);
+        ChessGame chessGame = new ChessGame(chessBoard, Side.WHITE, GameState.RUN);
 
         this.outputView.printChessBoard(chessBoard.getChessBoard());
         while (play(chessGame)) {

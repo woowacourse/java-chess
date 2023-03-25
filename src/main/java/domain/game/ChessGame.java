@@ -8,12 +8,13 @@ import java.util.Map;
 public class ChessGame {
 
     private final Board board;
-    private Side currentTurn = Side.WHITE;
+    private Side currentTurn;
     private GameState state;
 
-    public ChessGame(Board board) {
+    public ChessGame(Board board, Side currentTurn, GameState state) {
         this.board = board;
-        this.state = GameState.RUN;
+        this.currentTurn = currentTurn;
+        this.state = state;
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
