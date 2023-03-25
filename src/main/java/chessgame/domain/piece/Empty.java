@@ -6,7 +6,7 @@ import chessgame.domain.chessgame.Camp;
 public class Empty extends Piece {
 
     public Empty() {
-        super(PieceType.EMPTY, Camp.EMPTY, 0);
+        super(PieceType.EMPTY, Camp.EMPTY);
     }
 
     @Override

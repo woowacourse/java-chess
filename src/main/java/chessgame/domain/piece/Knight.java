@@ -10,7 +10,6 @@ import static chessgame.domain.coordinate.Inclination.*;
 
 public class Knight extends Piece {
 
-    private static final double SCORE = 2.5;
     private static final List<Inclination> availableInclinations = List.of(
             TWO, MINUS_TWO, HALF, MINUS_HALF
     );
@@ -20,7 +19,7 @@ public class Knight extends Piece {
     );
 
     public Knight(final Camp camp) {
-        super(PieceType.KNIGHT, camp, SCORE);
+        super(PieceType.KNIGHT, camp);
     }
 
     @Override

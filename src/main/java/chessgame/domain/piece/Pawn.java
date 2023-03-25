@@ -5,11 +5,10 @@ import chessgame.domain.chessgame.Camp;
 
 public abstract class Pawn extends Piece {
 
-    private static final double SCORE = 1;
     private static final PieceType PIECE_TYPE_SYMBOL = PieceType.PAWN;
 
     public Pawn(final Camp camp) {
-        super(PieceType.PAWN, camp, SCORE);
+        super(PieceType.PAWN, camp);
     }
 
     public abstract boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,

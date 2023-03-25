@@ -7,12 +7,10 @@ public abstract class Piece {
 
     private final PieceType pieceType;
     private final Camp camp;
-    private final double score;
 
-    protected Piece(final PieceType pieceType, final Camp camp, final double score) {
+    protected Piece(final PieceType pieceType, final Camp camp) {
         this.pieceType = pieceType;
         this.camp = camp;
-        this.score = score;
     }
 
     public abstract boolean isReachableByRule(final Coordinate startCoordinate,
@@ -42,6 +40,6 @@ public abstract class Piece {
     }
 
     public double score() {
-        return score;
+        return pieceType.score();
     }
 }

@@ -10,13 +10,12 @@ import static chessgame.domain.coordinate.Inclination.*;
 
 public class Queen extends Piece {
 
-    private static final double SCORE = 9;
     private static final List<Inclination> availableInclinations = List.of(
             POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
     );
 
     public Queen(final Camp camp) {
-        super(PieceType.QUEEN, camp, SCORE);
+        super(PieceType.QUEEN, camp);
     }
 
     @Override
