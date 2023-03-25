@@ -136,7 +136,7 @@ public class OutputView {
     }
 
     public void printMakeNewRoomMessage() {
-        System.out.println("저장된 게임이 없어 새로운 게임을 만듭니다.");
+        System.out.println("새로운 게임을 만듭니다.");
     }
 
     public void printSavedRooms(List<Room> rooms) {
