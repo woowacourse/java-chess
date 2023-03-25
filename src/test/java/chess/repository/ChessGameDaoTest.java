@@ -54,6 +54,6 @@ class ChessGameDaoTest {
         chessGameDao.update(boardId, MovingState.getInstance());
 
         //expect
-        assertThat(chessGameDao.findStatusByBoardId(boardId)).isEqualTo("test");
+        assertThat(chessGameDao.findStatusByBoardId(boardId)).isEqualTo("moving");
     }
 }
