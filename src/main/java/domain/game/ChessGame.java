@@ -30,6 +30,10 @@ public class ChessGame {
         return state == GameState.RUN;
     }
 
+    public void end() {
+        state = GameState.END;
+    }
+
     public Map<Side, Double> calculateScores() {
         return board.calculateScore();
     }
