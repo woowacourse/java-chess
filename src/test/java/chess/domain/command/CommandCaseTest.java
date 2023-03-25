@@ -39,6 +39,6 @@ class   CommandCaseTest {
 
         assertThatThrownBy(() -> CommandCase.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("입력값은 start, end, move만 가능합니다.");
+                .hasMessage("입력값은 start, end, move, status만 가능합니다.");
     }
 }

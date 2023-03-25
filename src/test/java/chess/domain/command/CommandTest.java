@@ -39,7 +39,7 @@ class CommandTest {
 		final String input = "move a2 a3";
 
 		// when
-		final Command command = Command.ofMoveOrEnd(input);
+		final Command command = Command.ofCommand(input);
 
 		// then
 		assertAll(
@@ -49,25 +49,25 @@ class CommandTest {
 	}
 
 	@Test
-	@DisplayName("ofMoveOrEnd 메서드 end 동작 테스트")
+	@DisplayName("ofCommand 메서드 end 동작 테스트")
 	void ofMoveOrEnd_end() {
 		// given
 		final String input = "end";
 
 		// then
-		assertDoesNotThrow(() -> Command.ofMoveOrEnd(input));
+		assertDoesNotThrow(() -> Command.ofCommand(input));
 	}
 
 	@Test
-	@DisplayName("명령어가 end 또는 move가 아니면 예외가 발생한다")
+	@DisplayName("명령어가 end, move 또는 status가 아니면 예외가 발생한다")
 	void ofMoveOrEnd_invalidInput() {
 		// given
 		final String input = "start";
 
 		// when
-		assertThatThrownBy(() -> Command.ofMoveOrEnd(input))
+		assertThatThrownBy(() -> Command.ofCommand(input))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("게임 진행중에는 end와 move 커맨드 입력만 가능합니다");
+			.hasMessage("게임 진행중에는 end와 move, status 커맨드 입력만 가능합니다");
 	}
 
 	@Test
@@ -75,7 +75,7 @@ class CommandTest {
 	void isEnd() {
 		// given
 		final String input = "end";
-		final Command command = Command.ofMoveOrEnd(input);
+		final Command command = Command.ofCommand(input);
 
 		// then
 		assertTrue(command.isEnd());
@@ -86,9 +86,20 @@ class CommandTest {
 	void isMove() {
 		// given
 		final String input = "move a2 a3";
-		final Command command = Command.ofMoveOrEnd(input);
+		final Command command = Command.ofCommand(input);
 
 		// then
 		assertTrue(command.isMove());
+	}
+
+	@Test
+	@DisplayName("명령어가 status이면 true를 반환한다")
+	void isStatus() {
+		// given
+		final String input = "status";
+		final Command command = Command.ofCommand(input);
+
+		// then
+		assertTrue(command.isStatus());
 	}
 }

@@ -65,8 +65,8 @@
     - [x] 체스판에 흰말을 채운다
     - [x] 체스판이 비어있다면 빈 객체로 채운다
 - [x] 커맨드
-  - [ ] 커맨드 목록은 start, end, move, status가 있다 
-  - [ ] 커맨드가 start, end, move, status인지 확인한다
+  - [x] 커맨드 목록은 start, end, move, status가 있다 
+  - [x] 커맨드가 start, end, move, status인지 확인한다
     - [x] move일 경우 `move 출발지 도착지` 형식인지 확인한다
     - [ ] status일 경우 각 진영의 점수를 출력한다
 - [x] 뷰

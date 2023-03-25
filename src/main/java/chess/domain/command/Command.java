@@ -1,5 +1,7 @@
 package chess.domain.command;
 
+import static chess.domain.command.CommandCase.*;
+
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -25,34 +27,46 @@ public final class Command {
     }
 
     public static Command ofStart(final String input) {
-        CommandCase value = CommandCase.from(input);
+        CommandCase value = from(input);
         validateStart(value);
         return new Command(value, new ArrayList<>());
     }
 
     private static void validateStart(final CommandCase value) {
-        if (!value.equals(CommandCase.START)) {
+        if (!value.equals(START)) {
             throw new IllegalArgumentException("게임을 시작하려면 start만 입력해야합니다");
         }
     }
 
-    public static Command ofMoveOrEnd(final String input) {
+    public static Command ofCommand(final String input) {
         List<String> inputs = Arrays.asList(input.split(DELIMITER));
-        CommandCase value = CommandCase.from(inputs.get(COMMAND_INDEX));
+        CommandCase firstCommand = from(inputs.get(COMMAND_INDEX));
 
-        if (value.equals(CommandCase.END)) {
+        if (firstCommand.equals(END)) {
             return ofEnd(input);
         }
-        if (value.equals(CommandCase.MOVE)) {
-            return ofMove(value, inputs);
+        if (firstCommand.equals(MOVE)) {
+            return ofMove(firstCommand, inputs);
         }
-        throw new IllegalArgumentException("게임 진행중에는 end와 move 커맨드 입력만 가능합니다");
+        if(firstCommand.equals(STATUS)){
+            return ofStatus(input);
+        }
+        throw new IllegalArgumentException("게임 진행중에는 end와 move, status 커맨드 입력만 가능합니다");
+    }
+
+    private static Command ofStatus(String input) {
+        CommandCase value = from(input.trim());
+
+        if (!value.equals(STATUS)) {
+            throw new IllegalArgumentException("게임의 점수를 알려면 status만 입력해야합니다");
+        }
+        return new Command(value, new ArrayList<>());
     }
 
     private static Command ofEnd(final String input) {
-        CommandCase value = CommandCase.from(input);
+        CommandCase value = from(input.trim());
 
-        if (!value.equals(CommandCase.END)) {
+        if (!value.equals(END)) {
             throw new IllegalArgumentException("게임을 종료하려면 end만 입력해야합니다");
         }
         return new Command(value, new ArrayList<>());
@@ -93,11 +107,15 @@ public final class Command {
     }
 
     public boolean isEnd() {
-        return commandCase.equals(CommandCase.END);
+        return commandCase.equals(END);
     }
 
     public boolean isMove() {
-        return commandCase.equals(CommandCase.MOVE);
+        return commandCase.equals(MOVE);
+    }
+
+    public boolean isStatus(){
+        return commandCase.equals(STATUS);
     }
 
     public Position getSource() {

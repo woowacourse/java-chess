@@ -16,31 +16,53 @@ public class ChessApplication {
 
 	public static void main(String[] args) {
 		Board board = Board.create();
-		try {
-			start(board);
-			play(board);
-		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
-			play(board);
-		}
+		start(board);
+		play(board);
 	}
 
 	private static void start(final Board board) {
 		String inputCommand = InputView.askStart();
-		Command.ofStart(inputCommand);
+		operateStart(board, inputCommand);
+	}
 
-		final Map<Position, Piece> chessBoard = board.board();
-		OutputView.printBoard(chessBoard, ranks(), files());
+	private static void operateStart(final Board board, final String inputCommand) {
+		try {
+			Command.ofStart(inputCommand);
+			final Map<Position, Piece> chessBoard = board.board();
+			OutputView.printBoard(chessBoard, ranks(), files());
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e.getMessage());
+			start(board);
+		}
+
 	}
 
 	private static void play(final Board board) {
 		String inputCommand = InputView.askNext();
-		Command command = Command.ofMoveOrEnd(inputCommand);
+		operatePlay(board, inputCommand);
+	}
+
+	private static void operatePlay(final Board board, final String inputCommand) {
+		try {
+			Command command = Command.ofCommand(inputCommand);
+			operateCommand(board, command);
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e.getMessage());
+		} finally {
+			play(board);
+		}
+
+	}
+
+	private static void operateCommand(Board board, Command command) {
 		if (command.isEnd()) {
 			return;
 		}
 		if (command.isMove()) {
 			movePiece(board, command);
+		}
+		if (command.isStatus()) {
+			// TODO : status관련 로직
 		}
 	}
 
