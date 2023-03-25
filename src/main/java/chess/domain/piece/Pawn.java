@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.PieceScore.PAWN_WITHOUT_SAME_FILE;
+
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Score;
@@ -9,7 +11,6 @@ public class Pawn extends Piece {
 
     private static final int BLACK_INIT_RANK = 7;
     private static final int WHITE_INIT_RANK = 2;
-    private static final double SCORE = 1.0;
 
     public Pawn(Team team) {
         super(team);
@@ -58,6 +59,6 @@ public class Pawn extends Piece {
 
     @Override
     public Score convertToScore() {
-        return new Score(SCORE);
+        return new Score(PAWN_WITHOUT_SAME_FILE.getScore());
     }
 }

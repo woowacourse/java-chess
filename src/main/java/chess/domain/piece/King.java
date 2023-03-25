@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
+import static chess.domain.PieceScore.KING;
+
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 
 public class King extends Piece {
-
-    private static final double SCORE = 0.0;
 
     public King(Team team) {
         super(team);
@@ -26,6 +26,6 @@ public class King extends Piece {
 
     @Override
     public Score convertToScore() {
-        return new Score(SCORE);
+        return new Score(KING.getScore());
     }
 }

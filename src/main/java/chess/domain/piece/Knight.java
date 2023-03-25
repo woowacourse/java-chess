@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.PieceScore.KNIGHT;
+
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
 import chess.domain.Score;
@@ -7,8 +9,6 @@ import chess.domain.Team;
 import java.util.List;
 
 public class Knight extends Piece {
-
-    private static final double SCORE = 2.5;
 
     public Knight(Team team) {
         super(team);
@@ -32,6 +32,6 @@ public class Knight extends Piece {
 
     @Override
     public Score convertToScore() {
-        return new Score(SCORE);
+        return new Score(KNIGHT.getScore());
     }
 }
