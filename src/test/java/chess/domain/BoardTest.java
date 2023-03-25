@@ -1,7 +1,5 @@
 package chess.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.*;
@@ -14,6 +12,8 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

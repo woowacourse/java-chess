@@ -1,12 +1,18 @@
 package chess.dao.Piece;
 
 import chess.dao.JdbcConnection;
-import chess.domain.piece.*;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 

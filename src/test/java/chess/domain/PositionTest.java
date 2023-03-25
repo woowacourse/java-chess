@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.movepattern.RookMovePattern;
+import chess.domain.movepattern.NormalMovePattern;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -20,7 +20,7 @@ public class PositionTest {
         final Position target = Position.of(File.getFile(1), Rank.getRank(1));
         final Position expect = Position.of(File.getFile(1), Rank.getRank(2));
 
-        final Position movedPosition = target.move(RookMovePattern.UP);
+        final Position movedPosition = target.move(NormalMovePattern.UP);
 
         Assertions.assertThat(movedPosition).isEqualTo(expect);
     }

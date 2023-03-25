@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
