@@ -69,7 +69,6 @@ public final class Controller {
             runnable.run();
         } catch (Exception e) {
             OutputView.printExceptionMessage(e.getMessage());
-            retryOnError(runnable);
         }
     }
 }
