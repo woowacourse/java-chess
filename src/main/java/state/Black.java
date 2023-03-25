@@ -1,9 +1,9 @@
-package status;
+package state;
 
 import domain.board.Board;
 import domain.position.Position;
 
-final class Black extends Turn {
+final class Black extends Playing {
     private static final String NOT_BLACK_PIECE = "검정 플레이어 차례입니다.";
 
     public Black(final Board board) {
@@ -18,7 +18,7 @@ final class Black extends Turn {
     }
 
     @Override
-    protected Status getNextTurn() {
+    protected State getNextTurn() {
         return new White(board);
     }
 }

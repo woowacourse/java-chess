@@ -20,6 +20,29 @@ public final class Position {
         return new Position(file, rank);
     }
 
+    public Position move(final Direction direction) {
+        final Rank movedRank = rank.move(direction.getRankDifference());
+        final File movedFile = file.move(direction.getFileDifference());
+
+        return Position.of(movedFile, movedRank);
+    }
+
+    public int compareRank(final Position other) {
+        final String otherRank = other.rank.getName();
+        final String thisRank = rank.getName();
+        final int rankDifference = otherRank.compareTo(thisRank);
+
+        return Integer.compare(rankDifference, 0);
+    }
+
+    public int compareFile(final Position other) {
+        final String otherFile = other.file.getName();
+        final String thisFile = file.getName();
+        final int fileDifference = otherFile.compareTo(thisFile);
+
+        return Integer.compare(fileDifference, 0);
+    }
+
     public List<Position> between(final Position destination) {
         final Direction direction = Direction.of(this, destination);
 
@@ -55,29 +78,6 @@ public final class Position {
 
     public int getDistance(final Position other) {
         return Math.abs(getFileDifference(other)) + Math.abs(getRankDifference(other));
-    }
-
-    public Position move(final Direction direction) {
-        final Rank movedRank = rank.move(direction.getRankDifference());
-        final File movedFile = file.move(direction.getFileDifference());
-
-        return Position.of(movedFile, movedRank);
-    }
-
-    public int compareRank(final Position other) {
-        final String otherRank = other.rank.getName();
-        final String thisRank = rank.getName();
-        final int rankDifference = otherRank.compareTo(thisRank);
-
-        return Integer.compare(rankDifference, 0);
-    }
-
-    public int compareFile(final Position other) {
-        final String otherFile = other.file.getName();
-        final String thisFile = file.getName();
-        final int fileDifference = otherFile.compareTo(thisFile);
-
-        return Integer.compare(fileDifference, 0);
     }
 
     public Rank getRank() {

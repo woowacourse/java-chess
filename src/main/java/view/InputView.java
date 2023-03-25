@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public final class InputView {
+    private static final String NOT_EXIST_COMMAND = "명령어를 입력해야 합니다.";
+
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String readStartGameOption() {
+    public static String readStartOption() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
                 + "> 게임 종료 : end\n"
@@ -17,6 +19,12 @@ public final class InputView {
     }
 
     public static List<String> readPlayGameOption() {
-        return Arrays.asList(SCANNER.nextLine().split(" "));
+        final String[] options = SCANNER.nextLine().split(" ");
+
+        if (options.length == 0) {
+            throw new IllegalArgumentException(NOT_EXIST_COMMAND);
+        }
+
+        return Arrays.asList(options);
     }
 }
