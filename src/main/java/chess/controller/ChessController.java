@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.maker.EmptyPiecesFactory;
 import chess.domain.board.maker.StartingPiecesFactory;
@@ -14,15 +15,14 @@ public class ChessController {
 
     private final Map<GameState, GameAction> actionByGameState = Map.of(
             GameState.READY, this::start,
-            GameState.RUNNING, this::move
+            GameState.RUNNING, this::move,
+            GameState.STATUS, this::status
     );
 
 
     public void run() {
         OutputView.printGameStartGuideMessage();
-
         ChessGame chessGame = ChessGame.from(new EmptyPiecesFactory());
-
         do {
             final Command command = readCommand();
             if (command.isEnd()) {
@@ -73,6 +73,14 @@ public class ChessController {
 
         chessGame = chessGame.move(currentPosition, targetPosition);
 
+        OutputView.printBoard(chessGame.getExistingPieces());
+        return chessGame;
+    }
+
+    private ChessGame status(final Command command, final ChessGame chessGame) {
+        final Map<Color, Double> scoreByColor = chessGame.calculateScoreByColor();
+        OutputView.printScores(scoreByColor);
+        OutputView.printWinner(chessGame.findScoreWinner());
         OutputView.printBoard(chessGame.getExistingPieces());
         return chessGame;
     }

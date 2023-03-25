@@ -1,10 +1,12 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.piece.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +42,16 @@ public class OutputView {
             Rank.SEVEN, 1,
             Rank.EIGHT, 0
     );
+    private static final Map<Color, String> MESSAGE_BY_COLOR = new LinkedHashMap<>(Map.of(
+            Color.BLACK, "black",
+            Color.WHITE, "white"
+    ));
 
     public static void printGameStartGuideMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 상황 : status");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
@@ -88,5 +95,24 @@ public class OutputView {
             return upperPieceMessage;
         }
         return upperPieceMessage.toLowerCase();
+    }
+
+    public static void printScores(final Map<Color, Double> scoreByColor) {
+        for (Color color : MESSAGE_BY_COLOR.keySet()) {
+            final Double score = scoreByColor.get(color);
+            final String colorMessage = MESSAGE_BY_COLOR.get(color);
+            System.out.printf("> %s: %s%n", colorMessage, score.toString());
+        }
+    }
+
+    public static void printWinner(final Color color) {
+        System.out.println(printWinnerMessage(color));
+    }
+
+    private static String printWinnerMessage(final Color color) {
+        if (color == Color.NOTHING) {
+            return "현재 동점입니다.%n";
+        }
+        return String.format("현재 %s 진영이 이기고 있습니다.%n", MESSAGE_BY_COLOR.get(color));
     }
 }
