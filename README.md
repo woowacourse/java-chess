@@ -43,7 +43,42 @@ classDiagram
 
 ```
 
+### Query Statement
+```sql
+create table chess_game
+(
+    id          int         not null primary key,
+    board_id    int         not null,
+    status      varchar(30),
+);
+
+create table board
+(
+    id      int         not null,
+    game_id int         not null,
+    x_pos   int         not null,
+    y_pos   int         not null,
+    role    varchar(30) not null,
+    team    varchar(30) not null,
+
+    foreign key (game_id_id) references chess_game (id)
+    primary key (id, x_pos, y_pos)
+)
+
+```
+
 ## 기능 요구 사항
+
+### 체스 게임 실행
+
+- [ ] 현재 게임에 입장 할 수 있는 체스 게임 목록을 보여준다.
+  - [ ] 종료되지 않은 게임만 보여준다.
+  - [ ] `START`를 입력하는 경우, 새로운 게임을 시작한다.
+  - [ ] `입장 할 수 있는 체스 게임을 선택`하는 경우, 해당 게임을 이어서 시작한다.
+- [ ] `end`를 입력해 게임을 종료하는 경우, 현재 상태를 저장한다.
+  - [ ] 기존에 존재하던 게임인 경우, board 상태를 업데이트 한다.
+  - [ ] 새로운 게임인 경우, chessGame과 board를 DB에 생성한다.
+
 
 ### 게임 진행
 
@@ -58,13 +93,6 @@ classDiagram
 - [X] 체스판이 초기화되지 않고 `move`를 입력하면 예외가 발생한다.
 - [X] 체스말이 움직일 수 없는 위치로 이동하면 예외가 발생한다.
 - [X] 해당 차례인 팀 말이 아닌 다른 팀의 말을 움직이는 경우 예외가 발생한다.
-
-
-### 게임 저장
-
-- [ ] `1. 게임 목록`을 선택하면 현재 존재하는 게임 목록을 보여준다.
-- [ ]
-
 
 ### 점수
 - [x] 팀별로 현재까지 남아 있는 말에 따라 점수를 계산한다.
