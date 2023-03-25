@@ -21,8 +21,7 @@ class ChessGameDaoImplTest {
 
     @AfterEach
     void clear() {
-        final String query = "delete from chess_game";
-        jdbcTemplate.executeUpdate(query, Collections.emptyList());
+        jdbcTemplate.executeUpdate("delete from chess_game", Collections.emptyList());
     }
 
     @Test
