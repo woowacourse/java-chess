@@ -3,13 +3,15 @@ package chess.domain.piece;
 import java.util.List;
 
 public enum Team {
-    BLACK,
-    WHITE,
-    EMPTY;
+    BLACK(List.of("1", "2")),
+    WHITE(List.of("7", "8")),
+    EMPTY(List.of("1", "2", "3", "4", "5", "6", "7", "8"));
 
-    private static final List<String> BLACK_TEAM_ROW_NUMS = List.of("1", "2");
-    private static final List<String> WHITE_TEAM_ROW_NUMS = List.of("7", "8");
-    private static final List<String> ROW_NUMS = List.of("1", "2", "3", "4", "5", "6", "7", "8");
+    private final List<String> rowNums;
+
+    Team(List<String> rowNums) {
+        this.rowNums = rowNums;
+    }
 
     public static Team from(String rowNum) {
         validateOutOfRangeRowNum(rowNum);
@@ -24,11 +26,11 @@ public enum Team {
     }
 
     private static boolean isBlackTeamRowNum(String rowNum) {
-        return BLACK_TEAM_ROW_NUMS.contains(rowNum);
+        return BLACK.rowNums.contains(rowNum);
     }
 
     private static boolean isWhiteTeamRowNum(String rowNum) {
-        return WHITE_TEAM_ROW_NUMS.contains(rowNum);
+        return WHITE.rowNums.contains(rowNum);
     }
 
     private static void validateOutOfRangeRowNum(String rowNum) {
@@ -38,7 +40,7 @@ public enum Team {
     }
 
     private static boolean isOutOfRangeRowNum(String rowNum) {
-        return !ROW_NUMS.contains(rowNum);
+        return !EMPTY.rowNums.contains(rowNum);
     }
 
     public boolean isSameTeam(Team otherTeam) {
