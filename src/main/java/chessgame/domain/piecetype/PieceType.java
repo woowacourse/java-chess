@@ -1,42 +1,47 @@
 package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
-
-import java.util.Objects;
+import chessgame.domain.piece.Camp;
 
 public abstract class PieceType {
 
     private final PieceTypeSymbol pieceTypeSymbol;
+    private final Camp camp;
     private final double score;
 
-    protected PieceType(PieceTypeSymbol pieceTypeSymbol, double score) {
+    protected PieceType(final PieceTypeSymbol pieceTypeSymbol, final Camp camp, final double score) {
         this.pieceTypeSymbol = pieceTypeSymbol;
+        this.camp = camp;
         this.score = score;
     }
 
     public abstract boolean isReachableByRule(final Coordinate startCoordinate,
                                               final Coordinate endCoordinate);
 
+    public abstract boolean isCatchable(final Camp otherCamp,
+                                        final Coordinate startCoordinate,
+                                        final Coordinate endCoordinate);
+
+
     public abstract boolean canReap();
+
+    public boolean isEmpty() {
+        return pieceTypeSymbol.isEmpty();
+    }
+
+    public boolean isSameCamp(final Camp camp) {
+        return this.camp.equals(camp);
+    }
 
     public boolean isSameTypeWith(final PieceTypeSymbol otherType) {
         return this.pieceTypeSymbol.equals(otherType);
     }
 
+    public Camp camp() {
+        return camp;
+    }
+
     public double score() {
         return score;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PieceType pieceType = (PieceType) o;
-        return Double.compare(pieceType.score, score) == 0 && pieceTypeSymbol == pieceType.pieceTypeSymbol;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pieceTypeSymbol, score);
     }
 }

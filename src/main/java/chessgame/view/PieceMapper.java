@@ -1,12 +1,10 @@
 package chessgame.view;
 
 import chessgame.domain.piece.Camp;
-import chessgame.domain.piece.Piece;
 import chessgame.domain.piecetype.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class PieceMapper {
 
@@ -21,20 +19,18 @@ public class PieceMapper {
         mapper.put(Pawn.class, "p");
     }
 
-    public static String getTarget(final Piece square) {
-        Optional<PieceType> piece = square.piece();
+    public static String getTarget(final PieceType piece) {
         String message = mapper.keySet()
                                .stream()
-                               .filter(pieceType ->
-                                       piece.isPresent() && pieceType.isInstance(piece.get()))
+                               .filter(pieceType -> pieceType.isInstance(piece))
                                .map(mapper::get)
                                .findAny()
                                .orElse(".");
-        return makeUpperCaseIfCampIsBlack(square, message);
+        return makeUpperCaseIfCampIsBlack(piece, message);
     }
 
-    private static String makeUpperCaseIfCampIsBlack(final Piece piece, final String message) {
-        if (piece.isExist() && piece.isSameCamp(Camp.BLACK)) {
+    private static String makeUpperCaseIfCampIsBlack(final PieceType piece, final String message) {
+        if (piece.isEmpty() && piece.isSameCamp(Camp.BLACK)) {
             return message.toUpperCase();
         }
         return message;

@@ -2,6 +2,7 @@ package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
+import chessgame.domain.piece.Camp;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class Rook extends PieceType {
             POSITIVE_INFINITY, NEGATIVE_INFINITY, ZERO, MINUS_ZERO
     );
 
-    public Rook() {
-        super(PieceTypeSymbol.ROOK, SCORE);
+    public Rook(final Camp camp) {
+        super(PieceTypeSymbol.ROOK, camp, SCORE);
     }
 
     @Override
@@ -24,6 +25,14 @@ public class Rook extends PieceType {
             return false;
         }
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
+    }
+
+    @Override
+    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+        if (isSameCamp(otherCamp)) {
+            return false;
+        }
+        return isReachableByRule(startCoordinate, endCoordinate);
     }
 
     @Override

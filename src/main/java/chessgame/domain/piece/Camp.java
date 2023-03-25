@@ -3,7 +3,8 @@ package chessgame.domain.piece;
 public enum Camp {
 
     WHITE,
-    BLACK;
+    BLACK,
+    EMPTY;
 
     public Camp change() {
         if (this.equals(WHITE)) {

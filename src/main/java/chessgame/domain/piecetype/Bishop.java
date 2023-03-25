@@ -2,6 +2,7 @@ package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
+import chessgame.domain.piece.Camp;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class Bishop extends PieceType {
     private static final double SCORE = 3;
     private static final List<Inclination> availableInclinations = List.of(ONE, MINUS_ONE);
 
-    public Bishop() {
-        super(PieceTypeSymbol.BISHOP, SCORE);
+    public Bishop(final Camp camp) {
+        super(PieceTypeSymbol.BISHOP, camp, SCORE);
     }
 
     @Override
@@ -23,6 +24,14 @@ public class Bishop extends PieceType {
             return false;
         }
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
+    }
+
+    @Override
+    public boolean isCatchable(final Camp otherCamp, final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        if (isSameCamp(otherCamp)) {
+            return false;
+        }
+        return isReachableByRule(startCoordinate, endCoordinate);
     }
 
     @Override

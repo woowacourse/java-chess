@@ -1,6 +1,7 @@
 package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.piece.Camp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,7 +17,7 @@ class RookTest {
     void isReachableByRuleLeft(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
-        Rook rook = new Rook();
+        Rook rook = new Rook(Camp.WHITE);
 
         assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -27,7 +28,7 @@ class RookTest {
     void isReachableByRuleRight(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
-        Rook rook = new Rook();
+        Rook rook = new Rook(Camp.WHITE);
 
         assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -38,7 +39,7 @@ class RookTest {
     void isReachableByRuleUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
-        Rook rook = new Rook();
+        Rook rook = new Rook(Camp.WHITE);
 
         assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -49,7 +50,7 @@ class RookTest {
     void isReachableByRuleDown(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
-        Rook rook = new Rook();
+        Rook rook = new Rook(Camp.WHITE);
 
         assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -60,7 +61,7 @@ class RookTest {
     void isReachableByRuleCantDiagonal(int row, int col) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(6, 3);
         Coordinate endCoordinate = Coordinate.fromOnBoard(row, col);
-        Rook rook = new Rook();
+        Rook rook = new Rook(Camp.WHITE);
 
         assertThat(rook.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }

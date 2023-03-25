@@ -2,7 +2,7 @@ package chessgame.view;
 
 import chessgame.domain.chessgame.Board;
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piece.Piece;
+import chessgame.domain.piecetype.PieceType;
 
 import java.util.Map;
 
@@ -27,10 +27,10 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private StringBuilder makeRank(final Map<Coordinate, Piece> board, final int rank) {
+    private StringBuilder makeRank(final Map<Coordinate, PieceType> board, final int rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int file = 0; file < BOARD_FILE; file++) {
-            Piece piece = board.get(Coordinate.fromOnBoard(rank, file));
+            PieceType piece = board.get(Coordinate.fromOnBoard(rank, file));
             stringBuilder.append(PieceMapper.getTarget(piece));
         }
         stringBuilder.append(System.lineSeparator());

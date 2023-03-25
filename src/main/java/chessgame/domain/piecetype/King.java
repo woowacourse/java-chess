@@ -2,6 +2,7 @@ package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
+import chessgame.domain.piece.Camp;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class King extends PieceType {
             POSITIVE_INFINITY, NEGATIVE_INFINITY, ONE, MINUS_ONE, ZERO, MINUS_ZERO
     );
 
-    public King() {
-        super(PieceTypeSymbol.KING, SCORE);
+    public King(final Camp camp) {
+        super(PieceTypeSymbol.KING, camp, SCORE);
     }
 
     @Override
@@ -29,6 +30,14 @@ public class King extends PieceType {
 
     private static boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
+    }
+
+    @Override
+    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+        if (isSameCamp(otherCamp)) {
+            return false;
+        }
+        return isReachableByRule(startCoordinate, endCoordinate);
     }
 
     @Override

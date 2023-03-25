@@ -1,6 +1,7 @@
 package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.piece.Camp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,7 +16,7 @@ class QueenTest {
     void isReachableByRuleRightUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(distance, distance);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -26,7 +27,7 @@ class QueenTest {
     void isReachableByRuleLeftUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(7, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, distance);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -37,7 +38,7 @@ class QueenTest {
     void isReachableByRuleLeftBottom(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(7, 7);
         Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, 7 - distance);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -48,7 +49,7 @@ class QueenTest {
     void isReachableByRuleRightBottom(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(7, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, distance);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -59,7 +60,7 @@ class QueenTest {
     void isReachableByRuleLeft(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -70,7 +71,7 @@ class QueenTest {
     void isReachableByRuleRight(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -81,7 +82,7 @@ class QueenTest {
     void isReachableByRuleUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -92,7 +93,7 @@ class QueenTest {
     void isReachableByRuleDown(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
-        Queen queen = new Queen();
+        Queen queen = new Queen(Camp.WHITE);
 
         assertThat(queen.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }

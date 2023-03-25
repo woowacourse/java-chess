@@ -2,6 +2,7 @@ package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
+import chessgame.domain.piece.Camp;
 
 import java.util.List;
 
@@ -11,6 +12,10 @@ import static chessgame.domain.coordinate.Inclination.ONE;
 public class BlackPawn extends Pawn {
 
     private static final List<Inclination> availableInclinationsWhenCatch = List.of(ONE, MINUS_ONE);
+
+    public BlackPawn() {
+        super(Camp.BLACK);
+    }
 
     @Override
     public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {

@@ -2,6 +2,7 @@ package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
+import chessgame.domain.piece.Camp;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class Knight extends PieceType {
             Coordinate.fromOnBoard(2, 1)
     );
 
-    public Knight() {
-        super(PieceTypeSymbol.KNIGHT, SCORE);
+    public Knight(final Camp camp) {
+        super(PieceTypeSymbol.KNIGHT, camp, SCORE);
     }
 
     @Override
@@ -29,6 +30,14 @@ public class Knight extends PieceType {
         }
         return availableInclinations.contains(startCoordinate.getInclination(endCoordinate)) &&
                 availableCoordinateDifferences.contains(startCoordinate.minusWithAbsoluteValue(endCoordinate));
+    }
+
+    @Override
+    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+        if (isSameCamp(otherCamp)) {
+            return false;
+        }
+        return isReachableByRule(startCoordinate, endCoordinate);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.piece.Camp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,7 +17,7 @@ class KnightTest {
     void isReachableByRule(int row, int col) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(4, 4);
         Coordinate endCoordinate = Coordinate.fromOnBoard(row, col);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -27,7 +28,7 @@ class KnightTest {
     void isReachableByRuleCantLeft(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
@@ -38,7 +39,7 @@ class KnightTest {
     void isReachableByRuleCantRight(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
@@ -49,7 +50,7 @@ class KnightTest {
     void isReachableByRuleCantUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
@@ -60,7 +61,7 @@ class KnightTest {
     void isReachableByRuleCantDown(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
-        Knight knight = new Knight();
+        Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }

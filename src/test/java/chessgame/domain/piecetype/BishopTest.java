@@ -1,6 +1,7 @@
 package chessgame.domain.piecetype;
 
 import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.piece.Camp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,7 +16,7 @@ class BishopTest {
     void isReachableByRuleRightUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(distance, distance);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -26,7 +27,7 @@ class BishopTest {
     void isReachableByRuleLeftUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(7, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, distance);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -37,7 +38,7 @@ class BishopTest {
     void isReachableByRuleLeftBottom(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(7, 7);
         Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, 7 - distance);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -48,7 +49,7 @@ class BishopTest {
     void isReachableByRuleRightBottom(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(7, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(7 - distance, distance);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
@@ -61,7 +62,7 @@ class BishopTest {
     void isReachableByRuleLeft(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
@@ -72,7 +73,7 @@ class BishopTest {
     void isReachableByRuleRight(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
@@ -83,7 +84,7 @@ class BishopTest {
     void isReachableByRuleUp(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
@@ -94,7 +95,7 @@ class BishopTest {
     void isReachableByRuleDown(int distance) {
         Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
         Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
-        Bishop bishop = new Bishop();
+        Bishop bishop = new Bishop(Camp.WHITE);
 
         assertThat(bishop.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }

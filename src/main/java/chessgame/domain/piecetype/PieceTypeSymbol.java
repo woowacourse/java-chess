@@ -7,5 +7,10 @@ public enum PieceTypeSymbol {
     ROOK,
     BISHOP,
     KNIGHT,
-    PAWN
+    PAWN,
+    EMPTY;
+
+    public boolean isEmpty() {
+        return this.equals(EMPTY);
+    }
 }
