@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import domain.PieceToScoreConverter;
 import domain.PieceToStringConverter;
@@ -55,11 +54,20 @@ public class ChessService {
             validateTurn(currentSquare);
 
             chessBoard.move(currentSquare, targetSquare);
-
+            checkKingDead();
             currentCamp = currentCamp.fetchOppositeCamp();
             return;
         }
         throw new IllegalStateException("게임을 먼저 실행해주세요.");
+    }
+
+    private void checkKingDead() {
+        if (chessBoard.getBoard()
+            .values()
+            .stream()
+            .filter(piece -> PieceToScoreConverter.convert(piece) == 0 && !piece.isEmpty()).count() != 2) {
+            ongoing = false;
+        }
     }
 
     private Square convertToSquare(String squareName) {
