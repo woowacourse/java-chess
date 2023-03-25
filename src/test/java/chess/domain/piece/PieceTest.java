@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.NONE;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -55,5 +57,13 @@ public class PieceTest {
         Piece piece = new PieceImplement(WHITE);
 
         assertThat(piece.getScore()).isEqualTo(Score.valueOf(3));
+    }
+
+    @DisplayName("없는 색깔로 기물 생성시 예외가 발생한다")
+    @Test
+    void colorNone_throws() {
+        assertThatThrownBy(() -> new PieceImplement(NONE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("없는 색깔입니다.");
     }
 }

@@ -9,8 +9,15 @@ public class Piece {
     protected final PieceType type;
 
     public Piece(Color color, PieceType type) {
+        validateColor(color);
         this.color = color;
         this.type = type;
+    }
+
+    private void validateColor(Color color) {
+        if (color == Color.NONE) {
+            throw new IllegalArgumentException("없는 색깔입니다.");
+        }
     }
 
     public boolean canMove(Move move, Piece targetPiece) {
