@@ -13,20 +13,21 @@ import static chess.domain.piece.Role.*;
 
 public class Board {
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
+    private static final int DEFAULT_KING_COUNT = 2;
 
     private final Map<Square, Piece> board;
-    private Side turn;
+    private Team turn;
 
     Board(final Map<Square, Piece> board) {
         this.board = board;
-        this.turn = Side.from(FIRST_TURN_COLOR);
+        this.turn = Team.from(FIRST_TURN_COLOR);
     }
 
     public Piece findPiece(final File file, final Rank rank) {
         Square piece = Square.of(file, rank);
         if (!board.containsKey(piece)) {
-            Side blankSide = Side.from(Color.EMPTY);
-            return BLANK.create(blankSide);
+            Team blankTeam = Team.from(Color.EMPTY);
+            return BLANK.create(blankTeam);
         }
         return board.get(piece);
     }
@@ -113,22 +114,22 @@ public class Board {
         return squares;
     }
 
-    public double calculateScore(final Side side) {
-        double pawnScore = calculatePawnScore(side);
-        double majorScore = calculateMajorScore(side);
+    public double calculateScore(final Team team) {
+        double pawnScore = calculatePawnScore(team);
+        double majorScore = calculateMajorScore(team);
 
         return majorScore + pawnScore;
     }
 
-    private double calculatePawnScore(final Side side) {
+    private double calculatePawnScore(final Team team) {
         return Arrays.stream(File.values())
-                .mapToDouble(file -> calculatePawnScoreOfFile(side, file))
+                .mapToDouble(file -> calculatePawnScoreOfFile(team, file))
                 .sum();
     }
 
-    private long calculatePawnScoreOfFile(final Side side, final File file) {
+    private long calculatePawnScoreOfFile(final Team team, final File file) {
         long score = board.entrySet().stream()
-                .filter(entry -> entry.getValue().isSameSide(side))
+                .filter(entry -> entry.getValue().isSameSide(team))
                 .filter(entry -> entry.getValue().hasSameRole(PAWN) || entry.getValue().hasSameRole(INITIAL_PAWN))
                 .map(Map.Entry::getKey)
                 .filter(square -> square.hasSameFile(file))
@@ -139,11 +140,25 @@ public class Board {
         return score;
     }
 
-    private double calculateMajorScore(final Side side) {
+    private double calculateMajorScore(final Team team) {
         return board.values().stream()
-                .filter(piece -> piece.isSameSide(side))
+                .filter(piece -> piece.isSameSide(team))
                 .filter(piece -> !piece.hasSameRole(PAWN) && !piece.hasSameRole(INITIAL_PAWN))
                 .mapToDouble(Piece::getScore)
                 .sum();
+    }
+
+    public boolean isEnd() {
+        return board.values().stream()
+                .filter(piece -> piece.hasSameRole(KING))
+                .count() < DEFAULT_KING_COUNT;
+    }
+
+    public Team findWinner() {
+        return board.values().stream()
+                .filter(piece -> piece.hasSameRole(KING))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("킹이 존재하지 않습니다."))
+                .getSide();
     }
 }
