@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Color;
 import chess.domain.Position;
 
 public abstract class State {
@@ -17,4 +18,6 @@ public abstract class State {
     public abstract State start();
 
     public abstract State end();
+
+    public abstract double calculateScore(Color color);
 }

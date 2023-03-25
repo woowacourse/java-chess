@@ -42,6 +42,10 @@ public enum Column {
         return Integer.compare(this.index, column.index);
     }
 
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(index);

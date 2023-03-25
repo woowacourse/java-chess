@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Color;
 import chess.domain.Position;
 
 public final class Ready extends State {
@@ -26,5 +27,10 @@ public final class Ready extends State {
     @Override
     public State end() {
         return new End(board);
+    }
+
+    @Override
+    public double calculateScore(Color color) {
+        throw new UnsupportedOperationException("start 명령어를 먼저 입력해 주세요");
     }
 }

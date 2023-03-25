@@ -38,7 +38,11 @@ public abstract class Piece {
         return this.pieceType != type;
     }
 
-    public final PieceType getPieceType() {
+    public final double getScore() {
+        return pieceType.getScore();
+    }
+
+    public PieceType getPieceType() {
         return pieceType;
     }
 }
