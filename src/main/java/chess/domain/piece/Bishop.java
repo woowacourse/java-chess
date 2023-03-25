@@ -7,8 +7,7 @@ public class Bishop extends Piece {
     public Bishop(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
-    
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.BISHOP;
