@@ -9,9 +9,8 @@ import static chess.controller.Command.START;
 import static chess.controller.Command.STATUS;
 import static chess.controller.Command.validateMoveCommandForm;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
 import chess.domain.board.BoardResult;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -19,21 +18,21 @@ import java.util.List;
 public class ChessGameController {
 
     public void run() {
-        final Board board = BoardInitializer.initialize();
+        final ChessGameService chessGameService = new ChessGameService();
         OutputView.printGameStart();
 
-        Command command = getInitCommand(board);
+        Command command = getInitCommand(chessGameService);
         while (command != END) {
-            command = start(board);
+            command = start(chessGameService);
         }
 
-        OutputView.printResult(BoardResult.create(board.getBoard()));
+        OutputView.printResult(BoardResult.create(chessGameService.board()));
     }
 
-    private Command getInitCommand(final Board board) {
+    private Command getInitCommand(final ChessGameService chessGameService) {
         final Command command = createInitCommand();
         if (command == START) {
-            OutputView.printBoard(board.getBoard());
+            OutputView.printBoard(chessGameService.board());
         }
 
         return command;
@@ -48,38 +47,38 @@ public class ChessGameController {
         }
     }
 
-    private Command start(final Board board) {
+    private Command start(final ChessGameService chessGameService) {
         try {
             final List<String> commands = InputView.readMoveCommand();
             validateMoveCommandForm(commands);
 
-            return play(board, commands);
+            return play(chessGameService, commands);
         } catch (IllegalArgumentException e) {
             OutputView.printException(e.getMessage());
-            return start(board);
+            return start(chessGameService);
         }
     }
 
-    private Command play(final Board board, final List<String> commands) {
+    private Command play(final ChessGameService chessGameService, final List<String> commands) {
         Command command = Command.createPlayingCommand(commands.get(MOVE_COMMAND_INDEX));
         if (command == STATUS) {
-            OutputView.printScore(board.whiteScore(), board.blackScore());
+            OutputView.printScore(chessGameService.whiteScore(), chessGameService.blackScore());
         }
         if (command == MOVE) {
-            command = move(board, commands);
+            command = move(chessGameService, commands);
         }
 
         return command;
     }
 
-    private Command move(final Board board, final List<String> commands) {
+    private Command move(final ChessGameService chessGameService, final List<String> commands) {
         final String source = commands.get(MOVE_SOURCE_INDEX);
         final String target = commands.get(MOVE_TARGET_INDEX);
 
-        board.move(source, target);
-        OutputView.printBoard(board.getBoard());
+        chessGameService.move(source, target);
+        OutputView.printBoard(chessGameService.board());
 
-        if (board.isKingDead()) {
+        if (chessGameService.isKingDead()) {
             return END;
         }
         return MOVE;

@@ -6,6 +6,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -20,6 +21,10 @@ public class Board {
 
     public static Board from(final Map<Position, Piece> board) {
         return new Board(board);
+    }
+
+    public static Board create() {
+        return new Board(new HashMap<>());
     }
 
     public void move(final String source, final String target) {
@@ -60,28 +65,14 @@ public class Board {
         board.put(targetPosition, piece);
         board.put(sourcePosition, Empty.getInstance());
         turn = turn.nextTurn();
-
     }
 
-    public boolean isKingDead() {
-        return isKingDead(Color.WHITE) || isKingDead(Color.BLACK);
-    }
-
-    private boolean isKingDead(final Color color) {
+    public boolean isKingDead(final Color color) {
         return !board.containsValue(King.from(color));
     }
 
-    public double whiteScore() {
-        return calculateScore(Color.WHITE);
-    }
-
-    public double blackScore() {
-        return calculateScore(Color.BLACK);
-    }
-
-    public double calculateScore(final Color color) {
-        final BoardResult boardResult = BoardResult.create(getBoard());
-        return boardResult.calculatePoints(color);
+    public void clear() {
+        board.clear();
     }
 
     public Map<Position, Piece> getBoard() {
