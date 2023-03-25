@@ -30,11 +30,9 @@ public class PrintGameResult implements CommandStatus {
 
     @Override
     public CommandStatus start() {
-        Pieces pieces = new Pieces();
-        Board board = new Board(pieces);
-        JdbcChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
+        Board board = new Board(new Pieces());
         Long gameId = chessGameDao.saveNewChessGame();
-        for (Piece piece : pieces.getPieces()) {
+        for (Piece piece : board.getPieces()) {
             chessGameDao.savePiece(piece, gameId);
         }
         return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);

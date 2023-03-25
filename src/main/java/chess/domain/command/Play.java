@@ -33,6 +33,9 @@ public class Play implements CommandStatus {
     public CommandStatus start() {
         Board board = new Board(new Pieces());
         Long gameId = chessGameDao.saveNewChessGame();
+        for (Piece piece : board.getPieces()) {
+            chessGameDao.savePiece(piece, gameId);
+        }
         return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
     }
 
