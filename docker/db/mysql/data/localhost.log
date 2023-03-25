@@ -1,0 +1,360 @@
+/usr/sbin/mysqld, Version: 8.0.28 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2023-03-25T07:37:33.847807Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:33.851388Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:33.853173Z	   42 Query	/* ApplicationName=IntelliJ IDEA 2022.3.1 */ select database()
+2023-03-25T07:37:33.858888Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:33.863281Z	   42 Query	SELECT @@session.transaction_isolation
+2023-03-25T07:37:55.997181Z	   74 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:37:56.011663Z	   74 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:37:56.032091Z	   74 Query	SET character_set_results = NULL
+2023-03-25T07:37:56.034718Z	   74 Query	SET autocommit=1
+2023-03-25T07:37:56.115077Z	   74 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:37:56.124671Z	   74 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:37:56.144657Z	   74 Quit	
+2023-03-25T07:37:56.286128Z	   75 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:37:56.289781Z	   75 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:37:56.293439Z	   75 Query	SET character_set_results = NULL
+2023-03-25T07:37:56.296292Z	   75 Query	SET autocommit=1
+2023-03-25T07:37:56.300998Z	   75 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:37:56.305572Z	   75 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:37:56.317881Z	   75 Quit	
+2023-03-25T07:38:11.370113Z	   76 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:11.378547Z	   76 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:11.394651Z	   76 Query	SET character_set_results = NULL
+2023-03-25T07:38:11.398700Z	   76 Query	SET autocommit=1
+2023-03-25T07:38:11.466826Z	   76 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:11.474822Z	   76 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:38:11.488742Z	   76 Quit	
+2023-03-25T07:38:11.589883Z	   77 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:11.593002Z	   77 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:11.596139Z	   77 Query	SET character_set_results = NULL
+2023-03-25T07:38:11.598778Z	   77 Query	SET autocommit=1
+2023-03-25T07:38:11.600961Z	   77 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:11.603344Z	   77 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:38:11.609010Z	   77 Quit	
+2023-03-25T07:38:11.680200Z	   78 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:11.685703Z	   78 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:11.688901Z	   78 Query	SET character_set_results = NULL
+2023-03-25T07:38:11.690881Z	   78 Query	SET autocommit=1
+2023-03-25T07:38:11.693130Z	   78 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:11.695190Z	   78 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:38:11.701139Z	   78 Quit	
+2023-03-25T07:38:11.762869Z	   79 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:11.768180Z	   79 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:11.772166Z	   79 Query	SET character_set_results = NULL
+2023-03-25T07:38:11.773963Z	   79 Query	SET autocommit=1
+2023-03-25T07:38:11.776272Z	   79 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:11.777983Z	   79 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:38:11.782919Z	   79 Quit	
+2023-03-25T07:38:11.816883Z	   80 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:11.819610Z	   80 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:11.823416Z	   80 Query	SET character_set_results = NULL
+2023-03-25T07:38:11.827239Z	   80 Query	SET autocommit=1
+2023-03-25T07:38:11.829879Z	   80 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:38:11.877695Z	   80 Quit	
+2023-03-25T07:38:11.971554Z	   81 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:11.973866Z	   81 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:11.976637Z	   81 Query	SET character_set_results = NULL
+2023-03-25T07:38:11.978698Z	   81 Query	SET autocommit=1
+2023-03-25T07:38:11.984443Z	   81 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:11.987061Z	   81 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:38:11.989452Z	   81 Quit	
+2023-03-25T07:38:12.044128Z	   82 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.047887Z	   82 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.050817Z	   82 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.052853Z	   82 Query	SET autocommit=1
+2023-03-25T07:38:12.056235Z	   82 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:12.058394Z	   82 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:38:12.062773Z	   82 Quit	
+2023-03-25T07:38:12.102708Z	   83 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.105666Z	   83 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.108455Z	   83 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.110586Z	   83 Query	SET autocommit=1
+2023-03-25T07:38:12.117870Z	   83 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:38:12.124321Z	   83 Quit	
+2023-03-25T07:38:12.220083Z	   84 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.222882Z	   84 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.225292Z	   84 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.228243Z	   84 Query	SET autocommit=1
+2023-03-25T07:38:12.230688Z	   84 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:12.233474Z	   84 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:38:12.239809Z	   84 Quit	
+2023-03-25T07:38:12.283252Z	   85 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.285988Z	   85 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.289251Z	   85 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.290751Z	   85 Query	SET autocommit=1
+2023-03-25T07:38:12.293539Z	   85 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:12.295508Z	   85 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:38:12.300027Z	   85 Quit	
+2023-03-25T07:38:12.331790Z	   86 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.335770Z	   86 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.338558Z	   86 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.340191Z	   86 Query	SET autocommit=1
+2023-03-25T07:38:12.342185Z	   86 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:12.344620Z	   86 Query	UPDATE piece SET `rank` = 3, `file` = 'a' WHERE `rank` = 1 AND `file` = 'a'
+2023-03-25T07:38:12.349466Z	   86 Quit	
+2023-03-25T07:38:12.377067Z	   87 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.379633Z	   87 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.381704Z	   87 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.383119Z	   87 Query	SET autocommit=1
+2023-03-25T07:38:12.385166Z	   87 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:38:12.390531Z	   87 Quit	
+2023-03-25T07:38:12.422613Z	   88 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:38:12.425121Z	   88 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:38:12.427832Z	   88 Query	SET character_set_results = NULL
+2023-03-25T07:38:12.429561Z	   88 Query	SET autocommit=1
+2023-03-25T07:38:12.432159Z	   88 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:38:12.438129Z	   88 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:38:12.441124Z	   88 Quit	
+2023-03-25T07:42:07.019372Z	   89 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.032659Z	   89 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.046916Z	   89 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.049611Z	   89 Query	SET autocommit=1
+2023-03-25T07:42:07.134426Z	   89 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.146398Z	   89 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:42:07.165875Z	   89 Quit	
+2023-03-25T07:42:07.302307Z	   90 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.310126Z	   90 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.313756Z	   90 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.317090Z	   90 Query	SET autocommit=1
+2023-03-25T07:42:07.319945Z	   90 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.323120Z	   90 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:42:07.331304Z	   90 Quit	
+2023-03-25T07:42:07.402052Z	   91 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.405957Z	   91 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.411128Z	   91 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.413013Z	   91 Query	SET autocommit=1
+2023-03-25T07:42:07.415609Z	   91 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.419280Z	   91 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:42:07.424538Z	   91 Quit	
+2023-03-25T07:42:07.481847Z	   92 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.485343Z	   92 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.488804Z	   92 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.490432Z	   92 Query	SET autocommit=1
+2023-03-25T07:42:07.492422Z	   92 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.494025Z	   92 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:42:07.499437Z	   92 Quit	
+2023-03-25T07:42:07.534495Z	   93 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.537347Z	   93 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.540682Z	   93 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.542475Z	   93 Query	SET autocommit=1
+2023-03-25T07:42:07.545998Z	   93 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:42:07.587912Z	   93 Quit	
+2023-03-25T07:42:07.682477Z	   94 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.685189Z	   94 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.689698Z	   94 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.691426Z	   94 Query	SET autocommit=1
+2023-03-25T07:42:07.698077Z	   94 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.700202Z	   94 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:42:07.702804Z	   94 Quit	
+2023-03-25T07:42:07.759046Z	   95 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.763048Z	   95 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.766138Z	   95 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.768238Z	   95 Query	SET autocommit=1
+2023-03-25T07:42:07.772023Z	   95 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.775938Z	   95 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:42:07.782162Z	   95 Quit	
+2023-03-25T07:42:07.824344Z	   96 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.827017Z	   96 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.829629Z	   96 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.831845Z	   96 Query	SET autocommit=1
+2023-03-25T07:42:07.843078Z	   96 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:42:07.848883Z	   96 Quit	
+2023-03-25T07:42:07.949890Z	   97 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:07.952725Z	   97 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:07.956027Z	   97 Query	SET character_set_results = NULL
+2023-03-25T07:42:07.959424Z	   97 Query	SET autocommit=1
+2023-03-25T07:42:07.961805Z	   97 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:07.964609Z	   97 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:42:07.969212Z	   97 Quit	
+2023-03-25T07:42:08.013849Z	   98 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:08.016571Z	   98 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:08.020106Z	   98 Query	SET character_set_results = NULL
+2023-03-25T07:42:08.021939Z	   98 Query	SET autocommit=1
+2023-03-25T07:42:08.024989Z	   98 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:08.026829Z	   98 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:42:08.030983Z	   98 Quit	
+2023-03-25T07:42:08.064617Z	   99 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:08.070492Z	   99 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:08.075209Z	   99 Query	SET character_set_results = NULL
+2023-03-25T07:42:08.077175Z	   99 Query	SET autocommit=1
+2023-03-25T07:42:08.079599Z	   99 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:08.082715Z	   99 Query	UPDATE piece SET `rank` = 3, `file` = 'a' WHERE `rank` = 1 AND `file` = 'a'
+2023-03-25T07:42:08.112468Z	   99 Quit	
+2023-03-25T07:42:08.145623Z	  100 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:08.148400Z	  100 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:08.151647Z	  100 Query	SET character_set_results = NULL
+2023-03-25T07:42:08.153560Z	  100 Query	SET autocommit=1
+2023-03-25T07:42:08.155675Z	  100 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:42:08.160317Z	  100 Quit	
+2023-03-25T07:42:08.202069Z	  101 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:42:08.205294Z	  101 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:42:08.207830Z	  101 Query	SET character_set_results = NULL
+2023-03-25T07:42:08.209427Z	  101 Query	SET autocommit=1
+2023-03-25T07:42:08.212288Z	  101 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:42:08.218720Z	  101 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:42:08.221608Z	  101 Quit	
+2023-03-25T07:43:05.700800Z	  102 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:43:05.712548Z	  102 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:43:05.728715Z	  102 Query	SET character_set_results = NULL
+2023-03-25T07:43:05.737710Z	  102 Query	SET autocommit=1
+2023-03-25T07:43:05.823675Z	  102 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:43:05.829520Z	  102 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:43:05.842915Z	  102 Quit	
+2023-03-25T07:43:05.933170Z	  103 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:43:05.939787Z	  103 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:43:05.943013Z	  103 Query	SET character_set_results = NULL
+2023-03-25T07:43:05.944662Z	  103 Query	SET autocommit=1
+2023-03-25T07:43:05.947345Z	  103 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:43:06.027858Z	  103 Quit	
+2023-03-25T07:43:06.225855Z	  104 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:43:06.229692Z	  104 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:43:06.232916Z	  104 Query	SET character_set_results = NULL
+2023-03-25T07:43:06.234463Z	  104 Query	SET autocommit=1
+2023-03-25T07:43:06.237529Z	  104 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:43:06.239971Z	  104 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:43:06.247110Z	  104 Quit	
+2023-03-25T07:56:42.213194Z	  105 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:56:42.224347Z	  105 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:56:42.240469Z	  105 Query	SET character_set_results = NULL
+2023-03-25T07:56:42.242938Z	  105 Query	SET autocommit=1
+2023-03-25T07:56:42.324545Z	  105 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:56:42.331684Z	  105 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:56:42.346754Z	  105 Quit	
+2023-03-25T07:56:42.459920Z	  106 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:56:42.462884Z	  106 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:56:42.467000Z	  106 Query	SET character_set_results = NULL
+2023-03-25T07:56:42.469008Z	  106 Query	SET autocommit=1
+2023-03-25T07:56:42.472408Z	  106 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:56:42.475044Z	  106 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:56:42.481729Z	  106 Quit	
+2023-03-25T07:56:52.962236Z	  107 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:56:52.976277Z	  107 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:56:52.993319Z	  107 Query	SET character_set_results = NULL
+2023-03-25T07:56:52.995885Z	  107 Query	SET autocommit=1
+2023-03-25T07:56:53.076289Z	  107 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:56:53.084060Z	  107 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:56:53.097691Z	  107 Quit	
+2023-03-25T07:56:53.205124Z	  108 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:56:53.208386Z	  108 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:56:53.211650Z	  108 Query	SET character_set_results = NULL
+2023-03-25T07:56:53.214719Z	  108 Query	SET autocommit=1
+2023-03-25T07:56:53.218485Z	  108 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:56:53.271067Z	  108 Quit	
+2023-03-25T07:56:53.486623Z	  109 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:56:53.489374Z	  109 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:56:53.492793Z	  109 Query	SET character_set_results = NULL
+2023-03-25T07:56:53.494567Z	  109 Query	SET autocommit=1
+2023-03-25T07:56:53.497006Z	  109 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:56:53.499331Z	  109 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:56:53.507139Z	  109 Quit	
+2023-03-25T07:59:41.941465Z	  110 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:59:41.952361Z	  110 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:59:41.969779Z	  110 Query	SET character_set_results = NULL
+2023-03-25T07:59:41.973380Z	  110 Query	SET autocommit=1
+2023-03-25T07:59:42.045731Z	  110 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:59:42.052595Z	  110 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T07:59:42.070120Z	  110 Quit	
+2023-03-25T07:59:42.164774Z	  111 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:59:42.167721Z	  111 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:59:42.170969Z	  111 Query	SET character_set_results = NULL
+2023-03-25T07:59:42.173260Z	  111 Query	SET autocommit=1
+2023-03-25T07:59:42.176712Z	  111 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T07:59:42.214200Z	  111 Quit	
+2023-03-25T07:59:42.347414Z	  112 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T07:59:42.350670Z	  112 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T07:59:42.353354Z	  112 Query	SET character_set_results = NULL
+2023-03-25T07:59:42.355712Z	  112 Query	SET autocommit=1
+2023-03-25T07:59:42.358152Z	  112 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:59:42.359794Z	  112 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T07:59:42.366726Z	  112 Quit	
+2023-03-25T08:00:40.783666Z	  113 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:40.789978Z	  113 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:40.804171Z	  113 Query	SET character_set_results = NULL
+2023-03-25T08:00:40.806200Z	  113 Query	SET autocommit=1
+2023-03-25T08:00:40.880222Z	  113 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:40.888484Z	  113 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T08:00:40.902142Z	  113 Quit	
+2023-03-25T08:00:41.022249Z	  114 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.029158Z	  114 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.031969Z	  114 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.034111Z	  114 Query	SET autocommit=1
+2023-03-25T08:00:41.043790Z	  114 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.046796Z	  114 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T08:00:41.054164Z	  114 Quit	
+2023-03-25T08:00:41.123750Z	  115 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.128455Z	  115 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.134171Z	  115 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.136980Z	  115 Query	SET autocommit=1
+2023-03-25T08:00:41.139661Z	  115 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.142473Z	  115 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T08:00:41.147546Z	  115 Quit	
+2023-03-25T08:00:41.213232Z	  116 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.217375Z	  116 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.220594Z	  116 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.222157Z	  116 Query	SET autocommit=1
+2023-03-25T08:00:41.227442Z	  116 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.229143Z	  116 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T08:00:41.234410Z	  116 Quit	
+2023-03-25T08:00:41.271164Z	  117 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.273419Z	  117 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.278213Z	  117 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.284073Z	  117 Query	SET autocommit=1
+2023-03-25T08:00:41.286990Z	  117 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T08:00:41.328611Z	  117 Quit	
+2023-03-25T08:00:41.421252Z	  118 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.423817Z	  118 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.426947Z	  118 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.428731Z	  118 Query	SET autocommit=1
+2023-03-25T08:00:41.430735Z	  118 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.433542Z	  118 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T08:00:41.436099Z	  118 Quit	
+2023-03-25T08:00:41.486389Z	  119 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.490262Z	  119 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.492535Z	  119 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.494675Z	  119 Query	SET autocommit=1
+2023-03-25T08:00:41.497666Z	  119 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.500325Z	  119 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T08:00:41.506534Z	  119 Quit	
+2023-03-25T08:00:41.543316Z	  120 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.546020Z	  120 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.548443Z	  120 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.550653Z	  120 Query	SET autocommit=1
+2023-03-25T08:00:41.559918Z	  120 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T08:00:41.566696Z	  120 Quit	
+2023-03-25T08:00:41.606102Z	  121 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.608463Z	  121 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.610504Z	  121 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.614164Z	  121 Query	SET autocommit=1
+2023-03-25T08:00:41.616410Z	  121 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.618937Z	  121 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T08:00:41.623678Z	  121 Quit	
+2023-03-25T08:00:41.658135Z	  122 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.660441Z	  122 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.663277Z	  122 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.664806Z	  122 Query	SET autocommit=1
+2023-03-25T08:00:41.667722Z	  122 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.670403Z	  122 Query	INSERT INTO piece(`rank`, `file`, shape, color) VALUES(1, 'a', 'PAWN', 'WHITE')
+2023-03-25T08:00:41.674453Z	  122 Quit	
+2023-03-25T08:00:41.713206Z	  123 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.717409Z	  123 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.719729Z	  123 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.721170Z	  123 Query	SET autocommit=1
+2023-03-25T08:00:41.722987Z	  123 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.725516Z	  123 Query	UPDATE piece SET `rank` = 3, `file` = 'a' WHERE `rank` = 1 AND `file` = 'a'
+2023-03-25T08:00:41.730340Z	  123 Quit	
+2023-03-25T08:00:41.759889Z	  124 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.762272Z	  124 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.764981Z	  124 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.767023Z	  124 Query	SET autocommit=1
+2023-03-25T08:00:41.769280Z	  124 Query	SELECT * FROM piece WHERE color = 'WHITE'
+2023-03-25T08:00:41.773797Z	  124 Quit	
+2023-03-25T08:00:41.889718Z	  125 Connect	root@172.19.0.1 on chess using SSL/TLS
+2023-03-25T08:00:41.895908Z	  125 Query	/* mysql-connector-java-8.0.28 (Revision: 7ff2161da3899f379fb3171b6538b191b1c5c7e2) */SELECT  @@session.auto_increment_increment AS auto_increment_increment, @@character_set_client AS character_set_client, @@character_set_connection AS character_set_connection, @@character_set_results AS character_set_results, @@character_set_server AS character_set_server, @@collation_server AS collation_server, @@collation_connection AS collation_connection, @@init_connect AS init_connect, @@interactive_timeout AS interactive_timeout, @@license AS license, @@lower_case_table_names AS lower_case_table_names, @@max_allowed_packet AS max_allowed_packet, @@net_write_timeout AS net_write_timeout, @@performance_schema AS performance_schema, @@sql_mode AS sql_mode, @@system_time_zone AS system_time_zone, @@time_zone AS time_zone, @@transaction_isolation AS transaction_isolation, @@wait_timeout AS wait_timeout
+2023-03-25T08:00:41.900458Z	  125 Query	SET character_set_results = NULL
+2023-03-25T08:00:41.903963Z	  125 Query	SET autocommit=1
+2023-03-25T08:00:41.906885Z	  125 Query	SELECT @@session.transaction_read_only
+2023-03-25T08:00:41.912535Z	  125 Query	DELETE FROM piece WHERE `rank` = 1 AND `file` = 'a' AND color = 'WHITE'
+2023-03-25T08:00:41.915605Z	  125 Quit	
