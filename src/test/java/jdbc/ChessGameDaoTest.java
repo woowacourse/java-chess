@@ -7,8 +7,7 @@ import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
 import domain.piece.Color;
-import jdbc.ChessGameDao;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +20,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessGameDaoTest {
 
+    private String boardAutoIncrementId;
     private final ChessGameDao chessGameDao = new ChessGameDao();
+
+    @BeforeEach
+    void beforeEach() {
+        boardAutoIncrementId = ChessBoardAutoIncrementIdGetter.getId();
+    }
 
     @Test
     @DisplayName("Connection 을 확인한다.")
@@ -86,10 +91,12 @@ public class ChessGameDaoTest {
         rollBack(saveId);
     }
 
-    private void rollBackAutoIncrement(String id) {
+    private void rollBackAutoIncrement(String gameId) {
         try (Connection connection = chessGameDao.getConnection()) {
-            PreparedStatement rollBackId = connection.prepareStatement("ALTER TABLE chess_game auto_increment = " + id);
-            rollBackId.executeUpdate();
+            PreparedStatement rollBackGameId = connection.prepareStatement("ALTER TABLE chess_game auto_increment = " + gameId);
+            PreparedStatement rollBackBoardId = connection.prepareStatement("ALTER TABLE chess_board auto_increment = " + boardAutoIncrementId);
+            rollBackGameId.executeUpdate();
+            rollBackBoardId.executeUpdate();
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
