@@ -77,6 +77,14 @@ public class Point {
         return (source.rankDistance(target) == distance && source.fileDistance(target) == -distance);
     }
 
+    public File getFile(){
+        return file;
+    }
+
+    public Rank getRank(){
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -94,9 +102,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point{" +
-                "rank=" + file +
-                ", file=" + rank +
-                '}';
+        return file +" "+ rank;
     }
 }
