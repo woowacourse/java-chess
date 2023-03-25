@@ -12,36 +12,31 @@ public class InputView {
     private static final int TARGET_POSITION_INDEX = 2;
     private final Scanner SCANNER = new Scanner(System.in);
 
-    public String requestUserCommandInGame() {
+    public List<String> requestUserCommandInGame() {
         String userCommand = SCANNER.nextLine();
 
         if (userCommand.isEmpty()) {
             throw new IllegalArgumentException("아무 값도 입력되지 않았습니다.");
         }
-
-        List<String> userCommands = Arrays.asList(userCommand.split(INPUT_COMMAND_DELIMITER));
-        if (GameCommand.from(userCommands.get(COMMAND_INDEX)).equals(GameCommand.END)) {
-            return userCommand;
-        }
-
-        if (userCommands.size() == 1 && userCommands.get(0).equals("status")) {
-            return userCommand;
-        }
-        if (userCommands.size() != MOVE_COMMAND_INPUT_CORRECT_SIZE) {
-            throw new IllegalArgumentException("이동 입력은 move b2 b3 형식으로 입력해주세요.");
-        }
-
-        if (!GameCommand.from(userCommands.get(COMMAND_INDEX)).equals(GameCommand.MOVE)) {
-            throw new IllegalArgumentException("이동 입력은 move b2 b3 형식으로 입력해주세요.");
-        }
-
-        return userCommands.get(SOURCE_POSITION_INDEX) + userCommands.get(TARGET_POSITION_INDEX);
+        return Arrays.asList(userCommand.split(INPUT_COMMAND_DELIMITER));
     }
 
     public void requestStartCommand() {
-        if (GameCommand.from(SCANNER.nextLine()).equals(GameCommand.START)) {
+        List<String> userInputs = Arrays.asList(SCANNER.nextLine());
+        if (GameCommand.from(userInputs).equals(GameCommand.START)) {
             return;
         }
         throw new IllegalArgumentException("게임 시작 명령어를 입력해주세요.");
+    }
+
+    public GameCommand requestLoadGameOrNewGame() {
+        List<String> userInputs = Arrays.asList(SCANNER.nextLine());
+        GameCommand gameCommand = GameCommand.from(userInputs);
+
+        if (gameCommand == GameCommand.NEW || gameCommand == GameCommand.LOAD) {
+            return gameCommand;
+        }
+
+        throw new IllegalArgumentException("새로운 게임 시작 : 'new'아니면 기존 게임 불러오기 : 'load'를 입력해주세요.");
     }
 }
