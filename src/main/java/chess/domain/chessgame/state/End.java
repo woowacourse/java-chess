@@ -17,6 +17,16 @@ public class End implements GameState {
     }
 
     @Override
+    public boolean isKingDead() {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public GameState close() {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
     public GameState end() {
         return new End();
     }

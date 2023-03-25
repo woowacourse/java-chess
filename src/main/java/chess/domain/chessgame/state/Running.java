@@ -31,6 +31,16 @@ public class Running implements GameState {
     }
 
     @Override
+    public boolean isKingDead() {
+        return chessBoard.isKingDead();
+    }
+
+    @Override
+    public GameState close() {
+        return new Ready();
+    }
+
+    @Override
     public GameState end() {
         return new End();
     }

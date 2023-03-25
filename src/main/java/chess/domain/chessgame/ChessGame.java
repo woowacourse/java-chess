@@ -15,6 +15,9 @@ public final class ChessGame {
 
     public void move(final SquareCoordinate from, final SquareCoordinate to) {
         gameState.move(from, to);
+        if (gameState.isKingDead()) {
+            gameState = gameState.close();
+        }
     }
 
     public void end() {

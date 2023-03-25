@@ -17,6 +17,16 @@ public class Ready implements GameState {
     }
 
     @Override
+    public boolean isKingDead() {
+        throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public GameState close() {
+        throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
     public GameState end() {
         return new End();
     }

@@ -9,6 +9,10 @@ public interface GameState {
 
     void move(final SquareCoordinate from, final SquareCoordinate to);
 
+    boolean isKingDead();
+
+    GameState close();
+
     GameState end();
 
     boolean isNotEnd();

@@ -3,6 +3,7 @@ package chess.domain.chessboard;
 import chess.domain.piece.Empty;
 import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
+import chess.domain.piece.state.King;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,15 @@ public final class ChessBoard {
                 .collect(Collectors.toUnmodifiableList());
 
         departure.validateRoute(routeSquares);
+    }
+
+    public boolean isKingDead() {
+        int kingCount = (int) this.squares.values()
+                .stream()
+                .filter(squareState -> squareState.getClass().equals(King.class))
+                .count();
+
+        return kingCount < 2;
     }
 
     public List<SquareState> getSquares() {
