@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ChessGameDaoTest {
 
     private static final String CHESS_GAME_ID = Integer.toString(Integer.MAX_VALUE);
-    private final ChessGameChessGameDao chessGameDao = new ChessGameChessGameDao();
+    private final ChessGameDao chessGameDao = new ChessGameDao();
 
     @Test
     @DisplayName("Connection 을 확인한다.")
@@ -48,6 +48,22 @@ public class ChessGameDaoTest {
         boolean equals = chessBoardEquals(insertionChessGame, chessGame);
 
         assertThat(chessGame.getColorTurn()).isEqualTo(Color.BLACK);
+        assertThat(equals).isTrue();
+    }
+
+    @Test
+    @DisplayName("Chess Game 을 update 한다.")
+    void updateGame() {
+        String saveId = chessGameDao.save(new ChessGame(ChessBoard.generate()));
+        ChessGame chessGame = chessGameDao.select(saveId);
+        MovePosition movePosition = MovePosition.of(PositionFactory.createPosition("a2"), PositionFactory.createPosition("a4"));
+        chessGame.move(movePosition);
+
+        chessGameDao.update(saveId, chessGame);
+        ChessGame chessGameAfterUpdate = chessGameDao.select(saveId);
+        boolean equals = chessBoardEquals(chessGame, chessGameAfterUpdate);
+
+        assertThat(chessGameAfterUpdate.getColorTurn()).isEqualTo(chessGame.getColorTurn());
         assertThat(equals).isTrue();
     }
 

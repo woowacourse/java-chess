@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class ChessGameChessGameDao implements JdbcChessGameDao {
+public class ChessGameDao implements JdbcChessGameDao {
 
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
@@ -178,8 +178,54 @@ public class ChessGameChessGameDao implements JdbcChessGameDao {
     }
 
     @Override
-    public void update(String id, ChessGame chessGame) {
+    public void update(String id, ChessGame chessGameAfterProcess) {
+        ChessGame chessGameBySelect = select(id);
+        String q1 = "UPDATE chess_game SET turn = ? WHERE id = ?";
+        String q2 = "UPDATE chess_board SET piece_type = ?, piece_color = ? WHERE x = ? and y = ? and game_id = ?";
 
+        try (Connection connection = getConnection()){
+            PreparedStatement p1 = connection.prepareStatement(q1);
+            PreparedStatement p2 = connection.prepareStatement(q2);
+            p1.setString(1, chessGameAfterProcess.getColorTurn().name());
+            p1.setString(2, id);
+            p1.executeUpdate();
+            p2.setString(5, id);
+
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
+                    Position findPosition = Position.of(x, y);
+                    Square square1 = new Square(chessGameBySelect.getChessBoard()
+                            .findSquare(findPosition)
+                            .getSquareStatus());
+                    Square square2 = new Square(chessGameAfterProcess.getChessBoard()
+                            .findSquare(findPosition)
+                            .getSquareStatus());
+
+                    if (isNotSameSquare(square1, square2)) {
+                        p2.setString(1, square2.getType().name());
+                        p2.setString(2, square2.getColor().name());
+                        p2.setString(3, Integer.toString(x));
+                        p2.setString(4, Integer.toString(y));
+                        p2.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    private boolean isNotSameSquare(Square insertionSquareStatus, Square squareStatus) {
+        return isNotSameColor(insertionSquareStatus, squareStatus)
+                || isNotSameType(insertionSquareStatus, squareStatus);
+    }
+
+    private boolean isNotSameType(Square insertionSquareStatus, Square squareStatus) {
+        return insertionSquareStatus.isNotSameType(squareStatus.getType());
+    }
+
+    private boolean isNotSameColor(Square insertionSquareStatus, Square squareStatus) {
+        return insertionSquareStatus.isNotSameColor(squareStatus.getColor());
     }
 
     @Override
