@@ -79,7 +79,9 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void update(final Long id, final Color color, final PieceType pieceType) {
-
+        final String query = "update piece set color = ?, type = ? where id = ?";
+        final List<String> parameters = List.of(color.name(), pieceType.name(), String.valueOf(id));
+        jdbcTemplate.executeUpdate(query, parameters);
     }
 
     @Override

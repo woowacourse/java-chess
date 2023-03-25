@@ -1,6 +1,10 @@
 package chess.dao;
 
+import static chess.domain.board.File.A;
+import static chess.domain.board.Rank.TWO;
+import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.WHITE_PAWN;
 import static chess.util.SquareFixture.A_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.dto.ChessGameDto;
 import chess.dao.dto.PieceDto;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +70,7 @@ class PieceDaoImplTest {
             final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
             pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
 
-            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), File.A, Rank.TWO);
+            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
 
             assertThat(piece).isNotEmpty();
         }
@@ -77,9 +79,28 @@ class PieceDaoImplTest {
         void 파일과_랭크에_해당하는_기물이_존재하지_않으면_기물을_조회하지_않는다() {
             final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
 
-            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), File.A, Rank.TWO);
+            final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
 
             assertThat(piece).isEmpty();
         }
+    }
+
+    @Test
+    void 기물의_색과_타입을_수정한다() {
+        final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+        pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
+        final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+
+        pieceDao.update(piece.get().getId(), BLACK, KING);
+
+        final Optional<PieceDto> updatePiece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+        assertAll(
+                () -> assertThat(updatePiece).isNotEmpty(),
+                () -> assertThat(updatePiece.get().getId()).isEqualTo(piece.get().getId()),
+                () -> assertThat(updatePiece.get().getColor()).isEqualTo("BLACK"),
+                () -> assertThat(updatePiece.get().getType()).isEqualTo("KING"),
+                () -> assertThat(updatePiece.get().getFile()).isEqualTo("A"),
+                () -> assertThat(updatePiece.get().getRank()).isEqualTo("TWO")
+        );
     }
 }
