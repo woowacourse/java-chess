@@ -9,8 +9,10 @@ import chess.domain.game.command.StartCommand;
 import chess.domain.game.command.StatusQuery;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.infra.thread.ThreadPool;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.request.Request;
 import chess.view.resposne.PieceResponse;
 import chess.view.resposne.StatusResponse;
 import java.util.List;
@@ -38,14 +40,14 @@ public class ChessController {
     public void run() {
         output.printInitialMessage();
         while (true) {
-            List<String> commands = input.inputGameCommand();
-            executeCommandAndHandleError(commands);
+            Request request = input.inputGameCommand();
+            executeCommandAndHandleError(request);
         }
     }
 
-    private void executeCommandAndHandleError(List<String> commands) {
+    private void executeCommandAndHandleError(Request request) {
         try {
-            executeCommand(commands);
+            executeCommand(request.commands());
         } catch (Exception e) {
             output.printError(e);
         }
