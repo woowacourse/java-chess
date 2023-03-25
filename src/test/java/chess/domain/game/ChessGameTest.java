@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import chess.domain.board.BoardFactory;
+import chess.domain.game.state.GameState;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +22,7 @@ class ChessGameTest {
 
         @Test
         void 시작_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
 
             assertThatIllegalStateException()
@@ -31,7 +32,7 @@ class ChessGameTest {
 
         @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
             chessGame.end();
 
@@ -46,7 +47,7 @@ class ChessGameTest {
 
         @Test
         void 초기_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
 
             assertThatIllegalStateException()
                     .isThrownBy(() -> chessGame.calculateScore(WHITE))
@@ -55,7 +56,7 @@ class ChessGameTest {
 
         @Test
         void 시작_상태라면_점수를_계산한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
 
             assertThat(chessGame.calculateScore(WHITE)).isEqualTo(38);
@@ -63,7 +64,7 @@ class ChessGameTest {
 
         @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
             chessGame.end();
 
@@ -78,7 +79,7 @@ class ChessGameTest {
 
         @Test
         void 초기_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
 
             assertThatIllegalStateException()
                     .isThrownBy(() -> chessGame.move(B_TWO, B_THREE))
@@ -87,7 +88,7 @@ class ChessGameTest {
 
         @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
             chessGame.end();
 
@@ -102,7 +103,7 @@ class ChessGameTest {
 
         @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
             chessGame.end();
 
@@ -114,7 +115,7 @@ class ChessGameTest {
 
     @Test
     void 색의_점수를_계산한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create());
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
 
         assertThat(chessGame.calculateScoreOfColor(WHITE)).isEqualTo(38);
     }
@@ -124,14 +125,14 @@ class ChessGameTest {
 
         @Test
         void 초기_상태라면_true_반환한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
 
             assertThat(chessGame.isRunning()).isTrue();
         }
 
         @Test
         void 시작_상태라면_true_반환한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
 
             assertThat(chessGame.isRunning()).isTrue();
@@ -139,7 +140,7 @@ class ChessGameTest {
 
         @Test
         void 종료_상태라면_false_반환한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create());
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
             chessGame.start();
             chessGame.end();
 

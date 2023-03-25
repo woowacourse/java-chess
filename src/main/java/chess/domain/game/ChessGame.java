@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import static chess.domain.game.state.GameState.INIT;
 import static java.lang.String.format;
 
 import chess.domain.board.Board;
@@ -12,11 +11,13 @@ import chess.domain.piece.Piece;
 
 public class ChessGame {
 
+    private Long id = 0L;
     private final Board board;
-    private GameState gameState = INIT;
+    private GameState gameState;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final Board board, final GameState gameState) {
         this.board = board;
+        this.gameState = gameState;
     }
 
     public void start() {
@@ -77,5 +78,9 @@ public class ChessGame {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
     }
 }

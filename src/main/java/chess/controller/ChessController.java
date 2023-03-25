@@ -1,7 +1,10 @@
 package chess.controller;
 
-import chess.controller.command.ExecuteCommand;
+import chess.controller.command.chess.ChessGameCommand;
+import chess.controller.command.execute.ExecuteCommand;
 import chess.domain.game.ChessGame;
+import chess.service.ChessGameService;
+import chess.service.PieceService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -10,21 +13,35 @@ public class ChessController {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
-    private final ChessGame chessGame;
+    private final ChessGameService chessGameService;
+    private final PieceService pieceService;
 
-    public ChessController(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public ChessController(final ChessGameService chessGameService, final PieceService pieceService) {
+        this.chessGameService = chessGameService;
+        this.pieceService = pieceService;
     }
 
     public void run() {
-        outputView.printStartMessage();
+        outputView.printStartMessage(chessGameService.findAllChessGameId());
+        final ChessGame chessGame = readChessGame();
         while (chessGame.isRunning()) {
-            playChessGame();
-            checkKing();
+            playChessGame(chessGame);
+            checkKing(chessGame);
         }
     }
 
-    private void playChessGame() {
+    private ChessGame readChessGame() {
+        while (true) {
+            try {
+                final ChessGameCommand chessGameCommand = inputView.readChessGameCommand();
+                return chessGameCommand.execute(chessGameService, pieceService, outputView);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private void playChessGame(final ChessGame chessGame) {
         try {
             final ExecuteCommand executeCommand = inputView.readExecuteCommand();
             executeCommand.execute(chessGame, outputView);
@@ -33,7 +50,7 @@ public class ChessController {
         }
     }
 
-    private void checkKing() {
+    private void checkKing(final ChessGame chessGame) {
         if (chessGame.isKingDied()) {
             chessGame.done();
             outputView.printDoneMessage();

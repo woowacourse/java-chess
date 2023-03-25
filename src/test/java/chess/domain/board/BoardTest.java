@@ -48,6 +48,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.GameState;
 import chess.domain.piece.Piece;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -160,7 +161,7 @@ class BoardTest {
         @Test
         void 해당_턴의_왕이_죽으면_true_반환한다() {
             final Map<Square, Piece> board = Map.of(E_EIGHT, new Piece(BLACK, KING));
-            final ChessGame chessGame = new ChessGame(new Board(board));
+            final ChessGame chessGame = new ChessGame(new Board(board), GameState.INIT);
             chessGame.start();
 
             assertThat(chessGame.isKingDied()).isTrue();
@@ -169,7 +170,7 @@ class BoardTest {
         @Test
         void 해당_턴의_왕이_살아있으면_false_반환한다() {
             final Map<Square, Piece> board = Map.of(E_ONE, new Piece(WHITE, KING));
-            final ChessGame chessGame = new ChessGame(new Board(board));
+            final ChessGame chessGame = new ChessGame(new Board(board), GameState.INIT);
             chessGame.start();
 
             assertThat(chessGame.isKingDied()).isFalse();
