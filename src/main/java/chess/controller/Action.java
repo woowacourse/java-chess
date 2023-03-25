@@ -1,17 +1,17 @@
 package chess.controller;
 
-import java.util.List;
+import chess.view.request.Request;
 import java.util.function.Consumer;
 
 public class Action {
 
-    private final Consumer<List<String>> action;
+    private final Consumer<Request> action;
 
-    public Action(Consumer<List<String>> action) {
+    public Action(Consumer<Request> action) {
         this.action = action;
     }
 
-    public void execute(List<String> args) {
+    public void execute(Request args) {
         action.accept(args);
     }
 }

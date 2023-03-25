@@ -3,6 +3,8 @@ package chess.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.game.state.MovingState;
+import chess.domain.game.state.StartState;
 import chess.infra.connection.JdbcTemplate;
 import chess.infra.connection.TestConnectionPool;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,7 +25,7 @@ class ChessGameDaoTest {
     @Order(1)
     void save를_통해_새로운_보드를_생성할_수_있다() {
         //expect
-        assertDoesNotThrow(() -> chessGameDao.save("test1"));
+        assertDoesNotThrow(() -> chessGameDao.save("test1", StartState.getInstance()));
     }
 
     @Test
@@ -33,6 +35,7 @@ class ChessGameDaoTest {
         assertThat(chessGameDao.findBoardIdsByUserId("test1")).isNotEmpty();
     }
 
+
     @Test
     @Order(3)
     void delete() {
@@ -41,5 +44,16 @@ class ChessGameDaoTest {
 
         //expect
         assertDoesNotThrow(() -> chessGameDao.delete(boardId));
+    }
+
+    @Test
+    @Order(4)
+    void update() {
+        //given
+        int boardId = chessGameDao.save("test2", StartState.getInstance());
+        chessGameDao.update(boardId, MovingState.getInstance());
+
+        //expect
+        assertThat(chessGameDao.findStatusByBoardId(boardId)).isEqualTo("test");
     }
 }
