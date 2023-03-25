@@ -1,11 +1,11 @@
 package dao;
 
-import domain.board.ChessGame;
+import domain.piece.move.Coordinate;
 
 public interface ChessGameDao {
 
-    void create(final ChessGame chessGame);
-    ChessGame read();
-    void update(final ChessGame chessGame);
+    void create(final Coordinate start, final Coordinate end);
+    Coordinate read();
+    void update(final Coordinate start, final Coordinate end);
     void delete();
 }
