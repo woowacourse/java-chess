@@ -50,4 +50,8 @@ public abstract class Piece {
     public boolean isTypeOf(PieceType pieceType) {
         return this.type == pieceType;
     }
+
+    public PieceType type() {
+        return type;
+    }
 }

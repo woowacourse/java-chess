@@ -13,9 +13,13 @@ public final class ChessGame {
     private final Board board;
     private Color turn;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final Board board, final Color turn) {
         this.board = board;
-        this.turn = WHITE;
+        this.turn = turn;
+    }
+
+    public ChessGame(final Board board) {
+        this(board, WHITE);
     }
 
     public boolean isEnd() {
@@ -37,5 +41,9 @@ public final class ChessGame {
 
     public Map<Color, Double> calculateScore() {
         return board.calculateScore();
+    }
+
+    public Color turn() {
+        return turn;
     }
 }

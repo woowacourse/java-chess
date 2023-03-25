@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class DBTest {
 
-    private final DB db = new DB();
+    private final DBChessGameDao db = new DBChessGameDao();
 
     @Test
     public void test_getConnection() {

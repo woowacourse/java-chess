@@ -16,24 +16,32 @@ import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+import dao.ChessGameDao;
+import dao.DBChessGameDao;
 import java.util.List;
 import java.util.Map;
 
 public final class ChessController {
     private final Map<ChessGameCommand, ChessGameAction> commandMapper;
-    private final ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
 
     public ChessController() {
-        this.chessGame = new ChessGame(new BoardFactory().createInitialBoard());
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::movePiece,
                 STATUS, this::showStatus,
                 END, this::end
         );
+        this.chessGameDao = new DBChessGameDao();
     }
 
     public void run() {
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame == null) {
+            chessGame = new ChessGame(new BoardFactory().createInitialBoard());
+            chessGameDao.save(chessGame);
+        }
+
         OutputView.printStartMessage();
         ChessGameCommand command = EMPTY;
 
@@ -59,26 +67,32 @@ public final class ChessController {
     }
 
     private void start(final List<String> commands) {
+        ChessGame chessGame = chessGameDao.select();
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
         OutputView.printBoard(chessGame.board());
     }
 
     private void movePiece(final List<String> commands) {
+        ChessGame chessGame = chessGameDao.select();
         validateCommandsSize(commands, MOVE_COMMAND_SIZE);
         Position from = searchPosition(commands.get(FROM_INDEX));
         Position to = searchPosition(commands.get(TO_INDEX));
 
         chessGame.move(from, to);
         OutputView.printBoard(chessGame.board());
+
+        chessGameDao.update(chessGame);
     }
 
     private void showStatus(final List<String> commands) {
+        ChessGame chessGame = chessGameDao.select();
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         OutputView.printScore(chessGame.calculateScore());
     }
 
     private void end(final List<String> commands) {
+        ChessGame chessGame = chessGameDao.select();
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         if (!chessGame.isEnd()) {
