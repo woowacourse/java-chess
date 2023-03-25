@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.piece.Piece;
 import chess.domain.square.Color;
-import chess.domain.square.Side;
+import chess.domain.square.Team;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,10 +62,18 @@ public class OutputView {
         System.err.println(message);
     }
 
-    public void printStatuses(final Map<Side, Double> status) {
+    public void printStatuses(final Map<Team, Double> status) {
         String statuses = status.entrySet().stream()
                 .map(entry -> String.format(entry.getKey() + ": " + entry.getValue() + "점") + System.lineSeparator())
                 .collect(Collectors.joining());
         System.out.println(statuses);
+    }
+
+    public void showWinner(final Team team) {
+        if (team.isEmpty()) {
+            System.out.println("우승자가 없습니다.");
+            return;
+        }
+        System.out.println(team.getColor() + "가 이겼습니다.");
     }
 }
