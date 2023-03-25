@@ -10,7 +10,7 @@ public interface SquareState {
 
     boolean isSameTeam(final Piece piece);
 
-    boolean isSameTeam(final Team team);
+    boolean isDifferentTeam(final Team team);
 
     Team getTeam();
 

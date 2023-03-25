@@ -11,6 +11,13 @@ public enum Team {
         this.pawnDirection = pawnDirection;
     }
 
+    public Team getNextTurn() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
     public int getPawnDirection() {
         return pawnDirection;
     }

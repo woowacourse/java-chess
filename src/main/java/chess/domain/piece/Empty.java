@@ -19,8 +19,8 @@ public final class Empty implements SquareState {
     }
 
     @Override
-    public boolean isSameTeam(final Team team) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+    public boolean isDifferentTeam(final Team team) {
+        return true;
     }
 
     @Override

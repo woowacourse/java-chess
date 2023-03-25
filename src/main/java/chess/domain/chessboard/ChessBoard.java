@@ -16,8 +16,8 @@ public final class ChessBoard {
         this.squares = ChessFactory.create();
     }
 
-    public boolean isRightTeam(Team team, SquareCoordinate from) {
-        return squares.get(from).isSameTeam(team);
+    public boolean isDifferentTeam(Team team, SquareCoordinate from) {
+        return squares.get(from).isDifferentTeam(team);
     }
 
     public void move(final SquareCoordinate from, final SquareCoordinate to) {

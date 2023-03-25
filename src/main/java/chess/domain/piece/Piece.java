@@ -26,8 +26,8 @@ public abstract class Piece implements SquareState {
     }
 
     @Override
-    public boolean isSameTeam(final Team team) {
-        return this.team.equals(team);
+    public boolean isDifferentTeam(final Team team) {
+        return !this.team.equals(team);
     }
 
     @Override
