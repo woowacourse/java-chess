@@ -9,9 +9,11 @@ import domain.piece.PieceLocations;
 public class ChessBoard {
 
     private final PieceLocations pieceLocations;
+    private final ScoreCalculator scoreCalculator;
 
     public ChessBoard() {
         pieceLocations = new PieceLocations();
+        scoreCalculator = new ScoreCalculator();
     }
 
     public Piece find(Square square) {
@@ -79,4 +81,14 @@ public class ChessBoard {
     private boolean hasPiece(Square route) {
         return pieceLocations.hasPiece(route);
     }
+
+    public double getBlackScore() {
+        return scoreCalculator.sumBlackScore(pieceLocations.getPieceLocations());
+    }
+
+    public double getWhiteScore() {
+        return scoreCalculator.sumWhiteScore(pieceLocations.getPieceLocations());
+    }
+
+
 }

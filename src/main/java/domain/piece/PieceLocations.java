@@ -60,4 +60,8 @@ public class PieceLocations {
     public boolean hasPiece(Square square) {
         return pieceLocations.containsKey(square);
     }
+
+    public Map<Square, Piece> getPieceLocations() {
+        return pieceLocations;
+    }
 }
