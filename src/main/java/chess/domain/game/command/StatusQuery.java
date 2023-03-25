@@ -7,7 +7,6 @@ import java.util.Map;
 public class StatusQuery implements Query {
 
     @Override
-    @SuppressWarnings("unchecked")
     public Map<Color, Double> execute(ChessGame chessGame) {
         return chessGame.getStatus();
     }
