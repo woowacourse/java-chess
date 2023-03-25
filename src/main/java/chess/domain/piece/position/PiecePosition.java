@@ -45,11 +45,17 @@ public class PiecePosition {
     }
 
     public PiecePosition move(final Direction direction) {
-        return PiecePosition.of(rank.plus(direction.rankUnit()), file.plus(direction.fileUnit()));
+        return PiecePosition.of(
+                rank.plus(direction.rankUnit()),
+                file.plus(direction.fileUnit())
+        );
     }
 
     public Direction direction(final PiecePosition destination) {
-        return Direction.byInterval(rankInterval(destination), fileInterval(destination));
+        return Direction.byInterval(
+                rankInterval(destination),
+                fileInterval(destination)
+        );
     }
 
     @Override
@@ -67,5 +73,13 @@ public class PiecePosition {
 
     public int rankValue() {
         return rank.value();
+    }
+
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
     }
 }

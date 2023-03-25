@@ -2,15 +2,16 @@ package chess.view;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.movestrategy.BishopMovementStrategy;
+import chess.domain.piece.movestrategy.KingMovementStrategy;
+import chess.domain.piece.movestrategy.KnightMovementStrategy;
+import chess.domain.piece.movestrategy.QueenMovementStrategy;
+import chess.domain.piece.movestrategy.RookMovementStrategy;
+import chess.domain.piece.movestrategy.pawn.BlackPawnMovementStrategy;
+import chess.domain.piece.movestrategy.pawn.WhitePawnMovementStrategy;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.strategy.BishopMovementStrategy;
-import chess.domain.piece.strategy.KingMovementStrategy;
-import chess.domain.piece.strategy.KnightMovementStrategy;
-import chess.domain.piece.strategy.QueenMovementStrategy;
-import chess.domain.piece.strategy.RookMovementStrategy;
-import chess.domain.piece.strategy.pawn.PawnMovementStrategy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,14 +30,14 @@ public class OutputView {
 
     static {
         whitePieceIcons.put(RookMovementStrategy.class, "r");
-        whitePieceIcons.put(PawnMovementStrategy.class, "p");
+        whitePieceIcons.put(WhitePawnMovementStrategy.class, "p");
         whitePieceIcons.put(BishopMovementStrategy.class, "b");
         whitePieceIcons.put(KingMovementStrategy.class, "k");
         whitePieceIcons.put(KnightMovementStrategy.class, "n");
         whitePieceIcons.put(QueenMovementStrategy.class, "q");
 
         blackPieceIcons.put(RookMovementStrategy.class, "R");
-        blackPieceIcons.put(PawnMovementStrategy.class, "P");
+        blackPieceIcons.put(BlackPawnMovementStrategy.class, "P");
         blackPieceIcons.put(BishopMovementStrategy.class, "B");
         blackPieceIcons.put(KingMovementStrategy.class, "K");
         blackPieceIcons.put(KnightMovementStrategy.class, "N");
@@ -46,13 +47,14 @@ public class OutputView {
         colorIconMapping.put(Color.BLACK, blackPieceIcons);
     }
 
-    public static void showBoard(final List<Piece> chessBoard) {
+    public static void showBoard(final List<Piece> chessBoard, final Color color) {
         final Map<PiecePosition, Piece> pieceMap = chessBoard.stream()
                 .collect(Collectors.toMap(Piece::piecePosition, Function.identity()));
         for (int rank = Rank.MAX; rank >= Rank.MIN; rank--) {
             System.out.println(makeLineFormat(pieceMap, rank));
         }
         System.out.println();
+        System.out.println(color + " 색이 움직일 차례입니다.");
     }
 
     private static String makeLineFormat(final Map<PiecePosition, Piece> chessBoard, final int rank) {
@@ -69,7 +71,7 @@ public class OutputView {
 
     private static String convertCaseAccordingToColor(final Piece piece) {
         final Map<Class<?>, String> pieceIconMap = colorIconMapping.get(piece.color());
-        return pieceIconMap.get(piece.pieceMovement().getClass());
+        return pieceIconMap.get(piece.pieceMovementStrategy().getClass());
     }
 
     public static void printStartMessage() {
@@ -77,9 +79,36 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+        System.out.println("> 현재 점수 : status (게임 진행 중에만 볼 수 있습니다.)");
+        System.out.println("> 재시작 : restart gameId - 예. restart 1");
     }
 
     public static void error(final String message) {
+        System.out.println();
         System.out.println("[ERROR] " + message);
+    }
+
+    public static void printWinColor(final Color winColor) {
+        if (winColor == Color.NONE) {
+            System.out.println("왕이 죽지 않아서 무승부입니다.");
+            return;
+        }
+        System.out.println(winColor + " 이 이겼습니다.");
+    }
+
+    public static void printScore(final Map<Color, Double> colorScoreMapping) {
+        System.out.println(colorScoreMapping.entrySet()
+                .stream()
+                .map(it -> it.getKey() + "색: " + it.getValue() + "점")
+                .collect(Collectors.joining(System.lineSeparator())));
+    }
+
+    public static void startGame(final Long id) {
+        System.out.println(id + "번 게임을 시작합니다");
+        System.out.println();
+    }
+
+    public static void saveAndEnd() {
+        System.out.println("게임 저장 후 종료");
     }
 }

@@ -7,11 +7,11 @@ public class File {
     public static final char MIN = 'a';
     public static final char MAX = 'h';
 
-    private final char file;
+    private final char value;
 
-    private File(final char file) {
-        validate(file);
-        this.file = file;
+    private File(final char value) {
+        validate(value);
+        this.value = value;
     }
 
     private void validate(final char file) {
@@ -27,11 +27,11 @@ public class File {
     }
 
     public int interval(final File file) {
-        return file.file - this.file;
+        return file.value - this.value;
     }
 
     public File plus(final int amount) {
-        return File.from((char) (file + amount));
+        return File.from((char) (value + amount));
     }
 
     @Override
@@ -39,11 +39,15 @@ public class File {
         if (this == o) return true;
         if (!(o instanceof File)) return false;
         final File file1 = (File) o;
-        return file == file1.file;
+        return value == file1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file);
+        return Objects.hash(value);
+    }
+
+    public char value() {
+        return value;
     }
 }

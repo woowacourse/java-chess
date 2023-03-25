@@ -9,10 +9,10 @@ public class Turn {
     private static final Turn whiteTurn = new Turn(Color.WHITE);
     private static final Turn blackTurn = new Turn(Color.BLACK);
 
-    private final Color turn;
+    private final Color color;
 
-    public Turn(final Color turn) {
-        this.turn = turn;
+    public Turn(final Color color) {
+        this.color = color;
     }
 
     public Turn change() {
@@ -23,7 +23,14 @@ public class Turn {
     }
 
     public boolean misMatch(final Color color) {
-        return turn != color;
+        return this.color != color;
+    }
+
+    public Color enemyColor() {
+        if (equals(whiteTurn)) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
     }
 
     @Override
@@ -31,11 +38,15 @@ public class Turn {
         if (this == o) return true;
         if (!(o instanceof Turn)) return false;
         final Turn turn1 = (Turn) o;
-        return turn == turn1.turn;
+        return color == turn1.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(turn);
+        return Objects.hash(color);
+    }
+
+    public Color color() {
+        return color;
     }
 }
