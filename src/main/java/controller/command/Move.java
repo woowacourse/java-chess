@@ -22,6 +22,9 @@ public class Move extends GameCommand {
         try {
             validateCommandInputSize();
             executeMove();
+            if (chessBoard.isGameEnded()) {
+                return new GameEnd(chessBoard);
+            }
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }

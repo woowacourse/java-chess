@@ -138,4 +138,8 @@ public final class ChessBoard {
             whitePieces.put(entry.getKey(), entry.getValue());
         }
     }
+
+    public boolean isGameEnded() {
+        return chessBoard.values().stream().filter(Piece::isKing).count() != 2;
+    }
 }

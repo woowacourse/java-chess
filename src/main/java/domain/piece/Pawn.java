@@ -26,6 +26,11 @@ public abstract class Pawn extends Piece {
         return true;
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
     protected final boolean isMovableInitialRowPawn(Position start, Path path) {
         return isMovableNonInitialRowPawn(start, path) ||
                 path.size() == 2 && isForwardTwoStep(start, path.getEndPosition());
