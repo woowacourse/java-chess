@@ -6,7 +6,8 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
-import chess.dto.ScoreDto;
+import chess.dto.outputView.PrintTotalScoreDto;
+import chess.dto.outputView.PrintWinnerDto;
 
 import java.util.List;
 import java.util.Map;
@@ -94,8 +95,8 @@ public final class ChessGame {
         return piece;
     }
 
-    public ScoreDto calculateScore() {
-        return ScoreDto.from(calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
+    public PrintTotalScoreDto calculateScore() {
+        return PrintTotalScoreDto.from(calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
     }
 
     public double calculateScoreByTeam(final Team team) {
@@ -138,11 +139,12 @@ public final class ChessGame {
                 .count() < 2;
     }
 
-    public Team getWinner() {
-        return getEntryStream()
+    public PrintWinnerDto getWinner() {
+        final Team team = getEntryStream()
                 .map(m -> m.getValue().getTeam())
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("왕이 없을 수는 없습니다."));
+        return new PrintWinnerDto(team);
     }
 
     public Map<Position, Piece> getBoard() {

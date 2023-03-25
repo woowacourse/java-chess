@@ -1,20 +1,20 @@
-package chess.dto;
+package chess.dto.outputView;
 
 import chess.domain.piece.Team;
 
 import java.util.Map;
 import java.util.Optional;
 
-public final class ScoreDto {
+public final class PrintTotalScoreDto {
 
     private final Map<Team, Double> score;
 
-    public ScoreDto(final Map<Team, Double> score) {
+    public PrintTotalScoreDto(final Map<Team, Double> score) {
         this.score = score;
     }
 
-    public static ScoreDto from(final double whiteScore, final double blackScore) {
-        return new ScoreDto(Map.of(chess.domain.piece.Team.WHITE, whiteScore, chess.domain.piece.Team.BLACK, blackScore));
+    public static PrintTotalScoreDto from(final double whiteScore, final double blackScore) {
+        return new PrintTotalScoreDto(Map.of(chess.domain.piece.Team.WHITE, whiteScore, chess.domain.piece.Team.BLACK, blackScore));
     }
 
     public Optional<Team> whosWinner() {

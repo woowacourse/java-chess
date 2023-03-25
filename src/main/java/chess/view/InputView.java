@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.dto.inputView.ReadCommandDto;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,9 +19,10 @@ public final class InputView {
         return scanner.nextLine().trim();
     }
 
-    public List<String> readCommand() {
+    public ReadCommandDto readCommand() {
         final String input = readLine();
-        return Arrays.stream(input.split(" "))
+        final List<String> result = Arrays.stream(input.split(" "))
                 .collect(Collectors.toList());
+        return new ReadCommandDto(result);
     }
 }

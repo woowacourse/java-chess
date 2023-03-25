@@ -4,6 +4,11 @@ import chess.dao.ChessDao;
 import chess.dao.DbChessGameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameFactory;
+import chess.dto.inputView.ReadCommandDto;
+import chess.dto.outputView.PrintBoardDto;
+import chess.dto.outputView.PrintEndMessageDto;
+import chess.dto.outputView.PrintErrorMessageDto;
+import chess.dto.outputView.PrintInitialMessageDto;
 import chess.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -18,18 +23,17 @@ import static chess.controller.GameCommand.SOURCE_INDEX;
 import static chess.controller.GameCommand.START;
 import static chess.controller.GameCommand.STATUS;
 import static chess.controller.GameCommand.TARGET_INDEX;
-import static chess.controller.GameCommand.from;
 import static chess.controller.GameCommand.getPosition;
 
 public final class ChessController {
 
-    private final IOViewResolver viewResolver;
     private final Map<GameCommand, Function<List<String>, GameCommand>> gameStatusMap;
+    private final IOViewResolver ioViewResolver;
     private final ChessDao dao;
     private ChessGame chessGame;
 
-    public ChessController(final IOViewResolver viewResolver) {
-        this.viewResolver = viewResolver;
+    public ChessController(final IOViewResolver ioViewResolver) {
+        this.ioViewResolver = ioViewResolver;
         this.gameStatusMap = new EnumMap<>(GameCommand.class);
         this.dao = new DbChessGameDao();
         initGameStatusMap();
@@ -43,7 +47,7 @@ public final class ChessController {
     }
 
     public void process() {
-        viewResolver.printInitialMessage();
+        ioViewResolver.outputViewResolve(new PrintInitialMessageDto());
         GameCommand gameCommand = INIT;
         while (!gameCommand.isEnd()) {
             gameCommand = play(gameCommand);
@@ -52,11 +56,12 @@ public final class ChessController {
 
     private GameCommand play(final GameCommand gameCommand) {
         try {
-            final List<String> input = viewResolver.readCommand();
-            final GameCommand newGameCommand = from(input);
+            final ReadCommandDto readCommandDto = ioViewResolver.inputViewResolve(ReadCommandDto.class);
+            final List<String> input = readCommandDto.getResult();
+            final GameCommand newGameCommand = GameCommand.from(input);
             return gameStatusMap.get(newGameCommand).apply(input);
         } catch (IllegalArgumentException | IllegalStateException exception) {
-            viewResolver.printErrorMessage(exception.getMessage());
+            ioViewResolver.outputViewResolve(new PrintErrorMessageDto(exception.getMessage()));
             return gameCommand;
         }
     }
@@ -67,11 +72,11 @@ public final class ChessController {
         }
         if (dao.hasHistory()) {
             chessGame = dao.loadGame();
-            viewResolver.printBoard(chessGame.getBoard());
+            ioViewResolver.outputViewResolve(new PrintBoardDto(chessGame.getBoard()));
             return MOVE;
         }
         chessGame = ChessGameFactory.generate();
-        viewResolver.printBoard(chessGame.getBoard());
+        ioViewResolver.outputViewResolve(new PrintBoardDto(chessGame.getBoard()));
         return MOVE;
     }
 
@@ -82,22 +87,22 @@ public final class ChessController {
         chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
         if (chessGame.isKingDead()) {
             dao.delete();
-            viewResolver.printWinner(chessGame.getWinner());
+            ioViewResolver.outputViewResolve(chessGame.getWinner());
             return END;
         }
-        viewResolver.printBoard(chessGame.getBoard());
+        ioViewResolver.outputViewResolve(new PrintBoardDto(chessGame.getBoard()));
         return MOVE;
     }
 
     private GameCommand status(final List<String> strings) {
         dao.delete();
-        viewResolver.printTotalScore(chessGame.calculateScore());
-        viewResolver.printEndMessage();
+        ioViewResolver.outputViewResolve(chessGame.calculateScore());
+        ioViewResolver.outputViewResolve(new PrintEndMessageDto());
         return END;
     }
 
     private GameCommand end(final List<String> input) {
-        viewResolver.printEndMessage();
+        ioViewResolver.outputViewResolve(new PrintEndMessageDto());
         dao.save(chessGame);
         return END;
     }
