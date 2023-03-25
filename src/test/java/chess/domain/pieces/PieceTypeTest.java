@@ -57,7 +57,7 @@ class PieceTypeTest {
         List<Piece> pieces = List.of(new Rook(WHITE), new Rook(WHITE), new Knight(WHITE), new Knight(WHITE),
                 new Bishop(WHITE), new Bishop(WHITE), new Queen(WHITE), new King(WHITE));
 
-        assertThat(PieceType.calculateSingleColumn(pieces)).isEqualTo(new Score(30.0));
+        assertThat(PieceType.scoreOfOneColumnWithSingleTeam(pieces)).isEqualTo(new Score(30.0));
     }
 
     @Test
@@ -65,7 +65,7 @@ class PieceTypeTest {
     void 하나의_열에_폰이_하나면_1점으로_계산한다() {
         List<Piece> pieces = List.of(new BlackPawn());
 
-        assertThat(PieceType.calculateSingleColumn(pieces)).isEqualTo(new Score(1));
+        assertThat(PieceType.scoreOfOneColumnWithSingleTeam(pieces)).isEqualTo(new Score(1));
     }
 
     @Test
@@ -73,7 +73,7 @@ class PieceTypeTest {
     void 하나의_열에_폰이_2개_이상이면_각_0_5점으로_계산한다_case1() {
         List<Piece> pieces = List.of(new BlackPawn(), new BlackPawn());
 
-        assertThat(PieceType.calculateSingleColumn(pieces)).isEqualTo(new Score(1));
+        assertThat(PieceType.scoreOfOneColumnWithSingleTeam(pieces)).isEqualTo(new Score(1));
     }
 
     @Test
@@ -81,13 +81,13 @@ class PieceTypeTest {
     void 하나의_열에_폰이_2개_이상이면_각_0_5점으로_계산한다_case2() {
         List<Piece> pieces = List.of(new BlackPawn(), new BlackPawn(), new BlackPawn());
 
-        assertThat(PieceType.calculateSingleColumn(pieces)).isEqualTo(new Score(1.5));
+        assertThat(PieceType.scoreOfOneColumnWithSingleTeam(pieces)).isEqualTo(new Score(1.5));
     }
 
     @Test
     @DisplayName("Piece가 없으면 0점을 반환한다")
     void Piece가_없으면_0점을_반환한다() {
-        Score score = PieceType.calculateSingleColumn(List.of());
+        Score score = PieceType.scoreOfOneColumnWithSingleTeam(List.of());
 
         assertThat(score).isEqualTo(Score.ZERO);
     }

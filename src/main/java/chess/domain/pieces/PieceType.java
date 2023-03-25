@@ -37,9 +37,9 @@ public enum PieceType {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
 
-    public static Score calculateSingleColumn(final List<Piece> singleColumnPieces) {
-        Score totalScore = totalScore(singleColumnPieces);
-        long pawnCount = getPawnCount(singleColumnPieces);
+    public static Score scoreOfOneColumnWithSingleTeam(final List<Piece> piecesInOneColumnWithSingleTeam) {
+        Score totalScore = totalScore(piecesInOneColumnWithSingleTeam);
+        long pawnCount = getPawnCount(piecesInOneColumnWithSingleTeam);
 
         if (pawnCount >= CRITERIA_OF_CALCULATE_PAWN_SCORE) {
             return totalScore.subtract(SCORE_OF_OVERLAP_PAWNS * pawnCount);
@@ -47,16 +47,16 @@ public enum PieceType {
         return totalScore;
     }
 
-    private static Score totalScore(final List<Piece> singleColumnPieces) {
-        return singleColumnPieces.stream()
-                .map(piece1 -> from(piece1.getClass()))
+    private static Score totalScore(final List<Piece> piecesInOneColumnWithSingleTeam) {
+        return piecesInOneColumnWithSingleTeam.stream()
+                .map(piece -> from(piece.getClass()))
                 .map(PieceType::getScore)
                 .reduce(Score::add)
                 .orElse(Score.ZERO);
     }
 
-    private static long getPawnCount(final List<Piece> singleColumnPieces) {
-        return singleColumnPieces.stream()
+    private static long getPawnCount(final List<Piece> piecesInOneColumnWithSingleTeam) {
+        return piecesInOneColumnWithSingleTeam.stream()
                 .filter(piece1 -> from(piece1.getClass()).equals(PAWN))
                 .count();
     }
