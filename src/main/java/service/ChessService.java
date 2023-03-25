@@ -1,16 +1,16 @@
 package service;
 
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import domain.CommandRequest;
+import domain.PieceToScoreConverter;
 import domain.PieceToStringConverter;
 import domain.board.ChessBoard;
 import domain.board.File;
 import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
+import dto.CommandRequestDto;
 
 public class ChessService {
     private static final int FILE_INDEX = 0;
@@ -19,23 +19,15 @@ public class ChessService {
     private final ChessBoard chessBoard;
     private Camp currentCamp;
     private boolean ongoing;
-    private final Map<Command, Consumer<CommandRequest>> commandsAndExecutions = Map.of(
-        Command.START, ignored -> start(),
-        Command.END, ignored -> end(),
-        Command.MOVE, this::move);
 
     public ChessService() {
         this.chessBoard = new ChessBoard();
         this.currentCamp = Camp.WHITE;
         PieceToStringConverter.init();
+        PieceToScoreConverter.init();
     }
 
-    public void execute(CommandRequest commandRequest) {
-        Command command = Command.findRunCommand(commandRequest.getCommand());
-        commandsAndExecutions.get(command).accept(commandRequest);
-    }
-
-    private void start() {
+    public void start() {
         if (!ongoing) {
             chessBoard.initialize();
             ongoing = true;
@@ -44,14 +36,14 @@ public class ChessService {
         throw new IllegalStateException("이미 게임이 실행중입니다.");
     }
 
-    private void end() {
+    public void end() {
         ongoing = false;
     }
 
-    private void move(CommandRequest commandRequest) {
+    public void move(CommandRequestDto commandRequestDto) {
         if (ongoing) {
-            Square currentSquare = convertToSquare(commandRequest.getCurrentSquareName());
-            Square targetSquare = convertToSquare(commandRequest.getTargetSquareName());
+            Square currentSquare = convertToSquare(commandRequestDto.getCurrentSquareName());
+            Square targetSquare = convertToSquare(commandRequestDto.getTargetSquareName());
 
             validateTurn(currentSquare);
 
