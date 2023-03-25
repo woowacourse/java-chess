@@ -19,4 +19,9 @@ public final class InMemoryChessGameDao implements ChessGameDao {
     public void update(final ChessGame chessGame) {
         this.chessGame = chessGame;
     }
+
+    @Override
+    public void reset() {
+        this.chessGame = null;
+    }
 }

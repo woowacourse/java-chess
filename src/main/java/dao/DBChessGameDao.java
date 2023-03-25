@@ -136,11 +136,12 @@ public final class DBChessGameDao implements ChessGameDao {
 
     @Override
     public void update(final ChessGame chessGame) {
-        delete();
+        reset();
         save(chessGame);
     }
 
-    private void delete() {
+    @Override
+    public void reset() {
         final var query = "DELETE FROM chess_game;";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {

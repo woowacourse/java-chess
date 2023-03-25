@@ -9,4 +9,6 @@ public interface ChessGameDao {
     ChessGame select();
 
     void update(ChessGame chessGame);
+
+    void reset();
 }

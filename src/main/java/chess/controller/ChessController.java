@@ -97,9 +97,11 @@ public final class ChessController {
 
         if (!chessGame.isEnd()) {
             OutputView.printScore(chessGame.calculateScore());
+            return;
         }
 
         OutputView.printWinner(chessGame.winner());
+        chessGameDao.reset();
     }
 
     private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {
