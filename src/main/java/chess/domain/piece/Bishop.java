@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.BishopMovePattern;
-
-import java.util.Arrays;
+import chess.domain.movepattern.NormalMovePattern;
 
 public class Bishop extends LinearPiece {
 
     public Bishop(final Type type, final Side side) {
-        super(type, side, Arrays.asList(BishopMovePattern.values()));
+        super(type, side, NormalMovePattern.bishopMovePattern());
     }
 
     @Override

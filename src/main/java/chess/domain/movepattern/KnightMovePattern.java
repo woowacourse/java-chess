@@ -1,5 +1,9 @@
 package chess.domain.movepattern;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum KnightMovePattern implements MovePattern {
 
     UP_LEFT(-1, 2),
@@ -17,6 +21,10 @@ public enum KnightMovePattern implements MovePattern {
     KnightMovePattern(final int fileVector, final int rankVector) {
         this.fileVector = fileVector;
         this.rankVector = rankVector;
+    }
+
+    public static List<MovePattern> knightMovePattern() {
+        return Arrays.stream(values()).collect(Collectors.toList());
     }
 
     @Override

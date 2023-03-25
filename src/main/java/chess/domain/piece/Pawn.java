@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.BlackPawnMovePattern;
 import chess.domain.movepattern.MovePattern;
-import chess.domain.movepattern.WhitePawnMovePattern;
+import chess.domain.movepattern.NormalMovePattern;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -21,10 +19,10 @@ public class Pawn extends Piece {
         List<MovePattern> movePatterns = new ArrayList<>();
 
         if (side.isWhite()) {
-            movePatterns.addAll(Arrays.asList(WhitePawnMovePattern.values()));
+            movePatterns.addAll(NormalMovePattern.whitePawnMovePattern());
         }
         if (side.isBlack()) {
-            movePatterns.addAll(Arrays.asList(BlackPawnMovePattern.values()));
+            movePatterns.addAll(NormalMovePattern.blackPawnMovePattern());
         }
         return movePatterns;
     }

@@ -2,12 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.movepattern.KnightMovePattern;
 
-import java.util.Arrays;
-
 public class Knight extends ImmediatePiece {
 
     public Knight(final Type type, final Side side) {
-        super(type, side,Arrays.asList(KnightMovePattern.values()));
+        super(type, side, KnightMovePattern.knightMovePattern());
     }
 
     @Override

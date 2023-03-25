@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.KingMovePattern;
-
-import java.util.Arrays;
+import chess.domain.movepattern.NormalMovePattern;
 
 public class King extends ImmediatePiece {
 
     public King(final Type type, final Side side) {
-        super(type, side, Arrays.asList(KingMovePattern.values()));
+        super(type, side, NormalMovePattern.kingMovePattern());
     }
 
     @Override

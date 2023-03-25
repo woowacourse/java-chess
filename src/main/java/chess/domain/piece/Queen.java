@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.QueenMovePattern;
-
-import java.util.Arrays;
+import chess.domain.movepattern.NormalMovePattern;
 
 public class Queen extends LinearPiece {
 
     public Queen(final Type type, final Side side) {
-        super(type, side, Arrays.asList(QueenMovePattern.values()));
+        super(type, side, NormalMovePattern.queenMovePattern());
     }
 
     @Override

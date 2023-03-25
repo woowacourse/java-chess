@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.RookMovePattern;
-
-import java.util.Arrays;
+import chess.domain.movepattern.NormalMovePattern;
 
 public class Rook extends LinearPiece {
 
     public Rook(final Type type, final Side side) {
-        super(type, side, Arrays.asList(RookMovePattern.values()));
+        super(type, side, NormalMovePattern.rookMovePattern());
     }
 
     @Override
