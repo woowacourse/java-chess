@@ -3,19 +3,19 @@ package chessgame.service;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Game;
-import dao.BoardDao;
+import dao.GameDao;
 
 import java.sql.SQLException;
 
 public class ChessService {
-    private final BoardDao boardDao = new BoardDao();
+    private final GameDao gameDao = new GameDao();
 
     public Game setGame(String gameName) throws SQLException {
-        Game readGame = boardDao.read(gameName);
+        Game readGame = gameDao.read(gameName);
         if (readGame == null) {
             return new Game(new Board(ChessBoardFactory.create()), gameName);
         }
-        readGame.setDbState(boardDao.findTurnByGame(gameName));
+        readGame.setDbState(gameDao.findTurnByGame(gameName));
         return readGame;
     }
 
@@ -25,10 +25,10 @@ public class ChessService {
     }
 
     private void removeGame(Game game) {
-        boardDao.remove(game.getName());
+        gameDao.remove(game.getName());
     }
 
     private void saveGame(Game game) {
-        boardDao.save(game.board(),game.getName(),game.getTurn());
+        gameDao.save(game.board(),game.getName(),game.getTurn());
     }
 }

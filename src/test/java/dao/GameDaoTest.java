@@ -12,44 +12,40 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class BoardDaoTest {
-    private final BoardDao boardDao = new BoardDao();
+class GameDaoTest {
+    private final GameDao gameDao = new GameDao();
     private static final String gameName = "test";
     @BeforeEach
     void delete(){
-        boardDao.remove(gameName);
-    }
-    @Test
-    void connection() {
-        assertThat(boardDao.getConnection()).isNotNull();
+        gameDao.remove(gameName);
     }
 
     @Test
     void save() {
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(() -> boardDao.save(board, gameName, new White()));
+        Assertions.assertThatNoException().isThrownBy(() -> gameDao.save(board, gameName, new White()));
     }
 
     @Test
     void readNull(){
-        Assertions.assertThatNoException().isThrownBy(()->assertThat(boardDao.read(gameName)).isNull());
+        Assertions.assertThatNoException().isThrownBy(()->assertThat(gameDao.read(gameName)).isNull());
     }
     @Test
     void read(){
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(()->boardDao.save(board,gameName,new White()));
-        Assertions.assertThatNoException().isThrownBy(()->assertThat(boardDao.read(gameName)).isNotNull());
+        Assertions.assertThatNoException().isThrownBy(()-> gameDao.save(board,gameName,new White()));
+        Assertions.assertThatNoException().isThrownBy(()->assertThat(gameDao.read(gameName)).isNotNull());
     }
 
     @Test
     void remove(){
         Board board = new Board(ChessBoardFactory.create());
 
-        boardDao.save(board,gameName, new White());
+        gameDao.save(board,gameName, new White());
 
-        Assertions.assertThatNoException().isThrownBy(()->boardDao.remove(gameName));
+        Assertions.assertThatNoException().isThrownBy(()-> gameDao.remove(gameName));
     }
 
     @Nested
@@ -59,16 +55,16 @@ class BoardDaoTest {
 
         @Test
         void Should_FindWhite_WhenWhiteTurn() {
-            boardDao.save(board, gameName, new White());
+            gameDao.save(board, gameName, new White());
 
-            Assertions.assertThat(boardDao.findTurnByGame(gameName)).isEqualTo("White");
+            Assertions.assertThat(gameDao.findTurnByGame(gameName)).isEqualTo("White");
         }
 
         @Test
         void Should_FindBlack_WhenBlackTurn() {
-            boardDao.save(board, gameName, new Black());
+            gameDao.save(board, gameName, new Black());
 
-            Assertions.assertThat(boardDao.findTurnByGame(gameName)).isEqualTo("Black");
+            Assertions.assertThat(gameDao.findTurnByGame(gameName)).isEqualTo("Black");
         }
     }
 }
