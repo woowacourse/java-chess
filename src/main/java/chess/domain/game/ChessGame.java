@@ -13,7 +13,6 @@ import chess.domain.piece.Piece;
 public class ChessGame {
 
     private final Board board;
-
     private GameState gameState = INIT;
 
     public ChessGame(final Board board) {

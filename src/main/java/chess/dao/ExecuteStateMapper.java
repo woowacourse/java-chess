@@ -8,6 +8,7 @@ import chess.domain.game.state.StartState;
 import java.util.Arrays;
 
 public enum ExecuteStateMapper {
+
     INIT(InitState.class),
     START(StartState.class),
     END(EndState.class),
