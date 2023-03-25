@@ -13,6 +13,13 @@ public enum Color {
                 .orElseThrow(IllegalAccessError::new);
     }
 
+    public static Color fromName(String name) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalAccessError::new);
+    }
+
     public boolean isWhite() {
         return this == WHITE;
     }

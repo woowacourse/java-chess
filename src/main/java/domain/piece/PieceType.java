@@ -5,6 +5,7 @@ import domain.chessboard.Type;
 public enum PieceType implements Type {
 
     PAWN(1),
+    INIT_PAWN(1),
     BISHOP(3),
     KNIGHT(2.5),
     ROOK(5),

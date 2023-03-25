@@ -21,6 +21,11 @@ public class ChessGame {
         this.chessBoard = chessBoard;
     }
 
+    public ChessGame(Color color, final ChessBoard chessBoard) {
+        this.colorTurn = color;
+        this.chessBoard = chessBoard;
+    }
+
     public void move(final MovePosition movePosition) {
         final Square startPoint = chessBoard.findSquare(movePosition.getSource());
         final Square endPoint = chessBoard.findSquare(movePosition.getTarget());
@@ -116,6 +121,10 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
+    }
+
+    public Color getColorTurn() {
+        return colorTurn;
     }
 
 }

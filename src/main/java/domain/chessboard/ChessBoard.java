@@ -36,6 +36,18 @@ public class ChessBoard {
         return new ChessBoard(new ArrayList<>(chessBoard));
     }
 
+    public static ChessBoard generateEmptyBoard() {
+        final List<Rank> emptyChessBoard = new ArrayList<>();
+        createEmptyChessBoard(emptyChessBoard);
+        return new ChessBoard(new ArrayList<>(emptyChessBoard));
+    }
+
+    private static void createEmptyChessBoard(List<Rank> emptyChessBoard) {
+        for (int i = 0; i < 8; i++) {
+            emptyChessBoard.add(Rank.initRankToRank(RankFactory.EMPTY));
+        }
+    }
+
     public List<Rank> getChessBoard() {
         return new ArrayList<>(chessBoard);
     }

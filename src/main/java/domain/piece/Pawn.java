@@ -9,7 +9,7 @@ import java.util.Collections;
 public class Pawn extends PawnFeature {
 
     public Pawn(final Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override

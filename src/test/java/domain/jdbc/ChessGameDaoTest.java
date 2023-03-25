@@ -2,13 +2,12 @@ package domain.jdbc;
 
 import domain.ChessGame;
 import domain.chessboard.ChessBoard;
-import domain.piece.Color;
+import domain.chessboard.SquareStatus;
+import domain.coordinate.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,8 +29,41 @@ public class ChessGameDaoTest {
 
     @Test
     @DisplayName("새로운 Chess Game 방을 만든다.")
-    void saveChessGame() { // 추후 테스트를 목 ChessGameDao 로 할 수 있도록하자.
+    void saveChessGame() {
         chessGameDao.save(new ChessGame(ChessBoard.generate()));
+    }
+
+    @Test
+    @DisplayName("생성한 Chess Game 의 정보를 가져온다.")
+    void selectNewGame() {
+        ChessGame insertionChessGame = new ChessGame(ChessBoard.generate());
+        ChessGame chessGame = chessGameDao.selectNewGame(insertionChessGame);
+
+        boolean allMatch = chessGameEquals(insertionChessGame, chessGame);
+
+        assertThat(insertionChessGame.getColorTurn()).isEqualTo(chessGame.getColorTurn());
+        assertThat(allMatch).isTrue();
+    }
+
+    private boolean chessGameEquals(ChessGame insertionChessGame, ChessGame chessGame) {
+        boolean allMatch = true;
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Position findPosition = Position.of(x, y);
+                SquareStatus insertionSquareStatus = insertionChessGame.getChessBoard()
+                        .findSquare(findPosition).getSquareStatus();
+                SquareStatus squareStatus = chessGame.getChessBoard()
+                        .findSquare(findPosition).getSquareStatus();
+
+                if (insertionSquareStatus.getColor() != squareStatus.getColor()
+                        || insertionSquareStatus.getType() != squareStatus.getType()) {
+                    allMatch = false;
+                }
+            }
+        }
+
+        return allMatch;
     }
 
 }

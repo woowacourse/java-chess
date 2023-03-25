@@ -12,7 +12,7 @@ public class InitPawn extends PawnFeature {
     private static final int INIT_PAWN_DISTANCE = 2;
 
     public InitPawn(final Color color) {
-        super(color);
+        super(color, PieceType.INIT_PAWN);
     }
 
     @Override
