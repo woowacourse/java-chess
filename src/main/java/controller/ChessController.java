@@ -6,6 +6,7 @@ import controller.adapter.inward.CoordinateAdapter;
 import controller.adapter.outward.RenderingAdapter;
 import domain.board.ChessGame;
 import domain.piece.move.Coordinate;
+import service.ChessGameService;
 import view.InputView;
 import view.OutputView;
 
@@ -18,15 +19,19 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameService chessGameService;
+
 
     private final Map<Command, BiConsumer<ChessGame, CommandArguments>> commander;
 
     public ChessController(
             final InputView inputView,
-            final OutputView outputView
+            final OutputView outputView,
+            final ChessGameService chessGameService
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameService = chessGameService;
         this.commander = new HashMap<>();
         initializeCommander();
     }
@@ -39,15 +44,8 @@ public class ChessController {
     }
 
     public void run() {
-        ChessGame chessGame = setupGame();
-        repeat(() -> interact(chessGame));
-        printGameResult(chessGame);
-    }
-
-    private ChessGame setupGame() {
-        ChessGame chessGame = new ChessGame();
         outputView.printGameStartMessage();
-        return chessGame;
+        repeat(this::interact);
     }
 
     private void repeat(Runnable target) {
@@ -59,35 +57,33 @@ public class ChessController {
         }
     }
 
-    private void printGameResult(final ChessGame chessGame) {
-        String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
-        String winningColorMessage = RenderingAdapter.convertWinningColor(chessGame.getWinningColor());
-        outputView.printGameResult(gameResultMessage);
-        outputView.printWinner(winningColorMessage);
-    }
-
-    private void interact(final ChessGame chessGame) {
+    private void interact() {
+        ChessGame chessGame;
         Command command;
         do {
+            chessGame = chessGameService.loadGame();
             List<String> pureArguments = inputView.readCommand();
             command = Command.of(pureArguments);
             CommandArguments commandArguments = CommandArguments.of(pureArguments);
             commander.get(command).accept(chessGame, commandArguments);
         } while (command.isNotEnd() && chessGame.isGameNotOver());
+        printGameResultIfOver(chessGame);
     }
 
     private void start(final ChessGame chessGame, final CommandArguments ignored) {
-        printBoard(chessGame);
+        ChessGame newChessGame = chessGameService.startGame();
+        printBoard(newChessGame);
     }
 
     private void end(final ChessGame chessGame, final CommandArguments ignored) {
-        printGameResult(chessGame);
+        outputView.printGameEndMessage();
     }
 
     private void move(final ChessGame chessGame, final CommandArguments arguments) {
         Coordinate startCoordinate = CoordinateAdapter.convert(arguments.getRawStartCoordinate());
         Coordinate endCoordinate = CoordinateAdapter.convert(arguments.getRawEndCoordinate());
         chessGame.move(startCoordinate, endCoordinate);
+        chessGameService.updateMove(startCoordinate, endCoordinate);
         printBoard(chessGame);
     }
 
@@ -99,5 +95,15 @@ public class ChessController {
     private void printBoard(final ChessGame chessGame) {
         String boardMessage = RenderingAdapter.unpackBoard(chessGame.getBoard());
         outputView.printBoard(boardMessage);
+    }
+
+    private void printGameResultIfOver(final ChessGame chessGame) {
+        if (chessGame.isGameNotOver()) {
+            return;
+        }
+        String gameResultMessage = RenderingAdapter.unpackGameResult(chessGame.collectPoint());
+        String winningColorMessage = RenderingAdapter.convertWinningColor(chessGame.getWinningColor());
+        outputView.printGameResult(gameResultMessage);
+        outputView.printWinner(winningColorMessage);
     }
 }
