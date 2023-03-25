@@ -41,11 +41,7 @@ public class ChessController {
     private void playChessGame() {
         do {
             outputView.printBoard(chessGame.getBoard());
-        } while (isPlaying(readCommand()));
-    }
-
-    private boolean isPlaying(GameCommand gameCommand) {
-        return gameCommand == GameCommand.MOVE;
+        } while (readCommand() == GameCommand.MOVE);
     }
 
     /**
@@ -55,10 +51,7 @@ public class ChessController {
         try {
             List<String> input = readInput();
             return executeCommand(input);
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return readCommand();
-        } catch (UnsupportedOperationException e) {
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
             outputView.printError(e.getMessage());
             return readCommand();
         }
