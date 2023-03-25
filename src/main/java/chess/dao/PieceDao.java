@@ -17,4 +17,6 @@ public interface PieceDao {
     void update(final Long chessGameId, final Square square, final Piece piece);
 
     void delete(final Long chessGameId, final Square square);
+
+    void deleteAll(final Long chessGameId);
 }

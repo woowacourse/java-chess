@@ -96,4 +96,11 @@ public class PieceDaoImpl implements PieceDao {
         final List<String> parameters = List.of(String.valueOf(chessGameId), file.name(), rank.name());
         jdbcTemplate.executeUpdate(query, parameters);
     }
+
+    @Override
+    public void deleteAll(final Long chessGameId) {
+        final String query = "delete from piece where chess_game_id = ?";
+        final List<String> parameters = List.of(String.valueOf(chessGameId));
+        jdbcTemplate.executeUpdate(query, parameters);
+    }
 }

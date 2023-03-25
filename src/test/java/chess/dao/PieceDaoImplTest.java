@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.WHITE_PAWN;
+import static chess.util.SquareFixture.A_THREE;
 import static chess.util.SquareFixture.A_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -106,9 +107,20 @@ class PieceDaoImplTest {
     void 기물을_삭제한다() {
         final PieceDaoImpl pieceDao = new PieceDaoImpl();
         pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
-        final Optional<PieceDto> piece = pieceDao.findBySquare(chessGameDto.getId(), A_TWO);
 
         pieceDao.delete(chessGameDto.getId(), A_TWO);
+
+        final List<PieceDto> pieces = pieceDao.findAllByChessGameId(chessGameDto.getId());
+        assertThat(pieces).hasSize(0);
+    }
+
+    @Test
+    void 모든_기물을_삭제한다() {
+        final PieceDaoImpl pieceDao = new PieceDaoImpl();
+        pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
+        pieceDao.save(chessGameDto.getId(), A_THREE, new Piece(WHITE, WHITE_PAWN));
+
+        pieceDao.deleteAll(chessGameDto.getId());
 
         final List<PieceDto> pieces = pieceDao.findAllByChessGameId(chessGameDto.getId());
         assertThat(pieces).hasSize(0);
