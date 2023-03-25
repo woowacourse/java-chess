@@ -10,6 +10,7 @@ import domain.board.File;
 import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
+import dto.BoardResponseDto;
 import dto.CommandRequestDto;
 
 public class ChessService {
@@ -65,11 +66,8 @@ public class ChessService {
         }
     }
 
-    public Map<Square, String> getChessBoard() {
-        return chessBoard.getBoard()
-            .entrySet()
-            .stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, entry -> PieceToStringConverter.convert(entry.getValue())));
+    public BoardResponseDto toBoardDto() {
+        return new BoardResponseDto(chessBoard.getBoard());
     }
 
     public boolean isOngoing() {
