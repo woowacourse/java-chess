@@ -6,6 +6,6 @@ public interface ChessGameDao {
 
     void create(final ChessGame chessGame);
     ChessGame read();
-    void update();
+    void update(final ChessGame chessGame);
     void delete();
 }

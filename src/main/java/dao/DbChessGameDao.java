@@ -40,7 +40,7 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void update() {
+    public void update(final ChessGame chessGame) {
 
     }
 
