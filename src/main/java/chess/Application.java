@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.pieces.component.Name;
+import chess.domain.pieces.Piece;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -35,18 +35,22 @@ public class Application {
     }
 
     private static void printBoard() {
-        List<List<Name>> pieceNames = new ArrayList<>();
+        List<List<String>> pieceNames = new ArrayList<>();
         for (int rank = 8; rank > 0; rank--) {
             pieceNames.add(addName(chessGame.getBoard(), rank));
         }
         OutputView.printBoard(pieceNames);
     }
 
-    private static List<Name> addName(Board board, int rank) {
-        List<Name> pieceNames = new ArrayList<>();
+    private static List<String> addName(Board board, int rank) {
+        List<String> pieceNames = new ArrayList<>();
         for (int file = 0; file < 8; file++) {
-            Name name = board.getBoard().get(new Position(Rank.of(rank), File.ofByFile(file))).getName();
-            pieceNames.add(name);
+            Piece piece = board.getBoard().get(new Position(Rank.of(rank), File.ofByFile(file)));
+
+            if (piece.isWhiteTeam()) {
+                pieceNames.add(piece.getType().getName().toLowerCase());
+            }
+            pieceNames.add(piece.getType().getName());
         }
         return List.copyOf(pieceNames);
     }
