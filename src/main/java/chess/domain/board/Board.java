@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.constant.ExceptionCode;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Path;
@@ -67,5 +68,10 @@ public class Board {
 
     public Set<Piece> getExistingPieces() {
         return Set.copyOf(existingPieces);
+    }
+
+    public boolean isKingExist(final Color color) {
+        return existingPieces.stream()
+                .anyMatch(piece -> piece.isSameColor(color) && PieceType.findByPiece(piece).equals(PieceType.KING));
     }
 }

@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.TestPiecesGenerator;
 import chess.constant.ExceptionCode;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -11,10 +12,13 @@ import chess.domain.piece.property.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static chess.PositionFixture.A1;
 import static chess.PositionFixture.A2;
@@ -155,5 +159,26 @@ class BoardTest {
         final boolean actual = board.isSameColor(D8, color);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "검사 색 : {1}, 검사 결과 : {2}")
+    @MethodSource("providePiecesAndColorToCheckAndExpected")
+    @DisplayName("특정 색상의 왕이 존재하는지 확인한다")
+    void king_exist_check_test(final List<Piece> pieces, final Color checkingColor, final boolean expected) {
+        final PiecesGenerator piecesGenerator = new TestPiecesGenerator(pieces);
+        final Board board = Board.createBoardWith(piecesGenerator);
+
+        final boolean actual = board.isKingExist(checkingColor);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> providePiecesAndColorToCheckAndExpected() {
+        return Stream.of(
+                Arguments.of(List.of(new King(A1, BLACK), new Queen(A2, BLACK)), BLACK, true),
+                Arguments.of(List.of(new Queen(A1, BLACK), new King(A2, WHITE)), BLACK, false),
+                Arguments.of(List.of(new King(A1, WHITE), new Queen(A2, BLACK)), WHITE, true),
+                Arguments.of(List.of(new Queen(A1, WHITE), new King(A2, BLACK)), WHITE, false)
+        );
     }
 }

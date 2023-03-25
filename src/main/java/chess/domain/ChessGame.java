@@ -39,6 +39,10 @@ public class ChessGame {
         currentTurnColor = currentTurnColor.getOppositeColor();
     }
 
+    public boolean isKingCaught() {
+        return !(board.isKingExist(currentTurnColor) && board.isKingExist(currentTurnColor.getOppositeColor()));
+    }
+
     public Set<Piece> getExistingPieces() {
         return board.getExistingPieces();
     }

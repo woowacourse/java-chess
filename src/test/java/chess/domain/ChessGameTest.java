@@ -2,7 +2,9 @@ package chess.domain;
 
 import chess.TestPiecesGenerator;
 import chess.constant.ExceptionCode;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +14,14 @@ import static chess.PositionFixture.A2;
 import static chess.PositionFixture.A4;
 import static chess.PositionFixture.A6;
 import static chess.PositionFixture.A7;
+import static chess.PositionFixture.B5;
+import static chess.PositionFixture.E1;
+import static chess.PositionFixture.E8;
 import static chess.domain.piece.property.Color.BLACK;
 import static chess.domain.piece.property.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessGameTest {
 
@@ -43,5 +49,24 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.move(A7, A6))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionCode.INVALID_TURN.name());
+    }
+
+    @Test
+    @DisplayName("왕이 잡혔는지 확인한다")
+    void king_caught_state_check_test() {
+        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
+                new King(E1, WHITE),
+                new King(E8, BLACK),
+                new Queen(B5, WHITE)
+        )));
+
+        final boolean initialKingCaught = chessGame.isKingCaught();
+        chessGame.move(B5, E8);
+        final boolean afterMovedKingCaught = chessGame.isKingCaught();
+
+        assertSoftly(softly -> {
+            softly.assertThat(initialKingCaught).isFalse();
+            softly.assertThat(afterMovedKingCaught).isTrue();
+        });
     }
 }
