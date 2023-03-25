@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class Queen extends Piece {
 
-    private static final String NAME = "Q";
+    private static final String NAME = "Queen";
 
     public Queen(final Team team) {
         super(NAME, team);

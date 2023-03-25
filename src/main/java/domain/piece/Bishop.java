@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class Bishop extends Piece {
 
-    private static final String NAME = "B";
+    private static final String NAME = "Bishop";
 
     public Bishop(final Team team) {
         super(NAME, team);

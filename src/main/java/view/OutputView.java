@@ -11,6 +11,17 @@ import java.util.stream.Collectors;
 
 public final class OutputView {
     private static final String EMPTY_SPACE = ".";
+    private static final String KING = "King";
+    private static final String BISHOP = "Bishop";
+    private static final String KNIGHT = "Knight";
+    private static final String PAWN = "Pawn";
+    private static final String QUEEN = "Queen";
+    private static final String KING_VIEW = "K";
+    private static final String BISHOP_VIEW = "B";
+    private static final String KNIGHT_VIEW = "N";
+    private static final String PAWN_VIEW = "P";
+    private static final String QUEEN_VIEW = "Q";
+    private static final String ROOK_VIEW = "R";
 
     public static void printBoard(final Map<Position, Piece> board) {
         Arrays.stream(Rank.values())
@@ -30,18 +41,39 @@ public final class OutputView {
 
     private static String makePieceView(final Map<Position, Piece> board, final Position position) {
         if (board.containsKey(position)) {
-            return convertCaseByTeam(board.get(position));
+            return convertPieceByTeam(board.get(position));
         }
 
         return EMPTY_SPACE;
     }
 
-    private static String convertCaseByTeam(final Piece piece) {
-        if (piece.isBlack()) {
-            return piece.getName();
+    private static String convertPieceByTeam(final Piece piece) {
+        String name = makePieceName(piece);
+        if (!piece.isBlack()) {
+            name = name.toLowerCase();
         }
 
-        return piece.getName().toLowerCase();
+        return name;
+    }
+
+    private static String makePieceName(final Piece piece) {
+        final String name = piece.getName();
+        if (name.equals(KING)) {
+            return KING_VIEW;
+        }
+        if (name.equals(BISHOP)) {
+            return BISHOP_VIEW;
+        }
+        if (name.equals(KNIGHT)) {
+            return KNIGHT_VIEW;
+        }
+        if (name.equals(PAWN)) {
+            return PAWN_VIEW;
+        }
+        if (name.equals(QUEEN)) {
+            return QUEEN_VIEW;
+        }
+        return ROOK_VIEW;
     }
 
     public static void printError(final String errorMessage) {

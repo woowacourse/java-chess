@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
-    private static final String NAME = "N";
+    private static final String NAME = "Knight";
     private static final int ONE_STEP_OF_KNIGHT = 3;
 
     public Knight(final Team team) {
