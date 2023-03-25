@@ -477,4 +477,33 @@ class ChessBoardTest {
             }
         }
     }
+
+    @Nested
+    @DisplayName("getPieces 메서드는")
+    class getPieces {
+        ChessBoard chessBoard;
+
+        @BeforeEach
+        void 초기보드생성() {
+            chessBoard = new ChessBoardFactory().generate();
+        }
+
+        @Test
+        @DisplayName("Black 진영을 입력하면 해당 진영의 모든 기물을 반환한다")
+        void it_returns_black_pieces() {
+            assertThat(chessBoard.getPieces(Side.BLACK)
+                                 .values())
+                    .allMatch(piece -> piece.isSameSide(Side.BLACK))
+                    .hasSize(16);
+        }
+
+        @Test
+        @DisplayName("White 진영을 입력하면 해당 진영의 모든 기물을 반환한다")
+        void it_returns_white_pieces() {
+            assertThat(chessBoard.getPieces(Side.WHITE)
+                                 .values())
+                    .allMatch(piece -> piece.isSameSide(Side.WHITE))
+                    .hasSize(16);
+        }
+    }
 }

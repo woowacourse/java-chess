@@ -5,6 +5,8 @@ import chess.piece.Piece;
 
 import java.util.Map;
 
+import static java.util.stream.Collectors.toUnmodifiableMap;
+
 public class ChessBoard {
     private final Map<Square, Piece> pieces;
 
@@ -63,6 +65,16 @@ public class ChessBoard {
         final Piece piece = pieces.get(square);
 
         return piece.getSide();
+    }
+
+    public Map<Square, Piece> getPieces(final Side side) {
+        return pieces.entrySet()
+                     .stream()
+                     .filter(squarePieceEntry -> {
+                         final Piece piece = squarePieceEntry.getValue();
+                         return piece.isSameSide(side);
+                     })
+                     .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public Map<Square, Piece> getPieces() {
