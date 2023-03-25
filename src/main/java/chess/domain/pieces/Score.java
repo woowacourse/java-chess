@@ -5,22 +5,20 @@ import java.util.Objects;
 
 public class Score {
 
+    public static final Score ZERO = new Score(0);
+
     private final BigDecimal score;
 
     public Score(final int score) {
         this.score = new BigDecimal(String.valueOf(score));
     }
 
-    public Score(final BigDecimal score) {
-        this.score = score;
-    }
-
-    public Score(final Double score) {
+    public Score(final double score) {
         this.score = new BigDecimal(String.valueOf(score));
     }
 
-    public Score(final String score) {
-        this.score = new BigDecimal(score);
+    private Score(final BigDecimal score) {
+        this.score = score;
     }
 
     public Score add(final Score otherScore) {
