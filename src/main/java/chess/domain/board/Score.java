@@ -45,7 +45,7 @@ public class Score {
 
     private double calculateScoreExceptPawn(List<Map.Entry<Position, Piece>> pieces) {
         List<Map.Entry<Position, Piece>> piecesExceptPawn = getEntryOf(pieces,
-                (entry) -> !entry.getValue().isTypeOf(PieceType.PAWN)
+                (entry) -> !entry.getValue().isTypeOf(PieceType.PAWN) && !entry.getValue().isTypeOf(PieceType.INIT_PAWN)
         );
         return getScoreSumOf(piecesExceptPawn);
     }
@@ -65,7 +65,7 @@ public class Score {
 
     private double calculatePawnScore(List<Map.Entry<Position, Piece>> pieces) {
         List<Map.Entry<Position, Piece>> pawnPieces = getEntryOf(pieces,
-                (entry) -> entry.getValue().isTypeOf(PieceType.PAWN)
+                (entry) -> entry.getValue().isTypeOf(PieceType.PAWN) || entry.getValue().isTypeOf(PieceType.INIT_PAWN)
         );
         double origin = getScoreSumOf(pawnPieces);
         return origin + getDecreaseScoreOfPawn(pawnPieces);

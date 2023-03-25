@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.InitPawnPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
@@ -60,7 +61,7 @@ public class ScoreTest {
 
         //when
         data.put(A1, new PawnPiece(Color.WHITE));
-        data.put(B1, new PawnPiece(Color.WHITE));
+        data.put(B1, new InitPawnPiece(Color.WHITE));
         data.put(B2, new KingPiece(Color.WHITE));
         Score score = new Score(data, Color.WHITE);
         double result = score.getScore();
@@ -76,7 +77,7 @@ public class ScoreTest {
 
         //when
         data.put(A1, new PawnPiece(Color.WHITE));
-        data.put(A2, new PawnPiece(Color.WHITE));
+        data.put(A2, new InitPawnPiece(Color.WHITE));
         data.put(A3, new PawnPiece(Color.WHITE));
         data.put(A4, new KingPiece(Color.WHITE));
         Score score = new Score(data, Color.WHITE);
