@@ -30,22 +30,22 @@ public final class ChessGame {
         path.judgeBetweenStuck(
                 chessBoard.choiceBetweenPiece(path.getBetweenPositions(fromPosition, toPosition)),
                 pieceMove);
-        validateLastMovable(chessBoard.choicePiece(toPosition), pieceMove, true);
+        validateLastMovable(chessBoard.choosePiece(toPosition), pieceMove, true);
 
         chessBoard.movePieceOn(fromPosition, toPosition);
         changeTurn();
     }
 
     private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
-        Piece fromPiece = chessBoard.choicePiece(fromPosition);
+        Piece fromPiece = chessBoard.choosePiece(fromPosition);
 
         return fromPiece.getMovement(fromPosition, toPosition);
     }
 
     public void validateBeforeMoveTo(Position fromPosition, Position toPosition) {
-        validatePickExistPiece(chessBoard.choicePiece(fromPosition));
-        validateTurnCamp(chessBoard.choicePiece(fromPosition));
-        validateSameCamp(chessBoard.choicePiece(fromPosition), chessBoard.choicePiece(toPosition));
+        validatePickExistPiece(chessBoard.choosePiece(fromPosition));
+        validateTurnCamp(chessBoard.choosePiece(fromPosition));
+        validateSameCamp(chessBoard.choosePiece(fromPosition), chessBoard.choosePiece(toPosition));
         validateEqualPosition(fromPosition, toPosition);
     }
 

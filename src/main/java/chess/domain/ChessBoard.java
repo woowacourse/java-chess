@@ -39,7 +39,7 @@ public class ChessBoard {
         board.put(fromPosition, new Empty());
     }
 
-    public Piece choicePiece(Position position) {
+    public Piece choosePiece(Position position) {
         return board.get(position);
     }
 
@@ -92,10 +92,10 @@ public class ChessBoard {
         return calculateByCamp(groupingByCamp, camp);
     }
 
-    private static Double calculateByCamp(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
+    private double calculateByCamp(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
         return groupingByCamp.get(camp).stream()
-                .map(piece -> piece.getPieceSymbol().getPieceScore())
-                .reduce((double) INITIAL_VALUE, Double::sum);
+                .mapToDouble(piece -> piece.getPieceSymbol().getPieceScore())
+                .sum();
     }
 
     private int countPawn(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
