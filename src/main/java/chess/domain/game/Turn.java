@@ -15,7 +15,7 @@ public final class Turn {
         return new Turn(Team.WHITE);
     }
 
-    private static Turn of(final Team team) {
+    public static Turn of(final Team team) {
         return new Turn(team);
     }
 

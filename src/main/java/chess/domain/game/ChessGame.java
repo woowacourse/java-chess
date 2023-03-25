@@ -6,7 +6,6 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
-import chess.dto.BoardDto;
 import chess.dto.ScoreDto;
 
 import java.util.List;
@@ -23,12 +22,13 @@ public final class ChessGame {
     public static final int COUNT_OF_PAWN_DEGRADE_SCORE = 2;
     private static final int BOARD_LENGTH = 8;
     public static final double TOTAL_BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
+
     private final Map<Position, Piece> board;
     private Turn turn;
 
-    private ChessGame(final Map<Position, Piece> board) {
+    private ChessGame(final Map<Position, Piece> board, final Turn turn) {
         this.board = board;
-        this.turn = Turn.create();
+        this.turn = turn;
     }
 
     public static ChessGame from(final Map<Position, Piece> board) {
@@ -36,7 +36,15 @@ public final class ChessGame {
             throw new IllegalArgumentException(
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
         }
-        return new ChessGame(board);
+        return new ChessGame(board, Turn.create());
+    }
+
+    public static ChessGame from(final Map<Position, Piece> board, final Turn turn) {
+        if (board.size() != TOTAL_BOARD_SIZE) {
+            throw new IllegalArgumentException(
+                    String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
+        }
+        return new ChessGame(board, turn);
     }
 
     public void move(final Position source, final Position target) {
@@ -98,7 +106,7 @@ public final class ChessGame {
 
         final Map<File, Long> pieceCountByFile = board.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSamePieceTypeAs(PieceType.PAWN))
+                .filter(entry -> isPawn(entry.getValue()))
                 .filter(entry -> entry.getValue().isSameTeamWith(team))
                 .collect(groupingBy(e -> e.getKey().getFile(), Collectors.counting()));
 
@@ -109,6 +117,13 @@ public final class ChessGame {
                 .sum();
 
         return totalScore - totalMinusScore;
+    }
+
+    private boolean isPawn(final Piece value) {
+        return value.isSamePieceTypeAs(PieceType.INITIAL_WHITE_PAWN) ||
+                value.isSamePieceTypeAs(PieceType.INITIAL_BLACK_PAWN) ||
+                value.isSamePieceTypeAs(PieceType.WHITE_PAWN) ||
+                value.isSamePieceTypeAs(PieceType.BLACK_PAWN);
     }
 
     private Stream<Map.Entry<Position, Piece>> getEntryStream() {
@@ -129,7 +144,11 @@ public final class ChessGame {
                 .orElseThrow(() -> new IllegalStateException("왕이 없을 수는 없습니다."));
     }
 
-    public BoardDto getBoard() {
-        return BoardDto.from(Map.copyOf(board));
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
+    }
+
+    public Team getTurn() {
+        return turn.getTeam();
     }
 }

@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.dao.ChessDao;
+import chess.dao.DbChessGameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameFactory;
 import chess.view.InputView;
@@ -25,12 +27,14 @@ public final class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private final Map<GameCommand, Function<List<String>, GameCommand>> gameStatusMap;
+    private final ChessDao dao;
     private ChessGame chessGame;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.gameStatusMap = new EnumMap<>(GameCommand.class);
+        this.dao = new DbChessGameDao();
         initGameStatusMap();
     }
 

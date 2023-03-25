@@ -6,6 +6,7 @@ import chess.domain.movingStrategy.MoveUp;
 import chess.domain.movingStrategy.MoveUpUp;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public final class InitialWhitePawn extends Pawn {
     private static final InitialWhitePawn INSTANCE = new InitialWhitePawn(new MovingStrategies(movingStrategies), new AttackStrategies(attackStrategies));
 
     private InitialWhitePawn(final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
-        super(Team.WHITE, movingStrategies, attackStrategies);
+        super(Team.WHITE, PieceType.INITIAL_WHITE_PAWN, movingStrategies, attackStrategies);
     }
 
     public static InitialWhitePawn instance() {

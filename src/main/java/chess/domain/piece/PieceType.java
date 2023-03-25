@@ -6,7 +6,11 @@ public enum PieceType {
     KNIGHT("N", 2.5),
     QUEEN("Q", 9.0),
     KING("K", 0.0),
-    PAWN("P", 1.0),
+    INITIAL_WHITE_PAWN("P", 1.0),
+    INITIAL_BLACK_PAWN("P", 1.0),
+    WHITE_PAWN("P", 1.0),
+    BLACK_PAWN("P", 1.0),
+
     EMPTY(".", 0.0);
 
     private final String value;

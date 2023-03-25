@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.view;
 
 import chess.domain.game.File;
 import chess.domain.game.Position;
@@ -11,15 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class BoardDto {
+public final class RenderUtil {
 
-    private final List<String> names;
-
-    private BoardDto(final List<String> names) {
-        this.names = names;
+    private RenderUtil() {
+        throw new AssertionError();
     }
 
-    public static BoardDto from(Map<Position, Piece> board) {
+    public static List<String> renderBoard(Map<Position, Piece> board) {
         List<String> names = new ArrayList<>();
         for (int rankOrder = Rank.MAX_ORDER; rankOrder >= Rank.MIN_ORDER; rankOrder--) {
             for (int fileOrder = File.MIN_ORDER; fileOrder <= File.MAX_ORDER; fileOrder++) {
@@ -28,7 +26,7 @@ public final class BoardDto {
                 names.add(render(piece));
             }
         }
-        return new BoardDto(names);
+        return names;
     }
 
     private static String render(final Piece piece) {
@@ -44,7 +42,4 @@ public final class BoardDto {
         throw new AssertionError();
     }
 
-    public List<String> getNames() {
-        return List.copyOf(names);
-    }
 }

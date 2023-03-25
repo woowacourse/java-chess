@@ -19,8 +19,8 @@ public abstract class Pawn extends Piece {
 
     private final AttackStrategies attackStrategies;
 
-    protected Pawn(final Team team, final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
-        super(team, PieceType.PAWN, movingStrategies);
+    protected Pawn(final Team team, final PieceType pieceType, final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
+        super(team, pieceType, movingStrategies);
         this.attackStrategies = attackStrategies;
     }
 

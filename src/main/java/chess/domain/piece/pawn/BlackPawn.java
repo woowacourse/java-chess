@@ -5,6 +5,7 @@ import chess.domain.movingStrategy.MoveLeftDown;
 import chess.domain.movingStrategy.MoveRightDown;
 import chess.domain.movingStrategy.MovingStrategies;
 import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public final class BlackPawn extends Pawn {
 
 
     private BlackPawn(final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
-        super(Team.BLACK, movingStrategies, attackStrategies);
+        super(Team.BLACK, PieceType.BLACK_PAWN, movingStrategies, attackStrategies);
     }
 
     public static BlackPawn instance() {
