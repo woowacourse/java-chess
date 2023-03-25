@@ -7,6 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
+import chess.dao.ChessMovementDao;
+import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
 import java.util.Collections;
@@ -25,7 +27,8 @@ class ReadyTest {
     @BeforeEach
     void beforeEach() {
         chessGame = new ChessGame();
-        ready = new Ready(chessGame);
+        final ChessMovementDao dao = new FakeChessMovementDao();
+        ready = new Ready(chessGame, dao);
     }
 
     @Test
@@ -33,6 +36,18 @@ class ReadyTest {
     void execute_givenStartCommand_thenInitialChessGameAndReturnPlay() {
         // when
         final GameState actual = ready.execute(GameCommand.START, EMPTY);
+
+        // then
+        assertThat(actual).isExactlyInstanceOf(Play.class);
+
+        assertThat(chessGame.getChessBoard()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("execute()는 명령어로 load가 주어지면 dao에서 이전 게임 명령어를 불러와 초기화하고 Play를 반환한다.")
+    void execute_givenLoadCommand_thenInitialChessGameAndReturnPlay() {
+        // when
+        final GameState actual = ready.execute(GameCommand.LOAD, EMPTY);
 
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);

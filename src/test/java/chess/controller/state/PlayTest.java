@@ -14,6 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
+import chess.dao.ChessMovementDao;
+import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
 import java.util.Collections;
@@ -27,11 +29,13 @@ class PlayTest {
     private static final List<Position> EMPTY = Collections.emptyList();
 
     private GameState play;
+    private ChessMovementDao dao;
 
     @BeforeEach
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
-        final GameState ready = new Ready(chessGame);
+        dao = new FakeChessMovementDao();
+        final GameState ready = new Ready(chessGame, dao);
 
         play = ready.execute(GameCommand.START, EMPTY);
     }
@@ -53,15 +57,25 @@ class PlayTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 진행중입니다.");
     }
+
+    @Test
+    @DisplayName("execute()는 명령어로 load가 주어지면 예외가 발생한다.")
+    void execute_givenLoadCommand_thenFail() {
+        // when, then
+        assertThatThrownBy(() -> play.execute(GameCommand.LOAD, EMPTY))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 진행중입니다.");
+    }
     
     @Test
-    @DisplayName("execute()는 명령어로 move와 올바른 좌표가 주어지면 기물을 옮긴 뒤 Play를 반환한다.")
+    @DisplayName("execute()는 명령어로 move와 올바른 좌표가 주어지면 기물을 옮긴 뒤 Dao에 저장하고 자기 자신을 반환한다.")
     void execute_givenMoveCommandAndValidPositions_thenMoveAndReturnPlay() {
         // when
         final GameState actual = play.execute(GameCommand.MOVE, List.of(A2, A3));
 
         // then
-        assertThat(actual).isExactlyInstanceOf(Play.class);
+        assertThat(actual).isSameAs(play);
+        assertThat(dao.findAll()).hasSize(1);
     }
 
     @Test

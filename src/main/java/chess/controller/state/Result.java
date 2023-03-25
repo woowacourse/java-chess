@@ -4,14 +4,15 @@ import chess.controller.GameCommand;
 import chess.model.position.Position;
 import java.util.List;
 
-public class Result implements GameState {
+public final class Result implements GameState {
 
     private static final boolean PRINTABLE = true;
+    private static final boolean UN_PRINTABLE = false;
 
-    private final boolean printable;
+    private boolean printable;
 
-    Result(final boolean printable) {
-        this.printable = printable;
+    Result() {
+        this.printable = false;
     }
 
     @Override
@@ -25,15 +26,14 @@ public class Result implements GameState {
         if (gameCommand.isEnd()) {
             return new End();
         }
-        return new Result(PRINTABLE);
+        printable = PRINTABLE;
+        return this;
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {
-        if (gameCommand.isStart()) {
-            throw new IllegalArgumentException("게임을 시작할 수 없습니다.");
-        }
-        if (gameCommand.isMove()) {
-            throw new IllegalArgumentException("게임을 플레이할 수 없습니다.");
+        if (gameCommand.isStart() || gameCommand.isLoad() || gameCommand.isMove()) {
+            printable = UN_PRINTABLE;
+            throw new IllegalArgumentException("게임이 종료된 상태입니다.");
         }
     }
 

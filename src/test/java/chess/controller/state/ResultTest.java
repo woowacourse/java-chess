@@ -1,6 +1,5 @@
 package chess.controller.state;
 
-import static chess.helper.PositionFixture.A1;
 import static chess.helper.PositionFixture.A2;
 import static chess.helper.PositionFixture.A3;
 import static chess.helper.PositionFixture.A6;
@@ -14,6 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
+import chess.dao.ChessMovementDao;
+import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +29,9 @@ class ResultTest {
     @BeforeEach
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
-        final GameState ready = new Ready(chessGame);
+        final ChessMovementDao dao = new FakeChessMovementDao();
+        final GameState ready = new Ready(chessGame, dao);
+
         GameState play = ready.execute(GameCommand.START, Collections.emptyList());
 
         play = play.execute(GameCommand.MOVE, List.of(E2, E3));
@@ -57,7 +60,7 @@ class ResultTest {
         // when, then
         assertThatThrownBy(() -> result.execute(GameCommand.START, Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("게임을 시작할 수 없습니다.");
+                .hasMessage("게임이 종료된 상태입니다.");
     }
 
     @Test
@@ -66,7 +69,16 @@ class ResultTest {
         // when, then
         assertThatThrownBy(() -> result.execute(GameCommand.MOVE, Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("게임을 플레이할 수 없습니다.");
+                .hasMessage("게임이 종료된 상태입니다.");
+    }
+
+    @Test
+    @DisplayName("execute()는 명령어로 load가 주어지면 예외가 발생한다.")
+    void execute_givenLoadCommand_thenFail() {
+        // when, then
+        assertThatThrownBy(() -> result.execute(GameCommand.LOAD, Collections.emptyList()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 종료된 상태입니다.");
     }
 
     @Test

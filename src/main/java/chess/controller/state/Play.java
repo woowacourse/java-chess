@@ -1,55 +1,61 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
+import chess.dao.ChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
 import java.util.List;
 
-public class Play implements GameState {
+public final class Play implements GameState {
 
-    private static final boolean UN_PRINTABLE = false;
-    private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
-    private final ChessGame chessGame;
+    private static final int SOURCE_INDEX = 0;
 
-    public Play(final ChessGame chessGame) {
+    private final ChessGame chessGame;
+    private final ChessMovementDao chessMovementDao;
+
+    Play(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
         this.chessGame = chessGame;
+        this.chessMovementDao = chessMovementDao;
     }
 
     @Override
-    public GameState execute(final GameCommand gameCommand, final List<Position> movePositions) {
+    public GameState execute(final GameCommand gameCommand, final List<Position> positions) {
         validateGameCommand(gameCommand);
 
         try {
-            return handleGameCommand(gameCommand, movePositions);
+            return handleGameCommand(gameCommand, positions);
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("존재하지 않는 체스 칸을 지정했습니다.", e);
         }
     }
 
-    private void validateGameCommand(final GameCommand gameCommand) {
-        if (gameCommand.isStart()) {
-            throw new IllegalArgumentException("게임이 진행중입니다.");
-        }
-        if (gameCommand.isStatus()) {
-            throw new IllegalArgumentException("게임이 진행중입니다.");
-        }
-    }
-
-    private GameState handleGameCommand(final GameCommand gameCommand, final List<Position> movePositions) {
+    private GameState handleGameCommand(final GameCommand gameCommand, final List<Position> positions) {
         if (gameCommand.isMove()) {
-            return handleMove(movePositions);
+            return handleMove(positions.get(SOURCE_INDEX), positions.get(TARGET_INDEX));
         }
         return new End();
     }
 
-    private GameState handleMove(final List<Position> movePositions) {
-        chessGame.move(movePositions.get(SOURCE_INDEX), movePositions.get(TARGET_INDEX));
+    private GameState handleMove(final Position source, final Position target) {
+        chessGame.move(source, target);
+        chessMovementDao.save(source, target);
 
         if (chessGame.isGameOnGoing()) {
             return this;
         }
-        return new Result(UN_PRINTABLE);
+        chessMovementDao.delete();
+        return new Result();
+    }
+
+    private void validateGameCommand(final GameCommand gameCommand) {
+        if (isInvalidCommand(gameCommand)) {
+            throw new IllegalArgumentException("게임이 진행중입니다.");
+        }
+    }
+
+    private boolean isInvalidCommand(final GameCommand gameCommand) {
+        return gameCommand.isStart() || gameCommand.isStatus() || gameCommand.isLoad();
     }
 
     @Override

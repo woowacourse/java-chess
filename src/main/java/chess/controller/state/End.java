@@ -4,7 +4,10 @@ import chess.controller.GameCommand;
 import chess.model.position.Position;
 import java.util.List;
 
-public class End implements GameState {
+public final class End implements GameState {
+
+    End() {
+    }
 
     @Override
     public GameState execute(final GameCommand gameCommand, final List<Position> ignored) {

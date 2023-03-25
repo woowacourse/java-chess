@@ -3,6 +3,7 @@ package chess.controller;
 import chess.controller.dto.PlayRequest;
 import chess.controller.state.GameState;
 import chess.controller.state.Ready;
+import chess.dao.ChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.piece.Camp;
 import chess.model.piece.PieceScore;
@@ -16,9 +17,6 @@ import java.util.stream.Collectors;
 
 public class ChessController {
 
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -27,9 +25,9 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-    public void start(final ChessGame chessGame) {
+    public void start(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
         outputView.guideGameStart();
-        GameState gameState = new Ready(chessGame);
+        GameState gameState = new Ready(chessGame, chessMovementDao);
 
         while (gameState.isContinue()) {
             gameState = run(gameState);

@@ -1,10 +1,11 @@
 package chess.controller.state;
 
-import static chess.helper.PositionFixture.A1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
+import chess.dao.ChessMovementDao;
+import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
 import java.util.Collections;
@@ -22,7 +23,8 @@ class EndTest {
     @BeforeEach
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
-        final GameState ready = new Ready(chessGame);
+        final ChessMovementDao dao = new FakeChessMovementDao();
+        final GameState ready = new Ready(chessGame, dao);
         final GameState play = ready.execute(GameCommand.START, EMPTY);
 
         end = play.execute(GameCommand.END, EMPTY);

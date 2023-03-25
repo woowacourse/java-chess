@@ -1,16 +1,20 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
+import chess.dao.ChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import java.util.Collections;
 import java.util.List;
 
-public class Ready implements GameState {
+public final class Ready implements GameState {
 
     private final ChessGame chessGame;
+    private final ChessMovementDao chessMovementDao;
 
-    public Ready(final ChessGame chessGame) {
+    public Ready(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
         this.chessGame = chessGame;
+        this.chessMovementDao = chessMovementDao;
     }
 
     @Override
@@ -21,18 +25,21 @@ public class Ready implements GameState {
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {
-        if (gameCommand.isMove()) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-        }
-        if (gameCommand.isStatus()) {
+        if (isInvalidCommand(gameCommand)) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
     }
 
+    private boolean isInvalidCommand(final GameCommand gameCommand) {
+        return gameCommand.isMove() || gameCommand.isStatus();
+    }
+
     private GameState handleGameCommand(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
-            chessGame.initialChessGame();
-            return new Play(chessGame);
+            return new Start(chessGame, chessMovementDao).execute(gameCommand, Collections.emptyList());
+        }
+        if (gameCommand.isLoad()) {
+            return new Load(chessGame, chessMovementDao).execute(gameCommand, Collections.emptyList());
         }
         return new End();
     }
