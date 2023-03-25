@@ -14,7 +14,7 @@ public class King extends Piece {
     }
 
     private King(final Side side) {
-        super(side);
+        super(side, PieceType.KING);
     }
 
     public static King getKingOf(final Side side) {

@@ -21,7 +21,7 @@ public final class Pawn extends Piece {
     }
 
     private Pawn(Side side) {
-        super(side);
+        super(side, PieceType.PAWN);
     }
 
     private static void addPawns(final List<Pawn> pawns, final Side side) {

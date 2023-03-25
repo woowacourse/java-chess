@@ -17,7 +17,7 @@ public class Rook extends Piece {
     }
 
     private Rook(final Side side) {
-        super(side);
+        super(side, PieceType.ROOK);
     }
 
     private static void addRooks(final List<Rook> rooks, final Side side) {

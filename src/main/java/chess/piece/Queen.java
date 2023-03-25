@@ -14,7 +14,7 @@ public class Queen extends Piece {
     }
 
     private Queen(final Side side) {
-        super(side);
+        super(side, PieceType.QUEEN);
     }
 
     public static Queen getQueenOf(final Side side) {

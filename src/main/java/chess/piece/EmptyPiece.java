@@ -7,7 +7,7 @@ public class EmptyPiece extends Piece {
     private static EmptyPiece emptyPiece;
 
     private EmptyPiece() {
-        super(Side.EMPTY);
+        super(Side.EMPTY, null);
     }
 
     public static EmptyPiece getInstance() {

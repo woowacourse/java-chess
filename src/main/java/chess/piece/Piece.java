@@ -6,9 +6,11 @@ import chess.chessboard.Square;
 public abstract class Piece {
 
     private final Side side;
+    private final PieceType pieceType;
 
-    Piece(final Side side) {
+    Piece(final Side side, PieceType pieceType) {
         this.side = side;
+        this.pieceType = pieceType;
     }
 
     protected boolean isOppositeSide(final Piece piece) {
@@ -31,5 +33,13 @@ public abstract class Piece {
 
     public Side getSide() {
         return side;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
     }
 }

@@ -19,7 +19,7 @@ public class Bishop extends Piece {
     }
 
     private Bishop(final Side side) {
-        super(side);
+        super(side, PieceType.BISHOP);
     }
 
     private static void addBishops(final List<Bishop> bishops, final Side side) {
