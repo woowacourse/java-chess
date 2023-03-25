@@ -1,11 +1,13 @@
 package chess.domain.game;
 
 import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.NONE;
 import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -13,6 +15,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ScoreTest {
@@ -76,5 +79,22 @@ class ScoreTest {
         double score = Score.calculate(pieces, WHITE).getValue();
 
         assertThat(score).isEqualTo(7);
+    }
+
+    @DisplayName("점수를 비교하여 승리진영을 반환한다")
+    @ParameterizedTest
+    @CsvSource(value = {"10,5,BLACK", "5,10,WHITE"})
+    void judgeWinner(double blackScore, double whiteScore, Color expected) {
+        Color actual = Score.judgeWinner(Score.valueOf(blackScore), Score.valueOf(whiteScore));
+
+        assertThat(actual).isSameAs(expected);
+    }
+
+    @DisplayName("점수가 같으면 없는색을 반환한다")
+    @Test
+    void judgeWinner_same_None() {
+        Color winner = Score.judgeWinner(Score.valueOf(10), Score.valueOf(10));
+
+        assertThat(winner).isSameAs(NONE);
     }
 }

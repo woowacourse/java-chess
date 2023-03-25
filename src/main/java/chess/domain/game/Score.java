@@ -66,6 +66,16 @@ public class Score {
                 .sum();
     }
 
+    public static Color judgeWinner(Score blackScore, Score whiteScore) {
+        if (blackScore.value > whiteScore.value) {
+            return Color.BLACK;
+        }
+        if (blackScore.value < whiteScore.value) {
+            return Color.WHITE;
+        }
+        return Color.NONE;
+    }
+
     public double getValue() {
         return value;
     }
