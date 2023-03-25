@@ -67,10 +67,6 @@ public class Board {
         return !board.containsValue(King.from(color));
     }
 
-    public void clear() {
-        board.clear();
-    }
-
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
