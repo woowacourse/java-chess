@@ -4,5 +4,5 @@ import chess.domain.game.ChessGame;
 
 public interface Query {
 
-    <T> T execute(ChessGame chessGame);
+    Object execute(ChessGame chessGame);
 }
