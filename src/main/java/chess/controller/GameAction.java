@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
+import chess.domain.chessgame.ChessGame;
 
 @FunctionalInterface
 public interface GameAction {

@@ -1,47 +1,52 @@
-package chess.domain;
+package chess.domain.chessgame;
 
+import chess.domain.Color;
+import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.piecesfactory.PiecesFactory;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ChessGame {
-    private final Board board;
-    private final Color currentTurnColor;
+public class PlayingChessGame extends ChessGame {
 
-    private ChessGame(final Board board, final Color currentTurnColor) {
-        this.board = board;
-        this.currentTurnColor = currentTurnColor;
+    PlayingChessGame(final Board board, final Color currentTurnColor) {
+        super(board, currentTurnColor);
     }
 
-    private ChessGame(final Board board) {
-        this(board, Color.WHITE);
+    @Override
+    public ChessGame start() {
+        throw new UnsupportedOperationException("게임이 이미 시작되었습니다.");
     }
 
-    public static ChessGame from(final PiecesFactory piecesFactory) {
-        return new ChessGame(Board.from(piecesFactory));
-    }
-
+    @Override
     public ChessGame move(final Position currentPosition, final Position targetPosition) {
         board.move(currentTurnColor, currentPosition, targetPosition);
-        return new ChessGame(board, currentTurnColor.getOppositeColor());
+        return new PlayingChessGame(board, currentTurnColor.getOppositeColor());
     }
 
+    @Override
     public boolean isPlaying() {
-        return board.hasPieces();
+        return true;
     }
 
+    @Override
     public boolean isGameOver() {
         return !board.hasTwoKings();
     }
 
+    @Override
+    public ChessGame end() {
+        return new EndChessGame(board, currentTurnColor);
+    }
+
+    @Override
     public Map<Color, Double> calculateScoreByColor() {
         return board.calculateScoreByColor();
     }
 
+    @Override
     public Color findScoreWinner() {
         final Map<Color, Double> scoreByColor = board.calculateScoreByColor();
         return getWinnerColor(scoreByColor);
@@ -77,7 +82,8 @@ public class ChessGame {
                 .orElseThrow(IllegalStateException::new);
     }
 
-    public List<Piece> getExistingPieces() {
+    @Override
+    public List<Piece> getPieces() {
         return board.getPieces();
     }
 }
