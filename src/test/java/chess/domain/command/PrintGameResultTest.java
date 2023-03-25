@@ -6,6 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.dao.ChessGameDao;
 import chess.dao.JdbcChessGameDao;
 import chess.domain.board.Board;
+import chess.domain.board.GameResultBySide;
+import chess.domain.board.ResultCalculator;
+import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Pieces;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -109,5 +112,19 @@ class PrintGameResultTest {
 
         // when, then
         Assertions.assertDoesNotThrow(() -> printGameResult.getGameResultBySide());
+    }
+
+    @Test
+    @DisplayName("게임 결과 출력 상태에서 이전 게임 존재를 확인할 시 예외를 던진다.")
+    void isExistPreviousGame() {
+        // given
+        Board board = new Board(new Pieces());
+        PrintGameResult printGameResult = new PrintGameResult(new ChessGame(1L, board, Turn.WHITE), chessGameDao);
+        Long gameId = 1L;
+
+        // when, then
+        assertThatThrownBy(() -> printGameResult.isExistPreviousGame(gameId))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임 결과 출력 상태에서는 이전 게임이 존재하는지 확인할 수 없습니다.");
     }
 }

@@ -107,4 +107,17 @@ class EndTest {
         // when, then
         Assertions.assertDoesNotThrow(() -> end.getGameResultBySide());
     }
+
+    @Test
+    @DisplayName("게임 종료 상태에서 이전 게임 존재를 확인할 시 예외를 던진다.")
+    void isExistPreviousGame() {
+        // given
+        End end = new End(new ResultCalculator(new ScoreBySide(), new GameResultBySide()));
+        Long gameId = 1L;
+
+        // when, then
+        assertThatThrownBy(() -> end.isExistPreviousGame(gameId))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임 종료 상태에서는 이전 게임이 존재하는지 확인할 수 없습니다.");
+    }
 }
