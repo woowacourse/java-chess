@@ -6,7 +6,6 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import chess.piece.nonsliding.Knight;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -52,14 +51,16 @@ class KnightTest {
         assertThat(knight.isMovable(position)).isFalse();
     }
 
-
     @Test
-    @DisplayName("기물을 뛰어넘기 떄문에 빈 경로를 반환한다.")
+    @DisplayName("나이트의 이동 경로를 반환한다.")
     void getPaths_empty() {
         // given
         final Knight knight = new Knight(new Position(File.E, Rank.ONE), Side.WHITE);
         final Position targetPosition = new Position(File.F, Rank.THREE);
-        List<Position> expectedPaths = Collections.emptyList();
+        List<Position> expectedPaths = List.of(
+                new Position(File.E, Rank.TWO),
+                new Position(File.E, Rank.THREE)
+        );
 
         // when
         List<Position> paths = knight.getPaths(targetPosition);
