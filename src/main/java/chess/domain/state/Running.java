@@ -1,12 +1,14 @@
 package chess.domain.state;
 
-import chess.cache.PieceCache;
-import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.Color;
+import chess.domain.PieceType;
+import chess.domain.Position;
+import chess.domain.piece.Piece;
 
-public abstract class Running extends State {
-    protected Running(final Board board) {
-        super(board);
+public class Running extends State {
+    protected Running(final ChessGame ChessGame) {
+        super(ChessGame);
     }
 
     @Override
@@ -15,17 +17,36 @@ public abstract class Running extends State {
     }
 
     @Override
+    public boolean isGameEnd() {
+        return false;
+    }
+
+    @Override
+    public State move(final Position source, final Position target) {
+        Piece capturePiece = chessGame.move(source, target);
+        if (capturePiece.isSamePieceType(PieceType.KING)) {
+            return new GameEnd(chessGame);
+        }
+        return new Running(chessGame.next());
+    }
+
+    @Override
     public State start() {
-        return new White(Board.from(PieceCache.create()));
+        return new Running(ChessGame.create());
     }
 
     @Override
     public State end() {
-        return new End(board);
+        return new End(chessGame);
     }
 
     @Override
     public double calculateScore(Color color) {
-        return board.calculateScore(color);
+        return chessGame.calculateScore(color);
+    }
+
+    @Override
+    public Color getColor() {
+        return chessGame.getColor();
     }
 }

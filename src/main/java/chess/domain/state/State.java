@@ -1,17 +1,19 @@
 package chess.domain.state;
 
-import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.Position;
 
 public abstract class State {
-    protected final Board board;
+    protected final ChessGame chessGame;
 
-    protected State(final Board board) {
-        this.board = board;
+    protected State(final ChessGame chessGame) {
+        this.chessGame = chessGame;
     }
 
     public abstract boolean isEnd();
+
+    public abstract boolean isGameEnd();
 
     public abstract State move(Position source, Position target);
 
@@ -20,4 +22,6 @@ public abstract class State {
     public abstract State end();
 
     public abstract double calculateScore(Color color);
+
+    public abstract Color getColor();
 }

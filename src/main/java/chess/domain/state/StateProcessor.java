@@ -1,7 +1,6 @@
 package chess.domain.state;
 
-import chess.cache.PieceCache;
-import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
@@ -17,13 +16,13 @@ public final class StateProcessor {
     }
 
     public static StateProcessor create() {
-        final State state = new Ready(Board.from(PieceCache.create()));
+        final State state = new Ready(ChessGame.create());
 
         return new StateProcessor(state);
     }
 
     public Map<Position, Piece> getBoard() {
-        return state.board
+        return state.chessGame
                 .getBoard();
     }
 
@@ -33,6 +32,14 @@ public final class StateProcessor {
 
     public boolean isNotEnd() {
         return !state.isEnd();
+    }
+
+    public boolean isGameEnd() {
+        return state.isGameEnd();
+    }
+
+    public boolean isNotGameEnd() {
+        return !state.isGameEnd();
     }
 
     public State move(final CommandDto commandDto) {
@@ -53,5 +60,9 @@ public final class StateProcessor {
 
     public double status(Color color) {
         return state.calculateScore(color);
+    }
+
+    public Color getColor() {
+        return state.getColor();
     }
 }

@@ -4,12 +4,9 @@ import chess.cache.BoardCache;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Board {
     private final Map<Position, Piece> board;
@@ -63,35 +60,7 @@ public final class Board {
         return Map.copyOf(board);
     }
 
-    public double calculateScore(Color color) {
-        return Arrays.stream(Row.values())
-                .flatMap(row -> calculateColumnScore(color, row))
-                .mapToDouble(Map.Entry::getValue)
-                .sum();
-    }
-
-    private Stream<Map.Entry<PieceType, Double>> calculateColumnScore(final Color color, final Row row) {
-        Map<PieceType, Double> columnScore = Arrays.stream(Column.values())
-                .map(column -> board.get(Position.of(row, column)))
-                .filter(piece -> piece.isSameColor(color))
-                .collect(Collectors.groupingBy(Piece::getPieceType, Collectors.summingDouble(Piece::getScore)));
-
-        return columnScore.entrySet()
-                .stream()
-                .peek(this::calculatePawnScore);
-    }
-
-    private void calculatePawnScore(final Map.Entry<PieceType, Double> entry) {
-        final double duplicatesPawnScore = 0.5;
-
-        if (isVerticalDuplicatesPawn(entry)) {
-            entry.setValue(entry.getValue() * duplicatesPawnScore);
-        }
-    }
-
-    private boolean isVerticalDuplicatesPawn(final Map.Entry<PieceType, Double> entry) {
-        final int pawnCount = 1;
-
-        return entry.getKey() == PieceType.PAWN && entry.getValue() > pawnCount;
+    public Piece getPiece(Position position) {
+        return board.get(position);
     }
 }
