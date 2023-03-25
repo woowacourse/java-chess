@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InputRenderer {
+public final class InputRenderer {
 
     private static final Map<String, Integer> FILE_TO_COLUMN = new HashMap<>();
     private static final Map<String, Integer> RANK_TO_ROW = new HashMap<>();

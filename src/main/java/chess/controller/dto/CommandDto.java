@@ -5,7 +5,7 @@ import chess.controller.Command;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandDto {
+public final class CommandDto {
 
     private final Command command;
     private final List<Integer> source;

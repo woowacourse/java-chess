@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
-public class PieceMapper {
+public final class PieceMapper {
 
     private static final Map<PieceType, Supplier<Piece>> BLACK_PIECE = new HashMap<>();
 

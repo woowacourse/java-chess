@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-public class TeamDto {
+public final class TeamDto {
 
     private final String team;
 

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputRenderer {
+public final class OutputRenderer {
     private static final Map<PieceType, String> PIECE_TO_STRING = new EnumMap<>(PieceType.class);
     private static final Map<Team, String> TEAM_TO_STRING = new EnumMap<>(Team.class);
 
