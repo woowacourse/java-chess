@@ -1,6 +1,6 @@
 package chess.dto.response;
 
-public class StatusDto {
+public final class StatusDto {
 
     private final double blackScore;
     private final double whiteScore;

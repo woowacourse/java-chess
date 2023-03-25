@@ -2,7 +2,7 @@ package chess.dto.response;
 
 import java.util.List;
 
-public class ChessBoardDto {
+public final class ChessBoardDto {
 
     private final List<String> chessBoard;
 

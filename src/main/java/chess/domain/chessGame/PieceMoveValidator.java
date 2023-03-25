@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class PieceMoveValidator {
+public final class PieceMoveValidator {
 
     private static final int NO_OBSTACLES_COUNT = 0;
 

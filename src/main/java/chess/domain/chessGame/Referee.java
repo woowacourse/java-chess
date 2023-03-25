@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Referee {
+public final class Referee {
 
     private static final List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
     private static final List<Integer> rows = List.of(1, 2, 3, 4, 5, 6, 7, 8);

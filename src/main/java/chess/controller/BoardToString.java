@@ -32,7 +32,7 @@ public final class BoardToString {
     }
 
     private static String getOneRow(Map<Position, Piece> chessBoard, int row, int columnCount) {
-        StringBuilder oneRow = new StringBuilder();
+        final StringBuilder oneRow = new StringBuilder();
         for (int column = 1; column <= columnCount; column++) {
             oneRow.append(pieceNameOrDot(chessBoard, Position.of(row, column)));
         }

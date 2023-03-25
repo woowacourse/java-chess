@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class PawnMoveValidator {
+public final class PawnMoveValidator {
 
     private final Map<Position, Piece> chessBoard;
 

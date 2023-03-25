@@ -4,7 +4,7 @@ import chess.view.GameCommand;
 
 import java.util.List;
 
-public class CommandDto {
+public final class CommandDto {
 
     private final GameCommand gameCommand;
     private final String startPosition;
