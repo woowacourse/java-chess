@@ -4,8 +4,10 @@ import chess.TestPiecesGenerator;
 import chess.constant.ExceptionCode;
 import chess.controller.command.Command;
 import chess.domain.ChessGame;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
 import chess.domain.piece.property.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +17,11 @@ import java.util.List;
 import java.util.Set;
 
 import static chess.PositionFixture.A2;
+import static chess.PositionFixture.B5;
+import static chess.PositionFixture.E1;
+import static chess.PositionFixture.E8;
+import static chess.domain.piece.property.Color.BLACK;
+import static chess.domain.piece.property.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -75,6 +82,21 @@ class ChessRunningTest {
         final boolean isEnd = chessRunning.isEnd();
 
         assertThat(isEnd).isFalse();
+    }
+
+    @Test
+    @DisplayName("왕이 잡히면 게임 종료상태로 변경된다")
+    void king_caught_state_check_test() {
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(List.of(
+                new King(E1, WHITE),
+                new King(E8, BLACK),
+                new Queen(B5, WHITE)
+        ))));
+        final Command movingCommand = Command.of(List.of("move", "b5", "e8"));
+
+        final ChessState resultState = chessRunning.process(movingCommand);
+
+        assertThat(resultState).isInstanceOf(ChessEnd.class);
     }
 
 }

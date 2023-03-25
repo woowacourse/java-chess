@@ -27,6 +27,9 @@ public class ChessRunning extends ChessState {
         }
         if (command.is(Type.MOVE)) {
             processMove(command);
+            if(chessGame.isKingCaught()){
+                return new ChessEnd(chessGame);
+            }
             return this;
         }
         if (command.is(Type.END)) {
