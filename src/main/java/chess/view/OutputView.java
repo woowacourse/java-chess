@@ -46,4 +46,8 @@ public class OutputView {
                 + "흰색 진영 : %.1f점%n"
                 + "검은색 진영 : %.1f점", winner, whiteScore, blackScore);
     }
+
+    public static void printKingDeadMessage() {
+        printMessage("King이 죽어 승자가 결정됐고, 게임이 끝났습니다.");
+    }
 }
