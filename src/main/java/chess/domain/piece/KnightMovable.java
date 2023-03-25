@@ -15,7 +15,7 @@ public abstract class KnightMovable extends Piece {
     }
 
     @Override
-    protected List<Position> createMovablePositions(final Position source, final Position target) {
+    protected final List<Position> createMovablePositions(final Position source, final Position target) {
         final Direction direction = KnightDirection.from(source, target);
 
         if (source.isRangeOk(direction)) {
