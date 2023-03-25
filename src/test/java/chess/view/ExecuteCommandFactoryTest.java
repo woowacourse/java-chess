@@ -3,10 +3,9 @@ package chess.view;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.controller.command.EndCommand;
-import chess.controller.command.MoveCommand;
-import chess.controller.command.StartCommand;
-import chess.controller.command.StatusCommand;
+import chess.controller.command.execute.EndCommand;
+import chess.controller.command.execute.MoveCommand;
+import chess.controller.command.execute.StatusCommand;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -18,13 +17,6 @@ class ExecuteCommandFactoryTest {
 
     @Nested
     class getInstance_메서드는 {
-
-        @Test
-        void 시작_명령이라면_시작_커멘드를_반환한다() {
-            final String input = "start";
-
-            assertThat(ExecuteCommandFactory.getInstance(input)).isInstanceOf(StartCommand.class);
-        }
 
         @Test
         void 상태_명령이라면_상태_커멘드를_반환한다() {

@@ -2,12 +2,15 @@ package chess.view;
 
 import chess.view.dto.ChessBoardDto;
 import chess.view.dto.ChessStatusDto;
+import java.util.List;
 
 public class OutputView {
 
-    public void printStartMessage() {
+    public void printStartMessage(List<Long> chessGameIds) {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 입장 : enter 게임아이디 - 예. enter 1");
+        System.out.println("> 존재하는 게임아이디 : " + chessGameIds);
         System.out.println("> 점수 확인 : status");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
         System.out.println("> 게임 종료 : end");
