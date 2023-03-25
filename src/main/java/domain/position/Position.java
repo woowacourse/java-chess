@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public final class Position {
 
-    private static final Map<Integer, Map<Integer, Position>> CACHE = new HashMap<>();
+    private static final Map<Integer, Row> CACHE = new HashMap<>();
 
     private final int x;
     private final int y;
@@ -18,11 +18,11 @@ public final class Position {
     }
 
     public static Position of(final int x, final int y) {
-        CACHE.computeIfAbsent(y, k -> new HashMap<>())
+        CACHE.computeIfAbsent(y, k -> new Row(new HashMap<>()))
                 .putIfAbsent(x, new Position(x, y));
 
         return CACHE.get(y)
-                .get(x);
+                .getPosition(x);
     }
 
     public int diffY(final Position otherPosition) {
