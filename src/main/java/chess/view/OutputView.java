@@ -13,7 +13,7 @@ public class OutputView {
 
     public static void printBoard(List<List<String>> pieceNames) {
         for (List<String> names : pieceNames) {
-            names.forEach(System.out::println);
+            names.forEach(System.out::print);
             System.out.println();
         }
     }

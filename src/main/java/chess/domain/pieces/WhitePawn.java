@@ -52,7 +52,7 @@ public class WhitePawn extends Piece {
     }
 
     private void checkCanEat(Piece targetPiece) {
-        if (targetPiece.getTeam() == Team.WHITE) {
+        if (targetPiece.getTeam() != Team.BLACK) {
             throw new IllegalArgumentException("[ERROR] 도착지점이 상대편 기물이 아니므로 이동할 수 없습니다.");
         }
     }

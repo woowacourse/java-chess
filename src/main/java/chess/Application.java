@@ -49,6 +49,7 @@ public class Application {
 
             if (piece.isWhiteTeam()) {
                 pieceNames.add(piece.getType().getName().toLowerCase());
+                continue;
             }
             pieceNames.add(piece.getType().getName());
         }
