@@ -8,4 +8,8 @@ public class InputView {
     public String readCommand() {
         return scanner.nextLine();
     }
+
+    public String readGameName() {
+        return scanner.nextLine();
+    }
 }

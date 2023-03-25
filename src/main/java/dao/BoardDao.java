@@ -95,4 +95,31 @@ public class BoardDao {
         connection.close();
         return new Game(new Board(board), gameName);
     }
+
+    public void remove(String gameName) throws SQLException{
+        Connection connection = getConnection();
+        final String query = "delete from game where name = ?";
+
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            preparedStatement.execute();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        connection.close();
+    }
+
+    public String findTurnByGame(String gameName) throws SQLException{
+        Connection connection = getConnection();
+        final String query = "select team_turn from game where name = ?";
+
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getString("team_turn");
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

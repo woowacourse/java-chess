@@ -1,22 +1,43 @@
 package chessgame.controller;
 
+import chessgame.domain.Board;
+import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Command;
 import chessgame.domain.Game;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
+import dao.BoardDao;
+
+import java.sql.SQLException;
 
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final BoardDao boardDao;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+    public ChessController(InputView inputView, OutputView outputView, BoardDao boardDao) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.boardDao = boardDao;
     }
 
     public void run() {
-        Game game = new Game();
+        Game game = setGame();
         playGame(game);
+    }
+
+    public Game setGame(){
+        try {
+            String gameName = inputView.readGameName();
+            Game readGame = boardDao.read(gameName);
+            if(readGame==null){
+                return new Game(new Board(ChessBoardFactory.create()),gameName);
+            }
+            readGame.setDbState(boardDao.findTurnByGame(gameName));
+            return readGame;
+        }catch(SQLException e){
+            return null;
+        }
     }
 
     private void playGame(Game game) {
@@ -27,6 +48,16 @@ public class ChessController {
         } while (!game.isEnd());
         if (game.isEndByKing()) {
             outputView.printWinner(game.winTeam());
+        }
+
+        saveGame(game);
+    }
+
+    private void saveGame(Game game) {
+        try {
+            boardDao.remove(game.getName());
+            boardDao.save(game.board(),game.getName(),game.getTurn());
+        }catch (SQLException e){
         }
     }
 

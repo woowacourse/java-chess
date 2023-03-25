@@ -35,4 +35,11 @@ class BoardDaoTest {
 
         Assertions.assertThatNoException().isThrownBy(()->boardDao.save(board,"test",new White()));
     }
+
+    @Test
+    public void remove(){
+        Board board = new Board(ChessBoardFactory.create());
+        boardDao.save(board,"test", new White());
+        Assertions.assertThatNoException().isThrownBy(()->boardDao.remove("test"));
+    }
 }

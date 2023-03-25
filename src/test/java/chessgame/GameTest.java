@@ -1,10 +1,7 @@
 package chessgame;
 
 
-import chessgame.domain.Board;
-import chessgame.domain.Command;
-import chessgame.domain.Game;
-import chessgame.domain.Team;
+import chessgame.domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +17,7 @@ class GameTest {
 
     @BeforeEach
     void before() {
-        game = new Game();
+        game = new Game(new Board(ChessBoardFactory.create()),"test");
     }
 
     @Test
