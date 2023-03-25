@@ -1,4 +1,4 @@
-package chessgame.domain.board;
+package chessgame.domain.chessgame;
 
 import chessgame.domain.coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayName;

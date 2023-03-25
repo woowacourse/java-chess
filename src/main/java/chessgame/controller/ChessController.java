@@ -1,6 +1,6 @@
 package chessgame.controller;
 
-import chessgame.domain.board.ChessGame;
+import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
