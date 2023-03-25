@@ -53,7 +53,8 @@ public class PrintGameResult implements CommandStatus {
         if (chessGame.isTargetPieceOppositeKing(sourcePosition, targetPosition)) {
             return gameEnd(sourcePosition, targetPosition);
         }
-        piecePositionUpdate(sourcePosition, targetPosition);
+        piecePositionUpdateWhenOnlyMove(sourcePosition, targetPosition);
+        piecePositionUpdateWhenTakePiece(sourcePosition, targetPosition);
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
         return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()), chessGameDao);
@@ -74,16 +75,22 @@ public class PrintGameResult implements CommandStatus {
         return new End(resultCalculator);
     }
 
-    private void piecePositionUpdate(Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
-        Piece targetPiece = chessGame.findPieceByPosition(targetPosition);
-        UpdatePiecePositionDto updateSourcePiecePositionDto = new UpdatePiecePositionDto(sourcePosition);
-        FindPiecePositionDto findSourcePiecePositionDto = new FindPiecePositionDto(chessGame.getId(), sourcePiece.getRank(), sourcePiece.getFile());
-        FindPiecePositionDto findTargetPiecePositionDto = new FindPiecePositionDto(chessGame.getId(), targetPiece.getRank(), targetPiece.getFile());
+    private void piecePositionUpdateWhenOnlyMove(Position sourcePosition, Position targetPosition) {
         if (chessGame.isOnlyMove(targetPosition)) {
-            chessGameDao.updatePiecePosition(updateSourcePiecePositionDto, findSourcePiecePositionDto);
+            Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
+            UpdatePiecePositionDto updateTargetPiecePositionDto = new UpdatePiecePositionDto(targetPosition);
+            FindPiecePositionDto findSourcePiecePositionDto = new FindPiecePositionDto(chessGame.getId(), sourcePiece.getRank(), sourcePiece.getFile());
+            chessGameDao.updatePiecePosition(updateTargetPiecePositionDto, findSourcePiecePositionDto);
         }
+    }
+
+    private void piecePositionUpdateWhenTakePiece(Position sourcePosition, Position targetPosition) {
         if (chessGame.isTakePieceMove(targetPosition)) {
+            Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
+            Piece targetPiece = chessGame.findPieceByPosition(targetPosition);
+            UpdatePiecePositionDto updateSourcePiecePositionDto = new UpdatePiecePositionDto(sourcePosition);
+            FindPiecePositionDto findSourcePiecePositionDto = new FindPiecePositionDto(chessGame.getId(), sourcePiece.getRank(), sourcePiece.getFile());
+            FindPiecePositionDto findTargetPiecePositionDto = new FindPiecePositionDto(chessGame.getId(), targetPiece.getRank(), targetPiece.getFile());
             chessGameDao.deletePieceByPosition(findTargetPiecePositionDto);
             chessGameDao.updatePiecePosition(updateSourcePiecePositionDto, findSourcePiecePositionDto);
         }
