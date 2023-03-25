@@ -12,6 +12,7 @@ public enum Column {
     G("g", 7),
     H("h", 8);
 
+    private static final int INDEX_NUMBER_APPLIER = 1;
     private final String column;
     private final int columnIndex;
 
@@ -29,16 +30,25 @@ public enum Column {
 
     public static String symbolFromIndex(int index) {
         return Arrays.stream(values())
-            .filter(column -> column.columnIndex == index)
+            .filter(value -> value.columnIndex == index)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다")).column;
     }
 
     public int subtract(Column targetColumn) {
-        return this.ordinal() - targetColumn.ordinal();
+        return this.columnIndex - targetColumn.columnIndex;
     }
 
     public Column up(int num) {
-        return values()[ordinal() + num];
+        return values()[columnIndex + num - INDEX_NUMBER_APPLIER];
     }
+
+    public int compareIndex(Column otherColumn){
+        return Integer.compare(otherColumn.columnIndex,this.columnIndex);
+    }
+
+    public int realFieldIndex(){
+        return columnIndex - INDEX_NUMBER_APPLIER;
+    }
+
 }
