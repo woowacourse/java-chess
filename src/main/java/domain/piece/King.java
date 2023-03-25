@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
-    private King(Side side) {
+    public King(Side side) {
         super(side, PieceType.KING);
     }
 

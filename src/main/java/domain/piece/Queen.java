@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Queen extends Piece {
-    private Queen(Side side) {
+    public Queen(Side side) {
         super(side, PieceType.QUEEN);
     }
 

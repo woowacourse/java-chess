@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
-    private Pawn(Side side) {
+    public Pawn(Side side) {
         super(side, PieceType.PAWN);
     }
 
