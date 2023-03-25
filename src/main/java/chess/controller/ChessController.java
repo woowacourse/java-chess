@@ -60,8 +60,13 @@ public class ChessController {
             return;
         }
 
+        move(chessGame, command);
+    }
+
+    private void move(ChessGame chessGame, String command) {
         Position source = convertToSourcePosition(command);
         Position target = convertToTargetPosition(command);
+
         movePiece(chessGame, source, target);
     }
 
