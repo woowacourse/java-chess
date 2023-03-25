@@ -1,5 +1,7 @@
 package chess;
 
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -9,9 +11,11 @@ import java.util.Map;
 public final class ChessGame {
 
     private final Board board;
+    private Color turn;
 
     public ChessGame(final Board board) {
         this.board = board;
+        this.turn = WHITE;
     }
 
     public boolean isEnd() {
@@ -27,7 +31,8 @@ public final class ChessGame {
     }
 
     public void move(final Position from, final Position to) {
-        board.move(from, to);
+        board.move(from, to, turn);
+        turn = turn.opposite();
     }
 
     public Map<Color, Double> calculateScore() {

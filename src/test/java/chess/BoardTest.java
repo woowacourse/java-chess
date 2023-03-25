@@ -54,7 +54,7 @@ class BoardTest {
         void test_moveEmptyFrom() {
             Board board = new BoardFactory().createInitialBoard();
 
-            assertThatThrownBy(() -> board.move(D4, A1))
+            assertThatThrownBy(() -> board.move(D4, A1, WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("출발점에 말이 없습니다.");
         }
@@ -70,7 +70,7 @@ class BoardTest {
             assertTrue(board.board().containsKey(from));
             assertFalse(board.board().containsKey(to));
 
-            board.move(from, to);
+            board.move(from, to, WHITE);
 
             assertFalse(board.board().containsKey(from));
             assertTrue(board.board().containsKey(to));

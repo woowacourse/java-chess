@@ -18,23 +18,20 @@ import java.util.stream.Collectors;
 public final class Board {
 
     private final Map<Position, Piece> board;
-    private Color turn;
 
     public Board(final Map<Position, Piece> board) {
         this.board = board;
-        this.turn = WHITE;
     }
 
-    public void move(final Position from, final Position to) {
-        validateCanMove(from, to);
+    public void move(final Position from, final Position to, final Color turn) {
+        validateCanMove(from, to, turn);
         movePiece(from, to);
-        turn = turn.opposite();
     }
 
-    private void validateCanMove(final Position from, final Position to) {
+    private void validateCanMove(final Position from, final Position to, final Color turn) {
         validateSamePosition(from, to);
         validateIsFromEmpty(from);
-        validateIsDifferentColor(from);
+        validateIsDifferentColor(from, turn);
 
         Piece destination = board.getOrDefault(to, null);
 
@@ -55,7 +52,7 @@ public final class Board {
         }
     }
 
-    private void validateIsDifferentColor(final Position from) {
+    private void validateIsDifferentColor(final Position from, final Color turn) {
         if (!board.get(from).isSameColor(turn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
@@ -79,7 +76,11 @@ public final class Board {
             if (score.get(WHITE) > score.get(BLACK)) {
                 return WHITE;
             }
-            return BLACK;
+            if (score.get(WHITE) < score.get(BLACK)) {
+
+                return BLACK;
+            }
+            return null;
         }
         final List<Color> colorsOfKing = collectColorsOfKing();
         if (colorsOfKing.size() != 1) {

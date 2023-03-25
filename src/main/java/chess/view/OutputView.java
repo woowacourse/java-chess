@@ -84,7 +84,11 @@ public final class OutputView {
     }
 
     public static void printWinner(final Color winner) {
-        System.out.println("승리 팀은 " + winner.name() + "팀 입니다!!! 축하합니다!!!");
+        if (winner != null) {
+            System.out.println("승리 팀은 " + winner.name() + "팀 입니다!!! 축하합니다!!!");
+            return;
+        }
+        System.out.println("무승부입니다!");
     }
 
     public static void printStartMessage() {
