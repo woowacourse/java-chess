@@ -69,6 +69,10 @@ public final class Position {
         return column.getColumn();
     }
 
+    public static int getMaxIndex() {
+        return MAX_INDEX;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
