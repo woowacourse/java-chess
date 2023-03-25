@@ -12,10 +12,9 @@ public class Turn {
     private final List<Team> order;
     private int currentIndex;
 
-    public Turn(List<Team> teams) {
-        validate(teams);
+    public Turn() {
+        this.order = List.of(Team.WHITE, Team.BLACK);
         this.currentIndex = START_INDEX;
-        this.order = teams;
     }
 
     public Turn(Team team) {
@@ -23,6 +22,11 @@ public class Turn {
         this.currentIndex = order.indexOf(team);
     }
 
+    public Turn(List<Team> teams) {
+        validate(teams);
+        this.order = teams;
+        this.currentIndex = START_INDEX;
+    }
 
     private void validate(final List<Team> teams) {
         if (teams.size() != DEFAULT_TEAM_SIZE) {

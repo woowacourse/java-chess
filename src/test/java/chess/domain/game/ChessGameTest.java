@@ -52,7 +52,7 @@ class ChessGameTest {
     @Test
     void 말을_움직일_수_있다() {
         //given
-        ChessGame chessGame = new ChessGame(ChessBoard.createBoard(), TurnFixture.TURN, GameStatus.IDLE);
+        ChessGame chessGame = new ChessGame(ChessBoard.createBoard(), TurnFixture.TURN, GameStatus.START);
 
         //when & then
         assertDoesNotThrow(() -> chessGame.movePiece(A2, A4));

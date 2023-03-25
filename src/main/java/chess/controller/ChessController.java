@@ -21,6 +21,7 @@ import static chess.domain.game.Command.END;
 import static chess.domain.game.Command.MOVE;
 import static chess.domain.game.Command.START;
 import static chess.domain.game.Command.STATUS;
+import static chess.domain.game.GameStatus.IDLE;
 
 public class ChessController {
 
@@ -47,25 +48,40 @@ public class ChessController {
     }
 
     private void processGame() {
-        ChessGame chessGame = chessGameDao.select();
-        if (chessGame == null) {
-            chessGame = new ChessGame(ChessBoard.createBoard(), new Turn(List.of(Team.WHITE, Team.BLACK)), GameStatus.IDLE);
-            chessGameDao.save(chessGame);
-        }
+        ChessGame chessGame = loadChessGame();
+        initComment(chessGame);
+        play(chessGame);
+        endGame(chessGame);
+    }
 
-        final Command firstCommand = readValidateInput(this::readCommand);
-        chessGame.receiveCommand(firstCommand);
+    private void initComment(final ChessGame chessGame) {
+        Command command = readValidateInput(this::readCommand);
+        chessGame.receiveCommand(command);
+        chessGameDao.update(chessGame);
+    }
 
-        while (!chessGame.isEnd()) {
+    private void endGame(ChessGame chessGame) {
+        renderChessBoard();
+        printStatus(chessGame);
+        System.out.println("게임 종료" + chessGame.getCurrentTeam() + "의 패배!");
+    }
+
+    private void play(final ChessGame chessGame) {
+        while (!isEnd(chessGame)) {
             renderCurrentTeam();
             renderChessBoard();
             Command command = readValidateInput(this::readCommand);
             chessGame.receiveCommand(command);
         }
+    }
 
-        renderChessBoard();
-        printStatus(chessGame);
-        System.out.println("게임 종료" + chessGame.getCurrentTeam() + "의 패배!");
+    private ChessGame loadChessGame() {
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame == null) {
+            chessGame = new ChessGame(ChessBoard.createBoard(), new Turn(), IDLE);
+            chessGameDao.save(chessGame);
+        }
+        return chessGame;
     }
 
     private void renderCurrentTeam() {
@@ -92,15 +108,16 @@ public class ChessController {
     private void start(final List<String> commands) {
         final ChessGame chessGame = chessGameDao.select();
         Command.validateCommandSize(commands.size(), START);
-        if (!chessGame.isEnd()) {
+        if (!isEnd(chessGame)) {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
+        chessGameDao.update(chessGame);
     }
 
     private void move(final List<String> commands) {
         final ChessGame chessGame = chessGameDao.select();
         Command.validateCommandSize(commands.size(), MOVE);
-        if (chessGame.isEnd()) {
+        if (isEnd(chessGame)) {
             throw new IllegalArgumentException("체스게임을 시작하려면 START를 입력하세요.");
         }
 
@@ -112,11 +129,10 @@ public class ChessController {
 
     private void status(final List<String> commands) {
         final ChessGame chessGame = chessGameDao.select();
-        if (chessGame.isEnd()) {
+        Command.validateCommandSize(commands.size(), STATUS);
+        if (isEnd(chessGame)) {
             throw new IllegalArgumentException("체스게임을 시작하려면 START를 입력하세요.");
         }
-
-        Command.validateCommandSize(commands.size(), STATUS);
         printStatus(chessGame);
     }
 
@@ -129,11 +145,15 @@ public class ChessController {
     private void end(final List<String> commands) {
         final ChessGame chessGame = chessGameDao.select();
         Command.validateCommandSize(commands.size(), END);
-        if (chessGame.isEnd()) {
+        if (isEnd(chessGame)) {
             throw new IllegalArgumentException("체스게임을 시작하려면 START를 입력하세요.");
         }
-
         chessGameDao.update(chessGame);
+    }
+
+    private boolean isEnd(final ChessGame chessGame) {
+        GameStatus status = chessGame.getStatus();
+        return status == IDLE || status == GameStatus.END;
     }
 
     private <T> T readValidateInput(final Supplier<T> function) {

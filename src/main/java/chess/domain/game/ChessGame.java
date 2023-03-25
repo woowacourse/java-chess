@@ -8,7 +8,6 @@ import chess.domain.piece.Team;
 import java.math.BigDecimal;
 
 import static chess.domain.game.GameStatus.END;
-import static chess.domain.game.GameStatus.START;
 
 public class ChessGame {
 
@@ -16,7 +15,7 @@ public class ChessGame {
     private final Turn turn;
     private GameStatus gameStatus;
 
-    public ChessGame(final ChessBoard chessBoard, final Turn turn, GameStatus status) {
+    public ChessGame(final ChessBoard chessBoard, final Turn turn, final GameStatus status) {
         this.chessBoard = chessBoard;
         this.turn = turn;
         this.gameStatus = status;
@@ -30,7 +29,7 @@ public class ChessGame {
         validateStatus();
         validateTurn(from);
         chessBoard.movePiece(from, to);
-        
+
         if (chessBoard.isEnd()) {
             gameStatus = END;
         }
@@ -45,14 +44,9 @@ public class ChessGame {
     }
 
     private void validateStatus() {
-        if (this.isEnd()) {
+        if (this.gameStatus == END) {
             throw new IllegalStateException("이미 종료된 게임입니다.");
         }
-
-    }
-
-    public boolean isEnd() {
-        return gameStatus != START;
     }
 
     public BigDecimal getScore(Team team) {
@@ -65,5 +59,13 @@ public class ChessGame {
 
     public Team getCurrentTeam() {
         return turn.getCurrentTeam();
+    }
+
+    public GameStatus getStatus() {
+        return this.gameStatus;
+    }
+
+    public boolean isEnd() {
+        return this.gameStatus == END;
     }
 }
