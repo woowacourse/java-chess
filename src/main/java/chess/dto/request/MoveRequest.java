@@ -1,8 +1,8 @@
-package chess.domain.dto.request;
+package chess.dto.request;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.dto.PositionDto;
+import chess.dto.PositionDto;
 
 import java.util.List;
 

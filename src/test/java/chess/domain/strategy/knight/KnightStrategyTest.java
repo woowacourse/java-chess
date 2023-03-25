@@ -2,8 +2,8 @@ package chess.domain.strategy.knight;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.request.MoveRequest;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
