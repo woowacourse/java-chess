@@ -10,6 +10,8 @@ public interface GameStatus {
 
     GameStatus start();
 
+    GameStatus load(GameStatus gameStatus);
+
     GameStatus playTurn(Position source, Position target);
 
     GameStatus end();

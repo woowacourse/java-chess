@@ -19,6 +19,11 @@ public final class Waiting implements GameStatus {
     }
 
     @Override
+    public GameStatus load(final GameStatus gameStatus) {
+        return gameStatus;
+    }
+
+    @Override
     public GameStatus playTurn(final Position source, final Position target) {
         throw new UnsupportedOperationException("시작하기 전에 이동 명령을 내릴 수 없습니다.");
     }

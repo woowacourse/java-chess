@@ -23,6 +23,11 @@ public final class Running implements GameStatus {
     }
 
     @Override
+    public GameStatus load(final GameStatus gameStatus) {
+        throw new UnsupportedOperationException("시작한 후에는 게임을 불러올 수 없습니다.");
+    }
+
+    @Override
     public GameStatus playTurn(final Position source, final Position target) {
         board.confirmMove(source, target, turn);
         return new Running(board, changeTurn());

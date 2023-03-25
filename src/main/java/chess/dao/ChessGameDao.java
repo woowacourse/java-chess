@@ -1,11 +1,16 @@
 package chess.dao;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Running;
 import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
+import chess.domain.piece.property.Kind;
 import chess.dto.PositionStringMapper;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class ChessGameDao {
@@ -42,6 +47,7 @@ public final class ChessGameDao {
             }
             return null;
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -100,19 +106,17 @@ public final class ChessGameDao {
     }
 
     private void updateTarget(final Long gameId, final Piece piece, final String mappingTarget) {
-        String sql = "INSERT INTO board (piece, color) VALUES(?, ?) " +
+        String sql = "INSERT INTO board (position, piece, color, game_id) VALUES(?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE " +
                 "piece = ?," +
-                "color = ? " +
-                "WHERE position = ? " +
-                "AND game_id = ?";
+                "color = ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, piece.getName());
-            preparedStatement.setString(2, piece.getColor().name());
-            preparedStatement.setString(3, piece.getName());
-            preparedStatement.setString(4, piece.getColor().name());
-            preparedStatement.setString(5, mappingTarget);
-            preparedStatement.setLong(6, gameId);
+            preparedStatement.setString(1, mappingTarget);
+            preparedStatement.setString(2, piece.getName());
+            preparedStatement.setString(3, piece.getColor().name());
+            preparedStatement.setLong(4, gameId);
+            preparedStatement.setString(5, piece.getName());
+            preparedStatement.setString(6, piece.getColor().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -129,35 +133,35 @@ public final class ChessGameDao {
             throw new RuntimeException(e);
         }
     }
-//
-//    public ChessGame load(int gameId) {
-//        String turn = findTurnById(gameId);
-//        Map<Position, Piece> board = new HashMap<>();
-//
-//        String sql = "SELECT * FROM board WHERE game_id = ?";
-//        try {
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setInt(1, gameId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                String position = resultSet.getString("position");
-//                String piece = resultSet.getString("piece");
-//                String color = resultSet.getString("color");
-//                Kind kind = Kind.valueOf(piece);
-//                board.put(Position.from(position), kind.toPiece(color));
-//            }
-//
-//            return ChessGame.load(new Board(board), Color.valueOf(turn));
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-//    }
 
-    private String findTurnById(int gameId) {
+    public Running load(Long gameId) {
+        String turn = findTurnById(gameId);
+        Map<Position, Piece> board = new HashMap<>();
+
+        String sql = "SELECT * FROM board WHERE game_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, gameId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String position = resultSet.getString("position");
+                String piece = resultSet.getString("piece");
+                String color = resultSet.getString("color");
+                Kind kind = Kind.valueOf(piece);
+                board.put(Position.from(position), kind.toPiece(color));
+            }
+
+            return new Running(new Board(board), Color.valueOf(turn));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private String findTurnById(Long gameId) {
         String sql = "SELECT * FROM game WHERE game_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, gameId);
+            preparedStatement.setLong(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getString("turn");

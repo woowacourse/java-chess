@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
@@ -16,20 +15,16 @@ public final class ChessGame {
         this.gameStatus = new Waiting();
     }
 
-    public ChessGame(Board board, Color turn) {
-        this.gameStatus = new Running(board, turn);
-    }
-
     public void startGame() {
         this.gameStatus = gameStatus.start();
     }
 
-    public void playTurn(Position source, Position target) {
-        this.gameStatus = gameStatus.playTurn(source, target);
+    public void load(GameStatus gameStatus) {
+        this.gameStatus = this.gameStatus.load(gameStatus);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return gameStatus.getBoard();
+    public void playTurn(Position source, Position target) {
+        this.gameStatus = gameStatus.playTurn(source, target);
     }
 
     public void end() {
@@ -40,12 +35,16 @@ public final class ChessGame {
         return gameStatus.isOnGoing();
     }
 
-    public String getTurn() {
-        return gameStatus.getTurn().name();
-    }
-
     public double computeScore(Color color) {
         return gameStatus.computeScore(color);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return gameStatus.getBoard();
+    }
+
+    public String getTurn() {
+        return gameStatus.getTurn().name();
     }
 
     public Long getGameId() {
