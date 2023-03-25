@@ -26,6 +26,14 @@ public class ChessGame {
         board.checkPieceMoveCondition(sourcePosition, targetPosition);
     }
 
+    public boolean isOnlyMove(Position targetPosition) {
+        return board.isOnlyMove(targetPosition);
+    }
+
+    public boolean isTakePieceMove(Position targetPosition) {
+        return board.isTakePieceMove(targetPosition);
+    }
+
     public void movePiece(Position sourcePosition, Position targetPosition) {
         board.movePiece(sourcePosition, targetPosition);
     }

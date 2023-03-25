@@ -1,12 +1,12 @@
 package chess.domain.piece.dto;
 
-public class FindPieceDto {
+public class FindPiecePositionDto {
 
     private Long gameId;
     private String rank;
     private String file;
 
-    public FindPieceDto(Long gameId, int rank, int file) {
+    public FindPiecePositionDto(Long gameId, int rank, int file) {
         this.gameId = gameId;
         this.rank = String.valueOf(rank);
         this.file = String.valueOf(file);

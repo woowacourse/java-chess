@@ -36,6 +36,7 @@ public class Board {
         checkPieceMovable(targetPosition, sourcePiece);
         checkPath(targetPosition, sourcePiece);
         checkTargetPositionPieceSide(targetPosition, sourcePiece);
+        checkMoveWhenPawn(sourcePosition, targetPosition, sourcePiece);
     }
 
     private void checkPieceMovable(final Position targetPosition, final Piece sourcePiece) {
@@ -59,22 +60,33 @@ public class Board {
         }
     }
 
+    private boolean isExistPieceOnPosition(Position targetPosition) {
+        return pieces.isPieceExistOnPosition(targetPosition);
+    }
+
     private void checkSameSidePiece(final Piece sourcePiece, final Piece targetPiece) {
         if (targetPiece.isSameSide(sourcePiece.getSide())) {
             throw new IllegalArgumentException("[ERROR] 타겟 위치에 아군 말이 존재합니다.");
         }
     }
 
-    private boolean isExistPieceOnPosition(Position targetPosition) {
-        return pieces.isPieceExistOnPosition(targetPosition);
-    }
-
-    public void movePiece(Position sourcePosition, Position targetPosition) {
-        final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
+    private void checkMoveWhenPawn(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
         if (sourcePiece.isPawn()) {
             checkPieceDiagonalMove(sourcePosition, targetPosition);
             checkPieceLinearMove(sourcePosition, targetPosition);
         }
+    }
+
+    public boolean isOnlyMove(Position targetPosition) {
+       return !isExistPieceOnPosition(targetPosition);
+    }
+
+    public boolean isTakePieceMove(Position targetPosition) {
+        return isExistPieceOnPosition(targetPosition);
+    }
+
+    public void movePiece(Position sourcePosition, Position targetPosition) {
+        final Piece sourcePiece = pieces.findPieceByPosition(sourcePosition);
         takePieceOrOnlyMove(targetPosition, sourcePiece);
     }
 
@@ -93,10 +105,10 @@ public class Board {
     }
 
     private void takePieceOrOnlyMove(Position targetPosition, Piece sourcePiece) {
-        if (isExistPieceOnPosition(targetPosition)) {
+        if (isTakePieceMove(targetPosition)) {
             takePieceMove(targetPosition, sourcePiece);
         }
-        if (!isExistPieceOnPosition(targetPosition)) {
+        if (isOnlyMove(targetPosition)) {
             move(targetPosition, sourcePiece);
         }
     }

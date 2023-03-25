@@ -13,7 +13,9 @@ import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
+import chess.domain.piece.dto.FindPiecePositionDto;
 import chess.domain.piece.dto.SavePieceDto;
+import chess.domain.piece.dto.UpdatePiecePositionDto;
 import chess.domain.position.Position;
 import chess.domain.service.ChessGame;
 
@@ -51,6 +53,7 @@ public class PrintGameResult implements CommandStatus {
         if (chessGame.isTargetPieceOppositeKing(sourcePosition, targetPosition)) {
             return gameEnd(sourcePosition, targetPosition);
         }
+        piecePositionUpdate(sourcePosition, targetPosition);
         chessGame.movePiece(sourcePosition, targetPosition);
         Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
         return new Play(new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange()), chessGameDao);
@@ -69,6 +72,21 @@ public class PrintGameResult implements CommandStatus {
         resultCalculator.saveTotalScoreBySide(Side.BLACK, chessGame.getTotalScoreBySide(Side.BLACK));
         resultCalculator.saveGameResultBySide();
         return new End(resultCalculator);
+    }
+
+    private void piecePositionUpdate(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
+        Piece targetPiece = chessGame.findPieceByPosition(targetPosition);
+        UpdatePiecePositionDto updateSourcePiecePositionDto = new UpdatePiecePositionDto(sourcePosition);
+        FindPiecePositionDto findSourcePiecePositionDto = new FindPiecePositionDto(chessGame.getId(), sourcePiece.getRank(), sourcePiece.getFile());
+        FindPiecePositionDto findTargetPiecePositionDto = new FindPiecePositionDto(chessGame.getId(), targetPiece.getRank(), targetPiece.getFile());
+        if (chessGame.isOnlyMove(targetPosition)) {
+            chessGameDao.updatePiecePosition(updateSourcePiecePositionDto, findSourcePiecePositionDto);
+        }
+        if (chessGame.isTakePieceMove(targetPosition)) {
+            chessGameDao.deletePieceByPosition(findTargetPiecePositionDto);
+            chessGameDao.updatePiecePosition(updateSourcePiecePositionDto, findSourcePiecePositionDto);
+        }
     }
 
     @Override
