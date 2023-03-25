@@ -1,7 +1,10 @@
 package chess;
 
+import static chess.domain.command.Command.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
+import static chess.view.InputView.*;
+import static chess.view.OutputView.*;
 
 import java.util.Map;
 
@@ -9,8 +12,6 @@ import chess.domain.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
 
 public class ChessApplication {
 
@@ -21,34 +22,34 @@ public class ChessApplication {
 	}
 
 	private static void start(final Board board) {
-		String inputCommand = InputView.askStart();
+		String inputCommand = askStart();
 		operateStart(board, inputCommand);
 	}
 
 	private static void operateStart(final Board board, final String inputCommand) {
 		try {
-			Command.ofStart(inputCommand);
+			ofStart(inputCommand);
 			final Map<Position, Piece> chessBoard = board.board();
 
 			printBoard(chessBoard, ranks(), files());
 		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
+			printErrorMessage(e.getMessage());
 			start(board);
 		}
 
 	}
 
 	private static void play(final Board board) {
-		String inputCommand = InputView.askNext();
+		String inputCommand = askNext();
 		operatePlay(board, inputCommand);
 	}
 
 	private static void operatePlay(final Board board, final String inputCommand) {
 		try {
-			Command command = Command.ofCommand(inputCommand);
+			Command command = ofCommand(inputCommand);
 			operateCommand(board, command);
 		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
+			printErrorMessage(e.getMessage());
 		} finally {
 			play(board);
 		}
