@@ -2,6 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
 import java.util.List;
@@ -46,8 +47,20 @@ class BoardTest {
 
     @Test
     @DisplayName("해당 팀의 현재 점수를 구한다.")
-    void calculateScore() {
+    void calculateScore_noChange() {
         assertThat(board.calculateScore(Team.WHITE)).isEqualTo(new Score(38));
+    }
+
+    @Test
+    @DisplayName("해당 팀의 현재 점수를 구한다.")
+    void calculateScore() {
+        board.move(new Position(2, 2), new Position(4, 2));
+        board.move(new Position(7, 3), new Position(5, 3));
+        board.move(new Position(4, 2), new Position(5, 3));
+        assertAll(
+                () -> assertThat(board.calculateScore(Team.WHITE)).isEqualTo(new Score(37)),
+                () -> assertThat(board.calculateScore(Team.BLACK)).isEqualTo(new Score(37))
+        );
     }
 
     @Test

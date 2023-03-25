@@ -5,10 +5,12 @@ import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -81,10 +83,24 @@ public class Board {
     }
 
     public Score calculateScore(Team team) {
-        return board.keySet().stream()
+        Score score = board.keySet().stream()
                 .filter(key -> board.get(key).isSameTeam(team))
                 .map(key -> board.get(key).convertToScore())
                 .reduce(Score.min(), Score::add);
+
+        return reCalculateAboutPawn(score, team);
+    }
+
+    private Score reCalculateAboutPawn(Score score, Team team) {
+        Map<Integer, Long> pawnCount = board.keySet().stream()
+                .filter(key -> board.get(key).isSameTeam(team) && board.get(key).getClass() == Pawn.class)
+                .collect(Collectors.groupingBy(Position::getFile, Collectors.counting()));
+
+        Long countForRecalculation = pawnCount.values().stream()
+                .filter(count -> count > 1)
+                .reduce(0L, Long::sum);
+
+        return score.add(new Score(-0.5 * countForRecalculation));
     }
 
     public boolean hasKing(Team team) {
