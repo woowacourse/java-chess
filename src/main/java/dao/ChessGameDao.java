@@ -8,6 +8,5 @@ public interface ChessGameDao {
 
     void create(final Coordinate start, final Coordinate end);
     List<Coordinate> read();
-    void update(final Coordinate start, final Coordinate end);
     void delete();
 }

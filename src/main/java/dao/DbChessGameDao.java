@@ -81,11 +81,6 @@ CREATE TABLE chess_game (
     }
 
     @Override
-    public void update(final Coordinate start, final Coordinate end) {
-
-    }
-
-    @Override
     public void delete() {
         final var query = "DELETE FROM chess_game";
 
