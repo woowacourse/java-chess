@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+## db ##
+/main/java/chess/db/mysql/data/chess
