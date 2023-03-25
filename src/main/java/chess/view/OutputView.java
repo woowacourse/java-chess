@@ -139,6 +139,10 @@ public class OutputView {
         System.out.println("새로운 게임을 만듭니다.");
     }
 
+    public void printPlaySavedRoomMessage() {
+        System.out.println("저장되어 있던 게임을 실행합니다.");
+    }
+
     public void printSavedRooms(List<Room> rooms) {
         for (Room room : rooms) {
             System.out.println(room.roomId() + "번 방");
