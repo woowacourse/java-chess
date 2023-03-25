@@ -13,18 +13,33 @@ import java.util.Map;
 
 public class ChessGameService {
 
-    private final Board board;
+    private Board board;
+    private final ChessGameDao chessGameDao;
 
     public ChessGameService() {
-        this.board = Board.create();
+        this.board = BoardInitializer.initialize();
+        this.chessGameDao = new ChessGameDao();
+    }
+
+    public void restart() {
+        final List<MoveDto> moves = chessGameDao.restart();
+        for (MoveDto move : moves) {
+            final String source = move.getSource();
+            final String target = move.getTarget();
+
+            board.move(source, target);
+        }
     }
 
     public void move(final String source, final String target) {
         board.move(source, target);
+        MoveDto moveDto = new MoveDto(source, target);
+        chessGameDao.save(moveDto);
     }
 
     public void clear() {
         board.clear();
+        chessGameDao.clear();
     }
 
     public double whiteScore() {
@@ -40,11 +55,11 @@ public class ChessGameService {
         return boardResult.calculatePoints(color);
     }
 
-    public boolean isKingDead() {
-        return board.isKingDead(Color.WHITE) || board.isKingDead(Color.BLACK);
-    }
-
     public Map<Position, Piece> board(){
         return board.getBoard();
+    }
+
+    public boolean isKingDead() {
+        return board.isKingDead(Color.WHITE) || board.isKingDead(Color.BLACK);
     }
 }
