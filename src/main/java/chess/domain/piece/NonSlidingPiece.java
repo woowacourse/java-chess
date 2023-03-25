@@ -26,9 +26,4 @@ public abstract class NonSlidingPiece extends Piece {
     public final boolean isInitialPawn() {
         return false;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

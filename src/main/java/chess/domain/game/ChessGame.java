@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhitePawn;
@@ -10,6 +11,7 @@ import chess.dto.BoardDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static chess.domain.piece.pawn.Pawn.DEGRADED_SCORE;
 import static java.util.stream.Collectors.groupingBy;
@@ -91,7 +93,7 @@ public final class ChessGame {
 
         final Map<File, Long> pieceCountByFile = board.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> entry.getValue().isSamePieceTypeAs(PieceType.PAWN))
                 .filter(entry -> entry.getValue().isSameTeamWith(team))
                 .collect(groupingBy(e -> e.getKey().getFile(), Collectors.counting()));
 
@@ -102,6 +104,24 @@ public final class ChessGame {
                 .sum();
 
         return totalScore - totalMinusScore;
+    }
+
+    private Stream<Map.Entry<Position, Piece>> getEntryStream() {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSamePieceTypeAs(PieceType.KING));
+    }
+
+    public boolean isKingDead() {
+        return getEntryStream()
+                .count() < 2;
+    }
+
+    public Team getWinner() {
+        return getEntryStream()
+                .map(m -> m.getValue().getTeam())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("왕이 없을 수는 없습니다."));
     }
 
     public BoardDto getBoard() {

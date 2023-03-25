@@ -49,11 +49,6 @@ public abstract class Pawn extends Piece {
         throw new IllegalArgumentException(INVALID_MOVEMENT_MESSAGE);
     }
 
-    @Override
-    public final boolean isPawn() {
-        return true;
-    }
-
     protected static final class AttackStrategies {
 
         private final List<MovingStrategy> strategies;

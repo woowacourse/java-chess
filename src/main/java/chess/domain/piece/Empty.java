@@ -28,9 +28,4 @@ public final class Empty extends Piece {
     public boolean isInitialPawn() {
         return false;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

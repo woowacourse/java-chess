@@ -31,9 +31,4 @@ public abstract class SlidingPiece extends Piece {
     public final boolean isInitialPawn() {
         return false;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

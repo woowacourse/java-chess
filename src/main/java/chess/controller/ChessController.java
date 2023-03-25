@@ -72,6 +72,10 @@ public final class ChessController {
             throw new IllegalArgumentException("체스 게임은 아직 시작하지 않았습니다.");
         }
         chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
+        if (chessGame.isKingDead()) {
+            outputView.printWinner(chessGame.getWinner());
+            return END;
+        }
         outputView.printBoard(chessGame.getBoard());
         return MOVE;
     }

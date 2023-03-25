@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.piece.Team;
 import chess.dto.BoardDto;
 
 public final class OutputView {
@@ -22,6 +23,10 @@ public final class OutputView {
                 System.out.println();
             }
         }
+    }
+
+    public void printWinner(final Team winner) {
+        System.out.printf("왕이 죽었습니다. 승자는 %s팀 입니다.", winner.name());
     }
 
     public void printEndMessage() {
