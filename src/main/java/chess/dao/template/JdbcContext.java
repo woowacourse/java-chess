@@ -45,8 +45,8 @@ public class JdbcContext {
     private <T> T workWithStatementStrategy(StatementStrategy statementStrategy, RowMapper<T> rowMapper) {
         try (Connection c = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
                 PASSWORD);
-             PreparedStatement ps = statementStrategy.makePreparedStatement(c)) {
-            ResultSet resultSet = ps.executeQuery();
+             PreparedStatement ps = statementStrategy.makePreparedStatement(c);
+             ResultSet resultSet = ps.executeQuery()) {
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
             throw new IllegalStateException(DATABASE_CONNECTION_EXCEPTION_MESSAGE, e);
