@@ -18,18 +18,13 @@ public final class Turn {
         if (currentPositionPiece.isNeutrality()) {
             throw new IllegalArgumentException(INVALID_EMPTY_PIECE_MOVE);
         }
-
-        if (isValidTurn(currentPositionPiece)) {
+        if (currentPositionPiece.isAlly(this.turn)) {
             return;
         }
         throw new IllegalArgumentException(INVALID_CONSECUTIVE_MOVE);
     }
 
-    private boolean isValidTurn(final Piece currentPositionPiece) {
-        return currentPositionPiece.isAlly(this.turn);
-    }
-
-    public Turn change() {
+    public Turn changeTurn() {
         if (this.turn.isWhite()) {
             return new Turn(Team.BLACK);
         }

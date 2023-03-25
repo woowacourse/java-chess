@@ -80,7 +80,7 @@ class TurnTest {
     @DisplayName("턴을 바꿔준다.")
     void 턴을_바꿔준다() {
         assertThat(turn.getTurn()).isEqualTo(Team.WHITE);
-        Turn changedTurn = turn.change();
+        Turn changedTurn = turn.changeTurn();
         assertThat(changedTurn.getTurn()).isEqualTo(Team.BLACK);
     }
 }

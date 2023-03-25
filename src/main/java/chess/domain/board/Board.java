@@ -80,7 +80,7 @@ public final class Board {
 
     private void checkAndChangeTurn(final Piece currentPositionPiece, final Turn turn) {
         turn.validateTurn(currentPositionPiece);
-        this.turn = turn.change();
+        this.turn = turn.changeTurn();
     }
 
     private void validateMove(final Position currentPosition, final Position targetPosition, final Piece currentPositionPiece) {
