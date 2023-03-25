@@ -45,12 +45,4 @@ public class Square {
         int row = rank.minus(other.rank);
         return Direction.of(column, row);
     }
-
-    @Override
-    public String toString() {
-        return "Square{" +
-            "chessColumn=" + chessColumn +
-            ", rank=" + rank +
-            '}';
-    }
 }
