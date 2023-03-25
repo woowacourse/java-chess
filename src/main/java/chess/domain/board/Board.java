@@ -75,7 +75,7 @@ public class Board {
         }
     }
 
-    public boolean isEndOfGame() {
+    public boolean isGameOver() {
         long kingCount = pieces.values().stream()
                 .filter(piece -> piece.isSameType(PieceType.KING))
                 .count();

@@ -23,7 +23,7 @@ public class GameResult {
     public GameResult(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
-    
+
     public Score getScore(Color color) {
         Map<Position, Piece> colorPieces = filterPiecesByColor(pieces, color);
         double score = calculateScore(colorPieces);
@@ -58,13 +58,13 @@ public class GameResult {
     }
 
     public Color getWinner() {
-        if (isEndOfGame()) {
+        if (isGameOver()) {
             return getWinnerOfEnd();
         }
         return getCurrentWinner(getScore(Color.BLACK), getScore(Color.WHITE));
     }
 
-    private boolean isEndOfGame() {
+    private boolean isGameOver() {
         long kingCount = pieces.values().stream()
                 .filter(piece -> piece.isSameType(PieceType.KING))
                 .count();

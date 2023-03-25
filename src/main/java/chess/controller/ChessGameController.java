@@ -74,7 +74,7 @@ public class ChessGameController {
         if (commandType == CommandType.MOVE) {
             MoveRequest moveRequest = request.getMoveRequest();
             game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
-            if (game.isEndOfGame()) {
+            if (game.isGameOver()) {
                 outputView.printFinalWinner(game.getResult());
                 return CommandType.END;
             }
