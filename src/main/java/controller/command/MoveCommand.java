@@ -25,7 +25,9 @@ public class MoveCommand implements GameCommand {
         }
         chessBoard.move(src, dest);
         outputView.printChessBoard(chessBoard);
+        if (!chessBoard.isExistKing()) {
+            return GameStatus.END;
+        }
         return GameStatus.RUNNING;
     }
-
 }

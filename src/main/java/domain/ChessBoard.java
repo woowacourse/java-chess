@@ -90,5 +90,10 @@ public class ChessBoard {
         return scoreCalculator.sumWhiteScore(pieceLocations.getPieceLocations());
     }
 
+    public boolean isExistKing() {
+        KingFinder kingFinder = new KingFinder();
+        return kingFinder.isExistKing(pieceLocations.getPieceLocations(), piece -> piece.isBlack())
+                && kingFinder.isExistKing(pieceLocations.getPieceLocations(), piece -> piece.isWhite());
+    }
 
 }
