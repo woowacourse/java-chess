@@ -35,6 +35,10 @@ public enum Column {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다")).column;
     }
 
+    public static int indexFromColumn(Column column) {
+        return column.columnIndex;
+    }
+
     public int subtract(Column targetColumn) {
         return this.columnIndex - targetColumn.columnIndex;
     }
@@ -43,11 +47,11 @@ public enum Column {
         return values()[columnIndex + num - INDEX_NUMBER_APPLIER];
     }
 
-    public int compareIndex(Column otherColumn){
-        return Integer.compare(otherColumn.columnIndex,this.columnIndex);
+    public int compareIndex(Column otherColumn) {
+        return Integer.compare(otherColumn.columnIndex, this.columnIndex);
     }
 
-    public int realFieldIndex(){
+    public int realFieldIndex() {
         return columnIndex - INDEX_NUMBER_APPLIER;
     }
 

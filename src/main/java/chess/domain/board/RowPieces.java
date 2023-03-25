@@ -4,6 +4,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceMatcher;
 import chess.domain.piece.Point;
+import chess.domain.piece.coordinate.Column;
 import chess.view.SymbolMatcher;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class RowPieces implements Comparable<RowPieces> {
 
     private static final int FIRST_PIECE_INDEX = 0;
+    private static final int INDEX_NUMBER_APPLIER = 1;
 
     private final List<Piece> pieces;
 
@@ -36,6 +38,10 @@ public class RowPieces implements Comparable<RowPieces> {
             sum = presentPoint.subtract(sum).add(presentPoint.sum(previousPoint));
         }
         return sum;
+    }
+
+    public boolean checkPawnByColumn(Column column) {
+        return pieces.get(Column.indexFromColumn(column) - INDEX_NUMBER_APPLIER).isPawn();
     }
 
     @Override
