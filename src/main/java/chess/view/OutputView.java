@@ -1,6 +1,8 @@
 package chess.view;
 
 import chess.controller.dto.PieceResponse;
+import chess.domain.game.Status;
+import chess.domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 점수 출력 : status");
     }
 
     public void printPieces(List<PieceResponse> pieces) {
@@ -46,6 +49,24 @@ public class OutputView {
             char[] line = board[i];
             System.out.println(String.copyValueOf(line));
         }
+    }
+
+    public void printStatus(Status status) {
+        printColorStatus(status, Color.WHITE);
+        printColorStatus(status, Color.BLACK);
+        printWinner(status.getWinner());
+    }
+
+    private void printColorStatus(Status status, Color color) {
+        System.out.println(color.name() + ": " + status.getScore(color).getValue());
+    }
+
+    private void printWinner(Color winner) {
+        if (winner == Color.NONE) {
+            System.out.println("현재 동점입니다.");
+            return;
+        }
+        System.out.println("현재 " + winner.name() + "이(가) 앞서고있습니다.");
     }
 
     private enum PieceType {

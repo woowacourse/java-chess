@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class ChessGameController {
 
@@ -41,7 +42,7 @@ public class ChessGameController {
         if (commandType == CommandType.START) {
             play(new Game());
         }
-        if (commandType == CommandType.MOVE) {
+        if (Set.of(CommandType.MOVE, CommandType.STATUS).contains(commandType)) {
             throw new IllegalArgumentException("아직 게임이 시작되지 않은 상태입니다.");
         }
     }
@@ -66,6 +67,9 @@ public class ChessGameController {
         CommandType commandType = request.getCommandType();
         if (commandType == CommandType.START) {
             throw new IllegalArgumentException("게임이 진행중입니다.");
+        }
+        if (commandType == CommandType.STATUS) {
+            outputView.printStatus(game.getStatus());
         }
         if (commandType == CommandType.MOVE) {
             MoveRequest moveRequest = request.getMoveRequest();

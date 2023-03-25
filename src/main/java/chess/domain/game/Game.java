@@ -40,6 +40,10 @@ public class Game {
     }
 
     public String getTurn() {
-        return this.turn.name();
+        return turn.name();
+    }
+
+    public Status getStatus() {
+        return board.getStatus();
     }
 }

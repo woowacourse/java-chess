@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.game.Status;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Move;
@@ -69,6 +70,10 @@ public class Board {
         if (pieces.get(position) != null) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
+    }
+
+    public Status getStatus() {
+        return Status.from(pieces);
     }
 
     public Map<Position, Piece> getPieces() {

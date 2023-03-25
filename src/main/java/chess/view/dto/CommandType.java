@@ -7,9 +7,9 @@ import java.util.Set;
 
 public enum CommandType {
 
-    START, END, MOVE;
-    
-    private static final Set<CommandType> SINGLE_COMMAND_TYPES = Set.of(START, END);
+    START, END, MOVE, STATUS;
+
+    private static final Set<CommandType> SINGLE_COMMAND_TYPES = Set.of(START, END, STATUS);
 
     public static CommandType from(String input) {
         return Arrays.stream(values())
