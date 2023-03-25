@@ -8,9 +8,9 @@ import java.util.function.BiPredicate;
 
 public enum Situation {
 
-    COLLEAGUE(Piece::hasSameColorWith),
-    ENEMY((x, y) -> !(y.hasSameColorWith(Color.NEUTRAL) || x.hasSameColorWith(y))),
-    NEUTRAL((x, y) -> y.hasSameColorWith(Color.NEUTRAL))
+    COLLEAGUE((x, y) -> x.getColor() == y.getColor()),
+    ENEMY((x, y) -> x.getColor() != Color.NEUTRAL && x.getColor() != y.getColor()),
+    NEUTRAL((x, y) -> y.getColor() == Color.NEUTRAL)
     ;
 
     private final BiPredicate<Piece, Piece> selector;

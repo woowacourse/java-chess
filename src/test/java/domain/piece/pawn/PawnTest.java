@@ -28,13 +28,13 @@ class PawnTest {
         assertThat(whitePawn.isPawn()).isTrue();
         assertThat(whitePawn.getPoint()).isEqualTo(1);
         assertThat(whitePawn.isKing()).isFalse();
-        assertThat(whitePawn.hasSameColorWith(Color.WHITE)).isTrue();
+        assertThat(whitePawn.getColor() == Color.WHITE).isTrue();
 
         assertThat(blackPawn.canJump()).isFalse();
         assertThat(blackPawn.isPawn()).isTrue();
         assertThat(blackPawn.getPoint()).isEqualTo(1);
         assertThat(blackPawn.isKing()).isFalse();
-        assertThat(blackPawn.hasSameColorWith(Color.BLACK)).isTrue();
+        assertThat(blackPawn.getColor() == Color.BLACK).isTrue();
     }
 
     @Test

@@ -18,7 +18,7 @@ class EmptyPieceTest {
         assertThat(emptyPiece.canJump()).isFalse();
         assertThat(emptyPiece.isKing()).isFalse();
         assertThat(emptyPiece.isPawn()).isFalse();
-        assertThat(emptyPiece.hasSameColorWith(Color.NEUTRAL)).isTrue();
+        assertThat(emptyPiece.getColor() == Color.NEUTRAL).isTrue();
         assertThat(emptyPiece.getPoint()).isEqualTo(0);
     }
 

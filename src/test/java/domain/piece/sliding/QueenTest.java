@@ -21,7 +21,7 @@ class QueenTest {
         assertThat(queen.canJump()).isFalse();
         assertThat(queen.isPawn()).isFalse();
         assertThat(queen.isKing()).isFalse();
-        assertThat(queen.hasSameColorWith(Color.WHITE)).isTrue();
+        assertThat(queen.getColor() == Color.WHITE).isTrue();
         assertThat(queen.getPoint()).isEqualTo(9);
     }
 
