@@ -96,6 +96,10 @@ public final class Pieces {
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, KING_DEFAULT_RANK_POSITION, Shape.KING));
     }
 
+    public static Pieces from(List<Piece> dbPieces) {
+        return new Pieces(dbPieces);
+    }
+
     public long getShapeCount(final Shape shape) {
         return pieces.stream()
                 .filter(piece -> piece.isSameShape(shape))
