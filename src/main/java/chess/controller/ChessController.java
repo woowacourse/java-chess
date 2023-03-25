@@ -15,6 +15,8 @@ import chess.view.resposne.PieceResponse;
 import chess.view.resposne.StatusResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class ChessController {
@@ -27,6 +29,7 @@ public class ChessController {
     private static final String GAMES = "games";
     private static final String CREATE = "create";
     private static final String JOIN = "join";
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
     private static final Filter filter = new Filter(
             List.of(START, END, MOVE, STATUS, GAMES, CREATE, JOIN),
             List.of(START, END, MOVE, STATUS)
@@ -80,7 +83,7 @@ public class ChessController {
         if (action == null) {
             throw new IllegalArgumentException("잘못된 명령입니다.");
         }
-        action.execute(request);
+        executorService.submit(() -> action.execute(request));
     }
 
     public void login(Request request) {
