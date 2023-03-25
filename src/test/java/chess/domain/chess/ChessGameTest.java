@@ -23,20 +23,26 @@ class ChessGameTest {
         final Position target = new Position(6, 7);
 
         // when, then
-        assertThatThrownBy(() -> chessGame.setUp(source, target, CampType.WHITE))
+        assertThatThrownBy(() -> chessGame.run(source, target, CampType.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("현재 차례가 아닙니다. 현재 차례 = WHITE");
     }
 
     @Test
-    @DisplayName("현재 체스 게임에서 킹이 살아있는지 판단한다.")
-    void isKingAlive() {
+    @DisplayName("모든 진영의 왕이 살아있는 것이 아니라면 false를 반환한다.")
+    void run() {
         // given
         final ChessGame chessGame = new ChessGame();
+        final Position source = new Position(1, 0);
+        final Position target = new Position(3, 0);
 
-        // when, then
-        assertThat(chessGame.isKingAlive())
-                .isTrue();
+        // when
+        chessGame.run(source, target, CampType.WHITE);
+        boolean isGameRun = ChessGameHelper.playKingDie(chessGame);
+
+        // then
+        assertThat(isGameRun)
+                .isFalse();
     }
 
     @Test

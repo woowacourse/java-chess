@@ -17,14 +17,9 @@ public final class ChessGame {
         this.chessBoard = ChessBoard.getInstance(this);
     }
 
-    public void setUp(final Position source, final Position target, final CampType currentCamp) {
+    public boolean run(final Position source, final Position target, final CampType currentCamp) {
         this.currentCamp = currentCamp;
-        play(source, target);
-    }
-
-    public boolean isKingAlive() {
-        List<Piece> aliveKings = chessBoard.getAliveKings();
-        return aliveKings.size() == ALL_KING_ALIVE_COUNT;
+        return play(source, target);
     }
 
     public Map<Position, Piece> getWhiteBoard() {
@@ -35,7 +30,7 @@ public final class ChessGame {
         return chessBoard.getBoardByCamp(CampType.BLACK);
     }
 
-    private void play(final Position source, final Position target) {
+    private boolean play(final Position source, final Position target) {
         validateCamp(source);
         validateTargetSameCamp(target);
         validateObstacle(source, target);
@@ -43,6 +38,7 @@ public final class ChessGame {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
         movePiece(source, target);
+        return isKingAlive();
     }
 
     private void validateObstacle(final Position source, final Position target) {
@@ -92,6 +88,11 @@ public final class ChessGame {
         if (!chessBoard.contains(position)) {
             throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
         }
+    }
+
+    private boolean isKingAlive() {
+        List<Piece> aliveKings = chessBoard.getAliveKings();
+        return aliveKings.size() == ALL_KING_ALIVE_COUNT;
     }
 
     public Map<Position, Piece> getChessBoard() {
