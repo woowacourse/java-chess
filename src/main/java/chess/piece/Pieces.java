@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.board.File;
 import chess.board.Position;
 import chess.piece.type.Piece;
 import java.util.ArrayList;
@@ -59,5 +60,12 @@ public class Pieces {
         return piecesOfTeam.stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
+    }
+
+    public long getPawnCountByFile(final File file, final Side side) {
+        final int fileValue = file.getValue();
+        return pieces.stream()
+                .filter(piece -> piece.getSide() == side && piece.getFile() == fileValue)
+                .count();
     }
 }
