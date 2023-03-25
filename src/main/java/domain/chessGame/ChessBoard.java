@@ -1,5 +1,6 @@
 package domain.chessGame;
 
+import domain.piece.Color;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.position.Path;
@@ -8,30 +9,47 @@ import domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public final class ChessBoard {
 
     private final Map<Position, Piece> chessBoard;
+    private Color turnOfColor;
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
         this.chessBoard = new HashMap<>(chessBoard);
+        turnOfColor = Color.WHITE;
     }
 
     public void movePiece(Position startPosition, Position endPosition) {
+        validateBeforeMovePiece(startPosition, endPosition);
+
+        chessBoard.put(endPosition, chessBoard.get(startPosition));
+        chessBoard.remove(startPosition);
+
+        turnOfColor = turnOfColor.changeColor();
+    }
+
+    private void validateBeforeMovePiece(Position startPosition, Position endPosition) {
         validateExistPieceInStartPosition(startPosition);
+        validateCorrectTurnPieceInStartPosition(chessBoard.get(startPosition));
 
         if (!validatePieceMovable(startPosition, endPosition)) {
             throw new IllegalArgumentException("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
         }
-
-        chessBoard.put(endPosition, chessBoard.get(startPosition));
-        chessBoard.remove(startPosition);
     }
 
     private void validateExistPieceInStartPosition(Position startPosition) {
         if (!chessBoard.containsKey(startPosition)) {
             throw new IllegalArgumentException("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
+        }
+    }
+
+    private void validateCorrectTurnPieceInStartPosition(Piece piece) {
+        if (turnOfColor == Color.WHITE && piece.isBlack()) {
+            throw new IllegalArgumentException("[ERROR] 흰색 진영의 차례입니다.");
+        }
+        if (turnOfColor == Color.BLACK && piece.isWhite()) {
+            throw new IllegalArgumentException("[ERROR] 검은색 진영의 차례입니다.");
         }
     }
 
