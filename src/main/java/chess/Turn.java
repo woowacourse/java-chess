@@ -1,21 +1,14 @@
 package chess;
 
 import chess.chessboard.Side;
-import chess.piece.Piece;
 
-public abstract class Turn {
+public interface Turn {
 
-    private final Side side;
-
-    Turn(final Side side) {
-        this.side = side;
-    }
-
-    public static Turn initialTurn() {
+    static Turn initialTurn() {
         return new WhiteTurn();
     }
 
-    public abstract Turn nextTurn();
+    Turn nextTurn();
 
-    public abstract boolean isTurnOf(final Piece side);
+    boolean isTurnOf(final Side side);
 }

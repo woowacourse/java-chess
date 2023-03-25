@@ -1,6 +1,5 @@
 package chess.chessboard;
 
-import chess.Turn;
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
 
@@ -8,50 +7,27 @@ import java.util.Map;
 
 public class ChessBoard {
     private final Map<Square, Piece> pieces;
-    private Turn turn;
 
     public ChessBoard(Map<Square, Piece> pieces) {
         this.pieces = pieces;
-        this.turn = Turn.initialTurn();
     }
 
-    public boolean executeTurnMove(final Square source, final Square destination) {
-        validateNotEmpty(pieces.get(source));
-
-        if (isMovePieceSuccess(source, destination)) {
-            turn = turn.nextTurn();
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isMovePieceSuccess(final Square source, final Square destination) {
-        final Piece pieceToMove = pieces.get(source);
-
-        return turn.isTurnOf(pieceToMove) && movePiece(source, destination);
-    }
-
-    boolean movePiece(final Square source, final Square destination) {
+    public Piece move(final Square source, final Square destination) {
         final Piece pieceToMove = pieces.get(source);
         validateNotEmpty(pieceToMove);
+        validateMovablePath(source, destination);
 
-        if (isPieceMovable(source, destination)) {
-            movePiece(source, destination, pieceToMove);
-            return true;
-        }
-        return false;
+        return movePiece(source, destination);
     }
 
-    private boolean isPieceMovable(final Square source, final Square destination) {
+    private Piece movePiece(final Square source, final Square destination) {
         final Piece pieceToMove = pieces.get(source);
-        final Piece pieceOfDestination = pieces.get(destination);
+        final Piece existingPiece = pieces.get(destination);
 
-        return pieceToMove.isMovable(source, destination, pieceOfDestination) && !hasObstacleAlongPath(source, destination);
-    }
-
-    private void movePiece(final Square source, final Square destination, final Piece pieceToMove) {
         pieces.put(destination, pieceToMove);
         pieces.put(source, EmptyPiece.getInstance());
+
+        return existingPiece;
     }
 
     private void validateNotEmpty(final Piece target) {
@@ -60,11 +36,33 @@ public class ChessBoard {
         }
     }
 
+    private void validateMovablePath(final Square source, final Square destination) {
+        if (isNotValidMove(source, destination)) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다");
+        }
+        if (hasObstacleAlongPath(source, destination)) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다");
+        }
+    }
+
+    private boolean isNotValidMove(final Square source, final Square destination) {
+        final Piece pieceToMove = pieces.get(source);
+        final Piece pieceOfDestination = pieces.get(destination);
+
+        return !pieceToMove.isMovable(source, destination, pieceOfDestination);
+    }
+
     private boolean hasObstacleAlongPath(final Square source, final Square destination) {
         return source.squaresOfPath(destination)
                      .stream()
                      .map(pieces::get)
                      .anyMatch(piece -> piece != EmptyPiece.getInstance());
+    }
+
+    public Side getPieceSideAt(final Square square) {
+        final Piece piece = pieces.get(square);
+
+        return piece.getSide();
     }
 
     public Map<Square, Piece> getPieces() {

@@ -50,9 +50,9 @@ public class ChessGameController {
         final Square source = getSourceSquare(moveCommandDto);
         final Square destination = getDestinationSquare(moveCommandDto);
 
-        if (!chessBoard.executeTurnMove(source, destination)) {
-            outputView.printInvalidMoveMessage();
-        }
+//        if (!chessBoard.executeTurnMove(source, destination)) {
+//            outputView.printInvalidMoveMessage();
+//        }
     }
 
     private Square getSourceSquare(final MoveCommandDto moveCommandDto) {

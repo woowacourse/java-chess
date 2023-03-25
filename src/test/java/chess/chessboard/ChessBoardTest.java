@@ -9,10 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("ChessBoard 클래스")
 class ChessBoardTest {
@@ -149,7 +149,7 @@ class ChessBoardTest {
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("앞의 칸에 기물이 존재한다면 false를 반환한다")
@@ -163,7 +163,9 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재한다면 true를 반환한다")
@@ -171,12 +173,13 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Square source = Square.of(Rank.SEVEN, File.B);
                 Square destination = Square.of(Rank.SIX, File.A);
+                final Queen expected = Queen.getQueenOf(Side.WHITE);
                 pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
                                        .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.WHITE));
+                pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재하지 않는다면 false를 반환한다")
@@ -189,8 +192,12 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
-                assertThat(chessBoard.movePiece(source, Square.of(Rank.SIX, File.C))).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
+                assertThatThrownBy(() -> chessBoard.move(source, Square.of(Rank.SIX, File.C)))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
         }
 
@@ -207,7 +214,7 @@ class ChessBoardTest {
                                          .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("대각선 내에 기물이 존재한다면 false를 반환한다")
@@ -221,7 +228,9 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어있다면 true를 반환한다")
@@ -231,12 +240,13 @@ class ChessBoardTest {
                 Square destination = Square.of(Rank.SIX, File.A);
                 pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
                                          .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.WHITE));
+                final Queen expected = Queen.getQueenOf(Side.WHITE);
+                pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
-                chessBoard.movePiece(destination, source);
-                assertThat(chessBoard.movePiece(source, Square.of(Rank.FIVE, File.D))).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
+                chessBoard.move(destination, source);
+                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -249,7 +259,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
         }
 
@@ -266,7 +278,7 @@ class ChessBoardTest {
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("작선 내에 기물이 존재한다면 false를 반환한다")
@@ -280,7 +292,9 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
@@ -290,12 +304,13 @@ class ChessBoardTest {
                 Square destination = Square.of(Rank.SIX, File.B);
                 pieces.put(source, Rook.getRooksOf(Side.BLACK)
                                        .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.WHITE));
+                final Queen expected = Queen.getQueenOf(Side.WHITE);
+                pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
-                chessBoard.movePiece(destination, source);
-                assertThat(chessBoard.movePiece(source, Square.of(Rank.SEVEN, File.D))).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
+                chessBoard.move(destination, source);
+                assertThat(chessBoard.move(source, Square.of(Rank.SEVEN, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -308,7 +323,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
         }
 
@@ -321,13 +338,15 @@ class ChessBoardTest {
             void it_returns_true() {
                 Square source = Square.of(Rank.THREE, File.E);
                 Square destination = Square.of(Rank.TWO, File.G);
+                final Queen expected = Queen.getQueenOf(Side.WHITE);
                 pieces.put(source, Knight.getKnightsOf(Side.BLACK)
                                          .get(0));
+                pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isTrue();
-                chessBoard.movePiece(destination, source);
-                assertThat(chessBoard.movePiece(source, Square.of(Rank.FIVE, File.D))).isTrue();
+                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
+                chessBoard.move(destination, source);
+                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -340,7 +359,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
         }
 
@@ -359,9 +380,9 @@ class ChessBoardTest {
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination1)).isTrue();
-                chessBoard.movePiece(destination1, source);
-                assertThat(chessBoard.movePiece(source, destination2)).isTrue();
+                assertThat(chessBoard.move(source, destination1)).isEqualTo(EmptyPiece.getInstance());
+                chessBoard.move(destination1, source);
+                assertThat(chessBoard.move(source, destination2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("이동 경로 상에 기물이 존재한다면 false를 반환한다")
@@ -377,8 +398,12 @@ class ChessBoardTest {
                 pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination1)).isFalse();
-                assertThat(chessBoard.movePiece(source, destination2)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination1))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
+                assertThatThrownBy(() -> chessBoard.move(source, destination2))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
@@ -387,13 +412,14 @@ class ChessBoardTest {
                 Square source = Square.of(Rank.SEVEN, File.B);
                 Square destination1 = Square.of(Rank.THREE, File.F);
                 Square destination2 = Square.of(Rank.SEVEN, File.A);
+                final Queen expected = Queen.getQueenOf(Side.WHITE);
                 pieces.put(source, Queen.getQueenOf(Side.BLACK));
-                pieces.put(destination1, Queen.getQueenOf(Side.WHITE));
+                pieces.put(destination1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination1)).isTrue();
-                chessBoard.movePiece(destination1, source);
-                assertThat(chessBoard.movePiece(source, destination2)).isTrue();
+                assertThat(chessBoard.move(source, destination1)).isEqualTo(expected);
+                chessBoard.move(destination1, source);
+                assertThat(chessBoard.move(source, destination2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -407,8 +433,12 @@ class ChessBoardTest {
                 pieces.put(destination2, King.getKingOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination1)).isFalse();
-                assertThat(chessBoard.movePiece(source, destination2)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination1))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
+                assertThatThrownBy(() -> chessBoard.move(source, destination2))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
         }
 
@@ -422,13 +452,14 @@ class ChessBoardTest {
                 Square source = Square.of(Rank.THREE, File.E);
                 Square destination1 = Square.of(Rank.THREE, File.F);
                 Square destination2 = Square.of(Rank.FOUR, File.D);
+                final Queen expected = Queen.getQueenOf(Side.WHITE);
                 pieces.put(source, King.getKingOf(Side.BLACK));
-                pieces.put(destination1, Queen.getQueenOf(Side.WHITE));
+                pieces.put(destination1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination1)).isTrue();
-                chessBoard.movePiece(destination1, source);
-                assertThat(chessBoard.movePiece(source, destination2)).isTrue();
+                assertThat(chessBoard.move(source, destination1)).isEqualTo(expected);
+                chessBoard.move(destination1, source);
+                assertThat(chessBoard.move(source, destination2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -440,89 +471,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.movePiece(source, destination)).isFalse();
-            }
-        }
-
-
-        @Nested
-        @DisplayName("이동 순서가 있는데")
-        class sequence {
-            Square source1 = Square.of(Rank.FIVE, File.B);
-            Square source2 = Square.of(Rank.FIVE, File.C);
-            Square destination1 = Square.of(Rank.FOUR, File.B);
-            Square destination2 = Square.of(Rank.SEVEN, File.C);
-
-            @Test
-            @DisplayName("처음에 백이 먼저 공격해야 true를 반환한다")
-            void it_returns_true() {
-                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
-                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
-
-                pieces.put(source1, whiteRooks.get(0));
-                pieces.put(source2, blackRooks.get(0));
-
-                final ChessBoard chessBoard = new ChessBoard(pieces);
-                assertThat(chessBoard.executeTurnMove(source1, destination1)).isTrue();
-            }
-
-            @Test
-            @DisplayName("처음에 흑이 먼저 공격하면 false를 반환한다.")
-            void it_returns_false() {
-                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
-                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
-
-                pieces.put(source1, whiteRooks.get(0));
-                pieces.put(source2, blackRooks.get(0));
-
-                final ChessBoard chessBoard = new ChessBoard(pieces);
-                assertThat(chessBoard.executeTurnMove(source2, destination2)).isFalse();
-            }
-
-            @Test
-            @DisplayName("백이 공격하고 나서 흑이 공격해야 true를 반환한다")
-            void it_returns_true1() {
-                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
-                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
-
-                pieces.put(source1, whiteRooks.get(0));
-                pieces.put(source2, blackRooks.get(0));
-
-                final ChessBoard chessBoard = new ChessBoard(pieces);
-                chessBoard.executeTurnMove(source1, destination1);
-
-                assertThat(chessBoard.executeTurnMove(source2, destination2)).isTrue();
-            }
-
-            @Test
-            @DisplayName("흑이 공격하고 나서 백이 공격해야 true를 반환한다")
-            void it_returns_true2() {
-                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
-                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
-
-                pieces.put(source1, whiteRooks.get(0));
-                pieces.put(source2, blackRooks.get(0));
-
-                final ChessBoard chessBoard = new ChessBoard(pieces);
-                chessBoard.executeTurnMove(source1, destination1);
-                chessBoard.executeTurnMove(source2, destination2);
-
-                assertThat(chessBoard.executeTurnMove(destination1, source1)).isTrue();
-            }
-
-            @Test
-            @DisplayName("백이 공격하고 나서 백이 공격하면 false를 반환한다")
-            void it_returns_false1() {
-                List<Rook> whiteRooks = Rook.getRooksOf(Side.WHITE);
-                List<Rook> blackRooks = Rook.getRooksOf(Side.BLACK);
-
-                pieces.put(source1, whiteRooks.get(0));
-                pieces.put(source2, blackRooks.get(0));
-
-                final ChessBoard chessBoard = new ChessBoard(pieces);
-                chessBoard.executeTurnMove(source1, destination1);
-
-                assertThat(chessBoard.executeTurnMove(destination1, source1)).isFalse();
+                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("갈 수 없는 경로입니다");
             }
         }
     }

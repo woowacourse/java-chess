@@ -1,13 +1,8 @@
 package chess;
 
 import chess.chessboard.Side;
-import chess.piece.Piece;
 
-public class BlackTurn extends Turn {
-
-    public BlackTurn() {
-        super(Side.BLACK);
-    }
+public class BlackTurn implements Turn {
 
     @Override
     public Turn nextTurn() {
@@ -15,7 +10,7 @@ public class BlackTurn extends Turn {
     }
 
     @Override
-    public boolean isTurnOf(final Piece piece) {
-        return piece.isBlack();
+    public boolean isTurnOf(final Side side) {
+        return side == Side.BLACK;
     }
 }
