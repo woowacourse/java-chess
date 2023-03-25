@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.position.Position;
+import java.util.Map;
 
 public final class King extends Piece {
 
@@ -29,5 +30,10 @@ public final class King extends Piece {
     @Override
     public boolean isEndGameIfDead() {
         return true;
+    }
+
+    @Override
+    public Score getScore(final Position source, final Map<Position, Piece> influentialPieceForScore) {
+        return new Score(0);
     }
 }

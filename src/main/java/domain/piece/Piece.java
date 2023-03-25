@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.position.Position;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -35,6 +36,8 @@ public abstract class Piece {
     public String getName() {
         return name;
     }
+
+    public abstract Score getScore(final Position source, final Map<Position, Piece> influentialPieceForScore);
 
     @Override
     public boolean equals(final Object o) {

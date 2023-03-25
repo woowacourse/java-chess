@@ -1,7 +1,13 @@
 package domain.piece;
 
 import domain.position.Position;
+import domain.position.Positions;
+import domain.position.Rank;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Pawn extends Piece {
 
@@ -57,6 +63,28 @@ public final class Pawn extends Piece {
                 Objects.equals(destination, validateEdgeDestination(source, UP, RIGHT));
     }
 
+    @Override
+    public Score getScore(final Position source, final Map<Position, Piece> influentialPieceForScore) {
+        List<Position> positions = influencingPositions(source);
+        if (isAllyPawnInColumn(positions, influentialPieceForScore)) {
+            return new Score(0.5);
+        }
+        return new Score(1);
+    }
+
+    private boolean isAllyPawnInColumn(List<Position> influencingPositions,
+                                       final Map<Position, Piece> influentialPieces) {
+        return influencingPositions.stream().filter(influentialPieces::containsKey)
+                .anyMatch(position -> influentialPieces.get(position).getClass().equals(this.getClass()));
+    }
+
+    private List<Position> influencingPositions(final Position source) {
+        char file = (char) source.getFile();
+        return Arrays.stream(Rank.values())
+                .map(rank -> Positions.from(file + rank.getName()))
+                .filter(position -> !source.equals(position))
+                .collect(Collectors.toList());
+    }
 
     private Position validateEdgeDestination(final Position source, final int rank, final int file) {
         try {

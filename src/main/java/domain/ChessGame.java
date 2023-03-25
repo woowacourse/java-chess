@@ -2,6 +2,7 @@ package domain;
 
 import domain.board.Board;
 import domain.piece.Piece;
+import domain.piece.Score;
 import domain.piece.Team;
 import domain.position.Position;
 import gameinitializer.ChessGameInitializer;
@@ -28,5 +29,15 @@ public final class ChessGame {
         boolean endedGame = board.move(source, destination, thisTurn);
         thisTurn = thisTurn.otherTeam();
         return endedGame;
+    }
+
+    public Score calculateTeamScore(Team team) {
+        Map<Position, Piece> teamPieces = board.getPiecesByTeam(team);
+        double teamScore = teamPieces.entrySet().stream().mapToDouble((entry) -> {
+            Piece piece = entry.getValue();
+            Score pieceScore = piece.getScore(entry.getKey(), teamPieces);
+            return pieceScore.getScore();
+        }).sum();
+        return new Score(teamScore);
     }
 }

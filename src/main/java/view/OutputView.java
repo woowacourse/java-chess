@@ -1,6 +1,9 @@
 package view;
 
+import domain.ChessGame;
 import domain.piece.Piece;
+import domain.piece.Score;
+import domain.piece.Team;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Positions;
@@ -48,5 +51,25 @@ public final class OutputView {
 
     public static void printEndedGameMessage() {
         System.out.println("게임을 종료합니다.");
+    }
+
+    public static void printGameScoreStatus(final ChessGame chessGame) {
+        Score blackTeamScore = chessGame.calculateTeamScore(Team.BLACK);
+        Score whiteTeamScore = chessGame.calculateTeamScore(Team.WHITE);
+
+        System.out.println(
+                "백팀: " + whiteTeamScore.getScore() + ", 흑팀: " + blackTeamScore.getScore() + ", 이긴 팀: " + decisionWinner(
+                        blackTeamScore, whiteTeamScore));
+    }
+
+    private static String decisionWinner(Score blackTeamScore, Score whiteTeamScore) {
+        String winner = "무승부";
+        if (blackTeamScore.getScore() < whiteTeamScore.getScore()) {
+            winner = "백팀";
+        }
+        if (blackTeamScore.getScore() > whiteTeamScore.getScore()) {
+            winner = "흑팀";
+        }
+        return winner;
     }
 }

@@ -2,6 +2,7 @@ package command;
 
 import static command.MoveCommand.END;
 import static command.MoveCommand.MOVE;
+import static command.MoveCommand.STATUS;
 
 import domain.position.Position;
 import domain.position.Positions;
@@ -25,6 +26,9 @@ public final class MoveCommandParser {
     public static MoveCommandParser parse(final List<String> commands) {
         if (END.equals(MoveCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
             return new MoveCommandParser(END, null, null);
+        }
+        if (STATUS.equals(MoveCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
+            return new MoveCommandParser(STATUS, null, null);
         }
         if (MOVE.equals(MoveCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 3) {
             return new MoveCommandParser(MOVE, Positions.from(commands.get(SOURCE_INDEX)),

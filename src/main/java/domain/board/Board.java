@@ -5,6 +5,7 @@ import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class Board {
@@ -92,5 +93,12 @@ public final class Board {
 
     public Map<Position, Piece> getPieces() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Map<Position, Piece> getPiecesByTeam(Team team) {
+        Map<Position, Piece> query = new HashMap<>();
+        board.entrySet().stream().filter(piece -> team.equals(piece.getValue().getTeam()))
+                .forEach(piece -> query.put(piece.getKey(), piece.getValue()));
+        return query;
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import static command.MoveCommand.END;
+import static command.MoveCommand.STATUS;
 
 import command.MoveCommandParser;
 import command.StartCommand;
@@ -46,19 +47,21 @@ public final class ChessController {
     private void play() {
         boolean nextStep;
         do {
-            nextStep = executeCommand();
+            nextStep = executeCommand(readMoveCommand());
         } while (nextStep);
     }
 
-    private boolean executeCommand() {
-        MoveCommandParser command = readMoveCommand();
+    private boolean executeCommand(final MoveCommandParser command) {
         if (END.equals(command.getMoveCommand())) {
             return false;
         }
+        if (STATUS.equals(command.getMoveCommand())) {
+            OutputView.printGameScoreStatus(chessGame);
+            return true;
+        }
         boolean isEndedGame = movePieceWithHandling(command);
-        boolean keepGame = !isEndedGame;
         OutputView.printBoard(chessGame.getPieces());
-        return keepGame;
+        return !isEndedGame;
     }
 
     private boolean movePieceWithHandling(final MoveCommandParser command) {

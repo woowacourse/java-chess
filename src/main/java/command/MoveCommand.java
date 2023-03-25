@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public enum MoveCommand {
     END,
-    MOVE;
+    MOVE,
+    STATUS;
 
     public static MoveCommand from(final String command) {
         validateCommand(command);

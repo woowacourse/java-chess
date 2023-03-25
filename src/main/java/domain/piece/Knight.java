@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.position.Position;
+import java.util.Map;
 
 public final class Knight extends Piece {
 
@@ -21,5 +22,10 @@ public final class Knight extends Piece {
     @Override
     public boolean isEatable(final Position source, final Position destination) {
         return isMovable(source, destination);
+    }
+
+    @Override
+    public Score getScore(final Position source, final Map<Position, Piece> influentialPieceForScore) {
+        return new Score(2.5);
     }
 }
