@@ -32,6 +32,7 @@ public class ChessController {
         while(!(chessGame.status() == GameStatus.END)) {
             repeatByRunnable(() -> handleCommand(chessGame));
         }
+        repeatByRunnable(() -> handleCommandAfterGameEnd(chessGame));
     }
 
     private ChessGame setUp() {
@@ -65,19 +66,6 @@ public class ChessController {
         }
     }
 
-    private void handleStartCommand(final ChessGame chessGame) {
-        chessGame.start();
-        OutputView.printBoard(new BoardDto(chessGame.getBoard()));
-    }
-
-    private void handleMoveCommand(final ChessGame chessGame, final List<String> splitGameCommand) {
-        final Position sourcePosition = generatePosition(splitGameCommand.get(SOURCE_POSITION_INDEX));
-        final Position targetPosition = generatePosition(splitGameCommand.get(TARGET_POSITION_INDEX));
-
-        chessGame.movePiece(sourcePosition, targetPosition);
-        OutputView.printBoard(new BoardDto(chessGame.getBoard()));
-    }
-
     private List<String> inputGameCommand() {
         return repeatUntilReturnValue(inputView::inputGameCommand);
     }
@@ -89,6 +77,19 @@ public class ChessController {
             OutputView.printErrorMessage(e);
             return repeatUntilReturnValue(supplier);
         }
+    }
+
+    private void handleStartCommand(final ChessGame chessGame) {
+        chessGame.start();
+        OutputView.printBoard(new BoardDto(chessGame.getBoard()));
+    }
+
+    private void handleMoveCommand(final ChessGame chessGame, final List<String> splitGameCommand) {
+        final Position sourcePosition = generatePosition(splitGameCommand.get(SOURCE_POSITION_INDEX));
+        final Position targetPosition = generatePosition(splitGameCommand.get(TARGET_POSITION_INDEX));
+
+        chessGame.movePiece(sourcePosition, targetPosition);
+        OutputView.printBoard(new BoardDto(chessGame.getBoard()));
     }
 
     private Position generatePosition(final String positionInput) {
@@ -104,5 +105,21 @@ public class ChessController {
         } catch (NumberFormatException e) {
             throw new NumberFormatException("[ERROR] 랭크 값은 숫자여야 합니다.");
         }
+    }
+
+    private void handleCommandAfterGameEnd(final ChessGame chessGame) {
+        OutputView.printCommandAfterGameEndInputMessage();
+        final String inputCommand = repeatUntilReturnValue(inputView::inputCommandAfterGameEnd);
+        if (GameCommand.STATUS == GameCommand.of(inputCommand)) {
+            handleStatusCommand(chessGame);
+        }
+    }
+
+    private void handleStatusCommand(ChessGame chessGame) {
+        final Side winner = chessGame.getWinner();
+        final double whiteScore = chessGame.calculateScoreBySide(Side.WHITE);
+        final double blackScore = chessGame.calculateScoreBySide(Side.BLACK);
+
+        OutputView.printGameResult(winner, whiteScore, blackScore);
     }
 }
