@@ -1,16 +1,17 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.strategy.PawnStrategy;
+import chess.strategy.MoveStrategy;
 
 public class Pawn extends Piece {
 
     public Pawn(Team team) {
-        super(Role.PAWN, team, new PawnStrategy());
+        super(Role.PAWN, team);
     }
 
     @Override
     public boolean canMove(Position source, Position target) {
+        MoveStrategy moveStrategy = role.getMoveStrategy();
         return moveStrategy.isMovable(source, target) && isCorrectDirection(source, target);
     }
 

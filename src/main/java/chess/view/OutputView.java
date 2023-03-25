@@ -10,6 +10,7 @@ public class OutputView {
     private static final int CRITERIA_Y_POS = 7;
     private static final int BOARD_SIZE = 8;
     private static final String ROW_DELIMITER = "";
+    private static final String GAME_NUMBER_INPUT_MESSAGE = "입장하고 싶은 게임 번호를 입력하세요.";
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String COMMAND_INPUT_MESSAGE = "> 게임 시작 : start" + LINE_SEPARATOR +
@@ -18,6 +19,10 @@ public class OutputView {
             "> 점수 확인 : status";
 
     private OutputView() {
+    }
+
+    public static void printGameNumberMessage() {
+        System.out.println(GAME_NUMBER_INPUT_MESSAGE);
     }
 
     public static void printStartMessage() {
