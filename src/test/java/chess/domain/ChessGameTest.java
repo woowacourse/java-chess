@@ -1,14 +1,12 @@
 package chess.domain;
 
-import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.ChessGame;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import static chess.domain.SquareCoordinates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ChessGameTest {
@@ -28,7 +26,7 @@ class ChessGameTest {
 
     @Test
     void 게임을_시작하기_전에_말을_움직이는_예외_테스트() {
-        assertThatThrownBy(() -> chessGame.move(SquareCoordinate.of("a2"), SquareCoordinate.of("a3"))).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> chessGame.move(A2, A3)).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -37,5 +35,20 @@ class ChessGameTest {
 
         chessGame.end();
         assertThat(chessGame.isNotEnd()).isFalse();
+    }
+
+    @Test
+    void 왕을_잡았을때_게임이_대기상태로_전환되는지_확인(){
+        chessGame.start();
+
+        //Shortest way for checkmate
+        chessGame.move(F2, F3);
+        chessGame.move(E7, E5);
+        chessGame.move(G2, G4);
+        chessGame.move(D8, H4);
+        chessGame.move(H2, H3);
+        chessGame.move(H4, E1);
+
+        assertDoesNotThrow(() -> chessGame.start());
     }
 }

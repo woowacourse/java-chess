@@ -7,7 +7,10 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.SquareCoordinates.*;
+import static chess.domain.SquareCoordinates.E1;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ChessBoardTest {
@@ -27,5 +30,21 @@ class ChessBoardTest {
                 .asInstanceOf(InstanceOfAssertFactories.list(SquareState.class))
                 .first()
                 .isInstanceOf(Rook.class);
+    }
+
+    @Test
+    void 왕을_잡았을때_True를_반환하는지_확인(){
+        ChessBoard chessBoard = new ChessBoard();
+        assertThat(chessBoard.isKingDead()).isFalse();
+
+        //Shortest way for checkmate
+        chessBoard.move(F2, F3);
+        chessBoard.move(E7, E5);
+        chessBoard.move(G2, G4);
+        chessBoard.move(D8, H4);
+        chessBoard.move(H2, H3);
+        chessBoard.move(H4, E1);
+
+        assertThat(chessBoard.isKingDead()).isTrue();
     }
 }
