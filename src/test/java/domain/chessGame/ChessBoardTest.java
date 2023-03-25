@@ -2,7 +2,10 @@ package domain.chessGame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
 
+import domain.piece.Bishop;
+import domain.piece.BlackPawn;
 import domain.piece.Color;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -197,6 +200,45 @@ class ChessBoardTest {
             assertThatThrownBy(() -> chessBoard.movePiece(start, end))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("[ERROR] 폰은 대각선 이동 경로에 상대 말이 없으면 이동이 불가능합니다.");
+        }
+    }
+
+    @Nested
+    @DisplayName("색깔 별로 말들의 현황을 반환한다.")
+    class getPiecesByColorTest {
+
+        Map<Position, Piece> setupBoard = Map.of(
+                Position.of(2, 3), new WhitePawn(),
+                Position.of(2, 4), new WhitePawn(),
+                Position.of(3, 5), new Rook(Color.BLACK),
+                Position.of(4, 3), new BlackPawn(),
+                Position.of(4, 4), new Bishop(Color.BLACK));
+
+        @Test
+        @DisplayName("검은 말들의 현황을 반환한다.")
+        void getBlackPiecesTest() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+
+            // when
+            Map<Position, Piece> blackPieces = chessBoard.getBlackPieces();
+
+            // then
+            assertThat(blackPieces).containsOnlyKeys(Position.of(3, 5), Position.of(4, 3),
+                    Position.of(4, 4));
+        }
+
+        @Test
+        @DisplayName("흰 말들의 현황을 반환한다.")
+        void getWhitePiecesTest() {
+            // given
+            ChessBoard chessBoard = new ChessBoard(setupBoard);
+
+            // when
+            Map<Position, Piece> blackPieces = chessBoard.getWhitePieces();
+
+            // then
+            assertThat(blackPieces).containsOnlyKeys(Position.of(2, 3), Position.of(2, 4));
         }
     }
 }

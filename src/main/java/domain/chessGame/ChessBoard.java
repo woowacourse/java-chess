@@ -8,6 +8,7 @@ import domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class ChessBoard {
 
@@ -90,5 +91,33 @@ public final class ChessBoard {
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard;
+    }
+
+    public Map<Position, Piece> getBlackPieces() {
+        Map<Position, Piece> blackPieces = new HashMap<>();
+        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
+            putOnlyBlackPiece(blackPieces, entry);
+        }
+        return blackPieces;
+    }
+
+    private void putOnlyBlackPiece(Map<Position, Piece> blackPieces, Map.Entry<Position, Piece> entry) {
+        if (entry.getValue().isBlack()) {
+            blackPieces.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public Map<Position, Piece> getWhitePieces() {
+        Map<Position, Piece> whitePieces = new HashMap<>();
+        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
+            putOnlyWhitePiece(whitePieces, entry);
+        }
+        return whitePieces;
+    }
+
+    private void putOnlyWhitePiece(Map<Position, Piece> whitePieces, Map.Entry<Position, Piece> entry) {
+        if (entry.getValue().isWhite()) {
+            whitePieces.put(entry.getKey(), entry.getValue());
+        }
     }
 }
