@@ -8,8 +8,6 @@
 classDiagram
     Game --> Piece
     Game --> Position
-    Position --> Movement
-
     Rank <-- Position
     File <-- Position
 
@@ -206,7 +204,6 @@ classDiagram
 
 ### RankMapper
 - [x] Rank에 대한 사용자 입력을 Rank로 변환한다.
-
 
 ## 우아한테크코스 코드리뷰
 
