@@ -110,7 +110,7 @@ public class MySQLChessGameDao implements ChessGameDao {
 
     private void saveGameState(GameState gameState) {
         String query = "INSERT INTO game_state VALUES(?)";
-        jdbcContext.insert(query, RunningStateMapper.map(gameState).name());
+        jdbcContext.insert(query, RunningStateMapper.map(gameState));
     }
 
     public void deleteAllBoard() {
@@ -135,11 +135,12 @@ public class MySQLChessGameDao implements ChessGameDao {
             this.gameState = gameState;
         }
 
-        public static RunningStateMapper map(GameState gameState) {
+        public static String map(GameState gameState) {
             return Arrays.stream(values())
                     .filter(runningStateMapper -> runningStateMapper.isSameState(gameState))
                     .findAny()
-                    .orElseThrow(IllegalArgumentException::new);
+                    .orElseThrow(IllegalArgumentException::new)
+                    .name();
         }
 
         private boolean isSameState(GameState gameState) {
