@@ -1,14 +1,19 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.Team;
-import chess.domain.position.Position;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.PieceType;
+import chess.domain.pieces.Score;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public final class Board {
 
@@ -41,6 +46,18 @@ public final class Board {
                 .count();
 
         return kingCount == ALL_KING_ALIVE_COUNT;
+    }
+
+    public Score scoreOf(final Team team) {
+        return IntStream.range(0, Position.getMaxIndex())
+                .mapToObj(column -> IntStream.range(0, Position.getMaxIndex())
+                        .mapToObj(row -> Position.of(row, column))
+                        .map(board::get)
+                        .filter(piece -> piece.isAlly(team))
+                        .collect(toList()))
+                .map(PieceType::scoreOfOneColumnWithSingleTeam)
+                .reduce(Score::add)
+                .orElse(Score.ZERO);
     }
 
     private void validateNotEquals(final Position currentPosition, final Position targetPosition) {

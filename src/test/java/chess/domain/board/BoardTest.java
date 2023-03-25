@@ -99,4 +99,42 @@ class BoardTest {
 
         assertThat(board.isKingAlive()).isFalse();
     }
+
+    @Test
+    @DisplayName("검은색 팀의 점수를 계산한다")
+    void 검은색_팀의_점수를_계산한다() {
+        Score scoreOfBlackTeam = board.scoreOf(Team.BLACK);
+
+        assertThat(scoreOfBlackTeam).isEqualTo(new Score(38.0));
+    }
+
+    @Test
+    @DisplayName("흰색 팀의 점수를 계산한다")
+    void 흰색_팀의_점수를_계산한다() {
+        var scoreOfWhiteTeam = board.scoreOf(Team.WHITE);
+
+        assertThat(scoreOfWhiteTeam).isEqualTo(new Score(38.0));
+    }
+
+    /**
+     * RNBQKBNR
+     * PPPPPPP. 검은색 팀 점수: 37.0
+     * ........
+     * .......p
+     * ........
+     * ........
+     * pppppp.p 흰색 팀 점수: 37.0
+     * rnbqkbnr
+     */
+    @Test
+    @DisplayName("폰이 같은 열에 있는 경우 각 폰은 0.5점으로 계산한다")
+    void 폰이_같은_열에_있는_경우_각_폰은_0_5점_으로_계산한다_case1() {
+        board.movePiece(Position.toPosition("g2"), Position.toPosition("g4"));
+        board.movePiece(Position.toPosition("h7"), Position.toPosition("h5"));
+        board.movePiece(Position.toPosition("g4"), Position.toPosition("h5"));
+
+        Score scoreOfWhiteTeam = board.scoreOf(Team.WHITE);
+
+        assertThat(scoreOfWhiteTeam).isEqualTo(new Score(37.0));
+    }
 }
