@@ -6,6 +6,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.assertj.core.api.Assertions;
@@ -44,6 +45,6 @@ public class PawnTest {
         final Position doubleUpPosition = Position.of(File.getFile(2), Rank.getRank(4));
 
         Assertions.assertThat(pawn.findMovablePositions(startPosition, board))
-                .isEqualTo(List.of(upPosition, doubleUpPosition));
+                .isEqualTo(new Path(List.of(upPosition, doubleUpPosition)));
     }
 }

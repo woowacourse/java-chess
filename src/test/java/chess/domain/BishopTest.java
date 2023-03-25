@@ -6,6 +6,7 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.assertj.core.api.Assertions;
@@ -41,6 +42,6 @@ public class BishopTest {
         final Board board = BoardFactory.generateBoard();
 
         Assertions.assertThat(bishop.findMovablePositions(Position.of(File.getFile(3), Rank.getRank(1)), board))
-                .isEqualTo(List.of());
+                .isEqualTo(new Path(List.of()));
     }
 }

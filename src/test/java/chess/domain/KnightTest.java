@@ -6,6 +6,7 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.assertj.core.api.Assertions;
@@ -43,6 +44,6 @@ public class KnightTest {
         final Position upRightPosition = Position.of(File.getFile(3), Rank.getRank(3));
 
         Assertions.assertThat(knight.findMovablePositions(Position.of(File.getFile(2), Rank.getRank(1)), board))
-                .isEqualTo(List.of(upLeftPosition, upRightPosition));
+                .isEqualTo(new Path(List.of(upLeftPosition, upRightPosition)));
     }
 }

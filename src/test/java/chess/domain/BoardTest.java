@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.*;
 import chess.domain.position.File;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.assertj.core.api.Assertions;
@@ -110,7 +111,7 @@ public class BoardTest {
         final Position doubleUpPosition = Position.of(File.getFile(2), Rank.getRank(4));
 
         Assertions.assertThat(board.findMovablePositions(startPosition))
-                .isEqualTo(List.of(upPosition, doubleUpPosition));
+                .isEqualTo(new Path(List.of(upPosition, doubleUpPosition)));
     }
 
     @Test
