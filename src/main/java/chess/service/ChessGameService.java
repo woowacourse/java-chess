@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ChessGameService {
 
-    private Board board;
+    private final Board board;
     private final MoveDao moveDao;
 
     public ChessGameService() {
