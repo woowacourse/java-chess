@@ -42,12 +42,8 @@ graph TD
     LinearPiece --> Rook
     LinearPiece --> Bishop
     
-    MovePattern --> BishopMovePattern
-    MovePattern --> KingMovePattern
+    MovePattern --> NormalMovePattern
     MovePattern --> KnightMovePattern
-    MovePattern --> PawnMovePattern
-    MovePattern --> QueenMovePattern
-    MovePattern --> RookMovePattern
 ```
 
 ## 도메인
