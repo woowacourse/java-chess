@@ -66,29 +66,33 @@ public class ChessController {
             outputView.printBoard(chessGame.getBoard());
             List<String> commands = inputView.readCommand();
             Command command = Command.of(commands);
-            processPlayGame(command, commands, chessGame);
-            return command;
+            return processPlayGame(command, commands, chessGame);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return readPlayCommand(chessGame);
         }
     }
 
-    private void processPlayGame(final Command command,
-                                 final List<String> commands,
-                                 final ChessGame chessGame) {
+    private Command processPlayGame(final Command command,
+                                    final List<String> commands,
+                                    final ChessGame chessGame) {
         if (command.isStart()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
         }
         if (command.isMove()) {
-            processMove(commands, chessGame);
+            return processMove(commands, chessGame);
         }
+        return command;
     }
 
-    private void processMove(final List<String> commands, final ChessGame chessGame) {
+    private Command processMove(final List<String> commands, final ChessGame chessGame) {
         Coordinate startCoordinate = convertCoordinate(commands.get(START_COORDINATE_INDEX));
         Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
-        chessGame.move(startCoordinate, endCoordinate);
+        boolean isKing = chessGame.move(startCoordinate, endCoordinate);
+        if (isKing) {
+            return Command.END;
+        }
+        return Command.MOVE;
     }
 
     private Coordinate convertCoordinate(final String frontCoordinate) {

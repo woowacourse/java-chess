@@ -3,6 +3,7 @@ package chessgame.domain.chessgame;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Empty;
 import chessgame.domain.piece.Piece;
+import chessgame.domain.piece.PieceType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,13 +25,14 @@ public class Board {
         return startPiece.isSameCamp(camp);
     }
 
-    public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    public boolean move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (isMovable(startCoordinate, endCoordinate)) {
             Piece startPiece = board.get(startCoordinate);
+            Piece endPiece = board.get(endCoordinate);
             board.put(startCoordinate, new Empty());
             board.put(endCoordinate, startPiece);
             startPiece.checkMoved();
-            return;
+            return endPiece.isSameTypeWith(PieceType.KING);
         }
         throw new IllegalArgumentException("[ERROR] 해당 기물을 옮길 수 없습니다.");
     }

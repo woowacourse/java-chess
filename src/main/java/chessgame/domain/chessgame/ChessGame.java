@@ -12,10 +12,11 @@ public class ChessGame {
         this.turn = Camp.WHITE;
     }
 
-    public void move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    public boolean move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         checkTurn(startCoordinate);
-        board.move(startCoordinate, endCoordinate);
+        boolean isKing = board.move(startCoordinate, endCoordinate);
         changeTurn();
+        return isKing;
     }
 
     private void checkTurn(final Coordinate coordinate) {
