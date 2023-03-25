@@ -11,7 +11,7 @@ import static chess.controller.ChessGameCommand.START;
 import static chess.controller.ChessGameCommand.STATUS;
 import static chess.controller.ChessGameCommand.TO_INDEX;
 
-import chess.domain.board.Board;
+import chess.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 public final class ChessController {
-    private final Board board;
     private final Map<ChessGameCommand, ChessGameAction> commandMapper;
+    private final ChessGame chessGame;
 
     public ChessController() {
-        this.board = new BoardFactory().createInitialBoard();
+        this.chessGame = new ChessGame(new BoardFactory().createInitialBoard());
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::movePiece,
@@ -39,9 +39,9 @@ public final class ChessController {
 
         while (command.isPlayable()) {
             command = play();
-            if (board.isEnd()) {
+            if (chessGame.isEnd()) {
                 command = END;
-                OutputView.printWinner(board.winner());
+                OutputView.printWinner(chessGame.winner());
             }
         }
     }
@@ -60,7 +60,7 @@ public final class ChessController {
 
     private void start(final List<String> commands) {
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
-        OutputView.printBoard(board.board());
+        OutputView.printBoard(chessGame.board());
     }
 
     private void movePiece(final List<String> commands) {
@@ -68,24 +68,24 @@ public final class ChessController {
         Position from = searchPosition(commands.get(FROM_INDEX));
         Position to = searchPosition(commands.get(TO_INDEX));
 
-        board.move(from, to);
-        OutputView.printBoard(board.board());
+        chessGame.move(from, to);
+        OutputView.printBoard(chessGame.board());
     }
 
     private void showStatus(final List<String> commands) {
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
-        OutputView.printScore(board.calculateScore());
+        OutputView.printScore(chessGame.calculateScore());
     }
 
     private void end(final List<String> commands) {
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
-        if (!board.isEnd()) {
-            OutputView.printScore(board.calculateScore());
+        if (!chessGame.isEnd()) {
+            OutputView.printScore(chessGame.calculateScore());
         }
 
-        OutputView.printWinner(board.winner());
+        OutputView.printWinner(chessGame.winner());
     }
 
     private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {
