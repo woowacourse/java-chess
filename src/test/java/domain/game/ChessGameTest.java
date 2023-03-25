@@ -82,16 +82,15 @@ class ChessGameTest {
         chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
         chessGame.move(Position.of("d", "2"), Position.of("e", "1"));
         //when
-        assertThat(chessGame.isPlayable()).isEqualTo(true);
+        assertThat(chessGame.isPlayable()).isEqualTo(false);
         //then
     }
 
     @DisplayName("target position에 king이 없고, 유효한 움직임이면 게임은 종료되지 않는다.")
     @Test
     void kingAliveTest() {
-
         chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
-        assertThat(chessGame.isPlayable()).isEqualTo(false);
+        assertThat(chessGame.isPlayable()).isEqualTo(true);
     }
 
 }
