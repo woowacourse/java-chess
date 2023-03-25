@@ -18,14 +18,20 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        if (isFirstMove) {
+            return isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
+        }
+        return isReachableByRuleAfterFirstMove(startCoordinate, endCoordinate);
+    }
+
+    private boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         Inclination inclination = startCoordinate.getInclination(endCoordinate);
         return inclination.equals(Inclination.POSITIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 2);
     }
 
-    @Override
-    public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    private boolean isReachableByRuleAfterFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }

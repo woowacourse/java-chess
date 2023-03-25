@@ -11,9 +11,6 @@ public abstract class Pawn extends Piece {
         super(PieceType.PAWN, camp);
     }
 
-    public abstract boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,
-                                                           final Coordinate endCoordinate);
-
     public abstract boolean isReachableByRule(final Coordinate startCoordinate,
                                               final Coordinate endCoordinate);
 

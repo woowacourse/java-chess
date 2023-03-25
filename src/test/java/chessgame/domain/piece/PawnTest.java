@@ -27,7 +27,7 @@ class PawnTest {
         Coordinate endCoordinate = Coordinate.fromOnBoard(3, 0);
         Pawn pawn = new WhitePawn();
 
-        assertThat(pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
 
     @Test
@@ -99,7 +99,7 @@ class PawnTest {
         Coordinate endCoordinate = Coordinate.fromOnBoard(4, 0);
         Pawn pawn = new BlackPawn();
 
-        assertThat(pawn.isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate)).isTrue();
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
     }
 
     @Test

@@ -29,19 +29,13 @@ public class Board {
             Piece startPiece = board.get(startCoordinate);
             board.put(startCoordinate, new Empty());
             board.put(endCoordinate, startPiece);
-//            startPiece.checkMoved();
+            startPiece.checkMoved();
             return;
         }
         throw new IllegalArgumentException("[ERROR] 해당 기물을 옮길 수 없습니다.");
     }
 
     private boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (!isMovableByRule(startCoordinate, endCoordinate)) {
-            System.out.println("룰 안 됨");
-        }
-        if (!isNotBlocked(startCoordinate, endCoordinate)) {
-            System.out.println("장애물");
-        }
         return isMovableByRule(startCoordinate, endCoordinate) &&
                 isNotBlocked(startCoordinate, endCoordinate);
     }
@@ -75,11 +69,9 @@ public class Board {
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
         Coordinate indexCoordinate = directionVector.moveToDirection(startCoordinate);
 
-        while (!board.get(indexCoordinate)
-                     .isEmpty() && !indexCoordinate.equals(endCoordinate)) {
+        while (board.get(indexCoordinate).isEmpty() && !indexCoordinate.equals(endCoordinate)) {
             indexCoordinate = directionVector.moveToDirection(indexCoordinate);
         }
-
         return indexCoordinate.equals(endCoordinate);
     }
 
