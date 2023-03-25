@@ -1,6 +1,5 @@
 package chess.controller.state;
 
-import static chess.helper.PositionFixture.A1;
 import static chess.helper.PositionFixture.A2;
 import static chess.helper.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,10 +1,7 @@
 package chess.controller.state;
 
-import static chess.helper.PositionFixture.A6;
 import static chess.helper.PositionFixture.B6;
 import static chess.helper.PositionFixture.B7;
-import static chess.helper.PositionFixture.C8;
-import static chess.helper.PositionFixture.E1;
 import static chess.helper.PositionFixture.E2;
 import static chess.helper.PositionFixture.E3;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,11 +13,9 @@ import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
 import chess.model.game.ChessGame;
 import chess.model.piece.Piece;
-import chess.model.piece.type.Bishop;
 import chess.model.piece.type.Empty;
 import chess.model.piece.type.Pawn;
 import chess.model.position.Position;
-import chess.view.dto.ChessBoardResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

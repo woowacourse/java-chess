@@ -103,6 +103,7 @@ class PlayTest {
         // then
         assertThat(actual).isExactlyInstanceOf(Result.class);
         assertThat(actual.isPrintable()).isFalse();
+        assertThat(dao.findAll()).hasSize(0);
     }
 
     @Test
