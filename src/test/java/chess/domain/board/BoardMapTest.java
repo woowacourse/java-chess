@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -35,5 +36,15 @@ public class BoardMapTest {
 
         assertThat(boardMap.hasPieceAt(whiteRookPosition)).isTrue();
         assertThat(boardMap.hasPieceAt(emptyPosition)).isFalse();
+    }
+
+    @DisplayName("한 파일에 조건에 맞는 기물이 몇 개인지 센다")
+    @Test
+    void countPiecesMetCondition_inAFile() {
+        BoardMap boardMap = new BoardMap(AbstractTestFixture.INITIAL_BOARD);
+
+        long count = boardMap.count(File.B, piece -> piece.getType().equals(PieceType.PAWN));
+        
+        assertThat(count).isEqualTo(2);
     }
 }
