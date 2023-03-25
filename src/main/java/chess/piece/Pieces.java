@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.board.File;
 import chess.board.Position;
+import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,9 @@ public class Pieces {
     public long getPawnCountByFile(final File file, final Side side) {
         final int fileValue = file.getValue();
         return pieces.stream()
-                .filter(piece -> piece.getSide() == side && piece.getFile() == fileValue)
+                .filter(piece -> piece.getClass() == Pawn.class &&
+                        piece.getSide() == side &&
+                        piece.getFile() == fileValue)
                 .count();
     }
 }
