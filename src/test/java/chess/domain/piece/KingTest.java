@@ -75,10 +75,9 @@ class KingTest {
     @DisplayName("킹은 기물 위치와 관계없이 0점을 추가한다.")
     void kingScoreTest() {
         Piece king = new King(Camp.WHITE);
-        double sourceScore = 0;
 
-        double appendScore = king.appendPieceScore(sourceScore, true);
+        PieceScore appendScore = king.appendPieceScore(PieceScore.getZero(), true);
 
-        assertThat(appendScore).isEqualTo(0d);
+        assertThat(appendScore.getValue()).isZero();
     }
 }

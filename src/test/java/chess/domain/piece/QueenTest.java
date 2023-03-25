@@ -42,10 +42,9 @@ class QueenTest {
     @DisplayName("퀸은 기물 위치와 관계없이 9점을 추가한다.")
     void queenScoreTest() {
         Piece queen = new Queen(Camp.WHITE);
-        double sourceScore = 0;
 
-        double appendScore = queen.appendPieceScore(sourceScore, true);
+        PieceScore appendScore = queen.appendPieceScore(PieceScore.getZero(), true);
 
-        assertThat(appendScore).isEqualTo(9d);
+        assertThat(appendScore.getValue()).isEqualTo(9);
     }
 }

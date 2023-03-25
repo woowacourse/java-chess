@@ -4,6 +4,7 @@ import chess.controller.mapper.response.result.MatchResultMapper;
 import chess.domain.game.result.GameResult;
 import chess.domain.game.result.MatchResult;
 import chess.domain.piece.Camp;
+import chess.domain.piece.PieceScore;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,8 +43,8 @@ public class GameResultFormatter {
         StringBuilder formatBuilder = new StringBuilder();
         appendCampPrefix(camp, formatBuilder);
 
-        double scoreOfCamp = gameResult.peekScoreOfCamp(camp);
-        formatBuilder.append(scoreOfCamp);
+        PieceScore scoreOfCamp = gameResult.peekScoreOfCamp(camp);
+        formatBuilder.append(scoreOfCamp.getValue());
 
         return formatBuilder.toString();
     }

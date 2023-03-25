@@ -41,10 +41,9 @@ class BishopTest {
     @DisplayName("비숍은 기물 위치와 관계없이 3점을 추가한다.")
     void bishopScoreTest() {
         Piece bishop = new Bishop(Camp.WHITE);
-        double sourceScore = 0;
 
-        double appendScore = bishop.appendPieceScore(sourceScore, true);
+        PieceScore appendScore = bishop.appendPieceScore(PieceScore.getZero(), true);
 
-        assertThat(appendScore).isEqualTo(3d);
+        assertThat(appendScore.getValue()).isEqualTo(3);
     }
 }

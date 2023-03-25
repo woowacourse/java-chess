@@ -89,21 +89,17 @@ class PawnTest {
     @DisplayName("동일한 파일에 같은 진영의 폰이 존재하면 폰은 0.5점을 추가한다.")
     void pawnScoreSamPieceInSameFileTest() {
         Piece pawn = new Pawn(Camp.WHITE);
-        double sourceScore = 0;
+        PieceScore appendScore = pawn.appendPieceScore(PieceScore.getZero(), true);
 
-        double appendScore = pawn.appendPieceScore(sourceScore, true);
-
-        assertThat(appendScore).isEqualTo(0.5d);
+        assertThat(appendScore.getValue()).isEqualTo(0.5);
     }
 
     @Test
     @DisplayName("동일한 파일에 같은 진영의 폰이 존재하지 않으면 1점을 추가한다.")
     void pawnDefaultScoreTest() {
         Piece pawn = new Pawn(Camp.WHITE);
-        double sourceScore = 0;
+        PieceScore appendScore = pawn.appendPieceScore(PieceScore.getZero(), false);
 
-        double appendScore = pawn.appendPieceScore(sourceScore, false);
-
-        assertThat(appendScore).isEqualTo(1d);
+        assertThat(appendScore.getValue()).isEqualTo(1);
     }
 }

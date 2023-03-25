@@ -29,10 +29,9 @@ class KnightTest {
     @DisplayName("나이트는 기물 위치와 관계없이 2.5점을 추가한다.")
     void knightScoreTest() {
         Piece knight = new Knight(Camp.WHITE);
-        double sourceScore = 0;
 
-        double appendScore = knight.appendPieceScore(sourceScore, true);
+        PieceScore appendScore = knight.appendPieceScore(PieceScore.getZero(), true);
 
-        assertThat(appendScore).isEqualTo(2.5d);
+        assertThat(appendScore.getValue()).isEqualTo(2.5d);
     }
 }

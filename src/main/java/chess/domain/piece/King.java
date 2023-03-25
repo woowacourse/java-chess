@@ -7,7 +7,7 @@ import chess.domain.piece.move.PieceMove;
 
 public final class King extends Piece {
 
-    private static final double KING_SCORE = 0;
+    private static final PieceScore KING_SCORE = PieceScore.from("0");
 
     public King(Camp camp) {
         super(camp);
@@ -33,8 +33,8 @@ public final class King extends Piece {
     }
 
     @Override
-    public double appendPieceScore(double source, boolean ignore) {
-        return source + KING_SCORE;
+    public PieceScore appendPieceScore(PieceScore source, boolean ignore) {
+        return source.append(KING_SCORE);
     }
 
     @Override

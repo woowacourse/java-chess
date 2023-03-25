@@ -34,8 +34,9 @@ class EndScoreGameTest {
 
         ChessGame endScoreGame = new EndScoreGame(chessBoard);
 
-        assertThat(endScoreGame).extracting("whiteCampScore")
-                .isEqualTo(11.5d);
+        GameResult gameResult = endScoreGame.calculateResult();
+        assertThat(gameResult.peekScoreOfCamp(Camp.WHITE).getValue())
+                .isEqualTo(11.5);
     }
 
     @Test
@@ -52,8 +53,9 @@ class EndScoreGameTest {
 
         ChessGame endScoreGame = new EndScoreGame(chessBoard);
 
-        assertThat(endScoreGame).extracting("whiteCampScore")
-                .isEqualTo(11.5d);
+        GameResult gameResult = endScoreGame.calculateResult();
+        assertThat(gameResult.peekScoreOfCamp(Camp.WHITE).getValue())
+                .isEqualTo(11.5);
     }
 
     @Test
@@ -67,12 +69,14 @@ class EndScoreGameTest {
         pieceByPosition.put(Position.of(File.A, Rank.ONE), new Rook(Camp.WHITE));
         pieceByPosition.put(Position.of(File.B, Rank.ONE), new Knight(Camp.WHITE));
         ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
         ChessGame endScoreGame = new EndScoreGame(chessBoard);
 
         GameResult gameResult = endScoreGame.calculateResult();
-
-        assertThat(gameResult.peekScoreOfCamp(Camp.WHITE)).isEqualTo(9.5d);
-        assertThat(gameResult.peekScoreOfCamp(Camp.BLACK)).isEqualTo(0d);
+        assertThat(gameResult.peekScoreOfCamp(Camp.WHITE).getValue())
+                .isEqualTo(9.5);
+        assertThat(gameResult.peekScoreOfCamp(Camp.BLACK).getValue())
+                .isZero();
 
         assertThat(gameResult.getMatchResult()).isEqualTo(MatchResult.WHITE_WIN);
     }

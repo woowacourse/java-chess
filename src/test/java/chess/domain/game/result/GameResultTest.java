@@ -3,6 +3,7 @@ package chess.domain.game.result;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Camp;
+import chess.domain.piece.PieceScore;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,9 @@ class GameResultTest {
     @Test
     @DisplayName("게임 결과에 판정 점수가 존재하는 지 확인 할 수 있다. -> true")
     void containsScoreTest() {
-        Map<Camp, Double> scoreByCamp = Map.of(
-                Camp.WHITE, 20d,
-                Camp.BLACK, 10d
+        Map<Camp, PieceScore> scoreByCamp = Map.of(
+                Camp.WHITE, PieceScore.from("20"),
+                Camp.BLACK, PieceScore.from("10")
         );
 
         GameResult gameResult = new GameResult(MatchResult.WHITE_WIN, scoreByCamp);
@@ -33,10 +34,10 @@ class GameResultTest {
     @Test
     @DisplayName("해당 캠프의 게임 점수를 구할 수 있다.")
     void peekScoreOfCampTest() {
-        double whiteCampScore = 20d;
-        Map<Camp, Double> scoreByCamp = Map.of(
+        PieceScore whiteCampScore = PieceScore.from("20");
+        Map<Camp, PieceScore> scoreByCamp = Map.of(
                 Camp.WHITE, whiteCampScore,
-                Camp.BLACK, 10d
+                Camp.BLACK, PieceScore.from("10")
         );
 
         GameResult gameResult = new GameResult(MatchResult.WHITE_WIN, scoreByCamp);

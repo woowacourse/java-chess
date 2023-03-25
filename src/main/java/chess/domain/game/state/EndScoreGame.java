@@ -5,6 +5,7 @@ import chess.domain.game.result.MatchResult;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceScore;
 import chess.domain.position.ChessBoard;
 import chess.domain.position.File;
 import java.util.List;
@@ -15,8 +16,8 @@ import java.util.stream.Stream;
 
 public class EndScoreGame extends FinishedGame {
 
-    private final double whiteCampScore;
-    private final double blackCampScore;
+    private final PieceScore whiteCampScore;
+    private final PieceScore blackCampScore;
 
     protected EndScoreGame(ChessBoard chessBoard) {
         super(chessBoard);
@@ -24,12 +25,12 @@ public class EndScoreGame extends FinishedGame {
         this.blackCampScore = calculateChessScore(chessBoard, Camp.BLACK);
     }
 
-    private double calculateChessScore(ChessBoard chessBoard, Camp camp) {
+    private PieceScore calculateChessScore(ChessBoard chessBoard, Camp camp) {
         boolean hasSamePawnInSameFile = isPawnReduction(chessBoard, camp);
 
         List<Piece> collect = chessBoard.getPiecesOfCamp(camp);
 
-        double totalScore = 0d;
+        PieceScore totalScore = PieceScore.getZero();
         for (Piece piece : collect) {
             totalScore = piece.appendPieceScore(totalScore, hasSamePawnInSameFile);
         }
@@ -52,7 +53,7 @@ public class EndScoreGame extends FinishedGame {
 
     @Override
     public GameResult calculateResult() {
-        Map<Camp, Double> scoreByCamp = new ConcurrentHashMap<>();
+        Map<Camp, PieceScore> scoreByCamp = new ConcurrentHashMap<>();
         MatchResult matchResult = matchByScore();
 
         scoreByCamp.put(Camp.WHITE, whiteCampScore);
@@ -61,11 +62,11 @@ public class EndScoreGame extends FinishedGame {
     }
 
     private MatchResult matchByScore() {
-        if (whiteCampScore > blackCampScore) {
+        if (whiteCampScore.isGreaterThan(blackCampScore)) {
             return MatchResult.WHITE_WIN;
         }
 
-        if (blackCampScore > whiteCampScore) {
+        if (blackCampScore.isGreaterThan(whiteCampScore)) {
             return MatchResult.BLACK_WIN;
         }
 

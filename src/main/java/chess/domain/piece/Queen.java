@@ -7,7 +7,7 @@ import chess.domain.piece.move.PieceMove;
 
 public final class Queen extends Piece {
 
-    private static final double QUEEN_SCORE = 9;
+    private static final PieceScore QUEEN_SCORE = PieceScore.from("9");
 
     public Queen(Camp camp) {
         super(camp);
@@ -32,7 +32,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public double appendPieceScore(double totalScore, boolean isSamePieceInSameFile) {
-        return totalScore + QUEEN_SCORE;
+    public PieceScore appendPieceScore(PieceScore source, boolean isSamePieceInSameFile) {
+        return source.append(QUEEN_SCORE);
     }
 }

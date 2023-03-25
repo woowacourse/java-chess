@@ -42,10 +42,9 @@ class RookTest {
     @DisplayName("룩은 기물 위치와 관계없이 5점을 추가한다.")
     void rookScoreTest() {
         Piece rook = new Rook(Camp.WHITE);
-        double sourceScore = 0;
 
-        double appendScore = rook.appendPieceScore(sourceScore, true);
+        PieceScore appendScore = rook.appendPieceScore(PieceScore.getZero(), true);
 
-        assertThat(appendScore).isEqualTo(5d);
+        assertThat(appendScore.getValue()).isEqualTo(5);
     }
 }

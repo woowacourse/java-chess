@@ -9,8 +9,8 @@ import java.util.Objects;
 
 public final class Pawn extends Piece {
 
-    private static final double PAWN_DEFAULT_SCORE = 1;
-    private static final double PAWN_REDUCED_SCORE = 0.5;
+    private static final PieceScore PAWN_DEFAULT_SCORE = PieceScore.from("1");
+    private static final PieceScore PAWN_REDUCED_SCORE = PieceScore.from("0.5");
 
     private boolean isMoved = false;
 
@@ -57,12 +57,12 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public double appendPieceScore(double totalScore, boolean isSamePieceInSameFile) {
+    public PieceScore appendPieceScore(PieceScore source, boolean isSamePieceInSameFile) {
         if (isSamePieceInSameFile) {
-            return totalScore + PAWN_REDUCED_SCORE;
+            return source.append(PAWN_REDUCED_SCORE);
         }
 
-        return totalScore + PAWN_DEFAULT_SCORE;
+        return source.append(PAWN_DEFAULT_SCORE);
     }
 
     private boolean isForwardMove(int rankGap) {
