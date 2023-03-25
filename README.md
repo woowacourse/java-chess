@@ -13,7 +13,11 @@ graph TD
     ChessController --> InputView
     ChessController --> OutputView
     ChessController --> Command
-    ChessController --> ChessGame
+    ChessController --> ChessGameService
+    
+    ChessGameService --> ChessGame
+    ChessGameService --> ChessGameDao
+    ChessGameService --> PieceDao
 
     ChessGame --> Turn
     ChessGame --> State
@@ -99,6 +103,12 @@ graph TD
 - [x] 체스판을 출력한다.
 - [x] 점수를 출력한다.
 - [x] 승리팀을 출력한다.
+
+### ChessGameService
+- [x] chessGame을 찾을 수 있다.
+- [x] chessGame을 저장할 수 있다.
+- [x] piece 위치를 업데이트 할 수 있다.
+- [x] chessGame을 삭제할 수 있다.
 
 ### ChessGameDao
 - [x] chess_game을 저장할 수 있다.
