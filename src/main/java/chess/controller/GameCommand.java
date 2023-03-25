@@ -5,9 +5,10 @@ import java.util.Arrays;
 public enum GameCommand {
 
     START("start"),
-    END("end"),
+    LOAD("load"),
+    MOVE("move"),
     STATUS("status"),
-    MOVE("move");
+    END("end");
 
     private final String command;
 
@@ -22,12 +23,16 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
 
-    public boolean isMove() {
-        return this == MOVE;
-    }
-
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isLoad() {
+        return this == LOAD;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
     }
 
     public boolean isStatus() {
