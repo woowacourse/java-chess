@@ -126,4 +126,9 @@ public class Board {
         final Piece piece = pieces.findPieceByPosition(position);
         return piece.getSide();
     }
+
+    public boolean isKingExist(Side side) {
+        return pieces.containsKing(side);
+    }
+
 }

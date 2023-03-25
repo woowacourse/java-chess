@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.board.File;
 import chess.board.Position;
+import chess.piece.type.King;
 import chess.piece.type.Pawn;
 import chess.piece.type.Piece;
 import java.util.ArrayList;
@@ -70,5 +71,10 @@ public class Pieces {
                         piece.getSide() == side &&
                         piece.getFile() == fileValue)
                 .count();
+    }
+
+    public boolean containsKing(Side side) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.getClass() == King.class && piece.getSide() == side);
     }
 }

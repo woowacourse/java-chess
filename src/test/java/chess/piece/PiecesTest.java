@@ -136,4 +136,26 @@ class PiecesTest {
         // then
         assertThat(countOfWhitePawnOnFileA).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("King이 존재하면 true를 반환한다.")
+    void containsKing_true() {
+        // when, then
+        assertThat(pieces.containsKing(Side.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("King이 존재하지 않는다면 false를 반환한다.")
+    void containsKing_false() {
+        // given
+        final Pieces pieces = new Pieces(() -> List.of(
+                new Rook(new Position(File.A, Rank.ONE), Side.WHITE),
+                new Queen(new Position(File.E, Rank.ONE), Side.WHITE),
+                new Knight(new Position(File.B, Rank.ONE), Side.WHITE),
+                new Knight(new Position(File.B, Rank.EIGHT), Side.BLACK)
+        ));
+
+        // when, then
+        assertThat(pieces.containsKing(Side.WHITE)).isFalse();
+    }
 }

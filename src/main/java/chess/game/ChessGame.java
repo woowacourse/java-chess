@@ -31,11 +31,18 @@ public class ChessGame {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
-        checkGameNotStart();
+        checkGameStatus();
         final Side sourcePieceSide = board.getPieceSide(sourcePosition);
         checkTurnToMoveBySide(sourcePieceSide);
         board.movePiece(sourcePosition, targetPosition);
         changeTurnToMove();
+        checkKingAlive();
+    }
+
+    private void checkGameStatus() {
+        if (gameStatus != GameStatus.START) {
+            throw new IllegalArgumentException("[ERROR] 말을 이동할 수 없는 단계입니다.");
+        }
     }
 
     private void checkTurnToMoveBySide(final Side sourcePieceSide) {
@@ -52,10 +59,11 @@ public class ChessGame {
         turnToMove = Side.BLACK;
     }
 
-    private void checkGameNotStart() {
-        if (gameStatus != GameStatus.START) {
-            throw new IllegalArgumentException("[ERROR] 게임 시작 이후에 말을 이동할 수 있습니다.");
+    private void checkKingAlive() {
+        if (board.isKingExist(turnToMove)) {
+            return;
         }
+        gameStatus = GameStatus.END;
     }
 
     public void exit() {
