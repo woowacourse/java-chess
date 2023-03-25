@@ -103,4 +103,16 @@ class PieceDaoImplTest {
                 () -> assertThat(updatePiece.get().getRank()).isEqualTo("TWO")
         );
     }
+
+    @Test
+    void 기물을_삭제한다() {
+        final PieceDaoImpl pieceDao = new PieceDaoImpl(jdbcTemplate);
+        pieceDao.save(chessGameDto.getId(), A_TWO, new Piece(WHITE, WHITE_PAWN));
+        final Optional<PieceDto> piece = pieceDao.findByFileAndRank(chessGameDto.getId(), A, TWO);
+
+        pieceDao.delete(piece.get().getId());
+
+        final List<PieceDto> pieces = pieceDao.findAllByChessGameId(chessGameDto.getId());
+        assertThat(pieces).hasSize(0);
+    }
 }

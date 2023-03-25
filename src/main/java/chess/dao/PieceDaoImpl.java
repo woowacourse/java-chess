@@ -86,6 +86,8 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void delete(final Long id) {
-
+        final String query = "delete from piece where id = ?";
+        final List<String> parameters = List.of(String.valueOf(id));
+        jdbcTemplate.executeUpdate(query, parameters);
     }
 }
