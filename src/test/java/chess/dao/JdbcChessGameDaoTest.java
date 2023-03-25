@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.dto.FindPieceDto;
+import chess.domain.piece.dto.FindPiecePositionDto;
 import chess.domain.piece.dto.GeneratePieceDto;
 import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
@@ -96,9 +96,22 @@ class JdbcChessGameDaoTest {
         int rankToFind = 2;
         int fileToFind = 2;
         UpdatePiecePositionDto updatePiecePositionDto = new UpdatePiecePositionDto(positionToUpdate);
-        FindPieceDto findPieceDto = new FindPieceDto(gameId, rankToFind, fileToFind);
+        FindPiecePositionDto findPiecePositionDto = new FindPiecePositionDto(gameId, rankToFind, fileToFind);
 
         // when
-        assertDoesNotThrow(() -> jdbcChessGameDao.updatePiecePosition(updatePiecePositionDto, findPieceDto));
+        assertDoesNotThrow(() -> jdbcChessGameDao.updatePiecePosition(updatePiecePositionDto, findPiecePositionDto));
+    }
+
+    @Test
+    @DisplayName("삭제하려는 포지션으로 기물을 찾아서 삭제한다.")
+    void deletePieceByPosition() {
+        // given
+        Long gameId = 20L;
+        int rankToFind = 1;
+        int fileToFind = 1;
+        FindPiecePositionDto findPiecePositionDto = new FindPiecePositionDto(gameId, rankToFind, fileToFind);
+
+        // when
+        assertDoesNotThrow(() -> jdbcChessGameDao.deletePieceByPosition(findPiecePositionDto));
     }
 }
