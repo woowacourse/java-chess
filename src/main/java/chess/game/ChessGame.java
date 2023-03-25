@@ -78,7 +78,7 @@ public class ChessGame {
     }
 
     public Side getWinner() {
-        if (GameStatus.END == gameStatus) {
+        if (GameStatus.END != gameStatus) {
             throw new IllegalArgumentException("[ERROR] 아직 게임이 진행중입니다.");
         }
         if (turnToMove == Side.BLACK) {
