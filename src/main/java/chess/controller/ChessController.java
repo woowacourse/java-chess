@@ -55,10 +55,28 @@ public class ChessController {
             InputView.extractColumn(source));
         Coordinate destinationCoordinate = Coordinate.createCoordinate(InputView.extractRow(destination),
             InputView.extractColumn(destination));
-
         chessBoard.move(sourceCoordinate, destinationCoordinate);
         OutputView.printChessBoard(chessBoard.chessBoard());
+        if (checkIsKingDead(chessBoard)){
+            return;
+        }
         runChessGame(chessBoard);
+    }
+
+    private boolean checkIsKingDead(ChessBoard chessBoard) {
+        if (isKingDead(chessBoard, Team.BLACK)) {
+            OutputView.printKingIsDead(Team.BLACK);
+            return true;
+        }
+        if (isKingDead(chessBoard,Team.WHITE)){
+            OutputView.printKingIsDead(Team.WHITE);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isKingDead(ChessBoard chessBoard, Team team) {
+        return !chessBoard.isKingAlive(team);
     }
 
     private boolean isCommandEnd(List<String> splitedCommand) {

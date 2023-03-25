@@ -3,9 +3,9 @@ package chess.view.result;
 import chess.domain.piece.Team;
 
 public enum Result {
-    BLACK_WIN("블랙 팀이 이기고 있습니다"),
-    WHITE_WIN("화이트 팀이 이기고 있습니다"),
-    DRAW("동점입니다");
+    BLACK_WIN("블랙 승"),
+    WHITE_WIN("화이트 승"),
+    DRAW("동점");
 
     private final String result;
 

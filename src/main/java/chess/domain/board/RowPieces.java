@@ -101,6 +101,13 @@ public class RowPieces implements Comparable<RowPieces> {
         );
     }
 
+    public boolean isContainsKing(Team team) {
+        List<Piece> extractPieceByTeam = pieces.stream().filter(piece -> piece.isSameTeam(team))
+            .collect(Collectors.toList());
+        return extractPieceByTeam.stream()
+            .anyMatch(Piece::isKing);
+    }
+
     public List<Piece> pieces() {
         return pieces;
     }

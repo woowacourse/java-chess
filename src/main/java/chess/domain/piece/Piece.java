@@ -75,6 +75,10 @@ public abstract class Piece {
         return this.coordinate.compareTo(otherPiece.coordinate);
     }
 
+    public boolean isKing(){
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

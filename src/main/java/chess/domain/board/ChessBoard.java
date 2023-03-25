@@ -129,12 +129,9 @@ public class ChessBoard {
         return count;
     }
 
-//    public boolean isKingAlive(Team team){
-//        for (RowPieces rowPieces : chessBoard) {
-//
-//
-//        }
-//    }
+    public boolean isKingAlive(Team team){
+        return chessBoard.stream().anyMatch(rowPieces -> rowPieces.isContainsKing(team));
+    }
 
     public List<RowPieces> chessBoard() {
         return chessBoard;

@@ -58,4 +58,9 @@ public class OutputView {
         System.out.println("> 블랙 팀 : " + blackTeamPoint);
         System.out.println(Result.of(team));
     }
+
+    public static void printKingIsDead(Team team) {
+        System.out.println("> 킹이 죽어 경기가 종료되었습니다");
+        System.out.println(Result.of(team));
+    }
 }
