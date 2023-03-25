@@ -46,14 +46,14 @@ public enum Directions {
             .orElseThrow(() -> new IllegalArgumentException("해당 방향으로 갈 수 없습니다."));
     }
 
-    public void validateContains(Direction vector) {
-        if (contains(vector)) {
+    public void validateContains(Direction direction) {
+        if (contains(direction)) {
             return;
         }
         throw new IllegalArgumentException("해당 목적지로 갈 수 없습니다.");
     }
 
-    public boolean contains(Direction vector) {
-        return directions.contains(vector);
+    public boolean contains(Direction direction) {
+        return directions.contains(direction);
     }
 }

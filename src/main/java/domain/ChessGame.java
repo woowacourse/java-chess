@@ -7,11 +7,11 @@ import java.util.List;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private final Rule rule;
+    private final Turn turn;
 
     public ChessGame() {
         chessBoard = new ChessBoard();
-        rule = new Rule();
+        turn = new Turn();
     }
 
     public Piece find(Square square) {
@@ -20,12 +20,12 @@ public class ChessGame {
 
     public void move(Square source, Square destination) {
         Piece piece = chessBoard.find(source);
-        rule.validateOrder(piece);
+        turn.validateOrder(piece);
         List<Square> routes = piece.findRoutes(source, destination);
 
         checkPawn(source, destination, piece);
         go(source, destination, piece, routes);
-        rule.nextOrder();
+        turn.nextOrder();
     }
 
     private void checkPawn(Square source, Square destination, Piece piece) {

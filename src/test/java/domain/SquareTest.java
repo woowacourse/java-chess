@@ -54,15 +54,15 @@ class SquareTest {
 
     @ParameterizedTest(name = "{index} : next_success")
     @MethodSource("parametersProvider2")
-    void next_success(Square source, Direction vector, Square expected) {
-        Square actual = source.add(vector);
+    void next_success(Square source, Direction direction, Square expected) {
+        Square actual = source.add(direction);
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest(name = "{index} : next_fail")
     @MethodSource("parametersProvider3")
-    void next_fail(Square square, Direction vector) {
-        assertThatThrownBy(() -> square.add(vector))
+    void next_fail(Square square, Direction direction) {
+        assertThatThrownBy(() -> square.add(direction))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("체스판을 벗어날 수 없습니다.");
     }

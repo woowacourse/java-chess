@@ -1,19 +1,18 @@
 package domain;
 
 import domain.piece.Piece;
-import domain.piece.PieceInfo;
 import domain.piece.TeamColor;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RuleTest {
+class TurnTest {
 
     @Test
     @DisplayName("백이 첫수를 두고 흑,백 순서로 진행한다.")
     void validateOrder() {
-        Rule rule = new Rule();
+        Turn turn = new Turn();
         Piece white = new Piece(TeamColor.WHITE, null) {
             @Override
             public List<Square> findRoutes(Square source, Square destination) {
@@ -31,8 +30,8 @@ class RuleTest {
 
         Assertions.assertDoesNotThrow(() -> {
             for (Piece piece : pieces) {
-                rule.validateOrder(piece);
-                rule.nextOrder();
+                turn.validateOrder(piece);
+                turn.nextOrder();
             }
         });
     }

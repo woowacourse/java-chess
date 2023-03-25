@@ -18,19 +18,19 @@ public abstract class SlidingPiece extends Piece {
     @Override
     public List<Square> findRoutes(Square source, Square destination) {
         Direction vector = destination.calculateVector(source);
-        Direction direction = findDirection(vector);
+        Direction directionVector = findDirection(vector);
 
-        return getSquaresToDestination(source, vector, direction);
+        return getSquaresToDestination(source, vector, directionVector);
     }
 
     protected abstract Direction findDirection(Direction direction);
 
     private List<Square> getSquaresToDestination(Square source, Direction vector,
-        Direction direction) {
+        Direction directionVector) {
         int maxStep = vector.getMaxLength();
         List<Square> result = new ArrayList<>();
         for (int step = 1; step <= maxStep; step++) {
-            Square next = source.add(direction.multiply(step));
+            Square next = source.add(directionVector.multiply(step));
             result.add(next);
         }
         return Collections.unmodifiableList(result);

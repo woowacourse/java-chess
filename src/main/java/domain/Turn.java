@@ -3,10 +3,10 @@ package domain;
 import domain.piece.Piece;
 import domain.piece.TeamColor;
 
-public class Rule {
+public class Turn {
     private TeamColor currentOrder;
 
-    public Rule() {
+    public Turn() {
         this.currentOrder = TeamColor.WHITE;
     }
 

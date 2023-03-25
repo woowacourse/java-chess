@@ -14,17 +14,17 @@ public class Pawn extends Piece {
 
     @Override
     public List<Square> findRoutes(Square source, Square destination) {
-        Direction vector = destination.calculateVector(source);
-        state.validateDirection(vector);
+        Direction direction = destination.calculateVector(source);
+        state.validateDirection(direction);
 
-        return getSquares(source, destination, vector);
+        return getSquares(source, destination, direction);
     }
 
-    private List<Square> getSquares(Square source, Square destination, Direction vector) {
-        if (vector.equals(Direction.TOP_TOP)) {
+    private List<Square> getSquares(Square source, Square destination, Direction direction) {
+        if (direction.equals(Direction.TOP_TOP)) {
             return List.of(source.add(Direction.TOP), source.add(Direction.TOP_TOP));
         }
-        if (vector.equals(Direction.BOTTOM_BOTTOM)) {
+        if (direction.equals(Direction.BOTTOM_BOTTOM)) {
             return List.of(source.add(Direction.BOTTOM), source.add(Direction.BOTTOM_BOTTOM));
         }
         return List.of(destination);
@@ -39,7 +39,7 @@ public class Pawn extends Piece {
     }
 
     public boolean isDiagonal(Square source, Square destination) {
-        Direction vector = source.calculateVector(destination);
-        return Directions.Diagonal.contains(vector);
+        Direction direction = source.calculateVector(destination);
+        return Directions.Diagonal.contains(direction);
     }
 }

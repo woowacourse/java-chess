@@ -30,7 +30,7 @@ public enum PawnState {
         return this;
     }
 
-    public void validateDirection(Direction vector) {
-        directions.validateContains(vector);
+    public void validateDirection(Direction direction) {
+        directions.validateContains(direction);
     }
 }
