@@ -30,7 +30,7 @@ class BoardTest {
 
     @Test
     void Source_포지션을_받아_해당_위치의_말을_받을_수_있다() {
-        Board board = BoardFactory.createBoard();
+        Board board = new Board(BoardFactory.createBoard());
 
         Piece piece = board.findPiece(B_1);
 
@@ -48,7 +48,7 @@ class BoardTest {
 
     @Test
     void 경로를_입력했을_때_빈_공간을_입력하면_예외가_발생한다() {
-        Board board = BoardFactory.createBoard();
+        Board board = new Board(BoardFactory.createBoard());
 
         assertThatThrownBy(() -> board.movePiece(C_4, C_5))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -57,7 +57,7 @@ class BoardTest {
 
     @Test
     void 경로를_입력했을_때_말이_갈_수_없는_경로라면_예외가_발생한다() {
-        Board board = BoardFactory.createBoard();
+        Board board = new Board(BoardFactory.createBoard());
 
         assertThatThrownBy(() -> board.movePiece(C_2, C_5))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -66,7 +66,7 @@ class BoardTest {
 
     @Test
     void 경로를_입력했을_때_경로에_다른_말이_있다면_예외가_발생한다() {
-        Board board = BoardFactory.createBoard();
+        Board board = new Board(BoardFactory.createBoard());
 
         assertThatThrownBy(() -> board.movePiece(A_1, A_3))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -75,26 +75,14 @@ class BoardTest {
 
     @Test
     void 말을_움직인다() {
-        Board board = BoardFactory.createBoard();
+        Board board = new Board(BoardFactory.createBoard());
+
         board.movePiece(C_2, C_4);
+
         assertAll(
                 () -> assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class),
                 () -> assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class)
         );
-    }
-
-    @Test
-    void 초기점수를_계산한다() {
-        Board board = BoardFactory.createBoard();
-
-        assertThat(board.calculateScore(WHITE)).isEqualTo(38.0);
-    }
-
-    @Test
-    void 폰이_같은_File에_있을_때의_점수를_계산한다() {
-        Board board = new Board(Map.of(A_1, new Pawn(WHITE), A_2, new Pawn(WHITE)));
-
-        assertThat(board.calculateScore(WHITE)).isEqualTo(1.0);
     }
 
     @Test

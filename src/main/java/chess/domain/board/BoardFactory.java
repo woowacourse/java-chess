@@ -94,7 +94,7 @@ public class BoardFactory {
         }
     }
 
-    public static Board createBoard() {
-        return new Board(new HashMap<>(INIT_CHESS_BOARD));
+    public static Map<Position, Piece> createBoard() {
+        return new HashMap<>(INIT_CHESS_BOARD);
     }
 }

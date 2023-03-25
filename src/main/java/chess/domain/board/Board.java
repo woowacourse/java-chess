@@ -4,18 +4,21 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.RoleType;
-import chess.domain.position.FileCoordinate;
 import chess.domain.position.Position;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
+    private static final int INIT_KING_COUNT = 2;
 
-    public static final int KIN = 2;
     private final Map<Position, Piece> boards;
 
-    Board(Map<Position, Piece> boards) {
+    public Board(Map<Position, Piece> boards) {
         this.boards = boards;
+    }
+
+    public Board() {
+        this(new HashMap<>());
     }
 
     public Piece findPiece(Position position) {
@@ -70,36 +73,22 @@ public class Board {
                 .allMatch(piece -> piece.isSameRoleType(RoleType.EMPTY));
     }
 
-    public double calculateScore(Color color) {
-        return calculatePieceScore(color) - calculatePawnScore(color);
+    public boolean checkKingDead() {
+        long kingCount = boards.values().stream()
+                .filter(piece -> piece.isSameRoleType(RoleType.KING))
+                .count();
+        return kingCount < INIT_KING_COUNT;
     }
 
-    private double calculatePieceScore(Color color) {
-        return boards.values().stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(Piece::getScore)
-                .sum();
+    public void initialize() {
+        boards.putAll(BoardFactory.createBoard());
     }
 
-    private double calculatePawnScore(Color color) {
-        Map<FileCoordinate, Long> countByFile = boards.keySet().stream()
-                .filter(position -> boards.get(position).isSameColor(color))
-                .filter(position -> boards.get(position).isSameRoleType(RoleType.PAWN))
-                .collect(Collectors.groupingBy(Position::getFileCoordinate, Collectors.counting()));
-
-        return countByFile.values().stream()
-                .filter(count -> count >= 2)
-                .mapToDouble(count -> count * 0.5)
-                .sum();
+    public boolean isNotInitialize() {
+        return boards.isEmpty();
     }
 
     public Map<Position, Piece> getBoards() {
         return boards;
-    }
-
-    public boolean checkKingDead() {
-        return boards.values().stream()
-                .filter(piece -> piece.isSameRoleType(RoleType.KING))
-                .count() < KIN;
     }
 }
