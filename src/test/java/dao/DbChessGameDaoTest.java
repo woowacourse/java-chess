@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -36,6 +35,13 @@ class DbChessGameDaoTest {
     @DisplayName("좌표를 읽어올 수 있다")
     void read() {
         assertThatCode(dbChessGameDao::read)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("좌표를 모두 삭제할 수 있다")
+    void delete() {
+        assertThatCode(dbChessGameDao::delete)
                 .doesNotThrowAnyException();
     }
 }

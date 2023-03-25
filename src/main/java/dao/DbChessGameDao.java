@@ -87,6 +87,14 @@ CREATE TABLE chess_game (
 
     @Override
     public void delete() {
+        final var query = "DELETE FROM chess_game";
 
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.execute();
+        } catch (final SQLException e) {
+            System.err.println("삭제 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
