@@ -37,7 +37,7 @@ public final class Board {
     }
 
     private void replacePieceIfIsPawn(final Coordinate target, final Piece piece) {
-        if (piece.hasSameColorWith(Color.BLACK)) {
+        if (piece.getColor() == Color.BLACK) {
             pieceLocations.put(target, new BlackPawn(Color.BLACK));
             return;
         }
@@ -68,7 +68,7 @@ public final class Board {
 
     private double collectPurePointFor(final Color color) {
         return pieceLocations.values().stream()
-                .filter(piece -> piece.hasSameColorWith(color))
+                .filter(piece -> piece.getColor() == color)
                 .map(Piece::getPoint)
                 .reduce(Double::sum)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 보드가 초기화되지 않아 점수를 계산할 수 없습니다"));
@@ -86,14 +86,14 @@ public final class Board {
 
     private Map<Integer, Long> makePawnCountForEachFile(final Color color) {
         return pieceLocations.entrySet().stream()
-                .filter(entry -> entry.getValue().hasSameColorWith(color))
+                .filter(entry -> entry.getValue().getColor() == color)
                 .filter(entry -> entry.getValue().isPawn())
                 .collect(Collectors.groupingBy(entry -> entry.getKey().getCol(), Collectors.counting()));
     }
 
     public boolean isPieceEmptyAt(final Coordinate target) {
         return pieceLocations.get(target)
-                .hasSameColorWith(Color.NEUTRAL);
+                .getColor() == Color.NEUTRAL;
     }
 
     public boolean allKingAlive() {

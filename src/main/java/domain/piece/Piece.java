@@ -11,7 +11,6 @@ public abstract class Piece {
         this.color = color;
     }
 
-
     public static Piece ofEmpty() {
         return new EmptyPiece();
     }
@@ -48,12 +47,8 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean hasSameColorWith(final Color otherColor) {
-        return color == otherColor;
-    }
-
-    public boolean hasSameColorWith(final Piece otherPiece) {
-        return color == otherPiece.color;
+    public Color getColor() {
+        return color;
     }
 
     public double getPoint() {
