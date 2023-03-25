@@ -169,7 +169,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("한 파일 위에 다른 폰과 함께 존재하는 폰이 몇 개인지 반환한다.")
+    @DisplayName("한 파일에 2개 이상 존재하는 폰의 개수를 반환한다.")
     void getCountOfPawnsOnSameFileBySide() {
         // given
         Board fixedBoard = new Board(new Pieces(() -> List.of(
@@ -178,10 +178,12 @@ class BoardTest {
 
                 new Pawn(new Position(File.B, Rank.ONE), Side.WHITE),
                 new Pawn(new Position(File.B, Rank.THREE), Side.WHITE),
-                new Pawn(new Position(File.B, Rank.SEVEN), Side.WHITE)
+                new Pawn(new Position(File.B, Rank.SEVEN), Side.WHITE),
+
+                new Pawn(new Position(File.C, Rank.SEVEN), Side.WHITE)
         )));
 
         // when, then
-        assertThat(fixedBoard.getCountOfPawnsOnSameFileBySide(Side.WHITE)).isEqualTo(3);
+        assertThat(fixedBoard.getCountOfPawnsOnSameFileBySide(Side.WHITE)).isEqualTo(5);
     }
 }
