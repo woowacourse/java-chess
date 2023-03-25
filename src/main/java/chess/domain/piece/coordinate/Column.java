@@ -20,9 +20,9 @@ public enum Column {
         this.columnIndex = columnIndex;
     }
 
-    public static Column fromName(String column) {
+    public static Column fromName(String otherColumn) {
         return Arrays.stream(values())
-            .filter(column2 -> column2.column.equals(column))
+            .filter(value -> value.column.equals(otherColumn))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
     }
