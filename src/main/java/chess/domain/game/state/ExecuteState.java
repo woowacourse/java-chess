@@ -6,8 +6,6 @@ import chess.domain.piece.Color;
 
 public interface ExecuteState {
 
-    void start();
-
     double calculateScoreOfColor(final Color color, final ChessGame chessGame);
 
     void move(final Square source, final Square destination, final ChessGame chessGame);

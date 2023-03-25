@@ -28,7 +28,7 @@ class ChessGameDaoImplTest {
 
     @Test
     void 체스_게임을_저장한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
         final ChessGameDao chessGameDao = new ChessGameDaoImpl();
 
         chessGameDao.save(chessGame);
@@ -39,7 +39,7 @@ class ChessGameDaoImplTest {
 
     @Test
     void 체스_게임을_조회한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
         final ChessGameDao chessGameDao = new ChessGameDaoImpl();
         chessGameDao.save(chessGame);
         final Optional<ChessGameDto> chessGameDto = chessGameDao.findLatest();
@@ -51,7 +51,7 @@ class ChessGameDaoImplTest {
 
     @Test
     void 체스_게임_목록을_확인한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
         final ChessGameDao chessGameDao = new ChessGameDaoImpl();
         chessGameDao.save(chessGame);
 

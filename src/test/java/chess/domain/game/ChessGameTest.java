@@ -18,54 +18,18 @@ import org.junit.jupiter.api.Test;
 class ChessGameTest {
 
     @Nested
-    class start_메서드는 {
-
-        @Test
-        void 시작_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
-
-            assertThatIllegalStateException()
-                    .isThrownBy(chessGame::start)
-                    .withMessage("시작 상태에서는 시작할 수 없습니다.");
-        }
-
-        @Test
-        void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
-            chessGame.end();
-
-            assertThatIllegalStateException()
-                    .isThrownBy(chessGame::start)
-                    .withMessage("종료 상태에서는 시작할 수 없습니다.");
-        }
-    }
-
-    @Nested
     class calculateScore_메서드는 {
 
         @Test
-        void 초기_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-
-            assertThatIllegalStateException()
-                    .isThrownBy(() -> chessGame.calculateScore(WHITE))
-                    .withMessage("초기 상태에서는 점수를 계산할 수 없습니다.");
-        }
-
-        @Test
         void 시작_상태라면_점수를_계산한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
 
             assertThat(chessGame.calculateScore(WHITE)).isEqualTo(38);
         }
 
         @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
             chessGame.end();
 
             assertThatIllegalStateException()
@@ -78,18 +42,8 @@ class ChessGameTest {
     class move_메서드는 {
 
         @Test
-        void 초기_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-
-            assertThatIllegalStateException()
-                    .isThrownBy(() -> chessGame.move(B_TWO, B_THREE))
-                    .withMessage("초기 상태에서는 움직일 수 없습니다.");
-        }
-
-        @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
             chessGame.end();
 
             assertThatIllegalStateException()
@@ -103,8 +57,7 @@ class ChessGameTest {
 
         @Test
         void 종료_상태라면_예외를_던진다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
             chessGame.end();
 
             assertThatIllegalStateException()
@@ -115,7 +68,7 @@ class ChessGameTest {
 
     @Test
     void 색의_점수를_계산한다() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
 
         assertThat(chessGame.calculateScoreOfColor(WHITE)).isEqualTo(38);
     }
@@ -124,24 +77,15 @@ class ChessGameTest {
     class isRunning_메서드는 {
 
         @Test
-        void 초기_상태라면_true_반환한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-
-            assertThat(chessGame.isRunning()).isTrue();
-        }
-
-        @Test
         void 시작_상태라면_true_반환한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
 
             assertThat(chessGame.isRunning()).isTrue();
         }
 
         @Test
         void 종료_상태라면_false_반환한다() {
-            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
-            chessGame.start();
+            final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
             chessGame.end();
 
             assertThat(chessGame.isRunning()).isFalse();

@@ -17,7 +17,7 @@ public class NewChessGameCommand implements ChessGameCommand {
             final PieceService pieceService,
             final OutputView outputView
     ) {
-        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.INIT);
+        final ChessGame chessGame = new ChessGame(BoardFactory.create(), GameState.START);
         chessGameService.save(chessGame);
 
         final ChessGameDto chessGameDto = chessGameService.findLatest();

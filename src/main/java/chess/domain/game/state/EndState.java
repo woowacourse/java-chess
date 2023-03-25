@@ -9,11 +9,6 @@ public class EndState implements ExecuteState {
     public static final EndState CACHE = new EndState();
 
     @Override
-    public void start() {
-        throw new IllegalStateException("종료 상태에서는 시작할 수 없습니다.");
-    }
-
-    @Override
     public double calculateScoreOfColor(final Color color, final ChessGame chessGame) {
         throw new IllegalStateException("종료 상태에서는 점수를 계산할 수 없습니다.");
     }

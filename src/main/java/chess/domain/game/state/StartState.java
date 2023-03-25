@@ -9,11 +9,6 @@ public class StartState implements ExecuteState {
     public static final StartState CACHE = new StartState();
 
     @Override
-    public void start() {
-        throw new IllegalStateException("시작 상태에서는 시작할 수 없습니다.");
-    }
-
-    @Override
     public double calculateScoreOfColor(final Color color, final ChessGame chessGame) {
         return chessGame.calculateScoreOfColor(color);
     }

@@ -18,6 +18,6 @@ public class EndChessGameCommand implements ChessGameCommand {
             final PieceService pieceService,
             final OutputView outputView) {
         outputView.printEndMessage();
-        return new ChessGame(BoardFactory.create(), new GameState(WHITE, new EndState()));
+        return new ChessGame(BoardFactory.create(), new GameState(WHITE, EndState.CACHE));
     }
 }

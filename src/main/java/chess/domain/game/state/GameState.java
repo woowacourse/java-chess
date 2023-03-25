@@ -9,7 +9,7 @@ import chess.domain.piece.Piece;
 
 public class GameState {
 
-    public static final GameState INIT = new GameState(WHITE, InitState.CACHE);
+    public static final GameState START = new GameState(WHITE, StartState.CACHE);
 
     private final Color turn;
     private final ExecuteState executeState;
@@ -17,10 +17,6 @@ public class GameState {
     public GameState(final Color turn, final ExecuteState executeState) {
         this.turn = turn;
         this.executeState = executeState;
-    }
-
-    public void start() {
-        executeState.start();
     }
 
     public double calculateScoreOfColor(final Color color, final ChessGame chessGame) {
@@ -45,10 +41,6 @@ public class GameState {
 
     public GameState terminate() {
         return new GameState(turn, EndState.CACHE);
-    }
-
-    public GameState done() {
-        return new GameState(turn, DoneState.CACHE);
     }
 
     public boolean isTurn(final Piece piece) {
