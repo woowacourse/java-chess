@@ -16,13 +16,10 @@ public enum ChessColumn {
     }
 
     public static ChessColumn find(int column) {
-        ChessColumn[] chessColumns = values();
-        for (var chessColumn : chessColumns) {
-            if (chessColumn.column == column) {
-                return chessColumn;
-            }
-        }
-        throw new IllegalArgumentException("체스판을 벗어날 수 없습니다.");
+        return Arrays.stream(values())
+            .filter(chessColumn -> chessColumn.column == column)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어날 수 없습니다."));
     }
 
     public static ChessColumn find(char column) {
