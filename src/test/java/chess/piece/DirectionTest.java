@@ -83,4 +83,25 @@ class DirectionTest {
                 Arguments.of(-2, -1, Direction.LEFT_LEFT_DOWN)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("getDirectionBeforeMoveSidewaysCase")
+    @DisplayName("옆으로 이동하기 전까지 이동한 방향을 반환한다.")
+    void getDirectionBeforeMoveSideways(Direction direction, Direction expectedDirection) {
+        // when, then
+        assertThat(direction.getDirectionBeforeMoveSideways()).isSameAs(expectedDirection);
+    }
+
+    static Stream<Arguments> getDirectionBeforeMoveSidewaysCase() {
+        return Stream.of(
+                Arguments.of(Direction.UP_UP_RIGHT, Direction.UP),
+                Arguments.of(Direction.UP_UP_LEFT, Direction.UP),
+                Arguments.of(Direction.RIGHT_RIGHT_UP, Direction.RIGHT),
+                Arguments.of(Direction.RIGHT_RIGHT_DOWN, Direction.RIGHT),
+                Arguments.of(Direction.DOWN_DOWN_RIGHT, Direction.DOWN),
+                Arguments.of(Direction.DOWN_DOWN_LEFT, Direction.DOWN),
+                Arguments.of(Direction.LEFT_LEFT_UP, Direction.LEFT),
+                Arguments.of(Direction.LEFT_LEFT_DOWN, Direction.LEFT)
+        );
+    }
 }
