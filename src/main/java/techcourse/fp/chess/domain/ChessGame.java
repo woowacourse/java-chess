@@ -7,11 +7,9 @@ import techcourse.fp.chess.domain.piece.Piece;
 public class ChessGame {
 
     private final Board board;
-    private final ScoreCalculator scoreCalculator;
 
-    public ChessGame(final Board board, final ScoreCalculator scoreCalculator) {
+    public ChessGame(final Board board) {
         this.board = board;
-        this.scoreCalculator = scoreCalculator;
     }
 
     public void move(final Position source, final Position target) {
@@ -31,6 +29,6 @@ public class ChessGame {
     }
 
     public double findScoreByColor(Color color) {
-        return scoreCalculator.calculate(board.getBoard(), color);
+        return ScoreCalculator.calculate(board.getBoard(), color);
     }
 }

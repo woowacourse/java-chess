@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import techcourse.fp.chess.domain.BoardFactory;
 import techcourse.fp.chess.domain.ChessGame;
-import techcourse.fp.chess.domain.ScoreCalculator;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.dto.request.CommandRequest;
 import techcourse.fp.chess.dto.response.BoardResponse;
@@ -51,7 +50,7 @@ public final class ChessController {
     }
 
     private void startGame() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.generate(), new ScoreCalculator());
+        final ChessGame chessGame = new ChessGame(BoardFactory.generate());
         outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
         Command command = Command.EMPTY;
 
