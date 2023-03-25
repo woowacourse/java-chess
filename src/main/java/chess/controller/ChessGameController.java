@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.Pieces;
 import chess.domain.Player;
 import chess.domain.Players;
-import chess.domain.dto.response.PiecesResponse;
+import chess.dto.response.PiecesResponse;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 

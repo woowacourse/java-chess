@@ -1,8 +1,8 @@
 package chess.domain.strategy.pawn;
 
 import chess.domain.Position;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.request.MoveRequest;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
