@@ -201,4 +201,8 @@ public final class Position {
     public Rank getRank() {
         return rank;
     }
+
+    public String getFile() {
+        return file.name();
+    }
 }

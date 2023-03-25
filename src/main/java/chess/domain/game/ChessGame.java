@@ -10,6 +10,7 @@ import java.util.Map;
 public final class ChessGame {
 
     private GameStatus gameStatus;
+    private Long gameId;
 
     public ChessGame() {
         this.gameStatus = new Waiting();
@@ -47,7 +48,11 @@ public final class ChessGame {
         return gameStatus.computeScore(color);
     }
 
-    public static ChessGame load(Board board, Color turn) {
-        return new ChessGame(board, turn);
+    public Long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(final Long gameId) {
+        this.gameId = gameId;
     }
 }

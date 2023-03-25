@@ -1,14 +1,11 @@
 package chess.dao;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
-import chess.domain.piece.property.Color;
-import chess.domain.piece.property.Kind;
+import chess.dto.PositionStringMapper;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.Map;
 
 public final class ChessGameDao {
@@ -26,7 +23,6 @@ public final class ChessGameDao {
     }
 
     public Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
@@ -36,13 +32,23 @@ public final class ChessGameDao {
         }
     }
 
-    public void save(ChessGame chessGame) {
+    public Long createGame() {
+        String sql = "INSERT INTO game SET turn = 'WHITE'";
+        try (var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+            return null;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public void saveGame(ChessGame chessGame) {
         Map<Position, Piece> board = chessGame.getBoard();
-        String turn = chessGame.getTurn();
-
-        saveTurn(turn);
-
-        Integer recentSavedId = findRecentSavedId();
+        Long gameId = chessGame.getGameId();
 
         board.forEach(
                 (position, piece) -> {
@@ -52,18 +58,12 @@ public final class ChessGameDao {
                             "piece = ?," +
                             "color = ?," +
                             "game_id = ?";
-                    try (var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                        preparedStatement.setString(1, position.toString());
+                    try (var preparedStatement = connection.prepareStatement(sql)) {
+                        preparedStatement.setString(1, PositionStringMapper.mapping(position));
                         preparedStatement.setString(2, piece.getName());
                         preparedStatement.setString(3, piece.getColor().name());
-                        preparedStatement.setString(3, piece.getColor().name());
-                        preparedStatement.setInt(4, recentSavedId);
+                        preparedStatement.setLong(4, gameId);
                         preparedStatement.executeUpdate();
-                        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                        if (!generatedKeys.next()) {
-                            return;
-                        }
-                        long aLong = generatedKeys.getLong(1);
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
                     }
@@ -71,52 +71,88 @@ public final class ChessGameDao {
         );
     }
 
-    public Integer findRecentSavedId() {
-        String sql = "SELECT game_id FROM game ORDER BY game_id DESC LIMIT 1";
-        try (var preparedStatement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("game_id");
-            }
-            return null;
-        } catch (SQLException e) {
-            return null;
-        }
+    public void updateGame(ChessGame chessGame, Position source, Position target) {
+        Long gameId = chessGame.getGameId();
+        String turn = chessGame.getTurn();
+
+        updateTurn(gameId, turn);
+
+        Map<Position, Piece> board = chessGame.getBoard();
+        Piece piece = board.get(target);
+        String mappingSource = PositionStringMapper.mapping(source);
+        String mappingTarget = PositionStringMapper.mapping(target);
+
+        updateTarget(gameId, piece, mappingTarget);
+        deleteSource(mappingSource, gameId);
     }
 
-    private void saveTurn(final String turn) {
-        String sql = "INSERT INTO game SET turn = ?";
-        try (var preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, turn);
+    private void deleteSource(final String mappingSource, final Long gameId) {
+        String sql = "DELETE FROM board " +
+                "WHERE position = ?" +
+                "AND game_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, mappingSource);
+            preparedStatement.setLong(2, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
-    public ChessGame load(int gameId) {
-        String turn = findTurnById(gameId);
-        Map<Position, Piece> board = new HashMap<>();
-
-        String sql = "SELECT * FROM board WHERE game_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, gameId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String position = resultSet.getString("position");
-                String piece = resultSet.getString("piece");
-                String color = resultSet.getString("color");
-                Kind kind = Kind.valueOf(piece);
-                board.put(Position.from(position), kind.toPiece(color));
-            }
-
-            return ChessGame.load(new Board(board), Color.valueOf(turn));
+    private void updateTarget(final Long gameId, final Piece piece, final String mappingTarget) {
+        String sql = "INSERT INTO board (piece, color) VALUES(?, ?) " +
+                "ON DUPLICATE KEY UPDATE " +
+                "piece = ?," +
+                "color = ? " +
+                "WHERE position = ? " +
+                "AND game_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, piece.getName());
+            preparedStatement.setString(2, piece.getColor().name());
+            preparedStatement.setString(3, piece.getName());
+            preparedStatement.setString(4, piece.getColor().name());
+            preparedStatement.setString(5, mappingTarget);
+            preparedStatement.setLong(6, gameId);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
         }
     }
+
+    private void updateTurn(final Long gameId, final String turn) {
+        String sql = "UPDATE game SET turn = ? WHERE game_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, turn);
+            preparedStatement.setLong(2, gameId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+//
+//    public ChessGame load(int gameId) {
+//        String turn = findTurnById(gameId);
+//        Map<Position, Piece> board = new HashMap<>();
+//
+//        String sql = "SELECT * FROM board WHERE game_id = ?";
+//        try {
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setInt(1, gameId);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                String position = resultSet.getString("position");
+//                String piece = resultSet.getString("piece");
+//                String color = resultSet.getString("color");
+//                Kind kind = Kind.valueOf(piece);
+//                board.put(Position.from(position), kind.toPiece(color));
+//            }
+//
+//            return ChessGame.load(new Board(board), Color.valueOf(turn));
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//            return null;
+//        }
+//    }
 
     private String findTurnById(int gameId) {
         String sql = "SELECT * FROM game WHERE game_id = ?";

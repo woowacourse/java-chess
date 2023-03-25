@@ -119,14 +119,6 @@ public final class Board {
         board.remove(source);
     }
 
-    private Piece getPiece(Position position) {
-        return board.getOrDefault(position, new Empty());
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return new HashMap<>(board);
-    }
-
     public double computeScore(final Color color) {
         double sum = board.values().stream()
                 .filter(piece -> piece.equalsColor(color))
@@ -160,5 +152,18 @@ public final class Board {
             return Color.NONE;
         }
         return kingColors.get(0);
+    }
+
+    private Piece getPiece(Position position) {
+        return board.getOrDefault(position, new Empty());
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>(board);
+    }
+
+    @Override
+    public String toString() {
+        return board.toString();
     }
 }

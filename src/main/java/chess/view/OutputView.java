@@ -54,8 +54,8 @@ public final class OutputView {
         }
     }
 
-    public void printGameId(final int gameId) {
-        System.out.printf("저장된 게임 번호는 %d번 입니다.", gameId);
+    public void printGameId(final Long gameId) {
+        System.out.printf("%d번 게임이 생성되었습니다.", gameId);
         System.out.println();
     }
 

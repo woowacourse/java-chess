@@ -35,11 +35,4 @@ public final class ChessController {
             repeatTurns(chessGame);
         }
     }
-
-//    private void load(List<String> gameId) {
-//        int gameNumber = Integer.parseInt(gameId.get(1));
-//
-//        this.chessGame = ChessGameDao.load(gameNumber);
-//        printBoard(chessGame.getBoard());
-//    }
 }

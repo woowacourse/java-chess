@@ -49,4 +49,8 @@ public enum File {
     public int sub(final File file) {
         return this.value - file.value;
     }
+
+    public String getValue() {
+        return String.valueOf(value);
+    }
 }
