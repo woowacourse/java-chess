@@ -70,6 +70,7 @@
     - [ ] REGISTER, LOGIN 명령어를 입력할 수 있다.
         - [ ] REGISTER 명령어와 함께 아이디를 입력하여 계정을 생성할 수 있다. ex) REGISTER herb
         - [ ] LOGIN 명령어와 함께 아이디를 입력하여 로그인을 할 수 있다. ex) LOGIN herb
+        - [ ] LOGOUT 명령어를 입력하여 로그아웃을 할 수 있다. ex) LOGOUT
 
 - [ ] BoardController
     - [ ] 게임 관리 화면으로 로그인을 해야지 이동할 수 있다.

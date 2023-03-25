@@ -10,15 +10,15 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class CommandTest {
+public class ChessGameCommandTest {
 
     @Test
     void 올바른_입력값이_아니라면_예외를_던진다() {
         // given
-        final List<String> commands = List.of("invalid");
+        final List<String> invalidCommands = List.of("invalid");
 
         // expect
-        assertThatThrownBy(() -> ChessGameCommand.from(commands))
+        assertThatThrownBy(() -> ChessGameCommand.from(invalidCommands))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 명령어를 입력해주세요.");
     }
@@ -26,10 +26,10 @@ public class CommandTest {
     @Test
     void Command가_정상_반환된다() {
         // given
-        final List<String> commands = List.of("start");
+        final List<String> validCommand = List.of("start");
 
         // when
-        final ChessGameCommand command = ChessGameCommand.from(commands);
+        final ChessGameCommand command = ChessGameCommand.from(validCommand);
 
         // expect
         assertThat(command).isEqualTo(ChessGameCommand.START);
