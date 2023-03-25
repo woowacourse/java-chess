@@ -60,6 +60,7 @@ public class Board {
         board.put(targetPosition, piece);
         board.put(sourcePosition, Empty.getInstance());
         turn = turn.nextTurn();
+
     }
 
     public boolean isKingDead() {
