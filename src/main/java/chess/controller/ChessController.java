@@ -27,24 +27,22 @@ public class ChessController {
     private void executeState() {
         try {
             final Command command = InputView.readCommand();
-            executeCommand(command);
+            state = executeCommand(command);
         } catch (final Exception e) {
             System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
         }
     }
 
-    private void executeCommand(final Command command) {
+    private State executeCommand(final Command command) {
         if (command.isStart()) {
-            state = state.start();
+            return state.start();
         }
         if (command.isMove()) {
-            state = state.move(command.getSource(), command.getTarget());
+            return state.move(command.getSource(), command.getTarget());
         }
         if (command.isStatus()) {
-            state = state.status();
+            return state.status();
         }
-        if (command.isEnd()) {
-            state = state.end();
-        }
+        return state.end();
     }
 }
