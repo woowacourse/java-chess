@@ -131,4 +131,8 @@ public final class Board {
         }
         return pawnCount * 0.5;
     }
+
+    public Map<Position, Piece> board() {
+        return Map.copyOf(board);
+    }
 }

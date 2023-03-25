@@ -5,6 +5,7 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Map;
 
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.EMPTY;
@@ -15,7 +16,7 @@ public final class ChessGame {
     private final Board board;
     private Team turn;
 
-    private ChessGame(final Board board, final Team turn) {
+    public ChessGame(final Board board, final Team turn) {
         this.board = board;
         this.turn = turn;
     }
@@ -68,9 +69,11 @@ public final class ChessGame {
         return EMPTY;
     }
 
-    public List<List<Piece>> getBoard() {
+    public List<List<Piece>> board() {
         return board.getBoard();
     }
+
+
 
     public double getTotalScore(final Team team) {
         double basicScore = board.getScores(team)
@@ -93,5 +96,9 @@ public final class ChessGame {
 
     public Team getTurn() {
         return turn;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.board();
     }
 }
