@@ -26,41 +26,41 @@ public class UserAccessController {
     public void run() {
         outputView.printInputIdMessage();
         User user = userAccessService.findUserById(inputView.readUserId());
-        Room room = enterRoom(user);
+        Room room = selectRoomToPlay(user);
         MoveCommand moveCommand = startChessGame(room);
         userAccessService.updateRoomById(room.roomId(), moveCommand.getCommands());
     }
 
-    private Room enterRoom(User user) {
-        List<Room> rooms = userAccessService.findRoomsByUser(user);
-        if (rooms.isEmpty()) {
-            outputView.printMakeNewRoomMessage();
-            return userAccessService.makeRoomByUser(user);
+    private Room selectRoomToPlay(User user) {
+        if (userAccessService.havaSavedRoom(user)) {
+            return findRoom(user);
         }
-        return findRoom(rooms, user);
+        return makeNewRoomToPlay(user);
     }
 
-    private Room findRoom(List<Room> rooms, User user) {
+    private Room findRoom(User user) {
+        List<Room> rooms = userAccessService.findRoomsByUser(user);
         outputView.printSavedRooms(rooms);
         outputView.printSelectRoomMessage();
         try {
             int roomId = inputView.readRoomId();
-            return findUserSelectionRoom(rooms, roomId, user);
+            return findUserSelectionRoom(roomId, user);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
-            return findRoom(rooms, user);
+            return findRoom(user);
         }
     }
 
-    private Room findUserSelectionRoom(List<Room> rooms, int roomId, User user) {
+    private Room makeNewRoomToPlay(User user) {
+        outputView.printMakeNewRoomMessage();
+        return userAccessService.makeRoomByUser(user);
+    }
+
+    private Room findUserSelectionRoom(int roomId, User user) {
         if (roomId == NEW_ROOM_COMMAND) {
-            return userAccessService.makeRoomByUser(user);
+            return makeNewRoomToPlay(user);
         }
-        Room foundRoom = rooms.stream()
-                .filter(room -> room.roomId() == roomId)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 방 이름입니다."));
-        return foundRoom;
+        return userAccessService.findUserSelectionRoom(roomId, user);
     }
 
     private MoveCommand startChessGame(Room room) {
