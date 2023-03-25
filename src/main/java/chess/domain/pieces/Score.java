@@ -8,7 +8,7 @@ public class Score {
     private final BigDecimal score;
 
     public Score(final int score) {
-        this.score = new BigDecimal(score);
+        this.score = new BigDecimal(String.valueOf(score));
     }
 
     public Score(final BigDecimal score) {
@@ -16,6 +16,10 @@ public class Score {
     }
 
     public Score(final Double score) {
+        this.score = new BigDecimal(String.valueOf(score));
+    }
+
+    public Score(final String score) {
         this.score = new BigDecimal(score);
     }
 
