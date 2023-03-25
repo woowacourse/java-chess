@@ -6,7 +6,8 @@ public enum GameCommand {
     START("start"),
     MOVE("move"),
     END("end"),
-    STATUS("status");
+    STATUS("status"),
+    FIND_PREVIOUS_GAME("restart");
 
     private final String command;
 
