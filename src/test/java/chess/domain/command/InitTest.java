@@ -1,7 +1,6 @@
 package chess.domain.command;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import chess.dao.ChessGameDao;
 import chess.dao.JdbcChessGameDao;
@@ -110,13 +109,16 @@ class InitTest {
     }
     
     @Test
-    @DisplayName("초기 상태에서 이전 게임이 존재하는지 확인할 수 있다.")
-    void isExistPreviousGame() {
+    @DisplayName("초기 상태에서 이전 게임이 있으면 해당 게임의 플레이 상태로 전이된다.")
+    void restart() {
         // given
         Init init = new Init(chessGameDao);
         Long gameId = 1L;
-        
+
+        // when
+        CommandStatus restart = init.restart(gameId);
+
         // when, then
-        assertThat(init.isExistPreviousGame(gameId)).isTrue();
+        assertThat(restart).isInstanceOf(Play.class);
     }
 }

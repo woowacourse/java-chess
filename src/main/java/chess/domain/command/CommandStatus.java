@@ -11,13 +11,13 @@ public interface CommandStatus {
 
     CommandStatus start();
 
+    CommandStatus restart(Long previousGameId);
+
     CommandStatus move(Position sourcePosition, Position targetPosition);
 
     CommandStatus end();
 
     CommandStatus printGameResult();
-
-    boolean isExistPreviousGame(Long gameId);
 
     boolean isEnd();
 

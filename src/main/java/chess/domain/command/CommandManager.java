@@ -29,6 +29,11 @@ public class CommandManager {
         executionByGameCommand.get(commands.getCommand()).accept(commands);
     }
 
+    private void restart(Commands commands) {
+        Long previousGameId = commands.getPreviousGameId();
+        this.commandStatus = commandStatus.restart(previousGameId);
+    }
+
     private void start() {
         this.commandStatus = commandStatus.start();
     }
@@ -41,10 +46,6 @@ public class CommandManager {
 
     private void end() {
         this.commandStatus = commandStatus.end();
-    }
-
-    public boolean isExistPreviousGame(Long gameId) {
-        return commandStatus.isExistPreviousGame(gameId);
     }
 
     public boolean isEnd() {

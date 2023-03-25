@@ -14,6 +14,7 @@ import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
+import chess.domain.service.dto.ChessGameDto;
 
 public class Init implements CommandStatus {
 
@@ -31,6 +32,15 @@ public class Init implements CommandStatus {
     }
 
     @Override
+    public CommandStatus restart(Long previousGameId) {
+        if (chessGameDao.isExistPreviousChessGame(previousGameId)) {
+            ChessGameDto chessGameDto = chessGameDao.findChessGameByGameId(previousGameId);
+            return new Play(chessGameDto.generateChessGame(), chessGameDao);
+        }
+        throw new IllegalArgumentException("[ERROR] 이전 게임 ID에 해당하는 게임을 찾지 못했습니다.");
+    }
+
+    @Override
     public CommandStatus move(Position sourcePosition, Position targetPosition) {
         throw new IllegalStateException("[ERROR] 초기 상태에서는 기물을 움직일 수 없습니다.");
     }
@@ -43,11 +53,6 @@ public class Init implements CommandStatus {
     @Override
     public CommandStatus printGameResult() {
         throw new IllegalStateException("[ERROR] 초기 상태에서는 게임 결과를 출력할 수 없습니다.");
-    }
-
-    @Override
-    public boolean isExistPreviousGame(Long gameId) {
-        return chessGameDao.isExistPreviousChessGame(gameId);
     }
 
     @Override

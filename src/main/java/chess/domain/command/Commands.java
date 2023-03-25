@@ -15,6 +15,7 @@ public class Commands {
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private static final int PREVIOUS_GAME_ID_INDEX = 1;
 
     private final List<String> commands;
 
@@ -27,6 +28,9 @@ public class Commands {
         GameCommand gameCommand = GameCommand.from(commands.get(COMMAND_INDEX));
         if (gameCommand == GameCommand.MOVE && commands.size() != 3) {
             throw new IllegalArgumentException("[ERROR] move 명령어는 소스 위치와 타겟 위치를 모두 입력해야 합니다.");
+        }
+        if (gameCommand == GameCommand.FIND_PREVIOUS_GAME && commands.size() != 2) {
+            throw new IllegalArgumentException("[ERROR] restart 명령어는 이전 게임 ID를 형식에 맞게 정확히 입력해야합니다.");
         }
     }
 
@@ -57,5 +61,9 @@ public class Commands {
         File sourceFile = File.of(splitPosition.get(FILE_INDEX));
         Rank sourceRank = Rank.of(Integer.parseInt(splitPosition.get(RANK_INDEX)));
         return new Position(sourceFile, sourceRank);
+    }
+
+    public Long getPreviousGameId() {
+         return Long.parseLong(commands.get(PREVIOUS_GAME_ID_INDEX));
     }
 }

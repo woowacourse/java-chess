@@ -22,6 +22,11 @@ public class End implements CommandStatus {
     }
 
     @Override
+    public CommandStatus restart(Long previousGameId) {
+        throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 이전 게임으로 재시작할 수 없습니다.");
+    }
+
+    @Override
     public CommandStatus move(Position sourcePosition, Position targetPosition) {
         throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 기물을 움직일 수 없습니다.");
     }
@@ -35,11 +40,6 @@ public class End implements CommandStatus {
     @Override
     public CommandStatus printGameResult() {
         throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 게임 결과 상태로 전이될 수 없습니다.");
-    }
-
-    @Override
-    public boolean isExistPreviousGame(Long gameId) {
-        throw new IllegalStateException("[ERROR] 게임 종료 상태에서는 이전 게임이 존재하는지 확인할 수 없습니다.");
     }
 
     @Override

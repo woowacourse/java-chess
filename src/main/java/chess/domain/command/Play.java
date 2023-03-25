@@ -15,6 +15,7 @@ import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;
 import chess.domain.service.ChessGame;
+import chess.domain.service.dto.ChessGameDto;
 
 public class Play implements CommandStatus {
 
@@ -33,6 +34,11 @@ public class Play implements CommandStatus {
         Board board = new Board(new Pieces());
         Long gameId = chessGameDao.saveNewChessGame();
         return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
+    }
+
+    @Override
+    public CommandStatus restart(Long previousGameId) {
+        throw new IllegalStateException("[ERROR] 플레이 상태에서는 이전 게임으로 재시작할 수 없습니다.");
     }
 
     @Override
@@ -76,11 +82,6 @@ public class Play implements CommandStatus {
         resultCalculator.saveTotalScoreBySide(Side.BLACK, chessGame.getTotalScoreBySide(Side.BLACK));
         resultCalculator.saveGameResultBySide();
         return new PrintGameResult(chessGame, chessGameDao);
-    }
-
-    @Override
-    public boolean isExistPreviousGame(Long gameId) {
-        throw new IllegalStateException("[ERROR] 플레이 상태에서는 이전 게임이 존재하는지 확인할 수 없습니다.");
     }
 
     @Override
