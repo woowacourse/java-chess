@@ -3,7 +3,7 @@ package chess.view.validator;
 public class ResumeValidator implements InputValidator {
     private static final String START_INPUT = "start";
     private static final String RESUME_INPUT = "resume";
-    private static final String EXCEPTION_MESSAGE = "start나 resume를 입력해야 합니다.";
+    private static final String EXCEPTION_MESSAGE = "end, start나 resume를 입력해야 합니다.";
     private static final String END_INPUT = "end";
 
     private InputValidator next;

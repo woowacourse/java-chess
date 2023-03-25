@@ -30,5 +30,4 @@ class SquareTest {
                 Arguments.arguments("g", "1", File.G, Rank.ONE)
         );
     }
-
 }
