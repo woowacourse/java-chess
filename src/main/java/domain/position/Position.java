@@ -64,15 +64,6 @@ public final class Position {
         return Position.of(movedFile, movedRank);
     }
 
-    public Position move(final Direction direction, final int distance) {
-        Position result = this;
-        for (int i = 0; i < distance; i++) {
-            result = result.move(direction);
-        }
-
-        return result;
-    }
-
     public int compareRank(final Position other) {
         final String otherRank = other.rank.getName();
         final String thisRank = rank.getName();

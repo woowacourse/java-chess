@@ -78,7 +78,7 @@ public final class Board {
         throw new IllegalArgumentException(INVALID_MOVEMENT);
     }
 
-    public boolean isBlack(final Position position) {
+    public boolean isBlackPiece(final Position position) {
         return getPiece(position).isBlack();
     }
 

@@ -12,7 +12,7 @@ final class White extends Turn {
 
     @Override
     protected void validateTurn(final Position source) {
-        if (board.isBlack(source)) {
+        if (board.isBlackPiece(source)) {
             throw new IllegalArgumentException(NOT_WHITE_PIECE);
         }
     }
