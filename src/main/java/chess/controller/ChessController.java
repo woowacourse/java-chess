@@ -23,7 +23,7 @@ public class ChessController {
         chessGame.move(commandRequest);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         if (chessGame.isOver()) {
-            // TODO 메시지 출력
+            OutputView.printGameOverMessage();
         }
         return AppStatus.RUNNING;
     }

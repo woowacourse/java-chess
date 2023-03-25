@@ -4,6 +4,7 @@ import static chess.controller.CommandActionMapper.END;
 import static chess.controller.CommandActionMapper.EXIT;
 import static chess.controller.CommandActionMapper.MOVE;
 import static chess.controller.CommandActionMapper.START;
+import static chess.controller.CommandActionMapper.STATUS;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class OutputView {
             "> 게임 시작: %s\n> 게임 종료: %s\n> 게임 이동: %s\n> 어플리케이션 종료: %s",
             START.getCommand(), END.getCommand(), GAME_COMMAND_MOVE_DESCRIPTION, EXIT.getCommand()
     );
+    private static final String GAME_OVER_MESSAGE = "> 게임 오버\n> 결과 조회: " + STATUS.getCommand();
     private static final String ERROR_MESSAGE_FORMAT = "[입력 오류] %s" + System.lineSeparator();
 
     private OutputView() {
@@ -39,6 +41,10 @@ public class OutputView {
         for (String value : rank) {
             System.out.print(value);
         }
+    }
+
+    public static void printGameOverMessage() {
+        System.out.println(GAME_OVER_MESSAGE);
     }
 
     public static void printInputErrorMessage(final Exception exception) {
