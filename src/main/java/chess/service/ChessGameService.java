@@ -113,7 +113,10 @@ public class ChessGameService {
         if (status == null) {
             throw new ChessGameException("존재하지 않는 게임입니다");
         }
-        //todo 진행중인 유저가 맞는지 확인
+        String user = chessGameDao.findUserIdByBoardId(boardId);
+        if (!user.equals(userId)) {
+            throw new ChessGameException("자신의 게임이 아닙니다");
+        }
         return status;
     }
 }
