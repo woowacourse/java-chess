@@ -3,7 +3,7 @@ package chessgame.service;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Game;
-import dao.GameDao;
+import chessgame.dao.GameDao;
 
 import java.sql.SQLException;
 

@@ -1,4 +1,4 @@
-package dao;
+package chessgame.dao;
 
 import chessgame.domain.Board;
 import chessgame.domain.Game;
@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static dao.ConnectionGenerator.getConnection;
+import static chessgame.dao.ConnectionGenerator.getConnection;
 
 public class GameDao {
 

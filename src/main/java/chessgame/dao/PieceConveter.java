@@ -1,4 +1,4 @@
-package dao;
+package chessgame.dao;
 
 import chessgame.domain.Team;
 import chessgame.domain.piece.*;

@@ -1,5 +1,6 @@
 package dao;
 
+import chessgame.dao.GameDao;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.state.Black;
