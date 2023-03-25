@@ -15,6 +15,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
 import chess.model.game.ChessGame;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,22 +29,22 @@ class ResultTest {
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
         final GameState ready = new Ready(chessGame);
-        GameState play = ready.execute(GameCommand.START, A1, A1);
+        GameState play = ready.execute(GameCommand.START, Collections.emptyList());
 
-        play = play.execute(GameCommand.MOVE, E2, E3);
-        play = play.execute(GameCommand.MOVE, B7, B6);
-        play = play.execute(GameCommand.MOVE, E1, E2);
-        play = play.execute(GameCommand.MOVE, C8, A6);
-        play = play.execute(GameCommand.MOVE, A2, A3);
+        play = play.execute(GameCommand.MOVE, List.of(E2, E3));
+        play = play.execute(GameCommand.MOVE, List.of(B7, B6));
+        play = play.execute(GameCommand.MOVE, List.of(E1, E2));
+        play = play.execute(GameCommand.MOVE, List.of(C8, A6));
+        play = play.execute(GameCommand.MOVE, List.of(A2, A3));
 
-        result = play.execute(GameCommand.MOVE, A6, E2);
+        result = play.execute(GameCommand.MOVE, List.of(A6, E2));
     }
 
     @Test
     @DisplayName("execute()는 명령어로 Status가 주어지면 출력할 수 있는 Result를 반환한다")
     void execute_givenStatusCommand_thenReturnPrintableResult() {
         // when
-        final GameState actual = result.execute(GameCommand.STATUS, A1, A1);
+        final GameState actual = result.execute(GameCommand.STATUS, Collections.emptyList());
 
         // then
         assertThat(actual).isExactlyInstanceOf(Result.class);
@@ -53,7 +55,7 @@ class ResultTest {
     @DisplayName("execute()는 명령어로 start가 주어지면 예외가 발생한다")
     void execute_givenStartCommand_thenFail() {
         // when, then
-        assertThatThrownBy(() -> result.execute(GameCommand.START, A1, A1))
+        assertThatThrownBy(() -> result.execute(GameCommand.START, Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 시작할 수 없습니다.");
     }
@@ -62,7 +64,7 @@ class ResultTest {
     @DisplayName("execute()는 명령어로 move가 주어지면 예외가 발생한다")
     void execute_givenMoveCommand_thenFail() {
         // when, then
-        assertThatThrownBy(() -> result.execute(GameCommand.MOVE, A1, A1))
+        assertThatThrownBy(() -> result.execute(GameCommand.MOVE, Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 플레이할 수 없습니다.");
     }

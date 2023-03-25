@@ -6,11 +6,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
 import chess.model.game.ChessGame;
+import chess.model.position.Position;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class EndTest {
+
+    private static final List<Position> EMPTY = Collections.emptyList();
 
     private GameState end;
 
@@ -18,16 +23,16 @@ class EndTest {
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
         final GameState ready = new Ready(chessGame);
-        final GameState play = ready.execute(GameCommand.START, A1, A1);
+        final GameState play = ready.execute(GameCommand.START, EMPTY);
 
-        end = play.execute(GameCommand.END, A1, A1);
+        end = play.execute(GameCommand.END, EMPTY);
     }
 
     @Test
     @DisplayName("execute()는 호출하면 예외가 발생한다.")
     void execute_whenCall_thenFail() {
         // when, then
-        assertThatThrownBy(() -> end.execute(GameCommand.END, A1, A1))
+        assertThatThrownBy(() -> end.execute(GameCommand.END, EMPTY))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료되었습니다.");
     }

@@ -11,8 +11,13 @@ import chess.model.position.PositionConverter;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.ChessGameResultResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessController {
+
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -44,10 +49,11 @@ public class ChessController {
     private GameState playGame(final GameState gameState) {
         final PlayRequest playRequest = inputView.readPlayCommand();
         final GameCommand gameCommand = GameCommand.findGameCommand(playRequest.getCommand());
-        final Position source = PositionConverter.convert(playRequest.getSource());
-        final Position target = PositionConverter.convert(playRequest.getTarget());
+        final List<Position> movePositions = playRequest.getMovePositions().stream()
+                .map(PositionConverter::convert)
+                .collect(Collectors.toList());
 
-        return gameState.execute(gameCommand, source, target);
+        return gameState.execute(gameCommand, movePositions);
     }
 
     private void printChessBoard(final GameState gameState, final ChessGame chessGame) {

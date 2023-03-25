@@ -15,11 +15,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
 import chess.model.game.ChessGame;
+import chess.model.position.Position;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayTest {
+
+    private static final List<Position> EMPTY = Collections.emptyList();
 
     private GameState play;
 
@@ -28,14 +33,14 @@ class PlayTest {
         final ChessGame chessGame = new ChessGame();
         final GameState ready = new Ready(chessGame);
 
-        play = ready.execute(GameCommand.START, A1, A1);
+        play = ready.execute(GameCommand.START, EMPTY);
     }
 
     @Test
     @DisplayName("execute()는 명령어로 start가 주어지면 예외가 발생한다.")
     void execute_givenStartCommand_thenFail() {
         // when, then
-        assertThatThrownBy(() -> play.execute(GameCommand.START, A1, A1))
+        assertThatThrownBy(() -> play.execute(GameCommand.START, EMPTY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 진행중입니다.");
     }
@@ -44,7 +49,7 @@ class PlayTest {
     @DisplayName("execute()는 명령어로 status가 주어지면 예외가 발생한다.")
     void execute_givenStatusCommand_thenFail() {
         // when, then
-        assertThatThrownBy(() -> play.execute(GameCommand.STATUS, A1, A1))
+        assertThatThrownBy(() -> play.execute(GameCommand.STATUS, EMPTY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 진행중입니다.");
     }
@@ -53,7 +58,7 @@ class PlayTest {
     @DisplayName("execute()는 명령어로 move와 올바른 좌표가 주어지면 기물을 옮긴 뒤 Play를 반환한다.")
     void execute_givenMoveCommandAndValidPositions_thenMoveAndReturnPlay() {
         // when
-        final GameState actual = play.execute(GameCommand.MOVE, A2, A3);
+        final GameState actual = play.execute(GameCommand.MOVE, List.of(A2, A3));
 
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
@@ -63,7 +68,7 @@ class PlayTest {
     @DisplayName("execute()는 명령어로 move와 올바르지 않은 좌표가 주어지면 예외가 발생한다.")
     void execute_givenMoveCommandAndInvalidPositions_thenFail() {
         // when, then
-        assertThatThrownBy(() -> play.execute(GameCommand.MOVE, A1, A1))
+        assertThatThrownBy(() -> play.execute(GameCommand.MOVE, List.of(A1, A1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("동일한 위치로 기물을 이동시킬 수 없습니다.");
     }
@@ -72,14 +77,14 @@ class PlayTest {
     @DisplayName("execute()는 move의 결과로 킹이 죽는다면 Result를 반환한다")
     void execute_givenMoveCommandAndValidPositions_thenMoveAndReturnResult() {
         // given
-        play = play.execute(GameCommand.MOVE, E2, E3);
-        play = play.execute(GameCommand.MOVE, B7, B6);
-        play = play.execute(GameCommand.MOVE, E1, E2);
-        play = play.execute(GameCommand.MOVE, C8, A6);
-        play = play.execute(GameCommand.MOVE, A2, A3);
+        play = play.execute(GameCommand.MOVE, List.of(E2, E3));
+        play = play.execute(GameCommand.MOVE, List.of(B7, B6));
+        play = play.execute(GameCommand.MOVE, List.of(E1, E2));
+        play = play.execute(GameCommand.MOVE, List.of(C8, A6));
+        play = play.execute(GameCommand.MOVE, List.of(A2, A3));
 
         // when
-        final GameState actual = play.execute(GameCommand.MOVE, A6, E2);
+        final GameState actual = play.execute(GameCommand.MOVE, List.of(A6, E2));
 
         // then
         assertThat(actual).isExactlyInstanceOf(Result.class);
@@ -90,7 +95,7 @@ class PlayTest {
     @DisplayName("execute()는 명령어로 end가 주어지면 End를 반환한다.")
     void execute_givenEndCommand_thenReturnEnd() {
         // when
-        final GameState actual = play.execute(GameCommand.END, A1, A1);
+        final GameState actual = play.execute(GameCommand.END, EMPTY);
 
         // then
         assertThat(actual).isExactlyInstanceOf(End.class);

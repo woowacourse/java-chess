@@ -8,11 +8,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.GameCommand;
 import chess.model.game.ChessGame;
+import chess.model.position.Position;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ReadyTest {
+
+    private static final List<Position> EMPTY = Collections.emptyList();
 
     private ChessGame chessGame;
     private GameState ready;
@@ -27,7 +32,7 @@ class ReadyTest {
     @DisplayName("execute()는 명령어로 start가 주어지면 ChessGame의 필드를 초기화하고 Play를 반환한다.")
     void execute_givenStartCommand_thenInitialChessGameAndReturnPlay() {
         // when
-        final GameState actual = ready.execute(GameCommand.START, A1, A1);
+        final GameState actual = ready.execute(GameCommand.START, EMPTY);
 
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
@@ -39,7 +44,7 @@ class ReadyTest {
     @DisplayName("execute()는 명령어로 move가 주어지면 예외가 발생한다.")
     void execute_givenMoveCommand_thenFail() {
         // when, then
-        assertThatThrownBy(() -> ready.execute(GameCommand.MOVE, A2, A3))
+        assertThatThrownBy(() -> ready.execute(GameCommand.MOVE, List.of(A2, A3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -48,7 +53,7 @@ class ReadyTest {
     @DisplayName("execute()는 명령어로 status가 주어지면 예외가 발생한다.")
     void execute_givenStatusCommand_thenFail() {
         // when, then
-        assertThatThrownBy(() -> ready.execute(GameCommand.STATUS, A1, A1))
+        assertThatThrownBy(() -> ready.execute(GameCommand.STATUS, EMPTY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -57,7 +62,7 @@ class ReadyTest {
     @DisplayName("execute()는 명령어로 end가 주어지면 ChessGame을 초기화하지 않고 End를 반환한다.")
     void execute_givenEndCommand_thenNotInitialChessGameAndReturnEnd() {
         // when
-        final GameState actual = ready.execute(GameCommand.END, A1, A1);
+        final GameState actual = ready.execute(GameCommand.END, EMPTY);
 
         // then
         assertThat(actual).isExactlyInstanceOf(End.class);

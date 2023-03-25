@@ -2,6 +2,7 @@ package chess.controller.state;
 
 import chess.controller.GameCommand;
 import chess.model.position.Position;
+import java.util.List;
 
 public class Result implements GameState {
 
@@ -14,11 +15,7 @@ public class Result implements GameState {
     }
 
     @Override
-    public GameState execute(
-            final GameCommand gameCommand,
-            final Position ignoredSource,
-            final Position ignoredTarget
-    ) {
+    public GameState execute(final GameCommand gameCommand, final List<Position> ignored) {
         validateGameCommand(gameCommand);
 
         return handleGameCommand(gameCommand);
