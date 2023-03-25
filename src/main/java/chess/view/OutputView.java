@@ -11,14 +11,14 @@ public final class OutputView {
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final int LINE_BREAK_INDEX = 1;
 
-    public void printStartPrefix() {
+    public static void printStartPrefix() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
                 + "> 게임 종료 : end\n"
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessState(Map<Position, Piece> piecePoint) {
+    public static void printChessState(Map<Position, Piece> piecePoint) {
         StringBuilder chessBoardView = new StringBuilder();
         for (Position position : piecePoint.keySet()) {
             Piece piece = piecePoint.get(position);
@@ -37,16 +37,20 @@ public final class OutputView {
         }
     }
 
-    public void printErrorMessage(String message) {
+    public static void printErrorMessage(String message) {
         System.out.println(message);
     }
 
-    public void printStatusScore(final double whiteScore, final double blackScore) {
+    public static void printStatusScore(final double whiteScore, final double blackScore) {
         System.out.println("흰색 점수: " + whiteScore);
         System.out.println("검정색 점수: " + blackScore);
     }
 
-    public void printWinner(final Camp winnerCamp) {
+    public static void printReStart() {
+        System.out.println("이전 게임을 불러옵니다.");
+    }
+
+    public static void printWinner(final Camp winnerCamp) {
         System.out.println("승자 :" + ViewCamp.getCampName(winnerCamp));
     }
 }
