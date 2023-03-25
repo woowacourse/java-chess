@@ -21,6 +21,10 @@ public class Pieces {
         this.pieces = new ArrayList<>(generateInitialPieces());
     }
 
+    public Pieces(final List<Piece> pieces) {
+        this.pieces = new ArrayList<>(pieces);
+    }
+
     private List<Piece> generateInitialPieces() {
         List<Piece> pieces = new ArrayList<>();
         generateRankOnePieces(pieces);
