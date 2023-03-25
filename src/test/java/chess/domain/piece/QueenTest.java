@@ -18,12 +18,12 @@ class QueenTest {
     @CsvSource(value = {"a:1", "h:8", "a:3", "c:1", "e:1", "a:5", "c:8", "h:3"}, delimiter = ':')
     void 기물이_움직일_수_있는_위치라면_true반환(String rank, String file) {
         //given
-        Position startPosition = Position.of(File.from(rank), Rank.from(file));
-        Position endPosition = Position.of(File.C, Rank.THREE);
+        Position source = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.C, Rank.THREE);
         Queen queen = new Queen(Team.WHITE);
 
         //when
-        boolean actual = queen.canMove(startPosition, endPosition);
+        boolean actual = queen.canMove(source, destination);
 
         //then
         assertThat(actual).isTrue();
@@ -33,12 +33,12 @@ class QueenTest {
     @CsvSource(value = {"c:3", "d:6", "h:4"}, delimiter = ':')
     void 기물이_움직일_수_없는_위치라면_false반환(String rank, String file) {
         //given
-        Position startPosition = Position.of(File.from(rank), Rank.from(file));
-        Position endPosition = Position.of(File.C, Rank.THREE);
+        Position source = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.C, Rank.THREE);
         Queen queen = new Queen(Team.WHITE);
 
         //when
-        boolean actual = queen.canMove(startPosition, endPosition);
+        boolean actual = queen.canMove(source, destination);
 
         //then
         assertThat(actual).isFalse();

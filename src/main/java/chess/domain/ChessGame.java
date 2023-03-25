@@ -95,11 +95,11 @@ public class ChessGame {
         });
     }
 
-    public void executeMove(final String source, final String destination) {
+    public void executeMove(final String sourceCommand, final String destinationCommand) {
         state.movePiece(() -> {
-            Position startPosition = Position.from(source);
-            Position endPosition = Position.from(destination);
-            chessBoard.move(startPosition, endPosition);
+            Position source = Position.from(sourceCommand);
+            Position destination = Position.from(destinationCommand);
+            chessBoard.move(source, destination);
         });
     }
 

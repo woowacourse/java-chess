@@ -25,15 +25,19 @@ public abstract class Piece {
         trace.add(turn, last);
     }
 
-    public Team getTeam() {
-        return team;
+    public boolean isSameTeam(final Team team) {
+        return this.team.equals(team);
     }
 
-    public boolean isSameTeam(final Team team) {
-        return this.team == team;
+    public boolean isSoonMovedTwo(final Turn turn, final Position position) {
+        return trace.isSoonMovedTwo(turn, position);
     }
-    
+
     public abstract PieceType findType();
 
     public abstract Score calculateScore(Map<PieceType, Long> pieceCountBoard);
+
+    public Team getTeam() {
+        return team;
+    }
 }

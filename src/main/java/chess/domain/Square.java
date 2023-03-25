@@ -34,12 +34,12 @@ public class Square {
         return piece.findType() == PieceType.KING;
     }
 
-    boolean canAttack(final Position endPosition) {
-        return piece.canAttack(position, endPosition);
+    boolean canAttack(final Position destination) {
+        return piece.canAttack(position, destination);
     }
 
-    boolean canMove(final Position startPosition, final Position endPosition) {
-        return piece.canMove(startPosition, endPosition);
+    boolean canMove(final Position source, final Position destination) {
+        return piece.canMove(source, destination);
     }
 
     void moveTo(Turn turn, final Square destination) {
@@ -52,6 +52,10 @@ public class Square {
         this.piece = piece;
     }
 
+    void removePiece() {
+        this.piece = NoPiece.getInstance();
+    }
+
     boolean isSameFileAndTeam(File file, Team team) {
         return position.isSameFile(file) && piece.isSameTeam(team);
     }
@@ -62,6 +66,10 @@ public class Square {
 
     Score findPieceScore(Map<PieceType, Long> pieceCountBoard) {
         return piece.calculateScore(pieceCountBoard);
+    }
+
+    boolean isSoonMovedTwo(final Turn turn) {
+        return piece.isSoonMovedTwo(turn, position);
     }
 
     public Piece getPiece() {

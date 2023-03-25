@@ -50,8 +50,12 @@ public class Position {
         return Position.of(file.plus(fileDirection), rank.plus(rankDirection));
     }
 
-    public boolean isSameFile(File file){
-        return this.file==file;
+    public boolean isSameFile(File file) {
+        return this.file == file;
+    }
+
+    public static Position enPassantTargetPosition(Position source, Position destination) {
+        return Position.of(destination.file, source.rank);
     }
 
     @Override

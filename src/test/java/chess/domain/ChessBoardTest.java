@@ -9,6 +9,7 @@ import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Position;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -36,18 +37,18 @@ class ChessBoardTest {
     @Test
     void 경로에_장애물이_없는_상황에서_이동_명령을_받았을_때_체스_기물을_이동시킨다() {
         //given
-        Position startPosition = Position.of(File.C, Rank.TWO);
-        Position endPosition = Position.of(File.C, Rank.FOUR);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position destination = Position.of(File.C, Rank.FOUR);
 
         //when
-        chessBoard.move(startPosition, endPosition);
+        chessBoard.move(source, destination);
         boolean isStartEmpty = chessBoard.getSquares().stream()
-            .filter(square -> square.isSamePosition(startPosition))
+            .filter(square -> square.isSamePosition(source))
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
             .isEmpty();
         boolean isEndEmpty = chessBoard.getSquares().stream()
-            .filter(square -> square.isSamePosition(endPosition))
+            .filter(square -> square.isSamePosition(destination))
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
             .isEmpty();
@@ -65,13 +66,13 @@ class ChessBoardTest {
         @Test
         void 경로에_장애물이_있는_상황일때_체스_기물을_이동시키지못한다() {
             //given
-            Position startPosition = Position.of(File.A, Rank.ONE);
-            Position endPosition = Position.of(File.A, Rank.FOUR);
+            Position source = Position.of(File.A, Rank.ONE);
+            Position destination = Position.of(File.A, Rank.FOUR);
 
             //when
 
             //then
-            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+            assertThatThrownBy(() -> chessBoard.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있습니다.");
         }
@@ -79,13 +80,13 @@ class ChessBoardTest {
         @Test
         void 도착지에_내_기물이_있는_상황일때_체스_기물을_이동시키지못한다() {
             //given
-            Position startPosition = Position.of(File.A, Rank.ONE);
-            Position endPosition = Position.of(File.A, Rank.TWO);
+            Position source = Position.of(File.A, Rank.ONE);
+            Position destination = Position.of(File.A, Rank.TWO);
 
             //when
 
             //then
-            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+            assertThatThrownBy(() -> chessBoard.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("도착지에 아군 기물이 있습니다.");
         }
@@ -93,13 +94,13 @@ class ChessBoardTest {
         @Test
         void 상대방의_기물을_이동시키려고_할_때_체스_기물을_이동시키지못한다() {
             //given
-            Position startPosition = Position.of(File.C, Rank.SEVEN);
-            Position endPosition = Position.of(File.C, Rank.SIX);
+            Position source = Position.of(File.C, Rank.SEVEN);
+            Position destination = Position.of(File.C, Rank.SIX);
 
             //when
 
             //then
-            assertThatThrownBy(() -> chessBoard.move(startPosition, endPosition))
+            assertThatThrownBy(() -> chessBoard.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대방의 기물은 이동시킬 수 없습니다.");
         }
@@ -111,16 +112,16 @@ class ChessBoardTest {
         @Test
         void 폰이_공격가능할때_폰을_이동시킨다() {
             //given
-            Position startPosition = Position.of(File.C, Rank.TWO);
+            Position source = Position.of(File.C, Rank.TWO);
             Position middlePosition = Position.of(File.C, Rank.FOUR);
-            Position enemyStartPosition = Position.of(File.D, Rank.SEVEN);
-            Position enemyEndPosition = Position.of(File.D, Rank.FIVE);
+            Position enemysource = Position.of(File.D, Rank.SEVEN);
+            Position enemydestination = Position.of(File.D, Rank.FIVE);
 
-            chessBoard.move(startPosition, middlePosition);
-            chessBoard.move(enemyStartPosition, enemyEndPosition);
+            chessBoard.move(source, middlePosition);
+            chessBoard.move(enemysource, enemydestination);
 
             //when
-            final Executable executable = () -> chessBoard.move(middlePosition, enemyEndPosition);
+            final Executable executable = () -> chessBoard.move(middlePosition, enemydestination);
 
             //then
             assertDoesNotThrow(executable);
@@ -179,7 +180,8 @@ class ChessBoardTest {
     }
 
     @Nested
-    class WHITE팀_기준_점수_계산{
+    class WHITE팀_기준_점수_계산 {
+
         @Test
         void 초기_상태의_점수는_38점이다() {
             //given
@@ -226,13 +228,13 @@ class ChessBoardTest {
             chessBoard.move(pawn3Start, pawn3Middle);
             chessBoard.move(enemyKnight2middle, pawn2Middle);   //폰 먹힘
             chessBoard.move(pawn3Middle, pawn3Middle2);
-            chessBoard.move(enemyPawnStart,enemyPawnEnd);
+            chessBoard.move(enemyPawnStart, enemyPawnEnd);
             chessBoard.move(pawn3Middle2, pawn3Middle3);
             chessBoard.move(enemyQueenStart, enemyQueenMiddle);
             chessBoard.move(pawn3Middle3, pawn3Middle4);
             chessBoard.move(pawn1Middle, enemyKnight1End);
             chessBoard.move(pawn4Start, pawn4Middle);
-            chessBoard.move(enemyQueenMiddle,knightmiddle); //나이트 먹힘
+            chessBoard.move(enemyQueenMiddle, knightmiddle); //나이트 먹힘
 
             //when
             Score score = chessBoard.calculateScoreByTeam(Team.WHITE);
@@ -259,6 +261,53 @@ class ChessBoardTest {
             //then
             assertThat(score).isEqualTo(new Score(37.0));
         }
+    }
+
+    @Test
+    void 앙_파상_조건을_만족하면_앙_파상_동작을_수행한다() {
+        //given
+        Position pawnPath1 = Position.from("b2");
+        Position pawnPath2 = Position.from("b4");
+        Position pawnPath3 = Position.from("b5");
+        Position enPassant = Position.from("c6");
+        Position enemyMeaninglessStart = Position.from("d7");
+        Position enemyMeaninglessEnd = Position.from("d6");
+        Position enemyPawnStart = Position.from("c7");
+        Position enemyPawnEnd = Position.from("c5");
+
+        chessBoard.move(pawnPath1, pawnPath2);
+        chessBoard.move(enemyMeaninglessStart, enemyMeaninglessEnd);
+        chessBoard.move(pawnPath2, pawnPath3);
+        chessBoard.move(enemyPawnStart, enemyPawnEnd);
+
+        //when
+        Executable executable = () -> chessBoard.move(pawnPath3, enPassant);
+
+        Supplier<Boolean> isStartEmpty = () -> chessBoard.getSquares().stream()
+            .filter(square -> square.isSamePosition(pawnPath3))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
+            .isEmpty();
+
+        Supplier<Boolean> isEndEmpty = () -> chessBoard.getSquares().stream()
+            .filter(square -> square.isSamePosition(enPassant))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
+            .isEmpty();
+
+        Supplier<Boolean> isBeAttacked = () -> chessBoard.getSquares().stream()
+            .filter(square -> square.isSamePosition(enemyPawnEnd))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
+            .isEmpty();
+
+        //then
+        assertAll(
+            () -> assertDoesNotThrow(executable),
+            () -> assertThat(isStartEmpty.get()).isTrue(),
+            () -> assertThat(isEndEmpty.get()).isFalse(),
+            () -> assertThat(isBeAttacked.get()).isTrue()
+        );
     }
 
 }

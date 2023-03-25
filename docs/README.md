@@ -12,6 +12,7 @@
 | 기물    | Piece     | 체스판의 말                           | (abstract) class |
 | 행     | File      | 체스판의 세로 위치 정보 (1 ~ 8)            | enum             |
 | 열     | Rank      | 체스판의 가로 위치 정보 (a ~ h)            | enum             |
+| 이동 범위 | MoveRange | 말이 이동할 수 있는 유형            | enum             |
 | 좌표    | Position  | 행과 열로 이루어진 체스판의 위치정보             | class            |
 | 칸     | Square    | 좌표와 기물 정보를 가지고 있는 체스판의 구성요소      | class            |
 | 턴     | Turn      | 체스 게임의 턴                         | class            |
@@ -29,22 +30,22 @@ DB 이름 : chess
 
 > 각 게임에 대한 정보를 저장한다.
 
-| gameId | winner | state | turn |
-| ------ | ------ | ----- | ---- |
-| 233    | Black  | finished | 3 |
-| 234    | Empty  | running | 5 |
+| gameId | winner | state    |
+| ------ | ------ | -------- |
+| 233    | Black  | finished |
+| 234    | Empty  | running  |
 
-- gameData 테이블
+- moveHistory 테이블
 
-> 게임 각각의 모든 칸(Square) 정보들을 저장한다.
+> 게임의 내에서 말의 이동 기록을 저장한다.
 
-| gameDataId | gameId | 좌표 | team | pieceType |
-| --- | --- | --- | --- | --- |
-| 444 | 234 | a1 | WHITE | Queen |
-| 445 | 234 | a2 | WHITE | Pawn |
-| … | … | … | … | … |
-| 462 | 234 | c8 | BLACK | Rook |
-| 463 | 234 | d1 | EMPTY | NoPiece |
+| gameDataId | gameId | source | destination |
+| --- | --- | --- | --- |
+| 444 | 234 | a1 | a1 |
+| 445 | 234 | a2 | a2 |
+| … | … | … | … |
+| 462 | 234 | c8 | c8 |
+| 463 | 234 | d1 | d1 |
 
 # 📔게임 용어 사전
 
@@ -148,7 +149,7 @@ RESULT-->ZZ
 G--> |end 명령|ZZ
 ```
 
-# 💠클래스 다이어그램
+# 💠클래스 다이어그램(미완성)
 
 ```mermaid
 classDiagram
@@ -256,11 +257,18 @@ class Team{
 class GameState{
   <<interface>>>
   startGame(Runnable runnable)
+  enterLoad(Runnable runnable)
+  loadGame(Runnable runnable)
+  cancelLoad(Runnable runnable)
   movePiece(Runnable runnable)
   finishGame(Runnable runnable)
-  isFinished(Runnable runnable)
+  isRunning()
+  isFinished()
 }
 class ReadyState{
+   +GameState STATE
+}
+class LoadingState{
    +GameState STATE
 }
 class RunningState{
@@ -308,8 +316,10 @@ Piece o--> Trace
 Trace"1"o-->"1..*"Log
 
 GameState<|--ReadyState
+GameState<|--LoadingState
 GameState<|--RunningState
 GameState<|--FinishedState
+
 
 ```
 
@@ -431,11 +441,18 @@ classDiagram
 class GameState{
   <<interface>>>
   startGame(Runnable runnable)
+  enterLoad(Runnable runnable)
+  loadGame(Runnable runnable)
+  cancelLoad(Runnable runnable)
   movePiece(Runnable runnable)
   finishGame(Runnable runnable)
-  isFinished(Runnable runnable)
+  isRunning()
+  isFinished()
 }
 class ReadyState{
+   +GameState STATE
+}
+class LoadingState{
    +GameState STATE
 }
 class RunningState{
@@ -447,6 +464,7 @@ class FinishedState{
 
 
 GameState<|--ReadyState
+GameState<|--LoadingState
 GameState<|--RunningState
 GameState<|--FinishedState
 
@@ -510,6 +528,7 @@ GameState<|--FinishedState
     - [x] 특정 팀의 열 별 점수를 구한다.
     - [x] 폰의 경우, 같은 열에 같은 팀의 폰이 존재하면 0.5점으로 계산한다.
 - [x] 점수 상으로 이긴 팀을 구한다.
+- [x] 폰 기물의 앙 파상 동작을 구현한다.(공격 로직)
 
 #### 기물(Piece)
 
@@ -546,8 +565,11 @@ GameState<|--FinishedState
 
 # 프로그래밍 요구사항
 
-도메인의 의존성을 최소한으로 구현한다. 한 줄에 점을 하나만 찍는다. 게터/세터/프로퍼티를 쓰지 않는다. 모든 객체지향 생활 체조 원칙을 잘 지키며 구현한다. 프로그래밍
-체크리스트의 원칙을 지키면서 프로그래밍 한다.
+- 도메인의 의존성을 최소한으로 구현한다.
+- 한 줄에 점을 하나만 찍는다.
+- 게터/세터/프로퍼티를 쓰지 않는다.
+- 모든 객체지향 생활 체조 원칙을 잘 지키며 구현한다.
+- 프로그래밍 체크리스트의 원칙을 지키면서 프로그래밍 한다.
 
 # 📌 Commit Convention
 

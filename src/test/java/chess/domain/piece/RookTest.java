@@ -19,12 +19,12 @@ class RookTest {
     @CsvSource(value = {"c:1", "a:3", "c:8", "h:3"}, delimiter = ':')
     void 기물이_움직일_수_있는_위치라면_true반환(String rank, String file) {
         //given
-        Position startPosition = Position.of(File.from(rank), Rank.from(file));
-        Position endPosition = Position.of(File.C, Rank.THREE);
+        Position source = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.C, Rank.THREE);
         Rook rook = new Rook(Team.WHITE);
 
         //when
-        boolean actual = rook.canMove(startPosition, endPosition);
+        boolean actual = rook.canMove(source, destination);
 
         //then
         assertThat(actual).isTrue();
@@ -34,12 +34,12 @@ class RookTest {
     @CsvSource(value = {"a:1", "a:5", "h:4", "c:3"}, delimiter = ':')
     void 기물이_움직일_수_없는_위치라면_false반환(String rank, String file) {
         //given
-        Position startPosition = Position.of(File.from(rank), Rank.from(file));
-        Position endPosition = Position.of(File.C, Rank.THREE);
+        Position source = Position.of(File.from(rank), Rank.from(file));
+        Position destination = Position.of(File.C, Rank.THREE);
         Rook rook = new Rook(Team.WHITE);
 
         //when
-        boolean actual = rook.canMove(startPosition, endPosition);
+        boolean actual = rook.canMove(source, destination);
 
         //then
         assertThat(actual).isFalse();
