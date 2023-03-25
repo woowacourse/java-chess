@@ -21,7 +21,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.N);
+        assertThat(directionVector).isEqualTo(DirectionVector.NORTH);
     }
 
     @Test
@@ -32,7 +32,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.NE);
+        assertThat(directionVector).isEqualTo(DirectionVector.NORTH_EAST);
     }
 
     @Test
@@ -43,7 +43,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.E);
+        assertThat(directionVector).isEqualTo(DirectionVector.EAST);
     }
 
     @Test
@@ -54,7 +54,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.SE);
+        assertThat(directionVector).isEqualTo(DirectionVector.SOUTH_EAST);
     }
 
     @Test
@@ -65,7 +65,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.S);
+        assertThat(directionVector).isEqualTo(DirectionVector.SOUTH);
     }
 
     @Test
@@ -76,7 +76,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.SW);
+        assertThat(directionVector).isEqualTo(DirectionVector.SOUTH_WEST);
     }
 
     @Test
@@ -87,7 +87,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.W);
+        assertThat(directionVector).isEqualTo(DirectionVector.WEST);
     }
 
     @Test
@@ -98,7 +98,7 @@ class DirectionVectorTest {
 
         DirectionVector directionVector = DirectionVector.calculate(startCoordinate, endCoordinate);
 
-        assertThat(directionVector).isEqualTo(DirectionVector.NW);
+        assertThat(directionVector).isEqualTo(DirectionVector.NORTH_WEST);
     }
 
     @ParameterizedTest(name = "{0}은 (1, 1)에서 ({1}, {2})로 이동한다")
@@ -114,14 +114,14 @@ class DirectionVectorTest {
 
     static Stream<Arguments> moveToDirectionTestData() {
         return Stream.of(
-                Arguments.arguments(DirectionVector.N, Coordinate.fromOnBoard(2, 1)),
-                Arguments.arguments(DirectionVector.NE, Coordinate.fromOnBoard(2, 2)),
-                Arguments.arguments(DirectionVector.E, Coordinate.fromOnBoard(1, 2)),
-                Arguments.arguments(DirectionVector.SE, Coordinate.fromOnBoard(0, 2)),
-                Arguments.arguments(DirectionVector.S, Coordinate.fromOnBoard(0, 1)),
-                Arguments.arguments(DirectionVector.SW, Coordinate.fromOnBoard(0, 0)),
-                Arguments.arguments(DirectionVector.W, Coordinate.fromOnBoard(1, 0)),
-                Arguments.arguments(DirectionVector.NW, Coordinate.fromOnBoard(2, 0))
+                Arguments.arguments(DirectionVector.NORTH, Coordinate.fromOnBoard(2, 1)),
+                Arguments.arguments(DirectionVector.NORTH_EAST, Coordinate.fromOnBoard(2, 2)),
+                Arguments.arguments(DirectionVector.EAST, Coordinate.fromOnBoard(1, 2)),
+                Arguments.arguments(DirectionVector.SOUTH_EAST, Coordinate.fromOnBoard(0, 2)),
+                Arguments.arguments(DirectionVector.SOUTH, Coordinate.fromOnBoard(0, 1)),
+                Arguments.arguments(DirectionVector.SOUTH_WEST, Coordinate.fromOnBoard(0, 0)),
+                Arguments.arguments(DirectionVector.WEST, Coordinate.fromOnBoard(1, 0)),
+                Arguments.arguments(DirectionVector.NORTH_WEST, Coordinate.fromOnBoard(2, 0))
         );
     }
 }
