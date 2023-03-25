@@ -1,12 +1,11 @@
 package chess.controller;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Side;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -23,9 +22,11 @@ public class ChessController {
     public static final int RANK_INDEX = 1;
 
     private final Map<Command, BiConsumer<ChessGame, String[]>> commands = new EnumMap<>(Command.class);
+    private final ChessGameService chessGameService;
 
-    public ChessController() {
+    public ChessController(ChessGameService chessGameService) {
         putCommands();
+        this.chessGameService = chessGameService;
     }
 
     private void putCommands() {
@@ -60,23 +61,70 @@ public class ChessController {
                 Rank.getRank(Integer.parseInt(target[RANK_INDEX])));
 
         chessGame.moveOrNot(sourcePosition, targetPosition);
+        chessGameService.update(chessGame, sourcePosition, targetPosition);
     }
 
-    private static String[] splitPosition(final String[] splitCommand, final int index) {
+    private String[] splitPosition(final String[] splitCommand, final int index) {
         return splitCommand[index].split("");
     }
 
     public void run() {
-        final Board board = BoardFactory.generateBoard();
-        final ChessGame chessGame = new ChessGame(board);
+        ChessGame chessGame = initChessGame(inputInitCommand());
 
-        OutputView.printStartMessage();
         while (chessGame.isRunnable()) {
             printChessBoard(chessGame);
             executeCommand(chessGame);
         }
-        OutputView.printScore(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
-        OutputView.printWinner(chessGame.calculateWinner());
+        processIfClear(chessGame);
+    }
+
+    private void processIfClear(final ChessGame chessGame) {
+        if (chessGame.isClear()) {
+            final Side winner = chessGame.calculateWinner();
+
+            chessGameService.delete();
+            OutputView.printKingDie(winner);
+            OutputView.printScore(chessGame.calculateWhiteScore(), chessGame.calculateBlackScore());
+            OutputView.printWinner(winner);
+        }
+    }
+
+    private InitCommand inputInitCommand() {
+        try {
+            final String command = InputView.readInitCommand();
+            return InitCommand.findByString(command);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return inputInitCommand();
+        }
+    }
+
+    private ChessGame initChessGame(InitCommand command) {
+        ChessGame chessGame = findChessGameIfContinue(command);
+
+        if (chessGame == null) {
+            OutputView.printNewGameMessage();
+            chessGameService.delete();
+            chessGame = chessGameService.save();
+        }
+        return chessGame;
+    }
+
+    private ChessGame findChessGameIfContinue(final InitCommand command) {
+        ChessGame chessGame = null;
+        if (command.isContinue()) {
+            chessGame = chessGameService.findChessGame();
+            printContinueMessage(chessGame);
+        }
+        return chessGame;
+    }
+
+    private void printContinueMessage(final ChessGame chessGame) {
+        if (chessGame == null) {
+            OutputView.printNonContinueMessage();
+            return;
+        }
+        OutputView.printContinueMessage();
     }
 
     private void printChessBoard(final ChessGame chessGame) {
@@ -85,7 +133,7 @@ public class ChessController {
         }
     }
 
-    private void executeCommand(final ChessGame chessGame) {
+    private void executeCommand(ChessGame chessGame) {
         try {
             final String[] splitCommand = InputView.readCommand().split(" ");
             final Command command = Command.findByString(splitCommand[COMMAND_INDEX]);
