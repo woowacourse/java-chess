@@ -26,15 +26,25 @@ public final class OutputView {
     }
 
     public static void printChessBoard(final ChessBoardDto chessBoard) {
-        final List<List<String>> rowDTOs = chessBoard.getRowDTOs();
-
         System.out.print(System.lineSeparator());
-        final int size = rowDTOs.size();
-        for (int i = 0; i < size; i++) {
-            final List<String> row = rowDTOs.get(i);
-            printRow(row);
-            System.out.printf("  %d%n", 8 - i);
-        }
+
+        printRow(chessBoard.getRow1());
+        System.out.printf("  %d%n", 8);
+        printRow(chessBoard.getRow2());
+        System.out.printf("  %d%n", 7);
+        printRow(chessBoard.getRow3());
+        System.out.printf("  %d%n", 6);
+        printRow(chessBoard.getRow4());
+        System.out.printf("  %d%n", 5);
+        printRow(chessBoard.getRow5());
+        System.out.printf("  %d%n", 4);
+        printRow(chessBoard.getRow6());
+        System.out.printf("  %d%n", 3);
+        printRow(chessBoard.getRow7());
+        System.out.printf("  %d%n", 2);
+        printRow(chessBoard.getRow8());
+        System.out.printf("  %d%n", 1);
+
         System.out.println(System.lineSeparator() + "abcdefgh" + System.lineSeparator());
     }
 
@@ -45,7 +55,6 @@ public final class OutputView {
     }
 
     public static void printScore(final ScoreDto scoreDto) {
-
         System.out.printf("White : %.1f%n", scoreDto.getWhiteScore());
         System.out.printf("Black : %.1f%n", scoreDto.getBlackScore());
         System.out.println(scoreDto.getWinner());
