@@ -1,8 +1,8 @@
 package chess.domain.score;
 
-import chess.domain.Color;
 import chess.domain.Column;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 

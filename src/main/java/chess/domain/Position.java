@@ -57,8 +57,4 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, column);
     }
-
-    public boolean isSameColumn(Column column) {
-        return this.column.equals(column);
-    }
 }

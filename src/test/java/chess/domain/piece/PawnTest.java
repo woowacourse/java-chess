@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.piece.PieceInfo.BLACK_PAWN_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_PAWN_INFO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -15,11 +16,11 @@ class PawnTest {
     @Test
     void isMovable_메서드로_checkDirection_에러발생_테스트() {
         //given, when
-        Pawn whitePawn = new Pawn(Color.WHITE);
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
         Position whitePawnStart = new Position("b", "2");
         Position whitePawnEnd = new Position("b", "1");
 
-        Pawn blackPawn = new Pawn(Color.BLACK);
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Position blackPawnStart = new Position("b", "7");
         Position blackPawnEnd = new Position("b", "8");
         Color whitePawndestinationColor = Color.BLACK;
@@ -35,7 +36,7 @@ class PawnTest {
     @Test
     void isMovable_메서드로_checkDistance_에러발생_테스트() {
         //given, when
-        Pawn pawn = new Pawn(Color.WHITE);
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "5");
         Color destinationColor = Color.BLACK;
@@ -48,7 +49,7 @@ class PawnTest {
     @Test
     void isMovable_메서드로_첫번째_이동시_2칸_이동_가능_테스트() {
         //given, when
-        Pawn pawn = new Pawn(Color.WHITE);
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "4");
         Color destinationColor = Color.NONE;
@@ -60,7 +61,7 @@ class PawnTest {
     @Test
     void isMovable_메서드로_두번째_이동부터_1칸_이동_가능_테스트() {
         //given
-        Pawn pawn = new Pawn(Color.WHITE);
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "4");
         Position afterMoveEnd = new Position("b", "3");
@@ -79,8 +80,8 @@ class PawnTest {
     @Test
     void isMovable_메서드로_moveForward_에러발생_테스트() {
         //given, when
-        Pawn whitePawn = new Pawn(Color.WHITE);
-        Pawn blackPawn = new Pawn(Color.BLACK);
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "3");
         Color destinationColor = Color.WHITE;
@@ -95,8 +96,8 @@ class PawnTest {
     @Test
     void isMovable_메서드로_moveDiagonal_에러발생_테스트() {
         //given, when
-        Pawn whitePawn = new Pawn(Color.WHITE);
-        Pawn blackPawn = new Pawn(Color.BLACK);
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("a", "3");
         Color destinationColor = Color.NONE;
@@ -116,7 +117,7 @@ class PawnTest {
     @Test
     void isMovable_올바른_반환값_테스트() {
         //given, when
-        Pawn pawn = new Pawn(Color.WHITE);
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("a", "3");
         Color destinationColor = Color.BLACK;

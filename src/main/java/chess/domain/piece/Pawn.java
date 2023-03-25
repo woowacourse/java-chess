@@ -1,12 +1,10 @@
 package chess.domain.piece;
 
 import chess.direction.Direction;
-import chess.domain.Color;
 import chess.domain.Position;
 
 import java.util.List;
 
-import static chess.domain.piece.PieceName.PAWN_NAME;
 import static chess.domain.score.Score.PAWN_DEFAULT_SCORE;
 import static chess.view.ErrorMessage.MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
@@ -19,9 +17,9 @@ public class Pawn extends Piece {
 
     private int distance = 2;
 
-    public Pawn(Color color) {
-        super(PAWN_NAME.getName(), color, PAWN_DEFAULT_SCORE.getScore());
-        this.direction = createDirectionByColor(color);
+    public Pawn(PieceInfo pieceInfo) {
+        super(pieceInfo.getName(), pieceInfo.getColor(), PAWN_DEFAULT_SCORE.getScore());
+        this.direction = createDirectionByColor(pieceInfo.getColor());
     }
 
     private List<Direction> createDirectionByColor(Color color) {

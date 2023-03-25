@@ -1,6 +1,5 @@
 package chess.domain.boardStrategy;
 
-import chess.domain.Color;
 import chess.domain.Column;
 import chess.domain.Position;
 import chess.domain.Rank;
@@ -19,16 +18,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static chess.domain.piece.PieceInfo.BLACK_BISHOP_INFO;
+import static chess.domain.piece.PieceInfo.BLACK_KING_INFO;
+import static chess.domain.piece.PieceInfo.BLACK_KNIGHT_INFO;
+import static chess.domain.piece.PieceInfo.BLACK_PAWN_INFO;
+import static chess.domain.piece.PieceInfo.BLACK_QUEEN_INFO;
+import static chess.domain.piece.PieceInfo.BLACK_ROOK_INFO;
+import static chess.domain.piece.PieceInfo.EMPTY_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_BISHOP_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_KING_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_KNIGHT_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_PAWN_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_QUEEN_INFO;
+import static chess.domain.piece.PieceInfo.WHITE_ROOK_INFO;
+
 public class InitialBoardStrategy implements BoardStrategy {
     private final Map<Position, Piece> board = new HashMap<>();
 
     @Override
     public Map<Position, Piece> generate() {
         initEmptyPieces();
-        initFirstRow(Rank.EIGHT, Color.BLACK);
-        initSecondRow(Rank.SEVEN, Color.BLACK);
-        initFirstRow(Rank.ONE, Color.WHITE);
-        initSecondRow(Rank.TWO, Color.WHITE);
+        initFirstRow();
+        initSecondRow();
 
         return new HashMap<>(board);
     }
@@ -36,26 +47,62 @@ public class InitialBoardStrategy implements BoardStrategy {
     private void initEmptyPieces() {
         for (Rank rank : Rank.getReversedOrderedRanks()) {
             for (Column column : Column.getOrderedColumns()) {
-                board.put(new Position(column, rank), new EmptyPiece());
+                board.put(new Position(column, rank), new EmptyPiece(EMPTY_INFO));
             }
         }
     }
 
-    private void initFirstRow(Rank rank, Color color) {
-        List<Piece> firstRowPieces = List.of(new Rook(color), new Knight(color), new Bishop(color), new Queen(color),
-                new King(color), new Bishop(color), new Knight(color), new Rook(color));
+    private void initFirstRow() {
+        initBlackFirstRow();
+        initWhiteFirstRow();
+    }
+
+    private void initWhiteFirstRow() {
+        Rank rank = Rank.ONE;
+
+        List<Piece> firstRowPieces = List.of(new Rook(WHITE_ROOK_INFO), new Knight(WHITE_KNIGHT_INFO), new Bishop(WHITE_BISHOP_INFO),
+                new Queen(WHITE_QUEEN_INFO), new King(WHITE_KING_INFO), new Bishop(WHITE_BISHOP_INFO),
+                new Knight(WHITE_KNIGHT_INFO), new Rook(WHITE_ROOK_INFO));
 
         IntStream.range(0, firstRowPieces.size())
                 .forEach(i -> board.replace(new Position(Column.findColumnByIndex(i + 1), rank),
                         firstRowPieces.get(i))
                 );
-
     }
 
-    private void initSecondRow(Rank rank, Color color) {
+    private void initBlackFirstRow() {
+        Rank rank = Rank.EIGHT;
+
+        List<Piece> firstRowPieces = List.of(new Rook(BLACK_ROOK_INFO), new Knight(BLACK_KNIGHT_INFO), new Bishop(BLACK_BISHOP_INFO),
+                new Queen(BLACK_QUEEN_INFO), new King(BLACK_KING_INFO), new Bishop(BLACK_BISHOP_INFO),
+                new Knight(BLACK_KNIGHT_INFO), new Rook(BLACK_ROOK_INFO));
+
+        IntStream.range(0, firstRowPieces.size())
+                .forEach(i -> board.replace(new Position(Column.findColumnByIndex(i + 1), rank),
+                        firstRowPieces.get(i))
+                );
+    }
+
+    private void initSecondRow() {
+        initBlackSecondRow();
+        initWhiteSecondRow();
+    }
+
+    private void initBlackSecondRow() {
+        Rank rank =  Rank.SEVEN;
+
         Arrays.stream(Column.values())
                 .forEach(column -> board.replace(new Position(column, rank),
-                        new Pawn(color))
+                        new Pawn(BLACK_PAWN_INFO))
+                );
+    }
+
+    private void initWhiteSecondRow() {
+        Rank rank = Rank.TWO;
+
+        Arrays.stream(Column.values())
+                .forEach(column -> board.replace(new Position(column, rank),
+                        new Pawn(WHITE_PAWN_INFO))
                 );
     }
 }
