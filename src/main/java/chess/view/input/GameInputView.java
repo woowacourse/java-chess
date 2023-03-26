@@ -18,11 +18,9 @@ public class GameInputView {
 
     public List<String> readCommand(final String user, final String room) {
         System.out.println("[로그인 한 유저: " + user + ", 선택한 방 이름: " + room + "]");
-        System.out.println("> 게임 시작 : start");
-        System.out.println("> 게임 상태 : status");
-        System.out.println("> 게임 초기화 : clear");
-        System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예) move b2 b3");
+        System.out.println("> 게임 상태 : status");
+        System.out.println("> 게임 종료 : end");
         final String input = scanner.nextLine();
 
         return Arrays.stream(input.split(DELIMITER, LIMIT))

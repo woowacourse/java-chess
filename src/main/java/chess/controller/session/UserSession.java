@@ -19,7 +19,7 @@ public class UserSession {
     public static int getId() {
         final User auth = session.get();
         if (auth == null) {
-            return 0;
+            return AnonymousKeyGenerator.getKey();
         }
         return session.get().getId();
     }
@@ -34,5 +34,6 @@ public class UserSession {
 
     public static void remove() {
         session.remove();
+        AnonymousKeyGenerator.remove();
     }
 }

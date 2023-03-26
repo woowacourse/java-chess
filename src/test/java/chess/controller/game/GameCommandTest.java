@@ -26,13 +26,13 @@ public class GameCommandTest {
     @Test
     void Command가_정상_반환된다() {
         // given
-        final List<String> validCommand = List.of("start");
+        final List<String> validCommand = List.of("move");
 
         // when
         final GameCommand command = GameCommand.from(validCommand);
 
         // expect
-        assertThat(command).isEqualTo(GameCommand.START);
+        assertThat(command).isEqualTo(GameCommand.MOVE);
     }
 
     @Test

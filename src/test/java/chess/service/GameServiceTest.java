@@ -19,7 +19,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.MoveDto;
-import chess.repository.ChessDao;
+import chess.repository.GameDao;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -31,19 +31,19 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class ChessGameTest {
+public class GameServiceTest {
 
-    private ChessDao mockChessDao;
+    private GameDao mockGameDao;
 
     @BeforeEach
     void setUp() {
-        mockChessDao = new ChessDao() {
+        mockGameDao = new GameDao() {
             @Override
-            public void save(final MoveDto moveDto) {
+            public void save(final MoveDto moveDto, final int roomId) {
             }
 
             @Override
-            public List<MoveDto> findAll() {
+            public List<MoveDto> findAllByRoomId(final int roomId) {
                 return List.of();
             }
 
@@ -65,13 +65,14 @@ public class ChessGameTest {
     @Test
     void 체스_게임을_생성한다() {
         // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
+        final GameService gameService = new GameService(mockGameDao);
+        final int roomId = 1;
 
         // when
-        chessGame.initialize();
+        gameService.initialize(roomId);
 
         // then
-        final List<PieceType> result = toPieceTypes(chessGame.getResult().getBoard());
+        final List<PieceType> result = toPieceTypes(gameService.getResult(roomId).getBoard());
         assertThat(result).containsExactly(
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
@@ -87,35 +88,37 @@ public class ChessGameTest {
     @Test
     void 기물을_움직인다() {
         // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
-        chessGame.initialize();
+        final GameService gameService = new GameService(mockGameDao);
+        final int roomId = 1;
+        gameService.initialize(roomId);
 
         // when
-        chessGame.move(new MoveDto("e2", "e4"));
+        gameService.move(new MoveDto("e2", "e4"), roomId);
 
         // then
-        final Map<Position, Piece> board = chessGame.getResult().getBoard();
+        final Map<Position, Piece> board = gameService.getResult(roomId).getBoard();
         assertThat(board.get(E4)).isEqualTo(Pawn.from(Color.WHITE));
     }
 
     @Test
     void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
         // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
-        chessGame.initialize();
+        final GameService gameService = new GameService(mockGameDao);
+        final int roomId = 1;
+        gameService.initialize(roomId);
 
         // when
-        chessGame.move(new MoveDto("e2", "e4"));
-        chessGame.move(new MoveDto("e7", "e5"));
-        chessGame.move(new MoveDto("g1", "f3"));
-        chessGame.move(new MoveDto("b8", "c6"));
-        chessGame.move(new MoveDto("f1", "b5"));
-        chessGame.move(new MoveDto("a7", "a6"));
-        chessGame.move(new MoveDto("b5", "a4"));
-        chessGame.move(new MoveDto("d7", "d6"));
+        gameService.move(new MoveDto("e2", "e4"), roomId);
+        gameService.move(new MoveDto("e7", "e5"), roomId);
+        gameService.move(new MoveDto("g1", "f3"), roomId);
+        gameService.move(new MoveDto("b8", "c6"), roomId);
+        gameService.move(new MoveDto("f1", "b5"), roomId);
+        gameService.move(new MoveDto("a7", "a6"), roomId);
+        gameService.move(new MoveDto("b5", "a4"), roomId);
+        gameService.move(new MoveDto("d7", "d6"), roomId);
 
         // then
-        final List<PieceType> result = toPieceTypes(chessGame.getResult().getBoard());
+        final List<PieceType> result = toPieceTypes(gameService.getResult(roomId).getBoard());
         assertThat(result).containsExactly(
                 ROOK, EMPTY, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK,
                 EMPTY, PAWN, PAWN, EMPTY, EMPTY, PAWN, PAWN, PAWN,
@@ -129,58 +132,20 @@ public class ChessGameTest {
     }
 
     @Test
-    void 체스게임이_초기화_되었는지_확인한다() {
-        // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
-        chessGame.initialize();
-
-        // when
-        final boolean result = chessGame.isInitialized();
-
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    void 체스게임이_초기화되지_않은_상태인지_확인한다() {
-        // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
-
-        // when
-        final boolean result = chessGame.isNotInitialized();
-
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    void 체스게임을_초기상태로_되돌린다() {
-        // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
-        chessGame.initialize();
-        chessGame.move(new MoveDto("d2", "d4"));
-
-        // when
-        chessGame.clear();
-
-        // then
-        assertThat(chessGame.isInitialized()).isFalse();
-    }
-
-    @Test
     void 왕이_잡히는_경우_게임이_종료된다() {
         // given
-        final ChessGame chessGame = new ChessGame(mockChessDao);
-        chessGame.initialize();
-        chessGame.move(new MoveDto("e2", "e4"));
-        chessGame.move(new MoveDto("e7", "e5"));
-        chessGame.move(new MoveDto("d1", "h5"));
-        chessGame.move(new MoveDto("f7", "f5"));
+        final GameService gameService = new GameService(mockGameDao);
+        final int roomId = 1;
+        gameService.initialize(roomId);
+        gameService.move(new MoveDto("e2", "e4"), roomId);
+        gameService.move(new MoveDto("e7", "e5"), roomId);
+        gameService.move(new MoveDto("d1", "h5"), roomId);
+        gameService.move(new MoveDto("f7", "f5"), roomId);
 
         // when
-        chessGame.move(new MoveDto("h5", "e8"));
+        gameService.move(new MoveDto("h5", "e8"), roomId);
 
         // then
-        assertThat(chessGame.isGameOver()).isTrue();
+        assertThat(gameService.isGameOver(roomId)).isTrue();
     }
 }

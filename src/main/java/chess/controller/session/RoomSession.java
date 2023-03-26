@@ -15,7 +15,7 @@ public class RoomSession {
     public static int getId() {
         final Room room = session.get();
         if (room == null) {
-            return 0;
+            return AnonymousKeyGenerator.getKey();
         }
         return room.getId();
     }
@@ -23,12 +23,13 @@ public class RoomSession {
     public static String getName() {
         final Room room = session.get();
         if (room == null) {
-            return "none";
+            return String.valueOf(AnonymousKeyGenerator.getKey());
         }
         return room.getName();
     }
 
     public static void remove() {
         session.remove();
+        AnonymousKeyGenerator.remove();
     }
 }

@@ -5,25 +5,26 @@ import chess.dto.MoveDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessJdbcDao implements ChessDao {
+public class GameJdbcDao implements GameDao {
     private final JdbcTemplate jdbcTemplate;
 
-    public ChessJdbcDao(final JdbcTemplate jdbcTemplate) {
+    public GameJdbcDao(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public void save(final MoveDto moveDto) {
+    public void save(final MoveDto moveDto, final int roomId) {
         jdbcTemplate.executeUpdate(
-                "INSERT INTO move (source, target) VALUES (?, ?)",
+                "INSERT INTO move (source, target, room_id) VALUES (?, ?, ?)",
                 moveDto.getSource(),
-                moveDto.getTarget()
+                moveDto.getTarget(),
+                roomId
         );
     }
 
     @Override
-    public List<MoveDto> findAll() {
-        return jdbcTemplate.query("SELECT * FROM move", resultSet -> {
+    public List<MoveDto> findAllByRoomId(final int roomId) {
+        return jdbcTemplate.query("SELECT * FROM move where room_id = ?", resultSet -> {
             final List<MoveDto> result = new ArrayList<>();
             while (resultSet.next()) {
                 final String source = resultSet.getString("source");
@@ -31,7 +32,7 @@ public class ChessJdbcDao implements ChessDao {
                 result.add(new MoveDto(source, target));
             }
             return result;
-        });
+        }, roomId);
     }
 
     public void deleteAll() {

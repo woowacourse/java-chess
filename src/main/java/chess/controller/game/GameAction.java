@@ -1,12 +1,12 @@
 package chess.controller.game;
 
-import chess.service.ChessGame;
+import chess.service.GameService;
 import java.util.List;
 
 @FunctionalInterface
 public interface GameAction {
-    GameAction EMPTY = (chessGame, commands) -> {
+    GameAction EMPTY = (gameService, commands) -> {
     };
 
-    void execute(final ChessGame chessGame, final List<String> commands);
+    void execute(final GameService gameService, final List<String> commands);
 }

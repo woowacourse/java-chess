@@ -58,13 +58,13 @@
 
 ### 컨트롤러
 
-- [ ] MainController
-    - [ ] USER, GAME, START의 명령어를 입력할 수 있다.
-        - [ ] USER 명령어를 입력하면 계정 관리 화면으로 이동한다. (UserController)
-        - [ ] GAME 명령어를 입력하면 게임 관리 화면으로 이동한다. (BoardController)
-            - [ ] 해당 화면은 로그인을 해야지 이동할 수 있다.
-        - [ ] START 명령어를 입력하면 선택한 게임을 시작한다. (GameController)
-            - [ ] 로그인을 하지 않은 경우 게임 기록이 데이터베이스에 저장되지만 따로 관리할 수 없다.
+- [x] MainController
+    - [x] USER, GAME, START의 명령어를 입력할 수 있다.
+        - [x] USER 명령어를 입력하면 계정 관리 화면으로 이동한다. (UserController)
+        - [x] GAME 명령어를 입력하면 게임 관리 화면으로 이동한다. (BoardController)
+            - [x] 해당 화면은 로그인을 해야지 이동할 수 있다.
+        - [x] START 명령어를 입력하면 선택한 게임을 시작한다. (GameController)
+            - [x] 로그인을 하지 않은 경우 게임 기록이 데이터베이스에 저장되지만 따로 관리할 수 없다.
 
 - [x] UserController
     - [x] REGISTER, LOGIN, LOGOUT 명령어를 입력할 수 있다.
@@ -72,15 +72,15 @@
         - [x] LOGIN 명령어와 함께 아이디를 입력하여 로그인을 할 수 있다. ex) LOGIN herb
         - [x] LOGOUT 명령어를 입력하여 로그아웃을 할 수 있다. ex) LOGOUT
 
-- [ ] BoardController
-    - [ ] 게임 관리 화면으로 로그인을 해야지 이동할 수 있다.
-    - [ ] HISTORY, CREATE, JOIN 명령어를 입력할 수 있다.
-        - [ ] HISTORY 명령어를 입력하여 진행한 게임을 확인할 수 있다.
-        - [ ] CREATE 명령어를 이용하여 게임을 생성할 수 있다.
-        - [ ] JOIN 명령어와 게임 번호를 입력하여 진행할 게임을 선택할 수 있다. ex) JOIN 3
+- [x] BoardController
+    - [x] 게임 관리 화면으로 로그인을 해야지 이동할 수 있다.
+    - [x] HISTORY, CREATE, JOIN 명령어를 입력할 수 있다.
+        - [x] HISTORY 명령어를 입력하여 진행한 게임을 확인할 수 있다.
+        - [x] CREATE 명령어를 이용하여 게임을 생성할 수 있다. ex) CREATE 방이름
+        - [x] JOIN 명령어와 게임 번호를 입력하여 진행할 게임을 선택할 수 있다. ex) JOIN 3
 
-- [ ] GameController
-    - [ ] 게임 선택을 하지 않은 경우 새로운 게임이 데이터베이스에 저장된다.
+- [x] GameController
+    - [x] 게임 선택을 하지 않은 경우 새로운 게임이 데이터베이스에 저장된다.
     - [x] 게임을 시작하고 나면 상태 확인(STATUS) 명령어를 입력할 수 있다.
     - [x] 게임을 시작하고 나면 이동(MOVE) 명령어를 입력할 수 있다.
     - [x] 초기화(CLEAR) 명령어 입력시 체스 게임을 초기상태로 되돌린다.

@@ -7,10 +7,13 @@ import chess.controller.room.RoomController;
 import chess.controller.user.UserController;
 import chess.db.FixedConnectionPool;
 import chess.db.JdbcTemplate;
+import chess.repository.GameDao;
+import chess.repository.GameJdbcDao;
 import chess.repository.RoomDao;
 import chess.repository.RoomJdbcDao;
 import chess.repository.UserDao;
 import chess.repository.UserJdbcDao;
+import chess.service.GameService;
 import chess.service.RoomService;
 import chess.service.UserService;
 import chess.view.input.GameInputView;
@@ -56,7 +59,11 @@ public class ControllerFactory {
     }
 
     private static Controller gameController() {
-        return new GameController(new GameInputView(SCANNER), new GameOutputView());
+        return new GameController(new GameInputView(SCANNER), new GameOutputView(), new GameService(gameDao()));
+    }
+
+    private static GameDao gameDao() {
+        return new GameJdbcDao(JDBC_TEMPLATE);
     }
 
     private static Controller empty() {

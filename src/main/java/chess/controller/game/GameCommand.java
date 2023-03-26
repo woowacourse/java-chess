@@ -4,10 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum GameCommand {
-    START(1),
     MOVE(3),
     STATUS(1),
-    CLEAR(1),
     END(1),
     EMPTY(0),
     ;
