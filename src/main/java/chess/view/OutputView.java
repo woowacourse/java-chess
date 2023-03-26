@@ -105,4 +105,13 @@ public class OutputView {
             System.out.print(piece);
         }
     }
+
+    public void printWinner(final String side) {
+        if (Objects.equals("BLACK", side)) {
+            System.out.println("흑의 승리입니다.");
+        }
+        if (Objects.equals("WHITE", side)) {
+            System.out.println("백의 승리입니다.");
+        }
+    }
 }

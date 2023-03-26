@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -582,21 +583,25 @@ class ChessBoardTest {
         @DisplayName("체스보드 내에")
         class given_chessBoard {
 
-            @DisplayName("킹이 하나만 존재할 경우 true를 반환한다.")
+            @DisplayName("흑색 킹만 살아있다면 \"BLACK\"이 담긴 리스트를 반환한다.")
             @Test
             void it_returns_true_when_one_king_dead() {
                 pieces.put(Square.of(Rank.SEVEN, File.C), King.of(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
-                assertThat(chessBoard.isKingDead()).isTrue();
+                List<String> aliveKings = chessBoard.findAliveKing();
+                assertThat(aliveKings).hasSize(1);
+                assertThat(aliveKings).contains("BLACK");
             }
 
-            @DisplayName("양쪽 킹이 다 존재할 경우 false를 반환한다.")
+            @DisplayName("양쪽 킹이 다 살아있을 경우 \"BLACK\"과 \"WHITE\"가 담긴 리스트를 반환한다.")
             @Test
             void it_returns_flase_when_both_king_live() {
                 pieces.put(Square.of(Rank.SEVEN, File.C), King.of(Side.BLACK));
                 pieces.put(Square.of(Rank.TWO, File.H), King.of(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
-                assertThat(chessBoard.isKingDead()).isFalse();
+                List<String> aliveKings = chessBoard.findAliveKing();
+                assertThat(aliveKings).hasSize(2);
+                assertThat(aliveKings).contains("BLACK", "WHITE");
             }
         }
     }

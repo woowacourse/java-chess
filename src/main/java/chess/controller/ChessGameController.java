@@ -6,6 +6,7 @@ import chess.view.OutputView;
 import dto.ChessBoardDto;
 import dto.CommandDto;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -42,6 +43,7 @@ public class ChessGameController {
         command.validateCommandInPlaying();
         if (command.isPlaying()) {
             updateChessBoard(chessBoard, commandDto);
+            command = confirmGameEnd(chessBoard);
         }
         return command;
     }
@@ -59,6 +61,15 @@ public class ChessGameController {
         if (from == to) {
             throw new IllegalArgumentException("같은 지점이 들어왔습니다.");
         }
+    }
+
+    private Command confirmGameEnd(final ChessBoard chessBoard) {
+        List<String> aliveKings = chessBoard.findAliveKing();
+        if (aliveKings.size() == 1) {
+            outputView.printWinner(aliveKings.get(0));
+            return Command.END;
+        }
+        return Command.MOVE;
     }
 
     private <T> T repeatUntilNoException(Supplier<T> supplier) {

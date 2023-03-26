@@ -5,8 +5,10 @@ import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
 import chess.domain.chesspiece.PieceInfo;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -87,13 +89,12 @@ public class ChessBoard {
                 .sum();
     }
 
-    public boolean isKingDead() {
-        final int kingsOnBoard = (int) pieces.values()
+    public List<String> findAliveKing() {
+        return pieces.values()
                 .stream()
                 .filter(piece -> Objects.equals(piece.getName(), PieceInfo.KING.name()))
-                .count();
-
-        return kingsOnBoard == 1;
+                .map(Piece::getSide)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public Map<Square, Piece> getPieces() {
