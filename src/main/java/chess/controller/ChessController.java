@@ -27,13 +27,19 @@ public class ChessController {
 
         outputView.printStartMessage();
 
-        if (isStartCommand()) {
+        if (retryOnInvalidUserInput(this::isStartCommand)) {
             play(chessGame);
         }
     }
 
     private boolean isStartCommand() {
-        return Command.isStartCommand(requestCommand().get(Index.MAIN_COMMAND.value));
+        String command = requestCommand().get(Index.MAIN_COMMAND.value);
+
+        if (Command.isStartCommand(command)) {
+            return true;
+        }
+
+        throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
     }
 
     private List<String> requestCommand() {
@@ -46,12 +52,11 @@ public class ChessController {
             outputView.printChessBoard(chessGame.getChessboard());
             commands = retryOnInvalidUserInput(this::handleCommand);
 
-            commands.ifPresent(command -> movePiece(chessGame, command));
-            commands.ifPresent(command -> checkPromotion(chessGame, command));
+            commands.ifPresent(command -> actionForCommand(chessGame, command));
+        } while (commands.isPresent() && chessGame.isBothKingAlive());
 
-        } while (commands.isPresent() && !chessGame.isKingDead());
-
-        outputView.printFinishMessage();
+        outputView.printChessBoard(chessGame.getChessboard());
+        outputView.printScoreMessage(chessGame);
     }
 
     private Optional<List<String>> handleCommand() {
@@ -67,6 +72,22 @@ public class ChessController {
         }
 
         return Optional.of(commands);
+    }
+
+    private void actionForCommand(ChessGame chessGame, List<String> command) {
+        String mainCommand = command.get(Index.MAIN_COMMAND.value);
+
+        if (Command.isStatusCommand(mainCommand)) {
+            calculateResult(chessGame);
+            return;
+        }
+
+        movePiece(chessGame, command);
+        checkPromotion(chessGame, command);
+    }
+
+    private void calculateResult(ChessGame chessGame) {
+        outputView.printScoreMessage(chessGame);
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
@@ -142,7 +163,8 @@ public class ChessController {
     private enum Command {
         START("start"),
         END("end"),
-        MOVE("move");
+        MOVE("move"),
+        STATUS("status");
 
         private final String command;
 
@@ -156,6 +178,10 @@ public class ChessController {
 
         private static boolean isEndCommand(String input) {
             return END.command.equals(input);
+        }
+
+        private static boolean isStatusCommand(String input) {
+            return STATUS.command.equals(input);
         }
     }
 
