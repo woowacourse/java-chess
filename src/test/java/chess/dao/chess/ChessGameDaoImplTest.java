@@ -16,6 +16,7 @@ class ChessGameDaoImplTest {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
         final ChessGameEntity expected = new ChessGameEntity(1L, "WHITE", 1L);
+        chessGameDao.save(expected);
         final long userId = 1L;
 
         // when
