@@ -2,7 +2,6 @@ package chess.controller.state;
 
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.TeamColor;
 
 public final class Start implements State {
 
@@ -15,7 +14,7 @@ public final class Start implements State {
     @Override
     public State checkCommand(final Command command) {
         if (command.isStart()) {
-            return new Move(chessGame, TeamColor.WHITE);
+            return new Move(chessGame, chessGame.getCurrentTeamColor());
         }
         if (command.isEnd()) {
             return new End();
