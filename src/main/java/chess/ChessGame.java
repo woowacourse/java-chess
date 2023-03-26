@@ -1,5 +1,6 @@
 package chess;
 
+import chess.database.ChessGameDao;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
 import chess.piece.Shape;
@@ -11,9 +12,13 @@ public class ChessGame {
 
     private static final String OUT_OF_CHESS_BOUND_ERROR = "[ERROR] 해당 위치로 움직일 수 없습니다.";
 
+    private final int gameIdx;
     private final ChessBoard chessBoard;
 
     public ChessGame(ChessBoard chessBoard) {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        chessGameDao.addGame();
+        this.gameIdx = chessGameDao.findLastInsertGame();
         this.chessBoard = chessBoard;
     }
 
