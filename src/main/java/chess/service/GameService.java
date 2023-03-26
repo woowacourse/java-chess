@@ -31,6 +31,9 @@ public class GameService {
 
     public void move(final MoveDto moveDto, final int roomId) {
         final Board board = boards.get(roomId);
+        if (board == null) {
+            throw new IllegalArgumentException("게임을 찾을 수 없습니다.");
+        }
         final Position sourcePosition = Position.from(moveDto.getSource());
         final Position targetPosition = Position.from(moveDto.getTarget());
         board.move(sourcePosition, targetPosition);
@@ -39,11 +42,21 @@ public class GameService {
 
     public boolean isGameOver(final int roomId) {
         final Board board = boards.get(roomId);
+        if (board == null) {
+            throw new IllegalArgumentException("게임을 찾을 수 없습니다.");
+        }
         return board.isGameOver();
     }
 
     public GameResult getResult(final int roomId) {
         final Board board = boards.get(roomId);
+        if (board == null) {
+            throw new IllegalArgumentException("게임을 찾을 수 없습니다.");
+        }
         return board.getResult();
+    }
+
+    public void removeBoard(final int roomId) {
+        boards.remove(roomId);
     }
 }

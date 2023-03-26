@@ -10,6 +10,7 @@ import static chess.domain.piece.PieceType.ROOK;
 import static chess.fixture.PositionFixture.E4;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
@@ -147,5 +148,26 @@ public class GameServiceTest {
 
         // then
         assertThat(gameService.isGameOver(roomId)).isTrue();
+    }
+
+    @Test
+    void 보드를_삭제한다() {
+        // given
+        final GameService gameService = new GameService(mockGameDao);
+        final int roomId = 1;
+        gameService.initialize(roomId);
+        gameService.move(new MoveDto("e2", "e4"), roomId);
+        gameService.move(new MoveDto("e7", "e5"), roomId);
+        gameService.move(new MoveDto("d1", "h5"), roomId);
+        gameService.move(new MoveDto("f7", "f5"), roomId);
+        gameService.move(new MoveDto("h5", "e8"), roomId);
+
+        // when
+        gameService.removeBoard(roomId);
+
+        // then
+        assertThatThrownBy(() -> gameService.move(new MoveDto("h5", "e8"), roomId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임을 찾을 수 없습니다.");
     }
 }

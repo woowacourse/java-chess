@@ -55,6 +55,7 @@ public class GameController implements Controller {
             command = checkGameOver(command);
         }
         outputView.printGameEnd();
+        gameService.removeBoard(RoomSession.getId());
     }
 
     private GameCommand play() {
