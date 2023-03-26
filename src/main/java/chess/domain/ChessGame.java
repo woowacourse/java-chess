@@ -124,6 +124,14 @@ public class ChessGame {
                 && currentSquare.reachedEndRank();
     }
 
+    public boolean isKingDead() {
+        int whiteKingCountOnBoard = chessboard.getPieceCountOnBoard(PieceType.KING.createPiece(Camp.WHITE));
+        int blackKingCountOnBoard = chessboard.getPieceCountOnBoard(PieceType.KING.createPiece(Camp.BLACK));
+
+        return whiteKingCountOnBoard == 0
+                || blackKingCountOnBoard == 0;
+    }
+
     public Chessboard getChessboard() {
         return chessboard;
     }
