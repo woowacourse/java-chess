@@ -33,7 +33,7 @@ public class InitialChessGame extends ChessGame {
 
     @Override
     public boolean isGameOver() {
-        return false;
+        return !board.hasTwoKings();
     }
 
     @Override
