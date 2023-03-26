@@ -5,6 +5,7 @@ import chess.domain.board.Chessboard;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.BeforeEach;
@@ -156,4 +157,27 @@ class ChessGameTest {
                 .isTrue();
     }
 
+
+    @ParameterizedTest(name = "특정 진영의 점수를 계산할 수 있다.")
+    @MethodSource("sourceAndTargetSquareAndScoreProvider")
+    void calculateScoreSuccessTest(Square source, Square target, double score) {
+        chessboard.swapPiece(source, target);
+
+        assertThat(chessGame.calculateScoreOf(Camp.WHITE))
+                .isEqualTo(score);
+    }
+
+    static Stream<Arguments> sourceAndTargetSquareAndScoreProvider() {
+        return Stream.of(
+                Arguments.arguments(    // 모든 기물이 살아있는 경우
+                        Square.getInstanceOf(File.C, Rank.THREE), Square.getInstanceOf(File.C, Rank.THREE), 38.0
+                ),
+                Arguments.arguments(    // Pawn이 동일한 File에 존재
+                        Square.getInstanceOf(File.B, Rank.TWO), Square.getInstanceOf(File.C, Rank.THREE), 37.0
+                ),
+                Arguments.arguments(    // 퀸이 죽은 경우
+                        Square.getInstanceOf(File.C, Rank.THREE), Square.getInstanceOf(File.D, Rank.ONE), 29.0
+                )
+        );
+    }
 }
