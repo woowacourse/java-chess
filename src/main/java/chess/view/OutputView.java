@@ -1,7 +1,9 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.point.Point;
 
 import java.util.Map;
 
@@ -21,5 +23,13 @@ public class OutputView {
     public static void printChessBoard(final Map<Position, Piece> board) {
         final String chessBoard = BoardViewForm.createChessBoard(board);
         System.out.println(chessBoard + System.lineSeparator());
+    }
+
+    public static void printChessStatus(final Point blackPoint, final Point whitePoint, final Color winner) {
+        System.out.println(System.lineSeparator()
+                + "검정색 플레이어 점수 : " + blackPoint + System.lineSeparator()
+                + "흰색 플레이어 점수 : " + whitePoint + System.lineSeparator()
+                + "체스 결과 : " + winner.getPlayer()
+        );
     }
 }

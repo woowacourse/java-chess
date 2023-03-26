@@ -2,6 +2,8 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.Chess;
+import chess.domain.Color;
+import chess.domain.point.Point;
 import chess.domain.point.Points;
 import chess.domain.state.Start;
 import chess.domain.state.State;
@@ -9,6 +11,8 @@ import chess.dto.Command;
 import chess.view.GameState;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import static chess.domain.Color.*;
 
 public final class Controller {
     public void run() {
@@ -18,7 +22,6 @@ public final class Controller {
             state = nextState(state);
             OutputView.printChessBoard(state.getChess());
         }
-        OutputView.printChessResult(state.getWinner());
     }
 
     private State nextState(State state) {
@@ -56,6 +59,7 @@ public final class Controller {
 
     private State end(final State state, final Command command) {
         if (command.getGameState() == GameState.END) {
+            announceCurrentChessState(state);
             return state.end();
         }
         return state;
@@ -63,8 +67,16 @@ public final class Controller {
 
     private State status(final State state, final Command command) {
         if (command.getGameState() == GameState.STATUS) {
+            announceCurrentChessState(state);
             return state.status();
         }
         return state;
+    }
+
+    private void announceCurrentChessState(final State state) {
+        final Point blackPoint = state.getPointBy(BLACK);
+        final Point whitePoint = state.getPointBy(WHITE);
+        final Color winner = state.getWinner();
+        OutputView.printChessStatus(blackPoint, whitePoint, winner);
     }
 }
