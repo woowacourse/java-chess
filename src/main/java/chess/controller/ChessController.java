@@ -48,13 +48,21 @@ public class ChessController {
     }
 
     private void initialize(ChessGame chessGame) {
-        List<BoardDto> recordedBoard = boardDao.findAllByRoomName(chessGame.getRoomName());
+        setCorrectTurn(chessGame);
+        setRecordedBoard(chessGame);
+    }
+
+    private void setCorrectTurn(ChessGame chessGame) {
         gameRoomDao.findByRoomName(chessGame.getRoomName())
                 .ifPresent(gameRoom -> {
                     if (!gameRoom.isWhiteTurn()) {
                         chessGame.passTurn();
                     }
                 });
+    }
+
+    private void setRecordedBoard(ChessGame chessGame) {
+        List<BoardDto> recordedBoard = boardDao.findAllByRoomName(chessGame.getRoomName());
 
         Chessboard chessboard = chessGame.getChessboard();
         for (BoardDto boardDto : recordedBoard) {
@@ -75,14 +83,14 @@ public class ChessController {
         throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
     }
 
-    private List<String> requestCommand() {
-        return retryOnInvalidUserInput(inputView::requestCommand);
-    }
-
     private Command getMainCommand(List<String> command) {
         String mainCommand = command.get(Index.MAIN_COMMAND.value);
 
         return Command.renderToCommand(mainCommand);
+    }
+
+    private List<String> requestCommand() {
+        return retryOnInvalidUserInput(inputView::requestCommand);
     }
 
     private void play(ChessGame chessGame) {
@@ -93,37 +101,6 @@ public class ChessController {
 
             commands.ifPresent(command -> actionForCommand(chessGame, command));
         } while (commands.isPresent() && chessGame.isBothKingAlive());
-    }
-
-    private void finalize(ChessGame chessGame) {
-        outputView.printChessBoard(chessGame.getChessboard());
-        outputView.printScoreMessage(chessGame);
-
-        if (gameRoomDao.findByRoomName(chessGame.getRoomName()).isEmpty()) {
-            gameRoomDao.save(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
-            boardDao.save(createBoardDto(chessGame));
-            return;
-        }
-
-        if (chessGame.isBothKingAlive()) {
-            boardDao.update(createBoardDto(chessGame));
-            return;
-        }
-
-        boardDao.deleteAllByRoomName(chessGame.getRoomName());
-    }
-
-    private List<BoardDto> createBoardDto(ChessGame chessGame) {
-        Chessboard board = chessGame.getChessboard();
-        List<BoardDto> boardDtoList = new ArrayList<>();
-        for (Square square : board.getBoardMap().keySet()) {
-            String source = SquareRenderer.render(square);
-            String piece = PieceRenderer.render(board.getPieceAt(square));
-
-            boardDtoList.add(new BoardDto(source, piece, chessGame.getRoomName()));
-        }
-
-        return boardDtoList;
     }
 
     private Optional<List<String>> handleCommand() {
@@ -174,6 +151,42 @@ public class ChessController {
     private PieceType requestPieceType() {
         return retryOnInvalidUserInput(inputView::requestPiece);
     }
+
+    private void finalize(ChessGame chessGame) {
+        outputView.printChessBoard(chessGame.getChessboard());
+        outputView.printScoreMessage(chessGame);
+
+        updateGameState(chessGame);
+    }
+
+    private void updateGameState(ChessGame chessGame) {
+        if (gameRoomDao.findByRoomName(chessGame.getRoomName()).isEmpty()) {
+            gameRoomDao.save(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
+            boardDao.save(createBoardDto(chessGame));
+            return;
+        }
+
+        if (chessGame.isBothKingAlive()) {
+            boardDao.update(createBoardDto(chessGame));
+            return;
+        }
+
+        boardDao.deleteAllByRoomName(chessGame.getRoomName());
+    }
+
+    private List<BoardDto> createBoardDto(ChessGame chessGame) {
+        Chessboard board = chessGame.getChessboard();
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (Square square : board.getBoardMap().keySet()) {
+            String source = SquareRenderer.render(square);
+            String piece = PieceRenderer.render(board.getPieceAt(square));
+
+            boardDtoList.add(new BoardDto(source, piece, chessGame.getRoomName()));
+        }
+
+        return boardDtoList;
+    }
+
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
