@@ -8,7 +8,7 @@ public class Start implements GameAction {
     @Override
     public ChessGame execute(final Command command, ChessGame chessGame) {
         chessGame = chessGame.start();
-        OutputView.printBoard(chessGame.getPieces());
+        OutputView.printBoard(chessGame.getPieces(), chessGame.getCurrentTurnColor());
         return chessGame;
     }
 }

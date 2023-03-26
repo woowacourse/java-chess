@@ -55,8 +55,9 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + NEW_LINE);
     }
 
-    public static void printBoard(final List<Piece> pieces) {
+    public static void printBoard(final List<Piece> pieces, final Color color) {
         final String boardMessage = generateBoardMessage(pieces);
+        System.out.printf("<순서 : %s>%n", color.name());
         System.out.println(boardMessage);
     }
 

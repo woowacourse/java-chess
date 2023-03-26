@@ -14,7 +14,7 @@ public class Move implements GameAction {
 
         chessGame = chessGame.move(currentPosition, targetPosition);
 
-        OutputView.printBoard(chessGame.getPieces());
+        OutputView.printBoard(chessGame.getPieces(), chessGame.getCurrentTurnColor());
         return chessGame;
     }
 }
