@@ -54,6 +54,15 @@ public class ChessController {
         endGame(chessGame);
     }
 
+    private ChessGame loadChessGame() {
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame == null) {
+            chessGame = new ChessGame(ChessBoard.createBoard(), new Turn(), IDLE);
+            chessGameDao.save(chessGame);
+        }
+        return chessGame;
+    }
+
     private void initComment(final ChessGame chessGame) {
         if (chessGame.getStatus() == GameStatus.PLAYING) {
             return;
@@ -63,12 +72,13 @@ public class ChessController {
         chessGameDao.update(chessGame);
     }
 
-    private void endGame(ChessGame chessGame) {
-        renderChessBoard();
-        printStatus(chessGame);
-        if (chessGame.getStatus() == GameStatus.GAME_OVER) {
-            System.out.println("게임 종료 " + chessGame.getCurrentTeam() + "의 패배!");
-        }
+    private Command readCommand() {
+        final List<String> commands = inputView.readGameCommand();
+        Command command = Command.from(commands.get(0));
+        GameAction gameAction = commandMapper.get(command);
+        gameAction.execute(commands);
+
+        return command;
     }
 
     private void play(final ChessGame chessGame) {
@@ -78,15 +88,6 @@ public class ChessController {
             Command command = readValidateInput(this::readCommand);
             chessGame.receiveCommand(command);
         }
-    }
-
-    private ChessGame loadChessGame() {
-        ChessGame chessGame = chessGameDao.select();
-        if (chessGame == null) {
-            chessGame = new ChessGame(ChessBoard.createBoard(), new Turn(), IDLE);
-            chessGameDao.save(chessGame);
-        }
-        return chessGame;
     }
 
     private void renderCurrentTeam() {
@@ -101,15 +102,14 @@ public class ChessController {
         outputView.printChessBoard(chessBoardDto);
     }
 
-    private Command readCommand() {
-        final List<String> commands = inputView.readGameCommand();
-        Command command = Command.from(commands.get(0));
-        GameAction gameAction = commandMapper.get(command);
-        gameAction.execute(commands);
-
-        return command;
+    private void endGame(ChessGame chessGame) {
+        renderChessBoard();
+        printStatus(chessGame);
+        if (chessGame.getStatus() == GameStatus.GAME_OVER) {
+            System.out.println("게임 종료 " + chessGame.getCurrentTeam() + "의 패배!");
+        }
     }
-
+    
     private void start(final List<String> commands) {
         final ChessGame chessGame = chessGameDao.select();
         Command.validateCommandSize(commands.size(), START);

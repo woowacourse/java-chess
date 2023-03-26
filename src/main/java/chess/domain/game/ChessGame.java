@@ -51,14 +51,14 @@ public class ChessGame {
         }
     }
 
+    public boolean isEnd() {
+        return this.gameStatus == GAME_OVER;
+    }
+
     public BigDecimal getScore(Team team) {
         return chessBoard.calculateScore(team);
     }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
+    
     public Team getCurrentTeam() {
         return turn.getCurrentTeam();
     }
@@ -67,7 +67,7 @@ public class ChessGame {
         return this.gameStatus;
     }
 
-    public boolean isEnd() {
-        return this.gameStatus == GAME_OVER;
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 }

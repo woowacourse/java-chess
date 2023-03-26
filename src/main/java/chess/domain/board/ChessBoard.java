@@ -113,6 +113,14 @@ public class ChessBoard {
         return calculatePawnSubScore(pawnPositions);
     }
 
+    private BigDecimal getOrdinalScore(final Team team) {
+        return piecePosition.values().stream()
+                .filter(piece -> piece.getTeam() == team)
+                .map(piece -> piece.getType().getScore())
+                .reduce(BigDecimal::add)
+                .orElseThrow(() -> new IllegalStateException(team + "은 점수를 계산할 수 없습니다."));
+    }
+
     private BigDecimal calculatePawnSubScore(final List<Position> pawnPositions) {
         BigDecimal result = BigDecimal.ZERO;
 
@@ -137,14 +145,6 @@ public class ChessBoard {
                 ).filter(position -> piecePosition.get(position).getType() == PieceType.PAWN)
                 .filter(position -> piecePosition.get(position).getTeam() == team)
                 .collect(Collectors.toList());
-    }
-
-    private BigDecimal getOrdinalScore(final Team team) {
-        return piecePosition.values().stream()
-                .filter(piece -> piece.getTeam() == team)
-                .map(piece -> piece.getType().getScore())
-                .reduce(BigDecimal::add)
-                .orElseThrow(() -> new IllegalStateException(team + "은 점수를 계산할 수 없습니다."));
     }
 
     public boolean isEnd() {
