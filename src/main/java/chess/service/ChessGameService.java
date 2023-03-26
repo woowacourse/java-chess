@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Team;
 
 import java.util.List;
 
@@ -31,9 +30,5 @@ public class ChessGameService {
     
     public boolean isKingDied() {
         return chessGame.isKingDied();
-    }
-    
-    public Team teamWithKing() {
-        return chessGame.teamWithKing();
     }
 }

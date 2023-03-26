@@ -174,16 +174,6 @@ public class BlackWhiteChessBoard implements ChessBoard {
     }
     
     @Override
-    public Team teamWithKing() {
-        return pieces.keySet().stream()
-                .map(this::pieceOrEmpty)
-                .filter(piece -> piece.pieceType() == PieceType.KING)
-                .map(Piece::team)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("킹이 존재하지 않습니다."));
-    }
-    
-    @Override
     public Team winnerTeam() {
         double whiteScore = calculateScore(Team.WHITE);
         double blackScore = calculateScore(Team.BLACK);
@@ -200,6 +190,15 @@ public class BlackWhiteChessBoard implements ChessBoard {
         }
         
         return Team.EMPTY;
+    }
+    
+    private Team teamWithKing() {
+        return pieces.keySet().stream()
+                .map(this::pieceOrEmpty)
+                .filter(piece -> piece.pieceType() == PieceType.KING)
+                .map(Piece::team)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("킹이 존재하지 않습니다."));
     }
     
     @Override

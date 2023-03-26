@@ -94,12 +94,6 @@ class BlackWhiteChessBoardTest {
     }
     
     @Test
-    void 킹이_살아있는_팀_반환() {
-            blackTeamKingDie();
-            assertThat(blackWhiteChessBoard.teamWithKing()).isEqualTo(Team.WHITE);
-    }
-    
-    @Test
     void 같은_줄에_있는_같은_팀의_Pawn들은_점수가_반으로_줄어든다() {
         blackWhiteChessBoard.move("b2", "b4", Team.WHITE);
         blackWhiteChessBoard.move("a7", "a5", Team.BLACK);

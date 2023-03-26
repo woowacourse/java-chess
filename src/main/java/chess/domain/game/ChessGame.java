@@ -35,8 +35,4 @@ public class ChessGame {
     public boolean isKingDied() {
         return chessBoard.isKingDied();
     }
-    
-    public Team teamWithKing() {
-        return chessBoard.teamWithKing();
-    }
 }
