@@ -18,10 +18,10 @@
 // TODO: 2023/03/14 -> check 기능 생각해보기
 
 - [x] 명령어
-  - [ ] start, move, status, end 명령어를 가진다.
+  - [x] start, move, status, end 명령어를 가진다.
   - [x] 현재 게임 진행 상황에 맞지 않는 명령어가 입력되면 예외를 던진다.
     - [x] 게임 시작 시 start 이외의 명령어는 예외 처리
-    - [ ] 게임 플레이 중 move, status, end 이외의 명령어는 예외 처리
+    - [x] 게임 플레이 중 move, status, end 이외의 명령어는 예외 처리
 
 - [x] 체스 기물
   - [x] 자신의 진영을 가지고 있다.

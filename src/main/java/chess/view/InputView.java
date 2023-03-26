@@ -33,7 +33,8 @@ public class InputView {
 
     private void validateFormatWithoutArguments(final List<String> parsedCommandInput) {
         if (!Objects.equals("start", parsedCommandInput.get(0))
-                && !Objects.equals("end", parsedCommandInput.get(0))) {
+                && !Objects.equals("end", parsedCommandInput.get(0))
+                && !Objects.equals("status", parsedCommandInput.get(0))) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
         }
     }

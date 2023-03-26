@@ -24,8 +24,8 @@ public class ChessGameController {
         outputView.printInitialMessage();
         Command command = repeatUntilNoException(this::startGame);
         ChessBoard chessBoard = ChessBoardFactory.generate();
+        outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
         while (command.isPlaying()) {
-            outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
             command = repeatUntilNoException(this::playTurn, chessBoard);
         }
     }
@@ -41,11 +41,18 @@ public class ChessGameController {
         CommandDto commandDto = inputView.readCommand();
         Command command = Command.from(commandDto.getCommand());
         command.validateCommandInPlaying();
-        if (command.isPlaying()) {
+        executeCommand(chessBoard, commandDto, command);
+        return confirmGameEnd(chessBoard);
+    }
+
+    private void executeCommand(final ChessBoard chessBoard, final CommandDto commandDto, final Command command) {
+        if (command.isMove()) {
             updateChessBoard(chessBoard, commandDto);
-            command = confirmGameEnd(chessBoard);
         }
-        return command;
+        if (command.isStatus()) {
+            outputView.printScore(Side.WHITE.name(), chessBoard.calculateScore(Side.WHITE));
+            outputView.printScore(Side.BLACK.name(), chessBoard.calculateScore(Side.BLACK));
+        }
     }
 
     private void updateChessBoard(final ChessBoard chessBoard, final CommandDto commandDto) {
@@ -55,6 +62,7 @@ public class ChessGameController {
         if (!chessBoard.canMove(from, to)) {
             outputView.printInvalidMoveMessage();
         }
+        outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
     }
 
     private void validateSameSquare(final Square from, final Square to) {

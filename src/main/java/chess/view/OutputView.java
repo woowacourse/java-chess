@@ -114,4 +114,14 @@ public class OutputView {
             System.out.println("백의 승리입니다.");
         }
     }
+
+    public void printScore(final String side, final double score) {
+        if (Objects.equals("BLACK", side)) {
+            System.out.println("흑의 점수는 " + score + "점입니다.");
+        }
+        if (Objects.equals("WHITE", side)) {
+            System.out.println("백의 점수는 " + score + "점입니다.");
+        }
+        System.out.println();
+    }
 }
