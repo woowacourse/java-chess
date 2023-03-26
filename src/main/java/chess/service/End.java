@@ -42,4 +42,9 @@ public class End implements State {
     public Map<Position, Piece> getBoard() {
         throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
     }
+
+    @Override
+    public State load(final long id) {
+        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+    }
 }

@@ -21,7 +21,7 @@ class StartedTest {
 
     @BeforeEach
     void setUp() {
-        started = new Started(new BoardFactory().createInitialBoard());
+        started = new Started(new BoardFactory().createInitialBoard(), 1);
     }
 
     @Test

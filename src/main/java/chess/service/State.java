@@ -17,4 +17,6 @@ public interface State {
     State end();
 
     Map<Position, Piece> getBoard();
+
+    State load(final long id);
 }

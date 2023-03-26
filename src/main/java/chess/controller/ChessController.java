@@ -14,6 +14,7 @@ public class ChessController {
             GameCommand.START, (chessService, ignored) -> start(chessService),
             GameCommand.MOVE, this::move,
             GameCommand.STATUS, (chessService, ignored) -> status(chessService),
+            GameCommand.LOAD, this::load,
             GameCommand.END, (chessService, ignored) -> end(chessService)
     );
 
@@ -49,6 +50,10 @@ public class ChessController {
 
     private void start(final ChessService chessService) {
         chessService.start();
+    }
+
+    private void load(final ChessService chessService, final CommandRequest request) {
+        chessService.load(request.getId());
     }
 
     private void move(final ChessService chessService, final CommandRequest request) {

@@ -1,15 +1,39 @@
 package chess.dao;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 public class DataBaseBoardDao implements BoardDao {
+
+    private static final Map<PieceType, Function<Color, Piece>> PIECE_MAPPER = new EnumMap<>(PieceType.class);
+
+    static {
+        PIECE_MAPPER.put(PieceType.PAWN, Pawn::new);
+        PIECE_MAPPER.put(PieceType.KNIGHT, Knight::new);
+        PIECE_MAPPER.put(PieceType.BISHOP, Bishop::new);
+        PIECE_MAPPER.put(PieceType.ROOK, Rook::new);
+        PIECE_MAPPER.put(PieceType.QUEEN, Queen::new);
+        PIECE_MAPPER.put(PieceType.KING, King::new);
+    }
 
     @Override
     public void saveBoard(final Board board, final long gameId) {
@@ -39,7 +63,26 @@ public class DataBaseBoardDao implements BoardDao {
 
     @Override
     public Board loadBoard(final Long gameId) {
-        return null;
+        final String findBoardInfoByChessGameId =
+                "SELECT position_file, position_rank, color, pieceType from board WHERE chess_game_id = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(findBoardInfoByChessGameId)) {
+            preparedStatement.setLong(1, gameId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            final Map<Position, Piece> board = new HashMap<>();
+            while (resultSet.next()) {
+                final int file = resultSet.getInt(1);
+                final int rank = resultSet.getInt(2);
+                final Color color = Color.valueOf(resultSet.getString(3));
+                final PieceType pieceType = PieceType.valueOf(resultSet.getString(4));
+                final Position position = new Position(file, rank);
+                board.put(position, PIECE_MAPPER.get(pieceType).apply(color));
+            }
+            return new Board(board);
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
