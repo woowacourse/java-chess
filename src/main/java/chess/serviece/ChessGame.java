@@ -1,6 +1,9 @@
-package chess.domain;
+package chess.serviece;
 
 import chess.controller.GameStatus;
+import chess.domain.Camp;
+import chess.domain.ChessBoard;
+import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.dto.ChessBoardStatus;
 import chess.dto.CommandRequest;

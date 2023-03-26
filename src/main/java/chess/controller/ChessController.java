@@ -2,9 +2,9 @@ package chess.controller;
 
 import chess.controller.converter.BoardConverter;
 import chess.controller.util.InputExceptionHandler;
-import chess.domain.ChessGame;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
+import chess.serviece.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 

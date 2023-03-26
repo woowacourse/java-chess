@@ -1,9 +1,13 @@
-package chess.domain;
+package chess.serviece;
 
 import chess.dao.boardpieces.BoardPiecesDao;
 import chess.dao.boardpieces.LocalBoardPiecesDao;
 import chess.dao.boardstatuses.BoardStatusesDao;
 import chess.dao.boardstatuses.LocalBoardStatusesDao;
+import chess.domain.Camp;
+import chess.domain.ChessBoard;
+import chess.domain.PieceInitializer;
+import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.dto.ChessBoardStatus;
 import java.util.List;
