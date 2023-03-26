@@ -55,6 +55,9 @@ public class ChessController {
     }
 
     private void initComment(final ChessGame chessGame) {
+        if (chessGame.getStatus() == GameStatus.PLAYING) {
+            return;
+        }
         Command command = readValidateInput(this::readCommand);
         chessGame.receiveCommand(command);
         chessGameDao.update(chessGame);
@@ -63,7 +66,9 @@ public class ChessController {
     private void endGame(ChessGame chessGame) {
         renderChessBoard();
         printStatus(chessGame);
-        System.out.println("게임 종료" + chessGame.getCurrentTeam() + "의 패배!");
+        if (chessGame.getStatus() == GameStatus.GAME_OVER) {
+            System.out.println("게임 종료" + chessGame.getCurrentTeam() + "의 패배!");
+        }
     }
 
     private void play(final ChessGame chessGame) {
@@ -153,7 +158,7 @@ public class ChessController {
 
     private boolean isEnd(final ChessGame chessGame) {
         GameStatus status = chessGame.getStatus();
-        return status == IDLE || status == GameStatus.END;
+        return status == IDLE || status == GameStatus.GAME_OVER;
     }
 
     private <T> T readValidateInput(final Supplier<T> function) {

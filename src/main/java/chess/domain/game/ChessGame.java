@@ -7,7 +7,7 @@ import chess.domain.piece.Team;
 
 import java.math.BigDecimal;
 
-import static chess.domain.game.GameStatus.END;
+import static chess.domain.game.GameStatus.GAME_OVER;
 
 public class ChessGame {
 
@@ -31,7 +31,7 @@ public class ChessGame {
         chessBoard.movePiece(from, to);
 
         if (chessBoard.isEnd()) {
-            gameStatus = END;
+            gameStatus = GAME_OVER;
         }
         turn.next();
     }
@@ -44,7 +44,7 @@ public class ChessGame {
     }
 
     private void validateStatus() {
-        if (this.gameStatus == END) {
+        if (this.gameStatus == GAME_OVER) {
             throw new IllegalStateException("이미 종료된 게임입니다.");
         }
     }
@@ -66,6 +66,6 @@ public class ChessGame {
     }
 
     public boolean isEnd() {
-        return this.gameStatus == END;
+        return this.gameStatus == GAME_OVER;
     }
 }
