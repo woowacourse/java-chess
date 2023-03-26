@@ -45,7 +45,7 @@ public enum Direction {
 			.orElseThrow(() -> new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다"));
 	}
 
-	public static Direction findDirection(final int dx, final int dy) {
+	private static Direction findDirection(final int dx, final int dy) {
 		if (dx == 0) {
 			return calculateVertical(dy);
 		}
