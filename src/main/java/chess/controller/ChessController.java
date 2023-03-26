@@ -49,7 +49,7 @@ public class ChessController {
 
     private void repeatMove() {
         String gameCommandInput = inputView.readChessGameCommand();
-        while (ChessGameCommand.generateMoveCommand(gameCommandInput) != ChessGameCommand.END) {
+        while (!ChessGameCommand.isEnd(gameCommandInput)) {
             MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
             chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
             outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));

@@ -28,7 +28,7 @@ public enum ChessGameCommand {
                 ));
     }
 
-    public static ChessGameCommand generateMoveCommand(final String input) {
+    private static ChessGameCommand generateMoveCommand(final String input) {
         List<ChessGameCommand> gameMoveCommands = List.of(MOVE, END);
         return gameMoveCommands.stream()
                 .filter(chessGameCommand -> input.contains(chessGameCommand.input))
@@ -37,6 +37,11 @@ public enum ChessGameCommand {
                         "%s 중 입력해야 합니다.",
                         gameMoveCommands.stream().map(chessGameCommand -> chessGameCommand.input).collect(Collectors.joining(", ")))
                 ));
+    }
+
+    public static boolean isEnd(String gameCommandInput) {
+        ChessGameCommand chessGameCommand = generateMoveCommand(gameCommandInput);
+        return END == chessGameCommand;
     }
 
     @Override
