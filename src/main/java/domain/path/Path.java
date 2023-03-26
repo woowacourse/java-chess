@@ -1,26 +1,41 @@
 package domain.path;
 
-import domain.board.Square;
+import domain.board.piece.Piece;
+import domain.path.direction.Direction;
+import domain.path.location.Location;
 import java.util.List;
-import java.util.stream.IntStream;
-import util.ListUtil;
 
 public final class Path {
 
-    private final List<Square> path;
+    private final PieceMove pieceMove;
+    private final List<Piece> piecesInPath;
 
-    public Path(List<Square> path) {
-        this.path = path;
+    public Path(final PieceMove pieceMove, final List<Piece> piecesInPath) {
+        this.pieceMove = pieceMove;
+        this.piecesInPath = piecesInPath;
     }
 
-    public boolean isBlocked() {
-        final int exceptEndSquare = path.size() - 1;
-        return IntStream.range(0, exceptEndSquare)
-            .mapToObj(path::get)
-            .anyMatch(Square::isNotEmpty);
+    public int getMoveCount() {
+        return piecesInPath.size() - 1;
     }
 
-    public Square getEnd() {
-        return ListUtil.getLastElement(path);
+    public Location getStartLocation() {
+        return pieceMove.getStart();
+    }
+
+    public Direction getDirection() {
+        return Direction.find(pieceMove);
+    }
+
+    public List<Piece> getPiecesInPath() {
+        return piecesInPath;
+    }
+
+    @Override
+    public String toString() {
+        return "Path{" +
+            "pieceMove=" + pieceMove +
+            ", piecesInPath=" + piecesInPath +
+            '}';
     }
 }
