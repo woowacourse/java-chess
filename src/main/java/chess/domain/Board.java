@@ -8,6 +8,7 @@ import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static chess.domain.piece.PieceType.*;
@@ -92,7 +93,24 @@ public class Board {
                 .stream()
                 .filter(piece -> piece.getTeam() == team)
                 .map(piece -> piece.getPieceType().getScore())
-                .reduce(0.0, Double::sum);
+                .reduce(0.0-0.5*calculateSameLinePawn(team), Double::sum);
+    }
+
+    public int calculateSameLinePawn(final Team team) {
+        return calculatePawnNumber(team).values()
+                .stream()
+                .filter(count -> count >= 2)
+                .reduce(0, Integer::sum);
+    }
+
+    private Map<File, Integer> calculatePawnNumber(final Team team) {
+        Map<File, Integer> numberOfPawn = new HashMap<>();
+        board.keySet()
+                .stream()
+                .filter(square -> PAWN == board.get(square).getPieceType())
+                .filter(square -> team == board.get(square).getTeam())
+                .forEach(square -> numberOfPawn.put(square.getFile(), numberOfPawn.getOrDefault(square.getFile(), 0) + 1));
+        return numberOfPawn;
     }
 
     public Map<Square, Piece> getBoard() {

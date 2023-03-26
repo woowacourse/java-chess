@@ -115,11 +115,33 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("특정 팀에 해당하는 점수만 계산한다.")
+    @DisplayName("팀에 해당하는 점수를 계산한다.")
     void calculateTeamScore() {
         Board board = new Board();
 
         assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(38.0);
+        assertThat(board.calculateTeamScore(Team.BLACK)).isEqualTo(38.0);
+    }
+
+    @Test
+    @DisplayName("같은 세로줄에 같은 팀의 폰은 0.5점으로 계산한다.")
+    void calculateWhiteTeamScore() {
+        Board board = new Board();
+
+        Square src = Square.of(A, TWO);
+        Square dst = Square.of(A, FOUR);
+        board.move(src, dst);
+
+        src = Square.of(B, SEVEN);
+        dst = Square.of(B, FIVE);
+        board.move(src, dst);
+
+        src = Square.of(A, FOUR);
+        dst = Square.of(B, FIVE);
+        board.move(src, dst);
+
+        assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(37.0);
+        assertThat(board.calculateTeamScore(Team.BLACK)).isEqualTo(37.0);
     }
 
     @Test
