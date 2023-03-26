@@ -45,10 +45,20 @@ public enum Command {
     }
 
     public static void validateNormalCommand(final String command) {
-        if (command.equals(START.keyword) || command.equals(END.keyword) || STATUS.keyword.equals(command)) {
+        if (isNormalKeyword(command)) {
             return;
         }
         throw new CommandException();
+    }
+
+    private static boolean isNormalKeyword(final String command) {
+        if (START.keyword.equals(command)) {
+            return true;
+        }
+        if (END.keyword.equals(command)) {
+            return true;
+        }
+        return STATUS.keyword.equals(command);
     }
 
     private static void validateMove(final List<String> command) {
