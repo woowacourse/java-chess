@@ -12,7 +12,7 @@ public class King extends Piece {
     );
 
     public King(Team team) {
-        super(team, Role.KING);
+        super(team, PieceType.KING);
     }
 
     @Override

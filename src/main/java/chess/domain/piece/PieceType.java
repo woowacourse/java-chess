@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum Role {
+public enum PieceType {
     KING,
     QUEEN,
     BISHOP,
@@ -8,5 +8,4 @@ public enum Role {
     ROOK,
     PAWN,
     EMPTY,
-    ;
 }

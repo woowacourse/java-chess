@@ -5,7 +5,7 @@ import chess.exception.PieceCanNotMoveException;
 
 public class Empty extends Piece {
     public Empty() {
-        super(Team.EMPTY, Role.EMPTY);
+        super(Team.EMPTY, PieceType.EMPTY);
     }
 
     @Override

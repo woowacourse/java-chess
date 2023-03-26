@@ -6,8 +6,8 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
-import chess.domain.piece.Role;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.exception.PathBlockedException;
@@ -103,7 +103,7 @@ public class Board {
     public void move(Square source, Square target) {
         validateMovable(source, target);
 
-        if (board.get(source).isSameRole(Role.PAWN)) {
+        if (board.get(source).isSameRole(PieceType.PAWN)) {
             board.put(source, new Pawn(board.get(source).getTeam(), IS_MOVED));
         }
         board.put(target, board.get(source));
@@ -114,7 +114,7 @@ public class Board {
         Direction direction = Direction.calculateDirection(source, target);
 
         validatePathBlocked(source, target, direction);
-        if (board.get(source).isSameRole(Role.PAWN)) {
+        if (board.get(source).isSameRole(PieceType.PAWN)) {
             validatePawnPathBlocked(target, direction);
         }
         board.get(source).validateMovableRange(source, target);
@@ -124,7 +124,7 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        if (isBlocked(source, target, direction) && !board.get(source).isSameRole(Role.KNIGHT)) {
+        if (isBlocked(source, target, direction) && !board.get(source).isSameRole(PieceType.KNIGHT)) {
             throw new PathBlockedException();
         }
         if (sourcePiece.isSameTeam(targetPiece.getTeam())) {
@@ -163,7 +163,7 @@ public class Board {
 
     public boolean haveOneKing() {
         int kingCount = (int) board.values().stream()
-                .filter(piece -> piece.isSameRole(Role.KING))
+                .filter(piece -> piece.isSameRole(PieceType.KING))
                 .count();
 
         return kingCount == 1;

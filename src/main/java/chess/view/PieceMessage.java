@@ -1,44 +1,44 @@
 package chess.view;
 
-import chess.domain.piece.Role;
+import chess.domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
 public enum PieceMessage {
-    KING(Role.KING, "K"),
-    QUEEN(Role.QUEEN, "Q"),
-    BISHOP(Role.BISHOP, "B"),
-    KNIGHT(Role.KNIGHT, "N"),
-    ROOK(Role.ROOK, "R"),
-    PAWN(Role.PAWN, "P"),
-    EMPTY(Role.EMPTY, ".");
+    KING(PieceType.KING, "K"),
+    QUEEN(PieceType.QUEEN, "Q"),
+    BISHOP(PieceType.BISHOP, "B"),
+    KNIGHT(PieceType.KNIGHT, "N"),
+    ROOK(PieceType.ROOK, "R"),
+    PAWN(PieceType.PAWN, "P"),
+    EMPTY(PieceType.EMPTY, ".");
 
-    private static final Map<Role, String> MESSAGES;
+    private static final Map<PieceType, String> MESSAGES;
 
-    private final Role role;
+    private final PieceType pieceType;
     private final String message;
 
-    PieceMessage(Role role, String message) {
-        this.role = role;
+    PieceMessage(PieceType pieceType, String message) {
+        this.pieceType = pieceType;
         this.message = message;
     }
 
     static {
-        MESSAGES = new EnumMap<>(Role.class);
-        for (Role role : Role.values()) {
-            MESSAGES.put(role, findMessage(role));
+        MESSAGES = new EnumMap<>(PieceType.class);
+        for (PieceType pieceType : PieceType.values()) {
+            MESSAGES.put(pieceType, findMessage(pieceType));
         }
     }
 
-    private static String findMessage(Role role) {
-        return Arrays.stream(PieceMessage.values()).filter(pieceMessage -> pieceMessage.role == role)
+    private static String findMessage(PieceType pieceType) {
+        return Arrays.stream(PieceMessage.values()).filter(pieceMessage -> pieceMessage.pieceType == pieceType)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new)
                 .message;
     }
 
-    public static String getMessage(Role role) {
-        return MESSAGES.get(role);
+    public static String getMessage(PieceType pieceType) {
+        return MESSAGES.get(pieceType);
     }
 }

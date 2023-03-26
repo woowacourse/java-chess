@@ -10,13 +10,13 @@ public class Pawn extends Piece {
     private final boolean isMoved;
 
     public Pawn(Team team) {
-        super(team, Role.PAWN);
+        super(team, PieceType.PAWN);
         possibleDirections = makePossibleMove();
         isMoved = false;
     }
 
     public Pawn(Team team, boolean isMoved) {
-        super(team, Role.PAWN);
+        super(team, PieceType.PAWN);
         possibleDirections = makePossibleMove();
         this.isMoved = isMoved;
     }

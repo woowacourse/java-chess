@@ -11,7 +11,7 @@ public class Bishop extends Piece {
     );
 
     public Bishop(Team team) {
-        super(team, Role.BISHOP);
+        super(team, PieceType.BISHOP);
     }
 
     @Override

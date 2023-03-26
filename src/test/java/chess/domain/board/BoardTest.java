@@ -3,7 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.piece.Role;
+import chess.domain.piece.PieceType;
 import chess.exception.PathBlockedException;
 import chess.exception.PawnMoveDiagonalException;
 import chess.exception.PawnMoveForwardException;
@@ -21,20 +21,20 @@ class BoardTest {
         return Stream.of(
                 Arguments.of(
                         0,
-                        Role.ROOK
+                        PieceType.ROOK
                 ),
                 Arguments.of(
                         1,
-                        Role.KNIGHT
+                        PieceType.KNIGHT
                 ),
                 Arguments.of(
                         30,
-                        Role.EMPTY
+                        PieceType.EMPTY
 
                 ),
                 Arguments.of(
                         63,
-                        Role.ROOK
+                        PieceType.ROOK
                 )
         );
     }
@@ -42,10 +42,10 @@ class BoardTest {
     @DisplayName("체스 게임을 할 수 있는 체스판을 초기화한다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("boardTestProvider")
-    void Should_Create_When_Board(int index, Role role) {
+    void Should_Create_When_Board(int index, PieceType pieceType) {
         Board board = new Board();
 
-        assertThat(board.getPieces().get(index).getRole()).isEqualTo(role);
+        assertThat(board.getPieces().get(index).getRole()).isEqualTo(pieceType);
     }
 
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 없을 경우 이동할 수 있다.")

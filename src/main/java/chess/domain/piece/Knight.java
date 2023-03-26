@@ -13,7 +13,7 @@ public class Knight extends Piece {
     );
 
     public Knight(Team team) {
-        super(team, Role.KNIGHT);
+        super(team, PieceType.KNIGHT);
     }
 
     @Override
