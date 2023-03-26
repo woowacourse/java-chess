@@ -17,6 +17,9 @@ public final class Start implements State {
         if (command.isStart()) {
             return new Move(chessGame, TeamColor.WHITE);
         }
+        if (command.isEnd()) {
+            return new End();
+        }
         throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
     }
 
