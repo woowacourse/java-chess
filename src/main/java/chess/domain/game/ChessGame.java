@@ -17,6 +17,9 @@ import static chess.controller.Command.TARGET_SOURCE_INDEX_IN_COMMANDLINE;
 
 public class ChessGame {
 
+    private static final Color teamBlack = Color.BLACK;
+    private static final Color teamWhite = Color.WHITE;
+
     private final ChessBoard chessBoard;
     private Color turn;
     private StateOfChessGame stateOfChessGame;
@@ -62,6 +65,11 @@ public class ChessGame {
         if(colorOfStartPiece.isOpponent(turn)) {
             throw new IllegalArgumentException("상대편의 기물을 움직일 수 없습니다");
         }
+    }
+
+    public  Map<Color, Double> status() {
+        return Map.of(teamBlack, chessBoard.findScoreOfPiecesByColor(teamBlack),
+                teamWhite, chessBoard.findScoreOfPiecesByColor(teamWhite));
     }
 
     public void finishGame() {
