@@ -1,11 +1,9 @@
 package dao;
 
-import domain.game.Board;
-import domain.game.ChessGame;
 import domain.game.GameState;
 import domain.game.PieceType;
 import domain.piece.*;
-import dto.ChessGameServiceResponseDto;
+import dto.dao.ChessGameDaoResponseDto;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -29,8 +27,25 @@ public class BoardDao {
         }
     }
 
-    public void save(Map<Position, Piece> board, Side currentTurn) {
-        final String saveQuery = "INSERT INTO chess_board(piece_type, side, last_turn, piece_rank, piece_file) VALUES(?,?,?,?,?)";
+    public Long createRoom() {
+        try (Connection connection = getConnection()) {
+            final String createQuery = "INSERT INTO game_room(status) VALUES(?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, GameState.RUN.name());
+
+            preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+        throw new IllegalArgumentException("게임 방 생성 실패");
+    }
+
+    public void save(Map<Position, Piece> board, Side currentTurn, Long roomId) {
+        final String saveQuery = "INSERT INTO chess_board(piece_type, side, last_turn, piece_rank, piece_file, game_room_id_fk) VALUES(?,?,?,?,?,?)";
         for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
             File file = pieces.getKey().getFile();
             Rank rank = pieces.getKey().getRank();
@@ -45,6 +60,7 @@ public class BoardDao {
                 preparedStatement.setString(3, currentTurn.name());
                 preparedStatement.setString(4, rank.getText());
                 preparedStatement.setString(5, file.getText());
+                preparedStatement.setLong(6, roomId);
 
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
@@ -53,7 +69,8 @@ public class BoardDao {
         }
     }
 
-    public ChessGameServiceResponseDto loadGame() {
+
+    public ChessGameDaoResponseDto loadGame() {
         Map<Position, Piece> board = new HashMap<>();
         final String loadQuery = "select piece_type, side, last_turn, piece_rank, piece_file from chess_board";
         Side lastTurn = null;
@@ -73,7 +90,8 @@ public class BoardDao {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-        return ChessGameServiceResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
+//        return ChessGameServiceResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
+        return new ChessGameDaoResponseDto(board, lastTurn, GameState.RUN);
     }
 
     public void delete() {

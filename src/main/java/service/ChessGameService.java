@@ -1,9 +1,10 @@
 package service;
 
 import dao.BoardDao;
-import dto.ChessGameSaveRequestDto;
-import dto.ChessGameServiceResponseDto;
-import dto.service.ChessGameControllerResponseDto;
+import domain.game.ChessGame;
+import domain.game.GameState;
+import dto.dao.ChessGameDaoResponseDto;
+import dto.service.ChessGameServiceResponseDto;
 
 public class ChessGameService {
     private final BoardDao boardDao;
@@ -12,15 +13,21 @@ public class ChessGameService {
         this.boardDao = boardDao;
     }
 
-    public void saveChessGame(ChessGameSaveRequestDto chessGameSaveRequestDto) {
-        boardDao.delete();
-        boardDao.save(chessGameSaveRequestDto.getBoard(), chessGameSaveRequestDto.getLastTurn());
+//    public void saveChessGame(ChessGame chessGame) {
+//        boardDao.delete();
+//        boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn());
+//    }
+
+    public void createGameRoom(ChessGame chessGame) {
+        Long roomId = boardDao.createRoom();
+        boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn(), roomId);
     }
 
-    public ChessGameControllerResponseDto loadChessGame() {
+    public ChessGameServiceResponseDto loadChessGame() {
         if (hasGame()) {
-            ChessGameServiceResponseDto chessGameResponseDto = boardDao.loadGame();
-            return ChessGameControllerResponseDto.from(chessGameResponseDto);
+            ChessGameDaoResponseDto chessGameResponseDto = boardDao.loadGame();
+            return new ChessGameServiceResponseDto(chessGameResponseDto.getBoard(), chessGameResponseDto.getLastTurn(), 0, GameState.RUN);
+//            return ChessGameServiceResponseDto.from(chessGameResponseDto);
         }
         throw new IllegalArgumentException("저장된 게임이 없습니다.");
     }
