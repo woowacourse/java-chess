@@ -41,4 +41,18 @@ class ChessGameDaoImplTest {
         assertThat(chessGameEntity)
                 .isEqualTo(Optional.empty());
     }
+
+    @Test
+    @DisplayName("사용자가 현재 진행 중인 체스 게임을 저장한다")
+    void save() {
+        // given
+        final ChessGameDao chessGameDao = new MockChessGameDao();
+
+        // when
+        final Long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+
+        // then
+        assertThat(savedChessGameId)
+                .isEqualTo(1L);
+    }
 }

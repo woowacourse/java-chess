@@ -21,4 +21,13 @@ public final class ChessGameDaoImpl implements ChessGameDao {
                 resultSet.getLong("user_id"))
         ), String.valueOf(userId));
     }
+
+    @Override
+    public Long save(final ChessGameEntity chessGameEntity) {
+        final String query = "INSERT INTO chess_game(current_camp, user_id) " +
+                "VALUES (?, ?)";
+        return jdbcTemplate.executeUpdate(query,
+                chessGameEntity.getCurrentCamp(),
+                String.valueOf(chessGameEntity.getUserId()));
+    }
 }

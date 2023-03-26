@@ -12,4 +12,9 @@ public class MockChessGameDao implements ChessGameDao {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Long save(final ChessGameEntity chessGameEntity) {
+        return 1L;
+    }
 }

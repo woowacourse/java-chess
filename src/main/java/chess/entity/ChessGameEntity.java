@@ -3,12 +3,17 @@ package chess.entity;
 import java.util.Objects;
 
 public final class ChessGameEntity {
-    private final Long id;
+    private Long id;
     private final String currentCamp;
     private final Long userId;
 
     public ChessGameEntity(final Long id, final String currentCamp, final Long userId) {
         this.id = id;
+        this.currentCamp = currentCamp;
+        this.userId = userId;
+    }
+
+    public ChessGameEntity(final String currentCamp, final Long userId) {
         this.currentCamp = currentCamp;
         this.userId = userId;
     }
@@ -32,5 +37,9 @@ public final class ChessGameEntity {
 
     public String getCurrentCamp() {
         return currentCamp;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }
