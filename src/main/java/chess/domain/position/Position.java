@@ -28,7 +28,7 @@ public final class Position {
 		return file == target.file && rank == target.rank;
 	}
 
-	public Position setNextPosition(final Direction unit) {
+	public Position nextPosition(final Direction unit) {
 		File newFile = file.nextFile(unit.dx());
 		Rank newRank = rank.nextRank(unit.dy());
 		return Position.of(newFile, newRank);

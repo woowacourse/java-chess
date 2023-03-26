@@ -88,7 +88,7 @@ public class Board {
 		List<Position> path = new ArrayList<>();
 		Position pathPosition = source;
 		while (!pathPosition.isSame(target)) {
-			pathPosition = pathPosition.setNextPosition(unit);
+			pathPosition = pathPosition.nextPosition(unit);
 			path.add(pathPosition);
 		}
 
