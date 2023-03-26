@@ -3,8 +3,7 @@ package chess.dao;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.room.ChessRoom;
-
-import java.sql.SQLException;
+import chess.view.TeamName;
 
 public class ChessGameDao {
 
@@ -31,5 +30,10 @@ public class ChessGameDao {
         };
 
         return JdbcTemplate.select(query, mapper, chessRoom.getGameId());
+    }
+
+    public static void updateTurn(final ChessGame chessGame) {
+        final var query = "UPDATE chess_game SET turn = ? WHERE id = ?";
+        JdbcTemplate.executeUpdate(query, TeamName.findByTeam(chessGame.getTurn()), chessGame.getId());
     }
 }

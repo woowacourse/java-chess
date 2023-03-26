@@ -2,6 +2,7 @@ package chess.controller.command.strategy;
 
 import chess.controller.ChessState;
 import chess.dao.BoardDao;
+import chess.dao.ChessGameDao;
 import chess.dao.MoveLogDao;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
@@ -57,6 +58,7 @@ public class MoveCommand implements StrategyCommand {
     private ChessState existOpponentKing(final ChessGame chessGame) {
         if (chessGame.isExistOpponentKing()) {
             chessGame.changeTurn();
+            ChessGameDao.updateTurn(chessGame);
             return PROGRESS;
         }
         OutputView.printResultWinning(chessGame.getTurn());

@@ -3,7 +3,6 @@ package chess.controller;
 import chess.dao.PlayerDao;
 import chess.domain.player.Player;
 import chess.view.InputView;
-import chess.view.OutputView;
 
 public class PlayerController {
 
