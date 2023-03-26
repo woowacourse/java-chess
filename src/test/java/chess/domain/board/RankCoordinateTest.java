@@ -40,4 +40,11 @@ class RankCoordinateTest {
     void RankCoordinate_객체간의_크기를_비교할_수_있다(RankCoordinate rankCoordinate1, RankCoordinate rankCoordinate2, int expect) {
         assertThat(rankCoordinate1.compare(rankCoordinate2)).isEqualTo(expect);
     }
+
+
+    @ParameterizedTest
+    @CsvSource(value = {"ONE:TWO:1", "ONE:THREE:2", "TWO:ONE:1", "ONE:ONE:0"}, delimiter = ':')
+    void RankCoordinate_객체간의_거리를_구할_수_있다(RankCoordinate rankCoordinate1, RankCoordinate rankCoordinate2, int expect) {
+        assertThat(rankCoordinate1.calculateDistance(rankCoordinate2)).isEqualTo(expect);
+    }
 }

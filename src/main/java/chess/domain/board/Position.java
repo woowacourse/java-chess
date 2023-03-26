@@ -26,8 +26,8 @@ public class Position {
 
         int columnStep = fileCoordinate.compare(targetPosition.fileCoordinate);
         int rowStep = rankCoordinate.compare(targetPosition.rankCoordinate);
-        int difference = getDifference(targetPosition);
-        return IntStream.range(START_PATH_RANGE, difference)
+        int distance = getDistance(targetPosition);
+        return IntStream.range(START_PATH_RANGE, distance)
                 .mapToObj(coordinate -> createPosition(columnStep, rowStep, coordinate))
                 .collect(Collectors.toList());
     }
@@ -37,24 +37,24 @@ public class Position {
                 RankCoordinate.findBy(this.getRow() + (rowStep * coordinate)));
     }
 
-    private int getDifference(Position targetPosition) {
-        int columnDifference = Math.abs(targetPosition.getColumn() - this.getColumn());
-        int rowDifference = Math.abs(targetPosition.getRow() - this.getRow());
-        return Math.max(columnDifference, rowDifference);
+    private int getDistance(Position targetPosition) {
+        int columnDistance = calculateColumnDifferenceWith(targetPosition);
+        int rowDistance = calculateRowDifferenceWith(targetPosition);
+        return Math.max(columnDistance, rowDistance);
     }
 
     private boolean isNotStraight(Position targetPosition) {
-        int columnDifference = Math.abs(targetPosition.getColumn() - this.getColumn());
-        int rowDifference = Math.abs(targetPosition.getRow() - this.getRow());
-        return columnDifference != ZERO_DIFFERENCE && rowDifference != ZERO_DIFFERENCE && columnDifference != rowDifference;
+        int columnDistance = calculateColumnDifferenceWith(targetPosition);
+        int rowDistance = calculateRowDifferenceWith(targetPosition);
+        return columnDistance != ZERO_DIFFERENCE && rowDistance != ZERO_DIFFERENCE && columnDistance != rowDistance;
     }
 
     public int calculateColumnDifferenceWith(Position targetPosition) {
-        return Math.abs(this.getColumn() - targetPosition.getColumn());
+        return fileCoordinate.calculateDistance(targetPosition.fileCoordinate);
     }
 
     public int calculateRowDifferenceWith(Position targetPosition) {
-        return Math.abs(this.getRow() - targetPosition.getRow());
+        return rankCoordinate.calculateDistance(targetPosition.rankCoordinate);
     }
 
     public FileCoordinate getFileCoordinate() {

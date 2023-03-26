@@ -40,4 +40,10 @@ class FileCoordinateTest {
     void FileCoordinate_객체간의_크기를_비교할_수_있다(FileCoordinate fileCoordinate1, FileCoordinate fileCoordinate2, int expect) {
         assertThat(fileCoordinate1.compare(fileCoordinate2)).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"A:B:1", "A:C:2", "B:A:1", "A:A:0"}, delimiter = ':')
+    void FileCoordinate_객체간의_거리를_구할_수_있다(FileCoordinate fileCoordinate1, FileCoordinate fileCoordinate2, int expect) {
+        assertThat(fileCoordinate1.calculateDistance(fileCoordinate2)).isEqualTo(expect);
+    }
 }

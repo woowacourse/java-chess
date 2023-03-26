@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -39,6 +40,10 @@ public enum FileCoordinate {
 
     public int compare(FileCoordinate other) {
         return Integer.compare(other.columnNumber, this.columnNumber);
+    }
+
+    public int calculateDistance(FileCoordinate other) {
+        return Math.abs(this.columnNumber - other.columnNumber);
     }
 
     public int getColumnNumber() {
