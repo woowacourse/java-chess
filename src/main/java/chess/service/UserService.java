@@ -1,7 +1,7 @@
 package chess.service;
 
+import chess.domain.user.User;
 import chess.dto.NameDto;
-import chess.dto.UserDto;
 import chess.repository.UserDao;
 
 public class UserService {
@@ -12,18 +12,18 @@ public class UserService {
     }
 
     public void save(final NameDto nameDto) {
-        final UserDto userDto = userDao.findByName(nameDto);
-        if (userDto != null) {
+        final User user = userDao.findByName(nameDto);
+        if (user != null) {
             throw new IllegalArgumentException("이미 등록된 이름입니다.");
         }
         userDao.save(nameDto);
     }
 
-    public UserDto findByName(final NameDto nameDto) {
-        final UserDto userDto = userDao.findByName(nameDto);
-        if (userDto == null) {
+    public User findByName(final NameDto nameDto) {
+        final User user = userDao.findByName(nameDto);
+        if (user == null) {
             throw new IllegalArgumentException("해당 이름을 가진 유저가 없습니다.");
         }
-        return userDto;
+        return user;
     }
 }

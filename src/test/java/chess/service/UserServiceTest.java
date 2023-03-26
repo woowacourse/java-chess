@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.user.User;
 import chess.dto.NameDto;
-import chess.dto.UserDto;
 import chess.repository.UserDao;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +24,16 @@ public class UserServiceTest {
     @BeforeEach
     void setUp() {
         mockUserDao = new UserDao() {
-            private final List<UserDto> users = new ArrayList<>();
+            private final List<User> users = new ArrayList<>();
             private int index = 0;
 
             @Override
             public void save(final NameDto nameDto) {
-                users.add(new UserDto(++index, nameDto.getValue()));
+                users.add(new User(++index, nameDto.getValue()));
             }
 
             @Override
-            public UserDto findByName(final NameDto nameDto) {
+            public User findByName(final NameDto nameDto) {
                 return users.stream()
                         .filter(user -> user.getName().equals(nameDto.getValue()))
                         .findFirst()
@@ -68,7 +68,7 @@ public class UserServiceTest {
         userService.save(nameDto);
 
         // then
-        final UserDto result = userService.findByName(nameDto);
+        final User result = userService.findByName(nameDto);
         assertThat(result.getName()).isEqualTo("herb");
     }
 
@@ -90,7 +90,7 @@ public class UserServiceTest {
         userService.save(nameDto);
 
         // when
-        final UserDto result = userService.findByName(nameDto);
+        final User result = userService.findByName(nameDto);
 
         // then
         assertAll(

@@ -6,7 +6,6 @@ import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.domain.user.User;
 import chess.dto.NameDto;
-import chess.dto.UserDto;
 import chess.service.UserService;
 import chess.view.input.UserInputView;
 import chess.view.output.UserOutputView;
@@ -72,8 +71,7 @@ public class UserController implements Controller {
             throw new IllegalArgumentException("이미 로그인 된 상태입니다.");
         }
         final NameDto nameDto = new NameDto(commands.get(UserCommand.NAME_INDEX));
-        final UserDto userDto = userService.findByName(nameDto);
-        final User user = new User(userDto.getId(), userDto.getName());
+        final User user = userService.findByName(nameDto);
         UserSession.add(user);
         outputView.printLoginSuccess(user.getName());
     }

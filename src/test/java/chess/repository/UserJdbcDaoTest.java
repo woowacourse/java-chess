@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.db.JdbcTemplate;
 import chess.db.TestConnectionPool;
+import chess.domain.user.User;
 import chess.dto.NameDto;
-import chess.dto.UserDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +52,7 @@ public class UserJdbcDaoTest {
         userDao.save(nameDto);
 
         // then
-        final UserDto result = userDao.findByName(nameDto);
+        final User result = userDao.findByName(nameDto);
         assertThat(result.getName()).isEqualTo("herb");
     }
 
@@ -63,7 +63,7 @@ public class UserJdbcDaoTest {
         userDao.save(nameDto);
 
         // when
-        final UserDto result = userDao.findByName(nameDto);
+        final User result = userDao.findByName(nameDto);
 
         // then
 
