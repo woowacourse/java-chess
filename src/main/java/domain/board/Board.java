@@ -58,19 +58,16 @@ public final class Board {
     private double collectPurePointFor(final Color color) {
         return pieceLocations.values().stream()
                 .filter(piece -> piece.getColor() == color)
-                .map(Piece::getPoint)
-                .reduce(Double::sum)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 보드가 초기화되지 않아 점수를 계산할 수 없습니다"));
+                .mapToDouble(Piece::getPoint)
+                .sum();
     }
 
     private double reducePointIfPawnsExistStraight(final Color color, final double purePoint) {
         Map<Integer, Long> pawnCountForEachFile = makePawnCountForEachFile(color);
-
         return purePoint - pawnCountForEachFile.values().stream()
-                .filter(col -> col >= 2)
-                .map(col -> col * 0.5)
-                .reduce(Double::sum)
-                .orElse(0.0);
+                .filter(pawnCount -> pawnCount >= 2)
+                .mapToDouble(col -> col * 0.5)
+                .sum();
     }
 
     private Map<Integer, Long> makePawnCountForEachFile(final Color color) {
