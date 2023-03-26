@@ -6,11 +6,15 @@ import chess.controller.dto.PieceResponse;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.user.User;
+import chess.service.UserService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.CommandType;
 import chess.view.dto.MoveRequest;
 import chess.view.dto.Request;
+import chess.view.dto.user.UserCommandType;
+import chess.view.dto.user.UserRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +25,47 @@ public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final UserService userService;
 
-    public ChessGameController(InputView inputView, OutputView outputView) {
+    public ChessGameController(InputView inputView, OutputView outputView, UserService userService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.userService = userService;
     }
 
     public void start() {
+        login();
+
         outputView.printStartMessage();
         ready();
+    }
+
+    private void login() {
+        repeat(this::selectUser);
+    }
+
+    private void selectUser() {
+        printAskUserNameMessages();
+        UserRequest userRequest = inputView.askUserCommand();
+        if (userRequest.getCommandType() == UserCommandType.USE) {
+            User user = userService.findByName(userRequest.getUserName());
+            askGame(user.getId());
+            return;
+        }
+        long userId = userService.create(userRequest.getUserName());
+        askGame(userId);
+    }
+    
+    private void askGame(long userId) {
+
+    }
+
+    private void printAskUserNameMessages() {
+        List<String> userNames = userService.findUserNames();
+        if (userNames.size() > 1) {
+            outputView.printSelectUserMessage(userNames);
+        }
+        outputView.printCreateUserMessage();
     }
 
     private void ready() {

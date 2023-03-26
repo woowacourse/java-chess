@@ -4,6 +4,12 @@
 
 # 기능 목록
 
+- 사용자
+    - 이름으로 구분한다
+        - 사용자의 이름은 중복될 수 없다.
+    - 기존에 있는 사용자를 선택하거나 새로운 사용자를 입력받는다
+    - 사용자의 이름은 중복될 수 없다
+    - 사용자의 이름은 5자 이하이다
 - 게임
     - 턴을 가진다
         - 턴에 맞는 기물인지 확인한다
@@ -90,6 +96,26 @@
 ```mermaid
 classDiagram
     Piece <-- Pawn
+```
+
+### 테이블 DDL
+
+```sql
+CREATE TABLE User
+(
+    id   INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE Room
+(
+    id      INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT         NOT NULL,
+    name    VARCHAR(10) NOT NULL,
+    winner  VARCHAR(10),
+    FOREIGN KEY (user_id) REFERENCES user (id)
+);
+
 ```
 
 ## 우아한테크코스 코드리뷰

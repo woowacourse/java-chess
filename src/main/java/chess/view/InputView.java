@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.view.dto.CommandType;
 import chess.view.dto.Request;
+import chess.view.dto.user.UserRequest;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,12 +14,19 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public Request askCommand() {
-        return askCommand("");
+    public UserRequest askUserCommand() {
+        String[] inputs = inputCommand();
+        validateUserCommandSize(inputs);
+        return UserRequest.from(inputs);
     }
 
-    public Request askCommand(String turn) {
-        printTurn(turn);
+    private void validateUserCommandSize(String[] inputs) {
+        if (inputs.length != 2) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+        }
+    }
+
+    public Request askCommand() {
         String[] inputs = inputCommand();
         validateHasLength(inputs);
         CommandType commandType = CommandType.from(inputs[0]);
@@ -28,6 +36,11 @@ public class InputView {
         }
         validateParameters(inputs);
         return Request.createMoveCommand(inputs[1], inputs[2]);
+    }
+
+    public Request askCommand(String turn) {
+        printTurn(turn);
+        return askCommand();
     }
 
     private void printTurn(String turn) {

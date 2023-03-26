@@ -9,6 +9,18 @@ import java.util.Objects;
 
 public class OutputView {
 
+    public void printSelectUserMessage(List<String> userNames) {
+        System.out.println("> 유저 리스트");
+        for (String userName : userNames) {
+            System.out.println("\t" + userName);
+        }
+        System.out.println("> 기존 유저 선택: use 유저이름 - 예. use 홍길동");
+    }
+
+    public void printCreateUserMessage() {
+        System.out.println("> 신규 유저 생성: create 유저이름 - 예. create 홍길동");
+    }
+
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
