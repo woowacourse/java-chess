@@ -142,36 +142,35 @@ public class Board {
 		return score;
 	}
 
-	public double whiteStatus() {
-		double score = 0.0;
-		for (File file : files()) {
-			score += whiteScores(file);
-		}
-		return score;
-	}
-
 	private double blackScores(File file) {
 		double newScore = 0;
 		int count = 0;
 		for (Rank rank : ranks()) {
 			Piece piece = board.get(Position.of(file, rank));
-			newScore += blackPieceScore(piece.name());
+			newScore += updateScore(piece, BLACK);
 			count += pawnCount(piece.name(), BLACK);
 		}
 		return newScore + addPawnScore(count);
 	}
 
-	private double blackPieceScore(String pieceName) {
-		if (pieceName.equals(ROOK_NAME)) {
+	private double updateScore(Piece piece, Color color) {
+		if (piece.color() == color) {
+			return pieceScore(piece.name());
+		}
+		return 0;
+	}
+
+	private double pieceScore(String pieceName) {
+		if (pieceName.equalsIgnoreCase(ROOK_NAME)) {
 			return ROOK.score();
 		}
-		if (pieceName.equals(KNIGHT_NAME)) {
+		if (pieceName.equalsIgnoreCase(KNIGHT_NAME)) {
 			return KNIGHT.score();
 		}
-		if (pieceName.equals(BISHOP_NAME)) {
+		if (pieceName.equalsIgnoreCase(BISHOP_NAME)) {
 			return BISHOP.score();
 		}
-		if (pieceName.equals(QUEEN_NAME)) {
+		if (pieceName.equalsIgnoreCase(QUEEN_NAME)) {
 			return QUEEN.score();
 		}
 		return 0;
@@ -197,30 +196,22 @@ public class Board {
 		return PAWNS.score() * count;
 	}
 
+	public double whiteStatus() {
+		double score = 0.0;
+		for (File file : files()) {
+			score += whiteScores(file);
+		}
+		return score;
+	}
+
 	private double whiteScores(File file) {
 		double newScore = 0;
 		int count = 0;
 		for (Rank rank : ranks()) {
 			Piece piece = board.get(Position.of(file, rank));
-			newScore += whitePieceScore(piece.name());
+			newScore += updateScore(piece, WHITE);
 			count += pawnCount(piece.name(), WHITE);
 		}
 		return newScore + addPawnScore(count);
-	}
-
-	private double whitePieceScore(String pieceName) {
-		if (pieceName.equals(ROOK_NAME.toLowerCase())) {
-			return ROOK.score();
-		}
-		if (pieceName.equals(KNIGHT_NAME.toLowerCase())) {
-			return KNIGHT.score();
-		}
-		if (pieceName.equals(BISHOP_NAME.toLowerCase())) {
-			return BISHOP.score();
-		}
-		if (pieceName.equals(QUEEN_NAME.toLowerCase())) {
-			return QUEEN.score();
-		}
-		return 0;
 	}
 }
