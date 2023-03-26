@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.dto.ChessBoardStatus;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -15,6 +16,10 @@ public class ChessGame {
 
     public void validateCommand(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
+    }
+
+    public List<Integer> availableBoards() {
+        return chessBoardService.findAllBoardIds();
     }
 
     public void start(int boardId) {

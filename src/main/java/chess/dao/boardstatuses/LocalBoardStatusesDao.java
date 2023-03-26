@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class LocalBoardStatusesDao implements BoardStatusesDao {
@@ -24,6 +26,24 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    @Override
+    public List<Integer> findAllNotOverIds() {
+        final String sql = "SELECT board_id FROM board_statuses WHERE isOver = 'N'";
+
+        List<Integer> ids = new ArrayList<>();
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ids.add(resultSet.getInt(1));
+            }
+            return ids;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -94,4 +114,5 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
             throw new RuntimeException(e);
         }
     }
+
 }

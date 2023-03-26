@@ -6,6 +6,7 @@ import chess.dao.boardstatuses.BoardStatusesDao;
 import chess.dao.boardstatuses.LocalBoardStatusesDao;
 import chess.domain.piece.Piece;
 import chess.dto.ChessBoardStatus;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoardService {
@@ -22,7 +23,11 @@ public class ChessBoardService {
     }
 
     public void updateChessBoard(ChessBoard chessBoard) {
-        boardPiecesDao.insertOrUpdate(chessBoard.getId(), chessBoard.piecesByPosition());
         boardStatusesDao.insertOrUpdate(chessBoard.getId(), chessBoard.status());
+        boardPiecesDao.insertOrUpdate(chessBoard.getId(), chessBoard.piecesByPosition());
+    }
+
+    public List<Integer> findAllBoardIds() {
+        return boardStatusesDao.findAllNotOverIds();
     }
 }
