@@ -32,4 +32,8 @@ public abstract class Piece {
     public double getScore() {
         return role.getScore();
     }
+
+    public Role getRole() {
+        return role;
+    }
 }

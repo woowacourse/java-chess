@@ -12,7 +12,7 @@ public class Turn {
         this.turn = 0;
     }
 
-    private Turn(int turn) {
+    public Turn(int turn) {
         this.turn = turn;
     }
 
@@ -34,6 +34,10 @@ public class Turn {
         return Team.WHITE;
     }
 
+    public int getTurn() {
+        return turn;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -49,5 +53,9 @@ public class Turn {
     @Override
     public int hashCode() {
         return Objects.hash(turn);
+    }
+
+    public boolean isFirst() {
+        return turn == 0;
     }
 }

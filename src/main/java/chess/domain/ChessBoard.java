@@ -18,6 +18,11 @@ public class ChessBoard {
         this.turn = new Turn();
     }
 
+    public ChessBoard(List<Square> squares, Turn turn) {
+        this.squares = squares;
+        this.turn = turn;
+    }
+
     public void move(final Position source, final Position destination) {
         validateIsAllyPiece(source);
         validateNotExistAllyAt(destination);
@@ -141,5 +146,9 @@ public class ChessBoard {
 
     public Team previousTeam() {
         return turn.findCurrentEnemyTeam();
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

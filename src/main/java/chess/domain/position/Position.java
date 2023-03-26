@@ -45,6 +45,14 @@ public class Position {
         return Position.of(file.plus(rankDirection), rank.plus(fileDirection));
     }
 
+    public boolean isSameRank(final Rank rank) {
+        return this.rank == rank;
+    }
+
+    public boolean isSameFile(final File file) {
+        return this.file == file;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -62,11 +70,11 @@ public class Position {
         return Objects.hash(file, rank);
     }
 
-    public boolean isSameRank(final Rank rank) {
-        return this.rank == rank;
+    public File getFile() {
+        return file;
     }
 
-    public boolean isSameFile(final File file) {
-        return this.file == file;
+    public Rank getRank() {
+        return rank;
     }
 }

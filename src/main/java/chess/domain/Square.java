@@ -65,4 +65,8 @@ public class Square {
     public boolean isSameFile(final File file) {
         return position.isSameFile(file);
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

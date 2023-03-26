@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandFactory;
-import chess.controller.command.CommandHistory;
+import chess.dao.ChessDao;
 import chess.domain.ChessBoardFactory;
 import chess.domain.ChessGame;
 import chess.view.InputView;
@@ -19,24 +19,31 @@ public class ChessController {
     }
 
     public void run() {
-        CommandHistory commandHistory = new CommandHistory();
+        ChessGame chessGame = loadChessGame();
+
         outputView.printGameGuide();
-        ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
         while (chessGame.isNotEnd()) {
-            executeCommand(chessGame, commandHistory);
+            executeCommand(chessGame);
         }
         outputView.printWinningTeam(chessGame.findWinningTeam());
     }
 
-    private void executeCommand(final ChessGame chessGame, final CommandHistory commandHistory) {
+    private ChessGame loadChessGame() {
+        ChessDao chessDao = new ChessDao();
+        ChessGame chessGame = chessDao.load();
+        if (chessGame == null) {
+            chessGame = new ChessGame(ChessBoardFactory.create());
+        }
+        return chessGame;
+    }
+
+    private void executeCommand(final ChessGame chessGame) {
         try {
             Command command = CommandFactory.from(inputView.readCommandAndParameters());
             command.execute(chessGame, outputView);
-            commandHistory.addHistory(command);
         } catch (IllegalArgumentException | UnsupportedOperationException | IllegalStateException e) {
             outputView.printError(e.getMessage());
-            executeCommand(chessGame, commandHistory);
+            executeCommand(chessGame);
         }
     }
-
 }
