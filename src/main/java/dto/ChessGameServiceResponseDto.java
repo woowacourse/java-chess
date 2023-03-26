@@ -7,17 +7,17 @@ import domain.piece.Side;
 
 import java.util.Map;
 
-public class ChessGameResponseDto {
+public class ChessGameServiceResponseDto {
     private final Map<Position, Piece> board;
     private final Side lastTurn;
 
-    private ChessGameResponseDto(Map<Position, Piece> board, Side lastTurn) {
+    private ChessGameServiceResponseDto(Map<Position, Piece> board, Side lastTurn) {
         this.board = board;
         this.lastTurn = lastTurn;
     }
 
-    public static ChessGameResponseDto from(ChessGame chessGame) {
-        return new ChessGameResponseDto(chessGame.getBoard(), chessGame.getCurrentTurn());
+    public static ChessGameServiceResponseDto from(ChessGame chessGame) {
+        return new ChessGameServiceResponseDto(chessGame.getBoard(), chessGame.getCurrentTurn());
     }
 
     public Map<Position, Piece> getBoard() {

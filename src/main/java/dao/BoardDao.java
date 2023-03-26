@@ -5,7 +5,7 @@ import domain.game.ChessGame;
 import domain.game.GameState;
 import domain.game.PieceType;
 import domain.piece.*;
-import dto.ChessGameResponseDto;
+import dto.ChessGameServiceResponseDto;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class BoardDao {
         }
     }
 
-    public ChessGameResponseDto loadGame() {
+    public ChessGameServiceResponseDto loadGame() {
         Map<Position, Piece> board = new HashMap<>();
         final String loadQuery = "select piece_type, side, last_turn, piece_rank, piece_file from chess_board";
         Side lastTurn = null;
@@ -73,7 +73,7 @@ public class BoardDao {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-        return ChessGameResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
+        return ChessGameServiceResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
     }
 
     public void delete() {

@@ -1,8 +1,8 @@
 package service;
 
 import dao.BoardDao;
-import dto.ChessGameResponseDto;
 import dto.ChessGameSaveRequestDto;
+import dto.ChessGameServiceResponseDto;
 import dto.service.ChessGameControllerResponseDto;
 
 public class ChessGameService {
@@ -19,7 +19,7 @@ public class ChessGameService {
 
     public ChessGameControllerResponseDto loadChessGame() {
         if (hasGame()) {
-            ChessGameResponseDto chessGameResponseDto = boardDao.loadGame();
+            ChessGameServiceResponseDto chessGameResponseDto = boardDao.loadGame();
             return ChessGameControllerResponseDto.from(chessGameResponseDto);
         }
         throw new IllegalArgumentException("저장된 게임이 없습니다.");
