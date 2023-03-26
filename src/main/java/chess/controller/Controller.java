@@ -30,6 +30,7 @@ public class Controller {
         actionsByCommand.put(Command.START, this::start);
         actionsByCommand.put(Command.MOVE, this::move);
         actionsByCommand.put(Command.END, (ignored,ignored2) -> {});
+        actionsByCommand.put(Command.STATUS, this::status);
     }
 
     public void playChessGame(BoardStrategy boardStrategy) {
@@ -60,6 +61,10 @@ public class Controller {
     private void move(List<String> commandLine, BoardStrategy boardStrategy) {
         chessGame.move(commandLine);
         outputView.printBoard(chessGame.getChessBoard());
+    }
+
+    private void status(List<String> commandLine, BoardStrategy boardStrategy) {
+        outputView.printStatus(chessGame.status());
     }
 
 }
