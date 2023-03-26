@@ -1,7 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 public enum Direction {
 
@@ -9,9 +9,9 @@ public enum Direction {
     DIAGONAL((rowGap, columnGap) -> Math.abs(rowGap) == Math.abs(columnGap)),
     OTHER((rowGap, columnGap) -> false);
 
-    private final BiFunction<Integer, Integer, Boolean> isProperDirection;
+    private final BiPredicate<Integer, Integer> isProperDirection;
 
-    Direction(BiFunction<Integer, Integer, Boolean> isProperDirection) {
+    Direction(BiPredicate<Integer, Integer> isProperDirection) {
         this.isProperDirection = isProperDirection;
     }
 
@@ -20,7 +20,7 @@ public enum Direction {
         int columnGap = start.calculateColumnGap(end);
 
         return Arrays.stream(values())
-                .filter(direction -> direction.isProperDirection.apply(rowGap, columnGap))
+                .filter(direction -> direction.isProperDirection.test(rowGap, columnGap))
                 .findFirst()
                 .orElse(Direction.OTHER);
     }
