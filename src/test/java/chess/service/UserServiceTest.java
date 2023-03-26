@@ -5,33 +5,34 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class UserServiceTest {
 
     @Test
-    @DisplayName("사용자의 이름이 이미 저장되어 있다면, 예외를 발생시킨다.")
-    void validateDuplicate() {
-        // given
-        final UserService userService = new UserService(new MockUserDao());
-
-        // when, then
-        assertThatThrownBy(() -> userService.validateDuplicate("journey"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이미 존재하는 사용자입니다. 다른 이름을 입력해 주세요.");
-    }
-
-    @Test
-    @DisplayName("사용자의 이름에 따라 사용자의 정보를 삽입한다.")
-    void insert() {
+    @DisplayName("사용자의 이름이 이미 저장되어 있다면, 존재하는 사용자의 아이디를 반환한다.")
+    void getUserId_exist() {
         // given
         final UserService userService = new UserService(new MockUserDao());
 
         // when
-        Long userId = userService.insert("journey");
+        Long userId = userService.getUserId("journey");
 
         // then
         assertThat(userId)
                 .isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("사용자의 이름이 저장되지 않았다면, 새롭게 저장 후 저장된 아이디를 반환한다.")
+    void getUserId_new() {
+        // given
+        final UserService userService = new UserService(new MockUserDao());
+
+        // when
+        Long userId = userService.getUserId("hello");
+
+        // then
+        assertThat(userId)
+                .isEqualTo(2L);
     }
 }

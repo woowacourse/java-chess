@@ -16,6 +16,9 @@ public class MockUserDao implements UserDao {
 
     @Override
     public Long insert(final String name) {
-        return 1L;
+        if (name.equals("journey")) {
+            return 1L;
+        }
+        return 2L;
     }
 }

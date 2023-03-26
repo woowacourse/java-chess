@@ -13,16 +13,17 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public void validateDuplicate(final String name) {
+    public Long getUserId(final String name) {
         final User user = User.create(name);
         final String userName = user.getName();
         final Optional<UserEntity> userEntity = userDao.findByName(userName);
         if (userEntity.isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 사용자입니다. 다른 이름을 입력해 주세요.");
+            return userEntity.get().getId();
         }
+        return insert(name);
     }
 
-    public Long insert(final String name) {
+    private Long insert(final String name) {
         return userDao.insert(name);
     }
 }

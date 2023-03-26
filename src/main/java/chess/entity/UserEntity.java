@@ -23,4 +23,8 @@ public class UserEntity {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
+    public Long getId() {
+        return id;
+    }
 }
