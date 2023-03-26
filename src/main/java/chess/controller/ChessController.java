@@ -4,6 +4,7 @@ import chess.dao.BoardDao;
 import chess.dao.GameRoomDao;
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.domain.RoomName;
 import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
@@ -33,7 +34,9 @@ public class ChessController {
     }
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        RoomName roomName = new RoomName(inputView.requestRoomName());
+
+        ChessGame chessGame = new ChessGame(roomName);
 
         outputView.printStartMessage();
         initialize(chessGame);
@@ -44,9 +47,8 @@ public class ChessController {
     }
 
     private void initialize(ChessGame chessGame) {
-        String roomName = "임시";
-        List<BoardDto> recordedBoard = boardDao.findAllByRoomName(roomName);
-        gameRoomDao.findByRoomName(roomName)
+        List<BoardDto> recordedBoard = boardDao.findAllByRoomName(chessGame.getRoomName());
+        gameRoomDao.findByRoomName(chessGame.getRoomName())
                 .ifPresent(gameRoom -> {
                     if (!gameRoom.isWhiteTurn()) {
                         chessGame.passTurn();
@@ -101,8 +103,10 @@ public class ChessController {
         outputView.printChessBoard(chessGame.getChessboard());
         outputView.printScoreMessage(chessGame);
 
-        if (gameRoomDao.findByRoomName("임시").isEmpty()) {
-            gameRoomDao.save(new GameRoomDto("임시", chessGame.isWhiteTurn()));
+        if (gameRoomDao.findByRoomName(chessGame.getRoomName()).isEmpty()) {
+            gameRoomDao.save(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
+            boardDao.save(chessGame);
+            return;
         }
 
         if (chessGame.isBothKingAlive()) {
@@ -110,8 +114,7 @@ public class ChessController {
             return;
         }
 
-        boardDao.deleteAllByRoomName("임시");
-//        gameRoomDao.deleteByName("임시");
+        boardDao.deleteAllByRoomName(chessGame.getRoomName());
     }
 
     private Optional<List<String>> handleCommand() {

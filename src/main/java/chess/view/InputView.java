@@ -12,7 +12,8 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public String requestRoomName(){
+    public String requestRoomName() {
+        System.out.println("입장하실 방을 입력해주세요.");
         return scanner.nextLine();
     }
 

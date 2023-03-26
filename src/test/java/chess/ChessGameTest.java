@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.ChessGame;
+import chess.domain.RoomName;
 import chess.domain.board.Chessboard;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -26,7 +27,7 @@ class ChessGameTest {
 
     @BeforeEach
     void setup() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(new RoomName("test"));
         chessboard = chessGame.getChessboard();
     }
 

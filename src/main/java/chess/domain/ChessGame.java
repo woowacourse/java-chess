@@ -12,10 +12,12 @@ import java.util.Map;
 
 public class ChessGame {
     private final Chessboard chessboard;
+    private final RoomName roomName;
     private Turn turn;
 
-    public ChessGame() {
+    public ChessGame(RoomName roomName) {
         turn = new Turn();
+        this.roomName = roomName;
         chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
     }
@@ -161,5 +163,9 @@ public class ChessGame {
 
     public Chessboard getChessboard() {
         return chessboard;
+    }
+
+    public String getRoomName() {
+        return roomName.getRoomName();
     }
 }

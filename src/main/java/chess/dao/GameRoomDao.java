@@ -60,7 +60,7 @@ public class GameRoomDao {
     }
 
     public void update(GameRoomDto gameRoom) {
-        String query = "UPDATE gaem_room SET is_white_turn = ? WHERE room_name = ?";
+        String query = "UPDATE room SET is_white_turn = ? WHERE room_name = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(query)) {

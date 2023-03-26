@@ -40,7 +40,7 @@ public class BoardDao {
                 prepareStatement.setString(1, null); // auto_increment
                 prepareStatement.setString(2, source);
                 prepareStatement.setString(3, piece);
-                prepareStatement.setString(4, "임시");
+                prepareStatement.setString(4, chessGame.getRoomName());
                 prepareStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class BoardDao {
 
                 prepareStatement.setString(1, piece);
                 prepareStatement.setString(2, source);
-                prepareStatement.setString(3, "임시");
+                prepareStatement.setString(3, chessGame.getRoomName());
                 prepareStatement.executeUpdate();
             }
         } catch (SQLException e) {
