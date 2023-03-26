@@ -54,4 +54,18 @@ class BoardDaoTest {
     void loadBoardTest() {
         assertDoesNotThrow(() -> boardDao.findAllByRoomName(ROOM_NAME));
     }
+
+    @DisplayName("DB에서 체스판을 업데이트할 수 있다.")
+    @Test
+    void updateBoardTest() {
+        ChessGame chessGame = new ChessGame();
+        boardDao.save(chessGame);
+
+        Square source = Square.getInstanceOf(File.B, Rank.TWO);
+        Square target = Square.getInstanceOf(File.B, Rank.THREE);
+        chessGame.move(source, target);
+
+        assertDoesNotThrow(() -> boardDao.update(chessGame));
+
+    }
 }
