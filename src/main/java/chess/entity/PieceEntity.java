@@ -30,4 +30,20 @@ public final class PieceEntity {
     public int hashCode() {
         return Objects.hash(id, rank, file, pieceType, campType);
     }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public Integer getFile() {
+        return file;
+    }
+
+    public String getPieceType() {
+        return pieceType;
+    }
+
+    public String getCampType() {
+        return campType;
+    }
 }
