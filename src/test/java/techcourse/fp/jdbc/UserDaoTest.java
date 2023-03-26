@@ -1,44 +1,58 @@
 package techcourse.fp.jdbc;
 
+import java.sql.Connection;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserDaoTest {
-    private final UserDao userDao = new UserDao();
-    
+    private UserDao userDao;
+
+    //테스트 메소드 실행 순서 정의 어떻게 할까?
+    @BeforeEach
+    void setUp(){
+        userDao = new UserDao();
+    }
+
+
     @Test
     void connection() {
-        try (final var connection = userDao.getConnection()) {
-            assertThat(connection).isNotNull();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Connection connection = userDao.getConnection();
+
+        assertThat(connection).isNotNull();
     }
-    
+
     @Test
-    void addUser() {
-        int addedUser = userDao.addUser(new User("testUserId2", "testUser2"));
-        assertThat(addedUser).isEqualTo(1);
+    void save() {
+        User user = new User("hamad","hamadteco");
+        userDao.insert(user);
     }
-    
+
     @Test
     void findByUserId() {
-        final var user = userDao.findByUserId("testUserId");
-        assertThat(user).isEqualTo(new User("testUserId", "testUser"));
+        User hamad = userDao.findByUserId("hamad");
+        assertThat(hamad).isEqualTo(new User("hamad","hamadteco"));
     }
-    
+
     @Test
-    void deleteUser() {
-        int deletedUser = userDao.deleteUser(new User("testUserId2", "testUser2"));
-        assertThat(deletedUser).isEqualTo(1);
+    void notFound() {
+        User user = userDao.findByUserId("some");
+        assertThat(user).isNull();
     }
-    
+
     @Test
-    void updateUser() {
-        int updateUser = userDao.updateUser(new User("testUserId2", "testUser2"), new User("updateUser1", "updateUser1"));
-        assertThat(updateUser).isEqualTo(1);
+    void update() {
+        User user = new User("hamad","hamadWooTeco");
+        userDao.updateUser(user);
+        assertThat(userDao.findByUserId("hamad")).isEqualTo(user);
+
+    }
+
+    @Test
+    void delete() {
+        User user = new User("hamad","hamadWooTeco");
+        userDao.deleteUser(user);
+        assertThat(userDao.findByUserId("hamad")).isNull();
     }
 }
