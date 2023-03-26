@@ -6,20 +6,39 @@
 
 - [ ] 애플리케이션 재시작 시 이전에 하던 체스 게임을 재시작할 수 있어야 한다
 - [ ] table
-    - [ ] piece_type, team_color, rank, file, turn
-- [ ] CRUD
-    - [ ] Create
-        - [ ] DB에서 불러 올 체스 게임이 없으면 만든다
-        - Query : 
-    - [ ] Read
-        - [ ] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
-        - Query : 
-    - [ ] Update
-        - [ ] 기물을 움직일 때마다 DB 업데이트 해준다
-        - Query : 
-    - [ ] Delete
-      - [ ] King 이 죽으면 DB 초기화 해준다
-      - Query :
+    - [ ] Piece 정보 : piece_type, team_color, rank, file
+    - [ ] Chessgame 정보 : id, turn
+      - [ ] CRUD
+          - [ ] Create
+              - [ ] DB에서 불러 올 체스 게임이 없으면 만든다
+          - [ ] Read
+              - [ ] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
+          - [ ] Update
+              - [ ] 기물을 움직일 때마다 DB 업데이트 해준다
+              - [ ] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
+          - [ ] Delete
+            - [ ] King 이 죽으면 DB 초기화 해준다
+
+- Query
+```sql
+CREATE TABLE chess_game (
+    piece_type VARCHAR(255),
+    piece_rank VARCHAR(255) NOT NULL,
+    piece_file VARCHAR(255) NOT NULL,
+    team VARCHAR(255),
+    turn VARCHAR(255) NOT NULL
+)
+             
+SELECT piece_type, piece_rank, piece_file, team, turn from chess_game;
+
+INSERT INTO chess_game(piece_type, piece_rank, piece_file, team, turn) VALUES (?, ?, ?, ?, ?); 
+
+DELETE FROM chess_game;
+
+TRUNCATE TABLE chess_game;
+
+```
+
 
 ## ✔ 3단계 기능 요구사항
 
