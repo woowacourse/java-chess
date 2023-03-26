@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class KnightTest {
-
     private static final Knight KNIGHT_BLACK = new Knight(Team.BLACK);
 
     @Test
@@ -25,7 +24,6 @@ class KnightTest {
         Assertions.assertThat(KNIGHT_BLACK.findRoute(C3, B1)).containsExactly(B1);
         Assertions.assertThat(KNIGHT_BLACK.findRoute(C3, D5)).containsExactly(D5);
         Assertions.assertThat(KNIGHT_BLACK.findRoute(C3, E2)).containsExactly(E2);
-
     }
 
     @Test

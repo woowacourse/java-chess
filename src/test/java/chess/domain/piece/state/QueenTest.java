@@ -15,15 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class QueenTest {
-
-    public static final Queen QUEEN_BLACK = new Queen(Team.BLACK);
+    private static final Queen QUEEN_BLACK = new Queen(Team.BLACK);
 
     @Test
     void 퀸은_같은_파일의_좌표로_움직일_수_있다() {
         //when & then
         Assertions.assertThat(QUEEN_BLACK.findRoute(A1, A3)).containsExactly(A2, A3);
     }
-
 
     @Test
     void 퀸은_같은_랭크의_좌표로_움직일_수_있다() {

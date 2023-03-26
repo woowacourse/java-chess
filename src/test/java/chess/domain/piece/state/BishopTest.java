@@ -15,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BishopTest {
-
-    public static final Bishop BISHOP_BLACK = new Bishop(Team.BLACK);
+    private static final Bishop BISHOP_BLACK = new Bishop(Team.BLACK);
 
     @Test
     void 비숍이_갈_수_없는_좌표이면_예외가_발생한다() {

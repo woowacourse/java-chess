@@ -15,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class KingTest {
-
-    public static final King KING_BLACK = new King(Team.BLACK);
+    private static final King KING_BLACK = new King(Team.BLACK);
 
     @Test
     void 킹은_한칸_위_아래_좌_우로_움직일_수_있다() {

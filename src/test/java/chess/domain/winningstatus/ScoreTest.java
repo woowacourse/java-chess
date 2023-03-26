@@ -13,7 +13,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ScoreTest {
-
     private static final Rook ROOK_BLACK = new Rook(Team.BLACK);
     private static final Knight KNIGHT_BLACK = new Knight(Team.BLACK);
     private static final Bishop BISHOP_BLACK = new Bishop(Team.BLACK);

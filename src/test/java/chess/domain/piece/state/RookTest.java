@@ -15,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RookTest {
-
-    public static final Rook ROOK_BLACK = new Rook(Team.BLACK);
+    private static final Rook ROOK_BLACK = new Rook(Team.BLACK);
 
     @Test
     void 룩이_갈_수_없는_좌표이면_예외가_발생한다() {
