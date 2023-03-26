@@ -1,11 +1,11 @@
 package chess.dao.boardpieces;
 
+import chess.dao.ConnectionManager;
 import chess.domain.Camp;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,22 +16,6 @@ import java.util.Optional;
 
 public class LocalBoardPiecesDao implements BoardPiecesDao {
 
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @Override
     public Optional<Map<Position, Piece>> find(final int boardId) {
         final String sql = "SELECT p.position_file, p.position_rank, p.piece_type, p.piece_camp "
@@ -41,7 +25,7 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
                 + "AND s.is_over = 'N'";
 
         Map<Position, Piece> piecesByPosition = new HashMap<>();
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, boardId);
 
@@ -76,7 +60,7 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
                 + "ON DUPLICATE KEY UPDATE "
                 + "position_file = ?, position_rank = ?, piece_type = ?, piece_camp = ?";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, boardId);
             preparedStatement.setInt(2, position.getFile());
@@ -98,7 +82,7 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
     public void delete(int boardId) {
         final String sql = "DELETE FROM board_pieces WHERE board_id = ?";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, boardId);
             preparedStatement.executeUpdate();

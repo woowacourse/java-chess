@@ -1,9 +1,9 @@
 package chess.dao.boardstatuses;
 
+import chess.dao.ConnectionManager;
 import chess.domain.Camp;
 import chess.dto.ChessBoardStatus;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,30 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class LocalBoardStatusesDao implements BoardStatusesDao {
-
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
+    
     @Override
     public List<Integer> findAllNotOverIds() {
         final String sql = "SELECT board_id FROM board_statuses WHERE is_over = 'N'";
 
         List<Integer> ids = new ArrayList<>();
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -51,7 +34,7 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
     public Optional<ChessBoardStatus> find(final int boardId) {
         final String sql = "SELECT current_turn, is_over FROM board_statuses WHERE board_id = ?";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, boardId);
 
@@ -73,7 +56,7 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
                 + "VALUES (?, ?, ?)"
                 + "ON DUPLICATE KEY UPDATE current_turn = ?, is_over = ?;";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             String currentTurn = status.getCurrentTurn().name();
             String isOver = convertIsOver(status.isOver());
@@ -105,7 +88,7 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
     public void delete(final int boardId) {
         final String sql = "DELETE FROM board_statuses WHERE board_id = ?";
 
-        try (final Connection connection = getConnection();
+        try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, boardId);
 
