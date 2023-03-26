@@ -21,14 +21,15 @@ public class ChessBoardDao {
         }
     }
 
-    public void addBoard(int gameIdx, String square, String pieceType) {
-        final var query = "INSERT INTO ChessBoard VALUES(?, ?, ?)";
+    public void addBoard(int gameIdx, int file, int rank, String pieceType) {
+        final var query = "INSERT INTO ChessBoard VALUES(?, ?, ?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)
         ) {
             preparedStatement.setInt(1, gameIdx);
-            preparedStatement.setString(2, square);
-            preparedStatement.setString(3, pieceType);
+            preparedStatement.setInt(2, file);
+            preparedStatement.setInt(3, rank);
+            preparedStatement.setString(4, pieceType);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

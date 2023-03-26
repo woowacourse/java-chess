@@ -1,5 +1,6 @@
 package chess;
 
+import chess.database.ChessBoardDao;
 import chess.database.ChessGameDao;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
@@ -20,6 +21,19 @@ public class ChessGame {
         chessGameDao.addGame();
         this.gameIdx = chessGameDao.findLastInsertGame();
         this.chessBoard = chessBoard;
+        addChessBoard(new ChessBoardDao(), gameIdx);
+    }
+
+    public void addChessBoard(ChessBoardDao chessBoardDao, int gameIdx) {
+        for (int file = 1; file <= 8; file++) {
+            circuitRank(chessBoardDao, gameIdx, file);
+        }
+    }
+
+    private void circuitRank(ChessBoardDao chessBoardDao, int gameIdx, int file) {
+        for (int rank = 1; rank <= 8; rank++)
+            chessBoardDao.addBoard(gameIdx, file, rank,
+                    chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getShape().name());
     }
 
     public void moveChessPiece(Position sourcePosition, Position targetPosition) {

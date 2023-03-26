@@ -1,5 +1,6 @@
 package chess;
 
+import chess.database.ChessGameDao;
 import chess.piece.Bishop;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
