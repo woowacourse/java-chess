@@ -9,6 +9,7 @@ import chess.controller.dto.PieceResponse;
 import chess.controller.mapper.FileMapper;
 import chess.controller.mapper.PieceResponseMapper;
 import chess.controller.mapper.RankMapper;
+import chess.domain.exception.NotPlayableException;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -46,7 +47,7 @@ public class ChessGameController {
                 play(new Game());
             }
             if (command == Command.MOVE) {
-                throw new IllegalArgumentException("아직 게임이 시작되지 않은 상태입니다.");
+                throw new NotPlayableException("아직 게임이 시작되지 않은 상태입니다.");
             }
             if (command == Command.END) {
                 return;
@@ -66,7 +67,7 @@ public class ChessGameController {
             Request request = inputView.askCommand();
             Command command = request.getCommand();
             if (command == Command.START) {
-                throw new IllegalArgumentException("게임이 진행중입니다.");
+                throw new NotPlayableException("게임이 진행중입니다.");
             }
             if (command == Command.MOVE) {
                 MoveRequest moveRequest = request.getMoveRequest();
