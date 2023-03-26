@@ -13,7 +13,7 @@ public class King extends Piece {
         whiteKing = new King(Side.WHITE);
     }
 
-    private King(final Side side) {
+    public King(final Side side) {
         super(side, PieceType.KING);
     }
 

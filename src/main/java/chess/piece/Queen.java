@@ -13,7 +13,7 @@ public class Queen extends Piece {
         whiteQueen = new Queen(Side.WHITE);
     }
 
-    private Queen(final Side side) {
+    public Queen(final Side side) {
         super(side, PieceType.QUEEN);
     }
 

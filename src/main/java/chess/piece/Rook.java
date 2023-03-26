@@ -16,7 +16,7 @@ public class Rook extends Piece {
         addRooks(whiteRooks, Side.WHITE);
     }
 
-    private Rook(final Side side) {
+    public Rook(final Side side) {
         super(side, PieceType.ROOK);
     }
 

@@ -20,7 +20,7 @@ public final class Pawn extends Piece {
         addPawns(whitePawns, Side.WHITE);
     }
 
-    private Pawn(Side side) {
+    public Pawn(Side side) {
         super(side, PieceType.PAWN);
     }
 

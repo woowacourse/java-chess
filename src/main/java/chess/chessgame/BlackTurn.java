@@ -13,4 +13,9 @@ public class BlackTurn implements Turn {
     public boolean isTurnOf(final Side side) {
         return side == Side.BLACK;
     }
+
+    @Override
+    public Side getSide() {
+        return Side.BLACK;
+    }
 }

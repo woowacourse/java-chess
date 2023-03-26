@@ -14,10 +14,14 @@ public class ChessGame {
     private Turn turn;
     private Side winner;
 
-    public ChessGame(final ChessBoard chessBoard) {
+    public ChessGame(final Turn turn, final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
-        this.turn = Turn.initialTurn();
+        this.turn = turn;
         this.winner = Side.EMPTY;
+    }
+
+    public ChessGame(final ChessBoard chessBoard) {
+        this(Turn.initialTurn(), chessBoard);
     }
 
     public void move(final Square source, final Square destination) {
@@ -74,5 +78,9 @@ public class ChessGame {
 
     public String getWinner() {
         return winner.name();
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

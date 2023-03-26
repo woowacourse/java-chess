@@ -3,6 +3,7 @@ package chess.status;
 import chess.chessboard.ChessBoard;
 import chess.chessboard.ChessBoardFactory;
 import chess.chessgame.ChessGame;
+import chess.chessgame.Turn;
 import chess.controller.ChessBoardDto;
 import chess.controller.Command;
 import chess.controller.CommandType;
@@ -15,7 +16,7 @@ public class Ready implements GameStatus {
         validateStartCommand(command);
 
         final ChessBoard chessBoard = new ChessBoardFactory().generate();
-        final ChessGame chessGame = new ChessGame(chessBoard);
+        final ChessGame chessGame = new ChessGame(Turn.initialTurn(), chessBoard);
 
         printAction.run(ChessBoardDto.of(chessBoard));
 

@@ -18,7 +18,7 @@ public class Bishop extends Piece {
         addBishops(whiteBishops, Side.WHITE);
     }
 
-    private Bishop(final Side side) {
+    public Bishop(final Side side) {
         super(side, PieceType.BISHOP);
     }
 

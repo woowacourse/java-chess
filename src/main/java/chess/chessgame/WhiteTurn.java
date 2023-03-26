@@ -13,4 +13,9 @@ public class WhiteTurn implements Turn {
     public boolean isTurnOf(final Side side) {
         return side == Side.WHITE;
     }
+
+    @Override
+    public Side getSide() {
+        return Side.WHITE;
+    }
 }

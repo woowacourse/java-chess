@@ -18,7 +18,7 @@ public class Knight extends Piece {
         addKnights(whiteKnights, Side.WHITE);
     }
 
-    private Knight(final Side side) {
+    public Knight(final Side side) {
         super(side, PieceType.KNIGHT);
     }
 
