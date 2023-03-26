@@ -13,11 +13,11 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position targetPosition, Team team) {
-        if (position.calculateColumnDifferenceWith(targetPosition) == TWO_DIFFERENCE) {
-            return position.calculateRowDifferenceWith(targetPosition) == ONE_DIFFERENCE && isNotSameTeam(team);
+        if (position.calculateColumnDistance(targetPosition) == TWO_DIFFERENCE) {
+            return position.calculateRowDistance(targetPosition) == ONE_DIFFERENCE && isDifferentTeam(team);
         }
-        if (position.calculateColumnDifferenceWith(targetPosition) == ONE_DIFFERENCE) {
-            return position.calculateRowDifferenceWith(targetPosition) == TWO_DIFFERENCE && isNotSameTeam(team);
+        if (position.calculateColumnDistance(targetPosition) == ONE_DIFFERENCE) {
+            return position.calculateRowDistance(targetPosition) == TWO_DIFFERENCE && isDifferentTeam(team);
         }
         return false;
     }

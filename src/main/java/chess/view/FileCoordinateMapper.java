@@ -27,20 +27,9 @@ public enum FileCoordinateMapper {
 
     public static FileCoordinate findBy(String columnView) {
         return Arrays.stream(values())
-                .filter(it -> it.columnView.equals(columnView))
+                .filter(it -> it.columnView.equalsIgnoreCase(columnView))
                 .map(it -> it.fileCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
-    }
-
-    static void validate(String columnView) {
-        if (isNotContain(columnView)) {
-            throw new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE);
-        }
-    }
-
-    private static boolean isNotContain(String columnView) {
-        return Arrays.stream(values())
-                .noneMatch(x -> x.columnView.equals(columnView));
     }
 }

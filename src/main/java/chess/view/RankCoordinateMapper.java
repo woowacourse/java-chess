@@ -32,15 +32,4 @@ public enum RankCoordinateMapper {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
-
-    static void validate(String rowView) {
-        if (isNotContain(rowView)) {
-            throw new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE);
-        }
-    }
-
-    private static boolean isNotContain(String rowView) {
-        return Arrays.stream(values())
-                .noneMatch(x -> x.rowView.equals(rowView));
-    }
 }

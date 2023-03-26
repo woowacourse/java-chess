@@ -13,7 +13,7 @@ public class Queen extends Piece {
         return (isStraight(targetPosition)
                 || isDiagonal(targetPosition))
                 && isNotMyPosition(targetPosition)
-                && isNotSameTeam(team);
+                && isDifferentTeam(team);
     }
 
     @Override

@@ -33,7 +33,7 @@ public abstract class Piece {
     }
 
     private void validateTeam(Team nowPlayingTeam) {
-        if (isNotSameTeam(nowPlayingTeam)) {
+        if (isDifferentTeam(nowPlayingTeam)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVE_MESSAGE);
         }
     }
@@ -53,7 +53,7 @@ public abstract class Piece {
                 || position.getRankCoordinate() == targetPosition.getRankCoordinate());
     }
 
-    protected boolean isNotSameTeam(Team team) {
+    protected boolean isDifferentTeam(Team team) {
         return this.team != team;
     }
 

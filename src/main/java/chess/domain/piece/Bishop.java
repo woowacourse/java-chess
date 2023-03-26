@@ -11,7 +11,7 @@ public class Bishop extends Piece {
     @Override
     public boolean canMove(Position targetPosition, Team team) {
         return isDiagonal(targetPosition) && isNotMyPosition(targetPosition)
-                && isNotSameTeam(team);
+                && isDifferentTeam(team);
     }
 
     @Override

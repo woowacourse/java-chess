@@ -38,22 +38,22 @@ public class Position {
     }
 
     private int getDistance(Position targetPosition) {
-        int columnDistance = calculateColumnDifferenceWith(targetPosition);
-        int rowDistance = calculateRowDifferenceWith(targetPosition);
+        int columnDistance = calculateColumnDistance(targetPosition);
+        int rowDistance = calculateRowDistance(targetPosition);
         return Math.max(columnDistance, rowDistance);
     }
 
     private boolean isNotStraight(Position targetPosition) {
-        int columnDistance = calculateColumnDifferenceWith(targetPosition);
-        int rowDistance = calculateRowDifferenceWith(targetPosition);
+        int columnDistance = calculateColumnDistance(targetPosition);
+        int rowDistance = calculateRowDistance(targetPosition);
         return columnDistance != ZERO_DIFFERENCE && rowDistance != ZERO_DIFFERENCE && columnDistance != rowDistance;
     }
 
-    public int calculateColumnDifferenceWith(Position targetPosition) {
+    public int calculateColumnDistance(Position targetPosition) {
         return fileCoordinate.calculateDistance(targetPosition.fileCoordinate);
     }
 
-    public int calculateRowDifferenceWith(Position targetPosition) {
+    public int calculateRowDistance(Position targetPosition) {
         return rankCoordinate.calculateDistance(targetPosition.rankCoordinate);
     }
 

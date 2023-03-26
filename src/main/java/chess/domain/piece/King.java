@@ -14,12 +14,12 @@ public class King extends Piece {
     public boolean canMove(Position targetPosition, Team team) {
         return isDifferenceUnderBound(targetPosition)
                 && isNotMyPosition(targetPosition)
-                && isNotSameTeam(team);
+                && isDifferentTeam(team);
     }
 
     public boolean isDifferenceUnderBound(Position targetPosition) {
-        return position.calculateColumnDifferenceWith(targetPosition) <= BOUND
-                && position.calculateRowDifferenceWith(targetPosition) <= BOUND;
+        return position.calculateColumnDistance(targetPosition) <= BOUND
+                && position.calculateRowDistance(targetPosition) <= BOUND;
     }
 
     @Override
