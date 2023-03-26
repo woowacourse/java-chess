@@ -68,12 +68,12 @@ public class Board {
             return sourcePiece.canMove(source, target);
         }
         if (sourcePiece.isRoleOf(Role.PAWN)) {
-            return sourcePiece.canMove(source, target) && pawnCanMove(source, target);
+            return sourcePiece.canMove(source, target) && canPawnMove(source, target);
         }
         return sourcePiece.canMove(source, target) && isEmptyRoute(source, target);
     }
 
-    private boolean pawnCanMove(Position source, Position target) {
+    private boolean canPawnMove(Position source, Position target) {
         Piece targetPiece = squares.get(target);
         if (targetPiece.isRoleOf(Role.EMPTY)) {
             return source.isSameXAs(target);

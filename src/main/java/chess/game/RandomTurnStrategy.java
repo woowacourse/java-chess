@@ -13,7 +13,6 @@ public class RandomTurnStrategy implements TurnStrategy {
     }
 
     @Override
-
     public RunningState create() {
         if (random.nextBoolean()) {
             return WhiteTurnState.STATE;
