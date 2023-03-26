@@ -11,6 +11,7 @@ import chess.domain.square.Square;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -127,6 +128,14 @@ public class Board {
                 .filter(Piece::isKing)
                 .count() < KING_NUMBER;
     }
+
+//    public Score calculateBlackScore() {
+//        return board.entrySet().stream()
+//                .filter(entry -> entry.getValue().isBlack())
+//                .filter(entry -> )
+//                .map(piece -> new Score(piece.getPieceType().getValue()))
+//                .reduce(Score.init(), Score::plus);
+//    }
 
     public Map<Square, Piece> getBoard() {
         return new HashMap<>(board);
