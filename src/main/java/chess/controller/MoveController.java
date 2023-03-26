@@ -41,8 +41,8 @@ public class MoveController implements Controller {
     }
 
     private void handleFinishGame() {
-        String gameId = GameDao.getGameIdOf(LoginSession.getCurrentLoginId());
-        GameDao.deleteGameOf(LoginSession.getCurrentLoginId());
+        String gameId = GameDao.getGameIdOf(LoginSession.getCurrentPlayingRoomName());
+        GameDao.deleteGameOf(LoginSession.getCurrentPlayingRoomName());
         PieceDao.delete(gameId);
     }
 

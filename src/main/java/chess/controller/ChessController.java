@@ -1,9 +1,12 @@
 package chess.controller;
 
+import chess.controller.login.LoginSession;
+import chess.dao.GameDao;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -23,7 +26,8 @@ public class ChessController {
 
     private Map<GameCommand, Controller> makeControllers() {
         Map<GameCommand, Controller> controllers = new HashMap<>();
-        controllers.put(GameCommand.START, StartController.getInstance());
+        controllers.put(GameCommand.CREATE, CreateController.getInstance());
+        controllers.put(GameCommand.RESUME, ResumeController.getInstance());
         controllers.put(GameCommand.MOVE, MoveController.getInstance());
         controllers.put(GameCommand.END, EndController.getInstance());
         controllers.put(GameCommand.STATUS, StatusController.getInstance());
@@ -35,6 +39,7 @@ public class ChessController {
 
     public void init() {
         ensureLoggedIn();
+        enterRoom();
         outputView.printInitialMessage();
         processNextRequest();
     }
@@ -55,6 +60,26 @@ public class ChessController {
         ensureLoggedIn();
     }
 
+    private void enterRoom() {
+        List<String> roomNames = GameDao.getGameNameOf(LoginSession.getCurrentLoginId());
+        outputView.printCurrentPlayRoom(roomNames);
+        Request request = readRequest();
+        GameCommand gameCommand = request.getGameCommand();
+        if (gameCommand == GameCommand.CREATE || gameCommand == GameCommand.RESUME) {
+            Controller controller = controllers.get(gameCommand);
+            Response response = controller.execute(request);
+            if (response.getType() == ResponseType.FAIL) {
+                outputView.printCommandError(response.getCause());
+                enterRoom();
+                return;
+            }
+            outputView.printBoard(response.getBoard());
+            return;
+        }
+        outputView.printInvalidCommand();
+        enterRoom();
+    }
+
     private void processNextRequest() {
         Request request = readRequest();
         Controller controller = controllers.get(request.getGameCommand());
@@ -68,7 +93,7 @@ public class ChessController {
 
     private void handleResponse(Response response) {
         ResponseType type = response.getType();
-        if (type == ResponseType.MOVE || type == ResponseType.START) {
+        if (type == ResponseType.MOVE) {
             outputView.printBoard(response.getBoard());
             processNextRequest();
         }

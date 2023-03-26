@@ -22,9 +22,10 @@ public class EndController implements Controller {
         validate(request);
         if (GameSession.existGame()) {
             Game game = GameSession.getGame();
-            String currentLoginId = LoginSession.getCurrentLoginId();
-            GameDao.enrollGameOf(currentLoginId, currentLoginId, game.getBoard().getTurn().name());
-            PieceDao.saveBoard(BoardSaveDto.from(game.getBoard(), currentLoginId));
+            String currentPlayingRoomName = LoginSession.getCurrentPlayingRoomName();
+            String gameId = GameDao.getGameIdOf(currentPlayingRoomName);
+            GameDao.updateTurn(gameId, game.getBoard().getTurn().name());
+            PieceDao.saveBoard(BoardSaveDto.from(game.getBoard(), gameId));
         }
         return new Response(ResponseType.END);
     }

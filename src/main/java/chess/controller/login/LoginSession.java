@@ -3,6 +3,7 @@ package chess.controller.login;
 public class LoginSession {
 
     private static String currentLoginId = null;
+    private static String playingRoomName = null;
 
     private LoginSession() {
     }
@@ -15,11 +16,15 @@ public class LoginSession {
         currentLoginId = userId;
     }
 
-    public static void logout() {
-        currentLoginId = null;
+    public static void enterRoom(String roomName) {
+        playingRoomName = roomName;
     }
 
     public static String getCurrentLoginId() {
         return currentLoginId;
+    }
+
+    public static String getCurrentPlayingRoomName() {
+        return playingRoomName;
     }
 }
