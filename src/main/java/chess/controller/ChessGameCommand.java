@@ -1,6 +1,7 @@
 package chess.controller;
 
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -17,17 +18,25 @@ public enum ChessGameCommand {
     }
 
     public static ChessGameCommand generateExecuteCommand(final String input) {
-        return Stream.of(START, END)
+        List<ChessGameCommand> gameExecuteCommands = List.of(START, END);
+        return gameExecuteCommands.stream()
                 .filter(chessGameCommand -> chessGameCommand.input.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(format("%s, %s 중 입력해야 합니다.", START, END)));
+                .orElseThrow(() -> new IllegalArgumentException(format(
+                        "%s 중 입력해야 합니다.",
+                        gameExecuteCommands.stream().map(chessGameCommand -> chessGameCommand.input).collect(Collectors.joining(", ")))
+                ));
     }
 
     public static ChessGameCommand generateMoveCommand(final String input) {
-        return Stream.of(MOVE, END)
+        List<ChessGameCommand> gameMoveCommands = List.of(MOVE, END);
+        return gameMoveCommands.stream()
                 .filter(chessGameCommand -> input.contains(chessGameCommand.input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(format("%s, %s 중 입력해야 합니다.", MOVE, END)));
+                .orElseThrow(() -> new IllegalArgumentException(format(
+                        "%s 중 입력해야 합니다.",
+                        gameMoveCommands.stream().map(chessGameCommand -> chessGameCommand.input).collect(Collectors.joining(", ")))
+                ));
     }
 
     @Override
