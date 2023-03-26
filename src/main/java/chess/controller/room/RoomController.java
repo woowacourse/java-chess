@@ -1,9 +1,18 @@
 package chess.controller.room;
 
+import static chess.controller.room.RoomCommand.CREATE;
+import static chess.controller.room.RoomCommand.EMPTY;
+import static chess.controller.room.RoomCommand.END;
+import static chess.controller.room.RoomCommand.HISTORY;
+import static chess.controller.room.RoomCommand.JOIN;
+import static chess.controller.room.RoomCommand.NAME_INDEX;
+import static chess.controller.room.RoomCommand.ROOM_ID_INDEX;
+
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
+import chess.domain.room.Room;
 import chess.service.RoomService;
 import chess.view.input.RoomInputView;
 import chess.view.output.RoomOutputView;
@@ -13,6 +22,7 @@ import java.util.Map;
 public class RoomController implements Controller {
     private final RoomInputView inputView;
     private final RoomOutputView outputView;
+    private final RoomService roomService;
     private final CommandMapper<RoomCommand, RoomAction> commandMapper;
 
     public RoomController(
@@ -22,22 +32,26 @@ public class RoomController implements Controller {
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.roomService = roomService;
         this.commandMapper = new CommandMapper<>(mappingCommand());
     }
 
     private Map<RoomCommand, RoomAction> mappingCommand() {
         return Map.of(
-                RoomCommand.HISTORY, ignore -> history(),
-                RoomCommand.CREATE, this::create,
-                RoomCommand.JOIN, this::join,
-                RoomCommand.END, RoomAction.EMPTY
+                HISTORY, ignore -> history(),
+                CREATE, this::create,
+                JOIN, this::join,
+                END, RoomAction.EMPTY
         );
     }
 
     @Override
     public void run() {
-        RoomCommand command = RoomCommand.EMPTY;
-        while (command != RoomCommand.END) {
+        if (UserSession.get() == null) {
+            throw new IllegalArgumentException("로그인 후 게임 관리를 할 수 있습니다.");
+        }
+        RoomCommand command = EMPTY;
+        while (command != END) {
             command = play();
         }
     }
@@ -52,20 +66,28 @@ public class RoomController implements Controller {
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printException(e.getMessage());
-            return RoomCommand.EMPTY;
+            return EMPTY;
         }
     }
 
     private void history() {
-
+        final List<Room> rooms = roomService.findAllByUserId(UserSession.getId());
+        outputView.printRooms(rooms);
     }
 
     private void create(final List<String> commands) {
-
+        final String roomName = commands.get(NAME_INDEX);
+        roomService.save(roomName, UserSession.getId());
+        outputView.printSaveSuccess(roomName);
     }
 
     private void join(final List<String> commands) {
-
+        try {
+            final int roomId = Integer.parseInt(commands.get(ROOM_ID_INDEX));
+            final Room room = roomService.findById(roomId, UserSession.getId());
+            RoomSession.add(room);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("올바른 값을 입력해주세요.");
+        }
     }
-
 }

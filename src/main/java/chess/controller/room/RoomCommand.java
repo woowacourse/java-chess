@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum RoomCommand {
-    HISTORY(2),
+    HISTORY(1),
     CREATE(2),
     JOIN(2),
     END(1),
@@ -17,6 +17,8 @@ public enum RoomCommand {
         this.size = size;
     }
 
+    public static final int NAME_INDEX = 1;
+    public static final int ROOM_ID_INDEX = 1;
     private static final int COMMAND_INDEX = 0;
     private static final String INVALID_COMMAND_MESSAGE = "올바른 명령어를 입력해주세요.";
 
