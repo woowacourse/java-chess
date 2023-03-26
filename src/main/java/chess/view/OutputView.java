@@ -15,6 +15,7 @@ public final class OutputView {
         System.out.println("게임 이동: move source target위치 - 예. move b2 b3");
         System.out.println("게임 현황: " + Command.STATUS.value());
         System.out.println("게임 저장: " + Command.SAVE.value());
+        System.out.println("게임 불러 오기: " + Command.LOAD.value());
     }
 
     public static void printChessBoard(final ChessBoardFormatter chessBoardMarkConverter) {

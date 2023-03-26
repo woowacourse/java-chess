@@ -51,6 +51,9 @@ public final class ChessController {
         if (command == Command.SAVE) {
             saveGame(chessGame);
         }
+        if (command == Command.LOAD) {
+            chessGame.end();
+        }
         if (command == Command.END) {
             chessGame.end();
         }
@@ -109,5 +112,9 @@ public final class ChessController {
         RoomName roomName = new RoomName(InputView.readRoomName());
         chessGame.save(roomName);
         OutputView.printSaved(roomName.getRoomName());
+    }
+
+    private void loadGame(final ChessGame chessGame){
+
     }
 }
