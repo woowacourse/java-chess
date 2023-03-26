@@ -142,7 +142,7 @@ public class Board {
 		return score;
 	}
 
-	private double blackScores(File file) {
+	private double blackScores(final File file) {
 		double newScore = 0;
 		int count = 0;
 		for (Rank rank : ranks()) {
@@ -153,14 +153,14 @@ public class Board {
 		return newScore + addPawnScore(count);
 	}
 
-	private double updateScore(Piece piece, Color color) {
+	private double updateScore(final Piece piece, final Color color) {
 		if (piece.color() == color) {
 			return pieceScore(piece.name());
 		}
 		return 0;
 	}
 
-	private double pieceScore(String pieceName) {
+	private double pieceScore(final String pieceName) {
 		if (pieceName.equalsIgnoreCase(ROOK_NAME)) {
 			return ROOK.score();
 		}
@@ -176,7 +176,7 @@ public class Board {
 		return 0;
 	}
 
-	private int pawnCount(String name, Color color) {
+	private int pawnCount(final String name, final Color color) {
 		if (color == BLACK && name.equals(PAWN_NAME)) {
 			return 1;
 		}
@@ -186,7 +186,7 @@ public class Board {
 		return 0;
 	}
 
-	private double addPawnScore(int count) {
+	private double addPawnScore(final int count) {
 		if (count == 0) {
 			return 0;
 		}
@@ -204,7 +204,7 @@ public class Board {
 		return score;
 	}
 
-	private double whiteScores(File file) {
+	private double whiteScores(final File file) {
 		double newScore = 0;
 		int count = 0;
 		for (Rank rank : ranks()) {
