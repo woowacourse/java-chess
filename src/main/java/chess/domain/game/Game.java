@@ -29,7 +29,7 @@ public class Game {
     }
 
     public boolean isGameEnd() {
-        return !board.haveTwoKing();
+        return board.haveOneKing();
     }
 
     public List<Piece> getPieces() {

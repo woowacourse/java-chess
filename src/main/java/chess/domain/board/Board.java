@@ -161,8 +161,12 @@ public class Board {
         return board.get(square).isAnotherTeam(turn);
     }
 
-    public boolean haveTwoKing() {
-        return board.containsValue(new King(Team.BLACK)) && board.containsValue(new King(Team.WHITE));
+    public boolean haveOneKing() {
+        int kingCount = (int) board.values().stream()
+                .filter(piece -> piece.isSameRole(Role.KING))
+                .count();
+
+        return kingCount == 1;
     }
 
     public List<Piece> getPieces() {

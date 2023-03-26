@@ -58,4 +58,18 @@ class GameTest {
 
         assertThat(game.isGameEnd()).isTrue();
     }
+
+    @DisplayName("King이 잡힌게 아니면 게임이 계속된다.")
+    @Test
+    void Should_GameContinue_When_NotCheckKing() {
+        Game game = new Game();
+
+        game.move(new Square(File.E, Rank.TWO), new Square(File.E, Rank.FOUR));
+        game.move(new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FIVE));
+        game.move(new Square(File.E, Rank.ONE), new Square(File.E, Rank.TWO));
+        game.move(new Square(File.D, Rank.FIVE), new Square(File.D, Rank.FOUR));
+        game.move(new Square(File.E, Rank.TWO), new Square(File.E, Rank.THREE));
+
+        assertThat(game.isGameEnd()).isFalse();
+    }
 }
