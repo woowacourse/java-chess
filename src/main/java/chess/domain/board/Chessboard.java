@@ -5,10 +5,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Chessboard {
@@ -89,5 +86,9 @@ public class Chessboard {
         return (int) Square.getSquaresAt(file).stream()
                 .filter(square -> board.get(square).equals(targetPawn))
                 .count();
+    }
+
+    public Map<Square, Piece> getBoardMap() {
+        return Collections.unmodifiableMap(board);
     }
 }

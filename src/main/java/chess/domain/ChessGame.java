@@ -25,7 +25,7 @@ public class ChessGame {
 
         if (canMove(source, target)) {
             chessboard.swapPiece(source, target);
-            turn = turn.nextTurn();
+            passTurn();
             return;
         }
 
@@ -96,6 +96,14 @@ public class ChessGame {
         }
 
         return false;
+    }
+
+    public boolean isWhiteTurn() {
+        return turn.isMoveOrder(PieceType.PAWN.createPiece(Camp.WHITE));
+    }
+
+    public void passTurn() {
+        turn = turn.nextTurn();
     }
 
     public void promotePawn(Square currentSquare, PieceType pieceType) {

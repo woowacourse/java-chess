@@ -12,6 +12,10 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    public String requestRoomName(){
+        return scanner.nextLine();
+    }
+
     public List<String> requestCommand() {
         String input = scanner.nextLine();
 

@@ -1,9 +1,16 @@
 package chess.controller;
 
+import chess.dao.BoardDao;
+import chess.dao.GameRoomDao;
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.dto.BoardDto;
+import chess.dto.GameRoomDto;
+import chess.dto.PieceRenderer;
 import chess.dto.SquareRenderer;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,19 +22,48 @@ import java.util.function.Supplier;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final BoardDao boardDao;
+    private final GameRoomDao gameRoomDao;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.boardDao = new BoardDao();
+        this.gameRoomDao = new GameRoomDao();
     }
 
     public void run() {
         ChessGame chessGame = new ChessGame();
 
         outputView.printStartMessage();
-
+        initialize(chessGame);
         if (retryOnInvalidUserInput(this::isStartCommand)) {
             play(chessGame);
+        }
+        finalize(chessGame);
+    }
+
+    private void initialize(ChessGame chessGame) {
+        String roomName = "임시";
+        List<BoardDto> recordedBoard = boardDao.findAllByRoomName(roomName);
+        gameRoomDao.findByRoomName(roomName)
+                .ifPresent(gameRoom -> {
+                    if (!gameRoom.isWhiteTurn()) {
+                        chessGame.passTurn();
+                    }
+                });
+
+        if (recordedBoard.isEmpty()) {
+            boardDao.save(chessGame);
+            return;
+        }
+
+        Chessboard chessboard = chessGame.getChessboard();
+        for (BoardDto boardDto : recordedBoard) {
+            Square source = SquareRenderer.render(boardDto.getSource());
+            Piece piece = PieceRenderer.render(boardDto.getPiece());
+
+            chessboard.putPiece(source, piece);
         }
     }
 
@@ -59,9 +95,23 @@ public class ChessController {
 
             commands.ifPresent(command -> actionForCommand(chessGame, command));
         } while (commands.isPresent() && chessGame.isBothKingAlive());
+    }
 
+    private void finalize(ChessGame chessGame) {
         outputView.printChessBoard(chessGame.getChessboard());
         outputView.printScoreMessage(chessGame);
+
+        if (gameRoomDao.findByRoomName("임시").isEmpty()) {
+            gameRoomDao.save(new GameRoomDto("임시", chessGame.isWhiteTurn()));
+        }
+
+        if (chessGame.isBothKingAlive()) {
+            boardDao.update(chessGame);
+            return;
+        }
+
+        boardDao.deleteAllByRoomName("임시");
+//        gameRoomDao.deleteByName("임시");
     }
 
     private Optional<List<String>> handleCommand() {
@@ -73,7 +123,6 @@ public class ChessController {
         }
 
         if (command.isEndCommand()) {
-            //디비 추가
             return Optional.empty();
         }
 
@@ -93,8 +142,10 @@ public class ChessController {
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
-        Square source = SquareRenderer.render(command.get(Index.SOURCE_SQUARE.value));
-        Square target = SquareRenderer.render(command.get(Index.TARGET_SQUARE.value));
+        String sourceCommand = command.get(Index.SOURCE_SQUARE.value);
+        String targetCommand = command.get(Index.TARGET_SQUARE.value);
+        Square source = SquareRenderer.render(sourceCommand);
+        Square target = SquareRenderer.render(targetCommand);
 
         retryOnInvalidAction(() -> chessGame.move(source, target));
     }
@@ -104,7 +155,6 @@ public class ChessController {
 
         if (chessGame.canPromotion(movedSquare)) {
             PieceType pieceType = requestPieceType();
-
             chessGame.promotePawn(movedSquare, pieceType);
         }
     }
