@@ -2,5 +2,6 @@ package domain.game;
 
 public enum GameState {
     RUN,
-    END
+    END,
+    KING_DEAD
 }

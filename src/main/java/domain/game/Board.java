@@ -56,6 +56,16 @@ public class Board {
         return Side.calculateWinner(whiteScore, blackScore);
     }
 
+    public Side calculateKingExistSide(Side side) {
+        List<Piece> pieces = collectPiecesBySide(side);
+
+        return pieces.stream()
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .map(Piece::getSide)
+                .findAny()
+                .orElse(side.nextSide());
+    }
+
     private void validateTurn(Side side, Piece sourcePiece) {
         if (sourcePiece.isIncorrectTurn(side)) {
             throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");

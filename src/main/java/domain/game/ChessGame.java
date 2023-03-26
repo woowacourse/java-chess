@@ -18,12 +18,14 @@ public class ChessGame {
         this.state = state;
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
+    public GameState move(Position sourcePosition, Position targetPosition) {
         if (board.isMovable(sourcePosition, targetPosition, currentTurn)) {
             this.state = calculateNextGameState(targetPosition);
             board.move(sourcePosition, targetPosition);
+            return this.state;
         }
         currentTurn = currentTurn.nextSide();
+        return this.state;
     }
 
     public boolean isPlayable() {
@@ -39,12 +41,16 @@ public class ChessGame {
     }
 
     public Side calculateWinner() {
+        if (this.state == GameState.KING_DEAD) {
+            return board.calculateKingExistSide(Side.WHITE);
+        }
         return board.calculateWinner();
     }
 
     private GameState calculateNextGameState(Position targetPosition) {
         if (board.isKing(targetPosition)) {
-            return GameState.END;
+            state = GameState.KING_DEAD;
+            return GameState.KING_DEAD;
         }
         return GameState.RUN;
     }

@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class ChessController {
-
+    // TODO: 2023/03/26 현재 turn side출력 
     private static final String POSITION_DELIMITER = "";
     private static final int SOURCE_TEXT_INDEX = 1;
     private static final int TARGET_TEXT_INDEX = 2;
@@ -101,6 +101,7 @@ public class ChessController {
 
     private GameCommand repeatNewGameOrLoadGameCommand(Supplier<GameCommand> supplier) {
         try {
+            this.outputView.printLoadGameMessage();
             return supplier.get();
         } catch (IllegalArgumentException e) {
             this.outputView.printErrorMessage(e.getMessage());
@@ -123,7 +124,10 @@ public class ChessController {
         String sourceText = commands.get(SOURCE_TEXT_INDEX);
         String targetText = commands.get(TARGET_TEXT_INDEX);
 
-        chessGame.move(convertPosition(sourceText), convertPosition(targetText));
+        GameState gameState = chessGame.move(convertPosition(sourceText), convertPosition(targetText));
+        if (gameState == GameState.KING_DEAD) {
+            outputView.printWinner(chessGame.calculateWinner());
+        }
     }
 
     private Position convertPosition(String positionText) {
