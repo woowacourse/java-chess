@@ -6,7 +6,7 @@ import chess.view.OutputView;
 
 public class FrontController {
 
-    private static final ChessController chessController = new ChessController();
+    private static final ChessGameController CHESS_GAME_CONTROLLER = new ChessGameController();
     private static final InputExceptionHandler inputExceptionHandler = new InputExceptionHandler(
             OutputView::printInputErrorMessage);
     private static AppStatus appStatus = AppStatus.RUNNING;
@@ -18,7 +18,7 @@ public class FrontController {
         OutputView.printGuideMessage();
         while (appStatus == AppStatus.RUNNING) {
             appStatus = inputExceptionHandler.retryExecuteIfInputIllegal(
-                    InputView::requestGameCommand, chessController, CommandActionMapper::execute
+                    InputView::requestGameCommand, CHESS_GAME_CONTROLLER, CommandActionMapper::execute
             );
         }
     }

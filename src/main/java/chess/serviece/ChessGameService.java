@@ -11,7 +11,7 @@ import chess.dto.GameResultResponse;
 import java.util.List;
 import java.util.Map;
 
-public class ChessGame {
+public class ChessGameService {
 
     private final ChessBoardService chessBoardService = new ChessBoardService();
     private ChessBoard chessBoard;

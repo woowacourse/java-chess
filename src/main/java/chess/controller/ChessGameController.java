@@ -4,49 +4,49 @@ import chess.controller.converter.BoardConverter;
 import chess.controller.util.InputExceptionHandler;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
-import chess.serviece.ChessGame;
+import chess.serviece.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ChessGameController {
 
     private static final InputExceptionHandler inputExceptionHandler = new InputExceptionHandler(
             OutputView::printInputErrorMessage);
-    private final ChessGame chessGame;
+    private final ChessGameService chessGameService;
 
-    public ChessController() {
-        this.chessGame = new ChessGame();
+    public ChessGameController() {
+        this.chessGameService = new ChessGameService();
     }
 
     public void validateCommandRequest(CommandRequest commandRequest) {
-        chessGame.validateCommand(commandRequest);
+        chessGameService.validateCommand(commandRequest);
     }
 
     public AppStatus start(CommandRequest commandRequest) {
-        OutputView.printAvailableBoardIds(chessGame.availableBoards());
+        OutputView.printAvailableBoardIds(chessGameService.availableBoards());
         int boardId = inputExceptionHandler.retryRequestIfInputIllegal(InputView::requestBoardId);
-        chessGame.start(boardId);
-        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
+        chessGameService.start(boardId);
+        OutputView.printBoard(BoardConverter.convertToBoard(chessGameService.readBoard()));
         return AppStatus.RUNNING;
     }
 
     public AppStatus move(CommandRequest commandRequest) {
-        chessGame.move(commandRequest);
-        OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
-        if (chessGame.isOver()) {
+        chessGameService.move(commandRequest);
+        OutputView.printBoard(BoardConverter.convertToBoard(chessGameService.readBoard()));
+        if (chessGameService.isOver()) {
             OutputView.printGameOverMessage();
         }
         return AppStatus.RUNNING;
     }
 
     public AppStatus end(CommandRequest commandRequest) {
-        chessGame.end(commandRequest);
+        chessGameService.end(commandRequest);
         OutputView.printGuideMessage();
         return AppStatus.RUNNING;
     }
 
     public AppStatus status(CommandRequest commandRequest) {
-        GameResultResponse gameResult = chessGame.computeResult(commandRequest);
+        GameResultResponse gameResult = chessGameService.computeResult(commandRequest);
         OutputView.printGameResult(gameResult);
         return AppStatus.RUNNING;
     }
