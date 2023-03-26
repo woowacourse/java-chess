@@ -9,16 +9,21 @@ public class InputView {
     private static final Pattern pattern = Pattern.compile("^[0-9]+$");
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMITER = " ";
+    private static final int NEW_GAME_NUMBER = 0;
 
     private InputView() {
     }
 
-    public static int readGameNumber() {
-        String number = scanner.nextLine();
-        if (!pattern.matcher(number).matches()) {
+    public static int readGameNumber(List<Integer> allGameIds) {
+        String inputNumber = scanner.nextLine();
+        if (!pattern.matcher(inputNumber).matches()) {
             throw new IllegalArgumentException("[ERROR] 숫자만 입력하세요.");
         }
-        return Integer.parseInt(number);
+        int number = Integer.parseInt(inputNumber);
+        if (!allGameIds.contains(number) && number != NEW_GAME_NUMBER) {
+            throw new IllegalArgumentException("[ERROR] 일치하는 게임 방이 존재하지 않습니다.");
+        }
+        return number;
     }
 
     public static ChessEvent readGameCommand() {
