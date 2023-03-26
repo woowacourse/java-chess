@@ -18,10 +18,16 @@ public class ChessGame {
         board = Board.create();
         turn = Color.WHITE;
     }
-    
+
+    public ChessGame(Board board, Color turn, GameStatus status) {
+        this.board = board;
+        this.turn = turn;
+        this.status = status;
+    }
+
     public void start() {
         if (status != GameStatus.START) {
-            throw new IllegalStateException("실행할 수 없는 명령입니다.");
+            throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
         board.initialize();
         status = GameStatus.MOVE;
@@ -33,7 +39,7 @@ public class ChessGame {
         }
         Position source = Position.from(arguments.get(0));
         Position destination = Position.from(arguments.get(1));
-    
+
         checkPieceCanMove(source, destination);
         checkCatchKing(destination);
         board.replace(source, destination);
@@ -92,13 +98,17 @@ public class ChessGame {
     public boolean isCatch() {
         return status == GameStatus.CATCH;
     }
-    
+
     public Board getBoard() {
         return board;
     }
 
     public Color getTurn() {
         return turn;
+    }
+
+    public GameStatus getStatus() {
+        return status;
     }
 }
 
