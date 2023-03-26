@@ -16,6 +16,7 @@ import chess.dto.SquareRenderer;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -100,16 +101,29 @@ public class ChessController {
 
         if (gameRoomDao.findByRoomName(chessGame.getRoomName()).isEmpty()) {
             gameRoomDao.save(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
-            boardDao.save(chessGame);
+            boardDao.save(createBoardDto(chessGame));
             return;
         }
 
         if (chessGame.isBothKingAlive()) {
-            boardDao.update(chessGame);
+            boardDao.update(createBoardDto(chessGame));
             return;
         }
 
         boardDao.deleteAllByRoomName(chessGame.getRoomName());
+    }
+
+    private List<BoardDto> createBoardDto(ChessGame chessGame) {
+        Chessboard board = chessGame.getChessboard();
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (Square square : board.getBoardMap().keySet()) {
+            String source = SquareRenderer.render(square);
+            String piece = PieceRenderer.render(board.getPieceAt(square));
+
+            boardDtoList.add(new BoardDto(source, piece, chessGame.getRoomName()));
+        }
+
+        return boardDtoList;
     }
 
     private Optional<List<String>> handleCommand() {

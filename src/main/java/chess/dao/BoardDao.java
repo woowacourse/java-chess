@@ -1,11 +1,6 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
-import chess.domain.board.Chessboard;
-import chess.domain.board.Square;
 import chess.dto.BoardDto;
-import chess.dto.PieceRenderer;
-import chess.dto.SquareRenderer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,20 +22,15 @@ public class BoardDao {
         }
     }
 
-    // TODO: 2023-03-24 서비스 객체를 만들어야 하나 ? DTO로 전달 받아야하기 떄문에...?
-    public void save(ChessGame chessGame) {
+    public void save(List<BoardDto> boardDtoList) {
         String query = "INSERT INTO board VALUES(?, ?, ?, ?)";
-        Chessboard board = chessGame.getChessboard();
         try (Connection connection = getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(query)) {
-            for (Square square : board.getBoardMap().keySet()) {
-                String source = SquareRenderer.render(square);
-                String piece = PieceRenderer.render(board.getPieceAt(square));
-
+            for (BoardDto boardDto : boardDtoList) {
                 prepareStatement.setString(1, null); // auto_increment
-                prepareStatement.setString(2, source);
-                prepareStatement.setString(3, piece);
-                prepareStatement.setString(4, chessGame.getRoomName());
+                prepareStatement.setString(2, boardDto.getSource());
+                prepareStatement.setString(3, boardDto.getPiece());
+                prepareStatement.setString(4, boardDto.getRoomName());
                 prepareStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -73,19 +63,15 @@ public class BoardDao {
         return result;
     }
 
-    public void update(ChessGame chessGame) {
+    public void update(List<BoardDto> boardDtoList) {
         String query = "UPDATE board SET piece = ? WHERE source = ? AND room_name = ?";
 
-        Chessboard board = chessGame.getChessboard();
         try (Connection connection = getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(query)) {
-            for (Square square : board.getBoardMap().keySet()) {
-                String source = SquareRenderer.render(square);
-                String piece = PieceRenderer.render(board.getPieceAt(square));
-
-                prepareStatement.setString(1, piece);
-                prepareStatement.setString(2, source);
-                prepareStatement.setString(3, chessGame.getRoomName());
+            for (BoardDto boardDto : boardDtoList) {
+                prepareStatement.setString(1, boardDto.getSource());
+                prepareStatement.setString(2, boardDto.getPiece());
+                prepareStatement.setString(3, boardDto.getRoomName());
                 prepareStatement.executeUpdate();
             }
         } catch (SQLException e) {

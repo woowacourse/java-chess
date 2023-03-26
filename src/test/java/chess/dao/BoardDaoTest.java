@@ -2,13 +2,19 @@ package chess.dao;
 
 import chess.domain.ChessGame;
 import chess.domain.RoomName;
+import chess.domain.board.Chessboard;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.dto.BoardDto;
+import chess.dto.PieceRenderer;
+import chess.dto.SquareRenderer;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -47,7 +53,7 @@ class BoardDaoTest {
 
         chessGame.move(source, target);
 
-        assertDoesNotThrow(() -> boardDao.save(chessGame));
+        assertDoesNotThrow(() -> boardDao.save(createBoardDtoList(chessGame)));
     }
 
     @DisplayName("DB에서 체스판을 불러올 수 있다.")
@@ -60,13 +66,24 @@ class BoardDaoTest {
     @Test
     void updateBoardTest() {
         ChessGame chessGame = new ChessGame(ROOM_NAME);
-        boardDao.save(chessGame);
+        boardDao.save(createBoardDtoList(chessGame));
 
         Square source = Square.getInstanceOf(File.B, Rank.TWO);
         Square target = Square.getInstanceOf(File.B, Rank.THREE);
         chessGame.move(source, target);
 
-        assertDoesNotThrow(() -> boardDao.update(chessGame));
+        assertDoesNotThrow(() -> boardDao.update(createBoardDtoList(chessGame)));
+    }
 
+    private List<BoardDto> createBoardDtoList(ChessGame chessGame) {
+        Chessboard board = chessGame.getChessboard();
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (Square square : board.getBoardMap().keySet()) {
+            String source = SquareRenderer.render(square);
+            String piece = PieceRenderer.render(board.getPieceAt(square));
+
+            boardDtoList.add(new BoardDto(source, piece, chessGame.getRoomName()));
+        }
+        return boardDtoList;
     }
 }
