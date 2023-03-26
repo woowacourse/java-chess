@@ -174,4 +174,14 @@ public class JdbcChessGameDao implements ChessGameDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteAll() {
+        final var gameQuery = "DELETE FROM game";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(gameQuery)) {
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
