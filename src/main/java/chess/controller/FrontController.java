@@ -11,11 +11,12 @@ import java.util.List;
 
 public class FrontController {
 
-
     private static final int NEW_ROOM_CREATION_ID = 0;
+    private final ErrorController errorController;
     private final Rooms rooms;
 
-    public FrontController(Rooms rooms) {
+    public FrontController(Rooms rooms, ErrorController errorController) {
+        this.errorController = errorController;
         this.rooms = rooms;
     }
 
@@ -28,10 +29,10 @@ public class FrontController {
     }
 
     private int selectRoomId(List<Integer> id) {
-        int selectedId = InputView.readRoomId();
+        int selectedId = errorController.RetryIfThrowsException(InputView::readRoomId);
         while (!id.contains(selectedId) && selectedId != NEW_ROOM_CREATION_ID) {
             OutputView.printNonExistRoomMessage();
-            selectedId = InputView.readRoomId();
+            selectedId = errorController.RetryIfThrowsException(InputView::readRoomId);
         }
         if (selectedId == NEW_ROOM_CREATION_ID) {
             selectedId = rooms.createNewRoom();
