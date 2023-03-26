@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.piece.Color;
+import chess.domain.state.command.Command;
 
 public abstract class Finished implements ChessState {
 
@@ -22,5 +23,10 @@ public abstract class Finished implements ChessState {
     @Override
     public ChessState finish() {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public ChessState changeStateByCommand(final Command command) {
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 }

@@ -18,7 +18,7 @@ public class Run extends Runnable {
             throw new IllegalArgumentException("이미 진행중입니다");
         }
         if (command.isEnd()) {
-            return new End(turn);
+            return new End();
         }
         validateSize(command);
         return this;
@@ -42,6 +42,6 @@ public class Run extends Runnable {
 
     @Override
     public ChessState finish() {
-        return new End(turn);
+        return new Checkmate(turn);
     }
 }

@@ -71,6 +71,10 @@ public class OutputView {
     }
 
     public static void printResult(final String winner) {
+        if (winner == null) {
+            System.out.println("게임이 종료되었습니다.");
+            return;
+        }
         System.out.printf("%s이(가) 이겼습니다.%n", winner);
     }
 }

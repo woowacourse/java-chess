@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Turn;
 import chess.domain.piece.Color;
@@ -11,14 +11,15 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("Run 은")
-class RunTest {
+@DisplayName("Checkmate 는")
+class CheckmateTest {
 
     @Test
-    void 종료_상태로_상태를_바꿀_수_있다() {
+    void 종료_상태로_상태를_바꾸면_예외처리() {
         // given
-        ChessState state = new Run(new Turn(Color.WHITE));
+        final ChessState state = new Checkmate(new Turn(Color.WHITE));
         // when & then
-        assertThat(state.finish()).isInstanceOf(Checkmate.class);
+        assertThatThrownBy(state::finish)
+                .isInstanceOf(IllegalStateException.class);
     }
 }
