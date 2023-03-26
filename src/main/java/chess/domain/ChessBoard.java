@@ -87,6 +87,15 @@ public class ChessBoard {
                 .sum();
     }
 
+    public boolean isKingDead() {
+        final int kingsOnBoard = (int) pieces.values()
+                .stream()
+                .filter(piece -> Objects.equals(piece.getName(), PieceInfo.KING.name()))
+                .count();
+
+        return kingsOnBoard == 1;
+    }
+
     public Map<Square, Piece> getPieces() {
         return Map.copyOf(pieces);
     }

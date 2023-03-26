@@ -561,4 +561,43 @@ class ChessBoardTest {
             }
         }
     }
+
+    @Nested
+    @DisplayName("isKingDead 메서드는")
+    class isKingDead {
+
+        Map<Square, Piece> pieces;
+
+        @BeforeEach
+        void empty_chessboard() {
+            pieces = new HashMap<>();
+            for (Rank rank : Rank.values()) {
+                for (File file : File.values()) {
+                    pieces.put(Square.of(rank, file), EmptyPiece.getInstance());
+                }
+            }
+        }
+
+        @Nested
+        @DisplayName("체스보드 내에")
+        class given_chessBoard {
+
+            @DisplayName("킹이 하나만 존재할 경우 true를 반환한다.")
+            @Test
+            void it_returns_true_when_one_king_dead() {
+                pieces.put(Square.of(Rank.SEVEN, File.C), King.of(Side.BLACK));
+                ChessBoard chessBoard = new ChessBoard(pieces);
+                assertThat(chessBoard.isKingDead()).isTrue();
+            }
+
+            @DisplayName("양쪽 킹이 다 존재할 경우 false를 반환한다.")
+            @Test
+            void it_returns_flase_when_both_king_live() {
+                pieces.put(Square.of(Rank.SEVEN, File.C), King.of(Side.BLACK));
+                pieces.put(Square.of(Rank.TWO, File.H), King.of(Side.WHITE));
+                ChessBoard chessBoard = new ChessBoard(pieces);
+                assertThat(chessBoard.isKingDead()).isFalse();
+            }
+        }
+    }
 }
