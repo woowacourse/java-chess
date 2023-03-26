@@ -35,4 +35,9 @@ public class King extends Piece {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public double score() {
+        return 0;
+    }
 }

@@ -94,4 +94,13 @@ class RookTest {
         // when & then
         assertThat(rook.isPawn()).isFalse();
     }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Rook rook = new Rook(Color.WHITE, PiecePosition.of('a', 1));
+
+        // when & then
+        assertThat(rook.score()).isEqualTo(5);
+    }
 }

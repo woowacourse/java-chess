@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
@@ -66,4 +67,10 @@ public abstract class Piece implements Cloneable {
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
+
+    public abstract double score();
+
+    public File file() {
+        return piecePosition.file();
+    }
 }

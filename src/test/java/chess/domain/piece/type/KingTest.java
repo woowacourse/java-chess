@@ -111,4 +111,13 @@ class KingTest {
         // when & then
         assertThat(king.isPawn()).isFalse();
     }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final King king = new King(Color.WHITE, PiecePosition.of('e', 1));
+
+        // when & then
+        assertThat(king.score()).isEqualTo(0);
+    }
 }

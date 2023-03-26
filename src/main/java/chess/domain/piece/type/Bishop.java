@@ -33,4 +33,9 @@ public class Bishop extends Piece {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public double score() {
+        return 3;
+    }
 }

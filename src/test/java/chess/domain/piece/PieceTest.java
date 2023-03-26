@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
@@ -42,6 +43,11 @@ class PieceTest {
             public boolean isPawn() {
                 return false;
             }
+
+            @Override
+            public double score() {
+                return 0;
+            }
         });
     }
 
@@ -81,6 +87,11 @@ class PieceTest {
         public boolean isPawn() {
             return false;
         }
+
+        @Override
+        public double score() {
+            return 0;
+        }
     }
 
     @Test
@@ -90,5 +101,14 @@ class PieceTest {
         // when & then
         assertThatThrownBy(() -> myPiece.wayPointsWithCondition(of('a', 1)))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 어느_File에_위치해있는지_알_수_있다() {
+        // given
+        Piece myPiece = new MyPiece(Color.BLACK, of('a', 1));
+        File file = new File('a');
+        // when & then
+        assertThat(myPiece.file()).isEqualTo(file);
     }
 }

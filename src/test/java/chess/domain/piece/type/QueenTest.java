@@ -132,4 +132,13 @@ class QueenTest {
         // when & then
         assertThat(queen.isPawn()).isFalse();
     }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Queen queen = new Queen(Color.WHITE, PiecePosition.of('d', 1));
+
+        // when & then
+        assertThat(queen.score()).isEqualTo(9);
+    }
 }

@@ -201,4 +201,13 @@ class PawnTest {
         // when & then
         assertThat(pawn.isPawn()).isTrue();
     }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Pawn pawn = new Pawn(Color.WHITE, PiecePosition.of('a', 2));
+
+        // when & then
+        assertThat(pawn.score()).isEqualTo(1);
+    }
 }

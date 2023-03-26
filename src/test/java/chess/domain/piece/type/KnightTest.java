@@ -91,4 +91,13 @@ class KnightTest {
         // when & then
         assertThat(knight.isPawn()).isFalse();
     }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Knight knight = new Knight(Color.WHITE, PiecePosition.of('b', 1));
+
+        // when & then
+        assertThat(knight.score()).isEqualTo(2.5);
+    }
 }

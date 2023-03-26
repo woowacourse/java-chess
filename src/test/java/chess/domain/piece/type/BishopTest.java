@@ -94,4 +94,13 @@ class BishopTest {
         // when & then
         assertThat(bishop.isPawn()).isFalse();
     }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Bishop bishop = new Bishop(Color.WHITE, PiecePosition.of('c', 1));
+
+        // when & then
+        assertThat(bishop.score()).isEqualTo(3);
+    }
 }

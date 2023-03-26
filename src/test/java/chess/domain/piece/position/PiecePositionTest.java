@@ -94,4 +94,14 @@ class PiecePositionTest {
         // when & then
         assertThat(position.direction(destination)).isEqualTo(Direction.NORTHWEST);
     }
+
+    @Test
+    void 어느_File에_위치해있는지_알_수_있다() {
+        // given
+        final PiecePosition position = PiecePosition.of('a', 7);
+        final File file = new File('a');
+
+        // when & then
+        assertThat(position.file()).isEqualTo(file);
+    }
 }
