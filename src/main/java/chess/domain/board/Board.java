@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static chess.domain.PieceScore.PAWN_WITH_SAME_FILE;
 
-import chess.dao.ChessBoardDao;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
@@ -18,14 +17,12 @@ import java.util.stream.Collectors;
 public class Board {
 
     private final Map<Position, Piece> board;
-    private final ChessBoardDao chessBoardDao;
 
-    private Board(Map<Position, Piece> board, ChessBoardDao chessBoardDao) {
+    private Board(Map<Position, Piece> board) {
         this.board = board;
-        this.chessBoardDao = chessBoardDao;
     }
 
-    public static Board init(long chessGameId, ChessBoardDao chessBoardDao) {
+    public static Board init() {
         Map<Position, Piece> setting = new HashMap<>();
 
         for (PieceSettings pieceSetting : PieceSettings.values()) {
@@ -34,13 +31,12 @@ public class Board {
         for (EmptySettings emptySetting : EmptySettings.values()) {
             setting.put(emptySetting.getPosition(), emptySetting.getPiece());
         }
-        chessBoardDao.save(chessGameId, setting);
 
-        return new Board(setting, chessBoardDao);
+        return new Board(setting);
     }
 
-    public static Board setting(Map<Position, Piece> board, ChessBoardDao chessBoardDao) {
-        return new Board(board, chessBoardDao);
+    public static Board setting(Map<Position, Piece> board) {
+        return new Board(board);
     }
 
     public boolean isNotTurn(Position source, Team turn) {
@@ -82,14 +78,11 @@ public class Board {
         Piece targetPiece = board.get(target);
 
         board.put(target, sourcePiece);
-        chessBoardDao.update(target, sourcePiece);
         if (!targetPiece.isSameTeam(Team.EMPTY)) {
             board.put(source, new Empty(Team.EMPTY));
-            chessBoardDao.update(source, new Empty(Team.EMPTY));
             return;
         }
         board.put(source, targetPiece);
-        chessBoardDao.update(source, targetPiece);
     }
 
     public boolean isEmptyPiece(Position source) {

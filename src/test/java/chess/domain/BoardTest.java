@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.dao.InMemoryChessBoardDao;
 import chess.domain.board.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +15,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.init(1, new InMemoryChessBoardDao());
+        board = Board.init();
     }
 
     @Test

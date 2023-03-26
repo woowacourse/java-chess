@@ -1,10 +1,7 @@
 package chess.domain;
 
-import chess.dao.ChessBoardDao;
-import chess.dao.ChessGameDao;
 import chess.domain.board.Board;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,31 +10,20 @@ public class ChessGame {
     private final long id;
     private final Board board;
     private Team turn;
-    private final ChessGameDao chessGameDao;
 
-    private ChessGame(long id, Board board, Team turn, ChessGameDao chessGameDao) {
+    private ChessGame(long id, Board board, Team turn) {
         this.id = id;
         this.board = board;
         this.turn = turn;
-        this.chessGameDao = chessGameDao;
     }
 
-    public static ChessGame createGame(ChessGameDao chessGameDao, ChessBoardDao chessBoardDao) {
-        long id = chessGameDao.create();
-        Board initBoard = Board.init(id, chessBoardDao);
-        return new ChessGame(id, initBoard, Team.getStartTeam(), chessGameDao);
+    public static ChessGame createGame(long id) {
+        Board initBoard = Board.init();
+        return new ChessGame(id, initBoard, Team.getStartTeam());
     }
 
-    public static ChessGame continueGame(long id, ChessGameDao chessGameDao) {
-        return chessGameDao.findById(id);
-    }
-
-    public static ChessGame setting(long id, Board board, Team turn, ChessGameDao chessGameDao) {
-        return new ChessGame(id, board, turn, chessGameDao);
-    }
-
-    public static List<Integer> showProgressGame(ChessGameDao chessGameDao) {
-        return chessGameDao.findAll();
+    public static ChessGame setting(long id, Board board, Team turn) {
+        return new ChessGame(id, board, turn);
     }
 
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
@@ -45,7 +31,6 @@ public class ChessGame {
         validateTurn(source);
         board.move(source, target);
         turn = turn.reverse();
-        chessGameDao.updateTurn(this);
     }
 
     private void validateEmpty(Position source) {

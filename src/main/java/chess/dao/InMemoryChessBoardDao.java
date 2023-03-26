@@ -3,15 +3,14 @@ package chess.dao;
 import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class InMemoryChessBoardDao implements ChessBoardDao {
 
     private Board board;
 
     @Override
-    public void save(long chessGameId, Map<Position, Piece> board) {
-        this.board = Board.setting(board, new InMemoryChessBoardDao());
+    public void save(long chessGameId, Board board) {
+        this.board = Board.setting(board.getBoard());
     }
 
     @Override

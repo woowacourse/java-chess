@@ -3,12 +3,14 @@ package chess.controller;
 import static chess.view.PositionConverter.convertToSourcePosition;
 import static chess.view.PositionConverter.convertToTargetPosition;
 
-import chess.dao.DbChessBoardDao;
-import chess.dao.DbChessGameDao;
+import chess.dao.ChessBoardDao;
+import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -19,16 +21,22 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameDao chessGameDao;
+    private final ChessBoardDao chessBoardDao;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+
+    public ChessController(InputView inputView, OutputView outputView,
+                           ChessGameDao chessGameDao, ChessBoardDao chessBoardDao) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameDao = chessGameDao;
+        this.chessBoardDao = chessBoardDao;
     }
 
     public void run() {
         outputView.printStartMessage();
         inputStartCommand();
-        outputView.printGameList(ChessGame.showProgressGame(new DbChessGameDao()));
+        outputView.printGameList(chessGameDao.findAll());
         String gameCommand = inputGameCommand();
         ChessGame chessGame = startChessGame(gameCommand);
         progress(chessGame);
@@ -36,11 +44,13 @@ public class ChessController {
 
     private ChessGame startChessGame(String gameCommand) {
         if (GameCommand.isNew(gameCommand)) {
-            ChessGame chessGame = ChessGame.createGame(new DbChessGameDao(), new DbChessBoardDao());
-            outputView.printGameId(chessGame.getId());
+            long chessGameId = chessGameDao.create();
+            ChessGame chessGame = ChessGame.createGame(chessGameId);
+            chessBoardDao.save(chessGameId, chessGame.getBoard());
+            outputView.printGameId(chessGameId);
             return chessGame;
         }
-        return ChessGame.continueGame(Integer.parseInt(gameCommand), new DbChessGameDao());
+        return chessGameDao.findById(Integer.parseInt(gameCommand));
     }
 
     private void inputStartCommand() {
@@ -68,6 +78,7 @@ public class ChessController {
             outputView.printBoard(chessGame.getBoard());
             String command = inputCommand();
             play(chessGame, command);
+            chessGameDao.updateTurn(chessGame);
             onGoing = !isGameOver(chessGame) && !GameCommand.isEnd(command);
         }
     }
@@ -95,10 +106,23 @@ public class ChessController {
 
     private void movePiece(ChessGame chessGame, Position source, Position target) {
         try {
+            Piece sourcePiece = chessGame.getBoard().getBoard().get(source);
+            Piece targetPiece = chessGame.getBoard().getBoard().get(target);
+
             chessGame.movePiece(source, target);
+            updateBoard(source, target, sourcePiece, targetPiece);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
         }
+    }
+
+    private void updateBoard(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
+        chessBoardDao.update(target, sourcePiece);
+        if (!targetPiece.isSameTeam(Team.EMPTY)) {
+            chessBoardDao.update(source, new Empty(Team.EMPTY));
+            return;
+        }
+        chessBoardDao.update(source, targetPiece);
     }
 
     private boolean isGameOver(ChessGame chessGame) {

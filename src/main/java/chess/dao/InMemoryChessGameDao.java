@@ -10,6 +10,7 @@ public class InMemoryChessGameDao implements ChessGameDao {
 
     @Override
     public long create() {
+        this.chessGame = ChessGame.createGame(1);
         return 1;
     }
 
