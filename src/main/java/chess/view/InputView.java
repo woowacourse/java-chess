@@ -9,7 +9,7 @@ public final class InputView {
     private static final String INPUT_ERROR_MESSAGE = "빈 값을 입력할 수 없습니다.";
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static List<String> getCommand() {
+    public static List<String> getCommands() {
         final String command = readCommand();
         return Arrays.asList(command.split(DELIMITER));
     }

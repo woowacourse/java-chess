@@ -26,7 +26,7 @@ public final class ChessHandler {
 
     private Controller play(final ChessGame chessGame, Controller controller) {
         try {
-            final List<String> commands = InputView.getCommand();
+            final List<String> commands = InputView.getCommands();
             final Command command = Command.findCommand(commands);
             controller = controller.checkCommand(command,
                     () -> OutputView.printBoard(
