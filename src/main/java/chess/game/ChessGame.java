@@ -4,12 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import chess.dto.SquareResponse;
 
-import java.util.List;
 import java.util.Objects;
-
-import static java.util.stream.Collectors.toList;
 
 public class ChessGame {
 
@@ -61,26 +57,16 @@ public class ChessGame {
         return !turn.isCorrectWith(sourcePiece);
     }
 
-    public List<SquareResponse> getBoard() {
-        return board.getBoard().entrySet().stream()
-                .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
-                .collect(toList());
-    }
-
     public Board getChessBoard() {
-        return this.board;
+        return new Board(board.getBoard());
     }
 
     public Team getCurrentTeam() {
         return turn.getTeam();
     }
 
-    public Team getLosingTeam() {
-        return turn.getTeam();
-    }
-
-    public Team getWinningTeam() {
-        return turn.next().getTeam();
+    public Turn getCurrentTurn() {
+        return new Turn(turn.getTeam());
     }
 
     public int getId() {
