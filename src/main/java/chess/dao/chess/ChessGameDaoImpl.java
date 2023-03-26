@@ -5,7 +5,7 @@ import chess.entity.ChessGameEntity;
 
 import java.util.Optional;
 
-public class ChessGameDaoImpl implements ChessGameDao {
+public final class ChessGameDaoImpl implements ChessGameDao {
     private final JdbcTemplate jdbcTemplate;
 
     public ChessGameDaoImpl(final JdbcTemplate jdbcTemplate) {

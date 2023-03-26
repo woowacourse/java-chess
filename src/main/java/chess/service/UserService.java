@@ -6,7 +6,7 @@ import chess.entity.UserEntity;
 
 import java.util.Optional;
 
-public class UserService {
+public final class UserService {
     private final UserDao userDao;
 
     public UserService(final UserDao userDao) {

@@ -5,7 +5,7 @@ import chess.entity.UserEntity;
 
 import java.util.Optional;
 
-public class UserDaoImpl implements UserDao {
+public final class UserDaoImpl implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
 

@@ -2,7 +2,7 @@ package chess.entity;
 
 import java.util.Objects;
 
-public class UserEntity {
+public final class UserEntity {
     private final Long id;
     private final String name;
 
