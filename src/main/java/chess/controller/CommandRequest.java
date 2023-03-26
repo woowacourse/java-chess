@@ -45,10 +45,10 @@ public class CommandRequest {
 
     public static CommandRequest from(final List<String> request) {
         final GameCommand command = GameCommand.from(request.get(COMMAND_INDEX));
-        if (request.size() == GameCommand.MOVE_COMMAND_SIZE) {
+        if (request.size() == GameCommand.MOVE_COMMAND_SIZE && command == GameCommand.MOVE) {
             return new CommandRequest(command, request.get(FROM_POSITION_INDEX), request.get(TO_POSITION_INDEX));
         }
-        if (request.size() == GameCommand.LOAD_COMMAND_SIZE) {
+        if (request.size() == GameCommand.LOAD_COMMAND_SIZE && command == GameCommand.LOAD) {
             return new CommandRequest(command, request.get(GAME_ID_INDEX));
         }
         if (request.size() == GameCommand.DEFAULT_COMMAND_SIZE) {

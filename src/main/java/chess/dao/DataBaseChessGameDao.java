@@ -78,4 +78,18 @@ public class DataBaseChessGameDao implements ChessGameDao {
             throw new IllegalArgumentException("게임이 로딩되지 않습니다.");
         }
     }
+
+    @Override
+    public void deleteGame(final long gameId) {
+        final String deleteBoardQuery =
+                "DELETE FROM chess_game WHERE id = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(deleteBoardQuery)) {
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

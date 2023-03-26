@@ -118,7 +118,16 @@ public class DataBaseBoardDao implements BoardDao {
     }
 
     @Override
-    public void deleteGame() {
-
+    public void deleteBoard(final long gameId) {
+        final String deleteBoardQuery =
+                "DELETE FROM board WHERE chess_game_id = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(deleteBoardQuery)) {
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

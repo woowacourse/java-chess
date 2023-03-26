@@ -12,5 +12,5 @@ public interface BoardDao {
 
     Board loadBoard(final Long gameId, final Turn turn);
 
-    void deleteGame();
+    void deleteBoard(long gameId);
 }

@@ -36,6 +36,8 @@ public class Started implements State {
         CHESS_GAME_DAO.updateTurn(board.getTurn(), gameId);
         BOARD_DAO.updatePiecePosition(from, to, gameId);
         if (board.isKingDead()) {
+            BOARD_DAO.deleteBoard(gameId);
+            CHESS_GAME_DAO.deleteGame(gameId);
             return End.getInstance();
         }
         return this;

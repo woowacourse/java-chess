@@ -12,4 +12,6 @@ public interface ChessGameDao {
     void updateTurn(final Turn turn, final long gameId);
 
     Turn loadTurn(long gameId);
+
+    void deleteGame(long gameId);
 }
