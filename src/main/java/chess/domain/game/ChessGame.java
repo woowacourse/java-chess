@@ -13,6 +13,12 @@ public final class ChessGame {
 
     public ChessGame() {
         this.chessBoard = ChessBoard.getInstance(this);
+        this.currentTeamColor = TeamColor.WHITE;
+    }
+
+    public ChessGame(final ChessBoard chessBoard, final TeamColor turn) {
+        this.chessBoard = chessBoard;
+        this.currentTeamColor = turn;
     }
 
     public void setUp(final Position source, final Position target, final TeamColor teamColor) {

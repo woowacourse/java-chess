@@ -14,7 +14,7 @@ public final class ChessBoard {
 
     private final Map<Position, Piece> board;
 
-    private ChessBoard(final Map<Position, Piece> board) {
+    public ChessBoard(final Map<Position, Piece> board) {
         this.board = board;
     }
 
