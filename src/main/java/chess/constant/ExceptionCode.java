@@ -1,8 +1,5 @@
 package chess.constant;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum ExceptionCode {
     INVALID_COMMAND_PARAMETER,
     UNDEFINED_COMMAND_TYPE,
@@ -17,16 +14,4 @@ public enum ExceptionCode {
     GAME_ALREADY_RUNNING,
     INVALID_TURN,
     GAME_OVER_STATE;
-
-    private static final Map<String, ExceptionCode> CODE_BY_NAME = new HashMap<>();
-
-    static {
-        for (ExceptionCode code : values()) {
-            CODE_BY_NAME.put(code.name(), code);
-        }
-    }
-
-    public static ExceptionCode findByName(String name) {
-        return CODE_BY_NAME.get(name);
-    }
 }

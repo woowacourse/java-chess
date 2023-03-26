@@ -137,8 +137,12 @@ public class OutputView {
     }
 
     public void printErrorMessage(final RuntimeException exception) {
-        final String exceptionCodeName = exception.getMessage();
-        final ExceptionCode code = ExceptionCode.findByName(exceptionCodeName);
-        System.out.println(EXCEPTION_MESSAGE_SIGN + EXCEPTION_MESSAGES.getOrDefault(code, exceptionCodeName));
+        try {
+            final String exceptionCodeName = exception.getMessage();
+            final ExceptionCode code = ExceptionCode.valueOf(exceptionCodeName);
+            System.out.println(EXCEPTION_MESSAGE_SIGN + EXCEPTION_MESSAGES.getOrDefault(code, exceptionCodeName));
+        } catch (RuntimeException e) {
+            System.out.println(EXCEPTION_MESSAGE_SIGN + exception.getMessage());
+        }
     }
 }
