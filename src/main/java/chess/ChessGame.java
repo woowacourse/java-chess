@@ -39,7 +39,8 @@ public class ChessGame {
     private void circuitRank(ChessBoardDao chessBoardDao, int gameIdx, int file) {
         for (int rank = 1; rank <= 8; rank++) {
             chessBoardDao.addBoard(gameIdx, file, rank,
-                    chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getShape().name());
+                    chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getShape().name(),
+                    chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getSide().name());
         }
     }
 
@@ -48,9 +49,11 @@ public class ChessGame {
         ChessPiece chessPiece = findChessPiece(sourcePosition);
         copyChessPiece(chessPiece, targetPosition);
         chessBoardDao.movePiece(gameIdx, targetPosition.getXPosition(), targetPosition.getYPosition(),
-                chessBoard.getChessPieceByPosition(sourcePosition).getShape().name());
+                chessBoard.getChessPieceByPosition(sourcePosition).getShape().name(),
+                chessBoard.getChessPieceByPosition(sourcePosition).getSide().name());
         chessBoardDao.movePiece(gameIdx, sourcePosition.getXPosition(), sourcePosition.getYPosition(),
-                Shape.EMPTY.name());
+                Shape.EMPTY.name(),
+                Side.EMPTY.name());
         removeChessPiece(sourcePosition);
     }
 
@@ -80,5 +83,9 @@ public class ChessGame {
 
     public double takeScore(Side side) {
         return chessBoard.calculateScore(side);
+    }
+
+    public int getGameIdx() {
+        return gameIdx;
     }
 }

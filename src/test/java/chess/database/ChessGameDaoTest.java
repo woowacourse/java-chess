@@ -11,7 +11,7 @@ class ChessGameDaoTest {
     @Test
     @DisplayName("게임의 생성 정보를 올바르게 DB에 저장한다.")
     void shouldSuccessCreateGame() {
-        ChessBoard chessBoard = ChessBoard.generateChessBoard();
-        Assertions.assertDoesNotThrow(() -> new ChessGame(chessBoard));
+        ChessBoard chessBoard = ChessBoard.generateChessBoard(0);
+        Assertions.assertDoesNotThrow(() -> new ChessGame(chessBoard, 0));
     }
 }

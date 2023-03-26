@@ -38,34 +38,33 @@ public class ChessBoard {
         for (int file = 1; file <= 8; file++) {
             for (int rank = 1; rank <= 8; rank++) {
                 ChessBoardDao chessBoardDao = new ChessBoardDao();
-                String pieceType = chessBoardDao.findPiece(gameIdx, file, rank);
+                String pieceType = chessBoardDao.findPieceType(gameIdx, file, rank);
+                Side pieceSide = Side.convertSide(chessBoardDao.findPieceSide(gameIdx, file, rank));
                 if(pieceType.equals(Shape.PAWN.name())){
-                    System.out.print("whitePawn 위치하는곳");
-                    System.out.println("file = " + file + "rank = "+ rank);
-                    chessBoard.put(Position.initPosition(file, rank), new Pawn(Shape.PAWN, Side.WHITE));
+                    chessBoard.put(Position.initPosition(file, rank), new Pawn(Shape.PAWN, pieceSide));
                 }
                 if(pieceType.equals(Shape.ROOK.name())){
-                    chessBoard.put(Position.initPosition(file, rank), new Rook(Shape.ROOK, Side.WHITE));
+                    chessBoard.put(Position.initPosition(file, rank), new Rook(Shape.ROOK, pieceSide));
 
                 }
                 if(pieceType.equals(Shape.KNIGHT.name())){
-                    chessBoard.put(Position.initPosition(file, rank), new Knight(Shape.KNIGHT, Side.WHITE));
+                    chessBoard.put(Position.initPosition(file, rank), new Knight(Shape.KNIGHT, pieceSide));
 
                 }
                 if(pieceType.equals(Shape.BISHOP.name())){
-                    chessBoard.put(Position.initPosition(file, rank), new Bishop(Shape.BISHOP, Side.WHITE));
+                    chessBoard.put(Position.initPosition(file, rank), new Bishop(Shape.BISHOP, pieceSide));
 
                 }
                 if(pieceType.equals(Shape.KING.name())){
-                    chessBoard.put(Position.initPosition(file, rank), new King(Shape.KING, Side.WHITE));
+                    chessBoard.put(Position.initPosition(file, rank), new King(Shape.KING, pieceSide));
 
                 }
                 if(pieceType.equals(Shape.QUEEN.name())){
-                    chessBoard.put(Position.initPosition(file, rank), new Queen(Shape.QUEEN, Side.WHITE));
+                    chessBoard.put(Position.initPosition(file, rank), new Queen(Shape.QUEEN, pieceSide));
 
                 }
                 if(pieceType.equals(Shape.EMPTY.name())){
-                    chessBoard.put(Position.initPosition(file, rank), new Empty(Shape.EMPTY, Side.EMPTY));
+                    chessBoard.put(Position.initPosition(file, rank), new Empty(Shape.EMPTY, pieceSide));
                 }
             }
         }

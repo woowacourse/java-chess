@@ -48,7 +48,6 @@ public class ChessController {
     private boolean command(Side side) {
         try {
             List<String> command = InputView.readPlayGameCommand();
-            System.out.println("command = " + command);
             if (isMoveCommand(side, command)) {
                 return !chessBoard.checkKingIsDead();
             }
