@@ -14,6 +14,10 @@ public final class WhitePawn extends Pawn {
         super(Color.WHITE);
     }
 
+    public WhitePawn(Color color) {
+        super(Color.WHITE);
+    }
+
     @Override
     protected Set<Position> computePath(final Position source, final Position target) {
         if (!canPawnMove(source, target, UP)) {

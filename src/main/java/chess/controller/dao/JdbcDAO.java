@@ -6,6 +6,8 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Kind;
 import chess.domain.piece.Piece;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
 public class JdbcDAO implements ChessDAO{
@@ -21,19 +23,22 @@ public class JdbcDAO implements ChessDAO{
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
 
-                final var query = "INSERT INTO chessGame VALUES(?, ?, ?, ?)";
+                final var query = "INSERT INTO chessGame VALUES(?, ?, ?, ?, ?)";
 
                 Position position = new Position(file, rank);
                 Square square = board.getSquare(position);
                 Piece piece = square.getPiece();
                 Color color = piece.getColor();
                 Kind kind = piece.getKind();
+                Class<?> pieceClass = piece.getClass();
+
                 try (final var connection = Loader.getConnection();
                         final var preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, file.name());
                     preparedStatement.setString(2, rank.name());
                     preparedStatement.setString(3, color.name());
                     preparedStatement.setString(4, kind.name());
+                    preparedStatement.setString(5, pieceClass.getName());
                     preparedStatement.executeUpdate();
                 } catch (final SQLException e) {
                     throw new RuntimeException(e);
@@ -57,17 +62,29 @@ public class JdbcDAO implements ChessDAO{
                 File squareFile = File.valueOf(resultSet.getString("square_file"));
                 Rank squareRank = Rank.valueOf(resultSet.getString("square_rank"));
                 Color color = Color.valueOf(resultSet.getString("piece_color"));
-                Kind kind = Kind.valueOf(resultSet.getString("piece_kind"));
+                //Kind kind = Kind.valueOf(resultSet.getString("piece_kind"));
+                String className = resultSet.getString("class_name");
 
-                PieceEntity pieceEntity = new PieceEntity(color, kind);
-                Piece piece = pieceEntity.getPiece();
-                Square square = new Square(piece);
-                Position position = new Position(squareFile ,squareRank);
-                board.set(position, square);
+                try{
+                    Class<?> pieceClass = Class.forName(className);
+                    Constructor<?> pieceClassConstructor = pieceClass.getConstructor(Color.class);
+                    Piece piece = (Piece) pieceClassConstructor.newInstance(color);
+
+                    Square square = new Square(piece);
+                    Position position = new Position(squareFile ,squareRank);
+                    board.set(position, square);
+
+                } catch (ClassNotFoundException | NoSuchMethodException |
+                         InstantiationException | IllegalAccessException |
+                         IllegalArgumentException | InvocationTargetException e) {
+                    throw new IllegalArgumentException(e.getMessage());
+                }
+
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+
         return new ChessGame(board, Color.WHITE);
     }
 
