@@ -1,10 +1,49 @@
 # java-chess
 
-체스 미션 저장소
+콘솔을 통해 체스 게임을 할 수 있는 자바 어플리케이션 저장소
 
-## 우아한테크코스 코드리뷰
+- 여러 개의 게임 방을 만들고, 입장할 수 있다.
+- 게임 도중 방을 나간 뒤 다른 방에 입장할 수 있다.
+- 게임 도중 방을 나가거나, 어플리케이션을 종료해도 재입장해 게임을 정상 재개할 수 있다.
+- 게임의 승패가 결정나 OVER 되면, 진영 별 점수와 이긴 진영을 확인할 수 있다.
+- OVER 상태의 게임 방에는 재입장할 수 없다.
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+## 실행 환경 참고 사항
+
+### 데이터베이스
+
+- 어플리케이션 실행 전, `java-chess/docker` 경로에서 아래 명령어로 MySQL DB 서버를 실행해야 한다.
+
+```
+docker-compose -p chess up -d
+```
+
+- DB 서버 중지 시에는 아래 명령어를 사용한다.
+
+```
+docker-compose -p chess down
+```
+
+- docker 파일 빌드로 db 생성 시 `docker/init/init.sql`이 자동 실행된다.
+- `chess` DB에 테이블 `board_pieces`, `board_statuses`가 생성되었다면 성공적으로 초기화된 것이다.
+
+### 콘솔 스크립트
+
+- `WHITE` 진영이 King을 잡아 승리하도록 하는 스크립트
+- 아래 명령어를 순서대로 실행할 수 있다. (DB에 999번 방 정보가 없다고 가정)
+
+```
+start
+999
+move d2 d4
+move e7 e5
+move d4 d5
+move e8 e7
+move d5 d6
+move a7 a6
+move d6 e7
+status
+```
 
 ## 기능 목록
 
@@ -40,17 +79,17 @@
 
 ### 시퀀스 다이어그램
 
-- move 명령에 대한 도메인 시퀀스 다이어그램
+- move 명령에 대한 도메인 시퀀스 다이어그램 (DB 적용 로직 생략)
 
 ```mermaid
 sequenceDiagram
 
 	InputView -->> Controller: move 명령어 입력
 
-	Controller ->> ChessGame: MOVE 명령어, 출발지, 도착지 위치 전달
-	ChessGame ->> ChessBoard: 출발지, 도착지 위치 전달, move 명령
+	Controller ->> ChessGameService: MOVE 명령어, 출발지, 도착지 위치 전달
+	ChessGameService ->> ChessBoard: 출발지, 도착지 위치 전달, move 명령
 
-  ChessBoard ->> Piece: 출발지에 위치한 말 확인
+    ChessBoard ->> Piece: 출발지에 위치한 말 확인
 
 	ChessBoard ->> Piece: 확인한 말에 출발지와 이동 방향을 전달
 
@@ -72,40 +111,45 @@ sequenceDiagram
 	ChessBoard ->> ChessBoard: 체크 확인(체크이면 게임 종료 처리)
 
 	ChessBoard ->> ChessBoard: 다른 말들의 위치를 고려해 체스판에 이동 결과 반영
-	ChessBoard -->> ChessGame: 게임 진행 중이면 체스판 정보 반환
+	ChessBoard -->> ChessGameService: 게임 진행 중이면 체스판 정보 반환
 
-	ChessGame -->> Controller: 체스판 정보 반환
+	ChessGameService -->> Controller: 체스판 정보 반환
 
 ```
 
-- status 명령에 대한 도메인 시퀀스 다이어그램
+- status 명령에 대한 도메인 시퀀스 다이어그램 (DB 적용 로직 생략)
 
 ```mermaid
 sequenceDiagram
 
 	InputView -->> Controller: status 명령어 입력
-	Controller ->> ChessGame: 게임 현황 정보 요청
+	Controller ->> ChessGameService: 게임 현황 정보 요청
 
-	ChessGame ->> ChessGame: 게임 상태 검증
-	ChessGame ->> ChessBoard: 진영 별 점수 요청
+	ChessGameService ->> ChessGameService: 게임 상태 검증
+	ChessGameService ->> ChessBoard: 진영 별 점수 요청
 	Piece -->> ChessBoard: 말의 점수 반환
 	ChessBoard ->> ChessBoard: 진영 별 말의 점수 합산
-	ChessBoard -->> ChessGame: 진영 별 점수 반환
-	ChessBoard -->> ChessGame: 승리한 진영 반환
+	ChessBoard -->> ChessGameService: 진영 별 점수 반환
+	ChessBoard -->> ChessGameService: 승리한 진영 반환
 
-	ChessGame -->> Controller: 게임 결과 정보 반환
+	ChessGameService -->> Controller: 게임 결과 정보 반환
 ```
 
 ### 도메인 기능
 
-- ChessGame
+- ChessGameService
     - [x] 게임 상태를 관리한다. (READY, RUNNING, OVER)
     - [x] 요청을 받아 상태를 확인하고 기능을 수행한다.
+        - [x] 데이터베이스로부터 필요한 정보를 가져오거나, 반영한다.
     - [x] 한 턴의 이동을 수행한 뒤, 게임을 끝내야 하는지 확인한다.
     - [x] 게임을 끝내야 하면 게임 상태를 OVER 로 변경한다.
     - [x] 게임 결과 정보를 반환한다.
         - [x] 이긴 진영을 확인한다.
         - [x] 진영 별 점수를 확인한다.
+- ChessBoardService
+    - [x] 데이터베이스에서 입장 가능한 방 번호를 모두 조회한다.
+    - [x] 데이터베이스에 체스판 정보를 업데이트한다. (위치 정보, 상태 정보)
+    - [X] 방 번호에 따른 체스판 정보를 조회한다.
 - ChessBoard
     - [x] 비어 있는 체스판을 생성한다.
         - [x] 체스판에 초기 말을 세팅한다.
@@ -156,6 +200,7 @@ sequenceDiagram
     - [x] 말의 타입과 색에 따라 이름을 출력한다.
     - [x] 게임 오버 시 안내문을 출력한다.
     - [x] 게임 결과 정보를 출력한다.
+    - [x] 게임 시작 시 입장 가능한 방 번호를 출력한다.
 - 입력
     - [x] 게임 명령어를 입력받는다. (start, end, move)
         - [x] `예외` 명령어가 유효하지 않으면 예외를 발생시킨다.
@@ -166,6 +211,8 @@ sequenceDiagram
         - [x] 입력이 status 이면 게임 결과 정보(진영 별 점수, 이긴 진영)를 출력한다.
             - [x] `예외` 게임이 종료되지 않은 상태이면 예외를 발생시킨다.
     - [x] 게임 상태에 맞지 않는 명령어 입력 시 예외를 발생시킨다.
+    - [x] 게임 시작 시 입장할 방 번호를 입력받는다.
+        - [x] `예외` 입력이 정수가 아니면 예외를 발생시킨다.
 
 ## 리뷰 반영 및 리팩터링 목록
 
