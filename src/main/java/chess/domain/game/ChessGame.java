@@ -73,6 +73,13 @@ public class ChessGame {
                 teamWhite, chessBoard.findScoreOfPiecesByColor(teamWhite));
     }
 
+    public Color findWinner() {
+        if(!stateOfChessGame.isFinished()) {
+            throw new UnsupportedOperationException("아직 게임이 종료되지 않았습니다");
+        }
+        return turn;
+    }
+
     public void finishGame() {
         stateOfChessGame = StateOfChessGame.FINISHED;
     }

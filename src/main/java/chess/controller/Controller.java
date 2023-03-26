@@ -29,7 +29,8 @@ public class Controller {
     private void putActions() {
         actionsByCommand.put(Command.START, this::start);
         actionsByCommand.put(Command.MOVE, this::move);
-        actionsByCommand.put(Command.END, (ignored,ignored2) -> {});
+        actionsByCommand.put(Command.END, (ignored, ignored2) -> {
+        });
         actionsByCommand.put(Command.STATUS, this::status);
     }
 
@@ -38,6 +39,13 @@ public class Controller {
         Command command = Command.START;
         while (command != Command.END && !chessGame.isFinished()) {
             command = playChessByCommand(boardStrategy);
+        }
+        endGameByCommand();
+    }
+
+    private void endGameByCommand() {
+        if (chessGame.isFinished()) { //end입력하고 끝난거면, 상태출력하기
+            outputView.printWinner(chessGame.findWinner());
         }
     }
 

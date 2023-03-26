@@ -72,4 +72,9 @@ public class OutputView {
     public void printExceptionMessage(String errorMessage) {
         System.out.println(errorMessage);
     }
+
+    public void printWinner(final Color colorOfWinner) {
+        System.out.println(colorOfWinner + "팀이 승리하였습니다");
+
+    }
 }
