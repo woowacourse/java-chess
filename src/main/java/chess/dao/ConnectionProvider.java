@@ -33,9 +33,7 @@ public class ConnectionProvider {
     }
 
     public static void startTransaction() {
-        if (isTransactionActive()) {
-            throw new IllegalStateException(ALREADY_TRANSACTION_EXCEPTION_MESSAGE);
-        }
+        validateTransactionActive();
         txConnection = getConnection();
         try {
             txConnection.setAutoCommit(false);
@@ -44,10 +42,14 @@ public class ConnectionProvider {
         }
     }
 
-    public static void endTransaction() {
-        if (!isTransactionActive()) {
-            throw new IllegalStateException(INVALID_TRANSACTION_EXCEPTION_MESSAGE);
+    private static void validateTransactionActive() {
+        if (isTransactionActive()) {
+            throw new IllegalStateException(ALREADY_TRANSACTION_EXCEPTION_MESSAGE);
         }
+    }
+
+    public static void endTransaction() {
+        validateTransactionInactive();
         try {
             txConnection.close();
         } catch (SQLException e) {
@@ -57,10 +59,14 @@ public class ConnectionProvider {
         }
     }
 
-    public static void commit() {
+    private static void validateTransactionInactive() {
         if (!isTransactionActive()) {
             throw new IllegalStateException(INVALID_TRANSACTION_EXCEPTION_MESSAGE);
         }
+    }
+
+    public static void commit() {
+        validateTransactionInactive();
         try {
             txConnection.commit();
         } catch (SQLException e) {
@@ -69,9 +75,7 @@ public class ConnectionProvider {
     }
 
     public static void rollback() {
-        if (!isTransactionActive()) {
-            throw new IllegalStateException(INVALID_TRANSACTION_EXCEPTION_MESSAGE);
-        }
+        validateTransactionInactive();
         try {
             txConnection.rollback();
         } catch (SQLException e) {
