@@ -4,6 +4,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 
+import java.util.List;
+
 public final class EmptyPiece extends Piece {
 
     private static final EmptyPiece emptyPiece = new EmptyPiece(PieceType.EMPTY_PIECE, Color.NONE);
@@ -19,6 +21,11 @@ public final class EmptyPiece extends Piece {
     @Override
     public boolean isMovable(final Position start, final Position end, final Color destinationColor) {
         return false;
+    }
+
+    @Override
+    public double getScore(final List<Piece> piecesInSameColumn) {
+        return pieceType.getScore();
     }
 
 }

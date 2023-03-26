@@ -5,6 +5,7 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 
+import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
@@ -20,6 +21,18 @@ public class Pawn extends Piece {
     public boolean isMovable(final Position start, final Position end, final Color colorOfDestination) {
         return isStraightMove(start, end) && isMovableStraightDestination(colorOfDestination)
                 || isDiagonalMovable(start,end) && isMovableDiagonalDestination(colorOfDestination);
+    }
+
+    @Override
+    public double getScore(final List<Piece> piecesInSameColumn) {
+        long pawnCountInSameColumn = piecesInSameColumn.stream()
+                .filter(piece -> piece.pieceType == this.pieceType)
+                .count();
+
+        if(pawnCountInSameColumn > 1) {
+            return pieceType.getScore();
+        }
+        return pieceType.getScore()*2;
     }
 
     private boolean isMovableDiagonalDestination(final Color colorOfDestination) {

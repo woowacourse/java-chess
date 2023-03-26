@@ -4,6 +4,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 
+import java.util.List;
+
 public abstract class Piece {
 
     protected final PieceType pieceType;
@@ -15,6 +17,8 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(Position start, Position end, Color destinationColor);
+
+    public abstract double getScore(List<Piece> piecesInSameColumn);
 
     public Color getColor() {
         return color;
