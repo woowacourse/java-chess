@@ -83,3 +83,15 @@
   - [x] status를 입력하거나, 상대방의 킹을 잡으면 게임을 종료한다. 그리고 DB를 모두 지운다.
   - [x] 그렇지 않고, end를 입력한다면 마지막 게임 상태를 DB에 저장한다.
 
+### DB DDL
+``` sql
+create table chess_game
+(
+    piece_id   int auto_increment primary key,
+    piece_file varchar(20) not null,
+    piece_rank varchar(20) not null,
+    piece_type varchar(20) not null,
+    piece_team varchar(20) not null,
+    last_turn  varchar(20) not null
+);
+```
