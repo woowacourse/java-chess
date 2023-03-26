@@ -1,6 +1,7 @@
 package domain.chessgame;
 
 import domain.chessboard.ChessBoard;
+import domain.chessboard.ChessBoardFactory;
 import domain.piece.Color;
 import domain.position.Position;
 import domain.position.Route;
@@ -13,11 +14,11 @@ import java.util.function.Predicate;
 
 public final class ChessGame {
 
-    private final ChessBoard chessBoard;
+    private ChessBoard chessBoard;
     private Turn turn;
 
     public ChessGame(final ChessBoard chessBoard) {
-        turn = new Turn(Color.WHITE);
+        this.turn = new Turn(Color.WHITE);
         this.chessBoard = chessBoard;
     }
 
@@ -37,6 +38,11 @@ public final class ChessGame {
         final List<Long> columnPawnCount = chessBoard.findColumnPawnCounts(color);
         final List<SquareStatus> pieces = chessBoard.findPieces(color);
         return ScoreCalculator.calculateScore(pieces, columnPawnCount);
+    }
+
+    public void initializeBoard() {
+        this.chessBoard = ChessBoardFactory.generate();
+        this.turn = new Turn(Color.WHITE);
     }
 
     private void validateTurn(final Position source) {

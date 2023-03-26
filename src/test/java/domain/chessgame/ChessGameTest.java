@@ -175,4 +175,18 @@ class ChessGameTest {
 
     }
 
+    @Test
+    @DisplayName("initializeBoard 메서드를 호출하면 board가 초기화된다.")
+    void initializeBoardTest() {
+        //given
+        final ChessGame chessGame = new ChessGame(TestChessBoardFactory.generate());
+
+        //when
+        chessGame.initializeBoard();
+        final ChessBoard chessBoard = chessGame.getChessBoard();
+
+        //then
+        assertThat(chessBoard).isEqualTo(ChessBoardFactory.generate());
+    }
+
 }
