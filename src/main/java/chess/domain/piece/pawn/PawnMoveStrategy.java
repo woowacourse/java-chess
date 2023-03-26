@@ -1,7 +1,7 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.Position;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 
 import java.util.Set;
 

@@ -6,6 +6,9 @@ import chess.domain.piece.normal.*;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Kind;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +22,7 @@ public final class Board {
 
     private static final int STACKED_PAWN = 2;
     private static final double STACKED_PAWN_SCORE = 0.5;
-    private static final int KINS_ALIVE = 2;
+    private static final int BOTH_KINGS_ALIVE = 2;
     private static final int WINNER_COLOR_INDEX = 0;
     private final Map<Position, Piece> board;
 
@@ -150,7 +153,7 @@ public final class Board {
                 .map(Piece::getColor)
                 .collect(Collectors.toList());
 
-        if (kingColors.size() == KINS_ALIVE) {
+        if (kingColors.size() == BOTH_KINGS_ALIVE) {
             return Color.NONE;
         }
         return kingColors.get(WINNER_COLOR_INDEX);

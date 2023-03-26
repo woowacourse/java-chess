@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,27 +47,5 @@ class PositionTest {
         var target = new Position(File.D, Rank.EIGHT);
 
         assertThat(source.isRankEquals(target)).isFalse();
-    }
-
-    @Test
-    @DisplayName("두 포지션의 기울기를 계산한다.")
-    void computeInclination_result1() {
-        var source = B4;
-        var target = E7;
-
-        double v = source.computeInclination(target);
-
-        assertThat(v).isEqualTo(1.0d);
-    }
-
-    @Test
-    @DisplayName("두 포지션의 기울기를 계산한다.")
-    void computeInclination_resultNegative1() {
-        var source = new Position(File.C, Rank.FIVE);
-        var target = new Position(File.A, Rank.SEVEN);
-
-        double v = source.computeInclination(target);
-
-        assertThat(v).isEqualTo(-1.0d);
     }
 }

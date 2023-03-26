@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.B;
-import static chess.domain.board.Rank.FIVE;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.B;
+import static chess.domain.position.Rank.FIVE;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EmptyTest {

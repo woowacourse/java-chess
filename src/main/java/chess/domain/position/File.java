@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import java.util.Arrays;
 
@@ -24,6 +24,10 @@ public enum File {
                 .filter(file -> file.value == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+    }
+
+    public File moveTo(final int distance) {
+        return File.from(this.value - distance);
     }
 
     public File plus() {

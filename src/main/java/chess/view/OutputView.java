@@ -1,11 +1,11 @@
 package chess.view;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.mapper.KindMapper;
 
 import java.util.Arrays;

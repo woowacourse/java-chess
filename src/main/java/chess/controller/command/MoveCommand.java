@@ -1,9 +1,9 @@
 package chess.controller.command;
 
 import chess.dao.ChessGameDao;
-import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 import chess.view.OutputView;
 import chess.view.PositionParser;
 

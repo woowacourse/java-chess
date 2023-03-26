@@ -1,21 +1,23 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.Position;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 
 import java.util.Set;
 
 public final class BlackPawnMoveStrategy implements PawnMoveStrategy {
 
     private static final int PAWN_INITIAL_RANK = 7;
-    private static final int FORAWRD_TWO_SQAURES = 4;
+    private static final int FORWARD_TWO_SQUARES = 4;
     private static final int FILE_DISTANCE_EXCLUDE = 2;
     private static final int RANK_DISTANCE = 1;
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
-        if (source.distanceEquals(target, FORAWRD_TWO_SQAURES) && source.isFileEquals(target)) {
+        Path path = Path.of(source, target);
+        if (source.distanceEquals(target, FORWARD_TWO_SQUARES) && source.isFileEquals(target)) {
             validateIsFirstMove(source);
-            return source.generateFilePath(target);
+            return path.computePath(source, target);
         }
         if (source.fileSubLessThan(target, FILE_DISTANCE_EXCLUDE) && source.rankSubEquals(target, RANK_DISTANCE)) {
             return Set.of(target);

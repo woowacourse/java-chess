@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import java.util.Arrays;
 
@@ -25,6 +25,10 @@ public enum Rank {
                 .filter(rank -> rank.value == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
+    }
+
+    public Rank moveTo(final int distance) {
+        return Rank.from(this.value - distance);
     }
 
     public Rank plus() {

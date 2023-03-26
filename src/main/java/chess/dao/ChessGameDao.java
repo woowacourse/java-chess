@@ -1,12 +1,12 @@
 package chess.dao;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Running;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Kind;
+import chess.domain.position.Position;
 import chess.mapper.PositionStringMapper;
 
 import java.sql.*;

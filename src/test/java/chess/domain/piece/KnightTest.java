@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
 import chess.domain.piece.normal.Knight;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

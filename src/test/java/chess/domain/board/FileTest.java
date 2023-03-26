@@ -1,10 +1,11 @@
 package chess.domain.board;
 
+import chess.domain.position.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.H;
+import static chess.domain.position.File.A;
+import static chess.domain.position.File.H;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

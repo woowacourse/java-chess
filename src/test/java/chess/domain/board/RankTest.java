@@ -1,10 +1,11 @@
 package chess.domain.board;
 
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.board.Rank.EIGHT;
-import static chess.domain.board.Rank.ONE;
+import static chess.domain.position.Rank.EIGHT;
+import static chess.domain.position.Rank.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

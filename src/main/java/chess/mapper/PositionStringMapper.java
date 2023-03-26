@@ -1,6 +1,6 @@
 package chess.mapper;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 
 public final class PositionStringMapper {
 

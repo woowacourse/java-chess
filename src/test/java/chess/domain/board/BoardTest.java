@@ -7,6 +7,9 @@ import chess.domain.piece.normal.Queen;
 import chess.domain.piece.normal.Rook;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

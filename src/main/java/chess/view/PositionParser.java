@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public final class PositionParser {
 
