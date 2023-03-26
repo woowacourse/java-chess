@@ -30,10 +30,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printWinner(final double scoreOfWhite, final double scoreOfBlack, final Team team) {
+    public void printScore(final double scoreOfWhite, final double scoreOfBlack) {
         System.out.println("백팀의 점수 : " + scoreOfWhite + " 흑팀의 점수: " + scoreOfBlack);
-        System.out.println("현재 우승팀은!! : " + parseTeam(team));
-        System.out.println();
+    }
+
+    public void printWinner(final Team team) {
+        System.out.println("현재 우승팀은!!! " + parseTeam(team));
     }
 
     private String parseTeam(final Team team) {

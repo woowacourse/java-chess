@@ -32,33 +32,49 @@ public class ChessController {
         processGame();
     }
 
-    // TODO: move에 대한 재입력 로직 추가
+    // TODO: move에 대한 재입력 로직 추가, 왕이 죽었을 때 승리팀을 알려주도록(기존의 view를 사용해서 승리팀을 알려줄지, 그냥 승리팀만 보여줄지  전자가 더 좋아보이긴 함)
     private void processGame() {
-        final Command firstCommand = repeat(this::readCommand);
+        final Command firstCommand = repeat(this::readFirstCommand);
         chessGame.receiveCommand(firstCommand);
 
         while (chessGame.isProcessing()) {
             renderChessBoard();
 
             final List<String> movePositions = new ArrayList<>();
-            final Command command = readMoveCommand(movePositions);
+            final Command command = repeat(() -> readMoveCommand(movePositions));
             if (command == Command.END) {
+                outputView.printScore(chessGame.calculateScore(Team.WHITE), chessGame.calculateScore(Team.BLACK));
+                outputView.printWinner(chessGame.findWinner());
                 break;
             }
             if (command == Command.STATUS) {
-                outputView.printWinner(chessGame.calculateScore(Team.WHITE), chessGame.calculateScore(Team.BLACK), chessGame.findWinner());
+                outputView.printScore(chessGame.calculateScore(Team.WHITE), chessGame.calculateScore(Team.BLACK));
+                outputView.printWinner(chessGame.findWinner());
                 continue;
             }
 
-            final Position from = PositionConvertor.convert(movePositions.get(0));
-            final Position to = PositionConvertor.convert(movePositions.get(1));
-            chessGame.movePiece(from, to);
+            move(movePositions);
+        }
+        outputView.printWinner(chessGame.findWinner());
+    }
+
+    private Command readFirstCommand() {
+        final List<String> commands = inputView.readGameCommand();
+        validateMove(commands);
+        validateStatus(commands);
+        return Command.from(commands.get(0));
+    }
+
+    private void validateMove(final List<String> commands) {
+        if (Command.from(commands.get(0)) == Command.MOVE) {
+            throw new IllegalArgumentException("게임을 시작하기 전에는 움직일 수 없습니다.");
         }
     }
 
-    private Command readCommand() {
-        final List<String> commands = inputView.readGameCommand();
-        return Command.from(commands.get(0));
+    private void validateStatus(final List<String> commands) {
+        if (Command.from(commands.get(0)) == Command.STATUS) {
+            throw new IllegalArgumentException("게임을 시작하기 전에는 진행상태를 확인할 수 없습니다.");
+        }
     }
 
     private void renderChessBoard() {
@@ -68,16 +84,20 @@ public class ChessController {
     }
 
     private Command readMoveCommand(final List<String> movePositions) {
-        return repeat(() -> {
-            final List<String> commands = inputView.readGameCommand();
-            final Command result = Command.from(commands.get(0));
-            if (result != Command.MOVE) {
-                return result;
-            }
-            movePositions.add(commands.get(1));
-            movePositions.add(commands.get(2));
-            return result;
-        });
+        final List<String> commands = inputView.readGameCommand();
+        final Command command = Command.from(commands.get(0));
+        if (command != Command.MOVE) {
+            return command;
+        }
+        movePositions.add(commands.get(1));
+        movePositions.add(commands.get(2));
+        return command;
+    }
+
+    private void move(final List<String> movePositions) {
+        final Position from = PositionConvertor.convert(movePositions.get(0));
+        final Position to = PositionConvertor.convert(movePositions.get(1));
+        chessGame.movePiece(from, to);
     }
 
     private <T> T repeat(final Supplier<T> function) {

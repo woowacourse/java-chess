@@ -75,3 +75,10 @@
   PieceType이 필요한 것 같다고 생각이 든다.
     - [x] King의 개수를 세서 게임이 종료되었는지 판단한다.
 - PieceType이란걸 만들면 Piece가 PieceType을 가질 수 있고, 각 스코어는 Enum으로 타입에 매핑시켜서 계산할 수 있지 않을까?
+
+
+- ChessGame을 쉽게 테스트하기 위해서는 PieceFactory에서 Map을 반환하도록 하면 좋을 것 같다는 생각이 들었다.
+
+## DB로 게임 저장하기
+
+
