@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -109,6 +111,26 @@ class PawnTest {
 
         assertThatThrownBy(() -> whitePawn.isMobile(new RelativePosition(0, 1), Pawn.from(Team.WHITE))).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동하고자 하는 자리에 같은 팀이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("검정색 폰은 0번째 row 에 도착하면 검정색 퀸으로 승진한다. ")
+    void promotionTest1() {
+        Pawn pawn = Pawn.from(Team.BLACK);
+        Piece promotedPawn = pawn.getPromotion(new Position(4, 0));
+
+        assertThat(promotedPawn.isPieceType(PieceType.QUEEN)).isTrue();
+        assertThat(promotedPawn.isTeam(Team.BLACK)).isTrue();
+    }
+
+    @Test
+    @DisplayName("하얀색 폰은 7번째 row 에 도착하면 하얀색 퀸으로 승진한다. ")
+    void promotionTest2() {
+        Pawn pawn = Pawn.from(Team.WHITE);
+        Piece promotedPawn = pawn.getPromotion(new Position(4, 7));
+
+        assertThat(promotedPawn.isPieceType(PieceType.QUEEN)).isTrue();
+        assertThat(promotedPawn.isTeam(Team.WHITE)).isTrue();
     }
 
 }
