@@ -26,6 +26,14 @@ public class InputValidator {
         }
     }
 
+    public static void validateDigit(String input) {
+        boolean isDigit = input.chars()
+                .allMatch(Character::isDigit);
+        if (!isDigit) {
+            throw new IllegalArgumentException("[ERROR] 게임 아이디는 정수로 입력해주세요.");
+        }
+    }
+
     public static void validateMoveCommand(String input) {
         if (!GameCommand.isMove(input)) {
             throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위해서는 " + MOVE.getCommand() + "를 입력해주세요.");
