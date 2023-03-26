@@ -19,8 +19,6 @@ public final class Application {
     private static final int FILE_OFFSET = 0;
     private static final int RANK_OFFSET = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
-    private static final int MIN_ROOM_NAME = 1;
-    private static final int MAX_ROOM_NAME = 20;
 
     private static final String NOT_STARTED = "게임을 먼저 시작해야 합니다.";
     private static final String NO_SUCH_FILE = "열은 A ~ H 를 입력해야 합니다.";
@@ -28,7 +26,6 @@ public final class Application {
     private static final String INVALID_COMMAND = "move, end, status 명령어만 가능합니다.";
     private static final String INVALID_MOVE_COMMAND_SIZE = "move b2 b3 등으로 입력해야 합니다.";
     private static final String NO_SUCH_ROOM = "존재하지 않는 방 번호입니다.";
-    private static final String INVALID_ROOM_NAME_LENGTH = "방 이름은 1 ~ 20 글자입니다.";
 
     private static final ChessDao chessDao = new DbChessDao();
 
@@ -84,20 +81,13 @@ public final class Application {
     }
 
     private static void playNewGame() {
-        final String roomName = InputView.readRoomName();
-        validateRoomNameLength(roomName);
-
-        final long roomId = chessDao.saveRoom(new Room(roomName));
         final ChessGame chessGame = ChessGame.initGame(new InitialChessAlignment());
+
+        final String roomName = InputView.readRoomName();
+        final long roomId = chessDao.saveRoom(new Room(roomName));
 
         chessDao.saveBoard(chessGame.getBoard(), roomId);
         play(chessGame, roomId);
-    }
-
-    private static void validateRoomNameLength(final String roomName) {
-        if (roomName.length() < MIN_ROOM_NAME || MAX_ROOM_NAME < roomName.length()) {
-            throw new IllegalArgumentException(INVALID_ROOM_NAME_LENGTH);
-        }
     }
 
     private static void play(ChessGame chessGame, long roomId) {

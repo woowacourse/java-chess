@@ -30,14 +30,7 @@ public final class ChessGame {
     }
 
     public Team getWinner() {
-        if (winnerNotExist()) {
-            return Team.NOTHING;
-        }
-
-        if (board.isBlackKingExist()) {
-            return Team.BLACK;
-        }
-        return Team.WHITE;
+        return board.getWinner();
     }
 
     public Map<Position, Piece> getBoard() {

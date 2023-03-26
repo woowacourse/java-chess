@@ -14,6 +14,7 @@ public final class Board {
     private static final String NOT_EXIST_SOURCE = "해당 위치에 말이 존재하지 않습니다.";
     private static final String INVALID_MOVEMENT = "해당 위치로 말을 이동할 수 없습니다.";
     private static final String INVALID_PLAYER_TURN = "잘못된 차례입니다.";
+    private static final double MULTI_PAWN_SCORE = 0.5;
 
     private final Map<Position, Piece> board;
     private Team currentTurn;
@@ -117,6 +118,16 @@ public final class Board {
                 .anyMatch(Piece::isKing);
     }
 
+    public Team getWinner() {
+        if (isWhiteKingExist() && isBlackKingExist()) {
+            return Team.NOTHING;
+        }
+        if (isBlackKingExist()) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
+
     public double getCurrentBlackScore() {
         final double sumScore = sumDefaultScore(Team.BLACK);
         return minusMultiPawnScore(sumScore, Team.BLACK);
@@ -138,7 +149,7 @@ public final class Board {
         final Map<File, Long> countPawns = countPawnsOnFile(team);
         final double multiPawnScore = countPawns.values().stream()
                 .filter(count -> count > 1)
-                .mapToDouble(count -> count * 0.5)
+                .mapToDouble(count -> count * MULTI_PAWN_SCORE)
                 .sum();
 
         return defaultScore - multiPawnScore;
