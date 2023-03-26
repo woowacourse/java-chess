@@ -9,6 +9,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,15 +24,7 @@ public class Board {
     }
 
     public static Board init() {
-        Map<Position, Piece> setting = new HashMap<>();
-
-        for (PieceSettings pieceSetting : PieceSettings.values()) {
-            setting.put(pieceSetting.getPosition(), pieceSetting.getPiece());
-        }
-        for (EmptySettings emptySetting : EmptySettings.values()) {
-            setting.put(emptySetting.getPosition(), emptySetting.getPiece());
-        }
-
+        Map<Position, Piece> setting = PieceFactory.createPieces();
         return new Board(setting);
     }
 
