@@ -3,7 +3,11 @@ package chess.domain.piece;
 import chess.domain.piece.movement.Movement;
 import chess.domain.piece.obstacleStrategy.BlockedByObstacle;
 import chess.domain.piece.obstacleStrategy.ObstacleStrategy;
+import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
+
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 
 public final class Pawn extends NoneEmptyPiece {
 
@@ -57,6 +61,16 @@ public final class Pawn extends NoneEmptyPiece {
             return relativePosition.inverseByXAxis();
         }
         return relativePosition;
+    }
+
+    public Piece getPromotion(Position position){
+        if(position.isRow(7) && team == WHITE){
+            return Queen.from(WHITE);
+        }
+        if(position.isRow(0) && team == BLACK){
+            return Queen.from(BLACK);
+        }
+        return this;
     }
 
     @Override

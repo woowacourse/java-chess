@@ -39,6 +39,10 @@ public final class Position implements Comparable<Position> {
         return this.column == column;
     }
 
+    public boolean isRow(final int row) {
+        return this.row == row;
+    }
+
     public int getColumn() {
         return column;
     }
@@ -75,4 +79,5 @@ public final class Position implements Comparable<Position> {
         }
         return o.row - this.row;
     }
+
 }
