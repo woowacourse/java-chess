@@ -36,6 +36,17 @@ class ChessGameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    static Stream<Arguments> invalidSquareProvider() {
+        return Stream.of(
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.ONE), Square.getInstanceOf(File.A, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FIVE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.THREE), Square.getInstanceOf(File.A, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.TWO))
+        );
+    }
+
     @ParameterizedTest(name = "이동 가능한 위치 입력시 기물이 이동한다")
     @MethodSource("validSquareProvider")
     void moveToValidSquare(Square source, Square target) {
@@ -44,6 +55,13 @@ class ChessGameTest {
 
         assertThat(chessboard.getPieceAt(target))
                 .isEqualTo(expectedPiece);
+    }
+
+    static Stream<Arguments> validSquareProvider() {
+        return Stream.of(
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FOUR))
+        );
     }
 
     @DisplayName("대각선에 상대 폰이 있을 경우, 이동할 수 있다.")
@@ -137,24 +155,5 @@ class ChessGameTest {
         assertThat(chessGame.isKingDead())
                 .isTrue();
     }
-
-    static Stream<Arguments> invalidSquareProvider() {
-        return Stream.of(
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.ONE), Square.getInstanceOf(File.A, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FIVE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.THREE), Square.getInstanceOf(File.A, Rank.FOUR)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.FOUR)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.TWO))
-        );
-    }
-
-    static Stream<Arguments> validSquareProvider() {
-        return Stream.of(
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FOUR))
-        );
-    }
-
 
 }

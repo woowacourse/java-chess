@@ -81,8 +81,8 @@ class ChessboardTest {
 
     @ParameterizedTest(name = "체스판 위에 존재하는 특정 기물의 수를 확인할 수 있다.")
     @MethodSource("pieceAndPieceCountProvider")
-    void getPieceCountOnBoardSuccessTest(Piece piece, int pieceCount) {
-        assertThat(chessboard.getPieceCountOnBoard(piece))
+    void countSamePieceOnBoardSuccessTest(Piece piece, int pieceCount) {
+        assertThat(chessboard.countSamePieceOnBoard(piece))
                 .isEqualTo(pieceCount);
     }
 

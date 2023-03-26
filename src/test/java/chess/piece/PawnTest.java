@@ -50,6 +50,15 @@ class PawnTest {
                 .isTrue();
     }
 
+    static Stream<Arguments> whitePawnMovableSquareProvider() {
+        return Stream.of(
+                Arguments.arguments(Square.getInstanceOf(File.E, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.E, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.F, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.D, Rank.THREE))
+        );
+    }
+
     @ParameterizedTest(name = "검은색 진영의 폰은 이동규칙에 따라 이동할 수 있다")
     @MethodSource("blackPawnMovableSquareProvider")
     void canMoveBlackPawnTest(Square target) {
@@ -58,15 +67,6 @@ class PawnTest {
 
         assertThat(pawn.canMove(source, target))
                 .isTrue();
-    }
-
-    static Stream<Arguments> whitePawnMovableSquareProvider() {
-        return Stream.of(
-                Arguments.arguments(Square.getInstanceOf(File.E, Rank.FOUR)),
-                Arguments.arguments(Square.getInstanceOf(File.E, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.F, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.D, Rank.THREE))
-        );
     }
 
     static Stream<Arguments> blackPawnMovableSquareProvider() {
