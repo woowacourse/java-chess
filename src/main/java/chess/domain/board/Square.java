@@ -32,6 +32,12 @@ public class Square {
         return CASHED_SQUARES.get(index - 1);
     }
 
+    public static List<Square> getSquaresAt(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> getInstanceOf(file, rank))
+                .collect(Collectors.toList());
+    }
+
     public boolean isSameRank(Square targetSquare) {
         return rank == targetSquare.rank;
     }
