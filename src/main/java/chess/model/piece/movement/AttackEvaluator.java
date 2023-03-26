@@ -1,22 +1,21 @@
 package chess.model.piece.movement;
 
 import chess.model.piece.Camp;
-import chess.model.piece.PieceType;
 
 public final class AttackEvaluator {
 
     private final Camp sourceCamp;
     private final Camp targetCamp;
-    private final PieceType targetPieceType;
+    private final boolean empty;
 
-    public AttackEvaluator(final Camp sourceCamp, final Camp targetCamp, final PieceType targetPieceType) {
+    public AttackEvaluator(final Camp sourceCamp, final Camp targetCamp, final boolean empty) {
         this.sourceCamp = sourceCamp;
         this.targetCamp = targetCamp;
-        this.targetPieceType = targetPieceType;
+        this.empty = empty;
     }
 
     public boolean isEmpty() {
-        return this.targetPieceType.isSamePieceType(PieceType.EMPTY);
+        return empty;
     }
 
     public boolean isEnemy() {

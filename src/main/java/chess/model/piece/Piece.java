@@ -23,7 +23,8 @@ public final class Piece {
     }
 
     public boolean movable(final Distance distance, final Piece target) {
-        final AttackEvaluator attackEvaluator = new AttackEvaluator(this.camp, target.camp, target.pieceType);
+        final AttackEvaluator attackEvaluator = new AttackEvaluator(this.camp, target.camp,
+                target.pieceType.isSamePieceType(PieceType.EMPTY));
 
         return pieceType.movable(distance, attackEvaluator);
     }
