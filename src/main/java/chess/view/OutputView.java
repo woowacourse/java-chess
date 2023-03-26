@@ -53,6 +53,13 @@ public class OutputView {
 		return sortedRanks;
 	}
 
+	public static void printStatus(final double blackScore, final double whiteScore){
+		System.out.println("게임 상태");
+		System.out.println("Black 팀: " + blackScore + "점");
+		System.out.println("White 팀: " + whiteScore + "점");
+		System.out.println();
+	}
+
 	public static void printErrorMessage(String errorMessage) {
 		System.out.println("[ERROR] " + errorMessage);
 	}
