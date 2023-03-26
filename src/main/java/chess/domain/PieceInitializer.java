@@ -33,10 +33,10 @@ public enum PieceInitializer {
     BLACK_KING(List.of(5), Camp.BLACK.startingRank(), new King(Camp.BLACK)),
     BLACK_PAWN(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.BLACK.startingPawnRank(), new Pawn(Camp.BLACK)),
 
-    EMPTY_3_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank(), new Empty()),
-    EMPTY_4_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 1, new Empty()),
-    EMPTY_5_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 2, new Empty()),
-    EMPTY_6_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 3, new Empty());
+    EMPTY_3_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank(), Empty.getInstance()),
+    EMPTY_4_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 1, Empty.getInstance()),
+    EMPTY_5_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 2, Empty.getInstance()),
+    EMPTY_6_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 3, Empty.getInstance());
 
     private final List<Integer> files;
     private final int rank;

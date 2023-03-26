@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class ChessBoard {
         validateMove(source, destination, movingPiece);
         boolean isKingAttacked = isKingAt(destination);
         piecesByPosition.put(destination, movingPiece);
-        piecesByPosition.remove(source);
+        piecesByPosition.put(source, Empty.getInstance());
         return isKingAttacked;
     }
 

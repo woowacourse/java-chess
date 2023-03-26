@@ -5,6 +5,7 @@ import static chess.domain.piece.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
@@ -98,8 +99,8 @@ class ChessBoardTest {
 
         Map<Position, Piece> piecesByPosition = chessBoard.piecesByPosition();
 
-        assertThat(piecesByPosition.containsKey(Position.of(1, 2)))
-                .isFalse();
+        assertThat(piecesByPosition.get(Position.of(1, 2)))
+                .isEqualTo(Empty.getInstance());
         assertThat(piecesByPosition.get(Position.of(1, 4)))
                 .isEqualTo(new Pawn(Camp.WHITE));
     }
