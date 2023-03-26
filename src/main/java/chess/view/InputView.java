@@ -16,12 +16,4 @@ public class InputView {
         return Arrays.stream(scanner.nextLine().split(READ_GAME_COMMAND_DELIMITER))
                 .collect(Collectors.toList());
     }
-
-    public boolean readStartCommand() {
-        String input = scanner.nextLine();
-        if (!START.equalsIgnoreCase(input)) {
-            throw new IllegalArgumentException(INVALID_START_MESSAGE);
-        }
-        return true;
-    }
 }
