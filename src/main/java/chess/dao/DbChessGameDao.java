@@ -48,7 +48,7 @@ public class DbChessGameDao implements ChessGameDao {
     @Override
     public ChessGame findById(long id) {
         Map<Position, Piece> board = new HashMap<>();
-        String turn = "white";
+        String turn = Team.WHITE.name();
         String query = "SELECT cg.turn, cb.piece_type, cb.piece_rank, cb.piece_file, cb.team FROM chess_game cg "
                 + "JOIN chess_board cb ON cg.chess_game_id = cb.chess_game_id and cg.chess_game_id = ?";
         try (Connection connection = database.getConnection();
