@@ -3,11 +3,11 @@ package chess.dao;
 import chess.domain.ChessGame;
 
 public interface ChessGameDao {
-    void save(ChessGame chessGame);
+    int save(final ChessGame chessGame);
 
-    ChessGame select();
+    ChessGame select(final int id);
 
-    void update(ChessGame chessGame);
+    void update(final ChessGame chessGame);
 
-    void delete();
+    void delete(final ChessGame chessGame);
 }

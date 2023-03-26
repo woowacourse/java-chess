@@ -24,6 +24,7 @@ public final class ChessController {
     private final ErrorController errorController;
     private final ChessGameDao chessGameDao;
     private final Map<Command, Action> commandMapper;
+    private int chessGameId = 1;
 
     public ChessController(final ErrorController errorController, ChessGameDao chessGameDao) {
         this.errorController = errorController;
@@ -56,10 +57,10 @@ public final class ChessController {
     }
 
     public CommandDto start(final CommandDto commandDto) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(chessGameId);
         if (chessGame == null) {
             chessGame = ChessGame.create();
-            chessGameDao.save(chessGame);
+            chessGameId = chessGameDao.save(chessGame);
         }
         OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
@@ -67,7 +68,7 @@ public final class ChessController {
     }
 
     public CommandDto move(final CommandDto commandDto) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(chessGameId);
         List<Integer> source = commandDto.getSource();
         List<Integer> target = commandDto.getTarget();
         Position sourcePosition = new Position(source.get(0), source.get(1));
@@ -87,13 +88,13 @@ public final class ChessController {
     }
 
     public CommandDto inquireStatus(final CommandDto commandDto) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(chessGameId);
         OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
         OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
         OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
 
         if (chessGame.isGameEnd()) {
-            chessGameDao.delete();
+            chessGameDao.delete(chessGame);
             return readCommand(List.of(END));
         }
         return readCommand(List.of(MOVE, STATUS, END));

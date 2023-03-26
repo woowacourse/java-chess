@@ -7,12 +7,13 @@ public final class InMemoryChessGameDao implements ChessGameDao {
     private ChessGame chessGame;
 
     @Override
-    public void save(ChessGame chessGame) {
+    public int save(ChessGame chessGame) {
         this.chessGame = chessGame;
+        return 1;
     }
 
     @Override
-    public ChessGame select() {
+    public ChessGame select(final int id) {
         return chessGame;
     }
 
@@ -22,7 +23,7 @@ public final class InMemoryChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void delete() {
+    public void delete(ChessGame chessGame) {
         this.chessGame = null;
     }
 }

@@ -32,17 +32,29 @@
 
 ```
   CREATE TABLE chess_game(
-  position_column INT not null,
-  position_row INT not null,
-  piece_type VARCHAR(255) not null,
-  piece_team VARCHAR(255) not null,
-  turn VARCHAR(255) not null,
-  constraint chess_game_pk primary key(position_column, position_row)
+  id INT NOT NULL AUTO_INCREMENT,
+  turn VARCHAR(8) NOT NULL,
+  
+  PRIMARY KEY(id)
   );
 
-  INSERT INTO chess_game(position_column, position_row, piece_type, piece_team, turn) VALUES(?,?,?,?,?);
-  SELECT * FROM chess_game;
-  DELETE FROM chess_game;
+  CREATE TABLE board(
+  chess_game_id INT NOT NULL,
+  position_column INT NOT NULL,
+  position_row INT NOT NULL,
+  piece_type VARCHAR(8) NOT NULL,
+  piece_team VARCHAR(8) NOT NULL,
+  
+  PRIMARY KEY(chess_game_id, position_column, position_row),
+  CONSTRAINT `fk_chess_game_id` FOREIGN KEY (`chess_game_id`) REFERENCES `chess_game` (`id`) ON DELETE CASCADE
+  );
+
+  INSERT INTO chess_game(turn) VALUES (?);
+  INSERT INTO board(chess_game_id, position_column, position_row, piece_type, piece_team) VALUES(?,?,?,?,?);
+  SELECT * FROM chess_game WHERE id = ?;
+  SELECT * FROM board WHERE chess_game_id = ?;
+  DELETE FROM chess_game WHERE id = ?;
+  DELETE FROM board WHERE chess_game_id = ?;
 ```
 
 ### ChessGame

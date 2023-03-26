@@ -9,16 +9,19 @@ import static chess.domain.piece.Team.WHITE;
 
 public final class ChessGame {
 
+    private static final int TEMPORARY_ID = 0;
+    private final int id;
     private final Board board;
     private Team turn;
 
-    public ChessGame(final Board board, final Team turn) {
+    public ChessGame(final int id, final Board board, final Team turn) {
+        this.id = id;
         this.board = board;
         this.turn = turn;
     }
 
     public static ChessGame create() {
-        return new ChessGame(BoardGenerator.createBoard(), WHITE);
+        return new ChessGame(TEMPORARY_ID, BoardGenerator.createBoard(), WHITE);
     }
 
     public void movePiece(final Position from, final Position to) {
@@ -90,5 +93,9 @@ public final class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public int getId() {
+        return id;
     }
 }
