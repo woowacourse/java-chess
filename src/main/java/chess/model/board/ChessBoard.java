@@ -4,8 +4,7 @@ import chess.model.piece.Camp;
 import chess.model.piece.Direction;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceScore;
-import chess.model.piece.PieceScoreConverter;
-import chess.model.piece.type.Empty;
+import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -77,7 +76,7 @@ public class ChessBoard {
 
     private void updateBoard(final Position source, final Piece sourcePiece, final Position target) {
         board.put(target, sourcePiece.pick());
-        board.put(source, Empty.EMPTY_PIECE);
+        board.put(source, Piece.EMPTY);
     }
 
     public boolean canPlayGame(final Camp camp) {
@@ -88,7 +87,7 @@ public class ChessBoard {
     private boolean isAliveKing(final Position position, final Camp camp) {
         final Piece piece = board.get(position);
 
-        return piece.isSameTeam(camp) && piece.isKing();
+        return piece.isSameTeam(camp) && piece.isSameType(PieceType.KING);
     }
 
     public PieceScore calculateScoreByCamp(final Camp camp) {
@@ -103,7 +102,7 @@ public class ChessBoard {
         return board.keySet().stream()
                 .map(board::get)
                 .filter(piece -> piece.isSameTeam(camp))
-                .map(piece -> PieceScoreConverter.convert(piece.getClass()))
+                .map(Piece::score)
                 .collect(Collectors.toList());
     }
 
@@ -128,7 +127,7 @@ public class ChessBoard {
     private long countPawn(final Camp camp, final RankPosition rankPosition) {
         return rankPosition.getPositions().stream()
                 .map(board::get)
-                .filter(Piece::isPawn)
+                .filter(piece -> piece.isSameType(PieceType.PAWN) || piece.isSameType(PieceType.INITIAL_PAWN))
                 .filter(piece -> piece.isSameTeam(camp))
                 .count();
     }

@@ -62,9 +62,8 @@ public class OutputView {
     private String convertToPieceMessage(final Map<Position, Piece> board, final Position position) {
         final Piece piece = board.get(position);
 
-        return PieceMessageConverter.convert(piece.getClass(), piece.camp());
+        return PieceMessageConverter.convert(piece.getPieceType(), piece.getCamp());
     }
-
 
     private List<String> convertToRankMessage(final Map<String, String> squares) {
         return Arrays.stream(Rank.values())

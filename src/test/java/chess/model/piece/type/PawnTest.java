@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
-    private final Piece blackPawn = new Pawn(Camp.BLACK);
+    private final Piece blackPawn = new Piece(PieceType.PAWN, Camp.BLACK);
     
     @Test
     @DisplayName("pick()은 호출하면 자기 자신을 반환한다")
@@ -47,33 +48,13 @@ class PawnTest {
         assertThat(actual).isSameAs(expected);
     }
 
-    @Test
-    @DisplayName("isKing()은 호출하면 false를 반환한다")
-    void isKing_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = blackPawn.isKing();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @Test
-    @DisplayName("isPawn()은 호출하면 true를 반환한다")
-    void ispawn_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = blackPawn.isPawn();
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
     @Nested
     @DisplayName("movable() 검은색 폰 테스트")
     class BlackPawnMovableMethodTest {
-        private final Piece blackPawn = new Pawn(Camp.BLACK);
-        private final Piece ally = new Pawn(Camp.BLACK);
-        private final Piece empty = Empty.EMPTY_PIECE;
-        private final Piece enemy = new Pawn(Camp.WHITE);
+        private final Piece blackPawn = new Piece(PieceType.PAWN, Camp.BLACK);
+        private final Piece ally = new Piece(PieceType.PAWN, Camp.BLACK);
+        private final Piece empty = Piece.EMPTY;
+        private final Piece enemy = new Piece(PieceType.PAWN, Camp.WHITE);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 대각선 ({0}, {1})일 때 움직일 수 있다.")
         @DisplayName("movable() 유효한 공격 이동 방향, 유효한 공격 이동 거리, 적군 테스트")
@@ -162,10 +143,10 @@ class PawnTest {
     @Nested
     @DisplayName("movable() 흰색 폰 테스트")
     class WhitePawnMovableMethodTest {
-        private final Piece whitePawn = new Pawn(Camp.WHITE);
-        private final Piece ally = new Pawn(Camp.WHITE);
-        private final Piece empty = Empty.EMPTY_PIECE;
-        private final Piece enemy = new Pawn(Camp.BLACK);
+        private final Piece whitePawn = new Piece(PieceType.PAWN, Camp.WHITE);
+        private final Piece ally = new Piece(PieceType.PAWN, Camp.WHITE);
+        private final Piece empty = Piece.EMPTY;
+        private final Piece enemy = new Piece(PieceType.PAWN, Camp.BLACK);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 대각선 ({0},{1})일 때 움직일 수 있다.")
         @DisplayName("movable() 유효한 공격 이동 방향, 유효한 공격 이동 거리, 적군 테스트")

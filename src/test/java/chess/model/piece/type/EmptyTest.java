@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class EmptyTest {
 
-    private final Piece empty = Empty.EMPTY_PIECE;
+    private final Piece empty = Piece.EMPTY;
 
     @Test
     @DisplayName("pick()을 호출하면 자기 자신을 반환한다")
@@ -35,42 +35,11 @@ class EmptyTest {
         assertThat(actual).isFalse();
     }
 
-    @ParameterizedTest(name = "isSameTeam()을 호출하면 Camp.{0}일 때 false를 반환한다")
-    @DisplayName("isSameTeam() 테스트")
-    @EnumSource(Camp.class)
-    void isSameTeam_whenCall_thenReturnFalse(final Camp camp) {
-        // when
-        final boolean actual = empty.isSameTeam(camp);
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
     @Test
     @DisplayName("isNotPassable()은 호출하면 false를 반환한다")
     void isNotPassable_whenCall_thenReturnFalse() {
         // when
         final boolean actual = empty.isNotPassable();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @Test
-    @DisplayName("isKing()은 호출하면 false를 반환한다")
-    void isKing_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = empty.isKing();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @Test
-    @DisplayName("isPawn()은 호출하면 false를 반환한다")
-    void ispawn_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = empty.isPawn();
 
         // then
         assertThat(actual).isFalse();

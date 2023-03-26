@@ -2,14 +2,8 @@ package chess.model.board;
 
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
-import chess.model.piece.type.Bishop;
-import chess.model.piece.type.Empty;
-import chess.model.piece.type.King;
-import chess.model.piece.type.Knight;
-import chess.model.piece.type.Pawn;
-import chess.model.piece.type.PieceFactory;
-import chess.model.piece.type.Queen;
-import chess.model.piece.type.Rook;
+import chess.model.piece.PieceFactory;
+import chess.model.piece.PieceType;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
@@ -21,11 +15,13 @@ import java.util.stream.Collectors;
 
 public final class ChessBoardFactory {
 
-    private static final List<Class<? extends Piece>> backPieces = List.of(
-            Rook.class, Knight.class, Bishop.class, Queen.class, King.class, Bishop.class, Knight.class, Rook.class
+    private static final List<PieceType> backPieces = List.of(
+            PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING,
+            PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK
     );
-    private static final List<Class<? extends Piece>> frontPieces = List.of(
-            Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class, Pawn.class
+    private static final List<PieceType> frontPieces = List.of(
+            PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
+            PieceType.PAWN, PieceType.PAWN
     );
     private static final int CHESS_BOARD_SIZE = 8;
 
@@ -67,7 +63,8 @@ public final class ChessBoardFactory {
     }
 
     private static Piece initialBackPieceToChessBoard(final int index, final Camp camp) {
-        final Class<? extends Piece> pieceType = backPieces.get(index);
+        final PieceType pieceType = backPieces.get(index);
+
         return PieceFactory.create(pieceType, camp);
     }
 
@@ -88,16 +85,16 @@ public final class ChessBoardFactory {
     }
 
     private static Piece initialFrontPieceToChessBoard(final int index, final Camp camp) {
-        final Class<? extends Piece> pieceType = frontPieces.get(index);
+        final PieceType pieceType = frontPieces.get(index);
 
         return PieceFactory.create(pieceType, camp);
     }
 
-    private static void initialEmptyPiece( final Map<Position, Piece> initialChessBoard, final Rank targetRank) {
+    private static void initialEmptyPiece(final Map<Position, Piece> initialChessBoard, final Rank targetRank) {
         for (final File targetFile : File.values()) {
             final Position targetPosition = Position.of(targetFile, targetRank);
 
-            initialChessBoard.put(targetPosition, Empty.EMPTY_PIECE);
+            initialChessBoard.put(targetPosition, Piece.EMPTY);
         }
     }
 }

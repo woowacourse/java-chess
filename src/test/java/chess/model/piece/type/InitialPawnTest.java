@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,27 +16,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class InitialPawnTest {
 
+    final Piece blackInitialPawn = new Piece(PieceType.INITIAL_PAWN, Camp.BLACK);
+
     @Test
     @DisplayName("pick()은 호출하면 가지고 있던 pawn을 반환한다")
     void pick_whenCall_thenReturnThis() {
-        // given
-        final Piece pawn = new Pawn(Camp.BLACK);
-        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
-
         // when
         final Piece actual = blackInitialPawn.pick();
 
         // then
-        assertThat(actual).isSameAs(pawn);
+        assertThat(actual.isSameType(PieceType.PAWN)).isTrue();
     }
 
     @Test
     @DisplayName("isNotPassable()은 호출하면 true를 반환한다")
     void isNotPassable_whenCall_thenReturnFalse() {
-        // given
-        final Piece pawn = new Pawn(Camp.BLACK);
-        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
-
         // when
         final boolean actual = blackInitialPawn.isNotPassable();
 
@@ -47,10 +42,6 @@ class InitialPawnTest {
     @DisplayName("isSameTeam() 테스트")
     @MethodSource("chess.helper.arguments.CampArguments#provideIsSameTeamByBlack")
     void isSameTeam_givenCamp_thenReturnIsSameTeam(final Camp camp, final boolean expected) {
-        // given
-        final Piece pawn = new Pawn(Camp.BLACK);
-        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
-
         // when
         final boolean actual = blackInitialPawn.isSameTeam(camp);
 
@@ -58,54 +49,14 @@ class InitialPawnTest {
         assertThat(actual).isSameAs(expected);
     }
 
-    @Test
-    @DisplayName("isKing()은 호출하면 false를 반환한다")
-    void isKing_whenCall_thenReturnFalse() {
-        // given
-        final Piece pawn = new Pawn(Camp.BLACK);
-        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
-
-        // when
-        final boolean actual = blackInitialPawn.isKing();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @Test
-    @DisplayName("isPawn()은 호출하면 true를 반환한다")
-    void ispawn_whenCall_thenReturnFalse() {
-        // given
-        final Piece pawn = new Pawn(Camp.BLACK);
-        final InitialPawn blackInitialPawn = new InitialPawn(pawn);
-
-        // when
-        final boolean actual = blackInitialPawn.isPawn();
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
     @Nested
     @DisplayName("movable() 검은색 폰 테스트")
     class BlackInitialPawnMovableMethodTest {
 
-        private final Piece empty = Empty.EMPTY_PIECE;
-        private Piece blackInitialPawn;
-        private Piece ally;
-        private Piece enemy;
-        
-        @BeforeEach
-        void beforeEach() {
-            final Pawn blackPawn = new Pawn(Camp.BLACK);
-            
-            blackInitialPawn = new InitialPawn(blackPawn);
-            ally = new InitialPawn(blackInitialPawn);
-            
-            final Pawn whiteInitialPawn = new Pawn(Camp.WHITE);
-            
-            enemy = new InitialPawn(whiteInitialPawn);
-        }
+        private final Piece empty = Piece.EMPTY;
+        private final Piece blackInitialPawn = new Piece(PieceType.INITIAL_PAWN, Camp.BLACK);
+        private final Piece ally = new Piece(PieceType.ROOK, Camp.BLACK);
+        private final Piece enemy = new Piece(PieceType.ROOK, Camp.WHITE);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 대각선 ({0},{1}) 일 때 움직일 수 있다.")
         @DisplayName("movable() 유효한 공격 이동 방향, 유효한 공격 이동 거리, 적군 테스트")
@@ -211,22 +162,10 @@ class InitialPawnTest {
     @DisplayName("movable() 흰색 폰 테스트")
     class WhiteInitialPawnMovableMethodTest {
 
-        private final Piece empty = Empty.EMPTY_PIECE;
-        private Piece whiteInitialPawn;
-        private Piece ally;
-        private Piece enemy;
-
-        @BeforeEach
-        void beforeEach() {
-            final Pawn whitePawn = new Pawn(Camp.WHITE);
-
-            whiteInitialPawn = new InitialPawn(whitePawn);
-            ally = new InitialPawn(whitePawn);
-
-            final Pawn blackPawn = new Pawn(Camp.BLACK);
-
-            enemy = new InitialPawn(blackPawn);
-        }
+        private final Piece empty = Piece.EMPTY;
+        private final Piece whiteInitialPawn = new Piece(PieceType.INITIAL_PAWN, Camp.WHITE);
+        private final Piece ally = new Piece(PieceType.ROOK, Camp.WHITE);
+        private final Piece enemy = new Piece(PieceType.ROOK, Camp.BLACK);
 
         @ParameterizedTest(name = "목적지가 적군인 경우 움직이는 방향이 대각선 ({0},{1})일 때 움직일 수 있다.")
         @DisplayName("movable() 유효한 공격 이동 방향, 유효한 공격 이동 거리, 적군 테스트")

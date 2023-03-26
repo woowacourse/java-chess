@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class KingTest {
 
-    private final Piece blackKing = new King(Camp.BLACK);
+    private final Piece blackKing = new Piece(PieceType.KING, Camp.BLACK);
     
     @Test
     @DisplayName("pick()은 호출하면 자기 자신을 반환한다")
@@ -47,32 +48,12 @@ class KingTest {
         assertThat(actual).isSameAs(expected);
     }
 
-    @Test
-    @DisplayName("isKing()은 호출하면 true를 반환한다")
-    void isKing_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = blackKing.isKing();
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @Test
-    @DisplayName("isPawn()은 호출하면 false를 반환한다")
-    void ispawn_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = blackKing.isPawn();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
     @Nested
     @DisplayName("movable() 테스트")
     class KingMovableMethodTest {
-        private final Piece ally = new Knight(Camp.BLACK);
-        private final Piece empty = Empty.EMPTY_PIECE;
-        private final Piece enemy = new Knight(Camp.WHITE);
+        private final Piece ally = new Piece(PieceType.BISHOP, Camp.BLACK);
+        private final Piece empty = Piece.EMPTY;
+        private final Piece enemy = new Piece(PieceType.PAWN, Camp.WHITE);
 
         @ParameterizedTest(name = "목적지가 적군이거나 빈 곳인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")
         @DisplayName("movable() 유효한 이동 방향, 유효한 이동 거리, 적군 테스트")

@@ -13,8 +13,7 @@ import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
 import chess.model.game.ChessGame;
 import chess.model.piece.Piece;
-import chess.model.piece.type.Empty;
-import chess.model.piece.type.Pawn;
+import chess.model.piece.PieceType;
 import chess.model.position.Position;
 import java.util.Collections;
 import java.util.List;
@@ -71,10 +70,10 @@ class LoadTest {
 
         final Map<Position, Piece> actualBoard = chessGame.getChessBoard().getSquares();
 
-        assertThat(actualBoard.get(E3).getClass()).isEqualTo(Pawn.class);
-        assertThat(actualBoard.get(B6).getClass()).isEqualTo(Pawn.class);
-        assertThat(actualBoard.get(E2).getClass()).isEqualTo(Empty.class);
-        assertThat(actualBoard.get(B7).getClass()).isEqualTo(Empty.class);
+        assertThat(actualBoard.get(E3).isSameType(PieceType.PAWN)).isTrue();
+        assertThat(actualBoard.get(B6).isSameType(PieceType.PAWN)).isTrue();
+        assertThat(actualBoard.get(E2).isSameType(PieceType.EMPTY)).isTrue();
+        assertThat(actualBoard.get(B7).isSameType(PieceType.EMPTY)).isTrue();
     }
 
     @Test

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
 
-    private final Bishop blackBishop = new Bishop(Camp.BLACK);
+    private final Piece blackBishop = new Piece(PieceType.BISHOP, Camp.BLACK);
 
     @Test
     @DisplayName("pick()은 호출하면 자기 자신을 반환한다")
@@ -36,26 +37,6 @@ class BishopTest {
         assertThat(actual).isTrue();
     }
 
-    @Test
-    @DisplayName("isKing()은 호출하면 false를 반환한다")
-    void isKing_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = blackBishop.isKing();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @Test
-    @DisplayName("isPawn()은 호출하면 false를 반환한다")
-    void ispawn_whenCall_thenReturnFalse() {
-        // when
-        final boolean actual = blackBishop.isPawn();
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
     @ParameterizedTest(name = "검은색 진영 비숍은 isSameTeam()을 호출할 때 Camp.{0}을 건네주면 {1}을 반환한다")
     @DisplayName("isSameTeam() 테스트")
     @MethodSource("chess.helper.arguments.CampArguments#provideIsSameTeamByBlack")
@@ -71,9 +52,9 @@ class BishopTest {
     @DisplayName("movable() 테스트")
     class BlackBishopMovableMethodTest {
 
-        private final Piece ally = new Bishop(Camp.BLACK);
-        private final Piece empty = Empty.EMPTY_PIECE;
-        private final Piece enemy = new Bishop(Camp.WHITE);
+        private final Piece ally = new Piece(PieceType.BISHOP, Camp.BLACK);
+        private final Piece empty = Piece.EMPTY;
+        private final Piece enemy = new Piece(PieceType.BISHOP, Camp.WHITE);
 
         @ParameterizedTest(name = "목적지가 적군이거나 빈 칸인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")
         @DisplayName("movable() 유효한 이동 방향, 유효한 이동 거리, 유효한 목적지 테스트")
