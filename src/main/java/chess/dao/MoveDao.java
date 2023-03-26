@@ -38,5 +38,38 @@ public class MoveDao {
         }
     }
 
+    public List<MoveDto> findAll() {
+        String query = "SELECT * FROM move";
+        List<MoveDto> result = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+             PreparedStatement prepareStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            while (resultSet.next()) {
+                result.add(new MoveDto(
+                        resultSet.getString("source"),
+                        resultSet.getString("target")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+        return result;
+    }
+
+    public void deleteAll() {
+        String query = "DELETE FROM move";
+
+        try (Connection connection = getConnection();
+             PreparedStatement prepareStatement = connection.prepareStatement(query)) {
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
 
 }
