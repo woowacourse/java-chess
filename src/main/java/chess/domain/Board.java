@@ -109,7 +109,7 @@ public class Board {
 
 	private void validateMovableByCount(final Piece piece, final int pathSize) {
 		if (!piece.movableByCount(pathSize)) {
-			throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다.");
+			throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다");
 		}
 	}
 

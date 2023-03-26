@@ -103,7 +103,7 @@ class BoardTest {
 
 		assertThatThrownBy(() -> board.move(source, target))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("한 칸만 움직일 수 있는 체스말입니다.");
+			.hasMessage("한 칸만 움직일 수 있는 체스말입니다");
 	}
 
 	@Test
