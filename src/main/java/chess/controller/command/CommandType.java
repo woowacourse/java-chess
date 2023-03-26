@@ -6,7 +6,8 @@ import java.util.List;
 public enum CommandType {
     START("start", 1, "start 명령어는 값을 하나만 입력해야합니다."),
     MOVE("move", 3, "move 명령어는 '도착지'와 '출발지'에 대한 정보를 입력해야합니다."),
-    END("end", 1, "end 명령어는 값을 하나만 입력해야합니다.");
+    END("end", 1, "end 명령어는 값을 하나만 입력해야합니다."),
+    STATUS("status", 1, "status 명령어는 값을 하나만 입력해야합니다.");
 
     static final String INVALID_COMMAND_MESSAGE = "잘못된 명령어를 입력했습니다.";
     private static final String INVALID_COMMAND_SIZE_MESSAGE = "명령어는 최소 한글자 이상입니다.";
