@@ -62,6 +62,10 @@ public class Position {
         return this.col == col;
     }
 
+    public String makeToString() {
+        return col.makeToString() + row.makeToString();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

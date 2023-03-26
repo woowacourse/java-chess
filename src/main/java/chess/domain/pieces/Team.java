@@ -2,9 +2,15 @@ package chess.domain.pieces;
 
 public enum Team {
 
-    BLACK,
-    WHITE,
-    EMPTY;
+    BLACK("black"),
+    WHITE("white"),
+    EMPTY("empty");
+
+    final String team;
+
+    Team(String team) {
+        this.team = team;
+    }
 
     public boolean isBlackTeam() {
         return this == BLACK;
@@ -16,5 +22,9 @@ public enum Team {
 
     public boolean isEmpty() {
         return this == EMPTY;
+    }
+
+    public String getTeam() {
+        return team;
     }
 }

@@ -41,4 +41,8 @@ public enum Row {
     public char getIndexOfRow() {
         return this.row;
     }
+
+    public String makeToString() {
+       return String.valueOf(this.row);
+    }
 }
