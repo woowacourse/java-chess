@@ -46,6 +46,10 @@ public abstract class Piece {
         return this.team.isDifferentTeam(otherPiece.team);
     }
     
+    public boolean isPawn() {
+        return false;
+    }
+    
     public Team team() {
         return this.team;
     }

@@ -13,4 +13,9 @@ public abstract class Pawn extends Piece {
     public PieceMovingType movingType() {
         return PieceMovingType.PAWN;
     }
+    
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

@@ -99,6 +99,18 @@ class BlackWhiteChessBoardTest {
             assertThat(blackWhiteChessBoard.teamWithKing()).isEqualTo(Team.WHITE);
     }
     
+    @Test
+    void 같은_줄에_있는_같은_팀의_Pawn들은_점수가_반으로_줄어든다() {
+        blackWhiteChessBoard.move("b2", "b4", Team.WHITE);
+        blackWhiteChessBoard.move("a7", "a5", Team.BLACK);
+        blackWhiteChessBoard.move("b4", "a5", Team.WHITE);
+        
+        assertAll(
+                () -> assertThat(blackWhiteChessBoard.calculateScore(Team.WHITE)).isEqualTo(37.0),
+                () -> assertThat(blackWhiteChessBoard.calculateScore(Team.BLACK)).isEqualTo(37.0)
+        );
+    }
+    
     private void blackTeamKingDie() {
         blackWhiteChessBoard.move("e2", "e3", Team.WHITE);
         blackWhiteChessBoard.move("f1", "b5", Team.WHITE);

@@ -54,6 +54,15 @@ public class BlackWhiteChessBoard implements ChessBoard {
         pieces.put(toCoordinate, fromPiece.movedPiece());
     }
     
+    private Coordinate parseCoordinate(String coordinate) {
+        String[] splitedCoordinate = coordinate.split("");
+        return new Coordinate(parseColumn(splitedCoordinate), parseRow(splitedCoordinate));
+    }
+    
+    private Piece pieceOrEmpty(Coordinate nextCoordinate) {
+        return pieces.getOrDefault(nextCoordinate, Empty.getInstance());
+    }
+    
     private void validateMovable(Coordinate fromCoordinate, Coordinate toCoordinate, Piece fromPiece, Team currentTeam) {
         validateSource(fromCoordinate, fromPiece, currentTeam);
         
@@ -81,11 +90,6 @@ public class BlackWhiteChessBoard implements ChessBoard {
     private boolean isImmovableToCoordinate(Coordinate toCoordinate, Set<Coordinate> possibleCoordinates) {
         return possibleCoordinates.stream()
                 .noneMatch(coordinate -> coordinate.equals(toCoordinate));
-    }
-    
-    private Coordinate parseCoordinate(String coordinate) {
-        String[] splitedCoordinate = coordinate.split("");
-        return new Coordinate(parseColumn(splitedCoordinate), parseRow(splitedCoordinate));
     }
     
     private Column parseColumn(String[] splitedCoordinate) {
@@ -121,12 +125,39 @@ public class BlackWhiteChessBoard implements ChessBoard {
     
     @Override
     public double calculateScore(Team team) {
+        return allTeamPieceScore(team) - sameColumnPawnScore(team);
+    }
+    
+    private double allTeamPieceScore(Team team) {
         return pieces.keySet().stream()
                 .map(this::pieceOrEmpty)
                 .filter(piece -> piece.isSameTeam(team))
                 .map(Piece::pieceType)
                 .mapToDouble(PieceType::score)
                 .sum();
+    }
+    
+    private double sameColumnPawnScore(Team team) {
+        return Arrays.stream(Column.values())
+                .mapToInt(column -> countOfSameTeamOnColumn(column, team))
+                .filter(this::isSameTeamPawnMoreThenTwo)
+                .sum() / 2.0;
+    }
+    
+    private int countOfSameTeamOnColumn(Column column, Team team) {
+        return (int) Arrays.stream(Row.values())
+                .map(row -> new Coordinate(column, row))
+                .map(this::pieceOrEmpty)
+                .filter(piece -> isSameTeamPawn(team, piece))
+                .count();
+    }
+    
+    private static boolean isSameTeamPawn(Team team, Piece piece) {
+        return piece.isSameTeam(team) && piece.isPawn();
+    }
+    
+    private boolean isSameTeamPawnMoreThenTwo(Integer countOfSameTeamOnColumn) {
+        return countOfSameTeamOnColumn >= 2;
     }
     
     @Override
@@ -169,10 +200,6 @@ public class BlackWhiteChessBoard implements ChessBoard {
         }
         
         return Team.EMPTY;
-    }
-    
-    private Piece pieceOrEmpty(Coordinate nextCoordinate) {
-        return pieces.getOrDefault(nextCoordinate, Empty.getInstance());
     }
     
     @Override
