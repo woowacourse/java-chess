@@ -38,7 +38,7 @@ public final class ChessBoard {
         validateExistPieceInStartPosition(startPosition);
         validateCorrectTurnPieceInStartPosition(chessBoard.get(startPosition));
 
-        if (!validatePieceMovable(startPosition, endPosition)) {
+        if (!isPieceMovable(startPosition, endPosition)) {
             throw new IllegalArgumentException("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
         }
     }
@@ -58,7 +58,7 @@ public final class ChessBoard {
         }
     }
 
-    private boolean validatePieceMovable(Position startPosition, Position endPosition) {
+    private boolean isPieceMovable(Position startPosition, Position endPosition) {
         Path path = new Path(startPosition, endPosition);
         Piece startPiece = chessBoard.get(startPosition);
 
@@ -66,17 +66,17 @@ public final class ChessBoard {
             validatePawnMovable(startPosition, endPosition);
         }
         return startPiece.isMovablePath(startPosition, path) &&
-                validatePassablePath(path) &&
-                validateMovableEndPosition(endPosition, startPiece);
+                isPassablePath(path) &&
+                isMovableEndPosition(endPosition, startPiece);
     }
 
-    private boolean validatePassablePath(Path path) {
+    private boolean isPassablePath(Path path) {
         List<Position> pathPositionsExcludedEnd = path.subListFirstTo(path.size() - 1);
         pathPositionsExcludedEnd.forEach(this::validateNoPieceAt);
         return true;
     }
 
-    private boolean validateMovableEndPosition(Position endPosition, Piece startPiece) {
+    private boolean isMovableEndPosition(Position endPosition, Piece startPiece) {
         Piece endPiece = chessBoard.get(endPosition);
         if (chessBoard.containsKey(endPosition) && (startPiece.isBlack() == endPiece.isBlack())) {
             throw new IllegalArgumentException("[ERROR] 같은 색의 말이 있는 칸으로 이동이 불가능합니다.");
@@ -103,7 +103,7 @@ public final class ChessBoard {
         if (!chessBoard.containsKey(endPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 상대 말이 없으면 이동이 불가능합니다.");
         }
-        validateMovableEndPosition(endPosition, selectedPawn);
+        isMovableEndPosition(endPosition, selectedPawn);
     }
 
     private void validateNoPieceAt(Position position) {
@@ -114,10 +114,6 @@ public final class ChessBoard {
 
     public boolean isGameEnded() {
         return chessBoard.values().stream().filter(Piece::isKing).count() != 2;
-    }
-
-    public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
     }
 
     public Map<Position, Piece> getBlackPieces() {
@@ -146,6 +142,10 @@ public final class ChessBoard {
         if (entry.getValue().isWhite()) {
             whitePieces.put(entry.getKey(), entry.getValue());
         }
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard;
     }
 
     public Color getTurnOfColor() {
