@@ -1,7 +1,6 @@
 package techcourse.fp.chess.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,26 +23,10 @@ import techcourse.fp.chess.dto.response.ChessGameInfo;
 
 public class LocalMysqlChessGameDao implements ChessGameDao {
 
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-
-    private Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public void save(final ChessGameRequest chessGameRequest) {
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = ConnectionProvider.getConnection()) {
             int chessGameId = saveChessGame(chessGameRequest, connection);
             savePiece(chessGameRequest.getBoard(), connection, chessGameId);
 
@@ -52,7 +35,8 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
         }
     }
 
-    private int saveChessGame(final ChessGameRequest chessGameRequest, final Connection connection) throws SQLException {
+    private int saveChessGame(final ChessGameRequest chessGameRequest, final Connection connection)
+            throws SQLException {
         final String query = "INSERT INTO chess_game(name, turn) VALUES (?,?);";
         final PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, chessGameRequest.getName());
@@ -73,7 +57,7 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
     }
 
     private void savePiece(final Map<Position, Piece> board,
-                                  final Connection connection, final int chessGameId) throws SQLException {
+                           final Connection connection, final int chessGameId) throws SQLException {
         final String query = "INSERT INTO piece(chess_game_id, piece_file, piece_rank, color, type) VALUES (?, ?, ?, ?, ?);";
 
         for (Position position : board.keySet()) {
@@ -93,7 +77,7 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
 
     @Override
     public ChessGame findById(final long chessGameId) {
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = ConnectionProvider.getConnection()) {
             Map<Position, Piece> board = createBoard(chessGameId, connection);
             final Turn turn = getTurn(chessGameId, connection);
 
@@ -148,7 +132,7 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
     public List<ChessGameInfo> findInfos() {
         final String query = "SELECT * FROM chess_game;";
 
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = ConnectionProvider.getConnection()) {
             final PreparedStatement ps = connection.prepareStatement(query);
             final ResultSet resultSet = ps.executeQuery();
 
@@ -157,7 +141,6 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
             while (resultSet.next()) {
                 final long id = resultSet.getLong("id");
                 final String name = resultSet.getString("name");
-
                 final String turn = resultSet.getString("turn");
                 final Timestamp createAt = resultSet.getTimestamp("created_at");
 
