@@ -16,5 +16,10 @@ public final class InputView {
     public static String getCoordinate() {
         return SCANNER.next();
     }
+
+    public static String readRoomName() {
+        System.out.println("저장할 방 이름을 입력해 주세요.");
+        return SCANNER.next();
+    }
 }
 

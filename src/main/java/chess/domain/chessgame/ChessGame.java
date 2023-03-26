@@ -1,5 +1,6 @@
 package chess.domain.chessgame;
 
+import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.state.GameState;
@@ -23,6 +24,14 @@ public final class ChessGame {
 
     public WinningStatus status() {
         return gameState.status();
+    }
+
+    public boolean isRunning() {
+        return gameState.isRunning();
+    }
+
+    public void save(RoomName roomName) {
+
     }
 
     public void end() {

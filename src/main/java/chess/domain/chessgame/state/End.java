@@ -33,6 +33,11 @@ public class End implements GameState {
     }
 
     @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
     public GameState end() {
         return new End();
     }

@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.ChessGame;
@@ -100,7 +101,12 @@ public final class ChessController {
         OutputView.printWinnerWhenRunning(TeamName.getNameByTeam(winner));
     }
 
-    private void saveGame(final ChessGame chessGame){
+    private void saveGame(final ChessGame chessGame) {
+        if (!chessGame.isRunning()) {
+            throw new IllegalStateException("게임이 진행중이 아닐 때는 저장할 수 없습니다.");
+        }
 
+        RoomName roomName = new RoomName(InputView.readRoomName());
+        chessGame.save(roomName);
     }
 }

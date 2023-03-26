@@ -16,6 +16,8 @@ public interface GameState {
 
     WinningStatus status();
 
+    boolean isRunning();
+
     GameState end();
 
     boolean isNotEnd();

@@ -58,6 +58,11 @@ public class Running implements GameState {
     }
 
     @Override
+    public boolean isRunning() {
+        return true;
+    }
+
+    @Override
     public GameState end() {
         return new End();
     }
