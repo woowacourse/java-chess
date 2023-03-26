@@ -69,8 +69,8 @@ public class BoardDao {
         try (Connection connection = getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(query)) {
             for (BoardDto boardDto : boardDtoList) {
-                prepareStatement.setString(1, boardDto.getSource());
-                prepareStatement.setString(2, boardDto.getPiece());
+                prepareStatement.setString(1, boardDto.getPiece());
+                prepareStatement.setString(2, boardDto.getSource());
                 prepareStatement.setString(3, boardDto.getRoomName());
                 prepareStatement.executeUpdate();
             }
