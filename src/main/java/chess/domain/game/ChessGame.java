@@ -51,4 +51,8 @@ public final class ChessGame {
     public boolean isEnd() {
         return chessBoard.checkKingDie();
     }
+
+    public TeamColor getCurrentTeamColor() {
+        return currentTeamColor;
+    }
 }

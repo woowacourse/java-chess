@@ -19,14 +19,4 @@ public class ScoreDto {
     public Double getBlackScore() {
         return blackScore;
     }
-
-    public String getWinner() {
-        if (whiteScore.equals(blackScore)) {
-            return "무승부";
-        }
-        if (whiteScore > blackScore) {
-            return "White";
-        }
-        return "Black";
-    }
 }

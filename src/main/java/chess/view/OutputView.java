@@ -21,8 +21,8 @@ public final class OutputView {
     }
 
     public static void printStatus(ScoreDto scoreDto) {
-        print(String.format("Black : %f, White : %f\n우승팀 : %s",
-                scoreDto.getBlackScore(), scoreDto.getWhiteScore(), scoreDto.getWinner()));
+        print(String.format("Black : %f, White : %f",
+                scoreDto.getBlackScore(), scoreDto.getWhiteScore()));
         System.out.println(System.lineSeparator());
     }
 }
