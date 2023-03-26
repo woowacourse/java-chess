@@ -1,5 +1,8 @@
 package chess.domain;
 
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
+
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -49,11 +52,37 @@ public class ChessGame {
         }
     }
 
+    public double calculateScoreBy(Team team) {
+        return board.calculateTotalScoreBy(team);
+    }
+
+    public List<String> determineWinningTeam() {
+        if (calculateScoreBy(BLACK) > calculateScoreBy(WHITE)) {
+            return List.of(BLACK.name());
+        }
+        if (calculateScoreBy(BLACK) < calculateScoreBy(WHITE)) {
+            return List.of(WHITE.name());
+        }
+        return List.of(BLACK.name(), WHITE.name());
+    }
+
+    public boolean isCheckmate() {
+        return board.countKing() < 2;
+    }
+
     private void changeTeam() {
         team = Team.change(team);
     }
 
     public Board getBoard() {
         return board;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public String teamName() {
+        return team.name();
     }
 }

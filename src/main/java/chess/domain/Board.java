@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
+import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 import static java.lang.Math.*;
@@ -131,6 +132,12 @@ public class Board {
                 .filter(entry -> entry.getKey().getFile() == square.getFile())
                 .filter(entry -> entry.getValue().isSameType(PAWN) || entry.getValue().isSameType(INITIAL_PAWN))
                 .filter(entry -> entry.getValue().getTeam() == piece.getTeam())
+                .count();
+    }
+
+    public long countKing() {
+        return board.values().stream()
+                .filter(piece -> piece.isSameType(KING))
                 .count();
     }
 }
