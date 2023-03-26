@@ -1,7 +1,7 @@
 package chess.repository;
 
 import chess.db.JdbcTemplate;
-import chess.dto.room.RoomDto;
+import chess.domain.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,27 +23,27 @@ public class RoomJdbcDao implements RoomDao {
     }
 
     @Override
-    public List<RoomDto> findAllByUserId(final int userId) {
+    public List<Room> findAllByUserId(final int userId) {
         return jdbcTemplate.query("select * from room where user_id = ?", resultSet -> {
-            final List<RoomDto> result = new ArrayList<>();
+            final List<Room> result = new ArrayList<>();
             while (resultSet.next()) {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
                 final boolean finished = resultSet.getBoolean("finished");
-                result.add(new RoomDto(id, name, finished));
+                result.add(new Room(id, name, finished));
             }
             return result;
         }, userId);
     }
 
     @Override
-    public RoomDto findById(final int roomId) {
+    public Room findById(final int roomId) {
         return jdbcTemplate.query("select * from room where id = ?", resultSet -> {
             if (resultSet.next()) {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
                 final boolean finished = resultSet.getBoolean("finished");
-                return new RoomDto(id, name, finished);
+                return new Room(id, name, finished);
             }
             return null;
         }, roomId);

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.db.JdbcTemplate;
 import chess.db.TestConnectionPool;
-import chess.dto.room.RoomDto;
+import chess.domain.room.Room;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -54,7 +54,7 @@ public class RoomJdbcDaoTest {
         roomDao.save(roomName, userId);
 
         // then
-        final List<RoomDto> result = roomDao.findAllByUserId(userId);
+        final List<Room> result = roomDao.findAllByUserId(userId);
         assertThat(result).hasSize(1);
     }
 
@@ -66,7 +66,7 @@ public class RoomJdbcDaoTest {
         roomDao.save("방2", userId);
 
         // when
-        final List<RoomDto> result = roomDao.findAllByUserId(userId);
+        final List<Room> result = roomDao.findAllByUserId(userId);
 
         // then
         assertThat(result).hasSize(2);
@@ -77,11 +77,11 @@ public class RoomJdbcDaoTest {
         // given
         final int userId = 1;
         roomDao.save("방1", userId);
-        final List<RoomDto> rooms = roomDao.findAllByUserId(userId);
+        final List<Room> rooms = roomDao.findAllByUserId(userId);
         final int roomId = rooms.get(0).getId();
 
         // when
-        final RoomDto room = roomDao.findById(roomId);
+        final Room room = roomDao.findById(roomId);
 
         // then
         assertThat(room.getName()).isEqualTo("방1");
