@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -39,5 +40,13 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 팀 말을 움직여 주세요.");
+    }
+
+    @Test
+    @DisplayName("남아있는 말들의 점수를 통해 이긴 진영을 구한다.")
+    void calculateWinnerTeam() {
+        ChessGame chessGame = new ChessGame(new Board(), Team.WHITE);
+
+        assertThat(chessGame.calculateWinnerTeam()).isEqualTo(Team.EMPTY);
     }
 }

@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.Team;
 
 public class OutputView {
 
@@ -14,6 +15,14 @@ public class OutputView {
     public void printChessBoard(final Board board) {
         System.out.println(BoardView.showChessBoard(board));
         System.out.println();
+    }
+
+    public void printTeamScore(final Team team, final double score) {
+        System.out.println(team + "의 점수는 " + score + "입니다.");
+    }
+
+    public void printWinnerTeam(final Team team) {
+        System.out.println("현재 이긴 팀은 " + team + "입니다.");
     }
 
     public void printErrorMessage(final String errorMessage) {

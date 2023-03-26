@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static chess.controller.Command.*;
+import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
 public class GameController {
@@ -50,10 +51,19 @@ public class GameController {
             return command;
         }
         validateWrongCommand(command, START);
-        validateMoveCommandFormat(gameCommand);
 
-        chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
-        outputView.printChessBoard(chessGame.getBoard());
+        if (command == MOVE) {
+            validateMoveCommandFormat(gameCommand);
+            chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
+            outputView.printChessBoard(chessGame.getBoard());
+        }
+
+        if (command == STATUS) {
+            outputView.printTeamScore(WHITE, chessGame.calculateTeamScore(WHITE));
+            outputView.printTeamScore(BLACK, chessGame.calculateTeamScore(BLACK));
+            outputView.printWinnerTeam(chessGame.calculateWinnerTeam());
+        }
+
         if (chessGame.isGameEnd()) {
             return END;
         }

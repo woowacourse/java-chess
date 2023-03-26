@@ -8,6 +8,8 @@ import chess.domain.square.Squares;
 import java.util.Arrays;
 import java.util.List;
 
+import static chess.domain.Team.*;
+
 public class ChessGame {
 
     private static final int SQUARE_INPUT_LENGTH = 2;
@@ -52,6 +54,22 @@ public class ChessGame {
 
     private void changeTeam() {
         team = Team.change(team);
+    }
+
+    public double calculateTeamScore(final Team team) {
+        return board.calculateTeamScore(team);
+    }
+
+    public Team calculateWinnerTeam() {
+        double whiteScore = calculateTeamScore(WHITE);
+        double blackScore = calculateTeamScore(BLACK);
+        if (whiteScore < blackScore) {
+            return BLACK;
+        }
+        if (blackScore < whiteScore) {
+            return WHITE;
+        }
+        return EMPTY;
     }
 
     public Board getBoard() {
