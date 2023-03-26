@@ -1,10 +1,21 @@
 package chess.dao;
 
+import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.Color;
+import chess.domain.GameStatus;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JdbcChessGameDao implements ChessGameDao {
     private static final String SERVER = "localhost:3306"; // MySQL 서버 주소
@@ -90,7 +101,32 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public void save(int gameId, ChessGame chessGame) {
+        final var gameQuery = "INSERT INTO game VALUES(?, ?, ?)";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(gameQuery)) {
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setString(2, chessGame.getStatus().getLabel());
+            preparedStatement.setString(3, chessGame.getTurn().getLabel());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+        Map<Position, Piece> positionAndMap = chessGame.getBoard().getPositionAndPiece();
+        for (final Map.Entry<Position, Piece> positionPieceEntry : positionAndMap.entrySet()) {
+            final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
+            try (final var connection = getConnection();
+                 final var preparedStatement = connection.prepareStatement(pieceQuery)) {
+                preparedStatement.setInt(1, gameId);
+                preparedStatement.setString(2, positionPieceEntry.getKey().getFile().getLabel());
+                preparedStatement.setString(3, positionPieceEntry.getKey().getRank().getLabel());
+                preparedStatement.setString(4, positionPieceEntry.getValue().getType().getLabel());
+                preparedStatement.setString(5, positionPieceEntry.getValue().getColor().getLabel());
+                preparedStatement.executeUpdate();
+            } catch (final SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
