@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import chess.controller.dto.PieceResponse;
+import chess.controller.exception.IllegalCommandException;
 import chess.controller.mapper.FileMapper;
 import chess.controller.mapper.PieceResponseMapper;
 import chess.controller.mapper.RankMapper;
-import chess.domain.exception.NotPlayableException;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -26,12 +26,12 @@ public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGameExceptionHandler exceptionHandler;
+    private final GameExceptionHandler exceptionHandler;
 
     public ChessGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.exceptionHandler = new ChessGameExceptionHandler(outputView);
+        this.exceptionHandler = new GameExceptionHandler(outputView);
     }
 
     public void start() {
@@ -47,7 +47,7 @@ public class ChessGameController {
                 play(new Game());
             }
             if (command == Command.MOVE) {
-                throw new NotPlayableException("아직 게임이 시작되지 않은 상태입니다.");
+                throw new IllegalCommandException("아직 게임이 시작되지 않은 상태입니다.");
             }
             if (command == Command.END) {
                 return;
@@ -57,7 +57,7 @@ public class ChessGameController {
 
     private void play(Game game) {
         outputView.printPieces(createResponses(game.getPieces()));
-        while (playOnce(game) != Command.END) {
+        while (playOnce(game) != Command.END && !game.isFinished()) {
             outputView.printPieces(createResponses(game.getPieces()));
         }
     }
@@ -67,7 +67,7 @@ public class ChessGameController {
             Request request = inputView.askCommand();
             Command command = request.getCommand();
             if (command == Command.START) {
-                throw new NotPlayableException("게임이 진행중입니다.");
+                throw new IllegalCommandException("게임이 진행중입니다.");
             }
             if (command == Command.MOVE) {
                 MoveRequest moveRequest = request.getMoveRequest();
