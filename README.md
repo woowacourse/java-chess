@@ -47,22 +47,21 @@ classDiagram
 ```sql
 create table chess_game
 (
-    id          int         not null primary key,
-    board_id    int         not null,
-    status      varchar(30),
+    id               int         not null primary key,
+    game_status      varchar(30),
 );
 
 create table board
 (
-    id      int         not null,
-    game_id int         not null,
-    x_pos   int         not null,
-    y_pos   int         not null,
-    role    varchar(30) not null,
-    team    varchar(30) not null,
+  id      int         not null,
+  game_id int         not null,
+  x_pos   int         not null,
+  y_pos   int         not null,
+  role    varchar(30) not null,
+  team    varchar(30) not null,
 
-    foreign key (game_id_id) references chess_game (id)
-    primary key (id, x_pos, y_pos)
+  foreign key (game_id) references chess_game (id),
+  primary key (id, x_pos, y_pos)
 )
 
 ```
@@ -71,13 +70,14 @@ create table board
 
 ### 체스 게임 실행
 
-- [ ] 현재 게임에 입장 할 수 있는 체스 게임 목록을 보여준다.
-  - [ ] 종료되지 않은 게임만 보여준다.
-  - [ ] `START`를 입력하는 경우, 새로운 게임을 시작한다.
-  - [ ] `입장 할 수 있는 체스 게임을 선택`하는 경우, 해당 게임을 이어서 시작한다.
-- [ ] `end`를 입력해 게임을 종료하는 경우, 현재 상태를 저장한다.
-  - [ ] 기존에 존재하던 게임인 경우, board 상태를 업데이트 한다.
-  - [ ] 새로운 게임인 경우, chessGame과 board를 DB에 생성한다.
+- [x] 현재 게임에 입장 할 수 있는 체스 게임 목록을 보여준다.
+  - [x] 진행중인 게임만 보여준다.
+  - [x] `0`를 입력하는 경우, 새로운 게임을 시작한다.
+  - [x] `입장 할 수 있는 체스 게임을 선택`하는 경우, 해당 게임에 입장한다.
+- [x] `START`를 입력하면 해당 게임을 시작한다.
+- [x] `end`를 입력해 게임을 종료하는 경우, 현재 상태를 저장한다.
+  - [x] 기존에 존재하던 게임인 경우, board 상태를 업데이트 한다.
+  - [x] 새로운 게임인 경우, chessGame과 board를 DB에 생성한다.
 
 
 ### 게임 진행
