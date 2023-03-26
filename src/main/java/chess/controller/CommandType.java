@@ -22,15 +22,4 @@ public enum CommandType {
                      .findFirst()
                      .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다"));
     }
-//
-//    private static void validateCodeExistence(final String code) {
-//        if (isCodeNotExist(code)) {
-//            throw new IllegalArgumentException("잘못된 명령어입니다.");
-//        }
-//    }
-//
-//    private static boolean isCodeNotExist(final String code) {
-//        return Arrays.stream(values())
-//                     .noneMatch((commandType) -> Objects.equals(code, commandType.code));
-//    }
 }
