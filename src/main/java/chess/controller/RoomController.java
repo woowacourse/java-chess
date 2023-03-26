@@ -6,6 +6,7 @@ import chess.repository.jdbc.JdbcRoomDao;
 import chess.service.RoomService;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.dto.category.CategoryCommandType;
 import chess.view.dto.ready.ReadyCommandType;
 import chess.view.dto.ready.ReadyRequest;
 import java.util.List;
@@ -23,9 +24,20 @@ public class RoomController extends Controller {
 
     @Override
     public void run() {
+        repeat(this::selectCategory);
         long roomId = repeat(this::selectRoom);
         Controller controller = new GameController(inputView, outputView, roomId);
         controller.run();
+    }
+
+    private void selectCategory() {
+        outputView.printSelectCategoryMessage();
+        CategoryCommandType commandType = inputView.askCategory();
+        while (commandType == CategoryCommandType.RECORD) {
+            outputView.printRecords(roomService.findEndRooms(userId));
+            outputView.printSelectCategoryMessage();
+            commandType = inputView.askCategory();
+        }
     }
 
     private long selectRoom() {

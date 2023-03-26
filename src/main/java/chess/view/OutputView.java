@@ -3,6 +3,7 @@ package chess.view;
 import chess.controller.dto.PieceResponse;
 import chess.domain.game.GameResult;
 import chess.domain.piece.Color;
+import chess.domain.room.Room;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,22 @@ public class OutputView {
 
     public void printCreateUserMessage() {
         System.out.println("> 신규 유저 생성: create 유저이름 - 예. create 홍길동");
+    }
+
+    public void printSelectCategoryMessage() {
+        System.out.println("> 게임 기록 확인하기: record");
+        System.out.println("> 게임 플레이하기: play");
+    }
+
+    public void printRecords(List<Room> rooms) {
+        if (rooms.size() == 0) {
+            System.out.println("완료된 게임이 없습니다.");
+            return;
+        }
+        System.out.println("> 게임 기록");
+        for (Room room : rooms) {
+            System.out.println("\t" + room.getName() + ": " + room.getWinner().name() + " 승리");
+        }
     }
 
     public void printSelectRoomMessage(List<String> roomNames) {

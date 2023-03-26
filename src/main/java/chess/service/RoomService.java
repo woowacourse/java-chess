@@ -40,4 +40,11 @@ public class RoomService {
         }
         return room.getId();
     }
+
+    public List<Room> findEndRooms(long userId) {
+        List<Room> rooms = roomDao.findAllByUserId(userId);
+        return rooms.stream()
+                .filter(room -> room.getWinner() != Color.NONE)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

@@ -40,7 +40,7 @@ public class GameController extends Controller {
 
     private void askToStart() {
         outputView.printStartMessage();
-        GameRequest request = inputView.askCommand();
+        GameRequest request = inputView.askGameCommand();
         GameCommandType commandType = request.getCommandType();
         if (commandType == GameCommandType.START) {
             play(setUpGame());
@@ -71,7 +71,7 @@ public class GameController extends Controller {
     }
 
     private GameCommandType playOnce(Game game) {
-        GameRequest request = inputView.askCommand(game.getTurn());
+        GameRequest request = inputView.askGameCommand(game.getTurn());
         GameCommandType commandType = request.getCommandType();
         if (commandType == GameCommandType.START) {
             throw new IllegalArgumentException("게임이 진행중입니다.");
