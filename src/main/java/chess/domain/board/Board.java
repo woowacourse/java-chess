@@ -2,17 +2,14 @@ package chess.domain.board;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -46,40 +43,39 @@ public class Board {
     }
 
     public Map<Color, Score> calculateScore() {
-        final Score blackScore = calculateScoreByColor(Color.BLACK);
-        final Score whiteScore = calculateScoreByColor(Color.WHITE);
+        final Map<Position, Piece> blackBoard = filterByColor(Color.BLACK);
+        final Map<Position, Piece> whiteBoard = filterByColor(Color.WHITE);
+        final Score blackScore = calculateScore(blackBoard);
+        final Score whiteScore = calculateScore(whiteBoard);
 
         return Map.of(Color.BLACK, blackScore, Color.WHITE, whiteScore);
     }
 
-    private Score calculateScoreByColor(final Color color) {
-        final Map<File, List<Piece>> pieceGroupByFile = board.entrySet()
+    private Score calculateScore(final Map<Position, Piece> board) {
+        final Score subtrahend = new Score(sumPawnCountInSameFileOver2(board) * Score.PAWN_WEIGHT);
+        return board.values()
+                .stream()
+                .map(piece -> Score.mapPieceScore(piece.getPieceType()))
+                .reduce(Score.ZERO, Score::sum)
+                .subtract(subtrahend);
+    }
+
+    private long sumPawnCountInSameFileOver2(final Map<Position, Piece> board) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getPieceType() == PieceType.PAWN)
+                .collect(groupingBy(entry -> entry.getKey().file(), counting()))
+                .values()
+                .stream()
+                .filter(count -> count >= 2)
+                .reduce(0L, Long::sum);
+    }
+
+    private Map<Position, Piece> filterByColor(final Color color) {
+        return board.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSameColor(color))
-                .collect(groupingBy(entry -> entry.getKey().file(), mapping(Entry::getValue, toList())));
-        return pieceGroupByFile.values()
-                .stream()
-                .map(this::calculateScoreByFile)
-                .reduce(Score.ZERO, Score::sum);
-    }
-
-    private Score calculateScoreByFile(final List<Piece> pieces) {
-        final Map<PieceType, Long> pieceCount = pieces.stream()
-                .collect(groupingBy(Piece::getPieceType, counting()));
-        return pieceCount.entrySet()
-                .stream()
-                .map(this::scoreMap)
-                .reduce(Score.ZERO, Score::sum);
-    }
-
-    private Score scoreMap(final Entry<PieceType, Long> entryMap) {
-        final PieceType pieceType = entryMap.getKey();
-        final Long count = entryMap.getValue();
-        final Score calculatedScore = Score.mapPieceScore(pieceType).multiply(count);
-        if (pieceType == PieceType.PAWN && count >= Score.DUPLICATE_SAME_FILE_PAWN_LIMIT) {
-            return calculatedScore.multiply(Score.PAWN_WEIGHT);
-        }
-        return calculatedScore;
+                .collect(toMap(Entry::getKey, Entry::getValue));
     }
 
     public boolean isKingDead() {
