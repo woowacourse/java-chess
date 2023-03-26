@@ -1,6 +1,7 @@
-package chess.domain;
+package chess.domain.room;
 
 import chess.dao.ChessGameDao;
+import chess.domain.ChessGame;
 
 import java.util.List;
 
@@ -15,10 +16,6 @@ public class Rooms {
     public int createNewRoom() {
         ChessGame chessGame = ChessGame.create();
         return chessGameDao.save(chessGame);
-    }
-
-    public ChessGame connectRoom(final int id) {
-        return chessGameDao.select(id);
     }
 
     public List<Integer> getRooms() {

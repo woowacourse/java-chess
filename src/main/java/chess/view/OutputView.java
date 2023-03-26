@@ -9,6 +9,18 @@ import java.util.stream.Collectors;
 
 public final class OutputView {
 
+    public static void printRoomId(List<Integer> id) {
+        String rooms = id.stream().map(value -> Integer.toString(value)).collect(Collectors.joining(", "));
+        System.out.println(
+                "> 체스 게임에 오신 것을 환영합니다. 입장하시려는 게임방의 id를 입력해주세요.\n"
+                        + "> 현재 존재하는 게임방 id: " + rooms + "\n"
+                        + "> 새 게임을 원하신다면 0을 입력해주세요.");
+    }
+
+    public static void printNonExistRoomMessage() {
+        System.out.println("존재하지 않는 게임방입니다.");
+    }
+
     public static void printInitialMessage() {
         System.out.println(
                 "> 체스 게임을 시작합니다.\n"

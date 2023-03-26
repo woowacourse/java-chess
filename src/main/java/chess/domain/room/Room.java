@@ -18,7 +18,7 @@ public class Room {
         return chessGameDao.select(id);
     }
 
-    public void updateRoom(Position sourcePosition, Position targetPosition){
+    public void updateRoom(Position sourcePosition, Position targetPosition) {
         ChessGame chessGame = connectRoom();
         chessGame.movePiece(sourcePosition, targetPosition);
         chessGameDao.update(chessGame);

@@ -92,12 +92,12 @@ public final class DBChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void delete(final ChessGame chessGame) {
+    public void delete(final int id) {
         final var query = "DELETE FROM chess_game WHERE id = ?;";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, chessGame.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

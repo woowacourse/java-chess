@@ -30,7 +30,7 @@ public final class InMemoryChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void delete(ChessGame chessGame) {
+    public void delete(final int id) {
         this.chessGame = null;
     }
 }

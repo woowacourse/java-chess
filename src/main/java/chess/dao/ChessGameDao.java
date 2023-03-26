@@ -13,5 +13,5 @@ public interface ChessGameDao {
 
     void update(final ChessGame chessGame);
 
-    void delete(final ChessGame chessGame);
+    void delete(final int id);
 }
