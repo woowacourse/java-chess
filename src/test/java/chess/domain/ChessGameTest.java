@@ -47,14 +47,14 @@ class ChessGameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"WHITE:A:SEVEN:SIX:BLACK", "BLACK:A:TWO:THREE:WHITE"}, delimiter = ':')
-    void 기물을_움직일_순서가_아니라면_움직일_수_없다(Color movableTurn, File file, Rank sourceRank, Rank destRank, String expectedTurn) {
+    @CsvSource(value = {"WHITE:A:SEVEN:SIX", "BLACK:A:TWO:THREE"}, delimiter = ':')
+    void 기물을_움직일_순서가_아니라면_움직일_수_없다(Color movableTurn, File file, Rank sourceRank, Rank destRank) {
         final ChessGame chessGame = new ChessGame(BoardFactory.generate(), movableTurn);
         final Square source = new Square(file, sourceRank);
         final Square destination = new Square(file, destRank);
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(source, destination))
-                .withMessageContaining(String.format("현재 이동 가능한 기물은 %s색 입니다.", expectedTurn));
+                .withMessageContaining(String.format("현재 이동 가능한 기물은 %s색 입니다.", movableTurn));
     }
 }
