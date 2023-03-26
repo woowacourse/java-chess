@@ -123,6 +123,21 @@ class ChessGameTest {
                 .isEqualTo(PieceType.BISHOP);
     }
 
+    @DisplayName("King이 죽었는지 확인할 수 있다.")
+    @Test
+    void isKingDeadSuccessTest() {
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square BlackKingSquare = Square.getInstanceOf(File.E, Rank.EIGHT);
+
+        assertThat(chessGame.isKingDead())
+                .isFalse();
+
+        chessboard.swapPiece(source, BlackKingSquare);
+
+        assertThat(chessGame.isKingDead())
+                .isTrue();
+    }
+
     static Stream<Arguments> invalidSquareProvider() {
         return Stream.of(
                 Arguments.arguments(Square.getInstanceOf(File.A, Rank.ONE), Square.getInstanceOf(File.A, Rank.THREE)),
