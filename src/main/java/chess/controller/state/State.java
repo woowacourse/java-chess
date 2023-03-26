@@ -40,4 +40,8 @@ public abstract class State {
     protected void saveGameHistory() {
         gameDao.addMove(game);
     }
+
+    protected Game lastGame() {
+        return gameDao.restoreLastGame();
+    }
 }

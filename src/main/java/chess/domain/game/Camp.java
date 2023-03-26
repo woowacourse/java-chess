@@ -21,6 +21,16 @@ public enum Camp {
         return EMPTY;
     }
 
+    public static Camp stringToCamp(final String name) {
+        if (name.equals(WHITE.name)) {
+            return WHITE;
+        }
+        if (name.equals(BLACK.name)) {
+            return BLACK;
+        }
+        return EMPTY;
+    }
+
     public String getName() {
         return name;
     }

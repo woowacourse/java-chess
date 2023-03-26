@@ -97,4 +97,14 @@ public final class BoardFactory {
 
         return pieces;
     }
+
+    public static Map<Square, Piece> createBoard(final List<Piece> pieces) {
+        final Map<Square, Piece> board = new LinkedHashMap<>();
+
+        for (final Piece piece : pieces) {
+            board.put(piece.position(), piece);
+        }
+
+        return board;
+    }
 }

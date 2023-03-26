@@ -11,8 +11,12 @@ import java.util.Map;
 public class Board {
     private final Map<Square, Piece> board;
 
+    public Board(final Map<Square, Piece> board) {
+        this.board = board;
+    }
+
     public Board() {
-        this.board = BoardFactory.createBoard();
+        this(BoardFactory.createBoard());
     }
 
     public void move(final Square source, final Square target) {

@@ -8,10 +8,18 @@ public class Ready extends State {
         super(game);
     }
 
+    //@Override
+    //public Running start() {
+    //    saveGameHistory();
+    //    OutputView.printChessBoard(game().getPieces());
+    //    return new Running(game());
+    //}
+
+
     @Override
     public Running start() {
-        saveGameHistory();
-        OutputView.printChessBoard(game().getPieces());
-        return new Running(game());
+        final Game lastGame = lastGame();
+        OutputView.printChessBoard(lastGame.getPieces());
+        return new Running(lastGame);
     }
 }

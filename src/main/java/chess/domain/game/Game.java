@@ -10,10 +10,16 @@ public class Game {
     private final Board board;
     private Camp turn;
 
-    public Game() {
-        this.board = new Board();
-        turn = Camp.WHITE;
+    public Game(final Board board, final Camp turn) {
+        this.board = board;
+        this.turn = turn;
     }
+
+    public Game() {
+        this(new Board(), Camp.WHITE);
+    }
+
+    //public Game()
 
     public void move(final Square source, final Square target) {
         if (!board.isSameCamp(source, turn)) {

@@ -11,6 +11,11 @@ public class Square {
         this.rank = rank;
     }
 
+    public Square(final String position) {
+        this.file = File.findFileByLetter(position.charAt(0));
+        this.rank = Rank.findRankByLetter(position.charAt(1));
+    }
+
     public Square nextSquare(final Move move) {
         if (move == Move.UP_UP || move == Move.DOWN_DOWN) {
             final int nextFile = this.getX() + Integer.signum(move.getX());
