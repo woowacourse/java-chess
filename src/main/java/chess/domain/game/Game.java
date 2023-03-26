@@ -33,6 +33,16 @@ public class Game {
         return board.haveOneKing();
     }
 
+    public Team calculateWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            return Team.WHITE;
+        }
+        if (blackScore > whiteScore) {
+            return Team.BLACK;
+        }
+        return Team.EMPTY;
+    }
+
     public double calculateWhiteScore() {
         List<Piece> whitePieces = board.getWhitePieces();
         return calculateScore(whitePieces);

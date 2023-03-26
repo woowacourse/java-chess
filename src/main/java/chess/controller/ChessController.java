@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.game.GameCommand;
+import chess.domain.piece.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -28,9 +29,8 @@ public class ChessController {
             GameCommand gameCommand = generateGameCommand();
             isEnd = executeGameCommand(gameCommand);
         }
-        double whiteScore = game.calculateWhiteScore();
-        double blackScore = game.calculateBlackScore();
-        outputView.printGameEndMessage(whiteScore, blackScore);
+        outputView.printGameEndMessage();
+        printGameStatus();
     }
 
     private GameCommand generateGameCommand() {
@@ -51,6 +51,10 @@ public class ChessController {
             play(gameCommand);
             return game.isGameEnd();
         }
+        if (gameCommand.isStatus()) {
+            printGameStatus();
+            return false;
+        }
         return true;
     }
 
@@ -69,5 +73,14 @@ public class ChessController {
         } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private void printGameStatus() {
+        double whiteScore = game.calculateWhiteScore();
+        double blackScore = game.calculateBlackScore();
+        Team winner = game.calculateWinner(whiteScore, blackScore);
+
+        outputView.printScoreMessage(whiteScore, blackScore);
+        outputView.printWinnerMessage(winner);
     }
 }

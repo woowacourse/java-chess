@@ -36,18 +36,19 @@ public class OutputView {
         }
     }
 
-    public void printGameEndMessage(double whiteScore, double blackScore) {
+    public void printGameEndMessage() {
         System.out.println("게임이 종료되었습니다.");
+    }
+
+    public void printScoreMessage(double whiteScore, double blackScore) {
         System.out.println("WHITE 팀 (" + whiteScore + ")점, BLACK 팀 (" + blackScore + ") 입니다.");
-        if (whiteScore > blackScore) {
-            System.out.println("WHTIE 팀이 승리하였습니다.");
-        }
-        if (blackScore > whiteScore) {
-            System.out.println("BLACK 팀이 승리하였습니다.");
-        }
-        if (blackScore == whiteScore) {
+    }
+
+    public void printWinnerMessage(Team winner) {
+        if (winner == Team.EMPTY) {
             System.out.println("무승부입니다.");
         }
+        System.out.println(winner.name() + " 팀이 승리하였습니다.");
     }
 
     public void printErrorMessage(String message) {

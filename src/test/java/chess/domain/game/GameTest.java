@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.piece.Team;
 import chess.exception.TeamNotMatchException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -87,5 +88,35 @@ class GameTest {
         Game game = new Game();
 
         assertThat(game.calculateBlackScore()).isEqualTo(38);
+    }
+
+    @DisplayName("점수를 통해 승자를 가릴 수 있다.")
+    @Test
+    void Should_WhiteWin_When_WhiteScoreOverThanBalckScore() {
+        Game game = new Game();
+        final double whiteScore = 10.0;
+        final double blackScore = 5.0;
+
+        assertThat(game.calculateWinner(whiteScore, blackScore)).isEqualTo(Team.WHITE);
+    }
+
+    @DisplayName("점수를 통해 승자를 가릴 수 있다.")
+    @Test
+    void Should_BlackWin_When_WhiteScoreLessThanBalckScore() {
+        Game game = new Game();
+        final double whiteScore = 5.0;
+        final double blackScore = 10.0;
+
+        assertThat(game.calculateWinner(whiteScore, blackScore)).isEqualTo(Team.BLACK);
+    }
+
+    @DisplayName("점수를 통해 승자를 가릴 수 있다.")
+    @Test
+    void Should_Empty_When_WhiteScoreSameBalckScore() {
+        Game game = new Game();
+        final double whiteScore = 5.0;
+        final double blackScore = 5.0;
+
+        assertThat(game.calculateWinner(whiteScore, blackScore)).isEqualTo(Team.EMPTY);
     }
 }
