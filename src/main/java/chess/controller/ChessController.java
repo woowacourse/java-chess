@@ -6,6 +6,7 @@ import chess.dao.ChessGameDao;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Coordinate;
+import chess.view.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
