@@ -71,7 +71,6 @@ public class OutputView {
     }
 
     public void printStatus(final Status status) {
-        System.out.println();
         System.out.println("WHITE 진영의 기물 점수: " + status.getWhiteSidePrice());
         System.out.println("BLACK 진영의 기물 점수: " + status.getBlackSidePrice());
         System.out.println("현재 " + getAdvantageSideFormat(status.getAdvantageSide()));

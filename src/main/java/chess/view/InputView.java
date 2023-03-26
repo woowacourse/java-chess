@@ -1,5 +1,6 @@
 package chess.view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -10,10 +11,11 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public String readCommand() {
-        System.out.println("게임 시작 : start");
-        System.out.println("게임 종료 : end");
-        System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
-        return scanner.nextLine();
+    public List<String> readCommand() {
+        System.out.println("게임 시작     : start");
+        System.out.println("기물 이동     : move source위치 target위치  (예시) move b2 b3");
+        System.out.println("기물 점수 상태 : status");
+        System.out.println("게임 종료     : end");
+        return List.of(scanner.nextLine().split(" "));
     }
 }
