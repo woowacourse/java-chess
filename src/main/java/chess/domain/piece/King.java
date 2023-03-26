@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 
 public final class King extends Piece {
 

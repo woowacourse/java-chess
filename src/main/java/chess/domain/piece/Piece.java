@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 
 public abstract class Piece {
 
-    protected final Team team;
-    protected final PieceType pieceType;
+    private final Team team;
+    private final PieceType pieceType;
 
     protected Piece(final Team team, final PieceType pieceType) {
         this.team = team;

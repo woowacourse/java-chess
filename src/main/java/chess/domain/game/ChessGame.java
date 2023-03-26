@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 

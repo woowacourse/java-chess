@@ -1,9 +1,9 @@
 package chess.dao;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.game.ChessGame;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Turn;

@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
