@@ -9,8 +9,9 @@ import java.util.List;
 import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("나이트는 ")
 class KnightTest {
-    @DisplayName("나이트는 대각선, 행, 열을 제외한 가장 가까운 칸으로 이동할 수 있다.")
+    @DisplayName("대각선, 행, 열을 제외한 가장 가까운 칸으로 이동할 수 있다.")
     @Test
     void knightMovable() {
         //given
@@ -24,7 +25,7 @@ class KnightTest {
         assertThat(destinations).allMatch(destination -> knight.isMovable(source, destination));
     }
 
-    @DisplayName("나이트는 대각선, 행, 열을 제외한 가장 가까운 칸이 아니면 이동할 수 없다.")
+    @DisplayName("대각선, 행, 열을 제외한 가장 가까운 칸이 아니면 이동할 수 없다.")
     @Test
     void knightUnMovable() {
         //given
@@ -36,5 +37,17 @@ class KnightTest {
 
         //then
         assertThat(destinations).noneMatch(destination -> knight.isMovable(source, destination));
+    }
+
+    @DisplayName("기본 점수는 2.5점이다.")
+    @Test
+    void score() {
+        //given
+        final Knight knight = new Knight(Team.BLACK);
+
+        //when
+
+        //then
+        assertThat(knight.getScore()).isEqualTo(2.5);
     }
 }

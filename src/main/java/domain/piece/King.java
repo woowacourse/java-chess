@@ -9,11 +9,12 @@ import java.util.List;
 
 public final class King extends Piece {
     private static final String NAME = "King";
+    private static final double NO_SCORE = 0;
     private static final int DIAGONAL_ONE_STEP = 2;
     private static final int ONE_STEP = 1;
 
     public King(final Team team) {
-        super(NAME, team);
+        super(NAME, team, NO_SCORE);
     }
 
     @Override

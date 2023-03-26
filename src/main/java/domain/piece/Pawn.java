@@ -10,12 +10,13 @@ import java.util.List;
 public final class Pawn extends Piece {
 
     private static final String NAME = "Pawn";
+    private static final double SCORE = 1;
     private static final int TWO_STEP = 2;
     private static final Rank INITIAL_RANK_BLACK = Rank.SEVEN;
     private static final Rank INITIAL_RANK_WHITE = Rank.TWO;
 
     public Pawn(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override

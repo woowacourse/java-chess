@@ -10,10 +10,11 @@ import java.util.List;
 public final class Knight extends Piece {
 
     private static final String NAME = "Knight";
+    private static final double SCORE = 2.5;
     private static final int ONE_STEP_OF_KNIGHT = 3;
 
     public Knight(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override

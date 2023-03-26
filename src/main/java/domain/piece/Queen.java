@@ -10,9 +10,10 @@ import java.util.List;
 public final class Queen extends Piece {
 
     private static final String NAME = "Queen";
+    private static final double SCORE = 9;
 
     public Queen(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override

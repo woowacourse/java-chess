@@ -8,10 +8,12 @@ import java.util.Objects;
 public abstract class Piece {
     private final String name;
     private final Team team;
+    private final double score;
 
-    Piece(final String name, final Team team) {
+    Piece(final String name, final Team team, final double score) {
         this.name = name;
         this.team = team;
+        this.score = score;
     }
 
     public abstract List<Position> getInitialBlackPositions();
@@ -30,6 +32,10 @@ public abstract class Piece {
 
     public String getName() {
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @Override
