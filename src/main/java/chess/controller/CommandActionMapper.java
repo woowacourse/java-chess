@@ -24,10 +24,11 @@ public enum CommandActionMapper {
     }
 
     public static AppStatus execute(ChessController chessController, CommandRequest commandRequest) {
-        CommandAction action = actionByCommand.getOrDefault(commandRequest.getCommand(),
-                (controller, request) -> {
-                    throw new IllegalArgumentException("해당 요청으로 실행할 수 있는 기능이 없습니다.");
-                });
+        String command = commandRequest.getCommand();
+        if (!actionByCommand.containsKey(command)) {
+            throw new IllegalArgumentException("해당 요청으로 실행할 수 있는 기능이 없습니다.");
+        }
+        CommandAction action = actionByCommand.get(command);
         chessController.validateCommandRequest(commandRequest);
         return action.execute(chessController, commandRequest);
     }
