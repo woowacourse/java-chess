@@ -149,4 +149,38 @@ class BoardTest {
             assertThat(board.getMinusScore(Team.WHITE)).isEqualTo(0.5 * 2);
         }
     }
+
+    @Nested
+    @DisplayName("매 판마다 승진할 pawn 이 있으면 승진시키는 checkPromotion 메서드 테스트")
+    class checkPromotionTest {
+
+        @Test
+        @DisplayName("하얀색 pawn 은 7번째 row 에 도달하면 queen 으로 승진해서 움직일 수 있다.")
+        void checkPromotionTest1() {
+            Board board = BoardGenerator.createBoard();
+
+            board.movePiece(new Position(0, 1), new Position(0, 3));
+            board.movePiece(new Position(0, 3), new Position(0, 4));
+            board.movePiece(new Position(0, 4), new Position(0, 5));
+            board.movePiece(new Position(0, 5), new Position(0, 6));
+            board.movePiece(new Position(0, 6), new Position(0, 7));
+
+            assertDoesNotThrow(() -> board.movePiece(new Position(0, 7), new Position(0, 4)));
+        }
+
+        @Test
+        @DisplayName("검정색 pawn 은 0번째 row 에 도달하면 queen 으로 승진해서 움직일 수 있다.")
+        void checkPromotionTest2() {
+            Board board = BoardGenerator.createBoard();
+
+            board.movePiece(new Position(5, 6), new Position(5, 4));
+            board.movePiece(new Position(5, 4), new Position(5, 3));
+            board.movePiece(new Position(5, 3), new Position(5, 2));
+            board.movePiece(new Position(5, 2), new Position(5, 1));
+            board.movePiece(new Position(5, 1), new Position(5, 0));
+
+            assertDoesNotThrow(() -> board.movePiece(new Position(5, 0), new Position(5, 6)));
+        }
+    }
+
 }
