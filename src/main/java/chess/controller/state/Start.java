@@ -14,15 +14,10 @@ public final class Start implements State {
 
     @Override
     public State checkCommand(final Command command) {
-        if (command.isEnd()) {
-            return new End();
+        if (command.isStart()) {
+            return new Move(chessGame, TeamColor.WHITE);
         }
-
-        if (command.isMove()) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-        }
-
-        return new Move(chessGame, TeamColor.WHITE);
+        throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
     }
 
     @Override

@@ -16,4 +16,9 @@ public class King extends Piece {
                 PossibleDestinations.of(source, Direction.getAllDirections(), KING_MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

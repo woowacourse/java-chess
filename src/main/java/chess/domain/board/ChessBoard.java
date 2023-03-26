@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public final class ChessBoard {
+    public static final int INITIAL_KING_COUNT = 2;
     private final Map<Position, Piece> board;
 
     private ChessBoard(final Map<Position, Piece> board) {
@@ -60,5 +61,11 @@ public final class ChessBoard {
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public boolean checkKingDie() {
+        return board.values().stream()
+                .filter(piece -> piece.isKing())
+                .count() != INITIAL_KING_COUNT;
     }
 }

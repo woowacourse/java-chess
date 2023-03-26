@@ -23,6 +23,10 @@ public abstract class Piece implements Movable {
         return pieceType;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
