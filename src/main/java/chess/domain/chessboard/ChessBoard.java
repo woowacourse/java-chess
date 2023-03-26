@@ -6,6 +6,7 @@ import chess.domain.piece.Team;
 import chess.domain.piece.state.King;
 import chess.domain.piece.state.Pawn;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,8 +20,8 @@ public final class ChessBoard {
 
     private final Map<SquareCoordinate, SquareState> squares;
 
-    public ChessBoard() {
-        this.squares = ChessFactory.create();
+    public ChessBoard(Map<SquareCoordinate, SquareState> squares) {
+        this.squares = squares;
     }
 
     public boolean isDifferentTeam(final Team team, final SquareCoordinate from) {
@@ -100,6 +101,10 @@ public final class ChessBoard {
             return kingPiece.get(FIRST_INDEX).getTeam();
         }
         throw new IllegalArgumentException("게임이 진행 중이므로 종료할 수 없습니다.");
+    }
+
+    public ChessBoard copyChessBoard(){
+        return new ChessBoard(Collections.unmodifiableMap(this.squares));
     }
 
     public List<SquareState> getSquares() {

@@ -21,7 +21,7 @@ public final class ChessGame {
         }
     }
 
-    public WinningStatus status(){
+    public WinningStatus status() {
         return gameState.status();
     }
 

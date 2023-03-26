@@ -1,6 +1,7 @@
 package chess.domain.chessgame.state;
 
 import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessFactory;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Team;
 import chess.domain.winningstatus.WinningStatus;
@@ -10,18 +11,21 @@ public class Ready implements GameState {
     private static final String READY_STATE_EXCEPTION_MESSAGE = "게임을 시작 전에 실행할 수 없는 동작입니다.";
 
     private final WinningStatusByKing winningStatusByKing;
+    private final ChessBoard chessBoard;
 
     public Ready() {
         this.winningStatusByKing = null;
+        this.chessBoard = null;
     }
 
-    public Ready(final WinningStatusByKing winningStatusByKing) {
+    public Ready(final WinningStatusByKing winningStatusByKing, final ChessBoard chessBoard) {
         this.winningStatusByKing = winningStatusByKing;
+        this.chessBoard = chessBoard;
     }
 
     @Override
     public GameState start() {
-        return new Running(new ChessBoard(), Team.WHITE);
+        return new Running(new ChessBoard(ChessFactory.create()), Team.WHITE);
     }
 
     @Override
@@ -58,6 +62,9 @@ public class Ready implements GameState {
 
     @Override
     public ChessBoard getChessBoard() {
-        throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+        if (chessBoard == null) {
+            throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+        }
+        return chessBoard;
     }
 }

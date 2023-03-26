@@ -45,7 +45,7 @@ public class Running implements GameState {
     @Override
     public GameState close() {
         final Team winner = chessBoard.findTeamHavingKing();
-        return new Ready(new WinningStatusByKing(winner));
+        return new Ready(new WinningStatusByKing(winner), chessBoard.copyChessBoard());
     }
 
     @Override

@@ -52,11 +52,11 @@ public final class Pawn extends Piece {
         return Math.abs(fileDistance) == 1 && rankDistance == getPawnDirection(this.team);
     }
 
-    private int getPawnDirection(Team team){
-        if(team == Team.WHITE){
+    private int getPawnDirection(Team team) {
+        if (team == Team.WHITE) {
             return WHITE_PAWN_DIRECTION;
         }
-        if(team == Team.BLACK){
+        if (team == Team.BLACK) {
             return BLACK_PAWN_DIRECTION;
         }
         throw new IllegalArgumentException("잘못된 팀입니다.");
