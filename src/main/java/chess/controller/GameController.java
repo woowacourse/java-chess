@@ -35,7 +35,7 @@ public class GameController {
     public void run() {
         outputView.printGameStart();
         Command command;
-        ChessGame chessGame = new ChessGame(START, new Board(), WHITE);
+        ChessGame chessGame = new ChessGame(new Board(), WHITE);
         do {
             List<String> gameCommand = repeatUntilValidate(() -> play(chessGame));
             command = Command.from(gameCommand.get(0));

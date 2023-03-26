@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.controller.Command;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -9,20 +8,16 @@ import chess.domain.square.Squares;
 import java.util.Arrays;
 import java.util.List;
 
-import static chess.controller.Command.READY;
-import static chess.controller.Command.START;
 import static chess.domain.Team.*;
 
 public class ChessGame {
 
     private static final int SQUARE_INPUT_LENGTH = 2;
 
-    private final Command status;
     private final Board board;
     private Team team;
 
-    public ChessGame(final Command status, final Board board, final Team team) {
-        this.status = status;
+    public ChessGame(final Board board, final Team team) {
         this.board = board;
         this.team = team;
     }
@@ -71,10 +66,6 @@ public class ChessGame {
             return WHITE;
         }
         return EMPTY;
-    }
-
-    public boolean isStarted() {
-        return status == START;
     }
 
     public boolean isGameEnd() {
