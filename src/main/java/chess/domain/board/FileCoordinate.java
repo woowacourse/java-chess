@@ -37,6 +37,10 @@ public enum FileCoordinate {
                 .collect(Collectors.toList());
     }
 
+    public int compare(FileCoordinate other) {
+        return Integer.compare(other.columnNumber, this.columnNumber);
+    }
+
     public int getColumnNumber() {
         return columnNumber;
     }

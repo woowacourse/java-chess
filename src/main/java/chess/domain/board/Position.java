@@ -20,13 +20,13 @@ public class Position {
     }
 
     public List<Position> findStraightPaths(Position targetPosition) {
-        int columnStep = getStep(this.getColumn(), targetPosition.getColumn());
-        int rowStep = getStep(this.getRow(), targetPosition.getRow());
-        int difference = getDifference(targetPosition);
-
         if (isNotStraight(targetPosition)) {
             return Collections.emptyList();
         }
+
+        int columnStep = fileCoordinate.compare(targetPosition.fileCoordinate);
+        int rowStep = rankCoordinate.compare(targetPosition.rankCoordinate);
+        int difference = getDifference(targetPosition);
         return IntStream.range(START_PATH_RANGE, difference)
                 .mapToObj(coordinate -> createPosition(columnStep, rowStep, coordinate))
                 .collect(Collectors.toList());
@@ -55,10 +55,6 @@ public class Position {
 
     public int calculateRowDifferenceWith(Position targetPosition) {
         return Math.abs(this.getRow() - targetPosition.getRow());
-    }
-
-    private int getStep(int nowCoordinate, int targetCoordinate) {
-        return Integer.compare(targetCoordinate, nowCoordinate);
     }
 
     public FileCoordinate getFileCoordinate() {

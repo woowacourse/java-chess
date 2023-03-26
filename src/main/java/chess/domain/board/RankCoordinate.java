@@ -36,6 +36,10 @@ public enum RankCoordinate {
                 .collect(Collectors.toList());
     }
 
+    public int compare(RankCoordinate other) {
+        return Integer.compare(other.rowNumber, this.rowNumber);
+    }
+
     public int getRowNumber() {
         return rowNumber;
     }
