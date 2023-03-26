@@ -32,6 +32,6 @@ public class ChessBoardService {
     }
 
     public List<Integer> findAllBoardIds() {
-        return boardStatusesDao.findAllNotOverIds();
+        return boardStatusesDao.findAvailableBoardIds();
     }
 }

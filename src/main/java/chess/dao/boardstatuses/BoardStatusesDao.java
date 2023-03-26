@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface BoardStatusesDao {
 
-    List<Integer> findAllNotOverIds();
+    List<Integer> findAvailableBoardIds();
 
     Optional<ChessBoardStatus> find(int boardId);
 

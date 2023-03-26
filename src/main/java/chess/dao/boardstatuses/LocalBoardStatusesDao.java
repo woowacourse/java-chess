@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class LocalBoardStatusesDao implements BoardStatusesDao {
-    
-    @Override
-    public List<Integer> findAllNotOverIds() {
+
+    public List<Integer> findAvailableBoardIds() {
         final String sql = "SELECT board_id FROM board_statuses WHERE is_over = 'N'";
 
         List<Integer> ids = new ArrayList<>();
