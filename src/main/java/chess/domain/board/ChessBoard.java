@@ -7,6 +7,7 @@ import chess.domain.piece.move.Position;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class ChessBoard {
@@ -18,6 +19,10 @@ public final class ChessBoard {
 
     public static ChessBoard getInstance(final ChessGame chessGame) {
         final Map<Position, Piece> board = ChessBoardFactory.getInstance(chessGame).createBoard();
+        return new ChessBoard(board);
+    }
+
+    public static ChessBoard create(final Map<Position, Piece> board) {
         return new ChessBoard(board);
     }
 
@@ -70,6 +75,19 @@ public final class ChessBoard {
         }
         final Position nextPosition = currentPosition.calculate(unitPosition);
         return isObstructed(target, unitPosition, nextPosition);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ChessBoard that = (ChessBoard) o;
+        return Objects.equals(board, that.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board);
     }
 
     public Map<Position, Piece> getBoard() {
