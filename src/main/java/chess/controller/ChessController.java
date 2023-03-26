@@ -47,6 +47,9 @@ public final class ChessController {
         if (command == Command.STATUS) {
             showStatus(chessGame.status());
         }
+        if (command == Command.SAVE) {
+            saveGame(chessGame);
+        }
         if (command == Command.END) {
             chessGame.end();
         }
@@ -60,6 +63,14 @@ public final class ChessController {
     private void showChessBoard(final ChessBoard chessBoard) {
         ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.toString(chessBoard);
         OutputView.printChessBoard(convertedChessBoard);
+    }
+
+    private void movePiece(final ChessGame chessGame) {
+        final SquareCoordinate from = SquareCoordinate.of(InputView.getCoordinate());
+        final SquareCoordinate to = SquareCoordinate.of(InputView.getCoordinate());
+
+        chessGame.move(from, to);
+        showChessBoard(chessGame.getChessBoard());
     }
 
     private void showStatus(final WinningStatus winningStatus) {
@@ -89,11 +100,7 @@ public final class ChessController {
         OutputView.printWinnerWhenRunning(TeamName.getNameByTeam(winner));
     }
 
-    private void movePiece(final ChessGame chessGame) {
-        final SquareCoordinate from = SquareCoordinate.of(InputView.getCoordinate());
-        final SquareCoordinate to = SquareCoordinate.of(InputView.getCoordinate());
+    private void saveGame(final ChessGame chessGame){
 
-        chessGame.move(from, to);
-        showChessBoard(chessGame.getChessBoard());
     }
 }
