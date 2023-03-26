@@ -62,7 +62,6 @@ public class ChessApplication {
 		}
 		if (command.isStatus()) {
 			printStatus(board.blackStatus(), board.whiteStatus());
-			// TODO : status관련 로직
 		}
 	}
 
