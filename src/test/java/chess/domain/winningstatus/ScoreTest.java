@@ -1,4 +1,4 @@
-package chess.domain.score;
+package chess.domain.winningstatus;
 
 import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
