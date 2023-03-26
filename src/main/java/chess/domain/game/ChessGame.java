@@ -24,14 +24,12 @@ import static java.util.stream.Collectors.groupingBy;
 public final class ChessGame {
 
     public static final int COUNT_OF_PAWN_DEGRADE_SCORE = 2;
+    public static final int KING_COUNT = 2;
     private static final int BOARD_LENGTH = 8;
     public static final double TOTAL_BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
-
     private final Map<Position, Piece> board;
     private final ChessDao dao;
     private Turn turn;
-
-
 
     private ChessGame(final Map<Position, Piece> board, final Turn turn) {
         this.board = board;
@@ -101,11 +99,7 @@ public final class ChessGame {
         return piece;
     }
 
-    public PrintTotalScoreDto calculateScore() {
-        return PrintTotalScoreDto.from(calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
-    }
-
-    public double calculateScoreByTeam(final Team team) {
+    double calculateScoreByTeam(final Team team) {
         final double totalScore = board.values()
                 .stream()
                 .filter(piece -> piece.isSameTeamWith(team))
@@ -127,11 +121,11 @@ public final class ChessGame {
         return totalScore - totalMinusScore;
     }
 
-    private boolean isPawn(final Piece value) {
-        return value.isSamePieceTypeAs(PieceType.INITIAL_WHITE_PAWN) ||
-                value.isSamePieceTypeAs(PieceType.INITIAL_BLACK_PAWN) ||
-                value.isSamePieceTypeAs(PieceType.WHITE_PAWN) ||
-                value.isSamePieceTypeAs(PieceType.BLACK_PAWN);
+    private boolean isPawn(final Piece piece) {
+        return piece.isSamePieceTypeAs(PieceType.INITIAL_WHITE_PAWN) ||
+                piece.isSamePieceTypeAs(PieceType.INITIAL_BLACK_PAWN) ||
+                piece.isSamePieceTypeAs(PieceType.WHITE_PAWN) ||
+                piece.isSamePieceTypeAs(PieceType.BLACK_PAWN);
     }
 
     private Stream<Map.Entry<Position, Piece>> getEntryStream() {
@@ -140,9 +134,13 @@ public final class ChessGame {
                 .filter(entry -> entry.getValue().isSamePieceTypeAs(PieceType.KING));
     }
 
+    public PrintTotalScoreDto calculateScore() {
+        return PrintTotalScoreDto.from(calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
+    }
+
     public boolean isKingDead() {
         return getEntryStream()
-                .count() < 2;
+                .count() < KING_COUNT;
     }
 
     public PrintWinnerDto getWinner() {
@@ -150,7 +148,7 @@ public final class ChessGame {
                 .map(m -> m.getValue().getTeam())
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("왕이 없을 수는 없습니다."));
-        return new PrintWinnerDto(team);
+        return new PrintWinnerDto(team.name());
     }
 
     public PrintBoardDto printBoard() {

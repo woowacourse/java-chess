@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.piece.Team;
 import chess.dto.outputView.PrintBoardDto;
 import chess.dto.outputView.PrintEndMessageDto;
 import chess.dto.outputView.PrintErrorMessageDto;
@@ -13,42 +12,53 @@ import java.util.Optional;
 
 public final class OutputView {
 
+    public static final int BOARD_SIZE = 8;
 
     public void printInitialMessage(final PrintInitialMessageDto dto) {
-        System.out.println(dto.getMessage());
+        print(dto.getMessage());
     }
 
     public void printBoard(final PrintBoardDto dto) {
-        final List<String> pieces = RenderUtil.renderBoard(dto.getBoard());
+        final List<String> pieces = dto.getPieces();
         int count = 0;
         for (String piece : pieces) {
-            System.out.print(piece);
+            print(piece);
             count++;
-            if (count % 8 == 0) {
-                System.out.println();
+            if (count % BOARD_SIZE == 0) {
+                printLineSeparator();
             }
         }
     }
 
     public void printWinner(final PrintWinnerDto dto) {
-        System.out.printf("왕이 죽었습니다. 승자는 %s팀 입니다.", dto.getWinnerTeam());
+        print(dto.getWinnerTeam());
     }
 
     public void printEndMessage(final PrintEndMessageDto dto) {
-        System.out.println(dto.getMessage());
+        print(dto.getMessage());
     }
 
     public void printTotalScore(final PrintTotalScoreDto dto) {
-        final Optional<Team> winnerOptional = dto.whosWinner();
+        final Optional<String> winnerOptional = dto.whosWinner();
         if (winnerOptional.isEmpty()) {
-            System.out.println("무승부입니다!");
+            print("무승부입니다!");
             return;
         }
-        final Team winner = winnerOptional.get();
-        System.out.printf("%s 승!!! 점수 : %f\n", winner.name(), dto.getScore().get(winner));
+        final String winner = winnerOptional.get();
+        print(String.format(
+                "%s 승!!! 점수 : %f\n", winner, dto.getScore().get(winner)));
+
     }
 
     public void printErrorMessage(final PrintErrorMessageDto dto) {
-        System.out.println(dto.getMessage());
+        print(dto.getMessage());
+    }
+
+    private void print(final String input) {
+        System.out.println(input);
+    }
+
+    private void printLineSeparator() {
+        System.out.print(System.lineSeparator());
     }
 }

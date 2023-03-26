@@ -7,29 +7,29 @@ import java.util.Optional;
 
 public final class PrintTotalScoreDto {
 
-    private final Map<Team, Double> score;
+    private final Map<String, Double> score;
 
-    public PrintTotalScoreDto(final Map<Team, Double> score) {
+    public PrintTotalScoreDto(final Map<String, Double> score) {
         this.score = score;
     }
 
     public static PrintTotalScoreDto from(final double whiteScore, final double blackScore) {
-        return new PrintTotalScoreDto(Map.of(Team.WHITE, whiteScore, Team.BLACK, blackScore));
+        return new PrintTotalScoreDto(Map.of(Team.WHITE.name(), whiteScore, Team.BLACK.name(), blackScore));
     }
 
-    public Optional<Team> whosWinner() {
-        final Double whiteScore = score.get(Team.WHITE);
-        final Double blackScore = score.get(Team.BLACK);
+    public Optional<String> whosWinner() {
+        final Double whiteScore = score.get(Team.WHITE.name());
+        final Double blackScore = score.get(Team.BLACK.name());
         if (whiteScore < blackScore) {
-            return Optional.of(Team.BLACK);
+            return Optional.of(Team.BLACK.name());
         }
         if (whiteScore > blackScore) {
-            return Optional.of(Team.WHITE);
+            return Optional.of(Team.WHITE.name());
         }
         return Optional.empty();
     }
 
-    public Map<Team, Double> getScore() {
+    public Map<String, Double> getScore() {
         return score;
     }
 }

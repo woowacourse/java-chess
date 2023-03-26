@@ -1,16 +1,14 @@
 package chess.dto.outputView;
 
-import chess.domain.piece.Team;
-
 public final class PrintWinnerDto {
 
-    private final Team winnerTeam;
+    private final String winnerTeam;
 
-    public PrintWinnerDto(final Team winnerTeam) {
-        this.winnerTeam = winnerTeam;
+    public PrintWinnerDto(final String winnerTeam) {
+        this.winnerTeam = String.format("왕이 죽었습니다. 승자는 %s팀 입니다.", winnerTeam);
     }
 
-    public Team getWinnerTeam() {
+    public String getWinnerTeam() {
         return winnerTeam;
     }
 }

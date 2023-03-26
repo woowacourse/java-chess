@@ -1,6 +1,9 @@
 package chess.controller;
 
+import chess.dao.DbChessGameDao;
+import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameFactory;
+import chess.dto.game.ChessGameLoadDto;
 import chess.dto.inputView.ReadCommandDto;
 import chess.dto.outputView.PrintEndMessageDto;
 import chess.dto.outputView.PrintErrorMessageDto;
@@ -16,19 +19,23 @@ import java.util.function.Function;
 import static chess.controller.GameCommand.END;
 import static chess.controller.GameCommand.INIT;
 import static chess.controller.GameCommand.MOVE;
+import static chess.controller.GameCommand.SOURCE_INDEX;
 import static chess.controller.GameCommand.START;
 import static chess.controller.GameCommand.STATUS;
+import static chess.controller.GameCommand.TARGET_INDEX;
+import static chess.controller.GameCommand.getPosition;
 
 public final class ChessController {
 
     private final Map<GameCommand, Function<List<String>, GameCommand>> gameStatusMap;
     private final IOViewResolver ioViewResolver;
     private final ChessGameService chessGameService;
+    private ChessGame chessGame;
 
     public ChessController(final IOViewResolver ioViewResolver) {
         this.ioViewResolver = ioViewResolver;
         this.gameStatusMap = new EnumMap<>(GameCommand.class);
-        this.chessGameService = new ChessGameService();
+        this.chessGameService = new ChessGameService(new DbChessGameDao());
         initGameStatusMap();
     }
 
@@ -61,39 +68,43 @@ public final class ChessController {
     }
 
     private GameCommand start(final List<String> input) {
-        chessGameService.checkStart();
+        if (chessGame != null) {
+            throw new IllegalArgumentException("체스 게임은 이미 진행되고 있습니다.");
+        }
         if (chessGameService.hasHistory()) {
-            chessGameService.initChessGame();
-            ioViewResolver.outputViewResolve(chessGameService.getBoard());
+            final ChessGameLoadDto chessGameLoadDto = chessGameService.loadGame();
+            chessGame = ChessGame.from(chessGameLoadDto.getBoard(), chessGameLoadDto.getTurn());
+            ioViewResolver.outputViewResolve(chessGame.getBoard());
             return MOVE;
         }
-        chessGameService.initChessGame(ChessGameFactory.generate());
-        ioViewResolver.outputViewResolve(chessGameService.getBoard());
+        chessGame = ChessGameFactory.generate();
+        ioViewResolver.outputViewResolve(chessGame.getBoard());
         return MOVE;
     }
 
     private GameCommand move(final List<String> input) {
-        chessGameService.checkMove();
-        chessGameService.move(input);
-
-        if (chessGameService.isKingDead()) {
-            ioViewResolver.outputViewResolve(chessGameService.getWinner());
+        if (chessGame == null) {
+            throw new IllegalArgumentException("체스 게임은 아직 시작하지 않았습니다.");
+        }
+        chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
+        if (chessGame.isKingDead()) {
+            ioViewResolver.outputViewResolve(chessGame.getWinner());
             return END;
         }
-        ioViewResolver.outputViewResolve(chessGameService.getBoard());
+        ioViewResolver.outputViewResolve(chessGame.getBoard());
         return MOVE;
     }
 
     private GameCommand status(final List<String> strings) {
         chessGameService.delete();
-        ioViewResolver.outputViewResolve(chessGameService.calculateScore());
+        ioViewResolver.outputViewResolve(chessGame.calculateScore());
         ioViewResolver.outputViewResolve(new PrintEndMessageDto());
         return END;
     }
 
     private GameCommand end(final List<String> input) {
         ioViewResolver.outputViewResolve(new PrintEndMessageDto());
-        chessGameService.save();
+        chessGameService.save(chessGame);
         return END;
     }
 }
