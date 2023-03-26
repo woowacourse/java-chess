@@ -63,11 +63,11 @@ public final class Pawn extends NoneEmptyPiece {
         return relativePosition;
     }
 
-    public Piece getPromotionResult(final Position position){
-        if(position.isRow(7) && team == WHITE){
+    public Piece getPromotionResult(final Position position) {
+        if (position.isRow(7) && team == WHITE) {
             return Queen.from(WHITE);
         }
-        if(position.isRow(0) && team == BLACK){
+        if (position.isRow(0) && team == BLACK) {
             return Queen.from(BLACK);
         }
         return this;
