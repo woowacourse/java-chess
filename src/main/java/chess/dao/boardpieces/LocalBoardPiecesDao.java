@@ -38,7 +38,7 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
                 + "FROM board_pieces as p, board_statuses as s "
                 + "WHERE p.board_id = ? "
                 + "AND p.board_id = s.board_id "
-                + "AND s.isOver = 'N'";
+                + "AND s.is_over = 'N'";
 
         Map<Position, Piece> piecesByPosition = new HashMap<>();
         try (final Connection connection = getConnection();

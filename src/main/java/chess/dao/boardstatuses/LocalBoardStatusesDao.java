@@ -32,7 +32,7 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
 
     @Override
     public List<Integer> findAllNotOverIds() {
-        final String sql = "SELECT board_id FROM board_statuses WHERE isOver = 'N'";
+        final String sql = "SELECT board_id FROM board_statuses WHERE is_over = 'N'";
 
         List<Integer> ids = new ArrayList<>();
         try (final Connection connection = getConnection();
@@ -49,7 +49,7 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
 
     @Override
     public Optional<ChessBoardStatus> find(final int boardId) {
-        final String sql = "SELECT current_turn, isOver FROM board_statuses WHERE board_id = ?";
+        final String sql = "SELECT current_turn, is_over FROM board_statuses WHERE board_id = ?";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -69,9 +69,9 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
 
     @Override
     public void insertOrUpdate(final int boardId, final ChessBoardStatus status) {
-        final String sql = "INSERT INTO board_statuses (board_id, current_turn, isOver)"
+        final String sql = "INSERT INTO board_statuses (board_id, current_turn, is_over)"
                 + "VALUES (?, ?, ?)"
-                + "ON DUPLICATE KEY UPDATE current_turn = ?, isOver = ?;";
+                + "ON DUPLICATE KEY UPDATE current_turn = ?, is_over = ?;";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
