@@ -3,15 +3,15 @@ package chess.domain.state;
 import chess.domain.Board;
 import chess.domain.Chess;
 import chess.domain.Color;
-import chess.domain.piece.Piece;
 import chess.domain.point.Points;
 import chess.dto.Command;
 
-import static chess.domain.PieceType.KING;
+public class Status extends State {
+    private final Color current;
 
-public final class Black extends State {
-    public Black(final Chess chess) {
+    public Status(final Chess chess, final Color current) {
         super(chess);
+        this.current = current;
     }
 
     @Override
@@ -21,11 +21,10 @@ public final class Black extends State {
 
     @Override
     public State move(final Command command) {
-        final Piece targetPiece = chess.move(command.getSource(), command.getTarget(), Color.BLACK);
-        if (targetPiece.isSamePieceType(KING)) {
-            return end();
+        if (current == Color.WHITE) {
+            return new White(chess).move(command);
         }
-        return new White(chess);
+        return new Black(chess).move(command);
     }
 
     @Override
@@ -35,7 +34,7 @@ public final class Black extends State {
 
     @Override
     public State status() {
-        return new Status(chess, Color.BLACK);
+        return new Status(chess, current);
     }
 
     @Override

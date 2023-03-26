@@ -1,28 +1,41 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Chess;
 import chess.domain.Color;
-import chess.dto.ChessInputDto;
+import chess.domain.piece.Piece;
+import chess.domain.point.Points;
+import chess.dto.Command;
+
+import static chess.domain.PieceType.KING;
 
 public final class White extends State {
-    public White(final Board board) {
-        super(board);
+    public White(final Chess chess) {
+        super(chess);
     }
 
     @Override
     public State start() {
-        return new Start(Board.create());
+        return new Start(Chess.create(Board.create(), Points.create()));
     }
 
     @Override
-    public State move(final ChessInputDto dto) {
-        board.move(dto.getSource(), dto.getTarget(), Color.WHITE);
-        return new Black(board);
+    public State move(final Command command) {
+        final Piece targetPiece = chess.move(command.getSource(), command.getTarget(), Color.WHITE);
+        if (targetPiece.isSamePieceType(KING)) {
+            return end();
+        }
+        return new Black(chess);
     }
 
     @Override
     public State end() {
-        return new End(board);
+        return new End(chess);
+    }
+
+    @Override
+    public State status() {
+        return new Status(chess, Color.WHITE);
     }
 
     @Override

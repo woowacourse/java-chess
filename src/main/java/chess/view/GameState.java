@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum GameState {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String command;
 
@@ -17,6 +18,6 @@ public enum GameState {
         return Arrays.stream(GameState.values())
                 .filter(gameState -> gameState.command.equals(inputCommand))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start와 end만 입력할 수 있습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("start, end, move, status만 입력할 수 있습니다."));
     }
 }
