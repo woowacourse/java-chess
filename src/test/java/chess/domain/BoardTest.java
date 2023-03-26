@@ -31,7 +31,7 @@ class BoardTest {
         void create(String position) {
             Board board = Board.create();
             assertThat(board).extracting("board").asInstanceOf(InstanceOfAssertFactories.MAP)
-                    .containsEntry(Position.from(position), Empty.create());
+                    .containsEntry(Position.from(position), Empty.create(Color.NONE));
         }
 
         @Test

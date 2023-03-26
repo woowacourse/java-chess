@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceMapperTest {
 
-    private static final Empty EMPTY = Empty.create();
+    private static final Empty EMPTY = Empty.create(Color.NONE);
     private static final Pawn WHITE_PAWN = Pawn.create(Color.WHITE);
     private static final Pawn BLACK_PAWN = Pawn.create(Color.BLACK);
     private static final Bishop WHITE_BISHOP = Bishop.create(Color.WHITE);

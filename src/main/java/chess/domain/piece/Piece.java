@@ -57,7 +57,11 @@ public abstract class Piece {
     public PieceType getType() {
         return type;
     }
-    
+
+    public Color getColor() {
+        return color;
+    }
+
     public boolean isWhite() {
         return color == Color.WHITE;
     }

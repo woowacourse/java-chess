@@ -9,6 +9,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -23,7 +24,7 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    private Board(final Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board) {
         this.board = board;
     }
 
@@ -32,7 +33,7 @@ public class Board {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
                 Position position = Position.from(file, rank);
-                board.put(position, Empty.create());
+                board.put(position, Empty.create(Color.NONE));
             }
         }
         return new Board(board);
@@ -106,7 +107,7 @@ public class Board {
 
     public void replace(final Position source, final Position destination) {
         board.put(destination, board.get(source));
-        board.put(source, Empty.create());
+        board.put(source, Empty.create(Color.NONE));
     }
 
     public double calculatePoint(Color color) {
@@ -145,6 +146,10 @@ public class Board {
             result.add(board.get(position));
         }
         return result;
+    }
+
+    public Map<Position, Piece> getPositionAndPiece() {
+        return Collections.unmodifiableMap(board);
     }
 
     public Piece getPieceAtPosition(final Position position) {

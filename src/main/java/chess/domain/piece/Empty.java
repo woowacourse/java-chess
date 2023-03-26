@@ -13,8 +13,8 @@ public class Empty extends Piece {
         super(color, pieceType, movableDirection);
     }
 
-    public static Empty create() {
-        return new Empty(Color.NONE, PieceType.EMPTY, MOVABLE_DIRECTIONS);
+    public static Empty create(Color color) {
+        return new Empty(color, PieceType.EMPTY, MOVABLE_DIRECTIONS);
     }
 
     @Override
