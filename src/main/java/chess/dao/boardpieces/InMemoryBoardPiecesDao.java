@@ -16,7 +16,7 @@ public class InMemoryBoardPiecesDao implements BoardPiecesDao {
     }
 
     @Override
-    public void insert(final int boardId, final Map<Position, Piece> piecesByPosition) {
+    public void insertOrUpdate(final int boardId, final Map<Position, Piece> piecesByPosition) {
         repository.put(boardId, piecesByPosition);
     }
 

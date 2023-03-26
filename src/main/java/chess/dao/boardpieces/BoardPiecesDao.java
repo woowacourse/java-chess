@@ -9,7 +9,7 @@ public interface BoardPiecesDao {
 
     Optional<Map<Position, Piece>> find(final int boardId);
 
-    void insert(final int boardId, final Map<Position, Piece> piecesByPosition);
+    void insertOrUpdate(final int boardId, final Map<Position, Piece> piecesByPosition);
 
     void delete(final int boardId);
 

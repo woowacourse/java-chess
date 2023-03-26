@@ -34,7 +34,11 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
 
     @Override
     public Optional<Map<Position, Piece>> find(final int boardId) {
-        final String sql = "SELECT position_file, position_rank, piece_type, piece_camp FROM board_pieces WHERE board_id = ?";
+        final String sql = "SELECT p.position_file, p.position_rank, p.piece_type, p.piece_camp "
+                + "FROM board_pieces as p, board_statuses as s "
+                + "WHERE p.board_id = ? "
+                + "AND p.board_id = s.board_id "
+                + "AND s.isOver = 'N'";
 
         Map<Position, Piece> piecesByPosition = new HashMap<>();
         try (final Connection connection = getConnection();
@@ -59,19 +63,26 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
     }
 
     @Override
-    public void insert(final int boardId, final Map<Position, Piece> piecesByPosition) {
+    public void insertOrUpdate(final int boardId, final Map<Position, Piece> piecesByPosition) {
         for (Entry<Position, Piece> square : piecesByPosition.entrySet()) {
-            insertPosition(boardId, square.getKey(), square.getValue());
+            insertOrUpdatePiece(boardId, square.getKey(), square.getValue());
         }
     }
 
-    private void insertPosition(final int boardId, final Position position, final Piece piece) {
-        final String sql = "INSERT INTO board_pieces (board_id, position_file, position_rank, piece_type, piece_camp)"
-                + "VALUES (?, ?, ?, ?, ?)";
+    private void insertOrUpdatePiece(final int boardId, final Position position, final Piece piece) {
+        final String sql = "INSERT INTO board_pieces "
+                + "(board_id, position_file, position_rank, piece_type, piece_camp) "
+                + "VALUES (?, ?, ?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "position_file = ?, position_rank = ?, piece_type = ?, piece_camp = ?";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, boardId);
+            preparedStatement.setInt(2, position.getFile());
+            preparedStatement.setInt(3, position.getRank());
+            preparedStatement.setString(4, piece.getType().name());
+            preparedStatement.setString(5, piece.getColor().name());
             preparedStatement.setInt(2, position.getFile());
             preparedStatement.setInt(3, position.getRank());
             preparedStatement.setString(4, piece.getType().name());

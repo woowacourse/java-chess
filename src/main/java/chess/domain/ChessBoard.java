@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.dto.ChessBoardStatus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class ChessBoard {
     private static final String WRONG_ATTACK_ERROR_MESSAGE = "선택한 말로 공격할 수 없습니다.";
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
     private final Map<Position, Piece> piecesByPosition;
+    private boolean isOver;
     private Camp currentTurnCamp;
 
     public ChessBoard() {
@@ -26,18 +28,25 @@ public class ChessBoard {
 
     public ChessBoard(final Map<Position, Piece> piecesByPosition) {
         this.piecesByPosition = new HashMap<>(piecesByPosition);
+        this.isOver = false;
         this.currentTurnCamp = Camp.WHITE;
     }
 
-    public boolean move(Position source, Position destination) {
+    public ChessBoard(final Map<Position, Piece> piecesByPosition, final ChessBoardStatus boardStatus) {
+        this.piecesByPosition = piecesByPosition;
+        this.isOver = boardStatus.isOver();
+        this.currentTurnCamp = boardStatus.getCurrentTurn();
+    }
+
+    public void move(Position source, Position destination) {
         Piece movingPiece = findPieceAtSourcePosition(source);
         CheckablePaths checkablePaths = movingPiece.findCheckablePaths(source);
         Path pathToDestination = checkablePaths.findPathContainingPosition(destination);
-        boolean isOver = progressIfPossible(pathToDestination, source, destination, movingPiece);
-        if (!isOver) {
+        boolean isKingChecked = progressIfPossible(pathToDestination, source, destination, movingPiece);
+        if (!isKingChecked) {
             switchCampTurn();
         }
-        return isOver;
+        this.isOver = isKingChecked;
     }
 
     private Piece findPieceAtSourcePosition(final Position source) {
@@ -127,8 +136,8 @@ public class ChessBoard {
                 .collect(Collectors.groupingBy(piecesByPosition::get));
     }
 
-    public Camp currentTurn() {
-        return currentTurnCamp;
+    public ChessBoardStatus status() {
+        return new ChessBoardStatus(currentTurnCamp, isOver);
     }
 
     public Map<Position, Piece> piecesByPosition() {
