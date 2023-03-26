@@ -136,6 +136,22 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public void deleteById(int gameId) {
+        final var gameQuery = "DELETE FROM game WHERE game_id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(gameQuery)) {
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+        final var pieceQuery = "DELETE FROM piece WHERE game_id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
