@@ -170,10 +170,6 @@ public class Board {
         return kingCount == 1;
     }
 
-    public List<Piece> getPieces() {
-        return new ArrayList<>(board.values());
-    }
-
     public Map<Piece, Square> getWhitePieces() {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(Team.WHITE))
@@ -184,5 +180,9 @@ public class Board {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(Team.BLACK))
                 .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
+    }
+
+    public List<Piece> getPieces() {
+        return new ArrayList<>(board.values());
     }
 }
