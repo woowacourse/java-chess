@@ -1,11 +1,10 @@
 package domain.piece.pawn;
 
-import domain.piece.move.Direction;
-import domain.piece.move.Inclination;
-import domain.piece.move.Situation;
-import domain.piece.move.Coordinate;
 import domain.piece.Color;
 import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+import domain.piece.move.Direction;
+import domain.piece.move.Inclination;
 
 public abstract class Pawn extends Piece {
 
@@ -16,33 +15,31 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(
-            final Coordinate start,
-            final Coordinate end,
-            final Situation situation
-    ) {
-        if (situation.meetNeutral() || situation.meetColleague()) {
-            return isMovableWhenMovingNotVariates(start, end);
-        }
-        return isMovableWhenMovingVariates(start, end);
-    }
-
-    protected abstract boolean isMovableWhenMovingNotVariates(
-            final Coordinate start,
-            final Coordinate end
-    );
-
-    protected boolean isMovableWhenMovingVariates(
-            final Coordinate start,
-            final Coordinate end
-    ) {
+    public boolean isMovable(final Coordinate start, final Coordinate end) {
         Inclination inclination = Inclination.of(start.getInclination(end));
 
-        return directionWhenEnemyExist().canBeDirectionOf(inclination) &&
-                start.hasDistanceLessThanOne(end);
+        return direction().canBeDirectionOf(inclination) &&
+                isReachableDistance(start, end);
     }
 
-    protected abstract Direction directionWhenEnemyExist();
+    @Override
+    public boolean isAttackable(final Coordinate start, final Coordinate end, final Piece target) {
+        Inclination inclination = Inclination.of(start.getInclination(end));
+
+        return attackDirection().canBeDirectionOf(inclination) &&
+                isReachableDistance(start, end);
+    }
+
+    private boolean isReachableDistance(final Coordinate start, final Coordinate end) {
+        if (start.getRow() == startRank()) {
+            return start.hasDistanceLessThanTwo(end);
+        }
+        return start.hasDistanceLessThanOne(end);
+    }
+
+    public abstract Direction direction();
+    public abstract Direction attackDirection();
+    public abstract int startRank();
 
     @Override
     public boolean isPawn() {
