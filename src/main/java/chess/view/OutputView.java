@@ -1,6 +1,8 @@
 package chess.view;
 
+import chess.domain.board.Score;
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -10,9 +12,11 @@ import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
 
@@ -22,7 +26,9 @@ public class OutputView {
             + "> 게임 시작 : start" + System.lineSeparator()
             + "> 게임 종료 : end" + System.lineSeparator()
             + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String SCORE_STATUS_MESSAGE_FORMAT = "%s팀은 %.1f점 입니다." + System.lineSeparator();
     private static final Map<Class<? extends Piece>, String> PIECE_VALUE_MAP = new HashMap<>();
+    private static final Map<Color, String> COLOR_STRING_MAP = new EnumMap<>(Color.class);
     private static final String EMPTY_POSITION = ".";
 
     static {
@@ -32,6 +38,8 @@ public class OutputView {
         PIECE_VALUE_MAP.put(Rook.class, "r");
         PIECE_VALUE_MAP.put(Knight.class, "n");
         PIECE_VALUE_MAP.put(Pawn.class, "p");
+        COLOR_STRING_MAP.put(Color.BLACK, "검은색");
+        COLOR_STRING_MAP.put(Color.WHITE, "흰색");
     }
 
     public void printGameStartInfo() {
@@ -73,6 +81,14 @@ public class OutputView {
             return pieceDisplay.toUpperCase();
         }
         return pieceDisplay;
+    }
+
+    public void printStatus(final Map<Color, Score> colorScore) {
+        for (final Entry<Color, Score> entry : colorScore.entrySet()) {
+            System.out.printf(SCORE_STATUS_MESSAGE_FORMAT,
+                    COLOR_STRING_MAP.get(entry.getKey()),
+                    entry.getValue().getValue());
+        }
     }
 
     public void printExceptionMessage(final Exception e) {
