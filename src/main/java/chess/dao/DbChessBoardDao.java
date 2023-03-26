@@ -33,14 +33,16 @@ public class DbChessBoardDao implements ChessBoardDao {
     }
 
     @Override
-    public void update(Position piecePosition, Piece piece) {
-        String query = "UPDATE chess_board SET piece_type = ?, team = ? WHERE piece_file = ? and piece_rank = ?";
+    public void update(long chessGameId, Position piecePosition, Piece piece) {
+        String query = "UPDATE chess_board SET piece_type = ?, team = ? "
+                + "WHERE piece_file = ? and piece_rank = ? and chess_game_id = ?";
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, piece.getClass().getName());
             preparedStatement.setString(2, piece.getTeam().name());
             preparedStatement.setInt(3, piecePosition.getFile());
             preparedStatement.setInt(4, piecePosition.getRank());
+            preparedStatement.setLong(5, chessGameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

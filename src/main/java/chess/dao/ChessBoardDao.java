@@ -7,5 +7,5 @@ import chess.domain.piece.Piece;
 public interface ChessBoardDao {
 
     void save(long chessGameId, Board board);
-    void update(Position piecePosition, Piece piece);
+    void update(long chessGameId, Position piecePosition, Piece piece);
 }

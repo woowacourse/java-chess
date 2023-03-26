@@ -110,19 +110,19 @@ public class ChessController {
             Piece targetPiece = chessGame.getBoard().getBoard().get(target);
 
             chessGame.movePiece(source, target);
-            updateBoard(source, target, sourcePiece, targetPiece);
+            updateBoard(chessGame.getId(), source, target, sourcePiece, targetPiece);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
         }
     }
 
-    private void updateBoard(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
-        chessBoardDao.update(target, sourcePiece);
+    private void updateBoard(long id, Position source, Position target, Piece sourcePiece, Piece targetPiece) {
+        chessBoardDao.update(id, target, sourcePiece);
         if (!targetPiece.isSameTeam(Team.EMPTY)) {
-            chessBoardDao.update(source, new Empty(Team.EMPTY));
+            chessBoardDao.update(id, source, new Empty(Team.EMPTY));
             return;
         }
-        chessBoardDao.update(source, targetPiece);
+        chessBoardDao.update(id, source, targetPiece);
     }
 
     private boolean isGameOver(ChessGame chessGame) {

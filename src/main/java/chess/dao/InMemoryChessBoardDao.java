@@ -14,7 +14,7 @@ public class InMemoryChessBoardDao implements ChessBoardDao {
     }
 
     @Override
-    public void update(Position piecePosition, Piece piece) {
+    public void update(long chessGameId, Position piecePosition, Piece piece) {
         board.getBoard().put(piecePosition, piece);
     }
 }
