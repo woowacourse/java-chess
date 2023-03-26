@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.MoveHistory;
+import chess.dto.MoveDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,12 +25,12 @@ public class ChessGameJdbcDao implements ChessGameDao {
     }
 
     @Override
-    public void save(MoveHistory moveHistory) {
+    public void saveMove(MoveDto moveDto) {
         var query = "INSERT INTO move_history(source, target) VALUES(?, ?)";
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, moveHistory.getSource());
-            preparedStatement.setString(2, moveHistory.getTarget());
+            preparedStatement.setString(1, moveDto.getSource());
+            preparedStatement.setString(2, moveDto.getTarget());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -38,14 +38,15 @@ public class ChessGameJdbcDao implements ChessGameDao {
     }
 
     @Override
-    public List<MoveHistory> findAll() {
+    public List<MoveDto> findAll() {
         var query = "SELECT * FROM move_history";
-        List<MoveHistory> moveHistories = new ArrayList<>();
+        List<MoveDto> moveHistories = new ArrayList<>();
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                moveHistories.add(MoveHistory.of(
+                moveHistories.add(MoveDto.of(
+                        resultSet.getInt("id"),
                         resultSet.getString("source"),
                         resultSet.getString("target")
                 ));

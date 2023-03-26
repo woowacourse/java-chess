@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.dto.ChessRequest;
-import chess.dto.MoveHistory;
+import chess.dto.MoveDto;
 import chess.service.ChessGameService;
 import chess.view.OutputView;
 
@@ -12,8 +12,8 @@ public class MoveAction implements Action {
         if (chessGameService.isNotStart()) {
             throw new IllegalArgumentException("start를 해주세요");
         }
-        MoveHistory moveHistory = MoveHistory.of(chessRequest.getSource(), chessRequest.getTarget());
-        chessGameService.move(moveHistory);
+        MoveDto moveDto = MoveDto.of(chessRequest.getSource(), chessRequest.getTarget());
+        chessGameService.move(moveDto);
         outputView.printBoard(chessGameService.getGameResult());
         return checkGameEnd(chessGameService, outputView);
     }

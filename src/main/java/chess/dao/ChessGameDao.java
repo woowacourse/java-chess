@@ -1,13 +1,13 @@
 package chess.dao;
 
-import chess.dto.MoveHistory;
+import chess.dto.MoveDto;
 import java.util.List;
 
 public interface ChessGameDao {
 
-    void save(MoveHistory moveHistory);
+    void saveMove(MoveDto moveDto);
 
-    List<MoveHistory> findAll();
+    List<MoveDto> findAll();
 
     void deleteAll();
 }
