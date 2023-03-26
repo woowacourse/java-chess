@@ -1,6 +1,6 @@
 # java-chess
 
-## 미션 4 기능
+## 미션 4 기능 목록
 
 ### MoveHistory
 
@@ -16,10 +16,10 @@
 
 ### 시나리오
 
-- [ ] 게임을 시작하기 전에 전에 진행했던 게임의 움직임들을 DB에서 불러온다.
-    - [ ] DB의 움직임들을
-
-- [ ] 게임을 진행하면서 움직임들을 DB에 저장한다.
+- [x] 게임을 시작하기 전에 전에 진행했던 게임의 움직임들을 DB에서 불러온다.
+    - [x] DB의 움직임들을 MoveCommand로 변환한다.
+    - [x] MoveCommand를 실행한다.
+- [x] 게임을 진행하면서 움직임들을 DB에 저장한다.
 
 ## 미션 3 구조 변경
 
@@ -31,11 +31,14 @@
 
 - getType: 명령의 타입을 반환
 
-### UpdateCommand
+- UpdateCommand와 QueryCommand를 분리하여 구현했다가 Command별로 Controller에서 분기를 나누는 것이 더 깔끔하다고 판단하여 Command를
+  하나로 통합했다.
+
+### UpdateCommand(Deprecated)
 
 - update: 명령을 실행
 
-### QueryCommand
+### QueryCommand(Deprecated)
 
 - query: 명령을 실행
 
