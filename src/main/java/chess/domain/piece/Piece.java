@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -42,4 +43,21 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovableRoute(List<Position> routeFromStartToEnd);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return pieceType == piece.pieceType && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
+    }
 }
