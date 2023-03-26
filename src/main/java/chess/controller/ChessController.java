@@ -38,7 +38,7 @@ public class ChessController {
         if (GameCommand.isNew(gameCommand)) {
             ChessGame chessGame = ChessGame.createGame();
             outputView.printGameId(chessGame.getId());
-            return ChessGame.createGame();
+            return chessGame;
         }
         return ChessGame.continueGame(Integer.parseInt(gameCommand));
     }
