@@ -27,6 +27,7 @@ public class BoardDao {
         }
     }
 
+    // TODO: 2023-03-24 서비스 객체를 만들어야 하나 ? DTO로 전달 받아야하기 떄문에...?
     public void save(ChessGame chessGame) {
         String query = "INSERT INTO board VALUES(?, ?, ?, ?)";
         Chessboard board = chessGame.getChessboard();
@@ -39,7 +40,7 @@ public class BoardDao {
                 prepareStatement.setString(1, null); // auto_increment
                 prepareStatement.setString(2, source);
                 prepareStatement.setString(3, piece);
-                prepareStatement.setString(4, "테스트");
+                prepareStatement.setString(4, "임시");
                 prepareStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -70,6 +71,27 @@ public class BoardDao {
         }
 
         return result;
+    }
+
+    public void update(ChessGame chessGame) {
+        String query = "UPDATE board SET piece = ? WHERE source = ? AND room_name = ?";
+
+        Chessboard board = chessGame.getChessboard();
+        try (Connection connection = getConnection();
+             PreparedStatement prepareStatement = connection.prepareStatement(query)) {
+            for (Square square : board.getBoardMap().keySet()) {
+                String source = SquareRenderer.render(square);
+                String piece = PieceRenderer.render(board.getPieceAt(square));
+
+                prepareStatement.setString(1, piece);
+                prepareStatement.setString(2, source);
+                prepareStatement.setString(3, "임시");
+                prepareStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     public void deleteAllByRoomName(String roomName) {
