@@ -11,7 +11,6 @@ import domain.type.PieceType;
 import domain.type.Type;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,10 +95,6 @@ public final class ChessBoard {
         final SquareStatus squareStatus = chessBoard.getOrDefault(position, EMPTY);
 
         return squareStatus.isDifferentType(type);
-    }
-
-    public Map<Position, SquareStatus> getChessBoard() {
-        return new HashMap<>(chessBoard);
     }
 
 }

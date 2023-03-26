@@ -5,6 +5,7 @@ import domain.piece.Color;
 import domain.position.Position;
 import domain.position.PositionFactory;
 import domain.squarestatus.SquareStatus;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,10 @@ public class ChessBoardTest {
     @Test
     @DisplayName("체스판을 생성한다.")
     void givenChessBoard_thenSize64() {
-        final int sum = ChessBoardFactory.generate()
-                .getChessBoard()
-                .values().size();
-
-        assertThat(sum).isEqualTo(32);
+        final ChessBoard chessBoard = ChessBoardFactory.generate();
+        assertThat(chessBoard)
+                .extracting("chessBoard", InstanceOfAssertFactories.map(Position.class, SquareStatus.class))
+                .hasSize(32);
     }
 
     @Test
