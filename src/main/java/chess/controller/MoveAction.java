@@ -1,8 +1,8 @@
 package chess.controller;
 
+import chess.dto.ChessRequest;
 import chess.dto.MoveHistory;
 import chess.service.ChessGameService;
-import chess.view.ChessRequest;
 import chess.view.OutputView;
 
 public class MoveAction implements Action {

@@ -1,17 +1,12 @@
-package chess.view;
+package chess.dto;
 
 import chess.controller.GameCommand;
-import chess.domain.position.Position;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChessRequest {
     private static final int MOVE_COMMAND_SIZE = 2;
     private static final int SOURCE_INDEX = 0;
     private static final int TARGET_INDEX = 1;
-    private static final int POSITION_FILE = 0;
-    private static final int POSITION_RANK = 1;
 
     private final GameCommand command;
     private final List<String> parameters;
@@ -38,12 +33,12 @@ public class ChessRequest {
         return command;
     }
 
-    public Position getSource() {
-        return createPosition(parameters.get(SOURCE_INDEX));
+    public String getSource() {
+        return parameters.get(SOURCE_INDEX);
     }
 
-    public Position getTarget() {
-        return createPosition(parameters.get(TARGET_INDEX));
+    public String getTarget() {
+        return parameters.get(TARGET_INDEX);
     }
 
     public GameCommand parseToCommand(String input) {
@@ -63,16 +58,5 @@ public class ChessRequest {
             return GameCommand.CLEAR;
         }
         throw new IllegalArgumentException("잘못된 명령어를 입력했습니다.");
-    }
-
-    public Position createPosition(String input) {
-        List<String> position = Arrays.stream(input.split(""))
-                .collect(Collectors.toList());
-        return parseToPosition(position);
-    }
-
-    private Position parseToPosition(List<String> position) {
-        return new Position(FileCoordinateView.findBy(position.get(POSITION_FILE)),
-                RankCoordinateView.findBy(position.get(POSITION_RANK)));
     }
 }

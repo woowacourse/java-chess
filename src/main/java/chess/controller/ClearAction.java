@@ -1,7 +1,7 @@
 package chess.controller;
 
+import chess.dto.ChessRequest;
 import chess.service.ChessGameService;
-import chess.view.ChessRequest;
 import chess.view.OutputView;
 
 public class ClearAction implements Action {
