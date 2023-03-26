@@ -2,6 +2,7 @@ package chess.controller;
 
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -27,5 +28,23 @@ class GameCommandTest {
         assertThatThrownBy(() -> GameCommand.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유효하지 않은 커맨드 양식 입니다.");
+    }
+
+    @Test
+    void 로그인_command_생성_테스트() {
+        //given
+        GameCommand result = GameCommand.from("login hello world");
+
+        //expect
+        assertThat(result).isEqualTo(GameCommand.LOGIN);
+    }
+
+    @Test
+    void 회원가입_command_생성_테스트() {
+        //given
+        GameCommand result = GameCommand.from("signUp hello world Guga12");
+
+        //expect
+        assertThat(result).isEqualTo(GameCommand.SIGNUP);
     }
 }

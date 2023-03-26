@@ -7,7 +7,9 @@ public enum GameCommand {
     START(Pattern.compile("^start$")),
     END(Pattern.compile("^end$")),
     MOVE(Pattern.compile("^move [a-h][1-8] [a-h][1-8]$")),
-    STATUS(Pattern.compile("status"));
+    STATUS(Pattern.compile("^status$")),
+    SIGNUP(Pattern.compile("^signUp [a-zA-Z0-9]+ [a-zA-Z0-9]+ [a-zA-Z0-9]+$")),
+    LOGIN(Pattern.compile("^login [a-zA-Z0-9]+ [a-zA-Z0-9]+$"));
 
 
     private final Pattern commandFormat;

@@ -26,13 +26,30 @@ public class ChessController {
         controllers.put(GameCommand.MOVE, MoveController.getInstance());
         controllers.put(GameCommand.END, EndController.getInstance());
         controllers.put(GameCommand.STATUS, StatusController.getInstance());
+        controllers.put(GameCommand.LOGIN, LoginController.getInstance());
+        controllers.put(GameCommand.SIGNUP, StatusController.getInstance());
 
         return controllers;
     }
 
     public void init() {
+        ensureLoggedIn();
         outputView.printInitialMessage();
         processNextRequest();
+    }
+
+    private void ensureLoggedIn() {
+        outputView.printLoginMessage();
+        Request request = readRequest();
+        GameCommand gameCommand = request.getGameCommand();
+        if (GameCommand.LOGIN == gameCommand || GameCommand.SIGNUP == gameCommand) {
+            Response response = controllers.get(gameCommand).execute(request);
+            if (response.getType() == ResponseType.FAIL) {
+                outputView.printCommandError(response.getCause());
+                ensureLoggedIn();
+            }
+        }
+        outputView.ensureLoginMessage();
     }
 
     private void processNextRequest() {

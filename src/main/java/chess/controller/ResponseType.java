@@ -6,5 +6,7 @@ public enum ResponseType {
     MOVE,
     END,
     STATUS,
+    LOGIN,
+    SIGNUP,
     FAIL
 }
