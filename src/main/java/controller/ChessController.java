@@ -41,13 +41,17 @@ public class ChessController {
         do {
             this.outputView.printSideOfTurn(game.getSideOfTurn());
             command = repeat(() -> moveByUserCommand(game));
-        } while (command.isMove());
-        printGameResult(game);
+        } while (!command.isEnd());
+        printGameResultOf(game);
     }
 
     private Command moveByUserCommand(Game game) {
         Command command = this.inputView.requestUserCommand();
         if (command.isEnd()) {
+            return command;
+        }
+        if (command.isStatus()) {
+            printGameResultOf(game);
             return command;
         }
         moveByPositionsOfMoveCommand(game, command);
@@ -80,7 +84,7 @@ public class ChessController {
         game.move(sourcePosition, targetPosition);
     }
 
-    private void printGameResult(Game game) {
+    private void printGameResultOf(Game game) {
         String gameStatusText = GameStatusMapper.convertGameStatusToText(game.checkStatus());
         Score whiteScore = game.calculateWhiteScore();
         Score blackScore = game.calculateBlackScore();

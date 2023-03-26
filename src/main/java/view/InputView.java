@@ -4,6 +4,7 @@ import controller.command.Command;
 import controller.command.End;
 import controller.command.Move;
 import controller.command.Start;
+import controller.command.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +20,9 @@ public class InputView {
         }
         if (userInput.equals("end")) {
             return new End();
+        }
+        if (userInput.equals("status")) {
+            return new Status();
         }
         return convertUserInputToMoveCommand(userInput);
     }
