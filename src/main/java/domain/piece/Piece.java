@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.board.Square;
-import domain.piece.type.Type;
+import domain.piece.type.PieceType;
 
 public abstract class Piece {
     protected static final int FILE = 0;
     protected static final int RANK = 1;
 
     private final Camp camp;
-    private final Type type;
+    private final PieceType pieceType;
 
-    public Piece(Camp camp, Type type) {
+    public Piece(Camp camp, PieceType pieceType) {
         this.camp = camp;
-        this.type = type;
+        this.pieceType = pieceType;
     }
 
     protected abstract void validateMovable(List<Integer> gaps);
@@ -85,15 +85,15 @@ public abstract class Piece {
     }
 
     public Score getScore() {
-        return type.getScore();
+        return pieceType.getScore();
     }
 
     public Camp getCamp() {
         return camp;
     }
 
-    public Type getType() {
-        return type;
+    public PieceType getType() {
+        return pieceType;
     }
 
     @Override
@@ -105,11 +105,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return camp == piece.camp && type == piece.type;
+        return camp == piece.camp && pieceType == piece.pieceType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp, type);
+        return Objects.hash(camp, pieceType);
     }
 }

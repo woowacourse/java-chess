@@ -19,7 +19,7 @@ import domain.piece.type.unrestricted.Bishop;
 import domain.piece.type.unrestricted.Queen;
 import domain.piece.type.unrestricted.Rook;
 
-public enum Type {
+public enum PieceType {
     KING('k', ZERO_SCORE, King::new),
     QUEEN('q', QUEEN_SCORE, Queen::new),
     ROOK('r', ROOK_SCORE, Rook::new),
@@ -32,7 +32,7 @@ public enum Type {
     private final Score score;
     private final Function<Camp, Piece> expression;
 
-    Type(char label, Score score, Function<Camp, Piece> expression) {
+    PieceType(char label, Score score, Function<Camp, Piece> expression) {
         this.label = label;
         this.score = score;
         this.expression = expression;
@@ -50,8 +50,8 @@ public enum Type {
         return score;
     }
 
-    public static Type find(String piece) {
-        return Arrays.stream(Type.values())
+    public static PieceType find(String piece) {
+        return Arrays.stream(PieceType.values())
                 .filter(type -> type.name().equals(piece))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물 입니다."));

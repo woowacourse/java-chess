@@ -13,7 +13,7 @@ public class Empty extends Piece {
     }
 
     private Empty() {
-        super(Camp.NONE, Type.EMPTY);
+        super(Camp.NONE, PieceType.EMPTY);
     }
 
     public static Empty getInstance() {

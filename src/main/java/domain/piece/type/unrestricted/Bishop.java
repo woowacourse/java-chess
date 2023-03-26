@@ -3,11 +3,11 @@ package domain.piece.type.unrestricted;
 import java.util.List;
 
 import domain.piece.Camp;
-import domain.piece.type.Type;
+import domain.piece.type.PieceType;
 
 public class Bishop extends UnrestrictedPiece {
     public Bishop(Camp camp) {
-        super(camp, Type.BISHOP);
+        super(camp, PieceType.BISHOP);
     }
 
     @Override

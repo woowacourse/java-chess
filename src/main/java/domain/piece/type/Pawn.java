@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     private boolean isGoingForward;
 
     public Pawn(Camp camp) {
-        super(camp, Type.PAWN);
+        super(camp, PieceType.PAWN);
     }
 
     @Override

@@ -15,7 +15,7 @@ import domain.piece.Piece;
 import domain.piece.Score;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
-import domain.piece.type.Type;
+import domain.piece.type.PieceType;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;
 import domain.piece.type.unrestricted.Bishop;
@@ -191,9 +191,9 @@ public class ChessBoard {
     public void putPiece(BoardDto boardDto) {
         String parsedSquare = boardDto.getSquare();
         Square square = Square.of(File.findFile(parsedSquare.charAt(0)), Rank.findRank(parsedSquare.charAt(1)));
-        Type type = Type.find(boardDto.getPiece());
+        PieceType pieceType = PieceType.find(boardDto.getPiece());
         Camp camp = Camp.find(boardDto.getCamp());
-        Piece piece = type.createPiece(camp);
+        Piece piece = pieceType.createPiece(camp);
         board.put(square, piece);
     }
 
