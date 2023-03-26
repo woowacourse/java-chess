@@ -1,10 +1,8 @@
 package chess.domain.board;
 
-import chess.TestPiecesFactory;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.*;
-import chess.domain.piecesfactory.PiecesFactory;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -31,38 +29,31 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class BoardTest {
 
     @Test
-    void 초기_체스판이_정상적으로_생성된다() {
+    void 체스판이_정상적으로_생성된다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Pawn(A, SEVEN, BLACK),
-                new Rook(A, EIGHT, BLACK),
-
-                new Pawn(A, TWO, WHITE),
-                new Rook(A, ONE, WHITE)
+                new Pawn(A, TWO, WHITE)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         final List<Piece> pieces = board.getPieces();
 
         //then
-        assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
+        assertThat(pieces)
+                .extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
                 .contains(
                         tuple(new Position(A, SEVEN), BLACK, Pawn.class),
-                        tuple(new Position(A, EIGHT), BLACK, Rook.class),
-
-                        tuple(new Position(A, TWO), WHITE, Pawn.class),
-                        tuple(new Position(A, ONE), WHITE, Rook.class)
+                        tuple(new Position(A, TWO), WHITE, Pawn.class)
                 );
     }
 
     @Test
     void 말을_원하는_위치로_이동시킨다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
@@ -76,11 +67,10 @@ class BoardTest {
     @Test
     void 다른_색_말을_잡는다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, FIVE, WHITE)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
@@ -98,8 +88,7 @@ class BoardTest {
     @Test
     void 현재_위치에_말이_없다면_예외가_발생한다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of());
-        final Board board = Board.from(piecesFactory.generate());
+        final Board board = Board.from(List.of());
 
         //when
         //then
@@ -111,10 +100,9 @@ class BoardTest {
     @Test
     void 목표_위치로_이동할_수_없다면_예외가_발생한다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         //then
@@ -127,10 +115,9 @@ class BoardTest {
     @CsvSource({"BLACK, WHITE", "WHITE, BLACK"})
     void 해당_색상_체스말을_움직일_순서가_아니라면_예외가_발생한다(final Color pieceColor, final Color turnColor) {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Queen(D, EIGHT, pieceColor)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         //then
@@ -142,11 +129,10 @@ class BoardTest {
     @Test
     void 이동_경로에_말이_있다면_예외가_발생한다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         //then
@@ -158,11 +144,10 @@ class BoardTest {
     @Test
     void 목표_위치에_같은_색_말이_있다면_예외가_발생한다() {
         //given
-        final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
+        final Board board = Board.from(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
         ));
-        final Board board = Board.from(piecesFactory.generate());
 
         //when
         //then
@@ -175,7 +160,7 @@ class BoardTest {
     @MethodSource("provideKings")
     void 왕이_두_개인지_확인한다(final List<Piece> pieces, final boolean expected) {
         //given
-        final Board board = Board.from(new TestPiecesFactory(pieces).generate());
+        final Board board = Board.from(pieces);
 
         //when
         final boolean actual = board.hasTwoKings();
@@ -196,7 +181,7 @@ class BoardTest {
     @MethodSource("providePiecesAndScore")
     void 두_진영의_점수를_계산한다(final List<Piece> pieces, final double blackScore, final double whiteScore) {
         //given
-        final Board board = Board.from(new TestPiecesFactory(pieces).generate());
+        final Board board = Board.from(pieces);
 
         //when
         Map<Color, Double> scoreByColor = board.calculateScoreByColor();

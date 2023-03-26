@@ -1,6 +1,5 @@
 package chess.domain.dao;
 
-import chess.TestPiecesFactory;
 import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
@@ -23,6 +22,9 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class MysqlChessGameDaoTest {
+
+    private static final List<Piece> PIECES = List.of(new Pawn(File.A, Rank.TWO, Color.WHITE));
+
     private final MysqlChessGameDao mysqlChessGameDao = new MysqlChessGameDao();
 
     @BeforeEach
@@ -46,9 +48,7 @@ class MysqlChessGameDaoTest {
     @Test
     void 체스게임을_저장한다() {
         //given
-        final ChessGame chessGame = ChessGame.from(new TestPiecesFactory(List.of(
-                new Pawn(File.A, Rank.TWO, Color.WHITE)
-        )).generate());
+        final ChessGame chessGame = ChessGame.from(PIECES);
 
         //when
         mysqlChessGameDao.save(chessGame);
@@ -66,9 +66,7 @@ class MysqlChessGameDaoTest {
     @Test
     void 체스게임을_업데이트한다() {
         //given
-        ChessGame chessGame = ChessGame.from(new TestPiecesFactory(List.of(
-                new Pawn(File.A, Rank.TWO, Color.WHITE)
-        )).generate());
+        ChessGame chessGame = ChessGame.from(PIECES);
         mysqlChessGameDao.save(chessGame);
         chessGame = chessGame.start();
         chessGame.move(new Position(A, TWO), new Position(A, FOUR));
@@ -89,9 +87,7 @@ class MysqlChessGameDaoTest {
     @Test
     void 체스게임을_지운다() {
         //given
-        final ChessGame chessGame = ChessGame.from(new TestPiecesFactory(List.of(
-                new Pawn(File.A, Rank.TWO, Color.WHITE)
-        )).generate());
+        final ChessGame chessGame = ChessGame.from(PIECES);
         mysqlChessGameDao.save(chessGame);
 
         //when

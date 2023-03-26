@@ -1,6 +1,5 @@
 package chess.domain.chessgame;
 
-import chess.TestPiecesFactory;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.Board;
@@ -26,10 +25,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 @SuppressWarnings("NonAsciiCharacters")
 class InitialChessGameTest {
 
+    private static final List<Piece> STARTING_PIECES = new StartingPiecesFactory().generate();
+
     @Test
     void 시작하는지_확인한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         final ChessGame playingChessGame = chessGame.start();
@@ -42,7 +43,7 @@ class InitialChessGameTest {
     @Test
     void 움직이면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         //then
@@ -54,7 +55,7 @@ class InitialChessGameTest {
     @Test
     void 게임이_진행중이_아니다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         final boolean actual = chessGame.isPlaying();
@@ -66,7 +67,7 @@ class InitialChessGameTest {
     @Test
     void 게임이_끝이_아니다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         final boolean actual = chessGame.isGameOver();
@@ -78,7 +79,7 @@ class InitialChessGameTest {
     @Test
     void 게임이_끝난다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         final ChessGame endChessGame = chessGame.end();
@@ -91,7 +92,7 @@ class InitialChessGameTest {
     @Test
     void 색깔별_점수를_계산하면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         //then
@@ -103,7 +104,7 @@ class InitialChessGameTest {
     @Test
     void 우승자를_찾으면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         //then
@@ -115,8 +116,8 @@ class InitialChessGameTest {
     @Test
     void 체스말을_꺼낸다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new TestPiecesFactory(List.of(
-                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))).generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(
+                List.of(new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))));
 
         //when
         final List<Piece> pieces = chessGame.getPieces();
@@ -132,7 +133,7 @@ class InitialChessGameTest {
     @Test
     void 현재_순서_색깔을_꺼낸다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(STARTING_PIECES));
 
         //when
         final Color currentTurnColor = chessGame.getCurrentTurnColor();
