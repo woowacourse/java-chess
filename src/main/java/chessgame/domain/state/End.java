@@ -1,10 +1,22 @@
 package chessgame.domain.state;
 
+import java.util.List;
+
 import chessgame.controller.Command;
 import chessgame.domain.Game;
 import chessgame.domain.Team;
 
 public class End implements State {
+    private final List<Team> winners;
+
+    public End(Team winner) {
+        winners = List.of(winner);
+    }
+
+    public End(List<Team> winners) {
+        this.winners = winners;
+    }
+
     @Override
     public void changeState(Game game, Command command) {
         if (command.isNotStart()) {
@@ -25,6 +37,9 @@ public class End implements State {
 
     @Override
     public Team team() {
-        throw new IllegalStateException("팀이 존재하지 않는 상태입니다.");
+        if (winners.size() > 1) {
+            return null;
+        }
+        return winners.get(0);
     }
 }

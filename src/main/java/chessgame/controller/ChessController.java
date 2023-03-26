@@ -61,5 +61,8 @@ public class ChessController {
         if (command.isStatus()) {
             outputView.printScore(game.score());
         }
+        if (game.isEnd()) {
+            outputView.printWinner(game.winner());
+        }
     }
 }

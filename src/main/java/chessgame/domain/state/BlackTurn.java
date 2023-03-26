@@ -19,7 +19,8 @@ public class BlackTurn implements Running {
             game.setState(command, new WhiteTurn());
         }
         if (command.isEnd()) {
-            game.setState(new End());
+            game.calculateScore();
+            game.setState(new End(game.score().winner()));
         }
     }
 

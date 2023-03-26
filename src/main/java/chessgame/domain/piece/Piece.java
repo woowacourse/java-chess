@@ -14,4 +14,6 @@ public interface Piece {
     double score(Team team, boolean hasPawn);
 
     boolean isPawn();
+
+    boolean isKing();
 }

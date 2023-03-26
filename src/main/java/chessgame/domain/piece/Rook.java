@@ -44,6 +44,11 @@ public class Rook implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public Team team() {
         return team;
     }

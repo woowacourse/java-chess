@@ -44,6 +44,11 @@ public class Queen implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String failMoveMsg() {
         return "퀸은 상하좌우, 대각선으로만 이동 가능합니다.";
     }

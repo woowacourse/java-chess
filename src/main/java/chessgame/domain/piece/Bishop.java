@@ -49,6 +49,11 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
     }

@@ -82,11 +82,6 @@ public class Board {
             sum += board.get(point).score(team, hasPawn);
         }
         return sum;
-        /*return board.keySet()
-            .stream()
-            .mapToDouble(point -> board.get(point)
-                .score(team, hasPawnExistInSameFile(point, team)))
-            .sum();*/
     }
 
     private boolean hasPawnExistInSameFile(Point point, Team team) {
@@ -102,5 +97,12 @@ public class Board {
     @Override
     public String toString() {
         return "Board{" + "board=" + board + '}';
+    }
+
+    public boolean isOver() {
+        return board.values()
+            .stream()
+            .filter(Piece::isKing)
+            .count() < 2;
     }
 }
