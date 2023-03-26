@@ -47,3 +47,42 @@
     - [x] 처음에 한 칸 또는 두 칸 이동할 수 있다.
     - [x] 처음 이동 후 한 칸 씩만 전진 가능하다.
     - [x] 기본 점수 1점
+
+### Room
+
+- [ ] 체스 게임 방이다.
+- [ ] 방의 이름을 가진다.
+- [ ] 방의 번호를 가진다.
+
+## DB 테이블
+
+```sql
+USE
+chess;
+
+CREATE TABLE room
+(
+    room_id INT PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE piece
+(
+    piece_id      INT PRIMARY KEY AUTO_INCREMENT,
+    room          INT         NOT NULL,
+    name          VARCHAR(10) NOT NULL,
+    team          VARCHAR(10) NOT NULL,
+    position_file VARCHAR(10) NOT NULL,
+    position_rank VARCHAR(10) NOT NULL,
+    FOREIGN KEY (room) REFERENCES room (room_id) ON DELETE CASCADE
+);
+```
+
+## ChessDao
+
+- [ ] 모든 방을 불러올 수 있다.
+- [ ] Room을 저장할 수 있다.
+- [ ] Room을 제거할 수 있다.
+- [ ] Board를 저장할 수 있다.
+- [ ] Board를 제거할 수 있다.
+- [ ] 방 번호로 Board를 불러올 수 있다.
