@@ -29,6 +29,10 @@ public abstract class Piece implements Movable {
 
     public abstract Double getValue();
 
+    public TeamColor getTeamColor() {
+        return teamColor;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
