@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 import static chess.domain.PositionFixture.B_2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -43,7 +42,7 @@ class EndCommandTest {
     void EndCommand의_ChessGame판을_확인할_수_있다() {
         Command endCommand = new EndCommand(chessGame);
 
-        assertThat(endCommand.getChessGame().getBoard().findPiece(B_2)).isInstanceOf(Pawn.class);
+        assertThat(endCommand.getChessGameBoards().get(B_2)).isInstanceOf(Pawn.class);
     }
 
     @ParameterizedTest

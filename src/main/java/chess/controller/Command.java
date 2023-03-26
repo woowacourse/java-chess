@@ -1,8 +1,12 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Command {
 
@@ -20,7 +24,7 @@ public abstract class Command {
         return this.commandType == commandType;
     }
 
-    public ChessGame getChessGame() {
-        return chessGame;
+    public Map<Position, Piece> getChessGameBoards() {
+        return Collections.unmodifiableMap(chessGame.getBoard());
     }
 }

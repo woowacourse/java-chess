@@ -4,6 +4,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class Board {
     private final Map<Position, Piece> boards;
 
     public Board(Map<Position, Piece> boards) {
-        this.boards = boards;
+        this.boards = new HashMap<>(boards);
     }
 
     public Piece findPiece(Position position) {

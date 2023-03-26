@@ -19,8 +19,7 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(Board board) {
-        Map<Position, Piece> boards = board.getBoards();
+    public void printBoard(Map<Position, Piece> boards) {
         for (RankCoordinate rankCoordinate : RankCoordinate.getSortedRankCoordinates()) {
             printRank(boards, rankCoordinate);
             System.out.println();

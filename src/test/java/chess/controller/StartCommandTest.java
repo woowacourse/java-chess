@@ -28,7 +28,7 @@ class StartCommandTest {
     void StartCommand의_ChessGame판을_확인하면_예외가_발생한다() {
         Command startCommand = new StartCommand();
 
-        assertThatThrownBy(startCommand::getChessGame)
+        assertThatThrownBy(startCommand::getChessGameBoards)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 시작해야 체스판을 확인할 수 있습니다.");
     }

@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.board.Board;
 import chess.view.PositionMapper;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public class MoveCommand extends Command {
         if (inputCommandType == CommandType.MOVE) {
             chessGame.movePiece(PositionMapper.from(input.get(SOURCE_POSITION_INDEX)),
                     PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
-            return new MoveCommand(getChessGame());
+            return new MoveCommand(new ChessGame(new Board(getChessGameBoards())));
         }
         if (inputCommandType == CommandType.END) {
-            return new EndCommand(chessGame);
+            return new EndCommand(new ChessGame(new Board(getChessGameBoards())));
         }
         throw new IllegalArgumentException("잘못된 명령어를 입력하셨습니다.");
     }

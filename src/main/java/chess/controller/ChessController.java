@@ -1,10 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.PositionMapper;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class ChessController {
         outputView.printStart();
         while (!command.isSameType(CommandType.END)) {
             playChessGame();
-            outputView.printBoard(command.getChessGame().getBoard());
+            outputView.printBoard(command.getChessGameBoards());
         }
     }
 
@@ -42,8 +39,7 @@ public class ChessController {
 
     private List<String> readInput() {
         try {
-            List<String> input = inputView.readGameCommand();
-            return input;
+            return inputView.readGameCommand();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return readInput();

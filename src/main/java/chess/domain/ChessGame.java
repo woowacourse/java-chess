@@ -2,7 +2,10 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+
+import java.util.Map;
 
 public class ChessGame {
 
@@ -19,7 +22,7 @@ public class ChessGame {
         this.nowPlayingTeam = nowPlayingTeam.getReverseTeam();
     }
 
-    public Board getBoard() {
-        return board;
+    public Map<Position, Piece> getBoard() {
+        return board.getBoards();
     }
 }

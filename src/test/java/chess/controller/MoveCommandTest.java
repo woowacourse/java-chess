@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Position;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +44,7 @@ class MoveCommandTest {
     void moveCommand의_ChessGame판을_확인할_수_있다() {
         Command moveCommand = new MoveCommand(chessGame);
 
-        assertThat(moveCommand.getChessGame().getBoard().findPiece(B_2)).isInstanceOf(Pawn.class);
+        assertThat(moveCommand.getChessGameBoards().get(B_2)).isInstanceOf(Pawn.class);
     }
 
     @ParameterizedTest
@@ -62,8 +61,8 @@ class MoveCommandTest {
 
         assertAll(
                 () ->  assertThat(result.isSameType(CommandType.MOVE)).isTrue(),
-                () -> assertThat(result.getChessGame().getBoard().findPiece(B_3)).isInstanceOf(Pawn.class),
-                () -> assertThat(result.getChessGame().getBoard().findPiece(B_2)).isInstanceOf(Empty.class)
+                () -> assertThat(result.getChessGameBoards().get(B_3)).isInstanceOf(Pawn.class),
+                () -> assertThat(result.getChessGameBoards().get(B_2)).isInstanceOf(Empty.class)
         );
     }
 
