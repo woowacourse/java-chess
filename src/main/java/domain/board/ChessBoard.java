@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 import domain.piece.Camp;
 import domain.piece.Piece;
 import domain.piece.Score;
+import domain.piece.factory.PieceFactory;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
-import domain.piece.type.PieceType;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;
 import domain.piece.type.unrestricted.Bishop;
@@ -188,12 +188,11 @@ public class ChessBoard {
                 .reduce(Score.ZERO_SCORE, Score::add);
     }
 
-    public void putPiece(BoardDto boardDto) {
+    public void setUpPieces(BoardDto boardDto) {
         String parsedSquare = boardDto.getSquare();
         Square square = Square.of(File.findFile(parsedSquare.charAt(0)), Rank.findRank(parsedSquare.charAt(1)));
-        PieceType pieceType = PieceType.find(boardDto.getPiece());
         Camp camp = Camp.find(boardDto.getCamp());
-        Piece piece = pieceType.createPiece(camp);
+        Piece piece = PieceFactory.find(boardDto.getPiece()).generatePiece(camp);
         board.put(square, piece);
     }
 

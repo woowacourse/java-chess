@@ -11,7 +11,7 @@ import domain.board.Rank;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.type.PieceType;
+import domain.piece.factory.PieceFactory;
 import dto.BoardDto;
 import dto.GameInfoDto;
 import dto.MoveHistoryDto;
@@ -32,7 +32,7 @@ public class ChessService {
         }
         chessBoard.initialize();
         for (BoardDto boardDto : gameInfoDto.getBoardDtos()) {
-            chessBoard.putPiece(boardDto);
+            chessBoard.setUpPieces(boardDto);
         }
         currentCamp = Camp.find(gameInfoDto.getCurrentTurn());
         isOngoing = true;
@@ -58,7 +58,7 @@ public class ChessService {
         for (MoveHistoryDto moveHistoryDto : lastTwoMoveHistories) {
             String parsedOrigin = moveHistoryDto.getSource();
             String parsedMoved = moveHistoryDto.getTarget();
-            Piece piece = PieceType.find(moveHistoryDto.getPiece()).createPiece(currentCamp);
+            Piece piece = PieceFactory.find(moveHistoryDto.getPiece()).generatePiece(currentCamp);
             Square originSquare = Square.of(
                     File.findFile(parsedOrigin.charAt(0)),
                     Rank.findRank(parsedOrigin.charAt(1)));

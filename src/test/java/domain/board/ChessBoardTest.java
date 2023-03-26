@@ -21,6 +21,7 @@ import domain.piece.type.restricted.Knight;
 import domain.piece.type.unrestricted.Bishop;
 import domain.piece.type.unrestricted.Queen;
 import domain.piece.type.unrestricted.Rook;
+import dto.BoardDto;
 
 class ChessBoardTest {
 
@@ -203,5 +204,20 @@ class ChessBoardTest {
         Score result = chessBoard.calculateFinalScore(Camp.WHITE);
 
         assertThat(result.getScore()).isEqualTo(26);
+    }
+
+    @Test
+    @DisplayName("boardDto를 통해 기물을 배치한다.")
+    void setUpPieces() {
+        HashMap<Square, Piece> map = new HashMap<>();
+        ChessBoard chessBoard = new ChessBoard(map);
+        Square square = Square.of(1, 1);
+        Piece piece = new Pawn(Camp.WHITE);
+        BoardDto boardDto = BoardDto.of(square, piece);
+
+        chessBoard.setUpPieces(boardDto);
+
+        Piece result = map.get(square);
+        assertThat(result).isEqualTo(piece);
     }
 }
