@@ -148,8 +148,3 @@ CREATE TABLE chess_game (
     board_row1 VARCHAR(255) NOT NULL
 );
 ```
-
-
-## Todo
-- getter에 방어적 복사 적용
-- 재입력 로직 구현
