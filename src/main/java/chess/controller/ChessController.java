@@ -5,6 +5,8 @@ import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.function.Supplier;
+
 import static chess.controller.ChessGameCommand.START;
 
 public class ChessController {
@@ -27,23 +29,17 @@ public class ChessController {
     }
 
     private ChessGameCommand readChessStartCommand() {
-        while (true) {
-            try {
-                return ChessGameCommand.generateExecuteCommand(inputView.readChessExecuteCommand());
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
+        return repeatUntilGetValidInput(
+                () -> ChessGameCommand.generateExecuteCommand(inputView.readChessExecuteCommand())
+        );
     }
 
     private void playChessGame() {
-        while (true) {
-            try {
-                repeatMove();
-                return;
-            } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception.getMessage());
-            }
+        try {
+            repeatMove();
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            playChessGame();
         }
     }
 
@@ -54,6 +50,15 @@ public class ChessController {
             chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
             outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
             gameCommandInput = inputView.readChessGameCommand();
+        }
+    }
+
+    private <T> T repeatUntilGetValidInput(final Supplier<T> inputReader) {
+        try {
+            return inputReader.get();
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            return repeatUntilGetValidInput(inputReader);
         }
     }
 }

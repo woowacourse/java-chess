@@ -28,7 +28,7 @@ public enum ChessGameCommand {
                 ));
     }
 
-    private static ChessGameCommand generateMoveCommand(final String input) {
+    public static ChessGameCommand generateMoveCommand(final String input) {
         List<ChessGameCommand> gameMoveCommands = List.of(MOVE, END);
         return gameMoveCommands.stream()
                 .filter(chessGameCommand -> input.contains(chessGameCommand.input))
