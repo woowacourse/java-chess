@@ -1,12 +1,12 @@
 package chess.model.piece;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class PieceFactory {
+public final class PieceFactory {
 
-    private static final Map<PieceType, Function<Camp, Piece>> factories = new HashMap<>();
+    private static final Map<PieceType, Function<Camp, Piece>> factories = new EnumMap<>(PieceType.class);
 
     static {
         factories.put(PieceType.BISHOP, camp -> new Piece(PieceType.BISHOP, camp));
