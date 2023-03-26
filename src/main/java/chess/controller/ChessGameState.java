@@ -20,7 +20,7 @@ public final class ChessGameState {
     }
     
     public void playWithCurrentTurn(List<String> inputCommand) {
-        command = CommandFactory.creaeteCommand(inputCommand.get(COMMAND_INDEX));
+        command = CommandFactory.creaeteCommand(inputCommand.remove(COMMAND_INDEX));
         command.playWithCurrentTurn(inputCommand, chessGameService);
     }
     
@@ -36,7 +36,7 @@ public final class ChessGameState {
         if (chessGameService.isKingDied()) {
             command = CommandFactory.creaeteCommand(END);
             command.playWithCurrentTurn(Collections.emptyList(), chessGameService);
-            chessGameService.newChessGame();
+            chessGameService.initChessGame();
         }
     }
 }

@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChessGame {
-    private static final int FROM_COORDINATE_INDEX = 1;
-    private static final int TO_COORDINATE_INDEX = 2;
+    private static final int FROM_COORDINATE_INDEX = 0;
+    private static final int TO_COORDINATE_INDEX = 1;
     
     private ChessBoard chessBoard;
     private Team currentTeam;
     
-    public void initChessGame() {
+    public void newChessGame() {
         chessBoard = BlackWhiteChessBoard.create();
         currentTeam = Team.WHITE;
     }

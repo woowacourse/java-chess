@@ -1,19 +1,19 @@
 package chess.controller.command;
 
 import chess.dto.ChessBoardDto;
+import chess.dto.MoveDto;
 import chess.service.ChessGameService;
 import chess.view.OutputView;
 
 import java.util.List;
 
-public class StartCommand implements Command {
-    
+public class LoadCommand implements Command {
     @Override
     public void playWithCurrentTurn(List<String> inputCommand, ChessGameService chessGameService) {
         chessGameService.newChessGame();
-        chessGameService.initChessGame();
+        chessGameService.load();
     
-        OutputView.noticeNewGame();
+        OutputView.noticeLoadGame();
         ChessBoardDto chessBoardDto = new ChessBoardDto(chessGameService.chessBoard());
         OutputView.printChessBoard(chessBoardDto);
     }

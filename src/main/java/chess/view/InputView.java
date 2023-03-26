@@ -17,6 +17,7 @@ public class InputView {
     private static final String END_COMMAND = "end";
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
+    private static final String LOAD_COMMAND = "load";
     
     private InputView() {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
@@ -46,7 +47,7 @@ public class InputView {
     private static void validateCommandForm(String inputCommand) {
         String[] splitedInputCommand = inputCommand.split(" ");
         if (!isCorrectCommand(splitedInputCommand[0])) {
-            throw new IllegalArgumentException("start, end, status, move 명령만 입력할 수 있습니다.");
+            throw new IllegalArgumentException("start, end, status, move, load 명령만 입력할 수 있습니다.");
         }
         
         if (MOVE_COMMAND.equals(splitedInputCommand[0])) {
@@ -58,7 +59,7 @@ public class InputView {
     }
     
     private static boolean isCorrectCommand(String command) {
-        return List.of(START_COMMAND, END_COMMAND, STATUS_COMMAND, MOVE_COMMAND).contains(command);
+        return List.of(START_COMMAND, END_COMMAND, STATUS_COMMAND, MOVE_COMMAND, LOAD_COMMAND).contains(command);
     }
     
     public static <T> T repeatAtExceptionCase(Supplier<T> inputProcess) {

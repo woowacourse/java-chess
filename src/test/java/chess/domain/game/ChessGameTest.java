@@ -15,7 +15,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         assertAll(
                 () -> assertThat(chessGame.isChessBoardNotInitialized()).isTrue(),
-                chessGame::initChessGame,
+                chessGame::newChessGame,
                 () -> assertThat(chessGame.isChessBoardNotInitialized()).isFalse()
         );
     }

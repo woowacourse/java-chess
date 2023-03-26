@@ -27,6 +27,7 @@ public class OutputView {
     public static void noticeGameStart(){
         println("> 체스 게임을 시작합니다.");
         println("> 게임 시작 : start");
+        println("> 게임 로드 : load");
         println("> 게임 종료 : end");
         println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
@@ -34,6 +35,10 @@ public class OutputView {
     
     public static void noticeNewGame() {
         println("게임을 새로 시작합니다.");
+    }
+    
+    public static void noticeLoadGame() {
+        println("이어서 게임을 시작합니다.");
     }
     
     public static void printChessBoard(ChessBoardDto chessBoardDto) {

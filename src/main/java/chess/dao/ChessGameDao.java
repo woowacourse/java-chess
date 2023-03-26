@@ -5,6 +5,8 @@ import chess.dto.MoveDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessGameDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -41,6 +43,26 @@ public class ChessGameDao {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             return preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public List<MoveDto> selectAllMovement() {
+        final var query = "SELECT * FROM movement";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+    
+            List<MoveDto> moveDtos = new ArrayList<>();
+            final var resultSet = preparedStatement.executeQuery();
+    
+            while (resultSet.next()) {
+                moveDtos.add(new MoveDto(List.of(
+                        resultSet.getString("source"),
+                        resultSet.getString("destination")
+                )));
+            }
+            return moveDtos;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

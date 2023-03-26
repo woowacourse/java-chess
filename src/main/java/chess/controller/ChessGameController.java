@@ -36,6 +36,6 @@ public class ChessGameController {
     private List<String> splitedCommand() {
         String inputCommand = InputView.repeatAtExceptionCase(InputView::inputCommand);
         return Arrays.stream(inputCommand.split(" "))
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 }

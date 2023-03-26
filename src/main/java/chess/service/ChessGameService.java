@@ -17,7 +17,10 @@ public class ChessGameService {
     }
     
     public void newChessGame() {
-        chessGame.initChessGame();
+        chessGame.newChessGame();
+    }
+    
+    public void initChessGame() {
         chessGameDao.deleteAll();
     }
     
@@ -36,5 +39,14 @@ public class ChessGameService {
     
     public boolean isKingDied() {
         return chessGame.isKingDied();
+    }
+    
+    public void load() {
+        for (MoveDto moveDto : chessGameDao.selectAllMovement()) {
+            String sourceCoordinate = moveDto.sourceCoordinate();
+            String destinationCoordinate = moveDto.destinationCoordinate();
+            
+            chessGame.move(List.of(sourceCoordinate, destinationCoordinate));
+        }
     }
 }
