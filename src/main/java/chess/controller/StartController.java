@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.dao.ChessDB;
+import chess.controller.login.LoginSession;
+import chess.dao.GameDao;
+import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.dto.BoardDto;
@@ -21,8 +23,9 @@ public class StartController implements Controller {
     public Response execute(Request request) {
         try {
             validate(request);
-            if (ChessDB.existBoard()) {
-                Game game = Game.of(ChessDB.getBoardData());
+            String gameId = GameDao.getGameIdOf(LoginSession.getCurrentLoginId());
+            if (gameId != null) {
+                Game game = Game.of(new Board(PieceDao.getBoardDataOf(gameId), GameDao.getGameTurnOf(gameId)));
                 GameSession.makeSession(game);
                 return new Response(ResponseType.START, makeBoardDto(game));
             }
@@ -35,8 +38,15 @@ public class StartController implements Controller {
     }
 
     private void validate(Request request) {
+        loggedIn();
         validateRequest(request);
         validateBoard();
+    }
+
+    private void loggedIn() {
+        if (!LoginSession.isLoggedIn()) {
+            throw new IllegalStateException("로그인 되지 않았습니다.");
+        }
     }
 
     private void validateRequest(Request request) {

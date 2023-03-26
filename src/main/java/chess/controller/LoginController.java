@@ -5,8 +5,8 @@ import chess.dao.UserDao;
 
 public class LoginController implements Controller {
     private final static LoginController INSTANCE = new LoginController();
-    private static final int ID_INDEX = 0;
-    private static final int PASSWORD_INDEX = 1;
+    private static final int ID_INDEX = 1;
+    private static final int PASSWORD_INDEX = 2;
 
     private LoginController() {
     }

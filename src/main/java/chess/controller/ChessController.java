@@ -27,7 +27,7 @@ public class ChessController {
         controllers.put(GameCommand.END, EndController.getInstance());
         controllers.put(GameCommand.STATUS, StatusController.getInstance());
         controllers.put(GameCommand.LOGIN, LoginController.getInstance());
-        controllers.put(GameCommand.SIGNUP, StatusController.getInstance());
+        controllers.put(GameCommand.SIGNUP, SignUpController.getInstance());
 
         return controllers;
     }
@@ -48,13 +48,19 @@ public class ChessController {
                 outputView.printCommandError(response.getCause());
                 ensureLoggedIn();
             }
+            return;
         }
         outputView.ensureLoginMessage();
+        ensureLoggedIn();
     }
 
     private void processNextRequest() {
         Request request = readRequest();
         Controller controller = controllers.get(request.getGameCommand());
+        if (request.getGameCommand() == GameCommand.LOGIN || request.getGameCommand() == GameCommand.SIGNUP) {
+            outputView.printInvalidCommand();
+            processNextRequest();
+        }
         Response response = controller.execute(request);
         handleResponse(response);
     }

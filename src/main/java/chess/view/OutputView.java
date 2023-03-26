@@ -53,4 +53,17 @@ public class OutputView {
         System.out.println("흰색 점수 : " + resultDto.getWhiteScore());
         System.out.println("검은색 점수 : " + resultDto.getBlackScore());
     }
+
+    public void printLoginMessage() {
+        System.out.println("로그인을 할 경우 \"login Id passWord\" 를 영어와 숫자로만 입력해주세요.");
+        System.out.println("회원 가입을 원할 경우 \"signUp id passWord userName\"을 영어와 숫자로만 입력해주세요");
+    }
+
+    public void ensureLoginMessage() {
+        System.out.println("회원 가입 혹은 로그인 명령을 내려주세요");
+    }
+
+    public void printInvalidCommand() {
+        System.out.println("올바르지 않은 커맨드 입력입니다.");
+    }
 }

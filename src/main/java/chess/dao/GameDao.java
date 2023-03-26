@@ -1,5 +1,8 @@
 package chess.dao;
 
+import chess.domain.piece.Color;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GameDao {
@@ -8,9 +11,7 @@ public class GameDao {
     }
 
     public static boolean enrollGameOf(String userId, String gameId, String turn) {
-        if (alreadyExistGame(userId)) {
-            return false;
-        }
+        deleteGameOf(userId);
         final var query = "INSERT INTO game VALUES(?, ?, ?)";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
@@ -71,5 +72,21 @@ public class GameDao {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static Color getGameTurnOf(String gameId) {
+        final var query = "SELECT turn FROM game WHERE game_id = ?";
+        try (var connection = ConnectionHandler.getConnection();
+             var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String turn = resultSet.getString("turn");
+                return Color.valueOf(turn);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -6,9 +6,9 @@ import chess.dao.UserDao;
 public class SignUpController implements Controller {
 
     private final static SignUpController INSTANCE = new SignUpController();
-    private static final int ID_INDEX = 0;
-    private static final int PASSWORD_INDEX = 1;
-    private static final int USER_NAME_INDEX = 2;
+    private static final int ID_INDEX = 1;
+    private static final int PASSWORD_INDEX = 2;
+    private static final int USER_NAME_INDEX = 3;
 
     private SignUpController() {
     }

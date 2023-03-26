@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.dao.ChessDB;
+import chess.controller.login.LoginSession;
+import chess.dao.GameDao;
+import chess.dao.PieceDao;
 import chess.domain.dto.BoardSaveDto;
 import chess.domain.game.Game;
 import chess.domain.game.GameSession;
@@ -20,7 +22,9 @@ public class EndController implements Controller {
         validate(request);
         if (GameSession.existGame()) {
             Game game = GameSession.getGame();
-            ChessDB.saveBoard(BoardSaveDto.from(game.getBoard(), "none"));
+            String currentLoginId = LoginSession.getCurrentLoginId();
+            GameDao.enrollGameOf(currentLoginId, currentLoginId, game.getBoard().getTurn().name());
+            PieceDao.saveBoard(BoardSaveDto.from(game.getBoard(), currentLoginId));
         }
         return new Response(ResponseType.END);
     }

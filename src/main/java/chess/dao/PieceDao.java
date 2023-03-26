@@ -69,6 +69,7 @@ public class PieceDao {
     }
 
     public static void saveBoard(BoardSaveDto dto) {
+        delete(dto.getGameId());
         final var query = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
         Map<String, HashMap<String, SavePieceDto>> data = dto.getData();
         try (var connection = ConnectionHandler.getConnection();

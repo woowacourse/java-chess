@@ -18,4 +18,8 @@ public class LoginSession {
     public static void logout() {
         currentLoginId = null;
     }
+
+    public static String getCurrentLoginId() {
+        return currentLoginId;
+    }
 }
