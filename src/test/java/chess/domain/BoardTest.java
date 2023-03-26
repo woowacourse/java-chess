@@ -142,4 +142,44 @@ class BoardTest {
                 Arguments.arguments(POSITION_4_7, POSITION_5_6, WHITE)
         );
     }
+
+    @DisplayName("세로로 이어지는 pawn 갯수를 반환한다.")
+    @ParameterizedTest
+    @MethodSource("countPawnDuplicatedColumn")
+    void countPawnDuplicatedColumn(
+            final List<Position> sources,
+            final List<Position> targets,
+            final List<Color> turns,
+            final int expected
+    ) {
+        // given
+        final Board board = Board.create();
+
+        // when
+        final int size = turns.size();
+        for (int index = 0; index < size; index++) {
+            board.move(sources.get(index), targets.get(index), turns.get(index));
+        }
+        final int pawnDuplicatedColumnCount = board.countPawnDuplicatedColumn(turns.get(size - 1));
+
+        // then
+        assertThat(pawnDuplicatedColumnCount).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> countPawnDuplicatedColumn() {
+        return Stream.of(
+                Arguments.arguments(
+                        List.of(POSITION_4_6),
+                        List.of(POSITION_4_4),
+                        List.of(WHITE),
+                        0
+                ),
+                Arguments.arguments(
+                        List.of(POSITION_4_6, POSITION_3_1, POSITION_4_4),
+                        List.of(POSITION_4_4, POSITION_3_3, POSITION_3_3),
+                        List.of(WHITE, BLACK, WHITE),
+                        2
+                )
+        );
+    }
 }

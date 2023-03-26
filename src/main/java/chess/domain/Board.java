@@ -6,6 +6,7 @@ import chess.domain.direction.BasicDirection;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import static chess.domain.PieceType.EMPTY;
 import static chess.domain.PieceType.PAWN;
 
 public final class Board {
+    private static final int PAWN_MIN_DUPLICATED_COUNT = 2;
+
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -27,7 +30,7 @@ public final class Board {
         return new Board(board);
     }
 
-    public void move(final Position source, final Position target, final Color currentPlayer) {
+    public Piece move(final Position source, final Position target, final Color currentPlayer) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
@@ -37,6 +40,7 @@ public final class Board {
 
         board.put(target, sourcePiece);
         board.put(source, Empty.create());
+        return targetPiece;
     }
 
     private void validateInvalidColor(final Color currentPlayer, final Piece sourcePiece, final Piece targetPiece) {
@@ -79,6 +83,35 @@ public final class Board {
             return targetPiece.isSamePieceType(EMPTY);
         }
         return targetPiece.isNotSamePieceType(EMPTY);
+    }
+
+    public int countPawnDuplicatedColumn(final Color color) {
+        final Map<Row, Integer> pawnCount = new EnumMap<>(Row.class);
+
+        board.entrySet()
+                .forEach(entry -> countIfPawnDuplicatedColumn(pawnCount, entry, color));
+
+        return calculatePawnDuplicatedCounts(pawnCount);
+    }
+
+    private void countIfPawnDuplicatedColumn(
+            final Map<Row, Integer> pawnCount,
+            final Map.Entry<Position, Piece> entry,
+            final Color color
+    ) {
+        final Piece piece = entry.getValue();
+        final Row currentRow = entry.getKey().getRow();
+
+        if (piece.isSameColor(color) && piece.isSamePieceType(PAWN)) {
+            pawnCount.put(currentRow, pawnCount.getOrDefault(currentRow, 0) + 1);
+        }
+    }
+
+    private int calculatePawnDuplicatedCounts(final Map<Row, Integer> pawnCount) {
+        return pawnCount.values()
+                .stream()
+                .filter(count -> count >= PAWN_MIN_DUPLICATED_COUNT)
+                .reduce(0, Integer::sum);
     }
 
     public Map<Position, Piece> getBoard() {
