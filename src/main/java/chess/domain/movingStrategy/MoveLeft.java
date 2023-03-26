@@ -5,7 +5,7 @@ import chess.domain.game.Position;
 
 public final class MoveLeft implements MovingStrategy {
 
-    private final static MoveLeft INSTANCE = new MoveLeft();
+    private static final MoveLeft INSTANCE = new MoveLeft();
 
     private MoveLeft() {
     }

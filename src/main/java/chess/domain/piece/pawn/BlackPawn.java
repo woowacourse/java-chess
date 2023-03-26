@@ -15,7 +15,6 @@ public final class BlackPawn extends Pawn {
     private static final List<MovingStrategy> attackStrategies = List.of(MoveLeftDown.instance(), MoveRightDown.instance());
     private static final BlackPawn INSTANCE = new BlackPawn(new MovingStrategies(movingStrategies), new AttackStrategies(attackStrategies));
 
-
     private BlackPawn(final MovingStrategies movingStrategies, final AttackStrategies attackStrategies) {
         super(Team.BLACK, PieceType.BLACK_PAWN, movingStrategies, attackStrategies);
     }

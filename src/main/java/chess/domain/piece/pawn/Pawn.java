@@ -13,7 +13,6 @@ import java.util.Optional;
 
 public abstract class Pawn extends Piece {
 
-
     public static final double DEGRADED_SCORE = 0.5;
     private static final String INVALID_MOVEMENT_MESSAGE = "폰이 해당 지점으로 이동할 수 없습니다.";
 

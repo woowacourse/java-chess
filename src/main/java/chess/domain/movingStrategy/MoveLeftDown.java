@@ -6,7 +6,7 @@ import chess.domain.game.Rank;
 
 public final class MoveLeftDown implements MovingStrategy {
 
-    private final static MoveLeftDown INSTANCE = new MoveLeftDown();
+    private static final MoveLeftDown INSTANCE = new MoveLeftDown();
 
     private MoveLeftDown() {
     }

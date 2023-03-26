@@ -3,9 +3,9 @@ package chess.domain.movingStrategy;
 import chess.domain.game.File;
 import chess.domain.game.Position;
 
-public final class MoveRight implements MovingStrategy{
+public final class MoveRight implements MovingStrategy {
 
-    private final static MoveRight INSTANCE = new MoveRight();
+    private static final MoveRight INSTANCE = new MoveRight();
 
     private MoveRight() {
     }
