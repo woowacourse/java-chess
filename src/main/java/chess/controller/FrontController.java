@@ -15,6 +15,7 @@ public class FrontController {
     }
 
     public static void run() {
+        // TODO 게임방 목록 조회해서 게임방 아이디 입력받기
         OutputView.printGuideMessage();
         while (appStatus == AppStatus.RUNNING) {
             appStatus = inputExceptionHandler.retryExecuteIfInputIllegal(

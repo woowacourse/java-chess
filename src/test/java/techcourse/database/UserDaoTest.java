@@ -3,12 +3,9 @@ package techcourse.database;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import techcourse.User;
 
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class UserDaoTest {
 
     private final UserDao userDao = new UserDao();

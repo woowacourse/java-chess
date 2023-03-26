@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.controller.GameStatus;
+import chess.dao.ChessBoardDao;
+import chess.dao.InMemoryChessBoardDao;
 import chess.domain.piece.Piece;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
@@ -8,16 +10,21 @@ import java.util.Map;
 
 public class ChessGame {
 
-    private final ChessBoard chessBoard;
+    private final ChessBoardDao chessBoardDao = new InMemoryChessBoardDao();
+    private ChessBoard chessBoard;
     private GameStatus gameStatus = GameStatus.READY;
 
     public ChessGame() {
         this.chessBoard = new ChessBoard();
     }
 
+    // TODO 게임방 id 입력받기
     public void start(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
         gameStatus = GameStatus.RUNNING;
+        // TODO ChessGameDao : currentTurn, isOver 확인
+        chessBoard = chessBoardDao.find()
+                .orElse(new ChessBoard());
     }
 
     public void move(CommandRequest commandRequest) {
@@ -26,9 +33,12 @@ public class ChessGame {
                 Position.from(commandRequest.getSourceCoordinate()),
                 Position.from(commandRequest.getDestinationCoordinate())
         );
+        // TODO ChessGameDao : currentTurn, isOver 갱신
         if (isOver) {
             gameStatus = GameStatus.OVER;
         }
+        chessBoardDao.delete();
+        chessBoardDao.insert(chessBoard);
     }
 
     public void end(CommandRequest commandRequest) {

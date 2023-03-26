@@ -25,7 +25,7 @@ public class ChessBoard {
     }
 
     public ChessBoard(final Map<Position, Piece> piecesByPosition) {
-        this.piecesByPosition = piecesByPosition;
+        this.piecesByPosition = new HashMap<>(piecesByPosition);
         this.currentTurnCamp = Camp.WHITE;
     }
 
