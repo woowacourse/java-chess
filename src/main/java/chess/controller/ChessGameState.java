@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public final class ChessGameState {
     private static final int COMMAND_INDEX = 0;
+    private static final String END = "end";
     
     private final ChessGameService chessGameService;
     private Command command;
@@ -32,7 +33,7 @@ public final class ChessGameState {
     
     public void noticeKingDead() {
         if (chessGameService.isKingDead()) {
-        
+            command = CommandFactory.creaeteCommand(END);
         }
     }
 }
