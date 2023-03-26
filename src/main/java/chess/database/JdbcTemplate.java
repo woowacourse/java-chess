@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 public final class JdbcTemplate {
@@ -40,7 +41,8 @@ public final class JdbcTemplate {
     public Long executeUpdate(final String query,
                               final String... params) {
         try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(
+                     query, Statement.RETURN_GENERATED_KEYS)) {
 
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setString(i + 1, params[i]);
