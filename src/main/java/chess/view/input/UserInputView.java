@@ -21,7 +21,7 @@ public class UserInputView {
         System.out.println("> 회원가입 : register 이름 - 예) register charlie");
         System.out.println("> 로그인 : login 이름 - 예) login charlie");
         System.out.println("> 로그아웃 : logout");
-        System.out.println("> 종료 : end");
+        System.out.println("> 메인 화면 : end");
 
         final String input = scanner.nextLine();
 
