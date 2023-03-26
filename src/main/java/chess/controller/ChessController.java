@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.controller.mapper.request.ChessGameCommandMapper;
+import chess.domain.ChessGameService;
 import chess.view.output.GameResultFormatter;
 import chess.view.output.ChessBoardStateFormatter;
 import chess.domain.game.command.ChessGameCommand;
@@ -18,15 +19,21 @@ public final class ChessController {
 
     private final OutputView outputView;
     private final InputView inputView;
+    private final ChessGameService gameService;
 
     public ChessController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.gameService = new ChessGameService();
     }
 
     public void run() {
         outputView.printStartPrefix();
         ChessGame chessGame = new ReadyGame();
+        if (gameService.isGameExist()) {
+            chessGame = requestNewGame();
+            printChessGameResult(chessGame);
+        }
 
         do {
             chessGame = play(chessGame);
@@ -34,6 +41,15 @@ public final class ChessController {
         } while (chessGame.isRunnableGame());
 
         printResult(chessGame);
+    }
+
+    private ChessGame requestNewGame() {
+        String command = inputView.readLoadCommand();
+        if (command.equals("y")) {
+            return gameService.getExistGame();
+        }
+
+        return new ReadyGame().startGame();
     }
 
     private ChessGame play(ChessGame chessGame) {

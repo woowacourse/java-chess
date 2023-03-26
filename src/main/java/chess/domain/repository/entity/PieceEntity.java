@@ -25,7 +25,7 @@ public class PieceEntity {
         String camp = getCampName(piece);
         String positionValue = getPositionValue(position);
 
-        return new PieceEntity(pieceType, camp, positionValue, boardId);
+        return new PieceEntity(positionValue, pieceType, camp, boardId);
     }
 
     private static String getCampName(Piece piece) {

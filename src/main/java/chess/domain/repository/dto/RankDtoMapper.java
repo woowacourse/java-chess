@@ -29,4 +29,12 @@ public enum RankDtoMapper {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크 입니다."))
                 .value;
     }
+
+    public static Rank convertToRank(String rankValue) {
+        return Arrays.stream(RankDtoMapper.values())
+                .filter(it -> it.value.equals(rankValue))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크 입니다."))
+                .rank;
+    }
 }

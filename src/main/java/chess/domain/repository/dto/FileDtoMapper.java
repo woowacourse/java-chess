@@ -29,4 +29,12 @@ public enum FileDtoMapper {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 입니다."))
                 .value;
     }
+
+    public static File convertToFile(String fileValue) {
+        return Arrays.stream(FileDtoMapper.values())
+                .filter(it -> it.value.equals(fileValue))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 입니다."))
+                .file;
+    }
 }
