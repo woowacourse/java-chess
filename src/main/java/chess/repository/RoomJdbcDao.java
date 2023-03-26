@@ -15,9 +15,8 @@ public class RoomJdbcDao implements RoomDao {
     @Override
     public void save(final String roomName, final int userId) {
         jdbcTemplate.executeUpdate(
-                "INSERT INTO room (name, finished, user_id) values (?, ?, ?)",
+                "INSERT INTO room (name, user_id) values (?, ?)",
                 roomName,
-                true,
                 userId
         );
     }
@@ -29,9 +28,8 @@ public class RoomJdbcDao implements RoomDao {
             while (resultSet.next()) {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
-                final boolean finished = resultSet.getBoolean("finished");
                 final int findUserId = resultSet.getInt("user_id");
-                result.add(new Room(id, name, finished, findUserId));
+                result.add(new Room(id, name, findUserId));
             }
             return result;
         }, userId);
@@ -43,9 +41,8 @@ public class RoomJdbcDao implements RoomDao {
             if (resultSet.next()) {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
-                final boolean finished = resultSet.getBoolean("finished");
                 final int findUserId = resultSet.getInt("user_id");
-                return new Room(id, name, finished, findUserId);
+                return new Room(id, name, findUserId);
             }
             return null;
         }, roomId);

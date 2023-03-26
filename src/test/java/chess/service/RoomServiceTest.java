@@ -28,7 +28,7 @@ class RoomServiceTest {
 
             @Override
             public void save(final String roomName, final int userId) {
-                final Room room = new Room(++index, roomName, true, userId);
+                final Room room = new Room(++index, roomName, userId);
                 rooms.add(room);
             }
 

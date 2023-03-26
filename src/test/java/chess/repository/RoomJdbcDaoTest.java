@@ -28,7 +28,6 @@ public class RoomJdbcDaoTest {
         final String query = "CREATE TABLE IF NOT EXISTS room ("
                 + "  id int PRIMARY KEY AUTO_INCREMENT,"
                 + "  name varchar(255),"
-                + "  finished boolean,"
                 + "  user_id int"
                 + ");";
         jdbcTemplate.executeUpdate(query);
