@@ -5,11 +5,18 @@ import chess.domain.board.Chessboard;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,5 +77,30 @@ class ChessboardTest {
 
         assertThat(chessboard.isEmptyInRoute(source, target))
                 .isTrue();
+    }
+
+    @ParameterizedTest(name = "체스판 위에 존재하는 특정 기물의 수를 확인할 수 있다.")
+    @MethodSource("pieceAndPieceCountProvider")
+    void getPieceCountOnBoardSuccessTest(Piece piece, int pieceCount) {
+        assertThat(chessboard.getPieceCountOnBoard(piece))
+                .isEqualTo(pieceCount);
+    }
+
+    static Stream<Arguments> pieceAndPieceCountProvider() {
+        return Stream.of(
+                Arguments.arguments(PieceType.PAWN.createPiece(Camp.WHITE), 8),
+                Arguments.arguments(PieceType.ROOK.createPiece(Camp.WHITE), 2),
+                Arguments.arguments(PieceType.BISHOP.createPiece(Camp.WHITE), 2),
+                Arguments.arguments(PieceType.KNIGHT.createPiece(Camp.WHITE), 2),
+                Arguments.arguments(PieceType.QUEEN.createPiece(Camp.WHITE), 1),
+                Arguments.arguments(PieceType.KING.createPiece(Camp.WHITE), 1),
+
+                Arguments.arguments(PieceType.PAWN.createPiece(Camp.BLACK), 8),
+                Arguments.arguments(PieceType.ROOK.createPiece(Camp.BLACK), 2),
+                Arguments.arguments(PieceType.BISHOP.createPiece(Camp.BLACK), 2),
+                Arguments.arguments(PieceType.KNIGHT.createPiece(Camp.BLACK), 2),
+                Arguments.arguments(PieceType.QUEEN.createPiece(Camp.BLACK), 1),
+                Arguments.arguments(PieceType.KING.createPiece(Camp.BLACK), 1)
+        );
     }
 }
