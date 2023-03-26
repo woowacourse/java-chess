@@ -69,7 +69,7 @@ public class GameDao {
             Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
             String name = resultSet.getString("piece_type");
             String team = resultSet.getString("piece_team");
-            Piece piece = PieceConveter.getPiece(name, team);
+            Piece piece = PieceConverter.getPiece(name, team);
 
             board.put(Point.of(file, rank), piece);
         }

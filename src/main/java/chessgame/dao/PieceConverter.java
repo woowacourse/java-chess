@@ -6,7 +6,7 @@ import chessgame.domain.piece.*;
 import java.util.Arrays;
 
 
-public enum PieceConveter {
+public enum PieceConverter {
     WHITE_KING("k", "WHITE", King.from(Team.WHITE)),
     WHITE_BISHOP("b", "WHITE", Bishop.from(Team.WHITE)),
     WHITE_KNIGHT("n", "WHITE", Knight.from(Team.WHITE)),
@@ -24,7 +24,7 @@ public enum PieceConveter {
     private final String team;
     private final Piece piece;
 
-    PieceConveter(String name, String team, Piece piece) {
+    PieceConverter(String name, String team, Piece piece) {
         this.name = name;
         this.team = team;
         this.piece = piece;
