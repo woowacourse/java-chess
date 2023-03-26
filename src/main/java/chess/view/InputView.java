@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.Command;
+import chess.view.command.Command;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
