@@ -12,9 +12,13 @@ public class ChessGame {
     private final Board board;
     private Team turn;
 
-    public ChessGame() {
+    private ChessGame() {
         this.board = BoardFactory.from(new HashMap<>());
         this.turn = Team.WHITE;
+    }
+
+    public static ChessGame create() {
+        return new ChessGame();
     }
 
     public void move(final Position source, final Position target) {

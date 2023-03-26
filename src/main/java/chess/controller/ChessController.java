@@ -12,7 +12,7 @@ public class ChessController {
     private ChessState state;
 
     public ChessController() {
-        this.chessGame = new ChessGame();
+        this.chessGame = ChessGame.create();
         this.state = ChessState.INIT;
     }
 
