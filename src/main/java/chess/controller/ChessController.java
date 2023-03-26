@@ -18,13 +18,6 @@ public class ChessController {
         this.chessGameDao = chessGameDao;
     }
 
-    private final Map<GameState, GameAction> actionByGameState = Map.of(
-            GameState.READY, this::start,
-            GameState.RUNNING, this::move,
-            GameState.CHECKING, this::status,
-            GameState.END, this::end
-    );
-
     public void run() {
         OutputView.printGameStartGuideMessage();
         ChessGame chessGame = chessGameDao.select();
@@ -40,8 +33,8 @@ public class ChessController {
     private ChessGame play(ChessGame chessGame) {
         try {
             final Command command = readCommand();
-            final GameAction gameAction = actionByGameState.get(command.getGameState());
-            chessGame = gameAction.execute(command, chessGame);
+            final GameActionByState gameActionByState = GameActionByState.valueOfCommand(command);
+            chessGame = gameActionByState.execute(command, chessGame);
             chessGameDao.update(chessGame);
             return chessGame;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
@@ -61,9 +54,9 @@ public class ChessController {
     }
 
     private ChessGame start(final Command command, ChessGame chessGame) {
-        final ChessGame playingChessGame = chessGame.start();
-        OutputView.printBoard(playingChessGame.getPieces());
-        return playingChessGame;
+        chessGame = chessGame.start();
+        OutputView.printBoard(chessGame.getPieces());
+        return chessGame;
     }
 
     private ChessGame move(final Command command, ChessGame chessGame) {
