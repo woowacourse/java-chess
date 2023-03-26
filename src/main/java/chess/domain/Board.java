@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.NoneEmptyPiece;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -13,6 +14,8 @@ import java.util.stream.Collectors;
 
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 
 public final class Board implements BoardProvider {
 
@@ -33,6 +36,20 @@ public final class Board implements BoardProvider {
         if (source.isMobile(RelativePosition.of(from, to), target)) {
             board.replace(to, source);
             board.replace(from, new EmptyPiece());
+            checkPromotion(to, source);
+        }
+    }
+
+    private void checkPromotion(final Position position, final Piece piece) {
+        if(!piece.isPieceType(PAWN)){
+            return;
+        }
+        if(position.isRow(0) && piece.isTeam(BLACK)){
+            board.replace(position, ((Pawn)piece).getPromotion(position));
+            return;
+        }
+        if(position.isRow(7) && piece.isTeam(WHITE)){
+            board.replace(position, ((Pawn)piece).getPromotion(position));
         }
     }
 

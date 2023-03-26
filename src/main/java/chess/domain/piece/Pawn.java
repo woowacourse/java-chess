@@ -63,7 +63,7 @@ public final class Pawn extends NoneEmptyPiece {
         return relativePosition;
     }
 
-    public Piece getPromotion(Position position){
+    public Piece getPromotion(final Position position){
         if(position.isRow(7) && team == WHITE){
             return Queen.from(WHITE);
         }

@@ -94,7 +94,7 @@
     - [x] Queen 은 9점, Rook 은 5점, Bishop 은 3점, Knight 는 2.5점, Pawn 은 1점
     - [x] King 은 잡히는 경우 경기가 끝나기 때문에 점수가 존재하지 않음
 - [ ] Pawn 의 특수한 룰을 구현
-    - [ ] 승진
+    - [x] 승진
     - [ ] 앙파상
 
 ### ObstacleStrategy
