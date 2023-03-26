@@ -21,4 +21,8 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 사용자입니다. 다른 이름을 입력해 주세요.");
         }
     }
+
+    public Long insert(final String name) {
+        return userDao.insert(name);
+    }
 }
