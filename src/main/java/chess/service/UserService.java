@@ -16,6 +16,10 @@ public class UserService {
     }
 
     public UserDto findByName(final NameDto nameDto) {
-        return userDao.findByName(nameDto);
+        final UserDto userDto = userDao.findByName(nameDto);
+        if (userDto == null) {
+            throw new IllegalArgumentException("해당 이름을 가진 유저가 없습니다.");
+        }
+        return userDto;
     }
 }

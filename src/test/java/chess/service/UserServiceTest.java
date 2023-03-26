@@ -1,6 +1,7 @@
 package chess.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dto.NameDto;
@@ -57,6 +58,17 @@ public class UserServiceTest {
         // then
         final UserDto result = userService.findByName(nameDto);
         assertThat(result.getName()).isEqualTo("herb");
+    }
+
+    @Test
+    void 존재하지_않는_사용자를_조회하는_경우_예외를_던진다() {
+        // given
+        final NameDto nameDto = new NameDto("herb");
+
+        // expect
+        assertThatThrownBy(() -> userService.findByName(nameDto))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 이름을 가진 유저가 없습니다.");
     }
 
     @Test

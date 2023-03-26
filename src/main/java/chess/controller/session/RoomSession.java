@@ -1,22 +1,16 @@
 package chess.controller.session;
 
 public class RoomSession {
-    private static RoomSession INSTANCE = new RoomSession();
-
-    private ThreadLocal<Room> session = new ThreadLocal<>();
+    private static final ThreadLocal<Room> session = new ThreadLocal<>();
 
     private RoomSession() {
     }
 
-    public static RoomSession getInstance() {
-        return INSTANCE;
-    }
-
-    public void add(final Room room) {
+    public static void add(final Room room) {
         session.set(room);
     }
 
-    public int getId() {
+    public static int getId() {
         final Room room = session.get();
         if (room == null) {
             return 0;
@@ -24,7 +18,7 @@ public class RoomSession {
         return room.getId();
     }
 
-    public String getName() {
+    public static String getName() {
         final Room room = session.get();
         if (room == null) {
             return "none";
@@ -32,7 +26,7 @@ public class RoomSession {
         return room.getName();
     }
 
-    public void remove() {
+    public static void remove() {
         session.remove();
     }
 }

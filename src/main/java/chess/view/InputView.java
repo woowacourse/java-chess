@@ -28,10 +28,24 @@ public class InputView {
         System.out.println("[로그인 한 유저: " + user + ", 선택한 방 이름: " + room + "]");
     }
 
-    public static List<String> readCommand() {
-        final String moveCommand = SCANNER.nextLine();
+    public static List<String> readUserCommand(final String user, final String room) {
+        printStatus(user, room);
+        System.out.println("> 회원가입 : register 이름 - 예) register charlie");
+        System.out.println("> 로그인 : login 이름 - 예) login charlie");
+        System.out.println("> 로그아웃 : logout");
+        System.out.println("> 종료 : end");
 
-        return Arrays.stream(moveCommand.split(DELIMITER, LIMIT))
+        final String input = SCANNER.nextLine();
+
+        return Arrays.stream(input.split(DELIMITER, LIMIT))
+                .map(String::trim)
+                .collect(toList());
+    }
+
+    public static List<String> readCommand() {
+        final String input = SCANNER.nextLine();
+
+        return Arrays.stream(input.split(DELIMITER, LIMIT))
                 .map(String::trim)
                 .collect(toList());
     }

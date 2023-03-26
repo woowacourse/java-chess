@@ -20,8 +20,8 @@ public class JdbcTemplate {
                 preparedStatement.setObject(i, parameters[i - 1]);
             }
             preparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            throw new IllegalArgumentException("입력이 올바르지 않습니다.");
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class JdbcTemplate {
             final ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet);
         } catch (SQLException e) {
-            throw new IllegalArgumentException("입력이 올바르지 않습니다.");
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }

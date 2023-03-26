@@ -8,17 +8,9 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class MainController implements Controller {
-    private final UserSession userSession;
-    private final RoomSession roomSession;
     private final CommandMapper<MainCommand, Controller> commandMapper;
 
-    public MainController(
-            final UserSession userSession,
-            final RoomSession roomSession,
-            final CommandMapper<MainCommand, Controller> commandMapper
-    ) {
-        this.userSession = userSession;
-        this.roomSession = roomSession;
+    public MainController(final CommandMapper<MainCommand, Controller> commandMapper) {
         this.commandMapper = commandMapper;
     }
 
@@ -32,7 +24,7 @@ public class MainController implements Controller {
 
     private MainCommand readCommand() {
         try {
-            final String command = InputView.readMainCommand(userSession.getName(), roomSession.getName());
+            final String command = InputView.readMainCommand(UserSession.getName(), RoomSession.getName());
             final MainCommand mainCommand = MainCommand.from(command);
             final Controller controller = commandMapper.getValue(mainCommand);
             controller.run();

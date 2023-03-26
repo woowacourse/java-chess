@@ -1,22 +1,16 @@
 package chess.controller.session;
 
 public class UserSession {
-    private static UserSession INSTANCE = new UserSession();
-
-    private ThreadLocal<User> session = new ThreadLocal<>();
+    private static final ThreadLocal<User> session = new ThreadLocal<>();
 
     private UserSession() {
     }
 
-    public static UserSession getInstance() {
-        return INSTANCE;
+    public static void add(final User user) {
+        session.set(user);
     }
 
-    public void add(final User auth) {
-        session.set(auth);
-    }
-
-    public int getId() {
+    public static int getId() {
         final User auth = session.get();
         if (auth == null) {
             return 0;
@@ -24,7 +18,7 @@ public class UserSession {
         return session.get().getId();
     }
 
-    public String getName() {
+    public static String getName() {
         final User auth = session.get();
         if (auth == null) {
             return "anonymous";
@@ -32,7 +26,7 @@ public class UserSession {
         return auth.getName();
     }
 
-    public void remove() {
+    public static void remove() {
         session.remove();
     }
 }
