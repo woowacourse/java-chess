@@ -1,31 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.game.ChessGame;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static chess.domain.piece.PieceType.*;
 
 public final class ChessBoardFactory {
-
-    private static final Map<ChessGame, ChessBoardFactory> CACHE = new ConcurrentHashMap<>();
-
-    private ChessBoardFactory() {
-    }
-
-    static ChessBoardFactory getInstance(final ChessGame chessGame) {
-        if (CACHE.containsKey(chessGame)) {
-            return CACHE.get(chessGame);
-        }
-        final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
-        CACHE.put(chessGame, chessBoardFactory);
-        return chessBoardFactory;
-    }
-
     public Map<Position, Piece> createBoard() {
         final Map<Position, Piece> board = new HashMap<>();
         createWhiteArea(board);
