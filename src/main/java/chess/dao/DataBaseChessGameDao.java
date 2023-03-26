@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.board.Turn;
+import chess.domain.piece.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,15 +29,35 @@ public class DataBaseChessGameDao implements ChessGameDao {
         }
     }
 
+    @Override
     public Long generateNewGame() {
-        final String generateNewGameQuery = "INSERT * INTO CHESS_GAME VALUES (WHITE)";
+        final String generateNewGameQuery = "INSERT INTO CHESS_GAME VALUES (null, ?)";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.getLong(1);
+            preparedStatement.setString(1, Color.WHITE.name());
+            preparedStatement.executeUpdate();
+            final ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+            throw new SQLException();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException("게임이 생성되지 않습니다.");
+        }
+    }
+
+    @Override
+    public void updateTurn(final Turn turn, final long gameId) {
+        final String generateNewGameQuery = "UPDATE CHESS_GAME SET TURN = ? WHERE id = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, turn.getTurn().name());
+            preparedStatement.setLong(2, gameId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new IllegalArgumentException("게임이 생성되지 않습니다.");
         }
     }
 }

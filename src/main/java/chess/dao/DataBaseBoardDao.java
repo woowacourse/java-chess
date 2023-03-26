@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class DataBaseBoardDao implements BoardDao {
         final String saveBoardQuery = "INSERT INTO board VALUES (?,?,?,?,?)";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
-                     connection.prepareStatement(saveBoardQuery, Statement.RETURN_GENERATED_KEYS)) {
+                     connection.prepareStatement(saveBoardQuery)) {
             preparedStatement.setLong(1, gameId);
             for (final Entry<Position, Piece> positionPieceEntry : board.getBoard().entrySet()) {
                 final Position position = positionPieceEntry.getKey();
