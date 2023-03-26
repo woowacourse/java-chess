@@ -58,7 +58,7 @@ public class ChessController {
     }
 
     private void fetchScore() {
-         OutputView.printScore(chessService.toScoreDto());
+        OutputView.printScore(chessService.toScoreDto());
     }
 }
 

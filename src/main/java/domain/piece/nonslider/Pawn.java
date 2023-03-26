@@ -18,10 +18,7 @@ public class Pawn extends Piece {
         Direction.NORTH_EAST
     );
 
-    private static final Integer MIN_FILE_INDEX = 0;
-    private static final Integer MAX_FILE_INDEX = 7;
-    private static final Integer MIN_RANK_INDEX = 0;
-    private static final Integer MAX_RANK_INDEX = 7;
+    private static final int INITIAL_FORWARD_MOVE_DISTANCE = 2;
 
     private boolean isGoingForward;
     private boolean isFirstMove = true;
@@ -78,11 +75,9 @@ public class Pawn extends Piece {
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK_INDEX);
 
         return targetDirection.stream()
-            .filter(direction ->
-                currentFileCoordinate + directionUnit * direction.getFile() >= MIN_FILE_INDEX
-            && currentFileCoordinate + directionUnit * direction.getFile() <= MAX_FILE_INDEX
-            && currentRankCoordinate + directionUnit * direction.getRank() >= MIN_RANK_INDEX
-            && currentRankCoordinate + directionUnit * direction.getRank() <= MAX_RANK_INDEX)
+            .filter(direction -> isValidRange(currentFileCoordinate + directionUnit * direction.getFile(),
+                currentRankCoordinate + directionUnit * direction.getRank())
+            )
             .map(direction -> new Square(currentFileCoordinate + directionUnit * direction.getFile(),
                 currentRankCoordinate + directionUnit * direction.getRank())).collect(Collectors.toList());
     }
@@ -97,7 +92,7 @@ public class Pawn extends Piece {
         int directionUnit = fetchDirectionUnit();
         int currentFileCoordinate = currentSquare.toCoordinate().get(FILE_INDEX);
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK_INDEX);
-        return new Square(currentFileCoordinate, currentRankCoordinate + (directionUnit * 2));
+        return new Square(currentFileCoordinate, currentRankCoordinate + (directionUnit * INITIAL_FORWARD_MOVE_DISTANCE));
     }
 
     @Override
