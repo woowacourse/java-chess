@@ -22,7 +22,8 @@ public class ChessController {
     private final ChessGameDao chessGameDao = new ChessGameDao(Database.PRODUCT);
 
     public void run() {
-        User user = getUser();
+        LoginController loginController = new LoginController();
+        User user = loginController.getUser();
         Command initialCommand = readInitialCommand();
         if (initialCommand == Command.END) {
             return;
@@ -30,78 +31,6 @@ public class ChessController {
         if (initialCommand == Command.START) {
             startGame(user);
         }
-    }
-
-    private User getUser() {
-        OutputView.printWelcomeMessage();
-        User user;
-        do {
-            user = getUserByLoginCommand();
-        } while (user == null);
-        return user;
-    }
-
-    private User getUserByLoginCommand() {
-        OutputView.printLoginMessage();
-        Command loginCommand = readLoginCommand();
-        if (loginCommand == Command.LOGIN) {
-            return login();
-        }
-        return register();
-    }
-
-    private Command readLoginCommand() {
-        Command command = InputView.readCommand();
-        try {
-            validateLoginCommand(command);
-            return command;
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return readLoginCommand();
-        }
-    }
-
-    private void validateLoginCommand(Command command) {
-        if (command == Command.LOGIN || command == Command.REGISTER) {
-            return;
-        }
-        throw new IllegalArgumentException("아이디가 있으시다면 login, 아이디가 없으시다면 register를 입력해주세요.");
-    }
-
-    private User login() {
-        OutputView.printIdMessage();
-        String userId = InputView.readNext();
-        User user = chessGameDao.getUserById(userId);
-        if (user == null) {
-            OutputView.printErrorMessage("존재하지 않는 아이디입니다.");
-        }
-        return user;
-    }
-
-    private User register() {
-        String userId = readUserId();
-        if (isUserIdAlreadyExist(userId)) {
-            OutputView.printErrorMessage("이미 사용중인 아이디입니다.");
-            return null;
-        }
-        String nickname = readNickname();
-        chessGameDao.addUser(new User(userId, nickname));
-        return chessGameDao.getUserById(userId);
-    }
-
-    private String readUserId() {
-        OutputView.printIdInputMessage();
-        return InputView.readNext();
-    }
-
-    private boolean isUserIdAlreadyExist(String userId) {
-        User user = chessGameDao.getUserById(userId);
-        return user != null;
-    }
-
-    private String readNickname() {
-        OutputView.printNicknameInputMessage();
-        return InputView.readNext();
     }
 
     private Command readInitialCommand() {
