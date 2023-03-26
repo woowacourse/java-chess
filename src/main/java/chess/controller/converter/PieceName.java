@@ -37,7 +37,10 @@ public enum PieceName {
         if (camp == Camp.WHITE) {
             return name.toLowerCase();
         }
-        return name.toUpperCase();
+        if (camp == Camp.BLACK) {
+            return name.toUpperCase();
+        }
+        return name;
     }
 
 }
