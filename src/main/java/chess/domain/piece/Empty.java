@@ -13,6 +13,10 @@ public final class Empty extends Piece {
         super(Color.NONE);
     }
 
+    public Empty(Color color) {
+        super(Color.NONE);
+    }
+
     @Override
     protected Set<Position> computePath(final Position source, final Position target) {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_EXCEPTION_MESSAGE);
