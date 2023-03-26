@@ -25,7 +25,7 @@ public final class ChessGame {
         if (piece == null) {
             throw new IllegalArgumentException("기물이 존재하는 위치를 입력해주세요.");
         }
-        validateCamp(piece);
+        validateTurn(piece);
         if (!piece.canMove(source, target, chessBoard.getPiece(target))
                 || !chessBoard.isPossibleRoute(source, target, currentTeamColor)) {
             throw new IllegalArgumentException("기물 규칙 상 움직일 수 없는 위치입니다.");
@@ -33,7 +33,7 @@ public final class ChessGame {
         movePiece(source, target, piece);
     }
 
-    private void validateCamp(final Piece piece) {
+    private void validateTurn(final Piece piece) {
         if (!piece.isSameTeam(currentTeamColor)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }

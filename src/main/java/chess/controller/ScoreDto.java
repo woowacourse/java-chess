@@ -21,7 +21,7 @@ public class ScoreDto {
     }
 
     public String getWinner() {
-        if (whiteScore == blackScore) {
+        if (whiteScore.equals(blackScore)) {
             return "무승부";
         }
         if (whiteScore > blackScore) {

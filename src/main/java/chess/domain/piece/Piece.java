@@ -11,10 +11,6 @@ public abstract class Piece implements Movable {
         this.teamColor = teamColor;
     }
 
-    public boolean compareCamp(final Piece other) {
-        return teamColor == other.teamColor;
-    }
-
     public boolean isSameTeam(final TeamColor diffType) {
         return teamColor == diffType;
     }

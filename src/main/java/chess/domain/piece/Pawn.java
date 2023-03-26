@@ -13,14 +13,14 @@ public abstract class Pawn extends Piece {
         super(pieceType, teamColor);
     }
 
-    abstract boolean canAttack(Position source, Position target, Piece piece);
-
     public static Double calculateScore(int count) {
         if (count == PAWN_COUNT_CRITERION_FOR_SCORING) {
             return VALUE;
         }
         return VALUE_SAME_FILE * count;
     }
+
+    abstract boolean canAttack(Position source, Position target, Piece piece);
 
     @Override
     public boolean isPawn() {

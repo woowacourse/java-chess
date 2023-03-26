@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,30 +22,14 @@ class PieceTest {
         );
     }
 
-    @Test
-    @DisplayName("두 개의 체스말이 동일한 진영에 속하는지 판단한다.")
-    void compareCamp() {
-        // given
-        final Piece piece = new WhitePawn(PieceType.PAWN);
-        final Piece other = new Queen(PieceType.QUEEN, TeamColor.WHITE);
-        final Piece otherCamp = new King(PieceType.KING, TeamColor.BLACK);
-
-        // when, then
-        assertThat(piece.compareCamp(other))
-                .isTrue();
-
-        assertThat(piece.compareCamp(otherCamp))
-                .isFalse();
-    }
-
     @ParameterizedTest(name = "체스말이 입력받은 체스말과 동일한 진영인지 판단한다.")
     @CsvSource(value = {"WHITE:true", "BLACK:false"}, delimiter = ':')
-    void isSameCamp(final TeamColor campType, final boolean expected) {
+    void isSameTeamColor(final TeamColor teamColor, final boolean expected) {
         // given
         final Piece piece = new Knight(PieceType.KNIGHT, TeamColor.WHITE);
 
         // when, then
-        assertThat(piece.isSameTeam(campType))
+        assertThat(piece.isSameTeam(teamColor))
                 .isSameAs(expected);
     }
 
