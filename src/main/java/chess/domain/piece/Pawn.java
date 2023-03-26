@@ -5,7 +5,6 @@ import static chess.domain.move.Direction.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,37 +14,27 @@ import chess.domain.position.Position;
 
 public final class Pawn extends Piece {
 	private static final String name = "p";
-
-	private boolean isFirst = true;
+	private static final List<Position> blackPositions = List.of(
+		Position.of(A, SEVEN), Position.of(B, SEVEN),
+		Position.of(C, SEVEN), Position.of(D, SEVEN),
+		Position.of(E, SEVEN), Position.of(F, SEVEN),
+		Position.of(G, SEVEN), Position.of(H, SEVEN));
+	private static final List<Position> whitePositions = List.of(
+		Position.of(A, TWO), Position.of(B, TWO),
+		Position.of(C, TWO), Position.of(D, TWO),
+		Position.of(E, TWO), Position.of(F, TWO),
+		Position.of(G, TWO), Position.of(H, TWO));
 
 	public Pawn(final Color color, final Position position) {
 		super(color, position);
 	}
 
 	public static List<Position> initialBlackPosition() {
-		List<Position> positions = new ArrayList<>();
-		positions.add(Position.of(A, SEVEN));
-		positions.add(Position.of(B, SEVEN));
-		positions.add(Position.of(C, SEVEN));
-		positions.add(Position.of(D, SEVEN));
-		positions.add(Position.of(E, SEVEN));
-		positions.add(Position.of(F, SEVEN));
-		positions.add(Position.of(G, SEVEN));
-		positions.add(Position.of(H, SEVEN));
-		return positions;
+		return blackPositions;
 	}
 
 	public static List<Position> initialWhitePosition() {
-		List<Position> positions = new ArrayList<>();
-		positions.add(Position.of(A, TWO));
-		positions.add(Position.of(B, TWO));
-		positions.add(Position.of(C, TWO));
-		positions.add(Position.of(D, TWO));
-		positions.add(Position.of(E, TWO));
-		positions.add(Position.of(F, TWO));
-		positions.add(Position.of(G, TWO));
-		positions.add(Position.of(H, TWO));
-		return positions;
+		return whitePositions;
 	}
 
 	@Override
@@ -76,8 +65,14 @@ public final class Pawn extends Piece {
 
 	@Override
 	public boolean movableByCount(final int count) {
-		if (isFirst) {
-			isFirst = false;
+		if (color() == WHITE) {
+			return isFirstMove(whitePositions, count);
+		}
+		return isFirstMove(blackPositions, 0);
+	}
+
+	private boolean isFirstMove(final List<Position> positions, final int count) {
+		if (positions.contains(position())) {
 			return count <= 1;
 		}
 		return count == 0;
