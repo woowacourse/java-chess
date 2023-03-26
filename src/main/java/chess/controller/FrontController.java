@@ -11,6 +11,8 @@ import java.util.List;
 
 public class FrontController {
 
+
+    private static final int NEW_ROOM_CREATION_ID = 0;
     private final Rooms rooms;
 
     public FrontController(Rooms rooms) {
@@ -20,15 +22,20 @@ public class FrontController {
     public void run() {
         List<Integer> id = rooms.getRooms();
         OutputView.printRoomId(id);
+        int selectedId = selectRoomId(id);
+        ChessController chessController = new ChessController(new ErrorController(), new Room(new DBChessGameDao(new DBBoardDao()), selectedId));
+        chessController.run();
+    }
+
+    private int selectRoomId(List<Integer> id) {
         int selectedId = InputView.readRoomId();
-        while (!id.contains(selectedId) && selectedId != 0) {
+        while (!id.contains(selectedId) && selectedId != NEW_ROOM_CREATION_ID) {
             OutputView.printNonExistRoomMessage();
             selectedId = InputView.readRoomId();
         }
-        if (selectedId == 0) {
+        if (selectedId == NEW_ROOM_CREATION_ID) {
             selectedId = rooms.createNewRoom();
         }
-        ChessController chessController = new ChessController(new ErrorController(), new Room(new DBChessGameDao(new DBBoardDao()), selectedId));
-        chessController.run();
+        return selectedId;
     }
 }
