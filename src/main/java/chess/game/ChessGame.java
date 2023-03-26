@@ -13,12 +13,13 @@ import static java.util.stream.Collectors.toList;
 
 public class ChessGame {
 
+    private int id = 0;
     private final Board board;
     private Turn turn;
 
-    public ChessGame(Board board) {
+    public ChessGame(Board board, Turn turn) {
         this.board = board;
-        this.turn = new Turn(Team.WHITE);
+        this.turn = turn;
     }
 
     public void move(Position source, Position target) {
@@ -66,11 +67,27 @@ public class ChessGame {
                 .collect(toList());
     }
 
+    public Board getChessBoard() {
+        return this.board;
+    }
+
+    public Team getCurrentTeam() {
+        return turn.getTeam();
+    }
+
     public Team getLosingTeam() {
         return turn.getTeam();
     }
 
     public Team getWinningTeam() {
         return turn.next().getTeam();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
