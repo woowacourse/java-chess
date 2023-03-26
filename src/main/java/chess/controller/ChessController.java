@@ -30,6 +30,10 @@ public class ChessController {
     public ChessController(ChessGame chessGame, ChessGameDao chessGameDao) {
         this.chessGame = chessGame;
         this.chessGameDao = chessGameDao;
+        initializeActionMap();
+    }
+
+    private void initializeActionMap() {
         actionMap.put(START_COMMAND, new Action(ignore -> startGame()));
         actionMap.put(MOVE_COMMAND, new Action(this::movePiece));
         actionMap.put(STATUS_COMMAND, new Action(ignore -> getGameStatus()));
@@ -50,12 +54,16 @@ public class ChessController {
         PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
         chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
         chessGame.checkCheckmate();
+        changeTurn();
+        OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void changeTurn() {
         if (!chessGame.isEnd()) {
             chessGame.changeTurn();
             printCheckWarning();
             OutputView.printTurn(chessGame.getTurn());
         }
-        OutputView.printBoard(chessGame.getBoard());
     }
 
     private void printCheckWarning() {
