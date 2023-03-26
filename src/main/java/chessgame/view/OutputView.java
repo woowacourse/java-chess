@@ -1,8 +1,11 @@
 package chessgame.view;
 
+import java.util.List;
 import java.util.Map;
 
 import chessgame.domain.Board;
+import chessgame.domain.Score;
+import chessgame.domain.Scores;
 import chessgame.domain.Team;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.point.File;
@@ -45,15 +48,22 @@ public class OutputView {
         System.out.println("[ERROR] " + msg);
     }
 
-    public void printScore(Map<Team, Double> scores) {
-        //scores.keySet().forEach(key -> System.out.println(key.color() + "팀 : " + scores.get(key)));
-        for (Team team : scores.keySet()) {
-            double score = scores.get(team);
-            if ((int)score == scores.get(team)) {
-                System.out.println(team.color() + "팀 : " + (int)score);
+    public void printScore(Scores scores) {
+        for (Score score : scores.get()) {
+            double teamScore = score.score();
+            if ((int)score.score() == teamScore) {
+                System.out.println(score.team().color() + "팀 : " + (int)teamScore);
             } else {
-                System.out.println(team.color() + "팀 : " + score);
+                System.out.println(score.team().color() + "팀 : " + teamScore);
             }
+        }
+        List<Team> winners = scores.winner();
+        if (winners.size() > 1) {
+            scores.winner().forEach(team -> System.out.print(team.color() + "팀 "));
+            System.out.println("무승부");
+        }
+        if (winners.size() == 1) {
+            scores.winner().forEach(team -> System.out.print(team.color() + "팀 승리 "));
         }
     }
 }

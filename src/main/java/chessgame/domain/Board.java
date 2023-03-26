@@ -2,7 +2,6 @@ package chessgame.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +11,9 @@ import chessgame.domain.point.Points;
 
 public class Board {
     private final Map<Point, Piece> board;
-    private final Map<Team, Double> score;
 
     public Board() {
         this.board = GameBoardFactory.create();
-        this.score = new HashMap<>();
     }
 
     public void move(Points points, Team turn) {
@@ -78,28 +75,28 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public void calculateScore() {
-        for (Team team : Team.values()) {
-            for (Point point : board.keySet()) {
-                boolean hasPawn = hasPawnExistInSameFile(point, team);
-                score.put(team, board.values().stream().mapToDouble(piece -> piece.score(team, hasPawn)).sum());
-            }
+    public double calculateScore(Team team) {
+        double sum = 0;
+        for (Point point : board.keySet()) {
+            boolean hasPawn = hasPawnExistInSameFile(point, team);
+            sum += board.get(point).score(team, hasPawn);
         }
+        return sum;
+        /*return board.keySet()
+            .stream()
+            .mapToDouble(point -> board.get(point)
+                .score(team, hasPawnExistInSameFile(point, team)))
+            .sum();*/
     }
 
     private boolean hasPawnExistInSameFile(Point point, Team team) {
         return point.getSameFilePoints()
             .stream()
-            .anyMatch(sameFilePoint -> isSameTeamPawn(
-                sameFilePoint, team));
+            .anyMatch(sameFilePoint -> isSameTeamPawn(sameFilePoint, team));
     }
 
     private boolean isSameTeamPawn(Point point, Team team) {
         return board.containsKey(point) && board.get(point).isPawn() && board.get(point).team() == team;
-    }
-
-    public Map<Team, Double> score() {
-        return Collections.unmodifiableMap(score);
     }
 
     @Override
