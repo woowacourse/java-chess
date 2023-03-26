@@ -1,16 +1,16 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Blank;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.position.Rank;
-import chess.domain.position.Position;
 import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class ChessBoardFactory {
         List<Square> squares = Arrays.stream(Rank.values())
                 .flatMap(ChessBoardFactory::createSquaresFromOneFile)
                 .collect(Collectors.toUnmodifiableList());
-        return new ChessBoard(squares);
+        return new ChessBoard(squares, new Turn());
     }
 
     private static Stream<Square> createSquaresFromOneFile(final Rank temp) {
