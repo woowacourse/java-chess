@@ -64,4 +64,8 @@ public abstract class Piece {
     public double getScore() {
         return score;
     }
+
+    public boolean isPawn(){
+        return name.equalsIgnoreCase("p");
+    }
 }

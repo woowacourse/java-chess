@@ -62,13 +62,18 @@ public class ChessBoard {
         return new LinkedHashMap<>(chessBoard);
     }
 
-    public List<Piece> findPiecesByColor(Color color){
-        List<Piece> colorPieces = new ArrayList<>();
-        for (Piece piece : chessBoard.values()) {
-            if(piece.isSameColor(color)) {
-                colorPieces.add(piece);
+    public Map<Position, Piece> findPiecesByColor(Color color) {
+        Map<Position, Piece> colorPieces = new LinkedHashMap<>();
+        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
+            if(entry.getValue().isSameColor(color)){
+                colorPieces.put(entry.getKey(),entry.getValue());
             }
         }
+//        for (Piece piece : chessBoard.entrySet()) {
+//            if (piece.isSameColor(color)) {
+//                colorPieces.put();
+//            }
+//        }
 
         return colorPieces;
     }

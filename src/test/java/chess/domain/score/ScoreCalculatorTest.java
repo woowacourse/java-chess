@@ -3,6 +3,7 @@ package chess.domain.score;
 import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,8 @@ class ScoreCalculatorTest {
 
         //when
         double expectedScore = 38.0;
-        double blackScore = scoreCalculator.getBlackScore(chessBoard);
-        double whiteScore = scoreCalculator.getWhiteScore(chessBoard);
+        double blackScore = scoreCalculator.getScoreByColor(chessBoard, Color.BLACK);
+        double whiteScore = scoreCalculator.getScoreByColor(chessBoard, Color.WHITE);
 
         //then
         assertAll(

@@ -45,6 +45,10 @@ public class Position {
         return column.getIndex();
     }
 
+    public boolean isSamePosition(Position position){
+        return this.equals(position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

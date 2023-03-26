@@ -1,13 +1,11 @@
 package chess.view;
 
-import chess.domain.Position;
 import chess.domain.game.ChessBoard;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Color;
 import chess.domain.score.ScoreCalculator;
 import chess.dto.BoardDto;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -40,8 +38,8 @@ public class OutputView {
 
     public static void printScores(ChessBoard chessBoard) {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
-        System.out.println("black의 점수: " + scoreCalculator.getBlackScore(chessBoard));
-        System.out.println("white의 점수: " + scoreCalculator.getWhiteScore(chessBoard));
+        System.out.println("black의 점수: " + scoreCalculator.getScoreByColor(chessBoard,Color.BLACK));
+        System.out.println("white의 점수: " + scoreCalculator.getScoreByColor(chessBoard, Color.WHITE));
     }
 
     public static void printCheckmateGuideMessage() {

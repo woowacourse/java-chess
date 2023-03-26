@@ -9,52 +9,54 @@ import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static chess.domain.Column.A;
-import static chess.domain.Column.H;
+import java.util.stream.Collectors;
 
 public class ScoreCalculator {
 
-    public double getBlackScore(ChessBoard chessBoard) {
-        double blackScore = 0.0;
-        List<Piece> pieces = chessBoard.findPiecesByColor(Color.BLACK);
-        for (Piece piece : pieces) {
-            blackScore += piece.getScore();
+    public double getScoreByColor(ChessBoard chessBoard, Color color) {
+        double score = 0.0;
+        Map<Position, Piece> colorBoard = chessBoard.findPiecesByColor(color);
+        for (Piece piece : colorBoard.values()) {
+            score += piece.getScore();
         }
 
-        return calculatePawnScore(chessBoard, blackScore, Color.BLACK);
+        return calculatePawnScore(score, colorBoard);
     }
 
-    public double getWhiteScore(ChessBoard chessBoard) {
-        double whiteScore = 0.0;
-        List<Piece> pieces = chessBoard.findPiecesByColor(Color.WHITE);
-        for (Piece piece : pieces) {
-            whiteScore += piece.getScore();
-        }
+    public double calculatePawnScore(double score, Map<Position, Piece> colorBoard) {
+        List<Position> pawnsByColor = getPawnsByColor(colorBoard);
+        List<Long> countPerColumn = getPerColumn(pawnsByColor);
+        score = getScore(score, countPerColumn);
 
-        return calculatePawnScore(chessBoard, whiteScore, Color.WHITE);
+        return score;
     }
 
-    public double calculatePawnScore(ChessBoard chessBoard, double score, Color color) {
-        Map<Position, Piece> board = chessBoard.getChessBoard();
-
-        for (int index = A.getIndex(); index < H.getIndex(); index++) {
-            List<Piece> sameColumnPieces = getSameColumnPieces(board, index);
-            int pawnCount = getPawnCount(sameColumnPieces, color);
-            score = getScore(score, pawnCount);
+    private double getScore(double score, List<Long> countPerColumn) {
+        for (Long aLong : countPerColumn) {
+            score = getScore(score, aLong.intValue());
         }
         return score;
     }
 
-    private List<Piece> getSameColumnPieces(Map<Position, Piece> board, int index) {
-        List<Piece> sameColumnPieces = new ArrayList<>();
-
-        for (Position position : board.keySet()) {
-            if (position.getColumnIndex() == index) {
-                sameColumnPieces.add(board.get(position));
-            }
+    private List<Long> getPerColumn(List<Position> pawnsByColor) {
+        List<Long> countPerColumn = new ArrayList<>();
+        for (Column column : Column.values()) {
+            long count = pawnsByColor
+                    .stream()
+                    .filter(position -> position.getColumn().isSameColumn(column))
+                    .count();
+            countPerColumn.add(count);
         }
-        return sameColumnPieces;
+        return countPerColumn;
+    }
+
+    private List<Position> getPawnsByColor(Map<Position, Piece> colorBoard) {
+        List<Position> pawnsByColor = colorBoard.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isPawn())
+                .map(pawn -> pawn.getKey())
+                .collect(Collectors.toList());
+        return pawnsByColor;
     }
 
     private double getScore(double score, int pawnCount) {
@@ -62,13 +64,5 @@ public class ScoreCalculator {
             score -= Score.PAWN_SPECIAL_SCORE.getScore() * pawnCount;
         }
         return score;
-    }
-
-    private int getPawnCount(List<Piece> sameColumnsPieces, Color color) {
-        int pawnCount = 0;
-        for (Piece piece : sameColumnsPieces) {
-            pawnCount = piece.calculatePawn(pawnCount, color);
-        }
-        return pawnCount;
     }
 }
