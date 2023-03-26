@@ -21,8 +21,6 @@ public class King extends NonSlidingPiece {
         return PieceType.KING;
     }
     
-    
-    
     @Override
     public String toString() {
         return "King{" +

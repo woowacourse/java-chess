@@ -13,24 +13,30 @@ import chess.domain.piece.sliding.Rook;
 import java.util.function.Function;
 
 public enum PieceType {
-    KING(King::new),
-    QUEEN(Queen::new),
-    ROOK(Rook::new),
-    KNIGHT(Knight::new),
-    BISHOP(Bishop::new),
-    WHITE_START_PAWN(WhiteStartPawn::new),
-    BLACK_START_PAWN(BlackStartPawn::new),
-    WHITE_PAWN(WhitePawn::new),
-    BLACK_PAWN(BlackPawn::new),
-    EMPTY(ignore -> Empty.getInstance());
+    KING(King::new, 0),
+    QUEEN(Queen::new, 9),
+    ROOK(Rook::new, 5),
+    KNIGHT(Knight::new, 2.5),
+    BISHOP(Bishop::new, 3),
+    WHITE_START_PAWN(WhiteStartPawn::new, 1),
+    BLACK_START_PAWN(BlackStartPawn::new, 1),
+    WHITE_PAWN(WhitePawn::new, 1),
+    BLACK_PAWN(BlackPawn::new, 1),
+    EMPTY(ignore -> Empty.getInstance(), 0);
     
     private final Function<Team, Piece> pieceMaker;
+    private final double score;
     
-    PieceType(Function<Team, Piece> pieceMaker) {
+    PieceType(Function<Team, Piece> pieceMaker, double score) {
         this.pieceMaker = pieceMaker;
+        this.score = score;
     }
     
     public Piece makePiece(Team team) {
         return pieceMaker.apply(team);
+    }
+    
+    public double score() {
+        return score;
     }
 }

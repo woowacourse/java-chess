@@ -12,6 +12,8 @@ import chess.domain.piece.sliding.Rook;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static chess.fixture.CoordinateFixture.A_ONE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -77,5 +79,11 @@ class PieceTypeTest {
     void Empty_심볼에_맞는_Piece_구현체_반환() {
         Piece piece = PieceType.EMPTY.makePiece(Team.EMPTY);
         assertThat(piece).isEqualTo(Empty.getInstance());
+    }
+    
+    @ParameterizedTest(name = "pieceType : {0}, score : {1}")
+    @CsvSource(value = {"KING,0", "QUEEN,9", "ROOK,5", "BISHOP,3", "KNIGHT,2.5", "WHITE_PAWN,1"})
+    void 각_기물에_맞는_점수_반환(PieceType pieceType, double score) {
+        assertThat(pieceType.score()).isEqualTo(score);
     }
 }
