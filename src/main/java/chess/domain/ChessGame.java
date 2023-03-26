@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.controller.GameStatus;
-import chess.dao.ChessBoardDao;
-import chess.dao.InMemoryChessBoardDao;
+import chess.dao.boardpieces.BoardPiecesDao;
+import chess.dao.boardpieces.InMemoryBoardPiecesDao;
 import chess.domain.piece.Piece;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ChessGame {
 
-    private final ChessBoardDao chessBoardDao = new InMemoryChessBoardDao();
+    private final BoardPiecesDao boardPiecesDao = new InMemoryBoardPiecesDao();
     private ChessBoard chessBoard;
     private GameStatus gameStatus = GameStatus.READY;
 
@@ -22,9 +22,10 @@ public class ChessGame {
     public void start(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
         gameStatus = GameStatus.RUNNING;
-        // TODO ChessGameDao : currentTurn, isOver 확인
-        chessBoard = chessBoardDao.find()
-                .orElse(new ChessBoard());
+        Map<Position, Piece> piecesByPosition = boardPiecesDao.find(1)
+                .orElse(PieceInitializer.createPiecesWithPosition());
+        // TODO ChessGameDao : currentTurn, isOver 반영
+        chessBoard = new ChessBoard(piecesByPosition);
     }
 
     public void move(CommandRequest commandRequest) {
@@ -37,8 +38,8 @@ public class ChessGame {
         if (isOver) {
             gameStatus = GameStatus.OVER;
         }
-        chessBoardDao.delete();
-        chessBoardDao.insert(chessBoard);
+        boardPiecesDao.delete(1);
+        boardPiecesDao.insert(1, chessBoard.piecesByPosition());
     }
 
     public void end(CommandRequest commandRequest) {
