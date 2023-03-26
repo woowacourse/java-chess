@@ -40,14 +40,14 @@ public class ChessBoardGenerator {
     private Map<Position, Piece> generateWhitePiecesExcludePawn() {
         LinkedHashMap<Position, Piece> whitePiecesExcludePawns = new LinkedHashMap<>();
 
-        whitePiecesExcludePawns.put(Position.of(FILE_C, RANK_1), Bishop.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_D, RANK_1), Queen.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_A, RANK_1), Rook.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_B, RANK_1), Knight.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_E, RANK_1), King.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_F, RANK_1), Bishop.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_G, RANK_1), Knight.createOfWhite());
-        whitePiecesExcludePawns.put(Position.of(FILE_H, RANK_1), Rook.createOfWhite());
+        whitePiecesExcludePawns.put(Position.of(FILE_C, RANK_1), new Bishop(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_D, RANK_1), new Queen(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_A, RANK_1), new Rook(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_B, RANK_1), new Knight(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_E, RANK_1), new King(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_F, RANK_1), new Bishop(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_G, RANK_1), new Knight(Side.WHITE));
+        whitePiecesExcludePawns.put(Position.of(FILE_H, RANK_1), new Rook(Side.WHITE));
 
         return whitePiecesExcludePawns;
     }
@@ -55,14 +55,14 @@ public class ChessBoardGenerator {
     private Map<Position, Piece> generateWhitePawns() {
         LinkedHashMap<Position, Piece> whitePawns = new LinkedHashMap<>();
 
-        whitePawns.put(Position.of(FILE_A, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_B, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_C, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_D, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_E, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_F, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_G, RANK_2), Pawn.createOfWhite());
-        whitePawns.put(Position.of(FILE_H, RANK_2), Pawn.createOfWhite());
+        whitePawns.put(Position.of(FILE_A, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_B, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_C, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_D, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_E, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_F, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_G, RANK_2), new Pawn(Side.WHITE));
+        whitePawns.put(Position.of(FILE_H, RANK_2), new Pawn(Side.WHITE));
 
         return whitePawns;
     }
@@ -70,14 +70,14 @@ public class ChessBoardGenerator {
     private Map<Position, Piece> generateBlackPiecesExcludePawn() {
         LinkedHashMap<Position, Piece> blackPiecesExcludePawns = new LinkedHashMap<>();
 
-        blackPiecesExcludePawns.put(Position.of(FILE_A, RANK_8), Rook.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_B, RANK_8), Knight.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_C, RANK_8), Bishop.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_D, RANK_8), Queen.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_E, RANK_8), King.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_F, RANK_8), Bishop.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_G, RANK_8), Knight.createOfBlack());
-        blackPiecesExcludePawns.put(Position.of(FILE_H, RANK_8), Rook.createOfBlack());
+        blackPiecesExcludePawns.put(Position.of(FILE_A, RANK_8), new Rook(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_B, RANK_8), new Knight(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_C, RANK_8), new Bishop(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_D, RANK_8), new Queen(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_E, RANK_8), new King(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_F, RANK_8), new Bishop(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_G, RANK_8), new Knight(Side.BLACK));
+        blackPiecesExcludePawns.put(Position.of(FILE_H, RANK_8), new Rook(Side.BLACK));
 
         return blackPiecesExcludePawns;
     }
@@ -85,14 +85,14 @@ public class ChessBoardGenerator {
     private Map<Position, Piece> generateBlackPawns() {
         LinkedHashMap<Position, Piece> blackPawns = new LinkedHashMap<>();
 
-        blackPawns.put(Position.of(FILE_A, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_B, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_C, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_D, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_E, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_F, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_G, RANK_7), Pawn.createOfBlack());
-        blackPawns.put(Position.of(FILE_H, RANK_7), Pawn.createOfBlack());
+        blackPawns.put(Position.of(FILE_A, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_B, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_C, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_D, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_E, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_F, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_G, RANK_7), new Pawn(Side.BLACK));
+        blackPawns.put(Position.of(FILE_H, RANK_7), new Pawn(Side.BLACK));
 
         return blackPawns;
     }

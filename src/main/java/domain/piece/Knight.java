@@ -11,14 +11,6 @@ public class Knight extends Piece {
         super(side, PieceType.KNIGHT);
     }
 
-    public static Knight createOfWhite() {
-        return new Knight(Side.WHITE);
-    }
-
-    public static Knight createOfBlack() {
-        return new Knight(Side.BLACK);
-    }
-
     @Override
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);

@@ -12,14 +12,6 @@ public final class Pawn extends Piece {
         super(side, PieceType.PAWN);
     }
 
-    public static Pawn createOfBlack() {
-        return new Pawn(Side.BLACK);
-    }
-
-    public static Pawn createOfWhite() {
-        return new Pawn(Side.WHITE);
-    }
-
     @Override
     public List<Position> collectPath(Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);

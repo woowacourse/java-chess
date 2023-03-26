@@ -11,14 +11,6 @@ public class King extends Piece {
         super(side, PieceType.KING);
     }
 
-    public static King createOfWhite() {
-        return new King(Side.WHITE);
-    }
-
-    public static King createOfBlack() {
-        return new King(Side.BLACK);
-    }
-
     @Override
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);

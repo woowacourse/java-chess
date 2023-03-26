@@ -11,14 +11,6 @@ public class Queen extends Piece {
         super(side, PieceType.QUEEN);
     }
 
-    public static Queen createOfWhite() {
-        return new Queen(Side.WHITE);
-    }
-
-    public static Queen createOfBlack() {
-        return new Queen(Side.BLACK);
-    }
-
     @Override
     public boolean isMovable(Piece targetPiece, Position sourcePosition, Position targetPosition) {
         Movement movement = sourcePosition.calculateMovement(targetPosition);

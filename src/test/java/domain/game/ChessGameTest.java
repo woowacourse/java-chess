@@ -76,7 +76,7 @@ class ChessGameTest {
     @Test
     void isKingDeadTest() {
         //given
-        chessBoard.put(Position.of("d", "2"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("d", "2"), new Pawn(Side.BLACK));
         Board board = new Board(chessBoard);
         chessGame = new ChessGame(board, Side.WHITE, GameState.RUN);
         chessGame.move(Position.of("b", "2"), Position.of("b", "3"));
@@ -97,7 +97,7 @@ class ChessGameTest {
     @Test
     void calculateWinnerWhenKingDeadTest() {
         //given
-        chessBoard.put(Position.of("e", "1"), Pawn.createOfBlack());
+        chessBoard.put(Position.of("e", "1"), new Pawn(Side.BLACK));
         chessGame = new ChessGame(new Board(chessBoard), Side.WHITE, GameState.KING_DEAD);
         //when
         Side winSide = chessGame.calculateWinner();

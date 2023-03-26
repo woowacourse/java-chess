@@ -195,7 +195,7 @@ class BoardTest {
     @Test
     void calculateScoresWhenSameSidePawnOnSameRank() {
         //given
-        chessBoard.put(Position.of("c", "5"), Pawn.createOfWhite());
+        chessBoard.put(Position.of("c", "5"), new Pawn(Side.WHITE));
         chessBoard.put(Position.of("b", "2"), new EmptyPiece());
         chessBoard.put(Position.of("c", "7"), new EmptyPiece());
 
@@ -211,7 +211,7 @@ class BoardTest {
     @Test
     void drawWinTest() {
         //given
-        chessBoard.put(Position.of("c", "5"), Pawn.createOfWhite());
+        chessBoard.put(Position.of("c", "5"), new Pawn(Side.WHITE));
         chessBoard.put(Position.of("b", "2"), new EmptyPiece());
         chessBoard.put(Position.of("c", "7"), new EmptyPiece());
         //when
@@ -222,7 +222,7 @@ class BoardTest {
     @Test
     void calculateWinnerWhenKingDeadTest() {
         //given
-        chessBoard.put(Position.of("e", "8"), Pawn.createOfWhite());
+        chessBoard.put(Position.of("e", "8"), new Pawn(Side.WHITE));
         Board kingDeadBoard = new Board(chessBoard);
 
         //when
@@ -284,8 +284,8 @@ class BoardTest {
 
     private void setRank8() {
         chessBoard.put(Position.of("a", "8"), new EmptyPiece());
-        chessBoard.put(Position.of("b", "8"), King.createOfBlack());
-        chessBoard.put(Position.of("c", "8"), Rook.createOfBlack());
+        chessBoard.put(Position.of("b", "8"), new King(Side.BLACK));
+        chessBoard.put(Position.of("c", "8"), new Rook(Side.BLACK));
         chessBoard.put(Position.of("d", "8"), new EmptyPiece());
         chessBoard.put(Position.of("e", "8"), new EmptyPiece());
         chessBoard.put(Position.of("f", "8"), new EmptyPiece());
@@ -295,7 +295,7 @@ class BoardTest {
 
     private void setRank7() {
         chessBoard.put(Position.of("b", "7"), new EmptyPiece());
-        chessBoard.put(Position.of("d", "7"), Bishop.createOfBlack());
+        chessBoard.put(Position.of("d", "7"), new Bishop(Side.BLACK));
         chessBoard.put(Position.of("e", "7"), new EmptyPiece());
         chessBoard.put(Position.of("f", "7"), new EmptyPiece());
         chessBoard.put(Position.of("g", "7"), new EmptyPiece());
@@ -303,18 +303,18 @@ class BoardTest {
     }
 
     private void setRank6() {
-        chessBoard.put(Position.of("b", "6"), Pawn.createOfBlack());
-        chessBoard.put(Position.of("e", "6"), Queen.createOfBlack());
+        chessBoard.put(Position.of("b", "6"), new Pawn(Side.BLACK));
+        chessBoard.put(Position.of("e", "6"), new Queen(Side.BLACK));
     }
 
     private void setRank4() {
-        chessBoard.put(Position.of("f", "4"), Knight.createOfWhite());
-        chessBoard.put(Position.of("g", "4"), Queen.createOfWhite());
+        chessBoard.put(Position.of("f", "4"), new Knight(Side.WHITE));
+        chessBoard.put(Position.of("g", "4"), new Queen(Side.WHITE));
     }
 
     private void setRank3() {
-        chessBoard.put(Position.of("f", "3"), Pawn.createOfWhite());
-        chessBoard.put(Position.of("h", "3"), Pawn.createOfWhite());
+        chessBoard.put(Position.of("f", "3"), new Pawn(Side.WHITE));
+        chessBoard.put(Position.of("h", "3"), new Pawn(Side.WHITE));
     }
 
     private void setRank2() {
@@ -333,8 +333,8 @@ class BoardTest {
         chessBoard.put(Position.of("d", "1"), new EmptyPiece());
         chessBoard.put(Position.of("g", "1"), new EmptyPiece());
         chessBoard.put(Position.of("h", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("e", "1"), Rook.createOfWhite());
-        chessBoard.put(Position.of("f", "1"), King.createOfWhite());
+        chessBoard.put(Position.of("e", "1"), new Rook(Side.WHITE));
+        chessBoard.put(Position.of("f", "1"), new King(Side.WHITE));
     }
 
 }
