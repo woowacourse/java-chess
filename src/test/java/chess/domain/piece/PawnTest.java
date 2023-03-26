@@ -117,7 +117,7 @@ class PawnTest {
     @DisplayName("검정색 폰은 0번째 row 에 도착하면 검정색 퀸으로 승진한다. ")
     void promotionTest1() {
         Pawn pawn = Pawn.from(Team.BLACK);
-        Piece promotedPawn = pawn.getPromotion(new Position(4, 0));
+        Piece promotedPawn = pawn.getPromotionResult(new Position(4, 0));
 
         assertThat(promotedPawn.isPieceType(PieceType.QUEEN)).isTrue();
         assertThat(promotedPawn.isTeam(Team.BLACK)).isTrue();
@@ -127,7 +127,7 @@ class PawnTest {
     @DisplayName("하얀색 폰은 7번째 row 에 도착하면 하얀색 퀸으로 승진한다. ")
     void promotionTest2() {
         Pawn pawn = Pawn.from(Team.WHITE);
-        Piece promotedPawn = pawn.getPromotion(new Position(4, 7));
+        Piece promotedPawn = pawn.getPromotionResult(new Position(4, 7));
 
         assertThat(promotedPawn.isPieceType(PieceType.QUEEN)).isTrue();
         assertThat(promotedPawn.isTeam(Team.WHITE)).isTrue();
