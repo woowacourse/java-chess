@@ -28,17 +28,13 @@ public final class Position {
     }
 
     public int compareRank(final Position other) {
-        final String otherRank = other.rank.getName();
-        final String thisRank = rank.getName();
-        final int rankDifference = otherRank.compareTo(thisRank);
+        final int rankDifference = getRankDifference(other);
 
         return Integer.compare(rankDifference, 0);
     }
 
     public int compareFile(final Position other) {
-        final String otherFile = other.file.getName();
-        final String thisFile = file.getName();
-        final int fileDifference = otherFile.compareTo(thisFile);
+        final int fileDifference = getFileDifference(other);
 
         return Integer.compare(fileDifference, 0);
     }

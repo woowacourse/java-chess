@@ -110,17 +110,19 @@ public final class Application {
     }
 
     private static File parseFile(String input) {
-        return Arrays.stream(File.values())
-                .filter(file -> !File.NOTHING.equals(file))
-                .filter(file -> file.getName().equalsIgnoreCase(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_FILE));
+        try {
+            return File.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(NO_SUCH_FILE);
+        }
     }
 
     private static Rank parseRank(String input) {
+        final int inputRank = Integer.parseInt(input);
+
         return Arrays.stream(Rank.values())
                 .filter(rank -> !Rank.NOTHING.equals(rank))
-                .filter(rank -> rank.getName().equals(input))
+                .filter(rank -> inputRank == rank.getValue())
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_RANK));
     }
