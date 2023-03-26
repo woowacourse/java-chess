@@ -13,20 +13,24 @@ public final class ChessGame {
         this.board = board;
     }
 
-    public static ChessGame initGame(ChessAlignment alignment) {
+    public static ChessGame initGame(final ChessAlignment alignment) {
         return new ChessGame(Board.create(alignment));
+    }
+
+    public static ChessGame loadGame(Board board) {
+        return new ChessGame(board);
     }
 
     public void move(Position source, Position destination) {
         board.move(source, destination);
     }
 
-    public boolean isWin() {
-        return !board.isWhiteKingExist() || !board.isBlackKingExist();
+    public boolean winnerNotExist() {
+        return board.isWhiteKingExist() && board.isBlackKingExist();
     }
 
     public Team getWinner() {
-        if (!isWin()) {
+        if (winnerNotExist()) {
             return Team.NOTHING;
         }
 

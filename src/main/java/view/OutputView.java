@@ -1,5 +1,6 @@
 package view;
 
+import domain.Room;
 import domain.piece.Piece;
 import domain.piece.Team;
 import domain.position.File;
@@ -7,6 +8,7 @@ import domain.position.Position;
 import domain.position.Rank;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,14 @@ public final class OutputView {
     private static final String WINNER_BLACK = "Black";
     private static final String WINNER_WHITE = "White";
     private static final String WINNER_DRAW = "없음";
+
+    public static void printRooms(final List<Room> rooms) {
+        System.out.println("방 목록");
+        System.out.println("----------------");
+        rooms.stream()
+                .map(room -> room.getId() + " : " + room.getName())
+                .forEach(System.out::println);
+    }
 
     public static void printBoard(final Map<Position, Piece> board) {
         Arrays.stream(Rank.values())

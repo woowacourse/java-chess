@@ -50,6 +50,10 @@ public abstract class Piece {
         return score;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

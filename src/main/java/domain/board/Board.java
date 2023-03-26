@@ -27,6 +27,10 @@ public final class Board {
         return new Board(alignment.makeInitialPieces());
     }
 
+    public static Board load(final Map<Position, Piece> pieces) {
+        return new Board(pieces);
+    }
+
     public void move(final Position source, final Position destination) {
         validateTurn(source);
         validateRoute(source, destination);
