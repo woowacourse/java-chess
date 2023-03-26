@@ -12,6 +12,10 @@ public class Turn {
         this.color = color;
     }
 
+    public Color color() {
+        return color;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

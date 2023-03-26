@@ -1,7 +1,10 @@
 package chess.domain.board.service.mapper;
 
 import chess.domain.board.Board;
+import chess.domain.board.Turn;
 import chess.domain.board.position.Position;
+import chess.domain.board.service.newDto.BoardRegisterRequest;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 import java.util.Arrays;
@@ -25,7 +28,8 @@ public class BoardMapper {
 
         final Map<Position, Piece> chessBoard = board.chessBoard();
 
-        return chessBoard.entrySet().stream()
+        return chessBoard.entrySet()
+                         .stream()
                          .map(entry -> {
                              final Position position = entry.getKey();
                              return PieceInitialMapping.mapToPieceInitialFrom(entry.getValue())
@@ -37,23 +41,67 @@ public class BoardMapper {
                          .collect(Collectors.joining(PIECE_DELIM));
     }
 
+    public BoardRegisterRequest mapToBoardRegisterRequestFrom(final Board board) {
+
+        final Map<Position, Piece> chessBoard = board.chessBoard();
+
+        final String chessPosition = chessBoard.entrySet()
+                                               .stream()
+                                               .map(entry -> {
+                                                   final Position position = entry.getKey();
+                                                   return PieceInitialMapping.mapToPieceInitialFrom(entry.getValue())
+                                                           + POSITION_AND_PIECE_DELIM
+                                                           + position.column().value()
+                                                           + POSITION_DELIM
+                                                           + position.row().value();
+                                               })
+                                               .collect(Collectors.joining(PIECE_DELIM));
+
+        return new BoardRegisterRequest(chessPosition, board.turn().color().name());
+    }
+
     public Board mapToBoardMapFrom(final String position) {
 
-        return new Board(Arrays.stream(position.split(PIECE_REGEX))
-                               .map(s -> s.split(POSITION_REGEX))
-                               .collect(Collectors.toMap(
-                                       arr -> {
-                                           final String[] s = arr[POSITION_INDEX.value()].trim()
-                                                                                         .split(POSITION_DELIM);
+//        return Board.bringBackPreviousGame(Arrays.stream(position.split(PIECE_REGEX))
+//                               .map(s -> s.split(POSITION_REGEX))
+//                               .collect(Collectors.toMap(
+//                                       arr -> {
+//                                           final String[] s = arr[POSITION_INDEX.value()].trim()
+//                                                                                         .split(POSITION_DELIM);
+//
+//                                           return new Position(
+//                                                   Integer.parseInt(s[POSITION_COLUMN.value()]),
+//                                                   Integer.parseInt(s[POSITION_ROW.value()])
+//                                           );
+//                                       },
+//                                       arr -> PieceInitialMapping.mapToPieceFrom(
+//                                               arr[PIECE_INDEX.value()].trim())
+//                               )), new Turn(Color.WHITE));
+        return null;
+    }
 
-                                           return new Position(
-                                                   Integer.parseInt(s[POSITION_COLUMN.value()]),
-                                                   Integer.parseInt(s[POSITION_ROW.value()])
-                                           );
-                                       },
-                                       arr -> PieceInitialMapping.mapToPieceFrom(
-                                               arr[PIECE_INDEX.value()].trim())
-                               )));
+    public Board mapToBoardSearchResponseFrom(final String position,
+                                              final String turn) {
+
+        final Map<Position, Piece> chessBoard =
+                Arrays.stream(position.split(PIECE_REGEX))
+                      .map(s -> s.split(POSITION_REGEX))
+                      .collect(Collectors.toMap(
+                              arr -> {
+                                  final String[] s = arr[POSITION_INDEX.value()].trim()
+                                                                                .split(POSITION_DELIM);
+
+                                  return new Position(
+                                          Integer.parseInt(s[POSITION_COLUMN.value()]),
+                                          Integer.parseInt(s[POSITION_ROW.value()])
+                                  );
+                              },
+                              arr -> PieceInitialMapping.mapToPieceFrom(
+                                      arr[PIECE_INDEX.value()].trim())
+                      ));
+
+
+        return Board.bringBackPreviousGame(chessBoard, new Turn(Color.valueOf(turn)));
     }
 
 }
