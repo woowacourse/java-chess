@@ -2,6 +2,7 @@ package chess.game;
 
 import chess.board.ChessBoard;
 import chess.board.Position;
+import chess.piece.Team;
 
 public class ChessGame {
 
@@ -27,10 +28,20 @@ public class ChessGame {
     }
 
     public boolean isProcessing() {
-        if (chessBoard.isGameOver()) {
+        if (chessBoard.isGameOver(Team.WHITE) || chessBoard.isGameOver(Team.BLACK)) {
             isProcessing = false;
         }
         return isProcessing;
+    }
+
+    public Team findWinner() {
+        if (chessBoard.calculateScore(Team.WHITE) > chessBoard.calculateScore(Team.BLACK)) {
+            return Team.WHITE;
+        }
+        if (chessBoard.calculateScore(Team.WHITE) < chessBoard.calculateScore(Team.BLACK)) {
+            return Team.BLACK;
+        }
+        return null;
     }
 
     public ChessBoard getChessBoard() {

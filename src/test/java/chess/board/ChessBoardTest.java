@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,14 +28,14 @@ import chess.piece.WhitePawn;
 
 class ChessBoardTest {
 
-    private Map<Position, Piece> piecePosition;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
-        piecePosition = new HashMap<>();
+        board = new HashMap<>();
         for (final File file : File.values()) {
             for (final Rank rank : Rank.values()) {
-                piecePosition.put(new Position(file, rank), new EmptyPiece());
+                board.put(new Position(file, rank), new EmptyPiece());
             }
         }
     }
@@ -52,9 +51,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.D1;
 
-            piecePosition.put(from, new Rook(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Rook(Team.WHITE));
+            board.put(other, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -68,9 +67,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.F1;
 
-            piecePosition.put(from, new Rook(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Rook(Team.WHITE));
+            board.put(to, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
@@ -88,9 +87,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.D4;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Bishop(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -106,9 +105,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.E4;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Bishop(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -124,9 +123,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.B3;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Bishop(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -142,9 +141,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.F3;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Bishop(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -158,9 +157,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.F6;
 
-            piecePosition.put(from, new Bishop(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Bishop(Team.WHITE));
+            board.put(to, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
@@ -178,9 +177,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.D4;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Queen(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -196,9 +195,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.E4;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Queen(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -214,9 +213,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.B3;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Queen(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -232,9 +231,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.F3;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Queen(Team.WHITE));
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -250,9 +249,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.D1;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(other, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Queen(Team.WHITE));
+            board.put(other, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -266,9 +265,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.F1;
 
-            piecePosition.put(from, new Queen(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Queen(Team.WHITE));
+            board.put(to, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
@@ -284,9 +283,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.A2;
 
-            piecePosition.put(from, new King(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new King(Team.WHITE));
+            board.put(to, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -300,9 +299,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.A2;
 
-            piecePosition.put(from, new King(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new King(Team.WHITE));
+            board.put(to, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
@@ -318,9 +317,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.C2;
 
-            piecePosition.put(from, new Knight(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Knight(Team.WHITE));
+            board.put(to, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -334,9 +333,9 @@ class ChessBoardTest {
             Position from = FixturePosition.A1;
             Position to = FixturePosition.C2;
 
-            piecePosition.put(from, new Knight(Team.WHITE));
-            piecePosition.put(to, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new Knight(Team.WHITE));
+            board.put(to, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
@@ -354,9 +353,9 @@ class ChessBoardTest {
 
             Position other = FixturePosition.B3;
 
-            piecePosition.put(from, new WhitePawn());
-            piecePosition.put(other, new Rook(Team.WHITE));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new WhitePawn());
+            board.put(other, new Rook(Team.WHITE));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertThatThrownBy(() -> chessBoard.movePiece(from, to))
@@ -370,9 +369,9 @@ class ChessBoardTest {
             Position from = FixturePosition.D4;
             Position to = FixturePosition.E5;
 
-            piecePosition.put(from, new WhitePawn());
-            piecePosition.put(to, new Rook(Team.BLACK));
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+            board.put(from, new WhitePawn());
+            board.put(to, new Rook(Team.BLACK));
+            ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
             //when & then
             assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
@@ -384,7 +383,7 @@ class ChessBoardTest {
         //given
         ChessBoard chessBoard = new ChessBoard();
         //when & then
-        assertThat(chessBoard.getPiecePosition().size())
+        assertThat(chessBoard.getBoard().size())
                 .isEqualTo(64);
     }
 
@@ -399,7 +398,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Pawn.class);
         }
@@ -412,7 +411,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Rook.class);
         }
@@ -425,7 +424,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Knight.class);
         }
@@ -438,7 +437,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Bishop.class);
         }
@@ -450,7 +449,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Queen.class);
         }
@@ -462,7 +461,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(King.class);
         }
@@ -480,7 +479,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Pawn.class);
         }
@@ -493,7 +492,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Rook.class);
         }
@@ -506,7 +505,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Knight.class);
         }
@@ -519,7 +518,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Bishop.class);
         }
@@ -531,7 +530,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Queen.class);
         }
@@ -543,68 +542,66 @@ class ChessBoardTest {
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getBoard();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(King.class);
         }
     }
 
     @Test
-    void isGameOver메서드는_king의_개수가_2가_아니면_true를_반환한다() {
+    void isGameOver메서드는_해당되는_팀에_왕이_없으면_true를_반환한다() {
         // given
-        piecePosition.put(new Position(File.B, Rank.FOUR), new King(Team.BLACK));
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+        board.put(new Position(File.B, Rank.FOUR), new King(Team.BLACK));
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
         // when & then
-        assertThat(chessBoard.isGameOver()).isTrue();
+        assertThat(chessBoard.isGameOver(Team.WHITE)).isTrue();
     }
 
     @Test
-    void isGameOver메서드는_king의_개수가_2이면_false를_반환한다() {
+    void isGameOver메서드는_해당되는_팀에_왕이_있으면_true를_반환한다() {
         // given
-        piecePosition.put(new Position(File.B, Rank.FOUR), new King(Team.BLACK));
-        piecePosition.put(new Position(File.C, Rank.FOUR), new King(Team.WHITE));
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+        board.put(new Position(File.B, Rank.FOUR), new King(Team.BLACK));
+        board.put(new Position(File.C, Rank.FOUR), new King(Team.WHITE));
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
         // when & then
-        assertThat(chessBoard.isGameOver()).isFalse();
+        assertThat(chessBoard.isGameOver(Team.WHITE)).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK:18", "WHITE:17"}, delimiter = ':')
+    void calculateScore메서드는_각_팀에_해당하는_점수를_반환한다(Team team, double score) {
+        // given
+        board.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
+        board.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
+        board.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
+        board.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
+        board.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
+        board.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
+        board.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
+
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
+
+        // when & then
+        assertThat(chessBoard.calculateScore(team)).isEqualTo(score);
     }
 
     @Test
-    void calculateScore메서드는_검은색_팀의_점수를_첫번째_요소로_가진_리스트이다() {
+    void calculateScore메서드는_세로_줄에_폰이_두개_이상이면_점수의_절반으로_계산한다() {
         // given
-        piecePosition.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
-        piecePosition.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
-        piecePosition.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
-        piecePosition.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
-        piecePosition.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
-        piecePosition.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
-        piecePosition.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
+        board.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
+        board.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
+        board.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
+        board.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
+        board.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
+        board.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
+        board.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
+        board.put(new Position(File.A, Rank.THREE), new BlackPawn());
 
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
-        // when
-        List<Double> scores = chessBoard.calculateScore();
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
-        // then
-        assertThat(scores.get(0)).isEqualTo(18);
-    }
-
-    @Test
-    void calculateScore메서드는_흰색_팀의_점수를_두번째_요소로_가진_리스트이다() {
-        // given
-        piecePosition.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
-        piecePosition.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
-        piecePosition.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
-        piecePosition.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
-        piecePosition.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
-        piecePosition.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
-        piecePosition.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
-
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
-        // when
-        List<Double> scores = chessBoard.calculateScore();
-
-        // then
-        assertThat(scores.get(1)).isEqualTo(17);
+        // when & then
+        assertThat(chessBoard.calculateScore(Team.BLACK)).isEqualTo(18);
     }
 }

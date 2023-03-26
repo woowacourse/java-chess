@@ -1,6 +1,6 @@
 package chess.board;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -10,18 +10,19 @@ import java.util.stream.IntStream;
 import chess.game.PieceScore;
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import chess.piece.Team;
 
 public class ChessBoard {
 
-    private final Map<Position, Piece> piecePosition;
+    private final Map<Position, Piece> board;
 
     public ChessBoard() {
-        this.piecePosition = PieceFactory.createPiece();
+        this.board = PieceFactory.createPiece();
     }
 
-    private ChessBoard(final Map<Position, Piece> piecePosition) {
-        this.piecePosition = piecePosition;
+    private ChessBoard(final Map<Position, Piece> board) {
+        this.board = board;
     }
 
     static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
@@ -29,8 +30,8 @@ public class ChessBoard {
     }
 
     public void movePiece(final Position from, final Position to) {
-        final Piece fromPiece = piecePosition.get(from);
-        final Piece toPiece = piecePosition.get(to);
+        final Piece fromPiece = board.get(from);
+        final Piece toPiece = board.get(to);
 
         if (fromPiece.isRook() && fromPiece.isMovable(from, to, toPiece)) {
             validateFileAndRank(from, to);
@@ -67,9 +68,9 @@ public class ChessBoard {
     }
 
     private void move(final Position from, final Position to) {
-        final Piece piece = piecePosition.get(from);
-        piecePosition.put(from, new EmptyPiece());
-        piecePosition.put(to, piece);
+        final Piece piece = board.get(from);
+        board.put(from, new EmptyPiece());
+        board.put(to, piece);
     }
 
     private void validateDiagonal(final Position from, final Position to) {
@@ -81,7 +82,7 @@ public class ChessBoard {
         }
 
         for (final Position position : makeDiagonal(sliceFile(from, to, files), sliceRank(from, to, ranks))) {
-            validateBlockedRoute(piecePosition.get(position));
+            validateBlockedRoute(board.get(position));
         }
     }
 
@@ -129,7 +130,7 @@ public class ChessBoard {
         final int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            final Piece validationPiece = piecePosition.get(new Position(from.getFile(), Rank.from(i)));
+            final Piece validationPiece = board.get(new Position(from.getFile(), Rank.from(i)));
             validateBlockedRoute(validationPiece);
         }
     }
@@ -147,7 +148,7 @@ public class ChessBoard {
         final int max = Math.max(fromFile.getIndex(), toFile.getIndex()) - 1;
 
         for (int i = min; i <= max; i++) {
-            final Piece validationPiece = piecePosition.get(new Position(File.from(i), from.getRank()));
+            final Piece validationPiece = board.get(new Position(File.from(i), from.getRank()));
             validateBlockedRoute(validationPiece);
         }
     }
@@ -158,31 +159,43 @@ public class ChessBoard {
         }
     }
 
-    public boolean isGameOver() {
-        final long numberOfKing = piecePosition.values()
+    public boolean isGameOver(final Team team) {
+        return board.values()
                 .stream()
                 .filter(Piece::isKing)
-                .count();
-        return numberOfKing != 2;
+                .noneMatch(piece -> piece.getTeam() == team);
     }
 
-    public List<Double> calculateScore() {
-        final List<Double> scores = new ArrayList<>();
-        for (final Team team : Team.values()) {
-            scores.add(calculateSum(team));
-        }
-        return scores;
+    public double calculateScore(final Team team) {
+        return calculateTotalScore(team) - calculateDuplicatedPawnScore(team);
     }
 
-    private double calculateSum(final Team team) {
-        return piecePosition.values()
+    private double calculateTotalScore(final Team team) {
+        return board.values()
                 .stream()
-                .filter(piece -> team == piece.getTeam())
+                .filter(piece -> piece.isSameTeam(team))
                 .mapToDouble(piece -> PieceScore.findScore(piece.getType()))
                 .sum();
     }
 
-    public Map<Position, Piece> getPiecePosition() {
-        return Map.copyOf(piecePosition);
+    private double calculateDuplicatedPawnScore(final Team team) {
+        return countPawnInSameFile(team).values()
+                .stream()
+                .filter(numberOfPawn -> numberOfPawn >= 2)
+                .mapToDouble(pawnScore -> pawnScore * 0.5)
+                .sum();
+    }
+
+    private Map<File, Long> countPawnInSameFile(final Team team) {
+        return Arrays.stream(Rank.values())
+                .flatMap(file -> Arrays.stream(File.values())
+                        .map(rank -> new Position(rank, file)))
+                .filter(position -> board.get(position).isSameTeam(team))
+                .filter(position -> board.get(position).isSameType(PieceType.PAWN))
+                .collect(Collectors.groupingBy(Position::getFile, Collectors.counting()));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }

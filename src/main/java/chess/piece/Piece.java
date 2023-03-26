@@ -48,6 +48,14 @@ public abstract class Piece {
         return team == Team.BLACK;
     }
 
+    public boolean isSameTeam(final Team team) {
+        return this.team == team;
+    }
+
+    public boolean isSameType(final PieceType type) {
+        return this.type == type;
+    }
+
     public abstract boolean isMovable(final Position from, final Position to, final Piece piece);
 
     public Team getTeam() {
