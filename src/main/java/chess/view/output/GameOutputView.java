@@ -4,8 +4,6 @@ import chess.domain.board.GameResult;
 import chess.domain.piece.Color;
 
 public class GameOutputView {
-    private static final String NEXT_LINE = System.lineSeparator();
-
     public void printGameStart() {
         System.out.println("> 체스 게임을 시작합니다.");
     }
@@ -30,7 +28,7 @@ public class GameOutputView {
         }
         return "무승부";
     }
-    
+
     public void printGameEnd() {
         System.out.println("체스 게임을 종료합니다.");
     }
