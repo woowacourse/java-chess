@@ -18,10 +18,21 @@ public final class Position {
     }
 
     public static Position from(final String input) {
+        validateInputLength(input);
         File file = File.of(input.charAt(FILE_INDEX));
         Rank rank = Rank.of(input.charAt(RANK_INDEX));
 
         return new Position(file, rank);
+    }
+
+    private static void validateInputLength(final String input) {
+        if (isNotTwoLength(input)) {
+            throw new IllegalArgumentException("위치는 2글자입니다 (ex. a1, d3, h8)");
+        }
+    }
+
+    private static boolean isNotTwoLength(final String input) {
+        return input.length() != 2;
     }
 
     public static Position of(final File file, final Rank rank) {
