@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.PAWN;
-import static chess.domain.piece.Team.BLACK;
-import static chess.domain.piece.Team.WHITE;
 
 public final class Board implements BoardProvider {
 
@@ -41,15 +39,12 @@ public final class Board implements BoardProvider {
     }
 
     private void checkPromotion(final Position position, final Piece piece) {
-        if(!piece.isPieceType(PAWN)){
+        if (!piece.isPieceType(PAWN)) {
             return;
         }
-        if(position.isRow(0) && piece.isTeam(BLACK)){
-            board.replace(position, ((Pawn)piece).getPromotion(position));
-            return;
-        }
-        if(position.isRow(7) && piece.isTeam(WHITE)){
-            board.replace(position, ((Pawn)piece).getPromotion(position));
+        Piece promotionResult = ((Pawn) piece).getPromotionResult(position);
+        if (!promotionResult.isPieceType(PAWN)) {
+            board.replace(position, promotionResult);
         }
     }
 
