@@ -7,6 +7,7 @@ import chess.domain.room.ChessRoom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ChessGameDao {
 
@@ -27,12 +28,12 @@ public class ChessGameDao {
     }
 
     public static ChessGame create(final Board board) {
-        final var query = "INSERT INTO chess_game VALUES (?, DEFAULT)";
+        final var query = "INSERT INTO chess_game(board_id) VALUES (?)";
         try (final var connection = getConnection()) {
-            final var prepareStatement = connection.prepareStatement(query);
+            final var prepareStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, board.getId());
 
-            prepareStatement.executeQuery();
+            prepareStatement.executeUpdate();
 
             final var generatedKeys = prepareStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -48,11 +49,11 @@ public class ChessGameDao {
         return null;
     }
 
-    public static ChessGame findById(final int id) {
+    public static ChessGame findById(final ChessRoom chessRoom) {
         final var query = "SELECT * FROM chess_game WHERE id = ?";
         try (final var connection = getConnection()) {
             final var prepareStatement = connection.prepareStatement(query);
-            prepareStatement.setInt(1, id);
+            prepareStatement.setInt(1, chessRoom.getGameId());
 
             final var resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {

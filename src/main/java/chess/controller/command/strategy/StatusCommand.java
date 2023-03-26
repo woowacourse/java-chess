@@ -3,11 +3,12 @@ package chess.controller.command.strategy;
 import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
-import chess.domain.team.Team;
 import chess.view.OutputView;
 
-import static chess.controller.ChessState.*;
-import static chess.domain.team.Team.*;
+import static chess.controller.ChessState.PROGRESS;
+import static chess.controller.ChessState.START;
+import static chess.domain.team.Team.BLACK;
+import static chess.domain.team.Team.WHITE;
 
 public class StatusCommand implements StrategyCommand {
 

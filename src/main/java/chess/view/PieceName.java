@@ -47,7 +47,7 @@ public class PieceName {
 
         changeByTeam = new HashMap<>();
         changeByTeam.put(Team.WHITE, String::toLowerCase);
-        changeByTeam.put(Team.BLACK, String::toLowerCase);
+        changeByTeam.put(Team.BLACK, String::toUpperCase);
         changeByTeam.put(Team.NONE, name -> name);
     }
 
@@ -59,9 +59,6 @@ public class PieceName {
     }
 
     public static Piece findByName(final String name) {
-        return nameToPiece.values().stream()
-                .filter(value -> value.equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 체스말이 존재하지 않습니다"));
+        return nameToPiece.get(name);
     }
 }

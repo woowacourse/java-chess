@@ -10,6 +10,7 @@ import chess.view.PieceName;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +33,12 @@ public class BoardDao {
     }
 
     public static Board create() {
-        final var query = "INSERT INTO board() VALUES ()";
-        try (final var connection = getConnection()) {
-            final var preparedStatement = connection.prepareStatement(query);
+        final var query = "INSERT INTO board() VALUES()";
 
-            preparedStatement.executeQuery();
+        try (final var connection = getConnection()) {
+            final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.executeUpdate();
 
             final var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -55,38 +57,25 @@ public class BoardDao {
     private static Map<Position, Piece> createMapById(final int boardId) {
         final Map<Position, Piece> board = new HashMap<>();
 
-        final var query = "SELECT * FROM board WHERE id = ?";
+        for (final File file : File.values()) {
+            for (final Rank rank : Rank.values()) {
+                final String position = file.value() + String.valueOf(rank.value());
+                board.put(Position.of(file, rank), findByPosition(boardId, position));
+            }
+        }
+        return board;
+    }
+
+    private static Piece findByPosition(final int boardId, final String position) {
+        final var query = "SELECT " + position + " FROM board WHERE id = ?";
         try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, boardId);
 
-            final var resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                for (final File file : File.values()) {
-                    for (final Rank rank : Rank.values()) {
-                        final String position = file.name() + rank.name();
-                        board.put(Position.of(file, rank), findByPosition(boardId, position));
-                    }
-                }
-                return board;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
-    }
-
-    private static Piece findByPosition(final int boardId, final String position) {
-        final var query = "SELECT ? FROM board WHERE boardId = ?";
-        try(final var connection = getConnection()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, position);
-            preparedStatement.setInt(2, boardId);
-
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return PieceName.findByName(resultSet.getString(1));
+                final String name = resultSet.getString(1);
+                return PieceName.findByName(name);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -96,8 +85,8 @@ public class BoardDao {
     }
 
     public static Board findById(final int boardId) {
-        final var query = "SELECT id FROM board WHERE board_id = ?";
-        try(final var connection = getConnection()) {
+        final var query = "SELECT id FROM board WHERE id = ?";
+        try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, boardId);
 

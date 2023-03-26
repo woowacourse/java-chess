@@ -8,30 +8,25 @@ import chess.domain.room.ChessRoom;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ChessGameController {
 
-    private final ChessGame chessGame;
-    private ChessState state;
+    public void run(final ChessRoom chessRoom) {
+        final ChessGame chessGame = ChessGameDao.findById(chessRoom);
+        ChessState state = chessRoom.getState();
 
-    public ChessController(final ChessRoom chessRoom) {
-        this.chessGame = ChessGameDao.findById(chessRoom.getGameId());
-        this.state = ChessState.INIT;
-    }
-
-    public void run() {
         OutputView.printStart();
         while (state != ChessState.END) {
-            state = play();
+            state = play(state, chessGame);
         }
     }
 
-    private ChessState play() {
+    private ChessState play(final ChessState state, final ChessGame chessGame) {
         try {
             StrategyCommand command = Command.bind(InputView.read());
             return command.execute(state, chessGame);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return play();
+            return play(state, chessGame);
         }
     }
 }

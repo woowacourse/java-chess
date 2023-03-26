@@ -7,7 +7,9 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-import static chess.controller.ChessState.*;
+import static chess.controller.ChessState.END;
+import static chess.controller.ChessState.PROGRESS;
+import static chess.controller.ChessState.START;
 
 public class MoveCommand implements StrategyCommand {
 

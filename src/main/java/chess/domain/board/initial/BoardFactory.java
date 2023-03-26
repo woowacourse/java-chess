@@ -16,10 +16,10 @@ public final class BoardFactory {
     private BoardFactory() {
     }
 
-    public static Board from(final int id, final Map<Position, Piece> board) {
+    public static Board from(final Map<Position, Piece> board) {
         fillEmpty(board);
         fillPieces(board);
-        return new Board(id, board);
+        return new Board(0, board);
     }
 
     private static void fillPieces(final Map<Position, Piece> board) {

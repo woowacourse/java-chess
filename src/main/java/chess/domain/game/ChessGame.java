@@ -37,7 +37,6 @@ public class ChessGame {
 
     public static ChessGame of(final int id, final int boardId, final String team) {
         final Team turn = TeamName.findByName(team);
-
         return new ChessGame(id, boardId, turn);
     }
 

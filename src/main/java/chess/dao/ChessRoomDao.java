@@ -1,14 +1,11 @@
 package chess.dao;
 
-import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.player.Player;
 import chess.domain.room.ChessRoom;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessRoomDao {
@@ -30,7 +27,7 @@ public class ChessRoomDao {
     }
 
     public static ChessRoom findByPlayer(final Player player) {
-        final var query = "SELECT id, game_id, player_id, status FROM chess_room WHERE player_id = ? AND status != \"END\"";
+        final var query = "SELECT id, game_id, player_id, state FROM chess_room WHERE player_id = ? AND state != \"END\"";
         try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, player.getId());
@@ -51,7 +48,7 @@ public class ChessRoomDao {
     }
 
     public static ChessRoom create(final ChessGame chessGame, final Player player) {
-        final var query = "INSERT INTO chess_room VALUES (?, ?, DEFAULT)";
+        final var query = "INSERT INTO chess_room(game_id, player_id) VALUES (?, ?)";
         try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, chessGame.getId());

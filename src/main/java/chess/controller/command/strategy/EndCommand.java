@@ -3,7 +3,9 @@ package chess.controller.command.strategy;
 import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
 
-import static chess.controller.ChessState.*;
+import static chess.controller.ChessState.END;
+import static chess.controller.ChessState.PROGRESS;
+import static chess.controller.ChessState.START;
 
 public class EndCommand implements StrategyCommand {
 

@@ -4,7 +4,8 @@ import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
 import chess.view.OutputView;
 
-import static chess.controller.ChessState.*;
+import static chess.controller.ChessState.INIT;
+import static chess.controller.ChessState.START;
 
 public class StartCommand implements StrategyCommand {
 

@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.controller.ChessGameController;
 import chess.controller.ChessRoomController;
 import chess.controller.PlayerController;
 import chess.domain.player.Player;
@@ -10,12 +10,11 @@ public class ChessApplication {
 
     public static void main(String[] args) {
         PlayerController playerController = new PlayerController();
-        Player player = playerController.handle();
-
         ChessRoomController chessRoomController = new ChessRoomController();
-        ChessRoom chessRoom = chessRoomController.handleChessRoom(player);
+        ChessGameController chessGameController = new ChessGameController();
 
-        ChessController controller = new ChessController(chessRoom);
-        controller.run();
+        Player player = playerController.handle();
+        ChessRoom chessRoom = chessRoomController.handle(player);
+        chessGameController.run(chessRoom);
     }
 }

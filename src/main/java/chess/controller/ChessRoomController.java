@@ -10,7 +10,7 @@ import chess.domain.room.ChessRoom;
 
 public class ChessRoomController {
 
-    public ChessRoom handleChessRoom(final Player player) {
+    public ChessRoom handle(final Player player) {
         ChessRoom chessRoom = ChessRoomDao.findByPlayer(player);
 
         if (chessRoom == null) {
