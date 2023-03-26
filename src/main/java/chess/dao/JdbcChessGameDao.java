@@ -131,7 +131,8 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public void updateById(int gameId, ChessGame chessGame) {
-
+        deleteById(gameId);
+        save(gameId, chessGame);
     }
 
     @Override
