@@ -13,6 +13,7 @@ import controller.command.GameCommand;
 import controller.command.MoveCommand;
 import controller.command.StartCommand;
 import controller.command.StatusCommand;
+import database.db.ChessBoardDao;
 import domain.ChessBoard;
 import domain.Square;
 import view.InputView;
@@ -21,18 +22,25 @@ import view.OutputView;
 public class MainController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessBoardDao chessBoardDao;
 
-    public MainController() {
+    public MainController(ChessBoardDao chessBoardDao) {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.chessBoardDao = chessBoardDao;
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = chessBoardDao.read();
+        if (chessBoard == null) {
+            chessBoard = new ChessBoard();
+        }
         inputView.printStartMessage();
         GameStatus gameStatus = GameStatus.INIT;
         do {
             gameStatus = executeCommand(chessBoard, gameStatus);
+            chessBoardDao.update(chessBoard);
+            chessBoardDao.save(chessBoard);
         }
         while (gameStatus != GameStatus.END);
     }
