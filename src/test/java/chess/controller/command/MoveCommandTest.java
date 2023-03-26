@@ -1,8 +1,5 @@
 package chess.controller.command;
 
-import chess.controller.command.Command;
-import chess.controller.command.CommandType;
-import chess.controller.command.MoveCommand;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
@@ -22,7 +19,7 @@ import static chess.domain.PositionFixture.B_2;
 import static chess.domain.PositionFixture.B_3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -63,7 +60,7 @@ class MoveCommandTest {
 
 
         assertAll(
-                () ->  assertThat(result.isSameType(CommandType.MOVE)).isTrue(),
+                () -> assertThat(result.isSameType(CommandType.MOVE)).isTrue(),
                 () -> assertThat(result.getChessGameBoards().get(B_3)).isInstanceOf(Pawn.class),
                 () -> assertThat(result.getChessGameBoards().get(B_2)).isInstanceOf(Empty.class)
         );

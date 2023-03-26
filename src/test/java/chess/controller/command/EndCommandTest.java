@@ -1,8 +1,5 @@
 package chess.controller.command;
 
-import chess.controller.command.Command;
-import chess.controller.command.CommandType;
-import chess.controller.command.EndCommand;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Pawn;

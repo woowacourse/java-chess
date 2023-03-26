@@ -1,6 +1,9 @@
 package chess.domain.board;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -60,5 +63,23 @@ class PositionTest {
 
         assertThat(path).containsOnly(C_5, C_6);
         assertThat(reversePath).containsOnly(C_5, C_6);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:TWO:B:THREE:0", "B:TWO:D:FOUR:2", "D:FOUR:B:TWO:2"}, delimiter = ':')
+    void 열의_거리를_구할_수_있다(FileCoordinate fileCoordinate1, RankCoordinate rankCoordinate1,
+                        FileCoordinate fileCoordinate2, RankCoordinate rankCoordinate2, int expect) {
+        Position position1 = new Position(fileCoordinate1, rankCoordinate1);
+        Position position2 = new Position(fileCoordinate2, rankCoordinate2);
+        assertThat(position1.calculateColumnDistance(position2)).isEqualTo(expect);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:TWO:B:THREE:1", "B:TWO:D:FOUR:2", "D:FOUR:B:TWO:2"}, delimiter = ':')
+    void 행의_거리를_구할_수_있다(FileCoordinate fileCoordinate1, RankCoordinate rankCoordinate1,
+                        FileCoordinate fileCoordinate2, RankCoordinate rankCoordinate2, int expect) {
+        Position position1 = new Position(fileCoordinate1, rankCoordinate1);
+        Position position2 = new Position(fileCoordinate2, rankCoordinate2);
+        assertThat(position1.calculateRowDistance(position2)).isEqualTo(expect);
     }
 }

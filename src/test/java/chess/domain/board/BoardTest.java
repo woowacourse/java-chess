@@ -27,7 +27,7 @@ class BoardTest {
 
     @Test
     void 잘못된_위치를_입력하면_예외가_발생한다() {
-        Board board = new Board(Map.of(B_1, new Bishop(Team.WHITE,  B_1)));
+        Board board = new Board(Map.of(B_1, new Bishop(Team.WHITE, B_1)));
 
         assertThatThrownBy(() -> board.findPiece(C_4))
                 .isInstanceOf(IllegalArgumentException.class)

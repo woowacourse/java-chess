@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static chess.controller.command.CommandType.INVALID_COMMAND_MESSAGE;
 
-public class StartCommand extends Command{
+public class StartCommand extends Command {
 
     private static final String INVALID_ACCESS_CHESS_BOARD_MESSAGE = "게임을 시작해야 체스판을 확인할 수 있습니다.";
 

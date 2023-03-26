@@ -4,7 +4,7 @@ import chess.domain.ChessGame;
 
 import java.util.List;
 
-public class EndCommand extends Command{
+public class EndCommand extends Command {
 
     private static final String INVALID_EXECUTE_MESSAGE = "게임이 종료되었습니다.";
 
