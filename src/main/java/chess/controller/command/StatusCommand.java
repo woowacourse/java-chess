@@ -5,6 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.score.Score;
 
@@ -56,7 +57,7 @@ public class StatusCommand extends Command{
         if (team == Team.EMPTY) {
             return;
         }
-        if (piece.getClass().equals(Pawn.class) && chessGame.pawnCountByColumnAndTeam(position, team) > 1) {
+        if (piece.getPieceType().equals(PieceType.PAWN) && chessGame.pawnCountByColumnAndTeam(position, team) > 1) {
             score.put(team, score.get(team) + 0.5);
             return;
         }

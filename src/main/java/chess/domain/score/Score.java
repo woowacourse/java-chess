@@ -5,27 +5,27 @@ import chess.domain.piece.*;
 import java.util.Arrays;
 
 public enum Score {
-    QUEEN_SCORE(Queen.class, 9),
-    ROOK_SCORE(Rook.class, 5),
-    BISHOP_SCORE(Bishop.class, 3),
-    KNIGHT_SCORE(Knight.class, 2.5),
-    PAWN_SCORE(Pawn.class, 1),
-    KING_SCORE(King.class, 0),
-    EMPTY_SCORE(Empty.class, 0),
+    QUEEN_SCORE(PieceType.QUEEN, 9),
+    ROOK_SCORE(PieceType.ROOK, 5),
+    BISHOP_SCORE(PieceType.BISHOP, 3),
+    KNIGHT_SCORE(PieceType.KNIGHT, 2.5),
+    PAWN_SCORE(PieceType.PAWN, 1),
+    KING_SCORE(PieceType.KING, 0),
+    EMPTY_SCORE(PieceType.EMPTY, 0),
     ;
 
     public static final String NO_MATCHED_SCORE_MESSAGE = "점수를 알 수 없습니다.";
-    private final Class<? extends Piece> pieceClass;
+    private final PieceType pieceType;
     private final double score;
 
-    Score(Class<? extends Piece> pieceClass, double score) {
-        this.pieceClass = pieceClass;
+    Score(PieceType pieceType, double score) {
+        this.pieceType = pieceType;
         this.score = score;
     }
 
     public static double findScoreBy(Piece piece) {
         return Arrays.stream(values())
-                .filter(it -> it.pieceClass.equals(piece.getClass()))
+                .filter(it -> it.pieceType.equals(piece.getPieceType()))
                 .map(it -> it.score)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCHED_SCORE_MESSAGE));

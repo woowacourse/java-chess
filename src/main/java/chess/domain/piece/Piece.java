@@ -51,4 +51,8 @@ public abstract class Piece {
     public Team getTeam() {
         return team;
     }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
 }
