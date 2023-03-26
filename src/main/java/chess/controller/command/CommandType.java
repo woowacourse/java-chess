@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.controller.command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +8,7 @@ public enum CommandType {
     MOVE("move", 3, "move 명령어는 '도착지'와 '출발지'에 대한 정보를 입력해야합니다."),
     END("end", 1, "end 명령어는 값을 하나만 입력해야합니다.");
 
-    private static final String INVALID_COMMAND_MESSAGE = "잘못된 명령어를 입력했습니다.";
+    static final String INVALID_COMMAND_MESSAGE = "잘못된 명령어를 입력했습니다.";
     private static final String INVALID_COMMAND_SIZE_MESSAGE = "명령어는 최소 한글자 이상입니다.";
     private static final int COMMAND_INDEX = 0;
     private static final int MIN_INPUT_SIZE = 1;
@@ -42,23 +42,6 @@ public enum CommandType {
     private static void validateInputSize(List<String> input) {
         if (input.size() < MIN_INPUT_SIZE) {
             throw new IllegalArgumentException(INVALID_COMMAND_SIZE_MESSAGE);
-        }
-    }
-
-    public void validate(List<String> input) {
-        validateCommandSize(input);
-        validateInputMessage(input);
-    }
-
-    private void validateCommandSize(List<String> input) {
-        if (input.size() != inputSize || input.size() < MIN_INPUT_SIZE) {
-            throw new IllegalArgumentException(errorMessage);
-        }
-    }
-
-    private void validateInputMessage(List<String> input) {
-        if (!gameCommand.equalsIgnoreCase(input.get(0))) {
-            throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
         }
     }
 }

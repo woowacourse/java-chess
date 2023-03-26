@@ -1,5 +1,8 @@
-package chess.controller;
+package chess.controller.command;
 
+import chess.controller.command.Command;
+import chess.controller.command.CommandType;
+import chess.controller.command.StartCommand;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
