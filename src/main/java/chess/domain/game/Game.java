@@ -58,4 +58,8 @@ public class Game {
     public boolean isFinished() {
         return isFinished(board);
     }
+
+    public double getScoreOf(Team team) {
+        return board.score(team);
+    }
 }

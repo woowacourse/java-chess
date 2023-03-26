@@ -81,4 +81,12 @@ public class GameTest extends AbstractTestFixture {
                 .isInstanceOf(NotPlayableException.class)
                 .hasMessage("왕 없이 플레이할 수 없습니다");
     }
+
+    @DisplayName("각 팀의 점수를 가져올 수 있다")
+    @Test
+    void getScoreOfTeam() {
+        Game game = new Game();
+
+        assertThat(game.getScoreOf(Team.BLACK)).isEqualTo(38);
+    }
 }
