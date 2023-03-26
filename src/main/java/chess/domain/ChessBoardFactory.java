@@ -61,6 +61,6 @@ public class ChessBoardFactory {
         if (file == File.E) {
             return new King(team);
         }
-        throw new IllegalStateException("올바른 Rank가 아닙니다.");
+        throw new IllegalStateException("올바른 File이 아닙니다.");
     }
 }

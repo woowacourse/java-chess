@@ -24,20 +24,20 @@ public class ChessController {
     public void run() {
         List<Integer> roomNumbers = ChessDao.getInstance().fetchAllRoomNumbers();
         OutputView.printRoomList(roomNumbers);
-        RoomNumber roomNumber = readRoomNumber(roomNumbers);
-        GameRoom gameRoom = loadGameRoom(roomNumber, roomNumbers.size());
-        join(gameRoom);
+        RoomNumber roomNumber = createRoomNumber(roomNumbers);
+        GameRoom gameRoom = createGameRoom(roomNumber, roomNumbers.size());
+        joinGameRoom(gameRoom);
         clearRoomIfKingDead(gameRoom, roomNumbers.size());
     }
 
-    private RoomNumber readRoomNumber(List<Integer> roomNumbers) {
+    private RoomNumber createRoomNumber(List<Integer> roomNumbers) {
         try {
             int rawRoomNumber = InputView.readRoomNumber();
             validateExistRoomNumber(rawRoomNumber, roomNumbers);
             return new RoomNumber(rawRoomNumber);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return readRoomNumber(roomNumbers);
+            return createRoomNumber(roomNumbers);
         }
     }
 
@@ -48,14 +48,14 @@ public class ChessController {
         throw new IllegalArgumentException("존재하지 않는 방 번호입니다.");
     }
 
-    private GameRoom loadGameRoom(final RoomNumber roomNumber, final int numberOfExistRooms) {
+    private GameRoom createGameRoom(final RoomNumber roomNumber, final int numberOfExistRooms) {
         if (roomNumber.getRoomNumber() == NEW_ROOM_NUMBER) {
             return new GameRoom(new RoomNumber(numberOfExistRooms + 1), new ChessGame(ChessBoardFactory.create()));
         }
         return chessDao.fetchGameRoom(roomNumber);
     }
 
-    public void join(GameRoom gameRoom) {
+    public void joinGameRoom(GameRoom gameRoom) {
         OutputView.printGameGuide();
         while (gameRoom.isGameNotEnd()) {
             executeCommand(gameRoom);
