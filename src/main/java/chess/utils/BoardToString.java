@@ -17,10 +17,10 @@ public final class BoardToString {
     }
 
     public static List<String> convert(Map<Position, Piece> chessBoard) {
-        return getChessBoardForView(chessBoard);
+        return getStringFromChessBoard(chessBoard);
     }
 
-    private static List<String> getChessBoardForView(Map<Position, Piece> chessBoard) {
+    private static List<String> getStringFromChessBoard(Map<Position, Piece> chessBoard) {
         List<String> chessBoardForView = new ArrayList<>();
         int columnCount = ColumnToNumber.values().length;
         int rowCount = RowToNumber.values().length;
