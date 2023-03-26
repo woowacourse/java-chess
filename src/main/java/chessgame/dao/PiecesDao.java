@@ -4,8 +4,11 @@ import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
+import chessgame.dto.PieceDto;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PiecesDao {
 
@@ -30,6 +33,30 @@ public class PiecesDao {
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
             throw new RuntimeException(exception);
+        }
+    }
+
+    public List<PieceDto> findPiecesByRoomId(long roomId) {
+        try (final var connection = databaseConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(FIND_PIECES_BY_ROOM_ID_QUERY)) {
+            preparedStatement.setLong(1, roomId);
+            final var result = preparedStatement.executeQuery();
+
+            List<PieceDto> pieces = new ArrayList<>();
+
+            while (result.next()) {
+                PieceDto pieceDto = new PieceDto(
+                        result.getInt("rank"),
+                        result.getInt("file"),
+                        result.getString("type"),
+                        result.getString("camp"),
+                        result.getInt("game_room_id")
+                );
+                pieces.add(pieceDto);
+            }
+            return pieces;
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
