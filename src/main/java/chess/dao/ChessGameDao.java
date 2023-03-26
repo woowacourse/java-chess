@@ -7,7 +7,7 @@ public interface ChessGameDao {
 
     List<Long> findAllId();
 
-    Long generateNewGame();
+    long generateNewGame();
 
     void updateTurn(final Turn turn, final long gameId);
 }

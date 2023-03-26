@@ -88,4 +88,8 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return board;
     }
+
+    public Turn getTurn() {
+        return turn;
+    }
 }

@@ -30,7 +30,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public Long generateNewGame() {
+    public long generateNewGame() {
         final String generateNewGameQuery = "INSERT INTO CHESS_GAME VALUES (null, ?)";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement =

@@ -7,7 +7,7 @@ public interface BoardDao {
 
     void saveBoard(final Board board, final long gameId);
 
-    void updatePiecePosition(final Position from, final Position to);
+    void updatePiecePosition(final Position from, final Position to, final long gameId);
 
     Board loadBoard(final Long gameId);
 

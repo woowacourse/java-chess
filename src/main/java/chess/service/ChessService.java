@@ -1,8 +1,6 @@
 package chess.service;
 
-import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
-import chess.dao.DataBaseBoardDao;
 import chess.dao.DataBaseChessGameDao;
 import chess.domain.board.Score;
 import chess.domain.piece.Color;
@@ -14,7 +12,6 @@ import java.util.Map;
 public class ChessService {
 
     private static final ChessGameDao CHESS_GAME_DAO = new DataBaseChessGameDao();
-    private static final BoardDao BOARD_DAO = new DataBaseBoardDao();
 
     private State state;
 
