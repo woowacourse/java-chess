@@ -55,6 +55,10 @@ public class Column {
         return this.value == 0;
     }
 
+    public int value() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

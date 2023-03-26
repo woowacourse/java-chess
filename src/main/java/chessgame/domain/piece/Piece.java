@@ -41,6 +41,10 @@ public abstract class Piece {
         this.isFirstMove = false;
     }
 
+    public PieceType pieceType() {
+        return pieceType;
+    }
+
     public Camp camp() {
         return camp;
     }

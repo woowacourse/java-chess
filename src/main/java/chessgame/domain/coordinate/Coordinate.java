@@ -74,6 +74,14 @@ public class Coordinate {
         return this.column.equals(otherCoordinate.column);
     }
 
+    public int row() {
+        return row.value();
+    }
+
+    public int column() {
+        return column.value();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
