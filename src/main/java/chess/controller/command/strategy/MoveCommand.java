@@ -32,9 +32,18 @@ public class MoveCommand implements StrategyCommand {
         if (state == ChessState.START || state == ChessState.PROGRESS) {
             chessGame.move(source, target);
             OutputView.printBoard(chessGame.getBoard());
-            return ChessState.PROGRESS;
+            return existOpponentKing(chessGame);
         }
 
         throw new IllegalArgumentException("게임을 시작하전에 체스 기물을 이동할 수 없습니다");
+    }
+
+    private ChessState existOpponentKing(final ChessGame chessGame) {
+        if (chessGame.isExistOpponentKing()) {
+            chessGame.changeTurn();
+            return ChessState.PROGRESS;
+        }
+        OutputView.printResultWinning(chessGame.getTurn());
+        return ChessState.END;
     }
 }

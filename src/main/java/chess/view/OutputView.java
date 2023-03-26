@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.team.Team;
 
 import java.util.Map;
 
@@ -53,6 +54,15 @@ public class OutputView {
             return;
         }
         System.out.println("결과: 무승부\n");
+    }
+
+    public static void printResultWinning(final Team team) {
+        if (team == Team.WHITE) {
+            System.out.println("White 팀 승리!");
+        }
+        if (team == Team.BLACK) {
+            System.out.println("Black 팀 승리!");
+        }
     }
 
     public static void printErrorMessage(IllegalArgumentException e) {

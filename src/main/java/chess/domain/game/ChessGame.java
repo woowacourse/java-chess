@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.initial.BoardFactory;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -27,6 +28,9 @@ public class ChessGame {
 
     public void move(final Position source, final Position target) {
         board.move(source, target, turn);
+    }
+
+    public void changeTurn() {
         turn = turn.reverse();
     }
 
@@ -78,7 +82,40 @@ public class ChessGame {
         return 0;
     }
 
+    public boolean isExistOpponentKing() {
+        int countOpponentKing = 0;
+
+        for(final File file: File.values()) {
+            countOpponentKing += getCountOpponentKingEachFile(file);
+        }
+
+        return countOpponentKing == 1;
+    }
+
+    private int getCountOpponentKingEachFile(final File file) {
+        int countOpponentKing = 0;
+
+        for(final Rank rank: Rank.values()) {
+            countOpponentKing += getCountOpponentKingEachPosition(file, rank);
+        }
+
+        return countOpponentKing;
+    }
+
+    private int getCountOpponentKingEachPosition(final File file, final Rank rank) {
+        final Piece piece = board.getPiece(Position.of(file, rank));
+
+        if (piece.equals(new King(turn.reverse()))) {
+            return 1;
+        }
+        return 0;
+    }
+
     public Board getBoard() {
         return board;
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 }
