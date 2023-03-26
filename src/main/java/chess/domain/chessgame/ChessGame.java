@@ -39,4 +39,8 @@ public abstract class ChessGame {
     public List<Piece> getPieces() {
         return board.getPieces();
     }
+
+    public Color getCurrentTurnColor() {
+        return currentTurnColor;
+    }
 }

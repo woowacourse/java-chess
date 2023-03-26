@@ -127,4 +127,18 @@ class EndChessGameTest {
                         tuple(new Position(E, ONE), WHITE, King.class)
                 );
     }
+
+    @Test
+    void 현재_순서_색깔을_꺼낸다() {
+        //given
+        final ChessGame chessGame = new EndChessGame(Board.from(new TestPiecesFactory(List.of(
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))),
+                Color.BLACK);
+
+        //when
+        final Color currentTurnColor = chessGame.getCurrentTurnColor();
+
+        //then
+        assertThat(currentTurnColor).isEqualTo(BLACK);
+    }
 }

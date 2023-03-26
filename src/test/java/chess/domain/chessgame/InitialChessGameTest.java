@@ -1,6 +1,7 @@
 package chess.domain.chessgame;
 
 import chess.TestPiecesFactory;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.piece.King;
@@ -126,5 +127,17 @@ class InitialChessGameTest {
                         tuple(new Position(E, EIGHT), BLACK, King.class),
                         tuple(new Position(E, ONE), WHITE, King.class)
                 );
+    }
+
+    @Test
+    void 현재_순서_색깔을_꺼낸다() {
+        //given
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+
+        //when
+        final Color currentTurnColor = chessGame.getCurrentTurnColor();
+
+        //then
+        assertThat(currentTurnColor).isEqualTo(WHITE);
     }
 }
