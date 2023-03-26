@@ -40,7 +40,7 @@ public enum File {
     }
 
     public String symbol() {
-        return this.symbol.toUpperCase();
+        return this.symbol;
     }
     public int index() {
         return this.index;

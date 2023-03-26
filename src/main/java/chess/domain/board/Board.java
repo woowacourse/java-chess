@@ -51,6 +51,19 @@ public class Board {
         }
     }
 
+    public Side calculateAdvantageSide() {
+        final double whiteSidePrice = calculatePriceBySide(Side.WHITE);
+        final double blackSidePrice = calculatePriceBySide(Side.BLACK);
+
+        if (whiteSidePrice > blackSidePrice) {
+            return Side.WHITE;
+        }
+        if (whiteSidePrice < blackSidePrice) {
+            return Side.BLACK;
+        }
+        return Side.NEUTRALITY;
+    }
+
     public double calculatePriceBySide(final Side side) {
         return calculateTotalPriceBySide(side) - calculatePawnSpecialPriceBySide(side);
     }

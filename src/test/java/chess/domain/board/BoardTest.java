@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static chess.domain.piece.Side.BLACK;
+import static chess.domain.piece.Side.NEUTRALITY;
 import static chess.domain.piece.Side.WHITE;
 import static chess.domain.position.File.A;
 import static chess.domain.position.File.B;
@@ -484,5 +485,75 @@ public class BoardTest {
         softAssertions.assertThat(board.isKingCaptured()).isTrue();
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    void 흰_진영의_기물_점수가_더_높다면_흰_진영이_더_유리하다() {
+        /*
+
+        .K......
+        ........
+        ........
+        ........
+        ........
+        ........
+        ........
+        ....rk..
+
+        */
+
+        boardMap.put(Position.of(E, ONE), new Rook(WHITE));
+        boardMap.put(Position.of(F, ONE), new King(WHITE));
+        boardMap.put(Position.of(B, EIGHT), new King(BLACK));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.calculateAdvantageSide()).isEqualTo(WHITE);
+    }
+
+    @Test
+    void 검은_진영의_기물_점수가_더_높다면_검은_진영이_더_유리하다() {
+        /*
+
+        .KR.....
+        ........
+        ........
+        ........
+        ........
+        ........
+        ........
+        .....k..
+
+        */
+
+        boardMap.put(Position.of(F, ONE), new King(WHITE));
+        boardMap.put(Position.of(C, EIGHT), new Rook(BLACK));
+        boardMap.put(Position.of(B, EIGHT), new King(BLACK));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.calculateAdvantageSide()).isEqualTo(BLACK);
+    }
+
+    @Test
+    void 두_진영의_기물_점수가_같다면_어떤_진영도_유리하지_않으므로_중립을_반환한다() {
+        /*
+
+        .KR.....
+        ........
+        ........
+        ........
+        ........
+        ........
+        ........
+        ....rk..
+
+        */
+
+        boardMap.put(Position.of(E, ONE), new Rook(WHITE));
+        boardMap.put(Position.of(F, ONE), new King(WHITE));
+        boardMap.put(Position.of(C, EIGHT), new Rook(BLACK));
+        boardMap.put(Position.of(B, EIGHT), new King(BLACK));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.calculateAdvantageSide()).isEqualTo(NEUTRALITY);
     }
 }
