@@ -1,14 +1,54 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.chessgame.Camp;
+
 public enum PieceType {
 
-    KING(0),
-    QUEEN(9),
-    ROOK(5),
-    BISHOP(3),
-    KNIGHT(2.5),
-    PAWN(1),
-    EMPTY(0);
+    KING(0) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            return new King(camp);
+        }
+    },
+    QUEEN(9) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            return new Queen(camp);
+        }
+    },
+    ROOK(5) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            return new Rook(camp);
+        }
+    },
+    BISHOP(3) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            return new Bishop(camp);
+        }
+    },
+    KNIGHT(2.5) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            return new Knight(camp);
+        }
+    },
+    PAWN(1) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            if (camp.equals(Camp.WHITE)) {
+                return new WhitePawn();
+            }
+            return new BlackPawn();
+        }
+    },
+    EMPTY(0) {
+        @Override
+        public Piece createPiece(Camp camp) {
+            return new Empty();
+        }
+    };
 
     private final double score;
 
@@ -23,4 +63,6 @@ public enum PieceType {
     public double score() {
         return score;
     }
+
+    abstract public Piece createPiece(Camp camp);
 }
