@@ -8,10 +8,11 @@ public enum Command {
 
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private static final int COMMAND_KEYWORD_INDEX = 0;
-    private static final int START_AND_END_COMMAND_SIZE = 1;
+    private static final int NORMAL_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_DESTINATION_INDEX = 2;
@@ -32,8 +33,8 @@ public enum Command {
     }
 
     private static void validateCommand(final List<String> command) {
-        if (command.size() == START_AND_END_COMMAND_SIZE) {
-            validateStartAndEnd(command.get(COMMAND_KEYWORD_INDEX));
+        if (command.size() == NORMAL_COMMAND_SIZE) {
+            validateNormalCommand(command.get(COMMAND_KEYWORD_INDEX));
             return;
         }
         if (command.size() == MOVE_COMMAND_SIZE) {
@@ -43,8 +44,8 @@ public enum Command {
         throw new CommandException();
     }
 
-    public static void validateStartAndEnd(final String command) {
-        if (command.equals(START.keyword) || command.equals(END.keyword)) {
+    public static void validateNormalCommand(final String command) {
+        if (command.equals(START.keyword) || command.equals(END.keyword) || STATUS.keyword.equals(command)) {
             return;
         }
         throw new CommandException();
@@ -75,5 +76,9 @@ public enum Command {
 
     public boolean isMoveCommand() {
         return this == MOVE;
+    }
+
+    public boolean isStatusCommand() {
+        return this == STATUS;
     }
 }

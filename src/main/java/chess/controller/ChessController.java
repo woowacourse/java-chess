@@ -12,6 +12,7 @@ import java.util.List;
 import static chess.view.Command.MOVE_DESTINATION_INDEX;
 import static chess.view.Command.MOVE_SOURCE_INDEX;
 
+// TODO: 커멘드 패턴 적용해보기
 public class ChessController {
 
     private final ChessGame chessGame = new ChessGame();
@@ -51,6 +52,7 @@ public class ChessController {
             command = InputView.readCommand();
         }
         checkStart(command);
+        checkStatus(command);
         checkEnd(command);
     }
 
@@ -67,6 +69,14 @@ public class ChessController {
     private void checkStart(final List<String> command) {
         if (Command.from(command).isStartCommand()) {
             chessGame.restart();
+            OutputView.printGameStatus(chessGame.getGameStatus());
+            playUntilEnd();
+        }
+    }
+
+    private void checkStatus(final List<String> command) {
+        if (Command.from(command).isStatusCommand()) {
+            OutputView.printScore(chessGame.getScore());
             OutputView.printGameStatus(chessGame.getGameStatus());
             playUntilEnd();
         }

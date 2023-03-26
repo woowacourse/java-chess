@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.exception.StartCommandException;
 import chess.dto.GameStatusDto;
+import chess.dto.ScoreDto;
 import chess.dto.SquareMoveDto;
 import chess.view.Command;
 
@@ -36,6 +37,12 @@ public class ChessGame {
 
     public boolean isEnd() {
         return board.isKingCaught();
+    }
+
+    public ScoreDto getScore() {
+        final Score whiteScore = board.calculateWhiteScore();
+        final Score blackScore = board.calculateBlackScore();
+        return new ScoreDto(whiteScore, blackScore);
     }
 
     public GameStatusDto getGameStatus() {

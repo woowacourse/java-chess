@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.dto.GameStatusDto;
+import chess.dto.ScoreDto;
 
 public class OutputView {
 
@@ -25,12 +26,18 @@ public class OutputView {
         System.out.println(START_MESSAGE_PREFIX + message);
     }
 
-    public static void printGameStatus(GameStatusDto gameStatusDto) {
+    public static void printGameStatus(final GameStatusDto gameStatusDto) {
         gameStatusDto.getGameStatus().forEach(OutputView::printGameStatusRow);
         System.out.println();
     }
 
-    private static void printGameStatusRow(String row) {
+    public static void printScore(final ScoreDto scoreDto) {
+        System.out.println("백팀 점수: " + scoreDto.getWhiteScore());
+        System.out.println("흑팀 점수: " + scoreDto.getBlackScore());
+        System.out.println();
+    }
+
+    private static void printGameStatusRow(final String row) {
         System.out.println(row);
     }
 }

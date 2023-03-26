@@ -129,13 +129,13 @@ public class Board {
                 .count() < KING_NUMBER;
     }
 
-//    public Score calculateBlackScore() {
-//        return board.entrySet().stream()
-//                .filter(entry -> entry.getValue().isBlack())
-//                .filter(entry -> )
-//                .map(piece -> new Score(piece.getPieceType().getValue()))
-//                .reduce(Score.init(), Score::plus);
-//    }
+    public Score calculateWhiteScore() {
+        return ScoreCalculator.calculateWhiteScore(new HashMap<>(board));
+    }
+
+    public Score calculateBlackScore() {
+        return ScoreCalculator.calculateBlackScore(new HashMap<>(board));
+    }
 
     public Map<Square, Piece> getBoard() {
         return new HashMap<>(board);
