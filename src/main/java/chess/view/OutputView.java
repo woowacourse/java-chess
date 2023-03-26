@@ -24,6 +24,18 @@ public class OutputView {
         System.out.println("[ERROR] " + message);
     }
 
+    public void printScore(String team, double score) {
+        System.out.println(team + ": " + score + "점");
+    }
+
+    public void printWin(String team) {
+        if (team.equals("무")) {
+            System.out.println("무승부");
+            return;
+        }
+        System.out.println(team + " 승!");
+    }
+
     private char[][] setUpBoard() {
         char[][] board = new char[8][8];
         for (char[] line : board) {
