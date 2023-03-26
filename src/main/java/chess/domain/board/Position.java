@@ -85,4 +85,8 @@ public class Position {
     public Rank getRank() {
         return rank;
     }
+
+    public Column getColumn() {
+        return column;
+    }
 }
