@@ -263,13 +263,34 @@
 
 ### DataBase 구조
 
-![img.png](img.png)
+![img_1.png](img_1.png)
+
+- Chess_Board.game_id -> Chess_Game.id 형태의 연관관계
+- 외래키 제약 조건을 on delete cascade 로 하여, 관련된 Chess_Game 레코드가 삭제되었을 때, 자동으로 Chess_Board 도 삭제도 되도록 하였음
 
 ### dao 패키지
-- [ ] JdbcDao
+- [x] JdbcChessGameDao
   - save, select, update, delete 인터페이스를 제공한다. 
-  - [ ] ChessGameDao
+  - [x] ChessGameDao
+    - 모든 체스 게임 목록을 받아올 수 있다. 
     - 체스 보드를 저장할 수 있다.
     - 체스 보드를 꺼내올 수 있다.
-    - 체스 보드를 삭제할 수 있다.
     - 체스 보드를 업데이트 할 수 있다.
+    - 체스 보드를 삭제할 수 있다.
+
+### Type 패키지
+- [x] Piece Type
+  - INIT_PAWN 추가
+
+### Piece 패키지
+- [x] Color
+  - NONE 추가
+
+### View 패키지
+- [x] OutputView
+  - printStartMessage() 기능에 방 목록 출력 기능 추가
+
+### Controller
+- [x] ChessController
+  - 기존의 ChessGame -> ChessGameDao 로 변경
+  - 입장할 체스 게임의 ID 를 인스턴스 변수로 추가
