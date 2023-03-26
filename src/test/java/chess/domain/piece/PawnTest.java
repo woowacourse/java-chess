@@ -57,4 +57,18 @@ class PawnTest {
         final var piece = new Pawn(Team.WHITE, B_2);
         assertThat(piece.isEmpty()).isFalse();
     }
+
+    @Test
+    void 폰은_대각선에_상대방이_있을_때_움직일_수_있다_move() {
+        final var piece = new Pawn(Team.WHITE, B_1);
+        assertThat(piece.move(new Position(FileCoordinate.A, RankCoordinate.TWO), Team.WHITE, Team.BLACK))
+                .isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    void 폰은_직선이_비어있을_때_움직일_수_있다_move() {
+        final var piece = new Pawn(Team.WHITE, B_1);
+        assertThat(piece.move(new Position(FileCoordinate.B, RankCoordinate.TWO), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(Pawn.class);
+    }
 }

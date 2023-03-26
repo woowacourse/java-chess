@@ -29,4 +29,11 @@ class RookTest {
         final var piece = new Rook(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
+
+    @Test
+    void 룩을_움직일_수_있다() {
+        final var piece = new Rook(Team.WHITE, C_4);
+        assertThat(piece.move(new Position(FileCoordinate.A, RankCoordinate.FOUR), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(Rook.class);
+    }
 }

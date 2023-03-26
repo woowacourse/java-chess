@@ -29,4 +29,11 @@ class KnightTest {
         final var piece = new Knight(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
+
+    @Test
+    void 나이트를_움직일_수_있다() {
+        final var piece = new Knight(Team.WHITE, C_4);
+        assertThat(piece.move(new Position(FileCoordinate.B, RankCoordinate.SIX), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(Knight.class);
+    }
 }

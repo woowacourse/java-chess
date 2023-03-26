@@ -29,4 +29,11 @@ class KingTest {
         final var piece = new King(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
+
+    @Test
+    void 킹을_움직일_수_있다() {
+        final var piece = new King(Team.WHITE, C_4);
+        assertThat(piece.move(new Position(FileCoordinate.B, RankCoordinate.FIVE), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(King.class);
+    }
 }

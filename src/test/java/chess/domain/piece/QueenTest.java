@@ -29,4 +29,11 @@ class QueenTest {
         final var piece = new Queen(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
+
+    @Test
+    void 퀸을_움직일_수_있다() {
+        final var piece = new Queen(Team.WHITE, C_4);
+        assertThat(piece.move(new Position(FileCoordinate.A, RankCoordinate.TWO), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(Queen.class);
+    }
 }

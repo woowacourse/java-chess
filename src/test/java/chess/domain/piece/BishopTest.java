@@ -28,4 +28,11 @@ class BishopTest {
         final var piece = new Bishop(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
     }
+
+    @Test
+    void 비숍을_움직일_수_있다() {
+        final var piece = new Bishop(Team.WHITE, C_4);
+        assertThat(piece.move(new Position(FileCoordinate.A, RankCoordinate.TWO), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(Bishop.class);
+    }
 }
