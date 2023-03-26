@@ -49,7 +49,7 @@
 
 - `docker-compose`로 `mysql` 실행 가능
 - `DB` 정보
-  - `dababase : chess`
+  - `database : chess`
   - `username : user`
   - `password : password`
 - `db/mysql/init/create-table.sql`에서 초기 테이블 세팅
