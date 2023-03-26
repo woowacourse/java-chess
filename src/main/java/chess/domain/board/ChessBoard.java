@@ -20,5 +20,7 @@ public interface ChessBoard {
     
     double calculateScore(Team white);
     
-    boolean isKingDead();
+    boolean isKingDied();
+    
+    Team teamWithKing();
 }

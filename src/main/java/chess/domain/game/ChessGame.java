@@ -36,7 +36,11 @@ public class ChessGame {
         return chessBoard.calculateScore(team);
     }
     
-    public boolean isKingDead() {
-        return chessBoard.isKingDead();
+    public boolean isKingDied() {
+        return chessBoard.isKingDied();
+    }
+    
+    public Team teamWithKing() {
+        return chessBoard.teamWithKing();
     }
 }

@@ -32,7 +32,7 @@ public final class ChessGameState {
     }
     
     public void noticeKingDead() {
-        if (chessGameService.isKingDead()) {
+        if (chessGameService.isKingDied()) {
             command = CommandFactory.creaeteCommand(END);
         }
     }

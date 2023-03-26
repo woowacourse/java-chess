@@ -46,6 +46,10 @@ public abstract class Piece {
         return this.team.isDifferentTeam(otherPiece.team);
     }
     
+    public Team team() {
+        return this.team;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

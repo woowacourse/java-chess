@@ -86,6 +86,23 @@ class BlackWhiteChessBoardTest {
     
     @Test
     void 킹이_죽었는지_확인() {
-        assertThat(blackWhiteChessBoard.isKingDead()).isFalse();
+        assertAll(
+                () -> assertThat(blackWhiteChessBoard.isKingDied()).isFalse(),
+                this::blackTeamKingDie,
+                () -> assertThat(blackWhiteChessBoard.isKingDied()).isTrue()
+        );
+    }
+    
+    @Test
+    void 킹이_살아있는_팀_반환() {
+            blackTeamKingDie();
+            assertThat(blackWhiteChessBoard.teamWithKing()).isEqualTo(Team.WHITE);
+    }
+    
+    private void blackTeamKingDie() {
+        blackWhiteChessBoard.move("e2", "e3", Team.WHITE);
+        blackWhiteChessBoard.move("f1", "b5", Team.WHITE);
+        blackWhiteChessBoard.move("d7", "d6", Team.BLACK);
+        blackWhiteChessBoard.move("b5", "e8", Team.WHITE);
     }
 }

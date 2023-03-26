@@ -15,7 +15,7 @@ public class BlackWhiteChessBoard implements ChessBoard {
         this.pieces = pieces;
     }
     
-    public static BlackWhiteChessBoard create(){
+    public static BlackWhiteChessBoard create() {
         return new BlackWhiteChessBoard(initChessBoard());
     }
     
@@ -49,14 +49,14 @@ public class BlackWhiteChessBoard implements ChessBoard {
         Piece fromPiece = pieceOrEmpty(fromCoordinate);
         
         validateMovable(fromCoordinate, toCoordinate, fromPiece, currentTeam);
-    
+        
         pieces.remove(fromCoordinate);
         pieces.put(toCoordinate, fromPiece.movedPiece());
     }
     
     private void validateMovable(Coordinate fromCoordinate, Coordinate toCoordinate, Piece fromPiece, Team currentTeam) {
         validateSource(fromCoordinate, fromPiece, currentTeam);
-    
+        
         PieceMovingType pieceMovingType = fromPiece.movingType();
         Set<Coordinate> possibleCoordinates = pieceMovingType.movableRouteSearch(this, fromPiece, fromCoordinate);
         validateDestination(toCoordinate, possibleCoordinates);
@@ -120,11 +120,6 @@ public class BlackWhiteChessBoard implements ChessBoard {
     }
     
     @Override
-    public Map<Coordinate, Piece> pieces() {
-        return Collections.unmodifiableMap(pieces);
-    }
-    
-    @Override
     public double calculateScore(Team team) {
         return pieces.keySet().stream()
                 .map(this::pieceOrEmpty)
@@ -135,7 +130,7 @@ public class BlackWhiteChessBoard implements ChessBoard {
     }
     
     @Override
-    public boolean isKingDead() {
+    public boolean isKingDied() {
         return numberOfSurvivingKings() == 1;
     }
     
@@ -147,8 +142,23 @@ public class BlackWhiteChessBoard implements ChessBoard {
                 .count();
     }
     
+    @Override
+    public Team teamWithKing() {
+        return pieces.keySet().stream()
+                .map(this::pieceOrEmpty)
+                .filter(piece -> piece.pieceType() == PieceType.KING)
+                .map(Piece::team)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("킹이 존재하지 않습니다."));
+    }
+    
     private Piece pieceOrEmpty(Coordinate nextCoordinate) {
         return pieces.getOrDefault(nextCoordinate, Empty.getInstance());
+    }
+    
+    @Override
+    public Map<Coordinate, Piece> pieces() {
+        return Collections.unmodifiableMap(pieces);
     }
     
     @Override

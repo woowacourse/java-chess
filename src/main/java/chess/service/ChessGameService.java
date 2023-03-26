@@ -33,7 +33,11 @@ public class ChessGameService {
         return chessGame.calculateScore(team);
     }
     
-    public boolean isKingDead() {
-        return chessGame.isKingDead();
+    public boolean isKingDied() {
+        return chessGame.isKingDied();
+    }
+    
+    public Team teamWithKing() {
+        return chessGame.teamWithKing();
     }
 }
