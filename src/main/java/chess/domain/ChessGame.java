@@ -1,10 +1,14 @@
 package chess.domain;
 
 import chess.domain.board.Chessboard;
+import chess.domain.board.File;
 import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+
+import java.util.Arrays;
+import java.util.Map;
 
 public class ChessGame {
     private static final Piece WHITE_PIECE = PieceType.PAWN.createPiece(Camp.WHITE);
@@ -126,11 +130,30 @@ public class ChessGame {
 
     // TODO: 2023-03-22 메서드명 변경 ex) isNotKingDead or isKingAlive
     public boolean isKingDead() {
-        int whiteKingCountOnBoard = chessboard.getPieceCountOnBoard(PieceType.KING.createPiece(Camp.WHITE));
-        int blackKingCountOnBoard = chessboard.getPieceCountOnBoard(PieceType.KING.createPiece(Camp.BLACK));
+        int whiteKingCountOnBoard = chessboard.countSamePieceOnBoard(PieceType.KING.createPiece(Camp.WHITE));
+        int blackKingCountOnBoard = chessboard.countSamePieceOnBoard(PieceType.KING.createPiece(Camp.BLACK));
 
         return whiteKingCountOnBoard == 0
                 || blackKingCountOnBoard == 0;
+    }
+
+    public double calculateScoreOf(Camp camp) {
+        Map<PieceType, Integer> alivePieceAndCountMap = chessboard.getAlivePieceAndCountMap(camp);
+
+        double sum = alivePieceAndCountMap.keySet().stream()
+                .mapToDouble(pieceType -> alivePieceAndCountMap.get(pieceType) * pieceType.getScore())
+                .sum();
+
+        return applyPawnScoreAtSameFile(sum, camp);
+    }
+
+    private double applyPawnScoreAtSameFile(double sum, Camp camp) {
+        double countPawnOfDuplicateFile = Arrays.stream(File.values())
+                .mapToInt(file -> chessboard.countSameCampPawnInFile(camp, file))
+                .filter(count -> count > 1)
+                .sum();
+
+        return sum - (countPawnOfDuplicateFile * 0.5);
     }
 
     public Chessboard getChessboard() {
