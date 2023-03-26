@@ -7,6 +7,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.exception.PieceCannotMoveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static chess.fixture.PieceFixture.BISHOP_WHITE;
+import static chess.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.fixture.PieceFixture.KING_WHITE;
 import static chess.fixture.PieceFixture.KNIGHT_WHITE;
 import static chess.fixture.PieceFixture.PAWN_WHITE;
@@ -34,6 +36,7 @@ import static chess.fixture.PositionFixture.C2;
 import static chess.fixture.PositionFixture.D1;
 import static chess.fixture.PositionFixture.D4;
 import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.D6;
 import static chess.fixture.PositionFixture.D8;
 import static chess.fixture.PositionFixture.E1;
 import static chess.fixture.PositionFixture.E4;
@@ -50,6 +53,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ChessBoardTest {
+
+    public static final int INIT_SCORE = 38;
 
     private Map<Position, Piece> piecePosition = new HashMap<>();
 
@@ -430,7 +435,7 @@ class ChessBoardTest {
     }
 
     @Nested
-    class 폰은_이동경로에 {
+    class 폰은_ {
 
         @Test
         void 이동할_수_없는_경로로_움직이면_예외() {
@@ -449,7 +454,7 @@ class ChessBoardTest {
         }
 
         @Test
-        void 같은_팀의_말이_있으면_예외() {
+        void 이동_경로에_같은_팀의_말이_있으면_예외() {
             //given
             Position from = B2;
             Position to = B4;
@@ -466,18 +471,70 @@ class ChessBoardTest {
                     .hasMessage("이동하려는 경로에 말이 존재합니다.");
         }
 
-        @Test
-        void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
-            //given
-            Position from = D4;
-            Position to = E5;
+        @Nested
+        class 대각선으로_이동_시_ {
+            @Test
+            void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
+                //given
+                Position from = D4;
+                Position to = E5;
 
-            piecePosition.put(from, PAWN_WHITE);
-            piecePosition.put(to, ROOK_BLACK);
-            ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+                piecePosition.put(from, PAWN_WHITE);
+                piecePosition.put(to, ROOK_BLACK);
+                ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
 
-            //when & then
-            assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
+                //when & then
+                assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
+            }
+
+            @Test
+            void 끝_지점이_다른_팀의_말이_아니면_예외() {
+                //given
+                Position from = D4;
+                Position to = E5;
+
+                piecePosition.put(from, PAWN_WHITE);
+                piecePosition.put(to, EMPTY_PIECE);
+                ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+                //when & then
+                assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                        .isInstanceOf(PieceCannotMoveException.class)
+                        .hasMessage("PAWN이 움직일 수 없는 경로입니다.");
+            }
+        }
+
+        @Nested
+        class 전진_시_ {
+            @Test
+            void 끝지점에_말이_존재하지_않아야_한다() {
+                //given
+                Position from = D4;
+                Position to = D5;
+
+                piecePosition.put(from, PAWN_WHITE);
+                piecePosition.put(to, EMPTY_PIECE);
+                ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+                //when & then
+                assertDoesNotThrow(() -> chessBoard.movePiece(from, to));
+            }
+
+            @Test
+            void 끝지점에_말이_존재하면_예외() {
+                //given
+                Position from = D4;
+                Position to = D5;
+
+                piecePosition.put(from, PAWN_WHITE);
+                piecePosition.put(to, ROOK_BLACK);
+                ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+                //when & then
+                assertThatThrownBy(() -> chessBoard.movePiece(from, to))
+                        .isInstanceOf(PieceCannotMoveException.class)
+                        .hasMessage("PAWN이 움직일 수 없는 경로입니다.");
+            }
         }
     }
 
@@ -636,5 +693,30 @@ class ChessBoardTest {
             assertThat(piecePosition.get(E8))
                     .isInstanceOf(King.class);
         }
+    }
+
+    @Test
+    void 주어진_팀의_점수를_구할_수_있다() {
+        //given
+        ChessBoard chessBoard = ChessBoard.createBoard();
+
+        //when & then
+        assertThat(chessBoard.calculateScore(Team.WHITE).intValue())
+                .isEqualTo(INIT_SCORE);
+
+    }
+
+    @Test
+    void 폰이_세로로_겹쳤을_때_점수계산() {
+        //given
+        piecePosition.put(D4, PAWN_WHITE);
+        piecePosition.put(D5, PAWN_WHITE);
+        piecePosition.put(D6, PAWN_WHITE);
+
+        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
+
+        assertThat(chessBoard.calculateScore(Team.WHITE).doubleValue())
+                .isEqualTo(1.5);
+
     }
 }

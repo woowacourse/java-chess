@@ -116,9 +116,9 @@ public class ChessBoard {
                 .map(Position::getFile)
                 .collect(Collectors.toList());
 
-        for (final File file : files) {
+        for (final File file : File.values()) {
             int pawnCount = Collections.frequency(files, file);
-            if (pawnCount != 1) {
+            if (pawnCount > 1) {
                 result = result.add(PAWN_REDUCE_NUMBER.multiply(BigDecimal.valueOf(pawnCount)));
             }
         }

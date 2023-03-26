@@ -67,7 +67,7 @@ public class ChessController {
         renderChessBoard();
         printStatus(chessGame);
         if (chessGame.getStatus() == GameStatus.GAME_OVER) {
-            System.out.println("게임 종료" + chessGame.getCurrentTeam() + "의 패배!");
+            System.out.println("게임 종료 " + chessGame.getCurrentTeam() + "의 패배!");
         }
     }
 
@@ -142,9 +142,11 @@ public class ChessController {
     }
 
     private void printStatus(final ChessGame chessGame) {
-        Team team = chessGame.getCurrentTeam();
-        BigDecimal currentScore = chessGame.getScore(team);
-        outputView.printStatus(team, currentScore.longValue());
+        BigDecimal blackScore = chessGame.getScore(Team.BLACK);
+        outputView.printStatus(Team.BLACK, blackScore.longValue());
+
+        BigDecimal whiteScore = chessGame.getScore(Team.WHITE);
+        outputView.printStatus(Team.WHITE, whiteScore.longValue());
     }
 
     private void end(final List<String> commands) {

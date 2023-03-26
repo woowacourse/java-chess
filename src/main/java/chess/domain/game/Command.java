@@ -7,7 +7,7 @@ public enum Command {
     START(GameStatus.PLAYING, 1),
     MOVE(GameStatus.PLAYING, 3),
     STATUS(GameStatus.PLAYING, 1),
-    END(GameStatus.GAME_OVER, 1),
+    END(GameStatus.IDLE, 1),
     ;
 
     public static final String INVALID_COMMAND_MESSAGE = "올바른 명령어를 입력하세요.";

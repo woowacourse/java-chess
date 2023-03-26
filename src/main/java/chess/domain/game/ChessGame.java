@@ -22,7 +22,9 @@ public class ChessGame {
     }
 
     public void receiveCommand(final Command command) {
-        this.gameStatus = command.getStatus();
+        if (this.gameStatus != GAME_OVER) {
+            this.gameStatus = command.getStatus();
+        }
     }
 
     public void movePiece(final Position from, final Position to) {
