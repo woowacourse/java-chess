@@ -1,5 +1,6 @@
 package chess.controller.status;
 
+import static chess.controller.CommandActionMapper.EXIT;
 import static chess.controller.CommandActionMapper.MOVE;
 import static chess.controller.CommandActionMapper.START;
 import static chess.controller.CommandActionMapper.STATUS;
@@ -11,6 +12,9 @@ public enum GameStatus {
     OVER;
 
     public void validateCommand(String command) {
+        if (EXIT.getCommand().equalsIgnoreCase(command)) {
+            return;
+        }
         if (this != OVER && isStatus(command)) {
             throw new IllegalArgumentException("게임이 시작하지 않았거나, 오버 상태가 아닙니다.");
         }
