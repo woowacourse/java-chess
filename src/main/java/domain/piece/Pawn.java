@@ -13,11 +13,36 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Square> findRoutes(Square source, Square destination) {
+    public List<Square> findRoutes(Square source, Square destination, Piece pieceOfDestination) {
+        checkState(source);
+        validatePawnMove(source, destination, pieceOfDestination);
+        return findRoutes(source, destination);
+    }
+
+    private void validatePawnMove(Square source, Square destination, Piece pieceOfDestination) {
+        if (isDiagonal(source, destination) && canNotKill(pieceOfDestination)) {
+            throw new IllegalArgumentException("대각선으로 갈 수 없습니다.");
+        }
+        if (isLinear(source, destination) && pieceOfDestination.isNotBlank()) {
+            throw new IllegalArgumentException("폰은 기물이 있으면 앞으로 갈 수 없습니다.");
+        }
+    }
+
+    private boolean canNotKill(Piece pieceOfDestination) {
+        return pieceOfDestination.isBlank() || isSameTeam(pieceOfDestination);
+    }
+
+    @Override
+    protected List<Square> findRoutes(Square source, Square destination) {
         Direction direction = destination.calculateVector(source);
         state.validateDirection(direction);
-
         return getSquares(source, destination, direction);
+    }
+
+    public void checkState(Square source) {
+        if (state.isMoved(source)) {
+            state = state.next();
+        }
     }
 
     private List<Square> getSquares(Square source, Square destination, Direction direction) {
@@ -28,10 +53,6 @@ public class Pawn extends Piece {
             return List.of(source.add(Direction.BOTTOM), source.add(Direction.BOTTOM_BOTTOM));
         }
         return List.of(destination);
-    }
-
-    public void changeState() {
-        state = state.next();
     }
 
     public boolean isLinear(Square source, Square destination) {

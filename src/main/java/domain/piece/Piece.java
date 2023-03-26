@@ -17,7 +17,11 @@ public abstract class Piece {
         return teamColor.isBlack();
     }
 
-    public abstract List<Square> findRoutes(Square source, Square destination);
+    public List<Square> findRoutes(Square source, Square destination, Piece pieceOfDestination) {
+        return findRoutes(source, destination);
+    }
+
+    protected abstract List<Square> findRoutes(Square source, Square destination);
 
     public PieceInfo getPieceType() {
         return pieceInfo;
@@ -25,6 +29,10 @@ public abstract class Piece {
 
     public boolean isDifferentTeam(Piece piece) {
         return teamColor.isDifferent(piece.teamColor);
+    }
+
+    public boolean isSameTeam(Piece piece) {
+        return teamColor.isSame(piece.teamColor);
     }
 
     public boolean isSameColor(TeamColor color) {
@@ -37,5 +45,9 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return getPieceType().isPawn();
+    }
+
+    public boolean isBlank() {
+        return false;
     }
 }

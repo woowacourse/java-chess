@@ -95,4 +95,9 @@ public class ChessBoard {
         Piece piece = locationInfo.get(route);
         return piece.isNotBlank();
     }
+
+    public boolean isBlank(Square route) {
+        Piece piece = locationInfo.get(route);
+        return piece.isBlank();
+    }
 }

@@ -101,16 +101,15 @@ class PawnTest {
             @MethodSource("parametersProvider2")
             void move_fail(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.WHITE);
-                pawn.changeState();
 
-                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination))
+                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination, Blank.getInstance()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
 
             Stream<Arguments> parametersProvider2() {
                 return Stream.of(
-                    arguments(Square.of(3, 2), Square.of(3, 4))
+                    arguments(Square.of(3, 3), Square.of(3, 5))
                 );
             }
         }
@@ -201,16 +200,15 @@ class PawnTest {
             @MethodSource("parametersProvider2")
             void move_fail(Square source, Square destination) {
                 Pawn pawn = new Pawn(TeamColor.BLACK);
-                pawn.changeState();
 
-                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination))
+                Assertions.assertThatThrownBy(() -> pawn.findRoutes(source, destination, Blank.getInstance()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 목적지로 갈 수 없습니다.");
             }
 
             Stream<Arguments> parametersProvider2() {
                 return Stream.of(
-                    arguments(Square.of(3, 7), Square.of(3, 5)
+                    arguments(Square.of(3, 6), Square.of(3, 4)
                     ));
             }
         }

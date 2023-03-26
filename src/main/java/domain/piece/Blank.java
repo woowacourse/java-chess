@@ -40,4 +40,9 @@ public class Blank extends Piece {
     public boolean isPawn() {
         throw new IllegalStateException(NO_EXIST_MSG);
     }
+
+    @Override
+    public boolean isBlank() {
+        return true;
+    }
 }
