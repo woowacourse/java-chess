@@ -34,6 +34,10 @@ public class ChessGame {
         return isProcessing;
     }
 
+    public double calculateScore(final Team team) {
+        return chessBoard.calculateScore(team);
+    }
+
     public Team findWinner() {
         if (chessBoard.calculateScore(Team.WHITE) > chessBoard.calculateScore(Team.BLACK)) {
             return Team.WHITE;

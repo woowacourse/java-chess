@@ -19,7 +19,7 @@ public enum Command {
     public static Command from(final String gameCommand) {
         return Arrays.stream(values())
                 .filter(command -> command.keyword.equalsIgnoreCase(gameCommand))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
 }

@@ -1,10 +1,11 @@
 package chess.view;
 
-import chess.dto.ChessBoardDto;
-import chess.dto.PieceDto;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import chess.dto.ChessBoardDto;
+import chess.dto.PieceDto;
+import chess.piece.Team;
 
 public class OutputView {
 
@@ -27,5 +28,21 @@ public class OutputView {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public void printWinner(final double scoreOfWhite, final double scoreOfBlack, final Team team) {
+        System.out.println("백팀의 점수 : " + scoreOfWhite + " 흑팀의 점수: " + scoreOfBlack);
+        System.out.println("현재 우승팀은!! : " + parseTeam(team));
+        System.out.println();
+    }
+
+    private String parseTeam(final Team team) {
+        if (team == Team.WHITE) {
+            return "백팀";
+        }
+        if (team == Team.BLACK) {
+            return "흑팀";
+        }
+        return "무승부";
     }
 }

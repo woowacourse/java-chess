@@ -10,6 +10,7 @@ import chess.board.Position;
 import chess.dto.ChessBoardDto;
 import chess.game.ChessGame;
 import chess.game.Command;
+import chess.piece.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionConvertor;
@@ -44,6 +45,11 @@ public class ChessController {
             if (command == Command.END) {
                 break;
             }
+            if (command == Command.STATUS) {
+                outputView.printWinner(chessGame.calculateScore(Team.WHITE), chessGame.calculateScore(Team.BLACK), chessGame.findWinner());
+                continue;
+            }
+
             final Position from = PositionConvertor.convert(movePositions.get(0));
             final Position to = PositionConvertor.convert(movePositions.get(1));
             chessGame.movePiece(from, to);

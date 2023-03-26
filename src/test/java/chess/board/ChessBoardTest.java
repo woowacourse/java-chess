@@ -548,6 +548,7 @@ class ChessBoardTest {
         }
     }
 
+    // TODO: Nested로 묶기
     @Test
     void isGameOver메서드는_해당되는_팀에_왕이_없으면_true를_반환한다() {
         // given
