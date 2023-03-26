@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piecesfactory.PiecesFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +16,8 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public static Board from(final PiecesFactory piecesFactory) {
-        return new Board(new Pieces(piecesFactory.generate()));
+    public static Board from(final List<Piece> pieces) {
+        return new Board(new Pieces(pieces));
     }
 
     public void move(final Color turnColor, final Position currentPosition, final Position targetPosition) {

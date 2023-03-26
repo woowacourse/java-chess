@@ -39,7 +39,7 @@ class BoardTest {
                 new Pawn(A, TWO, WHITE),
                 new Rook(A, ONE, WHITE)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         final List<Piece> pieces = board.getPieces();
 
@@ -58,7 +58,7 @@ class BoardTest {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
 
@@ -73,7 +73,7 @@ class BoardTest {
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, FIVE, WHITE)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
 
@@ -89,7 +89,7 @@ class BoardTest {
     @Test
     void 현재_위치에_말이_없다면_예외가_발생한다() {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of());
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -101,7 +101,7 @@ class BoardTest {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, BLACK)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(E, SIX)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -114,7 +114,7 @@ class BoardTest {
         final PiecesFactory piecesFactory = new TestPiecesFactory(List.of(
                 new Queen(D, EIGHT, pieceColor)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         assertThatThrownBy(() -> board.move(turnColor, new Position(D, EIGHT), new Position(E, SIX)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -127,7 +127,7 @@ class BoardTest {
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -140,7 +140,7 @@ class BoardTest {
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, SEVEN, BLACK)
         ));
-        final Board board = Board.from(piecesFactory);
+        final Board board = Board.from(piecesFactory.generate());
 
         assertThatThrownBy(() -> board.move(BLACK, new Position(D, EIGHT), new Position(D, SEVEN)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -150,7 +150,7 @@ class BoardTest {
     @ParameterizedTest
     @MethodSource("provideKings")
     void 왕이_두_개인지_확인한다(final List<Piece> pieces, final boolean expected) {
-        final Board board = Board.from(new TestPiecesFactory(pieces));
+        final Board board = Board.from(new TestPiecesFactory(pieces).generate());
 
         final boolean actual = board.hasTwoKings();
 
@@ -168,7 +168,7 @@ class BoardTest {
     @ParameterizedTest
     @MethodSource("providePiecesAndScore")
     void 두_진영의_점수를_계산한다(final List<Piece> pieces, final double blackScore, final double whiteScore) {
-        final Board board = Board.from(new TestPiecesFactory(pieces));
+        final Board board = Board.from(new TestPiecesFactory(pieces).generate());
 
         Map<Color, Double> scoreByColor = board.calculateScoreByColor();
 
