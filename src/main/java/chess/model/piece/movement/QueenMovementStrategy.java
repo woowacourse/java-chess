@@ -8,11 +8,11 @@ import java.util.List;
 public final class QueenMovementStrategy implements MovementStrategy {
 
     public static final QueenMovementStrategy MOVEMENT = new QueenMovementStrategy();
-    private static final List<Direction> availableDirections = new ArrayList<>();
+    private static final List<Direction> DIRECTIONS = new ArrayList<>();
 
     static {
-        availableDirections.addAll(Direction.DIAGONAL);
-        availableDirections.addAll(Direction.ORTHOGONAL);
+        DIRECTIONS.addAll(Direction.DIAGONAL);
+        DIRECTIONS.addAll(Direction.ORTHOGONAL);
     }
 
     private QueenMovementStrategy() {
@@ -24,7 +24,7 @@ public final class QueenMovementStrategy implements MovementStrategy {
     }
 
     private boolean isAvailableDirection(final Distance distance) {
-        return availableDirections.stream()
+        return DIRECTIONS.stream()
                 .anyMatch(distance::matchByDirection);
     }
 }

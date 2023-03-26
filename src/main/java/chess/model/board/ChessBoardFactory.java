@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 public final class ChessBoardFactory {
 
-    private static final List<PieceType> backPieces = List.of(
+    private static final List<PieceType> BACK_PIECES = List.of(
             PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN, PieceType.KING,
             PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK
     );
-    private static final List<PieceType> frontPieces = List.of(
+    private static final List<PieceType> FRONT_PIECES = List.of(
             PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN, PieceType.PAWN,
             PieceType.PAWN, PieceType.PAWN
     );
@@ -63,7 +63,7 @@ public final class ChessBoardFactory {
     }
 
     private static Piece initialBackPieceToChessBoard(final int index, final Camp camp) {
-        final PieceType pieceType = backPieces.get(index);
+        final PieceType pieceType = BACK_PIECES.get(index);
 
         return PieceFactory.create(pieceType, camp);
     }
@@ -85,7 +85,7 @@ public final class ChessBoardFactory {
     }
 
     private static Piece initialFrontPieceToChessBoard(final int index, final Camp camp) {
-        final PieceType pieceType = frontPieces.get(index);
+        final PieceType pieceType = FRONT_PIECES.get(index);
 
         return PieceFactory.create(pieceType, camp);
     }

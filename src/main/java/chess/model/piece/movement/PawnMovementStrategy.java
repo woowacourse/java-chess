@@ -18,11 +18,11 @@ import java.util.Map;
 public final class PawnMovementStrategy implements MovementStrategy {
 
     public static final PawnMovementStrategy MOVEMENT = new PawnMovementStrategy();
-    private static final Map<Camp, Direction> moveDirections = Map.of(
+    private static final Map<Camp, Direction> MOVE_DIRECTIONS = Map.of(
             WHITE, NORTH,
             BLACK, SOUTH
     );
-    private static final Map<Camp, List<Direction>> attackDirection = Map.of(
+    private static final Map<Camp, List<Direction>> ATTACK_DIRECTION = Map.of(
             WHITE, List.of(NORTH_EAST, NORTH_WEST),
             BLACK, List.of(SOUTH_EAST, SOUTH_WEST)
     );
@@ -52,7 +52,7 @@ public final class PawnMovementStrategy implements MovementStrategy {
     }
 
     private boolean isAttackAbleDirection(final Distance distance, final AttackEvaluator attackEvaluator) {
-        final List<Direction> availableDirections = attackDirection.get(attackEvaluator.sourceCamp());
+        final List<Direction> availableDirections = ATTACK_DIRECTION.get(attackEvaluator.sourceCamp());
 
         return availableDirections.stream()
                 .anyMatch(distance::matchByDirection);
@@ -76,7 +76,7 @@ public final class PawnMovementStrategy implements MovementStrategy {
     }
 
     private boolean isMovableDirection(final Distance distance, final AttackEvaluator attackEvaluator) {
-        final Direction availableDirection = moveDirections.get(attackEvaluator.sourceCamp());
+        final Direction availableDirection = MOVE_DIRECTIONS.get(attackEvaluator.sourceCamp());
 
         return distance.matchByDirection(availableDirection);
     }

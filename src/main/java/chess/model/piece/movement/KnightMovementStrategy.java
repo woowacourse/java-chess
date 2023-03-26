@@ -16,7 +16,7 @@ import java.util.List;
 public final class KnightMovementStrategy implements MovementStrategy {
 
     public static final KnightMovementStrategy MOVEMENT = new KnightMovementStrategy();
-    private static final List<Direction> availableDirections = List.of(
+    private static final List<Direction> DIRECTIONS = List.of(
             NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
             NORTH_WEST_WEST, NORTH_EAST_EAST, SOUTH_WEST_WEST, SOUTH_EAST_EAST
     );
@@ -39,7 +39,7 @@ public final class KnightMovementStrategy implements MovementStrategy {
     }
 
     private boolean isMovableDirection(final Distance distance) {
-        return availableDirections.stream()
+        return DIRECTIONS.stream()
                 .anyMatch(distance::matchByDirection);
     }
 

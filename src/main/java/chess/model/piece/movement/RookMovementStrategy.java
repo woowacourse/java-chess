@@ -7,7 +7,7 @@ import java.util.List;
 public final class RookMovementStrategy implements MovementStrategy {
 
     public static final RookMovementStrategy MOVEMENT = new RookMovementStrategy();
-    private static final List<Direction> availableDirections = Direction.ORTHOGONAL;
+    private static final List<Direction> DIRECTIONS = Direction.ORTHOGONAL;
 
     private RookMovementStrategy() {
     }
@@ -18,7 +18,7 @@ public final class RookMovementStrategy implements MovementStrategy {
     }
 
     private boolean isAvailableDirection(final Distance distance) {
-        return availableDirections.stream()
+        return DIRECTIONS.stream()
                 .anyMatch(distance::matchByDirection);
     }
 }

@@ -13,7 +13,7 @@ import java.util.Map;
 public final class InitialPawnMovementStrategy implements MovementStrategy {
 
     public static final InitialPawnMovementStrategy MOVEMENT = new InitialPawnMovementStrategy();
-    private static final Map<Camp, Direction> moveDirections = Map.of(
+    private static final Map<Camp, Direction> MOVE_DIRECTIONS = Map.of(
             WHITE, NORTH,
             BLACK, SOUTH
     );
@@ -31,7 +31,7 @@ public final class InitialPawnMovementStrategy implements MovementStrategy {
     }
 
     private boolean isAvailableDirection(final Distance distance, final AttackEvaluator attackEvaluator) {
-        final Direction availableDirection = moveDirections.get(attackEvaluator.sourceCamp());
+        final Direction availableDirection = MOVE_DIRECTIONS.get(attackEvaluator.sourceCamp());
 
         return isAvailableDistance(distance) && distance.matchByDirection(availableDirection);
     }

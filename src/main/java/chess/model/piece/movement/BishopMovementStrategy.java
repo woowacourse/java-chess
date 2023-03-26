@@ -7,7 +7,7 @@ import java.util.List;
 public final class BishopMovementStrategy implements MovementStrategy {
 
     public static final BishopMovementStrategy MOVEMENT = new BishopMovementStrategy();
-    private static final List<Direction> availableDirections = Direction.DIAGONAL;
+    private static final List<Direction> DIRECTIONS = Direction.DIAGONAL;
 
     private BishopMovementStrategy() {
     }
@@ -18,7 +18,7 @@ public final class BishopMovementStrategy implements MovementStrategy {
     }
 
     private boolean isAvailableDirection(final Distance distance) {
-        return availableDirections.stream()
+        return DIRECTIONS.stream()
                 .anyMatch(distance::matchByDirection);
     }
 }

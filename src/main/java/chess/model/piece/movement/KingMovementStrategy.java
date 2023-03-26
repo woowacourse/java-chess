@@ -8,13 +8,13 @@ import java.util.List;
 public final class KingMovementStrategy implements MovementStrategy {
 
     public static final KingMovementStrategy MOVEMENT = new KingMovementStrategy();
-    private static final List<Direction> availableDirections = new ArrayList<>();
+    private static final List<Direction> DIRECTIONS = new ArrayList<>();
     private static final int MINIMUM_DISTANCE = 0;
     private static final int MAXIMUM_DISTANCE = 1;
 
     static {
-        availableDirections.addAll(Direction.DIAGONAL);
-        availableDirections.addAll(Direction.ORTHOGONAL);
+        DIRECTIONS.addAll(Direction.DIAGONAL);
+        DIRECTIONS.addAll(Direction.ORTHOGONAL);
     }
 
     private KingMovementStrategy() {
@@ -33,7 +33,7 @@ public final class KingMovementStrategy implements MovementStrategy {
     }
 
     private boolean isMovableDirection(final Distance distance) {
-        return availableDirections.stream()
+        return DIRECTIONS.stream()
                 .anyMatch(distance::matchByDirection);
     }
 
