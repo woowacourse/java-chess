@@ -29,13 +29,17 @@ public class MoveCommand extends Command {
         throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
     }
 
-    private MoveCommand executeMove(List<String> input) {
+    private Command executeMove(List<String> input) {
         chessGame.movePiece(PositionMapper.from(input.get(SOURCE_POSITION_INDEX)),
                 PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
+
+        if (chessGame.isFinished()) {
+            return new StatusCommand(new ChessGame(new Board(getChessGameBoards())));
+        }
         return new MoveCommand(new ChessGame(new Board(getChessGameBoards())));
     }
 
-    private EndCommand executeEnd() {
+    private Command executeEnd() {
         return new EndCommand(new ChessGame(new Board(getChessGameBoards())));
     }
 }

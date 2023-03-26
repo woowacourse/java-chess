@@ -34,11 +34,11 @@ public class StatusCommand extends Command{
         throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
     }
 
-    private StatusCommand executeStatus() {
+    private Command executeStatus() {
         return this;
     }
 
-    private EndCommand executeEnd() {
+    private Command executeEnd() {
         return new EndCommand(new ChessGame(new Board(getChessGameBoards())));
     }
 }

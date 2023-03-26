@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static chess.PositionFixture.B_2;
-import static chess.PositionFixture.B_3;
+import static chess.PositionFixture.*;
+import static chess.PositionFixture.E_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -64,6 +64,21 @@ class MoveCommandTest {
                 () -> assertThat(result.getChessGameBoards().get(B_3)).isInstanceOf(Pawn.class),
                 () -> assertThat(result.getChessGameBoards().get(B_2)).isInstanceOf(Empty.class)
         );
+    }
+
+    @Test
+    void move명령어를_했을_때_King을_잡으면_StatusCommand_객체가_반환된다() {
+        chessGame.movePiece(E_2, E_4);
+        chessGame.movePiece(F_7, F_5);
+        chessGame.movePiece(E_4, F_5);
+        chessGame.movePiece(G_7, G_5);
+        chessGame.movePiece(D_1, H_5);
+        chessGame.movePiece(C_7, C_6);
+
+        Command moveCommand = new MoveCommand(chessGame);
+        Command result = moveCommand.execute(List.of("move", "h5", "e8"));
+
+        assertThat(result.isSameType(CommandType.STATUS)).isTrue();
     }
 
     @ParameterizedTest
