@@ -28,6 +28,8 @@ public class MainController implements Controller {
         while (command != MainCommand.END) {
             command = readCommand();
         }
+        UserSession.remove();
+        RoomSession.remove();
     }
 
     private MainCommand readCommand() {
