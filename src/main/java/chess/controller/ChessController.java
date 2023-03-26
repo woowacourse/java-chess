@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessGameDao;
 import chess.domain.chessGame.ChessBoard;
 import chess.domain.chessGame.ChessBoardGenerator;
 import chess.domain.chessGame.Referee;
@@ -23,6 +24,12 @@ public final class ChessController {
     private static final String WHITE_TEAM = "흰색";
     private static final String DRAW = "무승부";
 
+    private final ChessGameDao chessGameDao;
+
+    public ChessController(ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
+
     public void run() {
         OutputView.printStartMessage();
         CommandDto commandDto = repeat(InputView::readInitialCommand);
@@ -42,12 +49,18 @@ public final class ChessController {
 
     private void startGame() {
         ChessBoard chessBoard = setUpChessBoard();
+        showChessBoardStatus(chessBoard);
         checkKingAlive(chessBoard);
-        repeat(() -> playGame(chessBoard));
+        try {
+            repeat(() -> playGame(chessBoard));
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void checkKingAlive(ChessBoard chessBoard) {
         if (chessBoard.isKingDead()) {
+            chessGameDao.delete(chessBoard);
             throw new IllegalStateException("[ERROR] King이 죽었기 때문에 끝난 게임입니다.");
         }
     }
@@ -62,9 +75,12 @@ public final class ChessController {
     }
 
     private ChessBoard setUpChessBoard() {
+        ChessBoard chessBoard = chessGameDao.select();
+        if (chessBoard != null) {
+            return chessBoard;
+        }
         ChessBoardGenerator generator = new ChessBoardGenerator();
-        ChessBoard chessBoard = new ChessBoard(generator.generate());
-        showChessBoardStatus(chessBoard);
+        chessBoard = new ChessBoard(generator.generate());
         return chessBoard;
     }
 
@@ -93,6 +109,7 @@ public final class ChessController {
         chessBoard.movePiece(Position.of(startInput), Position.of(endInput));
         showChessBoardStatus(chessBoard);
         checkKingAlive(chessBoard);
+        chessGameDao.update(chessBoard);
     }
 
     private void showChessBoardStatus(ChessBoard chessBoard) {
