@@ -95,4 +95,12 @@ public class Square {
     public boolean reachedEndRank() {
         return rank == Rank.ONE || rank == Rank.EIGHT;
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

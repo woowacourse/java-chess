@@ -22,11 +22,19 @@ public enum FileRenderer {
         this.file = rank;
     }
 
-    static public File renderToFile(String input) {
+    static public File render(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.command.equals(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."))
                 .file;
+    }
+
+    static public String render(File file) {
+        return Arrays.stream(values())
+                .filter(value -> value.file == file)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."))
+                .command;
     }
 }

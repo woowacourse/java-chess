@@ -7,9 +7,7 @@ import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-
-import java.util.Arrays;
+import chess.dto.PieceRenderer;
 
 public class OutputView {
     private static final String WHITE = "WHITE";
@@ -82,43 +80,10 @@ public class OutputView {
 
         for (File file : File.values()) {
             Piece piece = chessboard.getPieceAt(Square.getInstanceOf(file, rank));
-            stringBuilder.append(PieceRenderer.getPieceName(piece));
+            stringBuilder.append(PieceRenderer.render(piece));
         }
 
         System.out.println(stringBuilder);
-    }
-
-    private enum PieceRenderer {
-        PAWN("p"),
-        ROOK("r"),
-        KNIGHT("n"),
-        BISHOP("b"),
-        QUEEN("q"),
-        KING("k"),
-        EMPTY(".");
-
-        private final String value;
-
-        PieceRenderer(String value) {
-            this.value = value;
-        }
-
-        public static String getPieceName(Piece piece) {
-            PieceRenderer renderedPiece = renderPiece(piece.getPieceType());
-
-            if (piece.isWhite()) {
-                return renderedPiece.value;
-            }
-
-            return renderedPiece.value.toUpperCase();
-        }
-
-        private static PieceRenderer renderPiece(PieceType pieceType) {
-            return Arrays.stream(values())
-                    .filter(value -> value.name().equals(pieceType.name()))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-        }
     }
 
     private enum Message {

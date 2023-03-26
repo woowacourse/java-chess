@@ -22,11 +22,19 @@ public enum RankRenderer {
         this.rank = rank;
     }
 
-    static public Rank renderToRank(String input) {
+    static public Rank render(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.command.equals(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."))
                 .rank;
+    }
+
+    static public String render(Rank rank) {
+        return Arrays.stream(values())
+                .filter(value -> value.rank == rank)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."))
+                .command;
     }
 }
