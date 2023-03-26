@@ -2,12 +2,12 @@ package chess.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.piece.type.Bishop;
-import chess.piece.type.King;
-import chess.piece.type.Knight;
-import chess.piece.type.Piece;
-import chess.piece.type.Rook;
-import chess.piece.Side;
+import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.King;
+import chess.domain.piece.type.Knight;
+import chess.domain.piece.type.Piece;
+import chess.domain.piece.type.Rook;
+import chess.domain.piece.Side;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

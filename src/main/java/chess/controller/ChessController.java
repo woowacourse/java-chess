@@ -1,15 +1,15 @@
 package chess.controller;
 
-import chess.board.Board;
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
-import chess.board.dto.BoardDto;
-import chess.game.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.board.dto.BoardDto;
+import chess.domain.game.ChessGame;
 import chess.view.GameCommand;
-import chess.piece.AllPiecesGenerator;
-import chess.piece.Pieces;
-import chess.piece.Side;
+import chess.domain.piece.AllPiecesGenerator;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.Side;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Arrays;
