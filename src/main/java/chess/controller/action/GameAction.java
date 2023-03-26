@@ -1,5 +1,6 @@
-package chess.controller;
+package chess.controller.action;
 
+import chess.controller.Command;
 import chess.domain.chessgame.ChessGame;
 
 @FunctionalInterface
