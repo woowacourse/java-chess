@@ -32,7 +32,7 @@ public class Running extends State {
 
     @Override
     public State start() {
-        return new Running(ChessGame.create());
+        throw new UnsupportedOperationException("게임 진행 중 입니다.");
     }
 
     @Override
