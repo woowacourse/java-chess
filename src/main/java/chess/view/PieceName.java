@@ -10,31 +10,58 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.team.Team;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 public class PieceName {
 
-    private static final Map<Class<? extends Piece>, String> pieceName = Map.of(
-            King.class, "k",
-            Queen.class, "q",
-            Rook.class, "r",
-            Knight.class, "n",
-            Bishop.class, "b",
-            Pawn.class, "p",
-            Empty.class, "."
-    );
+    private static final Map<Class<? extends Piece>, String> pieceToName;
+    private static final Map<String, Piece> nameToPiece;
+    private static final Map<Team, Function<String, String>> changeByTeam;
 
-    private static final Map<Team, Function<String, String>> changeByTeam = Map.of(
-            Team.WHITE, String::toLowerCase,
-            Team.BLACK, String::toUpperCase,
-            Team.NONE, name -> name
-    );
+    static {
+        pieceToName = new HashMap<>();
+        pieceToName.put(King.class, "k");
+        pieceToName.put(Queen.class, "q");
+        pieceToName.put(Rook.class, "r");
+        pieceToName.put(Knight.class, "n");
+        pieceToName.put(Bishop.class, "b");
+        pieceToName.put(Pawn.class, "p");
+        pieceToName.put(Empty.class, ".");
 
-    public static String findByPiece(Piece piece) {
+        nameToPiece = new HashMap<>();
+        nameToPiece.put("k", new King(Team.WHITE));
+        nameToPiece.put("K", new King(Team.BLACK));
+        nameToPiece.put("q", new Queen(Team.WHITE));
+        nameToPiece.put("Q", new Queen(Team.BLACK));
+        nameToPiece.put("r", new Rook(Team.WHITE));
+        nameToPiece.put("R", new Rook(Team.BLACK));
+        nameToPiece.put("n", new Knight(Team.WHITE));
+        nameToPiece.put("N", new Knight(Team.BLACK));
+        nameToPiece.put("b", new Bishop(Team.WHITE));
+        nameToPiece.put("B", new Bishop(Team.BLACK));
+        nameToPiece.put("p", new Pawn(Team.WHITE));
+        nameToPiece.put("P", new Pawn(Team.BLACK));
+        nameToPiece.put(".", new Empty(Team.NONE));
+
+        changeByTeam = new HashMap<>();
+        changeByTeam.put(Team.WHITE, String::toLowerCase);
+        changeByTeam.put(Team.BLACK, String::toLowerCase);
+        changeByTeam.put(Team.NONE, name -> name);
+    }
+
+    public static String findByPiece(final Piece piece) {
         final Team team = piece.team();
-        final String initialName = pieceName.get(piece.getClass());
+        final String initialName = pieceToName.get(piece.getClass());
 
         return changeByTeam.get(team).apply(initialName);
+    }
+
+    public static Piece findByName(final String name) {
+        return nameToPiece.values().stream()
+                .filter(value -> value.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름을 가진 체스말이 존재하지 않습니다"));
     }
 }

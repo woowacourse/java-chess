@@ -14,9 +14,11 @@ public class Board {
     private static final int START_COUNT = 0;
     private static final int INCLUDE_TARGET = 1;
 
+    private final int id;
     private final Map<Position, Piece> board;
 
-    public Board(final Map<Position, Piece> board) {
+    public Board(final int id, final Map<Position, Piece> board) {
+        this.id = id;
         this.board = board;
     }
 
@@ -113,6 +115,10 @@ public class Board {
 
     public Piece getPiece(final Position position) {
         return board.get(position);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Map<Position, Piece> getBoard() {

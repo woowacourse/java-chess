@@ -1,7 +1,7 @@
 package chess.domain.game;
 
+import chess.dao.BoardDao;
 import chess.domain.board.Board;
-import chess.domain.board.initial.BoardFactory;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -9,8 +9,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.team.Team;
-
-import java.util.HashMap;
+import chess.view.TeamName;
 
 public class ChessGame {
 
@@ -21,16 +20,25 @@ public class ChessGame {
     private static final double PENALTY_SCORE_DUPLICATE_PAWN_IN_FILE = 0.5;
     private static final int EXIST_OPPONENT_KING = 1;
     private static final int NOT_EXIST_OPPONENT_KING = 0;
+
+    private final int id;
     private final Board board;
     private Team turn;
 
-    private ChessGame() {
-        this.board = BoardFactory.from(new HashMap<>());
-        this.turn = Team.WHITE;
+    private ChessGame(final int id, final int boardId, final Team turn) {
+        this.id = id;
+        this.board = BoardDao.findById(boardId);
+        this.turn = turn;
     }
 
-    public static ChessGame create() {
-        return new ChessGame();
+    public static ChessGame of(final int id, final int boardId) {
+        return new ChessGame(id, boardId, Team.WHITE);
+    }
+
+    public static ChessGame of(final int id, final int boardId, final String team) {
+        final Team turn = TeamName.findByName(team);
+
+        return new ChessGame(id, boardId, turn);
     }
 
     public void move(final Position source, final Position target) {
@@ -92,7 +100,7 @@ public class ChessGame {
     public boolean isExistOpponentKing() {
         int countOpponentKing = INITIAL_COUNT;
 
-        for(final File file: File.values()) {
+        for (final File file : File.values()) {
             countOpponentKing += getCountOpponentKingEachFile(file);
         }
 
@@ -102,7 +110,7 @@ public class ChessGame {
     private int getCountOpponentKingEachFile(final File file) {
         int countOpponentKing = INITIAL_COUNT;
 
-        for(final Rank rank: Rank.values()) {
+        for (final Rank rank : Rank.values()) {
             countOpponentKing += getCountOpponentKingEachPosition(file, rank);
         }
 
@@ -118,11 +126,15 @@ public class ChessGame {
         return NOT_EXIST_OPPONENT_KING;
     }
 
-    public Board getBoard() {
-        return board;
+    public int getId() {
+        return id;
     }
 
     public Team getTurn() {
         return turn;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

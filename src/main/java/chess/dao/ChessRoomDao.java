@@ -1,12 +1,17 @@
 package chess.dao;
 
+import chess.domain.board.Board;
+import chess.domain.game.ChessGame;
 import chess.domain.player.Player;
+import chess.domain.room.ChessRoom;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlayerDao {
+public class ChessRoomDao {
 
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
@@ -24,17 +29,19 @@ public class PlayerDao {
         }
     }
 
-    public static Player findByName(final String name) {
-        final var query = "SELECT * FROM player WHERE name = ?";
+    public static ChessRoom findByPlayer(final Player player) {
+        final var query = "SELECT id, game_id, player_id, status FROM chess_room WHERE player_id = ? AND status != \"END\"";
         try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, name);
+            preparedStatement.setInt(1, player.getId());
 
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Player.of(
+                return ChessRoom.of(
                         resultSet.getInt(1),
-                        resultSet.getString(2)
+                        resultSet.getInt(2),
+                        resultSet.getInt(3),
+                        resultSet.getString(4)
                 );
             }
             return null;
@@ -43,13 +50,14 @@ public class PlayerDao {
         }
     }
 
-    public static Player create(final String name) {
-        final var query = "INSERT INTO player(name) VALUES (?)";
+    public static ChessRoom create(final ChessGame chessGame, final Player player) {
+        final var query = "INSERT INTO chess_room VALUES (?, ?, DEFAULT)";
         try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, name);
+            preparedStatement.setInt(1, chessGame.getId());
+            preparedStatement.setInt(2, player.getId());
             preparedStatement.executeUpdate();
-            return findByName(name);
+            return findByPlayer(player);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

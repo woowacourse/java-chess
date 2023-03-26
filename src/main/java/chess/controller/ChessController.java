@@ -2,7 +2,9 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.strategy.StrategyCommand;
+import chess.dao.ChessGameDao;
 import chess.domain.game.ChessGame;
+import chess.domain.room.ChessRoom;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -11,8 +13,8 @@ public class ChessController {
     private final ChessGame chessGame;
     private ChessState state;
 
-    public ChessController() {
-        this.chessGame = ChessGame.create();
+    public ChessController(final ChessRoom chessRoom) {
+        this.chessGame = ChessGameDao.findById(chessRoom.getGameId());
         this.state = ChessState.INIT;
     }
 
