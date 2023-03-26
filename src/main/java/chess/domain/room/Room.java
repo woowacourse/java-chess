@@ -11,6 +11,10 @@ public class Room {
         this.userId = userId;
     }
 
+    public boolean isNotCreatedBy(final int id) {
+        return userId != id;
+    }
+
     public int getId() {
         return id;
     }
@@ -21,9 +25,5 @@ public class Room {
 
     public int getUserId() {
         return userId;
-    }
-
-    public boolean isNotCreatedBy(final int id) {
-        return userId != id;
     }
 }
