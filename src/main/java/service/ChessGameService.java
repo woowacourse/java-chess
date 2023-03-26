@@ -1,6 +1,6 @@
 package service;
 
-import dao.BoardDao;
+import dao.ChessGameDao;
 import domain.game.Board;
 import domain.game.ChessGame;
 import dto.dao.ChessGameDaoResponseDto;
@@ -9,15 +9,14 @@ import dto.service.ChessGameCreateResponseDto;
 import java.util.List;
 
 public class ChessGameService {
-    private final BoardDao boardDao;
+    private final ChessGameDao boardDao;
 
-    public ChessGameService(BoardDao boardDao) {
+    public ChessGameService(ChessGameDao boardDao) {
         this.boardDao = boardDao;
     }
 
     public void updateChessGame(ChessGame chessGame, Long roomId) {
-        boardDao.delete(roomId);
-        boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn(), roomId);
+        boardDao.updateGame(roomId, chessGame.getBoard(), chessGame.getCurrentTurn());
     }
 
     public ChessGameCreateResponseDto createGameRoom(ChessGame chessGame) {

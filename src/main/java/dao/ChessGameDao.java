@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardDao {
+public class ChessGameDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
@@ -92,7 +92,6 @@ public class BoardDao {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-//        return ChessGameCreateResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
         return new ChessGameDaoResponseDto(board, lastTurn, GameState.RUN);
     }
 
@@ -112,14 +111,30 @@ public class BoardDao {
         }
     }
 
-    public void delete(Long roomId) {
-        String deleteQuery = "DELETE FROM chess_board WHERE game_room_id_fk = ?";
-        try (Connection connection = getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
-            preparedStatement.setLong(1, roomId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
+    public void updateGame(Long roomId, Map<Position, Piece> board, Side currentTurn) {
+        final String saveQuery = "UPDATE chess_board SET piece_type = ?,side = ?,piece_rank = ?,piece_file = ?, last_turn = ? where game_room_id_fk = ? and piece_file = ? and piece_rank = ?";
+        for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
+            File file = pieces.getKey().getFile();
+            Rank rank = pieces.getKey().getRank();
+            PieceType pieceType = pieces.getValue().getPieceType();
+            Side pieceSide = pieces.getValue().getSide();
+
+            try (Connection connection = getConnection()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(saveQuery);
+
+                preparedStatement.setString(1, pieceType.name());
+                preparedStatement.setString(2, pieceSide.name());
+                preparedStatement.setString(3, rank.getText());
+                preparedStatement.setString(4, file.getText());
+                preparedStatement.setString(5, currentTurn.name());
+                preparedStatement.setLong(6, roomId);
+                preparedStatement.setString(7, file.getText());
+                preparedStatement.setString(8, rank.getText());
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new IllegalArgumentException(e);
+            }
         }
     }
 
