@@ -1,17 +1,17 @@
 package chess.controller;
 
 import chess.service.ChessGameService;
+import chess.view.ChessRequest;
 import chess.view.OutputView;
 
-public class ClearController implements Controller {
+public class StatusAction implements Action {
+
     @Override
-    public void execute(ChessGameService chessGameService, OutputView outputView) {
+    public GameCommand execute(ChessGameService chessGameService, OutputView outputView, ChessRequest chessRequest) {
         if (chessGameService.isNotStart()) {
             throw new IllegalArgumentException("start를 해주세요");
         }
-        chessGameService.clear();
         outputView.printStatus(chessGameService.getGameResult());
-        outputView.printClear();
-        outputView.printStart();
+        return GameCommand.STATUS;
     }
 }
