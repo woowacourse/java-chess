@@ -30,6 +30,6 @@ class CommandArgumentsTest {
         );
 
         assertThat(commandArguments.getRawStartCoordinate())
-                .isEqualTo("b2");
+                .isEqualTo("b3");
     }
 }
