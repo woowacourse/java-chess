@@ -28,6 +28,7 @@ public enum CommandActionMapper {
                 (controller, request) -> {
                     throw new IllegalArgumentException("해당 요청으로 실행할 수 있는 기능이 없습니다.");
                 });
+        chessController.validateCommandRequest(commandRequest);
         return action.execute(chessController, commandRequest);
     }
 

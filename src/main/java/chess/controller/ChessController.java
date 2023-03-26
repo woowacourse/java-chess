@@ -14,11 +14,14 @@ public class ChessController {
         this.chessGame = new ChessGame();
     }
 
+    public void validateCommandRequest(CommandRequest commandRequest) {
+        chessGame.validateCommand(commandRequest);
+    }
+
     public AppStatus start(CommandRequest commandRequest) {
-        chessGame.start(commandRequest);
         // TODO 게임방 목록 출력
         // TODO 게임방 아이디를 입력받는다. 없는 아이디일 경우 새로 생성된다.
-        chessGame.selectBoardRoom(1);
+        chessGame.start(1);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         return AppStatus.RUNNING;
     }

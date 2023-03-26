@@ -83,10 +83,10 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
             preparedStatement.setInt(3, position.getRank());
             preparedStatement.setString(4, piece.getType().name());
             preparedStatement.setString(5, piece.getColor().name());
-            preparedStatement.setInt(2, position.getFile());
-            preparedStatement.setInt(3, position.getRank());
-            preparedStatement.setString(4, piece.getType().name());
-            preparedStatement.setString(5, piece.getColor().name());
+            preparedStatement.setInt(6, position.getFile());
+            preparedStatement.setInt(7, position.getRank());
+            preparedStatement.setString(8, piece.getType().name());
+            preparedStatement.setString(9, piece.getColor().name());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -26,7 +26,7 @@ class ChessBoardTest {
 
     @BeforeEach
     void setUp() {
-        chessBoard = new ChessBoard();
+        chessBoard = new ChessBoard(1);
     }
 
     @DisplayName("체스판에 초기 말을 세팅한다.")
@@ -40,7 +40,7 @@ class ChessBoardTest {
     @DisplayName("정해진 게임 규칙에 따라, 말을 움직일 때마다 진영 턴을 전환한다.")
     @Test
     void 진영_턴_전환() {
-        chessBoard = new ChessBoard();
+        chessBoard = new ChessBoard(1);
 
         chessBoard.move(Position.of(1, 2), Position.of(1, 4));
 
@@ -119,14 +119,14 @@ class ChessBoardTest {
     void 킹_체크_시_종료() {
         Position source = Position.of(1, 1);
         Position destination = Position.of(2, 2);
-        ChessBoard fakeChessBoard = new ChessBoard(new HashMap<>(Map.of(
+        ChessBoard fakeChessBoard = new ChessBoard(1, new HashMap<>(Map.of(
                 source, WHITE_PAWN,
                 destination, BLACK_KING)
         ));
 
-        boolean isOver = fakeChessBoard.move(source, destination);
+        fakeChessBoard.move(source, destination);
 
-        assertThat(isOver).isTrue();
+        assertThat(fakeChessBoard.isOver()).isTrue();
     }
 
 }

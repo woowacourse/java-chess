@@ -17,22 +17,28 @@ public class ChessBoard {
     private static final String WRONG_PIECE_COLOR_ERROR_MESSAGE = "자신 팀의 말만 이동시킬 수 있습니다.";
     private static final String WRONG_ATTACK_ERROR_MESSAGE = "선택한 말로 공격할 수 없습니다.";
     private static final String WRONG_DESTINATION_ERROR_MESSAGE = "해당 말이 갈 수 없는 위치입니다.";
+
+    private final int id;
     private final Map<Position, Piece> piecesByPosition;
     private boolean isOver;
     private Camp currentTurnCamp;
 
-    public ChessBoard() {
+    public ChessBoard(final int id) {
+        this.id = id;
         this.piecesByPosition = PieceInitializer.createPiecesWithPosition();
-        this.currentTurnCamp = Camp.WHITE;
-    }
-
-    public ChessBoard(final Map<Position, Piece> piecesByPosition) {
-        this.piecesByPosition = new HashMap<>(piecesByPosition);
         this.isOver = false;
         this.currentTurnCamp = Camp.WHITE;
     }
 
-    public ChessBoard(final Map<Position, Piece> piecesByPosition, final ChessBoardStatus boardStatus) {
+    public ChessBoard(final int id, final Map<Position, Piece> piecesByPosition) {
+        this.id = id;
+        this.piecesByPosition = piecesByPosition;
+        this.isOver = false;
+        this.currentTurnCamp = Camp.WHITE;
+    }
+
+    public ChessBoard(final int id, final Map<Position, Piece> piecesByPosition, final ChessBoardStatus boardStatus) {
+        this.id = id;
         this.piecesByPosition = piecesByPosition;
         this.isOver = boardStatus.isOver();
         this.currentTurnCamp = boardStatus.getCurrentTurn();
@@ -134,6 +140,14 @@ public class ChessBoard {
         return piecesByPosition.keySet()
                 .stream()
                 .collect(Collectors.groupingBy(piecesByPosition::get));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isOver() {
+        return isOver;
     }
 
     public ChessBoardStatus status() {
