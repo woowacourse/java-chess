@@ -2,6 +2,7 @@ package chessgame.piece;
 
 import chessgame.domain.Team;
 import chessgame.domain.piece.Bishop;
+import chessgame.domain.piece.PieceType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -45,19 +46,19 @@ class BishopTest {
         @Test
         @DisplayName("Pawn인지 여부를 물어본다.")
         void Should_False_When_IsPawn() {
-            Assertions.assertThat(bishop.isPawn()).isFalse();
+            Assertions.assertThat(bishop.isPiece(PieceType.PAWN)).isFalse();
         }
 
         @Test
-        @DisplayName("Pawn인지 여부를 물어본다.")
+        @DisplayName("Knight인지 여부를 물어본다.")
         void Should_False_When_IsKnight() {
-            Assertions.assertThat(bishop.isKnight()).isFalse();
+            Assertions.assertThat(bishop.isPiece(PieceType.KNIGHT)).isFalse();
         }
 
         @Test
         @DisplayName("King인지 여부를 물어본다.")
         void Should_False_When_IsKing() {
-            Assertions.assertThat(bishop.isKing()).isFalse();
+            Assertions.assertThat(bishop.isPiece(PieceType.KING)).isFalse();
         }
     }
 }

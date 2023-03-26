@@ -28,18 +28,8 @@ public class Queen implements Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
+    public boolean isPiece(PieceType piece) {
+        return pieceType.equals(piece);
     }
 
     @Override

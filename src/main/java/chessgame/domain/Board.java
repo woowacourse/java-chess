@@ -1,6 +1,7 @@
 package chessgame.domain;
 
 import chessgame.domain.piece.Piece;
+import chessgame.domain.piece.PieceType;
 import chessgame.domain.point.File;
 import chessgame.domain.point.Point;
 
@@ -59,7 +60,7 @@ public class Board {
     }
 
     private void followPieceRoute(Point source, Point target, Piece piece) {
-        if (piece.isKnight()) {
+        if (piece.isPiece(PieceType.KNIGHT)) {
             movePiece(source, target, piece);
             return;
         }
@@ -96,7 +97,7 @@ public class Board {
     public boolean isExistKing(Team team) {
         return board.values()
                 .stream()
-                .filter(Piece::isKing)
+                .filter(piece -> piece.isPiece(PieceType.KING))
                 .anyMatch(s -> s.team() == team);
     }
 
@@ -127,9 +128,10 @@ public class Board {
     }
 
     private Map<Point, Piece> calculateSameTeamPawn(Team team) {
+
         return board.keySet()
                 .stream()
-                .filter(point -> board.get(point).isPawn() && board.get(point).team() == team)
+                .filter(point -> board.get(point).isPiece(PieceType.PAWN) && board.get(point).team() == team)
                 .collect(Collectors.toMap(point -> point, board::get));
     }
 
