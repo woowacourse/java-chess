@@ -3,14 +3,12 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -171,40 +169,6 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 같은 위치로 움직일 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("각 팀별 점수가 정확하게 계산되어야 한다.")
-    void getTeamScore_Success() {
-        // given
-        Map<Position, Piece> squares = BoardFactory.createEmptyBoard();
-        squares.put(Position.of(0, 6), Pawn.of(Team.BLACK));
-        squares.put(Position.of(1, 5), Pawn.of(Team.BLACK));
-        squares.put(Position.of(1, 7), Pawn.of(Team.BLACK));
-        squares.put(Position.of(2, 7), Rook.of(Team.BLACK));
-        squares.put(Position.of(2, 6), Pawn.of(Team.BLACK));
-        squares.put(Position.of(3, 6), Bishop.of(Team.BLACK));
-        squares.put(Position.of(4, 5), Queen.of(Team.BLACK));
-
-        squares.put(Position.of(4, 0), Rook.of(Team.WHITE));
-        squares.put(Position.of(5, 0), King.of(Team.WHITE));
-        squares.put(Position.of(5, 1), Pawn.of(Team.WHITE));
-        squares.put(Position.of(5, 2), Pawn.of(Team.WHITE));
-        squares.put(Position.of(5, 3), Knight.of(Team.WHITE));
-        squares.put(Position.of(6, 1), Pawn.of(Team.WHITE));
-        squares.put(Position.of(6, 3), Queen.of(Team.WHITE));
-        squares.put(Position.of(7, 2), Pawn.of(Team.WHITE));
-        Board board = new Board(squares);
-
-        // when
-        Score blackScore = board.getTeamScore(Team.BLACK);
-        Score whiteScore = board.getTeamScore(Team.WHITE);
-
-        // then
-        assertThat(blackScore.getScore())
-                .isEqualTo(20);
-        assertThat(whiteScore.getScore())
-                .isEqualTo(19.5);
     }
 
     @Test

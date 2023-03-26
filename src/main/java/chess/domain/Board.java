@@ -88,10 +88,17 @@ public class Board {
                 .allMatch(piece -> piece.isRoleOf(Role.EMPTY));
     }
 
-    public Score getTeamScore(Team team) {
+    public Map<Position, Piece> getTeamSquares(Team team) {
         return squares.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
-                .collect(collectingAndThen(toMap(Entry::getKey, Entry::getValue), Score::of));
+                .collect(toMap(Entry::getKey, Entry::getValue));
+    }
+
+    public Map<Integer, Long> getPawnCountByX(Team team) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .filter(entry -> entry.getValue().isRoleOf(Role.PAWN))
+                .collect(groupingBy(entry -> entry.getKey().getX(), counting()));
     }
 
     public boolean isChecked(Team team) {
