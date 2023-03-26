@@ -73,8 +73,7 @@ public class MySQLChessGameDao implements ChessGameDao {
         final String query = "SELECT * FROM game_state";
         return jdbcContext.select(query, resultSet -> {
             validateEmptyResultSet(resultSet);
-            RunningStateMapper state = RunningStateMapper.valueOf(resultSet.getString("state"));
-            return state.gameState;
+            return RunningStateMapper.map(resultSet.getString("state"));
         });
     }
 
@@ -137,6 +136,10 @@ public class MySQLChessGameDao implements ChessGameDao {
                     .findAny()
                     .orElseThrow(IllegalArgumentException::new)
                     .name();
+        }
+
+        public static GameState map(String gameState) {
+            return RunningStateMapper.valueOf(gameState).gameState;
         }
 
         private boolean isSameState(GameState gameState) {
