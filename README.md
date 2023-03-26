@@ -86,3 +86,14 @@ graph TD
         Empty -.-> Piece
     end
 ```
+
+### ERD
+```sql
+CREATE TABLE move (
+    id     BIGINT        NOT NULL AUTO_INCREMENT,
+    source VARCHAR(300) NOT NULL,
+    target VARCHAR(300) NOT NULL,
+    primary key (id)
+);
+
+```
