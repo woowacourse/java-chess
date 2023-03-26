@@ -31,7 +31,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.findPiece(C_4))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 위치를 입력했습니다");
+                .hasMessage("잘못된 위치를 입력했습니다.");
     }
 
     @Test
@@ -57,5 +57,22 @@ class BoardTest {
 
         assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
         assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    void 경로에_말이_포함되어있을_때_말을_움직일_수_없다() {
+        Board board = BoardFactory.createBoard();
+        assertThatThrownBy(() -> board.movePiece(B_1, B_3, Team.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 위치를 입력했습니다.");
+    }
+
+    @Test
+    void 경로에_아무것도_없다면_말을_움직일_수_있다() {
+        Board board = BoardFactory.createBoard();
+        board.movePiece(B_2, B_3, Team.WHITE);
+
+        assertThat(board.findPiece(B_2)).isInstanceOf(Empty.class);
+        assertThat(board.findPiece(B_3)).isInstanceOf(Pawn.class);
     }
 }
