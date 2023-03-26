@@ -39,8 +39,6 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -72,22 +70,6 @@ public class BoardTest {
                 PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN,
                 ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK
         );
-    }
-
-    @ParameterizedTest(name = "보드가 초기화가 안되었는지 확인한다. 초기화:{0}, 결과:{1}")
-    @CsvSource({"true, false", "false, true"})
-    void 보드가_초기화가_안되었는지_확인한다(final boolean initialize, final boolean status) {
-        // given
-        Board board = new Board();
-        if (initialize) {
-            board.initialize();
-        }
-
-        // when
-        final boolean result = board.isNotInitialized();
-
-        // then
-        assertThat(result).isEqualTo(status);
     }
 
     @Test

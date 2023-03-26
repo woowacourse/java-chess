@@ -30,12 +30,7 @@ public class GameOutputView {
         }
         return "무승부";
     }
-
-    public void printGameClear() {
-        System.out.println("체스 게임을 초기화합니다." + NEXT_LINE);
-        printGameStart();
-    }
-
+    
     public void printGameEnd() {
         System.out.println("체스 게임을 종료합니다.");
     }

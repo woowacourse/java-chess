@@ -29,7 +29,7 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
-        if (isNotInitialized() || isGameOver()) {
+        if (isGameOver()) {
             throw new IllegalStateException("게임을 진행할 수 있는 상태가 아닙니다.");
         }
         final Piece piece = board.get(source);
@@ -37,10 +37,6 @@ public class Board {
         validate(source, target, piece);
         movePiece(source, target, piece);
         turn = turn.nextTurn();
-    }
-
-    public boolean isNotInitialized() {
-        return board.isEmpty();
     }
 
     public boolean isGameOver() {
@@ -76,9 +72,6 @@ public class Board {
     }
 
     public final GameResult getResult() {
-        if (isNotInitialized()) {
-            throw new IllegalStateException("결과를 반환할 수 있는 상태가 아닙니다.");
-        }
         return new GameResult(Collections.unmodifiableMap(board));
     }
 }
