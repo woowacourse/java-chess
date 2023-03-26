@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Chessboard {
     private final Map<Square, Piece> board;
@@ -69,7 +70,14 @@ public class Chessboard {
         return source.getDiagonalSquares(target);
     }
 
-    public int getPieceCountOnBoard(Piece targetPiece) {
+    public Map<PieceType, Integer> getAlivePieceAndCountMap(Camp camp) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameCamp(camp))
+                .distinct()
+                .collect(Collectors.toMap(Piece::getPieceType, this::countSamePieceOnBoard));
+    }
+
+    public int countSamePieceOnBoard(Piece targetPiece) {
         return (int) board.values().stream()
                 .filter(piece -> piece.equals(targetPiece))
                 .count();
