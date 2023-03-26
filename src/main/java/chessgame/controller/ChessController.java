@@ -1,12 +1,16 @@
 package chessgame.controller;
 
 import chessgame.domain.chessgame.BoardInitialImage;
+import chessgame.domain.chessgame.Camp;
 import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.piece.Piece;
+import chessgame.service.ChessGameService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
 
@@ -18,10 +22,12 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameService chessGameService;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView, ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameService = chessGameService;
     }
 
     public void run() {
@@ -47,11 +53,18 @@ public class ChessController {
 
     private void processStartGame(final Command command) {
         if (command.isStart()) {
-            playGame(new ChessGame(BoardInitialImage.generate()));
+            Map<Coordinate, Piece> board = makeNewGameRoom();
+            ChessGame chessGame = new ChessGame(board);
+            playGame(chessGame);
         }
         if (command.isMove() || command.isStatus()) {
             throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");
         }
+    }
+
+    private Map<Coordinate, Piece> makeNewGameRoom() {
+        chessGameService.addNewGame(BoardInitialImage.generate(), Camp.WHITE);
+        return chessGameService.findLeastPieces();
     }
 
     private void playGame(final ChessGame chessGame) {

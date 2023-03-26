@@ -3,7 +3,6 @@ package chessgame.service;
 import chessgame.dao.GameRoomDao;
 import chessgame.dao.PiecesDao;
 import chessgame.domain.chessgame.Camp;
-import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
@@ -19,14 +18,17 @@ public class ChessGameService {
     private final GameRoomDao gameRoomDao = new GameRoomDao();
     private final PiecesDao piecesDao = new PiecesDao();
 
-    public void addNewGame(ChessGame chessGame) {
-        gameRoomDao.addRoom(chessGame.getTurn());
+    public void addNewGame(Map<Coordinate, Piece> board, Camp camp) {
+        gameRoomDao.addRoom(camp);
         GameRoomDto leastGameRoom = gameRoomDao.findLeastGameRoom();
-        Map<Coordinate, Piece> board = chessGame.getBoard()
-                                                .getBoard();
 
         board.forEach((coordinate, piece) ->
                 piecesDao.addPiece(leastGameRoom.getRoomId(), coordinate, piece));
+    }
+
+    public Map<Coordinate, Piece> findLeastPieces() {
+        GameRoomDto leastGameRoom = gameRoomDao.findLeastGameRoom();
+        return findPiecesByRoomId(leastGameRoom.getRoomId());
     }
 
     public Map<Coordinate, Piece> findPiecesByRoomId(long roomId) {
@@ -45,8 +47,7 @@ public class ChessGameService {
         String type = pieceDto.getType();
 
         Camp pieceCamp = Camp.valueOf(camp);
-        Piece piece = PieceType.valueOf(type)
-                               .createPiece(pieceCamp);
-        return piece;
+        return PieceType.valueOf(type)
+                        .createPiece(pieceCamp);
     }
 }
