@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
 public final class EmptyPiece extends Piece {
@@ -17,15 +16,9 @@ public final class EmptyPiece extends Piece {
         return emptyPiece;
     }
 
-
     @Override
-    protected void checkMovableDirection(Direction direction) {
-        throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다");
-    }
-
-    @Override
-    public void checkMovable(final Position start, final Position end, final Color destinationColor) {
-        throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다");
+    public boolean isMovable(final Position start, final Position end, final Color destinationColor) {
+        return false;
     }
 
 }
