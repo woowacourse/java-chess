@@ -11,7 +11,6 @@ import chess.domain.square.Square;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -24,14 +23,12 @@ public class Board {
     }
 
     public static Board create() {
-        final BoardFactory boardFactory = new BoardFactory();
-        return new Board(boardFactory.make());
+        return new Board(BoardFactory.make());
     }
 
     public void reset() {
         board.clear();
-        final BoardFactory boardFactory = new BoardFactory();
-        board.putAll(boardFactory.make());
+        board.putAll(BoardFactory.make());
     }
 
     public void validateTurn(final Turn turn, final Square current) {
