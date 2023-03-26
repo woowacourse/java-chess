@@ -10,8 +10,9 @@ import java.util.Map;
 public class OutputView {
     public static final int RANK_INDEX = 0;
     public static final int FILE_INDEX = 1;
-    public static final int BLACK_SOCRE_INDEX = 0;
+    public static final int BLACK_SCORE_INDEX = 0;
     public static final int WHITE_SCORE_INDEX = 1;
+    public static final String EMPTY_PIECE_SPACE = ".";
     private static OutputView instance;
 
     private OutputView() {
@@ -46,7 +47,7 @@ public class OutputView {
     }
 
     public void printStatus(List<Double> score) {
-        double blackScore = score.get(BLACK_SOCRE_INDEX);
+        double blackScore = score.get(BLACK_SCORE_INDEX);
         double whiteScore = score.get(WHITE_SCORE_INDEX);
 
         System.out.println("흰색 진영 점수:" + whiteScore + " 검은색 진영 점수:" + blackScore);
@@ -73,10 +74,22 @@ public class OutputView {
         return board;
     }
 
+    public void printEndGameMessage(List<Double> score) {
+        System.out.println("게임이 종료되었습니다.");
+        double blackScore = score.get(BLACK_SCORE_INDEX);
+        double whiteScore = score.get(WHITE_SCORE_INDEX);
+        if (blackScore <= 0) {
+            System.out.println("흰색 진영이 승리했습니다.");
+        }
+        if (whiteScore <= 0) {
+            System.out.println("검은색 진영이 승리했습니다.");
+        }
+    }
+
     private List<String> initOneLine() {
         List<String> oneLine = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            oneLine.add(".");
+            oneLine.add(EMPTY_PIECE_SPACE);
         }
         return oneLine;
     }

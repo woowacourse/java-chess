@@ -22,7 +22,9 @@ public class ChessGameController {
         do {
             List<String> inputCommand = inputView.inputCommand();
             chessGameState = executeCommand(chessGameState, inputCommand);
-        } while (chessGameState.isEnd() == false);
+        } while (!chessGameState.isEnd());
+        outputView.printBoard(chessGameState.getPrintingBoard());
+        outputView.printEndGameMessage(chessGameState.calculateScore());
     }
 
     private ChessGameState executeCommand(ChessGameState chessGameState, List<String> inputCommand) {
