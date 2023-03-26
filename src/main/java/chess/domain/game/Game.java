@@ -90,4 +90,8 @@ public class Game {
     private double score(Team team) {
         return board.score(team);
     }
+
+    public Team getTurn() {
+        return turn;
+    }
 }

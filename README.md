@@ -4,6 +4,46 @@
 
 # 기능 목록
 
+## DB
+
+```sql
+drop database chess;
+create database chess;
+use chess;
+
+create table chess.game
+(
+    id          int auto_increment
+        primary key,
+    is_finished tinyint(1)   not null,
+    turn        varchar(100) not null
+);
+
+create table chess.piece
+(
+    game_id int          not null,
+    file    varchar(100) not null,
+    `rank`  varchar(100) not null,
+    type    varchar(100) not null,
+    team    varchar(100) not null,
+    constraint piece_game_id_fk
+        foreign key (game_id) references chess.game (id)
+);
+```
+
+- 게임을 저장한다
+    - 기물을 저장한다
+    - 게임 상태를 저장한다
+- 게임을 업데이트한다.
+    - 기물들을 업데이트한다.
+    - 게임 상태를 업데이트한다.
+- 게임을 불러온다
+- 게임을 끝낸다.
+- 최근에 안끝난 게임이 있는지 알 수 있다
+- 최근에 안끝난 게임 Id를 가져온다
+
+## 도메인
+
 - 게임
     - 턴을 가진다
         - 백부터 시작한다.

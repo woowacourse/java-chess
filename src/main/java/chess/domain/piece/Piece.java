@@ -47,4 +47,8 @@ public abstract class Piece {
     public abstract double score();
 
     public abstract PieceType getType();
+
+    public Team getTeam() {
+        return team;
+    }
 }
