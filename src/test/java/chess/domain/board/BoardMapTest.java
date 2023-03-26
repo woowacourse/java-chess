@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.game.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -37,13 +38,12 @@ public class BoardMapTest {
         assertThat(boardMap.hasPieceAt(emptyPosition)).isFalse();
     }
 
-    @DisplayName("한 파일에 폰이 몇 개인지 센다")
+    @DisplayName("한 파일에 한 팀의 폰이 몇 개인지 센다")
     @Test
     void countPawns_inAFile() {
         BoardMap boardMap = BoardMap.from(AbstractTestFixture.INITIAL_BOARD);
+        long count = boardMap.countFriendlyPawnsIn(File.B, Team.WHITE);
 
-        long count = boardMap.countPawnsIn(File.B);
-
-        assertThat(count).isEqualTo(2);
+        assertThat(count).isEqualTo(1);
     }
 }

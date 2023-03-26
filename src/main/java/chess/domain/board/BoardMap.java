@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import chess.domain.game.Team;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -19,7 +20,7 @@ public class BoardMap {
     private final List<PositionPiece> pieces;
 
     public BoardMap(List<PositionPiece> pieces) {
-        this.pieces = pieces;
+        this.pieces = new ArrayList<>(pieces);
     }
 
     public static BoardMap from(Map<Position, Piece> pieces) {
@@ -47,8 +48,9 @@ public class BoardMap {
                 .orElse(EMPTY_PIECE_2);
     }
 
-    public long countPawnsIn(File file) {
+    public long countFriendlyPawnsIn(File file, Team team) {
         return pieces.stream()
+                .filter(it -> it.hasTeam(team))
                 .filter(it -> it.isAt(file))
                 .filter(it -> it.hasType(PieceType.PAWN))
                 .count();

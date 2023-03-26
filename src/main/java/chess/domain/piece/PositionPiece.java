@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.BoardMap;
 import chess.domain.exception.IllegalMoveException;
+import chess.domain.game.Team;
 import chess.domain.move.Move;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -17,6 +18,9 @@ public class PositionPiece {
     }
 
     public void moveTo(Position target, BoardMap map) {
+        if (position.equals(new Position(null, null))) {
+            throw new IllegalMoveException("움직일 기물이 없습니다");
+        }
         validateNotSameTeam(target, map);
         validateMove(target, map);
         validateNoObstacles(target, map);
@@ -80,12 +84,24 @@ public class PositionPiece {
 
     public double scoreConsidering(BoardMap map) {
         if (moves.getType().equals(PieceType.PAWN)) {
-            long pawnCount = map.countPawnsIn(position.getFile());
+            long pawnCount = map.countFriendlyPawnsIn(position.getFile(), moves.team);
             if (pawnCount > 1) {
                 return 0.5;
             }
             return 1;
         }
         return moves.score();
+    }
+
+    public boolean hasTeam(Team team) {
+        return moves.hasTeam(team);
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Piece getPiece() {
+        return moves;
     }
 }

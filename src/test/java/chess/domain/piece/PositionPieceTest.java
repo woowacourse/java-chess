@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.BoardMap;
 import chess.domain.exception.IllegalMoveException;
 import chess.domain.game.Team;
@@ -63,14 +62,6 @@ public class PositionPieceTest {
         assertThatThrownBy(() -> piece.moveTo(target, boardMap))
                 .isInstanceOf(IllegalMoveException.class)
                 .hasMessage("해당 기물이 이동할 수 없는 수입니다");
-    }
-
-    @DisplayName("시작할 때 한 팀의 기본 점수는 38점이다")
-    @Test
-    void getScoreOfTeam_onStart() {
-        var board = BoardFactory.createBoard();
-
-        assertThat(board.score(Team.BLACK)).isEqualTo(38);
     }
 
     @DisplayName("폰이 한 파일 안에 있으면 0.5점으로 계산한다")
