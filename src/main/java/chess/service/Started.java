@@ -1,7 +1,7 @@
 package chess.service;
 
-import chess.domain.board.Score;
 import chess.domain.board.Board;
+import chess.domain.board.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -25,6 +25,9 @@ public class Started implements State {
     @Override
     public State move(final Position from, final Position to) {
         board.move(from, to);
+        if (board.isKingDead()) {
+            return End.getInstance();
+        }
         return this;
     }
 
