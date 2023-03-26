@@ -5,7 +5,7 @@
 
 ## ✔ 3단계 기능 요구사항
 - [x] King 이 잡혔을 때 게임 종료
-- [ ] status 명령 입력 시 점수 출력, 어느 진영이 이겼는지 출력
+- [x] status 명령 입력 시 점수 출력, 어느 진영이 이겼는지 출력
   - [x] commandType 에 status 추가
 - [x] 점수 계산
   - [x] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5

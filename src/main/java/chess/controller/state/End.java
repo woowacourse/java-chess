@@ -1,8 +1,10 @@
 package chess.controller.state;
 
 import chess.controller.Command;
+import chess.controller.ScoreDto;
 import chess.domain.Score;
 import chess.domain.chess.ChessGame;
+import chess.view.OutputView;
 
 public final class End implements State {
     @Override
@@ -16,8 +18,8 @@ public final class End implements State {
     }
 
     public State run(ChessGame chessGame) {
-        Score score = new Score();
-        System.out.println("status");
+        Score score = Score.calculate(chessGame.getChessBoard());
+        OutputView.printStatus(new ScoreDto(score));
         return new End();
     }
 }
