@@ -1,5 +1,6 @@
 package database.production;
 
+import database.ConnectionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

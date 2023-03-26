@@ -4,8 +4,8 @@ import chess.domain.board.Board;
 import chess.game.ChessGame;
 import chess.game.Turn;
 import database.dto.ChessGameDto;
-import database.production.BoardDao;
-import database.production.ChessGameDao;
+import database.BoardDao;
+import database.ChessGameDao;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package chess.service;
 
 import chess.domain.board.Board;
 import database.dto.SquareDto;
-import database.production.BoardDao;
+import database.BoardDao;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -6,6 +6,7 @@ import chess.domain.board.BoardFactory;
 import chess.domain.piece.Team;
 import chess.game.ChessGame;
 import chess.game.Turn;
+import database.ChessGameDao;
 import database.dto.ChessGameDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

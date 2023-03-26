@@ -1,4 +1,4 @@
-package database.production;
+package database;
 
 import chess.domain.piece.Team;
 import chess.game.Turn;

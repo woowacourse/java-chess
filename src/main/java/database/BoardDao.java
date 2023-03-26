@@ -1,4 +1,4 @@
-package database.production;
+package database;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
