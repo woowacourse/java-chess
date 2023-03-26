@@ -16,12 +16,13 @@ public class ChessGameService {
     }
 
     public void updateChessGame(ChessGame chessGame, Long roomId) {
-        boardDao.updateGame(roomId, chessGame.getBoard(), chessGame.getCurrentTurn());
+        boardDao.updateGameRoom(roomId, chessGame.getCurrentTurn(), chessGame.getState());
+        boardDao.updateChessBoard(roomId, chessGame.getBoard());
     }
 
     public ChessGameCreateResponseDto createGameRoom(ChessGame chessGame) {
         Long roomId = boardDao.createRoom();
-        boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn(), roomId);
+        boardDao.saveChessBoard(chessGame.getBoard(), chessGame.getCurrentTurn(), roomId);
         return new ChessGameCreateResponseDto(chessGame, roomId);
     }
 
