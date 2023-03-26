@@ -1,6 +1,5 @@
 package chess.domain.piece.state;
 
-import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Empty;
 import chess.domain.piece.SquareState;
 import chess.domain.piece.Team;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static chess.domain.SquareCoordinates.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -17,14 +17,52 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class PawnTest {
 
     @Test
+    void 흰색_폰은_양수방향으로_전진할_수_있다() {
+        // given
+        final Team team = Team.WHITE;
+        final Pawn pawn = new Pawn(team);
+
+        //when & then
+        assertDoesNotThrow(() -> pawn.findRoute(C1, C2));
+    }
+
+    @Test
+    void 흰색_폰은_음수방향으로_전진할_수_없다() {
+        // given
+        final Team team = Team.WHITE;
+        final Pawn pawn = new Pawn(team);
+
+        //when & then
+        assertThatThrownBy(() -> pawn.findRoute(C2, C1)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 검은색_폰은_음수방향으로_전진할_수_있다() {
+        // given
+        final Team team = Team.BLACK;
+        final Pawn pawn = new Pawn(team);
+
+        //when & then
+        assertDoesNotThrow(() -> pawn.findRoute(C2, C1));
+    }
+
+    @Test
+    void 검은색_폰은_양수방향으로_전진할_수_없다() {
+        // given
+        final Team team = Team.BLACK;
+        final Pawn pawn = new Pawn(team);
+
+        //when & then
+        assertThatThrownBy(() -> pawn.findRoute(C1, C2)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 폰은_직진할_떄_다른팀이_있으면_예외가_발생한다() {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final SquareCoordinate c1 = SquareCoordinate.of("c1");
-        final SquareCoordinate c2 = SquareCoordinate.of("c2");
         final List<SquareState> route = List.of(new Pawn(Team.BLACK));
-        pawn.findRoute(c1, c2);
+        pawn.findRoute(C1, C2);
 
         //when & then
         assertThatThrownBy(() -> pawn.validateRoute(route)).isInstanceOf(IllegalArgumentException.class);
@@ -35,10 +73,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final SquareCoordinate c1 = SquareCoordinate.of("c1");
-        final SquareCoordinate c2 = SquareCoordinate.of("c2");
         final List<SquareState> route = List.of(new Empty());
-        pawn.findRoute(c1, c2);
+        pawn.findRoute(C1, C2);
 
         //when & then
         assertDoesNotThrow(() -> pawn.validateRoute(route));
@@ -49,10 +85,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final SquareCoordinate c1 = SquareCoordinate.of("c1");
-        final SquareCoordinate b2 = SquareCoordinate.of("b2");
         final List<SquareState> route = List.of(new Empty());
-        pawn.findRoute(c1, b2);
+        pawn.findRoute(C1, B2);
 
         //when & then
         assertThatThrownBy(() -> pawn.validateRoute(route)).isInstanceOf(IllegalArgumentException.class);
@@ -63,10 +97,8 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final SquareCoordinate c1 = SquareCoordinate.of("c1");
-        final SquareCoordinate b2 = SquareCoordinate.of("b2");
         final List<SquareState> route = List.of(new Pawn(Team.BLACK));
-        pawn.findRoute(c1, b2);
+        pawn.findRoute(C1, B2);
 
         //when & then
         assertDoesNotThrow(() -> pawn.validateRoute(route));
@@ -77,18 +109,14 @@ class PawnTest {
         // given
         final Team team = Team.WHITE;
         final Pawn pawn = new Pawn(team);
-        final SquareCoordinate b1 = SquareCoordinate.of("b1");
-        final SquareCoordinate b2 = SquareCoordinate.of("b2");
         final List<SquareState> route1 = List.of(new Empty());
 
-        final SquareCoordinate b4 = SquareCoordinate.of("b4");
-
         //when
-        pawn.findRoute(b1, b2);
+        pawn.findRoute(B1, B2);
         pawn.validateRoute(route1);
 
         //then
-        assertThatThrownBy(() -> pawn.findRoute(b2, b4)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.findRoute(B2, B4)).isInstanceOf(IllegalArgumentException.class);
     }
 
 

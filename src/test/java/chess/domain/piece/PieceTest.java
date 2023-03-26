@@ -22,9 +22,7 @@ class PieceTest {
         //then
         assertDoesNotThrow(() -> new Pawn(team));
 
-        assertThat(new Pawn(team))
-                .extracting("team")
-                .isEqualTo(team);
+        assertThat(new Pawn(team).isSameTeam(team)).isTrue();
     }
 
     @Test
