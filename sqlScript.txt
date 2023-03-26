@@ -1,0 +1,15 @@
+create table chess_game (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    turn varchar NOT NULL,
+    PRIMARY KEY (id)
+);
+
+create table board (
+    chess_game_id BIGINT NOT NULL,
+    position_file BIGINT NOT NULL,
+    position_rank BIGINT NOT NULL,
+    color varchar(20) NOT NULL,
+    pieceType varChar(20) NOT NULL,
+    foreign key (chess_game_id) references chess_game (id),
+    primary key (chess_game_id, position_file, position_rank)
+);
