@@ -21,15 +21,16 @@ public class ChessGame {
     public ChessGame() {
         this.chessBoard = new ChessBoard();
     }
-
-    // TODO 게임방 id 입력받기
+    
     public void start(CommandRequest commandRequest) {
         gameStatus.validateCommand(commandRequest.getCommand());
         gameStatus = GameStatus.RUNNING;
-        // TODO 보드 조회 or 생성 로직 정리하기
-        Map<Position, Piece> piecesByPosition = boardPiecesDao.find(1)
+    }
+
+    public void selectBoardRoom(int boardId) {
+        Map<Position, Piece> piecesByPosition = boardPiecesDao.find(boardId)
                 .orElse(PieceInitializer.createPiecesWithPosition());
-        ChessBoardStatus status = boardStatusesDao.find(1)
+        ChessBoardStatus status = boardStatusesDao.find(boardId)
                 .orElse(new ChessBoardStatus(Camp.WHITE, false));
         chessBoard = new ChessBoard(piecesByPosition, status);
     }
