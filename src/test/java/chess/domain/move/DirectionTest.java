@@ -1,6 +1,7 @@
 package chess.domain.move;
 
 import static chess.domain.color.Color.*;
+import static chess.domain.move.Direction.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
@@ -22,7 +23,7 @@ class DirectionTest {
 		final Bishop bishop = new Bishop(WHITE, source);
 
 		// then
-		assertThatThrownBy(() -> Direction.calculateDirection(bishop, target))
+		assertThatThrownBy(() -> calculateDirection(bishop, target))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("체스말이 이동할 수 없는 위치입니다");
 	}
@@ -35,10 +36,7 @@ class DirectionTest {
 		final Position target = Position.of(C, THREE);
 		final Knight knight = new Knight(WHITE, source);
 
-		// when
-		final Direction direction = Direction.KNIGHT_UP_RIGHT;
-
 		// then
-		assertThat(Direction.calculateDirection(knight, target)).isEqualTo(direction);
+		assertThat(calculateDirection(knight, target)).isEqualTo(KNIGHT_UP_RIGHT);
 	}
 }
