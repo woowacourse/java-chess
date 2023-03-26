@@ -12,6 +12,7 @@ public class GameCommand {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
+    private static final String STATUS_COMMAND = "status";
 
     private final List<String> gameCommand;
 
@@ -32,7 +33,7 @@ public class GameCommand {
             return;
         }
 
-        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND))) {
+        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND) || command.equals(STATUS_COMMAND))) {
             throw new IllegalCommandException();
         }
     }
@@ -49,6 +50,10 @@ public class GameCommand {
 
     public boolean isMove() {
         return gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+    }
+
+    public boolean isStatus() {
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(STATUS_COMMAND);
     }
 
     public List<Square> convertToSquare() {

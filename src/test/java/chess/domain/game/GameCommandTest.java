@@ -15,7 +15,7 @@ class GameCommandTest {
     @DisplayName("start 커맨드가 입력되었을 때 True를 반환한다.")
     @Test
     void Should_True_When_GameCommandIsStart() {
-        final GameCommand gameCommand = new GameCommand(List.of("start"));
+        GameCommand gameCommand = new GameCommand(List.of("start"));
 
         assertThat(gameCommand.isStart()).isTrue();
     }
@@ -23,15 +23,23 @@ class GameCommandTest {
     @DisplayName("move 커맨드가 입력되었을 때 True를 반환한다.")
     @Test
     void Should_True_When_GameCommandIsMove() {
-        final GameCommand gameCommand = new GameCommand(List.of("move", "a1", "a2"));
+        GameCommand gameCommand = new GameCommand(List.of("move", "a1", "a2"));
 
         assertThat(gameCommand.isMove()).isTrue();
+    }
+
+    @DisplayName("status 커맨드가 입력되었을 때 True를 반환한다.")
+    @Test
+    void Should_GameCommandTest_When_GameCommandTest() {
+        GameCommand gameCommand = new GameCommand(List.of("status"));
+
+        assertThat(gameCommand.isStatus()).isTrue();
     }
 
     @DisplayName("move 커맨드를 좌표로 반환할 수 있다.")
     @Test
     void Should_ReturnSquareList_When_ConvertToSquare() {
-        final GameCommand gameCommand = new GameCommand(List.of("move", "a1", "a2"));
+        GameCommand gameCommand = new GameCommand(List.of("move", "a1", "a2"));
 
         assertThat(gameCommand.convertToSquare())
                 .containsExactly(new Square(File.A, Rank.ONE), new Square(File.A, Rank.TWO));
