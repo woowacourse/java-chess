@@ -14,7 +14,7 @@ class ChessBoardServiceTest {
     void getByChessGameId() {
         // given
         final ChessBoardService chessBoardService = new ChessBoardService(new MockPieceDao());
-        final ChessBoard expected = ChessBoardHelper.createMockBoard();
+        final ChessBoard expected = ChessBoardHelper.createMockProgressBoard();
 
         // when
         final ChessBoard actual = chessBoardService.getByChessGameId(1L);

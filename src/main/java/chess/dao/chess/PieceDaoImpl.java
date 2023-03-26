@@ -23,4 +23,15 @@ public class PieceDaoImpl implements PieceDao {
                 resultSet.getString("piece_type"),
                 resultSet.getString("camp"))), String.valueOf(chessGameId));
     }
+
+    @Override
+    public Long save(final PieceEntity pieceEntity, final Long chessGameId) {
+        final String query = "INSERT INTO piece(piece_rank, piece_file, piece_type, camp, chess_game_id) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        return jdbcTemplate.executeUpdate(query,
+                String.valueOf(pieceEntity.getRank()),
+                String.valueOf(pieceEntity.getFile()),
+                pieceEntity.getPieceType(), pieceEntity.getCampType(),
+                String.valueOf(chessGameId));
+    }
 }

@@ -16,7 +16,7 @@ public class PieceDaoImplTest {
         final PieceDao pieceDao = new MockPieceDao();
 
         // when
-        List<PieceEntity> pieceEntities = pieceDao.findByChessGameId(1L);
+        final List<PieceEntity> pieceEntities = pieceDao.findByChessGameId(1L);
 
         // then
         assertThat(pieceEntities)
@@ -24,5 +24,20 @@ public class PieceDaoImplTest {
 
         assertThat(pieceEntities.size())
                 .isSameAs(18);
+    }
+
+    @Test
+    @DisplayName("체스 게임에 해당하는 체스말의 정보를 저장한다")
+    void save() {
+        // given
+        final PieceDao pieceDao = new MockPieceDao();
+
+        // when
+        final Long savedPieceId = pieceDao.save(new PieceEntity(1, 2,
+                "PAWN", "WHITE"), 1L);
+
+        // then
+        assertThat(savedPieceId)
+                .isEqualTo(1L);
     }
 }

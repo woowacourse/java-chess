@@ -17,4 +17,9 @@ public class MockPieceDao implements PieceDao {
     public List<PieceEntity> findByChessGameId(final Long chessGameId) {
         return List.copyOf(mockPieceEntites);
     }
+
+    @Override
+    public Long save(final PieceEntity pieceEntity, final Long chessGameId) {
+        return 1L;
+    }
 }

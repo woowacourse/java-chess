@@ -3,7 +3,7 @@ package chess.entity;
 import java.util.Objects;
 
 public final class PieceEntity {
-    private final Long id;
+    private Long id;
     private final Integer rank;
     private final Integer file;
     private final String pieceType;
@@ -12,6 +12,13 @@ public final class PieceEntity {
     public PieceEntity(final Long id, final Integer rank, final Integer file,
                        final String pieceType, final String campType) {
         this.id = id;
+        this.rank = rank;
+        this.file = file;
+        this.pieceType = pieceType;
+        this.campType = campType;
+    }
+
+    public PieceEntity(final Integer rank, final Integer file, final String pieceType, final String campType) {
         this.rank = rank;
         this.file = file;
         this.pieceType = pieceType;
