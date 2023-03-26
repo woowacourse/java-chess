@@ -7,7 +7,7 @@ public class King extends Piece {
     private static final int BOUND = 1;
 
     public King(Team team, Position position) {
-        super(team, position);
+        super(team, position, PieceType.KING);
     }
 
     @Override

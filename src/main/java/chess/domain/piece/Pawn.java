@@ -16,7 +16,7 @@ public class Pawn extends Piece {
     }
 
     private Pawn(Team team, Position position, int moveCount) {
-        super(team, position);
+        super(team, position, PieceType.PAWN);
         this.moveCount = moveCount;
     }
 

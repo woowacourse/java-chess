@@ -8,7 +8,7 @@ public class Knight extends Piece {
     private static final int ONE_DIFFERENCE = 1;
 
     public Knight(Team team, Position position) {
-        super(team, position);
+        super(team, position, PieceType.KNIGHT);
     }
 
     @Override

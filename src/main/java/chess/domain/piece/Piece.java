@@ -9,10 +9,12 @@ public abstract class Piece {
 
     protected final Team team;
     protected final Position position;
+    protected final PieceType pieceType;
 
-    protected Piece(Team team, Position position) {
+    protected Piece(Team team, Position position, PieceType pieceType) {
         this.team = team;
         this.position = position;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean canMove(Position targetPosition, Team team);

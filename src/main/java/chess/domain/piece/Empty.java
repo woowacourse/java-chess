@@ -7,7 +7,7 @@ public class Empty extends Piece {
     private static final String INVALID_PIECE_MESSAGE = "빈칸은 움직일 수 없습니다.";
 
     private Empty(Team team, Position position) {
-        super(team, position);
+        super(team, position, PieceType.EMPTY);
     }
 
     public static Piece create(Position position) {

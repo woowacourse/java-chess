@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 public class Bishop extends Piece {
 
     public Bishop(Team team, Position position) {
-        super(team, position);
+        super(team, position, PieceType.BISHOP);
     }
 
     @Override
