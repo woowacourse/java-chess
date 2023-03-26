@@ -10,19 +10,21 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BoardDaoTest {
+    private final String ROOM_NAME = "test";
     private final BoardDao boardDao = new BoardDao();
 
     @BeforeEach
     void setup() {
-        boardDao.deleteAllByRoomName("test");
+        boardDao.deleteAllByRoomName(ROOM_NAME);
     }
 
     @AfterAll()
     void deleteAll() {
-        boardDao.deleteAllByRoomName("test");
+        boardDao.deleteAllByRoomName(ROOM_NAME);
     }
 
     @DisplayName("DB에 연결할 수 있다.")
@@ -44,6 +46,12 @@ class BoardDaoTest {
 
         chessGame.move(source, target);
 
-        Assertions.assertDoesNotThrow(() -> boardDao.save(chessGame));
+        assertDoesNotThrow(() -> boardDao.save(chessGame));
+    }
+
+    @DisplayName("DB에서 체스판을 불러올 수 있다.")
+    @Test
+    void loadBoardTest() {
+        assertDoesNotThrow(() -> boardDao.findAllByRoomName(ROOM_NAME));
     }
 }
