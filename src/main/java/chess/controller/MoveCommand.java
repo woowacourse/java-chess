@@ -23,7 +23,7 @@ public class MoveCommand extends Command {
             return new MoveCommand(getChessGame());
         }
         if (inputCommandType == CommandType.END) {
-            return null;
+            return new EndCommand(chessGame);
         }
         throw new IllegalArgumentException("잘못된 명령어를 입력하셨습니다.");
     }

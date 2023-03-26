@@ -105,4 +105,14 @@ class MoveCommandTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 행 번호를 입력해주세요.");
     }
+
+    @Test
+    void move_상태일_때_end를_입력하면_EndCommand_객체가_반환된다() {
+        Command moveCommand = new MoveCommand(chessGame);
+        List<String> input = List.of("end");
+
+        Command result = moveCommand.execute(input);
+
+        assertThat(result.isSameType(CommandType.END)).isTrue();
+    }
 }
