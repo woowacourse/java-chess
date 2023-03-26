@@ -44,7 +44,48 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public ChessGame findById(int gameId) {
-        return null;
+        GameStatus gameStatus = GameStatus.NONE;
+        Color turn = Color.NONE;
+        Map<Position, Piece> pieces = new HashMap<>(64);
+
+        final var gameQuery = "SELECT * FROM game WHERE game_id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(gameQuery)) {
+            preparedStatement.setInt(1, gameId);
+
+            final var resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                gameStatus = GameStatus.findByLabel(resultSet.getString("game_status"));
+                turn = Color.findByLabel(resultSet.getString("game_turn"));
+            } else {
+                return null;
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        final var pieceQuery = "SELECT * FROM piece WHERE game_id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
+            preparedStatement.setInt(1, gameId);
+
+            final var resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                File pieceFile = File.findByLabel(resultSet.getString("piece_file"));
+                Rank pieceRank = Rank.findByLabel(resultSet.getString("piece_rank"));
+                Color color = Color.findByLabel(resultSet.getString("piece_team"));
+                PieceType pieceType = PieceType.findByLabel(resultSet.getString("piece_type"));
+
+                Position position = Position.from(pieceFile, pieceRank);
+                Piece piece = pieceType.getInstance(color);
+                pieces.put(position, piece);
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ChessGame(new Board(pieces), turn, gameStatus);
     }
 
     @Override
