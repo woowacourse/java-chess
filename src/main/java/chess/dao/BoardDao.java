@@ -10,7 +10,6 @@ import chess.domain.team.Team;
 import chess.view.PieceName;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,23 +18,9 @@ public class BoardDao {
     public static Board create() {
         final var query = "INSERT INTO board() VALUES()";
 
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        final int id = JdbcTemplate.insertAndReturnKey(query);
 
-            preparedStatement.executeUpdate();
-
-            final var generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                final var id = generatedKeys.getInt(1);
-                return new Board(
-                        id,
-                        createMapById(id)
-                );
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
+        return new Board(id, createMapById(id));
     }
 
     private static Map<Position, Piece> createMapById(final int boardId) {
@@ -97,9 +82,9 @@ public class BoardDao {
         final var query = "UPDATE board SET %s = ? WHERE id = ?";
 
         final var targetQuery = String.format(query, target.getCoordinate());
-        JdbcTemplate.executeQuery(targetQuery, PieceName.findByPiece(sourcePiece), board.getId());
+        JdbcTemplate.executeUpdate(targetQuery, PieceName.findByPiece(sourcePiece), board.getId());
 
         final var sourceQuery = String.format(query, source.getCoordinate());
-        JdbcTemplate.executeQuery(sourceQuery, PieceName.findByPiece(new Empty(Team.NONE)), board.getId());
+        JdbcTemplate.executeUpdate(sourceQuery, PieceName.findByPiece(new Empty(Team.NONE)), board.getId());
     }
 }

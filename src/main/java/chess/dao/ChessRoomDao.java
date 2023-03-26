@@ -33,21 +33,14 @@ public class ChessRoomDao {
     public static ChessRoom create(final ChessGame chessGame, final Player player) {
         final var query = "INSERT INTO chess_room(game_id, player_id) VALUES (?, ?)";
 
-        JdbcTemplate.executeQuery(query, chessGame.getId(), player.getId());
+        JdbcTemplate.executeUpdate(query, chessGame.getId(), player.getId());
 
         return findByPlayer(player);
     }
 
     public static void updateState(final ChessRoom chessRoom, final ChessState state) {
         final var query = "UPDATE chess_room SET state = ? WHERE id = ?";
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, state.getValue());
-            preparedStatement.setInt(2, chessRoom.getId());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        JdbcTemplate.executeUpdate(query, state.getValue(), chessRoom.getId());
     }
 }

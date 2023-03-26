@@ -11,24 +11,10 @@ public class ChessGameDao {
 
     public static ChessGame create(final Board board) {
         final var query = "INSERT INTO chess_game(board_id) VALUES (?)";
-        try (final var connection = DBConnection.get()) {
-            final var prepareStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            prepareStatement.setInt(1, board.getId());
 
-            prepareStatement.executeUpdate();
+        final int id = JdbcTemplate.insertAndReturnKey(query, board.getId());
 
-            final var generatedKeys = prepareStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                return ChessGame.of(
-                        generatedKeys.getInt(1),
-                        board.getId()
-                );
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
+        return ChessGame.of(id, board.getId());
     }
 
     public static ChessGame findById(final ChessRoom chessRoom) {
