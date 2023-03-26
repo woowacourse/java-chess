@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PawnTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"B:TWO:true", "B:THREE:true", "A:TWO:false", "B:ONE:false", "C:THREE:false",
+    @CsvSource(value = {"B:THREE:true", "B:FOUR:true", "A:THREE:false", "B:TWO:false", "C:FOUR:false",
             "C:TWO:false"}, delimiter = ':')
     void 하얀_폰이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Pawn pawn = new Pawn(Team.WHITE, B_1);
+        Pawn pawn = new Pawn(Team.WHITE, B_2);
         assertThat(pawn.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 

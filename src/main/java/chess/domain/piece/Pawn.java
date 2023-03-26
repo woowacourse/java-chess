@@ -4,24 +4,17 @@ import chess.domain.board.Position;
 
 public class Pawn extends Piece {
 
-    private static final int INIT_MOVE_COUNT = 0;
     private static final int FIRST_STEP = 2;
     private static final int ONE_DIFFERENCE = 1;
-    private static final int MOVE_COUNT_STEP = 1;
-
-    private final int moveCount;
+    private static final int WHITE_ROW_NUMBER = 2;
+    private static final int BLACK_ROW_NUMBER = 7;
 
     public Pawn(Team team, Position position) {
-        this(team, position, INIT_MOVE_COUNT);
-    }
-
-    private Pawn(Team team, Position position, int moveCount) {
         super(team, position, PieceType.PAWN);
-        this.moveCount = moveCount;
     }
 
     private boolean isFirstMove() {
-        return this.moveCount == 0;
+        return (position.getRow() == WHITE_ROW_NUMBER && team == Team.WHITE) || (position.getRow() == BLACK_ROW_NUMBER && team == Team.BLACK);
     }
 
     @Override
@@ -75,6 +68,6 @@ public class Pawn extends Piece {
     @Override
     public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
         validate(targetPosition, nowPlayingTeam, targetTeam);
-        return new Pawn(team, targetPosition, moveCount + MOVE_COUNT_STEP);
+        return new Pawn(team, targetPosition);
     }
 }
