@@ -27,6 +27,12 @@ public abstract class Piece implements Movable {
         return false;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
+    public abstract Double getValue();
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

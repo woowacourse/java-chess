@@ -17,4 +17,9 @@ public class Bishop extends Piece {
                 PossibleDestinations.of(source, Direction.getDiagonalDirections(), BISHOP_MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
+
+    @Override
+    public Double getValue() {
+        return VALUE;
+    }
 }

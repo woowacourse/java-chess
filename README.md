@@ -3,15 +3,13 @@
 ## Pair: 져니 [⛄️](http://github.com/cl8d), 제나 [❤️](https://github.com/yenawee)
 
 
-## ✔ 2단계 기능 요구사항
+## ✔ 3단계 기능 요구사항
 - [x] King 이 잡혔을 때 게임 종료
 - [ ] status 명령 입력 시 점수 출력, 어느 진영이 이겼는지 출력
   - [x] commandType 에 status 추가
-- [ ] 점수 계산
-  - [ ] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5
-  - [ ] Pawn : 기본 1. 같은 세로 줄에 같은 색의 폰이 있으면 0.5
-
-
+- [x] 점수 계산
+  - [x] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5
+  - [x] Pawn : 기본 1. 같은 세로 줄에 같은 색의 폰이 있으면 0.5
 
 
 ## 1단계 피드백 사항 및 추가 수정 사항
@@ -26,7 +24,7 @@
 - [x] 예외 발생 시 재입력
 
 
-## ✔ 1단계 기능 요구사항
+## ✔ 1, 2단계 기능 요구사항
 
 ### ChessBoard
 
