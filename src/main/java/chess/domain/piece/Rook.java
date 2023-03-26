@@ -37,7 +37,7 @@ public final class Rook extends Piece {
 
 	@Override
 	public String name() {
-		if (super.color().equals(WHITE)) {
+		if (color() == WHITE) {
 			return name;
 		}
 		return name.toUpperCase();

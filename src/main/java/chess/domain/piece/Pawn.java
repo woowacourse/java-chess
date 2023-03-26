@@ -39,7 +39,7 @@ public final class Pawn extends Piece {
 
 	@Override
 	public String name() {
-		if (super.color().equals(WHITE)) {
+		if (color() == WHITE) {
 			return name;
 		}
 		return name.toUpperCase();
@@ -49,7 +49,7 @@ public final class Pawn extends Piece {
 	public Set<Direction> direction() {
 		final Set<Direction> whiteDirections = Set.of(UP, LEFT_UP, RIGHT_UP);
 		final Set<Direction> blackDirections = Set.of(DOWN, RIGHT_DOWN, LEFT_DOWN);
-		if (super.color().equals(WHITE)) {
+		if (color() == WHITE) {
 			return whiteDirections;
 		}
 		return blackDirections;
