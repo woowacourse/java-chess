@@ -8,6 +8,7 @@ import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.view.GameCommand;
+import chess.view.InputValidator;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;
@@ -26,8 +27,16 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         inputStartCommand();
-        ChessGame chessGame = ChessGame.createGame();
+        String gameCommand = inputGameCommand();
+        ChessGame chessGame = startChessGame(gameCommand);
         progress(chessGame);
+    }
+
+    private ChessGame startChessGame(String gameCommand) {
+        if (GameCommand.isNew(gameCommand)) {
+            return ChessGame.createGame();
+        }
+        return ChessGame.continueGame(Integer.parseInt(gameCommand));
     }
 
     private void inputStartCommand() {
@@ -36,6 +45,15 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e);
             inputStartCommand();
+        }
+    }
+
+    private String inputGameCommand() {
+        try {
+            return inputView.readGame();
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            return inputGameCommand();
         }
     }
 
