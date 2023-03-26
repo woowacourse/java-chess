@@ -4,26 +4,27 @@ import chess.dto.request.CommandDto;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public final class InputView {
 
     private static final String DELIMITER = " ";
     private static final Scanner scanner = new Scanner(System.in);
-    private static final int START_END_COMMAND_NECESSARY_WORD = 1;
-    private static final int MOVE_COMMAND_NECESSARY_WORD = 3;
+
+    private static final Set<Integer> COMMAND_NECESSARY_WORD = Set.of(1, 3);
 
     private InputView() {
     }
 
     public static CommandDto readInitialCommand() {
-        List<String> input = readUserInput();
-        GameCommand gameCommand = recognizeGameCommand(input);
+        List<String> userInput = readUserInput();
+        GameCommand gameCommand = recognizeGameCommand(userInput);
         while (gameCommand == GameCommand.MOVE) {
             OutputView.printNotStartedGameMessage();
-            input = readUserInput();
-            gameCommand = recognizeGameCommand(input);
+            userInput = readUserInput();
+            gameCommand = recognizeGameCommand(userInput);
         }
-        return CommandDto.of(gameCommand, input);
+        return insertIntoCommandDto(userInput);
     }
 
     private static List<String> readUserInput() {
@@ -36,14 +37,29 @@ public final class InputView {
     }
 
     public static CommandDto readPlayingCommand() {
-        List<String> input = readUserInput();
-        if (input.size() != START_END_COMMAND_NECESSARY_WORD && input.size() != MOVE_COMMAND_NECESSARY_WORD)  {
+        List<String> userInput = readUserInput();
+        validateInput(userInput);
+        return insertIntoCommandDto(userInput);
+    }
+
+    private static void validateInput(List<String> userInput) {
+        if (!COMMAND_NECESSARY_WORD.contains(userInput.size())) {
             throw new IllegalArgumentException("[ERROR] 명령어 형식이 올바르지 않습니다.");
         }
-        GameCommand gameCommand = recognizeGameCommand(input);
+        GameCommand gameCommand = recognizeGameCommand(userInput);
         if (gameCommand == GameCommand.START) {
             throw new IllegalArgumentException("[ERROR] 게임 진행 중에는 move와 end 명령어만 입력 가능합니다.");
         }
-        return CommandDto.of(gameCommand, input);
+    }
+
+    private static CommandDto insertIntoCommandDto(List<String> userInput) {
+        GameCommand gameCommand = recognizeGameCommand(userInput);
+        String startPosition = null;
+        String endPosition = null;
+        if (userInput.size() == 3) {
+            startPosition = userInput.get(1);
+            endPosition = userInput.get(2);
+        }
+        return CommandDto.of(gameCommand, startPosition, endPosition);
     }
 }

@@ -2,8 +2,6 @@ package chess.dto.request;
 
 import chess.view.GameCommand;
 
-import java.util.List;
-
 public final class CommandDto {
 
     private final GameCommand gameCommand;
@@ -16,13 +14,7 @@ public final class CommandDto {
         this.endPosition = endPosition;
     }
 
-    public static CommandDto of(GameCommand gameCommand, List<String> userInput) {
-        String startPosition = null;
-        String endPosition = null;
-        if (userInput.size() == 3) {
-            startPosition = userInput.get(1);
-            endPosition = userInput.get(2);
-        }
+    public static CommandDto of(GameCommand gameCommand, String startPosition, String endPosition) {
         return new CommandDto(gameCommand, startPosition, endPosition);
     }
 
