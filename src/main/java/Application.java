@@ -19,6 +19,8 @@ public final class Application {
     private static final int FILE_OFFSET = 0;
     private static final int RANK_OFFSET = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int MIN_ROOM_NAME = 1;
+    private static final int MAX_ROOM_NAME = 20;
 
     private static final String NOT_STARTED = "게임을 먼저 시작해야 합니다.";
     private static final String NO_SUCH_FILE = "열은 A ~ H 를 입력해야 합니다.";
@@ -27,8 +29,6 @@ public final class Application {
     private static final String INVALID_MOVE_COMMAND_SIZE = "move b2 b3 등으로 입력해야 합니다.";
     private static final String NO_SUCH_ROOM = "존재하지 않는 방 번호입니다.";
     private static final String INVALID_ROOM_NAME_LENGTH = "방 이름은 1 ~ 20 글자입니다.";
-    private static final int MIN_ROOM_NAME = 1;
-    private static final int MAX_ROOM_NAME = 20;
 
     private static final ChessDao chessDao = new DbChessDao();
 
@@ -36,42 +36,17 @@ public final class Application {
         final Command startCommand = readStartCommand();
 
         if (Command.LOAD.equals(startCommand)) {
-            final List<Room> rooms = chessDao.findAllRooms();
-            OutputView.printRooms(rooms);
-            final int roomId = InputView.readRoomNumber();
-
-            if (rooms.stream().noneMatch(room -> room.getId() == roomId)) {
-                throw new IllegalArgumentException(NO_SUCH_ROOM);
-            }
-
-            final Board board = chessDao.findBoardByRoomId(roomId);
-            chessDao.deleteBoard(roomId);
-            final ChessGame chessGame = ChessGame.loadGame(board);
-            play(chessGame, roomId);
+            playLoadedGame();
         }
-
         if (Command.START.equals(startCommand)) {
-            final String roomName = InputView.readRoomName();
-            if (roomName.length() < MIN_ROOM_NAME || MAX_ROOM_NAME < roomName.length()) {
-                throw new IllegalArgumentException(INVALID_ROOM_NAME_LENGTH);
-            }
-
-            final long roomId = chessDao.saveRoom(new Room(roomName));
-            final ChessGame chessGame = ChessGame.initGame(new InitialChessAlignment());
-            chessDao.saveBoard(chessGame.getBoard(), roomId);
-
-            play(chessGame, roomId);
+            playNewGame();
         }
     }
 
     private static Command readStartCommand() {
         try {
             final Command command = Command.from(InputView.readStartOption());
-            if (Command.START != command
-                    && Command.END != command
-                    && Command.LOAD != command) {
-                throw new IllegalArgumentException(NOT_STARTED);
-            }
+            validateStartCommand(command);
 
             return command;
         } catch (IllegalArgumentException e) {
@@ -80,25 +55,66 @@ public final class Application {
         }
     }
 
+    private static void validateStartCommand(final Command command) {
+        if (Command.START != command
+                && Command.END != command
+                && Command.LOAD != command) {
+            throw new IllegalArgumentException(NOT_STARTED);
+        }
+    }
+
+    private static void playLoadedGame() {
+        final List<Room> rooms = chessDao.findAllRooms();
+        OutputView.printRooms(rooms);
+
+        final int roomId = InputView.readRoomNumber();
+        validateRoomExist(rooms, roomId);
+
+        final Board board = chessDao.findBoardByRoomId(roomId);
+        final ChessGame chessGame = ChessGame.loadGame(board);
+
+        chessDao.deleteBoard(roomId);
+        play(chessGame, roomId);
+    }
+
+    private static void validateRoomExist(final List<Room> rooms, final int roomId) {
+        if (rooms.stream().noneMatch(room -> room.getId() == roomId)) {
+            throw new IllegalArgumentException(NO_SUCH_ROOM);
+        }
+    }
+
+    private static void playNewGame() {
+        final String roomName = InputView.readRoomName();
+        validateRoomNameLength(roomName);
+
+        final long roomId = chessDao.saveRoom(new Room(roomName));
+        final ChessGame chessGame = ChessGame.initGame(new InitialChessAlignment());
+
+        chessDao.saveBoard(chessGame.getBoard(), roomId);
+        play(chessGame, roomId);
+    }
+
+    private static void validateRoomNameLength(final String roomName) {
+        if (roomName.length() < MIN_ROOM_NAME || MAX_ROOM_NAME < roomName.length()) {
+            throw new IllegalArgumentException(INVALID_ROOM_NAME_LENGTH);
+        }
+    }
+
     private static void play(ChessGame chessGame, long roomId) {
         OutputView.printBoard(chessGame.getBoard());
 
         while (true) {
             try {
-                processByCommand(chessGame, roomId);
+                playByCommand(chessGame, roomId);
                 break;
             } catch (IllegalArgumentException e) {
                 OutputView.printError(e.getMessage());
             }
         }
-
-        if (!chessGame.winnerNotExist()) {
-            OutputView.printWinner(chessGame.getWinner());
-            chessDao.deleteRoom(roomId);
-        }
+        printWinner(chessGame, roomId);
     }
 
-    private static void processByCommand(final ChessGame chessGame, final long roomId) {
+    private static void playByCommand(final ChessGame chessGame, final long roomId) {
         while (chessGame.winnerNotExist()) {
             final List<String> gameOption = InputView.readPlayGameOption();
             Command command = Command.from(gameOption.get(COMMAND_OFFSET));
@@ -157,6 +173,13 @@ public final class Application {
                     .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_RANK));
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(NO_SUCH_RANK);
+        }
+    }
+
+    private static void printWinner(final ChessGame chessGame, final long roomId) {
+        if (!chessGame.winnerNotExist()) {
+            OutputView.printWinner(chessGame.getWinner());
+            chessDao.deleteRoom(roomId);
         }
     }
 }

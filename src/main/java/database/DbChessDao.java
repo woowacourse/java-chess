@@ -20,6 +20,12 @@ public final class DbChessDao implements ChessDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
+    private static final String KING_NAME = "King";
+    private static final String KNIGHT_NAME = "Knight";
+    private static final String QUEEN_NAME = "Queen";
+    private static final String PAWN_NAME = "Pawn";
+    private static final String BISHOP_NAME = "Bishop";
+
     private Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
@@ -152,19 +158,19 @@ public final class DbChessDao implements ChessDao {
     }
 
     private Piece makePiece(final Team team, final String pieceName) {
-        if (pieceName.equals("King")) {
+        if (pieceName.equals(KING_NAME)) {
             return new King(team);
         }
-        if (pieceName.equals("Knight")) {
+        if (pieceName.equals(KNIGHT_NAME)) {
             return new Knight(team);
         }
-        if (pieceName.equals("Queen")) {
+        if (pieceName.equals(QUEEN_NAME)) {
             return new Queen(team);
         }
-        if (pieceName.equals("Pawn")) {
+        if (pieceName.equals(PAWN_NAME)) {
             return new Pawn(team);
         }
-        if (pieceName.equals("Bishop")) {
+        if (pieceName.equals(BISHOP_NAME)) {
             return new Bishop(team);
         }
         return new Rook(team);
