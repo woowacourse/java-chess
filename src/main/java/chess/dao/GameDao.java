@@ -4,6 +4,9 @@ import java.sql.SQLException;
 
 public class GameDao {
 
+    private GameDao() {
+    }
+
     public static boolean enrollGameOf(String userId, String gameId, String turn) {
         if (alreadyExistGame(userId)) {
             return false;

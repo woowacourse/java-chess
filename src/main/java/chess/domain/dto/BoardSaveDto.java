@@ -10,14 +10,14 @@ import java.util.Map;
 public class BoardSaveDto {
 
     private final Map<String, HashMap<String, SavePieceDto>> data;
-    private final String turn;
+    private final String gameId;
 
-    private BoardSaveDto(Map<String, HashMap<String, SavePieceDto>> data, String turn) {
+    private BoardSaveDto(Map<String, HashMap<String, SavePieceDto>> data, String gameId) {
         this.data = data;
-        this.turn = turn;
+        this.gameId = gameId;
     }
 
-    public static BoardSaveDto from(Board board) {
+    public static BoardSaveDto from(Board board, String gameId) {
         Map<Position, Piece> boardData = board.getBoardData();
         Map<String, HashMap<String, SavePieceDto>> result = new HashMap<>();
         for (Position position : boardData.keySet()) {
@@ -25,14 +25,14 @@ public class BoardSaveDto {
             rankAndPieceDto.put(position.getRank().name(), SavePieceDto.from(boardData.get(position)));
             result.putIfAbsent(position.getFile().name(), rankAndPieceDto);
         }
-        return new BoardSaveDto(result, board.getTurn().name());
+        return new BoardSaveDto(result, gameId);
     }
 
     public Map<String, HashMap<String, SavePieceDto>> getData() {
         return data;
     }
 
-    public String getTurn() {
-        return turn;
+    public String getGameId() {
+        return gameId;
     }
 }

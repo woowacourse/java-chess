@@ -3,6 +3,8 @@ package chess.dao;
 import java.sql.SQLException;
 
 public class UserDao {
+    private UserDao() {
+    }
 
     public static boolean makeUserOf(String userName, String userId, String userPassword) {
         if (isDuplicationIdOrName(userName, userId)) {

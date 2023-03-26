@@ -19,7 +19,8 @@ public class BoardSaveDtoTest {
     @Test
     void Test() {
         Board board = BoardGenerator.makeBoard();
-        BoardSaveDto from = BoardSaveDto.from(board);
+        BoardSaveDto from = BoardSaveDto.from(board, "none" +
+                "");
 
         Map<String, HashMap<String, SavePieceDto>> data = from.getData();
 

@@ -167,5 +167,5 @@ turn VARCHAR(255) NOT NULL
     - [x] 게임 id 를 기반으로 게임을 삭제한다. (Delete)
 
 - PieceDao
-    - [ ] game_id 를 통해 해당 게임의 piece 를 가져온다. (Read)
-    - [ ] game_id 를 통해 해당 game_id의 피스를 삭제한다 (Delete)
+    - [X] game_id 를 통해 해당 게임의 piece 를 통해 Board 데이터를 가져온다. (Read)
+    - [x] game_id 를 통해 해당 game_id의 피스를 삭제한다 (Delete)

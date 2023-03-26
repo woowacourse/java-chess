@@ -20,7 +20,7 @@ public class EndController implements Controller {
         validate(request);
         if (GameSession.existGame()) {
             Game game = GameSession.getGame();
-            ChessDB.saveBoard(BoardSaveDto.from(game.getBoard()));
+            ChessDB.saveBoard(BoardSaveDto.from(game.getBoard(), "none"));
         }
         return new Response(ResponseType.END);
     }

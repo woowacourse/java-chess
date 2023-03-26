@@ -3,7 +3,6 @@ package chess.dao;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
-import chess.domain.board.Board;
 import chess.domain.dto.BoardSaveDto;
 import chess.domain.dto.SavePieceDto;
 import chess.domain.piece.BishopPiece;
@@ -22,26 +21,23 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessDB {
-    private ChessDB() {
-
+public class PieceDao {
+    private PieceDao() {
     }
 
-    public static Board getBoardData() {
-        final var query = "SELECT * FROM piece";
+    public static Map<Position, Piece> getBoardDataOf(String gameId) {
+        final var query = "SELECT * FROM piece WHERE game_id = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-
+            preparedStatement.setString(1, gameId);
             var resultSet = preparedStatement.executeQuery();
             Map<Position, Piece> result = new HashMap<>();
-            Color color = null;
             while (resultSet.next()) {
-                color = Color.valueOf(resultSet.getString("turn"));
                 Position position = Position.of(File.valueOf(resultSet.getString("file_id")), Rank.valueOf(resultSet.getString("rank_id")));
                 Piece piece = makePieceOf(resultSet.getString("pieceType"), resultSet.getString("color"));
                 result.put(position, piece);
             }
-            return new Board(result, color);
+            return result;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -73,16 +69,15 @@ public class ChessDB {
     }
 
     public static void saveBoard(BoardSaveDto dto) {
-        delete();
         final var query = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
         Map<String, HashMap<String, SavePieceDto>> data = dto.getData();
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-            for (String hello : data.keySet()) {
-                for (String hello2 : data.get(hello).keySet()) {
-                    SavePieceDto pieceDto = data.get(hello).get(hello2);
-                    preparedStatement.setString(1, hello2);
-                    preparedStatement.setString(2, hello);
+            for (String file : data.keySet()) {
+                for (String rank : data.get(file).keySet()) {
+                    SavePieceDto pieceDto = data.get(file).get(rank);
+                    preparedStatement.setString(1, rank);
+                    preparedStatement.setString(2, file);
                     preparedStatement.setString(3, pieceDto.getPieceType());
                     preparedStatement.setString(4, pieceDto.getPieceColor());
                     preparedStatement.setString(5, dto.getGameId());
@@ -94,30 +89,34 @@ public class ChessDB {
         }
     }
 
-    public static void delete() {
-        final var query = "DELETE FROM piece";
+    public static boolean delete(String game_id) {
+        final var query = "DELETE FROM piece WHERE game_id = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-            var resultSet = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static boolean existBoard() {
-        final var query = "SELECT * FROM piece";
-        try (var connection = ConnectionHandler.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
-
-            var resultSet = preparedStatement.executeQuery();
-            int i = 0;
-            while (resultSet.next()) {
-                i++;
+            preparedStatement.setString(1, game_id);
+            int result = preparedStatement.executeUpdate();
+            if (result == 64) {
+                return true;
             }
-            return i == 64;
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+//    public static boolean existBoard() {
+//        final var query = "SELECT * FROM piece";
+//        try (var connection = ConnectionHandler.getConnection();
+//             var preparedStatement = connection.prepareStatement(query)) {
+//
+//            var resultSet = preparedStatement.executeQuery();
+//            int i = 0;
+//            while (resultSet.next()) {
+//                i++;
+//            }
+//            return i == 64;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
