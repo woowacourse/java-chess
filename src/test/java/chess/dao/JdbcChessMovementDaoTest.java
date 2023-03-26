@@ -97,6 +97,6 @@ class JdbcChessMovementDaoTest {
 
         assertThat(before).hasSize(1);
         assertThat(before.size()).isGreaterThan(after.size());
-        assertThat(after).hasSize(0);
+        assertThat(after).isEmpty();
     }
 }

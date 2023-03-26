@@ -67,7 +67,7 @@ class StartTest {
 
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
-        assertThat(dao.findAll()).hasSize(0);
+        assertThat(dao.findAll()).isEmpty();
 
         final ChessBoard initialChessBoard = ChessBoardFactory.create();
         final Map<Position, Piece> initialBoard = initialChessBoard.getBoard();
