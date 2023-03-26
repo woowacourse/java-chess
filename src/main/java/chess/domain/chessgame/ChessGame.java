@@ -4,6 +4,7 @@ import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.state.GameState;
 import chess.domain.chessgame.state.Ready;
+import chess.domain.winningstatus.WinningStatus;
 
 public final class ChessGame {
 
@@ -18,6 +19,10 @@ public final class ChessGame {
         if (gameState.isKingDead()) {
             gameState = gameState.close();
         }
+    }
+
+    public WinningStatus status(){
+        return gameState.status();
     }
 
     public void end() {

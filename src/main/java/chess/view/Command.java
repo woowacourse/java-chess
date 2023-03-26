@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum Command {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String command;
 
@@ -17,7 +18,7 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(a -> a.equalsByQuery(query))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start 혹은 end 혹은 move 를 입력해야합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("올바른 커맨드를 입력해야합니다."));
     }
 
     private boolean equalsByQuery(final String query) {

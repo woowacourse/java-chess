@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.ChessGame;
+import chess.domain.winningstatus.WinningStatus;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -40,6 +41,9 @@ public final class ChessController {
         if (command == Command.MOVE) {
             movePiece(chessGame);
         }
+        if (command == Command.STATUS) {
+            showStatus(chessGame.status());
+        }
         if (command == Command.END) {
             chessGame.end();
         }
@@ -53,6 +57,12 @@ public final class ChessController {
     private void showChessBoard(final ChessBoard chessBoard) {
         ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.toString(chessBoard);
         OutputView.printChessBoard(convertedChessBoard);
+    }
+
+    private void showStatus(WinningStatus winningStatus) {
+        if (winningStatus.isWinnerDetermined()) {
+            return;
+        }
     }
 
     private void movePiece(final ChessGame chessGame) {
