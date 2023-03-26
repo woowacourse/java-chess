@@ -47,6 +47,7 @@ public class OutputView {
     public void printWinnerMessage(Team winner) {
         if (winner == Team.EMPTY) {
             System.out.println("무승부입니다.");
+            return;
         }
         System.out.println(winner.name() + " 팀이 승리하였습니다.");
     }

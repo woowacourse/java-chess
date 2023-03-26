@@ -7,6 +7,9 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.exception.TeamNotMatchException;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Game {
     private final Board board;
@@ -44,22 +47,50 @@ public class Game {
     }
 
     public double calculateWhiteScore() {
-        List<Piece> whitePieces = board.getWhitePieces();
+        Map<Piece, Square> whitePieces = board.getWhitePieces();
         return calculateScore(whitePieces);
     }
 
     public double calculateBlackScore() {
-        List<Piece> blackPieces = board.getBlackPieces();
+        Map<Piece, Square> blackPieces = board.getBlackPieces();
         return calculateScore(blackPieces);
     }
 
-    private double calculateScore(List<Piece> pieces) {
+    private double calculateScore(Map<Piece, Square> pieces) {
         double score = 0;
-        for (Piece piece : pieces) {
-            PieceType pieceType = piece.getPieceType();
+        Map<Piece, Integer> pawnPiece = getPawnPieces(pieces);
+        for (Entry<Piece, Square> entry : pieces.entrySet()) {
+            PieceType pieceType = entry.getKey().getPieceType();
             score += pieceType.getScore();
+            score -= pawnDuplicateMinusScore(pawnPiece, entry.getValue(), pieceType);
         }
         return score;
+    }
+
+    private double pawnDuplicateMinusScore(Map<Piece, Integer> pawnPiece, Square square, PieceType pieceType) {
+        if (pieceType == PieceType.PAWN) {
+            int fileToInt = square.getFileToInt();
+            long pawnCount = pawnPiece.values().stream()
+                    .filter(file -> file.equals(fileToInt)).count();
+            return pawnMinusScore(pawnCount);
+        }
+        return 0;
+    }
+
+    private double pawnMinusScore(long pawnCount) {
+        if (pawnCount > 1) {
+            return 0.5;
+        }
+        return 0;
+    }
+
+    private static Map<Piece, Integer> getPawnPieces(Map<Piece, Square> pieces) {
+        return pieces.entrySet().stream()
+                .filter(entry -> entry.getKey().isSamePieceType(PieceType.PAWN))
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> entry.getValue().getFileToInt()
+                ));
     }
 
     public List<Piece> getPieces() {

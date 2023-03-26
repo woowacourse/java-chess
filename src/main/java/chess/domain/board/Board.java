@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -173,15 +174,15 @@ public class Board {
         return new ArrayList<>(board.values());
     }
 
-    public List<Piece> getWhitePieces() {
-        return board.values().stream()
-                .filter(piece -> piece.isSameTeam(Team.WHITE))
-                .collect(Collectors.toList());
+    public Map<Piece, Square> getWhitePieces() {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(Team.WHITE))
+                .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
     }
 
-    public List<Piece> getBlackPieces() {
-        return board.values().stream()
-                .filter(piece -> piece.isSameTeam(Team.BLACK))
-                .collect(Collectors.toList());
+    public Map<Piece, Square> getBlackPieces() {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(Team.BLACK))
+                .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
     }
 }
