@@ -1,6 +1,8 @@
 package chess.domain.board.position;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -34,6 +36,8 @@ import static chess.fixture.PositionFixture.F5;
 import static chess.fixture.PositionFixture.G1;
 import static chess.fixture.PositionFixture.H1;
 
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class RouteFinderTest {
 
     @ParameterizedTest(name = "{0}과 {1}사이의 경로는 {2}")
