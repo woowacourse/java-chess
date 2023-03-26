@@ -54,4 +54,20 @@ public class ChessBoardDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void movePiece(int gameIdx, int targetFile, int targetRank, String pieceType) {
+        final var query = "update ChessBoard\n"
+                + "set peiceType = ?\n"
+                + "where gameIdx = ? and bFile = ? and bRank = ?;";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, pieceType);
+            preparedStatement.setInt(2, gameIdx);
+            preparedStatement.setInt(3, targetFile);
+            preparedStatement.setInt(4, targetRank);
+            final var resultSet = preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

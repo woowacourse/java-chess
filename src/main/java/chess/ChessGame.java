@@ -15,9 +15,10 @@ public class ChessGame {
 
     private final int gameIdx;
     private final ChessBoard chessBoard;
+    private final ChessGameDao chessGameDao;
 
     public ChessGame(ChessBoard chessBoard) {
-        ChessGameDao chessGameDao = new ChessGameDao();
+        this.chessGameDao = new ChessGameDao();
         chessGameDao.addGame();
         this.gameIdx = chessGameDao.findLastInsertGame();
         this.chessBoard = chessBoard;
@@ -31,14 +32,20 @@ public class ChessGame {
     }
 
     private void circuitRank(ChessBoardDao chessBoardDao, int gameIdx, int file) {
-        for (int rank = 1; rank <= 8; rank++)
+        for (int rank = 1; rank <= 8; rank++) {
             chessBoardDao.addBoard(gameIdx, file, rank,
                     chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getShape().name());
+        }
     }
 
     public void moveChessPiece(Position sourcePosition, Position targetPosition) {
+        ChessBoardDao chessBoardDao = new ChessBoardDao();
         ChessPiece chessPiece = findChessPiece(sourcePosition);
         copyChessPiece(chessPiece, targetPosition);
+        chessBoardDao.movePiece(gameIdx, targetPosition.getXPosition(), targetPosition.getYPosition(),
+                chessBoard.getChessPieceByPosition(sourcePosition).getShape().name());
+        chessBoardDao.movePiece(gameIdx, sourcePosition.getXPosition(), sourcePosition.getYPosition(),
+                Shape.EMPTY.name());
         removeChessPiece(sourcePosition);
     }
 
