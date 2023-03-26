@@ -39,4 +39,9 @@ public class Run extends Runnable {
     public boolean isInCorrectTurn(final Color color) {
         return this.turn.isIncorrect(color);
     }
+
+    @Override
+    public ChessState finish() {
+        return new End();
+    }
 }

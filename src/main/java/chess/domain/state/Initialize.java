@@ -23,4 +23,9 @@ public class Initialize extends Runnable {
     public boolean isInCorrectTurn(final Color color) {
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public ChessState finish() {
+        throw new IllegalStateException();
+    }
 }

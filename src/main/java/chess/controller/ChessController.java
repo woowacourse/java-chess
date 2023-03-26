@@ -48,7 +48,10 @@ public class ChessController {
     private ChessState movePiece(final ChessBoard chessBoard, final Command command, ChessState state) {
         final PiecePosition from = PiecePosition.of(command.getFromParameter());
         final PiecePosition to = PiecePosition.of(command.getToParameter());
-        chessBoard.movePiece(state, from, to);
-        return state.changeTurn();
+        state = chessBoard.movePiece(state, from, to);
+        if (state.isRunnable()) {
+            return state.changeTurn();
+        }
+        return state;
     }
 }

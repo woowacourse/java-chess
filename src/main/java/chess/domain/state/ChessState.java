@@ -12,4 +12,6 @@ public interface ChessState {
     ChessState changeTurn();
 
     boolean isInCorrectTurn(final Color color);
+
+    ChessState finish();
 }

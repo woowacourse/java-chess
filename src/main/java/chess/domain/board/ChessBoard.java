@@ -17,11 +17,11 @@ public class ChessBoard {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public void movePiece(final ChessState state, final PiecePosition source, final PiecePosition destination) {
+    public ChessState movePiece(final ChessState state, final PiecePosition source, final PiecePosition destination) {
         final Piece from = get(source);
         validateCorrectTurn(state, from);
         validateNonBlock(destination, from);
-        moveOrKill(destination, from);
+        return moveOrKill(state, destination, from);
     }
 
     private void validateCorrectTurn(final ChessState state, final Piece from) {
@@ -37,14 +37,22 @@ public class ChessBoard {
         }
     }
 
-    private void moveOrKill(final PiecePosition destination, final Piece from) {
+    private ChessState moveOrKill(final ChessState state, final PiecePosition destination, final Piece from) {
         if (existByPosition(destination)) {
             final Piece to = get(destination);
             from.moveAndKill(to);
             pieces.remove(to);
-            return;
+            return changeStateIfKing(state, to);
         }
         from.move(destination);
+        return state;
+    }
+
+    private ChessState changeStateIfKing(final ChessState state, final Piece to) {
+        if (to.isKing()) {
+            return state.finish();
+        }
+        return state;
     }
 
     private boolean existByPosition(final PiecePosition piecePosition) {

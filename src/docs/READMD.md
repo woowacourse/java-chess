@@ -143,7 +143,7 @@ classDiagram
 
 ### King이 잡히면 게임 종료
 - [x] 이동한 위치의 상대가 King인지 확인
-- [ ] Finished 상태로 변경
+- [x] Finished 상태로 변경
 - [ ] 승패 계산
 - [ ] 승패 출력
 
