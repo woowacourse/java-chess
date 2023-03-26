@@ -2,17 +2,36 @@
 
 ## Pair: 져니 [⛄️](http://github.com/cl8d), 제나 [❤️](https://github.com/yenawee)
 
+## ✔ 4단계 기능 요구사항
+
+- [ ] 애플리케이션 재시작 시 이전에 하던 체스 게임을 재시작할 수 있어야 한다
+- [ ] table
+    - [ ] piece_type, team_color, rank, file, turn
+- [ ] CRUD
+    - [ ] Create
+        - [ ] DB에서 불러 올 체스 게임이 없으면 만든다
+        - Query : 
+    - [ ] Read
+        - [ ] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
+        - Query : 
+    - [ ] Update
+        - [ ] 기물을 움직일 때마다 DB 업데이트 해준다
+        - Query : 
+    - [ ] Delete
+      - [ ] King 이 죽으면 DB 초기화 해준다
+      - Query :
 
 ## ✔ 3단계 기능 요구사항
+
 - [x] King 이 잡혔을 때 게임 종료
 - [x] status 명령 입력 시 점수 출력, 어느 진영이 이겼는지 출력
-  - [x] commandType 에 status 추가
+    - [x] commandType 에 status 추가
 - [x] 점수 계산
-  - [x] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5
-  - [x] Pawn : 기본 1. 같은 세로 줄에 같은 색의 폰이 있으면 0.5
-
+    - [x] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5
+    - [x] Pawn : 기본 1. 같은 세로 줄에 같은 색의 폰이 있으면 0.5
 
 ## 1단계 피드백 사항 및 추가 수정 사항
+
 - [x] 출력 시 View 와 Domain 의존성 제거 - DTO 도입
 - [x] 매직 넘버 상수화
 - [x] 클래스 및 메소드 네이밍 의미있는 표현으로 변경
@@ -22,7 +41,6 @@
 - [ ] 게임 커맨드 관리 상태 패턴 -> 커맨드 패턴 적용해보기 (학습 목적)
 - [ ] Readme 에 네이밍 사전, 클래스 다이어그램, 프로그래밍 흐름도 정리하기
 - [x] 예외 발생 시 재입력
-
 
 ## ✔ 1, 2단계 기능 요구사항
 
