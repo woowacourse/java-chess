@@ -1,7 +1,5 @@
-package dao;
+package chessgame.dao;
 
-import chessgame.dao.ConnectionGenerator;
-import chessgame.dao.GameDao;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.state.Black;

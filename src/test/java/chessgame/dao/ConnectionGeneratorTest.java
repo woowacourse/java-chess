@@ -1,6 +1,5 @@
-package dao;
+package chessgame.dao;
 
-import chessgame.dao.ConnectionGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
