@@ -1,13 +1,16 @@
 package chess.controller.state;
 
+import chess.dao.GameDao;
 import chess.domain.board.Square;
 import chess.domain.game.Game;
 
 public abstract class State {
     private final Game game;
+    private final GameDao gameDao;
 
     State(final Game game) {
         this.game = game;
+        gameDao = new GameDao();
     }
 
     public Running start() {
@@ -32,5 +35,9 @@ public abstract class State {
 
     public boolean isRunning() {
         return true;
+    }
+
+    protected void saveGameHistory() {
+        gameDao.addMove(game);
     }
 }

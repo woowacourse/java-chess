@@ -13,6 +13,7 @@ public class Running extends State {
     @Override
     public State move(final Square source, final Square target) {
         game().move(source, target);
+        saveGameHistory();
         OutputView.printChessBoard(game().getPieces());
 
         if (game().judgeWinner() != Camp.EMPTY) {

@@ -10,6 +10,7 @@ public class Ready extends State {
 
     @Override
     public Running start() {
+        saveGameHistory();
         OutputView.printChessBoard(game().getPieces());
         return new Running(game());
     }

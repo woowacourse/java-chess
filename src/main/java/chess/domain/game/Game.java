@@ -60,4 +60,8 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    public Camp turn() {
+        return turn;
+    }
 }
