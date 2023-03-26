@@ -38,7 +38,6 @@ public enum PieceInitialMapping {
     }
 
     public static String mapToPieceInitialFrom(final Piece piece) {
-
         return Arrays.stream(values())
                      .filter(it -> piece.isSameColor(it.color) && it.classType.equals(piece.getClass()))
                      .map(it -> it.name())
