@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
+    private static final Double VALUE = 2.5;
+
     public Knight(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
     }
