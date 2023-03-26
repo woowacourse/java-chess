@@ -48,9 +48,25 @@
   - [X] 이때, 폰의 점수는 동일한 진영의 폰이 동일한 파일에 존재하는 경우 절반 점수로 반영된다. 
   - [X] 점수가 높은 진영이 승리한다.
 
-## 기능 개선 목록
-- [X] 사용하지 않는 테스트 Ignore
-- [X] 책임에 맞는 패키지 분리
-  - [X] 입력과 관련된 Command를 view 패키지로 이동
-- [X] 책임에 맞는 역할 분리 
-- [X] 부정조건문 제거
+## 체스 DB
+```mysql
+CREATE TABLE board (
+	board_id BIGINT NOT NULL UNIQUE AUTO_INCREMENT,
+	turn VARCHAR(8) NOT NULL,
+	PRIMARY KEY(board_id)
+);
+
+CREATE TABLE piece (
+	piece_id BIGINT NOT NULL UNIQUE AUTO_INCREMENT,
+	camp VARCHAR(8) NOT NULL,
+	position VARCHAR(4) NOT NULL,
+	type VARCHAR(10) NOT NULL,
+	board_id BIGINT NOT NULL,
+	PRIMARY KEY (piece_id),
+    FOREIGN KEY (board_id)
+    REFERENCES board(board_id)
+);
+```
+- [ ] 새로운 게임이 시작되면 초기 기물 상태를 저장 후 반환
+- [ ] 존재하는 게임 선택 시, 저장된 진행 정보 반환
+- [ ] 게임 일시 정지 시, 현재 게임 상태를 저장
