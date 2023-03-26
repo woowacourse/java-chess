@@ -26,7 +26,7 @@ public final class Ready extends State {
 
     @Override
     public State start() {
-        return new Running(ChessGame.create());
+        return new Running(chessGame);
     }
 
     @Override
