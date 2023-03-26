@@ -24,6 +24,6 @@ public final class UserService {
     }
 
     private Long save(final String name) {
-        return userDao.insert(name);
+        return userDao.save(name);
     }
 }

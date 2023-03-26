@@ -15,10 +15,12 @@ class UserDaoImplTest {
     void findByName() {
         // given
         final UserDao userDao = new MockUserDao();
-        final UserEntity expected = new UserEntity(1L, "journey");
+        final String name = "journey";
+        userDao.save(name);
+        final UserEntity expected = new UserEntity(1L, name);
 
         // when
-        final Optional<UserEntity> userEntity = userDao.findByName("journey");
+        final Optional<UserEntity> userEntity = userDao.findByName(name);
         final UserEntity actual = userEntity.get();
 
         // then
@@ -46,7 +48,7 @@ class UserDaoImplTest {
         final UserDao userDao = new MockUserDao();
 
         // when
-        Long userId = userDao.insert("journey");
+        Long userId = userDao.save("journey");
 
         // then
         assertThat(userId)

@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface UserDao {
     Optional<UserEntity> findByName(final String name);
 
-    Long insert(final String name);
+    Long save(final String name);
 }

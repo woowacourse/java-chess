@@ -33,6 +33,6 @@ class UserServiceTest {
 
         // then
         assertThat(userId)
-                .isEqualTo(2L);
+                .isEqualTo(1L);
     }
 }
