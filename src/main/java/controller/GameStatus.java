@@ -50,12 +50,12 @@ public final class GameStatus {
         }
     }
 
-    private boolean isNotAllowCommand(final String command) {
-        return !(command.equalsIgnoreCase(NEW) || command.equalsIgnoreCase(LOAD) || command.equalsIgnoreCase(END));
-    }
-
     private void transition(final List<String> inputs) {
         this.command = CommandFactory.createCommand(inputs.get(COMMAND_INDEX), chessService);
+    }
+
+    private boolean isNotAllowCommand(final String command) {
+        return !(command.equalsIgnoreCase(NEW) || command.equalsIgnoreCase(LOAD) || command.equalsIgnoreCase(END));
     }
 
 }
