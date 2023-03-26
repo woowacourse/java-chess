@@ -2,31 +2,13 @@ package chess.dao;
 
 import chess.domain.player.Player;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class PlayerDao {
 
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public static Player findByName(final String name) {
         final var query = "SELECT * FROM player WHERE name = ?";
-        try (final var connection = getConnection()) {
+        try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
 
@@ -45,7 +27,7 @@ public class PlayerDao {
 
     public static Player create(final String name) {
         final var query = "INSERT INTO player(name) VALUES (?)";
-        try (final var connection = getConnection()) {
+        try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();

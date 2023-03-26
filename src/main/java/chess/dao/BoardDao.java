@@ -9,8 +9,6 @@ import chess.domain.position.Rank;
 import chess.domain.team.Team;
 import chess.view.PieceName;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -18,26 +16,10 @@ import java.util.Map;
 
 public class BoardDao {
 
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public static Board create() {
         final var query = "INSERT INTO board() VALUES()";
 
-        try (final var connection = getConnection()) {
+        try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.executeUpdate();
@@ -70,7 +52,7 @@ public class BoardDao {
 
     private static Piece findByPosition(final int boardId, final String position) {
         final var query = "SELECT " + position + " FROM board WHERE id = ?";
-        try (final var connection = getConnection()) {
+        try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, boardId);
 
@@ -88,7 +70,7 @@ public class BoardDao {
 
     public static Board findById(final int boardId) {
         final var query = "SELECT id FROM board WHERE id = ?";
-        try (final var connection = getConnection()) {
+        try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, boardId);
 
@@ -114,7 +96,7 @@ public class BoardDao {
                                     final Piece sourcePiece) {
         final var query = "UPDATE board SET %s = ? WHERE id = ?";
 
-        try (final var connection = getConnection()) {
+        try (final var connection = DBConnection.get()) {
             final var targetQuery = String.format(query, target.getCoordinate());
             final var targetPreparedStatement = connection.prepareStatement(targetQuery);
             targetPreparedStatement.setString(1, PieceName.findByPiece(sourcePiece));
