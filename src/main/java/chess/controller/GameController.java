@@ -5,7 +5,9 @@ import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static chess.controller.Command.*;
@@ -18,63 +20,70 @@ public class GameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final Map<Command, Action> commandAction = new EnumMap<>(Command.class);
+    private Command status = READY;
 
     public GameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        commandAction.put(START, (chessGame, ignore) -> start(chessGame));
+        commandAction.put(STATUS, (chessGame, ignore) -> status(chessGame));
+        commandAction.put(MOVE, this::move);
+        commandAction.put(END, (chessGame, ignore) -> end(chessGame));
     }
 
     public void run() {
         outputView.printGameStart();
-        Command command = repeatUntilValidate(this::inputCommand);
-        if (command == END) {
-            return;
-        }
-        ChessGame chessGame = new ChessGame(new Board(), WHITE);
-        outputView.printChessBoard(chessGame.getBoard());
+        Command command;
+        ChessGame chessGame = new ChessGame(START, new Board(), WHITE);
         do {
-            command = repeatUntilValidate(() -> progressGame(chessGame));
-        } while (command != END);
+            List<String> gameCommand = repeatUntilValidate(() -> play(chessGame));
+            command = Command.from(gameCommand.get(0));
+        } while (command != END || chessGame.isGameEnd());
     }
 
-    private Command inputCommand() {
+    public List<String> play(final ChessGame chessGame) {
+        List<String> gameCommand = repeatUntilValidate(this::inputCommand);
+        Command command = Command.from(gameCommand.get(0));
+        validateStatus(command);
+        commandAction.get(command).execute(chessGame, gameCommand);
+        status = command;
+        return gameCommand;
+    }
+
+    private List<String> inputCommand() {
         List<String> gameCommand = inputView.readGameCommand();
         Command command = Command.from(gameCommand.get(0));
-        validateWrongCommand(command, MOVE);
-        return command;
+        return gameCommand;
     }
 
-    private Command progressGame(final ChessGame chessGame) {
-        List<String> gameCommand = inputView.readGameCommand();
-        Command command = Command.from(gameCommand.get(0));
-        if (command == END) {
-            return command;
+    private void validateStatus(final Command command) {
+        if (command == START && status != READY) {
+            throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다. move, status, enc 중에 입력해주세요.");
         }
-        validateWrongCommand(command, START);
-
-        if (command == MOVE) {
-            validateMoveCommandFormat(gameCommand);
-            chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
-            outputView.printChessBoard(chessGame.getBoard());
+        if (command != START && status == READY) {
+            throw new IllegalArgumentException("체스 게임이 아직 시작되지 않았습니다. start 먼저 입력해주세요.");
         }
-
-        if (command == STATUS) {
-            outputView.printTeamScore(WHITE, chessGame.calculateTeamScore(WHITE));
-            outputView.printTeamScore(BLACK, chessGame.calculateTeamScore(BLACK));
-            outputView.printWinnerTeam(chessGame.calculateWinnerTeam());
-        }
-
-        if (chessGame.isGameEnd()) {
-            return END;
-        }
-        return command;
     }
 
-    private void validateWrongCommand(final Command userCommand, final Command notExpected) {
-        if (userCommand == notExpected) {
-            throw new IllegalArgumentException(
-                    "올바른 command를 입력해주세요. 게임 시작은 start로, 게임 진행은 move로, 게임 종료는 end로 할 수 있습니다.");
-        }
+    private void start(final ChessGame chessGame) {
+        outputView.printChessBoard(chessGame.getBoard());
+    }
+
+    private void status(final ChessGame chessGame) {
+        outputView.printTeamScore(WHITE, chessGame.calculateTeamScore(WHITE));
+        outputView.printTeamScore(BLACK, chessGame.calculateTeamScore(BLACK));
+        outputView.printWinnerTeam(chessGame.calculateWinnerTeam());
+    }
+
+    private void move(final ChessGame chessGame, final List<String> gameCommand) {
+        validateMoveCommandFormat(gameCommand);
+        chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
+        outputView.printChessBoard(chessGame.getBoard());
+
+    }
+
+    private void end(final ChessGame chessGame) {
     }
 
     private void validateMoveCommandFormat(final List<String> gameCommand) {
