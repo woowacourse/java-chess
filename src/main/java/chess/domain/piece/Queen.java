@@ -23,16 +23,16 @@ public class Queen extends Piece {
         return isStraight(source, target) || isDiagonal(source, target);
     }
 
-    @Override
-    public PieceType getPieceType() {
-        return PieceType.QUEEN;
-    }
-
     private boolean isStraight(Square source, Square target) {
         return source.isSameFile(target) || source.isSameRank(target);
     }
 
     private boolean isDiagonal(Square source, Square target) {
         return source.calculateFileDistance(target) == source.calculateRankDistance(target);
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
     }
 }
