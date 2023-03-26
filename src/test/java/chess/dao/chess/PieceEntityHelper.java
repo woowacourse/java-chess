@@ -23,15 +23,12 @@ public class PieceEntityHelper {
         results.add(new PieceEntity(id + 2, rank, 2, "BISHOP", campType));
         results.add(new PieceEntity(id + 3, rank, 3, "QUEEN", campType));
         results.add(new PieceEntity(id + 4, rank, 4, "KING", campType));
-        results.add(new PieceEntity(id + 5, rank, 5, "BISHOP", campType));
-        results.add(new PieceEntity(id + 6, rank, 6, "KNIGHT", campType));
-        results.add(new PieceEntity(id + 7, rank, 7, "ROOK", campType));
         return results;
     }
 
     private static List<PieceEntity> createMockPawnPieces(final long id, final int rank, final String campType) {
         final List<PieceEntity> results = new ArrayList<>();
-        for (int file = 0; file < 8; file++) {
+        for (int file = 0; file < 4; file++) {
             results.add(new PieceEntity(id + file, rank, file, "PAWN", campType));
         }
         return results;

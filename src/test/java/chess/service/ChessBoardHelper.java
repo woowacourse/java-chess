@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.chess.CampType;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -22,11 +23,18 @@ import static chess.domain.piece.PieceType.ROOK;
 
 public final class ChessBoardHelper {
 
-    public static Map<Position, Piece> createMockBoard() {
+    public static ChessBoard createMockBoard() {
         final Map<Position, Piece> board = new HashMap<>();
         createWhiteArea(board);
         createBlackArea(board);
-        return board;
+        return ChessBoard.create(board);
+    }
+
+    public static ChessBoard createMockProgressBoard() {
+        final Map<Position, Piece> board = new HashMap<>();
+        createWhiteProgressArea(board);
+        createBlackProgressArea(board);
+        return ChessBoard.create(board);
     }
 
     private static void createWhiteArea(final Map<Position, Piece> board) {
@@ -52,6 +60,30 @@ public final class ChessBoardHelper {
 
     private static void createPawnPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
         for (int file = 0; file < 8; file++) {
+            board.put(new Position(rank, file), new Piece(PAWN, campType, new Pawn()));
+        }
+    }
+
+    private static void createWhiteProgressArea(final Map<Position, Piece> board) {
+        createProgressPieces(board, 0, CampType.WHITE);
+        createProgressPawnPieces(board, 1, CampType.WHITE);
+    }
+
+    private static void createBlackProgressArea(final Map<Position, Piece> board) {
+        createProgressPawnPieces(board, 6, CampType.BLACK);
+        createProgressPieces(board, 7, CampType.BLACK);
+    }
+
+    private static void createProgressPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
+        board.put(new Position(rank, 0), new Piece(ROOK, campType, new Rook()));
+        board.put(new Position(rank, 1), new Piece(KNIGHT, campType, new Knight()));
+        board.put(new Position(rank, 2), new Piece(BISHOP, campType, new Bishop()));
+        board.put(new Position(rank, 3), new Piece(QUEEN, campType, new Queen()));
+        board.put(new Position(rank, 4), new Piece(KING, campType, new King()));
+    }
+
+    private static void createProgressPawnPieces(final Map<Position, Piece> board, final int rank, final CampType campType) {
+        for (int file = 0; file < 4; file++) {
             board.put(new Position(rank, file), new Piece(PAWN, campType, new Pawn()));
         }
     }

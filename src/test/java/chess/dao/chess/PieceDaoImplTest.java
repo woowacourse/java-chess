@@ -23,6 +23,6 @@ public class PieceDaoImplTest {
                 .isEqualTo(PieceEntityHelper.createPieceEntities());
 
         assertThat(pieceEntities.size())
-                .isSameAs(32);
+                .isSameAs(18);
     }
 }

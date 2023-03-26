@@ -25,4 +25,12 @@ public final class ChessGameEntity {
     public int hashCode() {
         return Objects.hash(id, currentCamp, userId);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCurrentCamp() {
+        return currentCamp;
+    }
 }

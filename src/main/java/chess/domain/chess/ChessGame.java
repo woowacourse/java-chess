@@ -6,6 +6,7 @@ import chess.domain.piece.move.Position;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class ChessGame {
     private static final int ALL_KING_ALIVE_COUNT = 2;
@@ -15,6 +16,11 @@ public final class ChessGame {
 
     public ChessGame() {
         this.chessBoard = ChessBoard.getInstance(this);
+    }
+
+    public ChessGame(final ChessBoard chessBoard, final CampType currentCamp) {
+        this.chessBoard = chessBoard;
+        this.currentCamp = currentCamp;
     }
 
     public boolean run(final Position source, final Position target, final CampType currentCamp) {
@@ -93,6 +99,19 @@ public final class ChessGame {
     private boolean isKingAlive() {
         List<Piece> aliveKings = chessBoard.getAliveKings();
         return aliveKings.size() == ALL_KING_ALIVE_COUNT;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ChessGame chessGame = (ChessGame) o;
+        return Objects.equals(chessBoard, chessGame.chessBoard) && currentCamp == chessGame.currentCamp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(chessBoard, currentCamp);
     }
 
     public Map<Position, Piece> getChessBoard() {
