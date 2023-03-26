@@ -21,7 +21,7 @@ public class DbChessBoardDao implements ChessBoardDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (Entry<Position, Piece> boardEntry : board.getBoard().entrySet()) {
                 preparedStatement.setLong(1, chessGameId);
-                preparedStatement.setString(2, boardEntry.getValue().getClass().getName());
+                preparedStatement.setString(2, boardEntry.getValue().type().getType());
                 preparedStatement.setInt(3, boardEntry.getKey().getRank());
                 preparedStatement.setInt(4, boardEntry.getKey().getFile());
                 preparedStatement.setString(5, boardEntry.getValue().getTeam().name());
@@ -38,7 +38,7 @@ public class DbChessBoardDao implements ChessBoardDao {
                 + "WHERE piece_file = ? and piece_rank = ? and chess_game_id = ?";
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, piece.getClass().getName());
+            preparedStatement.setString(1, piece.type().getType());
             preparedStatement.setString(2, piece.getTeam().name());
             preparedStatement.setInt(3, piecePosition.getFile());
             preparedStatement.setInt(4, piecePosition.getRank());

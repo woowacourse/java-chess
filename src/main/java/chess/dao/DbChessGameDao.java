@@ -10,6 +10,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import database.Database;
@@ -71,22 +72,22 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     private Piece makePiece(String pieceType, String team) {
-        if (pieceType.equals(King.class.getName())) {
+        if (pieceType.equals(PieceType.King.getType())) {
             return new King(Team.valueOf(team));
         }
-        if (pieceType.equals(Queen.class.getName())) {
+        if (pieceType.equals(PieceType.Queen.getType())) {
             return new Queen(Team.valueOf(team));
         }
-        if (pieceType.equals(Rook.class.getName())) {
+        if (pieceType.equals(PieceType.Rook.getType())) {
             return new Rook(Team.valueOf(team));
         }
-        if (pieceType.equals(Bishop.class.getName())) {
+        if (pieceType.equals(PieceType.Bishop.getType())) {
             return new Bishop(Team.valueOf(team));
         }
-        if (pieceType.equals(Knight.class.getName())) {
+        if (pieceType.equals(PieceType.Knight.getType())) {
             return new Knight(Team.valueOf(team));
         }
-        if (pieceType.equals(Pawn.class.getName())) {
+        if (pieceType.equals(PieceType.Pawn.getType())) {
             return new Pawn(Team.valueOf(team));
         }
         return new Empty(Team.valueOf(team));
