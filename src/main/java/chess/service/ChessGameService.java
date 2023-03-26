@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.Team;
 
 import java.util.List;
 
@@ -28,7 +29,11 @@ public class ChessGameService {
         return chessGame.isChessBoardNotInitialized();
     }
     
-    public double getWhiteTeamScore() {
-        return chessGame.getWhiteTeamScore();
+    public double getTeamScore(Team team) {
+        return chessGame.calculateScore(team);
+    }
+    
+    public boolean isKingDead() {
+        return chessGame.isKingDead();
     }
 }

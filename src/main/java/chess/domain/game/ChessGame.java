@@ -32,7 +32,11 @@ public class ChessGame {
         return chessBoard;
     }
     
-    public double getWhiteTeamScore() {
-        return chessBoard.calculateScore(Team.WHITE);
+    public double calculateScore(Team team) {
+        return chessBoard.calculateScore(team);
+    }
+    
+    public boolean isKingDead() {
+        return chessBoard.isKingDead();
     }
 }

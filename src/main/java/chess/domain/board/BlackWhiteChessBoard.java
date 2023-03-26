@@ -134,6 +134,19 @@ public class BlackWhiteChessBoard implements ChessBoard {
                 .sum();
     }
     
+    @Override
+    public boolean isKingDead() {
+        return numberOfSurvivingKings() == 1;
+    }
+    
+    private long numberOfSurvivingKings() {
+        return pieces.keySet().stream()
+                .map(this::pieceOrEmpty)
+                .map(Piece::pieceType)
+                .filter(pieceType -> pieceType == PieceType.KING)
+                .count();
+    }
+    
     private Piece pieceOrEmpty(Coordinate nextCoordinate) {
         return pieces.getOrDefault(nextCoordinate, Empty.getInstance());
     }

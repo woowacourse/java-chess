@@ -29,4 +29,10 @@ public final class ChessGameState {
         
         return command.isRunning();
     }
+    
+    public void noticeKingDead() {
+        if (chessGameService.isKingDead()) {
+        
+        }
+    }
 }

@@ -19,4 +19,6 @@ public interface ChessBoard {
     Map<Coordinate, Piece> pieces();
     
     double calculateScore(Team white);
+    
+    boolean isKingDead();
 }

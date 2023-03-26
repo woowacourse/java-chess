@@ -20,6 +20,7 @@ public class ChessGameController {
         
         while (chessGameState.isRunning()) {
             retryWithError(chessGameState::playWithCurrentTurn);
+            chessGameState.noticeKingDead();
         }
     }
     

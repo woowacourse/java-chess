@@ -83,4 +83,9 @@ class BlackWhiteChessBoardTest {
         double score = blackWhiteChessBoard.calculateScore(Team.WHITE);
         assertThat(score).isEqualTo(38.0);
     }
+    
+    @Test
+    void 킹이_죽었는지_확인() {
+        assertThat(blackWhiteChessBoard.isKingDead()).isFalse();
+    }
 }
