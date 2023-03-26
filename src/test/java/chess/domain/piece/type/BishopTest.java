@@ -6,6 +6,7 @@ import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -76,5 +77,13 @@ class BishopTest {
         // when & then
         final WayPoints condition = bishop.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
+    }
+
+    @Test
+    void King_인지_확인할_수_있다() {
+        // given
+        final Bishop bishop = new Bishop(Color.WHITE, PiecePosition.of('c', 1));
+        // when & then
+        assertThat(bishop.isKing()).isFalse();
     }
 }

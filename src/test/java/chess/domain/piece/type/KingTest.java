@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -93,5 +94,13 @@ class KingTest {
         // when & then
         assertThatThrownBy(() -> king.wayPointsWithCondition(destination))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void King_인지_확인할_수_있다() {
+        // given
+        final King king = new King(Color.WHITE, PiecePosition.of('e', 1));
+        // when & then
+        assertThat(king.isKing()).isTrue();
     }
 }

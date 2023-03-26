@@ -62,4 +62,6 @@ public abstract class Piece implements Cloneable {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
     }
+
+    public abstract boolean isKing();
 }

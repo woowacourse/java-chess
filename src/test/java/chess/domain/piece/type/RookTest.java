@@ -6,6 +6,7 @@ import chess.domain.piece.position.WayPoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -76,5 +77,13 @@ class RookTest {
         // when & then
         assertThatThrownBy(() -> rook.wayPointsWithCondition(destination))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void King_인지_확인할_수_있다() {
+        // given
+        final Rook rook = new Rook(Color.WHITE, PiecePosition.of('a', 1));
+        // when & then
+        assertThat(rook.isKing()).isFalse();
     }
 }

@@ -23,4 +23,9 @@ public class Rook extends Piece {
     protected WayPoints wayPointsWithCondition(final Path path) {
         return new WayPoints(path.wayPoints());
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

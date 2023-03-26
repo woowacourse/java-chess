@@ -5,9 +5,11 @@ import chess.domain.piece.position.PiecePosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -72,5 +74,13 @@ class KnightTest {
         // when & then
         assertThatThrownBy(() -> knight.wayPointsWithCondition(destination))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void King_인지_확인할_수_있다() {
+        // given
+        final Knight knight = new Knight(Color.WHITE, PiecePosition.of('b', 1));
+        // when & then
+        assertThat(knight.isKing()).isFalse();
     }
 }

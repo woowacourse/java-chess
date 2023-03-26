@@ -32,6 +32,11 @@ class PieceTest {
             protected WayPoints wayPointsWithCondition(final Path path) {
                 return null;
             }
+
+            @Override
+            public boolean isKing() {
+                return false;
+            }
         });
     }
 
@@ -60,6 +65,11 @@ class PieceTest {
         @Override
         protected WayPoints wayPointsWithCondition(final Path path) {
             return null;
+        }
+
+        @Override
+        public boolean isKing() {
+            return false;
         }
     }
 

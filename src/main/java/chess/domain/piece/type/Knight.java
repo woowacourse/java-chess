@@ -29,4 +29,9 @@ public class Knight extends Piece {
     protected WayPoints wayPointsWithCondition(final Path path) {
         return new WayPoints(Collections.emptyList());
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

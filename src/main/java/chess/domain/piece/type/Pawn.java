@@ -78,4 +78,9 @@ public class Pawn extends Piece {
         this.piecePosition = enemy.piecePosition();
         this.isMoved = true;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }
