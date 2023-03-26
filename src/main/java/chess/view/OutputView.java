@@ -77,4 +77,8 @@ public class OutputView {
         }
         System.out.printf("%s이(가) 이겼습니다.%n", winner);
     }
+
+    public static void printTeamScore(final Color color, final Double score) {
+        System.out.printf("%s의 점수는 %.1f점입니다.%n", color, score);
+    }
 }
