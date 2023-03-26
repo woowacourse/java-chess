@@ -10,6 +10,9 @@ import java.util.List;
 
 public final class PathValidatorFactory {
 
+    private PathValidatorFactory() {
+    }
+
     public static PathValidator rookPathValidator() {
         final DirectionValidation directionValidation = DirectionValidation.of(
             PieceType.ROOK.getPossibleDirections()
