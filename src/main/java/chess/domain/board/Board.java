@@ -17,11 +17,16 @@ public class Board {
 
     private static final String FROM_IS_EMPTY_MESSAGE = "출발점에 말이 없습니다.";
 
-    private final Turn turn = new Turn();
     private final Map<Position, Piece> board;
+    private final Turn turn;
+
+    public Board(final Map<Position, Piece> board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
+    }
 
     public Board(final Map<Position, Piece> board) {
-        this.board = board;
+        this(board, new Turn());
     }
 
     public void move(final Position from, final Position to) {

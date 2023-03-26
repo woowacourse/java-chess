@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.board.Board;
+import chess.domain.board.Turn;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -56,12 +57,44 @@ public class DataBaseBoardDao implements BoardDao {
     }
 
     @Override
-    public void updatePiecePosition(final Position from, final Position to) {
+    public void updatePiecePosition(final Position from, final Position to, final long gameId) {
+        removeDestinationPosition(to, gameId);
+        final String updatePiecePositionQuery =
+                "UPDATE board SET position_file = ?, position_rank = ? "
+                        + "where chess_game_id = ? AND position_file = ? AND Position_rank = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(updatePiecePositionQuery)) {
+            preparedStatement.setInt(1, to.file().value());
+            preparedStatement.setInt(2, to.rank().value());
+            preparedStatement.setLong(3, gameId);
+            preparedStatement.setInt(4, from.file().value());
+            preparedStatement.setInt(5, from.rank().value());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
+    private void removeDestinationPosition(final Position to, final long gameId) {
+        final String removeDestinationPositionQuery = "DELETE FROM board WHERE chess_game_id = ? "
+                + "AND position_file = ? AND position_rank = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(removeDestinationPositionQuery)) {
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.setInt(2, to.file().value());
+            preparedStatement.setInt(3, to.rank().value());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public Board loadBoard(final Long gameId) {
+    public Board loadBoard(final Long gameId, final Turn turn) {
         final String findBoardInfoByChessGameId =
                 "SELECT position_file, position_rank, color, pieceType from board WHERE chess_game_id = ?";
         try (final Connection connection = ConnectionGenerator.getConnection();
@@ -78,7 +111,7 @@ public class DataBaseBoardDao implements BoardDao {
                 final Position position = new Position(file, rank);
                 board.put(position, PIECE_MAPPER.get(pieceType).apply(color));
             }
-            return new Board(board);
+            return new Board(board, turn);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

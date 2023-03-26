@@ -4,8 +4,10 @@ import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
 import chess.dao.DataBaseBoardDao;
 import chess.dao.DataBaseChessGameDao;
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Score;
+import chess.domain.board.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -28,7 +30,10 @@ public class NotStarted implements State {
 
     @Override
     public State start() {
-        return new Started(new BoardFactory().createInitialBoard(), CHESS_GAME_DAO.generateNewGame());
+        final long gameId = CHESS_GAME_DAO.generateNewGame();
+        final Board initialBoard = new BoardFactory().createInitialBoard();
+        BOARD_DAO.saveBoard(initialBoard, gameId);
+        return new Started(initialBoard, gameId);
     }
 
     @Override
@@ -53,6 +58,7 @@ public class NotStarted implements State {
 
     @Override
     public State load(final long gameId) {
-        return new Started(BOARD_DAO.loadBoard(gameId), gameId);
+        final Turn turn = CHESS_GAME_DAO.loadTurn(gameId);
+        return new Started(BOARD_DAO.loadBoard(gameId, turn), gameId);
     }
 }
