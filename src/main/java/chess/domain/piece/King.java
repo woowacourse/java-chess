@@ -19,6 +19,7 @@ public final class King extends Piece {
     public boolean isMovableRoute(List<Position> routeFromStartToEnd) {
         Position start = routeFromStartToEnd.get(0);
         Position end = routeFromStartToEnd.get(routeFromStartToEnd.size() - 1);
-        return KING_MOVABLE_DIRECTIONS.contains(Direction.of(start, end)) && routeFromStartToEnd.size() == KING_ROUTE_SIZE;
+        return (KING_MOVABLE_DIRECTIONS.contains(Direction.of(start, end))
+                && routeFromStartToEnd.size() == KING_ROUTE_SIZE);
     }
 }
