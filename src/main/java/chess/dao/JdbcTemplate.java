@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class JdbcTemplate {
 
-    public static void executeUpdate(final String query, final Object... parameters) {
+    public static void executeQuery(final String query, final Object... parameters) {
         try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query);
 

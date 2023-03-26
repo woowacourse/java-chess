@@ -16,7 +16,7 @@ public class MoveLogDao {
                 "move_log(board_id, source_position, target_position, source_piece, target_piece) " +
                 "VALUES(?, ?, ?, ?, ?)";
 
-        JdbcTemplate.executeUpdate(query,
+        JdbcTemplate.executeQuery(query,
                 board.getId(),
                 source.getCoordinate(),
                 target.getCoordinate(),

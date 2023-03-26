@@ -34,6 +34,6 @@ public class ChessGameDao {
 
     public static void updateTurn(final ChessGame chessGame) {
         final var query = "UPDATE chess_game SET turn = ? WHERE id = ?";
-        JdbcTemplate.executeUpdate(query, TeamName.findByTeam(chessGame.getTurn()), chessGame.getId());
+        JdbcTemplate.executeQuery(query, TeamName.findByTeam(chessGame.getTurn()), chessGame.getId());
     }
 }

@@ -23,7 +23,7 @@ public class PlayerDao {
     public static Player create(final String name) {
         final var query = "INSERT INTO player(name) VALUES (?)";
 
-        JdbcTemplate.executeUpdate(query, name);
+        JdbcTemplate.executeQuery(query, name);
 
         return findByName(name);
     }

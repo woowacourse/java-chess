@@ -71,9 +71,9 @@ public class BoardDao {
         final var query = "UPDATE board SET %s = ? WHERE id = ?";
 
         final var targetQuery = String.format(query, target.getCoordinate());
-        JdbcTemplate.executeUpdate(targetQuery, PieceName.findByPiece(sourcePiece), board.getId());
+        JdbcTemplate.executeQuery(targetQuery, PieceName.findByPiece(sourcePiece), board.getId());
 
         final var sourceQuery = String.format(query, source.getCoordinate());
-        JdbcTemplate.executeUpdate(sourceQuery, PieceName.findByPiece(new Empty(Team.NONE)), board.getId());
+        JdbcTemplate.executeQuery(sourceQuery, PieceName.findByPiece(new Empty(Team.NONE)), board.getId());
     }
 }
