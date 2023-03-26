@@ -81,7 +81,7 @@
 # step4
 
 ## Dao
-- [ ] source 좌표, destination 좌표를 저장한다.
+- [x] source 좌표, destination 좌표를 저장한다.
 - [ ] 모든 데이터를 지운다. (초기화용)
 - [ ] 모든 데이터를 가져온다.
 
