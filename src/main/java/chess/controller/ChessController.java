@@ -19,8 +19,7 @@ public class ChessController {
     }
 
     public AppStatus start(CommandRequest commandRequest) {
-        // TODO 게임방 목록 출력
-        System.out.println(chessGame.availableBoards());
+        OutputView.printAvailableBoardIds(chessGame.availableBoards());
         // TODO 게임방 아이디를 입력받는다. 없는 아이디일 경우 새로 생성된다.
         chessGame.start(2);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
