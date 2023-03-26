@@ -15,8 +15,7 @@ public enum PieceDirection {
     KNIGHT(List.of(UP_UP_RIGHT, UP_RIGHT_RIGHT, DOWN_RIGHT_RIGHT, DOWN_DOWN_RIGHT,
             DOWN_DOWN_LEFT, DOWN_LEFT_LEFT, UP_LEFT_LEFT, UP_UP_LEFT)),
     STRAIGHT(List.of(UP, RIGHT, DOWN, LEFT)),
-    DIAGONAL(List.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT)),
-    KING_AND_QUEEN(Collections.emptyList());
+    DIAGONAL(List.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT));
 
     private final List<Direction> pieceDirections;
 
