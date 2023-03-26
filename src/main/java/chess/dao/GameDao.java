@@ -89,7 +89,7 @@ public class GameDao {
             if (resultSet.next()) {
                 final List<Piece> pieces = extractPieces(resultSet);
                 final Board board = new Board(BoardFactory.createBoard(pieces));
-                final Camp turn = Camp.stringToCamp(resultSet.getString("turn"));
+                final Camp turn = Camp.nameToCamp(resultSet.getString("turn"));
                 return new Game(board, turn);
             }
             return new Game();

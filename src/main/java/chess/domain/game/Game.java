@@ -18,9 +18,7 @@ public class Game {
     public Game() {
         this(new Board(), Camp.WHITE);
     }
-
-    //public Game()
-
+    
     public void move(final Square source, final Square target) {
         if (!board.isSameCamp(source, turn)) {
             throw new IllegalArgumentException("자신의 말만 이동할 수 있습니다.");

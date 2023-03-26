@@ -21,7 +21,7 @@ public enum Camp {
         return EMPTY;
     }
 
-    public static Camp stringToCamp(final String name) {
+    public static Camp nameToCamp(final String name) {
         if (name.equals(WHITE.name)) {
             return WHITE;
         }
