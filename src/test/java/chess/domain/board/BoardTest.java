@@ -3,12 +3,19 @@ package chess.domain.board;
 import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.helper.BoardFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BoardTest {
@@ -17,7 +24,7 @@ class BoardTest {
 
     @BeforeEach
     void boardInit() {
-        board = new Board(new BoardFactory());
+        board = Board.makeNewGame(new BoardFactory());
     }
 
     @Test
@@ -76,5 +83,41 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(from, to, Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("차례에 맞는 말을 선택해 주세요");
+    }
+
+    @Test
+    @DisplayName("bringBackPreviousGame() : 이전에 진행했던 게임을 다시 Board로 만들 수 있습니다.")
+    void test_bringBackPreviousGame() throws Exception {
+        //given
+        final Map<Position, Piece> board = BoardFixture.createBoard();
+        final Turn turn = new Turn(Color.BLACK);
+
+        //when
+        final Board previousGame = Board.bringBackPreviousGame(board, turn);
+
+        final Map<Position, Piece> savedChessBoard = previousGame.chessBoard();
+        final Turn savedTurn = previousGame.turn();
+
+        //then
+        assertAll(
+                () -> assertEquals(savedChessBoard, board),
+                () -> assertEquals(turn, savedTurn)
+        );
+    }
+
+    @Test
+    @DisplayName("makeNewGame() : 새로운 게임을 만들 수 있다.")
+    void test_makeNewGame() throws Exception {
+        //when
+        final Board newGame = Board.makeNewGame(new BoardFactory());
+
+        final Map<Position, Piece> newChessBoard = newGame.chessBoard();
+        final Turn savedTurn = newGame.turn();
+
+        //then
+        assertAll(
+                () -> assertNotNull(newChessBoard),
+                () -> assertEquals(savedTurn, new Turn(Color.WHITE))
+        );
     }
 }
