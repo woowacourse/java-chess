@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.dao.ChessGameDao;
-import chess.dao.InMemoryChessGameDao;
+import chess.dao.DbChessGameDao;
 import chess.domain.board.Board;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class ChessGame {
 
-    private static final ChessGameDao chessGameDao = new InMemoryChessGameDao();
+    private static final ChessGameDao chessGameDao = new DbChessGameDao();
 
     private final long id;
     private final Board board;
@@ -28,6 +28,10 @@ public class ChessGame {
 
     public static ChessGame continueGame(long id) {
         return chessGameDao.findById(id);
+    }
+
+    public static ChessGame setting(long id, Board board, Team turn) {
+        return new ChessGame(id, board, turn);
     }
 
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
