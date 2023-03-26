@@ -1,30 +1,52 @@
 package domain;
 
-import domain.board.Board;
-import domain.path.PathValidator;
+import controller.MoveCommand;
+import domain.board.ChessBoard;
+import domain.board.piece.Piece;
+import domain.path.location.Location;
+import java.util.Map;
 
 public final class ChessGame {
 
-    private Board board;
-    private boolean isWhite = true;
+    private boolean isReady = false;
+    private final ChessBoard chessBoard;
+
+    public ChessGame(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
+    }
 
     public void initialize() {
-        this.board = new Board(new PathValidator());
-        board.initialize();
-        isWhite = true;
+        chessBoard.initializeBoard();
     }
 
-    public void move(final Location start, final Location end) {
-        if (isWhite) {
-            board.moveWhite(start, end);
-            isWhite = false;
-            return;
+    public void move(MoveCommand moveCommand) {
+        chessBoard.move(moveCommand.getStart(), moveCommand.getEnd());
+        if (chessBoard.isOneKingExist()) {
+            end();
         }
-        board.moveBlack(start, end);
-        isWhite = true;
     }
 
-    public Board getBoard() {
-        return board;
+    public void ready() {
+        isReady = true;
+    }
+
+    public void end() {
+        isReady = false;
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return chessBoard.getBoard();
+    }
+
+    public double getBlackScore() {
+        return chessBoard.getBlackScore();
+    }
+
+    public double getWhiteScore() {
+        return chessBoard.getWhiteScore();
     }
 }
