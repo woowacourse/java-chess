@@ -63,3 +63,16 @@
 - [x] 한 팀의 전체 점수를 구한다
 - [x] 한 팀에서 한 세로줄에 있는 폰의 수를 구한다
 - [x] 한 세로줄의 폰이 두 개 이상이면 그 줄의 폰 수 * 0.5 만큼 점수가 감점된다
+- [x] 한 팀의 킹이 죽으면, 즉시 경기가 종료된다
+- [x] 이전 게임이 진행중이면, 이어서 진행할지, 새 게임을 진행할지 선택할 수 있다
+
+```sql
+CREATE TABLE chess_game(
+                         id bigint PRIMARY KEY auto_increment,
+                         source_coordinate_row VARCHAR(255) NOT NULL,
+                         source_coordinate_column VARCHAR(255) NOT NULL,
+                         destination_coordinate_row VARCHAR(255) NOT NULL,
+                         destination_coordinate_column VARCHAR(255) NOT NULL
+);
+
+```
