@@ -3,19 +3,19 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Column {
-    A(1, "a"),
-    B(2, "b"),
-    C(3,"c"),
-    D(4, "d"),
-    E(5, "e"),
-    F(6, "f"),
-    G(7, "g"),
-    H(8, "h");
+    A('a', "a"),
+    B('b', "b"),
+    C('c',"c"),
+    D('d', "d"),
+    E('e', "e"),
+    F('f', "f"),
+    G('g', "g"),
+    H('h', "h");
 
-    private final int sequence;
+    private final char sequence;
     private final String name;
 
-    Column(int sequence, String name) {
+    Column(char sequence, String name) {
         this.sequence = sequence;
         this.name = name;
     }
@@ -27,7 +27,17 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 컬럼을 찾을 수 없습니다."));
     }
 
+    public static boolean isInChessBoardRange(int columnSequence) {
+        return Arrays.stream(Rank.values())
+                .map(Rank::getSequence)
+                .anyMatch(rank -> rank == columnSequence);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public char getSequence() {
+        return sequence;
     }
 }

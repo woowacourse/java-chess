@@ -16,4 +16,21 @@ class ColumnTest {
 
         assertThat(Column.findColumn(columnValue)).isEqualTo(Column.A);
     }
+
+    @Test
+    @DisplayName("체스판 범위에 포함된 column값이 입력됐을 때 true를 반환한다.")
+    void shouldSucceedToCheckInRange() {
+        char column = 'f';
+
+        assertThat(Column.isInChessBoardRange(column)).isTrue();
+    }
+
+    @Test
+    @DisplayName("체스판 범위를 벗어난 column값이 입력되었을 때 false를 반환한다.")
+    void shouldSucceedToCheckOutOfRange() {
+        char rank = 'i';
+
+        assertThat(Column.isInChessBoardRange(rank)).isFalse();
+    }
+
 }

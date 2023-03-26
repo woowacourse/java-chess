@@ -27,7 +27,17 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 랭크를 찾을 수 없습니다."));
     }
 
+    public static boolean isInChessBoardRange(int rankValue) {
+        return Arrays.stream(Rank.values())
+                .map(Rank::getSequence)
+                .anyMatch(rank -> rank == rankValue);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public int getSequence() {
+        return sequence;
     }
 }

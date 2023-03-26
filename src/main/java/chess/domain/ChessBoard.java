@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
-
     private final static String WHITE_ROOK_LEFT = "a1";
     private final static String WHITE_ROOK_RIGHT = "h1";
     private final static String BLACK_ROOK_LEFT = "a8";
@@ -101,7 +100,7 @@ public class ChessBoard {
         chessBoard.put(Position.findPosition(WHITE_PAWN_SIXTH), new Pawn(Color.WHITE));
         chessBoard.put(Position.findPosition(WHITE_PAWN_SEVENTH), new Pawn(Color.WHITE));
         chessBoard.put(Position.findPosition(WHITE_PAWN_EIGHT), new Pawn(Color.WHITE));
-        
+
         chessBoard.put(Position.findPosition(BLACK_PAWN_FIRST), new Pawn(Color.BLACK));
         chessBoard.put(Position.findPosition(BLACK_PAWN_SECOND), new Pawn(Color.BLACK));
         chessBoard.put(Position.findPosition(BLACK_PAWN_THIRD), new Pawn(Color.BLACK));
@@ -148,8 +147,17 @@ public class ChessBoard {
         chessBoard.put(targetPosition, chessPiece);
     }
 
+
     public void removePiece(Position sourcePosition) {
         chessBoard.put(sourcePosition, new Empty());
+    }
+
+    public boolean isEmpty(Position position) {
+        return chessBoard.get(position).equals(new Empty());
+    }
+
+    public ChessPiece getChessPiece(Position position) {
+        return chessBoard.get(position);
     }
 
     public Map<Position, ChessPiece> getChessBoard() {
@@ -233,3 +241,4 @@ public class ChessBoard {
 //        return chessBoard;
 //    }
 }
+

@@ -189,6 +189,7 @@ public class ChessBoardTest {
         assertThat(chessBoard.getChessBoard().get(Position.findPosition("a2"))).isEqualTo(new Empty());
     }
 
+
     //    ChessBoard chessBoard = ChessBoard.generateChessBoard();
 //
 //    @Test

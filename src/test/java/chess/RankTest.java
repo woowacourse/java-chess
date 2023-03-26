@@ -16,4 +16,20 @@ class RankTest {
 
         assertThat(Rank.findRank(rankValue)).isEqualTo(Rank.ONE);
     }
+
+    @Test
+    @DisplayName("체스판 범위에 포함된 rank값이 입력됐을 때 true를 반환한다.")
+    void shouldSucceedToCheckInRange() {
+        int rank = 4;
+
+        assertThat(Rank.isInChessBoardRange(rank)).isTrue();
+    }
+
+    @Test
+    @DisplayName("체스판 범위를 벗어난 rank값이 입력되었을 때 false를 반환한다.")
+    void shouldSucceedToCheckOutOfRange() {
+        int rank = 9;
+
+        assertThat(Rank.isInChessBoardRange(rank)).isFalse();
+    }
 }
