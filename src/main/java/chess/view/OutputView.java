@@ -8,6 +8,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.dto.ChessBoardDto;
+import chess.dto.ScoreDto;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -85,5 +86,20 @@ public class OutputView {
     
     public static void println(String message) {
         System.out.println(message);
+    }
+    
+    public static void printIntermediateResults(ScoreDto scoreDto) {
+        println("> 중간 결과");
+        System.out.printf("White Team Score : %.1f%n", scoreDto.whiteScore());
+        System.out.printf("Black Team Score : %.1f%n", scoreDto.blackScore());
+        System.out.printf("Winner Team : %s%n", parseWinnerTeam(scoreDto));
+    }
+    
+    private static String parseWinnerTeam(ScoreDto scoreDto) {
+        Team winnerTeam = scoreDto.winnerTeam();
+        if (winnerTeam == Team.EMPTY) {
+            return "DRAW";
+        }
+        return winnerTeam.name().toUpperCase();
     }
 }

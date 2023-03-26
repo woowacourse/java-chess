@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 public enum CommandFactory {
     START(StartCommand::new),
     MOVE(MoveCommand::new),
+    STATUS(StatusCommand::new),
     END(EndCommand::new);
     
     private final Supplier<Command> gameState;

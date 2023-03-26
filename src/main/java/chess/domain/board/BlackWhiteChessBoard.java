@@ -152,6 +152,21 @@ public class BlackWhiteChessBoard implements ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("킹이 존재하지 않습니다."));
     }
     
+    @Override
+    public Team winnerTeam() {
+        double whiteScore = calculateScore(Team.WHITE);
+        double blackScore = calculateScore(Team.BLACK);
+        if (whiteScore > blackScore) {
+            return Team.WHITE;
+        }
+    
+        if (whiteScore < blackScore) {
+            return Team.BLACK;
+        }
+        
+        return Team.EMPTY;
+    }
+    
     private Piece pieceOrEmpty(Coordinate nextCoordinate) {
         return pieces.getOrDefault(nextCoordinate, Empty.getInstance());
     }

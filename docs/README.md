@@ -70,8 +70,8 @@
   - [x] 각 팀의 현재 점수를 반환한다.
 
 ## 입력
-- [ ] status 입력 추가
+- [x] status 입력 추가
 
 ## 출력
-- [ ] 각 팀의 점수 출력 (End -> King이 안잡혔다면, Status)
-- [ ] 각 팀의 승패 출력 (End, Status)
+- [x] 각 팀의 점수 출력 (End -> King이 안잡혔다면, Status)
+- [x] 각 팀의 승패 출력 (End, Status)

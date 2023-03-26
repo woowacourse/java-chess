@@ -29,10 +29,6 @@ public class ChessGameService {
         return chessGame.isChessBoardNotInitialized();
     }
     
-    public double getTeamScore(Team team) {
-        return chessGame.calculateScore(team);
-    }
-    
     public boolean isKingDied() {
         return chessGame.isKingDied();
     }

@@ -23,4 +23,6 @@ public interface ChessBoard {
     boolean isKingDied();
     
     Team teamWithKing();
+    
+    Team winnerTeam();
 }

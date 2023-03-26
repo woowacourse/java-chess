@@ -32,10 +32,6 @@ public class ChessGame {
         return chessBoard;
     }
     
-    public double calculateScore(Team team) {
-        return chessBoard.calculateScore(team);
-    }
-    
     public boolean isKingDied() {
         return chessBoard.isKingDied();
     }
