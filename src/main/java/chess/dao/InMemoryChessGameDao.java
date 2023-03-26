@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.ChessGame;
+import java.util.List;
 
 public class InMemoryChessGameDao implements ChessGameDao {
 
@@ -17,5 +18,10 @@ public class InMemoryChessGameDao implements ChessGameDao {
     @Override
     public void updateTurn(ChessGame chessGame) {
         // nothing
+    }
+
+    @Override
+    public List<Integer> findAll() {
+        return null;
     }
 }

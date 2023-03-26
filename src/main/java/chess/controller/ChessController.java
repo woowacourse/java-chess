@@ -11,6 +11,7 @@ import chess.view.GameCommand;
 import chess.view.InputValidator;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         inputStartCommand();
+        outputView.printGameList(ChessGame.showProgressGame());
         String gameCommand = inputGameCommand();
         ChessGame chessGame = startChessGame(gameCommand);
         progress(chessGame);

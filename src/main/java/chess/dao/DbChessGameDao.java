@@ -18,7 +18,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DbChessGameDao implements ChessGameDao {
@@ -48,7 +50,7 @@ public class DbChessGameDao implements ChessGameDao {
         Map<Position, Piece> board = new HashMap<>();
         String turn = "white";
         String query = "SELECT cg.turn, cb.piece_type, cb.piece_rank, cb.piece_file, cb.team FROM chess_game cg "
-                + "JOIN chess_board cb ON cg.chess_game_id = cb.chess_game_id and chess_game_id = ?";
+                + "JOIN chess_board cb ON cg.chess_game_id = cb.chess_game_id and cg.chess_game_id = ?";
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
@@ -69,22 +71,22 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     private Piece makePiece(String pieceType, String team) {
-        if (pieceType.equals("King")) {
+        if (pieceType.equals(King.class.getName())) {
             return new King(Team.valueOf(team));
         }
-        if (pieceType.equals("Queen")) {
+        if (pieceType.equals(Queen.class.getName())) {
             return new Queen(Team.valueOf(team));
         }
-        if (pieceType.equals("Rook")) {
+        if (pieceType.equals(Rook.class.getName())) {
             return new Rook(Team.valueOf(team));
         }
-        if (pieceType.equals("Bishop")) {
+        if (pieceType.equals(Bishop.class.getName())) {
             return new Bishop(Team.valueOf(team));
         }
-        if (pieceType.equals("Knight")) {
+        if (pieceType.equals(Knight.class.getName())) {
             return new Knight(Team.valueOf(team));
         }
-        if (pieceType.equals("Pawn")) {
+        if (pieceType.equals(Pawn.class.getName())) {
             return new Pawn(Team.valueOf(team));
         }
         return new Empty(Team.valueOf(team));
@@ -98,6 +100,23 @@ public class DbChessGameDao implements ChessGameDao {
             preparedStatement.setString(1, chessGame.getTurn().name());
             preparedStatement.setLong(2, chessGame.getId());
             preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Integer> findAll() {
+        List<Integer> allGameId = new ArrayList<>();
+        String query = "SELECT chess_game_id FROM chess_game";
+        try (Connection connection = database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int chessGameId = resultSet.getInt("chess_game_id");
+                allGameId.add(chessGameId);
+            }
+            return allGameId;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

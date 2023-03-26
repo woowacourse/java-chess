@@ -1,11 +1,17 @@
 package chess.view;
 
-import static chess.view.PieceView.*;
+import static chess.view.PieceView.BISHOP;
+import static chess.view.PieceView.EMPTY;
+import static chess.view.PieceView.KING;
+import static chess.view.PieceView.KNIGHT;
+import static chess.view.PieceView.PAWN;
+import static chess.view.PieceView.QUEEN;
+import static chess.view.PieceView.ROOK;
 
+import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -14,6 +20,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,6 +38,19 @@ public class OutputView {
                 + "> 게임 종료 : end\n"
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3"
         );
+    }
+
+    public void printGameList(List<Integer> allGameId) {
+        StringBuilder sb = new StringBuilder();
+        System.out.print("게임 목록(아이디) : ");
+        if (allGameId.isEmpty()) {
+            System.out.println("진행중인 게임이 없습니다!");
+            return;
+        }
+        for (Integer gameId : allGameId) {
+            sb.append(gameId).append(", ");
+        }
+        System.out.println(sb);
     }
 
     public void printBoard(Board board) {

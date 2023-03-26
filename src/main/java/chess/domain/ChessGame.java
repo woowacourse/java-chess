@@ -4,6 +4,7 @@ import chess.dao.ChessGameDao;
 import chess.dao.DbChessGameDao;
 import chess.domain.board.Board;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,6 +33,10 @@ public class ChessGame {
 
     public static ChessGame setting(long id, Board board, Team turn) {
         return new ChessGame(id, board, turn);
+    }
+
+    public static List<Integer> showProgressGame() {
+        return chessGameDao.findAll();
     }
 
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
