@@ -1,13 +1,8 @@
 package chess.view;
 
 import chess.domain.game.Camp;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class OutputView {
@@ -35,25 +30,13 @@ public class OutputView {
     }
 
     private static String getPieceInitial(final Piece piece) {
-        if (piece.getClass() == Bishop.class) {
-            return "b";
+        if (piece.isSameCamp(Camp.WHITE)) {
+            return piece.pieceType().whiteInitial();
         }
-        if (piece.getClass() == King.class) {
-            return "k";
+        if (piece.isSameCamp(Camp.BLACK)) {
+            return piece.pieceType().blackInitial();
         }
-        if (piece.getClass() == Knight.class) {
-            return "n";
-        }
-        if (piece.getClass() == Pawn.class) {
-            return "p";
-        }
-        if (piece.getClass() == Queen.class) {
-            return "q";
-        }
-        if (piece.getClass() == Rook.class) {
-            return "r";
-        }
-        return ".";
+        return PieceType.EMPTY.blackInitial();
     }
 
     private static String upperIfBlack(final Piece piece, String initial) {
