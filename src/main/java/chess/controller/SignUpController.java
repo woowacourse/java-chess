@@ -3,27 +3,35 @@ package chess.controller;
 import chess.controller.login.LoginSession;
 import chess.dao.UserDao;
 
-public class LoginController implements Controller {
-    private final static LoginController INSTANCE = new LoginController();
+public class SignUpController implements Controller {
+
+    private final static SignUpController INSTANCE = new SignUpController();
     private static final int ID_INDEX = 0;
     private static final int PASSWORD_INDEX = 1;
+    private static final int USER_NAME_INDEX = 2;
 
-    private LoginController() {
+    private SignUpController() {
     }
 
-    public static LoginController getInstance() {
+    public static SignUpController getInstance() {
         return INSTANCE;
     }
 
 
     @Override
     public Response execute(Request request) {
-        String userName = UserDao.getUserNameOf(getId(request), getPassword(request));
-        if (userName == null) {
-            return new Response(ResponseType.FAIL, "해당 아이디 비밀번호의 유저는 존재하지 않습니다.");
+        boolean result = UserDao.makeUserOf(getUserName(request), getId(request), getPassword(request));
+        if (!result) {
+            return new Response(ResponseType.FAIL, "해당 아이디 혹은 유저 네임이 중복 되었습니다.");
         }
         LoginSession.login(getId(request));
         return new Response(ResponseType.LOGIN);
+    }
+
+    private String getUserName(Request request) {
+        String input = request.getInput();
+        String[] split = input.split(" ");
+        return split[USER_NAME_INDEX];
     }
 
     private String getId(Request request) {
