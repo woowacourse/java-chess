@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class GameRoomDaoTest {
 
@@ -15,7 +16,7 @@ class GameRoomDaoTest {
     @Test
     @DisplayName("화이트 팀의 차례로 시작해야 하는 게임 생성")
     void addRoom() {
-        gameRoomDao.addRoom(Camp.WHITE);
+        assertDoesNotThrow(() -> gameRoomDao.addRoom(Camp.WHITE));
     }
 
     @Test
