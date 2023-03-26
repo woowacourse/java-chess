@@ -1,4 +1,4 @@
-package chess.controller.session;
+package chess.domain.user;
 
 public class User {
     private final int id;

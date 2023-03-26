@@ -1,4 +1,4 @@
-package chess.controller.session;
+package chess.domain.room;
 
 public class Room {
     private final int id;

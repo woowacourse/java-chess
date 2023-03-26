@@ -1,5 +1,7 @@
 package chess.controller.session;
 
+import chess.domain.room.Room;
+
 public class RoomSession {
     private static final ThreadLocal<Room> session = new ThreadLocal<>();
 

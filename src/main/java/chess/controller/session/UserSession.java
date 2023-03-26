@@ -1,5 +1,7 @@
 package chess.controller.session;
 
+import chess.domain.user.User;
+
 public class UserSession {
     private static final ThreadLocal<User> session = new ThreadLocal<>();
 
@@ -13,7 +15,7 @@ public class UserSession {
     public static User get() {
         return session.get();
     }
-    
+
     public static int getId() {
         final User auth = session.get();
         if (auth == null) {
