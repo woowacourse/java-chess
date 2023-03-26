@@ -11,8 +11,14 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void printRoomList(final List<Integer> roomNumbers) {
+        System.out.println("게임이 진행중인 " + roomNumbers.size() + "개의 방이 존재합니다.");
+        System.out.println("방 번호 목록  ");
+        roomNumbers.forEach(System.out::println);
+    }
+
     public static void printGameGuide() {
-        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 새로운 게임 방에 입장했습니다. 체스 게임을 시작합니다.");
         System.out.println(String.format("> 게임 시작 : %s", CommandType.START));
         System.out.println(String.format("> 게임 종료 : %s", CommandType.END));
         System.out.println(String.format("> 게임 이동 : %s SOURCE위치 TARGET위치 - 예. %s b2 b3"
@@ -40,9 +46,7 @@ public class OutputView {
         System.out.println("우승자: " + winningTeam);
     }
 
-    public static void printRoomList(final List<Integer> roomNumbers) {
-        System.out.println(roomNumbers.size() + "개의 방이 존재합니다.");
-        System.out.println("방 번호 목록  ");
-        roomNumbers.forEach(System.out::println);
+    public static void printSaveMessage() {
+        System.out.println("진행중인 게임을 저장합니다.");
     }
 }

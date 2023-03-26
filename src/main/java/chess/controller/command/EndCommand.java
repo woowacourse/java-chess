@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import chess.dao.ChessDao;
 import chess.domain.GameRoom;
+import chess.view.OutputView;
 
 public class EndCommand implements Command {
 
@@ -17,6 +18,7 @@ public class EndCommand implements Command {
         if (gameRoom.isFirstTurn()) {
             return;
         }
+        OutputView.printSaveMessage();
         chessDao.save(gameRoom);
     }
 }
