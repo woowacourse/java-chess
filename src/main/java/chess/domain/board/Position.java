@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class Position {
 
     private static final int START_PATH_RANGE = 1;
-    private static final int ZERO_DIFFERENCE = 0;
+    private static final int ZERO_DISTANCE = 0;
 
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
@@ -46,7 +46,7 @@ public class Position {
     private boolean isNotStraight(Position targetPosition) {
         int columnDistance = calculateColumnDistance(targetPosition);
         int rowDistance = calculateRowDistance(targetPosition);
-        return columnDistance != ZERO_DIFFERENCE && rowDistance != ZERO_DIFFERENCE && columnDistance != rowDistance;
+        return columnDistance != ZERO_DISTANCE && rowDistance != ZERO_DISTANCE && columnDistance != rowDistance;
     }
 
     public int calculateColumnDistance(Position targetPosition) {

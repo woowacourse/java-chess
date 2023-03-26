@@ -36,7 +36,7 @@ public class ChessGame {
         return RankCoordinate.getSortedRankCoordinates()
                 .stream()
                 .map(rankCoordinate -> findPiece(new Position(fileCoordinate, rankCoordinate)))
-                .filter(x -> x.getTeam() == team && x.getPieceType().equals(PieceType.PAWN))
+                .filter(x -> x.getTeam() == team && x.getPieceType() == PieceType.PAWN)
                 .count();
     }
 

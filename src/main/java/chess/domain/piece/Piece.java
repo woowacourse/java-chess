@@ -45,11 +45,15 @@ public abstract class Piece {
     }
 
     protected boolean isDifferentTeam(Team targetTeam) {
-        return !team.equals(targetTeam);
+        return team != targetTeam;
     }
 
     public Team getTeam() {
         return team;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     public PieceType getPieceType() {

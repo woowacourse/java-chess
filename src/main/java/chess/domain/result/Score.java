@@ -25,7 +25,7 @@ public enum Score {
 
     public static double findScoreBy(Piece piece) {
         return Arrays.stream(values())
-                .filter(it -> it.pieceType.equals(piece.getPieceType()))
+                .filter(it -> it.pieceType == piece.getPieceType())
                 .map(it -> it.score)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCHED_SCORE_MESSAGE));
