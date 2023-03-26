@@ -21,6 +21,7 @@ public class ChessController {
     private static final String STATUS_COMMAND = "status";
     private static final String SAVE_COMMAND = "save";
     private static final String LOAD_COMMAND = "load";
+    private static final String LEAVE_COMMAND = "leave";
     private static final String END_COMMAND = "end";
     private final Map<String, Action> actionMap = new HashMap<>();
     private final ChessGame chessGame;
@@ -34,6 +35,7 @@ public class ChessController {
         actionMap.put(STATUS_COMMAND, new Action(ignore -> getGameStatus()));
         actionMap.put(SAVE_COMMAND, new Action(ignore -> saveGame()));
         actionMap.put(LOAD_COMMAND, new Action(ignore -> loadGame()));
+        actionMap.put(LEAVE_COMMAND, new Action(ignore -> leaveGame()));
         actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
     }
 
@@ -78,6 +80,11 @@ public class ChessController {
         OutputView.printLoadMessage();
         OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void leaveGame() {
+        chessGame.leave();
+        OutputView.printStartMessage();
     }
 
     private void endGame() {

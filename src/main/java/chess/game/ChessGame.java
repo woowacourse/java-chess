@@ -113,4 +113,11 @@ public class ChessGame {
             this.gameState = gameStateLoadLogic.get();
         });
     }
+
+    public void leave() {
+        this.gameState.leaveGame(() -> {
+            this.board = null;
+            this.gameState = WaitingState.STATE;
+        });
+    }
 }

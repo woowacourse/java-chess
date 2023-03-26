@@ -57,4 +57,9 @@ public abstract class RunningState implements GameState {
     public void loadGame(Runnable runnable) {
         throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
     }
+
+    @Override
+    public void leaveGame(Runnable runnable) {
+        runnable.run();
+    }
 }

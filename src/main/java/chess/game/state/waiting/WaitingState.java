@@ -69,4 +69,9 @@ public class WaitingState implements GameState {
     public void loadGame(Runnable runnable) {
         runnable.run();
     }
+
+    @Override
+    public void leaveGame(Runnable runnable) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
+    }
 }

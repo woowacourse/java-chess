@@ -74,4 +74,9 @@ public abstract class EndState implements GameState {
     public List<SquareResponse> getBoard(Supplier<List<SquareResponse>> supplier) {
         return supplier.get();
     }
+
+    @Override
+    public void leaveGame(Runnable runnable) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
 }

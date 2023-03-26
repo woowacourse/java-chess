@@ -9,7 +9,7 @@ public class GameCommand {
     private static final String INVALID_COMMAND_EXCEPTION_MESSAGE = "[ERROR] 해당 커맨드가 존재하지 않습니다.";
     private static final String BLANK_INPUT_EXCEPTION_MESSAGE = "[ERROR] 공백은 입력될 수 없습니다.";
     private static final String NULL_INPUT_EXCEPTION_MESSAGE = "[ERROR] 입력은 null 값이 될 수 없습니다.";
-    private static final List<String> ALLOW_COMMANDS = List.of("start", "end", "move", "status", "save", "load");
+    private static final List<String> ALLOW_COMMANDS = List.of("start", "end", "move", "status", "save", "load", "leave");
     private static final String DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int MAX_COMMAND_LENGTH = 32;

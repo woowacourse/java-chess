@@ -13,6 +13,7 @@ public class OutputView {
     private static final String COMMAND_MOVE_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String COMMAND_SAVE_MESSAGE = "> 게임 저장 : save";
     private static final String COMMAND_LOAD_MESSAGE = "> 게임 불러오기 : load";
+    private static final String COMMAND_LEAVE_MESSAGE = "> 게임 나가기 : leave";
     private static final String COMMAND_STATUS_MESSAGE = "> 현재 점수 : status";
     private static final String COMMAND_END_MESSAGE = "> 게임 종료 : end";
 
@@ -25,6 +26,7 @@ public class OutputView {
         System.out.println(COMMAND_MOVE_MESSAGE);
         System.out.println(COMMAND_SAVE_MESSAGE);
         System.out.println(COMMAND_LOAD_MESSAGE);
+        System.out.println(COMMAND_LEAVE_MESSAGE);
         System.out.println(COMMAND_STATUS_MESSAGE);
         System.out.println(COMMAND_END_MESSAGE);
     }
