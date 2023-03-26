@@ -13,13 +13,14 @@ public enum Result {
         this.result = result;
     }
 
-    public static String of(Team team) {
+    public static String lose(Team team) {
         if (Team.BLACK.equals(team)) {
-            return BLACK_WIN.result;
+            return WHITE_WIN.result;
         }
         if (Team.WHITE.equals(team)) {
-            return WHITE_WIN.result;
+            return BLACK_WIN.result;
         }
         return DRAW.result;
     }
+
 }
