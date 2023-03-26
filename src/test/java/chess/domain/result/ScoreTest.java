@@ -1,4 +1,4 @@
-package chess.domain.score;
+package chess.domain.result;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Team;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.PositionFixture.C_4;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")

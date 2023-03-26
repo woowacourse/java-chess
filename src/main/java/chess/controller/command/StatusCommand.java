@@ -3,11 +3,10 @@ package chess.controller.command;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
-import chess.domain.score.Score;
+import chess.domain.result.Score;
 
 import java.util.HashMap;
 import java.util.List;

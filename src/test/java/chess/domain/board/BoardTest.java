@@ -4,6 +4,8 @@ import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 import java.util.Map;
@@ -74,5 +76,12 @@ class BoardTest {
 
         assertThat(board.findPiece(B_2)).isInstanceOf(Empty.class);
         assertThat(board.findPiece(B_3)).isInstanceOf(Pawn.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"BISHOP:4", "KING:2", "PAWN:16"}, delimiter = ':')
+    void board에_체스말이_몇_개_있는지_알_수_있다(PieceType pieceType, int pieceCount) {
+        Board board = BoardFactory.createBoard();
+        assertThat(board.getLeftPieceCount(pieceType)).isEqualTo(pieceCount);
     }
 }

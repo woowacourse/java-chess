@@ -4,13 +4,15 @@ import chess.domain.board.Board;
 import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
 import java.util.Map;
 
 public class ChessGame {
+
+    private static final int FINISH_KING_COUNT = 1;
 
     private final Board board;
     private Team nowPlayingTeam;
@@ -34,11 +36,15 @@ public class ChessGame {
         return RankCoordinate.getSortedRankCoordinates()
                 .stream()
                 .map(rankCoordinate -> findPiece(new Position(fileCoordinate, rankCoordinate)))
-                .filter(x -> x.getTeam() == team && x.getClass().equals(Pawn.class))
+                .filter(x -> x.getTeam() == team && x.getPieceType().equals(PieceType.PAWN))
                 .count();
     }
 
     public Map<Position, Piece> getBoard() {
         return board.getBoards();
+    }
+
+    public boolean isFinished() {
+        return board.getLeftPieceCount(PieceType.KING) == FINISH_KING_COUNT;
     }
 }

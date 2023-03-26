@@ -1,9 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +41,13 @@ public class Board {
         return paths.isEmpty() || paths.stream()
                 .map(boards::get)
                 .allMatch(Piece::isEmpty);
+    }
+
+    public long getLeftPieceCount(PieceType pieceType) {
+        return boards.keySet().stream()
+                .map(boards::get)
+                .filter(piece -> piece.getPieceType().equals(pieceType))
+                .count();
     }
 
     public Map<Position, Piece> getBoards() {
