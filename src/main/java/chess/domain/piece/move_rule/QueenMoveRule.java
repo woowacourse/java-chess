@@ -35,6 +35,11 @@ public class QueenMoveRule implements MoveRule {
         return false;
     }
 
+    @Override
+    public boolean isKingMove() {
+        return false;
+    }
+
     private void validateStraightOrDiagonal(Position currentPosition, Position nextPosition) {
         if (!(currentPosition.isDiagonalEqual(nextPosition) || currentPosition.isStraightEqual(nextPosition))) {
             throw new IllegalArgumentException("퀸은 대각선 또는 직선 상으로만 움직일 수 있습니다.");

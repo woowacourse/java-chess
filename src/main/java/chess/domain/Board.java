@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.KingDiedException;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
+    public static final int KING_COUNT = 1;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -95,12 +97,21 @@ public class Board {
     private void updateMovedPiece(Position currentPosition, Position nextPosition) {
         Piece movingPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
         board.remove(currentPosition);
+        Piece attacked = board.getOrDefault(nextPosition, BlankPiece.getInstance());
         board.put(nextPosition, movingPiece);
+        if (attacked.isKing()) {
+            throw new KingDiedException(getPrintingBoard());
+        }
     }
 
     private double getTeamScoreByColor(Color color) {
-        return board.values().stream()
+        List<Piece> pieces = board.values().stream()
                 .filter(p -> p.isSameColor(color))
+                .collect(Collectors.toList());
+        if (pieces.stream().filter(Piece::isKing).count() < KING_COUNT) {
+            return 0;
+        }
+        return pieces.stream()
                 .map(Piece::getScore)
                 .reduce(0D, Double::sum);
     }

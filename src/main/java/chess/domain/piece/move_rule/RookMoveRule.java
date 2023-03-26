@@ -35,6 +35,11 @@ public class RookMoveRule implements MoveRule {
         return false;
     }
 
+    @Override
+    public boolean isKingMove() {
+        return false;
+    }
+
     private void validateStraight(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isStraightEqual(nextPosition)) {
             throw new IllegalArgumentException("룩은 직선상으로만 움직일 수 있습니다.");

@@ -1,5 +1,6 @@
 package chess.domain.chessGame;
 
+import chess.KingDiedException;
 import chess.domain.Board;
 import chess.domain.PieceDto;
 import chess.domain.piece.Color;
@@ -24,7 +25,12 @@ public class PlayingChessGameState implements ChessGameState {
         Position nextPosition = Position.of(nextPositionSymbol);
         Color thisTurn = currentTurn;
         currentTurn = currentTurn.next();
-        return board.move(currentPosition, nextPosition, thisTurn);
+        try {
+            return board.move(currentPosition, nextPosition, thisTurn);
+        } catch (KingDiedException e) {
+            this.isEnd = true;
+            return e.getBoard();
+        }
     }
 
     @Override

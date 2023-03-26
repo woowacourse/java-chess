@@ -12,4 +12,6 @@ public interface MoveRule {
     PieceType pieceType();
 
     boolean isPawnMove();
+
+    boolean isKingMove();
 }

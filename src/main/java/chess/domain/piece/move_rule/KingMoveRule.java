@@ -36,6 +36,11 @@ public class KingMoveRule implements MoveRule {
         return false;
     }
 
+    @Override
+    public boolean isKingMove() {
+        return true;
+    }
+
     private void validateNear(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isNear(nextPosition)) {
             throw new IllegalArgumentException("킹은 인접한 칸으로만 이동할 수 있습니다.");

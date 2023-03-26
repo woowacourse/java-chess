@@ -37,6 +37,10 @@ public class Piece {
         return moveRule.isPawnMove();
     }
 
+    public boolean isKing() {
+        return moveRule.isKingMove();
+    }
+
     public PieceType getPieceType() {
         return moveRule.pieceType();
     }

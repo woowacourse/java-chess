@@ -36,6 +36,11 @@ public class KnightMoveRule implements MoveRule {
         return false;
     }
 
+    @Override
+    public boolean isKingMove() {
+        return false;
+    }
+
     private void validateKnightDirection(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isKnightPosition(nextPosition)) {
             throw new IllegalArgumentException("나이트는 L 모양으로만 움직일 수 있습니다.");

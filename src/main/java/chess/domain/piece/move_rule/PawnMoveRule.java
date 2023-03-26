@@ -23,4 +23,9 @@ public abstract class PawnMoveRule implements MoveRule {
     public boolean isPawnMove() {
         return true;
     }
+
+    @Override
+    public boolean isKingMove() {
+        return false;
+    }
 }

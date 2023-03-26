@@ -34,6 +34,11 @@ public class BishopMoveRule implements MoveRule {
         return false;
     }
 
+    @Override
+    public boolean isKingMove() {
+        return false;
+    }
+
     private void validateDiagonal(Position currentPosition, Position nextPosition) {
         if (!currentPosition.isDiagonalEqual(nextPosition)) {
             throw new IllegalArgumentException("비숍은 대각선상으로만 움직일 수 있습니다.");
