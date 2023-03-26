@@ -10,7 +10,6 @@ public final class OutputView {
     }
 
     public static void printWelcomeMessage() {
-        System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작: " + Command.START.value());
         System.out.println("게임 종료: " + Command.END.value());
         System.out.println("게임 이동: move source target위치 - 예. move b2 b3");
@@ -43,6 +42,11 @@ public final class OutputView {
 
     public static void printWinnerAfterRunning(final String winner) {
         System.out.println(winner + "이(가) 상태팀의 왕을 잡아 승리하였습니다.");
+    }
+
+    public static void printSaved(final String roomName) {
+        System.out.println(roomName + "방으로 저장이 완료되었습니다. 대기 상태로 돌아갑니다.\n");
+        printWelcomeMessage();
     }
 
     public static void printErrorMessage(final String errorMessage) {

@@ -43,4 +43,12 @@ public final class ChessBoardFormatter {
     public List<String> getChessBoardMark() {
         return Collections.unmodifiableList(chessBoardMark);
     }
+
+    public String getOneLineChessBoard() {
+        StringBuilder oneLineChessBoard = new StringBuilder();
+        for (String rankMark : chessBoardMark) {
+            oneLineChessBoard.append(rankMark);
+        }
+        return oneLineChessBoard.toString();
+    }
 }

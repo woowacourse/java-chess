@@ -108,5 +108,6 @@ public final class ChessController {
 
         RoomName roomName = new RoomName(InputView.readRoomName());
         chessGame.save(roomName);
+        OutputView.printSaved(roomName.getRoomName());
     }
 }
