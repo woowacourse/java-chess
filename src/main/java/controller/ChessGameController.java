@@ -29,8 +29,7 @@ public class ChessGameController {
     }
 
     public void run() {
-        OutputView.printStartMessage();
-        OutputView.printRooms(chessGameDao.findAllId());
+        OutputView.printStartMessage(chessGameDao.findAllId());
 
         isKeepGaming = true;
 
