@@ -4,10 +4,13 @@ import chessgame.domain.chessgame.Camp;
 import chessgame.dto.GameRoomDto;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameRoomDao {
 
     private static final String INSERT_GAME_ROOM_QUERY = "INSERT INTO game_rooms(turn) VALUES(?)";
+    private static final String FIND_ALL_GAME_ROOM_QUERY = "SELECT * FROM game_rooms";
     private static final String FIND_GAME_ROOM_QUERY = "SELECT * FROM game_rooms WHERE id = ?";
     private static final String FIND_LEAST_GAME_ROOM_QUERY =
             "select * from game_rooms order by id desc limit 1";
@@ -21,6 +24,26 @@ public class GameRoomDao {
              final var preparedStatement = connection.prepareStatement(INSERT_GAME_ROOM_QUERY)) {
             preparedStatement.setString(1, camp.name());
             preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<GameRoomDto> findAllGameRoom() {
+        try (final var connection = databaseConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(FIND_ALL_GAME_ROOM_QUERY)) {
+            final var result = preparedStatement.executeQuery();
+
+            List<GameRoomDto> rooms = new ArrayList<>();
+
+            while (result.next()) {
+                GameRoomDto gameRoomDto = new GameRoomDto(
+                        result.getLong("id"),
+                        result.getString("turn")
+                );
+                rooms.add(gameRoomDto);
+            }
+            return rooms;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
