@@ -1,18 +1,22 @@
 package chess.controller.command;
 
 import chess.dao.ChessDao;
-import chess.domain.ChessGame;
-import chess.view.OutputView;
+import chess.domain.GameRoom;
 
 public class EndCommand implements Command {
 
+    private final ChessDao chessDao;
+
     public EndCommand() {
+        chessDao = ChessDao.getInstance();
     }
 
     @Override
-    public void execute(ChessGame chessGame, final OutputView outputView) {
-        chessGame.end();
-        ChessDao chessDao = new ChessDao();
-        chessDao.save(chessGame.getChessBoard());
+    public void execute(GameRoom gameRoom) {
+        gameRoom.end();
+        if (gameRoom.isFirstTurn()) {
+            return;
+        }
+        chessDao.save(gameRoom);
     }
 }

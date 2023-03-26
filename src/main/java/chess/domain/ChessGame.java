@@ -45,6 +45,10 @@ public class ChessGame {
         return chessBoard.calculateScore(team);
     }
 
+    public boolean isKingDead() {
+        return chessBoard.isKingDead();
+    }
+
     public ChessBoard getChessBoard() {
         return chessBoard;
     }
@@ -57,5 +61,9 @@ public class ChessGame {
             return chessBoard.previousTeam();
         }
         return Team.NONE;
+    }
+
+    public boolean isFirstTurn() {
+        return chessBoard.isFirstTurn();
     }
 }

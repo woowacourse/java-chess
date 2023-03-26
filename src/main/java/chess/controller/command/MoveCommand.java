@@ -1,7 +1,7 @@
 package chess.controller.command;
 
 import chess.controller.ChessBoardDto;
-import chess.domain.ChessGame;
+import chess.domain.GameRoom;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 import java.util.List;
@@ -18,10 +18,10 @@ public class MoveCommand implements Command {
     }
 
     @Override
-    public void execute(ChessGame chessGame, final OutputView outputView) {
+    public void execute(GameRoom gameRoom) {
         final Position source = Position.from(parameters.get(SOURCE_INDEX));
         final Position destination = Position.from(parameters.get(DESTINATION_INDEX));
-        chessGame.executeMove(source, destination);
-        outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
+        gameRoom.executeMove(source, destination);
+        OutputView.printChessBoard(new ChessBoardDto(gameRoom.getChessGame().getChessBoard()));
     }
 }

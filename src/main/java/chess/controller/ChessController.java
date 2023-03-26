@@ -5,45 +5,81 @@ import chess.controller.command.CommandFactory;
 import chess.dao.ChessDao;
 import chess.domain.ChessBoardFactory;
 import chess.domain.ChessGame;
+import chess.domain.GameRoom;
+import chess.domain.RoomNumber;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 
 public class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private static final int NEW_ROOM_NUMBER = 0;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    private final ChessDao chessDao;
+
+    public ChessController(final ChessDao chessDao) {
+        this.chessDao = chessDao;
     }
 
     public void run() {
-        ChessGame chessGame = loadChessGame();
-
-        outputView.printGameGuide();
-        while (chessGame.isNotEnd()) {
-            executeCommand(chessGame);
-        }
-        outputView.printWinningTeam(chessGame.findWinningTeam());
+        List<Integer> roomNumbers = ChessDao.getInstance().fetchAllRoomNumbers();
+        OutputView.printRoomList(roomNumbers);
+        RoomNumber roomNumber = readRoomNumber(roomNumbers);
+        GameRoom gameRoom = loadGameRoom(roomNumber, roomNumbers.size());
+        join(gameRoom);
+        clearRoomIfKingDead(gameRoom, roomNumbers.size());
     }
 
-    private ChessGame loadChessGame() {
-        ChessDao chessDao = new ChessDao();
-        ChessGame chessGame = chessDao.load();
-        if (chessGame == null) {
-            chessGame = new ChessGame(ChessBoardFactory.create());
-        }
-        return chessGame;
-    }
-
-    private void executeCommand(final ChessGame chessGame) {
+    private RoomNumber readRoomNumber(List<Integer> roomNumbers) {
         try {
-            Command command = CommandFactory.from(inputView.readCommandAndParameters());
-            command.execute(chessGame, outputView);
-        } catch (IllegalArgumentException | UnsupportedOperationException | IllegalStateException e) {
-            outputView.printError(e.getMessage());
-            executeCommand(chessGame);
+            int rawRoomNumber = InputView.readRoomNumber();
+            validateExistRoomNumber(rawRoomNumber, roomNumbers);
+            return new RoomNumber(rawRoomNumber);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return readRoomNumber(roomNumbers);
         }
+    }
+
+    private void validateExistRoomNumber(final int roomNumber, final List<Integer> roomNumbers) {
+        if (roomNumber == NEW_ROOM_NUMBER || roomNumbers.contains(roomNumber)) {
+            return;
+        }
+        throw new IllegalArgumentException("존재하지 않는 방 번호입니다.");
+    }
+
+    private GameRoom loadGameRoom(final RoomNumber roomNumber, final int numberOfExistRooms) {
+        if (roomNumber.getRoomNumber() == NEW_ROOM_NUMBER) {
+            return new GameRoom(new RoomNumber(numberOfExistRooms + 1), new ChessGame(ChessBoardFactory.create()));
+        }
+        return chessDao.fetchGameRoom(roomNumber);
+    }
+
+    public void join(GameRoom gameRoom) {
+        OutputView.printGameGuide();
+        while (gameRoom.isGameNotEnd()) {
+            executeCommand(gameRoom);
+        }
+        OutputView.printWinningTeam(gameRoom.findWinningTeam());
+    }
+
+    private void executeCommand(final GameRoom gameRoom) {
+        try {
+            Command command = CommandFactory.from(InputView.readCommandAndParameters());
+            command.execute(gameRoom);
+        } catch (IllegalArgumentException | UnsupportedOperationException | IllegalStateException e) {
+            OutputView.printError(e.getMessage());
+            executeCommand(gameRoom);
+        }
+    }
+
+    private void clearRoomIfKingDead(final GameRoom gameRoom, final int numberOfExistRooms) {
+        if (gameRoom.isKingDead() && isNotNewRoom(gameRoom, numberOfExistRooms)) {
+            chessDao.clearByRoomNumber(gameRoom.getRoomNumber());
+        }
+    }
+
+    private boolean isNotNewRoom(final GameRoom gameRoom, final int numberOfExistRooms) {
+        return !gameRoom.isSameRoom(new RoomNumber(numberOfExistRooms + 1));
     }
 }

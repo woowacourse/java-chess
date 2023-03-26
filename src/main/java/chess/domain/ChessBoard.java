@@ -141,4 +141,8 @@ public class ChessBoard {
     public List<Square> getSquares() {
         return squares;
     }
+
+    public boolean isFirstTurn() {
+        return turn.isFirst();
+    }
 }
