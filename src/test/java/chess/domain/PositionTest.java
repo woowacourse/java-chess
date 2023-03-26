@@ -30,38 +30,50 @@ class PositionTest {
     @ParameterizedTest
     @CsvSource({"A, FOUR, true", "E, ONE, true", "C, SIX, false", "G, TWO, false"})
     void 상하좌우_위치에_있는지_확인한다(final File file, final Rank rank, final boolean expected) {
+        //given
         final Position otherPosition = new Position(file, rank);
 
+        //when
         final boolean actual = E_FOUR.isInCrossPosition(otherPosition);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource({"A, FOUR, false", "E, ONE, false", "C, SIX, true", "G, TWO, true"})
     void 대각선_위치에_있는지_확인한다(final File file, final Rank rank, final boolean expected) {
+        //given
         final Position otherPosition = new Position(file, rank);
 
+        //when
         final boolean actual = E_FOUR.isInDiagonalPosition(otherPosition);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource({"D, FOUR, 1", "F, FIVE, 2", "G, FIVE, 3"})
     void 맨허튼_거리를_계산한다(final File file, final Rank rank, final int expectedDistance) {
+        //given
         final Position otherPosition = new Position(file, rank);
 
+        //when
         final int actualDistance = E_FOUR.calculateManhattanDistance(otherPosition);
 
+        //then
         assertThat(actualDistance).isEqualTo(expectedDistance);
     }
 
     @ParameterizedTest
     @MethodSource("provideOtherPositionAndExpectedPassingPositions")
     void 입력_받은_위치로_가는_경로에_있는_위치들을_반환한다(final Position otherPosition, final List<Position> expectedPassingPositions) {
+        //given
+        //when
         final List<Position> actualPassingPositions = E_FOUR.findPassingPositions(otherPosition);
 
+        //then
         assertThat(actualPassingPositions).containsAll(expectedPassingPositions);
     }
 
@@ -78,32 +90,41 @@ class PositionTest {
     @ParameterizedTest
     @CsvSource({"FOUR, true", "SIX, false"})
     void Rank가_높은지_확인한다(final Rank otherRank, final boolean expected) {
+        //given
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 
+        //when
         final boolean actual = position.isUpperRankThan(otherPosition);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource({"FOUR, false", "SIX, true"})
     void Rank가_낮은지_확인한다(final Rank otherRank, final boolean expected) {
+        //given
         final Position position = new Position(D, FIVE);
         final Position otherPosition = new Position(D, otherRank);
 
+        //when
         final boolean actual = position.isLowerRankThan(otherPosition);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource({"A, true", "B, false"})
     void 같은_파일인지_확인한다(final File file, final boolean expected) {
+        //given
         final Position position = new Position(A, FIVE);
 
+        //when
         final boolean actual = position.isSameFile(file);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 }

@@ -27,22 +27,28 @@ class PiecesTest {
 
     @Test
     void 위치를_입력하면_말을_반환한다() {
+        //given
         final Pieces pieces = new Pieces(List.of(
                 new Pawn(A, SEVEN, BLACK)
         ));
 
+        //when
         final Piece piece = pieces.findPieceOrThrow(new Position(A, SEVEN));
 
+        //then
         assertThat(piece).extracting(Piece::getPosition, Piece::getColor, Object::getClass)
                 .contains(new Position(A, SEVEN), BLACK, Pawn.class);
     }
 
     @Test
     void 입력된_위치에_말이_없으면_예외를_발생시킨다() {
+        //given
         final Pieces pieces = new Pieces(List.of(
                 new Pawn(A, SEVEN, BLACK)
         ));
 
+        //when
+        //then
         assertThatThrownBy(() -> pieces.findPieceOrThrow(new Position(B, SEVEN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 말이 존재하지 않습니다.");
@@ -50,12 +56,15 @@ class PiecesTest {
 
     @Test
     void 입력된_위치에_말이_없으면_빈_말을_반환한다() {
+        //given
         final Pieces pieces = new Pieces(List.of(
                 new Pawn(A, SEVEN, BLACK)
         ));
 
+        //when
         final Piece piece = pieces.findPieceOrBlank(new Position(B, SEVEN));
 
+        //then
         assertThat(piece).extracting(Piece::getPosition, Piece::getColor, Object::getClass)
                 .contains(new Position(B, SEVEN), NOTHING, BlankPiece.class);
     }
@@ -63,12 +72,15 @@ class PiecesTest {
     @ParameterizedTest
     @MethodSource("providePathPositions")
     void 입력된_경로에_말이_있는지_확인한다(final List<Position> pathPositions, final boolean expected) {
+        //given
         final Pieces pieces = new Pieces(List.of(
                 new Pawn(A, SEVEN, BLACK)
         ));
 
+        //when
         final boolean actual = pieces.hasPiece(pathPositions);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -81,10 +93,13 @@ class PiecesTest {
 
     @Test
     void 말을_더한다() {
+        //given
         final Pieces pieces = new Pieces(new ArrayList<>());
 
+        //when
         pieces.add(new Pawn(A, SEVEN, BLACK));
 
+        //then
         assertSoftly(softly -> {
             final List<Piece> allPieces = pieces.getPieces();
             softly.assertThat(allPieces.size()).isEqualTo(1);
@@ -95,11 +110,14 @@ class PiecesTest {
 
     @Test
     void 말을_삭제한다() {
+        //given
         final Piece pawn = new Pawn(A, SEVEN, BLACK);
         final Pieces pieces = new Pieces(new ArrayList<>(List.of(pawn)));
 
+        //when
         pieces.remove(pawn);
 
+        //then
         assertSoftly(softly -> {
             final List<Piece> allPieces = pieces.getPieces();
             softly.assertThat(allPieces.size()).isEqualTo(0);
@@ -109,10 +127,13 @@ class PiecesTest {
     @ParameterizedTest
     @MethodSource("providePieces")
     void 비었는지_확인한다(final List<Piece> samplePieces, final boolean expected) {
+        //given
         final Pieces pieces = new Pieces(samplePieces);
 
+        //when
         final boolean actual = pieces.isEmpty();
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -127,10 +148,13 @@ class PiecesTest {
     @ParameterizedTest
     @MethodSource("provideKingPieces")
     void 왕_체스말이_두_개인지_확인한다(final List<Piece> kings, final boolean expected) {
+        //given
         final Pieces pieces = new Pieces(kings);
 
+        //when
         final boolean actual = pieces.hasTwoKings();
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -144,10 +168,13 @@ class PiecesTest {
     @ParameterizedTest
     @MethodSource("providePiecesAndScore")
     void 점수를_계산한다(final List<Piece> allPieces, final Color color, final double expectedScore) {
+        //given
         final Pieces pieces = new Pieces(allPieces);
 
+        //when
         final double actualScore = pieces.calculateScore(color);
 
+        //then
         assertThat(actualScore).isEqualTo(expectedScore);
     }
 

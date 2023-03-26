@@ -28,10 +28,13 @@ class RookTest {
 
     @Test
     void 지나갈_경로를_얻는다() {
+        //given
         final Piece rook = new Rook(A, EIGHT, Color.BLACK);
 
+        //when
         final List<Position> path = rook.getPassingPositions(new Position(A, FIVE));
 
+        //then
         assertThat(path).containsExactly(new Position(A, SEVEN), new Position(A, SIX));
     }
 
@@ -39,8 +42,11 @@ class RookTest {
     @ParameterizedTest
     @CsvSource({"A, EIGHT", "E, FOUR"})
     void 이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
+        //given
         final Piece rook = new Rook(A, EIGHT, Color.BLACK);
 
+        //when
+        //then
         assertThatThrownBy(() -> rook.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
@@ -49,10 +55,13 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("providePieceInTargetPosition")
     void 말을_이동시킨다(final Piece pieceInTargetPosition) {
+        //given
         final Piece originalRook = new Rook(A, EIGHT, BLACK);
 
+        //when
         final Piece movedRook = originalRook.move(pieceInTargetPosition);
 
+        //then
         assertThat(movedRook.getPosition()).isEqualTo(pieceInTargetPosition.getPosition());
     }
 
@@ -65,9 +74,12 @@ class RookTest {
 
     @Test
     void 목표_위치에_같은_색_말이_있다면_예외가_발생한다() {
+        //given
         final Piece originalRook = new Rook(A, EIGHT, BLACK);
         final Piece sameColorPiece = new Pawn(A, FIVE, BLACK);
 
+        //when
+        //then
         assertThatThrownBy(() -> originalRook.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
@@ -75,19 +87,25 @@ class RookTest {
 
     @Test
     void 왕인지_확인한다() {
+        //given
         final Piece rook = new Rook(A, EIGHT, BLACK);
 
+        //when
         final boolean actual = rook.isKing();
 
+        //then
         assertThat(actual).isFalse();
     }
 
     @Test
     void 폰인지_확인한다() {
+        //given
         final Piece rook = new Rook(A, EIGHT, BLACK);
 
+        //when
         final boolean actual = rook.isPawn();
 
+        //then
         assertThat(actual).isFalse();
     }
 }

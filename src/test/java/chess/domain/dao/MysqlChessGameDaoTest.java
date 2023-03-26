@@ -8,7 +8,6 @@ import chess.domain.Rank;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
@@ -33,8 +32,12 @@ class MysqlChessGameDaoTest {
 
     @Test
     void 데이터베이스를_연결한다() {
+        //given
         try (final var connection = mysqlChessGameDao.getConnection()) {
-            AssertionsForClassTypes.assertThat(connection).isNotNull();
+
+            //when
+            //then
+            assertThat(connection).isNotNull();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -66,40 +66,52 @@ class PieceTest {
     @ParameterizedTest()
     @CsvSource({"BLACK, true", "WHITE, false"})
     void 같은_색인지_확인한다(final Color otherColor, final boolean expected) {
+        //given
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
 
+        //when
         final boolean actual = piece.isSameColor(otherColor);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource({"BLACK, true", "WHITE, false"})
     void 검정_색인지_확인한다(final Color color, final boolean expected) {
+        //given
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, color);
 
+        //when
         final boolean actual = piece.isBlack();
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource({"BLACK, false", "WHITE, true"})
     void 하얀_색인지_확인한다(final Color color, final boolean expected) {
+        //given
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, color);
 
+        //when
         final boolean actual = piece.isWhite();
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource("providePathPositions")
     void 입력된_경로에_존재하는지_확인한다(final List<Position> pathPositions, final boolean expected) {
+        //given
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
 
+        //when
         final boolean actual = piece.existsIn(pathPositions);
 
+        //then
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -112,10 +124,13 @@ class PieceTest {
 
     @Test
     void 점수를_반환한다() {
+        //given
         final Piece piece = new TestPiece(File.C, Rank.EIGHT, BLACK);
 
+        //when
         final double score = piece.getScore();
 
+        //then
         assertThat(score).isEqualTo(0);
     }
 }

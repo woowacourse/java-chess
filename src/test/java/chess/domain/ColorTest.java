@@ -14,8 +14,11 @@ class ColorTest {
     @ParameterizedTest
     @CsvSource({"BLACK, WHITE", "WHITE, BLACK", "NOTHING, NOTHING"})
     void 반대_색_혹은_빈_색을_반환한다(final Color color, final Color expectedColor) {
+        //given
+        //when
         final Color actualColor = color.getOppositeColor();
 
+        //then
         assertThat(actualColor).isEqualTo(expectedColor);
     }
 }

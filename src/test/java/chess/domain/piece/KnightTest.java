@@ -31,10 +31,13 @@ class KnightTest {
     @ParameterizedTest
     @CsvSource({"C, SIX", "D, SEVEN"})
     void 지나갈_경로를_얻는다(final File file, final Rank rank) {
+        //given
         final Piece knight = new Knight(B, EIGHT, Color.BLACK);
 
+        //when
         final List<Position> path = knight.getPassingPositions(new Position(file, rank));
 
+        //then
         assertThat(path).isEmpty();
     }
 
@@ -42,8 +45,11 @@ class KnightTest {
     @ParameterizedTest
     @CsvSource({"C, EIGHT", "B, FIVE"})
     void 이동할_수_없는_위치가_입력되면_예외가_발생한다(final File file, final Rank rank) {
+        //given
         final Piece knight = new Knight(C, EIGHT, Color.BLACK);
 
+        //when
+        //then
         assertThatThrownBy(() -> knight.getPassingPositions(new Position(file, rank)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
@@ -52,10 +58,13 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("providePieceInTargetPosition")
     void 말을_이동시킨다(final Piece pieceInTargetPosition) {
+        //given
         final Piece originalKnight = new Knight(B, EIGHT, BLACK);
 
+        //when
         final Piece movedKnight = originalKnight.move(pieceInTargetPosition);
 
+        //then
         assertThat(movedKnight.getPosition()).isEqualTo(pieceInTargetPosition.getPosition());
     }
 
@@ -68,9 +77,12 @@ class KnightTest {
 
     @Test
     void 목표_위치에_같은_색_말이_있다면_예외가_발생한다() {
+        //given
         final Piece originalKnight = new Knight(B, EIGHT, BLACK);
         final Piece sameColorPiece = new Pawn(C, SIX, BLACK);
 
+        //when
+        //then
         assertThatThrownBy(() -> originalKnight.move(sameColorPiece))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 색 말은 잡을 수 없습니다.");
@@ -78,19 +90,25 @@ class KnightTest {
 
     @Test
     void 왕인지_확인한다() {
+        //given
         final Piece knight = new Knight(B, EIGHT, BLACK);
 
+        //when
         final boolean actual = knight.isKing();
 
+        //then
         assertThat(actual).isFalse();
     }
 
     @Test
     void 폰인지_확인한다() {
+        //given
         final Piece knight = new Knight(B, EIGHT, BLACK);
 
+        //when
         final boolean actual = knight.isPawn();
 
+        //then
         assertThat(actual).isFalse();
     }
 }
