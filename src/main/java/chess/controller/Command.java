@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
+import chess.domain.chessgame.ChessGame;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,10 +25,6 @@ public class Command {
     public Command(final List<String> commandInputs) {
         this.commandInputs = commandInputs;
         this.gameState = GameState.valueOfCommand(commandInputs.get(COMMAND_INDEX));
-    }
-
-    public boolean isEnd() {
-        return gameState == GameState.END;
     }
 
     public void validateCommandSize() {
@@ -64,8 +61,7 @@ public class Command {
         return generatePositionBy(fileRankInput);
     }
 
-
-    public GameState getGameState() {
-        return gameState;
+    public ChessGame execute(final ChessGame chessGame) {
+        return gameState.execute(this, chessGame);
     }
 }

@@ -1,14 +1,10 @@
 package chess.controller;
 
-import chess.domain.Color;
-import chess.domain.Position;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.dao.ChessGameDao;
 import chess.domain.piecesfactory.StartingPiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.Map;
 
 public class ChessController {
 
@@ -20,21 +16,25 @@ public class ChessController {
 
     public void run() {
         OutputView.printGameStartGuideMessage();
-        ChessGame chessGame = chessGameDao.select();
-        if (chessGame.isGameOver()) {
-            chessGame = ChessGame.from(new StartingPiecesFactory().generate());
-            chessGameDao.save(chessGame);
-        }
+        ChessGame chessGame = loadChessGame();
         while (!chessGame.isGameOver()) {
             chessGame = play(chessGame);
         }
     }
 
+    private ChessGame loadChessGame() {
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame.isGameOver()) {
+            chessGame = ChessGame.from(new StartingPiecesFactory().generate());
+            chessGameDao.save(chessGame);
+        }
+        return chessGame;
+    }
+
     private ChessGame play(ChessGame chessGame) {
         try {
             final Command command = readCommand();
-            final GameActionByState gameActionByState = GameActionByState.valueOfCommand(command);
-            chessGame = gameActionByState.execute(command, chessGame);
+            chessGame = command.execute(chessGame);
             chessGameDao.update(chessGame);
             return chessGame;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
@@ -51,33 +51,5 @@ public class ChessController {
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
-    }
-
-    private ChessGame start(final Command command, ChessGame chessGame) {
-        chessGame = chessGame.start();
-        OutputView.printBoard(chessGame.getPieces());
-        return chessGame;
-    }
-
-    private ChessGame move(final Command command, ChessGame chessGame) {
-        command.validateCommandSize();
-        final Position currentPosition = command.getCurrentPosition();
-        final Position targetPosition = command.getTargetPosition();
-
-        chessGame = chessGame.move(currentPosition, targetPosition);
-
-        OutputView.printBoard(chessGame.getPieces());
-        return chessGame;
-    }
-
-    private ChessGame status(final Command command, final ChessGame chessGame) {
-        final Map<Color, Double> scoreByColor = chessGame.calculateScoreByColor();
-        OutputView.printScores(scoreByColor);
-        OutputView.printWinner(chessGame.findScoreWinner());
-        return chessGame;
-    }
-
-    private ChessGame end(final Command command, final ChessGame chessGame) {
-        return chessGame.end();
     }
 }
