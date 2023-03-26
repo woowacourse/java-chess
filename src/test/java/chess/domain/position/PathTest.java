@@ -55,7 +55,7 @@ class PathTest {
         Path path2 = Path.of(E1, C3);
         //when
         boolean diagonal = path.isDiagonal();
-        boolean diagonal2 = path.isDiagonal();
+        boolean diagonal2 = path2.isDiagonal();
         //then
         assertAll(
                 () -> assertThat(diagonal).isTrue(),

@@ -46,10 +46,6 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
     }
 
-    public boolean isOver(final File file) {
-        return value > file.value;
-    }
-
     public int sub(final File file) {
         return this.value - file.value;
     }

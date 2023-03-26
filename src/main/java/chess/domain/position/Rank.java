@@ -47,10 +47,6 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
     }
 
-    public boolean isOver(final Rank rank) {
-        return value > rank.value;
-    }
-
     public int sub(final Rank rank) {
         return this.value - rank.value;
     }
