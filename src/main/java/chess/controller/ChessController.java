@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.chessgame.ChessGame;
+import chess.domain.dao.ChessGameDao;
 import chess.domain.piecesfactory.StartingPiecesFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -10,6 +11,12 @@ import chess.view.OutputView;
 import java.util.Map;
 
 public class ChessController {
+
+    private final ChessGameDao chessGameDao;
+
+    public ChessController(final ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
 
     private final Map<GameState, GameAction> actionByGameState = Map.of(
             GameState.READY, this::start,
@@ -20,7 +27,11 @@ public class ChessController {
 
     public void run() {
         OutputView.printGameStartGuideMessage();
-        ChessGame chessGame = ChessGame.from(new StartingPiecesFactory().generate());
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame.isGameOver()) {
+            chessGame = ChessGame.from(new StartingPiecesFactory().generate());
+            chessGameDao.save(chessGame);
+        }
         while (!chessGame.isGameOver()) {
             chessGame = play(chessGame);
         }
@@ -31,6 +42,7 @@ public class ChessController {
             final Command command = readCommand();
             final GameAction gameAction = actionByGameState.get(command.getGameState());
             chessGame = gameAction.execute(command, chessGame);
+            chessGameDao.update(chessGame);
             return chessGame;
         } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
             OutputView.printErrorMessage(e.getMessage());
