@@ -35,4 +35,14 @@ public class ChessGameDao {
             throw new RuntimeException(e);
         }
     }
+    
+    public int deleteAll() {
+        final var query = "DELETE FROM movement";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            return preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

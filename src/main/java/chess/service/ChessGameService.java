@@ -17,7 +17,8 @@ public class ChessGameService {
     }
     
     public void newChessGame() {
-        chessGame.newGame();
+        chessGame.initChessGame();
+        chessGameDao.deleteAll();
     }
     
     public ChessBoard chessBoard() {

@@ -36,6 +36,7 @@ public final class ChessGameState {
         if (chessGameService.isKingDied()) {
             command = CommandFactory.creaeteCommand(END);
             command.playWithCurrentTurn(Collections.emptyList(), chessGameService);
+            chessGameService.newChessGame();
         }
     }
 }

@@ -14,7 +14,7 @@ public class ChessGame {
     private ChessBoard chessBoard;
     private Team currentTeam;
     
-    public void newGame() {
+    public void initChessGame() {
         chessBoard = BlackWhiteChessBoard.create();
         currentTeam = Team.WHITE;
     }
