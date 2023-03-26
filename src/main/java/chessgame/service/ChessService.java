@@ -22,7 +22,7 @@ public class ChessService {
         if (readGame == null) {
             return new Game(new Board(ChessBoardFactory.create()), gameName);
         }
-        readGame.setDbState(gameDao.findTurnByGame(gameName, connection));
+        readGame.setTeamState(gameDao.findTurnByGame(gameName, connection));
         return readGame;
     }
 

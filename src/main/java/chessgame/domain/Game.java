@@ -33,7 +33,7 @@ public class Game {
         }
     }
 
-    public void setDbState(String team) {
+    public void setTeamState(String team) {
         if (team.equals("White")) {
             state = new White();
         }
