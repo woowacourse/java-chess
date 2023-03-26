@@ -17,6 +17,7 @@ public final class ChessBoard {
 
     public static final double DEDUCT_PAWN_SCORE = 0.5;
     public static final int INITIAL_VALUE = 0;
+
     private final Map<Position, Piece> board;
 
     public ChessBoard(final Map<Position, Piece> board) {
