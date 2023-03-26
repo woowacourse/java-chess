@@ -2,6 +2,7 @@ package chessgame.domain;
 
 import chessgame.controller.Command;
 import chessgame.domain.point.Points;
+import chessgame.domain.state.End;
 import chessgame.domain.state.Ready;
 import chessgame.domain.state.State;
 
@@ -27,8 +28,12 @@ public class Game {
     public void setState(Command command, State state) {
         if (isRunning()) {
             movePiece(command.points());
+            if (board().isOver()) {
+                this.state = new End(this.state.team());
+            } else {
+                this.state = state;
+            }
         }
-        this.state = state;
     }
 
     public boolean isRunning() {
@@ -49,11 +54,19 @@ public class Game {
         return state.isNotEnd();
     }
 
+    public boolean isEnd() {
+        return !isNotEnd() && state.team() != null;
+    }
+
     public Board board() {
         return board;
     }
 
     public Scores score() {
         return scores;
+    }
+
+    public Team winner() {
+        return state.team();
     }
 }

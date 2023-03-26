@@ -5,6 +5,15 @@ import chessgame.domain.Game;
 import chessgame.domain.Team;
 
 public class End implements State {
+    private Team team;
+
+    public End() {
+    }
+
+    public End(Team team) {
+        this.team = team;
+    }
+
     @Override
     public void changeState(Game game, Command command) {
         if (command.isNotStart()) {
@@ -25,6 +34,6 @@ public class End implements State {
 
     @Override
     public Team team() {
-        throw new IllegalStateException("팀이 존재하지 않는 상태입니다.");
+        return team;
     }
 }

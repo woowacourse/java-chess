@@ -51,6 +51,11 @@ public class King implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public Team team() {
         return team;
     }

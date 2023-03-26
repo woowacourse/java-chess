@@ -49,6 +49,11 @@ public class Knight implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String failMoveMsg() {
         return "나이트는 상하좌우 1칸 이동 후 진행방향으로 대각선 1칸이동만 가능합니다.";
     }

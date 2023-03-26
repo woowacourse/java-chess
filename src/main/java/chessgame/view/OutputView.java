@@ -66,4 +66,8 @@ public class OutputView {
             scores.winner().forEach(team -> System.out.print(team.color() + "팀 승리 "));
         }
     }
+
+    public void printWinner(Team winner) {
+        System.out.println(winner.color() + "팀 승");
+    }
 }
