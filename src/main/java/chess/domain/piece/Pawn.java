@@ -1,10 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.PieceScore.PAWN_WITHOUT_SAME_FILE;
-
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 
 public class Pawn extends Piece {
@@ -58,7 +55,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Score convertToScore() {
-        return new Score(PAWN_WITHOUT_SAME_FILE.getScore());
+    public PieceType type() {
+        return PieceType.Pawn;
     }
 }

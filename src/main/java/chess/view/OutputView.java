@@ -9,7 +9,7 @@ import static chess.view.PieceView.QUEEN;
 import static chess.view.PieceView.ROOK;
 
 import chess.domain.Position;
-import chess.domain.Score;
+import chess.domain.score.Score;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.piece.Bishop;

@@ -3,13 +3,11 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -102,12 +100,5 @@ class QueenTest {
                         )
                 )
         );
-    }
-
-    @Test
-    @DisplayName("퀸은 9점으로 계산된다.")
-    void calculateScore() {
-        Piece bishop = new Queen(Team.WHITE);
-        assertThat(bishop.convertToScore()).isEqualTo(new Score(9));
     }
 }

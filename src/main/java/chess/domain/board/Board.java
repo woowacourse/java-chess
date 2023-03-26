@@ -1,19 +1,16 @@
 package chess.domain.board;
 
-import static chess.domain.PieceScore.PAWN_WITH_SAME_FILE;
-
 import chess.domain.Position;
-import chess.domain.Score;
+import chess.domain.score.Score;
+import chess.domain.score.ScoreCalculator;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -83,24 +80,7 @@ public class Board {
     }
 
     public Score calculateScore(Team team) {
-        Score score = board.keySet().stream()
-                .filter(key -> board.get(key).isSameTeam(team))
-                .map(key -> board.get(key).convertToScore())
-                .reduce(Score.min(), Score::add);
-
-        return reCalculateAboutPawn(score, team);
-    }
-
-    private Score reCalculateAboutPawn(Score score, Team team) {
-        Map<Integer, Long> pawnCount = board.keySet().stream()
-                .filter(key -> board.get(key).isSameTeam(team) && board.get(key).getClass() == Pawn.class)
-                .collect(Collectors.groupingBy(Position::getFile, Collectors.counting()));
-
-        Long countForRecalculation = pawnCount.values().stream()
-                .filter(count -> count > 1)
-                .reduce(0L, Long::sum);
-
-        return score.subtract(new Score(PAWN_WITH_SAME_FILE.getScore() * countForRecalculation));
+        return ScoreCalculator.calculateScore(board, team);
     }
 
     public boolean hasKing(Team team) {

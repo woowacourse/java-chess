@@ -1,10 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.PieceScore.KING;
-
 import chess.domain.MoveStrategy;
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 
 public class King extends Piece {
@@ -25,7 +22,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Score convertToScore() {
-        return new Score(KING.getScore());
+    public PieceType type() {
+        return PieceType.King;
     }
 }

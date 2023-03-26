@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public abstract class Piece {
 
     protected abstract int calculateCount(int fileDiff, int rankDiff);
 
-    public abstract Score convertToScore();
+    public abstract PieceType type();
 
     public boolean isSameTeam(Piece otherPiece) {
         return team.isSameTeam(otherPiece.team);

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.score.Score;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

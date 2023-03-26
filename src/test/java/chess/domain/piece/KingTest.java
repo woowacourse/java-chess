@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,12 +58,5 @@ class KingTest {
         Position source = new Position(1, 1);
         Position target = new Position(2, 2);
         assertThat(king.findPath(source, target)).containsExactly(new Position(2, 2));
-    }
-
-    @Test
-    @DisplayName("킹은 0점으로 계산된다.")
-    void calculateScore() {
-        Piece bishop = new King(Team.WHITE);
-        assertThat(bishop.convertToScore()).isEqualTo(new Score(0));
     }
 }

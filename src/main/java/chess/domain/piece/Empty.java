@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 
 public class Empty extends Piece {
@@ -21,7 +20,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Score convertToScore() {
-        throw new UnsupportedOperationException();
+    public PieceType type() {
+        return PieceType.Empty;
     }
 }

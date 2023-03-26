@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.Team;
 import java.util.List;
 import java.util.stream.Stream;
@@ -173,12 +172,5 @@ class PawnTest {
                         )
                 )
         );
-    }
-
-    @Test
-    @DisplayName("폰은 1점으로 계산된다.")
-    void calculateScore() {
-        Piece bishop = new Pawn(Team.WHITE);
-        assertThat(bishop.convertToScore()).isEqualTo(new Score(1));
     }
 }

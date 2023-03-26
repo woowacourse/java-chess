@@ -7,7 +7,7 @@ import chess.dao.ChessBoardDao;
 import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.Position;
-import chess.domain.Score;
+import chess.domain.score.Score;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -16,7 +16,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class ChessController {
 
