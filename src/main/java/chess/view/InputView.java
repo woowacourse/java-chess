@@ -14,6 +14,7 @@ public class InputView {
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int DESTINATION_POSITION_INDEX = 2;
+    private static final int POSITION_WORD_SIZE = 2;
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
     private static final String WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE = "이동 요청 정보가 잘못 되었습니다.";
@@ -54,6 +55,9 @@ public class InputView {
     }
 
     private static List<Integer> parsePosition(String word) {
+        if (word.length() != POSITION_WORD_SIZE) {
+            throw new IllegalArgumentException(WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE);
+        }
         List<Integer> position = new ArrayList<>();
         position.add(File.findByUserIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))));
         position.add(Rank.findByUserIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
