@@ -1,6 +1,9 @@
 package chess.domain;
 
 import static chess.domain.color.Color.*;
+import static chess.domain.piece.PieceType.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +13,18 @@ import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.initial.BoardFactory;
 
 public class Board {
 
+	private static final String ROOK_NAME = "R";
+	private static final String KNIGHT_NAME = "N";
+	private static final String BISHOP_NAME = "B";
+	private static final String QUEEN_NAME = "Q";
+	private static final String PAWN_NAME = "P";
 	private static Color thisTurn;
 	private final Map<Position, Piece> board;
 
@@ -122,5 +132,95 @@ public class Board {
 
 	public Map<Position, Piece> board() {
 		return board;
+	}
+
+	public double blackStatus() {
+		double score = 0.0;
+		for (File file : files()) {
+			score += blackScores(file);
+		}
+		return score;
+	}
+
+	public double whiteStatus() {
+		double score = 0.0;
+		for (File file : files()) {
+			score += whiteScores(file);
+		}
+		return score;
+	}
+
+	private double blackScores(File file) {
+		double newScore = 0;
+		int count = 0;
+		for (Rank rank : ranks()) {
+			Piece piece = board.get(Position.of(file, rank));
+			newScore += blackPieceScore(piece.name());
+			count += pawnCount(piece.name(), BLACK);
+		}
+		return newScore + addPawnScore(count);
+	}
+
+	private double blackPieceScore(String pieceName) {
+		if (pieceName.equals(ROOK_NAME)) {
+			return ROOK.score();
+		}
+		if (pieceName.equals(KNIGHT_NAME)) {
+			return KNIGHT.score();
+		}
+		if (pieceName.equals(BISHOP_NAME)) {
+			return BISHOP.score();
+		}
+		if (pieceName.equals(QUEEN_NAME)) {
+			return QUEEN.score();
+		}
+		return 0;
+	}
+
+	private int pawnCount(String name, Color color) {
+		if (color == BLACK && name.equals(PAWN_NAME)) {
+			return 1;
+		}
+		if (color == WHITE && name.equals(PAWN_NAME.toLowerCase())) {
+			return 1;
+		}
+		return 0;
+	}
+
+	private double addPawnScore(int count) {
+		if (count == 0) {
+			return 0;
+		}
+		if (count == 1) {
+			return PAWN.score();
+		}
+		return PAWNS.score() * count;
+	}
+
+	private double whiteScores(File file) {
+		double newScore = 0;
+		int count = 0;
+		for (Rank rank : ranks()) {
+			Piece piece = board.get(Position.of(file, rank));
+			newScore += whitePieceScore(piece.name());
+			count += pawnCount(piece.name(), WHITE);
+		}
+		return newScore + addPawnScore(count);
+	}
+
+	private double whitePieceScore(String pieceName) {
+		if (pieceName.equals(ROOK_NAME.toLowerCase())) {
+			return ROOK.score();
+		}
+		if (pieceName.equals(KNIGHT_NAME.toLowerCase())) {
+			return KNIGHT.score();
+		}
+		if (pieceName.equals(BISHOP_NAME.toLowerCase())) {
+			return BISHOP.score();
+		}
+		if (pieceName.equals(QUEEN_NAME.toLowerCase())) {
+			return QUEEN.score();
+		}
+		return 0;
 	}
 }

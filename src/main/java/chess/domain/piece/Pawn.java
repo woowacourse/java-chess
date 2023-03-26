@@ -62,10 +62,7 @@ public final class Pawn extends Piece {
 
 	@Override
 	public boolean movable(final Direction direction) {
-		if (name().equals(name().toUpperCase())) {
-			return DOWN.equals(direction);
-		}
-		return UP.equals(direction);
+		return direction().contains(direction);
 	}
 
 	@Override

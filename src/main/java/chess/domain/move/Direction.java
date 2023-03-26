@@ -22,7 +22,8 @@ public enum Direction {
 	KNIGHT_DOWN_RIGHT(1, -2),
 	KNIGHT_DOWN_LEFT(-1, -2),
 	KNIGHT_LEFT_DOWN(-2, -1),
-	KNIGHT_LEFT_UP(-2, 1);
+	KNIGHT_LEFT_UP(-2, 1),
+	NOWHERE(10,10);
 
 	private final int dx;
 	private final int dy;
@@ -100,7 +101,7 @@ public enum Direction {
 		return knightDirections.stream()
 			.filter(direction -> direction.dx == dx && direction.dy == dy)
 			.findFirst()
-			.orElse(null);
+			.orElse(NOWHERE);
 	}
 
 	private static int diffFile(Position source, Position target) {

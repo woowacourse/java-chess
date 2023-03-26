@@ -1,5 +1,7 @@
 package chess.domain;
 
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
@@ -33,7 +35,6 @@ class BoardTest {
 		// given
 		final Position source = Position.from("b7");
 		final Position target = Position.from("b6");
-
 
 		// then
 		assertThatThrownBy(() -> board.move(source, target))
@@ -85,7 +86,7 @@ class BoardTest {
 	void throwExceptionWhenNotMovable() {
 		// given
 		final Position source = Position.from("b2");
-		final Position target = Position.from("c3");
+		final Position target = Position.from("d3");
 
 		// then
 		assertThatThrownBy(() -> board.move(source, target))
@@ -138,4 +139,37 @@ class BoardTest {
 			softly.assertThat(board.board().get(target).getClass()).isEqualTo(Knight.class);
 		});
 	}
+
+	@Test
+	@DisplayName("초기 검은 말 점수 계산 테스트")
+	void initialBlackStatus() {
+		// then
+		assertThat(board.blackStatus()).isEqualTo(38.0);
+	}
+
+	@Test
+	@DisplayName("초기 흰 말 점수 계산 테스트")
+	void intitialWhiteStatus() {
+		// then
+		assertThat(board.whiteStatus()).isEqualTo(38.0);
+	}
+
+	@Test
+	@DisplayName("초기 흰 말 점수 계산 테스트")
+	void whiteStatus() {
+		// given
+		final Position whiteSource = Position.of(C, TWO);
+		final Position whiteTarget = Position.of(C, FOUR);
+		final Position blackSource = Position.of(D, SEVEN);
+		final Position blackTarget = Position.of(D, FIVE);
+
+		// when
+		board.move(whiteSource, whiteTarget);
+		board.move(blackSource, blackTarget);
+		board.move(whiteTarget, blackTarget);
+
+		// then
+		assertThat(board.whiteStatus()).isEqualTo(37.0);
+	}
+
 }
