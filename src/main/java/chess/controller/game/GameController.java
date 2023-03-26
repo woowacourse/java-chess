@@ -7,6 +7,7 @@ import static chess.controller.game.GameCommand.MOVE_SOURCE_INDEX;
 import static chess.controller.game.GameCommand.MOVE_TARGET_INDEX;
 import static chess.controller.game.GameCommand.STATUS;
 
+import chess.controller.Action;
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
 import chess.controller.session.RoomSession;
@@ -22,7 +23,7 @@ public class GameController implements Controller {
     private final GameInputView inputView;
     private final GameOutputView outputView;
     private final GameService gameService;
-    private final CommandMapper<GameCommand, GameAction> commandMapper;
+    private final CommandMapper<GameCommand, Action> commandMapper;
 
     public GameController(
             final GameInputView inputView,
@@ -35,11 +36,11 @@ public class GameController implements Controller {
         this.commandMapper = new CommandMapper<>(mappingCommand());
     }
 
-    private Map<GameCommand, GameAction> mappingCommand() {
+    private Map<GameCommand, Action> mappingCommand() {
         return Map.of(
                 MOVE, this::move,
-                STATUS, (gameService, ignore) -> status(gameService),
-                END, GameAction.EMPTY
+                STATUS, ignore -> status(),
+                END, Action.EMPTY
         );
     }
 
@@ -50,19 +51,19 @@ public class GameController implements Controller {
         outputView.printBoard(gameService.getResult(RoomSession.getId()));
         GameCommand command = EMPTY;
         while (command != END) {
-            command = play(gameService);
-            command = checkGameOver(gameService, command);
+            command = play();
+            command = checkGameOver(command);
         }
         outputView.printGameEnd();
     }
 
-    private GameCommand play(final GameService gameService) {
+    private GameCommand play() {
         try {
             final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
             final GameCommand command = GameCommand.from(commands);
             command.validateCommandsSize(commands);
-            final GameAction gameAction = commandMapper.getValue(command);
-            gameAction.execute(gameService, commands);
+            final Action action = commandMapper.getValue(command);
+            action.execute(commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printException(e.getMessage());
@@ -70,17 +71,17 @@ public class GameController implements Controller {
         }
     }
 
-    private void move(final GameService gameService, final List<String> commands) {
+    private void move(final List<String> commands) {
         final MoveDto moveDto = new MoveDto(commands.get(MOVE_SOURCE_INDEX), commands.get(MOVE_TARGET_INDEX));
         gameService.move(moveDto, RoomSession.getId());
         outputView.printBoard(gameService.getResult(RoomSession.getId()));
     }
 
-    private void status(final GameService gameService) {
+    private void status() {
         outputView.printStatus(gameService.getResult(RoomSession.getId()));
     }
 
-    private GameCommand checkGameOver(final GameService gameService, final GameCommand command) {
+    private GameCommand checkGameOver(final GameCommand command) {
         if (gameService.isGameOver(RoomSession.getId())) {
             outputView.printStatus(gameService.getResult(RoomSession.getId()));
             return END;

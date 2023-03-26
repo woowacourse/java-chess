@@ -1,10 +1,10 @@
-package chess.controller.user;
+package chess.controller;
 
 import java.util.List;
 
 @FunctionalInterface
-public interface UserAction {
-    UserAction EMPTY = ignore -> {
+public interface Action {
+    Action EMPTY = ignore -> {
     };
 
     void execute(final List<String> commands);

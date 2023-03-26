@@ -1,5 +1,6 @@
 package chess.controller.user;
 
+import chess.controller.Action;
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
 import chess.controller.session.RoomSession;
@@ -15,7 +16,7 @@ public class UserController implements Controller {
     private final UserInputView inputView;
     private final UserOutputView outputView;
     private final UserService userService;
-    private final CommandMapper<UserCommand, UserAction> commandMapper;
+    private final CommandMapper<UserCommand, Action> commandMapper;
 
     public UserController(
             final UserInputView inputView,
@@ -28,12 +29,12 @@ public class UserController implements Controller {
         this.commandMapper = new CommandMapper<>(mappingCommand());
     }
 
-    private Map<UserCommand, UserAction> mappingCommand() {
+    private Map<UserCommand, Action> mappingCommand() {
         return Map.of(
                 UserCommand.REGISTER, this::register,
                 UserCommand.LOGIN, this::login,
                 UserCommand.LOGOUT, ignore -> logout(),
-                UserCommand.END, UserAction.EMPTY
+                UserCommand.END, Action.EMPTY
         );
     }
 
@@ -50,7 +51,7 @@ public class UserController implements Controller {
             final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
             final UserCommand command = UserCommand.from(commands);
             command.validateCommandsSize(commands);
-            final UserAction action = commandMapper.getValue(command);
+            final Action action = commandMapper.getValue(command);
             action.execute(commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {

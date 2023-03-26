@@ -8,6 +8,7 @@ import static chess.controller.room.RoomCommand.JOIN;
 import static chess.controller.room.RoomCommand.NAME_INDEX;
 import static chess.controller.room.RoomCommand.ROOM_ID_INDEX;
 
+import chess.controller.Action;
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
 import chess.controller.session.RoomSession;
@@ -23,7 +24,7 @@ public class RoomController implements Controller {
     private final RoomInputView inputView;
     private final RoomOutputView outputView;
     private final RoomService roomService;
-    private final CommandMapper<RoomCommand, RoomAction> commandMapper;
+    private final CommandMapper<RoomCommand, Action> commandMapper;
 
     public RoomController(
             final RoomInputView inputView,
@@ -36,12 +37,12 @@ public class RoomController implements Controller {
         this.commandMapper = new CommandMapper<>(mappingCommand());
     }
 
-    private Map<RoomCommand, RoomAction> mappingCommand() {
+    private Map<RoomCommand, Action> mappingCommand() {
         return Map.of(
                 HISTORY, ignore -> history(),
                 CREATE, this::create,
                 JOIN, this::join,
-                END, RoomAction.EMPTY
+                END, Action.EMPTY
         );
     }
 
@@ -61,7 +62,7 @@ public class RoomController implements Controller {
             final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
             final RoomCommand command = RoomCommand.from(commands);
             command.validateCommandsSize(commands);
-            final RoomAction action = commandMapper.getValue(command);
+            final Action action = commandMapper.getValue(command);
             action.execute(commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
