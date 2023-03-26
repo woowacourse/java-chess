@@ -1,5 +1,6 @@
 package chess.database;
 
+import database.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -31,6 +32,24 @@ public class ChessBoardDao {
             preparedStatement.setInt(3, rank);
             preparedStatement.setString(4, pieceType);
             preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findPiece(int gameIdx, int file, int rank) {
+        final var query = "select peiceType\n"
+                + "from ChessBoard\n"
+                + "where gameIdx = ? and bFile = ? and bRank = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameIdx);
+            preparedStatement.setInt(2, file);
+            preparedStatement.setInt(3, rank);
+
+            final var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getString("peiceType");
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
