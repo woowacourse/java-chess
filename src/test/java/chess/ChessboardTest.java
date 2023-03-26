@@ -16,6 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -101,6 +102,30 @@ class ChessboardTest {
                 Arguments.arguments(PieceType.KNIGHT.createPiece(Camp.BLACK), 2),
                 Arguments.arguments(PieceType.QUEEN.createPiece(Camp.BLACK), 1),
                 Arguments.arguments(PieceType.KING.createPiece(Camp.BLACK), 1)
+        );
+    }
+
+    @ParameterizedTest(name = "체스판 위에 살아있는 기물과 기물의 수를 받아올 수 있다.")
+    @MethodSource("alivePieceAndPieceCountProvider")
+    void getAlivePieceAndCountMapTest(PieceType pieceType, int pieceCount) {
+        Square whitePawnSquare = Square.getInstanceOf(File.A, Rank.TWO);
+        Camp white = Camp.WHITE;
+        chessboard.putPiece(whitePawnSquare, PieceType.EMPTY.createPiece(white));
+
+        Map<PieceType, Integer> alivePieceAndCountMap = chessboard.getAlivePieceAndCountMap(white);
+
+        assertThat(alivePieceAndCountMap.get(pieceType))
+                .isEqualTo(pieceCount);
+    }
+
+    static Stream<Arguments> alivePieceAndPieceCountProvider() {
+        return Stream.of(
+                Arguments.arguments(PieceType.PAWN, 7),
+                Arguments.arguments(PieceType.ROOK, 2),
+                Arguments.arguments(PieceType.KNIGHT, 2),
+                Arguments.arguments(PieceType.BISHOP, 2),
+                Arguments.arguments(PieceType.KING, 1),
+                Arguments.arguments(PieceType.QUEEN, 1)
         );
     }
 }
