@@ -15,15 +15,7 @@ public class Knight extends Piece {
 
     private static final Map<Integer, Integer> distance = Map.of(1, 2, 2, 1);
 
-    private static final List<Direction> direction = List.of(
-            Direction.KNIGHT_TOP_LEFT,
-            Direction.KNIGHT_TOP_RIGHT,
-            Direction.KNIGHT_LEFT_TOP,
-            Direction.KNIGHT_LEFT_BOTTOM,
-            Direction.KNIGHT_RIGHT_TOP,
-            Direction.KNIGHT_RIGHT_BOTTOM,
-            Direction.KNIGHT_BOTTOM_LEFT,
-            Direction.KNIGHT_BOTTOM_RIGHT);
+    private static final List<Direction> direction = Direction.getKnightDirection();
 
     public Knight(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), KNIGHT_SCORE.getScore());

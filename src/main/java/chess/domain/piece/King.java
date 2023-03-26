@@ -14,7 +14,7 @@ public class King extends Piece {
 
     private static final int MOVABLE_DISTANCE = 1;
 
-    private final List<Direction> direction = List.of(Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT, Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
+    private final List<Direction> direction = Direction.getKingDirection();
 
     public King(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), KING_SCORE.getScore());

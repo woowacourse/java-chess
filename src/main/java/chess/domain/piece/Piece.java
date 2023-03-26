@@ -53,8 +53,8 @@ public abstract class Piece {
 
     public abstract boolean findDirection(Direction direction, Position start, Position end, Piece piece);
 
-    public boolean isSameColor(Color colorOfDestination) {
-        return this.color.equals(colorOfDestination);
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
     }
 
     public Color getColor() {

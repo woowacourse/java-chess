@@ -1,15 +1,11 @@
 package chess.domain.score;
 
-import chess.domain.Position;
-import chess.domain.boardStrategy.InitialBoardStrategy;
+import chess.domain.board.strategy.InitialBoardStrategy;
+import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Piece;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,14 +17,13 @@ class ScoreCalculatorTest {
     void 초기_점수_테스트() {
         //given
         ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
-        Map<Position, Piece> chessBoard = chessGame.getChessBoard();
+        ChessBoard chessBoard = new ChessBoard(chessGame.getChessBoardMap());
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         //when
-        scoreCalculator.calculateScores(chessBoard);
         double expectedScore = 38.0;
-        double blackScore = scoreCalculator.getBlackScore();
-        double whiteScore = scoreCalculator.getWhiteScore();
+        double blackScore = scoreCalculator.getBlackScore(chessBoard);
+        double whiteScore = scoreCalculator.getWhiteScore(chessBoard);
 
         //then
         assertAll(

@@ -11,9 +11,7 @@ import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 
 public class Queen extends Piece {
 
-    private static final List<Direction> direction = List.of(
-            Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
-            Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
+    private static final List<Direction> direction = Direction.getQueenDirection();
 
     public Queen(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), QUEEN_SCORE.getScore());

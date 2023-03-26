@@ -12,7 +12,7 @@ import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
 
 public class Rook extends Piece {
 
-    private static final List<Direction> direction = List.of(Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT);
+    private static final List<Direction> direction = Direction.getRookDirection();
 
     public Rook(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), ROOK_SCORE.getScore());

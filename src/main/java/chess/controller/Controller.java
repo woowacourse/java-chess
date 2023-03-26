@@ -1,9 +1,8 @@
 package chess.controller;
 
 import chess.domain.Position;
-import chess.domain.boardStrategy.InitialBoardStrategy;
+import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
@@ -53,7 +52,7 @@ public class Controller {
     }
 
     private boolean gameCondition(ChessGame chessGame, Command command) {
-        return !isCheckmate(chessGame) && (isStart(command) || isStatus(command));
+        return !isKingDead(chessGame) && (isStart(command) || isStatus(command));
     }
 
     private Command getFirstCommand() {
@@ -88,7 +87,7 @@ public class Controller {
                 if (isMove(command)) {
                     move(chessGame, commandDto);
 
-                    if (isCheckmate(chessGame)) {
+                    if (isKingDead(chessGame)) {
                         printCheckmateGuideMessage();
                         return Command.END;
                     }
@@ -114,8 +113,8 @@ public class Controller {
         printChessGame(chessGame);
     }
 
-    private boolean isCheckmate(ChessGame chessGame) {
-        Map<Position, Piece> chessBoard = chessGame.getChessBoard();
+    private boolean isKingDead(ChessGame chessGame) {
+        Map<Position, Piece> chessBoard = chessGame.getChessBoardMap();
         int count = 0;
         for (Piece piece : chessBoard.values()) {
             count = piece.calculateKing(count);
@@ -125,7 +124,7 @@ public class Controller {
     }
 
     private void printChessGame(ChessGame chessGame) {
-        BoardDto boardDto = new BoardDto(chessGame.getChessBoard());
+        BoardDto boardDto = new BoardDto(chessGame.getChessBoardMap());
         printBoard(boardDto);
     }
 }

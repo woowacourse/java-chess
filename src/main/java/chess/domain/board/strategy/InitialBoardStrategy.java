@@ -1,4 +1,4 @@
-package chess.domain.boardStrategy;
+package chess.domain.board.strategy;
 
 import chess.domain.Column;
 import chess.domain.Position;
@@ -13,7 +13,6 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

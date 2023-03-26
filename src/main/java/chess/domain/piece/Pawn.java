@@ -6,6 +6,8 @@ import chess.domain.Position;
 
 import java.util.List;
 
+import static chess.direction.Direction.getBlackPawnDirection;
+import static chess.direction.Direction.getWhitePawnDirection;
 import static chess.domain.score.Score.PAWN_DEFAULT_SCORE;
 import static chess.view.ErrorMessage.MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE;
 import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
@@ -26,11 +28,9 @@ public class Pawn extends Piece {
 
     private List<Direction> createDirectionByColor(Color color) {
         if (color == Color.BLACK) {
-            return List.of(Direction.BOTTOM, Direction.BOTTOM_LEFT,
-                    Direction.BOTTOM_RIGHT);
+            return getBlackPawnDirection();
         }
-        return List.of(Direction.TOP, Direction.TOP_LEFT,
-                Direction.TOP_RIGHT);
+        return getWhitePawnDirection();
     }
 
     @Override
