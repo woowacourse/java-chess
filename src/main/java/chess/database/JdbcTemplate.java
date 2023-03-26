@@ -36,7 +36,28 @@ public final class JdbcTemplate {
             throw new RuntimeException(e);
         }
     }
-    
+
+    public Long executeUpdate(final String query,
+                              final String... params) {
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            for (int i = 0; i < params.length; i++) {
+                preparedStatement.setString(i + 1, params[i]);
+            }
+            preparedStatement.executeUpdate();
+
+            final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (!generatedKeys.next()) {
+                throw new SQLException("Update Exception! - generated key error.");
+            }
+            return generatedKeys.getLong(1);
+        } catch (SQLException e) {
+            System.out.println("SQL Exception! = " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     private Connection getConnection() {
         try {
             return DriverManager.getConnection(chessProperties.getUrl(),

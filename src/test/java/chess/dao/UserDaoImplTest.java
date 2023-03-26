@@ -39,4 +39,18 @@ class UserDaoImplTest {
         assertThat(userEntity)
                 .isEqualTo(Optional.empty());
     }
+
+    @Test
+    @DisplayName("사용자 정보를 삽입하면, 삽입된 사용자의 아이디를 반환한다.")
+    void insert() {
+        // given
+        final UserDao userDao = new MockUserDao();
+
+        // when
+        Long userId = userDao.insert("journey");
+
+        // then
+        assertThat(userId)
+                .isEqualTo(1L);
+    }
 }

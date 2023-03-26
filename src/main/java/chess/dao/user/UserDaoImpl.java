@@ -21,4 +21,10 @@ public class UserDaoImpl implements UserDao {
                 resultSet.getString("user_name"))
         ), name);
     }
+
+    @Override
+    public Long insert(final String name) {
+        final String query = "INSERT INTO user(user_name) VALUES(?)";
+        return jdbcTemplate.executeUpdate(query, name);
+    }
 }

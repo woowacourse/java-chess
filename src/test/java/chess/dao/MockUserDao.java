@@ -13,4 +13,9 @@ public class MockUserDao implements UserDao {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Long insert(final String name) {
+        return 1L;
+    }
 }
