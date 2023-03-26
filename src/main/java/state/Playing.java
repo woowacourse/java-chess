@@ -18,6 +18,11 @@ abstract class Playing implements State {
     protected abstract State getNextTurn();
 
     @Override
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
     public boolean isPlaying() {
         return true;
     }
@@ -29,7 +34,7 @@ abstract class Playing implements State {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
 

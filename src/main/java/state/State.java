@@ -1,5 +1,6 @@
 package state;
 
+import domain.board.Board;
 import domain.piece.Piece;
 import domain.position.Position;
 
@@ -10,7 +11,9 @@ public interface State {
 
     void move(Position source, Position destination);
 
-    Map<Position, Piece> getBoard();
+    Map<Position, Piece> getPieces();
+
+    Board getBoard();
 
     State next();
 }

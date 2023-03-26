@@ -22,7 +22,7 @@ public final class Application {
     private static final String NOT_STARTED = "게임을 먼저 시작해야 합니다.";
     private static final String NO_SUCH_FILE = "열은 A ~ H 를 입력해야 합니다.";
     private static final String NO_SUCH_RANK = "행은 1 ~ 8 을 입력해야 합니다.";
-    private static final String NOT_MOVE_OR_END = "move 또는 end 명령어만 가능합니다.";
+    private static final String INVALID_COMMAND = "move, end, status 명령어만 가능합니다.";
     private static final String INVALID_MOVE_COMMAND_SIZE = "move b2 b3 등으로 입력해야 합니다.";
     private static final int MOVE_COMMAND_SIZE = 3;
 
@@ -32,6 +32,21 @@ public final class Application {
         while (gameState.isPlaying()) {
             gameState = retryOnError(Application::play, gameState);
         }
+    }
+
+    private static State initChessGame() {
+        final Command command = Command.from(InputView.readStartOption());
+
+        if (Command.START.equals(command)) {
+            final State next = new Ready().next();
+            OutputView.printBoard(next.getPieces());
+            return next;
+        }
+        if (Command.END.equals(command)) {
+            return new End();
+        }
+
+        throw new IllegalArgumentException(NOT_STARTED);
     }
 
     private static State retryOnError(final Function<State, State> process, final State gameState) {
@@ -44,60 +59,39 @@ public final class Application {
         return retryOnError(process, gameState);
     }
 
-    private static State initChessGame() {
-        final Command command = Command.from(InputView.readStartOption());
+    private static State play(State gameState) {
+        final List<String> gameOption = InputView.readPlayGameOption();
+        final Command command = Command.from(gameOption.get(COMMAND_OFFSET));
 
-        if (Command.MOVE.equals(command)) {
-            throw new IllegalArgumentException(NOT_STARTED);
-        }
-
-        return getStartState(command);
+        return getNextState(gameState, gameOption, command);
     }
 
-    private static State getStartState(final Command command) {
+    private static State getNextState(final State gameState, final List<String> gameOption, final Command command) {
+        if (Command.MOVE.equals(command)) {
+            return playNextTurn(gameState, gameOption);
+        }
         if (Command.END.equals(command)) {
             return new End();
         }
+        if (Command.STATUS.equals(command)) {
+            OutputView.printStatus(gameState.getBoard());
+            return gameState;
+        }
 
-        final State next = new Ready().next();
-        OutputView.printBoard(next.getBoard());
-
-        return next;
+        throw new IllegalArgumentException(INVALID_COMMAND);
     }
 
-    private static State play(State gameState) {
-        final List<String> gameOption = InputView.readPlayGameOption();
-        if (isEnd(gameOption.get(COMMAND_OFFSET))) {
-            return new End();
-        }
+    private static State playNextTurn(final State gameState, final List<String> gameOption) {
         if (gameOption.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException(INVALID_MOVE_COMMAND_SIZE);
         }
 
-        return next(gameState, gameOption);
-    }
-
-    private static State next(final State gameState, final List<String> gameOption) {
         final Position source = getPositionFrom(gameOption, SOURCE_OFFSET);
         final Position destination = getPositionFrom(gameOption, DESTINATION_OFFSET);
-
         gameState.move(source, destination);
-        OutputView.printBoard(gameState.getBoard());
+        OutputView.printBoard(gameState.getPieces());
 
         return gameState.next();
-    }
-
-    private static boolean isEnd(final String commandInput) {
-        final Command command = Command.from(commandInput);
-
-        if (Command.MOVE.equals(command)) {
-            return false;
-        }
-        if (Command.END.equals(command)) {
-            return true;
-        }
-
-        throw new IllegalArgumentException(NOT_MOVE_OR_END);
     }
 
     private static Position getPositionFrom(final List<String> gameOption, int target) {
@@ -118,12 +112,15 @@ public final class Application {
     }
 
     private static Rank parseRank(String input) {
-        final int inputRank = Integer.parseInt(input);
-
-        return Arrays.stream(Rank.values())
-                .filter(rank -> !Rank.NOTHING.equals(rank))
-                .filter(rank -> inputRank == rank.getValue())
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_RANK));
+        try {
+            final int inputRank = Integer.parseInt(input);
+            return Arrays.stream(Rank.values())
+                    .filter(rank -> !Rank.NOTHING.equals(rank))
+                    .filter(rank -> inputRank == rank.getValue())
+                    .findAny()
+                    .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_RANK));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(NO_SUCH_RANK);
+        }
     }
 }

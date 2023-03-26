@@ -1,5 +1,6 @@
 package state;
 
+import domain.board.Board;
 import domain.piece.Piece;
 import domain.position.Position;
 
@@ -17,7 +18,12 @@ public final class End implements State {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getPieces() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Board getBoard() {
         throw new UnsupportedOperationException();
     }
 

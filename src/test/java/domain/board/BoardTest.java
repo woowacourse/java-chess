@@ -2,6 +2,7 @@ package domain.board;
 
 import domain.piece.*;
 import domain.position.Position;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -515,5 +516,77 @@ class BoardTest {
             assertThatThrownBy(() -> board.move(D4, E5))
                     .isInstanceOf(IllegalArgumentException.class);
         }
+    }
+
+    @DisplayName("킹이 존재하지 않을 때")
+    @Test
+    void notKingExist() {
+        //given
+        final Board board = Board.create(testStrategy(Map.of(D4, new Rook(Team.BLACK))));
+
+        //when
+
+        //then
+        Assertions.assertAll(
+                () -> assertThat(board.isBlackKingExist()).isFalse(),
+                () -> assertThat(board.isWhiteKingExist()).isFalse());
+    }
+
+    @DisplayName("킹이 존재할 때")
+    @Test
+    void kingExist() {
+        //given
+        final Board board = Board.create(new InitialChessAlignment());
+
+        //when
+
+        //then
+        Assertions.assertAll(
+                () -> assertThat(board.isBlackKingExist()).isTrue(),
+                () -> assertThat(board.isWhiteKingExist()).isTrue());
+    }
+
+    @DisplayName("점수를 구할 수 있다(초기 상태)")
+    @Test
+    void calculate1() {
+        //given
+        final Board board = Board.create(new InitialChessAlignment());
+
+        //when
+
+        //then
+        Assertions.assertAll(
+                () -> assertThat(board.getCurrentBlackScore()).isEqualTo(38),
+                () -> assertThat(board.getCurrentWhiteScore()).isEqualTo(38));
+    }
+
+    @DisplayName("점수를 구할 수 있다(폰이 2개가 겹쳤을 때)")
+    @Test
+    void calculate2() {
+        //given
+        final Board board = Board.create(testStrategy(Map.of(
+                D4, new Pawn(Team.BLACK),
+                D5, new Pawn(Team.BLACK))));
+
+        //when
+
+        //then
+        assertThat(board.getCurrentBlackScore()).isEqualTo(1);
+    }
+
+    @DisplayName("점수를 구할 수 있다(폰이 4개가 겹쳤을 때)")
+    @Test
+    void calculate3() {
+        //given
+        final Board board = Board.create(testStrategy(Map.of(
+                D4, new Pawn(Team.BLACK),
+                D5, new Pawn(Team.BLACK),
+                D6, new Pawn(Team.BLACK),
+                D8, new Pawn(Team.BLACK))));
+
+        //when
+
+        //then
+        assertThat(board.getCurrentBlackScore()).isEqualTo(2);
     }
 }

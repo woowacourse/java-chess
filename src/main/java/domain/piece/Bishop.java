@@ -32,4 +32,14 @@ public final class Bishop extends Piece {
     public boolean isMovable(final Position source, final Position destination) {
         return Direction.isDiagonal(source, destination);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

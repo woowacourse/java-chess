@@ -43,6 +43,8 @@ class PieceTest {
         //then
         Assertions.assertAll(
                 () -> assertThat(black.isBlack()).isTrue(),
-                () -> assertThat(white.isBlack()).isFalse());
+                () -> assertThat(white.isBlack()).isFalse(),
+                () -> assertThat(black.isWhite()).isFalse(),
+                () -> assertThat(white.isWhite()).isTrue());
     }
 }

@@ -35,4 +35,14 @@ public final class King extends Piece {
 
         return Direction.isStraight(source, destination) && source.getDistance(destination) == ONE_STEP;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

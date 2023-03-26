@@ -22,12 +22,24 @@ public abstract class Piece {
 
     public abstract boolean isMovable(final Position source, final Position destination);
 
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
     public boolean isCapturable(final Position source, final Position destination) {
         return isMovable(source, destination);
     }
 
     public boolean isBlack() {
         return team.equals(Team.BLACK);
+    }
+
+    public boolean isWhite() {
+        return team.equals(Team.WHITE);
+    }
+
+    public boolean isTeam(Team team) {
+        return this.team.equals(team);
     }
 
     public String getName() {

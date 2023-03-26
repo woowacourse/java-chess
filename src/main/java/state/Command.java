@@ -3,9 +3,10 @@ package state;
 public enum Command {
     START,
     END,
-    MOVE;
+    MOVE,
+    STATUS;
 
-    private static final String INVALID_GAME_OPTION = "start, move, end만 입력해야 합니다.";
+    private static final String INVALID_GAME_OPTION = "start, move, status, end만 입력해야 합니다.";
 
     public static Command from(final String command) {
         try {

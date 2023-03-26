@@ -69,6 +69,16 @@ public final class Pawn extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public boolean isCapturable(final Position source, final Position destination) {
         if (isBlack() &&
                 source.move(Direction.SW).equals(destination) ||

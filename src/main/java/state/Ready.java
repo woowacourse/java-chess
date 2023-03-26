@@ -20,7 +20,12 @@ public final class Ready implements State {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getPieces() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Board getBoard() {
         throw new UnsupportedOperationException();
     }
 

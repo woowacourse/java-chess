@@ -35,4 +35,14 @@ public final class Knight extends Piece {
                 !Direction.isStraight(source, destination) &&
                 !Direction.isDiagonal(source, destination);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

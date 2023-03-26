@@ -1,10 +1,13 @@
 package domain.board;
 
 import domain.piece.Piece;
+import domain.piece.Team;
+import domain.position.File;
 import domain.position.Position;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class Board {
 
@@ -80,6 +83,51 @@ public final class Board {
 
     public boolean isBlackPiece(final Position position) {
         return getPiece(position).isBlack();
+    }
+
+    public boolean isBlackKingExist() {
+        return board.values().stream()
+                .filter(Piece::isBlack)
+                .anyMatch(Piece::isKing);
+    }
+
+    public boolean isWhiteKingExist() {
+        return board.values().stream()
+                .filter(Piece::isWhite)
+                .anyMatch(Piece::isKing);
+    }
+
+    public double getCurrentBlackScore() {
+        final double sumScore = sumDefaultScore(Team.BLACK);
+        return minusMultiPawnScore(sumScore, Team.BLACK);
+    }
+
+    public double getCurrentWhiteScore() {
+        final double sumScore = sumDefaultScore(Team.WHITE);
+        return minusMultiPawnScore(sumScore, Team.WHITE);
+    }
+
+    private double sumDefaultScore(Team team) {
+        return board.values().stream()
+                .filter(piece -> piece.isTeam(team))
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private double minusMultiPawnScore(double defaultScore, Team team) {
+        final Map<File, Long> countPawns = countPawnsOnFile(team);
+        final double multiPawnScore = countPawns.values().stream()
+                .filter(count -> count > 1)
+                .mapToDouble(count -> count * 0.5)
+                .sum();
+
+        return defaultScore - multiPawnScore;
+    }
+
+    private Map<File, Long> countPawnsOnFile(Team team) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isTeam(team) && entry.getValue().isPawn())
+                .collect(Collectors.groupingBy(entry -> entry.getKey().getFile(), Collectors.counting()));
     }
 
     public Map<Position, Piece> getPieces() {

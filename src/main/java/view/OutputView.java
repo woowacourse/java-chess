@@ -1,5 +1,6 @@
 package view;
 
+import domain.board.Board;
 import domain.piece.Piece;
 import domain.position.File;
 import domain.position.Position;
@@ -22,6 +23,9 @@ public final class OutputView {
     private static final String PAWN_VIEW = "P";
     private static final String QUEEN_VIEW = "Q";
     private static final String ROOK_VIEW = "R";
+    private static final String WINNER_BLACK = "Black";
+    private static final String WINNER_WHITE = "White";
+    private static final String WINNER_DRAW = "없음";
 
     public static void printBoard(final Map<Position, Piece> board) {
         Arrays.stream(Rank.values())
@@ -74,6 +78,28 @@ public final class OutputView {
             return QUEEN_VIEW;
         }
         return ROOK_VIEW;
+    }
+
+    public static void printStatus(Board board) {
+        final double blackScore = board.getCurrentBlackScore();
+        final double whiteScore = board.getCurrentWhiteScore();
+
+        System.out.println("Black Score: " + blackScore);
+        System.out.println("White Score: " + whiteScore);
+        printCurrentWinner(blackScore, whiteScore);
+    }
+
+    private static void printCurrentWinner(final double blackScore, final double whiteScore) {
+        System.out.print("현재 승리: ");
+        if (blackScore > whiteScore) {
+            System.out.println(WINNER_BLACK);
+        }
+        if (blackScore < whiteScore) {
+            System.out.println(WINNER_WHITE);
+        }
+        if (blackScore == whiteScore) {
+            System.out.println(WINNER_DRAW);
+        }
     }
 
     public static void printError(final String errorMessage) {
