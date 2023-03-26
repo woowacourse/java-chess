@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.dto.ChessInputDto;
+import chess.dto.Command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,16 +16,16 @@ public class InputView {
     private InputView() {
     }
 
-    public static ChessInputDto inputGameState() {
+    public static Command inputGameState() {
         final String command = scanner.nextLine();
 
         final List<String> commands = Arrays.asList(command.split(DELIMITER));
         final GameState gameState = GameState.from(commands.get(GAME_STATE_INDEX));
 
-        if (gameState == GameState.START || gameState == GameState.END) {
-            return ChessInputDto.from(gameState);
+        if (gameState.isNotMoveState()) {
+            return Command.from(gameState);
         }
 
-        return ChessInputDto.from(gameState, commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+        return Command.from(gameState, commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
     }
 }

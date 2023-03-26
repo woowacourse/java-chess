@@ -20,4 +20,8 @@ public enum GameState {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("start, end, move, status만 입력할 수 있습니다."));
     }
+
+    public boolean isNotMoveState() {
+        return this != MOVE;
+    }
 }

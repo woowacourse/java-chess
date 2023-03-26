@@ -15,6 +15,7 @@ public class MockPosition {
     public static final Position POSITION_0_3 = Position.of(ROW_0, COLUMN_3);
     public static final Position POSITION_0_4 = Position.of(ROW_0, COLUMN_4);
     public static final Position POSITION_0_5 = Position.of(ROW_0, COLUMN_5);
+    public static final Position POSITION_0_6 = Position.of(ROW_0, COLUMN_6);
     public static final Position POSITION_0_7 = Position.of(ROW_0, COLUMN_7);
     public static final Position POSITION_1_0 = Position.of(ROW_1, COLUMN_0);
     public static final Position POSITION_1_1 = Position.of(ROW_1, COLUMN_1);
