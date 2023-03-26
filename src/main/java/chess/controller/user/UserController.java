@@ -64,13 +64,18 @@ public class UserController implements Controller {
     private void register(final List<String> commands) {
         final NameDto nameDto = new NameDto(commands.get(UserCommand.NAME_INDEX));
         userService.save(nameDto);
+        outputView.printRegisterSuccess(nameDto.getValue());
     }
 
     private void login(final List<String> commands) {
+        if (UserSession.get() != null) {
+            throw new IllegalArgumentException("이미 로그인 된 상태입니다.");
+        }
         final NameDto nameDto = new NameDto(commands.get(UserCommand.NAME_INDEX));
         final UserDto userDto = userService.findByName(nameDto);
         final User user = new User(userDto.getId(), userDto.getName());
         UserSession.add(user);
+        outputView.printLoginSuccess(user.getName());
     }
 
     private void logout() {

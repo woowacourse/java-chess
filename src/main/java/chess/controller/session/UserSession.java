@@ -10,6 +10,10 @@ public class UserSession {
         session.set(user);
     }
 
+    public static User get() {
+        return session.get();
+    }
+    
     public static int getId() {
         final User auth = session.get();
         if (auth == null) {

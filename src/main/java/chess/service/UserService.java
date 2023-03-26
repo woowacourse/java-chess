@@ -12,6 +12,10 @@ public class UserService {
     }
 
     public void save(final NameDto nameDto) {
+        final UserDto userDto = userDao.findByName(nameDto);
+        if (userDto != null) {
+            throw new IllegalArgumentException("이미 등록된 이름입니다.");
+        }
         userDao.save(nameDto);
     }
 

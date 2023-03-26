@@ -48,6 +48,18 @@ public class UserServiceTest {
     }
 
     @Test
+    void 이미_등록된_이름을_입력받아_회원가입을_진행하는_경우_예외를_던진다() {
+        // given
+        final NameDto nameDto = new NameDto("herb");
+        userService.save(nameDto);
+
+        // expect
+        assertThatThrownBy(() -> userService.save(nameDto))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이미 등록된 이름입니다.");
+    }
+
+    @Test
     void 사용자의_이름을_받아_사용자를_저장한다() {
         // given
         final NameDto nameDto = new NameDto("herb");
