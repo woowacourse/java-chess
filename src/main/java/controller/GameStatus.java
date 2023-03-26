@@ -1,42 +1,51 @@
 package controller;
 
-import dao.ChessDao;
-import domain.chessboard.ChessBoardFactory;
-import domain.chessgame.ChessGame;
+import controller.command.Command;
+import controller.command.CommandFactory;
+import service.ChessService;
 
 import java.util.List;
 
-public abstract class GameStatus {
+public final class GameStatus {
 
     private static final int COMMAND_INDEX = 0;
+    private static final String NEW = "new";
+    private static final String LOAD = "load";
 
-    protected final ChessGame chessGame;
+    private final ChessService chessService;
+    private Command command;
 
-    protected GameStatus(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public GameStatus(final ChessService chessService) {
+        this.chessService = chessService;
     }
 
-    public abstract void playTurn(final List<String> inputs);
+    public void playTurn(final List<String> inputs) {
+        validateNull(inputs);
+        transition(inputs);
+        command.playTurn(inputs);
+    }
 
-    public abstract boolean isKeepGaming();
+    private void validateNull(final List<String> inputs) {
+        final String command = inputs.get(COMMAND_INDEX);
 
-    public final GameStatus transition(final List<String> inputs) {
-        final Command command = Command.from(inputs.get(COMMAND_INDEX));
-        final ChessDao chessDao = new ChessDao();
+        if (this.command == null && isNotAllowCommand(command)) {
+            throw new IllegalArgumentException(String.format("%s 혹은 %s 명령어를 입력해 주세요", NEW, LOAD));
+        }
+    }
 
-        if (command == Command.NEW) {
-            return new NewGame(new ChessGame(ChessBoardFactory.generate()), chessDao);
+    private boolean isNotAllowCommand(final String command) {
+        return !(command.equalsIgnoreCase(NEW) || command.equalsIgnoreCase(LOAD) || command.equalsIgnoreCase("end"));
+    }
+
+    public boolean isKeepGaming() {
+        if (command != null) {
+            return command.isKeepGaming();
         }
-        if (command == Command.LOAD) {
-            return new LoadGame(new ChessGame(ChessBoardFactory.generate()), chessDao);
-        }
-        if (command == Command.MOVE) {
-            return new Move(chessGame, chessDao);
-        }
-        if (command == Command.STATUS) {
-            return new Status(chessGame);
-        }
-        return new End(chessGame);
+        return true;
+    }
+
+    private void transition(final List<String> inputs) {
+        this.command = CommandFactory.createCommand(inputs.get(COMMAND_INDEX), chessService);
     }
 
 }
