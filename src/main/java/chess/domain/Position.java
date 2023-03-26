@@ -100,6 +100,10 @@ public final class Position {
         return column.direction(position.column);
     }
 
+    public String getPosition() {
+        return row.getType() + column.getType();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
