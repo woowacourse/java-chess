@@ -1,5 +1,6 @@
 package chessgame.controller;
 
+import chessgame.domain.chessgame.BoardInitialImage;
 import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.view.InputView;
@@ -46,7 +47,7 @@ public class ChessController {
 
     private void processStartGame(final Command command) {
         if (command.isStart()) {
-            playGame(new ChessGame());
+            playGame(new ChessGame(BoardInitialImage.generate()));
         }
         if (command.isMove() || command.isStatus()) {
             throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");

@@ -1,6 +1,7 @@
 package chessgame.domain.chessgame;
 
 import chessgame.domain.coordinate.Coordinate;
+import chessgame.domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +12,8 @@ public class ChessGame {
     private Camp turn;
     private final Result result;
 
-    public ChessGame() {
-        this.board = new Board();
+    public ChessGame(Map<Coordinate, Piece> board) {
+        this.board = new Board(board);
         this.turn = Camp.WHITE;
         this.result = new Result();
     }

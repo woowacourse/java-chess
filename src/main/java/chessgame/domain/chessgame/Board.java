@@ -5,19 +5,14 @@ import chessgame.domain.piece.Empty;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
 
     private final Map<Coordinate, Piece> board;
 
-    public Board() {
-        board = initialize();
-    }
-
-    public Map<Coordinate, Piece> initialize() {
-        return new HashMap<>(BoardInitialImage.generate());
+    public Board(Map<Coordinate, Piece> board) {
+        this.board = board;
     }
 
     public boolean checkCamp(final Coordinate coordinate, final Camp camp) {
