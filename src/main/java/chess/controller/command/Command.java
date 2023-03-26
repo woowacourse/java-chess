@@ -37,11 +37,11 @@ public class Command {
         }
     }
 
-    public boolean is(final Type compareType) {
-        return type == compareType;
+    public Type getType() {
+        return type;
     }
 
-    public String getParameterAt(final int parameterIndex) {
-        return parameters.get(parameterIndex);
+    public List<String> getParameters() {
+        return List.copyOf(parameters);
     }
 }

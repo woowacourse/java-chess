@@ -8,7 +8,8 @@ import java.util.Map;
 public enum Type {
     START("start", 0),
     END("end", 0),
-    MOVE("move", 2);
+    MOVE("move", 2),
+    STATUS("status", 0);
 
     private static final Map<String, Type> TYPE_BY_INPUT = new HashMap<>();
 

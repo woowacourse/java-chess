@@ -19,6 +19,7 @@ public class OutputView {
     private static final Map<String, String> UPPER_SIGN_BY_PIECE;
     private static final Map<File, Integer> COLUMN_BY_FILE;
     private static final Map<Rank, Integer> ROW_BY_RANK;
+    private static final Map<Color, String> TEAM_COLOR_NAME;
     private static final Map<ExceptionCode, String> EXCEPTION_MESSAGES;
 
     static {
@@ -50,6 +51,10 @@ public class OutputView {
                 Rank.SEVEN, 1,
                 Rank.EIGHT, 0
         );
+        TEAM_COLOR_NAME = Map.of(
+                Color.BLACK, "검은색",
+                Color.WHITE, "흰색"
+        );
 
         EXCEPTION_MESSAGES = Map.ofEntries(
                 entry(ExceptionCode.INVALID_COMMAND_PARAMETER, "커멘드에 맞는 파라미터를 입력해주세요."),
@@ -63,7 +68,8 @@ public class OutputView {
                 entry(ExceptionCode.GAME_NOT_INITIALIZED, "아직 게임이 생성되지 않았습니다."),
                 entry(ExceptionCode.INVALID_COMMAND, "유효하지 않은 커멘드가 입력되었습니다."),
                 entry(ExceptionCode.GAME_ALREADY_RUNNING, "게임이 이미 진행중입니다."),
-                entry(ExceptionCode.INVALID_TURN, "해당 색의 말을 이동시킬 순서가 아닙니다.")
+                entry(ExceptionCode.INVALID_TURN, "해당 색의 말을 이동시킬 순서가 아닙니다."),
+                entry(ExceptionCode.GAME_OVER_STATE, "승자가 나와 더이상 플레이할 수 없습니다. 게임 재시작 또는 종료를 해주세요.")
         );
     }
 
@@ -72,6 +78,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 상태 확인 : status (게임 진행 중 점수 확인, 게임 오버시 승자 확인)");
     }
 
     public void printBoard(final List<PieceInfo> pieceInfos) {
@@ -115,6 +122,18 @@ public class OutputView {
             return upperPieceMessage;
         }
         return upperPieceMessage.toLowerCase();
+    }
+
+    public void printScores(final Map<Color, Double> scores) {
+        final String SCORE_FORMAT = "%s : %.1f";
+        System.out.println("팀색별 점수");
+        for (Map.Entry entry : scores.entrySet()) {
+            System.out.println(String.format(SCORE_FORMAT, TEAM_COLOR_NAME.get(entry.getKey()), entry.getValue()));
+        }
+    }
+
+    public void printWinner(final Color winningTeamColor) {
+        System.out.println(String.format("승리팀색 : %s", TEAM_COLOR_NAME.get(winningTeamColor)));
     }
 
     public void printErrorMessage(final RuntimeException exception) {
