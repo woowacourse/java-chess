@@ -1,11 +1,8 @@
 package chess.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import chess.domain.database.ChessGameDao;
 import chess.domain.database.Database;
-import chess.domain.dto.GameDto;
+import chess.domain.dto.ChessGameDto;
 import chess.domain.game.ChessGame;
 import chess.domain.game.User;
 import chess.domain.piece.Team;
@@ -20,6 +17,7 @@ import chess.view.dto.SquareDto;
 public class ChessController {
 
     private final ChessGameDao chessGameDao = new ChessGameDao(Database.PRODUCT);
+    private final LoadGameController loadGameController = new LoadGameController();
 
     public void run() {
         LoginController loginController = new LoginController();
@@ -56,7 +54,8 @@ public class ChessController {
     private void startGame(User user) {
         OutputView.printPlayNewGameMessage();
         Command newGameCommand = readNewGameCommand();
-        startGameByNewGameCommand(user, newGameCommand);
+        ChessGameDto chessGameDto = loadGameController.getChessGameDtoByCommand(user, newGameCommand);
+        playGame(chessGameDto.getId(), chessGameDto.getChessGame());
     }
 
     private Command readNewGameCommand() {
@@ -75,57 +74,6 @@ public class ChessController {
             return;
         }
         throw new IllegalArgumentException("새로운 게임을 시작하려면 new, 이미 존재하는 게임을 확인하려면 exist를 입력해주세요.");
-    }
-
-    private void startGameByNewGameCommand(User user, Command newGameCommand) {
-        if (newGameCommand == Command.NEW) {
-            playNewGame(user.getId());
-            return;
-        }
-        if (newGameCommand == Command.EXIST) {
-            playExistGame(user);
-        }
-    }
-
-    private void playExistGame(User user) {
-        List<GameDto> gameDtos = chessGameDao.getGamesById(user.getId());
-        if (gameDtos.isEmpty()) {
-            OutputView.printNoGameExistMessage();
-            playNewGame(user.getId());
-            return;
-        }
-        playExistGame(gameDtos);
-    }
-
-    private void playExistGame(List<GameDto> gameDtos) {
-        OutputView.printGames(gameDtos);
-        List<String> gameIds = getGameIds(gameDtos);
-        String gameId = readGameIdUntilIdIsValid(gameIds);
-        int lastTurn = chessGameDao.getLastTurnById(gameId);
-        ChessGame chessGame = chessGameDao.getGameById(gameId, lastTurn);
-        playGame(gameId, chessGame);
-    }
-
-    private List<String> getGameIds(List<GameDto> gameDtos) {
-        return gameDtos.stream()
-                .map(GameDto::getGameId)
-                .collect(Collectors.toList());
-    }
-
-    private String readGameIdUntilIdIsValid(List<String> gameIds) {
-        String gameId;
-        do {
-            OutputView.printSelectGameMessage();
-            gameId = InputView.readNext();
-        } while (!gameIds.contains(gameId));
-        return gameId;
-    }
-
-    private void playNewGame(String userId) {
-        ChessGame chessGame = new ChessGame();
-        chessGameDao.createGame(userId);
-        String lastGameId = chessGameDao.getLastGameId(userId);
-        playGame(lastGameId, chessGame);
     }
 
     private void playGame(String gameId, ChessGame chessGame) {
