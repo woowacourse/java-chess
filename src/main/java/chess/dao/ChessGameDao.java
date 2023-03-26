@@ -74,5 +74,20 @@ public class ChessGameDao {
         }
     }
 
+    public String findGameStatusByGameId(final int gameId) {
+        String query = "SELECT status FROM game WHERE game_Id = ?";
+
+        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query)) {
+            preparedStatement.setObject(1, gameId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("status");
+            }
+            throw new IllegalArgumentException("게임이 존재하지 않습니다.");
+        } catch (final SQLException e) {
+            throw new IllegalArgumentException("게임이 존재하지 않습니다.");
+        }
+    }
+
 
 }
