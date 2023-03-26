@@ -29,7 +29,7 @@ public class ChessController {
     private ChessGameCommand readChessStartCommand() {
         while (true) {
             try {
-                return ChessGameCommand.from(inputView.readChessExecuteCommand());
+                return ChessGameCommand.generateExecuteCommand(inputView.readChessExecuteCommand());
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
@@ -41,15 +41,15 @@ public class ChessController {
             try {
                 repeatMove();
                 return;
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
+            } catch (IllegalArgumentException exception) {
+                outputView.printErrorMessage(exception.getMessage());
             }
         }
     }
 
     private void repeatMove() {
         String gameCommandInput = inputView.readChessGameCommand();
-        while (ChessGameCommand.from(gameCommandInput) != ChessGameCommand.END) {
+        while (ChessGameCommand.generateMoveCommand(gameCommandInput) != ChessGameCommand.END) {
             MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
             chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
             outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
