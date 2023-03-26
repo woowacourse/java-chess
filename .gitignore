@@ -32,3 +32,7 @@ out/
 .vscode/
 
 ./.gitmessage
+
+## mysql
+/db/mysql/config
+/db/mysql/data
