@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SuppressWarnings({"NonAsciiCharacters","SpellCheckingInspection"})
 class BishopTest {
@@ -23,9 +22,8 @@ class BishopTest {
         Position end = Position.of(endColumn, endRank);
         Color colorOfDestination = Color.NONE;
 
-        assertThatThrownBy(() -> bishop.checkMovable(start, end, colorOfDestination))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Bishop이 이동할 수 있는 방향이 아닙니다");
+        assertThat(bishop.isMovable(start, end, colorOfDestination))
+                .isFalse();
 
     }
 
@@ -35,9 +33,8 @@ class BishopTest {
         Position end = Position.of(Column.C, Rank.FIVE);
         Color colorOfDestination = Color.BLACK;
 
-        assertThatThrownBy(() -> bishop.checkMovable(start, end, colorOfDestination))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Bishop은 도착점에 아군이 있으면 이동할 수 없습니다");
+        assertThat(bishop.isMovable(start, end, colorOfDestination))
+                .isFalse();
 
     }
 
@@ -47,9 +44,9 @@ class BishopTest {
         Position end = Position.of(Column.C, Rank.FIVE);
         Color colorOfDestination = Color.NONE;
 
-        assertDoesNotThrow(()->bishop.checkMovable(start, end, colorOfDestination));
+        assertThat(bishop.isMovable(start, end, colorOfDestination))
+                .isTrue();
 
     }
-
 
 }
