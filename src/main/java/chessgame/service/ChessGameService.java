@@ -27,6 +27,14 @@ public class ChessGameService {
                 piecesDao.addPiece(leastGameRoom.getRoomId(), coordinate, piece));
     }
 
+    public List<GameRoomDto> findAllGameRoom() {
+        return gameRoomDao.findAllGameRoom();
+    }
+
+    public GameRoomDto findGameRoomById(long roomId) {
+        return gameRoomDao.findGameRoomById(roomId);
+    }
+
     public GameRoomDto findLeastPieces() {
         return gameRoomDao.findLeastGameRoom();
     }

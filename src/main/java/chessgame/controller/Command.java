@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum Command {
 
-    START("start", 1),
+    START("start", 2),
     END("end", 1),
     MOVE("move", 3),
     STATUS("status", 1);

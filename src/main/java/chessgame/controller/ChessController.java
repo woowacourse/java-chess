@@ -41,10 +41,10 @@ public class ChessController {
 
     private Command readCommend() {
         try {
-            outputView.printGameStartMessage();
+            printGameStartMessage();
             List<String> commands = inputView.readCommand();
             Command command = Command.of(commands);
-            processStartGame(command);
+            processStartGame(command, commands);
             return command;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
@@ -52,14 +52,27 @@ public class ChessController {
         }
     }
 
-    private void processStartGame(final Command command) {
+    private void printGameStartMessage() {
+        List<GameRoomDto> gameRoomDtos = chessGameService.findAllGameRoom();
+        outputView.printGameStartMessage(gameRoomDtos);
+    }
+
+    private void processStartGame(final Command command, final List<String> commands) {
         if (command.isStart()) {
-            ChessGame chessGame = makeNewGameRoom();
+            ChessGame chessGame = makeGameRoom(commands);
             playGame(chessGame);
         }
         if (command.isMove() || command.isStatus()) {
             throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");
         }
+    }
+
+    private ChessGame makeGameRoom(List<String> commands) {
+        String roomId = commands.get(1);
+        if (roomId.equals("new")) {
+            return makeNewGameRoom();
+        }
+        return makeAlreadyExistGameRoom(roomId);
     }
 
     private ChessGame makeNewGameRoom() {
@@ -69,6 +82,12 @@ public class ChessController {
         long roomId = gameRoomDto.getRoomId();
         Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(roomId);
         return new ChessGame(board, roomId);
+    }
+
+    private ChessGame makeAlreadyExistGameRoom(String roomId) {
+        GameRoomDto gameRoomDto = chessGameService.findGameRoomById(Long.parseLong(roomId));
+        Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(gameRoomDto.getRoomId());
+        return new ChessGame(board, gameRoomDto.getRoomId());
     }
 
     private void playGame(final ChessGame chessGame) {
