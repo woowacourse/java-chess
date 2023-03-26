@@ -23,7 +23,7 @@ public class RoomSession {
     public static String getName() {
         final Room room = session.get();
         if (room == null) {
-            return String.valueOf(AnonymousKeyGenerator.getKey());
+            return "none";
         }
         return room.getName();
     }
