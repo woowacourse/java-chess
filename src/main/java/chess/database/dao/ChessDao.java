@@ -5,7 +5,10 @@ import chess.domain.pieces.Piece;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessDao {
 
@@ -29,7 +32,7 @@ public class ChessDao {
     public void addNotation(final Position source, final Position target, final Piece piece) {
         final String query = "INSERT INTO notation(SOURCE, TARGET, TURN) VALUES(?, ?, ?)";
         try (final Connection connection = getConnection();
-          final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, source.makeToString());
             preparedStatement.setString(2, target.makeToString());
             preparedStatement.setString(3, piece.getTeam().getTeam());
@@ -37,5 +40,27 @@ public class ChessDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Notation> readNotation() {
+        final String query = "SELECT * FROM notation";
+        try (final Connection connection = getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet result = preparedStatement.executeQuery();
+            return getNotations(result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static List<Notation> getNotations(final ResultSet result) throws SQLException {
+        List<Notation> notations = new ArrayList<>();
+        while (result.next()) {
+            notations.add(new Notation(
+                result.getString("source"),
+                result.getString("target"),
+                result.getString("turn")));
+        }
+        return notations;
     }
 }

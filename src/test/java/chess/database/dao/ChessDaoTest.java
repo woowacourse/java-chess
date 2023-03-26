@@ -6,6 +6,7 @@ import chess.domain.board.Position;
 import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Team;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,5 +34,20 @@ class ChessDaoTest {
 
         // when + then
         chessDao.addNotation(source, target, pawn);
+    }
+
+    @Test
+    @DisplayName("저장된 모든 기보를 불러온다.")
+    void read_notation() {
+        // given
+        chessDao.addNotation(Position.from("a2"), Position.from("a4"), new Pawn(Team.WHITE));
+        chessDao.addNotation(Position.from("a7"), Position.from("a5"), new Pawn(Team.BLACK));
+        chessDao.addNotation(Position.from("b2"), Position.from("b4"), new Pawn(Team.WHITE));
+
+        // when
+        List<Notation> result = chessDao.readNotation();
+
+        // then
+        assertThat(result.size()).isEqualTo(3);
     }
 }
