@@ -131,4 +131,10 @@ public class Board {
                 .filter(piece -> piece.getType().equals(PieceType.PAWN))
                 .collect(Collectors.toList());
     }
+
+    public boolean hasKing(Team team) {
+        return pieces.values().stream()
+                .filter(piece -> piece.hasTeam(team))
+                .anyMatch(piece -> piece.getType().equals(PieceType.KING));
+    }
 }

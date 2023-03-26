@@ -154,4 +154,18 @@ public class BoardTest extends AbstractTestFixture {
 
         assertThat(board.score(Team.WHITE)).isEqualTo(5);
     }
+
+    @DisplayName("어떤 팀의 왕이 존재하는지 알 수 있다")
+    @Test
+    void hasKing() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.ONE), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.TWO), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.FOUR), new Pawn(Team.WHITE)),
+                Map.entry(new Position(File.D, Rank.FIVE), new Knight(Team.WHITE))
+        ));
+
+        assertThat(board.hasKing(Team.WHITE)).isEqualTo(false);
+    }
 }
