@@ -1,12 +1,21 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
 
+import chess.domain.piece.type.Pawn;
 import chess.domain.state.ChessState;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -71,5 +80,35 @@ public class ChessBoard {
         return pieces.stream()
                 .map(Piece::clone)
                 .collect(Collectors.toList());
+    }
+
+    public Map<Color, Double> calculateScore() {
+        Map<Color, Double> scoreByColor = new HashMap<>();
+        Map<Color, List<Piece>> piecesByColor = pieces.stream()
+                .collect(groupingBy(Piece::color, toList()));
+        scoreByColor.put(Color.WHITE, calculateTeamScore(piecesByColor.get(Color.WHITE)));
+        scoreByColor.put(Color.BLACK, calculateTeamScore(piecesByColor.get(Color.BLACK)));
+        return scoreByColor;
+    }
+
+    private double calculateTeamScore(final List<Piece> pieces) {
+        return calculateScoreExcludingPawn(pieces) + calculatePawnScore(pieces);
+    }
+
+    private double calculateScoreExcludingPawn(final List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> !piece.isPawn())
+                .mapToDouble(Piece::score)
+                .sum();
+    }
+
+    private double calculatePawnScore(final List<Piece> pieces) {
+        Map<File, Long> pawnCounts = pieces.stream()
+                .filter(Piece::isPawn)
+                .collect(groupingBy(Piece::file, counting()));
+        return pawnCounts.values()
+                .stream()
+                .mapToDouble(Pawn::calculateScoreByCount)
+                .sum();
     }
 }

@@ -200,4 +200,20 @@ class ChessBoardTest {
         // then
         assertThat(chessBoard.pieces().size()).isEqualTo(31);
     }
+
+    @Test
+    void 팀별로_점수를_반환할_수_있다() {
+        // given
+        final ChessBoard chessBoard = ChessBoardFactory.create();
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('e', 2), PiecePosition.of('e', 4));
+        chessBoard.movePiece(new Run(new Turn(BLACK)), PiecePosition.of('f', 7), PiecePosition.of('f', 5));
+        chessBoard.movePiece(new Run(new Turn(WHITE)), PiecePosition.of('e', 4), PiecePosition.of('f', 5));
+
+        // when
+        final Map<Color, Double> scoreByColor = chessBoard.calculateScore();
+
+        // then
+        assertThat(scoreByColor.get(WHITE)).isEqualTo(37);
+        assertThat(scoreByColor.get(BLACK)).isEqualTo(37);
+    }
 }
