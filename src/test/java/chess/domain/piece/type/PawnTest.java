@@ -210,4 +210,11 @@ class PawnTest {
         // when & then
         assertThat(pawn.score()).isEqualTo(1);
     }
+
+    @Test
+    void 같은_File인_폰의_개수에_따라_다른_점수를_반환한다() {
+        assertThat(Pawn.calculateScoreByCount(3)).isEqualTo(1.5);
+        assertThat(Pawn.calculateScoreByCount(2)).isEqualTo(1);
+        assertThat(Pawn.calculateScoreByCount(1)).isEqualTo(1);
+    }
 }

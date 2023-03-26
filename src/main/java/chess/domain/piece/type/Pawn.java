@@ -11,6 +11,9 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final double SAME_FILE_SCORE = 0.5;
+    private static final int DEFAULT_SCORE = 1;
+
     private boolean isMoved;
 
     public Pawn(final Color color, final PiecePosition piecePosition) {
@@ -61,6 +64,13 @@ public class Pawn extends Piece {
         return new WayPoints(path.destination());
     }
 
+    public static double calculateScoreByCount(long pawnCount) {
+        if (pawnCount > 1) {
+            return pawnCount * SAME_FILE_SCORE;
+        }
+        return DEFAULT_SCORE;
+    }
+
     @Override
     public void move(final PiecePosition piecePosition) {
         if (!new Path(this.piecePosition, piecePosition).isStraight()) {
@@ -91,6 +101,6 @@ public class Pawn extends Piece {
 
     @Override
     public double score() {
-        return 1;
+        return DEFAULT_SCORE;
     }
 }
