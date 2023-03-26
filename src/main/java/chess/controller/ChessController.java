@@ -1,13 +1,17 @@
 package chess.controller;
 
 import chess.controller.converter.BoardConverter;
+import chess.controller.util.InputExceptionHandler;
 import chess.domain.ChessGame;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
+import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
+    private static final InputExceptionHandler inputExceptionHandler = new InputExceptionHandler(
+            OutputView::printInputErrorMessage);
     private final ChessGame chessGame;
 
     public ChessController() {
@@ -20,8 +24,8 @@ public class ChessController {
 
     public AppStatus start(CommandRequest commandRequest) {
         OutputView.printAvailableBoardIds(chessGame.availableBoards());
-        // TODO 게임방 아이디를 입력받는다. 없는 아이디일 경우 새로 생성된다.
-        chessGame.start(2);
+        int boardId = inputExceptionHandler.retryRequestIfInputIllegal(InputView::requestBoardId);
+        chessGame.start(boardId);
         OutputView.printBoard(BoardConverter.convertToBoard(chessGame.readBoard()));
         return AppStatus.RUNNING;
     }

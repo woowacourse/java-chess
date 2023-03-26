@@ -18,6 +18,8 @@ public class InputView {
     private static final int POSITION_FILE_INDEX = 0;
     private static final int POSITION_RANK_INDEX = 1;
     private static final String WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE = "이동 요청 정보가 잘못 되었습니다.";
+    private static final String BOARD_ID_NOT_INTEGER_ERROR_MESSAGE = "방 번호는 정수여야 합니다.";
+    private static final String REQUEST_BOARD_ID_MESSAGE = "> 입장할 방 번호를 선택하세요. 새로운 번호 입력 시 새 게임 방이 개설됩니다.";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -62,6 +64,16 @@ public class InputView {
         position.add(File.findByUserIndex(String.valueOf(word.charAt(POSITION_FILE_INDEX))));
         position.add(Rank.findByUserIndex(String.valueOf(word.charAt(POSITION_RANK_INDEX))));
         return position;
+    }
+
+    public static int requestBoardId() {
+        System.out.println(REQUEST_BOARD_ID_MESSAGE);
+        String line = scanner.nextLine();
+        try {
+            return Integer.parseInt(line);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(BOARD_ID_NOT_INTEGER_ERROR_MESSAGE);
+        }
     }
 
 }

@@ -22,4 +22,13 @@ public class InputExceptionHandler {
         }
     }
 
+    public <T> T retryRequestIfInputIllegal(Supplier<T> inputSupplier) {
+        try {
+            return inputSupplier.get();
+        } catch (final IllegalArgumentException exception) {
+            exceptionConsumer.accept(exception);
+            return retryRequestIfInputIllegal(inputSupplier);
+        }
+    }
+
 }
