@@ -2,7 +2,6 @@ package chess.repository;
 
 import chess.db.JdbcTemplate;
 import chess.domain.user.User;
-import chess.dto.NameDto;
 
 public class UserJdbcDao implements UserDao {
     private final JdbcTemplate jdbcTemplate;
@@ -12,20 +11,20 @@ public class UserJdbcDao implements UserDao {
     }
 
     @Override
-    public void save(final NameDto nameDto) {
-        jdbcTemplate.executeUpdate("INSERT INTO user (name) VALUES (?)", nameDto.getValue());
+    public void save(final String name) {
+        jdbcTemplate.executeUpdate("INSERT INTO user (name) VALUES (?)", name);
     }
 
     @Override
-    public User findByName(final NameDto nameDto) {
+    public User findByName(final String name) {
         return jdbcTemplate.query("SELECT * FROM user WHERE name = ?", resultSet -> {
             if (resultSet.next()) {
                 final int id = resultSet.getInt("id");
-                final String name = resultSet.getString("name");
-                return new User(id, name);
+                final String findName = resultSet.getString("name");
+                return new User(id, findName);
             }
             return null;
-        }, nameDto.getValue());
+        }, name);
     }
 
     public void deleteAll() {

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.db.JdbcTemplate;
 import chess.db.TestConnectionPool;
 import chess.domain.user.User;
-import chess.dto.NameDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,24 +45,24 @@ public class UserJdbcDaoTest {
     @Test
     void 사용자의_이름을_받아_사용자를_저장한다() {
         // given
-        final NameDto nameDto = new NameDto("herb");
+        final String name = "herb";
 
         // when
-        userDao.save(nameDto);
+        userDao.save(name);
 
         // then
-        final User result = userDao.findByName(nameDto);
+        final User result = userDao.findByName(name);
         assertThat(result.getName()).isEqualTo("herb");
     }
 
     @Test
     void 사용자의_이름을_받아_사용자를_조회한다() {
         // given
-        final NameDto nameDto = new NameDto("herb");
-        userDao.save(nameDto);
+        final String name = "herb";
+        userDao.save(name);
 
         // when
-        final User result = userDao.findByName(nameDto);
+        final User result = userDao.findByName(name);
 
         // then
 

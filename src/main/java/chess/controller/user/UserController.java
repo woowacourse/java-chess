@@ -5,7 +5,6 @@ import chess.controller.Controller;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.domain.user.User;
-import chess.dto.NameDto;
 import chess.service.UserService;
 import chess.view.input.UserInputView;
 import chess.view.output.UserOutputView;
@@ -61,17 +60,17 @@ public class UserController implements Controller {
     }
 
     private void register(final List<String> commands) {
-        final NameDto nameDto = new NameDto(commands.get(UserCommand.NAME_INDEX));
-        userService.save(nameDto);
-        outputView.printRegisterSuccess(nameDto.getValue());
+        final String name = commands.get(UserCommand.NAME_INDEX);
+        userService.save(name);
+        outputView.printRegisterSuccess(name);
     }
 
     private void login(final List<String> commands) {
         if (UserSession.get() != null) {
             throw new IllegalArgumentException("이미 로그인 된 상태입니다.");
         }
-        final NameDto nameDto = new NameDto(commands.get(UserCommand.NAME_INDEX));
-        final User user = userService.findByName(nameDto);
+        final String name = commands.get(UserCommand.NAME_INDEX);
+        final User user = userService.findByName(name);
         UserSession.add(user);
         outputView.printLoginSuccess(user.getName());
     }

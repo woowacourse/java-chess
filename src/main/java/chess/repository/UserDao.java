@@ -1,13 +1,12 @@
 package chess.repository;
 
 import chess.domain.user.User;
-import chess.dto.NameDto;
 
 public interface UserDao {
 
-    void save(final NameDto nameDto);
+    void save(final String name);
 
-    User findByName(final NameDto nameDto);
+    User findByName(final String name);
 
     void deleteAll();
 }
