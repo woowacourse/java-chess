@@ -7,12 +7,12 @@ CREATE TABLE game
 
 CREATE TABLE board
 (
-    `piece_id` bigint     not null unique auto_increment,
-    `board_name`          varchar(15) not null,
-    `file`                int         not null,
-    `rank`                int         not null,
-    `piece`               varchar(15) not null,
-    `team`                varchar(15) not null,
-    FOREIGN KEY (board_name) REFERENCES `game` (name),
+    piece_id bigint     not null unique auto_increment,
+    board_name          varchar(15) not null,
+    piece_file          varchar(10)         not null,
+    piece_rank          varchar(10)         not null,
+    piece_type          varchar(15) not null,
+    piece_team          varchar(15) not null,
+    FOREIGN KEY (board_name) REFERENCES game (name) on delete cascade ,
     PRIMARY KEY (piece_id)
 );

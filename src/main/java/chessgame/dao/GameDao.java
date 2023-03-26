@@ -22,7 +22,6 @@ public class GameDao {
         try {
             insertGame(gameName, turn, connection);
             insertBoard(boardMap, gameName, connection);
-            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +89,6 @@ public class GameDao {
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.execute();
-            connection.close();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
