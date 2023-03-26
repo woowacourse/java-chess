@@ -2,6 +2,7 @@ package view;
 
 import domain.game.Position;
 import domain.game.Rank;
+import domain.game.Score;
 import domain.game.Side;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -43,5 +44,11 @@ public class OutputView {
 
     public void printServerErrorMessage() {
         System.out.println("서버 내부 오류가 발생했습니다. 개발자에게 문의하세요.");
+    }
+
+    public void printGameResult(String gameStatusText, Score whiteScore, Score blackScore) {
+        System.out.println("게임 상태 : " + gameStatusText);
+        System.out.println("White 점수 : " + whiteScore.getNumber());
+        System.out.println("Black 점수 : " + blackScore.getNumber());
     }
 }

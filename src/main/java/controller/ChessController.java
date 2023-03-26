@@ -3,10 +3,12 @@ package controller;
 import controller.command.Command;
 import controller.command.End;
 import controller.command.Move;
+import controller.mapper.GameStatusMapper;
 import controller.mapper.PieceMapper;
 import domain.game.Game;
 import domain.game.GameStatus;
 import domain.game.Position;
+import domain.game.Score;
 import domain.piece.Piece;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -40,6 +42,7 @@ public class ChessController {
             this.outputView.printSideOfTurn(game.getSideOfTurn());
             command = repeat(() -> moveByUserCommand(game));
         } while (command.isMove());
+        printGameResult(game);
     }
 
     private Command moveByUserCommand(Game game) {
@@ -59,13 +62,6 @@ public class ChessController {
         return !game.checkStatus().equals(GameStatus.IN_PROGRESS);
     }
 
-    private static void moveByPositionsOfMoveCommand(Game game, Command command) {
-        Move moveCommand = (Move) command;
-        Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
-        Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
-        game.move(sourcePosition, targetPosition);
-    }
-
     private void printChessBoardOf(Game game) {
         Map<Position, Piece> chessBoard = game.getChessBoard();
         Map<Position, String> chessBoardOfForPrint = new LinkedHashMap<>();
@@ -75,6 +71,20 @@ public class ChessController {
                     PieceMapper.convertPieceCategoryToText(positionPieceEntry.getValue().getCategory()));
         }
         this.outputView.printChessBoard(chessBoardOfForPrint);
+    }
+
+    private static void moveByPositionsOfMoveCommand(Game game, Command command) {
+        Move moveCommand = (Move) command;
+        Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
+        Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
+        game.move(sourcePosition, targetPosition);
+    }
+
+    private void printGameResult(Game game) {
+        String gameStatusText = GameStatusMapper.convertGameStatusToText(game.checkStatus());
+        Score whiteScore = game.calculateWhiteScore();
+        Score blackScore = game.calculateBlackScore();
+        this.outputView.printGameResult(gameStatusText, whiteScore, blackScore);
     }
 
     private <T> T repeat(Supplier<T> supplier) {
