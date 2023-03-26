@@ -17,11 +17,6 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printLoadGameMessage() {
-        System.out.println("> 게임 새로 시작 : new");
-        System.out.println("> 기존 게임 불러오기 : load");
-    }
-
     public void printGameGuideMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -52,7 +47,7 @@ public class OutputView {
     }
 
     public void printGameSaveMessage() {
-        System.out.println("게임을 저장하고 종료합니다.");
+        System.out.println("게임을 저장합니다.");
     }
 
     public void printKingDeadMessage(Side side) {
@@ -62,5 +57,14 @@ public class OutputView {
     public void printGameRooms(List<Long> rooms) {
         System.out.println("게임 방 목록");
         rooms.forEach((room) -> System.out.println(room + "번 방을 입장하려면 load " + room + "을 입력하세요"));
+    }
+
+    public void printGameCreateMessage() {
+        System.out.println("> 새로운 게임 만들기 : new");
+        System.out.println("> 기존 게임 불러오기 : load (roomId)");
+    }
+
+    public void printNewGameMessage() {
+        System.out.println("새로운 게임을 시작합니다.");
     }
 }

@@ -6,10 +6,6 @@ import java.util.Scanner;
 
 public class InputView {
     private static final String INPUT_COMMAND_DELIMITER = " ";
-    private static final int MOVE_COMMAND_INPUT_CORRECT_SIZE = 3;
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
     private final Scanner SCANNER = new Scanner(System.in);
 
     public List<String> requestUserCommandInGame() {
@@ -37,6 +33,6 @@ public class InputView {
             return userInputs;
         }
 
-        throw new IllegalArgumentException("새로운 게임 시작 : 'new'아니면 기존 게임 불러오기 : 'load'를 입력해주세요.");
+        throw new IllegalArgumentException("new 또는 load (roomId)를 입력해주세요");
     }
 }

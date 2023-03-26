@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ChessController {
@@ -30,70 +30,78 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private final ChessGameService chessGameService;
-    private final Map<GameCommand, BiConsumer<ChessGame, List<String>>> commands;
+    private final Map<GameCommand, TriConsumer<ChessGame, List<String>, Long>> commands;
+    private final Map<GameCommand, Function<List<String>, ChessGameCreateResponseDto>> gameMakeCommands;
 
     public ChessController(InputView inputView, OutputView outputView, ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.chessGameService = chessGameService;
         this.commands = new EnumMap<>(GameCommand.class);
+        this.gameMakeCommands = new EnumMap<>(GameCommand.class);
 
-        commands.put(GameCommand.END, (chessGame, positions) -> endCommandExecute(chessGame));
-        commands.put(GameCommand.STATUS, (chessGame, positions) -> statusCommandExecute(chessGame));
-        commands.put(GameCommand.MOVE, (chessGame, positions) -> moveCommandExecute(chessGame, positions));
+        commands.put(GameCommand.END, (chessGame, positions, roomId) -> endCommandExecute(chessGame));
+        commands.put(GameCommand.STATUS, (chessGame, positions, roomId) -> statusCommandExecute(chessGame));
+        commands.put(GameCommand.MOVE, (chessGame, positions, roomId) -> moveCommandExecute(chessGame, positions));
+        commands.put(GameCommand.SAVE, (chessGame, positions, roomId) -> saveCommandExecute(chessGame, roomId));
+
+        gameMakeCommands.put(GameCommand.LOAD, (roomId) -> loadCommandExecute(roomId));
+        gameMakeCommands.put(GameCommand.NEW, (roomId) -> newCommandExecute());
     }
 
     public void run() {
         this.outputView.printGameGuideMessage();
-        repeatByRunnable(inputView::requestStartCommand);
+        repeatByRunnableUntilStartGame(inputView::requestStartCommand);
 
+        outputView.printGameCreateMessage();
         outputView.printGameRooms(chessGameService.findAllRooms());
-        List<String> chessGameCommand = repeatNewGameOrLoadGameCommand(inputView::requestLoadGameOrNewGame);
-        ChessGameCreateResponseDto chessGameDto = createChessGameByCommand(chessGameCommand);
+        ChessGameCreateResponseDto chessGameDto = repeatCreateGame();
         ChessGame chessGame = chessGameDto.getChessGame();
         this.outputView.printChessBoard(chessGame.getBoard());
+
         while (chessGame.isPlayable()) {
             play(chessGame, chessGameDto.getGameId());
             outputView.printChessBoard(chessGame.getBoard());
         }
     }
 
-    private ChessGameCreateResponseDto createChessGameByCommand(List<String> commands) {
-        GameCommand command = GameCommand.from(commands);
-        if (command == GameCommand.LOAD) {
-            Long roomId = Long.valueOf(commands.get(1));
-            return chessGameService.loadChessGame(roomId);
-        }
-        return chessGameService.createGameRoom(new ChessGame(new Board(new ChessBoardGenerator().generate()), Side.WHITE, GameState.RUN));
-    }
-
-    private void play(ChessGame chessGame, Long roomId) {
-        outputView.printSide(chessGame.getCurrentTurn());
-        List<String> userCommandInput = repeatBySupplier(inputView::requestUserCommandInGame);
-        try {
-            GameCommand command = GameCommand.from(userCommandInput);
-            if (command == GameCommand.SAVE) {
-                chessGameService.updateChessGame(chessGame, roomId);
-                return;
-            }
-            commands.get(command).accept(chessGame, userCommandInput);
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            play(chessGame, roomId);
-        }
-    }
-
-    private boolean isExitCommand(GameCommand command) {
-        return command.equals(GameCommand.END);
-    }
-
-    private Runnable repeatByRunnable(Runnable runnable) {
+    private Runnable repeatByRunnableUntilStartGame(Runnable runnable) {
         try {
             runnable.run();
             return runnable;
         } catch (IllegalArgumentException e) {
             this.outputView.printErrorMessage(e.getMessage());
-            return repeatByRunnable(runnable);
+            return repeatByRunnableUntilStartGame(runnable);
+        }
+    }
+
+    private ChessGameCreateResponseDto createChessGameByCommand(List<String> commands) {
+        GameCommand command = GameCommand.from(commands);
+        if (command == GameCommand.NEW || command == GameCommand.LOAD) {
+            return gameMakeCommands.get(command).apply(commands);
+        }
+        throw new IllegalArgumentException("new 또는 load명령어를 입력해주세요");
+    }
+
+    private ChessGameCreateResponseDto newCommandExecute() {
+        outputView.printNewGameMessage();
+        return chessGameService.createGameRoom(new ChessGame(new Board(new ChessBoardGenerator().generate()), Side.WHITE, GameState.RUN));
+    }
+
+    private ChessGameCreateResponseDto loadCommandExecute(List<String> commands) {
+        Long roomId = Long.valueOf(commands.get(1));
+        return chessGameService.loadChessGame(roomId);
+    }
+
+    private void play(ChessGame chessGame, Long roomId) {
+        try {
+            outputView.printSide(chessGame.getCurrentTurn());
+            List<String> userCommandInput = repeatBySupplier(inputView::requestUserCommandInGame);
+            GameCommand command = GameCommand.from(userCommandInput);
+            commands.get(command).accept(chessGame, userCommandInput, roomId);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            play(chessGame, roomId);
         }
     }
 
@@ -106,19 +114,17 @@ public class ChessController {
         }
     }
 
-    private List<String> repeatNewGameOrLoadGameCommand(Supplier<List<String>> supplier) {
+    private ChessGameCreateResponseDto repeatCreateGame() {
         try {
-            this.outputView.printLoadGameMessage();
-            return supplier.get();
+            List<String> commands = inputView.requestLoadGameOrNewGame();
+            return createChessGameByCommand(commands);
         } catch (IllegalArgumentException e) {
-            this.outputView.printErrorMessage(e.getMessage());
-            return repeatNewGameOrLoadGameCommand(supplier);
+            outputView.printErrorMessage(e.getMessage());
+            return repeatCreateGame();
         }
     }
 
     private void endCommandExecute(ChessGame chessGame) {
-//        chessGameService.updateChessGame(chessGame);
-        outputView.printGameSaveMessage();
         chessGame.end();
     }
 
@@ -141,7 +147,15 @@ public class ChessController {
     }
 
     private Position convertPosition(String positionText) {
+        if (positionText.length() != 2) {
+            throw new IllegalArgumentException("위치 값은 a1형식만 가능합니다.");
+        }
         List<String> positionTexts = Arrays.asList(positionText.split(POSITION_DELIMITER));
         return Position.of(positionTexts.get(FILE_INDEX), positionTexts.get(RANK_INDEX));
+    }
+
+    private void saveCommandExecute(ChessGame chessGame, Long roomId) {
+        chessGameService.updateChessGame(chessGame, roomId);
+        outputView.printGameSaveMessage();
     }
 }
