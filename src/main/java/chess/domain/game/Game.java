@@ -18,6 +18,11 @@ public class Game {
         this.board = BoardFactory.createBoard();
     }
 
+    public Game(Team turn, Board board) {
+        this.turn = turn;
+        this.board = board;
+    }
+
     public void movePiece(Position source, Position target) {
         validateTurn(turn, source);
         board.move(source, target);
@@ -36,5 +41,9 @@ public class Game {
 
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
+    }
+
+    public boolean isFinished() {
+        return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
     }
 }

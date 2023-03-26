@@ -9,10 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.AbstractTestFixture;
+import chess.domain.board.Board;
 import chess.domain.exception.DifferentTeamException;
+import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class GameTest extends AbstractTestFixture {
 
@@ -51,5 +55,16 @@ public class GameTest extends AbstractTestFixture {
         assertThat(pieces.get(createPosition("B,SIX")))
                 .isNotNull()
                 .isInstanceOf(Pawn.class);
+    }
+
+    @DisplayName("한 팀이라도 왕이 없으면 게임을 종료한다")
+    @Test
+    void isFinished() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new King(Team.WHITE))
+        ));
+        var game = new Game(Team.WHITE, board);
+
+        assertThat(game.isFinished()).isTrue();
     }
 }
