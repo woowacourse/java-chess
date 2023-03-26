@@ -1,5 +1,6 @@
 package chess.domain.chessgame.state;
 
+import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.winningstatus.WinningStatus;
@@ -35,6 +36,11 @@ public class End implements GameState {
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public GameState save(RoomName roomName) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override

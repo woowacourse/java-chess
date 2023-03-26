@@ -31,7 +31,7 @@ public final class ChessGame {
     }
 
     public void save(RoomName roomName) {
-
+        gameState = gameState.save(roomName);
     }
 
     public void end() {

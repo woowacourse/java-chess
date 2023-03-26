@@ -1,5 +1,6 @@
 package chess.domain.chessgame.state;
 
+import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessFactory;
 import chess.domain.chessboard.SquareCoordinate;
@@ -53,6 +54,11 @@ public class Ready implements GameState {
     @Override
     public boolean isRunning() {
         return false;
+    }
+
+    @Override
+    public GameState save(RoomName roomName) {
+        throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override
