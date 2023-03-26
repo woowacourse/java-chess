@@ -3,11 +3,12 @@ package chess.controller;
 import chess.dao.PlayerDao;
 import chess.domain.player.Player;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class PlayerController {
 
     public Player handle() {
-        String name = InputView.read().get(0);
+        String name = InputView.readPlayerName();
         Player player = PlayerDao.findByName(name);
 
         if (player == null) {

@@ -8,9 +8,7 @@ import java.sql.SQLException;
 
 public class ChessGameDao {
 
-    private static final String NOT_EXIST_CHESS_GAME_ERROR_MESSAGE = "체스 게임이 존재하지 않습니다";
-
-    public static ChessGame create(final Board board) throws SQLException {
+    public static ChessGame create(final Board board) {
         final var query = "INSERT INTO chess_game(board_id) VALUES (?)";
 
         final int id = JdbcTemplate.insertAndReturnKey(query, board.getId());
@@ -29,7 +27,7 @@ public class ChessGameDao {
                         resultSet.getString(3)
                 );
             }
-            throw new RuntimeException(NOT_EXIST_CHESS_GAME_ERROR_MESSAGE);
+            return null;
         };
 
         return JdbcTemplate.select(query, mapper, chessRoom.getGameId());

@@ -11,7 +11,18 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> read() {
-        return List.of(scanner.nextLine().split(DELIMITER, LIMIT));
+    public static List<String> readCommand() {
+        List<String> command = List.of(scanner.nextLine().split(DELIMITER, LIMIT));
+        System.out.println();
+
+        return command;
+    }
+
+    public static String readPlayerName() {
+        System.out.printf("참여자 이름을 입력해주세요 : ");
+        String name = scanner.nextLine();
+        System.out.println();
+
+        return name;
     }
 }

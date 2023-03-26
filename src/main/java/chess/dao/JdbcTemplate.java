@@ -24,7 +24,7 @@ public class JdbcTemplate {
             final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             for (int i = 0; i < parameters.length; i++) {
-                preparedStatement.setObject(i, parameters[i]);
+                preparedStatement.setObject(i + 1, parameters[i]);
             }
 
             preparedStatement.executeUpdate();

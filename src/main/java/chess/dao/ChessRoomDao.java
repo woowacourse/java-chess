@@ -7,8 +7,6 @@ import chess.domain.room.ChessRoom;
 
 public class ChessRoomDao {
 
-    private static final String NOT_EXIST_CHESS_ROOM_ERROR_MESSAGE = "체스방이 존재하지 않습니다";
-
     public static ChessRoom findByPlayer(final Player player) {
         final var query = "SELECT id, game_id, player_id, state FROM chess_room WHERE player_id = ? AND state != \"END\"";
 
@@ -21,7 +19,7 @@ public class ChessRoomDao {
                         resultSet.getString(4)
                 );
             }
-            throw new RuntimeException(NOT_EXIST_CHESS_ROOM_ERROR_MESSAGE);
+            return null;
         };
 
         return JdbcTemplate.select(query, mapper, player.getId());

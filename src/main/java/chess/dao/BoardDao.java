@@ -15,7 +15,6 @@ import java.util.Map;
 public class BoardDao {
 
     private static final String NOT_EXIST_PIECE_ERROR_MESSAGE = "해당하는 위치에 체스말이 존재하지 않습니다";
-    private static final String NOT_EXIST_BOARD_ERROR_MESSAGE = "체스판이 존재하지 않습니다";
 
     public static Board create() {
         final var query = "INSERT INTO board() VALUES()";
@@ -59,7 +58,7 @@ public class BoardDao {
                 final int id = resultSet.getInt(1);
                 return new Board(id, createMapById(id));
             }
-            throw new RuntimeException(NOT_EXIST_BOARD_ERROR_MESSAGE);
+            return null;
         };
 
         return JdbcTemplate.select(query, mapper, boardId);
