@@ -2,6 +2,7 @@ package chess.controller.command.strategy;
 
 import chess.controller.ChessState;
 import chess.dao.BoardDao;
+import chess.dao.MoveLogDao;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
@@ -40,9 +41,11 @@ public class MoveCommand implements StrategyCommand {
         if (state == START || state == PROGRESS) {
             final Board board = chessGame.getBoard();
             final Piece sourcePiece = board.getPiece(source);
+            final Piece targetPiece = board.getPiece(target);
 
             chessGame.move(source, target);
             BoardDao.updateByMove(board, source, target, sourcePiece);
+            MoveLogDao.insertMove(board, source, target, sourcePiece, targetPiece);
 
             OutputView.printBoard(chessGame.getBoard());
             return existOpponentKing(chessGame);

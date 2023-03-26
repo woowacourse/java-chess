@@ -63,7 +63,7 @@ public class ChessRoomDao {
 
     public static void updateState(final ChessRoom chessRoom, final ChessState state) {
         final var query = "UPDATE chess_room SET state = ? WHERE id = ?";
-        try(final var connection = getConnection()) {
+        try (final var connection = getConnection()) {
             final var preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, state.getValue());
             preparedStatement.setInt(2, chessRoom.getId());

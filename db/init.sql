@@ -1,6 +1,6 @@
 CREATE TABLE board
 (
-    id INT     NOT NULL AUTO_INCREMENT,
+    id BIGINT  NOT NULL AUTO_INCREMENT,
     a1 CHAR(1) NOT NULL DEFAULT ('r'),
     a2 CHAR(1) NOT NULL DEFAULT ('p'),
     a3 CHAR(1) NOT NULL DEFAULT ('.'),
@@ -68,10 +68,22 @@ CREATE TABLE board
     PRIMARY KEY (id)
 );
 
+CREATE TABLE move_log
+(
+    id              BIGINT  NOT NULL AUTO_INCREMENT,
+    board_id        BIGINT  NOT NULL,
+    source_position CHAR(2) NOT NULL,
+    target_position CHAR(2) NOT NULL,
+    source_piece    CHAR(1) NOT NULL,
+    target_piece    CHAR(1) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (board_id) REFERENCES board (id)
+);
+
 CREATE TABLE chess_game
 (
-    id       INT          NOT NULL AUTO_INCREMENT,
-    board_id INT          NOT NULL,
+    id       BIGINT       NOT NULL AUTO_INCREMENT,
+    board_id BIGINT       NOT NULL,
     turn     VARCHAR(255) NOT NULL DEFAULT ('WHITE'),
     PRIMARY KEY (id),
     FOREIGN KEY (board_id) REFERENCES board (id)
@@ -79,16 +91,16 @@ CREATE TABLE chess_game
 
 CREATE TABLE player
 (
-    id   INT          NOT NULL AUTO_INCREMENT,
+    id   BIGINT       NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE chess_room
 (
-    id        INT          NOT NULL AUTO_INCREMENT,
-    game_id   INT          NOT NULL,
-    player_id INT          NOT NULL,
+    id        BIGINT       NOT NULL AUTO_INCREMENT,
+    game_id   BIGINT       NOT NULL,
+    player_id BIGINT       NOT NULL,
     state     VARCHAR(255) NOT NULL DEFAULT "INIT",
     PRIMARY KEY (id),
     FOREIGN KEY (game_id) REFERENCES chess_game (id),

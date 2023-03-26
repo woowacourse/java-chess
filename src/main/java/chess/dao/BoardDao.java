@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.domain.board.Board;
-import chess.domain.game.ChessGame;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
