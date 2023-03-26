@@ -128,4 +128,20 @@ class ChessboardTest {
                 Arguments.arguments(PieceType.QUEEN, 1)
         );
     }
+
+    @DisplayName("특정 File에 존재하는 Pawn의 개수를 확인할 수 있다.")
+    @Test
+    void countSameCampPawnInFileSuccessTest() {
+        Piece whitePawn = PieceType.PAWN.createPiece(Camp.WHITE);
+        Square square = Square.getInstanceOf(File.A, Rank.THREE);
+
+        assertThat(chessboard.countSameCampPawnInFile(Camp.WHITE, File.A))
+                .isEqualTo(1);
+
+        chessboard.putPiece(square, whitePawn);
+
+        assertThat(chessboard.countSameCampPawnInFile(Camp.WHITE, File.A))
+                .isEqualTo(2);
+
+    }
 }
