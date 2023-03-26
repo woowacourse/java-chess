@@ -124,6 +124,7 @@ public class ChessGame {
                 && currentSquare.reachedEndRank();
     }
 
+    // TODO: 2023-03-22 메서드명 변경 ex) isNotKingDead or isKingAlive
     public boolean isKingDead() {
         int whiteKingCountOnBoard = chessboard.getPieceCountOnBoard(PieceType.KING.createPiece(Camp.WHITE));
         int blackKingCountOnBoard = chessboard.getPieceCountOnBoard(PieceType.KING.createPiece(Camp.BLACK));

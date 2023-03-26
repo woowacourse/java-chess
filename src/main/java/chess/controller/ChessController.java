@@ -49,7 +49,9 @@ public class ChessController {
             commands.ifPresent(command -> movePiece(chessGame, command));
             commands.ifPresent(command -> checkPromotion(chessGame, command));
 
-        } while (commands.isPresent());
+        } while (commands.isPresent() && !chessGame.isKingDead());
+
+        outputView.printFinishMessage();
     }
 
     private Optional<List<String>> handleCommand() {
