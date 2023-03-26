@@ -1,7 +1,7 @@
 package view;
 
-import domain.board.Board;
 import domain.piece.Piece;
+import domain.piece.Team;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -80,13 +80,11 @@ public final class OutputView {
         return ROOK_VIEW;
     }
 
-    public static void printStatus(Board board) {
-        final double blackScore = board.getCurrentBlackScore();
-        final double whiteScore = board.getCurrentWhiteScore();
-
+    public static void printStatus(double blackScore, double whiteScore) {
         System.out.println("Black Score: " + blackScore);
         System.out.println("White Score: " + whiteScore);
         printCurrentWinner(blackScore, whiteScore);
+        System.out.println();
     }
 
     private static void printCurrentWinner(final double blackScore, final double whiteScore) {
@@ -100,6 +98,10 @@ public final class OutputView {
         if (blackScore == whiteScore) {
             System.out.println(WINNER_DRAW);
         }
+    }
+
+    public static void printWinner(final Team winner) {
+        System.out.println(winner.name() + "가 승리했습니다!!");
     }
 
     public static void printError(final String errorMessage) {

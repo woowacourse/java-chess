@@ -6,7 +6,7 @@ import domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-final class ChessAlignmentMock {
+public final class ChessAlignmentMock {
     private static class Base implements ChessAlignment {
         @Override
         public Map<Position, Piece> makeInitialPieces() {
@@ -14,7 +14,7 @@ final class ChessAlignmentMock {
         }
     }
 
-    static ChessAlignment testStrategy(Map<Position, Piece> map) {
+    public static ChessAlignment testStrategy(Map<Position, Piece> map) {
         return new Base() {
             @Override
             public Map<Position, Piece> makeInitialPieces() {

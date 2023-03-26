@@ -1,5 +1,3 @@
-package state;
-
 public enum Command {
     START,
     END,

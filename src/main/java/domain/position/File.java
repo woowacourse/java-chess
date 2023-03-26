@@ -31,8 +31,4 @@ public enum File {
     public int getDifference(final File other) {
         return other.value - this.value;
     }
-
-    public char getValue() {
-        return value;
-    }
 }

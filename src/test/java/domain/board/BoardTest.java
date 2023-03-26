@@ -16,6 +16,7 @@ import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
     @DisplayName("Board를 초기화해 생성할 수 있다.")
@@ -53,7 +54,7 @@ class BoardTest {
             @Test
             void kingMove() {
                 //given
-                final King king = new King(Team.BLACK);
+                final King king = new King(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, king)));
 
                 //when
@@ -69,8 +70,8 @@ class BoardTest {
             @Test
             void kingEat() {
                 //given
-                final King king = new King(Team.BLACK);
-                final King feed = new King(Team.WHITE);
+                final King king = new King(Team.WHITE);
+                final King feed = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D4, king,
                         E5, feed)));
 
@@ -87,7 +88,7 @@ class BoardTest {
             @Test
             void kingNotMove() {
                 //given
-                final King king = new King(Team.BLACK);
+                final King king = new King(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, king)));
 
                 //when
@@ -105,7 +106,7 @@ class BoardTest {
             @Test
             void queenMove() {
                 //given
-                final Queen queen = new Queen(Team.BLACK);
+                final Queen queen = new Queen(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, queen)));
 
                 //when
@@ -121,8 +122,8 @@ class BoardTest {
             @Test
             void queenEat() {
                 //given
-                final Queen queen = new Queen(Team.BLACK);
-                final King feed = new King(Team.WHITE);
+                final Queen queen = new Queen(Team.WHITE);
+                final King feed = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D4, queen,
                         H8, feed)));
 
@@ -139,7 +140,7 @@ class BoardTest {
             @Test
             void queenNotMove() {
                 //given
-                final Queen queen = new Queen(Team.BLACK);
+                final Queen queen = new Queen(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, queen)));
 
                 //when
@@ -153,7 +154,7 @@ class BoardTest {
             @Test
             void queenNotMove2() {
                 //given
-                final Queen queen = new Queen(Team.BLACK);
+                final Queen queen = new Queen(Team.WHITE);
                 final King another = new King(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, queen,
                         D6, another)));
@@ -173,7 +174,7 @@ class BoardTest {
             @Test
             void knightMove() {
                 //given
-                final Knight knight = new Knight(Team.BLACK);
+                final Knight knight = new Knight(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, knight)));
 
                 //when
@@ -189,8 +190,8 @@ class BoardTest {
             @Test
             void knightEat() {
                 //given
-                final Knight knight = new Knight(Team.BLACK);
-                final King feed = new King(Team.WHITE);
+                final Knight knight = new Knight(Team.WHITE);
+                final King feed = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D4, knight,
                         B3, feed)));
 
@@ -207,7 +208,7 @@ class BoardTest {
             @Test
             void knightMove2() {
                 //given
-                final Knight knight = new Knight(Team.BLACK);
+                final Knight knight = new Knight(Team.WHITE);
                 final King another1 = new King(Team.WHITE);
                 final King another2 = new King(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, knight,
@@ -227,7 +228,7 @@ class BoardTest {
             @Test
             void knightNotMove() {
                 //given
-                final Knight knight = new Knight(Team.BLACK);
+                final Knight knight = new Knight(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, knight)));
 
                 //when
@@ -245,39 +246,39 @@ class BoardTest {
             @Test
             void pawnTwoStepMove() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
-                final Board board = Board.create(testStrategy(Map.of(D7, pawn)));
+                final Pawn pawn = new Pawn(Team.WHITE);
+                final Board board = Board.create(testStrategy(Map.of(D2, pawn)));
 
                 //when
-                board.move(D7, D5);
+                board.move(D2, D4);
 
                 //then
                 assertAll(
-                        () -> assertThat(board.getPieces().containsKey(D7)).isFalse(),
-                        () -> assertThat(board.getPieces().get(D5)).isEqualTo(pawn));
+                        () -> assertThat(board.getPieces().containsKey(D2)).isFalse(),
+                        () -> assertThat(board.getPieces().get(D4)).isEqualTo(pawn));
             }
 
             @DisplayName("한 칸 움직일 수 있다.")
             @Test
             void pawnOneStepMove() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
-                final Board board = Board.create(testStrategy(Map.of(D7, pawn)));
+                final Pawn pawn = new Pawn(Team.WHITE);
+                final Board board = Board.create(testStrategy(Map.of(D6, pawn)));
 
                 //when
-                board.move(D7, D6);
+                board.move(D6, D7);
 
                 //then
                 assertAll(
-                        () -> assertThat(board.getPieces().containsKey(D7)).isFalse(),
-                        () -> assertThat(board.getPieces().get(D6)).isEqualTo(pawn));
+                        () -> assertThat(board.getPieces().containsKey(D6)).isFalse(),
+                        () -> assertThat(board.getPieces().get(D7)).isEqualTo(pawn));
             }
 
             @DisplayName("자신의 가동 범위 밖으로 움직일 수 없다.")
             @Test
             void pawnNotMove() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
+                final Pawn pawn = new Pawn(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, pawn)));
 
                 //when
@@ -291,8 +292,8 @@ class BoardTest {
             @Test
             void pawnNotMove2() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
-                final King king = new King(Team.WHITE);
+                final Pawn pawn = new Pawn(Team.WHITE);
+                final King king = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D4, pawn,
                         D3, king)));
 
@@ -307,8 +308,8 @@ class BoardTest {
             @Test
             void pawnNotMove3() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
-                final King king = new King(Team.WHITE);
+                final Pawn pawn = new Pawn(Team.WHITE);
+                final King king = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D7, pawn,
                         D6, king)));
 
@@ -323,7 +324,7 @@ class BoardTest {
             @Test
             void pawnNotMove4() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
+                final Pawn pawn = new Pawn(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D7, pawn)));
 
                 //when
@@ -337,8 +338,8 @@ class BoardTest {
             @Test
             void pawnMove1() {
                 //given
-                final Pawn pawn = new Pawn(Team.BLACK);
-                final King king = new King(Team.WHITE);
+                final Pawn pawn = new Pawn(Team.WHITE);
+                final King king = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D7, pawn,
                         E6, king)));
 
@@ -359,7 +360,7 @@ class BoardTest {
             @Test
             void bishopMove() {
                 //given
-                final Bishop bishop = new Bishop(Team.BLACK);
+                final Bishop bishop = new Bishop(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, bishop)));
 
                 //when
@@ -375,7 +376,7 @@ class BoardTest {
             @Test
             void bishopNotMove() {
                 //given
-                final Bishop bishop = new Bishop(Team.BLACK);
+                final Bishop bishop = new Bishop(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, bishop)));
 
                 //when
@@ -389,7 +390,7 @@ class BoardTest {
             @Test
             void bishopNotMove2() {
                 //given
-                final Bishop bishop = new Bishop(Team.BLACK);
+                final Bishop bishop = new Bishop(Team.WHITE);
                 final King another = new King(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, bishop,
                         D6, another)));
@@ -405,8 +406,8 @@ class BoardTest {
             @Test
             void bishopEat() {
                 //given
-                final Bishop bishop = new Bishop(Team.BLACK);
-                final King feed = new King(Team.WHITE);
+                final Bishop bishop = new Bishop(Team.WHITE);
+                final King feed = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D4, bishop,
                         H8, feed)));
 
@@ -427,7 +428,7 @@ class BoardTest {
             @Test
             void rookMove() {
                 //given
-                final Rook rook = new Rook(Team.BLACK);
+                final Rook rook = new Rook(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, rook)));
 
                 //when
@@ -443,7 +444,7 @@ class BoardTest {
             @Test
             void rookNotMove() {
                 //given
-                final Rook rook = new Rook(Team.BLACK);
+                final Rook rook = new Rook(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, rook)));
 
                 //when
@@ -457,7 +458,7 @@ class BoardTest {
             @Test
             void rookNotMove2() {
                 //given
-                final Rook rook = new Rook(Team.BLACK);
+                final Rook rook = new Rook(Team.WHITE);
                 final King another = new King(Team.WHITE);
                 final Board board = Board.create(testStrategy(Map.of(D4, rook,
                         D6, another)));
@@ -473,8 +474,8 @@ class BoardTest {
             @Test
             void rookEat() {
                 //given
-                final Rook rook = new Rook(Team.BLACK);
-                final King feed = new King(Team.WHITE);
+                final Rook rook = new Rook(Team.WHITE);
+                final King feed = new King(Team.BLACK);
                 final Board board = Board.create(testStrategy(Map.of(D4, rook,
                         D8, feed)));
 
@@ -492,8 +493,8 @@ class BoardTest {
         @Test
         void existOnDestination() {
             //given
-            final King king = new King(Team.BLACK);
-            final Bishop team = new Bishop(Team.BLACK);
+            final King king = new King(Team.WHITE);
+            final Bishop team = new Bishop(Team.WHITE);
             final Board board = Board.create(testStrategy(Map.of(D4, king,
                     E5, team)));
 
@@ -588,5 +589,35 @@ class BoardTest {
 
         //then
         assertThat(board.getCurrentBlackScore()).isEqualTo(2);
+    }
+
+    @DisplayName("한 번 이동할 때마다 차례가 바뀐다")
+    @Test
+    void changeTurn() {
+        //given
+        final Board board = Board.create(new InitialChessAlignment());
+
+        //when
+
+
+        //then
+        assertAll(
+                () -> assertDoesNotThrow(() -> board.move(B2, B3)),
+                () -> assertDoesNotThrow(() -> board.move(A7, A5)),
+                () -> assertDoesNotThrow(() -> board.move(B3, B4)));
+    }
+
+    @DisplayName("잘못된 차례로 이동하면 예외가 발생한다")
+    @Test
+    void changeTurn2() {
+        //given
+        final Board board = Board.create(new InitialChessAlignment());
+
+        //when
+
+
+        //then
+        assertThatThrownBy(() -> board.move(A7, A5))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

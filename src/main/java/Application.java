@@ -1,16 +1,12 @@
+import domain.board.InitialChessAlignment;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import state.Command;
-import state.End;
-import state.Ready;
-import state.State;
 import view.InputView;
 import view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 public final class Application {
     private static final int COMMAND_OFFSET = 0;
@@ -27,71 +23,71 @@ public final class Application {
     private static final int MOVE_COMMAND_SIZE = 3;
 
     public static void main(final String[] args) {
-        State gameState = initChessGame();
+        final Command startCommand = readStartCommand();
 
-        while (gameState.isPlaying()) {
-            gameState = retryOnError(Application::play, gameState);
+        if (Command.START.equals(startCommand)) {
+            play();
         }
     }
 
-    private static State initChessGame() {
-        final Command command = Command.from(InputView.readStartOption());
-
-        if (Command.START.equals(command)) {
-            final State next = new Ready().next();
-            OutputView.printBoard(next.getPieces());
-            return next;
-        }
-        if (Command.END.equals(command)) {
-            return new End();
-        }
-
-        throw new IllegalArgumentException(NOT_STARTED);
-    }
-
-    private static State retryOnError(final Function<State, State> process, final State gameState) {
+    private static Command readStartCommand() {
         try {
-            return process.apply(gameState);
+            final Command command = Command.from(InputView.readStartOption());
+            if (Command.START != command && Command.END != command) {
+                throw new IllegalArgumentException(NOT_STARTED);
+            }
+
+            return command;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
+            return readStartCommand();
         }
-
-        return retryOnError(process, gameState);
     }
 
-    private static State play(State gameState) {
-        final List<String> gameOption = InputView.readPlayGameOption();
-        final Command command = Command.from(gameOption.get(COMMAND_OFFSET));
+    private static void play() {
+        final ChessGame chessGame = ChessGame.initGame(new InitialChessAlignment());
+        OutputView.printBoard(chessGame.getBoard());
 
-        return getNextState(gameState, gameOption, command);
+        while (true) {
+            try {
+                processByCommand(chessGame);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printError(e.getMessage());
+            }
+        }
+        OutputView.printWinner(chessGame.getWinner());
     }
 
-    private static State getNextState(final State gameState, final List<String> gameOption, final Command command) {
-        if (Command.MOVE.equals(command)) {
-            return playNextTurn(gameState, gameOption);
-        }
-        if (Command.END.equals(command)) {
-            return new End();
-        }
-        if (Command.STATUS.equals(command)) {
-            OutputView.printStatus(gameState.getBoard());
-            return gameState;
-        }
+    private static void processByCommand(final ChessGame chessGame) {
+        while (!chessGame.isWin()) {
+            final List<String> gameOption = InputView.readPlayGameOption();
+            Command command = Command.from(gameOption.get(COMMAND_OFFSET));
 
-        throw new IllegalArgumentException(INVALID_COMMAND);
+            if (Command.END.equals(command)) {
+                break;
+            }
+            if (Command.START.equals(command)) {
+                throw new IllegalArgumentException(INVALID_COMMAND);
+            }
+            if (Command.STATUS.equals(command)) {
+                OutputView.printStatus(chessGame.getBlackScore(), chessGame.getWhiteScore());
+            }
+            if (Command.MOVE.equals(command)) {
+                move(chessGame, gameOption);
+            }
+        }
     }
 
-    private static State playNextTurn(final State gameState, final List<String> gameOption) {
+    private static void move(final ChessGame chessGame, final List<String> gameOption) {
         if (gameOption.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException(INVALID_MOVE_COMMAND_SIZE);
         }
 
         final Position source = getPositionFrom(gameOption, SOURCE_OFFSET);
         final Position destination = getPositionFrom(gameOption, DESTINATION_OFFSET);
-        gameState.move(source, destination);
-        OutputView.printBoard(gameState.getPieces());
-
-        return gameState.next();
+        chessGame.move(source, destination);
+        OutputView.printBoard(chessGame.getBoard());
     }
 
     private static Position getPositionFrom(final List<String> gameOption, int target) {

@@ -5,6 +5,6 @@ import domain.position.Position;
 
 import java.util.Map;
 
-interface ChessAlignment {
+public interface ChessAlignment {
     Map<Position, Piece> makeInitialPieces();
 }
