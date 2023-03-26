@@ -55,11 +55,6 @@ public class ChessController {
                     }
                 });
 
-        if (recordedBoard.isEmpty()) {
-            boardDao.save(chessGame);
-            return;
-        }
-
         Chessboard chessboard = chessGame.getChessboard();
         for (BoardDto boardDto : recordedBoard) {
             Square source = SquareRenderer.render(boardDto.getSource());
