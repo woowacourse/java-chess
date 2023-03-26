@@ -35,6 +35,7 @@ public class ChessGame {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다");
         }
         this.chessBoard.initialize(boardStrategy.generate());
+        stateOfChessGame = StateOfChessGame.RUNNING;
     }
 
     public void move(List<String> commandLine) {
