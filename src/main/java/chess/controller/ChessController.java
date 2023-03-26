@@ -16,6 +16,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ChessController {
 
@@ -83,6 +84,15 @@ public class ChessController {
         }
     }
 
+    private String inputCommand() {
+        try {
+            return inputView.readCommand();
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e);
+            return inputCommand();
+        }
+    }
+
     private void play(ChessGame chessGame, String command) {
         if (GameCommand.isEnd(command)) {
             return;
@@ -133,14 +143,5 @@ public class ChessController {
             return true;
         }
         return false;
-    }
-
-    private String inputCommand() {
-        try {
-            return inputView.readCommand();
-        } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e);
-            return inputCommand();
-        }
     }
 }
