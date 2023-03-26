@@ -23,12 +23,18 @@
 - [x] 명령어 안내 문구를 출력한다.
 - [x] 사용자 명령어를 입력한다.
   - [x] 명령어는 start, end로 구성된다.
+- [ ] start 명령어가 입력되면 게임을 시작한다.
+  - [ ] DB에 저장된 게임이 있으면 저장된 정보로 체스판을 세팅한다.
+  - [ ] DB에 저장된 게임이 없으면 초기 체스판을 세팅한다.
 - [x] 체스판 현황을 출력한다.
-- [x] 체스판에 King이 모두 살아있는지 확인하고, 죽었다면 main으로 예외를 던진다.
+- [x] 체스판에 King이 모두 살아있는지 확인하고, 죽었다면 예외를 던진다.
 - [x] 체스판에 King이 모두 살아있다면, 사용자의 입력을 받아 체스 게임을 진행시킨다.
-- [x] 게임을 진행시키면서 King이 죽었는지 매번 판단하고, 죽었다면 main을 예외를 던져 종료시킨다.
+- [ ] 게임을 진행시키면서 말을 움직일 때마다 King이 죽었는지 매번 판단한다.
+  - [ ] 죽었다면 db에 저장된 정보를 삭제하고, 예외를 던진다.
+  - [ ] 살아있다면 db에 상태를 업데이트하고, 게임을 진행시킨다.
 - [x] status가 입력되면 각 진영의 점수를 출력하고, 어느 진영이 이겼는지 결과를 볼 수 있다.
 - [x] end가 입력되면 프로그램을 종료한다.
+  - [ ] 종료하기 전에 db에 저장하고 종료한다.
 
 ## model
 
@@ -118,6 +124,31 @@
   - [x] 자신의 말은 소문자로 출력한다.
   - [x] 말이 존재하는 위치는 이니셜로 출력한다.
   - [x] 말이 없는 위치는 `.`으로 출력한다.
+
+## DB
+
+---
+
+- [ ] 저장
+  - [ ] 체스판 상태를 문자열로 변환해 저장
+- [ ] 불러오기
+  - [ ] db에 저장된 문자열을 각 기물로 매핑
+
+```sql
+USE chess;
+
+CREATE TABLE chess_game (
+    board_row8 VARCHAR(255) NOT NULL,
+    board_row7 VARCHAR(255) NOT NULL,
+    board_row6 VARCHAR(255) NOT NULL,
+    board_row5 VARCHAR(255) NOT NULL,
+    board_row4 VARCHAR(255) NOT NULL,
+    board_row3 VARCHAR(255) NOT NULL,
+    board_row2 VARCHAR(255) NOT NULL,
+    board_row1 VARCHAR(255) NOT NULL
+);
+```
+
 
 ## Todo
 - getter에 방어적 복사 적용
