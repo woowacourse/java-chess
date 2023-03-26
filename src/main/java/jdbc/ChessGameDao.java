@@ -35,6 +35,7 @@ public class ChessGameDao implements JdbcChessGameDao {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    private static final String INVALID_DATA_ERROR_MESSAGE = "올바르지 않은 데이터입니다.";
     private static final int CHESS_BOARD_SIZE = 8;
 
     private static final Map<Type, Function<Color, SquareStatus>> squareStatusMapper = Map.of(
@@ -46,13 +47,13 @@ public class ChessGameDao implements JdbcChessGameDao {
             PieceType.KNIGHT, Knight::new,
             PieceType.QUEEN, Queen::new,
             PieceType.ROOK, Rook::new
-    ); // 이건 따로 분리해야 할까요?
+    ); // 이건 클래스를 따로 만들어서 분리해야할까요? ex) SquareStatusMapper
 
     public Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
@@ -62,7 +63,7 @@ public class ChessGameDao implements JdbcChessGameDao {
             ResultSet findAllResult = findAll.executeQuery();
             return getAllId(findAllResult);
         } catch (SQLException exception) {
-            throw new RuntimeException(exception.getMessage());
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
@@ -84,7 +85,7 @@ public class ChessGameDao implements JdbcChessGameDao {
             savePieces(chessGame.getChessBoard(), connection, currentId);
             return currentId;
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
@@ -92,7 +93,7 @@ public class ChessGameDao implements JdbcChessGameDao {
         try {
             return getId(connection);
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
@@ -145,7 +146,7 @@ public class ChessGameDao implements JdbcChessGameDao {
             ChessBoard chessBoard = getChessBoard(id, connection);
             return new ChessGame(turn, chessBoard);
         } catch (SQLException | IllegalStateException exception) {
-            throw new RuntimeException(exception.getMessage());
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
@@ -206,7 +207,7 @@ public class ChessGameDao implements JdbcChessGameDao {
             updateChessGameTurn(id, chessGameAfterProcess, connection);
             updateChessBoard(id, chessGameAfterProcess, chessGameBySelect, connection);
         } catch (SQLException | IllegalStateException exception) {
-            throw new RuntimeException(exception.getMessage());
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
@@ -273,7 +274,7 @@ public class ChessGameDao implements JdbcChessGameDao {
             deleteChessGame.setString(1, id);
             deleteChessGame.executeUpdate();
         } catch (SQLException | IllegalStateException exception) {
-            throw new IllegalStateException(exception.getMessage());
+            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 

@@ -87,7 +87,7 @@ public class ChessGameDaoTest {
         chessGameDao.delete(saveId);
 
         assertThatThrownBy(() -> chessGameDao.select(saveId))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(IllegalStateException.class);
         rollBack(saveId);
     }
 
