@@ -78,6 +78,7 @@ public class ChessController {
         }
         if (type == ResponseType.STATUS) {
             outputView.printResult(response.getResultDto());
+            processNextRequest();
         }
     }
 
