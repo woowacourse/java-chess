@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -55,5 +56,20 @@ class ChessGameTest {
         chessGame.movePiece(H_5, E_8); // 화이트 팀이 킹을 잡는 상황
 
         assertThat(chessGame.isFinished()).isTrue();
+    }
+
+    @Test
+    void 킹이_잡힌_뒤_체스_말을_움직일_수_없다() {
+        chessGame.movePiece(E_2, E_4);
+        chessGame.movePiece(F_7, F_5);
+        chessGame.movePiece(E_4, F_5);
+        chessGame.movePiece(G_7, G_5);
+        chessGame.movePiece(D_1, H_5);
+        chessGame.movePiece(C_7, C_6);
+        chessGame.movePiece(H_5, E_8); // 화이트 팀이 킹을 잡는 상황
+
+        assertThatThrownBy(() -> chessGame.movePiece(C_6, C_5))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 끝나 더 이상 체스 말을 움직일 수 없습니다.");
     }
 }

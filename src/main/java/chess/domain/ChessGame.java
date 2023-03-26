@@ -13,6 +13,7 @@ import java.util.Map;
 public class ChessGame {
 
     private static final int FINISH_KING_COUNT = 1;
+    public static final String INVALID_MOVE_AFTER_FINISH_MESSAGE = "게임이 끝나 더 이상 체스 말을 움직일 수 없습니다.";
 
     private final Board board;
     private Team nowPlayingTeam;
@@ -23,6 +24,9 @@ public class ChessGame {
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
+        if (isFinished()) {
+            throw new IllegalArgumentException(INVALID_MOVE_AFTER_FINISH_MESSAGE);
+        }
         board.movePiece(sourcePosition, targetPosition, nowPlayingTeam);
         this.nowPlayingTeam = nowPlayingTeam.getReverseTeam();
     }
