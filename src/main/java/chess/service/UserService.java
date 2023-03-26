@@ -20,10 +20,10 @@ public final class UserService {
         if (userEntity.isPresent()) {
             return userEntity.get().getId();
         }
-        return insert(name);
+        return save(name);
     }
 
-    private Long insert(final String name) {
+    private Long save(final String name) {
         return userDao.insert(name);
     }
 }
