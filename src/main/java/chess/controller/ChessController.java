@@ -21,8 +21,8 @@ public class ChessController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        outputView.printGameStartInfo();
         final ChessService chessService = new ChessService();
+        outputView.printGameStartInfo(chessService.findAllId());
 
         while (!chessService.isEnd()) {
             playChess(chessService);
