@@ -9,6 +9,7 @@ import chess.domain.position.Position;
 import chess.dto.request.CommandDto;
 import chess.dto.response.ChessBoardDto;
 import chess.dto.response.StatusDto;
+import chess.utils.BoardToString;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;

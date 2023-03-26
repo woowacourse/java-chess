@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.utils;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.ColumnToNumber;
