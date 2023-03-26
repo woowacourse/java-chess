@@ -3,6 +3,7 @@ package chess.domain.board;
 import static chess.domain.PieceScore.PAWN_WITH_SAME_FILE;
 
 import chess.dao.ChessBoardDao;
+import chess.dao.DbChessBoardDao;
 import chess.dao.InMemoryChessBoardDao;
 import chess.domain.Position;
 import chess.domain.Score;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private static final ChessBoardDao chessBoardDao = new InMemoryChessBoardDao();
+    private static final ChessBoardDao chessBoardDao = new DbChessBoardDao();
 
     private final Map<Position, Piece> board;
 
@@ -38,6 +39,10 @@ public class Board {
         chessBoardDao.save(chessGameId, setting);
 
         return new Board(setting);
+    }
+
+    public static Board setting(Map<Position, Piece> board) {
+        return new Board(board);
     }
 
     public boolean isNotTurn(Position source, Team turn) {
