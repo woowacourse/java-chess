@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.dao.ChessGameDao;
 import chess.domain.Team;
+import chess.game.Command;
 import chess.game.RandomTurnStrategy;
 import chess.game.action.Action;
 import chess.game.GameCommand;
@@ -11,19 +12,12 @@ import chess.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionMapper;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class ChessController {
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String STATUS_COMMAND = "status";
-    private static final String SAVE_COMMAND = "save";
-    private static final String LOAD_COMMAND = "load";
-    private static final String LEAVE_COMMAND = "leave";
-    private static final String END_COMMAND = "end";
-    private final Map<String, Action> actionMap = new HashMap<>();
+    private final Map<Command, Action> actionMap = new EnumMap<>(Command.class);
     private final ChessGame chessGame;
     private final ChessGameDao chessGameDao;
 
@@ -34,13 +28,13 @@ public class ChessController {
     }
 
     private void initializeActionMap() {
-        actionMap.put(START_COMMAND, new Action(ignore -> startGame()));
-        actionMap.put(MOVE_COMMAND, new Action(this::movePiece));
-        actionMap.put(STATUS_COMMAND, new Action(ignore -> getGameStatus()));
-        actionMap.put(SAVE_COMMAND, new Action(ignore -> saveGame()));
-        actionMap.put(LOAD_COMMAND, new Action(ignore -> loadGame()));
-        actionMap.put(LEAVE_COMMAND, new Action(ignore -> leaveGame()));
-        actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
+        actionMap.put(Command.START, new Action(ignore -> startGame()));
+        actionMap.put(Command.MOVE, new Action(this::movePiece));
+        actionMap.put(Command.STATUS, new Action(ignore -> getGameStatus()));
+        actionMap.put(Command.SAVE, new Action(ignore -> saveGame()));
+        actionMap.put(Command.LOAD, new Action(ignore -> loadGame()));
+        actionMap.put(Command.LEAVE, new Action(ignore -> leaveGame()));
+        actionMap.put(Command.END, new Action(ignore -> endGame()));
     }
 
     private void startGame() {

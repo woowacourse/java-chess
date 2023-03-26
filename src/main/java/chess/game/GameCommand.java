@@ -9,15 +9,14 @@ public class GameCommand {
     private static final String INVALID_COMMAND_EXCEPTION_MESSAGE = "[ERROR] 해당 커맨드가 존재하지 않습니다.";
     private static final String BLANK_INPUT_EXCEPTION_MESSAGE = "[ERROR] 공백은 입력될 수 없습니다.";
     private static final String NULL_INPUT_EXCEPTION_MESSAGE = "[ERROR] 입력은 null 값이 될 수 없습니다.";
-    private static final List<String> ALLOW_COMMANDS = List.of("start", "end", "move", "status", "save", "load", "leave");
     private static final String DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int MAX_COMMAND_LENGTH = 32;
 
-    private final String command;
+    private final Command command;
     private final List<String> parameters;
 
-    private GameCommand(String command, List<String> parameters) {
+    private GameCommand(Command command, List<String> parameters) {
         this.command = command;
         this.parameters = parameters;
     }
@@ -27,8 +26,15 @@ public class GameCommand {
         validateSize(input);
         List<String> tokens = Arrays.asList(input.split(DELIMITER));
         validateBlank(tokens);
-        validateAllowCommand(tokens.get(COMMAND_INDEX));
-        return new GameCommand(tokens.get(COMMAND_INDEX), tokens.subList(1, tokens.size()));
+        return new GameCommand(getCommand(tokens), tokens.subList(1, tokens.size()));
+    }
+
+    private static Command getCommand(List<String> tokens) {
+        try {
+            return Command.valueOf(tokens.get(COMMAND_INDEX).toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(INVALID_COMMAND_EXCEPTION_MESSAGE, e);
+        }
     }
 
     private static void validateNull(String input) {
@@ -51,13 +57,7 @@ public class GameCommand {
         }
     }
 
-    private static void validateAllowCommand(String command) {
-        if (!ALLOW_COMMANDS.contains(command)) {
-            throw new IllegalArgumentException(INVALID_COMMAND_EXCEPTION_MESSAGE);
-        }
-    }
-
-    public String getCommand() {
+    public Command getCommand() {
         return command;
     }
 

@@ -58,11 +58,11 @@ class GameCommandTest {
         GameCommand gameCommand = GameCommand.of(input);
 
         // when
-        String command = gameCommand.getCommand();
+        Command command = gameCommand.getCommand();
 
         // then
         assertThat(command)
-                .isEqualTo(input);
+                .isEqualTo(Command.valueOf(input.toUpperCase()));
     }
 
     @Test
