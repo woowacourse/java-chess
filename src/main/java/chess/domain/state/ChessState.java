@@ -14,4 +14,6 @@ public interface ChessState {
     boolean isInCorrectTurn(final Color color);
 
     ChessState finish();
+
+    String findWinner();
 }

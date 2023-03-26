@@ -6,4 +6,9 @@ public abstract class Runnable implements ChessState {
     public boolean isRunnable() {
         return true;
     }
+
+    @Override
+    public String findWinner() {
+        throw new IllegalStateException();
+    }
 }
