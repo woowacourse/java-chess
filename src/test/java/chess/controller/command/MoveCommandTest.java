@@ -5,6 +5,7 @@ import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
+import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -36,14 +37,14 @@ class MoveCommandTest {
     @Test
     void MoveCommand의_타입을_확인할_수_있다() {
 
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
 
         assertThat(moveCommand.isSameType(CommandType.MOVE)).isTrue();
     }
 
     @Test
     void moveCommand의_ChessGame판을_확인할_수_있다() {
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
 
         assertThat(moveCommand.getChessGameBoards().get(B_2)).isInstanceOf(Pawn.class);
     }
@@ -51,7 +52,7 @@ class MoveCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"move b2 b3", "move   b2 b3 ", " move b2 b3", "move b2   b3   ", " Move b2 b3  "})
     void move를_입력받으면_MoveCommand_객체가_반환된다(String command) {
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .filter(x -> !x.isEmpty())
@@ -76,7 +77,7 @@ class MoveCommandTest {
         chessGame.movePiece(D_1, H_5);
         chessGame.movePiece(C_7, C_6);
 
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
         Command result = moveCommand.execute(List.of("move", "h5", "e8"));
 
         assertThat(result.isSameType(CommandType.STATUS)).isTrue();
@@ -85,7 +86,7 @@ class MoveCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"move a2", "MOVE t3"})
     void move명령어는_출발지와_도착지에_대한_정보를_입력받지_않으면_예외가_발생한다(String command) {
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
@@ -98,7 +99,7 @@ class MoveCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"move a3 t2", "move t2 y3"})
     void move명령어는_잘못된_열_정보를_입력받으면_예외가_발생한다(String command) {
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
@@ -111,7 +112,7 @@ class MoveCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"move aa a2", "move a9 a7"})
     void move명령어는_잘못된_행_정보를_입력받으면_예외가_발생한다(String command) {
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
@@ -123,7 +124,7 @@ class MoveCommandTest {
 
     @Test
     void move_상태일_때_end를_입력하면_EndCommand_객체가_반환된다() {
-        Command moveCommand = new MoveCommand(chessGame);
+        Command moveCommand = new MoveCommand(chessGame, new OutputView());
         List<String> input = List.of("end");
 
         Command result = moveCommand.execute(input);

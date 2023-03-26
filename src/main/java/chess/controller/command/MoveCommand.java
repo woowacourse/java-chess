@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
+import chess.view.OutputView;
 import chess.view.PositionMapper;
 
 import java.util.List;
@@ -13,8 +14,9 @@ public class MoveCommand extends Command {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
-    protected MoveCommand(ChessGame chessGame) {
-        super(chessGame, CommandType.MOVE);
+    protected MoveCommand(ChessGame chessGame, OutputView outputView) {
+        super(chessGame, CommandType.MOVE, outputView);
+        outputView.printBoard(getChessGameBoards());
     }
 
     @Override
@@ -34,12 +36,13 @@ public class MoveCommand extends Command {
                 PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
 
         if (chessGame.isFinished()) {
-            return new StatusCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
+            outputView.printBoard(getChessGameBoards());
+            return new StatusCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()), outputView);
         }
-        return new MoveCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
+        return new MoveCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()), outputView);
     }
 
     private Command executeEnd() {
-        return new EndCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
+        return new EndCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()), outputView);
     }
 }

@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
+import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -39,21 +40,21 @@ class StatusCommandTest {
 
     @Test
     void StatusCommand의_타입을_확인할_수_있다() {
-        Command statusCommand = new StatusCommand(chessGame);
+        Command statusCommand = new StatusCommand(chessGame, new OutputView());
 
         assertThat(statusCommand.isSameType(CommandType.STATUS)).isTrue();
     }
 
     @Test
     void statusCommand의_ChessGame판을_확인할_수_있다() {
-        Command statusCommand = new StatusCommand(chessGame);
+        Command statusCommand = new StatusCommand(chessGame, new OutputView());
 
         assertThat(statusCommand.getChessGameBoards().get(E_8)).isInstanceOf(Queen.class);
     }
     @ParameterizedTest
     @ValueSource(strings = {"status", "status ", " status", "STATUS", " status  "})
     void status를_입력받으면_StatusCommand_객체가_반환된다(String command) {
-        Command statusCommand = new StatusCommand(chessGame);
+        Command statusCommand = new StatusCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .filter(x -> !x.isEmpty())
@@ -67,7 +68,7 @@ class StatusCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"end", "end ", " end", "END", " end  "})
     void end를_입력받으면_EndCommand_객체가_반환된다(String command) {
-        Command statusCommand = new StatusCommand(chessGame);
+        Command statusCommand = new StatusCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .filter(x -> !x.isEmpty())
@@ -81,7 +82,7 @@ class StatusCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"status1", "st", "sta tus", "move a2 a3"})
     void status나_end를_입력받지_않으면_예외가_발생한다(String command) {
-        Command statusCommand = new StatusCommand(chessGame);
+        Command statusCommand = new StatusCommand(chessGame, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());

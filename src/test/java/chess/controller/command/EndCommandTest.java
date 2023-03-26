@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
+import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -34,14 +35,14 @@ class EndCommandTest {
     @Test
     void EndCommand의_타입을_확인할_수_있다() {
 
-        Command endCommand = new EndCommand(chessGame);
+        Command endCommand = new EndCommand(chessGame, new OutputView());
 
         assertThat(endCommand.isSameType(CommandType.END)).isTrue();
     }
 
     @Test
     void EndCommand의_ChessGame판을_확인할_수_있다() {
-        Command endCommand = new EndCommand(chessGame);
+        Command endCommand = new EndCommand(chessGame, new OutputView());
 
         assertThat(endCommand.getChessGameBoards().get(B_2)).isInstanceOf(Pawn.class);
     }
@@ -49,7 +50,7 @@ class EndCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"start", "end", "move a2 a3", "move", "something"})
     void EndCommand는_execute를_하면_예외가_발생한다(String command) {
-        Command endCommand = new EndCommand(chessGame);
+        Command endCommand = new EndCommand(chessGame, new OutputView());
 
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)

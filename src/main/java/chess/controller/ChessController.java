@@ -9,8 +9,6 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
 
     private final OutputView outputView;
     private final InputView inputView;
@@ -26,7 +24,6 @@ public class ChessController {
         outputView.printStart();
         while (!command.isSameType(CommandType.END)) {
             playChessGame();
-            outputView.printBoard(command.getChessGameBoards());
         }
     }
 

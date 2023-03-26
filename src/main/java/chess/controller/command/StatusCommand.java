@@ -17,12 +17,10 @@ import static chess.controller.command.CommandType.INVALID_COMMAND_MESSAGE;
 public class StatusCommand extends Command{
 
     private final Result result;
-    private final OutputView outputView;
 
-    protected StatusCommand(ChessGame chessGame) {
-        super(chessGame, CommandType.STATUS);
+    protected StatusCommand(ChessGame chessGame, OutputView outputView) {
+        super(chessGame, CommandType.STATUS, outputView);
         result = chessGame.calculateResult();
-        outputView = new OutputView();
     }
 
     @Override
@@ -43,6 +41,6 @@ public class StatusCommand extends Command{
     }
 
     private Command executeEnd() {
-        return new EndCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
+        return new EndCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()), outputView);
     }
 }
