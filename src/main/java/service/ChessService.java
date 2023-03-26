@@ -107,13 +107,19 @@ public class ChessService {
 
     private double calculatePawnDisadvantage(Predicate<Piece> predicate) {
         double disadvantage = 0;
-        Map<Integer, List<Square>> collect = chessBoard.getBoard()
-            .keySet()
-            .stream()
-            .filter(square -> predicate.test(chessBoard.getBoard().get(square)))
-            .collect(Collectors.groupingBy(square -> square.toCoordinate().get(FILE_INDEX)));
+        Map<Integer, List<Square>> fileAndPieces = groupByFile(predicate);
 
-        Map<Integer, Long> collect1 = collect.entrySet().stream().collect(
+        Map<Integer, Long> fileAndPawnCounts = countOverPawn(fileAndPieces);
+
+        for (Long count : fileAndPawnCounts.values()) {
+            disadvantage = calculateDisadvantage(disadvantage, count);
+        }
+
+        return disadvantage;
+    }
+
+    private Map<Integer, Long> countOverPawn(Map<Integer, List<Square>> collect) {
+        return collect.entrySet().stream().collect(
             Collectors.toMap(
                 Map.Entry::getKey,
                 entry -> entry.getValue()
@@ -122,13 +128,20 @@ public class ChessService {
                     .count() - 1
             )
         );
+    }
 
-        for (Long value : collect1.values()) {
-            if (value >= 1) {
-                disadvantage -= 0.5 * value;
-            }
+    private Map<Integer, List<Square>> groupByFile(Predicate<Piece> predicate) {
+        return chessBoard.getBoard()
+            .keySet()
+            .stream()
+            .filter(square -> predicate.test(chessBoard.getBoard().get(square)))
+            .collect(Collectors.groupingBy(square -> square.toCoordinate().get(FILE_INDEX)));
+    }
+
+    private double calculateDisadvantage(double disadvantage, Long value) {
+        if (value >= 1) {
+            disadvantage -= 0.5 * value;
         }
-
         return disadvantage;
     }
 
