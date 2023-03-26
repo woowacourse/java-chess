@@ -1,4 +1,4 @@
-package chess.view.dto;
+package chess.view.dto.game;
 
 import static chess.view.InputView.INVALID_INPUT_MESSAGE;
 

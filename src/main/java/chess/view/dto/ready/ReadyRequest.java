@@ -1,4 +1,4 @@
-package chess.view.dto;
+package chess.view.dto.ready;
 
 public class ReadyRequest {
 

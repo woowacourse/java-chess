@@ -6,8 +6,8 @@ import chess.repository.jdbc.JdbcRoomDao;
 import chess.service.RoomService;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.dto.ReadyCommandType;
-import chess.view.dto.ReadyRequest;
+import chess.view.dto.ready.ReadyCommandType;
+import chess.view.dto.ready.ReadyRequest;
 import java.util.List;
 
 public class RoomController extends Controller {

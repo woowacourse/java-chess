@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.view.dto.GameCommandType;
-import chess.view.dto.GameRequest;
-import chess.view.dto.ReadyRequest;
+import chess.view.dto.game.GameCommandType;
+import chess.view.dto.game.GameRequest;
+import chess.view.dto.ready.ReadyRequest;
 import java.util.Scanner;
 
 public class InputView {
