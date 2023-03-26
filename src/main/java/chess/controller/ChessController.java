@@ -18,6 +18,7 @@ public class ChessController {
         this.outputView = outputView;
         this.inputView = inputView;
         controllers = makeControllers();
+
     }
 
     private Map<GameCommand, Controller> makeControllers() {

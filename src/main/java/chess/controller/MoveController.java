@@ -1,5 +1,8 @@
 package chess.controller;
 
+import chess.controller.login.LoginSession;
+import chess.dao.GameDao;
+import chess.dao.PieceDao;
 import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.dto.BoardDto;
@@ -26,18 +29,21 @@ public class MoveController implements Controller {
             validate(request);
             Game game = getGame();
             Game afterGame = game.move(makeStartingPosition(request), makeDestinationPosition(request));
+            if (afterGame.isEnd()) {
+                handleFinishGame();
+                return new Response(ResponseType.FINISH);
+            }
             GameSession.replaceSession(afterGame);
-            return selectResponseBy(afterGame);
+            return new Response(ResponseType.MOVE, makeBoardDto(afterGame));
         } catch (IllegalStateException | IllegalPieceMoveException e) {
             return new Response(ResponseType.FAIL, e.getMessage());
         }
     }
 
-    private Response selectResponseBy(Game afterGame) {
-        if (afterGame.isEnd()) {
-            return new Response(ResponseType.END);
-        }
-        return new Response(ResponseType.MOVE, makeBoardDto(afterGame));
+    private void handleFinishGame() {
+        String gameId = GameDao.getGameIdOf(LoginSession.getCurrentLoginId());
+        GameDao.deleteGameOf(LoginSession.getCurrentLoginId());
+        PieceDao.delete(gameId);
     }
 
     private void validate(Request request) {

@@ -7,5 +7,6 @@ public enum ResponseType {
     END,
     STATUS,
     LOGIN,
+    FINISH,
     FAIL
 }
