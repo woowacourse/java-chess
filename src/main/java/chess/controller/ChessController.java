@@ -3,9 +3,6 @@ package chess.controller;
 import chess.command.Command;
 import chess.command.CommandFactory;
 import chess.command.CommandType;
-import chess.command.MoveCommand;
-import chess.command.QueryCommand;
-import chess.command.UpdateCommand;
 import chess.domain.board.PieceProvider;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Game;
@@ -62,23 +59,23 @@ public class ChessController {
     }
     
     
-    private void executeEndCommand(final UpdateCommand command, final Game chessGame) {
+    private void executeEndCommand(final Command command, final Game chessGame) {
         command.update(chessGame);
     }
     
-    private void executeMoveCommand(final UpdateCommand command, final Game chessGame) {
+    private void executeMoveCommand(final Command command, final Game chessGame) {
         command.update(chessGame);
-        this.history.add((MoveCommand) command);
+        this.history.add(command);
         this.printBoard(chessGame);
     }
     
-    private void executeStartCommand(final UpdateCommand command, final Game chessGame) {
+    private void executeStartCommand(final Command command, final Game chessGame) {
         command.update(chessGame);
         this.history.getCommands().forEach(c -> c.update(chessGame));
         this.printBoard(chessGame);
     }
     
-    private void executeQueryCommand(final QueryCommand command, final Game chessGame) {
+    private void executeQueryCommand(final Command command, final Game chessGame) {
         Status status = command.query(chessGame);
         this.outputView.printStatus(status);
     }

@@ -8,8 +8,8 @@ import chess.domain.position.Position;
 
 public class ChessGame implements Game {
     
-    public static final String GAME_HAS_NOT_STARTED = "[GAME ERROR] 게임이 시작되지 않았습니다.";
-    public static final String GAME_HAS_ALREADY_STARTED = "[GAME ERROR] 게임이 이미 시작되었습니다.";
+    public static final String GAME_HAS_NOT_STARTED = GAME_ERROR_PREFIX + "게임이 시작되지 않았습니다.";
+    public static final String GAME_HAS_ALREADY_STARTED = GAME_ERROR_PREFIX + "게임이 이미 시작되었습니다.";
     
     private final Board board;
     private Color turn;

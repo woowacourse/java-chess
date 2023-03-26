@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 
 public final class ChessBoard implements Board {
     
-    public static final String OTHER_COLOR_IN_SOURCE = "[BOARD ERROR] 상대편 피스입니다.";
-    public static final String NO_PIECE_IN_SOURCE = "[BOARD ERROR] 해당 위치에 피스가 없습니다.";
-    public static final String OTHER_PIECE_IN_ROUTE = "[BOARD ERROR] 경로에 다른 피스가 있습니다.";
-    public static final String SAME_COLOR_IN_DESTINATION = "[BOARD ERROR] 같은 색의 말이 있습니다.";
-    public static final String NO_OTHER_COLOR_IN_DIAGONAL_DESTINATION = "[BOARD ERROR] 대각선으로 이동할 수 없습니다.";
+    public static final String OTHER_COLOR_IN_SOURCE = BOARD_ERROR_PREFIX + "상대편 피스입니다.";
+    public static final String NO_PIECE_IN_SOURCE = BOARD_ERROR_PREFIX + "해당 위치에 피스가 없습니다.";
+    public static final String OTHER_PIECE_IN_ROUTE = BOARD_ERROR_PREFIX + "경로에 다른 피스가 있습니다.";
+    public static final String SAME_COLOR_IN_DESTINATION = BOARD_ERROR_PREFIX + "같은 색의 말이 있습니다.";
+    public static final String NO_OTHER_COLOR_IN_DIAGONAL_DESTINATION = BOARD_ERROR_PREFIX + "대각선으로 이동할 수 없습니다.";
     
     private static final Map<PieceType, RouteCheck> routeCheckMap = new EnumMap<>(PieceType.class);
     

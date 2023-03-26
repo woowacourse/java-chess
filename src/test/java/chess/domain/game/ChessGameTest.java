@@ -81,7 +81,7 @@ class ChessGameTest {
         chessGame.move(Position.from("d1"), Position.from("h5"));
         chessGame.move(Position.from("f7"), Position.from("f5"));
         chessGame.move(Position.from("h5"), Position.from("e8"));
-        Assertions.assertThat(chessGame.isNotRunning()).isTrue();
+        Assertions.assertThat(chessGame.isOver()).isTrue();
         Assertions.assertThat(chessGame.isNotReady()).isTrue();
     }
 }
