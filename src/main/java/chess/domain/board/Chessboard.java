@@ -68,4 +68,10 @@ public class Chessboard {
 
         return source.getDiagonalSquares(target);
     }
+
+    public int getPieceCountOnBoard(Piece targetPiece) {
+        return (int) board.values().stream()
+                .filter(piece -> piece.equals(targetPiece))
+                .count();
+    }
 }
