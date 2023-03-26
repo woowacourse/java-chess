@@ -10,7 +10,6 @@ import domain.chessboard.Square;
 import domain.chessboard.StatusResult;
 import domain.piece.Color;
 
-import java.io.PrintStream;
 import java.util.List;
 
 public class OutputView {

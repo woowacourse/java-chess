@@ -1,6 +1,12 @@
 package domain.chessboard;
 
-import domain.piece.*;
+import domain.piece.Bishop;
+import domain.piece.Color;
+import domain.piece.InitPawn;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Queen;
+import domain.piece.Rook;
 
 import java.util.Arrays;
 import java.util.List;

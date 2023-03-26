@@ -1,7 +1,6 @@
 package domain.piece;
 
 import domain.coordinate.MovePosition;
-import domain.coordinate.Position;
 import domain.coordinate.Route;
 
 import java.util.Collections;

@@ -1,7 +1,6 @@
 package domain.chessboard;
 
 import domain.coordinate.MovePosition;
-import domain.coordinate.Position;
 import domain.coordinate.Route;
 import domain.piece.Color;
 
