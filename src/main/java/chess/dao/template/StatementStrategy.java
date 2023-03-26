@@ -1,9 +1,9 @@
 package chess.dao.template;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public interface StatementStrategy {
-    PreparedStatement makePreparedStatement(Connection c) throws SQLException;
+    Statement makeStatement(Connection c) throws SQLException;
 }

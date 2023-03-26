@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.dao.template.JdbcContext;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
@@ -17,8 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class MySQLChessGameDao implements ChessGameDao {
     private static final String EMPTY_PROGRESS_EXCEPTION_MESSAGE = "[ERROR] 저장된 진행 정보가 없습니다.";
@@ -93,21 +95,13 @@ public class MySQLChessGameDao implements ChessGameDao {
     }
 
     private void saveBoard(Map<Position, Piece> board) {
-        for (Entry<Position, Piece> entry : board.entrySet()) {
-            savePiece(entry.getKey(), entry.getValue());
-        }
-    }
-
-    private void savePiece(Position position, Piece piece) {
-        final String query = "INSERT INTO board VALUES(?,?,?,?)";
-        if (!piece.isRoleOf(Role.EMPTY)) {
-            jdbcContext.insert(query,
-                    position.getX(),
-                    position.getY(),
-                    piece.getRole().name(),
-                    piece.getTeam().name()
-            );
-        }
+        final String query = "INSERT INTO board VALUES(%s, %s, \"%s\", \"%s\")";
+        List<String> queries = board.entrySet().stream()
+                .filter(entry -> !entry.getValue().isRoleOf(Role.EMPTY))
+                .map(entry -> String.format(query, entry.getKey().getX(), entry.getKey().getY(),
+                        entry.getValue().getRole().name(), entry.getValue().getTeam().name()))
+                .collect(toList());
+        jdbcContext.insertBulk(queries);
     }
 
     private void saveGameState(GameState gameState) {
