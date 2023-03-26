@@ -82,4 +82,12 @@ public class Chessboard {
                 .filter(piece -> piece.equals(targetPiece))
                 .count();
     }
+
+    public int countSameCampPawnInFile(Camp camp, File file) {
+        Piece targetPawn = PieceType.PAWN.createPiece(camp);
+
+        return (int) Square.getSquaresAt(file).stream()
+                .filter(square -> board.get(square).equals(targetPawn))
+                .count();
+    }
 }
