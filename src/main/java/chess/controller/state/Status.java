@@ -9,12 +9,12 @@ public class Status implements State {
     private final ChessGame chessGame;
     private final TeamColor teamColor;
 
-    private Status(ChessGame chessGame, TeamColor teamColor) {
+    public Status(ChessGame chessGame, TeamColor teamColor) {
         this.chessGame = chessGame;
         this.teamColor = teamColor;
     }
 
-    public static State of(ChessGame chessGame, TeamColor teamColor) {
+    State run() {
         Score score = new Score();
         System.out.println("status");
         return new Status(chessGame, teamColor);
@@ -23,14 +23,14 @@ public class Status implements State {
     @Override
     public State checkCommand(Command command) {
         if (command.isEnd()) {
-            return new End();
+            return new End().run(chessGame);
         }
         if (command.isMove()) {
             Move move = new Move(chessGame, teamColor);
             return move.checkCommand(command);
         }
         if (command.isStatus()) {
-            return Status.of(chessGame, teamColor);
+            return run();
         }
         throw new UnsupportedOperationException("end, move 명령어만 입력 가능합니다.");
     }

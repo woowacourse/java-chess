@@ -47,4 +47,8 @@ public final class ChessGame {
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getBoard();
     }
+
+    public boolean isEnd() {
+        return chessBoard.checkKingDie();
+    }
 }

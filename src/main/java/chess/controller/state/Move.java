@@ -26,10 +26,10 @@ public final class Move implements State {
             throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
         }
         if (command.isEnd()) {
-            return new End();
+            return new End().run(chessGame);
         }
         if (command.isStatus()) {
-            return Status.of(chessGame, teamColor);
+            return new Status(chessGame, teamColor).run();
         }
         validateCommand(command);
         return move(command);
@@ -40,6 +40,9 @@ public final class Move implements State {
         final Position source = PositionConverter.convert(commands.get(SOURCE_INDEX));
         final Position target = PositionConverter.convert(commands.get(TARGET_INDEX));
         chessGame.setUp(source, target, teamColor);
+        if (chessGame.isEnd()) {
+            return new End().run(chessGame);
+        }
         return new Move(chessGame, teamColor.changeTurn());
     }
 
