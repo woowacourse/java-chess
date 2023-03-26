@@ -49,6 +49,11 @@ class PieceTest {
 		}
 
 		@Override
+		public boolean isEmpty() {
+			return false;
+		}
+
+		@Override
 		public boolean movable(final Direction direction) {
 			return false;
 		}

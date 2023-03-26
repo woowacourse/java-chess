@@ -17,7 +17,10 @@ public abstract class Piece {
 	}
 
 	public abstract String name();
+
 	public abstract Set<Direction> direction();
+
+	public abstract boolean isEmpty();
 
 	public abstract boolean movable(final Direction direction);
 

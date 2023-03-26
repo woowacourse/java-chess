@@ -41,6 +41,16 @@ public class Board {
 		movePiece(source, target, piece);
 	}
 
+	private void validateSourceNotEmpty(final Position source) {
+		if (isEmptyPosition(source)) {
+			throw new IllegalArgumentException("출발점에 체스말이 존재하지 않습니다");
+		}
+	}
+
+	private boolean isEmptyPosition(final Position source) {
+		return board.get(source).isEmpty();
+	}
+
 	private void isTurn(final Position source) {
 		if (board.get(source).color() != thisTurn) {
 			throw new IllegalArgumentException("상대팀의 순서입니다");
@@ -51,16 +61,6 @@ public class Board {
 		if(source.equals(target)){
 			throw new IllegalArgumentException("출발지와 도착지는 같을 수 없습니다");
 		}
-	}
-
-	private void validateSourceNotEmpty(final Position source) {
-		if (isEmptyPosition(source)) {
-			throw new IllegalArgumentException("출발점에 체스말이 존재하지 않습니다");
-		}
-	}
-
-	private boolean isEmptyPosition(final Position source) {
-		return board.get(source).getClass().equals(Empty.class);
 	}
 
 	private void validateTargetNotSameColor(final Position source, final Position target) {

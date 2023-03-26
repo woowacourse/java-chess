@@ -24,6 +24,11 @@ public final class Empty extends Piece {
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return true;
+	}
+
+	@Override
 	public boolean movable(final Direction direction) {
 		return false;
 	}
