@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.Score;
 import chess.domain.piece.TeamColor;
+import chess.domain.result.Score;
 
 public class ScoreDto {
     private final Double whiteScore;

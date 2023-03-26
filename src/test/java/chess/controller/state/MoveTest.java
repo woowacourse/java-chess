@@ -1,7 +1,7 @@
 package chess.controller.state;
 
 import chess.controller.Command;
-import chess.domain.chess.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

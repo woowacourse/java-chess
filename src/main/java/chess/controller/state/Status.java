@@ -2,9 +2,9 @@ package chess.controller.state;
 
 import chess.controller.Command;
 import chess.controller.ScoreDto;
-import chess.domain.Score;
-import chess.domain.chess.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.TeamColor;
+import chess.domain.result.Score;
 import chess.view.OutputView;
 
 public class Status implements State {
