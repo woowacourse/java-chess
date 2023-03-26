@@ -11,21 +11,27 @@ import static chess.controller.game.GameCommand.STATUS;
 
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
+import chess.controller.session.RoomSession;
+import chess.controller.session.UserSession;
 import chess.db.FixedConnectionPool;
 import chess.db.JdbcTemplate;
 import chess.dto.MoveDto;
 import chess.repository.ChessDao;
 import chess.repository.ChessJdbcDao;
 import chess.service.ChessGame;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.input.GameInputView;
+import chess.view.output.GameOutputView;
 import java.util.List;
 import java.util.Map;
 
 public class GameController implements Controller {
+    private final GameInputView inputView;
+    private final GameOutputView outputView;
     private final CommandMapper<GameCommand, GameAction> commandMapper;
 
-    public GameController() {
+    public GameController(final GameInputView inputView, final GameOutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.commandMapper = new CommandMapper<>(mappingCommand());
     }
 
@@ -41,7 +47,7 @@ public class GameController implements Controller {
 
     @Override
     public void run() {
-        OutputView.printGameStart();
+        outputView.printGameStart();
         final ChessDao chessDao = new ChessJdbcDao(new JdbcTemplate(FixedConnectionPool.getInstance()));
         final ChessGame chessGame = new ChessGame(chessDao);
         GameCommand command = EMPTY;
@@ -49,19 +55,19 @@ public class GameController implements Controller {
             command = play(chessGame);
             command = checkGameOver(chessGame, command);
         }
-        OutputView.printGameEnd();
+        outputView.printGameEnd();
     }
 
     private GameCommand play(final ChessGame chessGame) {
         try {
-            final List<String> commands = InputView.readCommand();
+            final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
             final GameCommand command = GameCommand.from(commands);
             command.validateCommandsSize(commands);
             final GameAction gameAction = commandMapper.getValue(command);
             gameAction.execute(chessGame, commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printException(e.getMessage());
+            outputView.printException(e.getMessage());
             return EMPTY;
         }
     }
@@ -71,7 +77,7 @@ public class GameController implements Controller {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다.");
         }
         chessGame.initialize();
-        OutputView.printBoard(chessGame.getResult());
+        outputView.printBoard(chessGame.getResult());
     }
 
     private void move(final ChessGame chessGame, final List<String> commands) {
@@ -80,14 +86,14 @@ public class GameController implements Controller {
         }
         final MoveDto moveDto = new MoveDto(commands.get(MOVE_SOURCE_INDEX), commands.get(MOVE_TARGET_INDEX));
         chessGame.move(moveDto);
-        OutputView.printBoard(chessGame.getResult());
+        outputView.printBoard(chessGame.getResult());
     }
 
     private void status(final ChessGame chessGame) {
         if (chessGame.isNotInitialized()) {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }
-        OutputView.printStatus(chessGame.getResult());
+        outputView.printStatus(chessGame.getResult());
     }
 
     private void clear(final ChessGame chessGame) {
@@ -95,12 +101,12 @@ public class GameController implements Controller {
             throw new IllegalArgumentException("START를 입력해주세요.");
         }
         chessGame.clear();
-        OutputView.printGameClear();
+        outputView.printGameClear();
     }
 
     private GameCommand checkGameOver(final ChessGame chessGame, final GameCommand command) {
         if (chessGame.isGameOver()) {
-            OutputView.printStatus(chessGame.getResult());
+            outputView.printStatus(chessGame.getResult());
             return END;
         }
         return command;

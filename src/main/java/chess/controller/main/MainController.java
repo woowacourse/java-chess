@@ -4,13 +4,21 @@ import chess.controller.CommandMapper;
 import chess.controller.Controller;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.input.MainInputView;
+import chess.view.output.MainOutputView;
 
 public class MainController implements Controller {
+    private final MainInputView inputView;
+    private final MainOutputView outputView;
     private final CommandMapper<MainCommand, Controller> commandMapper;
 
-    public MainController(final CommandMapper<MainCommand, Controller> commandMapper) {
+    public MainController(
+            final MainInputView inputView,
+            final MainOutputView outputView,
+            final CommandMapper<MainCommand, Controller> commandMapper
+    ) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.commandMapper = commandMapper;
     }
 
@@ -24,13 +32,13 @@ public class MainController implements Controller {
 
     private MainCommand readCommand() {
         try {
-            final String command = InputView.readMainCommand(UserSession.getName(), RoomSession.getName());
+            final String command = inputView.readCommand(UserSession.getName(), RoomSession.getName());
             final MainCommand mainCommand = MainCommand.from(command);
             final Controller controller = commandMapper.getValue(mainCommand);
             controller.run();
             return mainCommand;
         } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printException(e.getMessage());
+            outputView.printException(e.getMessage());
             return MainCommand.EMPTY;
         }
     }

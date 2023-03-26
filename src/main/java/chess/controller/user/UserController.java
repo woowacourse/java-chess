@@ -8,16 +8,24 @@ import chess.controller.session.UserSession;
 import chess.dto.NameDto;
 import chess.dto.UserDto;
 import chess.service.UserService;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.input.UserInputView;
+import chess.view.output.UserOutputView;
 import java.util.List;
 import java.util.Map;
 
 public class UserController implements Controller {
+    private final UserInputView inputView;
+    private final UserOutputView outputView;
     private final UserService userService;
     private final CommandMapper<UserCommand, UserAction> commandMapper;
 
-    public UserController(final UserService userService, final CommandMapper<UserCommand, UserAction> commandMapper) {
+    public UserController(
+            final UserInputView inputView,
+            final UserOutputView outputView,
+            final UserService userService
+    ) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.userService = userService;
         this.commandMapper = new CommandMapper<>(mappingCommand());
     }
@@ -41,14 +49,14 @@ public class UserController implements Controller {
 
     private UserCommand play() {
         try {
-            final List<String> commands = InputView.readUserCommand(UserSession.getName(), RoomSession.getName());
+            final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
             final UserCommand command = UserCommand.from(commands);
             command.validateCommandsSize(commands);
             final UserAction action = commandMapper.getValue(command);
             action.execute(commands);
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printException(e.getMessage());
+            outputView.printException(e.getMessage());
             return UserCommand.EMPTY;
         }
     }
