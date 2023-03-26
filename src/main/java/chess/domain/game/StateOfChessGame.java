@@ -1,8 +1,9 @@
 package chess.domain.game;
 
 public enum StateOfChessGame {
-    READY(false, false),
+
     RUNNING(true, false),
+    MOVING(true, false),
     FINISHED(true, true);
 
     private final boolean isStarted;
@@ -20,4 +21,5 @@ public enum StateOfChessGame {
     public boolean isFinished() {
         return isFinished;
     }
+
 }

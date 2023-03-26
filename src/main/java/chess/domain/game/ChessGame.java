@@ -27,15 +27,12 @@ public class ChessGame {
     public ChessGame() {
         this.chessBoard = new ChessBoard();
         this.turn = Color.WHITE;
-        this.stateOfChessGame = StateOfChessGame.READY;
+        this.stateOfChessGame = StateOfChessGame.RUNNING;
     }
 
     public void start(BoardStrategy boardStrategy) {
-        if(stateOfChessGame.isStarted()) {
-            throw new IllegalArgumentException("게임이 이미 시작되었습니다");
-        }
         this.chessBoard.initialize(boardStrategy.generate());
-        stateOfChessGame = StateOfChessGame.RUNNING;
+        stateOfChessGame = StateOfChessGame.MOVING;
     }
 
     public void move(List<String> commandLine) {
@@ -88,8 +85,19 @@ public class ChessGame {
         return this.stateOfChessGame.isFinished();
     }
 
+    public void end() {
+        stateOfChessGame = StateOfChessGame.RUNNING;
+    }
+
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getChessBoard();
     }
 
+    public Color getTurn() {
+        return turn;
+    }
+
+    public StateOfChessGame getStatus() {
+        return stateOfChessGame;
+    }
 }
