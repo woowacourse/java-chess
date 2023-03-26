@@ -1,5 +1,7 @@
 package domain.piece;
 
+import java.util.Arrays;
+
 public enum PieceName {
 
     PAWN("P", "p", 1),
@@ -17,6 +19,27 @@ public enum PieceName {
         this.black = black;
         this.white = white;
         this.score = score;
+    }
+
+    public static PieceName of(String name) {
+        if (Character.isUpperCase(name.charAt(0))) {
+            return getPieceNameOfBlack(name);
+        }
+        return getPieceNameOfWhite(name);
+    }
+
+    private static PieceName getPieceNameOfBlack(String name) {
+        return Arrays.stream(values())
+                .filter(pieceName -> pieceName.getBlack().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 말 이름입니다."));
+    }
+
+    private static PieceName getPieceNameOfWhite(String name) {
+        return Arrays.stream(values())
+                .filter(pieceName -> pieceName.getWhite().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 말 이름입니다."));
     }
 
     public String getBlack() {

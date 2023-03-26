@@ -1,6 +1,9 @@
 package controller.command;
 
-public class SystemEnd implements Command {
+public class SystemEnd extends Command {
+
+    protected SystemEnd() {
+    }
 
     @Override
     public Command execute() {
@@ -8,7 +11,7 @@ public class SystemEnd implements Command {
     }
 
     @Override
-    public Command readNextCommand() {
+    protected Command readNextCommand() {
         return this;
     }
 

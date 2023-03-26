@@ -1,10 +1,10 @@
 package controller.command;
 
-public interface Command {
+public abstract class Command {
 
-    Command execute();
+    public abstract Command execute();
 
-    Command readNextCommand();
+    protected abstract Command readNextCommand();
 
-    boolean isEnd();
+    public abstract boolean isEnd();
 }

@@ -20,6 +20,7 @@ public final class OutputView {
     private static final String BLACK_HIGHER_SCORE_MESSAGE = "검은색 진영의 점수가 더 높습니다.\n";
     private static final String WHIRE_HIGHER_SCORE_MESSAGE = "흰색 진영의 점수가 더 높습니다.\n";
     private static final String SAME_SCORE_MESSAGE = "두 진영의 점수가 동일합니다.\n";
+    private static final String END_GAME_MESSAGE = "게임이 종료되었습니다.";
 
     private OutputView() {
     }
@@ -81,5 +82,9 @@ public final class OutputView {
 
     public static void printExceptionMessage(String message) {
         System.out.println(message);
+    }
+
+    public static void printEndGameMessage() {
+        System.out.println(END_GAME_MESSAGE);
     }
 }

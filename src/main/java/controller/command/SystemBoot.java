@@ -1,15 +1,19 @@
 package controller.command;
 
+import dao.JdbcChessBoardDao;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
 
-public final class SystemBoot implements Command {
+public final class SystemBoot extends Command {
 
     protected enum SystemCommandType {
         START,
         END;
+    }
+
+    public SystemBoot() {
     }
 
     @Override
@@ -18,10 +22,10 @@ public final class SystemBoot implements Command {
     }
 
     @Override
-    public Command readNextCommand() {
+    protected Command readNextCommand() {
         SystemCommandType command = receiveSystemCommand();
         if (command == SystemCommandType.START) {
-            return new Initialize();
+            return new Initialize(new JdbcChessBoardDao());
         }
         return new SystemEnd();
     }

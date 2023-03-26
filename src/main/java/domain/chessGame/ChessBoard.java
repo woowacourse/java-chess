@@ -20,6 +20,11 @@ public final class ChessBoard {
         turnOfColor = Color.WHITE;
     }
 
+    public ChessBoard(Map<Position, Piece> chessBoard, Color turnOfColor) {
+        this.chessBoard = new HashMap<>(chessBoard);
+        this.turnOfColor = turnOfColor;
+    }
+
     public void movePiece(Position startPosition, Position endPosition) {
         validateBeforeMovePiece(startPosition, endPosition);
 
@@ -107,6 +112,10 @@ public final class ChessBoard {
         }
     }
 
+    public boolean isGameEnded() {
+        return chessBoard.values().stream().filter(Piece::isKing).count() != 2;
+    }
+
     public Map<Position, Piece> getChessBoard() {
         return chessBoard;
     }
@@ -139,7 +148,7 @@ public final class ChessBoard {
         }
     }
 
-    public boolean isGameEnded() {
-        return chessBoard.values().stream().filter(Piece::isKing).count() != 2;
+    public Color getTurnOfColor() {
+        return turnOfColor;
     }
 }

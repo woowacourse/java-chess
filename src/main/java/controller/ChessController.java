@@ -13,5 +13,6 @@ public class ChessController {
         while (!command.isEnd()) {
             command = command.execute();
         }
+        command.execute();
     }
 }

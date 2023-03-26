@@ -41,4 +41,8 @@ public abstract class Piece {
     public double getScore() {
         return name.getScore();
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

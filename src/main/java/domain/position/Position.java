@@ -107,4 +107,12 @@ public final class Position {
                 ", column=" + column +
                 '}';
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
 }
