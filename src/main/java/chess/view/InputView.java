@@ -31,7 +31,7 @@ public class InputView {
             return;
         }
 
-        validateStartAndEndCommand(commands);
+        validateNormalCommand(commands);
     }
 
     private void validateMoveCommand(List<String> commands) {
@@ -55,7 +55,7 @@ public class InputView {
         }
     }
 
-    private void validateStartAndEndCommand(List<String> commands) {
+    private void validateNormalCommand(List<String> commands) {
         if (commands.size() != CommandRule.NORMAL_COMMAND_SIZE.value) {
             throw new IllegalArgumentException("존재하지 않는 명령어 입니다.");
         }
@@ -74,7 +74,9 @@ public class InputView {
     private enum Command {
         START("start"),
         END("end"),
-        MOVE("move");
+        MOVE("move"),
+        STATUS("status")
+        ;
 
         private final String command;
 
