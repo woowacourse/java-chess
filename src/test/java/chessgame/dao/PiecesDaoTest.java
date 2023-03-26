@@ -6,6 +6,7 @@ import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.Queen;
 import chessgame.domain.piece.Rook;
 import chessgame.dto.PieceDto;
+import chessgame.repository.PiecesDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

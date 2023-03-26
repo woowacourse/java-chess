@@ -1,4 +1,4 @@
-package chessgame.dao;
+package chessgame.repository;
 
 import chessgame.domain.chessgame.Camp;
 import chessgame.dto.GameRoomDto;

@@ -1,7 +1,5 @@
 package chessgame.service;
 
-import chessgame.dao.GameRoomDao;
-import chessgame.dao.PiecesDao;
 import chessgame.domain.chessgame.Camp;
 import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
@@ -9,6 +7,8 @@ import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
 import chessgame.dto.GameRoomDto;
 import chessgame.dto.PieceDto;
+import chessgame.repository.GameRoomDao;
+import chessgame.repository.PiecesDao;
 
 import java.util.HashMap;
 import java.util.List;

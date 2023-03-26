@@ -1,5 +1,6 @@
 package chessgame.dao;
 
+import chessgame.repository.DatabaseConnection;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;

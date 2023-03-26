@@ -2,6 +2,7 @@ package chessgame.dao;
 
 import chessgame.domain.chessgame.Camp;
 import chessgame.dto.GameRoomDto;
+import chessgame.repository.GameRoomDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
