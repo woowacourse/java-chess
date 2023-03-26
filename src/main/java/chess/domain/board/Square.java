@@ -3,7 +3,6 @@ package chess.domain.board;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Square {
@@ -89,18 +88,5 @@ public class Square {
 
     public boolean reachedEndRank() {
         return rank == Rank.ONE || rank == Rank.EIGHT;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Square square = (Square) o;
-        return Objects.equals(file, square.file) && Objects.equals(rank, square.rank);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
     }
 }
