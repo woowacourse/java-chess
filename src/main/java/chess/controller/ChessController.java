@@ -17,7 +17,6 @@ import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import dao.ChessGameDao;
-import dao.DBChessGameDao;
 import java.util.List;
 import java.util.Map;
 
@@ -25,14 +24,14 @@ public final class ChessController {
     private final Map<ChessGameCommand, ChessGameAction> commandMapper;
     private final ChessGameDao chessGameDao;
 
-    public ChessController() {
+    public ChessController(ChessGameDao chessGameDao) {
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::movePiece,
                 STATUS, this::showStatus,
                 END, this::end
         );
-        this.chessGameDao = new DBChessGameDao();
+        this.chessGameDao = chessGameDao;
     }
 
     public void run() {

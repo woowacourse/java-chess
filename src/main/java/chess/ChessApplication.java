@@ -1,9 +1,10 @@
 package chess;
 
 import chess.controller.ChessController;
+import dao.DBChessGameDao;
 
 public final class ChessApplication {
     public static void main(String[] args) {
-        new ChessController().run();
+        new ChessController(new DBChessGameDao()).run();
     }
 }
