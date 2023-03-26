@@ -25,6 +25,10 @@ public abstract class Piece {
         return teamColor == TeamColor.WHITE;
     }
 
+    public TeamColor teamColor() {
+        return teamColor;
+    }
+
     public boolean isDifferentTeam(Piece piece) {
         return teamColor != piece.teamColor;
     }

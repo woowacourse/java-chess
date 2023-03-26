@@ -67,4 +67,12 @@ public class Square {
                 ", rank=" + rank +
                 '}';
     }
+
+    public ChessColumn getChessColumn() {
+        return chessColumn;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

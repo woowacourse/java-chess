@@ -16,6 +16,11 @@ public class ChessBoard {
         scoreCalculator = new ScoreCalculator();
     }
 
+    public ChessBoard(PieceLocations pieceLocations) {
+        this.pieceLocations = pieceLocations;
+        this.scoreCalculator = new ScoreCalculator();
+    }
+
     public Piece find(Square square) {
         return pieceLocations.find(square);
     }
@@ -92,8 +97,11 @@ public class ChessBoard {
 
     public boolean isExistKing() {
         KingFinder kingFinder = new KingFinder();
-        return kingFinder.isExistKing(pieceLocations.getPieceLocations(), piece -> piece.isBlack())
-                && kingFinder.isExistKing(pieceLocations.getPieceLocations(), piece -> piece.isWhite());
+        return kingFinder.isExistKing(pieceLocations.getPieceLocations(), Piece::isBlack)
+                && kingFinder.isExistKing(pieceLocations.getPieceLocations(), Piece::isWhite);
     }
 
+    public PieceLocations getPieceLocations() {
+        return pieceLocations;
+    }
 }
