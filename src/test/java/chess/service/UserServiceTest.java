@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.dao.MockUserDao;
+import chess.dao.user.MockUserDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,5 @@
-package chess.dao;
+package chess.dao.user;
 
-import chess.dao.user.UserDao;
 import chess.entity.UserEntity;
 
 import java.util.Optional;
