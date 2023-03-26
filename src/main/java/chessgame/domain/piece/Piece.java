@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
-import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.chessgame.Camp;
+import chessgame.domain.coordinate.Coordinate;
 
 public abstract class Piece {
 
@@ -47,5 +47,14 @@ public abstract class Piece {
 
     public double score() {
         return pieceType.score();
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "pieceType=" + pieceType +
+                ", camp=" + camp +
+                ", isFirstMove=" + isFirstMove +
+                '}';
     }
 }

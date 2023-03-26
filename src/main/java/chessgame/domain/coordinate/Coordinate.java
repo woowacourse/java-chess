@@ -70,6 +70,10 @@ public class Coordinate {
         return Math.abs(differenceRow) <= distance && Math.abs(differenceColumn) <= distance;
     }
 
+    public boolean isSameColumn(Coordinate otherCoordinate) {
+        return this.column.equals(otherCoordinate.column);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
