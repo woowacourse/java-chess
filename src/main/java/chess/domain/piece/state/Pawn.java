@@ -9,6 +9,8 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
+    public static final int WHITE_PAWN_DIRECTION = 1;
+    public static final int BLACK_PAWN_DIRECTION = -1;
     private boolean isMoved = false;
     private boolean isEnemyOnDiagonal = false;
 
@@ -47,15 +49,25 @@ public final class Pawn extends Piece {
     }
 
     private boolean checkMoveDiagonal(final int fileDistance, final int rankDistance) {
-        return Math.abs(fileDistance) == 1 && rankDistance == this.team.getPawnDirection();
+        return Math.abs(fileDistance) == 1 && rankDistance == getPawnDirection(this.team);
+    }
+
+    private int getPawnDirection(Team team){
+        if(team == Team.WHITE){
+            return WHITE_PAWN_DIRECTION;
+        }
+        if(team == Team.BLACK){
+            return BLACK_PAWN_DIRECTION;
+        }
+        throw new IllegalArgumentException("잘못된 팀입니다.");
     }
 
     private boolean checkMoveOneStep(final int fileDistance, final int rankDistance) {
-        return fileDistance == 0 && rankDistance == this.team.getPawnDirection();
+        return fileDistance == 0 && rankDistance == getPawnDirection(this.team);
     }
 
     private boolean checkMoveFirst(final int fileDistance, final int rankDistance) {
-        return fileDistance == 0 && rankDistance == 2 * this.team.getPawnDirection() && !isMoved;
+        return fileDistance == 0 && rankDistance == 2 * getPawnDirection(this.team) && !isMoved;
     }
 
     @Override
