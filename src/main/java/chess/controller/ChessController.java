@@ -1,78 +1,129 @@
 package chess.controller;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
 import chess.dto.PositionRequest;
+import chess.dto.SquareResponse;
 import chess.game.ChessGame;
+import chess.game.Turn;
+import chess.service.BoardService;
+import chess.service.ChessGameService;
 import chess.view.*;
 
 import java.util.List;
 import java.util.function.Supplier;
 
+import static java.util.stream.Collectors.toList;
+
 public class ChessController {
 
+    private static final int NEW_GAME_NUMBER = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
-    private final ChessGame chessGame;
+    private final ChessGameService chessGameService;
+    private final BoardService boardService;
 
-    public ChessController(ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public ChessController(ChessGameService chessGameService, BoardService boardService) {
+        this.chessGameService = chessGameService;
+        this.boardService = boardService;
     }
 
-    public void run() {
+    public void start() {
+        List<Integer> allGameIds = chessGameService.findAllGameIds();
+        if (allGameIds.isEmpty()) {
+            startNewGame();
+            return;
+        }
+        OutputView.printGameNumberMessage(chessGameService.findAllGameIds());
+        int gameNumber = repeat(() -> InputView.readGameNumber(allGameIds));
+        if (gameNumber == NEW_GAME_NUMBER) {
+            startNewGame();
+            return;
+        }
+        startExistGame(gameNumber);
+    }
+
+    private void startNewGame() {
+        Board board = new Board(BoardFactory.create());
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
+        chessGameService.save(chessGame, GameStatus.CONTINUING.name());
+        boardService.save(chessGame.getChessBoard(), chessGame.getId());
+        start(chessGame);
+    }
+
+    private void startExistGame(int gameNumber) {
+        ChessGame chessGame = chessGameService.findById(gameNumber);
+        start(chessGame);
+    }
+
+    public void start(ChessGame chessGame) {
         OutputView.printStartMessage();
         ChessEvent chessEvent = repeat(InputView::readGameCommand);
         if (chessEvent == ChessEvent.START) {
-            OutputView.printBoard(chessGame.getBoard());
-            while (gameLoop() == GameStatus.CONTINUE) ;
+            OutputView.printBoard(convertBoardToResponse(chessGame));
+            while (gameLoop(chessGame) == GameStatus.CONTINUING) ;
         }
     }
 
-    private GameStatus gameLoop() {
-        List<String> commands = repeat(InputView::readMoveCommand);
-        return executeByCommands(commands);
+    private static List<SquareResponse> convertBoardToResponse(ChessGame chessGame) {
+        return chessGame.getChessBoard().getBoard()
+                .entrySet()
+                .stream()
+                .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
+                .collect(toList());
     }
 
-    private GameStatus executeByCommands(List<String> commands) {
+    private GameStatus gameLoop(ChessGame chessGame) {
+        List<String> commands = repeat(InputView::readMoveCommand);
+        return executeByCommands(chessGame, commands);
+    }
+
+    private GameStatus executeByCommands(ChessGame chessGame, List<String> commands) {
         ChessAction chessAction = ChessAction.of(commands).orElse(ChessAction.END);
 
         if (chessAction == ChessAction.MOVE) {
-            move(commands);
-            return canContinue();
+            move(chessGame, commands);
+            return canContinue(chessGame);
         }
         if (chessAction == ChessAction.STATUS) {
-            showTeamScores();
-            return GameStatus.CONTINUE;
+            showTeamScores(chessGame);
+            return GameStatus.CONTINUING;
         }
-        return GameStatus.EXIT;
+        chessGameService.update(chessGame, GameStatus.CONTINUING.name());
+        boardService.update(chessGame.getChessBoard(), chessGame.getId());
+        return GameStatus.END;
     }
 
-    private GameStatus canContinue() {
-        if (chessGame.isEndCondition()) {
-            Team winningTeam = chessGame.getWinningTeam();
-            Team losingTeam = chessGame.getLosingTeam();
-            OutputView.printEndMessage(winningTeam, losingTeam);
-            return GameStatus.EXIT;
-        }
-        return GameStatus.CONTINUE;
-    }
-
-    private void showTeamScores() {
-        double whiteTeamScore = chessGame.calculateScore(Team.WHITE);
-        double blackTeamScore = chessGame.calculateScore(Team.BLACK);
-        OutputView.printScore(whiteTeamScore, blackTeamScore);
-    }
-
-    private void move(List<String> command) {
+    private void move(ChessGame chessGame, List<String> command) {
         try {
             PositionRequest source = PositionMapper.map(command.get(SOURCE_INDEX));
             PositionRequest target = PositionMapper.map(command.get(TARGET_INDEX));
             chessGame.move(convertRequestToPosition(source), convertRequestToPosition(target));
-            OutputView.printBoard(chessGame.getBoard());
+            OutputView.printBoard(convertBoardToResponse(chessGame));
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private GameStatus canContinue(ChessGame chessGame) {
+        if (chessGame.isEndCondition()) {
+            chessGameService.update(chessGame, GameStatus.END.name());
+            boardService.update(chessGame.getChessBoard(), chessGame.getId());
+            Team losingTeam = chessGame.getCurrentTurn().getTeam();
+            Team winningTeam = chessGame.getCurrentTurn().next().getTeam();
+            OutputView.printEndMessage(winningTeam, losingTeam);
+            return GameStatus.END;
+        }
+        return GameStatus.CONTINUING;
+    }
+
+    private void showTeamScores(ChessGame chessGame) {
+        double whiteTeamScore = chessGame.calculateScore(Team.WHITE);
+        double blackTeamScore = chessGame.calculateScore(Team.BLACK);
+        OutputView.printScore(whiteTeamScore, blackTeamScore);
     }
 
     private static Position convertRequestToPosition(PositionRequest request) {

@@ -1,12 +1,15 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.game.ChessGame;
+import chess.service.BoardService;
+import chess.service.ChessGameService;
 
 public class Application {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new ChessGame());
-        chessController.run();
+        ChessGameService chessGameService = new ChessGameService();
+        BoardService boardService = new BoardService();
+        ChessController chessController = new ChessController(chessGameService, boardService);
+        chessController.start();
     }
 }
