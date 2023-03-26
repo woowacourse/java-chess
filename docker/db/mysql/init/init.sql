@@ -1,0 +1,5 @@
+CREATE TABLE user (
+	user_id VARCHAR(12) NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	PRIMARY KEY (user_id)
+);
