@@ -33,7 +33,7 @@ class PlayingChessGameTest {
     @Test
     void 시작하면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         //then
@@ -45,7 +45,7 @@ class PlayingChessGameTest {
     @Test
     void 색깔이_바뀌는지_확인한다() {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory()), WHITE);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory().generate()), WHITE);
 
         //when
         final ChessGame changedChessGame = chessGame.move(new Position(A, TWO), new Position(A, FOUR));
@@ -58,7 +58,7 @@ class PlayingChessGameTest {
     @Test
     void 게임이_진행중이다() {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         final boolean actual = chessGame.isPlaying();
@@ -70,7 +70,7 @@ class PlayingChessGameTest {
     @Test
     void 게임이_끝이_아니다() {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         final boolean actual = chessGame.isGameOver();
@@ -82,7 +82,7 @@ class PlayingChessGameTest {
     @Test
     void 게임이_끝난다() {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         final ChessGame endChessGame = chessGame.end();
@@ -96,7 +96,7 @@ class PlayingChessGameTest {
     @MethodSource("providePiecesAndScore")
     void 색깔별_점수를_계산한다(final List<Piece> pieces, final double blackScore, final double whiteScore) {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(pieces)), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(pieces).generate()), Color.BLACK);
 
         //when
         Map<Color, Double> scoreByColor = chessGame.calculateScoreByColor();
@@ -122,7 +122,7 @@ class PlayingChessGameTest {
     @MethodSource("providePiecesAndWinnerColor")
     void 우승_색깔을_찾는다(final List<Piece> pieces, final Color expectedColor) {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(pieces)), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(pieces).generate()), Color.BLACK);
 
         //when
         Color actualColor = chessGame.findScoreWinner();
@@ -142,7 +142,7 @@ class PlayingChessGameTest {
     @MethodSource("provideDrawPieces")
     void 무승부이면_아무것도_아닌_색을_반환한다(final List<Piece> pieces) {
         //given
-        final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(pieces)), Color.BLACK);
+        final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(pieces).generate()), Color.BLACK);
 
         //when
         Color actualColor = chessGame.findScoreWinner();
@@ -163,7 +163,7 @@ class PlayingChessGameTest {
     void 체스말을_꺼낸다() {
         //given
         final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(List.of(
-                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))),
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))).generate()),
                 Color.BLACK);
 
         //when
@@ -181,7 +181,7 @@ class PlayingChessGameTest {
     void 현재_순서_색깔을_꺼낸다() {
         //given
         final ChessGame chessGame = new PlayingChessGame(Board.from(new TestPiecesFactory(List.of(
-                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))),
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))).generate()),
                 Color.BLACK);
 
         //when

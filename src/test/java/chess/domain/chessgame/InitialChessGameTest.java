@@ -29,7 +29,7 @@ class InitialChessGameTest {
     @Test
     void 시작하는지_확인한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         final ChessGame playingChessGame = chessGame.start();
@@ -42,7 +42,7 @@ class InitialChessGameTest {
     @Test
     void 움직이면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         //then
@@ -54,7 +54,7 @@ class InitialChessGameTest {
     @Test
     void 게임이_진행중이_아니다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         final boolean actual = chessGame.isPlaying();
@@ -66,7 +66,7 @@ class InitialChessGameTest {
     @Test
     void 게임이_끝이_아니다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         final boolean actual = chessGame.isGameOver();
@@ -78,7 +78,7 @@ class InitialChessGameTest {
     @Test
     void 게임이_끝난다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         final ChessGame endChessGame = chessGame.end();
@@ -91,7 +91,7 @@ class InitialChessGameTest {
     @Test
     void 색깔별_점수를_계산하면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         //then
@@ -103,7 +103,7 @@ class InitialChessGameTest {
     @Test
     void 우승자를_찾으면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         //then
@@ -116,7 +116,7 @@ class InitialChessGameTest {
     void 체스말을_꺼낸다() {
         //given
         final ChessGame chessGame = new InitialChessGame(Board.from(new TestPiecesFactory(List.of(
-                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))));
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))).generate()));
 
         //when
         final List<Piece> pieces = chessGame.getPieces();
@@ -132,7 +132,7 @@ class InitialChessGameTest {
     @Test
     void 현재_순서_색깔을_꺼낸다() {
         //given
-        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory()));
+        final ChessGame chessGame = new InitialChessGame(Board.from(new StartingPiecesFactory().generate()));
 
         //when
         final Color currentTurnColor = chessGame.getCurrentTurnColor();

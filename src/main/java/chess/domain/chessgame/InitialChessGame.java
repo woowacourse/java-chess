@@ -8,8 +8,12 @@ import java.util.Map;
 
 public class InitialChessGame extends ChessGame {
 
+    InitialChessGame(final Board board, final Color color) {
+        super(board, color);
+    }
+
     InitialChessGame(final Board board) {
-        super(board, Color.WHITE);
+        this(board, Color.WHITE);
     }
 
     @Override

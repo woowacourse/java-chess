@@ -4,7 +4,6 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.piecesfactory.PiecesFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +17,12 @@ public abstract class ChessGame {
         this.currentTurnColor = currentTurnColor;
     }
 
-    public static ChessGame from(final PiecesFactory piecesFactory) {
-        return new InitialChessGame(Board.from(piecesFactory));
+    public static ChessGame from(final List<Piece> pieces) {
+        return new InitialChessGame(Board.from(pieces));
+    }
+
+    public static ChessGame of(final List<Piece> pieces, final Color currentTurnColor) {
+        return new InitialChessGame(Board.from(pieces), currentTurnColor);
     }
 
     public abstract ChessGame start();

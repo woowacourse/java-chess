@@ -28,7 +28,7 @@ class EndChessGameTest {
     @Test
     void 시작하면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         //then
@@ -40,7 +40,7 @@ class EndChessGameTest {
     @Test
     void 움직이면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         //then
@@ -52,7 +52,7 @@ class EndChessGameTest {
     @Test
     void 게임이_진행중이_아니다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         final boolean actual = chessGame.isPlaying();
@@ -64,7 +64,7 @@ class EndChessGameTest {
     @Test
     void 게임이_끝이다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         final boolean actual = chessGame.isGameOver();
@@ -76,7 +76,7 @@ class EndChessGameTest {
     @Test
     void 게임을_끝내면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         //then
@@ -88,7 +88,7 @@ class EndChessGameTest {
     @Test
     void 색깔별_점수를_계산하면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         //then
@@ -100,7 +100,7 @@ class EndChessGameTest {
     @Test
     void 우승자를_찾으면_예외가_발생한다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory().generate()), Color.BLACK);
 
         //when
         //then
@@ -114,7 +114,7 @@ class EndChessGameTest {
     void 체스말을_꺼낸다() {
         //given
         final ChessGame chessGame = new EndChessGame(Board.from(new TestPiecesFactory(List.of(
-                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))),
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))).generate()),
                 Color.BLACK);
 
         //when
@@ -132,7 +132,7 @@ class EndChessGameTest {
     void 현재_순서_색깔을_꺼낸다() {
         //given
         final ChessGame chessGame = new EndChessGame(Board.from(new TestPiecesFactory(List.of(
-                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))),
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE))).generate()),
                 Color.BLACK);
 
         //when

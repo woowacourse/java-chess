@@ -20,7 +20,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printGameStartGuideMessage();
-        ChessGame chessGame = ChessGame.from(new StartingPiecesFactory());
+        ChessGame chessGame = ChessGame.from(new StartingPiecesFactory().generate());
         while (!chessGame.isGameOver()) {
             chessGame = play(chessGame);
         }
