@@ -144,17 +144,17 @@ class ChessGameTest {
 
     @DisplayName("King이 죽었는지 확인할 수 있다.")
     @Test
-    void isKingDeadSuccessTest() {
+    void isKingAliveSuccessTest() {
         Square source = Square.getInstanceOf(File.A, Rank.TWO);
         Square BlackKingSquare = Square.getInstanceOf(File.E, Rank.EIGHT);
 
-        assertThat(chessGame.isKingDead())
-                .isFalse();
+        assertThat(chessGame.isBothKingAlive())
+                .isTrue();
 
         chessboard.swapPiece(source, BlackKingSquare);
 
-        assertThat(chessGame.isKingDead())
-                .isTrue();
+        assertThat(chessGame.isBothKingAlive())
+                .isFalse();
     }
 
 

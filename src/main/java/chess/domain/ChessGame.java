@@ -128,13 +128,20 @@ public class ChessGame {
                 && currentSquare.reachedEndRank();
     }
 
-    // TODO: 2023-03-22 메서드명 변경 ex) isNotKingDead or isKingAlive
-    public boolean isKingDead() {
+    public boolean isBothKingAlive() {
+        return isWhiteKingAlive() && isBlackKingAlive();
+    }
+
+    public boolean isWhiteKingAlive() {
         int whiteKingCountOnBoard = chessboard.countSamePieceOnBoard(PieceType.KING.createPiece(Camp.WHITE));
+
+        return whiteKingCountOnBoard != 0;
+    }
+
+    public boolean isBlackKingAlive() {
         int blackKingCountOnBoard = chessboard.countSamePieceOnBoard(PieceType.KING.createPiece(Camp.BLACK));
 
-        return whiteKingCountOnBoard == 0
-                || blackKingCountOnBoard == 0;
+        return blackKingCountOnBoard != 0;
     }
 
     public double calculateScoreOf(Camp camp) {
