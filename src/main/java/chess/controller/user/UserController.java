@@ -1,5 +1,12 @@
 package chess.controller.user;
 
+import static chess.controller.user.UserCommand.EMPTY;
+import static chess.controller.user.UserCommand.END;
+import static chess.controller.user.UserCommand.LOGIN;
+import static chess.controller.user.UserCommand.LOGOUT;
+import static chess.controller.user.UserCommand.NAME_INDEX;
+import static chess.controller.user.UserCommand.REGISTER;
+
 import chess.controller.Action;
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
@@ -31,17 +38,17 @@ public class UserController implements Controller {
 
     private Map<UserCommand, Action> mappingCommand() {
         return Map.of(
-                UserCommand.REGISTER, this::register,
-                UserCommand.LOGIN, this::login,
-                UserCommand.LOGOUT, ignore -> logout(),
-                UserCommand.END, Action.EMPTY
+                REGISTER, this::register,
+                LOGIN, this::login,
+                LOGOUT, ignore -> logout(),
+                END, Action.EMPTY
         );
     }
 
     @Override
     public void run() {
-        UserCommand command = UserCommand.EMPTY;
-        while (command != UserCommand.END) {
+        UserCommand command = EMPTY;
+        while (command != END) {
             command = play();
         }
     }
@@ -56,12 +63,12 @@ public class UserController implements Controller {
             return command;
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printException(e.getMessage());
-            return UserCommand.EMPTY;
+            return EMPTY;
         }
     }
 
     private void register(final List<String> commands) {
-        final String name = commands.get(UserCommand.NAME_INDEX);
+        final String name = commands.get(NAME_INDEX);
         userService.save(name);
         outputView.printRegisterSuccess(name);
     }
@@ -70,7 +77,7 @@ public class UserController implements Controller {
         if (UserSession.get() != null) {
             throw new IllegalArgumentException("이미 로그인 된 상태입니다.");
         }
-        final String name = commands.get(UserCommand.NAME_INDEX);
+        final String name = commands.get(NAME_INDEX);
         final User user = userService.findByName(name);
         UserSession.add(user);
         outputView.printLoginSuccess(user.getName());

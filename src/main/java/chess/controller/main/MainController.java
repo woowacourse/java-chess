@@ -1,5 +1,8 @@
 package chess.controller.main;
 
+import static chess.controller.main.MainCommand.EMPTY;
+import static chess.controller.main.MainCommand.END;
+
 import chess.controller.CommandMapper;
 import chess.controller.Controller;
 import chess.controller.session.RoomSession;
@@ -24,8 +27,8 @@ public class MainController implements Controller {
 
     @Override
     public void run() {
-        MainCommand command = MainCommand.EMPTY;
-        while (command != MainCommand.END) {
+        MainCommand command = EMPTY;
+        while (command != END) {
             command = readCommand();
         }
         UserSession.remove();
@@ -41,7 +44,7 @@ public class MainController implements Controller {
             return mainCommand;
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printException(e.getMessage());
-            return MainCommand.EMPTY;
+            return EMPTY;
         }
     }
 }
