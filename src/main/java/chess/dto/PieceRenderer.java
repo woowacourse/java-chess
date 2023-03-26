@@ -37,19 +37,15 @@ public enum PieceRenderer {
     }
 
     public static String render(Piece piece) {
-        PieceRenderer renderedPiece = renderPiece(piece.getPieceType());
+        PieceRenderer renderedPiece = Arrays.stream(values())
+                .filter(value -> value.pieceType == piece.getPieceType())
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
 
         if (piece.isWhite()) {
             return renderedPiece.value;
         }
 
         return renderedPiece.value.toUpperCase();
-    }
-
-    private static PieceRenderer renderPiece(PieceType pieceType) {
-        return Arrays.stream(values())
-                .filter(value -> value.pieceType == pieceType)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
     }
 }
