@@ -10,6 +10,7 @@ import chess.domain.piece.Piece;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static chess.domain.Color.WHITE;
@@ -66,7 +67,7 @@ class MysqlChessGameDaoTest {
     @Test
     void 체스게임을_업데이트한다() {
         //given
-        ChessGame chessGame = ChessGame.from(PIECES);
+        ChessGame chessGame = ChessGame.from(new ArrayList<>(PIECES));
         mysqlChessGameDao.save(chessGame);
         chessGame = chessGame.start();
         chessGame.move(new Position(A, TWO), new Position(A, FOUR));

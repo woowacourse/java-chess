@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -51,9 +52,9 @@ class BoardTest {
     @Test
     void 말을_원하는_위치로_이동시킨다() {
         //given
-        final Board board = Board.from(List.of(
+        final Board board = Board.from(new ArrayList<>(List.of(
                 new Queen(D, EIGHT, BLACK)
-        ));
+        )));
 
         //when
         board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
@@ -67,10 +68,10 @@ class BoardTest {
     @Test
     void 다른_색_말을_잡는다() {
         //given
-        final Board board = Board.from(List.of(
+        final Board board = Board.from(new ArrayList<>(List.of(
                 new Queen(D, EIGHT, BLACK),
                 new Pawn(D, FIVE, WHITE)
-        ));
+        )));
 
         //when
         board.move(BLACK, new Position(D, EIGHT), new Position(D, FIVE));
