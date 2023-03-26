@@ -2,6 +2,8 @@ package chess.domain.board;
 
 import static chess.domain.PieceScore.PAWN_WITH_SAME_FILE;
 
+import chess.dao.ChessBoardDao;
+import chess.dao.InMemoryChessBoardDao;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
@@ -16,13 +18,15 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final ChessBoardDao chessBoardDao = new InMemoryChessBoardDao();
+
     private final Map<Position, Piece> board;
 
     private Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public static Board init() {
+    public static Board init(long chessGameId) {
         Map<Position, Piece> setting = new HashMap<>();
 
         for (PieceSettings pieceSetting : PieceSettings.values()) {
@@ -31,6 +35,8 @@ public class Board {
         for (EmptySettings emptySetting : EmptySettings.values()) {
             setting.put(emptySetting.getPosition(), emptySetting.getPiece());
         }
+        chessBoardDao.save(chessGameId, setting);
+
         return new Board(setting);
     }
 
@@ -73,11 +79,14 @@ public class Board {
         Piece targetPiece = board.get(target);
 
         board.put(target, sourcePiece);
+        chessBoardDao.update(target, sourcePiece);
         if (!targetPiece.isSameTeam(Team.EMPTY)) {
             board.put(source, new Empty(Team.EMPTY));
+            chessBoardDao.update(source, new Empty(Team.EMPTY));
             return;
         }
         board.put(source, targetPiece);
+        chessBoardDao.update(source, targetPiece);
     }
 
     public boolean isEmptyPiece(Position source) {

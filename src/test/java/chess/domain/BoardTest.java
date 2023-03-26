@@ -20,7 +20,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.init();
+        board = Board.init(1);
     }
 
     @Test

@@ -23,7 +23,7 @@ public class ChessGame {
 
     public static ChessGame createGame() {
         long id = chessGameDao.create();
-        return new ChessGame(id, Board.init(), Team.getStartTeam());
+        return new ChessGame(id, Board.init(id), Team.getStartTeam());
     }
 
     public static ChessGame continueGame(long id) {
