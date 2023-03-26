@@ -6,6 +6,8 @@ import chess.domain.piece.Piece;
 
 import java.util.Arrays;
 
+import static chess.domain.piece.Pawn.isDiagonal;
+
 public enum Direction {
     TOP(0, 1),
     BOTTOM(0, -1),
@@ -34,36 +36,12 @@ public enum Direction {
     }
 
     public static Direction findDirectionByGap(Position start, Position end, Piece piece) {
-        int gapOfRank = start.findGapOfRank(end);
-        int gapOfColumn = start.findGapOfColum(end);
-        int absX = Math.abs(gapOfColumn);
-        int absY = Math.abs(gapOfRank);
-
         return Arrays.stream(Direction.values())
                 .filter(direction -> {
-                    if (piece instanceof Knight) {
-                        return direction.x == gapOfColumn && direction.y == gapOfRank;
-                    }
-
-                    if (isDiagonal(direction)) {
-                        return direction.x * absX == gapOfColumn && direction.y * absX == gapOfRank;
-                    }
-
-                    return direction.x * absX == gapOfColumn && direction.y * absY == gapOfRank;
+                    return piece.findDirection(direction, start, end, piece);
                 })
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_GUIDE_MESSAGE));
-    }
-
-    private static boolean isDiagonal(Direction direction) {
-        return isEqualTo(direction, TOP_LEFT)
-                || isEqualTo(direction, TOP_RIGHT)
-                || isEqualTo(direction, BOTTOM_LEFT)
-                || isEqualTo(direction, BOTTOM_RIGHT);
-    }
-
-    private static boolean isEqualTo(Direction o1, Direction o2) {
-        return (o1.x == o2.x) && (o1.y == o2.y);
     }
 
     public int getX() {

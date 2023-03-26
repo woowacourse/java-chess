@@ -54,7 +54,7 @@ public class Pawn extends Piece {
         int distance = 1;
 
 
-        if(startColumn.isSameColumn(start.getColumn())){
+        if (startColumn.isSameColumn(start.getColumn())) {
             distance = 2;
         }
 
@@ -91,5 +91,32 @@ public class Pawn extends Piece {
 
     private boolean isDiagonalDirection(Direction direction) {
         return direction != Direction.TOP && direction != Direction.BOTTOM;
+    }
+
+    @Override
+    public int calculateKing(int count) {
+        return count;
+    }
+
+    @Override
+    public int calculatePawn(int count, Color color) {
+        if (this.isSameColor((color))) {
+            return count + 1;
+        }
+        return count;
+    }
+
+    @Override
+    public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
+        int gapOfRank = start.findGapOfRank(end);
+        int gapOfColumn = start.findGapOfColum(end);
+        int absX = Math.abs(gapOfColumn);
+        int absY = Math.abs(gapOfRank);
+
+        if (isDiagonal(direction)) {
+            return direction.getX() * absX == gapOfColumn && direction.getY() * absX == gapOfRank;
+        }
+
+        return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
 }

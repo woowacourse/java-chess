@@ -29,7 +29,6 @@ public class King extends Piece {
         return true;
     }
 
-
     private void checkDirection(Direction direction) {
         if (!this.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
@@ -49,5 +48,29 @@ public class King extends Piece {
         if (this.isSameColor(colorOfDestination)) {
             throw new IllegalArgumentException(EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
+    }
+
+    @Override
+    public int calculateKing(int count) {
+        return count + 1;
+    }
+
+    @Override
+    public int calculatePawn(int count, Color color) {
+        return count;
+    }
+
+    @Override
+    public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
+        int gapOfRank = start.findGapOfRank(end);
+        int gapOfColumn = start.findGapOfColum(end);
+        int absX = Math.abs(gapOfColumn);
+        int absY = Math.abs(gapOfRank);
+
+        if (isDiagonal(direction)) {
+            return direction.getX() * absX == gapOfColumn && direction.getY() * absX == gapOfRank;
+        }
+
+        return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
 }

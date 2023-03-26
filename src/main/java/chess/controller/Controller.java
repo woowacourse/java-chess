@@ -116,12 +116,12 @@ public class Controller {
 
     private boolean isCheckmate(ChessGame chessGame) {
         Map<Position, Piece> chessBoard = chessGame.getChessBoard();
-        int kingCount = (int) chessBoard.values()
-                .stream()
-                .filter(piece -> piece instanceof King)
-                .count();
+        int count = 0;
+        for (Piece piece : chessBoard.values()) {
+            count = piece.calculateKing(count);
+        }
 
-        return kingCount < 2;
+        return count < 2;
     }
 
     private void printChessGame(ChessGame chessGame) {

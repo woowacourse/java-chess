@@ -45,7 +45,7 @@ public enum Rank {
     }
 
     public static Rank findRankByValue(String value) {
-        return Arrays.stream(Rank.values())
+        return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_RANK_ERROR_GUIDE_MESSAGE.getErrorMessage()));

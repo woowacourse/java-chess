@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
     private static final String CHESS_GAME_START_GUIDE_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String GAME_START_GUIDE_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_GUIDE_MESSAGE = "> 게임 종료 : end";

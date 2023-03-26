@@ -3,6 +3,7 @@ package chess.view;
 import static chess.view.ErrorMessage.NO_COMMAND_ERROR_GUIDE_MESSAGE;
 
 public enum Command {
+
     START("start"),
     MOVE("move"),
     END("end"),

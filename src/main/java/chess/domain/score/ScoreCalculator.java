@@ -64,13 +64,10 @@ public class ScoreCalculator {
     private int getPawnCount(List<Piece> columns, Color color) {
         int pawnCount = 0;
         for (Piece piece : columns) {
-            if (piece instanceof Pawn && piece.isSameColor(color)) {
-                pawnCount++;
-            }
+           pawnCount = piece.calculatePawn(pawnCount,color);
         }
         return pawnCount;
     }
-
 
     public double getBlackScore() {
         return blackScore;
