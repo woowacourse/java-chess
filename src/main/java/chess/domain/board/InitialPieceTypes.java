@@ -1,17 +1,19 @@
 package chess.domain.board;
 
 import chess.domain.piece.PieceType;
-import chess.domain.piece.coordinate.Coordinate;
-import chess.domain.piece.coordinate.Row;
+import chess.domain.board.coordinate.Coordinate;
+import chess.domain.board.coordinate.Row;
 
+import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.piece.PieceType.*;
 
 public enum InitialPieceTypes {
     HERO_PIECE_TYPES(List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK)),
-    PAWN_TYPES(List.of(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN)),
-    EMPTY_TYPES(List.of(EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY));
+    WHITE_PAWN_TYPES(List.of(WHITE_START_PAWN, WHITE_START_PAWN, WHITE_START_PAWN, WHITE_START_PAWN, WHITE_START_PAWN, WHITE_START_PAWN, WHITE_START_PAWN, WHITE_START_PAWN)),
+    BLACK_PAWN_TYPES(List.of(BLACK_START_PAWN, BLACK_START_PAWN, BLACK_START_PAWN, BLACK_START_PAWN, BLACK_START_PAWN, BLACK_START_PAWN, BLACK_START_PAWN, BLACK_START_PAWN)),
+    EMPTY_TYPES(Collections.emptyList());
     
     private final List<PieceType> pieceTypes;
     
@@ -24,8 +26,12 @@ public enum InitialPieceTypes {
             return HERO_PIECE_TYPES;
         }
     
-        if (isPawnRow(coordinate)) {
-            return PAWN_TYPES;
+        if (isWhitePawnRow(coordinate)) {
+            return WHITE_PAWN_TYPES;
+        }
+    
+        if (isBlackPawnRow(coordinate)) {
+            return BLACK_PAWN_TYPES;
         }
         
         return EMPTY_TYPES;
@@ -35,8 +41,12 @@ public enum InitialPieceTypes {
         return coordinate.isSameRow(Row.ONE) || coordinate.isSameRow(Row.EIGHT);
     }
     
-    private static boolean isPawnRow(Coordinate coordinate) {
-        return coordinate.isSameRow(Row.TWO) || coordinate.isSameRow(Row.SEVEN);
+    private static boolean isBlackPawnRow(Coordinate coordinate) {
+        return coordinate.isSameRow(Row.SEVEN);
+    }
+    
+    private static boolean isWhitePawnRow(Coordinate coordinate) {
+        return coordinate.isSameRow(Row.TWO);
     }
     
     public PieceType findPieceTypeByColumn(Coordinate coordinate) {

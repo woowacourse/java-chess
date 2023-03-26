@@ -1,17 +1,27 @@
 package chess.view;
 
-import chess.domain.board.RowPieces;
+import chess.domain.board.BlackWhiteChessBoard;
+import chess.domain.board.coordinate.Column;
+import chess.domain.board.coordinate.Coordinate;
+import chess.domain.board.coordinate.Row;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.dto.ChessBoardDto;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String NEW_LINE = System.lineSeparator();
+    
     private OutputView() {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
     }
-    
+
     public static void noticeGameStart(){
         println("> 체스 게임을 시작합니다.");
         println("> 게임 시작 : start");
@@ -20,35 +30,53 @@ public class OutputView {
     }
     
     
-    public static void printChessBoard(List<RowPieces> chessBoard) {
-        println(parseChessBoardToDisplay(chessBoard));
+    public static void noticeNewGame() {
+        println("게임을 새로 시작합니다.");
+    }
+    
+    public static void printChessBoard(ChessBoardDto chessBoardDto) {
+        Map<Coordinate, Piece> pieces = chessBoardDto.pieces();
+        println(parseChessBoardToDisplay(pieces));
         println("abcdefgh\n");
-                
+
     }
     
-    private static String parseChessBoardToDisplay(List<RowPieces> chessBoard) {
-        return chessBoard.stream()
-                .map(rowPieces -> parseRowPiecesToDisplay(rowPieces) + rowPieces.row())
-                .collect(Collectors.joining("\n", "", "\n"));
+    private static String parseChessBoardToDisplay(Map<Coordinate, Piece> pieces) {
+        return coordinates().stream()
+                .sorted()
+                .map(coordinate -> parseRowToDisplay(pieces, coordinate))
+                .collect(Collectors.joining());
     }
     
-    private static String parseRowPiecesToDisplay(RowPieces rowPieces) {
-        return rowPieces.pieces().stream()
-                .map(OutputView::parsePieceToDisplay)
-                .collect(Collectors.joining("", "", " "));
+    private static List<Coordinate> coordinates() {
+        return Arrays.stream(Row.values())
+                .map(OutputView::initLineCoordinates)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toUnmodifiableList());
+    }
+    
+    private static List<Coordinate> initLineCoordinates(Row row) {
+        return Arrays.stream(Column.values())
+                .map(column -> new Coordinate(column, row))
+                .collect(Collectors.toUnmodifiableList());
+    }
+    
+    private static String parseRowToDisplay(Map<Coordinate, Piece> pieces, Coordinate coordinate) {
+        String pieceToDisplay = parsePieceToDisplay(pieces.getOrDefault(coordinate, Empty.getInstance()));
+        if (coordinate.isLastColumn()) {
+            return pieceToDisplay + " " + coordinate.row() + NEW_LINE;
+        }
+        
+        return pieceToDisplay;
     }
     
     private static String parsePieceToDisplay(Piece piece) {
         String symbol = PieceSymbolConverter.convert(piece.pieceType());
-        if (piece.isSameTeam(Team.WHITE)) {
+        if (piece.isTeam(Team.BLACK)) {
             return symbol.toUpperCase();
         }
-        
-        if (piece.isSameTeam(Team.BLACK)) {
-            return symbol;
-        }
-        
-        return ".";
+
+        return symbol;
     }
     
     public static void printErrorMessage(String message) {

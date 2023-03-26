@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class InputView {
     private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     private static final String MOVE_COMMAND_FORMAT = "move\\s[a-z][1-9]\\s[a-z][1-9]";
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(MOVE_COMMAND_FORMAT);
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
     private static final String MOVE_COMMAND = "move";
@@ -48,7 +49,7 @@ public class InputView {
         }
         
         if (MOVE_COMMAND.equals(splitedInputCommand[0])) {
-            Matcher matcher = Pattern.compile(MOVE_COMMAND_FORMAT).matcher(inputCommand);
+            Matcher matcher = MOVE_COMMAND_PATTERN.matcher(inputCommand);
             if (!matcher.matches()) {
                 throw new IllegalArgumentException("move 명령의 입력 형식이 잘못되었습니다. 다시 입력해주세요.");
             }
@@ -57,31 +58,6 @@ public class InputView {
     
     private static boolean isCorrectCommand(String command) {
         return List.of(START_COMMAND, END_COMMAND, MOVE_COMMAND).contains(command);
-    }
-    
-    public static String inputInitCommand() {
-        try {
-            String inputInitCommand = bufferedReader.readLine();
-            validateInputInitCommand(inputInitCommand);
-            return inputInitCommand;
-        } catch (IOException e) {
-            return inputInitCommand();
-        }
-    }
-    
-    private static void validateInputInitCommand(String inputInitCommand) {
-        validateBlank(inputInitCommand);
-        validateInitCommandForm(inputInitCommand);
-    }
-    
-    private static void validateInitCommandForm(String inputInitCommand) {
-        if (!isCorrectInitCommand(inputInitCommand)) {
-            throw new IllegalArgumentException("게임 첫 시작에선 start, end 명령만 입력할 수 있습니다.");
-        }
-    }
-    
-    private static boolean isCorrectInitCommand(String command) {
-        return List.of(START_COMMAND, END_COMMAND).contains(command);
     }
     
     public static <T> T repeatAtExceptionCase(Supplier<T> inputProcess) {

@@ -1,66 +1,45 @@
 package chess.domain.piece;
 
 import chess.domain.board.InitialPieceTypes;
-import chess.domain.distance.Distances;
-import chess.domain.piece.coordinate.Coordinate;
+import chess.domain.board.coordinate.Coordinate;
+import chess.domain.direction.Direction;
 
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Piece {
     protected final Team team;
-    protected final Coordinate coordinate;
     
-    protected Piece(Team team, Coordinate coordinate) {
+    protected Piece(Team team) {
         this.team = team;
-        this.coordinate = coordinate;
     }
     
     public static Piece from(Coordinate coordinate) {
-        Team team = Team.from(coordinate);
         InitialPieceTypes initialPieceTypes = InitialPieceTypes.from(coordinate);
-        
-        return initialPieceTypes.findPieceTypeByColumn(coordinate)
-                .makePiece(team, coordinate);
+        PieceType pieceType = initialPieceTypes.findPieceTypeByColumn(coordinate);
+        return pieceType.makePiece(Team.from(coordinate));
     }
+    
+    public abstract Set<Direction> directions();
+    
+    public abstract PieceMovingType movingType();
     
     public abstract PieceType pieceType();
     
-    public abstract boolean isMovable(Piece targetPiece);
-    
-    public Piece movedSourcePiece(Coordinate coordinate) {
-        return pieceType().makePiece(team, coordinate);
+    public Piece movedPiece() {
+        return this;
     }
     
-    public boolean isSameTeam(Team otherTeam) {
-        return this.team.isSameTeam(otherTeam);
+    public boolean isSameTeam(Piece otherPiece) {
+        return this.team.isSameTeam(otherPiece.team);
     }
     
-    protected Distances convertAbsoluteValue(Piece targetPiece) {
-        return subtractCoordinate(targetPiece).absoluteValue();
+    public boolean isTeam(Team currentTeam) {
+        return this.team.isSameTeam(currentTeam);
     }
     
-    protected Distances subtractCoordinate(Piece targetPiece) {
-        return this.coordinate.subtractCoordinate(targetPiece.coordinate);
-    }
-    
-    protected boolean isDifferentTeam(Piece otherPiece) {
+    public boolean isOppositeTeam(Piece otherPiece) {
         return this.team.isDifferentTeam(otherPiece.team);
-    }
-    
-    public int compareToPieceByRowNum(Piece piece) {
-        return coordinate.compareToPieceByRowNum(piece.coordinate);
-    }
-    
-    public boolean isKnight() {
-        return false;
-    }
-    
-    public boolean isSameCoordinate(Coordinate coordinate) {
-        return this.coordinate.equals(coordinate);
-    }
-    
-    public int row() {
-        return coordinate.row();
     }
     
     @Override
@@ -68,19 +47,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return team == piece.team && Objects.equals(coordinate, piece.coordinate);
+        return team == piece.team;
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(team, coordinate);
-    }
-    
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "team=" + team +
-                ", coordinate=" + coordinate +
-                '}';
+        return Objects.hash(team);
     }
 }

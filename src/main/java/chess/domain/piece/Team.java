@@ -1,20 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.piece.coordinate.Coordinate;
+import chess.domain.board.coordinate.Coordinate;
 
 public enum Team {
     BLACK, WHITE, EMPTY;
     
-    private static final int MAX_ROW_NUMBER_OF_BLACK_TEAM = 2;
-    private static final int MIN_ROW_NUMBER_WHITE_TEAM = 7;
+    private static final int MAX_ROW_NUMBER_OF_WHITE_TEAM = 2;
+    private static final int MIN_ROW_NUMBER_BLACK_TEAM = 7;
     
     public static Team from(Coordinate coordinate) {
-        if (coordinate.isRowNumLessOrEqualTo(MAX_ROW_NUMBER_OF_BLACK_TEAM)) {
-            return BLACK;
+        if (coordinate.isRowNumLessOrEqualTo(MAX_ROW_NUMBER_OF_WHITE_TEAM)) {
+            return WHITE;
         }
         
-        if (coordinate.isRowNumOverOrEqualTo(MIN_ROW_NUMBER_WHITE_TEAM)) {
-            return WHITE;
+        if (coordinate.isRowNumOverOrEqualTo(MIN_ROW_NUMBER_BLACK_TEAM)) {
+            return BLACK;
         }
         return EMPTY;
     }
@@ -24,7 +24,11 @@ public enum Team {
     }
     
     public boolean isDifferentTeam(Team otherTeam) {
-        return !isSameTeam(otherTeam);
+        if (this == BLACK) {
+            return otherTeam == WHITE;
+        }
+        
+        return otherTeam == BLACK;
     }
     
     public Team nextTeam() {
