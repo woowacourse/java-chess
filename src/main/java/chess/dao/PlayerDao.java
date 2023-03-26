@@ -2,27 +2,24 @@ package chess.dao;
 
 import chess.domain.player.Player;
 
-import java.sql.SQLException;
-
 public class PlayerDao {
+
+    private static final String NOT_EXIST_PLAYER_ERROR_MESSAGE = "참여자가 존재하지 않습니다";
 
     public static Player findByName(final String name) {
         final var query = "SELECT * FROM player WHERE name = ?";
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, name);
 
-            final var resultSet = preparedStatement.executeQuery();
+        final RowMapper<Player> mapper = resultSet -> {
             if (resultSet.next()) {
                 return Player.of(
                         resultSet.getInt(1),
                         resultSet.getString(2)
                 );
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            throw new RuntimeException(NOT_EXIST_PLAYER_ERROR_MESSAGE);
+        };
+
+        return JdbcTemplate.select(query, mapper, name);
     }
 
     public static Player create(final String name) {

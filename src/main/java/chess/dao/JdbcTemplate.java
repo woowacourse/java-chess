@@ -39,4 +39,20 @@ public class JdbcTemplate {
 
         throw new RuntimeException("id가 생성되지 않았습니다");
     }
+
+    public static <T> T select(final String query, final RowMapper<T> rowMapper, final Object... parameters) {
+        try (final var connection = DBConnection.get()) {
+            final var preparedStatement = connection.prepareStatement(query);
+
+            for (int i = 0; i < parameters.length; i++) {
+                preparedStatement.setObject(i + 1, parameters[i]);
+            }
+
+            final var resultSet = preparedStatement.executeQuery();
+
+            return rowMapper.mapRow(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

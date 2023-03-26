@@ -9,11 +9,13 @@ import chess.domain.position.Rank;
 import chess.domain.team.Team;
 import chess.view.PieceName;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardDao {
+
+    private static final String NOT_EXIST_PIECE_ERROR_MESSAGE = "해당하는 위치에 체스말이 존재하지 않습니다";
+    private static final String NOT_EXIST_BOARD_ERROR_MESSAGE = "체스판이 존재하지 않습니다";
 
     public static Board create() {
         final var query = "INSERT INTO board() VALUES()";
@@ -37,42 +39,30 @@ public class BoardDao {
 
     private static Piece findByPosition(final int boardId, final String position) {
         final var query = "SELECT " + position + " FROM board WHERE id = ?";
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, boardId);
 
-            final var resultSet = preparedStatement.executeQuery();
+        final RowMapper<Piece> mapper = resultSet -> {
             if (resultSet.next()) {
                 final String name = resultSet.getString(1);
                 return PieceName.findByName(name);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            throw new RuntimeException(NOT_EXIST_PIECE_ERROR_MESSAGE);
+        };
 
-        return null;
+        return JdbcTemplate.select(query, mapper, boardId);
     }
 
     public static Board findById(final int boardId) {
         final var query = "SELECT id FROM board WHERE id = ?";
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, boardId);
 
-            final var resultSet = preparedStatement.executeQuery();
+        final RowMapper<Board> mapper = resultSet -> {
             if (resultSet.next()) {
                 final int id = resultSet.getInt(1);
-
-                return new Board(
-                        id,
-                        createMapById(id)
-                );
+                return new Board(id, createMapById(id));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            throw new RuntimeException(NOT_EXIST_BOARD_ERROR_MESSAGE);
+        };
 
-        return null;
+        return JdbcTemplate.select(query, mapper, boardId);
     }
 
     public static void updateByMove(final Board board,

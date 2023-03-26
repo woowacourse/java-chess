@@ -5,11 +5,12 @@ import chess.domain.game.ChessGame;
 import chess.domain.room.ChessRoom;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ChessGameDao {
 
-    public static ChessGame create(final Board board) {
+    private static final String NOT_EXIST_CHESS_GAME_ERROR_MESSAGE = "체스 게임이 존재하지 않습니다";
+
+    public static ChessGame create(final Board board) throws SQLException {
         final var query = "INSERT INTO chess_game(board_id) VALUES (?)";
 
         final int id = JdbcTemplate.insertAndReturnKey(query, board.getId());
@@ -19,11 +20,8 @@ public class ChessGameDao {
 
     public static ChessGame findById(final ChessRoom chessRoom) {
         final var query = "SELECT * FROM chess_game WHERE id = ?";
-        try (final var connection = DBConnection.get()) {
-            final var prepareStatement = connection.prepareStatement(query);
-            prepareStatement.setInt(1, chessRoom.getGameId());
 
-            final var resultSet = prepareStatement.executeQuery();
+        final RowMapper<ChessGame> mapper = resultSet -> {
             if (resultSet.next()) {
                 return ChessGame.of(
                         resultSet.getInt(1),
@@ -31,10 +29,9 @@ public class ChessGameDao {
                         resultSet.getString(3)
                 );
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            throw new RuntimeException(NOT_EXIST_CHESS_GAME_ERROR_MESSAGE);
+        };
 
-        return null;
+        return JdbcTemplate.select(query, mapper, chessRoom.getGameId());
     }
 }
