@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.Command;
 import chess.domain.ChessGame;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -78,16 +79,12 @@ public class ChessController {
         String mainCommand = command.get(Index.MAIN_COMMAND.value);
 
         if (Command.isStatusCommand(mainCommand)) {
-            calculateResult(chessGame);
+            outputView.printScoreMessage(chessGame);
             return;
         }
 
         movePiece(chessGame, command);
         checkPromotion(chessGame, command);
-    }
-
-    private void calculateResult(ChessGame chessGame) {
-        outputView.printScoreMessage(chessGame);
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
@@ -115,9 +112,7 @@ public class ChessController {
     }
 
     private PieceType requestPieceType() {
-        String input = retryOnInvalidUserInput(inputView::requestPiece);
-
-        return PromotionPiece.renderToPieceType(input);
+        return retryOnInvalidUserInput(inputView::requestPiece);
     }
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
@@ -134,54 +129,6 @@ public class ChessController {
             request.run();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-        }
-    }
-
-    private enum PromotionPiece {
-        QUEEN("q", PieceType.QUEEN),
-        BISHOP("b", PieceType.BISHOP),
-        KNIGHT("n", PieceType.KNIGHT),
-        ROOK("r", PieceType.ROOK);
-
-        private final String command;
-        private final PieceType pieceType;
-
-        PromotionPiece(String command, PieceType pieceType) {
-            this.command = command;
-            this.pieceType = pieceType;
-        }
-
-        private static PieceType renderToPieceType(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."))
-                    .pieceType;
-        }
-    }
-
-    private enum Command {
-        START("start"),
-        END("end"),
-        MOVE("move"),
-        STATUS("status");
-
-        private final String command;
-
-        Command(String command) {
-            this.command = command;
-        }
-
-        private static boolean isStartCommand(String input) {
-            return START.command.equals(input);
-        }
-
-        private static boolean isEndCommand(String input) {
-            return END.command.equals(input);
-        }
-
-        private static boolean isStatusCommand(String input) {
-            return STATUS.command.equals(input);
         }
     }
 
