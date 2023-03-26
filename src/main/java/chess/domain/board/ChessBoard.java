@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.type.EmptyPiece;
 import chess.domain.piece.type.Piece;
 
@@ -9,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
-    private static final String OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE = "이동 경로에 기물이 있으므로 이동할 수 없습니다";
 
     private final Map<Position, Piece> chessBoard;
 
@@ -29,17 +29,13 @@ public class ChessBoard {
     }
 
     public void move(Position start, Position end) {
-        Piece pieceToMove = findPieceInBoardByPosition(start);
-        validateMove(start, end, pieceToMove);
-
-        movePieceToDestination(start, end, pieceToMove);
-    }
-
-    private void validateMove(final Position start, final Position end, final Piece pieceToMove) {
         checkIfMoveToSamePosition(start, end);
-        Color colorOfDestination = findPieceInBoardByPosition(end).getColor();
-        pieceToMove.checkMovable(start, end, colorOfDestination);
-        checkIfPiecesInRoute(start, end);
+        Piece pieceToMove = findPieceInBoardByPosition(start);
+        checkIfPieceToMoveEmpty(pieceToMove);
+        checkIfPieceMovable(start, end, pieceToMove);
+        checkIfOtherPiecesOnPath(start, end);
+
+        movePiece(start, end, pieceToMove);
     }
 
     private static void checkIfMoveToSamePosition(Position start, Position end) {
@@ -47,17 +43,29 @@ public class ChessBoard {
             throw new IllegalArgumentException("제자리로는 이동할 수 없습니다");
         }
     }
-
-    private void checkIfPiecesInRoute(final Position start, final Position end) {
-        if(start.findRouteTo(end).stream()
-                .anyMatch(position -> !position.equals(end) && chessBoard.get(position).getColor() != Color.NONE)) {
-            throw new IllegalArgumentException("이동경로에 기물이 있어 이동할 수 없습니다");
+    private void checkIfPieceToMoveEmpty(final Piece pieceToMove) {
+        if (pieceToMove.getPieceType().equals(PieceType.EMPTY_PIECE)) {
+            throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다");
         }
     }
 
-    private void movePieceToDestination(Position start, Position end, Piece piece) {
+    private void checkIfPieceMovable(final Position start, final Position end, final Piece pieceToMove) {
+        Color colorOfDestination = findPieceInBoardByPosition(end).getColor();
+        if (!pieceToMove.isMovable(start, end, colorOfDestination)) {
+            throw new IllegalArgumentException("기물이 이동 할 수 있는 위치가 아닙니다");
+        }
+    }
+
+    private void checkIfOtherPiecesOnPath(final Position start, final Position end) {
+        if (start.findRouteTo(end).stream()
+                .anyMatch(position -> !position.equals(end) && chessBoard.get(position).getColor() != Color.NONE)) {
+            throw new IllegalArgumentException("이동 경로에 기물이 있으므로 이동할 수 없습니다");
+        }
+    }
+
+    private void movePiece(final Position start, final Position end, final Piece pieceToMove) {
         chessBoard.replace(start, EmptyPiece.of());
-        chessBoard.replace(end, piece);
+        chessBoard.replace(end, pieceToMove);
     }
 
     public boolean isInitialized() {
