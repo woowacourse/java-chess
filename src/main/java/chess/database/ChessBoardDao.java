@@ -1,12 +1,10 @@
 package chess.database;
 
-import chess.ChessGame;
-import database.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ChessGameDao {
+public class ChessBoardDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
@@ -23,28 +21,17 @@ public class ChessGameDao {
         }
     }
 
-    public void addGame() {
-        final var query = "INSERT INTO ChessGame VALUES()";
+    public void addBoard(int gameIdx, String square, String pieceType) {
+        final var query = "INSERT INTO ChessBoard VALUES(?, ?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)
         ) {
+            preparedStatement.setInt(1, gameIdx);
+            preparedStatement.setString(2, square);
+            preparedStatement.setString(3, pieceType);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-    public int findLastInsertGame() {
-        final var query = "SELECT MAX(gameIdx) \"gameIdx\" FROM ChessGame";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            final var resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt("gameIdx");
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
 }
