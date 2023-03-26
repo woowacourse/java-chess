@@ -12,6 +12,6 @@ public class EndCommand extends Command{
 
     @Override
     public Command execute(List<String> input) {
-        return null;
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 }
