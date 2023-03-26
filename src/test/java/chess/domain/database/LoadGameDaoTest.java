@@ -34,20 +34,20 @@ class LoadGameDaoTest {
 
     @Test
     void get_last_turn_by_id() {
-        ChessGame chessGame = new ChessGame(Board.create(), new Turn(1));
+        ChessGame chessGame = new ChessGame(Board.create(), new Turn());
         chessGameDao.save("100", chessGame);
         chessGame.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR));
         chessGameDao.save("100", chessGame);
         chessGame.move(Square.of(File.A, Rank.SEVEN), Square.of(File.A, Rank.FIVE));
         chessGameDao.save("100", chessGame);
-        assertThat(loadGameDao.getLastTurnById("100")).isEqualTo(3);
+        assertThat(loadGameDao.getLastTurnById("100")).isEqualTo(2);
     }
 
     @Test
     void get_game_by_id() {
         ChessGame chessGame = new ChessGame();
         chessGameDao.save("100", chessGame);
-        ChessGame newChessGame = loadGameDao.getGameById("100", 1);
+        ChessGame newChessGame = loadGameDao.getGameById("100", 0);
         assertThat(newChessGame.getBoard()).hasSize(32);
     }
 

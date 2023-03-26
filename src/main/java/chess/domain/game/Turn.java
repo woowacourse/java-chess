@@ -7,7 +7,7 @@ public class Turn {
     private int turn;
 
     public Turn() {
-        this.turn = 1;
+        this.turn = 0;
     }
 
     public Turn(int turn) {
@@ -19,7 +19,7 @@ public class Turn {
     }
 
     public Team getCurrentTeam() {
-        if (turn % 2 == 1) {
+        if (turn % 2 == 0) {
             return Team.WHITE;
         }
         return Team.BLACK;
