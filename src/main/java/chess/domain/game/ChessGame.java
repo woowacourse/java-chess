@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ChessGame {
     private final Board board;
-    private final Turn turn;
+    private Turn turn;
 
     public ChessGame(Board board, Color firstTurnColor) {
         this.board = board;
@@ -22,7 +22,7 @@ public class ChessGame {
     public void move(Position sourcePosition, Position targetPosition) {
         validateTurn(sourcePosition);
         board.movePiece(sourcePosition, targetPosition);
-        turn.next();
+        turn = turn.next();
     }
 
     private void validateTurn(Position sourcePosition) {

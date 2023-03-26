@@ -25,8 +25,8 @@ class TurnTest {
     void 차례를_변경한다() {
         Turn turn = new Turn(Color.WHITE);
 
-        turn.next();
+        Turn nextTurn = turn.next();
 
-        assertThat(turn.getColor()).isEqualTo(Color.BLACK);
+        assertThat(nextTurn.getColor()).isEqualTo(Color.BLACK);
     }
 }
