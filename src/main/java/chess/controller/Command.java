@@ -8,7 +8,6 @@ public enum Command {
     MOVE("move"),
     END("end");
 
-
     public static final int COMMAND_INDEX_IN_COMMANDLINE =0;
     public static final int START_SOURCE_INDEX_IN_COMMANDLINE = 1;
     public static final int TARGET_SOURCE_INDEX_IN_COMMANDLINE = 2;

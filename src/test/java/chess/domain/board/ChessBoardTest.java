@@ -32,19 +32,6 @@ class ChessBoardTest {
         chessBoard = new ChessBoard();
     }
 
-    @Test
-    void 체스보드가_초기화_되었으면_true를_반환한다() {
-        chessBoard.initialize(initialBoardStrategy.generate());
-        assertThat(chessBoard.isInitialized())
-                .isTrue();
-    }
-
-    @Test
-    void 체스보드가_초기화_되지않았으면_false를_반환한다() {
-        assertThat(chessBoard.isInitialized())
-                .isFalse();
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"EIGHT, BLACK", "ONE, WHITE"})
     void 초기화된_체스보드의_Rank8과_Rank1에_예상한_기물들이_초기화되어_있다(Rank rank, Color color) {

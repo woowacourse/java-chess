@@ -68,10 +68,6 @@ public class ChessBoard {
         chessBoard.replace(end, pieceToMove);
     }
 
-    public boolean isInitialized() {
-        return chessBoard.size() != 0;
-    }
-
     public Map<Position, Piece> getChessBoard() {
         return new HashMap<>(chessBoard);
     }

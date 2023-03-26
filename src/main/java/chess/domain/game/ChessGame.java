@@ -17,21 +17,24 @@ import static chess.controller.Command.TARGET_SOURCE_INDEX_IN_COMMANDLINE;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private Color turn = Color.WHITE;
+    private Color turn;
+    private StateOfChessGame stateOfChessGame;
 
     public ChessGame() {
         this.chessBoard = new ChessBoard();
+        this.turn = Color.WHITE;
+        this.stateOfChessGame = StateOfChessGame.READY;
     }
 
     public void start(BoardStrategy boardStrategy) {
-        if(isStarted()){
+        if(stateOfChessGame.isStarted()) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다");
         }
         this.chessBoard.initialize(boardStrategy.generate());
     }
 
     public void move(List<String> commandLine) {
-        if(!isStarted()) {
+        if(!stateOfChessGame.isStarted()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다");
         }
         Position start = createPositionByCommand(commandLine.get(START_SOURCE_INDEX_IN_COMMANDLINE));
@@ -56,31 +59,8 @@ public class ChessGame {
         }
     }
 
-    private boolean isStarted() {
-        return chessBoard.isInitialized();
-    }
-
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getChessBoard();
     }
 
 }
-
-//
-/**
- *
- private Map<Command, Consumer<List<String>>> setActionsByCommand(BoardStrategy boardStrategy) {
- Map<Command, Consumer<List<String>>> actionsByCommand = new EnumMap<>(Command.class);
- actionsByCommand.put(Command.START, ignored -> start(boardStrategy));
- actionsByCommand.put(Command.MOVE, commandLine -> move(commandLine));
- actionsByCommand.put(Command.END, ignored -> {});
-
- return actionsByCommand;
- }
-
- public void execute(Command command, List<String> additionalCommand) {
- actionsByCommand.getOrDefault(command, ignored-> new IllegalArgumentException("해당하는 명령이 존재하지 않습니다"))
- .accept(additionalCommand);
-
- }
- */
