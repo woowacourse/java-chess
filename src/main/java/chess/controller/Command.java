@@ -13,9 +13,9 @@ public enum Command {
         this.code = code;
     }
 
-    public static Command from(String code) {
+    public static Command from(final String code) {
         return Arrays.stream(Command.values())
-                .filter(command -> command.code.equalsIgnoreCase(code))
+                .filter(command -> command.code.equals(code))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
