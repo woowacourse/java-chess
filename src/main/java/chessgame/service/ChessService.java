@@ -7,7 +7,6 @@ import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Game;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class ChessService {
     private final Connection connection;
@@ -17,7 +16,7 @@ public class ChessService {
         this.connection = ConnectionGenerator.getConnection();
     }
 
-    public Game setGame(String gameName) throws SQLException {
+    public Game setGame(String gameName) {
         Game readGame = gameDao.read(gameName, connection);
         if (readGame == null) {
             return new Game(new Board(ChessBoardFactory.create()), gameName);

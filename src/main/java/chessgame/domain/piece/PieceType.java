@@ -8,8 +8,8 @@ public enum PieceType {
     PAWN("p", 1),
     ROOK("r", 5);
 
-    private String name;
-    private double score;
+    private final String name;
+    private final double score;
 
     PieceType(String name, double score) {
         this.name = name;

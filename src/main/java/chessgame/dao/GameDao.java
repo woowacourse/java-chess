@@ -19,26 +19,31 @@ public class GameDao {
 
     public void save(Board board, String gameName, State turn, Connection connection) {
         Map<Point, Piece> boardMap = board.getBoard();
-        try {
-            insertGame(gameName, turn, connection);
-            insertBoard(boardMap, gameName, connection);
-        } catch (SQLException e) {
+        insertGame(gameName, turn, connection);
+        insertBoard(boardMap, gameName, connection);
+    }
+
+    private void insertGame(String gameName, State turn, Connection connection) {
+        final String query = "insert into game (name, team_turn) values (?, ?)";
+        try(final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            preparedStatement.setString(2, turn.getClass().getSimpleName());
+            preparedStatement.execute();
+        }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
 
-    private void insertGame(String gameName, State turn, Connection connection) throws SQLException {
-        final String query = "insert into game (name, team_turn) values (?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, gameName);
-        preparedStatement.setString(2, turn.getClass().getSimpleName());
-        preparedStatement.execute();
-        preparedStatement.close();
+    private void insertBoard(Map<Point, Piece> boardMap, String gameName, Connection connection) {
+        final String query = "insert into board (board_name, piece_file, piece_rank, piece_type, piece_team) values (?, ?, ?, ?, ?)";
+        try(final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            insertPiece(boardMap, gameName, preparedStatement);
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
-    private void insertBoard(Map<Point, Piece> boardMap, String gameName, Connection connection) throws SQLException {
-        final String query = "insert into board (board_name, piece_file, piece_rank, piece_type, piece_team) values (?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+    private static void insertPiece(Map<Point, Piece> boardMap, String gameName, PreparedStatement preparedStatement) throws SQLException {
         for (Point point : boardMap.keySet()) {
             preparedStatement.setString(1, gameName);
             preparedStatement.setString(2, point.getFile().toString());
@@ -47,12 +52,10 @@ public class GameDao {
             preparedStatement.setString(5, boardMap.get(point).team().toString());
             preparedStatement.execute();
         }
-        preparedStatement.close();
     }
 
     public Game read(String gameName, Connection connection) {
         final String query = "SELECT * FROM Board where board_name = ?";
-
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
