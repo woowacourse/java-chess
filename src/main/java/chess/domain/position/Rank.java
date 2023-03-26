@@ -20,7 +20,7 @@ public enum Rank {
         this.index = index;
     }
     
-    static Rank findByLabel(String label) {
+    public static Rank findByLabel(String label) {
         return Arrays.stream(values())
                 .filter(value -> value.label.equals(label))
                 .findAny()
