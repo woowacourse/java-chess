@@ -45,24 +45,27 @@ classDiagram
 
 ### Query Statement
 ```sql
-create table chess_game
+CREATE TABLE chess_game
 (
-    id               int         not null primary key,
-    game_status      varchar(30),
+  id              int             NOT NULL AUTO_INCREMENT,
+  game_status     varchar(30)     NOT NULL,
+  turn            varchar(30)     NOT NULL,
+  primary key (`id`)
 );
 
-create table board
+CREATE TABLE board
 (
-  id      int         not null,
-  game_id int         not null,
-  x_pos   int         not null,
-  y_pos   int         not null,
-  role    varchar(30) not null,
-  team    varchar(30) not null,
+  id      int         NOT NULL,
+  game_id int         NOT NULL,
+  x_pos   int         NOT NULL,
+  y_pos   int         NOT NULL,
+  role    varchar(30) NOT NULL,
+  team    varchar(30) NOT NULL,
 
-  foreign key (game_id) references chess_game (id),
-  primary key (id, x_pos, y_pos)
-)
+  primary key (id, x_pos, y_pos),
+  foreign key (game_id) references chess_game (id)
+);
+
 
 ```
 
