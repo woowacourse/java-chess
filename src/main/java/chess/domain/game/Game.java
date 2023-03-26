@@ -17,15 +17,19 @@ public class Game {
     }
 
     public void move(Square source, Square target) {
-        if (isNotMyTurn(source) || board.isEmptyPiece(source)) {
+        if (isNotCurrentTurn(source) || board.isEmptyPiece(source)) {
             throw new TeamNotMatchException(turn);
         }
         board.move(source, target);
         turn = turn.nextTurn(turn);
     }
 
-    private boolean isNotMyTurn(Square source) {
-        return board.getPiece(source).isAnotherTeam(turn);
+    private boolean isNotCurrentTurn(Square square) {
+        return board.isSquarePieceNotCurrentTurn(square, turn);
+    }
+
+    public boolean isGameEnd() {
+        return !board.haveTwoKing();
     }
 
     public List<Piece> getPieces() {

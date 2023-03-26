@@ -101,26 +101,33 @@ public class Board {
     }
 
     public void move(Square source, Square target) {
-        Piece sourcePiece = getPiece(source);
         validateMovable(source, target);
-        sourcePiece.validateMovableRange(source, target);
-        movePieceSourceToTarget(source, target);
+
+        if (board.get(source).isSameRole(Role.PAWN)) {
+            board.put(source, new Pawn(board.get(source).getTeam(), IS_MOVED));
+        }
+        board.put(target, board.get(source));
+        board.put(source, new Empty());
     }
 
-    private void validateMovable(Square source, Square target) {
+    public void validateMovable(Square source, Square target) {
         Direction direction = Direction.calculateDirection(source, target);
 
         validatePathBlocked(source, target, direction);
-        if (isSameRole(source, Role.PAWN)) {
+        if (board.get(source).isSameRole(Role.PAWN)) {
             validatePawnPathBlocked(target, direction);
         }
+        board.get(source).validateMovableRange(source, target);
     }
 
     private void validatePathBlocked(Square source, Square target, Direction direction) {
-        if (isBlocked(source, target, direction) && !isSameRole(source, Role.KNIGHT)) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+
+        if (isBlocked(source, target, direction) && !board.get(source).isSameRole(Role.KNIGHT)) {
             throw new PathBlockedException();
         }
-        if (isSameTeam(source, target)) {
+        if (sourcePiece.isSameTeam(targetPiece.getTeam())) {
             throw new TargetSameTeamException();
         }
     }
@@ -130,14 +137,14 @@ public class Board {
         if (nextSquare.equals(target)) {
             return false;
         }
-        if (isEmptyPiece(nextSquare)) {
+        if (board.get(nextSquare).isEmpty()) {
             return isBlocked(nextSquare, target, direction);
         }
         return true;
     }
 
     private void validatePawnPathBlocked(Square target, Direction direction) {
-        boolean isTargetEmpty = getPiece(target).isEmpty();
+        boolean isTargetEmpty = board.get(target).isEmpty();
         if (!isTargetEmpty && Direction.isMoveForward(direction)) {
             throw new PawnMoveForwardException();
         }
@@ -146,40 +153,19 @@ public class Board {
         }
     }
 
-    private void movePieceSourceToTarget(Square source, Square target) {
-        moveIfPawn(source);
-        board.put(target, getPiece(source));
-        board.put(source, new Empty());
+    public boolean isEmptyPiece(Square square) {
+        return board.get(square).isEmpty();
     }
 
-    private void moveIfPawn(Square source) {
-        if (isSameRole(source, Role.PAWN)) {
-            board.put(source, new Pawn(getPiece(source).getTeam(), IS_MOVED));
-        }
+    public boolean isSquarePieceNotCurrentTurn(Square square, Team turn) {
+        return board.get(square).isAnotherTeam(turn);
     }
 
-    private boolean isSameTeam(Square source, Square target) {
-        Piece sourcePiece = getPiece(source);
-        Team targetTeam = getPiece(target).getTeam();
-
-        return sourcePiece.isSameTeam(targetTeam);
-    }
-
-    private boolean isSameRole(Square source, Role role) {
-        Piece sourcePiece = getPiece(source);
-
-        return sourcePiece.isSameRole(role);
-    }
-
-    public boolean isEmptyPiece(Square source) {
-        return getPiece(source).isEmpty();
+    public boolean haveTwoKing() {
+        return board.containsValue(new King(Team.BLACK)) && board.containsValue(new King(Team.WHITE));
     }
 
     public List<Piece> getPieces() {
         return new ArrayList<>(board.values());
-    }
-
-    public Piece getPiece(Square source) {
-        return board.get(source);
     }
 }

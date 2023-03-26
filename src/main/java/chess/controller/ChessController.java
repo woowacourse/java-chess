@@ -46,7 +46,7 @@ public class ChessController {
         }
         if (gameCommand.isMove()) {
             play(gameCommand);
-            return false;
+            return game.isGameEnd();
         }
         return true;
     }
