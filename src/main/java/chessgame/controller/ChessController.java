@@ -131,6 +131,7 @@ public class ChessController {
         Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
         boolean isKing = chessGame.move(startCoordinate, endCoordinate);
         if (isKing) {
+            chessGameService.deleteGame(chessGame);
             return Command.END;
         }
         chessGameService.updateGame(chessGame);

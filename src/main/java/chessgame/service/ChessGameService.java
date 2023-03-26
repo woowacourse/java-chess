@@ -67,4 +67,11 @@ public class ChessGameService {
         gameRoomDao.updateGameRoomById(roomId, chessGame.getTurn());
         board.forEach((coordinate, piece) -> piecesDao.updatePieceByCoordinate(roomId, coordinate, piece));
     }
+
+    public void deleteGame(ChessGame chessGame) {
+        long roomId = chessGame.getRoomId();
+
+        piecesDao.deletePiecesByRoomId(roomId);
+        gameRoomDao.deleteGameRoomById(roomId);
+    }
 }
