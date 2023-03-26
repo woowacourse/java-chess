@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.login.LoginSession;
 import chess.domain.game.GameSession;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,6 +17,7 @@ public class StartControllerTest {
 
         //when
         boolean before = GameSession.existGame();
+        LoginSession.login("login");
         startController.execute(new Request("start"));
         boolean after = GameSession.existGame();
 
