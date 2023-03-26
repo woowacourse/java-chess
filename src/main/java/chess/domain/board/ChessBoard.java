@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ChessBoard {
     public static final int INITIAL_KING_COUNT = 2;
     private static final Map<ChessGame, ChessBoard> CACHE = new ConcurrentHashMap<>();
-    
+
     private final Map<Position, Piece> board;
 
     private ChessBoard(final Map<Position, Piece> board) {
