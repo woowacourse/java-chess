@@ -16,7 +16,8 @@ public class OutputView {
     private static final String GAME_START_GUIDE_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_GUIDE_MESSAGE = "> 게임 종료 : end";
     private static final String MOVE_COMMAND_GUIDE_MESSAGE = "게임 이동 : move source위치 target 위치 - 예. move b2 b3";
-
+    private static final String DELIMITER = " : ";
+    private static final String SCORE_MESSAGE = "점";
     private static final Map<PieceType, String> symbolOfPiece;
     private static final Map<Color, Function<String, String>> symbolOfPieceByColor;
 
@@ -44,7 +45,6 @@ public class OutputView {
     }
 
     public void printBoard(Map<Position, Piece> boards) {
-        System.out.println();
         Rank.getOrderedRanks()
                 .forEach(rank -> {
                             Column.getOrderedColumns()
@@ -52,6 +52,7 @@ public class OutputView {
                             System.out.println();
                         }
                 );
+        System.out.println();
     }
 
     private static String findSymbolOfPieceByColor(Map<Position, Piece> boards, Rank rank, Column column) {
@@ -60,6 +61,13 @@ public class OutputView {
         return symbolOfPieceByColor.get(piece.getColor()).apply(symbol);
     }
 
+    public void printStatus(final Map<Color, Double> status) {
+        status.keySet()
+                .forEach(key -> System.out.println(key + DELIMITER + status.get(key) + SCORE_MESSAGE));
+//        System.out.println("BLACK"+status.get(Color.BLACK)+"점");
+//        System.out.println("WHITE"+status.get(Color.WHITE)+"점");
+        System.out.println();
+    }
 
     public void printExceptionMessage(String errorMessage) {
         System.out.println(errorMessage);
