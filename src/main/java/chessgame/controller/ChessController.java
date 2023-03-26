@@ -6,8 +6,6 @@ import chessgame.service.ChessService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 
-import java.sql.SQLException;
-
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -29,9 +27,9 @@ public class ChessController {
             outputView.printSetGameMessage();
             String gameName = inputView.readGameName();
             return chessService.setGame(gameName);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             outputView.printErrorMsg(e.getMessage());
-            return null;
+            return setGame();
         }
     }
 

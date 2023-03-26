@@ -10,6 +10,14 @@ public class InputView {
     }
 
     public String readGameName() {
-        return scanner.nextLine();
+        String name = scanner.nextLine();
+        validateGameName(name);
+        return name;
+    }
+
+    private void validateGameName(String name) {
+        if(name.isBlank() || name.isEmpty()){
+            throw new IllegalArgumentException("게임 이름으로 공백을 입력할 수 없습니다.");
+        }
     }
 }

@@ -73,6 +73,6 @@ public class OutputView {
     }
 
     public void printSetGameMessage() {
-        System.out.println("호출할 체스게임 이름을 입력해주세요. (존재하지 않는 경우 새로운 게임이 시작됩니다.)");
+        System.out.println("호출할 체스게임 이름을 입력해주세요. (입력한 체스게임의 이어하기 데이터가 존재하지 않을 경우 새로운 게임이 시작됩니다.)");
     }
 }
