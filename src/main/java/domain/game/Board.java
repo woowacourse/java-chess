@@ -18,9 +18,11 @@ public class Board {
         this.chessBoard = chessBoard;
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
+    public Side move(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
+        Side nextSide = sourcePiece.getSide().nextSide();
         movePiece(sourcePosition, targetPosition, sourcePiece);
+        return nextSide;
     }
 
     public boolean isMovable(Position sourcePosition, Position targetPosition, Side side) {

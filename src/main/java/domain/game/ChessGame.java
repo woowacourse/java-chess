@@ -21,10 +21,10 @@ public class ChessGame {
     public GameState move(Position sourcePosition, Position targetPosition) {
         if (board.isMovable(sourcePosition, targetPosition, currentTurn)) {
             this.state = calculateNextGameState(targetPosition);
-            board.move(sourcePosition, targetPosition);
+            Side nextTurn = board.move(sourcePosition, targetPosition);
+            currentTurn = nextTurn;
             return this.state;
         }
-        currentTurn = currentTurn.nextSide();
         return this.state;
     }
 

@@ -23,6 +23,23 @@ class BoardTest {
         this.board = new Board(chessBoard);
     }
 
+    @DisplayName("한 번 움직인 경우 Black이 움직일 차례다")
+    @Test
+    void OneMoveTest() {
+        //given
+        Side nextSide = board.move(Position.of("b", "2"), Position.of("b", "4"));
+        assertThat(nextSide).isEqualTo(Side.BLACK);
+    }
+
+    @DisplayName("두 번 움직인 경우 White가 움직일 차례다")
+    @Test
+    void TwoMoveTest() {
+        //given
+        Side nextSide = board.move(Position.of("b", "2"), Position.of("b", "4"));
+        nextSide = board.move(Position.of("b", "7"), Position.of("b", "6"));
+        assertThat(nextSide).isEqualTo(Side.WHITE);
+    }
+
     @DisplayName("움직일 수 있는 source postion과 target position을 입력받은 경우," +
             "source position에 EmptyPiece가 저장되고," +
             "target position에는 source piece가 저장된다")
