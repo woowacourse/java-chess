@@ -72,4 +72,20 @@ class GameTest {
 
         assertThat(game.isGameEnd()).isFalse();
     }
+
+    @DisplayName("게임이 시작하자마자 끝났을 때, 점수는 38점이다.")
+    @Test
+    void Should_WhiteScoreIs47_When_GameEnd() {
+        Game game = new Game();
+
+        assertThat(game.calculateWhiteScore()).isEqualTo(38);
+    }
+
+    @DisplayName("게임이 시작하자마자 끝났을 때, 점수는 38점이다.")
+    @Test
+    void Should_BlackScoreIs47_When_GameEnd() {
+        Game game = new Game();
+
+        assertThat(game.calculateBlackScore()).isEqualTo(38);
+    }
 }

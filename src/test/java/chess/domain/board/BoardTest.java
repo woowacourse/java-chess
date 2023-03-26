@@ -45,7 +45,7 @@ class BoardTest {
     void Should_Create_When_Board(int index, PieceType pieceType) {
         Board board = new Board();
 
-        assertThat(board.getPieces().get(index).getRole()).isEqualTo(pieceType);
+        assertThat(board.getPieces().get(index).getPieceType()).isEqualTo(pieceType);
     }
 
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 없을 경우 이동할 수 있다.")

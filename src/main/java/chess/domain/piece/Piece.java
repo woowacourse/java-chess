@@ -13,7 +13,7 @@ public abstract class Piece {
 
     public abstract void validateMovableRange(Square source, Square target);
 
-    public boolean isSameRole(PieceType pieceType) {
+    public boolean isSamePieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
 
@@ -33,7 +33,7 @@ public abstract class Piece {
         return team;
     }
 
-    public PieceType getRole() {
+    public PieceType getPieceType() {
         return pieceType;
     }
 }

@@ -103,7 +103,7 @@ public class Board {
     public void move(Square source, Square target) {
         validateMovable(source, target);
 
-        if (board.get(source).isSameRole(PieceType.PAWN)) {
+        if (board.get(source).isSamePieceType(PieceType.PAWN)) {
             board.put(source, new Pawn(board.get(source).getTeam(), IS_MOVED));
         }
         board.put(target, board.get(source));
@@ -114,7 +114,7 @@ public class Board {
         Direction direction = Direction.calculateDirection(source, target);
 
         validatePathBlocked(source, target, direction);
-        if (board.get(source).isSameRole(PieceType.PAWN)) {
+        if (board.get(source).isSamePieceType(PieceType.PAWN)) {
             validatePawnPathBlocked(target, direction);
         }
         board.get(source).validateMovableRange(source, target);
@@ -124,7 +124,7 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        if (isBlocked(source, target, direction) && !board.get(source).isSameRole(PieceType.KNIGHT)) {
+        if (isBlocked(source, target, direction) && !board.get(source).isSamePieceType(PieceType.KNIGHT)) {
             throw new PathBlockedException();
         }
         if (sourcePiece.isSameTeam(targetPiece.getTeam())) {
@@ -163,7 +163,7 @@ public class Board {
 
     public boolean haveOneKing() {
         int kingCount = (int) board.values().stream()
-                .filter(piece -> piece.isSameRole(PieceType.KING))
+                .filter(piece -> piece.isSamePieceType(PieceType.KING))
                 .count();
 
         return kingCount == 1;
@@ -171,5 +171,17 @@ public class Board {
 
     public List<Piece> getPieces() {
         return new ArrayList<>(board.values());
+    }
+
+    public List<Piece> getWhitePieces() {
+        return board.values().stream()
+                .filter(piece -> piece.isSameTeam(Team.WHITE))
+                .collect(Collectors.toList());
+    }
+
+    public List<Piece> getBlackPieces() {
+        return board.values().stream()
+                .filter(piece -> piece.isSameTeam(Team.BLACK))
+                .collect(Collectors.toList());
     }
 }

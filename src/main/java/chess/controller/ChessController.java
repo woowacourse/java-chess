@@ -28,6 +28,9 @@ public class ChessController {
             GameCommand gameCommand = generateGameCommand();
             isEnd = executeGameCommand(gameCommand);
         }
+        double whiteScore = game.calculateWhiteScore();
+        double blackScore = game.calculateBlackScore();
+        outputView.printGameEndMessage(whiteScore, blackScore);
     }
 
     private GameCommand generateGameCommand() {
