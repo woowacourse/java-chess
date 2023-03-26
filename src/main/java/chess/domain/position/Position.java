@@ -54,6 +54,10 @@ public class Position {
         return rank.getIndex();
     }
 
+    public String getName() {
+        return file.name() + rank.getIndex();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

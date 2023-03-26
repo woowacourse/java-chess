@@ -23,17 +23,18 @@ public class RoomController extends Controller {
 
     @Override
     public void run() {
-        repeat(this::selectRoom);
+        long roomId = repeat(this::selectRoom);
+        Controller controller = new GameController(inputView, outputView, roomId);
+        controller.run();
     }
 
-    private void selectRoom() {
+    private long selectRoom() {
         printAskRoomNameMessages();
         ReadyRequest request = inputView.askReadyCommand();
         if (request.getCommandType() == ReadyCommandType.USE) {
-            long roomId = roomService.selectRoom(userId, request.getName());
-            return;
+            return roomService.selectRoom(userId, request.getName());
         }
-        long roomId = roomService.create(userId, request.getName());
+        return roomService.create(userId, request.getName());
     }
 
     private void printAskRoomNameMessages() {

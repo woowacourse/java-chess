@@ -15,6 +15,10 @@ public class Move {
         this.target = target;
     }
 
+    public static Move from(String source, String target) {
+        return new Move(new Position(source), new Position(target));
+    }
+
     private void validate(Position source, Position target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException("동일한 포지션으로의 움직임을 생성할 수 없습니다.");
@@ -61,5 +65,9 @@ public class Move {
 
     public Position getSource() {
         return source;
+    }
+
+    public Position getTarget() {
+        return target;
     }
 }

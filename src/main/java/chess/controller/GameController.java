@@ -4,16 +4,17 @@ import static chess.controller.IllegalArgumentExceptionHandler.repeat;
 
 import chess.controller.dto.PieceResponse;
 import chess.domain.game.Game;
+import chess.domain.game.GameResult;
 import chess.domain.piece.Piece;
+import chess.domain.position.Move;
 import chess.domain.position.Position;
-import chess.domain.user.User;
-import chess.service.UserService;
+import chess.repository.jdbc.JdbcMoveDao;
+import chess.repository.jdbc.JdbcRoomDao;
+import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.CommandType;
 import chess.view.dto.MoveRequest;
-import chess.view.dto.ReadyCommandType;
-import chess.view.dto.ReadyRequest;
 import chess.view.dto.Request;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,66 +22,37 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class ChessGameController {
+public class GameController extends Controller {
 
-    private final InputView inputView;
-    private final OutputView outputView;
-    private final UserService userService;
+    private final GameService gameService;
+    private final long roomId;
 
-    public ChessGameController(InputView inputView, OutputView outputView, UserService userService) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-        this.userService = userService;
+    public GameController(InputView inputView, OutputView outputView, long roomId) {
+        super(inputView, outputView);
+        this.gameService = new GameService(new JdbcRoomDao(), new JdbcMoveDao());
+        this.roomId = roomId;
     }
 
-    public void start() {
-        login();
-
-        outputView.printStartMessage();
-        ready();
-    }
-
-    private void login() {
-        repeat(this::selectUser);
-    }
-
-    private void selectUser() {
-        printAskUserNameMessages();
-        ReadyRequest request = inputView.askReadyCommand();
-        if (request.getCommandType() == ReadyCommandType.USE) {
-            User user = userService.findByName(request.getName());
-            askGame(user.getId());
-            return;
-        }
-        long userId = userService.create(request.getName());
-        askGame(userId);
-    }
-
-    private void askGame(long userId) {
-
-    }
-
-    private void printAskUserNameMessages() {
-        List<String> userNames = userService.findUserNames();
-        if (userNames.size() > 0) {
-            outputView.printSelectUserMessage(userNames);
-        }
-        outputView.printCreateUserMessage();
-    }
-
-    private void ready() {
+    @Override
+    public void run() {
         repeat(this::askToStart);
     }
 
     private void askToStart() {
+        outputView.printStartMessage();
         Request request = inputView.askCommand();
         CommandType commandType = request.getCommandType();
         if (commandType == CommandType.START) {
-            play(new Game());
+            play(setUpGame());
         }
         if (Set.of(CommandType.MOVE, CommandType.STATUS).contains(commandType)) {
             throw new IllegalArgumentException("아직 게임이 시작되지 않은 상태입니다.");
         }
+    }
+
+    private Game setUpGame() {
+        List<Move> moves = gameService.findMoves(roomId);
+        return Game.from(moves);
     }
 
     private void play(Game game) {
@@ -108,13 +80,20 @@ public class ChessGameController {
             outputView.printStatus(game.getResult());
         }
         if (commandType == CommandType.MOVE) {
-            MoveRequest moveRequest = request.getMoveRequest();
-            game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
+            move(game, request);
             if (game.isGameOver()) {
-                outputView.printFinalWinner(game.getResult());
+                GameResult gameResult = game.getResult();
+                gameService.updateWinner(roomId, gameResult.getWinner());
+                outputView.printFinalWinner(gameResult);
                 return CommandType.END;
             }
         }
         return commandType;
+    }
+
+    private void move(Game game, Request request) {
+        MoveRequest moveRequest = request.getMoveRequest();
+        game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
+        gameService.create(roomId, moveRequest.getSource(), moveRequest.getTarget());
     }
 }

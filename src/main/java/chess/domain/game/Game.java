@@ -4,7 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Move;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
@@ -15,6 +17,16 @@ public class Game {
     public Game() {
         this.turn = Color.WHITE;
         this.board = BoardFactory.createBoard();
+    }
+
+    public static Game from(List<Move> moves) {
+        Game game = new Game();
+        Board board = game.board;
+        for (Move move : moves) {
+            board.move(move.getSource(), move.getTarget());
+        }
+        game.turn = Color.calculateTurn(moves.size());
+        return game;
     }
 
     public void movePiece(String sourceRequest, String targetRequest) {

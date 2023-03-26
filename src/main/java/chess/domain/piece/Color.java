@@ -19,4 +19,15 @@ public enum Color {
     };
 
     public abstract Color change();
+
+    public static Color calculateTurn(int moveCount) {
+        if (isEven(moveCount)) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
+    private static boolean isEven(int moveCount) {
+        return moveCount % 2 == 0;
+    }
 }

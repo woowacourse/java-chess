@@ -122,6 +122,17 @@ CREATE TABLE Room
     FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
+CREATE TABLE Move
+(
+    id         INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    room_id    INT         NOT NULL,
+    source     VARCHAR(10) NOT NULL,
+    target     VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES room (id),
+    INDEX (created_at)
+)
+
 ```
 
 ## 우아한테크코스 코드리뷰

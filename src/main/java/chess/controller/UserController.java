@@ -22,19 +22,19 @@ public class UserController extends Controller {
 
     @Override
     public void run() {
-        Controller controller = repeat(this::selectUser);
+        long userId = repeat(this::selectUser);
+        Controller controller = new RoomController(inputView, outputView, userId);
         controller.run();
     }
 
-    private Controller selectUser() {
+    private long selectUser() {
         printAskUserNameMessages();
         ReadyRequest request = inputView.askReadyCommand();
         if (request.getCommandType() == ReadyCommandType.USE) {
             User user = userService.findByName(request.getName());
-            return new RoomController(inputView, outputView, user.getId());
+            return user.getId();
         }
-        long userId = userService.create(request.getName());
-        return new RoomController(inputView, outputView, userId);
+        return userService.create(request.getName());
     }
 
     private void printAskUserNameMessages() {
