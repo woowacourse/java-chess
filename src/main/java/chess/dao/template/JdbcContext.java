@@ -15,6 +15,16 @@ public class JdbcContext {
         workWithStatementStrategy(c -> c.prepareStatement(query));
     }
 
+    public void update(String query, Object... parameters) {
+        workWithStatementStrategy(c -> {
+            PreparedStatement ps = c.prepareStatement(query);
+            for (int i = 1; i <= parameters.length; i++) {
+                ps.setObject(i, parameters[i - 1]);
+            }
+            return ps;
+        });
+    }
+
     public void insert(String query, Object... parameters) {
         workWithStatementStrategy(c -> {
             PreparedStatement ps = c.prepareStatement(query);
@@ -37,6 +47,16 @@ public class JdbcContext {
 
     public <T> T select(String query, RowMapper<T> rowMapper) {
         return workWithStatementStrategy(c -> c.prepareStatement(query), rowMapper);
+    }
+
+    public <T> T select(String query, RowMapper<T> rowMapper, Object... parameters) {
+        return workWithStatementStrategy(c -> {
+            PreparedStatement ps = c.prepareStatement(query);
+            for (int i = 1; i <= parameters.length; i++) {
+                ps.setObject(i, parameters[i - 1]);
+            }
+            return ps;
+        }, rowMapper);
     }
 
     private void workWithStatementBatchStrategy(StatementStrategy statementStrategy) {

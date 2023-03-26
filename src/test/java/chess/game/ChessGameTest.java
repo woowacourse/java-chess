@@ -25,10 +25,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ChessGameTest {
 
+    GameId gameId;
     ChessGame chessGame;
 
     @BeforeEach
     void setUp() {
+        gameId = new GameId("1");
         chessGame = new ChessGame();
     }
 
@@ -68,10 +70,10 @@ class ChessGameTest {
         TurnStrategy turnStrategy = new RandomTurnStrategy();
 
         // when
-        chessGame.start(turnStrategy);
+        chessGame.start(gameId, turnStrategy);
 
         // then
-        assertThatThrownBy(() -> chessGame.start(turnStrategy))
+        assertThatThrownBy(() -> chessGame.start(gameId, turnStrategy))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 잘못된 게임의 상태 입니다.(상태: 진행중)");
     }
@@ -86,7 +88,7 @@ class ChessGameTest {
         chessGame.end();
 
         // then
-        assertThatThrownBy(() -> chessGame.start(turnStrategy))
+        assertThatThrownBy(() -> chessGame.start(gameId, turnStrategy))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 잘못된 게임의 상태 입니다.(상태: 종료됨)");
     }
@@ -117,7 +119,7 @@ class ChessGameTest {
     @DisplayName("나의 턴이 아닌데 말을 움직이면 예외가 발생한다.")
     void move_Invalid_Turn() {
         // given
-        chessGame.start(new MockTurnStrategy(BlackTurnState.STATE));
+        chessGame.start(gameId, new MockTurnStrategy(BlackTurnState.STATE));
 
         Position source = Position.of(2, 1);
         Position target = Position.of(2, 3);
@@ -132,7 +134,7 @@ class ChessGameTest {
     @DisplayName("턴을 바꾸면 상대방의 턴으로 넘어가야 한다.")
     void move_Next_Turn() {
         // given
-        chessGame.start(new MockTurnStrategy(WhiteTurnState.STATE));
+        chessGame.start(gameId, new MockTurnStrategy(WhiteTurnState.STATE));
 
         Position source = Position.of(2, 1);
         Position target = Position.of(2, 3);
@@ -150,7 +152,7 @@ class ChessGameTest {
     @DisplayName("빈 칸을 움직이면 예외가 발생해야 한다.")
     void move_EmptySquare() {
         // given
-        chessGame.start(new MockTurnStrategy(WhiteTurnState.STATE));
+        chessGame.start(gameId, new MockTurnStrategy(WhiteTurnState.STATE));
 
         Position source = Position.of(0, 3);
         Position target = Position.of(0, 4);
@@ -182,7 +184,8 @@ class ChessGameTest {
         squares.put(Position.of(6, 1), Pawn.of(Team.WHITE));
         squares.put(Position.of(6, 3), Queen.of(Team.WHITE));
         squares.put(Position.of(7, 2), Pawn.of(Team.WHITE));
-        chessGame.load(() -> new Board(squares), () -> WhiteTurnState.STATE);
+        chessGame.load(gameId, gameId -> new Board(squares), gameId -> WhiteTurnState.STATE);
+
         // when
         double whiteScore = chessGame.getTeamScore(Team.WHITE);
         double blackScore = chessGame.getTeamScore(Team.BLACK);
@@ -195,7 +198,7 @@ class ChessGameTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"1,1","2,1","3,1.5","4,2","5,2.5"})
+    @CsvSource({"1,1", "2,1", "3,1.5", "4,2", "5,2.5"})
     @DisplayName("같은 세로줄에 폰이 있으면 각 0.5점씩 계산되어야 한다.")
     void getTeamScore_Same_X_Pawn(int pawnCount, double expect) {
         // given
@@ -203,7 +206,7 @@ class ChessGameTest {
         for (int i = 1; i <= pawnCount; i++) {
             squares.put(Position.of(0, i), Pawn.of(Team.WHITE));
         }
-        chessGame.load(() -> new Board(squares), () -> WhiteTurnState.STATE);
+        chessGame.load(gameId, gameId -> new Board(squares), gameId -> WhiteTurnState.STATE);
 
         // when
         double whiteScore = chessGame.getTeamScore(Team.WHITE);

@@ -30,21 +30,21 @@ public class MySQLChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public Board findBoard() {
+    public Board findBoard(String gameId) {
         Map<Position, Piece> board = BoardFactory.createEmptyBoard();
-        board.putAll(findSquares());
+        board.putAll(findSquares(gameId));
         return new Board(board);
     }
 
-    private Map<Position, Piece> findSquares() {
-        final String query = "SELECT * FROM board";
+    private Map<Position, Piece> findSquares(String gameId) {
+        final String query = "SELECT * FROM board WHERE game_id = ?";
         return jdbcContext.select(query, resultSet -> {
             Map<Position, Piece> squares = new HashMap<>();
             while (resultSet.next()) {
                 squares.put(getPosition(resultSet), getPiece(resultSet));
             }
             return squares;
-        });
+        }, gameId);
     }
 
     private Position getPosition(ResultSet resultSet) throws SQLException {
@@ -60,47 +60,64 @@ public class MySQLChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public GameState findGameState() {
-        final String query = "SELECT * FROM game_state";
+    public GameState findGameState(String gameId) {
+        final String query = "SELECT * FROM state WHERE game_id = ?";
         return jdbcContext.select(query, resultSet -> {
             resultSet.next();
             return RunningStateMapper.map(resultSet.getString("state"));
-        });
+        }, gameId);
     }
 
     @Override
-    public void saveChessGame(Board board, GameState gameState) {
-        jdbcContext.transaction(() -> {
-            deleteAllBoard();
-            deleteGameState();
-            saveBoard(board.getBoard());
-            saveGameState(gameState);
-        });
+    public void saveChessGame(String gameId, Board board, GameState gameState) {
+        deleteAllBoard(gameId);
+        deleteGameState(gameId);
+        saveBoard(gameId, board.getBoard());
+        saveGameState(gameId, gameState);
     }
 
-    private void saveBoard(Map<Position, Piece> board) {
-        final String query = "INSERT INTO board VALUES(%s, %s, \"%s\", \"%s\")";
+    private void saveBoard(String gameId, Map<Position, Piece> board) {
+        final String query = "INSERT INTO board VALUES(%s, %s, %s, \"%s\", \"%s\")";
         List<String> queries = board.entrySet().stream()
                 .filter(entry -> !entry.getValue().isRoleOf(Role.EMPTY))
-                .map(entry -> String.format(query, entry.getKey().getX(), entry.getKey().getY(),
+                .map(entry -> String.format(query, gameId, entry.getKey().getX(), entry.getKey().getY(),
                         entry.getValue().getRole().name(), entry.getValue().getTeam().name()))
                 .collect(toList());
         jdbcContext.insertBulk(queries);
     }
 
-    private void saveGameState(GameState gameState) {
-        String query = "INSERT INTO game_state VALUES(?)";
-        jdbcContext.insert(query, RunningStateMapper.map(gameState));
+    private void saveGameState(String gameId, GameState gameState) {
+        String query = "INSERT INTO state VALUES(?, ?)";
+        jdbcContext.insert(query, gameId, RunningStateMapper.map(gameState));
     }
 
-    public void deleteAllBoard() {
-        String query = "DELETE FROM board";
-        jdbcContext.update(query);
+    @Override
+    public void createChessGame(String gameId, Board board, GameState gameState) {
+        String query = "INSERT INTO game VALUES(?)";
+        jdbcContext.insert(query, gameId);
+        saveBoard(gameId, board.getBoard());
+        saveGameState(gameId, gameState);
     }
 
-    public void deleteGameState() {
-        String query = "DELETE FROM game_state";
-        jdbcContext.update(query);
+    public void deleteAllBoard(String gameId) {
+        String query = "DELETE FROM board WHERE game_id = ?";
+        jdbcContext.update(query, gameId);
+    }
+
+    public void deleteGameState(String gameId) {
+        String query = "DELETE FROM state WHERE game_id = ?";
+        jdbcContext.update(query, gameId);
+    }
+
+    @Override
+    public boolean isExistGame(String gameId) {
+        final String query = "SELECT * FROM state WHERE game_id = ? LIMIT 1";
+        return jdbcContext.select(query, ResultSet::next, gameId);
+    }
+
+    @Override
+    public void transaction(Runnable runnable) {
+        jdbcContext.transaction(runnable);
     }
 
     private enum RunningStateMapper {

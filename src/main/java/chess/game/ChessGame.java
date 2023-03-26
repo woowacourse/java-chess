@@ -2,6 +2,8 @@ package chess.game;
 
 import static java.util.stream.Collectors.toList;
 
+import chess.dao.LoadLogic;
+import chess.dao.SaveLogic;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
@@ -16,14 +18,13 @@ import chess.game.state.running.CheckedState;
 import chess.game.state.waiting.WaitingState;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 public class ChessGame {
     private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
     private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
     private static final double PAWN_COUNT_MULTIPLIER = 0.5;
 
+    private GameId gameId;
     private Board board;
     private GameState gameState;
 
@@ -31,8 +32,9 @@ public class ChessGame {
         this.gameState = WaitingState.STATE;
     }
 
-    public void start(TurnStrategy turnStrategy) {
+    public void start(GameId gameId, TurnStrategy turnStrategy) {
         gameState.startGame(() -> {
+            this.gameId = gameId;
             this.board = new Board(BoardFactory.create());
             this.gameState = turnStrategy.create();
         });
@@ -134,14 +136,15 @@ public class ChessGame {
         return gameState.isChecked();
     }
 
-    public void save(BiConsumer<Board, GameState> saveLogic) {
-        gameState.saveGame(() -> saveLogic.accept(board, gameState));
+    public void save(SaveLogic saveLogic) {
+        gameState.saveGame(() -> saveLogic.save(gameId.getGameId(), board, gameState));
     }
 
-    public void load(Supplier<Board> boardLoadLogic, Supplier<GameState> gameStateLoadLogic) {
+    public void load(GameId gameId, LoadLogic<Board> boardLoadLogic, LoadLogic<GameState> gameStateLoadLogic) {
         this.gameState.loadGame(() -> {
-            this.board = boardLoadLogic.get();
-            this.gameState = gameStateLoadLogic.get();
+            this.gameId = gameId;
+            this.board = boardLoadLogic.load(gameId.getGameId());
+            this.gameState = gameStateLoadLogic.load(gameId.getGameId());
         });
     }
 

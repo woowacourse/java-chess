@@ -10,18 +10,34 @@ public class MemoryChessGameDao implements ChessGameDao {
     private Board board = new Board(BoardFactory.create());
 
     @Override
-    public Board findBoard() {
+    public Board findBoard(String gameId) {
         return board;
     }
 
     @Override
-    public GameState findGameState() {
+    public GameState findGameState(String gameId) {
         return gameState;
     }
 
     @Override
-    public void saveChessGame(Board board, GameState gameState) {
+    public void saveChessGame(String gameId, Board board, GameState gameState) {
         this.board = board;
         this.gameState = gameState;
+    }
+
+    @Override
+    public void createChessGame(String gameId, Board board, GameState gameState) {
+        this.board = board;
+        this.gameState = gameState;
+    }
+
+    @Override
+    public boolean isExistGame(String gameId) {
+        return false;
+    }
+
+    @Override
+    public void transaction(Runnable runnable) {
+        runnable.run();
     }
 }

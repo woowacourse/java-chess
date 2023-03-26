@@ -4,9 +4,15 @@ import chess.domain.Board;
 import chess.game.state.GameState;
 
 public interface ChessGameDao {
-    Board findBoard();
+    Board findBoard(String gameId);
 
-    GameState findGameState();
+    GameState findGameState(String gameId);
 
-    void saveChessGame(Board board, GameState gameState);
+    void saveChessGame(String gameId, Board board, GameState gameState);
+
+    void createChessGame(String gameId, Board board, GameState gameState);
+
+    boolean isExistGame(String gameId);
+
+    void transaction(Runnable runnable);
 }

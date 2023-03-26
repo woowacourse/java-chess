@@ -1,14 +1,15 @@
 package chess.controller;
 
 import chess.dao.ChessGameDao;
-import chess.domain.Team;
-import chess.game.Command;
-import chess.game.RandomTurnStrategy;
-import chess.game.action.Action;
-import chess.game.GameCommand;
+import chess.game.GameId;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.dto.PositionRequest;
 import chess.game.ChessGame;
+import chess.game.Command;
+import chess.game.GameCommand;
+import chess.game.RandomTurnStrategy;
+import chess.game.action.Action;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionMapper;
@@ -28,19 +29,32 @@ public class ChessController {
     }
 
     private void initializeActionMap() {
-        actionMap.put(Command.START, new Action(ignore -> startGame()));
+        actionMap.put(Command.START, new Action(this::startGame));
         actionMap.put(Command.MOVE, new Action(this::movePiece));
         actionMap.put(Command.STATUS, new Action(ignore -> getGameStatus()));
         actionMap.put(Command.SAVE, new Action(ignore -> saveGame()));
-        actionMap.put(Command.LOAD, new Action(ignore -> loadGame()));
+        actionMap.put(Command.LOAD, new Action(this::loadGame));
         actionMap.put(Command.LEAVE, new Action(ignore -> leaveGame()));
         actionMap.put(Command.END, new Action(ignore -> endGame()));
     }
 
-    private void startGame() {
-        chessGame.start(new RandomTurnStrategy());
+    private void startGame(GameCommand gameCommand) {
+        GameId gameId = getGameId(gameCommand);
+        validateExistGame(gameId);
+        chessGame.start(gameId, new RandomTurnStrategy());
+        chessGameDao.transaction(() -> chessGame.save(chessGameDao::createChessGame));
         OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private static GameId getGameId(GameCommand gameCommand) {
+        return new GameId(gameCommand.getParameter(0));
+    }
+
+    private void validateExistGame(GameId gameId) {
+        if (chessGameDao.isExistGame(gameId.getGameId())) {
+            throw new IllegalArgumentException("[ERROR] 이미 존재하는 체스방 입니다.");
+        }
     }
 
     private void movePiece(GameCommand gameCommand) {
@@ -77,8 +91,9 @@ public class ChessController {
         OutputView.printSaveMessage();
     }
 
-    private void loadGame() {
-        chessGame.load(chessGameDao::findBoard, chessGameDao::findGameState);
+    private void loadGame(GameCommand gameCommand) {
+        GameId gameId = getGameId(gameCommand);
+        chessGame.load(gameId, chessGameDao::findBoard, chessGameDao::findGameState);
         OutputView.printLoadMessage();
         OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
