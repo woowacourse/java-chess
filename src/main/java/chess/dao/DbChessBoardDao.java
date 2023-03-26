@@ -42,6 +42,7 @@ public class DbChessBoardDao implements ChessBoardDao {
             preparedStatement.setString(2, piece.getTeam().name());
             preparedStatement.setInt(3, piecePosition.getFile());
             preparedStatement.setInt(4, piecePosition.getRank());
+            preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
