@@ -64,7 +64,12 @@ public class DbChessGameDao implements ChessGameDao {
                 int file = resultSet.getInt("piece_file");
                 board.put(new Position(rank, file), piece);
             }
-            return ChessGame.setting(id, Board.setting(board), Team.valueOf(turn));
+            return ChessGame.setting(
+                    id,
+                    Board.setting(board, new DbChessBoardDao()),
+                    Team.valueOf(turn),
+                    new DbChessGameDao()
+            );
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

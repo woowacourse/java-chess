@@ -1,9 +1,12 @@
 package chess.dao;
 
 import chess.domain.ChessGame;
+import java.util.Collections;
 import java.util.List;
 
 public class InMemoryChessGameDao implements ChessGameDao {
+
+    private ChessGame chessGame;
 
     @Override
     public long create() {
@@ -12,7 +15,7 @@ public class InMemoryChessGameDao implements ChessGameDao {
 
     @Override
     public ChessGame findById(long id) {
-        return ChessGame.createGame();
+        return chessGame;
     }
 
     @Override
@@ -22,6 +25,6 @@ public class InMemoryChessGameDao implements ChessGameDao {
 
     @Override
     public List<Integer> findAll() {
-        return null;
+        return Collections.emptyList();
     }
 }

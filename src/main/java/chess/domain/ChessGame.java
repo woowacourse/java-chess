@@ -1,7 +1,7 @@
 package chess.domain;
 
+import chess.dao.ChessBoardDao;
 import chess.dao.ChessGameDao;
-import chess.dao.DbChessGameDao;
 import chess.domain.board.Board;
 import java.util.HashMap;
 import java.util.List;
@@ -10,32 +10,33 @@ import java.util.Optional;
 
 public class ChessGame {
 
-    private static final ChessGameDao chessGameDao = new DbChessGameDao();
-
     private final long id;
     private final Board board;
     private Team turn;
+    private final ChessGameDao chessGameDao;
 
-    private ChessGame(long id, Board board, Team turn) {
+    private ChessGame(long id, Board board, Team turn, ChessGameDao chessGameDao) {
         this.id = id;
         this.board = board;
         this.turn = turn;
+        this.chessGameDao = chessGameDao;
     }
 
-    public static ChessGame createGame() {
+    public static ChessGame createGame(ChessGameDao chessGameDao, ChessBoardDao chessBoardDao) {
         long id = chessGameDao.create();
-        return new ChessGame(id, Board.init(id), Team.getStartTeam());
+        Board initBoard = Board.init(id, chessBoardDao);
+        return new ChessGame(id, initBoard, Team.getStartTeam(), chessGameDao);
     }
 
-    public static ChessGame continueGame(long id) {
+    public static ChessGame continueGame(long id, ChessGameDao chessGameDao) {
         return chessGameDao.findById(id);
     }
 
-    public static ChessGame setting(long id, Board board, Team turn) {
-        return new ChessGame(id, board, turn);
+    public static ChessGame setting(long id, Board board, Team turn, ChessGameDao chessGameDao) {
+        return new ChessGame(id, board, turn, chessGameDao);
     }
 
-    public static List<Integer> showProgressGame() {
+    public static List<Integer> showProgressGame(ChessGameDao chessGameDao) {
         return chessGameDao.findAll();
     }
 

@@ -3,15 +3,15 @@ package chess.controller;
 import static chess.view.PositionConverter.convertToSourcePosition;
 import static chess.view.PositionConverter.convertToTargetPosition;
 
+import chess.dao.DbChessBoardDao;
+import chess.dao.DbChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.view.GameCommand;
-import chess.view.InputValidator;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         inputStartCommand();
-        outputView.printGameList(ChessGame.showProgressGame());
+        outputView.printGameList(ChessGame.showProgressGame(new DbChessGameDao()));
         String gameCommand = inputGameCommand();
         ChessGame chessGame = startChessGame(gameCommand);
         progress(chessGame);
@@ -36,11 +36,11 @@ public class ChessController {
 
     private ChessGame startChessGame(String gameCommand) {
         if (GameCommand.isNew(gameCommand)) {
-            ChessGame chessGame = ChessGame.createGame();
+            ChessGame chessGame = ChessGame.createGame(new DbChessGameDao(), new DbChessBoardDao());
             outputView.printGameId(chessGame.getId());
             return chessGame;
         }
-        return ChessGame.continueGame(Integer.parseInt(gameCommand));
+        return ChessGame.continueGame(Integer.parseInt(gameCommand), new DbChessGameDao());
     }
 
     private void inputStartCommand() {

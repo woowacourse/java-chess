@@ -1,11 +1,12 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.dao.InMemoryChessBoardDao;
+import chess.dao.InMemoryChessGameDao;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = ChessGame.createGame();
+        chessGame = ChessGame.createGame(new InMemoryChessGameDao(), new InMemoryChessBoardDao());
     }
 
     @Test

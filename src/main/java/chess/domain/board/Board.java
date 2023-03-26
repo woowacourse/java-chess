@@ -3,8 +3,6 @@ package chess.domain.board;
 import static chess.domain.PieceScore.PAWN_WITH_SAME_FILE;
 
 import chess.dao.ChessBoardDao;
-import chess.dao.DbChessBoardDao;
-import chess.dao.InMemoryChessBoardDao;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
@@ -19,15 +17,15 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private static final ChessBoardDao chessBoardDao = new DbChessBoardDao();
-
     private final Map<Position, Piece> board;
+    private final ChessBoardDao chessBoardDao;
 
-    private Board(Map<Position, Piece> board) {
+    private Board(Map<Position, Piece> board, ChessBoardDao chessBoardDao) {
         this.board = board;
+        this.chessBoardDao = chessBoardDao;
     }
 
-    public static Board init(long chessGameId) {
+    public static Board init(long chessGameId, ChessBoardDao chessBoardDao) {
         Map<Position, Piece> setting = new HashMap<>();
 
         for (PieceSettings pieceSetting : PieceSettings.values()) {
@@ -38,11 +36,11 @@ public class Board {
         }
         chessBoardDao.save(chessGameId, setting);
 
-        return new Board(setting);
+        return new Board(setting, chessBoardDao);
     }
 
-    public static Board setting(Map<Position, Piece> board) {
-        return new Board(board);
+    public static Board setting(Map<Position, Piece> board, ChessBoardDao chessBoardDao) {
+        return new Board(board, chessBoardDao);
     }
 
     public boolean isNotTurn(Position source, Team turn) {
