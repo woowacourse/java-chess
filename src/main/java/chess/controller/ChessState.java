@@ -21,4 +21,8 @@ public enum ChessState {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 게임 진행 상태가 존재하지 않습니다"));
     }
+
+    public String getValue() {
+        return value;
+    }
 }

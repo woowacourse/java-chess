@@ -3,6 +3,7 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.strategy.StrategyCommand;
 import chess.dao.ChessGameDao;
+import chess.dao.ChessRoomDao;
 import chess.domain.game.ChessGame;
 import chess.domain.room.ChessRoom;
 import chess.view.InputView;
@@ -17,6 +18,7 @@ public class ChessGameController {
         OutputView.printStart();
         while (state != ChessState.END) {
             state = play(state, chessGame);
+            ChessRoomDao.updateState(chessRoom, state);
         }
     }
 

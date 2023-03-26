@@ -54,12 +54,8 @@ public final class Position {
         return target.rank() - this.rank();
     }
 
-    public char file() {
-        return file.value();
-    }
-
-    public int rank() {
-        return rank.value();
+    public String getCoordinate() {
+        return file.value() + String.valueOf(rank.value());
     }
 
     @Override
@@ -73,5 +69,13 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public char file() {
+        return file.value();
+    }
+
+    public int rank() {
+        return rank.value();
     }
 }

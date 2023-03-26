@@ -1,10 +1,13 @@
 package chess.dao;
 
 import chess.domain.board.Board;
+import chess.domain.game.ChessGame;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.team.Team;
 import chess.view.PieceName;
 
 import java.sql.Connection;
@@ -104,5 +107,28 @@ public class BoardDao {
         }
 
         return null;
+    }
+
+    public static void updateByMove(final Board board,
+                                    final Position source,
+                                    final Position target,
+                                    final Piece sourcePiece) {
+        final var query = "UPDATE board SET %s = ? WHERE id = ?";
+
+        try (final var connection = getConnection()) {
+            final var targetQuery = String.format(query, target.getCoordinate());
+            final var targetPreparedStatement = connection.prepareStatement(targetQuery);
+            targetPreparedStatement.setString(1, PieceName.findByPiece(sourcePiece));
+            targetPreparedStatement.setInt(2, board.getId());
+            targetPreparedStatement.executeUpdate();
+
+            final var sourceQuery = String.format(query, source.getCoordinate());
+            final var sourcePreparedStatement = connection.prepareStatement(sourceQuery);
+            sourcePreparedStatement.setString(1, PieceName.findByPiece(new Empty(Team.NONE)));
+            sourcePreparedStatement.setInt(2, board.getId());
+            sourcePreparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

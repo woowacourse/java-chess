@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
 import chess.domain.player.Player;
 import chess.domain.room.ChessRoom;
@@ -55,6 +56,19 @@ public class ChessRoomDao {
             preparedStatement.setInt(2, player.getId());
             preparedStatement.executeUpdate();
             return findByPlayer(player);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void updateState(final ChessRoom chessRoom, final ChessState state) {
+        final var query = "UPDATE chess_room SET state = ? WHERE id = ?";
+        try(final var connection = getConnection()) {
+            final var preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, state.getValue());
+            preparedStatement.setInt(2, chessRoom.getId());
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
