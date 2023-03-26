@@ -10,4 +10,6 @@ public interface ChessGameDao {
     long generateNewGame();
 
     void updateTurn(final Turn turn, final long gameId);
+
+    Turn loadTurn(long gameId);
 }

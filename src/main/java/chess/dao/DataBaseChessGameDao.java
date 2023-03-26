@@ -60,4 +60,22 @@ public class DataBaseChessGameDao implements ChessGameDao {
             throw new IllegalArgumentException("게임이 생성되지 않습니다.");
         }
     }
+
+    @Override
+    public Turn loadTurn(final long gameId) {
+        final String generateNewGameQuery = "SELECT turn FROM chess_game WHERE id = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setLong(1, gameId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                final Color turn = Color.valueOf(resultSet.getString(1));
+                return new Turn(turn);
+            }
+            throw new SQLException();
+        } catch (final SQLException e) {
+            throw new IllegalArgumentException("게임이 로딩되지 않습니다.");
+        }
+    }
 }
