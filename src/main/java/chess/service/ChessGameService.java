@@ -16,14 +16,16 @@ public class ChessGameService {
     }
 
     public void move(MoveHistory moveHistory) {
-        chessGame.move(moveHistory.getSourcePosition(), moveHistory.getTargetPosition());
+        Position sourcePosition = Position.of(moveHistory.getSource());
+        Position targetPosition = Position.of(moveHistory.getTarget());
+        chessGame.move(sourcePosition, targetPosition);
         chessGameJdbcDao.save(moveHistory);
     }
 
     public GameResult loadBoard() {
         for (MoveHistory moveHistory : chessGameJdbcDao.findAll()) {
-            Position sourcePosition = moveHistory.getSourcePosition();
-            Position targetPosition = moveHistory.getTargetPosition();
+            Position sourcePosition = Position.of(moveHistory.getSource());
+            Position targetPosition = Position.of(moveHistory.getTarget());
             chessGame.move(sourcePosition, targetPosition);
         }
         return chessGame.getResult();

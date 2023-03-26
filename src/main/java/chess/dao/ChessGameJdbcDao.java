@@ -45,7 +45,7 @@ public class ChessGameJdbcDao implements ChessGameDao {
              var preparedStatement = connection.prepareStatement(query)) {
             var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                moveHistories.add(new MoveHistory(
+                moveHistories.add(MoveHistory.of(
                         resultSet.getString("source"),
                         resultSet.getString("target")
                 ));
