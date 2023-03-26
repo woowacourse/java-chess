@@ -6,7 +6,6 @@ import chess.model.piece.Camp;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import chess.model.position.Distance;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

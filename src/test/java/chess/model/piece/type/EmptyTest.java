@@ -2,13 +2,10 @@ package chess.model.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.piece.Camp;
 import chess.model.piece.Piece;
 import chess.model.position.Distance;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class EmptyTest {
 
