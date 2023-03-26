@@ -3,10 +3,7 @@ package chess.domain.board;
 import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceMovingType;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -125,6 +122,16 @@ public class BlackWhiteChessBoard implements ChessBoard {
     @Override
     public Map<Coordinate, Piece> pieces() {
         return Collections.unmodifiableMap(pieces);
+    }
+    
+    @Override
+    public double calculateScore(Team team) {
+        return pieces.keySet().stream()
+                .map(this::pieceOrEmpty)
+                .filter(piece -> piece.isSameTeam(team))
+                .map(Piece::pieceType)
+                .mapToDouble(PieceType::score)
+                .sum();
     }
     
     private Piece pieceOrEmpty(Coordinate nextCoordinate) {

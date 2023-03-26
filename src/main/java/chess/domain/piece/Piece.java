@@ -34,6 +34,10 @@ public abstract class Piece {
         return this.team.isSameTeam(otherPiece.team);
     }
     
+    public boolean isSameTeam(Team team) {
+        return this.team.isSameTeam(team);
+    }
+    
     public boolean isTeam(Team currentTeam) {
         return this.team.isSameTeam(currentTeam);
     }

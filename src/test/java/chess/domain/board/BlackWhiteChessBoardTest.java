@@ -77,4 +77,10 @@ class BlackWhiteChessBoardTest {
                 () -> assertThat(blackWhiteChessBoard.isEmpty(B_TWO)).isFalse()
         );
     }
+    
+    @Test
+    void 지정한_팀의_현재_점수_구하기() {
+        double score = blackWhiteChessBoard.calculateScore(Team.WHITE);
+        assertThat(score).isEqualTo(38.0);
+    }
 }

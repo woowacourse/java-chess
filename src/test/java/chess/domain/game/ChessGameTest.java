@@ -14,9 +14,9 @@ class ChessGameTest {
     void 초기화_안되었는지_확인() {
         ChessGame chessGame = new ChessGame();
         assertAll(
-                () -> assertThat(chessGame.isNotInitialized()).isTrue(),
+                () -> assertThat(chessGame.isChessBoardNotInitialized()).isTrue(),
                 chessGame::newGame,
-                () -> assertThat(chessGame.isNotInitialized()).isFalse()
+                () -> assertThat(chessGame.isChessBoardNotInitialized()).isFalse()
         );
     }
 }

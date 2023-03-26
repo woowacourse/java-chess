@@ -24,11 +24,15 @@ public class ChessGame {
         currentTeam = currentTeam.nextTeam();
     }
     
-    public boolean isNotInitialized() {
+    public boolean isChessBoardNotInitialized() {
         return Objects.isNull(chessBoard);
     }
     
     public ChessBoard chessBoard() {
         return chessBoard;
+    }
+    
+    public double getWhiteTeamScore() {
+        return chessBoard.calculateScore(Team.WHITE);
     }
 }

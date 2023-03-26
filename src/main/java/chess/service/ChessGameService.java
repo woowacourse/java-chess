@@ -24,7 +24,11 @@ public class ChessGameService {
         chessGame.move(inputCommand);
     }
     
-    public boolean isNotInitialized() {
-        return chessGame.isNotInitialized();
+    public boolean isChessBoardNotInitialized() {
+        return chessGame.isChessBoardNotInitialized();
+    }
+    
+    public double getWhiteTeamScore() {
+        return chessGame.getWhiteTeamScore();
     }
 }

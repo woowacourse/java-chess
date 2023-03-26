@@ -9,7 +9,7 @@ import java.util.List;
 public class MoveCommand implements Command {
     @Override
     public void playWithCurrentTurn(List<String> inputCommand, ChessGameService chessGameService) {
-        if (chessGameService.isNotInitialized()) {
+        if (chessGameService.isChessBoardNotInitialized()) {
             throw new IllegalArgumentException("첫 시작은 start 또는 end만 가능합니다.");
         }
         chessGameService.move(inputCommand);
