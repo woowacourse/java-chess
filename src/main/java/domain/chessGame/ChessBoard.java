@@ -63,7 +63,7 @@ public final class ChessBoard {
         Piece startPiece = chessBoard.get(startPosition);
 
         if (startPiece.isPawn() && startPiece.isMovablePath(startPosition, path)) {
-            validatePawnMovable(startPosition, endPosition);
+            validatePawnMovable((Pawn) startPiece, startPosition, endPosition);
         }
         return startPiece.isMovablePath(startPosition, path) &&
                 isPassablePath(path) &&
@@ -84,26 +84,24 @@ public final class ChessBoard {
         return true;
     }
 
-    private void validatePawnMovable(Position startPosition, Position endPosition) {
+    private void validatePawnMovable(Pawn selectedPawn, Position startPosition, Position endPosition) {
         Path path = new Path(startPosition, endPosition);
-        Pawn selectedPawn = (Pawn) chessBoard.get(startPosition);
 
         if (selectedPawn.isForwardOneStep(startPosition, path.getFirstPosition())) {
             validatePassablePathToForward(path.getPositions());
             return;
         }
-        validateMovableToDiagonal(selectedPawn, endPosition);
+        validateMovableToDiagonal(endPosition);
     }
 
     private void validatePassablePathToForward(List<Position> pathPositions) {
         pathPositions.forEach(this::validateNoPieceAt);
     }
 
-    private void validateMovableToDiagonal(Pawn selectedPawn, Position endPosition) {
+    private void validateMovableToDiagonal(Position endPosition) {
         if (!chessBoard.containsKey(endPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 상대 말이 없으면 이동이 불가능합니다.");
         }
-        isMovableEndPosition(endPosition, selectedPawn);
     }
 
     private void validateNoPieceAt(Position position) {
