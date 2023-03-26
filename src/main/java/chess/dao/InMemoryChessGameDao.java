@@ -2,6 +2,8 @@ package chess.dao;
 
 import chess.domain.ChessGame;
 
+import java.util.List;
+
 public final class InMemoryChessGameDao implements ChessGameDao {
 
     private ChessGame chessGame;
@@ -15,6 +17,11 @@ public final class InMemoryChessGameDao implements ChessGameDao {
     @Override
     public ChessGame select(final int id) {
         return chessGame;
+    }
+
+    @Override
+    public List<Integer> selectAllId() {
+        return List.of(1);
     }
 
     @Override

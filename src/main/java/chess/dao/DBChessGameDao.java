@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class DBChessGameDao implements ChessGameDao {
 
@@ -55,6 +57,24 @@ public final class DBChessGameDao implements ChessGameDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    @Override
+    public List<Integer> selectAllId() {
+        List<Integer> id = new ArrayList<>();
+        final var query = "SELECT id FROM chess_game";
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                id.add(resultSet.getInt("id"));
+            }
+
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
 
     @Override

@@ -5,6 +5,7 @@ import chess.controller.dto.StatusDto;
 import chess.controller.dto.TeamDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class OutputView {
 

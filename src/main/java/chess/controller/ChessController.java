@@ -5,6 +5,7 @@ import chess.controller.dto.InputRenderer;
 import chess.controller.dto.OutputRenderer;
 import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
+import chess.domain.Rooms;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -24,7 +25,8 @@ public final class ChessController {
     private final ErrorController errorController;
     private final ChessGameDao chessGameDao;
     private final Map<Command, Action> commandMapper;
-    private int chessGameId = 1;
+    private int id;
+    private final Rooms rooms;
 
     public ChessController(final ErrorController errorController, ChessGameDao chessGameDao) {
         this.errorController = errorController;
@@ -34,9 +36,16 @@ public final class ChessController {
                 MOVE, this::move,
                 STATUS, this::inquireStatus
         );
+        this.rooms = new Rooms(this.chessGameDao);
     }
 
     public void run() {
+        int input = InputView.printRoomId(rooms.getRooms());
+        if(input == 0){
+            input = rooms.createNewRoom();
+        }
+        this.id = input;
+
         OutputView.printInitialMessage();
         CommandDto commandDto = readCommand(List.of(START, END));
         Command command = commandDto.getCommand();
@@ -57,20 +66,16 @@ public final class ChessController {
     }
 
     public CommandDto start(final CommandDto commandDto) {
-        ChessGame chessGame = chessGameDao.select(chessGameId);
-        if (chessGame == null) {
-            chessGame = ChessGame.create();
-            chessGameId = chessGameDao.save(chessGame);
-        }
+        ChessGame chessGame = chessGameDao.select(id);
         OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
     public CommandDto move(final CommandDto commandDto) {
-        ChessGame chessGame = chessGameDao.select(chessGameId);
-        List<Integer> source = commandDto.getSource();
-        List<Integer> target = commandDto.getTarget();
+        ChessGame chessGame = chessGameDao.select(id);
+        List<java.lang.Integer> source = commandDto.getSource();
+        List<java.lang.Integer> target = commandDto.getTarget();
         Position sourcePosition = new Position(source.get(0), source.get(1));
         Position targetPosition = new Position(target.get(0), target.get(1));
         errorController.tryCatchStrategy(() -> {
@@ -88,12 +93,12 @@ public final class ChessController {
     }
 
     public CommandDto inquireStatus(final CommandDto commandDto) {
-        ChessGame chessGame = chessGameDao.select(chessGameId);
+        ChessGame chessGame = chessGameDao.select(id);
         OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
         OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
-        OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
 
         if (chessGame.isGameEnd()) {
+            OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
             chessGameDao.delete(chessGame);
             return readCommand(List.of(END));
         }

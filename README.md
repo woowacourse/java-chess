@@ -27,7 +27,7 @@
 
 - [x] 데이터베이스를 연결한다.
 - [x] 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다. (필수)
-- [ ] 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다. (선택)
+- [x] 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다. (선택)
 - [ ] 사용자별로 체스 게임 기록을 관리한다. (선택)
 
 ```
@@ -55,6 +55,7 @@
   SELECT * FROM board WHERE chess_game_id = ?;
   DELETE FROM chess_game WHERE id = ?;
   DELETE FROM board WHERE chess_game_id = ?;
+  UPDATE chess_game SET turn = ? WHERE id = ?;
 ```
 
 ### ChessGame
