@@ -6,7 +6,12 @@ import chess.domain.game.Score;
 import chess.domain.team.Team;
 import chess.view.OutputView;
 
+import static chess.controller.ChessState.*;
+import static chess.domain.team.Team.*;
+
 public class StatusCommand implements StrategyCommand {
+
+    private static final String CANNOT_STATUS_BEFORE_START_ERROR_MESSAGE = "게임이 시작되기 전에 점수를 확인할 수 없습니다";
 
     private StatusCommand() {
     }
@@ -17,16 +22,16 @@ public class StatusCommand implements StrategyCommand {
 
     @Override
     public ChessState execute(final ChessState state, final ChessGame chessGame) {
-        if (state == ChessState.START || state == ChessState.PROGRESS) {
-            Score white = chessGame.calculateScore(Team.WHITE);
-            Score black = chessGame.calculateScore(Team.BLACK);
+        if (state == START || state == PROGRESS) {
+            Score white = chessGame.calculateScore(WHITE);
+            Score black = chessGame.calculateScore(BLACK);
 
             OutputView.printStatus(white, black);
             OutputView.printScoreWinning(white, black);
             OutputView.printBoard(chessGame.getBoard());
-            return ChessState.PROGRESS;
+            return PROGRESS;
         }
 
-        throw new IllegalArgumentException("게임이 시작되기 전에 점수를 확인할 수 없습니다");
+        throw new IllegalArgumentException(CANNOT_STATUS_BEFORE_START_ERROR_MESSAGE);
     }
 }

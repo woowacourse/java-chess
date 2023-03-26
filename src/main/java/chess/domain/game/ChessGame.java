@@ -14,6 +14,13 @@ import java.util.HashMap;
 
 public class ChessGame {
 
+    private static final int INITIAL_SCORE = 0;
+    private static final int SAME_TEAM_PAWN = 1;
+    private static final int NOT_PAWN = 0;
+    private static final int INITIAL_COUNT = 0;
+    private static final double PENALTY_SCORE_DUPLICATE_PAWN_IN_FILE = 0.5;
+    private static final int EXIST_OPPONENT_KING = 1;
+    private static final int NOT_EXIST_OPPONENT_KING = 0;
     private final Board board;
     private Team turn;
 
@@ -35,7 +42,7 @@ public class ChessGame {
     }
 
     public Score calculateScore(final Team team) {
-        Score score = Score.from(0);
+        Score score = Score.from(INITIAL_SCORE);
 
         for (final File file : File.values()) {
             score = score.add(calculateScoreEachFile(file, team));
@@ -45,7 +52,7 @@ public class ChessGame {
     }
 
     private Score calculateScoreEachFile(final File file, final Team team) {
-        Score score = Score.from(0);
+        Score score = Score.from(INITIAL_SCORE);
 
         for (final Rank rank : Rank.values()) {
             score = score.add(calculateScoreEachPosition(Position.of(file, rank), team));
@@ -56,44 +63,44 @@ public class ChessGame {
     }
 
     private Score calculateScoreEachPosition(final Position position, final Team team) {
-        final Score score = Score.from(0);
+        final Score score = Score.from(INITIAL_SCORE);
         final Piece piece = board.getPiece(position);
 
         return score.add(PieceScore.findByPiece(piece, team));
     }
 
     private Score calculatePawnScoreByCountEachFile(final File file, final Team team) {
-        int pawnCount = 0;
+        int pawnCount = INITIAL_COUNT;
 
         for (final Rank rank : Rank.values()) {
             pawnCount += hasPawn(Position.of(file, rank), team);
         }
 
         if (pawnCount <= 1) {
-            return Score.from(0);
+            return Score.from(INITIAL_SCORE);
         }
-        return Score.from(0.5 * pawnCount);
+        return Score.from(PENALTY_SCORE_DUPLICATE_PAWN_IN_FILE * pawnCount);
     }
 
     private int hasPawn(final Position position, final Team team) {
         if (board.getPiece(position).equals(new Pawn(team))) {
-            return 1;
+            return SAME_TEAM_PAWN;
         }
-        return 0;
+        return NOT_PAWN;
     }
 
     public boolean isExistOpponentKing() {
-        int countOpponentKing = 0;
+        int countOpponentKing = INITIAL_COUNT;
 
         for(final File file: File.values()) {
             countOpponentKing += getCountOpponentKingEachFile(file);
         }
 
-        return countOpponentKing == 1;
+        return countOpponentKing == EXIST_OPPONENT_KING;
     }
 
     private int getCountOpponentKingEachFile(final File file) {
-        int countOpponentKing = 0;
+        int countOpponentKing = INITIAL_COUNT;
 
         for(final Rank rank: Rank.values()) {
             countOpponentKing += getCountOpponentKingEachPosition(file, rank);
@@ -106,9 +113,9 @@ public class ChessGame {
         final Piece piece = board.getPiece(Position.of(file, rank));
 
         if (piece.equals(new King(turn.reverse()))) {
-            return 1;
+            return EXIST_OPPONENT_KING;
         }
-        return 0;
+        return NOT_EXIST_OPPONENT_KING;
     }
 
     public Board getBoard() {
