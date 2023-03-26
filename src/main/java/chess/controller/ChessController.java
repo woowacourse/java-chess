@@ -43,6 +43,9 @@ public class ChessController {
         if (command.isStatus()) {
             return state.status();
         }
+        if (command.isReset()) {
+            return state.reset();
+        }
         return state.end();
     }
 }

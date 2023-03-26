@@ -17,6 +17,7 @@ public class Command {
     private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
     private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
+    private static final String RESET_COMMAND = "reset";
 
     private String input;
     private Square source;
@@ -34,7 +35,7 @@ public class Command {
             target = convertToSquare(commands.get(TARGET_INDEX));
             return;
         }
-        if (!isStart() && !isEnd() && !isStatus()) {
+        if (!isStart() && !isEnd() && !isStatus() && !isReset()) {
             throw new IllegalArgumentException("게임 명령어가 올바르지 않습니다.");
         }
     }
@@ -67,6 +68,10 @@ public class Command {
 
     public boolean isEnd() {
         return input.equals(END_COMMAND);
+    }
+
+    public boolean isReset() {
+        return input.equals(RESET_COMMAND);
     }
 
     public Square getSource() {
