@@ -2,6 +2,7 @@ package chessgame.domain.chessgame;
 
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
+import chessgame.dto.GameRoomDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +14,10 @@ public class ChessGame {
     private final Result result;
     private final long roomId;
 
-    public ChessGame(Map<Coordinate, Piece> board, long roomId) {
+    public ChessGame(Map<Coordinate, Piece> board, GameRoomDto gameRoomDto) {
         this.board = new Board(board);
-        this.roomId = roomId;
-        this.turn = Camp.WHITE;
+        this.roomId = gameRoomDto.getRoomId();
+        this.turn = Camp.valueOf(gameRoomDto.getTurn());
         this.result = new Result();
     }
 

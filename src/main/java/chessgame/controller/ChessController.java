@@ -81,13 +81,13 @@ public class ChessController {
 
         long roomId = gameRoomDto.getRoomId();
         Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(roomId);
-        return new ChessGame(board, roomId);
+        return new ChessGame(board, gameRoomDto);
     }
 
     private ChessGame makeAlreadyExistGameRoom(String roomId) {
         GameRoomDto gameRoomDto = chessGameService.findGameRoomById(Long.parseLong(roomId));
         Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(gameRoomDto.getRoomId());
-        return new ChessGame(board, gameRoomDto.getRoomId());
+        return new ChessGame(board, gameRoomDto);
     }
 
     private void playGame(final ChessGame chessGame) {
