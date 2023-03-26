@@ -18,7 +18,7 @@ public class OutputView {
     private static final String GAME_COMMAND_MOVE_DESCRIPTION =
             MOVE.getCommand() + " source위치 target위치 - 예. move b2 b3";
     private static final String GAME_COMMAND_REQUEST = String.format(
-            "> 게임 시작(방 목록 조회): %s\n> 게임 종료: %s\n> 게임 이동: %s\n> 어플리케이션 종료: %s",
+            "> 게임 시작(방 입장): %s\n> 게임 종료(방 나가기): %s\n> 게임 이동: %s\n> 어플리케이션 종료: %s",
             START.getCommand(), END.getCommand(), GAME_COMMAND_MOVE_DESCRIPTION, EXIT.getCommand()
     );
     private static final String GAME_OVER_MESSAGE =
