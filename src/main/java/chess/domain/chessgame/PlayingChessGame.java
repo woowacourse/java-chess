@@ -3,9 +3,7 @@ package chess.domain.chessgame;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -80,10 +78,5 @@ public class PlayingChessGame extends ChessGame {
                 .stream()
                 .max(Double::compareTo)
                 .orElseThrow(IllegalStateException::new);
-    }
-
-    @Override
-    public List<Piece> getPieces() {
-        return board.getPieces();
     }
 }

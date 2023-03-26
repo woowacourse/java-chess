@@ -1,18 +1,26 @@
 package chess.domain.chessgame;
 
+import chess.TestPiecesFactory;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.Board;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.piecesfactory.StartingPiecesFactory;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 import static chess.domain.File.A;
-import static chess.domain.Rank.FOUR;
-import static chess.domain.Rank.TWO;
+import static chess.domain.File.E;
+import static chess.domain.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -101,15 +109,22 @@ class EndChessGameTest {
                 .hasMessage("게임이 이미 끝났습니다.");
     }
 
+
     @Test
-    void 체스말을_꺼내면_예외가_발생한다() {
+    void 체스말을_꺼낸다() {
         //given
-        final ChessGame chessGame = new EndChessGame(Board.from(new StartingPiecesFactory()), Color.BLACK);
+        final ChessGame chessGame = new EndChessGame(Board.from(new TestPiecesFactory(List.of(
+                new King(E, EIGHT, BLACK), new King(E, ONE, WHITE)))),
+                Color.BLACK);
 
         //when
+        final List<Piece> pieces = chessGame.getPieces();
+
         //then
-        assertThatThrownBy(chessGame::getPieces)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("게임이 이미 끝났습니다.");
+        assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
+                .contains(
+                        tuple(new Position(E, EIGHT), BLACK, King.class),
+                        tuple(new Position(E, ONE), WHITE, King.class)
+                );
     }
 }

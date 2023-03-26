@@ -36,5 +36,7 @@ public abstract class ChessGame {
 
     public abstract Color findScoreWinner();
 
-    public abstract List<Piece> getPieces();
+    public List<Piece> getPieces() {
+        return board.getPieces();
+    }
 }

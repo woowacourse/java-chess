@@ -3,9 +3,7 @@ package chess.domain.chessgame;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
 
-import java.util.List;
 import java.util.Map;
 
 public class EndChessGame extends ChessGame {
@@ -46,11 +44,6 @@ public class EndChessGame extends ChessGame {
 
     @Override
     public Color findScoreWinner() {
-        throw new UnsupportedOperationException("게임이 이미 끝났습니다.");
-    }
-
-    @Override
-    public List<Piece> getPieces() {
         throw new UnsupportedOperationException("게임이 이미 끝났습니다.");
     }
 }
