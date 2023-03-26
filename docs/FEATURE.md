@@ -1,39 +1,5 @@
 ## 체스 게임 기능 목록
 
-### 데이터베이스 생성 쿼리
-
-```agsl
-CREATE TABLE User (
-	user_id VARCHAR(20) NOT NULL,
-	nickname VARCHAR(20) NOT NULL,
-	PRIMARY KEY (user_id)
-)
-```
-
-```agsl
-CREATE TABLE Game (
-	game_id BIGINT NOT NULL AUTO_INCREMENT,
-	user_id VARCHAR(20) NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	PRIMARY KEY (game_id),
-	FOREIGN KEY (user_id) REFERENCES User(user_id)
-)
-```
-
-```agsl
-CREATE TABLE Board (
-	game_id BIGINT NOT NULL,
-	turn INT NOT NULL,
-	piece_file CHAR(1) NOT NULL,
-	piece_rank CHAR(1) NOT NULL,
-	piece_type VARCHAR(10) NOT NULL,
-	piece_team TINYINT NOT NULL,
-	PRIMARY KEY (game_id, turn, piece_file, piece_rank),
-	FOREIGN KEY (game_id) REFERENCES Game(game_id)
-)
-```
-
-
 ### 도메인 기능
 
 - ChessGame: 체스 게임
