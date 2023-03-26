@@ -53,7 +53,17 @@ public class ChessDao {
         }
     }
 
-    private static List<Notation> getNotations(final ResultSet result) throws SQLException {
+    public void deleteNotation() {
+        final String query = "TRUNCATE notation";
+        try (final Connection connection = getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private List<Notation> getNotations(final ResultSet result) throws SQLException {
         List<Notation> notations = new ArrayList<>();
         while (result.next()) {
             notations.add(new Notation(

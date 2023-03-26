@@ -50,4 +50,19 @@ class ChessDaoTest {
         // then
         assertThat(result.size()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("기보 기록을 삭제합니다.")
+    void delete_notation() {
+        // given
+        chessDao.addNotation(Position.from("a2"), Position.from("a4"), new Pawn(Team.WHITE));
+        chessDao.addNotation(Position.from("a7"), Position.from("a5"), new Pawn(Team.BLACK));
+        chessDao.addNotation(Position.from("b2"), Position.from("b4"), new Pawn(Team.WHITE));
+
+        // when
+        chessDao.deleteNotation();
+
+        // then
+        assertThat(chessDao.readNotation().size()).isEqualTo(0);
+    }
 }
