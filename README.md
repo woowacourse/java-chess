@@ -4,20 +4,20 @@
 
 ## ✔ 4단계 기능 요구사항
 
-- [ ] 애플리케이션 재시작 시 이전에 하던 체스 게임을 재시작할 수 있어야 한다
+- [x] 애플리케이션 재시작 시 이전에 하던 체스 게임을 재시작할 수 있어야 한다
 - [ ] table
-    - [ ] Piece 정보 : piece_type, team_color, rank, file
+    - [x] Piece 정보 : piece_type, team_color, rank, file
     - [ ] Chessgame 정보 : id, turn
-      - [ ] CRUD
-          - [ ] Create
-              - [ ] DB에서 불러 올 체스 게임이 없으면 만든다
-          - [ ] Read
-              - [ ] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
-          - [ ] Update
-              - [ ] 기물을 움직일 때마다 DB 업데이트 해준다
-              - [ ] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
-          - [ ] Delete
-            - [ ] King 이 죽으면 DB 초기화 해준다
+        - [ ] CRUD
+            - [x] Create
+                - [x] DB에서 불러 올 체스 게임이 없으면 만든다
+            - [x] Read
+                - [x] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
+            - [x] Update
+                - [x] 기물을 움직일 때마다 DB 업데이트 해준다
+                - [x] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
+            - [ ] Delete
+              - [ ] King 이 죽으면 DB 초기화 해준다
 
 - Query
 ```sql
