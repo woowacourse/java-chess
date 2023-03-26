@@ -5,6 +5,7 @@ import domain.chessboard.ChessBoard;
 import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
+import jdbc.ChessGameDao;
 import view.Command;
 import view.InputView;
 import view.OutputView;
@@ -18,13 +19,16 @@ public class ChessGameController {
     private static final int TARGET_INDEX = 2;
 
     private ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
     private boolean isKeepGaming;
 
     public ChessGameController() {
+        chessGameDao = new ChessGameDao();
     }
 
     public void run() {
         OutputView.printStartMessage();
+        OutputView.printRooms(chessGameDao.findAllId());
 
         isKeepGaming = true;
 

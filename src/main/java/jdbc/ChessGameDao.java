@@ -56,6 +56,26 @@ public class ChessGameDao implements JdbcChessGameDao {
         }
     }
 
+    public List<String> findAllId() {
+        try (final Connection connection = getConnection()) {
+            PreparedStatement findAll = connection.prepareStatement("SELECT id FROM chess_game");
+            ResultSet findAllResult = findAll.executeQuery();
+            return getAllId(findAllResult);
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    private List<String> getAllId(ResultSet findAllResult) throws SQLException {
+        List<String> allId = new ArrayList<>();
+
+        while (findAllResult.next()) {
+            allId.add(findAllResult.getString("id"));
+        }
+
+        return allId;
+    }
+
     @Override
     public String save(ChessGame chessGame) {
         try (final Connection connection = getConnection()) {

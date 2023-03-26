@@ -10,6 +10,7 @@ import domain.chessboard.Square;
 import domain.chessboard.StatusResult;
 import domain.piece.Color;
 
+import java.io.PrintStream;
 import java.util.List;
 
 public class OutputView {
@@ -19,6 +20,14 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
+    public static void printRooms(List<String> roomsId) {
+        roomsId.forEach((OutputView::printRoom));
+    }
+
+    private static void printRoom(String roomId) {
+        System.out.printf("> Room Id : %s (start %s)\n", roomId, roomId);
     }
 
     public static void printErrorMessage(String message) {
