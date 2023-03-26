@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MySQLChessGameDao implements ChessGameDao {
-    private static final String EMPTY_PROGRESS_EXCEPTION_MESSAGE = "[ERROR] 저장된 진행 정보가 없습니다.";
-
     private final JdbcContext jdbcContext;
 
     public MySQLChessGameDao(JdbcContext jdbcContext) {
@@ -45,7 +43,6 @@ public class MySQLChessGameDao implements ChessGameDao {
             while (resultSet.next()) {
                 squares.put(getPosition(resultSet), getPiece(resultSet));
             }
-            validateEmptyProgress(squares);
             return squares;
         });
     }
@@ -62,25 +59,13 @@ public class MySQLChessGameDao implements ChessGameDao {
         return PieceFactory.of(role, team);
     }
 
-    private static void validateEmptyProgress(Map<Position, Piece> squares) {
-        if (squares.isEmpty()) {
-            throw new IllegalArgumentException(EMPTY_PROGRESS_EXCEPTION_MESSAGE);
-        }
-    }
-
     @Override
     public GameState findGameState() {
         final String query = "SELECT * FROM game_state";
         return jdbcContext.select(query, resultSet -> {
-            validateEmptyResultSet(resultSet);
+            resultSet.next();
             return RunningStateMapper.map(resultSet.getString("state"));
         });
-    }
-
-    private void validateEmptyResultSet(ResultSet resultSet) throws SQLException {
-        if (!resultSet.next()) {
-            throw new IllegalArgumentException(EMPTY_PROGRESS_EXCEPTION_MESSAGE);
-        }
     }
 
     @Override
