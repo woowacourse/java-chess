@@ -64,6 +64,7 @@ public class ChessController {
     private void progress(ChessGame chessGame) {
         boolean onGoing = true;
         while (onGoing) {
+            outputView.printCurrentTurn(chessGame.getTurn());
             outputView.printBoard(chessGame.getBoard());
             String command = inputCommand();
             play(chessGame, command);
