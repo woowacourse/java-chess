@@ -5,6 +5,7 @@ import chess.domain.boardStrategy.BoardStrategy;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static chess.view.ErrorMessage.NO_PIECE_ERROR_MESSAGE;

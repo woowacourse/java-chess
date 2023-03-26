@@ -16,13 +16,13 @@ class PawnTest {
     @Test
     void isMovable_메서드로_checkDirection_에러발생_테스트() {
         //given, when
-        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
         Position whitePawnStart = new Position("b", "2");
         Position whitePawnEnd = new Position("b", "1");
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO, whitePawnStart.getColumn());
 
-        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Position blackPawnStart = new Position("b", "7");
         Position blackPawnEnd = new Position("b", "8");
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO, blackPawnStart.getColumn());
         Color whitePawndestinationColor = Color.BLACK;
         Color blackPawndestinationColor = Color.WHITE;
 
@@ -36,9 +36,9 @@ class PawnTest {
     @Test
     void isMovable_메서드로_checkDistance_에러발생_테스트() {
         //given, when
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "5");
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
         Color destinationColor = Color.BLACK;
 
         //then
@@ -49,9 +49,9 @@ class PawnTest {
     @Test
     void isMovable_메서드로_첫번째_이동시_2칸_이동_가능_테스트() {
         //given, when
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "4");
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
         Color destinationColor = Color.NONE;
 
         //then
@@ -59,31 +59,26 @@ class PawnTest {
     }
 
     @Test
-    void isMovable_메서드로_두번째_이동부터_1칸_이동_가능_테스트() {
-        //given
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
-        Position start = new Position("b", "2");
+    void isMovable_메서드로_첫번째_이동시_2칸과_1칸이동_모두_가능_테스트() {
+        //given, when
+        Position firstStart = new Position("b", "2");
         Position end = new Position("b", "4");
         Position afterMoveEnd = new Position("b", "3");
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO, firstStart.getColumn());
         Color destinationColor = Color.NONE;
 
-        //when
-        pawn.afterFirstMove();
-
         //then
-        assertThatThrownBy(() -> pawn.isMovable(start, end, destinationColor))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        assertDoesNotThrow(() -> pawn.isMovable(start, afterMoveEnd, destinationColor));
+        assertDoesNotThrow(() -> pawn.isMovable(firstStart, end, destinationColor));
+        assertDoesNotThrow(() -> pawn.isMovable(firstStart, afterMoveEnd, destinationColor));
     }
 
     @Test
     void isMovable_메서드로_moveForward_에러발생_테스트() {
         //given, when
-        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
-        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("b", "3");
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO, start.getColumn());
         Color destinationColor = Color.WHITE;
 
         //then
@@ -96,10 +91,10 @@ class PawnTest {
     @Test
     void isMovable_메서드로_moveDiagonal_에러발생_테스트() {
         //given, when
-        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
-        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Position start = new Position("b", "2");
         Position end = new Position("a", "3");
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO, start.getColumn());
         Color destinationColor = Color.NONE;
 
         //then
@@ -117,8 +112,8 @@ class PawnTest {
     @Test
     void isMovable_올바른_반환값_테스트() {
         //given, when
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position start = new Position("b", "2");
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
         Position end = new Position("a", "3");
         Color destinationColor = Color.BLACK;
 

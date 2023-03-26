@@ -50,4 +50,8 @@ public enum Column {
     public int getIndex() {
         return index;
     }
+
+    public boolean isSameColumn(Column column){
+        return this.equals(column);
+    }
 }

@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceInfo;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static chess.view.ErrorMessage.OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE;
@@ -18,7 +19,7 @@ public class ChessBoard {
     Map<Position, Piece> chessBoard;
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
-        this.chessBoard = new HashMap<>(chessBoard);
+        this.chessBoard = new LinkedHashMap<>(chessBoard);
     }
 
     public void move(Position start, Position end) {
@@ -50,14 +51,6 @@ public class ChessBoard {
     private void movePieceToDestination(Position start, Position end, Piece piece) {
         chessBoard.replace(start, new EmptyPiece(PieceInfo.EMPTY_INFO));
         chessBoard.replace(end, piece);
-        changePawnSetting(piece);
-    }
-
-    private void changePawnSetting(Piece piece) {
-        if (piece instanceof Pawn) {
-            Pawn pawn = (Pawn) piece;
-            pawn.afterFirstMove();
-        }
     }
 
     private void checkOtherPieceInTravelRoute(Position currentPosition, Position end) {
@@ -67,6 +60,6 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return new HashMap<>(chessBoard);
+        return new LinkedHashMap<>(chessBoard);
     }
 }

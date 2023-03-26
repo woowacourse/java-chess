@@ -4,12 +4,14 @@ import chess.domain.Position;
 import chess.domain.boardStrategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -29,7 +31,9 @@ class ScoreCalculatorTest {
         double whiteScore = scoreCalculator.getWhiteScore();
 
         //then
-        assertEquals(expectedScore, blackScore);
-        assertEquals(expectedScore, whiteScore);
+        assertAll(
+                () -> assertEquals(expectedScore, blackScore),
+                () -> assertEquals(expectedScore, whiteScore)
+        );
     }
 }

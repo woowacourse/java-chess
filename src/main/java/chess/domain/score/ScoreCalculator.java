@@ -26,13 +26,14 @@ public class ScoreCalculator {
     }
 
     private void getWhiteScore(Piece piece) {
-        if (piece.getColor() == Color.WHITE) {
+
+        if (Color.isSameColor(piece.getColor(), Color.WHITE)) {
             whiteScore += piece.getScore();
         }
     }
 
     private void getBlackScore(Piece piece) {
-        if (piece.getColor() == Color.BLACK) {
+        if (piece.getColor().equals(Color.BLACK)) {
             blackScore += piece.getScore();
         }
     }

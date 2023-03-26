@@ -14,6 +14,7 @@ import chess.domain.piece.Rook;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -33,7 +34,7 @@ import static chess.domain.piece.PieceInfo.WHITE_QUEEN_INFO;
 import static chess.domain.piece.PieceInfo.WHITE_ROOK_INFO;
 
 public class InitialBoardStrategy implements BoardStrategy {
-    private final Map<Position, Piece> board = new HashMap<>();
+    private final Map<Position, Piece> board = new LinkedHashMap<>();
 
     @Override
     public Map<Position, Piece> generate() {
@@ -41,7 +42,7 @@ public class InitialBoardStrategy implements BoardStrategy {
         initFirstRow();
         initSecondRow();
 
-        return new HashMap<>(board);
+        return new LinkedHashMap<>(board);
     }
 
     private void initEmptyPieces() {
@@ -89,20 +90,20 @@ public class InitialBoardStrategy implements BoardStrategy {
     }
 
     private void initBlackSecondRow() {
-        Rank rank =  Rank.SEVEN;
+        Rank rank = Rank.SEVEN;
 
         Arrays.stream(Column.values())
-                .forEach(column -> board.replace(new Position(column, rank),
-                        new Pawn(BLACK_PAWN_INFO))
-                );
+                .map(column -> new Position(column, rank))
+                .forEach(position -> board.replace(position,
+                        new Pawn(BLACK_PAWN_INFO, position.getColumn())));
     }
 
     private void initWhiteSecondRow() {
         Rank rank = Rank.TWO;
 
         Arrays.stream(Column.values())
-                .forEach(column -> board.replace(new Position(column, rank),
-                        new Pawn(WHITE_PAWN_INFO))
-                );
+                .map(column -> new Position(column, rank))
+                .forEach(position -> board.replace(position,
+                        new Pawn(WHITE_PAWN_INFO, position.getColumn())));
     }
 }

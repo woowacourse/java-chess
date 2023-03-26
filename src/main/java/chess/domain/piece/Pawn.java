@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.direction.Direction;
+import chess.domain.Column;
 import chess.domain.Position;
 
 import java.util.List;
@@ -15,11 +16,12 @@ public class Pawn extends Piece {
 
     private final List<Direction> direction;
 
-    private int distance = 2;
+    private Column startColumn;
 
-    public Pawn(PieceInfo pieceInfo) {
+    public Pawn(PieceInfo pieceInfo, Column startColumn) {
         super(pieceInfo.getName(), pieceInfo.getColor(), PAWN_DEFAULT_SCORE.getScore());
         this.direction = createDirectionByColor(pieceInfo.getColor());
+        this.startColumn = startColumn;
     }
 
     private List<Direction> createDirectionByColor(Color color) {
@@ -49,6 +51,12 @@ public class Pawn extends Piece {
     private void checkDistance(Position start, Position end) {
         int absGapOfColumn = Math.abs(start.findGapOfColum(end));
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
+        int distance = 1;
+
+
+        if(startColumn.isSameColumn(start.getColumn())){
+            distance = 2;
+        }
 
         if (absGapOfColumn > distance || absGapOfRank > distance) {
             throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
@@ -83,9 +91,5 @@ public class Pawn extends Piece {
 
     private boolean isDiagonalDirection(Direction direction) {
         return direction != Direction.TOP && direction != Direction.BOTTOM;
-    }
-
-    public void afterFirstMove() {
-        distance = 1;
     }
 }
