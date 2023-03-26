@@ -47,7 +47,7 @@ public class RoomJdbcDaoTest {
     @Test
     void 사용자의_아이디와_방_이름을_입력받아_저장한다() {
         // given
-        final String roomName = "체스 한 판 하시죠?";
+        final String roomName = "방1";
         final int userId = 1;
 
         // when
