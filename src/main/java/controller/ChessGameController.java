@@ -20,6 +20,7 @@ public final class ChessGameController {
         while (gameStatus.isKeepGaming()) {
             retryOnError(gameStatus::playTurn);
         }
+        gameStatus.noticeKingDead();
     }
 
     private void retryOnError(final Consumer<List<String>> playGame) {
