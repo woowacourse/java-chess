@@ -72,21 +72,24 @@ public final class Board {
 
     public Color winner() {
         if (!isEnd()) {
-            final Map<Color, Double> score = calculateScore();
-            if (score.get(WHITE) > score.get(BLACK)) {
-                return WHITE;
-            }
-            if (score.get(WHITE) < score.get(BLACK)) {
-
-                return BLACK;
-            }
-            return null;
+            return winnerByScore();
         }
         final List<Color> colorsOfKing = collectColorsOfKing();
         if (colorsOfKing.size() != 1) {
             throw new IllegalStateException("승자를 결정할 수 없습니다!");
         }
         return colorsOfKing.get(0);
+    }
+
+    private Color winnerByScore() {
+        final Map<Color, Double> score = calculateScore();
+        if (score.get(WHITE) > score.get(BLACK)) {
+            return WHITE;
+        }
+        if (score.get(WHITE) < score.get(BLACK)) {
+            return BLACK;
+        }
+        return null;
     }
 
     private List<Color> collectColorsOfKing() {
