@@ -1,15 +1,13 @@
 package chess.controller;
 
-import chess.domain.Command;
 import chess.domain.ChessGame;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
+import chess.domain.Command;
 import chess.domain.board.Square;
 import chess.domain.piece.PieceType;
+import chess.dto.SquareRenderer;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -95,21 +93,14 @@ public class ChessController {
     }
 
     private void movePiece(ChessGame chessGame, List<String> command) {
-        Square source = getSquare(command.get(Index.SOURCE_SQUARE.value));
-        Square target = getSquare(command.get(Index.TARGET_SQUARE.value));
+        Square source = SquareRenderer.render(command.get(Index.SOURCE_SQUARE.value));
+        Square target = SquareRenderer.render(command.get(Index.TARGET_SQUARE.value));
 
         retryOnInvalidAction(() -> chessGame.move(source, target));
     }
 
-    private Square getSquare(String command) {
-        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(Index.FILE.value)));
-        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(Index.RANK.value)));
-
-        return Square.getInstanceOf(file, rank);
-    }
-
     private void checkPromotion(ChessGame chessGame, List<String> command) {
-        Square movedSquare = getSquare(command.get(Index.TARGET_SQUARE.value));
+        Square movedSquare = SquareRenderer.render(command.get(Index.TARGET_SQUARE.value));
 
         if (chessGame.canPromotion(movedSquare)) {
             PieceType pieceType = requestPieceType();
@@ -136,60 +127,6 @@ public class ChessController {
             request.run();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-        }
-    }
-
-    private enum FileRenderer {
-        A("a", File.A),
-        B("b", File.B),
-        C("c", File.C),
-        D("d", File.D),
-        E("e", File.E),
-        F("f", File.F),
-        G("g", File.G),
-        H("h", File.H);
-
-        private final String command;
-        private final File file;
-
-        FileRenderer(String command, File rank) {
-            this.command = command;
-            this.file = rank;
-        }
-
-        static private File renderToFile(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."))
-                    .file;
-        }
-    }
-
-    private enum RankRenderer {
-        EIGHT("8", Rank.EIGHT),
-        SEVEN("7", Rank.SEVEN),
-        SIX("6", Rank.SIX),
-        FIVE("5", Rank.FIVE),
-        FOUR("4", Rank.FOUR),
-        THREE("3", Rank.THREE),
-        TWO("2", Rank.TWO),
-        ONE("1", Rank.ONE);
-
-        private final String command;
-        private final Rank rank;
-
-        RankRenderer(String command, Rank rank) {
-            this.command = command;
-            this.rank = rank;
-        }
-
-        static private Rank renderToRank(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."))
-                    .rank;
         }
     }
 
