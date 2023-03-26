@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.piece.Shape;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardDaoTest {
@@ -39,4 +40,11 @@ class ChessBoardDaoTest {
         );
     }
 
+    @Test
+    void movePieceInBoardTable() {
+        ChessBoardDao chessBoardDao = new ChessBoardDao();
+        assertDoesNotThrow(() -> chessBoardDao.movePiece(13, 2, 4, Shape.PAWN.name()));
+        assertThat(chessBoardDao.findPiece(13, 2, 4)).isEqualTo(Shape.PAWN.name());
+        assertDoesNotThrow(() -> chessBoardDao.movePiece(13, 2, 4, "EMPTY"));
+    }
 }
