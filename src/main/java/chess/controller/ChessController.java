@@ -8,7 +8,7 @@ import chess.view.OutputView;
 
 public class ChessController {
 
-    private ChessGame chessGame;
+    private final ChessGame chessGame;
 
     public ChessController() {
         this.chessGame = new ChessGame();
@@ -31,7 +31,6 @@ public class ChessController {
 
     public AppStatus end(CommandRequest commandRequest) {
         chessGame.end(commandRequest);
-        chessGame = new ChessGame();
         OutputView.printGuideMessage();
         return AppStatus.RUNNING;
     }

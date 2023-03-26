@@ -68,6 +68,14 @@ public class Position {
         return this.file == other.file;
     }
 
+    public int getFile() {
+        return file;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
