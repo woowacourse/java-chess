@@ -61,6 +61,18 @@ public class ChessGameDao {
             throw new RuntimeException("UPDATE 오류:" + e.getMessage());
         }
     }
-    
+
+    public void updateTurn(final String turn, final int gameId) {
+        String query = "UPDATE game SET turn = ? WHERE game_id = ?";
+        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query)) {
+            preparedStatement.setObject(1, turn);
+            preparedStatement.setObject(2, gameId);
+            preparedStatement.executeUpdate();
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("UPDATE 오류:" + e.getMessage());
+        }
+    }
+
 
 }
