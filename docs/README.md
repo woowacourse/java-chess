@@ -1,157 +1,5 @@
 # java-chess
 
-<br>
-
-# 📚 도메인 모델 네이밍 사전
-
-| 한글명   | 영문명       | 설명                               | 분류               |
-|-------|-----------|----------------------------------|------------------|
-| 팀     | Team      | Black, White로 구별되는 팀 정보          | enum             |
-| 로그    | Log       | 기물이 이동 명령을 받았을 떄의 위치와 게임 턴 수를 저장 | class            |
-| 기록    | Trace     | 로그의 목록                           | class            |
-| 기물    | Piece     | 체스판의 말                           | (abstract) class |
-| 행     | File      | 체스판의 세로 위치 정보 (1 ~ 8)            | enum             |
-| 열     | Rank      | 체스판의 가로 위치 정보 (a ~ h)            | enum             |
-| 좌표    | Position  | 행과 열로 이루어진 체스판의 위치정보             | class            |
-| 칸     | Square    | 좌표와 기물 정보를 가지고 있는 체스판의 구성요소      | class            |
-| 체스 판  | ChessBoard | 칸을 가지고 있는 일급컬렉션                  | class            |
-| 턴     | Turn      | 체스 게임의 턴                         | class            |
-| 게임 상태 | GameState | 체스 게임의 상태                        | enum             |
-| 체스 게임 | ChessGame | 체스 게임 진행을 관리                     | class            |
-
-# 게임 용어 사전
-
-- 체크(Check) : 킹이 다른 기물에게 공격을 받는 것
-- 승진(Promotion) : 폰은 체스판 반대편에 도달하면 다른 기물로 변할 수 있다.(모든 기물로 승진 가능)
-- 캐슬링(Castling) : 킹과 룩 사이에 아무것도 없고, 둘다 움직인 적이 없으며 적에게 위협받고 있지 않을 때 킹이 룩의 방향으로 2칸 이동, 룩은 그 반대 방향으로 킹으로부터 한 칸
-- 앙파상(EnPassant) : 상대 폰이 2칸을 이동했을 때 내 폰이 해당 폰의 옆에 존재할 경우 해당 폰의 뒤칸으로 이동하면서(대각선이동) 상대방 폰을 잡을 수 있다.
-
-- 기물의 종류
-    - 킹(King)
-    - 퀸(queen) - 9점
-    - 룩(rook) - 5점
-    - 비숍(bishop) - 3점
-    - 나이트(knight) - 2.5점
-    - 폰(pawn)
-      <br>
-
-# 프로그램 흐름도
-
-- 1단계 흐름도
-
-```mermaid
-flowchart
-A[명령어 소개 출력] --> B[시작 명령어 입력] --> H(시작 명령어 유효성 검사) --> G(체스판 초기화) --> C[체스판 출력] --> D[이동 유저 명령 입력] --> I(이동 명령어 유효성 검사) --> E(말 이동 로직 수행)
-E--> D
-D--> |end 입력 or 킹 사망| J[게임종료]
-```
-
-# 클래스 다이어그램
-
-```mermaid
-classDiagram
-
-class ChessGame {
--ChessBoard chessBoard
--GameState state
-}
-class ChessBoard{
--List<Sqaure> sqaures
--Turn turn
-}
-class Square{
--Piece piece
--Position position
-}
-
-class Turn {
--int turn
-}
-class Piece{
-  <<abstract>>
-  #Team team
-  #Trace trace
-}
-class King 
-class Queen
-class Rook
-class Bishop
-class Knight
-class Pawn
-class NoPiece
-class Position
-class Rank{
-<<enumeration>>
-A
-B
-C
-D
-E
-F
-G
-H
-}
-
-class File{
-<<enumeration>>
-ONE
-TWO
-THREE
-FOUR
-FIVE
-SIX
-SEVEN
-EIGHT
-}
-class Command{
-<<enumeration>>
-START
-MOVE
-END
-}
-class Team{
-<<enumeration>>
-BLACK
-WHITE
-EMPTY
-}
-
-class GameState{
-<<enumeration>>
-RUNNING
-FINISHED
-}
-class Trace{
--List<Log> logs
-}
-class Log {
--Turn turn
--Position position
-}
-
-Piece<|--King
-Piece<|--Queen
-Piece<|--Rook
-Piece<|--Bishop
-Piece<|--Knight
-Piece<|--Pawn
-Piece<|--NoPiece
-
-ChessGame --> ChessBoard
-ChessGame --> GameState
-ChessGame ..> Command
-ChessBoard "1"-->"1..*" Square
-ChessBoard --> Turn
-Square --> Piece
-Square --> Position
-Position --> Rank
-Position --> File
-Piece --> Team
-Piece --> Trace
-Trace"1"-->"1..*"Log
-
-```
-
 # 👨‍🍳 기능 목록
 
 ## 입력(InputView)
@@ -160,8 +8,26 @@ Trace"1"-->"1..*"Log
 - [x] 게임 중 명령을 입력 받는다.
     - [x] 이동 명령 : move source위치 target위치을 실행해 이동한다.
     - [x] 종료 명령 : end로 프로그램을 종료한다.
+- [ ] white, black 의 플레이어 이름을 입력받는다
+- [ ] 게임 방 번호를 입력받는다.
 
 ## 도메인(domain)
+
+#### 게임 방(GameRoom)
+
+- [ ] 각 게임 방은 하나의 체스 게임과 두 명의 플레이어를 가진다.
+- [ ] 입력 된 게임 방 번호를 통해 입장할 수 있다.
+    - 입력 된 게임 방이 존재할 경우
+        - [ ] 기존의 게임 방에 입장한다.
+    - 입력 된 게임 방이 존재하지 않을 경우
+        - [ ] 예외를 던진다.
+    - new를 입력한 경우
+        - [ ] 새로운 게임 방을 생성한다.
+
+#### 플레이어
+
+- [ ] 플레이어 이름을 가진다.
+- [ ] 팀을 가진다.
 
 #### 체스 게임(ChessGame)
 
@@ -208,5 +74,7 @@ Trace"1"-->"1..*"Log
 
 ## 데이터베이스
 
-- [x] 승자가 정해지지 않고 게임이 끝나면 체스판을 저장한다
-- [x] 게임이 시작될 때, 저장된 체스판을 불러온다
+- [x] 승자가 정해지지 않고 게임이 끝나면 체스게임을 저장한다.
+- [ ] 입력된 플레이어 이름에 맞는 방 목록을 가져온다.
+- [x] 게임이 시작될 때, 저장된 체스게임을 불러온다.
+    - [ ] 방 번호를 입력받아 게임을 불러온다.
