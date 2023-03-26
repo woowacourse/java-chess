@@ -44,7 +44,7 @@ public final class Queen extends Piece {
 
 	@Override
 	public Set<Direction> direction() {
-		return ofEvery();
+		return directions;
 	}
 
 	@Override

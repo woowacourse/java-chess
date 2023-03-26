@@ -46,7 +46,7 @@ public final class Bishop extends Piece {
 
 	@Override
 	public Set<Direction> direction() {
-		return ofDiagonal();
+		return directions;
 	}
 
 	@Override

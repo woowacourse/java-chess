@@ -45,7 +45,7 @@ class PieceTest {
 
 		@Override
 		public Set<Direction> direction() {
-			return ofLinear();
+			return Set.of(UP, DOWN, LEFT, RIGHT);
 		}
 
 		@Override

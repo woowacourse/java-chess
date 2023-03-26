@@ -2,17 +2,28 @@ package chess.domain.move;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public enum Direction {
 
-	RIGHT(1, 0), LEFT(-1, 0), UP(0, 1), DOWN(0, -1), RIGHT_UP(1, 1), LEFT_UP(-1, 1), RIGHT_DOWN(1, -1), LEFT_DOWN(-1,
-		-1), KNIGHT_UP_LEFT(-1, 2), KNIGHT_UP_RIGHT(1, 2), KNIGHT_RIGHT_UP(2, 1), KNIGHT_RIGHT_DOWN(2,
-		-1), KNIGHT_DOWN_RIGHT(1, -2), KNIGHT_DOWN_LEFT(-1, -2), KNIGHT_LEFT_DOWN(-2, -1), KNIGHT_LEFT_UP(-2, 1);
+	RIGHT(1, 0),
+	LEFT(-1, 0),
+	UP(0, 1),
+	DOWN(0, -1),
+	RIGHT_UP(1, 1),
+	LEFT_UP(-1, 1),
+	RIGHT_DOWN(1, -1),
+	LEFT_DOWN(-1, -1),
+	KNIGHT_UP_LEFT(-1, 2),
+	KNIGHT_UP_RIGHT(1, 2),
+	KNIGHT_RIGHT_UP(2, 1),
+	KNIGHT_RIGHT_DOWN(2, -1),
+	KNIGHT_DOWN_RIGHT(1, -2),
+	KNIGHT_DOWN_LEFT(-1, -2),
+	KNIGHT_LEFT_DOWN(-2, -1),
+	KNIGHT_LEFT_UP(-2, 1);
 
 	private final int dx;
 	private final int dy;
@@ -20,32 +31,6 @@ public enum Direction {
 	Direction(final int dx, final int dy) {
 		this.dx = dx;
 		this.dy = dy;
-	}
-
-	public static Set<Direction> ofLinear() {
-		return Set.of(RIGHT, LEFT, UP, DOWN);
-	}
-
-	public static Set<Direction> ofDiagonal() {
-		return Set.of(RIGHT_UP, LEFT_UP, RIGHT_DOWN, LEFT_DOWN);
-	}
-
-	public static Set<Direction> ofEvery() {
-		return Stream.concat(ofLinear().stream(), ofDiagonal().stream()).collect(Collectors.toSet());
-	}
-
-	public static Set<Direction> ofBlackPawn() {
-		return Set.of(DOWN, RIGHT_DOWN, LEFT_DOWN);
-	}
-
-	public static Set<Direction> ofWhitePawn() {
-		return Set.of(UP, LEFT_UP, RIGHT_UP);
-	}
-
-	public static Set<Direction> ofKnight() {
-		return Set.of(
-			KNIGHT_RIGHT_UP, KNIGHT_RIGHT_DOWN, KNIGHT_LEFT_UP, KNIGHT_LEFT_DOWN,
-			KNIGHT_DOWN_RIGHT, KNIGHT_DOWN_LEFT, KNIGHT_UP_RIGHT, KNIGHT_UP_LEFT);
 	}
 
 	public static Direction calculateDirection(Position source, Position target, final Piece piece) {

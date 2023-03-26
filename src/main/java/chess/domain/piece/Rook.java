@@ -45,7 +45,7 @@ public final class Rook extends Piece {
 
 	@Override
 	public Set<Direction> direction() {
-		return Direction.ofLinear();
+		return directions;
 	}
 
 	@Override
