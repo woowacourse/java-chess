@@ -1,6 +1,6 @@
 package chess.controller;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public enum Command {
     START("start"),
@@ -14,16 +14,10 @@ public enum Command {
     }
 
     public static Command from(String code) {
-        if (Objects.equals(code, START.code)) {
-            return START;
-        }
-        if (Objects.equals(code, MOVE.code)) {
-            return MOVE;
-        }
-        if (Objects.equals(code, END.code)) {
-            return END;
-        }
-        throw new IllegalArgumentException("잘못된 명령어입니다.");
+        return Arrays.stream(Command.values())
+                .filter(command -> command.code.equalsIgnoreCase(code))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
 
     public void validateCommandInStart() {

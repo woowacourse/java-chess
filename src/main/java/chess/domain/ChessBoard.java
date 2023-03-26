@@ -3,8 +3,13 @@ package chess.domain;
 import chess.domain.chesspiece.EmptyPiece;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.PieceInfo;
 
 import java.util.Map;
+import java.util.Objects;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class ChessBoard {
     private final Map<Square, Piece> pieces;
@@ -58,6 +63,28 @@ public class ChessBoard {
         return from.calculatePath(to)
                 .stream()
                 .anyMatch(square -> pieces.get(square) != EmptyPiece.getInstance());
+    }
+
+    public double calculateScore(final Side side) {
+        double score = pieces.values()
+                .stream()
+                .filter(piece -> Objects.equals(piece.getSide(), side.name()))
+                .mapToDouble(piece -> piece.addPieceScore(0))
+                .sum();
+        return score - checkSameFilePawns(side);
+    }
+
+    private double checkSameFilePawns(final Side side) {
+        final Map<File, Long> sameFilePawnCounts = pieces.keySet().stream()
+                .filter(key -> Objects.equals(pieces.get(key).getName(), PieceInfo.PAWN.name()))
+                .filter(key -> Objects.equals(pieces.get(key).getSide(), side.name()))
+                .collect(groupingBy(Square::getFile, counting()));
+
+        return sameFilePawnCounts.values()
+                .stream()
+                .filter(it -> it >= 2)
+                .mapToDouble(it -> it.intValue() * 0.5)
+                .sum();
     }
 
     public Map<Square, Piece> getPieces() {

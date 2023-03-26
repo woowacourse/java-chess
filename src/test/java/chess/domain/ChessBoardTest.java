@@ -525,4 +525,40 @@ class ChessBoardTest {
             }
         }
     }
+
+    @Nested
+    @DisplayName("calculateScore 메서드는")
+    class calculateScore {
+
+        Map<Square, Piece> pieces;
+
+        @BeforeEach
+        void empty_chessboard() {
+            pieces = new HashMap<>();
+            for (Rank rank : Rank.values()) {
+                for (File file : File.values()) {
+                    pieces.put(Square.of(rank, file), EmptyPiece.getInstance());
+                }
+            }
+        }
+
+        @Nested
+        @DisplayName("초기 체스판이 주어졌을 때")
+        class given_pieces {
+
+            @DisplayName("백 진영의 점수는 38점이다")
+            @Test
+            void it_returns_white_side_score() {
+                ChessBoard chessBoard = ChessBoardFactory.generate();
+                assertThat(chessBoard.calculateScore(Side.WHITE)).isEqualTo(38);
+            }
+
+            @DisplayName("흑 진영의 점수는 38점이다")
+            @Test
+            void it_returns_black_side_score() {
+                ChessBoard chessBoard = ChessBoardFactory.generate();
+                assertThat(chessBoard.calculateScore(Side.BLACK)).isEqualTo(38);
+            }
+        }
+    }
 }
