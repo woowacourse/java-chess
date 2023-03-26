@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.controller.dto.BoardDto;
+import chess.dao.ChessGameDao;
+import chess.dao.JdbcChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.view.InputView;
@@ -11,22 +13,25 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class ChessController {
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
     private final Map<String, GameAction> commandMapper = new HashMap<>();
 
     public ChessController() {
-        this.chessGame = new ChessGame();
-        commandMapper.put("start", arguments -> start());
-        commandMapper.put("move", arguments -> move(arguments));
-        commandMapper.put("status", arguments -> status());
-        commandMapper.put("end", arguments -> end());
+        this.chessGameDao = new JdbcChessGameDao();
+        commandMapper.put("start", (gameId, ignore) -> start(gameId));
+        commandMapper.put("move", (gameId, arguments) -> move(gameId, arguments));
+        commandMapper.put("status", (gameId, ignore) -> status(gameId));
+        commandMapper.put("end", (gameId, ignore) -> end(gameId));
     }
 
     public void execute() {
-        OutputView.printGameStartMessage();
+        int gameId = loadChessGame();
 
+        OutputView.printGameStartMessage(gameId);
+        OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
         while (!chessGame.isEnd() && !chessGame.isCatch()) {
-            runGame();
+            runGame(gameId);
         }
 
         if (chessGame.isCatch()) {
@@ -36,32 +41,53 @@ public class ChessController {
         showStatus(chessGame);
     }
 
-    private void runGame() {
+    private int loadChessGame() {
+        List<Integer> possibleIds = chessGameDao.findAllPossibleId();
+        List<Integer> impossibleIds = chessGameDao.findAllImpossibleId();
+        OutputView.printRoomState(possibleIds, impossibleIds);
+
+        int id = InputView.readGameId();
+        ChessGame existedChessGame = chessGameDao.findById(id);
+
+        if (existedChessGame == null) {
+            this.chessGame = new ChessGame();
+            chessGameDao.save(id, chessGame);
+            return id;
+        }
+
+        this.chessGame = existedChessGame;
+        return id;
+    }
+
+    private void runGame(int gameId) {
         try {
             CommandLine commandLine = new CommandLine(InputView.readCommand());
             commandMapper.get(commandLine.getCommand())
-                    .execute(commandLine.getArguments());
+                    .execute(gameId, commandLine.getArguments());
         } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
             OutputView.printError(e.getMessage());
         }
     }
 
-    private void start() {
+    private void start(int gameId) {
         chessGame.start();
+        chessGameDao.updateById(gameId, chessGame); // Board 초기화 때문에 ..
         OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
     }
 
-    private void move(List<String> arguments) {
+    private void move(int gameId, List<String> arguments) {
         chessGame.move(arguments);
+        chessGameDao.updateById(gameId, chessGame);
         OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
     }
 
-    private void status() {
+    private void status(int gameId) {
         showStatus(chessGame);
     }
 
-    private void end() {
+    private void end(int gameId) {
         chessGame.end();
+        chessGameDao.updateById(gameId, chessGame);
     }
 
     private void showStatus(ChessGame chessGame) {
