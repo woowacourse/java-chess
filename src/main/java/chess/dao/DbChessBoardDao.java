@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.domain.Position;
-import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import database.Database;
 import java.sql.Connection;
@@ -46,10 +45,5 @@ public class DbChessBoardDao implements ChessBoardDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void select(Board board) {
-
     }
 }
