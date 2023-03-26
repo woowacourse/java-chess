@@ -29,7 +29,7 @@ public class Board {
 
 	public void move(final Position source, final Position target) {
 		validateSourceNotEmpty(source);
-		validateTurn(source);
+		isTurn(source);
 		validateDifferentPosition(source, target);
 		validateTargetNotSameColor(source, target);
 
@@ -41,7 +41,7 @@ public class Board {
 		movePiece(source, target, piece);
 	}
 
-	private void validateTurn(final Position source) {
+	private void isTurn(final Position source) {
 		if (board.get(source).color() != thisTurn) {
 			throw new IllegalArgumentException("상대팀의 순서입니다");
 		}
