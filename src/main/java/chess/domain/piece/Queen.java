@@ -17,4 +17,9 @@ public class Queen extends Piece {
                 PossibleDestinations.of(source, Direction.getAllDirections(), QUEEN_MAX_MOVE_COUNT);
         return allPositions.contains(target);
     }
+
+    @Override
+    public Double getValue() {
+        return VALUE;
+    }
 }

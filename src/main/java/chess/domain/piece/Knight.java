@@ -15,4 +15,9 @@ public class Knight extends Piece {
         final int fileGap = target.getFile() - source.getFile();
         return Math.abs(rankGap * fileGap) == 2;
     }
+
+    @Override
+    public Double getValue() {
+        return VALUE;
+    }
 }
