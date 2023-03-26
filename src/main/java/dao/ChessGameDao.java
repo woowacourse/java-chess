@@ -75,7 +75,7 @@ public class ChessGameDao {
 
             while (resultSet.next()) {
                 Position position = Position.of(resultSet.getString("piece_file"), resultSet.getString("piece_rank"));
-                Piece piece = new PieceFactory().create(PieceType.valueOf(resultSet.getString("piece_type")), Side.valueOf(resultSet.getString("side")));
+                Piece piece = new PieceMapper().create(PieceType.valueOf(resultSet.getString("piece_type")), Side.valueOf(resultSet.getString("side")));
                 board.put(position, piece);
                 lastTurn = Side.valueOf(resultSet.getString("current_turn"));
             }

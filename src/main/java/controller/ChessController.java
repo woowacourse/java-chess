@@ -26,6 +26,7 @@ public class ChessController {
     private static final int TARGET_TEXT_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private static final int POSITION_TEXT_SIZE = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -147,7 +148,7 @@ public class ChessController {
     }
 
     private Position convertPosition(String positionText) {
-        if (positionText.length() != 2) {
+        if (positionText.length() != POSITION_TEXT_SIZE) {
             throw new IllegalArgumentException("위치 값은 a1형식만 가능합니다.");
         }
         List<String> positionTexts = Arrays.asList(positionText.split(POSITION_DELIMITER));

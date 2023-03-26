@@ -6,10 +6,10 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class PieceFactory {
+public class PieceMapper {
     private final Map<PieceType, Function<Side, Piece>> pieces = new EnumMap<>(PieceType.class);
 
-    public PieceFactory() {
+    public PieceMapper() {
         pieces.put(PieceType.PAWN, Pawn::new);
         pieces.put(PieceType.KNIGHT, Knight::new);
         pieces.put(PieceType.KING, King::new);

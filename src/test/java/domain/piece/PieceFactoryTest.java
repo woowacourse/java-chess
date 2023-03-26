@@ -10,7 +10,7 @@ class PieceFactoryTest {
     @Test
     void whitePawnFactoryTest() {
         //given
-        PieceFactory pieceFactory = new PieceFactory();
+        PieceMapper pieceFactory = new PieceMapper();
         Piece whitePawn = pieceFactory.create(PieceType.PAWN, Side.WHITE);
         //then
         Assertions.assertThat(whitePawn).isEqualTo(new Pawn(Side.WHITE));
@@ -20,7 +20,7 @@ class PieceFactoryTest {
     @Test
     void blackPawnFactoryTest() {
         //given
-        PieceFactory pieceFactory = new PieceFactory();
+        PieceMapper pieceFactory = new PieceMapper();
         Piece whitePawn = pieceFactory.create(PieceType.PAWN, Side.BLACK);
         //then
         Assertions.assertThat(whitePawn).isEqualTo(new Pawn(Side.BLACK));
@@ -30,7 +30,7 @@ class PieceFactoryTest {
     @Test
     void whiteKnightFactoryTest() {
         //given
-        PieceFactory pieceFactory = new PieceFactory();
+        PieceMapper pieceFactory = new PieceMapper();
         Piece whitePawn = pieceFactory.create(PieceType.KNIGHT, Side.WHITE);
         //then
         Assertions.assertThat(whitePawn).isEqualTo(new Knight(Side.WHITE));
@@ -40,7 +40,7 @@ class PieceFactoryTest {
     @Test
     void blackKnightFactoryTest() {
         //given
-        PieceFactory pieceFactory = new PieceFactory();
+        PieceMapper pieceFactory = new PieceMapper();
         Piece whitePawn = pieceFactory.create(PieceType.PAWN, Side.WHITE);
         //then
         Assertions.assertThat(whitePawn).isEqualTo(new Pawn(Side.WHITE));
@@ -50,7 +50,7 @@ class PieceFactoryTest {
     @Test
     void emptyPieceFactoryTest() {
         //given
-        PieceFactory pieceFactory = new PieceFactory();
+        PieceMapper pieceFactory = new PieceMapper();
         Piece whitePawn = pieceFactory.create(PieceType.EMPTY_PIECE, Side.NEUTRAL);
         //then
         Assertions.assertThat(whitePawn).isEqualTo(new EmptyPiece());
