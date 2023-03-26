@@ -6,8 +6,8 @@ import java.util.List;
 
 public final class Result implements GameState {
 
-    private static final boolean PRINTABLE = true;
-    private static final boolean UN_PRINTABLE = false;
+    private static final boolean CAN_PRINT = true;
+    private static final boolean CANNOT_PRINT = false;
 
     private boolean printable;
 
@@ -26,13 +26,13 @@ public final class Result implements GameState {
         if (gameCommand.isEnd()) {
             return new End();
         }
-        printable = PRINTABLE;
+        printable = CAN_PRINT;
         return this;
     }
 
     private void validateGameCommand(final GameCommand gameCommand) {
         if (gameCommand.isStart() || gameCommand.isLoad() || gameCommand.isMove()) {
-            printable = UN_PRINTABLE;
+            printable = CANNOT_PRINT;
             throw new IllegalArgumentException("게임이 종료된 상태입니다.");
         }
     }
