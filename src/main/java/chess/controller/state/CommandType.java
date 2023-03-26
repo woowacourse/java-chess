@@ -1,5 +1,5 @@
 package chess.controller.state;
 
 public enum CommandType {
-    START, MOVE, END
+    START, MOVE, END, STATUS
 }

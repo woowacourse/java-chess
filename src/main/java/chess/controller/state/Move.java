@@ -28,6 +28,9 @@ public final class Move implements State {
         if (command.isEnd()) {
             return new End();
         }
+        if (command.isStatus()) {
+            return Status.of(chessGame, teamColor);
+        }
         validateCommand(command);
         return move(command);
     }
