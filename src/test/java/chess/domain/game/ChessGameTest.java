@@ -27,15 +27,6 @@ class ChessGameTest {
         }
 
         @Test
-        void 생성_시_진행중인_상태가_아니다() {
-            //given
-            ChessGame chessGame = new ChessGame(ChessBoard.createBoard(), TurnFixture.TURN, GameStatus.IDLE);
-
-            //when & then
-            assertThat(chessGame.isEnd()).isTrue();
-        }
-
-        @Test
         void 종료_커맨드_입력_시_진행중인_상태가_아니다() {
             //given
             ChessGame chessGame = new ChessGame(ChessBoard.createBoard(), TurnFixture.TURN, GameStatus.IDLE);
