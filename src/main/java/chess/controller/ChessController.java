@@ -80,7 +80,7 @@ public final class ChessController {
             return chessBoard;
         }
         ChessBoardGenerator generator = new ChessBoardGenerator();
-        chessBoard = new ChessBoard(generator.generate());
+        chessBoard = new ChessBoard(generator.generate(), Color.WHITE);
         return chessBoard;
     }
 
@@ -114,8 +114,10 @@ public final class ChessController {
 
     private void showChessBoardStatus(ChessBoard chessBoard) {
         Map<Position, Piece> chessBoardStatus = chessBoard.getChessBoard();
+        String turn = chessBoard.getTurn().name();
         ChessBoardDto chessBoardDto = ChessBoardDto.of(BoardToString.convert(chessBoardStatus));
         OutputView.printChessBoard(chessBoardDto);
+        OutputView.printTurn(turn);
     }
 
     private void showStatus(ChessBoard chessBoard) {

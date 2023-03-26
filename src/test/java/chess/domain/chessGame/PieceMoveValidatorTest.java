@@ -71,7 +71,19 @@ class PieceMoveValidatorTest {
             // expect
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> pieceMoveValidator.checkPieceExistInStartPosition(start))
-                            .withMessage("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
+                    .withMessage("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
+        }
+
+        @Test
+        @DisplayName("이동할 차례가 아닌 색의 말을 이동시키면 예외가 발생한다.")
+        void notMyTurnTest() {
+            // given
+            Position start = Position.of(4, 2);
+
+            // expect
+            assertThatIllegalArgumentException()
+                    .isThrownBy(() -> pieceMoveValidator.checkTurn(start, Color.WHITE))
+                    .withMessage("[ERROR] WHITE의 차례입니다.");
         }
 
         @Test

@@ -18,7 +18,7 @@ class ChessBoardTest {
     void getChessBoardTest() {
         // given
         ChessBoardGenerator generator = new ChessBoardGenerator();
-        ChessBoard chessBoard = new ChessBoard(generator.generate());
+        ChessBoard chessBoard = new ChessBoard(generator.generate(), Color.WHITE);
 
         // when
         Map<Position, Piece> setResult = chessBoard.getChessBoard();
@@ -35,10 +35,12 @@ class ChessBoardTest {
         @DisplayName("King이 1개라도 죽어있으면 true를 반환한다.")
         void isKingDead_True() {
             // given
-            ChessBoard chessBoard = new ChessBoard(Map.of(
-                    Position.of(1, 4), new Queen(Color.WHITE),
-                    Position.of(8, 4), new Queen(Color.BLACK)
-            ));
+            ChessBoard chessBoard = new ChessBoard(
+                    Map.of(
+                            Position.of(1, 4), new Queen(Color.WHITE),
+                            Position.of(8, 4), new Queen(Color.BLACK)),
+                    Color.WHITE
+            );
 
             // when
             boolean result = chessBoard.isKingDead();
@@ -51,10 +53,12 @@ class ChessBoardTest {
         @DisplayName("King이 2개 다 살아있으면 false를 반환한다.")
         void isKingDead_False() {
             // given
-            ChessBoard chessBoard = new ChessBoard(Map.of(
-                    Position.of(1, 5), new King(Color.WHITE),
-                    Position.of(8, 5), new King(Color.BLACK)
-            ));
+            ChessBoard chessBoard = new ChessBoard(
+                    Map.of(
+                            Position.of(1, 5), new King(Color.WHITE),
+                            Position.of(8, 5), new King(Color.BLACK)),
+                    Color.WHITE
+            );
 
             // when
             boolean result = chessBoard.isKingDead();
@@ -76,7 +80,7 @@ class ChessBoardTest {
         @DisplayName("목표 좌표에 말이 없고 경로 상에 다른 말이 없으면 말을 이동시킬 수 있다.")
         void moveToBlankTest() {
             // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            ChessBoard chessBoard = new ChessBoard(setupBoard, Color.WHITE);
             Position start = Position.of(2, 2);
             Position end = Position.of(4, 2);
 
@@ -93,7 +97,7 @@ class ChessBoardTest {
         @DisplayName("목표 좌표에 상대 말이 있고 경로 상에 다른 말이 없으면 상대 말을 잡고 이동시킬 수 있다.")
         void catchAndMoveTest() {
             // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            ChessBoard chessBoard = new ChessBoard(setupBoard, Color.WHITE);
             Position start = Position.of(2, 2);
             Position end = Position.of(5, 2);
 
@@ -121,7 +125,7 @@ class ChessBoardTest {
         @DisplayName("전진할 때 이동 경로에 말이 없으면 이동할 수 있다.")
         void pawnForwardTest_Success() {
             // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            ChessBoard chessBoard = new ChessBoard(setupBoard, Color.WHITE);
             Position start = Position.of(2, 4);
             Position end = Position.of(3, 4);
 
@@ -138,7 +142,7 @@ class ChessBoardTest {
         @DisplayName("대각선으로 이동할 때 이동 경로에 상대의 말이 존재하면 잡고 이동할 수 있다.")
         void pawnDiagonalTest_Success() {
             // given
-            ChessBoard chessBoard = new ChessBoard(setupBoard);
+            ChessBoard chessBoard = new ChessBoard(setupBoard, Color.WHITE);
             Position start = Position.of(2, 4);
             Position end = Position.of(3, 5);
 

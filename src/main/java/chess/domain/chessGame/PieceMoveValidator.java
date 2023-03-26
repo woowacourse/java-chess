@@ -1,5 +1,6 @@
 package chess.domain.chessGame;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -19,6 +20,13 @@ public final class PieceMoveValidator {
     public void checkPieceExistInStartPosition(Position startPosition) {
         if (!chessBoard.containsKey(startPosition)) {
             throw new IllegalArgumentException("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
+        }
+    }
+
+    public void checkTurn(Position startPosition, Color turn) {
+        Piece startPiece = chessBoard.get(startPosition);
+        if (startPiece.getColor() != turn) {
+            throw new IllegalArgumentException("[ERROR] " + turn.name() + "의 차례입니다.");
         }
     }
 

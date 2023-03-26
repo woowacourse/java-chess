@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.chessGame.ChessBoard;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.utils.BoardToString;
@@ -33,13 +34,14 @@ public final class DbChessGameDao implements ChessGameDao {
 
     @Override
     public void save(ChessBoard chessBoard) {
-        final var query = "INSERT  chess_game (board_row8, board_row7, board_row6, board_row5, board_row4, board_row3, board_row2, board_row1) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        final var query = "INSERT  chess_game (board_row8, board_row7, board_row6, board_row5, board_row4, board_row3, board_row2, board_row1, turn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         List<String> convertToString = BoardToString.convert(chessBoard.getChessBoard());
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             for (int i = 1; i <= convertToString.size(); i++) {
                 preparedStatement.setString(i, convertToString.get(i - 1));
             }
+            preparedStatement.setString(9, chessBoard.getTurn().name());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -48,7 +50,7 @@ public final class DbChessGameDao implements ChessGameDao {
 
     @Override
     public ChessBoard select() {
-        final var query = "SELECT board_row8, board_row7, board_row6, board_row5, board_row4, board_row3, board_row2, board_row1 FROM chess_game";
+        final var query = "SELECT board_row8, board_row7, board_row6, board_row5, board_row4, board_row3, board_row2, board_row1, turn FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
@@ -62,8 +64,10 @@ public final class DbChessGameDao implements ChessGameDao {
                 chessBoardText.add(resultSet.getString("board_row3"));
                 chessBoardText.add(resultSet.getString("board_row2"));
                 chessBoardText.add(resultSet.getString("board_row1"));
+
                 Map<Position, Piece> chessBoard = StringToBoard.convert(chessBoardText);
-                return new ChessBoard(chessBoard);
+                Color turn = Color.valueOf(resultSet.getString("turn"));
+                return new ChessBoard(chessBoard, turn);
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);

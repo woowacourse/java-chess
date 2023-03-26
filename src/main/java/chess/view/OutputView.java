@@ -42,4 +42,9 @@ public final class OutputView {
         System.out.println("승자 : " + statusDto.getWinner());
         System.out.println();
     }
+
+    public static void printTurn(String turn) {
+        System.out.println("===========");
+        System.out.println(turn + "의 차례");
+    }
 }
