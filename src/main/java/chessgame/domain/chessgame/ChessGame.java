@@ -11,9 +11,11 @@ public class ChessGame {
     private final Board board;
     private Camp turn;
     private final Result result;
+    private final long roomId;
 
-    public ChessGame(Map<Coordinate, Piece> board) {
+    public ChessGame(Map<Coordinate, Piece> board, long roomId) {
         this.board = new Board(board);
+        this.roomId = roomId;
         this.turn = Camp.WHITE;
         this.result = new Result();
     }
@@ -49,5 +51,9 @@ public class ChessGame {
 
     public Camp getTurn() {
         return turn;
+    }
+
+    public long getRoomId() {
+        return roomId;
     }
 }

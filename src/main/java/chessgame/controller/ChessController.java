@@ -5,6 +5,7 @@ import chessgame.domain.chessgame.Camp;
 import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
+import chessgame.dto.GameRoomDto;
 import chessgame.service.ChessGameService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -53,8 +54,7 @@ public class ChessController {
 
     private void processStartGame(final Command command) {
         if (command.isStart()) {
-            Map<Coordinate, Piece> board = makeNewGameRoom();
-            ChessGame chessGame = new ChessGame(board);
+            ChessGame chessGame = makeNewGameRoom();
             playGame(chessGame);
         }
         if (command.isMove() || command.isStatus()) {
@@ -62,9 +62,13 @@ public class ChessController {
         }
     }
 
-    private Map<Coordinate, Piece> makeNewGameRoom() {
+    private ChessGame makeNewGameRoom() {
         chessGameService.addNewGame(BoardInitialImage.generate(), Camp.WHITE);
-        return chessGameService.findLeastPieces();
+        GameRoomDto gameRoomDto = chessGameService.findLeastPieces();
+
+        long roomId = gameRoomDto.getRoomId();
+        Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(roomId);
+        return new ChessGame(board, roomId);
     }
 
     private void playGame(final ChessGame chessGame) {
@@ -110,6 +114,7 @@ public class ChessController {
         if (isKing) {
             return Command.END;
         }
+        chessGameService.updateGame(chessGame);
         return Command.MOVE;
     }
 

@@ -3,6 +3,7 @@ package chessgame.service;
 import chessgame.dao.GameRoomDao;
 import chessgame.dao.PiecesDao;
 import chessgame.domain.chessgame.Camp;
+import chessgame.domain.chessgame.ChessGame;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
@@ -26,9 +27,8 @@ public class ChessGameService {
                 piecesDao.addPiece(leastGameRoom.getRoomId(), coordinate, piece));
     }
 
-    public Map<Coordinate, Piece> findLeastPieces() {
-        GameRoomDto leastGameRoom = gameRoomDao.findLeastGameRoom();
-        return findPiecesByRoomId(leastGameRoom.getRoomId());
+    public GameRoomDto findLeastPieces() {
+        return gameRoomDao.findLeastGameRoom();
     }
 
     public Map<Coordinate, Piece> findPiecesByRoomId(long roomId) {
@@ -49,5 +49,14 @@ public class ChessGameService {
         Camp pieceCamp = Camp.valueOf(camp);
         return PieceType.valueOf(type)
                         .createPiece(pieceCamp);
+    }
+
+    public void updateGame(ChessGame chessGame) {
+        long roomId = chessGame.getRoomId();
+        Map<Coordinate, Piece> board = chessGame.getBoard()
+                                                .getBoard();
+
+        gameRoomDao.updateGameRoomById(roomId, chessGame.getTurn());
+        board.forEach((coordinate, piece) -> piecesDao.updatePieceByCoordinate(roomId, coordinate, piece));
     }
 }
