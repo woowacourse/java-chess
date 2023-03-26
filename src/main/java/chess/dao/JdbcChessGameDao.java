@@ -35,8 +35,27 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public List<Integer> findAllId() {
+    public List<Integer> findAllPossibleId() {
         final var query = "SELECT game_id FROM game WHERE game_status != ? AND game_status != ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, "end");
+            preparedStatement.setString(2, "catch");
+
+            final var resultSet = preparedStatement.executeQuery();
+            List<Integer> ids = new ArrayList<>();
+            while (resultSet.next()) {
+                ids.add(Integer.parseInt(resultSet.getString("game_id")));
+            }
+            return ids;
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Integer> findAllImpossibleId() {
+        final var query = "SELECT game_id FROM game WHERE game_status = ? OR game_status = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, "end");
