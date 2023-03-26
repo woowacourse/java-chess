@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.status.AppStatus;
 import chess.dto.CommandRequest;
 
 public interface CommandAction {

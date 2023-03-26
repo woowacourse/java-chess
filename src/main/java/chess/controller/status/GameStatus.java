@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.controller.status;
 
 import static chess.controller.CommandActionMapper.MOVE;
 import static chess.controller.CommandActionMapper.START;

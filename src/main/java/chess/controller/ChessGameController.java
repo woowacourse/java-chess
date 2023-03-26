@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.controller.converter.BoardConverter;
+import chess.controller.status.AppStatus;
 import chess.controller.util.InputExceptionHandler;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;

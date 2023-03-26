@@ -1,6 +1,6 @@
 package chess.serviece;
 
-import chess.controller.GameStatus;
+import chess.controller.status.GameStatus;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
