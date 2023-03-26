@@ -47,4 +47,11 @@ class MoveDaoTest {
         Assertions.assertDoesNotThrow(() -> moveDao.addMove(moveDto));
     }
 
+    @DisplayName("DB에 저장된 모든 움직임을 가져올 수 있다.")
+    @Test
+    void loadMovementTest() {
+        assertThat(moveDao.findAll())
+                .hasSize(3);
+    }
+
 }
