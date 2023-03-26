@@ -9,10 +9,12 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -20,7 +22,8 @@ public class Board {
     public static final int WHITE_PAWNS_RANK = 1;
     public static final int BLACK_PAWNS_RANK = 6;
     public static final int BLACK_GENERALS_RANK = 7;
-    private static final double PIECE_EXCLUSIVE_POINT = 0.5;
+    private static final double MULTIPLE_PAWN_POINT = 0.5;
+    private static final double MULTIPLE_PAWN_COUNT = 2;
 
     private final Map<Position, Piece> board;
 
@@ -111,24 +114,27 @@ public class Board {
     }
 
     public double calculatePoint(Color color) {
-        double pointSum = 0;
-        for (File file : File.values()) {
-            int pawnCount = 0;
-            for (Rank rank : Rank.values()) {
-                Position position = Position.from(file, rank);
-                Piece piece = board.get(position);
-                if (piece.isSameColor(color)) {
-                    if (piece.getType() == PieceType.PAWN) {
-                        pawnCount += 1;
-                    }
-                    pointSum += piece.getType().getPoint();
-                }
-            }
-            if (pawnCount > 1) {
-                pointSum -= PIECE_EXCLUSIVE_POINT * pawnCount;
-            }
-        }
-        return pointSum;
+        return pieceScore(color) - multiplePawnScore(color);
+    }
+
+    private double pieceScore(final Color color) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(piece -> piece.getType().getPoint())
+                .sum();
+    }
+
+    private double multiplePawnScore(final Color color) {
+        final Map<File, Long> pawnCount = Arrays.stream(Rank.values())
+                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.from(rank, file)))
+                .filter(position -> board.get(position).isSameColor(color))
+                .filter(position -> board.get(position).isSameType(PieceType.PAWN))
+                .collect(Collectors.groupingBy(Position::getFile, Collectors.counting()));
+
+        return pawnCount.values().stream()
+                .filter(value -> value >= MULTIPLE_PAWN_COUNT)
+                .mapToDouble(value -> value * MULTIPLE_PAWN_POINT)
+                .sum();
     }
 
     private boolean isEmpty(final Position position) {

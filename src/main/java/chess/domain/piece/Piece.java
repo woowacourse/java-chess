@@ -36,6 +36,10 @@ public abstract class Piece {
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
+
+    public boolean isSameType(PieceType pieceType) {
+        return this.getType() == pieceType;
+    }
     
     @Override
     public int hashCode() {
