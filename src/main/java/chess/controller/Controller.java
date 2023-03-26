@@ -19,10 +19,9 @@ public class Controller {
     private final OutputView outputView;
     private final ChessGame chessGame;
 
-    public Controller(InputView inputView, OutputView outputView,
-                      ChessGame chessGame) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public Controller(ChessGame chessGame) {
+        this.inputView = new InputView();
+        this.outputView = new OutputView();
         this.chessGame = chessGame;
         putActions();
     }
@@ -36,7 +35,7 @@ public class Controller {
     public void playChessGame(BoardStrategy boardStrategy) {
         outputView.printStartGuideMessage();
         Command command = Command.START;
-        while (command != Command.END) {
+        while (command != Command.END && !chessGame.isFinished()) {
             command = playChessByCommand(boardStrategy);
         }
     }
