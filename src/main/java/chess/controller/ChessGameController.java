@@ -32,14 +32,16 @@ public class ChessGameController {
 
         List<String> inputCommand = inputView.readGameCommand();
 
-        chessGame = playChess(chessGame, inputCommand);
+        playChess(chessGame, inputCommand);
 
-        outputView.printWin(chessGame.calculateScore());
     }
 
-    private ChessGame playChess(ChessGame chessGame, List<String> inputCommand) {
+    private void playChess(ChessGame chessGame, List<String> inputCommand) {
         while (isNotEnd(inputCommand)) {
             try {
+                if (inputCommand.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
+                    outputView.printWin(chessGame.calculateScore());
+                }
                 chessGame = createNewChessGame(chessGame, inputCommand);
                 tryChessMove(chessGame, inputCommand);
                 outputView.printBoard(chessGame.getBoard());
@@ -52,12 +54,10 @@ public class ChessGameController {
                 inputCommand = inputView.readGameCommand();
             }
         }
-        return chessGame;
     }
 
     private boolean isNotEnd(final List<String> inputCommand) {
-        return !(inputCommand.get(COMMAND_INDEX).equals(END_COMMAND)
-            || inputCommand.get(COMMAND_INDEX).equals(STATUS_COMMAND));
+        return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
     }
 
     private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
