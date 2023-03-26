@@ -93,4 +93,16 @@ class ChessGameTest {
         assertThat(chessGame.isPlayable()).isEqualTo(true);
     }
 
+    @DisplayName("왕이 죽은 경우 왕이 살아있는 진영이 승리한다.")
+    @Test
+    void calculateWinnerWhenKingDeadTest() {
+        //given
+        chessBoard.put(Position.of("e", "1"), Pawn.createOfBlack());
+        chessGame = new ChessGame(new Board(chessBoard), Side.WHITE, GameState.KING_DEAD);
+        //when
+        Side winSide = chessGame.calculateWinner();
+        //then
+        assertThat(winSide).isEqualTo(Side.BLACK);
+    }
+
 }

@@ -201,6 +201,20 @@ class BoardTest {
         assertThat(board.calculateWinner()).isEqualTo(Side.NEUTRAL);
     }
 
+    @DisplayName("왕이 죽은 경우 왕이 살아있는 진영이 승리한다.")
+    @Test
+    void calculateWinnerWhenKingDeadTest() {
+        //given
+        chessBoard.put(Position.of("e", "8"), Pawn.createOfWhite());
+        Board kingDeadBoard = new Board(chessBoard);
+
+        //when
+        Side winSide = kingDeadBoard.calculateKingExistSide(Side.WHITE);
+
+        //then
+        assertThat(winSide).isEqualTo(Side.WHITE);
+    }
+
 
     /**
      * .KR.....
