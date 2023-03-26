@@ -3,6 +3,7 @@ package chess.controller.command;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -27,7 +28,7 @@ class EndCommandTest {
 
     @BeforeEach
     void init() {
-        chessGame = new ChessGame(BoardFactory.createBoard());
+        chessGame = new ChessGame(BoardFactory.createBoard(), Team.WHITE);
     }
 
     @Test

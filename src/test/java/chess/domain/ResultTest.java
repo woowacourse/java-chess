@@ -21,7 +21,7 @@ class ResultTest {
 
     @BeforeEach
     void init() {
-        chessGame = new ChessGame(BoardFactory.createBoard());
+        chessGame = new ChessGame(BoardFactory.createBoard(), Team.WHITE);
         chessGame.movePiece(E_2, E_4);
         chessGame.movePiece(F_7, F_5);
         chessGame.movePiece(E_4, F_5);

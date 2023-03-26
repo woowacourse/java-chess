@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class StartCommand extends Command {
         if (inputCommandType != CommandType.START) {
             throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
         }
-        return new MoveCommand(new ChessGame(BoardFactory.createBoard()));
+        return new MoveCommand(new ChessGame(BoardFactory.createBoard(), Team.WHITE));
     }
 
     @Override

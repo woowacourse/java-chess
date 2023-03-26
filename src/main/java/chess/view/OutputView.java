@@ -1,9 +1,11 @@
 package chess.view;
 
+import chess.domain.Result;
 import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 import java.util.Map;
 
@@ -30,12 +32,20 @@ public class OutputView {
         for (FileCoordinate fileCoordinate : FileCoordinate.getSortedFileCoordinates()) {
             Position position = new Position(fileCoordinate, rankCoordinate);
             Piece piece = boards.get(position);
-            String message = PieceMapper.of(piece.getPieceType()).getMessage(piece.getTeam());
+            String message = PieceMapper.from(piece.getPieceType()).getMessage(piece.getTeam());
             System.out.print(message);
         }
     }
 
     public void printError(String message) {
         System.out.println(ERROR_START_MESSAGE + message);
+    }
+
+    public void printResult(Result result) {
+        Map<Team, Double> scores = result.getScore();
+        for (Team team : scores.keySet()) {
+            System.out.println(TeamMapper.from(team).getTeamView() + ": " + scores.get(team) + "점");
+        }
+        System.out.println("승리: " + TeamMapper.from(result.getWinner()).getTeamView());
     }
 }

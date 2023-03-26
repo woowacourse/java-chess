@@ -8,6 +8,7 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.Result;
 import chess.domain.Score;
+import chess.view.OutputView;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ import static chess.controller.command.CommandType.INVALID_COMMAND_MESSAGE;
 public class StatusCommand extends Command{
 
     private final Result result;
+    private final OutputView outputView;
 
     protected StatusCommand(ChessGame chessGame) {
         super(chessGame, CommandType.STATUS);
         result = chessGame.calculateResult();
+        outputView = new OutputView();
     }
 
     @Override
@@ -35,10 +38,11 @@ public class StatusCommand extends Command{
     }
 
     private Command executeStatus() {
+        outputView.printResult(result);
         return this;
     }
 
     private Command executeEnd() {
-        return new EndCommand(new ChessGame(new Board(getChessGameBoards())));
+        return new EndCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
     }
 }

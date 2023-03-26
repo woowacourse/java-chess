@@ -26,9 +26,9 @@ public enum PieceMapper {
         this.blackTeamView = blackTeamView;
     }
 
-    public static PieceMapper of(PieceType pieceType) {
+    public static PieceMapper from(PieceType pieceType) {
         return Arrays.stream(values())
-                .filter(it -> it.pieceType.equals(pieceType))
+                .filter(it -> it.pieceType == pieceType)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PIECE_MESSAGE));
     }

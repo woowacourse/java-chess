@@ -3,6 +3,7 @@ package chess.controller.command;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Queen;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,7 +27,7 @@ class StatusCommandTest {
 
     @BeforeEach
     void init() {
-        chessGame = new ChessGame(BoardFactory.createBoard());
+        chessGame = new ChessGame(BoardFactory.createBoard(), Team.WHITE);
         chessGame.movePiece(E_2, E_4);
         chessGame.movePiece(F_7, F_5);
         chessGame.movePiece(E_4, F_5);

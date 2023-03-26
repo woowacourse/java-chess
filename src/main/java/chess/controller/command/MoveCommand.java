@@ -34,12 +34,12 @@ public class MoveCommand extends Command {
                 PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
 
         if (chessGame.isFinished()) {
-            return new StatusCommand(new ChessGame(new Board(getChessGameBoards())));
+            return new StatusCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
         }
-        return new MoveCommand(new ChessGame(new Board(getChessGameBoards())));
+        return new MoveCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
     }
 
     private Command executeEnd() {
-        return new EndCommand(new ChessGame(new Board(getChessGameBoards())));
+        return new EndCommand(new ChessGame(new Board(getChessGameBoards()), chessGame.getNowPlayingTeam()));
     }
 }

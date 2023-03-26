@@ -18,9 +18,9 @@ public class ChessGame {
     private final Board board;
     private Team nowPlayingTeam;
 
-    public ChessGame(Board board) {
+    public ChessGame(Board board, Team nowPlayingTeam) {
         this.board = board;
-        this.nowPlayingTeam = Team.WHITE;
+        this.nowPlayingTeam = nowPlayingTeam;
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
@@ -54,5 +54,9 @@ public class ChessGame {
 
     public Map<Position, Piece> getBoard() {
         return board.getBoards();
+    }
+
+    public Team getNowPlayingTeam() {
+        return nowPlayingTeam;
     }
 }
