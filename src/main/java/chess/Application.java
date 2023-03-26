@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ChessGameController;
+import chess.controller.Controller;
 import chess.repository.jdbc.JdbcUserDao;
 import chess.service.UserService;
 import chess.view.InputView;
@@ -15,7 +15,9 @@ public class Application {
         OutputView outputView = new OutputView();
         UserService userService = new UserService(new JdbcUserDao());
 
-        new ChessGameController(inputView, outputView, userService).start();
+        Controller controller = Controller.create(inputView, outputView);
+        controller.run();
+//        new ChessGameController(inputView, outputView, userService).start();
 
         scanner.close();
     }
