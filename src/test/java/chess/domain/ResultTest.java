@@ -1,5 +1,6 @@
-package chess.domain.result;
+package chess.domain;
 
+import chess.domain.Result;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Team;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.PositionFixture.*;
+import static chess.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

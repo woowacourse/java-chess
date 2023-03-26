@@ -1,5 +1,6 @@
-package chess.domain.result;
+package chess.domain;
 
+import chess.domain.Score;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Team;
 import org.assertj.core.api.Assertions;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.PositionFixture.C_4;
+import static chess.PositionFixture.C_4;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")

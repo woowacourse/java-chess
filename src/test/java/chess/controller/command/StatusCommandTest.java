@@ -1,14 +1,8 @@
 package chess.controller.command;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.Position;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
-import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,15 +11,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static chess.domain.PositionFixture.*;
+import static chess.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")

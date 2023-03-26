@@ -3,11 +3,10 @@ package chess.domain.board;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static chess.domain.PositionFixture.*;
+import static chess.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {

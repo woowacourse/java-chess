@@ -6,28 +6,20 @@ import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
-import chess.domain.result.Score;
+import chess.domain.Result;
+import chess.domain.Score;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static chess.controller.command.CommandType.INVALID_COMMAND_MESSAGE;
 
 public class StatusCommand extends Command{
 
-    private final Map<Team, Double> score;
+    private final Result result;
 
     protected StatusCommand(ChessGame chessGame) {
         super(chessGame, CommandType.STATUS);
-        score = new HashMap<>();
-        initScore();
-    }
-
-    private Map<Team, Double> initScore() {
-        score.put(Team.WHITE, 0.0);
-        score.put(Team.BLACK, 0.0);
-        return score;
+        result = chessGame.calculateResult();
     }
 
     @Override
@@ -43,24 +35,7 @@ public class StatusCommand extends Command{
     }
 
     private StatusCommand executeStatus() {
-        for (Position position : getChessGameBoards().keySet()) {
-            calculateScore(position);
-        }
-        System.out.println(score);
         return this;
-    }
-
-    private void calculateScore(Position position) {
-        Piece piece = chessGame.findPiece(position);
-        Team team = piece.getTeam();
-        if (team == Team.EMPTY) {
-            return;
-        }
-        if (piece.getPieceType().equals(PieceType.PAWN) && chessGame.pawnCountByColumnAndTeam(position, team) > 1) {
-            score.put(team, score.get(team) + 0.5);
-            return;
-        }
-        score.put(team, score.get(team) + Score.findScoreBy(piece));
     }
 
     private EndCommand executeEnd() {

@@ -1,16 +1,15 @@
-package chess.domain;
+package chess;
 
-import chess.domain.board.Board;
+import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.PositionFixture.*;
+import static chess.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

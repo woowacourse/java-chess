@@ -44,11 +44,15 @@ public class ChessGame {
                 .count();
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getBoards();
-    }
-
     public boolean isFinished() {
         return board.getLeftPieceCount(PieceType.KING) == FINISH_KING_COUNT;
+    }
+
+    public Result calculateResult() {
+        return Result.from(this);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getBoards();
     }
 }

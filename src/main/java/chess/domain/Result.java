@@ -1,6 +1,5 @@
-package chess.domain.result;
+package chess.domain;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -20,7 +19,7 @@ public class Result {
         this.score = score;
     }
 
-    public static Result from(ChessGame chessGame) {
+    static Result from(ChessGame chessGame) {
         Map<Team, Double> score = initScore();
         for (Position position : chessGame.getBoard().keySet()) {
             calculateScore(score, chessGame, position);

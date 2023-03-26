@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static chess.domain.PositionFixture.B_2;
-import static chess.domain.PositionFixture.B_3;
+import static chess.PositionFixture.B_2;
+import static chess.PositionFixture.B_3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
