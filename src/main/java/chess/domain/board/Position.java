@@ -26,14 +26,6 @@ public class Position {
         return new Position(row, col);
     }
 
-    public Row getRow() {
-        return row;
-    }
-
-    public Col getCol() {
-        return col;
-    }
-
     public boolean isPlacePositionAtFirst() {
         return EMPTY_PLACE_START_INDEX <= this.row.getIndexOfRow() && this.row.getIndexOfRow() <= EMPTY_PLACE_END_INDEX;
     }
