@@ -66,7 +66,7 @@ public class ChessApplication {
 	}
 
 	private static void movePiece(Board board, Command command) {
-		board.move(command.getSource(), command.getTarget());
+		board.move(command.source(), command.target());
 		printBoard(board.board(), ranks(), files());
 		play(board);
 	}

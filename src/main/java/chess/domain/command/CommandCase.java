@@ -17,12 +17,12 @@ public enum CommandCase {
 
     public static CommandCase from(final String input) {
         return Arrays.stream(CommandCase.values())
-                .filter(commandCase -> commandCase.getValue().equals(input))
+                .filter(commandCase -> commandCase.value().equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력값은 start, end, move, status만 가능합니다."));
     }
 
-    public String getValue() {
+    public String value() {
         return value;
     }
 }

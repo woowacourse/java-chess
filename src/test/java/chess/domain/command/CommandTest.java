@@ -43,8 +43,8 @@ class CommandTest {
 
 		// then
 		assertAll(
-			() -> assertEquals(Position.from("a2"), command.getSource()),
-			() -> assertEquals(Position.from("a3"), command.getTarget())
+			() -> assertEquals(Position.from("a2"), command.source()),
+			() -> assertEquals(Position.from("a3"), command.target())
 		);
 	}
 
