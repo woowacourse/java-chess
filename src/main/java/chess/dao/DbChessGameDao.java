@@ -1,13 +1,5 @@
 package chess.dao;
 
-import chess.domain.game.File;
-import chess.domain.game.PieceMapper;
-import chess.domain.game.Position;
-import chess.domain.game.Rank;
-import chess.domain.game.Turn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Team;
 import chess.dto.game.ChessGameLoadDto;
 import chess.dto.game.ChessGameSaveDto;
 
@@ -16,12 +8,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class DbChessGameDao implements ChessDao {
+public final class DbChessGameDao implements ChessDao {
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         try {
             return DriverManager.getConnection(
                     "jdbc:mysql://127.0.0.1:13306/chess?useSSL=false&serverTimezone=UTC",
@@ -38,7 +31,7 @@ public class DbChessGameDao implements ChessDao {
     public void save(final ChessGameSaveDto dto) {
         final String sql = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, last_turn) VALUES (?, ?, ?, ?, ?)";
         try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
             for (int i = 0; i < dto.getSize(); i++) {
                 preparedStatement.setString(1, dto.getPiece_type().get(i));
                 preparedStatement.setString(2, dto.getPiece_file().get(i));
@@ -56,21 +49,22 @@ public class DbChessGameDao implements ChessDao {
     public ChessGameLoadDto loadGame() {
         final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
         try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
-            final Map<Position, Piece> board = new HashMap<>();
-            Turn turn = null;
+            final List<String> piece_type = new ArrayList<>();
+            final List<String> piece_file = new ArrayList<>();
+            final List<String> piece_ranks = new ArrayList<>();
+            final List<String> piece_teams = new ArrayList<>();
+            String last_turn = "";
 
             while (resultSet.next()) {
-                final PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
-                final File file = File.valueOf(resultSet.getString("piece_file"));
-                final Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
-                final Team team = Team.valueOf(resultSet.getString("piece_team"));
-                turn = Turn.of(Team.valueOf(resultSet.getString("last_turn")));
-
-                board.put(Position.of(file, rank), PieceMapper.get(pieceType, team));
+                piece_type.add(resultSet.getString("piece_type"));
+                piece_file.add(resultSet.getString("piece_file"));
+                piece_ranks.add(resultSet.getString("piece_rank"));
+                piece_teams.add(resultSet.getString("piece_team"));
+                last_turn = resultSet.getString("last_turn");
             }
-            return ChessGameLoadDto.from(board, turn);
+            return new ChessGameLoadDto(piece_type, piece_file, piece_ranks, piece_teams, last_turn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -80,7 +74,7 @@ public class DbChessGameDao implements ChessDao {
     public boolean hasHistory() {
         final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
         try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
             final ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
@@ -92,7 +86,7 @@ public class DbChessGameDao implements ChessDao {
     public void delete() {
         final String sql = "DELETE FROM chess_game";
         try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

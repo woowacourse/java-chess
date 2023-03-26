@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public final class InputView {
 
+    public static final String DELIMITER = " ";
+    
     private final Scanner scanner;
 
     public InputView(final Scanner scanner) {
@@ -21,7 +23,7 @@ public final class InputView {
 
     public ReadCommandDto readCommand() {
         final String input = readLine();
-        final List<String> result = Arrays.stream(input.split(" "))
+        final List<String> result = Arrays.stream(input.split(DELIMITER))
                 .collect(Collectors.toList());
         return new ReadCommandDto(result);
     }
