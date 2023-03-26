@@ -82,4 +82,22 @@ class PositionTest {
         Position position2 = new Position(fileCoordinate2, rankCoordinate2);
         assertThat(position1.calculateRowDistance(position2)).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:TWO:B:THREE:false", "B:TWO:D:FOUR:true", "D:FOUR:B:TWO:true", "B:TWO:A:ONE:true", "B:TWO:A:THREE:true", "B:TWO:C:THREE:true"}, delimiter = ':')
+    void 대각선인지_알_수_있다(FileCoordinate fileCoordinate1, RankCoordinate rankCoordinate1,
+                        FileCoordinate fileCoordinate2, RankCoordinate rankCoordinate2, boolean expect) {
+        Position position1 = new Position(fileCoordinate1, rankCoordinate1);
+        Position position2 = new Position(fileCoordinate2, rankCoordinate2);
+        assertThat(position1.isDiagonal(position2)).isEqualTo(expect);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:TWO:B:THREE:true", "B:TWO:D:TWO:true", "D:TWO:B:TWO:true", "B:TWO:B:EIGHT:true", "A:TWO:H:TWO:true", "B:TWO:A:ONE:false"}, delimiter = ':')
+    void 직선인지_알_수_있다(FileCoordinate fileCoordinate1, RankCoordinate rankCoordinate1,
+                      FileCoordinate fileCoordinate2, RankCoordinate rankCoordinate2, boolean expect) {
+        Position position1 = new Position(fileCoordinate1, rankCoordinate1);
+        Position position2 = new Position(fileCoordinate2, rankCoordinate2);
+        assertThat(position1.isStraight(position2)).isEqualTo(expect);
+    }
 }

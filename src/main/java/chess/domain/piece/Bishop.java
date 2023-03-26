@@ -10,7 +10,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Position targetPosition, Team team) {
-        return isDiagonal(targetPosition) && isNotMyPosition(targetPosition)
+        return position.isDiagonal(targetPosition) && isNotMyPosition(targetPosition)
                 && isDifferentTeam(team);
     }
 

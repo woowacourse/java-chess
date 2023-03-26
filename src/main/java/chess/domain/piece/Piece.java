@@ -42,19 +42,8 @@ public abstract class Piece {
         return !position.equals(targetPosition);
     }
 
-    protected boolean isDiagonal(Position targetPosition) {
-        int columnDifference = Math.abs(position.getColumn() - targetPosition.getColumn());
-        int rowDifference = Math.abs(position.getRow() - targetPosition.getRow());
-        return columnDifference == rowDifference;
-    }
-
-    protected boolean isStraight(Position targetPosition) {
-        return (position.getFileCoordinate() == targetPosition.getFileCoordinate()
-                || position.getRankCoordinate() == targetPosition.getRankCoordinate());
-    }
-
-    protected boolean isDifferentTeam(Team team) {
-        return this.team != team;
+    protected boolean isDifferentTeam(Team targetTeam) {
+        return !team.equals(targetTeam);
     }
 
     public Team getTeam() {

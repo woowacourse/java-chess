@@ -10,7 +10,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Position targetPosition, Team team) {
-        return isStraight(targetPosition)
+        return position.isStraight(targetPosition)
                 && isNotMyPosition(targetPosition)
                 && isDifferentTeam(team);
     }

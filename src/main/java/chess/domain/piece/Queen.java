@@ -10,8 +10,8 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position targetPosition, Team team) {
-        return (isStraight(targetPosition)
-                || isDiagonal(targetPosition))
+        return (position.isStraight(targetPosition)
+                || position.isDiagonal(targetPosition))
                 && isNotMyPosition(targetPosition)
                 && isDifferentTeam(team);
     }

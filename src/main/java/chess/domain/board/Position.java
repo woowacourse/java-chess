@@ -57,6 +57,17 @@ public class Position {
         return rankCoordinate.calculateDistance(targetPosition.rankCoordinate);
     }
 
+    public boolean isDiagonal(Position targetPosition) {
+        int columnDistance = calculateColumnDistance(targetPosition);
+        int rowDistance = calculateRowDistance(targetPosition);
+        return columnDistance == rowDistance;
+    }
+
+    public boolean isStraight(Position targetPosition) {
+        return (fileCoordinate.compare(targetPosition.fileCoordinate) == 0
+                || rankCoordinate.compare(targetPosition.rankCoordinate) == 0);
+    }
+
     public FileCoordinate getFileCoordinate() {
         return fileCoordinate;
     }
