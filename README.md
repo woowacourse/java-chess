@@ -72,7 +72,7 @@
 
 ### ChessProperties
 
-- [ ] DB 연결에 필요한 프로퍼티 정보를 관리한다.
+- [x] DB 연결에 필요한 프로퍼티 정보를 관리한다.
 
 ### JdbcTemplate
 
