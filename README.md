@@ -136,14 +136,36 @@ rank_id VARCHAR(255) NOT NULL,
 file_id VARCHAR(255) NOT NULL,
 pieceType VARCHAR(255) NOT NULL,
 color VARCHAR(255) NOT NULL,
+game_id VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user (
+user_id VARCHAR(255) NOT NULL,
+user_password VARCHAR(255) NOT NULL,
+user_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE game (
+user_id VARCHAR(255) NOT NULL,
+game_id VARCHAR(255) NOT NULL,
 turn VARCHAR(255) NOT NULL
 );
 
-#### ChessBB
+#### Dao
 
-- Create
-    - [x] 데이터 베이스에 해당 보드를 모두 지운 뒤 저장한다.
-- Read
-    - [x] 데이터 베이스에 저장된 보드를 읽어온다.
-- Delete
-    - [x] 데이터 베이스에 있는 모든 보드 정보를 삭제한다.
+- UserDao
+    - [ ] 새로운 유저를 등록한다. (Create)
+        - [ ] 같은 id 혹은 닉네임이 있으면 생성하지 못한다.
+    - [ ] id와 비밀번호로 유저 정보를 가져온다. (Select)
+        - [ ] id와 비밀번호가 둘 다 맞지 않는다면 정보를 가져올 수 없다.
+
+- GameDao
+    - [ ] user_id 를 기반으로 게임을 등록한다. (Create)
+        - [ ] 이미 user_id 에 대한 게임이 있다면 등록할 수 없다.
+    - [ ] 유저의 아이디로 게임 아이디를 가져온다. (Read)
+        - [ ] 해당 유저의 게임이 없다면 해당 테이블의 게임은 없다.
+    - [ ] 게임 id 를 기반으로 게임을 삭제한다. (Delete)
+
+- PieceDao
+    - [ ] game_id 를 통해 해당 게임의 piece 를 가져온다. (Select)
+    - [ ] game_id 를 통해 해당 game_id의 피스를 삭제한다 (Delete)
