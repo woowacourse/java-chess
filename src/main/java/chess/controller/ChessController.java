@@ -160,18 +160,20 @@ public class ChessController {
     }
 
     private void updateGameState(ChessGame chessGame) {
+        if (!chessGame.isBothKingAlive()) {
+            boardDao.deleteAllByRoomName(chessGame.getRoomName());
+            gameRoomDao.deleteByRoomName(chessGame.getRoomName());
+            return;
+        }
+
         if (gameRoomDao.findByRoomName(chessGame.getRoomName()).isEmpty()) {
             gameRoomDao.save(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
             boardDao.save(createBoardDto(chessGame));
             return;
         }
 
-        if (chessGame.isBothKingAlive()) {
-            boardDao.update(createBoardDto(chessGame));
-            return;
-        }
-
-        boardDao.deleteAllByRoomName(chessGame.getRoomName());
+        boardDao.update(createBoardDto(chessGame));
+        gameRoomDao.update(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
     }
 
     private List<BoardDto> createBoardDto(ChessGame chessGame) {
