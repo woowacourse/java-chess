@@ -19,6 +19,10 @@ public class OutputView {
         System.out.println(Message.MOVE_COMMAND.value);
     }
 
+    public void printFinishMessage() {
+        System.out.println(System.lineSeparator() + Message.GAME_FINISH.value);
+    }
+
     public void printChessBoard(Chessboard chessboard) {
         System.out.println();
         for (Rank rank : Rank.values()) {
@@ -76,7 +80,9 @@ public class OutputView {
         GAME_START("> 체스 게임을 시작합니다."),
         START_COMMAND("> 게임 시작 : start"),
         END_COMMAND("> 게임 종료 : end"),
-        MOVE_COMMAND("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        MOVE_COMMAND("> 게임 이동 : move source위치 target위치 - 예. move b2 b3"),
+        GAME_FINISH("> King이 죽었기 때문에 게임을 종료합니다."),
+        ;
 
         private final String value;
 
