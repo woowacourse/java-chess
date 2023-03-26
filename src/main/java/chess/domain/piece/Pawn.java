@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public abstract class Pawn extends Piece {
+public class Pawn extends Piece {
     protected static final int PAWN_MAX_MOVE_COUNT = 1;
     protected static final int PAWN_FIRST_MAX_MOVE_COUNT = 2;
     private static final Double VALUE = 1.0;
@@ -20,7 +20,9 @@ public abstract class Pawn extends Piece {
         return VALUE_SAME_FILE * count;
     }
 
-    abstract boolean canAttack(Position source, Position target, Piece piece);
+    boolean canAttack(Position source, Position target, Piece piece) {
+        return false;
+    }
 
     @Override
     public boolean isPawn() {
@@ -30,5 +32,10 @@ public abstract class Pawn extends Piece {
     @Override
     public Double getValue() {
         return null;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target, Piece targetPiece) {
+        return false;
     }
 }
