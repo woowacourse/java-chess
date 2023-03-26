@@ -2,6 +2,7 @@ package view;
 
 import domain.piece.*;
 
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -56,5 +57,10 @@ public class OutputView {
 
     public void printKingDeadMessage(Side side) {
         System.out.println(side + "진영의 King이 죽었습니다.");
+    }
+
+    public void printGameRooms(List<Long> rooms) {
+        System.out.println("게임 방 목록");
+        rooms.forEach((room) -> System.out.println(room + "번 방을 입장하려면 load " + room + "을 입력하세요"));
     }
 }

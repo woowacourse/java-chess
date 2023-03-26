@@ -6,7 +6,9 @@ import domain.piece.*;
 import dto.dao.ChessGameDaoResponseDto;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardDao {
@@ -70,14 +72,14 @@ public class BoardDao {
     }
 
 
-    public ChessGameDaoResponseDto loadGame() {
+    public ChessGameDaoResponseDto loadGame(Long roomId) {
         Map<Position, Piece> board = new HashMap<>();
-        final String loadQuery = "select piece_type, side, last_turn, piece_rank, piece_file from chess_board";
+        final String loadQuery = "select piece_type, side, last_turn, piece_rank, piece_file from chess_board where game_room_id_fk = ?";
         Side lastTurn = null;
 
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
-
+            preparedStatement.setLong(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -90,26 +92,43 @@ public class BoardDao {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-//        return ChessGameServiceResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
+//        return ChessGameCreateResponseDto.from(new ChessGame(new Board(board), lastTurn, GameState.RUN));
         return new ChessGameDaoResponseDto(board, lastTurn, GameState.RUN);
     }
 
-    public void delete() {
-        String deleteQuery = "DELETE FROM chess_board";
+    public List<Long> findAllGameRooms() {
+        String selectQuery = "SELECT game_room_id, status FROM game_room";
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Long> rooms = new ArrayList<>();
+            while (resultSet.next()) {
+                rooms.add(resultSet.getLong("game_room_id"));
+            }
+            return rooms;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public void delete(Long roomId) {
+        String deleteQuery = "DELETE FROM chess_board WHERE game_room_id_fk = ?";
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
-
+            preparedStatement.setLong(1, roomId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public boolean hasGame() {
-        final String loadQuery = "select last_turn from chess_board";
+    public boolean hasGame(Long roomId) {
+        final String loadQuery = "select piece_type from chess_board where game_room_id_fk = ?";
 
         try (Connection connection = getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
+            preparedStatement.setLong(1, roomId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

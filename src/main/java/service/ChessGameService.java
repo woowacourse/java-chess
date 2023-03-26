@@ -1,10 +1,12 @@
 package service;
 
 import dao.BoardDao;
+import domain.game.Board;
 import domain.game.ChessGame;
-import domain.game.GameState;
 import dto.dao.ChessGameDaoResponseDto;
-import dto.service.ChessGameServiceResponseDto;
+import dto.service.ChessGameCreateResponseDto;
+
+import java.util.List;
 
 public class ChessGameService {
     private final BoardDao boardDao;
@@ -13,27 +15,33 @@ public class ChessGameService {
         this.boardDao = boardDao;
     }
 
-//    public void saveChessGame(ChessGame chessGame) {
-//        boardDao.delete();
-//        boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn());
-//    }
-
-    public void createGameRoom(ChessGame chessGame) {
-        Long roomId = boardDao.createRoom();
+    public void updateChessGame(ChessGame chessGame, Long roomId) {
+        boardDao.delete(roomId);
         boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn(), roomId);
     }
 
-    public ChessGameServiceResponseDto loadChessGame() {
-        if (hasGame()) {
-            ChessGameDaoResponseDto chessGameResponseDto = boardDao.loadGame();
-            return new ChessGameServiceResponseDto(chessGameResponseDto.getBoard(), chessGameResponseDto.getLastTurn(), 0, GameState.RUN);
-//            return ChessGameServiceResponseDto.from(chessGameResponseDto);
+    public ChessGameCreateResponseDto createGameRoom(ChessGame chessGame) {
+        Long roomId = boardDao.createRoom();
+        boardDao.save(chessGame.getBoard(), chessGame.getCurrentTurn(), roomId);
+        return new ChessGameCreateResponseDto(chessGame, roomId);
+    }
+
+    public ChessGameCreateResponseDto loadChessGame(Long roomId) {
+        if (hasGame(roomId)) {
+            ChessGameDaoResponseDto chessGameResponseDto = boardDao.loadGame(roomId);
+            Board board = new Board(chessGameResponseDto.getBoard());
+            ChessGame chessGame = new ChessGame(board, chessGameResponseDto.getLastTurn(), chessGameResponseDto.getState());
+            return new ChessGameCreateResponseDto(chessGame, roomId);
         }
         throw new IllegalArgumentException("저장된 게임이 없습니다.");
     }
 
-    public boolean hasGame() {
-        return boardDao.hasGame();
+    public List<Long> findAllRooms() {
+        return boardDao.findAllGameRooms();
+    }
+
+    public boolean hasGame(Long roomId) {
+        return boardDao.hasGame(roomId);
     }
 
 }

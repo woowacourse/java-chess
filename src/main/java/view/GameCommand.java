@@ -8,8 +8,9 @@ public enum GameCommand {
     MOVE("move", 3),
     END("end", 1),
     STATUS("status", 1),
-    LOAD("load", 1),
-    NEW("new", 1);
+    LOAD("load", 2),
+    NEW("new", 1),
+    SAVE("save", 1);
 
     private final String gameCommand;
     private final int commandLine;

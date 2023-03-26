@@ -1,7 +1,13 @@
 package domain.game;
 
 public enum GameState {
-    RUN,
-    END,
-    KING_DEAD
+    RUN("run"),
+    END("end"),
+    KING_DEAD("king_dead");
+
+    private final String stateText;
+
+    GameState(String stateText) {
+        this.stateText = stateText;
+    }
 }

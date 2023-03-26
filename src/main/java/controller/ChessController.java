@@ -6,8 +6,7 @@ import domain.game.ChessGame;
 import domain.game.GameState;
 import domain.piece.Position;
 import domain.piece.Side;
-import dto.ChessGameSaveRequestDto;
-import dto.service.ChessGameControllerResponseDto;
+import dto.service.ChessGameCreateResponseDto;
 import service.ChessGameService;
 import view.GameCommand;
 import view.InputView;
@@ -47,33 +46,40 @@ public class ChessController {
     public void run() {
         this.outputView.printGameGuideMessage();
         repeatByRunnable(inputView::requestStartCommand);
-        GameCommand chessGameCommand = repeatNewGameOrLoadGameCommand(inputView::requestLoadGameOrNewGame);
-        ChessGame chessGame = createChessGameByCommand(chessGameCommand);
 
+        outputView.printGameRooms(chessGameService.findAllRooms());
+        List<String> chessGameCommand = repeatNewGameOrLoadGameCommand(inputView::requestLoadGameOrNewGame);
+        ChessGameCreateResponseDto chessGameDto = createChessGameByCommand(chessGameCommand);
+        ChessGame chessGame = chessGameDto.getChessGame();
         this.outputView.printChessBoard(chessGame.getBoard());
         while (chessGame.isPlayable()) {
-            play(chessGame);
+            play(chessGame, chessGameDto.getGameId());
             outputView.printChessBoard(chessGame.getBoard());
         }
     }
 
-    private ChessGame createChessGameByCommand(GameCommand command) {
+    private ChessGameCreateResponseDto createChessGameByCommand(List<String> commands) {
+        GameCommand command = GameCommand.from(commands);
         if (command == GameCommand.LOAD) {
-            ChessGameControllerResponseDto chessGameResponseDto = chessGameService.loadChessGame();
-            return new ChessGame(new Board(chessGameResponseDto.getBoard()), chessGameResponseDto.getLastTurn(), GameState.RUN);
+            Long roomId = Long.valueOf(commands.get(1));
+            return chessGameService.loadChessGame(roomId);
         }
-        return new ChessGame(new Board(new ChessBoardGenerator().generate()), Side.WHITE, GameState.RUN);
+        return chessGameService.createGameRoom(new ChessGame(new Board(new ChessBoardGenerator().generate()), Side.WHITE, GameState.RUN));
     }
 
-    private void play(ChessGame chessGame) {
+    private void play(ChessGame chessGame, Long roomId) {
         outputView.printSide(chessGame.getCurrentTurn());
         List<String> userCommandInput = repeatBySupplier(inputView::requestUserCommandInGame);
         try {
             GameCommand command = GameCommand.from(userCommandInput);
+            if (command == GameCommand.SAVE) {
+                chessGameService.updateChessGame(chessGame, roomId);
+                return;
+            }
             commands.get(command).accept(chessGame, userCommandInput);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
-            play(chessGame);
+            play(chessGame, roomId);
         }
     }
 
@@ -100,7 +106,7 @@ public class ChessController {
         }
     }
 
-    private GameCommand repeatNewGameOrLoadGameCommand(Supplier<GameCommand> supplier) {
+    private List<String> repeatNewGameOrLoadGameCommand(Supplier<List<String>> supplier) {
         try {
             this.outputView.printLoadGameMessage();
             return supplier.get();
@@ -111,7 +117,7 @@ public class ChessController {
     }
 
     private void endCommandExecute(ChessGame chessGame) {
-        chessGameService.saveChessGame(ChessGameSaveRequestDto.from(chessGame));
+//        chessGameService.updateChessGame(chessGame);
         outputView.printGameSaveMessage();
         chessGame.end();
     }

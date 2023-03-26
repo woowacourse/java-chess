@@ -1,23 +1,21 @@
-package dto;
+package dto.service;
 
-import domain.game.ChessGame;
+import domain.game.GameState;
 import domain.piece.Piece;
 import domain.piece.Position;
 import domain.piece.Side;
 
 import java.util.Map;
 
-public class ChessGameServiceResponseDto {
+public class ChessGameCreateRequestDto {
     private final Map<Position, Piece> board;
     private final Side lastTurn;
+    private final GameState state;
 
-    private ChessGameServiceResponseDto(Map<Position, Piece> board, Side lastTurn) {
+    public ChessGameCreateRequestDto(Map<Position, Piece> board, Side lastTurn, GameState state) {
         this.board = board;
         this.lastTurn = lastTurn;
-    }
-
-    public static ChessGameServiceResponseDto from(ChessGame chessGame) {
-        return new ChessGameServiceResponseDto(chessGame.getBoard(), chessGame.getCurrentTurn());
+        this.state = state;
     }
 
     public Map<Position, Piece> getBoard() {
@@ -26,5 +24,9 @@ public class ChessGameServiceResponseDto {
 
     public Side getLastTurn() {
         return lastTurn;
+    }
+
+    public GameState getState() {
+        return state;
     }
 }

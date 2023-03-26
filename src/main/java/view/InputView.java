@@ -29,12 +29,12 @@ public class InputView {
         throw new IllegalArgumentException("게임 시작 명령어를 입력해주세요.");
     }
 
-    public GameCommand requestLoadGameOrNewGame() {
-        List<String> userInputs = Arrays.asList(SCANNER.nextLine());
+    public List<String> requestLoadGameOrNewGame() {
+        List<String> userInputs = Arrays.asList(SCANNER.nextLine().split(INPUT_COMMAND_DELIMITER));
         GameCommand gameCommand = GameCommand.from(userInputs);
 
         if (gameCommand == GameCommand.NEW || gameCommand == GameCommand.LOAD) {
-            return gameCommand;
+            return userInputs;
         }
 
         throw new IllegalArgumentException("새로운 게임 시작 : 'new'아니면 기존 게임 불러오기 : 'load'를 입력해주세요.");
