@@ -47,6 +47,10 @@ public class ChessGame {
         }
     }
 
+    public Status getStatus() {
+        return Status.from(board);
+    }
+
     public void start() {
         this.state = State.START;
     }
