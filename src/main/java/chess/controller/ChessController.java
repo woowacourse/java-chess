@@ -83,7 +83,7 @@ public final class ChessController {
             OutputView.printFinishMessage();
             inquireStatus(chessGame);
             room.deleteRoom();
-            return readCommand(List.of(END));
+            return new CommandDto(END);
         }
         return readCommand(List.of(MOVE, STATUS, END));
     }
