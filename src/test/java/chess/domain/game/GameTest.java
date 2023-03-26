@@ -89,4 +89,40 @@ public class GameTest extends AbstractTestFixture {
 
         assertThat(game.getScoreOf(Team.BLACK)).isEqualTo(38);
     }
+
+    @DisplayName("이긴 팀을 알 수 있다")
+    @Test
+    void getWinner_noKing() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new King(Team.WHITE))
+        ));
+        var game = new Game(Team.WHITE, board);
+
+        assertThat(game.getWinner()).isEqualTo(Team.WHITE);
+    }
+
+    @DisplayName("이긴 팀을 알 수 있다")
+    @Test
+    void getWinner_hasKing() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new King(Team.WHITE)),
+                Map.entry(new Position(File.B, Rank.ONE), new King(Team.BLACK)),
+                Map.entry(new Position(File.C, Rank.ONE), new Pawn(Team.BLACK))
+        ));
+        var game = new Game(Team.WHITE, board);
+
+        assertThat(game.getWinner()).isEqualTo(Team.BLACK);
+    }
+
+    @DisplayName("이긴 팀을 알 수 있다")
+    @Test
+    void getWinner_draw() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new King(Team.WHITE)),
+                Map.entry(new Position(File.B, Rank.ONE), new King(Team.BLACK))
+        ));
+        var game = new Game(Team.WHITE, board);
+
+        assertThat(game.getWinner()).isEqualTo(Team.NEUTRAL);
+    }
 }

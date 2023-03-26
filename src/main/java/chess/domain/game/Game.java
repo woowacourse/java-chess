@@ -62,4 +62,32 @@ public class Game {
     public double getScoreOf(Team team) {
         return board.score(team);
     }
+
+    public Team getWinner() {
+        if (isFinished(board)) {
+            return getWinnerByKing();
+        }
+        return getWinnerByScore();
+    }
+
+    private Team getWinnerByKing() {
+        if (board.hasKing(Team.WHITE)) {
+            return Team.WHITE;
+        }
+        return Team.BLACK;
+    }
+
+    private Team getWinnerByScore() {
+        if (score(Team.WHITE) > score(Team.BLACK)) {
+            return Team.WHITE;
+        }
+        if (score(Team.WHITE) < score(Team.BLACK)) {
+            return Team.BLACK;
+        }
+        return Team.NEUTRAL;
+    }
+
+    private double score(Team team) {
+        return board.score(team);
+    }
 }
