@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.view.dto.CommandType;
+import chess.view.dto.GameCommandType;
+import chess.view.dto.GameRequest;
 import chess.view.dto.ReadyRequest;
-import chess.view.dto.Request;
 import java.util.Scanner;
 
 public class InputView {
@@ -26,19 +26,19 @@ public class InputView {
         }
     }
 
-    public Request askCommand() {
+    public GameRequest askCommand() {
         String[] inputs = inputCommand();
         validateHasLength(inputs);
-        CommandType commandType = CommandType.from(inputs[0]);
+        GameCommandType commandType = GameCommandType.from(inputs[0]);
         if (commandType.isSingleCommandType()) {
             validateSingleCommand(inputs);
-            return Request.createSingleCommand(commandType);
+            return GameRequest.createSingleCommand(commandType);
         }
         validateParameters(inputs);
-        return Request.createMoveCommand(inputs[1], inputs[2]);
+        return GameRequest.createMoveCommand(inputs[1], inputs[2]);
     }
 
-    public Request askCommand(String turn) {
+    public GameRequest askCommand(String turn) {
         printTurn(turn);
         return askCommand();
     }

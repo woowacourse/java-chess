@@ -13,9 +13,9 @@ import chess.repository.jdbc.JdbcRoomDao;
 import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.dto.CommandType;
+import chess.view.dto.GameCommandType;
+import chess.view.dto.GameRequest;
 import chess.view.dto.MoveRequest;
-import chess.view.dto.Request;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +40,12 @@ public class GameController extends Controller {
 
     private void askToStart() {
         outputView.printStartMessage();
-        Request request = inputView.askCommand();
-        CommandType commandType = request.getCommandType();
-        if (commandType == CommandType.START) {
+        GameRequest request = inputView.askCommand();
+        GameCommandType commandType = request.getCommandType();
+        if (commandType == GameCommandType.START) {
             play(setUpGame());
         }
-        if (Set.of(CommandType.MOVE, CommandType.STATUS).contains(commandType)) {
+        if (Set.of(GameCommandType.MOVE, GameCommandType.STATUS).contains(commandType)) {
             throw new IllegalArgumentException("아직 게임이 시작되지 않은 상태입니다.");
         }
     }
@@ -57,7 +57,7 @@ public class GameController extends Controller {
 
     private void play(Game game) {
         outputView.printPieces(createResponses(game.getPieces()));
-        while (repeat(() -> playOnce(game)) != CommandType.END) {
+        while (repeat(() -> playOnce(game)) != GameCommandType.END) {
             outputView.printPieces(createResponses(game.getPieces()));
         }
     }
@@ -70,28 +70,28 @@ public class GameController extends Controller {
         return responses;
     }
 
-    private CommandType playOnce(Game game) {
-        Request request = inputView.askCommand(game.getTurn());
-        CommandType commandType = request.getCommandType();
-        if (commandType == CommandType.START) {
+    private GameCommandType playOnce(Game game) {
+        GameRequest request = inputView.askCommand(game.getTurn());
+        GameCommandType commandType = request.getCommandType();
+        if (commandType == GameCommandType.START) {
             throw new IllegalArgumentException("게임이 진행중입니다.");
         }
-        if (commandType == CommandType.STATUS) {
+        if (commandType == GameCommandType.STATUS) {
             outputView.printStatus(game.getResult());
         }
-        if (commandType == CommandType.MOVE) {
+        if (commandType == GameCommandType.MOVE) {
             move(game, request);
             if (game.isGameOver()) {
                 GameResult gameResult = game.getResult();
                 gameService.updateWinner(roomId, gameResult.getWinner());
                 outputView.printFinalWinner(gameResult);
-                return CommandType.END;
+                return GameCommandType.END;
             }
         }
         return commandType;
     }
 
-    private void move(Game game, Request request) {
+    private void move(Game game, GameRequest request) {
         MoveRequest moveRequest = request.getMoveRequest();
         game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
         gameService.create(roomId, moveRequest.getSource(), moveRequest.getTarget());

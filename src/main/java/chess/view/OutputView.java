@@ -22,7 +22,7 @@ public class OutputView {
     }
 
     public void printSelectRoomMessage(List<String> roomNames) {
-        System.out.println("> 게임방 리스트");
+        System.out.println("> 진행중인 게임방 리스트");
         for (String roomName : roomNames) {
             System.out.println("\t" + roomName);
         }

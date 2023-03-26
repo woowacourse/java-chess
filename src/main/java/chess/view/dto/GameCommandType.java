@@ -5,13 +5,13 @@ import static chess.view.InputView.INVALID_INPUT_MESSAGE;
 import java.util.Arrays;
 import java.util.Set;
 
-public enum CommandType {
+public enum GameCommandType {
 
     START, END, MOVE, STATUS;
 
-    private static final Set<CommandType> SINGLE_COMMAND_TYPES = Set.of(START, END, STATUS);
+    private static final Set<GameCommandType> SINGLE_COMMAND_TYPES = Set.of(START, END, STATUS);
 
-    public static CommandType from(String input) {
+    public static GameCommandType from(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.name().equals(input))
                 .findFirst()
