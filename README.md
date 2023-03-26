@@ -48,3 +48,31 @@
 - 폰은 p, 룩은 r, 나이트는 n, 비숍은 b, 퀸은 q, 킹은 k로 표시한다.
 - 검은색 진영은 대문자, 흰색 진영은 소문자로 구분한다.
 - 빈 공간은 . 으로 표현한다.
+
+## DB
+
+### 설계
+
+```sql
+CREATE TABLE game
+(
+    id       int         not null primary key,
+    board_id int         not null,
+    state    varchar(10) not null
+)
+```
+
+```sql
+CREATE TABLE board
+(
+    id     int         not null primary key,
+    square varchar(3)  not null,
+    role   varchar(20) not null
+) 
+```
+
+### 요구사항
+
+- `game`의 state가 `Running`일 때 이전 게임을 불러온다.
+- state가 `End`, `WaitingStart` 일 때는 게임을 새롭게 시작한다.
+- `end`를 입력하면 현재 게임 상태와 보드 상황을 DB에 저장한다.
