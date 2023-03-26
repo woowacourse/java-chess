@@ -18,38 +18,18 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessDB {
-
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-
     private ChessDB() {
 
     }
 
-    private static Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public static Board getBoardData() {
         final var query = "SELECT * FROM piece";
-        try (var connection = getConnection();
+        try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
 
             var resultSet = preparedStatement.executeQuery();
@@ -96,7 +76,7 @@ public class ChessDB {
         delete();
         final var query = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
         Map<String, HashMap<String, SavePieceDto>> data = dto.getData();
-        try (var connection = getConnection();
+        try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             for (String hello : data.keySet()) {
                 for (String hello2 : data.get(hello).keySet()) {
@@ -116,7 +96,7 @@ public class ChessDB {
 
     public static void delete() {
         final var query = "DELETE FROM piece";
-        try (var connection = getConnection();
+        try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             var resultSet = preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -126,7 +106,7 @@ public class ChessDB {
 
     public static boolean existBoard() {
         final var query = "SELECT * FROM piece";
-        try (var connection = getConnection();
+        try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
 
             var resultSet = preparedStatement.executeQuery();

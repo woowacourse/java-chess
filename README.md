@@ -154,12 +154,12 @@ turn VARCHAR(255) NOT NULL
 #### Dao
 
 - UserDao
-    - [ ] 새로운 유저를 등록한다. (Create)
-        - [ ] 같은 id 혹은 닉네임이 있으면 생성하지 못한다.
-    - [ ] id와 비밀번호로 유저 정보를 가져온다. (Select)
-        - [ ] id와 비밀번호가 둘 다 맞지 않는다면 정보를 가져올 수 없다.
+    - [x] 새로운 유저를 등록한다. (Create)
+        - [x] 같은 id 혹은 닉네임이 있으면 생성하지 못한다.
+    - [x] id와 비밀번호로 유저 이름를 가져온다. (Read)
+        - [x] id와 비밀번호가 둘 다 맞지 않는다면 정보를 가져올 수 없다.
 
-- GameDao
+- GameDao경
     - [ ] user_id 를 기반으로 게임을 등록한다. (Create)
         - [ ] 이미 user_id 에 대한 게임이 있다면 등록할 수 없다.
     - [ ] 유저의 아이디로 게임 아이디를 가져온다. (Read)
@@ -167,5 +167,5 @@ turn VARCHAR(255) NOT NULL
     - [ ] 게임 id 를 기반으로 게임을 삭제한다. (Delete)
 
 - PieceDao
-    - [ ] game_id 를 통해 해당 게임의 piece 를 가져온다. (Select)
+    - [ ] game_id 를 통해 해당 게임의 piece 를 가져온다. (Read)
     - [ ] game_id 를 통해 해당 game_id의 피스를 삭제한다 (Delete)

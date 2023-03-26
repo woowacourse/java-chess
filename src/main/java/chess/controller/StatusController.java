@@ -22,8 +22,7 @@ public class StatusController implements Controller {
         try {
             validate(request);
             Game game = GameSession.getGame();
-            ChessDB chessDB = new ChessDB();
-            chessDB.saveBoard(BoardSaveDto.from(game.getBoard()));
+            ChessDB.saveBoard(BoardSaveDto.from(game.getBoard()));
             return new Response(ResponseType.STATUS, makeGameResultDto(game));
         } catch (IllegalArgumentException | IllegalStateException e) {
             return new Response(ResponseType.FAIL, e.getMessage());
