@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public final class Position {
 
-    private final static Map<String, Position> positions = new HashMap<>();
+    private static final Map<String, Position> positions = new HashMap<>();
 
     private final File file;
     private final Rank rank;
@@ -77,5 +77,13 @@ public final class Position {
         Rank newRank = rank.move(rankStep);
 
         return Position.of(newFile, newRank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

@@ -62,11 +62,9 @@ CREATE TABLE piece (
 	position VARCHAR(4) NOT NULL,
 	type VARCHAR(10) NOT NULL,
 	board_id BIGINT NOT NULL,
-	PRIMARY KEY (piece_id),
-    FOREIGN KEY (board_id)
-    REFERENCES board(board_id)
+	PRIMARY KEY (piece_id)
 );
 ```
-- [ ] 새로운 게임이 시작되면 초기 기물 상태를 저장 후 반환
+- [X] 새로운 게임이 시작되면 초기 기물 상태를 저장 후 반환
 - [ ] 존재하는 게임 선택 시, 저장된 진행 정보 반환
 - [ ] 게임 일시 정지 시, 현재 게임 상태를 저장
