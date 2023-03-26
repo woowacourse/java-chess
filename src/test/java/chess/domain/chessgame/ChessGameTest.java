@@ -1,6 +1,7 @@
-package chess.domain;
+package chess.domain.chessgame;
 
-import chess.domain.chessgame.ChessGame;
+import chess.domain.winningstatus.WinningStatusByKing;
+import chess.domain.winningstatus.WinningStatusByScore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -54,4 +55,47 @@ class ChessGameTest {
 
         assertDoesNotThrow(() -> chessGame.start());
     }
+
+    @Test
+    void 게임이_진행중일때_점수를_기반으로_status를_반환한다() {
+        chessGame.start();
+
+        assertThat(chessGame.status()).isInstanceOf(WinningStatusByScore.class);
+    }
+
+    @Test
+    void 게임이_종료됬을때_점수를_기반으로_status를_반환한다() {
+        chessGame.start();
+
+        //Shortest way for checkmate
+        chessGame.move(F2, F3);
+        chessGame.move(E7, E5);
+        chessGame.move(G2, G4);
+        chessGame.move(D8, H4);
+        chessGame.move(H2, H3);
+        chessGame.move(H4, E1);
+
+        assertThat(chessGame.status()).isInstanceOf(WinningStatusByKing.class);
+    }
+
+    @Test
+    void 진행_상황에따라_체스보드를_반환한다() {
+
+        assertThatThrownBy(() -> chessGame.getChessBoard()).isInstanceOf(IllegalStateException.class);
+
+        chessGame.start();
+        assertDoesNotThrow(() -> chessGame.getChessBoard());
+
+        //Shortest way for checkmate
+        chessGame.move(F2, F3);
+        chessGame.move(E7, E5);
+        chessGame.move(G2, G4);
+        chessGame.move(D8, H4);
+        chessGame.move(H2, H3);
+        chessGame.move(H4, E1);
+
+        assertDoesNotThrow(() -> chessGame.getChessBoard());
+    }
+
+
 }

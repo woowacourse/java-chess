@@ -48,4 +48,14 @@ class WinningStatusByScoreTest {
     void 점수가_더_높은_팀을_승자로_반환한다() {
         assertThat(winningStatusByScore.getWinner()).isEqualTo(Team.BLACK);
     }
+
+    @Test
+    void 점수가_동점이면_null을_반환한다() {
+        Map<Team, Score> scores1 = new EnumMap<>(Team.class);
+        scores1.put(Team.WHITE, new Score(List.of(KING_WHITE, PAWN_WHITE), 0));
+        scores1.put(Team.BLACK, new Score(List.of(KING_BLACK, PAWN_BLACK), 0));
+
+        WinningStatusByScore winningStatusByScore1 = new WinningStatusByScore(scores1);
+        assertThat(winningStatusByScore1.getWinner()).isEqualTo(null);
+    }
 }
