@@ -34,7 +34,7 @@ public class Board {
 		validateTargetNotSameColor(source, target);
 
 		Piece piece = board.get(source);
-		Direction unit = Direction.calculateDirection(source, target, piece);
+		Direction unit = Direction.calculateDirection(piece, target);
 		validateMovable(piece, unit);
 		validatePath(source, target, unit, piece);
 
@@ -58,7 +58,7 @@ public class Board {
 	}
 
 	private void validateDifferentPosition(final Position source, final Position target) {
-		if(source.equals(target)){
+		if (source.equals(target)) {
 			throw new IllegalArgumentException("출발지와 도착지는 같을 수 없습니다");
 		}
 	}

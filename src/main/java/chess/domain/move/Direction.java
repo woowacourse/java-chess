@@ -1,6 +1,5 @@
 package chess.domain.move;
 
-import java.util.List;
 import java.util.Set;
 
 import chess.domain.piece.Piece;
@@ -33,29 +32,41 @@ public enum Direction {
 		this.dy = dy;
 	}
 
-	public static Direction calculateDirection(Position source, Position target, final Piece piece) {
-		int dx = diffFile(source, target);
-		int dy = diffRank(source, target);
-		Set<Direction> directions = piece.direction();
-		Direction unit = findDirection(dx, dy);
+	public static Direction calculateDirection(final Piece piece, Position target) {
+		int dx = diffFile(piece.position(), target);
+		int dy = diffRank(piece.position(), target);
 
-		return directions.stream()
-			.filter((direction) -> direction == unit)
-			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다"));
+		return findDirection(piece, dx, dy);
 	}
 
-	private static Direction findDirection(final int dx, final int dy) {
-		if (dx == 0) {
-			return calculateVertical(dy);
+	private static Direction findDirection(final Piece piece, final int dx, final int dy) {
+		final Set<Direction> directions = piece.direction();
+		Direction direction = calculateKnight(directions, dx, dy);
+		if (!isKnight(dx, dy)) {
+			direction = calculateEvery(dx, dy);
 		}
-		if (dy == 0) {
-			return calculateHorizontal(dx);
+		if (!directions.contains(direction)) {
+			throw new IllegalArgumentException("체스말이 이동할 수 없는 위치입니다");
 		}
+		return direction;
+	}
+
+	private static boolean isKnight(final int dx, final int dy) {
+		return Math.abs(dx * dy) == 2;
+	}
+
+	private static Direction calculateEvery(int dx, int dy) {
 		if (Math.abs(dx) == Math.abs(dy)) {
 			return calculateDiagonal(dx, dy);
 		}
-		return calculateKnight(dx, dy);
+		return calculateLinear(dx, dy);
+	}
+
+	private static Direction calculateLinear(int dx, int dy) {
+		if (dx == 0) {
+			return calculateVertical(dy);
+		}
+		return calculateHorizontal(dx);
 	}
 
 	private static Direction calculateVertical(final int dy) {
@@ -85,13 +96,11 @@ public enum Direction {
 		return RIGHT_DOWN;
 	}
 
-	private static Direction calculateKnight(int dx, int dy) {
-		final List<Direction> knightDirections = List.of(KNIGHT_RIGHT_UP, KNIGHT_RIGHT_DOWN, KNIGHT_LEFT_UP,
-			KNIGHT_LEFT_DOWN, KNIGHT_UP_RIGHT, KNIGHT_UP_LEFT, KNIGHT_DOWN_RIGHT, KNIGHT_DOWN_LEFT);
+	private static Direction calculateKnight(final Set<Direction> knightDirections, final int dx, final int dy) {
 		return knightDirections.stream()
 			.filter(direction -> direction.dx == dx && direction.dy == dy)
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 값입니다."));
+			.orElse(null);
 	}
 
 	private static int diffFile(Position source, Position target) {

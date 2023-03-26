@@ -18,11 +18,11 @@ class DirectionTest {
 	void unavailableDirection() {
 		// given
 		final Position source = Position.of(C, ONE);
-		final Position target = Position.of(D, ONE);
+		final Position target = Position.of(D, EIGHT);
 		final Bishop bishop = new Bishop(WHITE, source);
 
 		// then
-		assertThatThrownBy(() -> Direction.calculateDirection(source, target, bishop))
+		assertThatThrownBy(() -> Direction.calculateDirection(bishop, target))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("체스말이 이동할 수 없는 위치입니다");
 	}
@@ -39,6 +39,6 @@ class DirectionTest {
 		final Direction direction = Direction.KNIGHT_UP_RIGHT;
 
 		// then
-		assertThat(Direction.calculateDirection(source, target, knight)).isEqualTo(direction);
+		assertThat(Direction.calculateDirection(knight, target)).isEqualTo(direction);
 	}
 }
