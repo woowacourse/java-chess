@@ -10,7 +10,10 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Role;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import chess.exception.PieceCanNotMoveException;
+import chess.exception.PathBlockedException;
+import chess.exception.PawnMoveDiagonalException;
+import chess.exception.PawnMoveForwardException;
+import chess.exception.TargetSameTeamException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -98,53 +101,32 @@ public class Board {
     }
 
     public void move(Square source, Square target) {
-        if (isMovable(source, target)) {
-            moveIfPawn(source);
-            board.put(target, getPiece(source));
-            board.put(source, new Empty());
-            return;
-        }
-        throw new PieceCanNotMoveException();
-    }
-
-    private void moveIfPawn(Square source) {
-        if (isSameRole(source, Role.PAWN)) {
-            board.put(source, new Pawn(getPiece(source).getTeam(), IS_MOVED));
-        }
-    }
-
-    private boolean isMovable(Square source, Square target) {
         Piece sourcePiece = getPiece(source);
+        validateMovable(source, target);
+        sourcePiece.validateMovableRange(source, target);
+        movePieceSourceToTarget(source, target);
+    }
+
+    private void validateMovable(Square source, Square target) {
         Direction direction = Direction.calculateDirection(source, target);
 
-        if (isPathBlocked(source, target, direction) && !isSameRole(source, Role.KNIGHT)) {
-            return false;
-        }
+        validatePathBlocked(source, target, direction);
         if (isSameRole(source, Role.PAWN)) {
-            return isPawnMovable(source, target, direction);
+            validatePawnPathBlocked(target, direction);
         }
-        return sourcePiece.isMovable(source, target, direction);
     }
 
-    private boolean isPawnMovable(Square source, Square target, Direction direction) {
-        boolean isTargetEmpty = getPiece(target).isEmpty();
-
-        if (Direction.isMoveForward(direction) && !isTargetEmpty) {
-            return false;
+    private void validatePathBlocked(Square source, Square target, Direction direction) {
+        if (isBlocked(source, target, direction) && !isSameRole(source, Role.KNIGHT)) {
+            throw new PathBlockedException();
         }
-        if (Direction.isMoveDiagonal(direction) && (isSameTeam(source, target) || isTargetEmpty)) {
-            return false;
+        if (isSameTeam(source, target)) {
+            throw new TargetSameTeamException();
         }
-        return getPiece(source).isMovable(source, target, direction);
-    }
-
-    private boolean isPathBlocked(Square source, Square target, Direction direction) {
-        return isBlocked(source, target, direction) || isSameTeam(source, target);
     }
 
     private boolean isBlocked(Square source, Square target, Direction direction) {
         Square nextSquare = source.nextSquare(source, direction.getFile(), direction.getRank());
-
         if (nextSquare.equals(target)) {
             return false;
         }
@@ -152,6 +134,28 @@ public class Board {
             return isBlocked(nextSquare, target, direction);
         }
         return true;
+    }
+
+    private void validatePawnPathBlocked(Square target, Direction direction) {
+        boolean isTargetEmpty = getPiece(target).isEmpty();
+        if (!isTargetEmpty && Direction.isMoveForward(direction)) {
+            throw new PawnMoveForwardException();
+        }
+        if (isTargetEmpty && Direction.isMoveDiagonal(direction)) {
+            throw new PawnMoveDiagonalException();
+        }
+    }
+
+    private void movePieceSourceToTarget(Square source, Square target) {
+        moveIfPawn(source);
+        board.put(target, getPiece(source));
+        board.put(source, new Empty());
+    }
+
+    private void moveIfPawn(Square source) {
+        if (isSameRole(source, Role.PAWN)) {
+            board.put(source, new Pawn(getPiece(source).getTeam(), IS_MOVED));
+        }
     }
 
     private boolean isSameTeam(Square source, Square target) {

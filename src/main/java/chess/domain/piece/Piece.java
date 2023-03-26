@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
 import chess.domain.board.Square;
 
 public abstract class Piece {
@@ -12,7 +11,7 @@ public abstract class Piece {
         this.role = role;
     }
 
-    public abstract boolean isMovable(Square source, Square target, Direction direction);
+    public abstract void validateMovableRange(Square source, Square target);
 
     public boolean isSameRole(Role role) {
         return this.role == role;

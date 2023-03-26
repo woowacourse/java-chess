@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
+import chess.exception.PieceCanNotMoveException;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -16,7 +17,11 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Square source, Square target, Direction direction) {
-        return POSSIBLE_DIRECTIONS.contains(direction);
+    public void validateMovableRange(Square source, Square target) {
+        Direction direction = Direction.calculateDirection(source, target);
+
+        if (!POSSIBLE_DIRECTIONS.contains(direction)) {
+            throw new PieceCanNotMoveException();
+        }
     }
 }

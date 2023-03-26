@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.Direction;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
@@ -17,43 +16,35 @@ class QueenTest {
         return Stream.of(
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.B, Rank.SEVEN),
-                        Direction.UP
+                        new Square(File.B, Rank.SEVEN)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.H, Rank.SEVEN),
-                        Direction.RIGHT_UP
+                        new Square(File.G, Rank.SEVEN)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.H, Rank.TWO),
-                        Direction.RIGHT
+                        new Square(File.H, Rank.TWO)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.C, Rank.ONE),
-                        Direction.RIGHT_DOWN
+                        new Square(File.C, Rank.ONE)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.B, Rank.ONE),
-                        Direction.DOWN
+                        new Square(File.B, Rank.ONE)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.A, Rank.ONE),
-                        Direction.LEFT_DOWN
+                        new Square(File.A, Rank.ONE)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.A, Rank.TWO),
-                        Direction.LEFT
+                        new Square(File.A, Rank.TWO)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.A, Rank.THREE),
-                        Direction.LEFT_UP
+                        new Square(File.A, Rank.THREE)
                 )
         );
     }
@@ -61,9 +52,9 @@ class QueenTest {
     @DisplayName("팔방으로 거리 제한 없이 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleQueenTestProvider")
-    void Should_Success_When_QueenMove(final Square source, final Square target, final Direction direction) {
-        final Queen queen = new Queen(Team.WHITE);
-
-        assertThat(queen.isMovable(source, target, direction)).isTrue();
+    void Should_Success_When_QueenMove(Square source, Square target) {
+        Queen queen = new Queen(Team.WHITE);
+        
+        assertDoesNotThrow(() -> queen.validateMovableRange(source, target));
     }
 }

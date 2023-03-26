@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
 import chess.domain.board.Square;
 import chess.exception.PieceCanNotMoveException;
 
@@ -15,7 +14,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square target, final Direction direction) {
+    public void validateMovableRange(Square source, Square target) {
         throw new PieceCanNotMoveException();
     }
 }

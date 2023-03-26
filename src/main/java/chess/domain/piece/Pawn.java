@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
+import chess.exception.PieceCanNotMoveException;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -28,17 +29,22 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Square source, Square target, Direction direction) {
-        if (possibleDirections.contains(direction)) {
-            return isMovableContainPossibleMoves(source, target, direction);
+    public void validateMovableRange(Square source, Square target) {
+        Direction direction = Direction.calculateDirection(source, target);
+
+        if (!possibleDirections.contains(direction)) {
+            throw new PieceCanNotMoveException();
         }
-        return false;
+        if (!validateMovableRange(source, target, direction)) {
+            throw new PieceCanNotMoveException();
+        }
     }
 
-    private boolean isMovableContainPossibleMoves(Square source, Square target, Direction direction) {
+    private boolean validateMovableRange(Square source, Square target, Direction direction) {
         boolean isMovableOneStep = source.isMovableToTarget(target, direction.getFile(), direction.getRank());
         boolean isMovableTwoStep = source.isMovableToTarget(target, direction.getFile(),
                 direction.getRank() + team.calculateDirection(1));
+
         if (Direction.isMoveForward(direction) && !isMoved) {
             return isMovableOneStep || isMovableTwoStep;
         }
