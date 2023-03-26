@@ -134,15 +134,24 @@ rnbqkbnr
 현재 상태: 백색 승
 ```
 
-### 다이어그램
+### 컨트롤러
 
 ```mermaid
 graph TD
-    ChessController --> InputView
-    ChessController --> OutputView --> BoardConverter
+    MainController --> UserController --> UserService --> UserDao
+    MainController --> RoomController --> RoomService --> RoomDao
+    MainController --> GameController --> GameSerivce --> GameDao
+```
 
-    ChessController --> ChessGame
-    ChessGame --> Board
+### 체스 게임
+
+```mermaid
+graph TD
+    GameController --> GameInputView
+    GameController --> GameOutputView --> BoardConverter
+
+    GameController --> GameService
+    GameService --> Board
     Board --> BoardGenerator
     Board --> GameResult
     Position --> Rank
