@@ -70,6 +70,7 @@ public final class ChessGame {
     private void validate(final Coordinate start, final Coordinate end) {
         validateNotEmpty(start);
         validateTurn(start);
+        validateSameColor(start, end);
         validateMoveByRule(start, end);
         validateNotBlocked(start, end);
     }
@@ -87,8 +88,14 @@ public final class ChessGame {
         }
     }
 
+    private void validateSameColor(final Coordinate start, final Coordinate end) {
+        if (board.findPiece(start).getColor() == board.findPiece(end).getColor()) {
+            throw new IllegalArgumentException("[ERROR] 같은 팀이 있는 곳으로 이동할 수 없습니다.");
+        }
+    }
+
     private void validateMoveByRule(final Coordinate start, final Coordinate end) {
-        if (board.isMovable(start, end)) {
+        if (board.isMovable(start, end) || board.isAttackable(start, end)) {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 방향으로 이동할 수 없습니다.");

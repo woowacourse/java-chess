@@ -1,6 +1,5 @@
 package domain.piece.nonsliding;
 
-import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,7 @@ class KnightTest {
         Coordinate endCoordinate = new Coordinate(row, col);
         Knight knight = new Knight(Color.WHITE);
 
-        assertThat(knight.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(knight.isMovable(startCoordinate, endCoordinate)).isTrue();
     }
 
     @ParameterizedTest(name = "(4, 4)에서 ({0}, {1})으로의 직선 이동은 불가능하다")
@@ -41,7 +40,7 @@ class KnightTest {
         Coordinate endCoordinate = new Coordinate(row, col);
         Knight knight = new Knight(Color.WHITE);
 
-        assertThat(knight.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(knight.isMovable(startCoordinate, endCoordinate)).isFalse();
     }
 
     @ParameterizedTest(name = "(4, 4)에서 ({0}, {1})으로의 대각선 이동은 불가능하다")
@@ -51,6 +50,6 @@ class KnightTest {
         Coordinate endCoordinate = new Coordinate(row, col);
         Knight knight = new Knight(Color.WHITE);
 
-        assertThat(knight.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(knight.isMovable(startCoordinate, endCoordinate)).isFalse();
     }
 }

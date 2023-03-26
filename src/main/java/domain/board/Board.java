@@ -1,9 +1,6 @@
 package domain.board;
 
 import domain.piece.move.Coordinate;
-import domain.piece.move.Situation;
-import domain.piece.pawn.BlackPawn;
-import domain.piece.pawn.WhitePawn;
 import domain.piece.Color;
 import domain.piece.Piece;
 
@@ -29,19 +26,7 @@ public final class Board {
     }
 
     public void replacePiece(final Coordinate target, final Piece piece) {
-        if (piece.isPawn()) {
-            replacePieceIfIsPawn(target, piece);
-            return;
-        }
         pieceLocations.put(target, piece);
-    }
-
-    private void replacePieceIfIsPawn(final Coordinate target, final Piece piece) {
-        if (piece.getColor() == Color.BLACK) {
-            pieceLocations.put(target, new BlackPawn(Color.BLACK));
-            return;
-        }
-        pieceLocations.put(target, new WhitePawn(Color.WHITE));
     }
 
     public void replaceWithEmptyPiece(final Coordinate target) {
@@ -50,8 +35,12 @@ public final class Board {
 
     public boolean isMovable(final Coordinate start, final Coordinate end) {
         validateOverBoardSize(start, end);
-        Situation situation = Situation.of(findPiece(start), findPiece(end));
-        return findPiece(start).isMovable(start, end, situation);
+        return findPiece(start).isMovable(start, end);
+    }
+
+    public boolean isAttackable(final Coordinate start, final Coordinate end) {
+        validateOverBoardSize(start, end);
+        return findPiece(start).isAttackable(start, end, findPiece(end));
     }
 
     private void validateOverBoardSize(final Coordinate start, final Coordinate end) {

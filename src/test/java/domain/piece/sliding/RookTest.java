@@ -1,6 +1,5 @@
 package domain.piece.sliding;
 
-import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(0, 6 - distance);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 오른쪽으로 {0}칸 이동할 수 있다")
@@ -41,7 +40,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(0, distance);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 위쪽으로 {0}칸 이동할 수 있다")
@@ -51,7 +50,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(distance, 0);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 아래쪽으로 {0}칸 이동할 수 있다")
@@ -61,7 +60,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(6 - distance, 0);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isTrue();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isTrue();
     }
 
     @ParameterizedTest(name = "룩은 우측 상단으로 {0}칸 이동할 수 없다")
@@ -71,7 +70,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(distance, distance);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isFalse();
     }
 
     @ParameterizedTest(name = "룩은 우측 하단으로 {0}칸 이동할 수 없다")
@@ -81,7 +80,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, distance);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isFalse();
     }
 
     @ParameterizedTest(name = "룩은 좌측 하단으로 {0}칸 이동할 수 없다")
@@ -91,7 +90,7 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(7 - distance, 7 - distance);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isFalse();
     }
 
     @ParameterizedTest(name = "룩은 좌측 상단으로 {0}칸 이동할 수 없다")
@@ -101,6 +100,6 @@ class RookTest {
         Coordinate endCoordinate = new Coordinate(distance, 7 - distance);
         Rook rook = new Rook(Color.WHITE);
 
-        assertThat(rook.isMovable(startCoordinate, endCoordinate, Situation.NEUTRAL)).isFalse();
+        assertThat(rook.isMovable(startCoordinate, endCoordinate)).isFalse();
     }
 }

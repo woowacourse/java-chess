@@ -14,7 +14,6 @@ public final class King extends Piece {
             Inclination.ONE, Inclination.MINUS_ONE, Inclination.NEGATIVE_INFINITY,
             Inclination.POSITIVE_INFINITY, Inclination.ZERO, Inclination.MINUS_ZERO
     ));
-
     private static final double POINT = 0;
 
     public King(final Color color) {
@@ -22,7 +21,7 @@ public final class King extends Piece {
     }
 
     @Override
-    protected boolean isMovableWhenMovingNotVariates(
+    public boolean isMovable(
             final Coordinate start,
             final Coordinate end
     ) {
@@ -30,6 +29,15 @@ public final class King extends Piece {
 
         return DIRECTION.canBeDirectionOf(inclination) &&
                 start.hasDistanceLessThanOne(end);
+    }
+
+    @Override
+    public boolean isAttackable(
+            final Coordinate start,
+            final Coordinate end,
+            final Piece target
+    ) {
+        return isMovable(start, end);
     }
 
     @Override
