@@ -24,15 +24,15 @@ public class ChessController {
         this.chessGame = chessGame;
     }
 
-    public void startPhase() {
-        try {
-            InputView.printGameStartMessage();
-            OutputView.printChessBoard(chessBoard.getChessBoard());
-        } catch (IllegalArgumentException e) {
-            OutputView.printMessage(e.getMessage());
-            startPhase();
-        }
-    }
+//    public void startPhase() {
+//        try {
+//            int gameIdx = InputView.printGameStartMessage();
+//            OutputView.printChessBoard(chessBoard.getChessBoard());
+//        } catch (IllegalArgumentException e) {
+//            OutputView.printMessage(e.getMessage());
+//            startPhase();
+//        }
+//    }
 
     public void commandPhase() {
         while (true) {
@@ -48,6 +48,7 @@ public class ChessController {
     private boolean command(Side side) {
         try {
             List<String> command = InputView.readPlayGameCommand();
+            System.out.println("command = " + command);
             if (isMoveCommand(side, command)) {
                 return !chessBoard.checkKingIsDead();
             }

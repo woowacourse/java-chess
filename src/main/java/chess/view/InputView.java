@@ -21,20 +21,25 @@ public class InputView {
     private static final int COMMAND_INDEX = 0;
     private static final int STATUS_COMMAND_SIZE = 1;
 
-    public static void printGameStartMessage() {
+    public static int printGameStartMessage() {
         printMessage(GAME_START_MESSAGE);
-        readInitialGameCommand();
+        return readInitialGameCommand();
     }
 
-    public static void readInitialGameCommand() {
+    public static int readInitialGameCommand() {
         String input = SCANNER.nextLine();
-        validateInitialCommand(input);
+        return validateInitialCommand(input);
     }
 
-    public static void validateInitialCommand(String input) {
-        if (!input.equals(START)) {
+    public static int validateInitialCommand(String input) {
+        List<String> splitInput = Arrays.asList(input.split(" "));
+        if (!splitInput.get(0).equals(START)) {
             throw new IllegalArgumentException(INIT_INPUT_ERROR_MESSAGE);
         }
+        if (splitInput.size() == 1) {
+            return 0;
+        }
+        return Integer.parseInt(splitInput.get(1));
     }
 
     public static List<String> readPlayGameCommand() {

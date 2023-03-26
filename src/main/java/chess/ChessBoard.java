@@ -1,6 +1,6 @@
 package chess;
 
-import chess.database.ChessGameDao;
+import chess.database.ChessBoardDao;
 import chess.piece.Bishop;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
@@ -14,7 +14,6 @@ import chess.piece.Side;
 import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ChessBoard {
 
@@ -24,15 +23,53 @@ public class ChessBoard {
         this.chessBoard = chessBoard;
     }
 
-    public static ChessBoard generateChessBoard() {
+    public static ChessBoard generateChessBoard(int gameIdx) {
         Map<Position, ChessPiece> chessBoard = new HashMap<>();
-        generateRook(chessBoard);
-        generateKnight(chessBoard);
-        generateBishop(chessBoard);
-        generateQueen(chessBoard);
-        generateKing(chessBoard);
-        generatePawn(chessBoard);
-        initEmptySpace(chessBoard);
+        if (gameIdx == 0) {
+            generateRook(chessBoard);
+            generateKnight(chessBoard);
+            generateBishop(chessBoard);
+            generateQueen(chessBoard);
+            generateKing(chessBoard);
+            generatePawn(chessBoard);
+            initEmptySpace(chessBoard);
+            return new ChessBoard(chessBoard);
+        }
+        for (int file = 1; file <= 8; file++) {
+            for (int rank = 1; rank <= 8; rank++) {
+                ChessBoardDao chessBoardDao = new ChessBoardDao();
+                String pieceType = chessBoardDao.findPiece(gameIdx, file, rank);
+                if(pieceType.equals(Shape.PAWN.name())){
+                    System.out.print("whitePawn 위치하는곳");
+                    System.out.println("file = " + file + "rank = "+ rank);
+                    chessBoard.put(Position.initPosition(file, rank), new Pawn(Shape.PAWN, Side.WHITE));
+                }
+                if(pieceType.equals(Shape.ROOK.name())){
+                    chessBoard.put(Position.initPosition(file, rank), new Rook(Shape.ROOK, Side.WHITE));
+
+                }
+                if(pieceType.equals(Shape.KNIGHT.name())){
+                    chessBoard.put(Position.initPosition(file, rank), new Knight(Shape.KNIGHT, Side.WHITE));
+
+                }
+                if(pieceType.equals(Shape.BISHOP.name())){
+                    chessBoard.put(Position.initPosition(file, rank), new Bishop(Shape.BISHOP, Side.WHITE));
+
+                }
+                if(pieceType.equals(Shape.KING.name())){
+                    chessBoard.put(Position.initPosition(file, rank), new King(Shape.KING, Side.WHITE));
+
+                }
+                if(pieceType.equals(Shape.QUEEN.name())){
+                    chessBoard.put(Position.initPosition(file, rank), new Queen(Shape.QUEEN, Side.WHITE));
+
+                }
+                if(pieceType.equals(Shape.EMPTY.name())){
+                    chessBoard.put(Position.initPosition(file, rank), new Empty(Shape.EMPTY, Side.EMPTY));
+                }
+            }
+        }
+        System.out.println("chessBoard 이전꺼 생성");
         return new ChessBoard(chessBoard);
     }
 

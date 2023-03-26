@@ -17,12 +17,17 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private final ChessGameDao chessGameDao;
 
-    public ChessGame(ChessBoard chessBoard) {
+    public ChessGame(ChessBoard chessBoard, int gameIdx) {
         this.chessGameDao = new ChessGameDao();
-        chessGameDao.addGame();
-        this.gameIdx = chessGameDao.findLastInsertGame();
         this.chessBoard = chessBoard;
-        addChessBoard(new ChessBoardDao(), gameIdx);
+        if (gameIdx == 0) {
+            chessGameDao.addGame();
+            this.gameIdx = chessGameDao.findLastInsertGame();
+            System.out.println(this.gameIdx);
+            addChessBoard(new ChessBoardDao(), this.gameIdx);
+            return;
+        }
+        this.gameIdx = gameIdx;
     }
 
     public void addChessBoard(ChessBoardDao chessBoardDao, int gameIdx) {
@@ -76,6 +81,4 @@ public class ChessGame {
     public double takeScore(Side side) {
         return chessBoard.calculateScore(side);
     }
-
-//    public double takeWinner(double whiu)
 }
