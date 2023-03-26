@@ -34,4 +34,13 @@ class GameRoomDaoTest {
         assertThatThrownBy(() -> gameRoomDao.findGameRoomById(1000))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("특정 아이디의 게임 데이터를 수정할 수 있다")
+    void updateGameRoomById() {
+        long roomId = 1;
+        Camp camp = Camp.BLACK;
+
+        assertDoesNotThrow(() -> gameRoomDao.updateGameRoomById(roomId, camp));
+    }
 }

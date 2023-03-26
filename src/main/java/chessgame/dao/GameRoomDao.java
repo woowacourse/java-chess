@@ -11,6 +11,8 @@ public class GameRoomDao {
     private static final String FIND_GAME_ROOM_QUERY = "SELECT * FROM game_rooms WHERE id = ?";
     private static final String FIND_LEAST_GAME_ROOM_QUERY =
             "select * from game_rooms order by id desc limit 1";
+    private static final String UPDATE_GAME_ROOM_QUERY =
+            "UPDATE game_rooms SET turn = ? WHERE id = ?";
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
@@ -55,5 +57,16 @@ public class GameRoomDao {
             throw new RuntimeException(e);
         }
         throw new IllegalArgumentException("[ERROR] 가장 최신 게임을 찾지 못했습니다.");
+    }
+
+    public void updateGameRoomById(long roomId, Camp camp) {
+        try (final var connection = databaseConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(UPDATE_GAME_ROOM_QUERY)) {
+            preparedStatement.setString(1, camp.name());
+            preparedStatement.setLong(2, roomId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
