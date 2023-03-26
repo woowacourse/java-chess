@@ -27,13 +27,9 @@ public class PlayerDao {
 
     public static Player create(final String name) {
         final var query = "INSERT INTO player(name) VALUES (?)";
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, name);
-            preparedStatement.executeUpdate();
-            return findByName(name);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        JdbcTemplate.executeQuery(query, name);
+
+        return findByName(name);
     }
 }

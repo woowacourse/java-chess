@@ -96,20 +96,10 @@ public class BoardDao {
                                     final Piece sourcePiece) {
         final var query = "UPDATE board SET %s = ? WHERE id = ?";
 
-        try (final var connection = DBConnection.get()) {
-            final var targetQuery = String.format(query, target.getCoordinate());
-            final var targetPreparedStatement = connection.prepareStatement(targetQuery);
-            targetPreparedStatement.setString(1, PieceName.findByPiece(sourcePiece));
-            targetPreparedStatement.setInt(2, board.getId());
-            targetPreparedStatement.executeUpdate();
+        final var targetQuery = String.format(query, target.getCoordinate());
+        JdbcTemplate.executeQuery(targetQuery, PieceName.findByPiece(sourcePiece), board.getId());
 
-            final var sourceQuery = String.format(query, source.getCoordinate());
-            final var sourcePreparedStatement = connection.prepareStatement(sourceQuery);
-            sourcePreparedStatement.setString(1, PieceName.findByPiece(new Empty(Team.NONE)));
-            sourcePreparedStatement.setInt(2, board.getId());
-            sourcePreparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        final var sourceQuery = String.format(query, source.getCoordinate());
+        JdbcTemplate.executeQuery(sourceQuery, PieceName.findByPiece(new Empty(Team.NONE)), board.getId());
     }
 }

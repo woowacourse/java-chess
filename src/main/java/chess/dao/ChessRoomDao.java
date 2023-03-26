@@ -32,15 +32,10 @@ public class ChessRoomDao {
 
     public static ChessRoom create(final ChessGame chessGame, final Player player) {
         final var query = "INSERT INTO chess_room(game_id, player_id) VALUES (?, ?)";
-        try (final var connection = DBConnection.get()) {
-            final var preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, chessGame.getId());
-            preparedStatement.setInt(2, player.getId());
-            preparedStatement.executeUpdate();
-            return findByPlayer(player);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        JdbcTemplate.executeQuery(query, chessGame.getId(), player.getId());
+
+        return findByPlayer(player);
     }
 
     public static void updateState(final ChessRoom chessRoom, final ChessState state) {
