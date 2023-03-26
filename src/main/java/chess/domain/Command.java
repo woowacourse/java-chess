@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import java.util.Arrays;
 
@@ -21,15 +21,15 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
 
-    public static boolean isStartCommand(String input) {
-        return START.command.equals(input);
+    public boolean isStartCommand() {
+        return this == START;
     }
 
-    public static boolean isEndCommand(String input) {
-        return END.command.equals(input);
+    public boolean isEndCommand() {
+        return this == END;
     }
 
-    public static boolean isStatusCommand(String input) {
-        return STATUS.command.equals(input);
+    public boolean isStatusCommand() {
+        return this == STATUS;
     }
 }

@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.Command;
+import chess.domain.Command;
 import chess.domain.ChessGame;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -34,9 +34,9 @@ public class ChessController {
     }
 
     private boolean isStartCommand() {
-        String command = requestCommand().get(Index.MAIN_COMMAND.value);
+        Command command = getMainCommand(requestCommand());
 
-        if (Command.isStartCommand(command)) {
+        if (command.isStartCommand()) {
             return true;
         }
 
@@ -45,6 +45,12 @@ public class ChessController {
 
     private List<String> requestCommand() {
         return retryOnInvalidUserInput(inputView::requestCommand);
+    }
+
+    private Command getMainCommand(List<String> command) {
+        String mainCommand = command.get(Index.MAIN_COMMAND.value);
+
+        return Command.renderToCommand(mainCommand);
     }
 
     private void play(ChessGame chessGame) {
@@ -62,13 +68,14 @@ public class ChessController {
 
     private Optional<List<String>> handleCommand() {
         List<String> commands = requestCommand();
-        String mainCommand = commands.get(Index.MAIN_COMMAND.value);
+        Command command = getMainCommand(commands);
 
-        if (Command.isStartCommand(mainCommand)) {
+        if (command.isStartCommand()) {
             throw new IllegalArgumentException("이미 게임이 실행중입니다.");
         }
 
-        if (Command.isEndCommand(mainCommand)) {
+        if (command.isEndCommand()) {
+            //디비 추가
             return Optional.empty();
         }
 
@@ -76,9 +83,9 @@ public class ChessController {
     }
 
     private void actionForCommand(ChessGame chessGame, List<String> command) {
-        String mainCommand = command.get(Index.MAIN_COMMAND.value);
+        Command mainCommand = getMainCommand(command);
 
-        if (Command.isStatusCommand(mainCommand)) {
+        if (mainCommand.isStatusCommand()) {
             outputView.printScoreMessage(chessGame);
             return;
         }
