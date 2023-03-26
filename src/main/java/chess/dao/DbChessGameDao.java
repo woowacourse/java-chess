@@ -33,11 +33,11 @@ public final class DbChessGameDao implements ChessDao {
         try (final Connection connection = getConnection()) {
             final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
             for (int i = 0; i < dto.getSize(); i++) {
-                preparedStatement.setString(1, dto.getPiece_type().get(i));
-                preparedStatement.setString(2, dto.getPiece_file().get(i));
-                preparedStatement.setString(3, dto.getPiece_rank().get(i));
-                preparedStatement.setString(4, dto.getPiece_team().get(i));
-                preparedStatement.setString(5, dto.getLast_turn().get(i));
+                preparedStatement.setString(1, dto.getPieceTypes().get(i));
+                preparedStatement.setString(2, dto.getPieceFiles().get(i));
+                preparedStatement.setString(3, dto.getPieceRanks().get(i));
+                preparedStatement.setString(4, dto.getPieceTeams().get(i));
+                preparedStatement.setString(5, dto.getLastTurns().get(i));
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {

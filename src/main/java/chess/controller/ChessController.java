@@ -68,7 +68,6 @@ public final class ChessController {
             final ReadCommandDto readCommandDto = ioViewResolver.inputViewResolve(ReadCommandDto.class);
             final List<String> input = readCommandDto.getResult();
             final GameCommand newGameCommand = GameCommand.from(input);
-
             return gameStatusMap.get(newGameCommand).apply(input);
         } catch (IllegalArgumentException | IllegalStateException exception) {
             ioViewResolver.outputViewResolve(new PrintErrorMessageDto(exception.getMessage()));
@@ -83,11 +82,11 @@ public final class ChessController {
         if (chessGameService.hasHistory()) {
             final ChessGameLoadDto chessGameLoadDto = chessGameService.loadGame();
             chessGame = ChessGame.from(parseBoard(chessGameLoadDto), parseTurn(chessGameLoadDto));
-            ioViewResolver.outputViewResolve(chessGame.getBoard());
+            ioViewResolver.outputViewResolve(chessGame.printBoard());
             return MOVE;
         }
         chessGame = ChessGameFactory.generate();
-        ioViewResolver.outputViewResolve(chessGame.getBoard());
+        ioViewResolver.outputViewResolve(chessGame.printBoard());
         return MOVE;
     }
 
@@ -122,7 +121,7 @@ public final class ChessController {
             ioViewResolver.outputViewResolve(chessGame.getWinner());
             return END;
         }
-        ioViewResolver.outputViewResolve(chessGame.getBoard());
+        ioViewResolver.outputViewResolve(chessGame.printBoard());
         return MOVE;
     }
 

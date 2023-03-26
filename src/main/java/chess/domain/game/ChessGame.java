@@ -12,6 +12,7 @@ import chess.dto.outputView.PrintBoardDto;
 import chess.dto.outputView.PrintTotalScoreDto;
 import chess.dto.outputView.PrintWinnerDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +52,19 @@ public final class ChessGame {
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
         }
         return new ChessGame(board, turn);
+    }
+
+    private static String render(final Piece piece) {
+        final Team team = piece.getTeam();
+        final PieceType pieceType = piece.getPieceType();
+
+        if (team.isBlack() || team.isEmpty()) {
+            return pieceType.getValue();
+        }
+        if (team.isWhite()) {
+            return pieceType.getValue().toLowerCase();
+        }
+        throw new AssertionError();
     }
 
     public void move(final Position source, final Position target) {
@@ -135,12 +149,12 @@ public final class ChessGame {
     }
 
     public PrintTotalScoreDto calculateScore() {
-        return PrintTotalScoreDto.from(calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
+        return new PrintTotalScoreDto(
+                calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
     }
 
     public boolean isKingDead() {
-        return getEntryStream()
-                .count() < KING_COUNT;
+        return getEntryStream().count() < KING_COUNT;
     }
 
     public PrintWinnerDto getWinner() {
@@ -152,7 +166,20 @@ public final class ChessGame {
     }
 
     public PrintBoardDto printBoard() {
-        return new PrintBoardDto(Map.copyOf(board));
+        final List<String> pieces = parseBoardDto(getBoard());
+        return new PrintBoardDto(pieces);
+    }
+
+    private List<String> parseBoardDto(final Map<Position, Piece> board) {
+        List<String> pieces = new ArrayList<>();
+        for (int rankOrder = Rank.MAX_ORDER; rankOrder >= Rank.MIN_ORDER; rankOrder--) {
+            for (int fileOrder = File.MIN_ORDER; fileOrder <= File.MAX_ORDER; fileOrder++) {
+                final Position position = Position.of(File.of(fileOrder), Rank.of(rankOrder));
+                final Piece piece = board.get(position);
+                pieces.add(render(piece));
+            }
+        }
+        return pieces;
     }
 
     public Map<Position, Piece> getBoard() {
