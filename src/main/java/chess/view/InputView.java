@@ -1,8 +1,8 @@
 package chess.view;
 
 import chess.view.dto.CommandType;
+import chess.view.dto.ReadyRequest;
 import chess.view.dto.Request;
-import chess.view.dto.user.UserRequest;
 import java.util.Scanner;
 
 public class InputView {
@@ -14,13 +14,13 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public UserRequest askUserCommand() {
+    public ReadyRequest askReadyCommand() {
         String[] inputs = inputCommand();
-        validateUserCommandSize(inputs);
-        return UserRequest.from(inputs);
+        validateReadyCommandSize(inputs);
+        return ReadyRequest.from(inputs);
     }
 
-    private void validateUserCommandSize(String[] inputs) {
+    private void validateReadyCommandSize(String[] inputs) {
         if (inputs.length != 2) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }

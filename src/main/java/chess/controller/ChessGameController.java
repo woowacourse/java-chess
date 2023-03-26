@@ -12,9 +12,9 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.CommandType;
 import chess.view.dto.MoveRequest;
+import chess.view.dto.ReadyCommandType;
+import chess.view.dto.ReadyRequest;
 import chess.view.dto.Request;
-import chess.view.dto.user.UserCommandType;
-import chess.view.dto.user.UserRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,23 +46,23 @@ public class ChessGameController {
 
     private void selectUser() {
         printAskUserNameMessages();
-        UserRequest userRequest = inputView.askUserCommand();
-        if (userRequest.getCommandType() == UserCommandType.USE) {
-            User user = userService.findByName(userRequest.getUserName());
+        ReadyRequest request = inputView.askReadyCommand();
+        if (request.getCommandType() == ReadyCommandType.USE) {
+            User user = userService.findByName(request.getName());
             askGame(user.getId());
             return;
         }
-        long userId = userService.create(userRequest.getUserName());
+        long userId = userService.create(request.getName());
         askGame(userId);
     }
-    
+
     private void askGame(long userId) {
 
     }
 
     private void printAskUserNameMessages() {
         List<String> userNames = userService.findUserNames();
-        if (userNames.size() > 1) {
+        if (userNames.size() > 0) {
             outputView.printSelectUserMessage(userNames);
         }
         outputView.printCreateUserMessage();

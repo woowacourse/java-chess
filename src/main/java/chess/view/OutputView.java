@@ -21,6 +21,18 @@ public class OutputView {
         System.out.println("> 신규 유저 생성: create 유저이름 - 예. create 홍길동");
     }
 
+    public void printSelectRoomMessage(List<String> roomNames) {
+        System.out.println("> 게임방 리스트");
+        for (String roomName : roomNames) {
+            System.out.println("\t" + roomName);
+        }
+        System.out.println("> 기존 게임방 선택: use 게임방이름 - 예. use 일번방");
+    }
+
+    public void printCreateRoomMessage() {
+        System.out.println("> 신규 게임방 생성: create 게임방이름 - 예. create 일번방");
+    }
+
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");

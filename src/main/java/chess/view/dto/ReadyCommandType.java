@@ -1,14 +1,14 @@
-package chess.view.dto.user;
+package chess.view.dto;
 
 import static chess.view.InputView.INVALID_INPUT_MESSAGE;
 
 import java.util.Arrays;
 
-public enum UserCommandType {
+public enum ReadyCommandType {
 
     USE, CREATE;
 
-    public static UserCommandType from(String input) {
+    public static ReadyCommandType from(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.name().equals(input))
                 .findFirst()
