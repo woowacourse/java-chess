@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MockUserDao implements UserDao {
-    private static final Map<Long, UserEntity> STORAGE = new ConcurrentHashMap<>();
+    private final Map<Long, UserEntity> STORAGE = new ConcurrentHashMap<>();
     private final AtomicLong pk = new AtomicLong(0L);
 
     @Override

@@ -8,9 +8,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MockChessGameDao implements ChessGameDao {
-    private static final Map<Long, ChessGameEntity> STORAGE = new ConcurrentHashMap<>();
+    private final Map<Long, ChessGameEntity> STORAGE = new ConcurrentHashMap<>();
     private final AtomicLong pk = new AtomicLong(0L);
-    
+
     @Override
     public Optional<ChessGameEntity> findByUserId(final Long userId) {
         return STORAGE.entrySet().stream()
