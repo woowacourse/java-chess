@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.board.Square;
+import domain.piece.score.Score;
 import domain.piece.type.PieceType;
 
 public abstract class Piece {
@@ -82,6 +83,10 @@ public abstract class Piece {
             return true;
         }
         return false;
+    }
+
+    public boolean isSameCamp (Camp camp) {
+        return this.camp == camp;
     }
 
     public Score getScore() {

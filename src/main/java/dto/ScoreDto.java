@@ -1,7 +1,7 @@
 package dto;
 
 import domain.piece.Camp;
-import domain.piece.Score;
+import domain.piece.score.Score;
 
 public class ScoreDto {
     private final String camp;

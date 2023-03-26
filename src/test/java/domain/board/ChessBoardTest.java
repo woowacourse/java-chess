@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.Score;
+import domain.piece.score.Score;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
 import domain.piece.type.restricted.King;
@@ -156,29 +156,6 @@ class ChessBoardTest {
 
         assertAll(() -> assertThat(result1).isEqualTo(3),
                 () -> assertThat(result2).isEqualTo(2));
-    }
-
-    @Test
-    @DisplayName("Camp를 인자로 전달받아 같은 Camp의 기물들의 점수 총합을 반환한다.")
-    void calculateScore() {
-        HashMap<Square, Piece> map = new HashMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                map.put(Square.of(file, rank), Empty.getInstance());
-            }
-        }
-
-        map.put(Square.of(0, 0), new Pawn(Camp.WHITE));
-        map.put(Square.of(1, 1), new Knight(Camp.WHITE));
-        map.put(Square.of(2, 0), new Rook(Camp.WHITE));
-        map.put(Square.of(2, 1), new Rook(Camp.WHITE));
-        map.put(Square.of(3, 0), new Bishop(Camp.WHITE));
-        map.put(Square.of(4, 0), new Queen(Camp.WHITE));
-        ChessBoard chessBoard = new ChessBoard(map);
-
-        Score score = chessBoard.calculateScoreSum(Camp.WHITE);
-
-        assertThat(score.getScore()).isEqualTo(25.5);
     }
 
     @Test

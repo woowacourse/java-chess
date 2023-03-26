@@ -12,8 +12,9 @@ import java.util.stream.Collectors;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.Score;
+import domain.piece.score.Score;
 import domain.piece.factory.PieceFactory;
+import domain.piece.score.ScoreCalculator;
 import domain.piece.type.Empty;
 import domain.piece.type.Pawn;
 import domain.piece.type.restricted.King;
@@ -159,8 +160,9 @@ public class ChessBoard {
 
     public Score calculateFinalScore(Camp camp) {
         int pawnCount = countPawnInAllColumns(camp);
-        Score score = calculateScoreSum(camp);
-        return score.calculateScoreWithPawnCount(pawnCount);
+        List<Piece> sameCampPieces = findSameCampPieces(camp);
+        Score sumScore = ScoreCalculator.calculateSum(sameCampPieces);
+        return ScoreCalculator.calculateScoreWithPawnCount(sumScore, pawnCount);
     }
 
     public int countPawnInAllColumns(Camp camp) {
@@ -178,14 +180,10 @@ public class ChessBoard {
                 .count();
     }
 
-    public Score calculateScoreSum(Camp camp) {
-        return Arrays.stream(File.values())
-                .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> Square.of(file, rank)))
-                .map(board::get)
-                .filter(piece -> piece.getCamp() == camp)
-                .map(Piece::getScore)
-                .reduce(Score.ZERO_SCORE, Score::add);
+    private List<Piece> findSameCampPieces(Camp camp) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameCamp(camp))
+                .collect(Collectors.toList());
     }
 
     public void setUpPieces(BoardDto boardDto) {

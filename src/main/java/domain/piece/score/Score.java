@@ -1,4 +1,6 @@
-package domain.piece;
+package domain.piece.score;
+
+import java.util.Objects;
 
 public class Score {
     public static final Score ZERO_SCORE = new Score(0);
@@ -7,7 +9,6 @@ public class Score {
     public static final Score BISHOP_SCORE = new Score(3);
     public static final Score KNIGHT_SCORE = new Score(2.5);
     public static final Score PAWN_SCORE = new Score(1);
-    public static final double PAWN_PENALTY_SCORE = 0.5;
 
     private final double score;
 
@@ -23,8 +24,20 @@ public class Score {
         return score;
     }
 
-    public Score calculateScoreWithPawnCount(int pawnCount) {
-        double pawnPenalty = pawnCount * PAWN_PENALTY_SCORE;
-        return new Score(this.score - pawnPenalty);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score1 = (Score) o;
+        return Double.compare(score1.score, score) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

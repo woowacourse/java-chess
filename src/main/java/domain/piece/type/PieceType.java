@@ -1,15 +1,15 @@
 package domain.piece.type;
 
-import static domain.piece.Score.BISHOP_SCORE;
-import static domain.piece.Score.KNIGHT_SCORE;
-import static domain.piece.Score.PAWN_SCORE;
-import static domain.piece.Score.QUEEN_SCORE;
-import static domain.piece.Score.ROOK_SCORE;
-import static domain.piece.Score.ZERO_SCORE;
+import static domain.piece.score.Score.BISHOP_SCORE;
+import static domain.piece.score.Score.KNIGHT_SCORE;
+import static domain.piece.score.Score.PAWN_SCORE;
+import static domain.piece.score.Score.QUEEN_SCORE;
+import static domain.piece.score.Score.ROOK_SCORE;
+import static domain.piece.score.Score.ZERO_SCORE;
 
 import java.util.Arrays;
 
-import domain.piece.Score;
+import domain.piece.score.Score;
 
 public enum PieceType {
     KING('k', ZERO_SCORE),
