@@ -5,6 +5,7 @@ import controller.command.End;
 import controller.command.Move;
 import controller.mapper.PieceMapper;
 import domain.game.Game;
+import domain.game.GameStatus;
 import domain.game.Position;
 import domain.piece.Piece;
 import java.util.LinkedHashMap;
@@ -47,11 +48,15 @@ public class ChessController {
             return command;
         }
         moveByPositionsOfMoveCommand(game, command);
-        if (game.isEnd()) {
+        if (isInProgress(game)) {
             return new End();
         }
         printChessBoardOf(game);
         return command;
+    }
+
+    private static boolean isInProgress(Game game) {
+        return !game.checkStatus().equals(GameStatus.IN_PROGRESS);
     }
 
     private static void moveByPositionsOfMoveCommand(Game game, Command command) {

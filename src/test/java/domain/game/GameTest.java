@@ -8,6 +8,8 @@ import static domain.game.File.E;
 import static domain.game.File.F;
 import static domain.game.File.G;
 import static domain.game.File.H;
+import static domain.game.GameStatus.IN_PROGRESS;
+import static domain.game.GameStatus.WHITE_WIN;
 import static domain.game.Rank.EIGHT;
 import static domain.game.Rank.FIVE;
 import static domain.game.Rank.FOUR;
@@ -179,7 +181,7 @@ class GameTest {
         assertThat(score.getNumber()).isEqualTo(33.5);
     }
 
-    @DisplayName("한 진영의 King이 죽었으면 true를 반환한다.")
+    @DisplayName("Black 진영의 King이 죽으면 White win을 반환한다.")
     @Test
     void shouldReturnTrueWhenKingDie() {
         game.move(Position.of(E, TWO), Position.of(E, FOUR));
@@ -201,13 +203,13 @@ class GameTest {
         pppp.ppp
         rnbqkbnr
         */
-        assertThat(game.isEnd()).isTrue();
+        assertThat(game.checkStatus()).isEqualTo(WHITE_WIN);
     }
 
-    @DisplayName("King이 죽지 않았으면 false를 반환한다.")
+    @DisplayName("King이 죽지 않았으면 In progress를 반환한다.")
     @Test
     void shouldReturnFalseWhenAllKingIsAlive() {
         // 체스판 초기화 직후 상태
-        assertThat(game.isEnd()).isFalse();
+        assertThat(game.checkStatus()).isEqualTo(IN_PROGRESS);
     }
-}x
+}
