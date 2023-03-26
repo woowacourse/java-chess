@@ -30,7 +30,8 @@ public class RoomJdbcDao implements RoomDao {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
                 final boolean finished = resultSet.getBoolean("finished");
-                result.add(new Room(id, name, finished));
+                final int findUserId = resultSet.getInt("user_id");
+                result.add(new Room(id, name, finished, findUserId));
             }
             return result;
         }, userId);
@@ -43,7 +44,8 @@ public class RoomJdbcDao implements RoomDao {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
                 final boolean finished = resultSet.getBoolean("finished");
-                return new Room(id, name, finished);
+                final int findUserId = resultSet.getInt("user_id");
+                return new Room(id, name, finished, findUserId);
             }
             return null;
         }, roomId);
