@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class WhitePawn extends Pawn {
 
-    public static final int START_RANK = 1;
+    private static final int START_RANK = 1;
 
     private static final Direction DIRECTION = new Direction(List.of(
             Inclination.POSITIVE_INFINITY
