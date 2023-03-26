@@ -7,12 +7,18 @@ import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Team;
 import java.sql.SQLException;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessDaoTest {
 
     private final ChessDao chessDao = new ChessDao();
+
+    @BeforeEach
+    void init_database() {
+        chessDao.deleteNotation();
+    }
 
     @Test
     @DisplayName("DB가 잘 연동되었는지 학인하는 테스트")
