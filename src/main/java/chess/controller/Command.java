@@ -3,7 +3,7 @@ package chess.controller;
 import java.util.Arrays;
 
 public enum Command {
-    START("start"), END("end"), MOVE("move"), STATUS("status");
+    START("start"), END("end"), MOVE("move"), STATUS("status"), RESTART("restart");
 
     private final String command;
 

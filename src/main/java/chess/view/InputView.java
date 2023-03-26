@@ -91,4 +91,23 @@ public class InputView {
     public static String extractRow(List<String> coordinate) {
         return coordinate.get(ROW_INDEX);
     }
+
+    public static Command inputRestartOrStart() {
+        System.out.println("\n> 이전 경기가 진행 중입니다");
+        System.out.println("> 이어서 진행하려면 restart, 새 게임을 시작하려면 start를 입력하세요\n");
+        try {
+            String inputCommand = bufferedReader.readLine();
+            validateRestartCommand(inputCommand);
+            return Command.of(inputCommand);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return inputRestartOrStart();
+        }
+    }
+
+    private static void validateRestartCommand(String inputCommand) throws IOException {
+        if (!List.of("start", "restart").contains(inputCommand)){
+            throw new IOException("start, restart만 입력 가능합니다");
+        }
+    }
 }
