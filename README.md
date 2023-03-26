@@ -85,3 +85,19 @@ graph TD
     - [x] 폰은 1점을 가진다.
       - [x] 같은 세로 줄에 같은 팀의 폰이 있으면 해당 줄에 있는 폰은 각 0.5 
     - [x] 한 번에 한 팀의 점수를 계산한다.
+
+## 4단계
+- [ ] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+- [ ] 도메인 객체의 변경을 최소화해야한다.
+
+```mysql
+CREATE TABLE board (
+    position_row int NOT NULL,
+    position_column int NOT NULL,
+    piece_type VARCHAR(10) NOT NULL,
+    piece_team VARCHAR(10) NOT NULL,
+    turn VARCHAR(5) NOT NULL
+);
+
+INSERT INTO board (position_row, position_column, piece_type, piece_team, turn) VALUES (?, ?, ?, ?, ?);
+```
