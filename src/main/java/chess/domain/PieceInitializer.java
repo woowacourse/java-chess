@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -30,7 +31,12 @@ public enum PieceInitializer {
     BLACK_BISHOP(List.of(3, 6), Camp.BLACK.startingRank(), new Bishop(Camp.BLACK)),
     BLACK_QUEEN(List.of(4), Camp.BLACK.startingRank(), new Queen(Camp.BLACK)),
     BLACK_KING(List.of(5), Camp.BLACK.startingRank(), new King(Camp.BLACK)),
-    BLACK_PAWN(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.BLACK.startingPawnRank(), new Pawn(Camp.BLACK));
+    BLACK_PAWN(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.BLACK.startingPawnRank(), new Pawn(Camp.BLACK)),
+
+    EMPTY_3_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank(), new Empty()),
+    EMPTY_4_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 1, new Empty()),
+    EMPTY_5_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 2, new Empty()),
+    EMPTY_6_RANK(List.of(1, 2, 3, 4, 5, 6, 7, 8), Camp.EMPTY.startingRank() + 3, new Empty());
 
     private final List<Integer> files;
     private final int rank;

@@ -3,7 +3,8 @@ package chess.domain;
 public enum Camp {
 
     BLACK(8),
-    WHITE(1);
+    WHITE(1),
+    EMPTY(3);
 
     private final int startingRank;
 
@@ -20,7 +21,10 @@ public enum Camp {
         if (this == BLACK) {
             return startingRank - 1;
         }
-        return startingRank + 1;
+        if (this == WHITE) {
+            return startingRank + 1;
+        }
+        throw new IllegalStateException("EMPTY 상태의 진영입니다.");
     }
 
     public Camp transfer() {

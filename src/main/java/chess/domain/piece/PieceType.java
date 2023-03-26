@@ -7,7 +7,8 @@ public enum PieceType {
     BISHOP(3),
     QUEEN(9),
     KING(0),
-    PAWN(1);
+    PAWN(1),
+    EMPTY(0);
 
 
     private final double point;

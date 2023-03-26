@@ -33,7 +33,7 @@ class ChessBoardTest {
     void 체스판_초기화() {
         Map<Position, Piece> positionPieces = chessBoard.piecesByPosition();
 
-        assertThat(positionPieces).hasSize(32);
+        assertThat(positionPieces).hasSize(64);
     }
 
     @DisplayName("정해진 게임 규칙에 따라, 말을 움직일 때마다 진영 턴을 전환한다.")
@@ -107,10 +107,10 @@ class ChessBoardTest {
     @DisplayName("진영 별 남아있는 말에 따른 점수를 합산한다.")
     @Test
     void 진영_별_점수_합산() {
-        for (Camp camp : Camp.values()) {
-            assertThat(chessBoard.calculateScoreByCamp(camp))
-                    .isEqualTo(38);
-        }
+        assertThat(chessBoard.calculateScoreByCamp(Camp.WHITE))
+                .isEqualTo(38);
+        assertThat(chessBoard.calculateScoreByCamp(Camp.BLACK))
+                .isEqualTo(38);
     }
 
     @DisplayName("상대 진영의 킹을 잡으면 해당 체스판은 종료된다.")

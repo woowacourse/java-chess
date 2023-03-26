@@ -12,7 +12,8 @@ public enum PieceName {
     BISHOP(PieceType.BISHOP, "B"),
     QUEEN(PieceType.QUEEN, "Q"),
     KING(PieceType.KING, "K"),
-    PAWN(PieceType.PAWN, "P");
+    PAWN(PieceType.PAWN, "P"),
+    EMPTY(PieceType.EMPTY, ".");
 
     private static final String WRONG_TYPE_ERROR_MESSAGE = "존재하지 않는 말 타입입니다.";
 

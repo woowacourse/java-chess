@@ -60,12 +60,8 @@ public class ChessBoard {
         return isKingAttacked;
     }
 
-    // TODO null 대신 EMPTY 말 저장
     private boolean isKingAt(Position position) {
         Piece target = piecesByPosition.get(position);
-        if (target == null) {
-            return false;
-        }
         return target.getType() == PieceType.KING;
     }
 
@@ -77,7 +73,7 @@ public class ChessBoard {
 
     private boolean hasObstacleInPath(final Path path, final Position destination) {
         return IntStream.range(0, path.findPositionIndex(destination))
-                .anyMatch(index -> piecesByPosition.containsKey((path.findByIndex(index))));
+                .anyMatch(index -> !isEmptyPosition((path.findByIndex(index))));
     }
 
     private void validateMove(final Position source, final Position destination, final Piece movingPiece) {
@@ -105,7 +101,7 @@ public class ChessBoard {
     }
 
     private boolean isEmptyPosition(final Position position) {
-        return !piecesByPosition.containsKey(position);
+        return piecesByPosition.get(position).getType() == PieceType.EMPTY;
     }
 
     private void switchCampTurn() {
