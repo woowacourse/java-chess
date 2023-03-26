@@ -16,6 +16,9 @@ public class PiecesDao {
             "INSERT INTO pieces(`rank`, `file`, `type`, `camp`, `game_room_id`) VALUES(?, ?, ?, ?, ?)";
     private static final String FIND_PIECES_BY_ROOM_ID_QUERY =
             "SELECT * FROM pieces WHERE game_room_id = ?";
+    private static final String UPDATE_PIECE_BY_COORDINATE_QUERY =
+            "UPDATE pieces SET type = ?, camp = ?" +
+                    "WHERE `game_room_id` = ? and `rank` = ? and `file` = ?";
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
@@ -57,6 +60,25 @@ public class PiecesDao {
             return pieces;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void updatePieceByCoordinate(long roomId, Coordinate coordinate, Piece chagePiece) {
+        try (final var connection = databaseConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(UPDATE_PIECE_BY_COORDINATE_QUERY)) {
+            PieceType pieceType = chagePiece.pieceType();
+            Camp camp = chagePiece.camp();
+            int rank = coordinate.row();
+            int file = coordinate.column();
+
+            preparedStatement.setString(1, pieceType.name());
+            preparedStatement.setString(2, camp.name());
+            preparedStatement.setLong(3, roomId);
+            preparedStatement.setInt(4, rank);
+            preparedStatement.setInt(5, file);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }

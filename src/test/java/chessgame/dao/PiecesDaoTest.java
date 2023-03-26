@@ -4,7 +4,9 @@ import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.Queen;
+import chessgame.domain.piece.Rook;
 import chessgame.dto.PieceDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +37,16 @@ class PiecesDaoTest {
         List<PieceDto> pieces = piecesDao.findPiecesByRoomId(roomId);
 
         assertThat(pieces).hasSizeGreaterThanOrEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("특정 게임의 아이디와 기물의 위치를 통해 기물의 타입을 수정할 수 있다")
+    void updatePieceByCoordinate() {
+        long roomId = 1;
+        Coordinate coordinate = Coordinate.fromOnBoard(3, 4);
+        Piece piece = new Rook(Camp.WHITE);
+
+        Assertions.assertDoesNotThrow(() ->
+                piecesDao.updatePieceByCoordinate(roomId, coordinate, piece));
     }
 }
