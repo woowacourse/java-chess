@@ -7,7 +7,8 @@ public enum Command {
 
     START("start", 1),
     END("end", 1),
-    MOVE("move", 3);
+    MOVE("move", 3),
+    STATUS("status", 1);
 
     private final String message;
     private final int commandCount;
@@ -18,22 +19,32 @@ public enum Command {
     }
 
     public static Command of(final List<String> targetMessage) {
+        String commandLower = targetMessage.get(0)
+                                           .toLowerCase();
         return Arrays.stream(values())
-                .filter(command -> command.message.equals(targetMessage.get(0)))
-                .filter(command -> targetMessage.size() == command.commandCount)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 명령입니다."));
+                     .filter(command -> command.message.equals(commandLower))
+                     .filter(command -> targetMessage.size() == command.commandCount)
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 명령입니다."));
     }
 
     public boolean canContinue() {
-        return isStart() || isMove();
+        return isStart() || isMove() || isStatus();
     }
 
     public boolean isStart() {
-        return this == Command.START;
+        return this.equals(Command.START);
+    }
+
+    public boolean isEnd() {
+        return this.equals(Command.END);
     }
 
     public boolean isMove() {
-        return this == Command.MOVE;
+        return this.equals(Command.MOVE);
+    }
+
+    public boolean isStatus() {
+        return this.equals(Command.STATUS);
     }
 }

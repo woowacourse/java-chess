@@ -48,7 +48,7 @@ public class ChessController {
         if (command.isStart()) {
             playGame(new ChessGame());
         }
-        if (command.isMove()) {
+        if (command.isMove() || command.isStatus()) {
             throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");
         }
     }
@@ -58,6 +58,7 @@ public class ChessController {
 
         do {
             command = readPlayCommand(chessGame);
+            printGameResultWhenEnd(command, chessGame);
         } while (command.canContinue());
     }
 
@@ -82,6 +83,9 @@ public class ChessController {
         if (command.isMove()) {
             return processMove(commands, chessGame);
         }
+        if (command.isStatus()) {
+            printGameStatus(chessGame);
+        }
         return command;
     }
 
@@ -99,5 +103,15 @@ public class ChessController {
         int row = Character.getNumericValue(frontCoordinate.charAt(ROW_INDEX)) - 1;
         int column = (int) frontCoordinate.charAt(COLUMN_INDEX) - ASCII_ALPHABET_A;
         return Coordinate.fromOnBoard(row, column);
+    }
+
+    private void printGameStatus(ChessGame chessGame) {
+        outputView.printGameStatus(chessGame.getStatus());
+    }
+
+    private void printGameResultWhenEnd(Command command, ChessGame chessGame) {
+        if (command.isEnd()) {
+            outputView.printGameResult(chessGame.getBoard(), chessGame.getStatus());
+        }
     }
 }

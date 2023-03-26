@@ -2,14 +2,19 @@ package chessgame.domain.chessgame;
 
 import chessgame.domain.coordinate.Coordinate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ChessGame {
 
     private final Board board;
     private Camp turn;
+    private final Result result;
 
     public ChessGame() {
         this.board = new Board();
         this.turn = Camp.WHITE;
+        this.result = new Result();
     }
 
     public boolean move(final Coordinate startCoordinate, final Coordinate endCoordinate) {
@@ -28,6 +33,13 @@ public class ChessGame {
 
     private void changeTurn() {
         turn = turn.change();
+    }
+
+    public Map<Camp, Double> getStatus() {
+        Map<Camp, Double> status = new HashMap<>();
+        status.put(Camp.WHITE, result.calculateTeamAt(board.getBoard(), Camp.WHITE));
+        status.put(Camp.BLACK, result.calculateTeamAt(board.getBoard(), Camp.BLACK));
+        return status;
     }
 
     public Board getBoard() {
