@@ -28,7 +28,7 @@ public class JdbcChessMovementDao implements ChessMovementDao {
                 final ResultSet resultSet = preparedStatement.executeQuery()) {
             return mapToMovementFromResultSet(resultSet);
         } catch (SQLException e) {
-            throw new IllegalStateException("DB 접속에 실패했습니다.", e);
+            throw new IllegalStateException("DB 관련 문제가 발생했습니다.", e);
         }
     }
 

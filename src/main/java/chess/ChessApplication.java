@@ -28,8 +28,8 @@ public class ChessApplication {
             final ChessMovementDao chessMovementDao = new JdbcChessMovementDao(connection);
 
             chessController.start(chessGame, chessMovementDao);
-        } catch (SQLException ignored) {
-
+        } catch (SQLException e) {
+            throw new IllegalStateException("DB 관련 문제가 발생했습니다.", e);
         }
     }
 
