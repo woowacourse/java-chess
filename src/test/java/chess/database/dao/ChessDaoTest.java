@@ -3,8 +3,6 @@ package chess.database.dao;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Position;
-import chess.domain.pieces.Pawn;
-import chess.domain.pieces.Team;
 import java.sql.SQLException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,19 +34,18 @@ class ChessDaoTest {
         // given
         Position source = Position.from("a2");
         Position target = Position.from("a4");
-        Pawn pawn = new Pawn(Team.WHITE);
 
         // when + then
-        chessDao.addNotation(source, target, pawn);
+        chessDao.addNotation(source, target);
     }
 
     @Test
     @DisplayName("저장된 모든 기보를 불러온다.")
     void read_notation() {
         // given
-        chessDao.addNotation(Position.from("a2"), Position.from("a4"), new Pawn(Team.WHITE));
-        chessDao.addNotation(Position.from("a7"), Position.from("a5"), new Pawn(Team.BLACK));
-        chessDao.addNotation(Position.from("b2"), Position.from("b4"), new Pawn(Team.WHITE));
+        chessDao.addNotation(Position.from("a2"), Position.from("a4"));
+        chessDao.addNotation(Position.from("a7"), Position.from("a5"));
+        chessDao.addNotation(Position.from("b2"), Position.from("b4"));
 
         // when
         List<Notation> result = chessDao.readNotation();
@@ -61,9 +58,9 @@ class ChessDaoTest {
     @DisplayName("기보 기록을 삭제합니다.")
     void delete_notation() {
         // given
-        chessDao.addNotation(Position.from("a2"), Position.from("a4"), new Pawn(Team.WHITE));
-        chessDao.addNotation(Position.from("a7"), Position.from("a5"), new Pawn(Team.BLACK));
-        chessDao.addNotation(Position.from("b2"), Position.from("b4"), new Pawn(Team.WHITE));
+        chessDao.addNotation(Position.from("a2"), Position.from("a4"));
+        chessDao.addNotation(Position.from("a7"), Position.from("a5"));
+        chessDao.addNotation(Position.from("b2"), Position.from("b4"));
 
         // when
         chessDao.deleteNotation();

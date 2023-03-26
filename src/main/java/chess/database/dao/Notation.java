@@ -4,11 +4,17 @@ public class Notation {
 
     private String source;
     private String target;
-    private String turn;
 
-    public Notation(String source, String target, String turn) {
+    public Notation(String source, String target) {
         this.source = source;
         this.target = target;
-        this.turn = turn;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public String getTarget() {
+        return target;
     }
 }

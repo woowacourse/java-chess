@@ -1,7 +1,6 @@
 package chess.database.dao;
 
 import chess.domain.board.Position;
-import chess.domain.pieces.Piece;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,13 +28,12 @@ public class ChessDao {
         }
     }
 
-    public void addNotation(final Position source, final Position target, final Piece piece) {
-        final String query = "INSERT INTO notation(SOURCE, TARGET, TURN) VALUES(?, ?, ?)";
+    public void addNotation(final Position source, final Position target) {
+        final String query = "INSERT INTO notation(SOURCE, TARGET) VALUES(?, ?)";
         try (final Connection connection = getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, source.makeToString());
             preparedStatement.setString(2, target.makeToString());
-            preparedStatement.setString(3, piece.getTeam().getTeam());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,8 +66,7 @@ public class ChessDao {
         while (result.next()) {
             notations.add(new Notation(
                 result.getString("source"),
-                result.getString("target"),
-                result.getString("turn")));
+                result.getString("target")));
         }
         return notations;
     }
