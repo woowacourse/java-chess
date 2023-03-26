@@ -50,4 +50,17 @@ public class ChessGameDao {
         }
     }
 
+    public void updateStatusByGameId(final String status, final int gameId) {
+        String query = "UPDATE game SET status = ? WHERE game_id = ?";
+        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query)) {
+            preparedStatement.setObject(1, status);
+            preparedStatement.setObject(2, gameId);
+            preparedStatement.executeUpdate();
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("UPDATE 오류:" + e.getMessage());
+        }
+    }
+    
+
 }
