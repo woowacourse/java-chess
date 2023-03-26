@@ -19,9 +19,18 @@ public class ChessApplication {
         final OutputView outputView = new OutputView();
         final ChessController chessController = new ChessController(inputView, outputView);
         final ChessGame chessGame = new ChessGame();
-        final ChessMovementDao chessMovementDao = new JdbcChessMovementDao(ConnectionHolder.CONNECTION);
 
-        chessController.start(chessGame, chessMovementDao);
+        start(chessController, chessGame);
+    }
+
+    private static void start(final ChessController chessController, final ChessGame chessGame) {
+        try (final Connection connection = ConnectionHolder.CONNECTION) {
+            final ChessMovementDao chessMovementDao = new JdbcChessMovementDao(connection);
+
+            chessController.start(chessGame, chessMovementDao);
+        } catch (SQLException ignored) {
+
+        }
     }
 
     private static final class ConnectionHolder {
