@@ -5,6 +5,7 @@ import java.util.Map;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.exception.DifferentTeamException;
+import chess.domain.exception.NotPlayableException;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -24,9 +25,20 @@ public class Game {
     }
 
     public void movePiece(Position source, Position target) {
+        validateNotFinished(board);
         validateTurn(turn, source);
         board.move(source, target);
         changeTurn();
+    }
+
+    private void validateNotFinished(Board board) {
+        if (isFinished(board)) {
+            throw new NotPlayableException("왕 없이 플레이할 수 없습니다");
+        }
+    }
+
+    private boolean isFinished(Board board) {
+        return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
     }
 
     private void validateTurn(Team turn, Position position) {
@@ -44,6 +56,6 @@ public class Game {
     }
 
     public boolean isFinished() {
-        return !board.hasKing(Team.WHITE) || !board.hasKing(Team.BLACK);
+        return isFinished(board);
     }
 }

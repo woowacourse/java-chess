@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.AbstractTestFixture;
 import chess.domain.board.Board;
 import chess.domain.exception.DifferentTeamException;
+import chess.domain.exception.NotPlayableException;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -66,5 +67,18 @@ public class GameTest extends AbstractTestFixture {
         var game = new Game(Team.WHITE, board);
 
         assertThat(game.isFinished()).isTrue();
+    }
+
+    @DisplayName("한 팀이라도 왕이 없으면 게임을 진행할 수 없다")
+    @Test
+    void playingWithoutKing_throws() {
+        var board = new Board(Map.ofEntries(
+                Map.entry(new Position(File.A, Rank.ONE), new King(Team.WHITE))
+        ));
+        var game = new Game(Team.WHITE, board);
+
+        assertThatThrownBy(() -> game.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.TWO)))
+                .isInstanceOf(NotPlayableException.class)
+                .hasMessage("왕 없이 플레이할 수 없습니다");
     }
 }
