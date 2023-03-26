@@ -30,7 +30,7 @@ public final class ChessController {
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::move,
-                STATUS, this::inquireStatus
+                STATUS, this::status
         );
         this.room = room;
     }
@@ -63,34 +63,40 @@ public final class ChessController {
     }
 
     public CommandDto move(final CommandDto commandDto) {
-        List<java.lang.Integer> source = commandDto.getSource();
-        List<java.lang.Integer> target = commandDto.getTarget();
-        Position sourcePosition = new Position(source.get(0), source.get(1));
-        Position targetPosition = new Position(target.get(0), target.get(1));
         errorController.tryCatchStrategy(() -> {
+            List<Integer> source = commandDto.getSource();
+            List<Integer> target = commandDto.getTarget();
+            Position sourcePosition = new Position(source.get(0), source.get(1));
+            Position targetPosition = new Position(target.get(0), target.get(1));
             room.updateRoom(sourcePosition, targetPosition);
             ChessGame chessGame = room.connectRoom();
             OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
             OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
         });
 
-        if (room.connectRoom().isGameEnd()) {
+        return checkGameOver();
+    }
+
+    private CommandDto checkGameOver() {
+        final ChessGame chessGame = room.connectRoom();
+        if (chessGame.isGameEnd()) {
             OutputView.printFinishMessage();
-            return readCommand(List.of(STATUS, END));
+            inquireStatus(chessGame);
+            room.deleteRoom();
+            return readCommand(List.of(END));
         }
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    public CommandDto inquireStatus(final CommandDto commandDto) {
-        ChessGame chessGame = room.connectRoom();
+    private void inquireStatus(ChessGame chessGame) {
         OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
         OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
+        OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
+    }
 
-        if (chessGame.isGameEnd()) {
-            OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
-            room.deleteRoom();
-            return readCommand(List.of(END));
-        }
+    public CommandDto status(final CommandDto commandDto) {
+        ChessGame chessGame = room.connectRoom();
+        inquireStatus(chessGame);
         return readCommand(List.of(MOVE, STATUS, END));
     }
 }
