@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 public abstract class Piece {
 
 	private final Color color;
-	private final Position position;
+	private Position position;
 
 	protected Piece(final Color color, final Position position) {
 		this.color = color;
@@ -36,5 +36,8 @@ public abstract class Piece {
 
 	public Position position() {
 		return position;
+	}
+	public void move(final Position target){
+		position = target;
 	}
 }

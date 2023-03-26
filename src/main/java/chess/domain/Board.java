@@ -114,6 +114,7 @@ public class Board {
 	}
 
 	private void movePiece(final Position source, final Position target, final Piece piece) {
+		piece.move(target);
 		board.put(target, piece);
 		board.put(source, new Empty(NONE, source));
 		thisTurn = thisTurn.switchTurn();
