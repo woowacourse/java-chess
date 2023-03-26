@@ -71,7 +71,8 @@ public final class ChessController {
     }
 
     private void showStatusAfterRunning(final WinningStatus winningStatus) {
-
+        Team winner = winningStatus.getWinner();
+        OutputView.printWinnerAfterRunning(TeamName.getNameByTeam(winner));
     }
 
     private void showStatusWhenRunning(final WinningStatus winningStatus) {

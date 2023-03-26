@@ -11,17 +11,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class ChessBoard {
-
     public static final int INITIAL_KING_COUNT = 2;
-    public static final int NO_COUNT = 0;
+    public static final int CLOSING_KING_COUNT = 1;
     public static final int MIN_DOUBLE_PAWN_COUNT = 2;
+    public static final int NO_COUNT = 0;
+    public static final int FIRST_INDEX = 0;
+
     private final Map<SquareCoordinate, SquareState> squares;
 
     public ChessBoard() {
         this.squares = ChessFactory.create();
     }
 
-    public boolean isDifferentTeam(Team team, SquareCoordinate from) {
+    public boolean isDifferentTeam(final Team team, final SquareCoordinate from) {
         return !squares.get(from).isSameTeam(team);
     }
 
@@ -52,15 +54,15 @@ public final class ChessBoard {
         return kingCount < INITIAL_KING_COUNT;
     }
 
-    public List<SquareState> getPiecesOf(Team team) {
+    public List<SquareState> getPiecesOf(final Team team) {
         return this.squares.values()
                 .stream()
                 .filter(squareState -> squareState.isSameTeam(team))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public int countDoublePawnOf(Team team) {
-        List<SquareCoordinate> pawnCoordinates = getPawnCoordinatesOf(team);
+    public int countDoublePawnOf(final Team team) {
+        final List<SquareCoordinate> pawnCoordinates = getPawnCoordinatesOf(team);
 
         int count = 0;
         for (FileIndex file : FileIndex.values()) {
@@ -70,7 +72,7 @@ public final class ChessBoard {
         return count;
     }
 
-    private List<SquareCoordinate> getPawnCoordinatesOf(Team team) {
+    private List<SquareCoordinate> getPawnCoordinatesOf(final Team team) {
         return this.squares.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
@@ -79,14 +81,25 @@ public final class ChessBoard {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static int countDoublePawnEachFile(FileIndex file, List<SquareCoordinate> pawnCoordinates) {
-        String alphanumeric = String.valueOf(file.index) + RankIndex.FIRST.index;
+    private int countDoublePawnEachFile(final FileIndex file, final List<SquareCoordinate> pawnCoordinates) {
+        final String alphanumeric = String.valueOf(file.index) + RankIndex.FIRST.index;
 
-        int curCount = SquareCoordinate.of(alphanumeric).countSameFiles(pawnCoordinates);
+        final int curCount = SquareCoordinate.of(alphanumeric).countSameFiles(pawnCoordinates);
         if (curCount >= MIN_DOUBLE_PAWN_COUNT) {
             return curCount;
         }
         return NO_COUNT;
+    }
+
+    public Team findTeamHavingKing() {
+        final List<SquareState> kingPiece = this.squares.values().stream()
+                .filter(piece -> piece.getClass().equals(King.class))
+                .collect(Collectors.toList());
+
+        if (kingPiece.size() == CLOSING_KING_COUNT) {
+            return kingPiece.get(FIRST_INDEX).getTeam();
+        }
+        throw new IllegalArgumentException("게임이 진행 중이므로 종료할 수 없습니다.");
     }
 
     public List<SquareState> getSquares() {

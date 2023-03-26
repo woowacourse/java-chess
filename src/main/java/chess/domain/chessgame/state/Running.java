@@ -5,6 +5,7 @@ import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Team;
 import chess.domain.winningstatus.Score;
 import chess.domain.winningstatus.WinningStatus;
+import chess.domain.winningstatus.WinningStatusByKing;
 import chess.domain.winningstatus.WinningStatusByScore;
 
 import java.util.EnumMap;
@@ -43,7 +44,8 @@ public class Running implements GameState {
 
     @Override
     public GameState close() {
-        return new Ready();
+        final Team winner = chessBoard.findTeamHavingKing();
+        return new Ready(new WinningStatusByKing(winner));
     }
 
     @Override

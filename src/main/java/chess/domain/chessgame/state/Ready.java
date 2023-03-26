@@ -15,7 +15,7 @@ public class Ready implements GameState {
         this.winningStatusByKing = null;
     }
 
-    public Ready(WinningStatusByKing winningStatusByKing) {
+    public Ready(final WinningStatusByKing winningStatusByKing) {
         this.winningStatusByKing = winningStatusByKing;
     }
 
@@ -25,7 +25,7 @@ public class Ready implements GameState {
     }
 
     @Override
-    public void move(SquareCoordinate from, SquareCoordinate to) {
+    public void move(final SquareCoordinate from, final SquareCoordinate to) {
         throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
     }
 
@@ -40,7 +40,10 @@ public class Ready implements GameState {
     }
 
     public WinningStatus status() {
-        throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+        if (winningStatusByKing == null) {
+            throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+        }
+        return winningStatusByKing;
     }
 
     @Override
