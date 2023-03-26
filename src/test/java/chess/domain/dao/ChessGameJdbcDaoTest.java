@@ -2,7 +2,7 @@ package chess.domain.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.dao.ChessGameJdbcDao;
+import chess.dao.ConnectionGenerator;
 import java.sql.SQLException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -14,7 +14,7 @@ class ChessGameJdbcDaoTest {
 
     @Test
     void DB를_연결한다() {
-        try (final var connection = new ChessGameJdbcDao().getConnection()) {
+        try (final var connection = ConnectionGenerator.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException e) {
             throw new RuntimeException(e);
