@@ -11,14 +11,11 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class ChessGame {
-    private static final Piece WHITE_PIECE = PieceType.PAWN.createPiece(Camp.WHITE);
-    private static final Piece BLACK_PIECE = PieceType.PAWN.createPiece(Camp.BLACK);
-
     private final Chessboard chessboard;
-    private Piece nextMovePiece;
+    private Turn turn;
 
     public ChessGame() {
-        nextMovePiece = WHITE_PIECE;
+        turn = new Turn();
         chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
     }
@@ -28,7 +25,7 @@ public class ChessGame {
 
         if (canMove(source, target)) {
             chessboard.swapPiece(source, target);
-            changeNextMovePiece(target);
+            turn = turn.nextTurn();
             return;
         }
 
@@ -38,9 +35,11 @@ public class ChessGame {
     private void validateTurn(Square square) {
         Piece pieceAtSquare = chessboard.getPieceAt(square);
 
-        if (pieceAtSquare.isNotSameCamp(nextMovePiece)) {
-            throw new IllegalArgumentException("해당 위치에는 당신의 Piece가 없습니다.");
+        if (turn.isMoveOrder(pieceAtSquare)) {
+            return;
         }
+
+        throw new IllegalArgumentException("해당 위치에는 당신의 Piece가 없습니다.");
     }
 
     private boolean canMove(Square source, Square target) {
@@ -97,17 +96,6 @@ public class ChessGame {
         }
 
         return false;
-    }
-
-    private void changeNextMovePiece(Square movedSquare) {
-        Piece movedPiece = chessboard.getPieceAt(movedSquare);
-
-        if (movedPiece.isWhite()) {
-            nextMovePiece = BLACK_PIECE;
-            return;
-        }
-
-        nextMovePiece = WHITE_PIECE;
     }
 
     public void promotePawn(Square currentSquare, PieceType pieceType) {
