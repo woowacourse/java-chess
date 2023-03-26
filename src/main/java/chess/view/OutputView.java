@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.board.BlackWhiteChessBoard;
 import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
@@ -18,6 +17,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
+    private static final String EMPTY = "EMPTY";
+    private static final String DRAW = "DRAW";
     
     private OutputView() {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
@@ -88,18 +89,28 @@ public class OutputView {
         System.out.println(message);
     }
     
-    public static void printIntermediateResults(ScoreDto scoreDto) {
+    public static void noticeIntermediateResult() {
         println("> 중간 결과");
+    }
+    
+    public static void noticeFinalResult() {
+        println("> 최종 결과");
+    }
+    
+    public static void printScore(ScoreDto scoreDto) {
         System.out.printf("White Team Score : %.1f%n", scoreDto.whiteScore());
         System.out.printf("Black Team Score : %.1f%n", scoreDto.blackScore());
+    }
+    
+    public static void printWinnerTeam(ScoreDto scoreDto) {
         System.out.printf("Winner Team : %s%n", parseWinnerTeam(scoreDto));
     }
     
     private static String parseWinnerTeam(ScoreDto scoreDto) {
-        Team winnerTeam = scoreDto.winnerTeam();
-        if (winnerTeam == Team.EMPTY) {
-            return "DRAW";
+        String winnerTeam = scoreDto.winnerTeam();
+        if (winnerTeam.equals(EMPTY)) {
+            return DRAW;
         }
-        return winnerTeam.name().toUpperCase();
+        return winnerTeam;
     }
 }

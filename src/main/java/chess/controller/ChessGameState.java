@@ -4,6 +4,7 @@ import chess.controller.command.Command;
 import chess.controller.command.CommandFactory;
 import chess.service.ChessGameService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +35,7 @@ public final class ChessGameState {
     public void noticeKingDead() {
         if (chessGameService.isKingDied()) {
             command = CommandFactory.creaeteCommand(END);
+            command.playWithCurrentTurn(Collections.emptyList(), chessGameService);
         }
     }
 }

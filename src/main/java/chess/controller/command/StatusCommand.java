@@ -13,7 +13,10 @@ public class StatusCommand implements Command {
             throw new IllegalArgumentException("첫 시작은 start 또는 end만 가능합니다.");
         }
     
-        OutputView.printIntermediateResults(new ScoreDto(chessGameService.chessBoard()));
+        OutputView.noticeIntermediateResult();
+        ScoreDto scoreDto = new ScoreDto(chessGameService.chessBoard());
+        OutputView.printScore(scoreDto);
+        OutputView.printWinnerTeam(scoreDto);
     }
     
     @Override

@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.dto.ChessBoardDto;
+import chess.dto.ScoreDto;
 import chess.service.ChessGameService;
 import chess.view.OutputView;
 
@@ -9,9 +9,16 @@ import java.util.List;
 public class EndCommand implements Command {
     @Override
     public void playWithCurrentTurn(List<String> inputCommand, ChessGameService chessGameService) {
-        OutputView.println("> 최종 결과");
-        ChessBoardDto chessBoardDto = new ChessBoardDto(chessGameService.chessBoard());
-        OutputView.printChessBoard(chessBoardDto);
+        OutputView.noticeFinalResult();
+        
+        ScoreDto scoreDto = new ScoreDto(chessGameService.chessBoard());
+        if (chessGameService.isKingDied()) {
+            OutputView.printWinnerTeam(scoreDto);
+            return;
+        }
+    
+        OutputView.printScore(scoreDto);
+        OutputView.printWinnerTeam(scoreDto);
     }
     
     @Override

@@ -6,12 +6,12 @@ import chess.domain.piece.Team;
 public class ScoreDto {
     private final double whiteScore;
     private final double blackScore;
-    private final Team winnerTeam;
+    private final String winnerTeam;
     
     public ScoreDto(ChessBoard chessBoard) {
         whiteScore = chessBoard.calculateScore(Team.WHITE);
         blackScore = chessBoard.calculateScore(Team.BLACK);
-        winnerTeam = chessBoard.winnerTeam();
+        winnerTeam = chessBoard.winnerTeam().name().toUpperCase();
     }
     
     public double whiteScore() {
@@ -22,7 +22,7 @@ public class ScoreDto {
         return blackScore;
     }
     
-    public Team winnerTeam() {
+    public String winnerTeam() {
         return winnerTeam;
     }
 }

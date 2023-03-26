@@ -156,6 +156,10 @@ public class BlackWhiteChessBoard implements ChessBoard {
     public Team winnerTeam() {
         double whiteScore = calculateScore(Team.WHITE);
         double blackScore = calculateScore(Team.BLACK);
+        if (isKingDied()) {
+            return teamWithKing();
+        }
+        
         if (whiteScore > blackScore) {
             return Team.WHITE;
         }
