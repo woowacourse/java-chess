@@ -1,11 +1,7 @@
-package chess.domain.game;
+package chess.domain.board;
 
 import chess.boardStrategy.EmptyBoardStrategy;
 import chess.boardstrategy.InitialBoardStrategy;
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Column;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.type.Bishop;
@@ -122,7 +118,7 @@ class ChessBoardTest {
 
         assertThatThrownBy(()->chessBoard.move(startPosition, endPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동경로에 기물이 있어 이동할 수 없습니다");
+                .hasMessageContaining("이동 경로에 기물이 있으므로 이동할 수 없습니다");
 
     }
 
