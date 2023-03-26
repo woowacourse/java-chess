@@ -19,6 +19,8 @@ public class PiecesDao {
     private static final String UPDATE_PIECE_BY_COORDINATE_QUERY =
             "UPDATE pieces SET type = ?, camp = ?" +
                     "WHERE `game_room_id` = ? and `rank` = ? and `file` = ?";
+    private static final String DELETE_PIECES_BY_ROOM_ID_QUERY =
+            "DELETE FROM pieces WHERE game_room_id = ?";
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
@@ -79,6 +81,16 @@ public class PiecesDao {
             preparedStatement.executeUpdate();
         } catch (final SQLException exception) {
             throw new RuntimeException(exception);
+        }
+    }
+
+    public void deletePiecesByRoomId(long roomId) {
+        try (final var connection = databaseConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(DELETE_PIECES_BY_ROOM_ID_QUERY)) {
+            preparedStatement.setLong(1, roomId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

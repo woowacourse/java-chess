@@ -43,4 +43,12 @@ class GameRoomDaoTest {
 
         assertDoesNotThrow(() -> gameRoomDao.updateGameRoomById(roomId, camp));
     }
+
+    @Test
+    @DisplayName("특정 아이디의 게임 데이터를 삭제할 수 있다")
+    void deleteGameRoomById() {
+        long roomId = 1;
+
+        assertDoesNotThrow(() -> gameRoomDao.deleteGameRoomById(roomId));
+    }
 }

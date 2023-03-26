@@ -16,6 +16,7 @@ public class GameRoomDao {
             "select * from game_rooms order by id desc limit 1";
     private static final String UPDATE_GAME_ROOM_QUERY =
             "UPDATE game_rooms SET turn = ? WHERE id = ?";
+    private static final String DELETE_GAME_ROOM_QUERY = "DELETE FROM game_rooms WHERE id = ?";
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
@@ -87,6 +88,16 @@ public class GameRoomDao {
              final var preparedStatement = connection.prepareStatement(UPDATE_GAME_ROOM_QUERY)) {
             preparedStatement.setString(1, camp.name());
             preparedStatement.setLong(2, roomId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteGameRoomById(long roomId) {
+        try (final var connection = databaseConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(DELETE_GAME_ROOM_QUERY)) {
+            preparedStatement.setLong(1, roomId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
