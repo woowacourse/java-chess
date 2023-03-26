@@ -50,8 +50,22 @@ public class ChessBoard {
         if (!fromPiece.isMovable(from, to)) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
+        if (fromPiece.getType() == PieceType.PAWN) {
+            validatePawnMovable(from, to);
+        }
+    }
+
+    private void validatePawnMovable(final Position from, final Position to) {
+        final Piece fromPiece = piecePosition.get(from);
         final Piece toPiece = piecePosition.get(to);
-        if (fromPiece.getType() == PieceType.PAWN && isDiagonal(from, to) && toPiece.getTeam() != fromPiece.getTeam()) {
+
+        Team fromPieceTeam = fromPiece.getTeam();
+
+        if (isDiagonal(from, to) && !fromPieceTeam.isEnemy(toPiece.getTeam())) {
+            throw new PieceCannotMoveException(fromPiece.getType());
+        }
+
+        if (!isDiagonal(from, to) && !toPiece.isEmpty()) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
     }
