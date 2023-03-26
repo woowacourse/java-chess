@@ -83,4 +83,12 @@ class KnightTest {
         // when & then
         assertThat(knight.isKing()).isFalse();
     }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Knight knight = new Knight(Color.WHITE, PiecePosition.of('b', 1));
+        // when & then
+        assertThat(knight.isPawn()).isFalse();
+    }
 }

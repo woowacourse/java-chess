@@ -37,6 +37,11 @@ class PieceTest {
             public boolean isKing() {
                 return false;
             }
+
+            @Override
+            public boolean isPawn() {
+                return false;
+            }
         });
     }
 
@@ -69,6 +74,11 @@ class PieceTest {
 
         @Override
         public boolean isKing() {
+            return false;
+        }
+
+        @Override
+        public boolean isPawn() {
             return false;
         }
     }

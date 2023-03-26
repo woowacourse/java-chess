@@ -151,6 +151,7 @@ classDiagram
 - [ ] status 명령어 입력에 대한 처리
 - [ ] 색깔 별로 점수 총합 계산
 - [ ] queen : 9점, rook : 5점, bishop : 3점, knight : 2.5점
+- [x] pawn인지 확인
 - [ ] pawn인 경우 같은 File(세로 줄)에 pawn이 있는지 확인
   - 있으면 0.5점
   - 없으면 1점

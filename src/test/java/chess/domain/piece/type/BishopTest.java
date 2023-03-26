@@ -86,4 +86,12 @@ class BishopTest {
         // when & then
         assertThat(bishop.isKing()).isFalse();
     }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Bishop bishop = new Bishop(Color.WHITE, PiecePosition.of('c', 1));
+        // when & then
+        assertThat(bishop.isPawn()).isFalse();
+    }
 }

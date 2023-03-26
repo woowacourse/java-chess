@@ -193,4 +193,12 @@ class PawnTest {
         // when & then
         assertThat(pawn.isKing()).isFalse();
     }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Pawn pawn = new Pawn(Color.WHITE, PiecePosition.of('a', 2));
+        // when & then
+        assertThat(pawn.isPawn()).isTrue();
+    }
 }

@@ -124,4 +124,12 @@ class QueenTest {
         // when & then
         assertThat(queen.isKing()).isFalse();
     }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Queen queen = new Queen(Color.WHITE, PiecePosition.of('d', 1));
+        // when & then
+        assertThat(queen.isPawn()).isFalse();
+    }
 }

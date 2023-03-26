@@ -64,4 +64,6 @@ public abstract class Piece implements Cloneable {
     }
 
     public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 }

@@ -86,4 +86,12 @@ class RookTest {
         // when & then
         assertThat(rook.isKing()).isFalse();
     }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Rook rook = new Rook(Color.WHITE, PiecePosition.of('a', 1));
+        // when & then
+        assertThat(rook.isPawn()).isFalse();
+    }
 }

@@ -103,4 +103,12 @@ class KingTest {
         // when & then
         assertThat(king.isKing()).isTrue();
     }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final King king = new King(Color.WHITE, PiecePosition.of('e', 1));
+        // when & then
+        assertThat(king.isPawn()).isFalse();
+    }
 }
