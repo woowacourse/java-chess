@@ -28,6 +28,22 @@ public final class OutputView {
         System.out.println("abcdefgh");
     }
 
+    public static void printScore(final String team, final double score) {
+        System.out.println(team + "의 점수는 " + score + "점 입니다.");
+    }
+
+    public static void printDrawWhenRunning() {
+        System.out.println("두 플레이어가 동등하게 겨루고 있습니다.");
+    }
+
+    public static void printWinnerWhenRunning(final String winner) {
+        System.out.println(winner + "이(가) 우세합니다.");
+    }
+
+    public static void printWinnerAfterRunning(final String winner) {
+        System.out.println(winner + "이(가) 상태팀의 왕을 잡아 승리하였습니다.");
+    }
+
     public static void printErrorMessage(final String errorMessage) {
         System.out.println("[ERROR] " + errorMessage + System.lineSeparator());
     }

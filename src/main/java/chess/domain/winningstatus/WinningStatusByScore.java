@@ -3,7 +3,6 @@ package chess.domain.winningstatus;
 import chess.domain.piece.Team;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 
 public class WinningStatusByScore implements WinningStatus {
@@ -26,9 +25,15 @@ public class WinningStatusByScore implements WinningStatus {
 
     @Override
     public Team getWinner() {
-        return scores.keySet()
-                .stream()
-                .max(Comparator.comparing(key -> scores.get(key).getScore()))
-                .orElseThrow(IllegalArgumentException::new);
+        double white_score = scores.get(Team.WHITE).getScore();
+        double black_score = scores.get(Team.BLACK).getScore();
+
+        if (white_score > black_score) {
+            return Team.WHITE;
+        }
+        if (black_score > white_score) {
+            return Team.BLACK;
+        }
+        return null;
     }
 }

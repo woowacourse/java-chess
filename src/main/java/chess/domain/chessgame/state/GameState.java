@@ -2,6 +2,7 @@ package chess.domain.chessgame.state;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
+import chess.domain.winningstatus.WinningStatus;
 
 public interface GameState {
 
@@ -12,6 +13,8 @@ public interface GameState {
     boolean isKingDead();
 
     GameState close();
+
+    WinningStatus status();
 
     GameState end();
 

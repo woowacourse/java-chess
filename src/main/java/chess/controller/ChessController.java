@@ -3,11 +3,14 @@ package chess.controller;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.ChessGame;
+import chess.domain.piece.Team;
+import chess.domain.winningstatus.Score;
 import chess.domain.winningstatus.WinningStatus;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 public final class ChessController {
@@ -59,10 +62,30 @@ public final class ChessController {
         OutputView.printChessBoard(convertedChessBoard);
     }
 
-    private void showStatus(WinningStatus winningStatus) {
+    private void showStatus(final WinningStatus winningStatus) {
         if (winningStatus.isWinnerDetermined()) {
+            showStatusAfterRunning(winningStatus);
             return;
         }
+        showStatusWhenRunning(winningStatus);
+    }
+
+    private void showStatusAfterRunning(final WinningStatus winningStatus) {
+
+    }
+
+    private void showStatusWhenRunning(final WinningStatus winningStatus) {
+        final Map<Team, Score> scores = winningStatus.getScores();
+        for (Team team : scores.keySet()) {
+            OutputView.printScore(TeamName.getNameByTeam(team), scores.get(team).getScore());
+        }
+
+        Team winner = winningStatus.getWinner();
+        if (winner == null) {
+            OutputView.printDrawWhenRunning();
+            return;
+        }
+        OutputView.printWinnerWhenRunning(TeamName.getNameByTeam(winner));
     }
 
     private void movePiece(final ChessGame chessGame) {

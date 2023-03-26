@@ -3,6 +3,12 @@ package chess.domain.chessgame.state;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.piece.Team;
+import chess.domain.winningstatus.Score;
+import chess.domain.winningstatus.WinningStatus;
+import chess.domain.winningstatus.WinningStatusByScore;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class Running implements GameState {
     private static final String RUNNING_STATE_EXCEPTION_MESSAGE = "게임을 실행 중일때 수행할 수 없는 동작입니다.";
@@ -10,9 +16,9 @@ public class Running implements GameState {
     private final ChessBoard chessBoard;
     private Team currentTeam;
 
-    public Running(final ChessBoard chessBoard) {
+    public Running(final ChessBoard chessBoard, final Team currentTeam) {
         this.chessBoard = chessBoard;
-        this.currentTeam = Team.WHITE;
+        this.currentTeam = currentTeam;
     }
 
     @Override
@@ -38,6 +44,15 @@ public class Running implements GameState {
     @Override
     public GameState close() {
         return new Ready();
+    }
+
+    @Override
+    public WinningStatus status() {
+        Map<Team, Score> scores = new EnumMap<>(Team.class);
+        scores.put(Team.WHITE, new Score(chessBoard.getPiecesOf(Team.WHITE), chessBoard.countDoublePawnOf(Team.WHITE)));
+        scores.put(Team.BLACK, new Score(chessBoard.getPiecesOf(Team.BLACK), chessBoard.countDoublePawnOf(Team.BLACK)));
+
+        return new WinningStatusByScore(scores);
     }
 
     @Override
