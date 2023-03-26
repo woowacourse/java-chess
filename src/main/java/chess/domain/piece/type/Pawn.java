@@ -3,78 +3,51 @@ package chess.domain.piece.type;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 
-import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
-
-    public static final String DIRECTION_ERROR_MESSAGE = "Pawn이 이동할 수 있는 방향이 아닙니다";
-    public static final String DISTANCE_ERROR_MESSAGE = "Pawn이 한 번에 이동할 수 있는 거리가 아닙니다";
-    private static final String MOVE_FORWARD_ERROR_MESSAGE = "Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다";
-    private static final String MOVE_DIAGONAL_ERROR_MESSAGE = "Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다";
     private static final Map<Color, Rank> FIRST_RANK_BY_COLOR = Map.of(Color.BLACK, Rank.SEVEN, Color.WHITE, Rank.TWO);
-    private static final Map<Boolean, Integer> MAXIMUM_DISTANCE_WHEN_FIRST_MOVE_OR_NOT = Map.of(true, 2, false, 1);
-    private final List<Direction> movableDirection;
+    private static final Map<Color, Integer> oneStraightRankDistanceByColor = Map.of(Color.BLACK, -1, Color.WHITE, 1);
+    private static final Map<Color, Integer> twoStraightRankDistanceByColor = Map.of(Color.BLACK, -2, Color.WHITE, 2);
 
     public Pawn(Color color) {
         super(PieceType.PAWN, color);
-        this.movableDirection = createMovableDirectionByColor(color);
-    }
-
-    private List<Direction> createMovableDirectionByColor(Color color) {
-        if (color == Color.BLACK) {
-            return List.of(Direction.BOTTOM, Direction.BOTTOM_LEFT,
-                    Direction.BOTTOM_RIGHT);
-        }
-        return List.of(Direction.TOP, Direction.TOP_LEFT,
-                Direction.TOP_RIGHT);
     }
 
     @Override
-    public void checkMovable(Position start, Position end, Color destinationColor) {
-        Direction direction = Direction.findDirectionByGap(start, end);
-        checkMovableDirection(direction);
-        checkMovableDistance(start, end);
-        checkMovableDestination(destinationColor, direction);//
-
+    public boolean isMovable(final Position start, final Position end, final Color colorOfDestination) {
+        return isStraightMove(start, end) && isMovableStraightDestination(colorOfDestination)
+                || isDiagonalMovable(start,end) && isMovableDiagonalDestination(colorOfDestination);
     }
 
-    @Override
-    protected void checkMovableDirection(Direction direction) {
-        if (!movableDirection.contains(direction)) {
-            throw new IllegalArgumentException(DIRECTION_ERROR_MESSAGE);
-        }
+    private boolean isMovableDiagonalDestination(final Color colorOfDestination) {
+        return colorOfDestination.isSameColor(color.getOpponent());
     }
 
-    private void checkMovableDistance(final Position start, final Position end) {
-        List<Position> route = start.findRouteTo(end);
-        if(route.size() > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE_OR_NOT.get(isFirstMove(start))) {
-            throw new IllegalArgumentException(DISTANCE_ERROR_MESSAGE);
+    private boolean isStraightMove(final Position start, final Position end) {
+        int x = start.findGapOfColumn(end);
+        int y = start.findGapOfRank(end);
+
+        if(isFirstMove(start)) {
+            return x == 0 && (y ==oneStraightRankDistanceByColor.get(color) || y== twoStraightRankDistanceByColor.get(color)) ;
         }
+        return x == 0 && y == oneStraightRankDistanceByColor.get(color);
     }
 
     private boolean isFirstMove(Position start) {
         return FIRST_RANK_BY_COLOR.get(color).equals(start.getRank());
     }
 
-    private void checkMovableDestination(final Color destinationColor, final Direction direction) {
-        if (isStraightDirection(direction) && !destinationColor.isSameColor(Color.NONE)) {
-            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_MESSAGE);
-        }
-        if (isDiagonalDirection(direction) && !destinationColor.isSameColor(color.getOpponent())) {
-            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_MESSAGE);
-        }
+    private static boolean isMovableStraightDestination(final Color colorOfDestination) {
+        return colorOfDestination.isSameColor(Color.NONE);
     }
 
-    private static boolean isStraightDirection(final Direction direction) {
-        return Math.abs(direction.getX()) == Direction.TOP.getX() && Math.abs(direction.getY()) == Direction.TOP.getY();
-    }
-
-    private boolean isDiagonalDirection(final Direction direction) {
-        return Math.abs(direction.getX()) == Math.abs(direction.getY());
+    public boolean isDiagonalMovable(final Position start, final Position end) {
+        int absX = Math.abs(start.findGapOfColumn(end));
+        int absY = Math.abs(start.findGapOfRank(end));
+        return  absX == 1 && absY ==1;
     }
 
 }
