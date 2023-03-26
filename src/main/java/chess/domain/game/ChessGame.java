@@ -6,6 +6,7 @@ import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.type.Piece;
 
 import java.util.List;
@@ -40,7 +41,12 @@ public class ChessGame {
         Position start = createPositionByCommand(commandLine.get(START_SOURCE_INDEX_IN_COMMANDLINE));
         Position end = createPositionByCommand(commandLine.get(TARGET_SOURCE_INDEX_IN_COMMANDLINE));
         checkCorrectTurnByColor(start);
+        Piece pieceToBeCaught = chessBoard.findPieceInBoardByPosition(end);
         chessBoard.move(start, end);
+        if(pieceToBeCaught.getPieceType() == PieceType.KING) {
+            finishGame();
+            return;
+        }
         turn = turn.getOpponent();
     }
 
@@ -51,12 +57,19 @@ public class ChessGame {
 
         return Position.of(column, rank);
     }
-
     private void checkCorrectTurnByColor(Position start) {
         Color colorOfStartPiece = chessBoard.findPieceInBoardByPosition(start).getColor();
         if(colorOfStartPiece.isOpponent(turn)) {
             throw new IllegalArgumentException("상대편의 기물을 움직일 수 없습니다");
         }
+    }
+
+    public void finishGame() {
+        stateOfChessGame = StateOfChessGame.FINISHED;
+    }
+
+    public boolean isFinished() {
+        return this.stateOfChessGame.isFinished();
     }
 
     public Map<Position, Piece> getChessBoard() {
