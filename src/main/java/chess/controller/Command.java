@@ -2,15 +2,19 @@ package chess.controller;
 
 import java.util.List;
 
-public interface CommandDto {
-    static CommandDto from(List<String> commandWithOptions) {
+public interface Command {
+
+    final int COMMAND_INDEX = 0;
+    Command EMPTY_COMMAND = () -> CommandType.EMPTY;
+
+    static Command from(List<String> commandWithOptions) {
         validateLengthNotZero(commandWithOptions);
 
         if (commandWithOptions.size() == 1) {
-            return new OptionLessCommandDto(commandWithOptions);
+            return new OptionLessCommand(commandWithOptions);
         }
 
-        return MoveCommandDto.from(commandWithOptions);
+        return MoveCommand.from(commandWithOptions);
     }
 
     private static void validateLengthNotZero(List<String> commandWithOptions) {
@@ -19,5 +23,5 @@ public interface CommandDto {
         }
     }
 
-    String getCommand();
+    CommandType getCommandType();
 }

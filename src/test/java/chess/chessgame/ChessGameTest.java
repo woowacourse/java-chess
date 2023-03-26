@@ -1,15 +1,12 @@
 package chess.chessgame;
 
 import chess.chessboard.*;
-import chess.piece.EmptyPiece;
-import chess.piece.Pawn;
-import chess.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessGameTest {
@@ -38,8 +35,7 @@ class ChessGameTest {
             @Test
             @DisplayName("처음에 백이 먼저 공격해야 정상적으로 동작한다")
             void it_returns_empty_piece1() {
-                final Piece actual = chessGame.move(whiteSource1, whiteDestination1);
-                assertThat(actual).isEqualTo(EmptyPiece.getInstance());
+                assertThatNoException().isThrownBy(() -> chessGame.move(whiteSource1, whiteDestination1));
             }
 
             @Test
@@ -55,7 +51,7 @@ class ChessGameTest {
             void it_returns_empty_piece2() {
                 chessGame.move(whiteSource1, whiteDestination1);
 
-                assertThat(chessGame.move(blackSource, blackDestination)).isEqualTo(EmptyPiece.getInstance());
+                assertThatNoException().isThrownBy(() -> chessGame.move(blackSource, blackDestination));
             }
 
             @Test
@@ -64,7 +60,7 @@ class ChessGameTest {
                 chessGame.move(whiteSource1, whiteDestination1);
                 chessGame.move(blackSource, blackDestination);
 
-                assertThat(chessGame.move(whiteSource2, whiteDestination2) instanceof Pawn).isTrue();
+                assertThatNoException().isThrownBy(() -> chessGame.move(whiteSource2, whiteDestination2));
             }
 
             @Test

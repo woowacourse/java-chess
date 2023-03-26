@@ -1,81 +1,47 @@
 package chess.controller;
 
-import chess.chessboard.*;
+import chess.status.GameStatus;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.function.Function;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final Map<CommandType, PrintAction> commandToAction;
 
     public ChessGameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.commandToAction = new EnumMap<>(CommandType.class);
     }
 
     public void run() {
-        ChessBoard chessBoard = startGame();
-        GameStatus gameStatus = GameStatus.getInitialGameStatus();
-
-        while (gameStatus.isPlaying()) {
-            gameStatus = repeatUntilNoIAE(this::playTurn, chessBoard);
-        }
-    }
-
-    private ChessBoard startGame() {
-        final ChessBoardFactory chessBoardFactory = new ChessBoardFactory();
+        setPrintActions();
+        GameStatus gameStatus = GameStatus.getInitialStatus();
 
         outputView.printInstructions();
 
-        return chessBoardFactory.generate();
-    }
+        Command command = Command.EMPTY_COMMAND;
 
-    private GameStatus playTurn(final ChessBoard chessBoard) {
-        outputView.printChessBoard(ChessBoardDto.of(chessBoard));
-
-        CommandDto commandDto = inputView.readCommand();
-        GameStatus gamestatus = GameStatus.getNextStatus(commandDto.getCommand());
-
-        if (gamestatus.isPlaying()) {
-            movePiece(chessBoard, (MoveCommandDto) commandDto);
-        }
-
-        return gamestatus;
-    }
-
-    private void movePiece(final ChessBoard chessBoard, final MoveCommandDto moveCommandDto) {
-        final Square source = getSourceSquare(moveCommandDto);
-        final Square destination = getDestinationSquare(moveCommandDto);
-
-//        if (!chessBoard.executeTurnMove(source, destination)) {
-//            outputView.printInvalidMoveMessage();
-//        }
-    }
-
-    private Square getSourceSquare(final MoveCommandDto moveCommandDto) {
-        final Rank sourceRank = moveCommandDto.getSourceRank();
-        final File sourceFile = moveCommandDto.getSourceFile();
-
-        return Square.of(sourceRank, sourceFile);
-    }
-
-    private Square getDestinationSquare(final MoveCommandDto moveCommandDto) {
-        final Rank destinationRank = moveCommandDto.getDestinationRank();
-        final File destinationFile = moveCommandDto.getDestinationFile();
-
-        return Square.of(destinationRank, destinationFile);
-    }
-
-    private <T, R> R repeatUntilNoIAE(Function<T, R> function, T arg) {
-        while (true) {
+        while (command.getCommandType() != CommandType.END) {
             try {
-                return function.apply(arg);
+                command = inputView.readCommand();
+                final PrintAction printAction = commandToAction.get(command.getCommandType());
+                gameStatus = gameStatus.playGame(command, printAction);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+
         }
+    }
+
+    private void setPrintActions() {
+        commandToAction.put(CommandType.START, chessBoardDto -> outputView.printChessBoard((ChessBoardDto) chessBoardDto));
+        commandToAction.put(CommandType.MOVE, chessBoardDto -> outputView.printChessBoard((ChessBoardDto) chessBoardDto));
+        commandToAction.put(CommandType.STATUS, resultDto -> outputView.printResult((ResultDto) resultDto));
     }
 }

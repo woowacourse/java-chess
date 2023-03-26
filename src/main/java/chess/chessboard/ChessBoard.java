@@ -3,6 +3,7 @@ package chess.chessboard;
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toUnmodifiableMap;
@@ -11,7 +12,7 @@ public class ChessBoard {
     private final Map<Square, Piece> pieces;
 
     public ChessBoard(Map<Square, Piece> pieces) {
-        this.pieces = pieces;
+        this.pieces = new HashMap<>(pieces);
     }
 
     public Piece move(final Square source, final Square destination) {
