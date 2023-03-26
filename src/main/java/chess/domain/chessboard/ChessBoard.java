@@ -103,7 +103,7 @@ public final class ChessBoard {
         throw new IllegalArgumentException("게임이 진행 중이므로 종료할 수 없습니다.");
     }
 
-    public ChessBoard copyChessBoard(){
+    public ChessBoard copyChessBoard() {
         return new ChessBoard(Collections.unmodifiableMap(this.squares));
     }
 

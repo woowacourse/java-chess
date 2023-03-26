@@ -25,16 +25,16 @@ public final class Empty implements SquareState {
 
     @Override
     public Team getTeam() {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+        throw new IllegalStateException(EMPTY_EXCEPTION);
     }
 
     @Override
     public List<SquareCoordinate> findRoute(final SquareCoordinate from, final SquareCoordinate to) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+        throw new IllegalStateException(EMPTY_EXCEPTION);
     }
 
     @Override
     public void validateRoute(final List<SquareState> routeSquares) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+        throw new IllegalStateException(EMPTY_EXCEPTION);
     }
 }

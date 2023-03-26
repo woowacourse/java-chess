@@ -8,7 +8,7 @@ public class Score {
 
     private final double score;
 
-    public Score(List<SquareState> pieces, int doublePawnCount) {
+    public Score(final List<SquareState> pieces, final int doublePawnCount) {
         double score = 0.0;
 
         for (SquareState piece : pieces) {

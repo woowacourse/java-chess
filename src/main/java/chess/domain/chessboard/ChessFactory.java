@@ -16,7 +16,7 @@ import static chess.domain.chessboard.RankIndex.*;
 public final class ChessFactory {
 
     public static Map<SquareCoordinate, SquareState> create() {
-        Map<SquareCoordinate, SquareState> squares = new LinkedHashMap<>();
+        final Map<SquareCoordinate, SquareState> squares = new LinkedHashMap<>();
 
         createSideRankByTeam(squares, FIRST.index, Team.WHITE);
         createPawnRankByTeam(squares, SECOND.index, Team.WHITE);
@@ -27,7 +27,7 @@ public final class ChessFactory {
         return squares;
     }
 
-    private static void createSideRankByTeam(Map<SquareCoordinate, SquareState> squares, final char rank, final Team team) {
+    private static void createSideRankByTeam(final Map<SquareCoordinate, SquareState> squares, final char rank, final Team team) {
         final List<SquareState> sideSquares = createSideSquaresByTeam(team);
 
         char file = A.index;
@@ -52,19 +52,19 @@ public final class ChessFactory {
         return String.valueOf(file) + rank;
     }
 
-    private static void createPawnRankByTeam(Map<SquareCoordinate, SquareState> squares, final char rank, final Team team) {
+    private static void createPawnRankByTeam(final Map<SquareCoordinate, SquareState> squares, final char rank, final Team team) {
         for (char file = A.index; file <= H.index; file++) {
             squares.put(SquareCoordinate.of(makeAlphanumeric(file, rank)), new Pawn(team));
         }
     }
 
-    private static void createBlankRanks(Map<SquareCoordinate, SquareState> squares) {
+    private static void createBlankRanks(final Map<SquareCoordinate, SquareState> squares) {
         for (char rank = THIRD.index; rank <= SIXTH.index; rank++) {
             createBlankRank(squares, rank);
         }
     }
 
-    private static void createBlankRank(Map<SquareCoordinate, SquareState> squares, final char rank) {
+    private static void createBlankRank(final Map<SquareCoordinate, SquareState> squares, final char rank) {
         for (char file = A.index; file <= H.index; file++) {
             squares.put(SquareCoordinate.of(makeAlphanumeric(file, rank)), new Empty());
         }

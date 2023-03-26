@@ -4,11 +4,11 @@ import chess.domain.piece.Team;
 
 import java.util.Map;
 
-public class WinningStatusByKing implements WinningStatus {
+public final class WinningStatusByKing implements WinningStatus {
 
     private final Team winner;
 
-    public WinningStatusByKing(Team winner) {
+    public WinningStatusByKing(final Team winner) {
         this.winner = winner;
     }
 

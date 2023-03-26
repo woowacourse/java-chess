@@ -5,7 +5,6 @@ import chess.domain.chessboard.SquareCoordinate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.IntFunction;
 
 public abstract class Piece implements SquareState {
@@ -108,10 +107,5 @@ public abstract class Piece implements SquareState {
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
         return team == piece.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team);
     }
 }
