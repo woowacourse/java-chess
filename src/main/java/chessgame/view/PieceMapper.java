@@ -30,7 +30,7 @@ public class PieceMapper {
     }
 
     private static String makeUpperCaseIfCampIsBlack(final Piece piece, final String message) {
-        if (piece.isEmpty() && piece.isSameCamp(Camp.BLACK)) {
+        if (piece.isNotEmpty() && piece.isSameCamp(Camp.BLACK)) {
             return message.toUpperCase();
         }
         return message;

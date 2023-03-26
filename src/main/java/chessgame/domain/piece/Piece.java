@@ -29,6 +29,10 @@ public abstract class Piece {
         return pieceType.isEmpty();
     }
 
+    public boolean isNotEmpty() {
+        return !pieceType.isEmpty();
+    }
+
     public boolean isSameCamp(final Camp camp) {
         return this.camp.equals(camp);
     }
