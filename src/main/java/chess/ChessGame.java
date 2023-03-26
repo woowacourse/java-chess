@@ -50,4 +50,6 @@ public class ChessGame {
     public double takeScore(Side side) {
         return chessBoard.calculateScore(side);
     }
+
+//    public double takeWinner(double whiu)
 }

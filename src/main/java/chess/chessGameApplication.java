@@ -8,6 +8,5 @@ public class chessGameApplication {
         ChessController chessController = new ChessController(chessBoard, chessGame);
         chessController.startPhase();
         chessController.commandPhase();
-        chessController.endPhase();
     }
 }
