@@ -36,6 +36,8 @@ public class ChessController {
 
     private ChessGame startChessGame(String gameCommand) {
         if (GameCommand.isNew(gameCommand)) {
+            ChessGame chessGame = ChessGame.createGame();
+            outputView.printGameId(chessGame.getId());
             return ChessGame.createGame();
         }
         return ChessGame.continueGame(Integer.parseInt(gameCommand));

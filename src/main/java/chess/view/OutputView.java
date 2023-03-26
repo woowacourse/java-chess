@@ -53,6 +53,10 @@ public class OutputView {
         System.out.println(sb);
     }
 
+    public void printGameId(long id) {
+        System.out.println("새로운 게임이 생성되었습니다. 아이디는 " + id + "입니다.");
+    }
+
     public void printBoard(Board board) {
         Map<Position, Piece> chessBoard = board.getBoard();
 
