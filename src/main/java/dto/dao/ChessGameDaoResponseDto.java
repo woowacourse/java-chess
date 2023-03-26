@@ -18,10 +18,6 @@ public class ChessGameDaoResponseDto {
         this.state = state;
     }
 
-//    public static ChessGameCreateResponseDto from() {
-//        return new ChessGameCreateResponseDto(chessGame.getBoard(), chessGame.getCurrentTurn(), gameId);
-//    }
-
     public Map<Position, Piece> getBoard() {
         return board;
     }
