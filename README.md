@@ -61,6 +61,49 @@
 - [x] 점수를 더한다.
 - [x] 점수를 비교한다.
 
+## 데이터베이스
+### 체스게임 테이블
+
+```sql
+create table chess_game (
+    chess_game_id int AUTO_INCREMENT NOT NULL,
+    turn VARCHAR(40) NOT NULL,
+    PRIMARY KEY (chess_game_id)
+);
+```
+
+- [ ] 체스게임을 생성한다.
+- [ ] 체스게임을 조회한다.
+- [ ] 체스게임 목록을 조회한다.
+- [ ] 턴을 수정한다.
+
+### 체스판 테이블
+
+```sql
+create table chess_board (
+    chess_board_id int AUTO_INCREMENT NOT NULL,
+    chess_game_id int NOT NULL,
+    piece_type VARCHAR(40) NOT NULL,
+    piece_rank int NOT NULL,
+    piece_file int NOT NULL,
+    team VARCHAR(40) NOT NULL,
+    PRIMARY KEY (chess_board_id),
+    FOREIGN KEY (chess_game_id) REFERENCES chess_game(chess_game_id) ON DELETE CASCADE
+);
+```
+
+- [ ] 기물의 위치를 저장한다.
+- [ ] 기물의 위치를 수정한다.
+- [ ] 기물의 위치를 조회한다.
+
+## 게임 진행 시나리오
+
+1. 'start' 를 입력하여 시작한다.
+2. 게임 시작 시, 생성되어 있는 체스게임의 아이디를 보여준다.
+3. 이어서 실행할 게임의 아이디를 입력한다.
+4. 새로 시작하려면 'new' 를 입력한다.
+5. 게임을 새로 생성하면 생성된 체스게임 아이디를 출력해준다.
+6. 'end' 를 입력하여 종료한다.
 
 ## 우아한테크코스 코드리뷰
 
