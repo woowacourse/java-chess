@@ -9,6 +9,7 @@ import static chess.domain.chessboard.RankIndex.SEVENTH;
 import static chess.domain.chessboard.RankIndex.SIXTH;
 import static chess.domain.chessboard.RankIndex.THIRD;
 
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.piece.state.Bishop;
 import chess.domain.piece.state.King;
@@ -16,9 +17,11 @@ import chess.domain.piece.state.Knight;
 import chess.domain.piece.state.Pawn;
 import chess.domain.piece.state.Queen;
 import chess.domain.piece.state.Rook;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public final class ChessBoard {
@@ -43,7 +46,7 @@ public final class ChessBoard {
 
         char file = A.index;
         for (Square square : sideSquares) {
-            this.squares.put(Coordinate.of(makeAlphanumeric(file++, rank)), square);
+            this.squares.put(Coordinate.from(makeAlphanumeric(file++, rank)), square);
         }
     }
 
@@ -65,7 +68,7 @@ public final class ChessBoard {
 
     private void createPawnRankByTeam(final char rank, final Team team) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), createPawnSquareByTeam(team));
+            squares.put(Coordinate.from(makeAlphanumeric(file, rank)), createPawnSquareByTeam(team));
         }
     }
 
@@ -81,7 +84,7 @@ public final class ChessBoard {
 
     private void createBlankRank(final char rank) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Square());
+            squares.put(Coordinate.from(makeAlphanumeric(file, rank)), new Square());
         }
     }
 
@@ -124,5 +127,57 @@ public final class ChessBoard {
         return this.squares.values()
                 .stream()
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<List<Square>> getSameFileSquaresByTeam(final Team team) {
+        return squaresGroupByFile(squaresGroupByTeam(team));
+    }
+
+    private Map<Coordinate, Square> squaresGroupByTeam(final Team team) {
+        return squares.entrySet()
+                .stream()
+                .filter(e -> e.getValue().isMyTeam(team))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+    }
+
+    private List<List<Square>> squaresGroupByFile(Map<Coordinate, Square> squares) {
+        final List<List<Square>> sameFileSquares = new ArrayList<>();
+        for (FileIndex fileIndex : FileIndex.files()) {
+            sameFileSquares.add(squares.entrySet()
+                    .stream()
+                    .filter(e -> e.getKey().isMyFile(fileIndex))
+                    .map(Entry::getValue)
+                    .collect(Collectors.toUnmodifiableList()));
+        }
+        return sameFileSquares;
+    }
+
+    public List<Square> squaresByTeam(final Team team) {
+        return squares.values()
+                .stream()
+                .filter(square -> square.isMyTeam(team))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public long countFileOfContinuousPawnByTeam(final Team team) {
+        long sum = 0;
+
+        for (FileIndex fileIndex : FileIndex.files()) {
+            sum += countContinuousPawnInFile(fileIndex, team);
+        }
+
+        return sum;
+    }
+
+    private long countContinuousPawnInFile(FileIndex fileIndex, Team team) {
+        long count = squares.entrySet().stream()
+                .filter(entry -> entry.getKey().isMyFile(fileIndex))
+                .filter(entry -> entry.getValue().isMyTeam(team))
+                .filter(entry -> entry.getValue().isTypeOf(PieceType.PAWN))
+                .count();
+        if (count > 1) {
+            return 1;
+        }
+        return 0;
     }
 }
