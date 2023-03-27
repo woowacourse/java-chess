@@ -22,16 +22,6 @@ public class WaitingStart implements State {
     }
 
     @Override
-    public Board getBoard() {
-        throw new IllegalStateException("보드 초기화 이전에 보드를 가져올 수 없습니다.");
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
-    }
-
-    @Override
     public double calculateScore(final Team team) {
         throw new IllegalStateException("보드 초기화 이전에 점수를 계산할 수 없습니다.");
     }
@@ -42,7 +32,17 @@ public class WaitingStart implements State {
     }
 
     @Override
+    public boolean isKingDead() {
+        return false;
+    }
+
+    @Override
     public Team getWinner() {
         throw new IllegalStateException("보드 초기화 이전에 우승자를 찾을 수 없습니다.");
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new IllegalStateException("보드 초기화 이전에 보드를 가져올 수 없습니다.");
     }
 }

@@ -22,7 +22,7 @@ public class Running implements State {
     public State move(final Square source, final Square target) {
         board.makeMove(source, target);
         if (isEnd()) {
-            return new End(board.findWinner());
+            return new KingDeadEnd(board.findWinner());
         }
         return this;
     }
@@ -30,16 +30,6 @@ public class Running implements State {
     @Override
     public State end() {
         return new End(Team.from(Color.EMPTY));
-    }
-
-    @Override
-    public Board getBoard() {
-        return board;
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 
     @Override
@@ -53,7 +43,17 @@ public class Running implements State {
     }
 
     @Override
+    public boolean isKingDead() {
+        return false;
+    }
+
+    @Override
     public Team getWinner() {
         throw new IllegalStateException("게임이 끝나지 않아 우승자가 없습니다.");
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
     }
 }

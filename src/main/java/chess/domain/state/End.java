@@ -29,16 +29,6 @@ public class End implements State {
     }
 
     @Override
-    public Board getBoard() {
-        throw new IllegalStateException(END_EXCEPTION_MESSAGE);
-    }
-
-    @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
     public double calculateScore(final Team team) {
         throw new IllegalStateException(END_EXCEPTION_MESSAGE);
     }
@@ -49,7 +39,17 @@ public class End implements State {
     }
 
     @Override
+    public boolean isKingDead() {
+        return false;
+    }
+
+    @Override
     public Team getWinner() {
         return winnerTeam;
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new IllegalStateException(END_EXCEPTION_MESSAGE);
     }
 }

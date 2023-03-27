@@ -11,13 +11,13 @@ public interface State {
 
     State end();
 
-    Board getBoard();
-
-    boolean isRunning();
-
     double calculateScore(final Team team);
 
     boolean isEnd();
 
+    boolean isKingDead();
+
     Team getWinner();
+
+    Board getBoard();
 }
