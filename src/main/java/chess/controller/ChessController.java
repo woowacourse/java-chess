@@ -207,22 +207,14 @@ public class ChessController {
         }
     }
 
-    private SquareDto readSquare() {
+    private void move(final String gameId, final ChessGame chessGame) {
         try {
-            return InputView.readSquare();
+            SquareDto currentDto = InputView.readSquare();
+            SquareDto destinationDto = InputView.readSquare();
+            saveGameWhenMoveSuccess(gameId, chessGame, currentDto, destinationDto);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return null;
         }
-    }
-
-    private void move(final String gameId, final ChessGame chessGame) {
-        SquareDto currentDto = readSquare();
-        SquareDto destinationDto = readSquare();
-        if (currentDto == null || destinationDto == null) {
-            return;
-        }
-        saveGameWhenMoveSuccess(gameId, chessGame, currentDto, destinationDto);
     }
 
     private void saveGameWhenMoveSuccess(
