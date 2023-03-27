@@ -86,4 +86,4 @@
 
 - Board
   - [x] board id로 검색 기능
-  - [ ] board 저장 기능
+  - [x] board 저장 기능

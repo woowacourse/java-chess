@@ -46,8 +46,15 @@ public class MySqlChessGameDao implements ChessGameDao {
         final PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, chessGameDto.getTurn());
         ps.executeUpdate();
+        return findChessGameId(ps);
+    }
 
-        return ps.getGeneratedKeys().getInt(1);
+    private int findChessGameId(final PreparedStatement ps) throws SQLException {
+        final ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        throw new IllegalStateException();
     }
 
     private void savePiece(final Map<Square, Piece> board, final Connection connection, final int chessGameId)
@@ -62,8 +69,8 @@ public class MySqlChessGameDao implements ChessGameDao {
 
             ps.setInt(1, chessGameId);
             ps.setString(2, piece.getPieceType().name());
-            ps.setString(3, square.getFile().name());
-            ps.setString(4, square.getRank().name());
+            ps.setString(3, Character.toString(square.getFile().getValue()));
+            ps.setString(4, Character.toString(square.getRank().getValue()));
             ps.setString(5, piece.getColor().name());
 
             ps.executeUpdate();
@@ -117,6 +124,6 @@ public class MySqlChessGameDao implements ChessGameDao {
             final String color = resultSet.getString(1);
             return new Turn(Color.valueOf(color));
         }
-        throw new SQLException();
+        throw new IllegalStateException();
     }
 }
