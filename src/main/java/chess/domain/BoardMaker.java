@@ -1,7 +1,7 @@
 package chess.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ import chess.domain.piece.Rook;
 public class BoardMaker {
 
 	public static Map<Position, Piece> setPieces() {
-		Map<Position, Piece> board = new HashMap<>();
+		Map<Position, Piece> board = new LinkedHashMap<>();
 		List<Piece> whitePieces = new ArrayList<>(
 			List.of(new Rook(Team.WHITE), new Knight(Team.WHITE), new Bishop(Team.WHITE), new Queen(Team.WHITE),
 				new King(Team.WHITE), new Bishop(Team.WHITE), new Knight(Team.WHITE), new Rook(Team.WHITE))

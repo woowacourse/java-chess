@@ -2,8 +2,8 @@ package chess.view;
 
 import java.util.List;
 
-import chess.controller.BoardDto;
-import chess.controller.TempResultDto;
+import chess.dto.BoardDto;
+import chess.dto.TempResultDto;
 
 public class OutputView {
 

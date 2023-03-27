@@ -18,10 +18,8 @@ public class InputRenderer {
 		}
 	}
 
-	public static PositionDto toPosition(final String rawPosition1, final String rawPosition2) {
-		Position source = new Position(getColumn(rawPosition1), getRow(rawPosition1));
-		Position target = new Position(getColumn(rawPosition2), getRow(rawPosition2));
-		return new PositionDto(source, target);
+	public static Position toPosition(final String rawPosition) {
+		return new Position(getColumn(rawPosition), getRow(rawPosition));
 	}
 
 	private static int getColumn(String rawPosition) {

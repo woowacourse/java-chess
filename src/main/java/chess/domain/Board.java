@@ -71,8 +71,6 @@ public class Board {
 		Piece sourcePiece = board.get(source);
 		Piece targetPiece = board.get(target);
 		if (isSameTeam(sourcePiece, targetPiece)) {
-			System.out.println("srcTeam.team, White, Black, Empty = " + sourcePiece.isGivenTeam(Team.WHITE) + " " + sourcePiece.isGivenTeam(Team.BLACK) + " " + sourcePiece.isGivenTeam(Team.EMPTY));
-			System.out.println("dstTeam.team, White, Black, Empty = " + targetPiece.isGivenTeam(Team.WHITE) + " " + targetPiece.isGivenTeam(Team.BLACK) + " " + targetPiece.isGivenTeam(Team.EMPTY));
 			throw new IllegalArgumentException(SAME_TEAM_IN_TARGET_ERROR_MESSAGE);
 		}
 	}

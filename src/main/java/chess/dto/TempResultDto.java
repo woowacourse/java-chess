@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.dto;
 
 public class TempResultDto {
 

@@ -10,6 +10,8 @@ import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.result.TempResult;
+import chess.dto.BoardDto;
+import chess.dto.TempResultDto;
 
 public class OutputRenderer {
 
