@@ -4,9 +4,15 @@ import chess.model.position.Distance;
 
 public final class EmptyMovementStrategy implements MovementStrategy {
 
-    public static final EmptyMovementStrategy MOVEMENT = new EmptyMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new EmptyMovementStrategy();
+    }
 
     private EmptyMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

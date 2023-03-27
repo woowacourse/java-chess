@@ -17,7 +17,10 @@ import java.util.Map;
 
 public final class PawnMovementStrategy implements MovementStrategy {
 
-    public static final PawnMovementStrategy MOVEMENT = new PawnMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new PawnMovementStrategy();
+    }
+
     private static final Map<Camp, Direction> MOVE_DIRECTIONS = Map.of(
             WHITE, NORTH,
             BLACK, SOUTH
@@ -29,6 +32,10 @@ public final class PawnMovementStrategy implements MovementStrategy {
     static final int MOVE_DISTANCE = 1;
 
     private PawnMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

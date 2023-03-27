@@ -13,7 +13,7 @@ class EmptyMovementStrategyTest extends CommonAttackEvaluator {
     @DisplayName("movable()은 호출하면 false를 반환한다.")
     void movable_whenCall_thenReturnFalse() {
         // given
-        final EmptyMovementStrategy movementStrategy = EmptyMovementStrategy.MOVEMENT;
+        final MovementStrategy movementStrategy = EmptyMovementStrategy.getInstance();
         final Distance ignoredDistance = new Distance(1, 1);
 
         // when

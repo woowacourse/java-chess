@@ -6,10 +6,17 @@ import java.util.List;
 
 public final class RookMovementStrategy implements MovementStrategy {
 
-    public static final RookMovementStrategy MOVEMENT = new RookMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new RookMovementStrategy();
+    }
+
     private static final List<Direction> DIRECTIONS = Direction.ORTHOGONAL;
 
     private RookMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

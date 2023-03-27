@@ -15,7 +15,10 @@ import java.util.List;
 
 public final class KnightMovementStrategy implements MovementStrategy {
 
-    public static final KnightMovementStrategy MOVEMENT = new KnightMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new KnightMovementStrategy();
+    }
+
     private static final List<Direction> DIRECTIONS = List.of(
             NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
             NORTH_WEST_WEST, NORTH_EAST_EAST, SOUTH_WEST_WEST, SOUTH_EAST_EAST
@@ -24,6 +27,10 @@ public final class KnightMovementStrategy implements MovementStrategy {
     private static final int MAXIMUM_DISTANCE = 2;
 
     private KnightMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

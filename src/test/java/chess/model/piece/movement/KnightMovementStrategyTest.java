@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightMovementStrategyTest extends CommonAttackEvaluator {
 
-    private final MovementStrategy movement = KnightMovementStrategy.MOVEMENT;
+    private final MovementStrategy movement = KnightMovementStrategy.getInstance();
 
     @ParameterizedTest(name = "목적지가 적군이거나 빈 곳인 경우 움직이는 방향이 ({0} / {1})일 때 움직일 수 있다.")
     @DisplayName("movable() 유효한 이동 방향, 유효한 이동 거리, 적군 테스트")

@@ -6,10 +6,17 @@ import java.util.List;
 
 public final class BishopMovementStrategy implements MovementStrategy {
 
-    public static final BishopMovementStrategy MOVEMENT = new BishopMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new BishopMovementStrategy();
+    }
+
     private static final List<Direction> DIRECTIONS = Direction.DIAGONAL;
 
     private BishopMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

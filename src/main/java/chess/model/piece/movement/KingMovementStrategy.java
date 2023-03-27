@@ -7,7 +7,10 @@ import java.util.List;
 
 public final class KingMovementStrategy implements MovementStrategy {
 
-    public static final KingMovementStrategy MOVEMENT = new KingMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new KingMovementStrategy();
+    }
+
     private static final List<Direction> DIRECTIONS = new ArrayList<>();
     private static final int MINIMUM_DISTANCE = 0;
     private static final int MAXIMUM_DISTANCE = 1;
@@ -18,6 +21,10 @@ public final class KingMovementStrategy implements MovementStrategy {
     }
 
     private KingMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

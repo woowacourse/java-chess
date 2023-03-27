@@ -16,14 +16,14 @@ import chess.model.position.Distance;
 
 public enum PieceType {
 
-    KING(PieceRuleScore.ZERO, KingMovementStrategy.MOVEMENT),
-    QUEEN(PieceRuleScore.QUEEN, QueenMovementStrategy.MOVEMENT),
-    BISHOP(PieceRuleScore.BISHOP, BishopMovementStrategy.MOVEMENT),
-    ROOK(PieceRuleScore.ROOK, RookMovementStrategy.MOVEMENT),
-    KNIGHT(PieceRuleScore.KNIGHT, KnightMovementStrategy.MOVEMENT),
-    INITIAL_PAWN(PieceRuleScore.PAWN, InitialPawnMovementStrategy.MOVEMENT),
-    PAWN(PieceRuleScore.PAWN, PawnMovementStrategy.MOVEMENT),
-    EMPTY(PieceRuleScore.ZERO, EmptyMovementStrategy.MOVEMENT);
+    KING(PieceRuleScore.ZERO, KingMovementStrategy.getInstance()),
+    QUEEN(PieceRuleScore.QUEEN, QueenMovementStrategy.getInstance()),
+    BISHOP(PieceRuleScore.BISHOP, BishopMovementStrategy.getInstance()),
+    ROOK(PieceRuleScore.ROOK, RookMovementStrategy.getInstance()),
+    KNIGHT(PieceRuleScore.KNIGHT, KnightMovementStrategy.getInstance()),
+    INITIAL_PAWN(PieceRuleScore.PAWN, InitialPawnMovementStrategy.getInstance()),
+    PAWN(PieceRuleScore.PAWN, PawnMovementStrategy.getInstance()),
+    EMPTY(PieceRuleScore.ZERO, EmptyMovementStrategy.getInstance());
 
     private final PieceRuleScore pieceRuleScore;
     private final MovementStrategy movementStrategy;

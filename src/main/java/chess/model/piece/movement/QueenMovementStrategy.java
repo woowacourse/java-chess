@@ -7,7 +7,10 @@ import java.util.List;
 
 public final class QueenMovementStrategy implements MovementStrategy {
 
-    public static final QueenMovementStrategy MOVEMENT = new QueenMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new QueenMovementStrategy();
+    }
+
     private static final List<Direction> DIRECTIONS = new ArrayList<>();
 
     static {
@@ -16,6 +19,10 @@ public final class QueenMovementStrategy implements MovementStrategy {
     }
 
     private QueenMovementStrategy() {
+    }
+
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
     }
 
     @Override

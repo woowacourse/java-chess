@@ -12,7 +12,10 @@ import java.util.Map;
 
 public final class InitialPawnMovementStrategy implements MovementStrategy {
 
-    public static final InitialPawnMovementStrategy MOVEMENT = new InitialPawnMovementStrategy();
+    private static class MovementHolder {
+        private static final MovementStrategy MOVEMENT = new InitialPawnMovementStrategy();
+    }
+
     private static final Map<Camp, Direction> MOVE_DIRECTIONS = Map.of(
             WHITE, NORTH,
             BLACK, SOUTH
@@ -22,12 +25,16 @@ public final class InitialPawnMovementStrategy implements MovementStrategy {
     private InitialPawnMovementStrategy() {
     }
 
+    public static MovementStrategy getInstance() {
+        return MovementHolder.MOVEMENT;
+    }
+
     @Override
     public boolean movable(final Distance distance, final AttackEvaluator attackEvaluator) {
         if (attackEvaluator.isEmpty() && isAvailableDirection(distance, attackEvaluator)) {
             return true;
         }
-        return PawnMovementStrategy.MOVEMENT.movable(distance, attackEvaluator);
+        return PawnMovementStrategy.getInstance().movable(distance, attackEvaluator);
     }
 
     private boolean isAvailableDirection(final Distance distance, final AttackEvaluator attackEvaluator) {

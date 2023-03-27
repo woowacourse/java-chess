@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnMovementStrategyTest extends CommonAttackEvaluator {
 
-    private final MovementStrategy movement = PawnMovementStrategy.MOVEMENT;
+    private final MovementStrategy movement = PawnMovementStrategy.getInstance();
 
     @Nested
     @DisplayName("movable() 검은색 폰 테스트")
