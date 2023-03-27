@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.DbChessGameDao;
 import chess.domain.Position;
 import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
@@ -27,6 +28,8 @@ public class Controller {
     public void playChessGame() {
         printStartGuideMessage();
         ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
+        DbChessGameDao dao = new DbChessGameDao();
+        dao.save(chessGame);
 
         Command command = getFirstCommand();
         play(chessGame, command);

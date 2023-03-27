@@ -41,12 +41,8 @@ public class Position {
         return column;
     }
 
-    public int getColumnIndex() {
-        return column.getIndex();
-    }
-
-    public boolean isSamePosition(Position position){
-        return this.equals(position);
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

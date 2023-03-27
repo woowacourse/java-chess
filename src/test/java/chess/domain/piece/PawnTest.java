@@ -18,11 +18,11 @@ class PawnTest {
         //given, when
         Position whitePawnStart = new Position("b", "2");
         Position whitePawnEnd = new Position("b", "1");
-        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO, whitePawnStart.getColumn());
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
 
         Position blackPawnStart = new Position("b", "7");
         Position blackPawnEnd = new Position("b", "8");
-        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO, blackPawnStart.getColumn());
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Color whitePawndestinationColor = Color.BLACK;
         Color blackPawndestinationColor = Color.WHITE;
 
@@ -38,7 +38,7 @@ class PawnTest {
         //given, when
         Position start = new Position("b", "2");
         Position end = new Position("b", "5");
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Color destinationColor = Color.BLACK;
 
         //then
@@ -51,7 +51,7 @@ class PawnTest {
         //given, when
         Position start = new Position("b", "2");
         Position end = new Position("b", "4");
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Color destinationColor = Color.NONE;
 
         //then
@@ -64,7 +64,7 @@ class PawnTest {
         Position firstStart = new Position("b", "2");
         Position end = new Position("b", "4");
         Position afterMoveEnd = new Position("b", "3");
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO, firstStart.getColumn());
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Color destinationColor = Color.NONE;
 
         //then
@@ -77,8 +77,8 @@ class PawnTest {
         //given, when
         Position start = new Position("b", "2");
         Position end = new Position("b", "3");
-        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
-        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO, start.getColumn());
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Color destinationColor = Color.WHITE;
 
         //then
@@ -93,8 +93,8 @@ class PawnTest {
         //given, when
         Position start = new Position("b", "2");
         Position end = new Position("a", "3");
-        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
-        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO, start.getColumn());
+        Pawn whitePawn = new Pawn(WHITE_PAWN_INFO);
+        Pawn blackPawn = new Pawn(BLACK_PAWN_INFO);
         Color destinationColor = Color.NONE;
 
         //then
@@ -113,7 +113,7 @@ class PawnTest {
     void isMovable_올바른_반환값_테스트() {
         //given, when
         Position start = new Position("b", "2");
-        Pawn pawn = new Pawn(WHITE_PAWN_INFO, start.getColumn());
+        Pawn pawn = new Pawn(WHITE_PAWN_INFO);
         Position end = new Position("a", "3");
         Color destinationColor = Color.BLACK;
 

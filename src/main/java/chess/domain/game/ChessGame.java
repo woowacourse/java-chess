@@ -16,6 +16,10 @@ public class ChessGame {
         this.chessBoard = new ChessBoard(boardStrategy.generate());
     }
 
+    public ChessGame(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
     public void move(Position start, Position end) {
         if (chessBoard.getChessBoard().get(start) instanceof EmptyPiece) {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE.getErrorMessage());

@@ -3,9 +3,6 @@ package chess.domain.piece;
 import chess.direction.Direction;
 import chess.domain.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static chess.direction.Direction.BOTTOM_LEFT;
 import static chess.direction.Direction.BOTTOM_RIGHT;
 import static chess.direction.Direction.TOP_LEFT;
@@ -34,7 +31,7 @@ public abstract class Piece {
         return Direction.findDirectionByGap(start, end, this);
     }
 
-   public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
+    public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
 
     public abstract int calculateKing(int count);
 
@@ -65,7 +62,44 @@ public abstract class Piece {
         return score;
     }
 
-    public boolean isPawn(){
+    public boolean isPawn() {
         return name.equalsIgnoreCase("p");
     }
+
+    public static Piece valueOf(String name) {
+        if (name.equals("B")) {
+            return new Bishop(PieceInfo.BLACK_BISHOP_INFO);
+        }
+        if (name.equals("b")) {
+            return new Bishop(PieceInfo.WHITE_BISHOP_INFO);
+        }
+
+        if (name.equals("k")) {
+            return new King(PieceInfo.WHITE_KING_INFO);
+        }
+        if (name.equals("K")) {
+            return new King(PieceInfo.BLACK_KING_INFO);
+        }
+
+        if (name.equals("q")) {
+            return new Queen(PieceInfo.WHITE_QUEEN_INFO);
+        }
+        if (name.equals("Q")) {
+            return new Queen(PieceInfo.BLACK_QUEEN_INFO);
+        }
+
+        if (name.equals("p")) {
+            return new Pawn(PieceInfo.WHITE_PAWN_INFO);
+        }
+        if (name.equals("P")) {
+            return new Pawn(PieceInfo.BLACK_QUEEN_INFO);
+        }
+
+        if (name.equals("n")) {
+            return new Knight(PieceInfo.WHITE_QUEEN_INFO);
+        }
+
+        return new Knight(PieceInfo.BLACK_QUEEN_INFO);
+    }
+
 }

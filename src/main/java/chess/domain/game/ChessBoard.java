@@ -7,9 +7,7 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceInfo;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static chess.view.ErrorMessage.OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE;
@@ -65,15 +63,10 @@ public class ChessBoard {
     public Map<Position, Piece> findPiecesByColor(Color color) {
         Map<Position, Piece> colorPieces = new LinkedHashMap<>();
         for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
-            if(entry.getValue().isSameColor(color)){
-                colorPieces.put(entry.getKey(),entry.getValue());
+            if (entry.getValue().isSameColor(color)) {
+                colorPieces.put(entry.getKey(), entry.getValue());
             }
         }
-//        for (Piece piece : chessBoard.entrySet()) {
-//            if (piece.isSameColor(color)) {
-//                colorPieces.put();
-//            }
-//        }
 
         return colorPieces;
     }

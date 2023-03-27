@@ -94,7 +94,7 @@ public class InitialBoardStrategy implements BoardStrategy {
         Arrays.stream(Column.values())
                 .map(column -> new Position(column, rank))
                 .forEach(position -> board.replace(position,
-                        new Pawn(BLACK_PAWN_INFO, position.getColumn())));
+                        new Pawn(BLACK_PAWN_INFO)));
     }
 
     private void initWhiteSecondRow() {
@@ -103,6 +103,6 @@ public class InitialBoardStrategy implements BoardStrategy {
         Arrays.stream(Column.values())
                 .map(column -> new Position(column, rank))
                 .forEach(position -> board.replace(position,
-                        new Pawn(WHITE_PAWN_INFO, position.getColumn())));
+                        new Pawn(WHITE_PAWN_INFO)));
     }
 }

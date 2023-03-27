@@ -20,10 +20,9 @@ public class Pawn extends Piece {
 
     private Column startColumn;
 
-    public Pawn(PieceInfo pieceInfo, Column startColumn) {
+    public Pawn(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), PAWN_DEFAULT_SCORE.getScore());
         this.direction = createDirectionByColor(pieceInfo.getColor());
-        this.startColumn = startColumn;
     }
 
     private List<Direction> createDirectionByColor(Color color) {
