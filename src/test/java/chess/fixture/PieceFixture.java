@@ -1,4 +1,7 @@
-package chess.piece;
+package chess.fixture;
+
+import chess.piece.EmptyPiece;
+import chess.piece.Piece;
 
 public class PieceFixture {
 

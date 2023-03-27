@@ -1,14 +1,33 @@
 package chess.piece;
 
-import chess.board.Position;
-import chess.fixture.FixturePosition;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import chess.board.File;
+import chess.board.Position;
+import chess.board.Rank;
+import chess.fixture.FixturePosition;
 
 class QueenTest {
+
+    private Map<Position, Piece> board;
+
+    @BeforeEach
+    void setUp() {
+        board = new HashMap<>();
+        for (final File file : File.values()) {
+            for (final Rank rank : Rank.values()) {
+                board.put(new Position(file, rank), new EmptyPiece());
+            }
+        }
+    }
 
     @Nested
     class 퀸이_움직일_때_이동방향은_ {
@@ -21,7 +40,7 @@ class QueenTest {
             Position to = FixturePosition.H8;
 
             //when & then
-            assertThat(queen.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertDoesNotThrow(() -> queen.validateMove(from, to, board));
         }
 
         @Test
@@ -33,7 +52,7 @@ class QueenTest {
             Position to = FixturePosition.A8;
 
             //when & then
-            assertThat(queen.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertDoesNotThrow(() -> queen.validateMove(from, to, board));
         }
 
         @Test
@@ -45,7 +64,7 @@ class QueenTest {
             Position to = FixturePosition.B8;
 
             //when & then
-            assertThatThrownBy(() -> queen.isMovable(from, to, PieceFixture.EMPTY_PIECE))
+            assertThatThrownBy(() -> queen.validateMove(from, to, board))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Queen이 이동할 수 없는 경로입니다.");
         }
@@ -59,7 +78,7 @@ class QueenTest {
             Position to = FixturePosition.B8;
 
             //when & then
-            assertThatThrownBy(() -> queen.isMovable(from, to, PieceFixture.EMPTY_PIECE))
+            assertThatThrownBy(() -> queen.validateMove(from, to, board))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Queen이 이동할 수 없는 경로입니다.");
         }

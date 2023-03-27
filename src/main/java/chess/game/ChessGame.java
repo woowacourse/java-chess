@@ -36,7 +36,7 @@ public class ChessGame {
         if (chessBoard.calculateScore(Team.WHITE) < chessBoard.calculateScore(Team.BLACK)) {
             return Team.BLACK;
         }
-        return null;
+        return Team.EMPTY;
     }
 
     public void end() {
