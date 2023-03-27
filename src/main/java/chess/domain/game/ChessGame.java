@@ -55,7 +55,7 @@ public class ChessGame {
         return this.gameStatus == GAME_OVER;
     }
 
-    public BigDecimal getScore(Team team) {
+    public BigDecimal calculateScore(Team team) {
         return chessBoard.calculateScore(team);
     }
 

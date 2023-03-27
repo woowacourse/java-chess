@@ -144,10 +144,10 @@ public class ChessController {
     }
 
     private void printStatus(final ChessGame chessGame) {
-        BigDecimal blackScore = chessGame.getScore(Team.BLACK);
+        BigDecimal blackScore = chessGame.calculateScore(Team.BLACK);
         outputView.printStatus(Team.BLACK, blackScore.longValue());
 
-        BigDecimal whiteScore = chessGame.getScore(Team.WHITE);
+        BigDecimal whiteScore = chessGame.calculateScore(Team.WHITE);
         outputView.printStatus(Team.WHITE, whiteScore.longValue());
     }
 

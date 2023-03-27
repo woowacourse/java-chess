@@ -127,7 +127,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(ChessBoard.createBoard(), new Turn(), GameStatus.PLAYING);
 
         //when & then
-        assertThat(chessGame.getScore(Team.WHITE).intValue())
+        assertThat(chessGame.calculateScore(Team.WHITE).intValue())
                 .isEqualTo(INIT_SCORE);
 
     }
