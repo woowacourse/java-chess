@@ -32,17 +32,17 @@ public class CommandDto {
                 .map(each -> each.strip())
                 .collect(Collectors.toList());
 
-        setStartSource(moveCommand);
-        setEndSource(moveCommand);
+        setStartPosition(moveCommand);
+        setEndPosition(moveCommand);
     }
 
-    private void setEndSource(List<String> moveCommand) {
+    private void setEndPosition(List<String> moveCommand) {
         List<String> endSource = List.of(moveCommand.get(END_SOURCE_INDEX).split(SOURCE_REGEX));
         columnOfEndSource = endSource.get(COLUMN_INDEX);
         rankOfEndSource = endSource.get(RANK_INDEX);
     }
 
-    private void setStartSource(List<String> moveCommand) {
+    private void setStartPosition(List<String> moveCommand) {
         List<String> startSource = List.of(moveCommand.get(START_SOURCE_INDEX).split(SOURCE_REGEX));
         columnOfStartSource = startSource.get(COLUMN_INDEX);
         rankOfStartSource = startSource.get(RANK_INDEX);

@@ -1,12 +1,15 @@
 package chess.view;
 
+import static chess.view.ErrorMessage.NO_COMMAND_ERROR_GUIDE_MESSAGE;
+
 public enum Command {
+
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    STATUS("status");
 
-    private static final String NO_COMMAND_ERROR_GUIDE_MESSAGE = "일치하는 명령이 없습니다.";
-    private String value;
+    private final String value;
 
     Command(String value) {
         this.value = value;
@@ -18,6 +21,22 @@ public enum Command {
                 return command;
             }
         }
-        throw new IllegalArgumentException(NO_COMMAND_ERROR_GUIDE_MESSAGE);
+        throw new IllegalArgumentException(NO_COMMAND_ERROR_GUIDE_MESSAGE.getErrorMessage());
+    }
+
+    public static boolean isStart(Command command) {
+        return command.equals(Command.START);
+    }
+
+    public static boolean isStatus(Command command) {
+        return command.equals(Command.STATUS);
+    }
+
+    public static boolean isEnd(Command command) {
+        return command.equals(Command.END);
+    }
+
+    public static boolean isMove(Command command) {
+        return command.equals(Command.MOVE);
     }
 }

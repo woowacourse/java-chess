@@ -1,40 +1,63 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
+import chess.direction.Direction;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 import java.util.List;
 
+import static chess.domain.score.Score.QUEEN_SCORE;
+import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
+
 public class Queen extends Piece {
 
-    private static final String name = "q";
-    private static final List<Direction> movableDirection = List.of(
-            Direction.TOP, Direction.BOTTOM, Direction.LEFT, Direction.RIGHT,
-            Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
+    private static final List<Direction> direction = Direction.getQueenDirection();
 
-
-    public Queen(Color color) {
-        super(name, color);
+    public Queen(PieceInfo pieceInfo) {
+        super(pieceInfo.getName(), pieceInfo.getColor(), QUEEN_SCORE.getScore());
     }
 
     @Override
     public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = findDirectionToMove(start, end);
-        checkMovableDirection(direction);
+        Direction direction = findDirection(start, end);
+        checkDirection(direction);
         checkMovableToDestination(colorOfDestination);
         return true;
     }
 
-    public void checkMovableDirection(Direction direction) {
-        if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("queen이 이동할 수 있는 방향이 아닙니다");
+    public void checkDirection(Direction direction) {
+        if (!Queen.direction.contains(direction)) {
+            throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
-        if(this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException("목적지에 아군이 있으므로 queen는 이동할 수 없습니다.");
+        if (this.isSameColor(colorOfDestination)) {
+            throw new IllegalArgumentException(EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
+    }
+
+    @Override
+    public int calculateKing(int count) {
+        return count;
+    }
+
+    @Override
+    public int calculatePawn(int count, Color color) {
+        return count;
+    }
+
+    @Override
+    public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
+        int gapOfRank = start.findGapOfRank(end);
+        int gapOfColumn = start.findGapOfColum(end);
+        int absX = Math.abs(gapOfColumn);
+        int absY = Math.abs(gapOfRank);
+
+        if (isDiagonal(direction)) {
+            return direction.getX() * absX == gapOfColumn && direction.getY() * absX == gapOfRank;
+        }
+
+        return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
 }

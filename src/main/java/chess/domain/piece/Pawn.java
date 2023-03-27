@@ -1,80 +1,81 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
+import chess.direction.Direction;
+import chess.domain.Column;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 import java.util.List;
 
+import static chess.direction.Direction.getBlackPawnDirection;
+import static chess.direction.Direction.getWhitePawnDirection;
+import static chess.domain.score.Score.PAWN_DEFAULT_SCORE;
+import static chess.view.ErrorMessage.MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_FORWARD_ERROR_GUIDE_MESSAGE;
+
 public class Pawn extends Piece {
 
-    private static final String name = "p";
-    private static final String MOVE_FORWARD_ERROR_GUIDE_MESSAGE = "도착점에 기물이 있어 Pawn은 앞으로 이동할 수 없습니다";
-    private static final String MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE = "Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다";
-    private static final int MAXIMUM_DISTANCE_WHEN_FIRST_MOVE = 2;
-    private static final int MAXIMUM_DISTANCE_AFTER_FIRST_MOVE = 1;
-    private final List<Direction> movableDirection;
-    private boolean isFirstMove = true;
+    private final List<Direction> direction;
 
-    public Pawn(Color color) {
-        super(name, color);
-        this.movableDirection = createMovableDirectionByColor(color);
+    private Column startColumn;
+
+    public Pawn(PieceInfo pieceInfo, Column startColumn) {
+        super(pieceInfo.getName(), pieceInfo.getColor(), PAWN_DEFAULT_SCORE.getScore());
+        this.direction = createDirectionByColor(pieceInfo.getColor());
+        this.startColumn = startColumn;
     }
 
-    private List<Direction> createMovableDirectionByColor(Color color) {
+    private List<Direction> createDirectionByColor(Color color) {
         if (color == Color.BLACK) {
-            return List.of(Direction.BOTTOM, Direction.BOTTOM_LEFT,
-                    Direction.BOTTOM_RIGHT);
+            return getBlackPawnDirection();
         }
-        return List.of(Direction.TOP, Direction.TOP_LEFT,
-                Direction.TOP_RIGHT);
+        return getWhitePawnDirection();
     }
 
     @Override
-    public boolean isMovable(Position start, Position end, Color colorOfDestination) {
-        Direction direction = findDirectionToMove(start, end);
-        checkMovableDirection(direction);
-        checkMovableAtOnce(start, end);
-        checkMovableToDestination(colorOfDestination, direction);
+    public boolean isMovable(Position start, Position end, Color destinationColor) {
+        Direction direction = findDirection(start, end);
+        checkDirection(direction);
+        checkDistance(start, end);
+        checkMovableToDestination(destinationColor, direction);
         return true;
     }
 
-    public void checkMovableDirection(Direction direction) {
-        if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("pawn이 이동할 수 있는 방향이 아닙니다");
+    private void checkDirection(Direction direction) {
+        if (!this.direction.contains(direction)) {
+            throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
-    public void checkMovableAtOnce(Position start, Position end) {
+    private void checkDistance(Position start, Position end) {
         int absGapOfColumn = Math.abs(start.findGapOfColum(end));
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
+        int distance = 1;
 
-        if (isFirstMove
-                && absGapOfColumn > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE
-                && absGapOfRank > MAXIMUM_DISTANCE_WHEN_FIRST_MOVE) {
-            throw new IllegalArgumentException("pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+
+        if (startColumn.isSameColumn(start.getColumn())) {
+            distance = 2;
         }
 
-        if(!isFirstMove
-                && absGapOfColumn > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE
-                && absGapOfRank > MAXIMUM_DISTANCE_AFTER_FIRST_MOVE){
-            throw new IllegalArgumentException("pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+        if (absGapOfColumn > distance || absGapOfRank > distance) {
+            throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination, Direction direction) {
-        if(isForwardDirection(direction)) {
+        if (isForwardDirection(direction)) {
             checkMoveForward(colorOfDestination);
         }
 
-        if(isDiagonalDirection(direction)){
+        if (isDiagonalDirection(direction)) {
             checkMoveDiagonal(colorOfDestination);
         }
     }
 
-    public void checkMoveForward(Color colorOfDestination) {
+    private void checkMoveForward(Color colorOfDestination) {
         if (colorOfDestination != Color.NONE) {
-            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE);
+            throw new IllegalArgumentException(MOVE_FORWARD_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
@@ -82,9 +83,9 @@ public class Pawn extends Piece {
         return direction == Direction.TOP || direction == Direction.BOTTOM;
     }
 
-    public void checkMoveDiagonal(Color colorOfDestination) {
+    private void checkMoveDiagonal(Color colorOfDestination) {
         if (colorOfDestination == Color.NONE || this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE);
+            throw new IllegalArgumentException(MOVE_DIAGONAL_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
@@ -92,4 +93,30 @@ public class Pawn extends Piece {
         return direction != Direction.TOP && direction != Direction.BOTTOM;
     }
 
+    @Override
+    public int calculateKing(int count) {
+        return count;
+    }
+
+    @Override
+    public int calculatePawn(int count, Color color) {
+        if (this.isSameColor((color))) {
+            return count + 1;
+        }
+        return count;
+    }
+
+    @Override
+    public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
+        int gapOfRank = start.findGapOfRank(end);
+        int gapOfColumn = start.findGapOfColum(end);
+        int absX = Math.abs(gapOfColumn);
+        int absY = Math.abs(gapOfRank);
+
+        if (isDiagonal(direction)) {
+            return direction.getX() * absX == gapOfColumn && direction.getY() * absX == gapOfRank;
+        }
+
+        return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
+    }
 }

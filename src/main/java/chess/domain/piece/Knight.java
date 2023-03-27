@@ -1,64 +1,80 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
+import chess.direction.Direction;
 import chess.domain.Position;
-import chess.practiceMove.Direction;
 
 import java.util.List;
 import java.util.Map;
 
+import static chess.domain.score.Score.KNIGHT_SCORE;
+import static chess.view.ErrorMessage.EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DIRECTION_ERROR_GUIDE_MESSAGE;
+import static chess.view.ErrorMessage.MOVE_DISTANCE_ERROR_GUIDE_MESSAGE;
+
 public class Knight extends Piece {
-    private static final String name = "n";
-    private static final Map<Integer, Integer> movableDistance = Map.of(1, 2, 2, 1);
-    private static final List<Direction> movableDirection = List.of(
-            Direction.KNIGHT_TOP_LEFT,
-            Direction.KNIGHT_TOP_RIGHT,
-            Direction.KNIGHT_LEFT_TOP,
-            Direction.KNIGHT_LEFT_BOTTOM,
-            Direction.KNIGHT_RIGHT_TOP,
-            Direction.KNIGHT_RIGHT_BOTTOM,
-            Direction.KNIGHT_BOTTOM_LEFT,
-            Direction.KNIGHT_BOTTOM_RIGHT);
 
+    private static final Map<Integer, Integer> distance = Map.of(1, 2, 2, 1);
 
-    public Knight(Color color) {
-        super(name, color);
+    private static final List<Direction> direction = Direction.getKnightDirection();
+
+    public Knight(PieceInfo pieceInfo) {
+        super(pieceInfo.getName(), pieceInfo.getColor(), KNIGHT_SCORE.getScore());
     }
 
     @Override
     public boolean isMovable(Position start, Position end, Color colorOfDestination) {
         Direction direction = Direction.findDirectionByGap(start, end, this);
-        checkMovableDirection(direction);
-        checkMovableAtOnce(start, end);
+        checkDirection(direction);
+        checkDistance(start, end);
         checkMovableToDestination(colorOfDestination);
         return true;
     }
 
-    public void checkMovableAtOnce(Position start, Position end) {
-        int absGapOfColumn = start.findGapOfColum(end);
-        int absGapOfRank = start.findGapOfRank(end);
+    private void checkDistance(Position start, Position end) {
+        int absGapOfColumn = Math.abs(start.findGapOfColum(end));
+        int absGapOfRank = Math.abs(start.findGapOfRank(end));
 
-        if(!isMovableAtOnce(absGapOfColumn, absGapOfRank)) {
-            throw new IllegalArgumentException("knight이 한 번에 이동할 수 있는 거리가 아닙니다");
+        if (!isMovableAtOnce(absGapOfColumn, absGapOfRank)) {
+            throw new IllegalArgumentException(MOVE_DISTANCE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private boolean isMovableAtOnce(int absGapOfColumn, int absGapOfRank) {
-        return movableDistance.entrySet()
-         .stream()
-         .anyMatch((entry) -> entry.getKey() == absGapOfColumn && entry.getValue() == absGapOfRank);
+        for (Map.Entry<Integer, Integer> entry : distance.entrySet()) {
+            if (entry.getKey() == absGapOfColumn && entry.getValue() == absGapOfRank) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void checkMovableDirection(Direction direction) {
-        if(!movableDirection.contains(direction)){
-            throw new IllegalArgumentException("knight가 이동할 수 있는 방향이 아닙니다");
+    private void checkDirection(Direction direction) {
+        if (!Knight.direction.contains(direction)) {
+            throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
     private void checkMovableToDestination(Color colorOfDestination) {
-        if(this.isSameColor(colorOfDestination)) {
-            throw new IllegalArgumentException("목적지에 아군이 있으므로 Knight는 이동할 수 없습니다.");
+        if (this.isSameColor(colorOfDestination)) {
+            throw new IllegalArgumentException(EXIST_ALLY_AT_DESTINATION_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
+    }
 
+    @Override
+    public int calculateKing(int count) {
+        return count;
+    }
+
+    @Override
+    public int calculatePawn(int count, Color color) {
+        return count;
+    }
+
+    @Override
+    public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
+        int gapOfRank = start.findGapOfRank(end);
+        int gapOfColumn = start.findGapOfColum(end);
+
+        return direction.getX() == gapOfColumn && direction.getY() == gapOfRank;
     }
 }

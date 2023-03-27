@@ -1,33 +1,26 @@
 package chess.domain.game;
 
-import chess.domain.Color;
+import chess.direction.Direction;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
-import chess.practiceMove.Direction;
+import chess.domain.piece.PieceInfo;
 
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import static chess.view.ErrorMessage.OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE;
 
 public class ChessBoard {
 
-    private static final String NO_PIECE_ERROR_GUIDE_MESSAGE = "이동할 수 있는 기물이 없습니다.";
-    private static final String DIRECTION_ERROR_GUIDE_MESSAGE = "기물이 해당 방향으로 이동할 수 없습니다";
-    private static final String MOVE_ERROR_GUIDE_MESSAGE = "기물이 이동할 수 없습니다";
-    private static final String OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE = "이동 경로에 기물이 있으므로 이동할 수 없습니다";
-    private static final String SAME_COLOR_PIECE_EXIST_ERROR_GUIDE_MESSAGE = "같은 팀이라 기물이 이동할 수 없습니다";
-    Map<Position, Piece> chessBoard;
+    private final Map<Position, Piece> chessBoard;
 
     public ChessBoard(Map<Position, Piece> chessBoard) {
-        this.chessBoard = new HashMap<>(chessBoard);
+        this.chessBoard = new LinkedHashMap<>(chessBoard);
     }
-
-    public Map<Position, Piece> getChessBoard() {
-        return new HashMap<>(chessBoard);
-    }
-
 
     public void move(Position start, Position end) {
         Piece startPiece = findStartPiece(start);
@@ -43,27 +36,45 @@ public class ChessBoard {
         return chessBoard.get(start);
     }
 
-
     private void checkMovableRoute(Position start, Position end, Piece startPiece) {
         Position currentPosition = start;
         Direction direction = Direction.findDirectionByGap(start, end, startPiece);
 
         do {
             currentPosition = currentPosition.moveDirection(direction);
-            checkOtherPieceInTravelRoute(currentPosition, end, findStartPiece(start));
+            checkOtherPieceInTravelRoute(currentPosition, end);
         } while (!currentPosition.equals(end));
 
     }
 
     private void movePieceToDestination(Position start, Position end, Piece piece) {
-        chessBoard.replace(start, new EmptyPiece());
+        chessBoard.replace(start, new EmptyPiece(PieceInfo.EMPTY_INFO));
         chessBoard.replace(end, piece);
     }
 
-    private void checkOtherPieceInTravelRoute(Position currentPosition, Position end, Piece startPiece) {
-        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor()!=Color.NONE) {
-            throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE);
+    private void checkOtherPieceInTravelRoute(Position currentPosition, Position end) {
+        if (!currentPosition.equals(end) && chessBoard.get(currentPosition).getColor() != Color.NONE) {
+            throw new IllegalArgumentException(OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE.getErrorMessage());
         }
     }
 
+    public Map<Position, Piece> getChessBoard() {
+        return new LinkedHashMap<>(chessBoard);
+    }
+
+    public Map<Position, Piece> findPiecesByColor(Color color) {
+        Map<Position, Piece> colorPieces = new LinkedHashMap<>();
+        for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
+            if(entry.getValue().isSameColor(color)){
+                colorPieces.put(entry.getKey(),entry.getValue());
+            }
+        }
+//        for (Piece piece : chessBoard.entrySet()) {
+//            if (piece.isSameColor(color)) {
+//                colorPieces.put();
+//            }
+//        }
+
+        return colorPieces;
+    }
 }
