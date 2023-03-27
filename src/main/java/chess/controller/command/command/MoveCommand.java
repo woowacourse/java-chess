@@ -1,13 +1,16 @@
 package chess.controller.command.command;
 
 import chess.controller.ChessState;
-import chess.dao.BoardDao;
 import chess.dao.ChessGameDao;
+import chess.dao.ChessPositionDao;
 import chess.dao.MoveLogDao;
 import chess.domain.board.Board;
+import chess.domain.board.initial.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.ChessGameDto;
+import chess.dto.ChessPositionDto;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -39,27 +42,30 @@ public class MoveCommand implements Command {
     }
 
     @Override
-    public ChessState execute(final ChessState state, final ChessGame chessGame) {
+    public ChessState execute(final ChessState state, final ChessGameDto chessGameDto) {
         if (!Set.of(START, PROGRESS).contains(state)) {
             throw new IllegalArgumentException(CANNOT_MOVE_BEFORE_START_ERROR_MESSAGE);
         }
 
-        final Board board = chessGame.getBoard();
-        final Piece sourcePiece = board.getPiece(source);
-        final Piece targetPiece = board.getPiece(target);
+        final Board loadBoard = MoveLogDao.load(chessGameDto, BoardFactory.create());
+        final ChessGame chessGame = ChessGame.of(loadBoard, chessGameDto.getTurn());
 
+        final Piece sourcePiece = loadBoard.getPiece(source);
+        final Piece targetPiece = loadBoard.getPiece(target);
         chessGame.move(source, target);
-        BoardDao.updateByMove(board, source, target, sourcePiece);
-        MoveLogDao.insertMove(board, source, target, sourcePiece, targetPiece);
 
-        OutputView.printBoard(board);
-        return existOpponentKing(chessGame);
+        final ChessPositionDto sourceChessPositionDto = ChessPositionDao.findByPositionAndPiece(source, sourcePiece);
+        final ChessPositionDto targetChessPositionDto = ChessPositionDao.findByPositionAndPiece(target, targetPiece);
+        MoveLogDao.insertMove(chessGameDto, sourceChessPositionDto, targetChessPositionDto);
+
+        OutputView.printBoard(chessGame.getBoard());
+        return existOpponentKing(chessGame, chessGameDto);
     }
 
-    private ChessState existOpponentKing(final ChessGame chessGame) {
+    private ChessState existOpponentKing(final ChessGame chessGame, final ChessGameDto chessGameDto) {
         if (chessGame.isExistOpponentKing()) {
             chessGame.changeTurn();
-            ChessGameDao.updateTurn(chessGame);
+            ChessGameDao.updateTurn(chessGameDto.getId(), chessGame);
             return PROGRESS;
         }
         OutputView.printResultWinning(chessGame.getTurn());

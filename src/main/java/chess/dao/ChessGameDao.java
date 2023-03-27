@@ -1,39 +1,52 @@
 package chess.dao;
 
-import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
-import chess.domain.room.ChessRoom;
+import chess.domain.team.Team;
+import chess.dto.ChessGameDto;
+import chess.dto.ChessRoomDto;
 import chess.view.TeamName;
 
 public class ChessGameDao {
 
-    public static ChessGame create(final Board board) {
-        final var query = "INSERT INTO chess_game(board_id) VALUES (?)";
+    public static ChessGameDto createAndReturnDto() {
+        final var query = "INSERT INTO chess_game(turn) VALUES (?)";
 
-        final int id = JdbcTemplate.insertAndReturnKey(query, board.getId());
+        final var id = JdbcTemplate.insertAndReturnKey(query, Team.WHITE.name());
 
-        return ChessGame.of(id, board.getId());
+        return findById(id);
     }
 
-    public static ChessGame findById(final ChessRoom chessRoom) {
+    public static ChessGameDto findById(final int id) {
         final var query = "SELECT * FROM chess_game WHERE id = ?";
 
-        final RowMapper<ChessGame> mapper = resultSet -> {
+        final RowMapper<ChessGameDto> mapper = makeChessGameDtoRowMapper();
+
+        return JdbcTemplate.select(query, mapper, id);
+    }
+
+    private static RowMapper<ChessGameDto> makeChessGameDtoRowMapper() {
+        final RowMapper<ChessGameDto> mapper = resultSet -> {
             if (resultSet.next()) {
-                return ChessGame.of(
+                return ChessGameDto.of(
                         resultSet.getInt(1),
-                        resultSet.getInt(2),
-                        resultSet.getString(3)
+                        resultSet.getString(2)
                 );
             }
             return null;
         };
-
-        return JdbcTemplate.select(query, mapper, chessRoom.getGameId());
+        return mapper;
     }
 
-    public static void updateTurn(final ChessGame chessGame) {
+    public ChessGameDto findByChessRoom(final ChessRoomDto chessRoomDto) {
+        final var query = "SELECT * FROM chess_game WHERE id = ?";
+
+        final RowMapper<ChessGameDto> mapper = makeChessGameDtoRowMapper();
+
+        return JdbcTemplate.select(query, mapper, chessRoomDto.getChessGameId());
+    }
+
+    public static void updateTurn(final int id, final ChessGame chessGame) {
         final var query = "UPDATE chess_game SET turn = ? WHERE id = ?";
-        JdbcTemplate.executeQuery(query, TeamName.findByTeam(chessGame.getTurn()), chessGame.getId());
+        JdbcTemplate.executeQuery(query, TeamName.findByTeam(chessGame.getTurn()), id);
     }
 }

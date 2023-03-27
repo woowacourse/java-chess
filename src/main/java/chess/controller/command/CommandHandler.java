@@ -37,7 +37,7 @@ public enum CommandHandler {
     }
 
     private static boolean isSameCommand(final List<String> input, final CommandHandler commandHandler) {
-        return commandHandler.name().equals(input.get(COMMAND_INDEX));
+        return commandHandler.name().toLowerCase().equals(input.get(COMMAND_INDEX));
     }
 
     private static boolean isSameSize(final List<String> input, final CommandHandler commandHandler) {

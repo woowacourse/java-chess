@@ -1,7 +1,7 @@
 package chess.controller.command.command;
 
 import chess.controller.ChessState;
-import chess.domain.game.ChessGame;
+import chess.dto.ChessGameDto;
 
 import java.util.Set;
 
@@ -21,7 +21,7 @@ public class EndCommand implements Command {
     }
 
     @Override
-    public ChessState execute(final ChessState state, final ChessGame chessGame) {
+    public ChessState execute(final ChessState state, final ChessGameDto chessGameDto) {
         if (!Set.of(START, PROGRESS).contains(state)) {
             throw new IllegalArgumentException(CANNOT_END_BEFORE_START_ERROR_MESSAGE);
         }

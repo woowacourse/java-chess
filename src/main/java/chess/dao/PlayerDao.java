@@ -1,18 +1,19 @@
 package chess.dao;
 
-import chess.domain.player.Player;
+import chess.dto.PlayerDto;
 
 import java.util.Optional;
 
 public class PlayerDao {
 
-    public Optional<Player> findByName(final String name) {
-        final var query = "SELECT name FROM player WHERE name = ?";
+    public Optional<PlayerDto> findByName(final String name) {
+        final var query = "SELECT * FROM player WHERE name = ?";
 
-        final RowMapper<Player> mapper = resultSet -> {
+        final RowMapper<PlayerDto> mapper = resultSet -> {
             if (resultSet.next()) {
-                return Player.of(
-                        resultSet.getString(1)
+                return PlayerDto.of(
+                        resultSet.getInt(1),
+                        resultSet.getString(2)
                 );
             }
             return null;

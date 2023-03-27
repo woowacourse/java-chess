@@ -3,8 +3,8 @@ package chess;
 import chess.controller.ChessGameController;
 import chess.controller.ChessRoomController;
 import chess.controller.PlayerController;
-import chess.domain.player.Player;
-import chess.domain.room.ChessRoom;
+import chess.dto.ChessRoomDto;
+import chess.dto.PlayerDto;
 
 public class ChessApplication {
 
@@ -13,8 +13,8 @@ public class ChessApplication {
         ChessRoomController chessRoomController = new ChessRoomController();
         ChessGameController chessGameController = new ChessGameController();
 
-        Player player = playerController.handle();
-        ChessRoom chessRoom = chessRoomController.handle(player);
-        chessGameController.run(chessRoom);
+        PlayerDto playerDto = playerController.handle();
+        ChessRoomDto chessRoomDto = chessRoomController.handle(playerDto);
+        chessGameController.run(chessRoomDto);
     }
 }

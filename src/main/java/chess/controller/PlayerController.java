@@ -1,14 +1,14 @@
 package chess.controller;
 
 import chess.dao.PlayerDao;
-import chess.domain.player.Player;
+import chess.dto.PlayerDto;
 import chess.view.InputView;
 
 public class PlayerController {
 
     private final PlayerDao playerDao = new PlayerDao();
 
-    public Player handle() {
+    public PlayerDto handle() {
         final String name = InputView.readPlayerName();
         playerDao.createIfNotExist(name);
 

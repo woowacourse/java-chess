@@ -17,7 +17,7 @@ import java.util.function.Function;
 public class PieceName {
 
     private static final Map<Class<? extends Piece>, String> pieceToName;
-    private static final Map<String, Piece> nameToPiece;
+    private static final Map<Class<? extends Piece>, String> pieceTofullName;
     private static final Map<Team, Function<String, String>> changeByTeam;
 
     static {
@@ -30,20 +30,14 @@ public class PieceName {
         pieceToName.put(Pawn.class, "p");
         pieceToName.put(Empty.class, ".");
 
-        nameToPiece = new HashMap<>();
-        nameToPiece.put("k", new King(Team.WHITE));
-        nameToPiece.put("K", new King(Team.BLACK));
-        nameToPiece.put("q", new Queen(Team.WHITE));
-        nameToPiece.put("Q", new Queen(Team.BLACK));
-        nameToPiece.put("r", new Rook(Team.WHITE));
-        nameToPiece.put("R", new Rook(Team.BLACK));
-        nameToPiece.put("n", new Knight(Team.WHITE));
-        nameToPiece.put("N", new Knight(Team.BLACK));
-        nameToPiece.put("b", new Bishop(Team.WHITE));
-        nameToPiece.put("B", new Bishop(Team.BLACK));
-        nameToPiece.put("p", new Pawn(Team.WHITE));
-        nameToPiece.put("P", new Pawn(Team.BLACK));
-        nameToPiece.put(".", new Empty(Team.NONE));
+        pieceTofullName = new HashMap<>();
+        pieceTofullName.put(King.class, "KING");
+        pieceTofullName.put(Queen.class, "QUEEN");
+        pieceTofullName.put(Bishop.class, "BISHOP");
+        pieceTofullName.put(Knight.class, "KNIGHT");
+        pieceTofullName.put(Rook.class, "ROOK");
+        pieceTofullName.put(Pawn.class, "PAWN");
+        pieceTofullName.put(Empty.class, "EMPTY");
 
         changeByTeam = new HashMap<>();
         changeByTeam.put(Team.WHITE, String::toLowerCase);
@@ -58,7 +52,7 @@ public class PieceName {
         return changeByTeam.get(team).apply(initialName);
     }
 
-    public static Piece findByName(final String name) {
-        return nameToPiece.get(name);
+    public static String findByFullName(final Piece piece) {
+        return pieceTofullName.get(piece.getClass());
     }
 }

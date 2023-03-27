@@ -23,7 +23,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.from(new HashMap<>());
+        board = BoardFactory.create();
     }
 
     @Test

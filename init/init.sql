@@ -11,14 +11,23 @@ CREATE TABLE chess_position
 
 CREATE TABLE chess_game
 (
-    id                 BIGINT       NOT NULL AUTO_INCREMENT,
-    source_position_id BIGINT       NOT NULL,
-    target_position_id BIGINT       NOT NULL,
-    turn               VARCHAR(255) NOT NULL,
+    id   BIGINT       NOT NULL AUTO_INCREMENT,
+    turn VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE move_log
+(
+    id                 BIGINT NOT NULL AUTO_INCREMENT,
+    chess_game_id      BIGINT NOT NULL,
+    source_position_id BIGINT NOT NULL,
+    target_position_id BIGINT NOT NULL,
     PRIMARY KEY (id),
+    FOREIGN KEY (chess_game_id) REFERENCES chess_game (id),
     FOREIGN KEY (source_position_id) REFERENCES chess_position (id),
     FOREIGN KEY (target_position_id) REFERENCES chess_position (id)
 );
+
 CREATE TABLE player
 (
     id   BIGINT       NOT NULL AUTO_INCREMENT,

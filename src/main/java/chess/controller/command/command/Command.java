@@ -1,10 +1,10 @@
 package chess.controller.command.command;
 
 import chess.controller.ChessState;
-import chess.domain.game.ChessGame;
+import chess.dto.ChessGameDto;
 
 @FunctionalInterface
 public interface Command {
 
-    ChessState execute(final ChessState state, final ChessGame chessGame);
+    ChessState execute(final ChessState state, final ChessGameDto chessGameDto);
 }

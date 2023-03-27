@@ -1,8 +1,12 @@
 package chess.controller.command.command;
 
 import chess.controller.ChessState;
+import chess.dao.MoveLogDao;
+import chess.domain.board.Board;
+import chess.domain.board.initial.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
+import chess.dto.ChessGameDto;
 import chess.view.OutputView;
 
 import java.util.Set;
@@ -24,10 +28,12 @@ public class StatusCommand implements Command {
     }
 
     @Override
-    public ChessState execute(final ChessState state, final ChessGame chessGame) {
+    public ChessState execute(final ChessState state, final ChessGameDto chessGameDto) {
         if (!Set.of(START, PROGRESS).contains(state)) {
             throw new IllegalArgumentException(CANNOT_STATUS_BEFORE_START_ERROR_MESSAGE);
         }
+        final Board board = BoardFactory.create();
+        final ChessGame chessGame = ChessGame.of(MoveLogDao.load(chessGameDto, board), chessGameDto.getTurn());
 
         Score white = chessGame.calculateScore(WHITE);
         Score black = chessGame.calculateScore(BLACK);

@@ -4,31 +4,34 @@ import chess.controller.command.CommandHandler;
 import chess.controller.command.command.Command;
 import chess.dao.ChessGameDao;
 import chess.dao.ChessRoomDao;
-import chess.domain.game.ChessGame;
-import chess.domain.room.ChessRoom;
+import chess.dto.ChessGameDto;
+import chess.dto.ChessRoomDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGameController {
 
-    public void run(final ChessRoom chessRoom) {
-        final ChessGame chessGame = ChessGameDao.findById(chessRoom);
-        ChessState state = chessRoom.getState();
+    private final ChessRoomDao chessRoomDao = new ChessRoomDao();
+    private final ChessGameDao chessGameDao = new ChessGameDao();
+
+    public void run(final ChessRoomDto chessRoomDto) {
+        ChessState state = chessRoomDto.getState();
 
         OutputView.printStart();
         while (state != ChessState.END) {
-            state = play(state, chessGame);
-            ChessRoomDao.updateState(chessRoom, state);
+            final ChessGameDto chessGameDto = chessGameDao.findByChessRoom(chessRoomDto);
+            state = play(state, chessGameDto);
+            chessRoomDao.updateState(chessRoomDto, state);
         }
     }
 
-    private ChessState play(final ChessState state, final ChessGame chessGame) {
+    private ChessState play(final ChessState state, final ChessGameDto chessGameDto) {
         try {
             Command command = CommandHandler.bind(InputView.readCommand());
-            return command.execute(state, chessGame);
+            return command.execute(state, chessGameDto);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return play(state, chessGame);
+            return play(state, chessGameDto);
         }
     }
 }

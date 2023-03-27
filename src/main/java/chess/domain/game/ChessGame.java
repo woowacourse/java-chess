@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.dao.BoardDao;
 import chess.domain.board.Board;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -21,23 +20,25 @@ public class ChessGame {
     private static final int EXIST_OPPONENT_KING = 1;
     private static final int NOT_EXIST_OPPONENT_KING = 0;
 
-    private final int id;
     private final Board board;
     private Team turn;
 
-    private ChessGame(final int id, final int boardId, final Team turn) {
-        this.id = id;
-        this.board = BoardDao.findById(boardId);
+    private ChessGame(final Board board, final Team turn) {
+        this.board = board;
         this.turn = turn;
     }
 
-    public static ChessGame of(final int id, final int boardId) {
-        return new ChessGame(id, boardId, Team.WHITE);
+    public static ChessGame of(final Board board) {
+        return new ChessGame(board, Team.WHITE);
     }
 
-    public static ChessGame of(final int id, final int boardId, final String team) {
+    public static ChessGame of(final Board board, final Team turn) {
+        return new ChessGame(board, turn);
+    }
+
+    public static ChessGame of(final Board board, final String team) {
         final Team turn = TeamName.findByName(team);
-        return new ChessGame(id, boardId, turn);
+        return new ChessGame(board, turn);
     }
 
     public void move(final Position source, final Position target) {
@@ -123,10 +124,6 @@ public class ChessGame {
             return EXIST_OPPONENT_KING;
         }
         return NOT_EXIST_OPPONENT_KING;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Team getTurn() {

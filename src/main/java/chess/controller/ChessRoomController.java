@@ -1,14 +1,17 @@
 package chess.controller;
 
 import chess.dao.ChessRoomDao;
-import chess.domain.player.Player;
-import chess.domain.room.ChessRoom;
+import chess.dto.ChessRoomDto;
+import chess.dto.PlayerDto;
 
 public class ChessRoomController {
 
-    public ChessRoom handle(final Player player) {
-        ChessRoom chessRoom = ChessRoomDao.findByPlayer(player);
+    private final ChessRoomDao chessRoomDao = new ChessRoomDao();
 
-        return chessRoom;
+    public ChessRoomDto handle(final PlayerDto playerDto) {
+        chessRoomDao.createIfNotExist(playerDto);
+
+        return chessRoomDao.findByPlayer(playerDto)
+                .orElseThrow(() -> new RuntimeException("체스방 생성 실패"));
     }
 }
