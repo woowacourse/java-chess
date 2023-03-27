@@ -53,15 +53,14 @@ public class ChessGameDao {
 
     public ChessGame select() {
         Map<Position, Piece> pieces = new LinkedHashMap<>();
-
         GameStatus gameStatus = GameStatus.IDLE;
+
         final var query = "SELECT piece_type, piece_color, piece_column, piece_rank, game_status FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-
                 Piece piece = Piece.valueOf(resultSet.getString("piece_type"));
                 Column pieceColumn = Column.valueOf(resultSet.getString("piece_column"));
                 Rank pieceRank = Rank.valueOf(resultSet.getString("piece_rank"));
@@ -92,7 +91,7 @@ public class ChessGameDao {
         save(chessGame);
     }
 
-    private void delete(final ChessGame chessGame) {
+    public void delete(final ChessGame chessGame) {
         final var query = "DELETE FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {

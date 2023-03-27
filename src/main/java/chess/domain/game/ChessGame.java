@@ -23,11 +23,13 @@ public class ChessGame {
         this.gameStatus = gameStatus;
     }
 
-    public void move(Position start, Position end) {
+    public ChessBoard move(Position start, Position end) {
         if (chessBoard.getChessBoard().get(start) instanceof EmptyPiece) {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE.getErrorMessage());
         }
         chessBoard.move(start, end);
+
+        return chessBoard;
     }
 
     public Map<Position, Piece> getChessBoardMap() {

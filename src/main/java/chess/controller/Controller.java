@@ -26,20 +26,51 @@ import static chess.view.OutputView.printStartGuideMessage;
 
 public class Controller {
 
+    private ChessGameDao dao = new ChessGameDao();
+
     public void playChessGame() {
         printStartGuideMessage();
-        ChessGame chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.IDLE);
-        ChessGameDao dao = new ChessGameDao();
-        dao.save(chessGame);
-        dao.select();
-
+        ChessGame chessGame = loadChessGame();
+        printChessGame(chessGame);
         Command command = getFirstCommand();
-        play(chessGame, command);
+        play2(chessGame, command);
+        //play(chessGame, command);
+    }
+
+    private ChessGame loadChessGame() {
+        ChessGame chessGame = dao.select();
+
+        if (chessGame == null) {
+            chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.IDLE);
+            dao.save(chessGame);
+        }
+
+        return chessGame;
+    }
+
+    private void play2(ChessGame chessGame, Command command) {
+        while (!isGameEnd(chessGame)) {
+            if (isStatus(command)) {
+                printScores(chessGame.getChessBoard());
+            }
+
+            if (isStart(command)) {
+                printChessGame(chessGame);
+            }
+
+            command = inputCommand(chessGame);
+        }
+    }
+
+    private boolean isGameEnd(ChessGame chessGame) {
+        GameStatus gameStatus = chessGame.getGameStatus();
+        return isKingDead(chessGame) || gameStatus.equals(GameStatus.GAME_OVER);
     }
 
     private void play(ChessGame chessGame, Command command) {
         while (gameCondition(chessGame, command)) {
             if (isEnd(command)) {
+                dao.delete(chessGame);
                 break;
             }
 
@@ -48,7 +79,7 @@ public class Controller {
             }
 
             if (isStart(command)) {
-                chessGame = new ChessGame(new InitialBoardStrategy(),GameStatus.PLAYING);
+                chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.PLAYING);
                 printChessGame(chessGame);
             }
 
@@ -83,14 +114,22 @@ public class Controller {
             CommandDto commandDto = readStateCommand();
             Command command = commandDto.getCommand();
 
-            while (isMove(command) || isStatus(command)) {
+            while (isMove(command) || isStatus(command) || isStart(command)) {
 
                 if (isStatus(command)) {
                     printScores(chessGame.getChessBoard());
                 }
 
+                if (isStart(command)) {
+                    chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.PLAYING);
+                    dao.update(chessGame);
+
+                    printChessGame(chessGame);
+                }
+
                 if (isMove(command)) {
-                    move(chessGame, commandDto);
+                    chessGame = move(chessGame, commandDto);
+                    dao.update(chessGame);
 
                     if (isKingDead(chessGame)) {
                         printCheckmateGuideMessage();
@@ -109,13 +148,14 @@ public class Controller {
         }
     }
 
-    private void move(ChessGame chessGame, CommandDto commandDto) {
+    private ChessGame move(ChessGame chessGame, CommandDto commandDto) {
         Position start = new Position(commandDto.getColumnOfStartSource(), commandDto.getRankOfStartSource());
         Position end = new Position(commandDto.getColumnOfEndSource(), commandDto.getRankOfEndSource());
 
 
         chessGame.move(start, end);
         printChessGame(chessGame);
+        return chessGame;
     }
 
     private boolean isKingDead(ChessGame chessGame) {
