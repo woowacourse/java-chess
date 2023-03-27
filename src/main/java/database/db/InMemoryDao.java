@@ -8,6 +8,9 @@ public class InMemoryDao implements ChessBoardDao {
 
     @Override
     public ChessBoard read() {
+        if (chessBoard == null) {
+            return new ChessBoard();
+        }
         return chessBoard;
     }
 
