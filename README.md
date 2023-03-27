@@ -208,6 +208,13 @@ classDiagram
 
 - [x] 사용자 입력에 대치되는 커맨드를 반환한다.
 
+## DAO
+### GameDao
+- [x] chess_game을 생성한다.
+- [ ] chess_game 정보를 저장한다.
+  - [x] 각 위치의 기물 정보를 저장한다.
+  - [ ] 상태를 저장한다.
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)

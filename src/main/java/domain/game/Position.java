@@ -90,8 +90,12 @@ public final class Position {
         return this.rank;
     }
 
+    public File getFile() {
+        return this.file;
+    }
+
     public Rank getRank() {
-        return rank;
+        return this.rank;
     }
 
     @Override

@@ -6,8 +6,10 @@ import domain.game.Side;
 import domain.piece.Piece;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
+import util.PositionMapper;
 
 public class GameDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -27,15 +29,37 @@ public class GameDao {
         }
     }
 
-    public void save(Game game) {
-        Map<Position, Piece> chessBoard = game.getChessBoard();
+    public void create(Game game) {
         Side sideOfTurn = game.getSideOfTurn();
+        String query = "INSERT INTO chess_game(turn) VALUES (?)";
+        ResultSet resultSet;
+        String[] returnId = {"game_id"};
+        int gameId = 0;
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query, returnId)) {
+            preparedStatement.setString(1, sideOfTurn.name());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys(); // 쿼리 실행 후 생성된 키 값 반환
+            if (resultSet.next()) {
+                gameId = resultSet.getInt(1); // 키값 초기화
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        saveChessBoard(game, gameId);
+    }
+
+    public void saveChessBoard(Game game, int gameId) {
+        Map<Position, Piece> chessBoard = game.getChessBoard();
+        String query;
         for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
-            String query = "INSERT INTO chess_game(turn) VALUES (?)";
+            String positionText = PositionMapper.convertPositionToString(positionPieceEntry.getKey());
+            String pieceText = positionPieceEntry.getValue().getCategory().name();
+            query = "UPDATE chess_game set " + positionText + " = ? where id = ?";
             try (final var connection = getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, sideOfTurn.name());
-
+                preparedStatement.setString(1, pieceText);
+                preparedStatement.setString(2, String.valueOf(gameId));
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);

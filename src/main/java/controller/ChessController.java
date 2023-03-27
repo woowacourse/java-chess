@@ -3,8 +3,6 @@ package controller;
 import controller.command.Command;
 import controller.command.End;
 import controller.command.Move;
-import controller.mapper.GameStatusMapper;
-import controller.mapper.PieceMapper;
 import domain.game.Game;
 import domain.game.GameStatus;
 import domain.game.Position;
@@ -13,6 +11,8 @@ import domain.piece.Piece;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import util.GameStatusMapper;
+import util.PieceMapper;
 import view.InputView;
 import view.OutputView;
 

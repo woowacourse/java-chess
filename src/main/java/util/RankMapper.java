@@ -1,4 +1,4 @@
-package controller.mapper;
+package util;
 
 import domain.game.Rank;
 import java.util.Arrays;
@@ -30,7 +30,19 @@ public enum RankMapper {
                 .orElseThrow(() -> new IllegalArgumentException("체스판의 가로 좌표는 a~h의 범위를 가집니다. 범위 안의 문자를 입력해주세요."));
     }
 
+    public static String convertRankToText(Rank rank) {
+        return Arrays.stream(RankMapper.values())
+                .filter(rankMapper -> rankMapper.rank.equals(rank))
+                .map(RankMapper::getText)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("서버 내부 에서 - 존재하지 않는 Rank를 텍스트로 변환 시도했습니다."));
+    }
+
     private Rank getRank() {
         return this.rank;
+    }
+
+    public String getText() {
+        return this.text;
     }
 }

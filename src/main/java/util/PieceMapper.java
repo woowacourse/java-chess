@@ -1,4 +1,4 @@
-package controller.mapper;
+package util;
 
 import domain.piece.PieceCategory;
 import java.util.Arrays;

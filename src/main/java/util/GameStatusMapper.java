@@ -1,4 +1,4 @@
-package controller.mapper;
+package util;
 
 import domain.game.GameStatus;
 import java.util.Arrays;
