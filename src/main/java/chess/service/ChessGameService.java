@@ -83,6 +83,11 @@ public class ChessGameService {
         return chessGame.isFinished();
     }
 
+    public Color findWinner(int gameId, BoardStrategy boardStrategy) {
+        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+        return chessGame.findWinner();
+    }
+
 }
 
 /**
