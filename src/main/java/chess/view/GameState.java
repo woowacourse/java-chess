@@ -1,4 +1,4 @@
-package chess.view;
+ package chess.view;
 
 import java.util.Arrays;
 
@@ -6,7 +6,9 @@ public enum GameState {
     START("start"),
     END("end"),
     MOVE("move"),
-    STATUS("status");
+    STATUS("status"),
+    LOAD("load"),
+    LOAD_LIST("load_list");
 
     private final String command;
 
@@ -18,7 +20,7 @@ public enum GameState {
         return Arrays.stream(GameState.values())
                 .filter(gameState -> gameState.command.equals(inputCommand))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start, end, move, status만 입력할 수 있습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("start, end, move, status, load_list만 입력할 수 있습니다."));
     }
 
     public boolean isNotMoveState() {
