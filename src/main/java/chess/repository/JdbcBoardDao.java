@@ -8,13 +8,11 @@ import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
-import chess.view.FileCoordinateMapper;
-import chess.view.PieceMapper;
-import chess.view.RankCoordinateMapper;
-import chess.view.TeamMapper;
+import chess.controller.mapper.FileCoordinateMapper;
+import chess.controller.mapper.PieceMapper;
+import chess.controller.mapper.RankCoordinateMapper;
+import chess.controller.mapper.TeamMapper;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;

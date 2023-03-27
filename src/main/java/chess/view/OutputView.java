@@ -6,6 +6,8 @@ import chess.domain.board.Position;
 import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.controller.mapper.PieceMapper;
+import chess.controller.mapper.TeamMapper;
 
 import java.util.Map;
 

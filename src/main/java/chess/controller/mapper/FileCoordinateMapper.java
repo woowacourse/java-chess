@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.mapper;
 
 import chess.domain.board.FileCoordinate;
 
