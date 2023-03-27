@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Square;
-
 import java.util.List;
 
 public abstract class Piece {

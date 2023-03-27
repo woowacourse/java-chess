@@ -27,7 +27,6 @@ public class Knight extends Piece {
         return false;
     }
 
-
     @Override
     public boolean isKing() {
         return false;

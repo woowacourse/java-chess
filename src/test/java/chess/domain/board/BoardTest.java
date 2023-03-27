@@ -190,7 +190,6 @@ class BoardTest {
         );
     }
 
-
     @Test
     void 같은_파일의_폰이_2개인_경우의_점수를_계산한다() {
         final Board board = BoardFactory.generate();

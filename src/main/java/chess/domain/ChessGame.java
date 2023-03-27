@@ -50,7 +50,6 @@ public class ChessGame {
         board.move(source, destination);
     }
 
-
     private boolean isMovable(final Piece piece, final Square source, final List<Square> route) {
         if (piece.isPawn()) {
             return board.canMovePawn(source, route);

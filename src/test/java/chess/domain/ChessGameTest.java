@@ -43,7 +43,7 @@ class ChessGameTest {
                 .withMessage("움직일 기물이 존재하지 않습니다.");
     }
 
-    @ParameterizedTest
+@ParameterizedTest
     @CsvSource(value = {"WHITE:A:SEVEN:SIX", "BLACK:A:TWO:THREE"}, delimiter = ':')
     void 기물을_움직일_순서가_아니라면_움직일_수_없다(Color movableTurn, File file, Rank sourceRank, Rank destRank) {
         final ChessGame chessGame = new ChessGame(BoardFactory.generate(), movableTurn);
