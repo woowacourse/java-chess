@@ -30,19 +30,24 @@ public class GameController {
     public GameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        commands.put(START, this::start);
-        commands.put(STATUS, this::status);
-        commands.put(MOVE, this::move);
-        commands.put(END, this::end);
     }
 
     public void run() {
+        initCommands();
         outputView.printStartNotice();
         Command command = readUntilValidate(this::ready);
         while (command != END) {
             command = readUntilValidate(this::play);
         }
         outputView.printStartWinningTeam(chessGame.determineWinningTeam());
+
+    }
+
+    private void initCommands() {
+        commands.put(START, this::start);
+        commands.put(STATUS, this::status);
+        commands.put(MOVE, this::move);
+        commands.put(END, this::end);
     }
 
     private Command ready() {

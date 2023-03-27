@@ -14,12 +14,17 @@ import chess.domain.square.Square;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Square, Piece> board;
 
     public Board() {
         this.board = Pieces.init();
+    }
+
+    public Board(Map<Square, Piece> board) {
+        this.board = board;
     }
 
     public boolean isSameColor(final Square source, final Team team) {
@@ -139,5 +144,12 @@ public class Board {
         return board.values().stream()
                 .filter(piece -> piece.isSameType(KING))
                 .count();
+    }
+
+    @Override
+    public String toString() {
+        return board.entrySet().stream()
+                .map(entry -> entry.getKey() + ":" + entry.getValue())
+                .collect(Collectors.joining(","));
     }
 }

@@ -34,4 +34,9 @@ public abstract class Piece {
     public final double score() {
         return pieceType.getScore();
     }
+
+    @Override
+    public String toString() {
+        return String.join(" ", team.toString(), pieceType.toString());
+    }
 }

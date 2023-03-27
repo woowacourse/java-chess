@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.domain.Command;
 import java.util.List;
 
 @FunctionalInterface
