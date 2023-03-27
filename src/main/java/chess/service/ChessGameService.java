@@ -20,9 +20,29 @@ public final class ChessGameService {
     public ChessGame getChessGame(final Long userId) {
         final Optional<ChessGameEntity> findChessGameEntity = chessGameDao.findByUserId(userId);
         if (findChessGameEntity.isEmpty()) {
-            return new ChessGame();
+            return getNewChessGame(userId);
         }
         final ChessGameEntity chessGameEntity = findChessGameEntity.get();
+        return getExistChessGame(chessGameEntity);
+    }
+
+    public Long getChessGameId(final Long userId) {
+        final Optional<ChessGameEntity> findChessGameEntity = chessGameDao.findByUserId(userId);
+        if (findChessGameEntity.isEmpty()) {
+            throw new IllegalArgumentException("저장된 데이터가 존재하지 않습니다.");
+        }
+        return findChessGameEntity.get().getId();
+    }
+
+    private ChessGame getNewChessGame(final Long userId) {
+        final CampType currentCamp = CampType.WHITE;
+        final Long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
+        final ChessGame chessGame = new ChessGame(currentCamp);
+        chessBoardService.saveAll(chessGameId, chessGame.getChessBoard());
+        return chessGame;
+    }
+
+    private ChessGame getExistChessGame(final ChessGameEntity chessGameEntity) {
         final ChessBoard chessBoard = getChessBoard(chessGameEntity);
         final String currentCamp = chessGameEntity.getCurrentCamp();
         return new ChessGame(chessBoard, CampType.from(currentCamp));

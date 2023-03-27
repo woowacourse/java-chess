@@ -24,7 +24,10 @@ public class MockChessGameDao implements ChessGameDao {
 
     @Override
     public Long save(final ChessGameEntity chessGameEntity) {
-        STORAGE.put(pk.addAndGet(1L), chessGameEntity);
+        final long key = pk.addAndGet(1L);
+        ChessGameEntity savedChessGameEntity = new ChessGameEntity(key,
+                chessGameEntity.getCurrentCamp(), chessGameEntity.getUserId());
+        STORAGE.put(key, savedChessGameEntity);
         return pk.longValue();
     }
 

@@ -21,9 +21,10 @@ class ChessGameServiceTest {
     @DisplayName("사용자의 아이디에 해당하는 체스 게임이 존재하지 않으면 새 게임을 반환한다.")
     void getChessGame_empty() {
         // given
+        final MockChessGameDao chessGameDao = new MockChessGameDao();
         final ChessGameService chessGameService = new ChessGameService(
-                new MockChessGameDao(), new ChessBoardService(new MockPieceDao()));
-        final ChessGame expected = new ChessGame(ChessBoardHelper.createMockBoard(), null);
+                chessGameDao, new ChessBoardService(new MockPieceDao()));
+        final ChessGame expected = new ChessGame(CampType.WHITE);
 
         // when
         final ChessGame actual = chessGameService.getChessGame(2L);
@@ -38,15 +39,7 @@ class ChessGameServiceTest {
     void getChessGame() {
         // given
         final Long userId = 1L;
-        final Long chessGameId = 1L;
-        final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
-        final MockPieceDao pieceDao = new MockPieceDao();
-        pieceEntities.forEach(pieceDao::save);
-
-        final MockChessGameDao chessGameDao = new MockChessGameDao();
-        chessGameDao.save(new ChessGameEntity("WHITE", userId));
-
-        final ChessGameService chessGameService = new ChessGameService(chessGameDao, new ChessBoardService(pieceDao));
+        final ChessGameService chessGameService = getChessGameService(userId);
         final ChessBoard mockProgressBoard = ChessBoardHelper.createMockProgressBoard();
         final ChessGame expected = new ChessGame(mockProgressBoard, CampType.WHITE);
 
@@ -56,5 +49,34 @@ class ChessGameServiceTest {
         // then
         assertThat(actual)
                 .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("사용자의 아이디를 기준으로 체스 게임을 조회한다")
+    void getChessGameId() {
+        // given
+        final Long userId = 1L;
+        final ChessGameService chessGameService = getChessGameService(userId);
+
+        // when
+        Long chessGameId = chessGameService.getChessGameId(userId);
+
+        // then
+        assertThat(chessGameId)
+                .isEqualTo(1L);
+    }
+
+    private ChessGameService getChessGameService(final Long userId) {
+        final MockChessGameDao chessGameDao = new MockChessGameDao();
+        Long chessGameId = chessGameDao.save(new ChessGameEntity("WHITE", userId));
+        final MockPieceDao pieceDao = getMockPieceDao(chessGameId);
+        return new ChessGameService(chessGameDao, new ChessBoardService(pieceDao));
+    }
+
+    private MockPieceDao getMockPieceDao(final Long chessGameId) {
+        final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
+        final MockPieceDao pieceDao = new MockPieceDao();
+        pieceEntities.forEach(pieceDao::save);
+        return pieceDao;
     }
 }
