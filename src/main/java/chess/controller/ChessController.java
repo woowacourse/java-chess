@@ -3,6 +3,8 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandType;
 import chess.controller.command.StartCommand;
+import chess.domain.ChessGame;
+import chess.repository.BoardDao;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -14,10 +16,10 @@ public class ChessController {
     private final InputView inputView;
     private Command command;
 
-    public ChessController(OutputView outputView, InputView inputView) {
+    public ChessController(OutputView outputView, InputView inputView, BoardDao boardDao) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.command = new StartCommand();
+        this.command = new StartCommand(boardDao);
     }
 
     public void run() {

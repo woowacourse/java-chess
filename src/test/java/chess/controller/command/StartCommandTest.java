@@ -1,5 +1,11 @@
 package chess.controller.command;
 
+import chess.domain.ChessGame;
+import chess.domain.board.BoardFactory;
+import chess.domain.piece.Team;
+import chess.repository.BoardDao;
+import chess.repository.InMemoryBoardDao;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -17,26 +23,26 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class StartCommandTest {
 
-    @Test
-    void StartCommand의_타입을_확인할_수_있다() {
-        Command startCommand = new StartCommand();
+    private ChessGame chessGame;
+    private BoardDao boardDao;
 
-        assertThat(startCommand.isSameType(CommandType.START)).isTrue();
+    @BeforeEach
+    void init() {
+        chessGame = new ChessGame(BoardFactory.createBoard(), Team.WHITE);
+        boardDao = new InMemoryBoardDao(chessGame);
     }
 
     @Test
-    void StartCommand의_ChessGame판을_확인하면_예외가_발생한다() {
-        Command startCommand = new StartCommand();
+    void StartCommand의_타입을_확인할_수_있다() {
+        Command startCommand = new StartCommand(boardDao);
 
-        assertThatThrownBy(startCommand::getChessGameBoards)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("게임을 시작해야 체스판을 확인할 수 있습니다.");
+        assertThat(startCommand.isSameType(CommandType.START)).isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"start", "start ", " start", "Start", " start  "})
     void start를_입력받으면_MoveCommand_객체가_반환된다(String command) {
-        Command startCommand = new StartCommand();
+        Command startCommand = new StartCommand(boardDao);
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .filter(x -> !x.isEmpty())
@@ -50,7 +56,7 @@ class StartCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"start1", "star", "sta rt"})
     void start를_입력받지_않으면_예외가_발생한다(String command) {
-        Command startCommand = new StartCommand();
+        Command startCommand = new StartCommand(boardDao);
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
@@ -63,7 +69,7 @@ class StartCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"start  2"})
     void start명령어는_명령어만_입력_가능하다(String command) {
-        Command startCommand = new StartCommand();
+        Command startCommand = new StartCommand(boardDao);
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());

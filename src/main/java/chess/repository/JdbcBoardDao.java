@@ -1,10 +1,7 @@
 package chess.repository;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Board;
-import chess.domain.board.FileCoordinate;
-import chess.domain.board.Position;
-import chess.domain.board.RankCoordinate;
+import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
@@ -73,6 +70,9 @@ public class JdbcBoardDao implements BoardDao {
                 Position position = new Position(pieceColumn, pieceRow);
                 Piece piece = pieceType.of(pieceTeam, position);
                 boards.put(position, piece);
+            }
+            if (turn == null) {
+                return new ChessGame(BoardFactory.createBoard(), Team.WHITE);
             }
             return new ChessGame(new Board(boards), turn);
         } catch (final SQLException e) {
