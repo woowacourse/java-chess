@@ -62,4 +62,9 @@ public abstract class RunningState implements GameState {
     public void leaveGame(Runnable runnable) {
         runnable.run();
     }
+
+    @Override
+    public List<String> getAllGameIds(Supplier<List<String>> supplier) {
+        throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
+    }
 }

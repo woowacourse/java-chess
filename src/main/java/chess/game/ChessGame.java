@@ -18,6 +18,7 @@ import chess.game.state.running.CheckedState;
 import chess.game.state.waiting.WaitingState;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ChessGame {
     private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
@@ -150,8 +151,18 @@ public class ChessGame {
 
     public void leave() {
         this.gameState.leaveGame(() -> {
+            this.gameId = null;
             this.board = null;
             this.gameState = WaitingState.STATE;
+        });
+    }
+
+    public List<String> getAllGameIds(Supplier<List<GameId>> findAllGameIdLogic) {
+        return gameState.getAllGameIds(() -> {
+            List<GameId> gameIds = findAllGameIdLogic.get();
+            return gameIds.stream()
+                    .map(GameId::getGameId)
+                    .collect(toList());
         });
     }
 }

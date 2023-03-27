@@ -14,6 +14,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionMapper;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -32,6 +33,7 @@ public class ChessController {
         actionMap.put(Command.START, new Action(this::startGame));
         actionMap.put(Command.MOVE, new Action(this::movePiece));
         actionMap.put(Command.STATUS, new Action(ignore -> getGameStatus()));
+        actionMap.put(Command.LIST, new Action(ignore -> printAllGameIds()));
         actionMap.put(Command.SAVE, new Action(ignore -> saveGame()));
         actionMap.put(Command.LOAD, new Action(this::loadGame));
         actionMap.put(Command.LEAVE, new Action(ignore -> leaveGame()));
@@ -84,6 +86,11 @@ public class ChessController {
         double blackTeamScore = chessGame.getTeamScore(Team.BLACK);
         double whiteTeamScore = chessGame.getTeamScore(Team.WHITE);
         OutputView.printGameStatus(blackTeamScore, whiteTeamScore);
+    }
+
+    private void printAllGameIds() {
+        List<String> gameIds = chessGame.getAllGameIds(chessGameDao::findAllGameId);
+        OutputView.printGameIds(gameIds);
     }
 
     private void saveGame() {

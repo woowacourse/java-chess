@@ -3,7 +3,9 @@ package chess.dao;
 import chess.domain.Board;
 import chess.game.GameId;
 import chess.game.state.GameState;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MemoryChessGameDao implements ChessGameDao {
@@ -39,6 +41,11 @@ public class MemoryChessGameDao implements ChessGameDao {
     @Override
     public void deleteGame(GameId gameId) {
         CHESS_TABLE.remove(gameId);
+    }
+
+    @Override
+    public List<GameId> findAllGameId() {
+        return new ArrayList<>(CHESS_TABLE.keySet());
     }
 
     @Override

@@ -3,6 +3,7 @@ package chess.dao;
 import chess.domain.Board;
 import chess.game.GameId;
 import chess.game.state.GameState;
+import java.util.List;
 
 public interface ChessGameDao {
     Board findBoard(GameId gameId);
@@ -16,6 +17,8 @@ public interface ChessGameDao {
     boolean isExistGame(GameId gameId);
 
     void deleteGame(GameId gameId);
+
+    List<GameId> findAllGameId();
 
     void transaction(Runnable runnable);
 }

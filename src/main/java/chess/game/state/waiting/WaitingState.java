@@ -74,4 +74,9 @@ public class WaitingState implements GameState {
     public void leaveGame(Runnable runnable) {
         throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
+
+    @Override
+    public List<String> getAllGameIds(Supplier<List<String>> supplier) {
+        return supplier.get();
+    }
 }

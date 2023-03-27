@@ -18,6 +18,7 @@ import chess.game.state.running.WhiteCheckedState;
 import chess.game.state.running.WhiteTurnState;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -126,6 +127,18 @@ public class MySQLChessGameDao implements ChessGameDao {
     public void deleteGame(GameId gameId) {
         final String query = "DELETE FROM game WHERE game_id = ?";
         jdbcContext.update(query, gameId.getGameId());
+    }
+
+    @Override
+    public List<GameId> findAllGameId() {
+        final String query = "SELECT game_id FROM game";
+        return jdbcContext.select(query, resultSet -> {
+            List<GameId> gameIds = new ArrayList<>();
+            while (resultSet.next()) {
+                gameIds.add(new GameId(resultSet.getString("game_id")));
+            }
+            return gameIds;
+        });
     }
 
     private enum RunningStateMapper {

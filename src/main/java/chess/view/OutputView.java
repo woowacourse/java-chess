@@ -15,6 +15,7 @@ public class OutputView {
     private static final String COMMAND_LOAD_MESSAGE = "> 게임 불러오기 : load <gameID>";
     private static final String COMMAND_LEAVE_MESSAGE = "> 게임 나가기 : leave";
     private static final String COMMAND_STATUS_MESSAGE = "> 현재 점수 : status";
+    private static final String COMMAND_GAME_LIST_MESSAGE = "> 게임방 목록 : list";
     private static final String COMMAND_END_MESSAGE = "> 게임 종료 : end";
 
     private OutputView() {
@@ -31,6 +32,7 @@ public class OutputView {
         System.out.println(COMMAND_LOAD_MESSAGE);
         System.out.println(COMMAND_LEAVE_MESSAGE);
         System.out.println(COMMAND_STATUS_MESSAGE);
+        System.out.println(COMMAND_GAME_LIST_MESSAGE);
         System.out.println(COMMAND_END_MESSAGE);
     }
 
@@ -109,5 +111,13 @@ public class OutputView {
 
     public static void printLoadMessage() {
         System.out.println("진행사항을 불러왔습니다.");
+    }
+
+    public static void printGameIds(List<String> gameIds) {
+        System.out.println("게임방의 목록 입니다.");
+        for (String gameId : gameIds) {
+            System.out.println(gameId);
+        }
+        System.out.println("총 " + gameIds.size() + "개의 게임방이 있습니다.");
     }
 }

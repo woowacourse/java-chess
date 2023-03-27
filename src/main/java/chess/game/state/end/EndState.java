@@ -79,4 +79,9 @@ public abstract class EndState implements GameState {
     public void leaveGame(Runnable runnable) {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
+
+    @Override
+    public List<String> getAllGameIds(Supplier<List<String>> supplier) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
 }

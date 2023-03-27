@@ -33,4 +33,6 @@ public interface GameState {
     void loadGame(Runnable runnable);
 
     void leaveGame(Runnable runnable);
+
+    List<String> getAllGameIds(Supplier<List<String>> supplier);
 }
