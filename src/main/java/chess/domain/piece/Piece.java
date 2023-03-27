@@ -9,9 +9,11 @@ public abstract class Piece implements PieceState {
 
     private static final int MIN_EMPTY_COUNT = 0;
     protected final Team team;
+    private final PieceType pieceType;
 
-    protected Piece(final Team team) {
+    protected Piece(final Team team, final PieceType pieceType) {
         this.team = team;
+        this.pieceType = pieceType;
     }
 
     @Override
@@ -98,5 +100,9 @@ public abstract class Piece implements PieceState {
 
     protected final void throwCanNotMoveException() {
         throw new IllegalArgumentException(this.getClass().getSimpleName() + "(은)는 해당 좌표로 이동할 수 없습니다.");
+    }
+
+    public boolean isTypeOf(final PieceType pieceType) {
+        return this.pieceType == pieceType;
     }
 }
