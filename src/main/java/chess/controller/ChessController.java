@@ -7,6 +7,7 @@ import chess.domain.piece.position.PiecePosition;
 import chess.domain.state.ChessState;
 import chess.domain.state.Initialize;
 import chess.domain.state.command.Command;
+import chess.service.RunningGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -14,6 +15,12 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class ChessController {
+
+    private final RunningGameService runningGameService;
+
+    public ChessController(final RunningGameService runningGameService) {
+        this.runningGameService = runningGameService;
+    }
 
     public void start() {
         OutputView.printStartMessage();
@@ -45,6 +52,7 @@ public class ChessController {
             return state;
         }
         state = changeState(chessBoard, command, state);
+        runningGameService.save(state.findCurrentTurn());
         OutputView.showBoard(chessBoard.pieces());
         return state;
     }

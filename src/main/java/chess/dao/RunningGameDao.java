@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dto.RunningGameDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,6 +20,19 @@ public class RunningGameDao {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void save(final RunningGameDto runningGameDto) {
+        final String query = "INSERT INTO running_game VALUES (?, ?)";
+        final int id = 1;
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, runningGameDto.getTurn());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
