@@ -49,7 +49,7 @@ public class ChessController {
 
     private void processGame() {
         ChessGame chessGame = loadChessGame();
-        initComment(chessGame);
+        initCommend(chessGame);
         play(chessGame);
         endGame(chessGame);
     }
@@ -63,7 +63,7 @@ public class ChessController {
         return chessGame;
     }
 
-    private void initComment(final ChessGame chessGame) {
+    private void initCommend(final ChessGame chessGame) {
         if (chessGame.getStatus() == GameStatus.PLAYING) {
             return;
         }
@@ -109,7 +109,7 @@ public class ChessController {
             System.out.println("게임 종료 " + chessGame.getCurrentTeam() + "의 패배!");
         }
     }
-    
+
     private void start(final List<String> commands) {
         final ChessGame chessGame = chessGameDao.select();
         Command.validateCommandSize(commands.size(), START);
