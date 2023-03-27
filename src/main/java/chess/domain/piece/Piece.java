@@ -28,7 +28,7 @@ public abstract class Piece {
         return this;
     }
 
-    public Team getSide() {
+    public Team getTeam() {
         return team;
     }
 
