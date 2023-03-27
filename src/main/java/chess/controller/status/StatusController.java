@@ -2,23 +2,27 @@ package chess.controller.status;
 
 import chess.controller.Command;
 import chess.controller.dto.ChessResultDto;
+import chess.controller.mapper.ChessBoardDtoMapper;
 import chess.controller.mapper.ChessResultDtoMapper;
-import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 import chess.domain.chess.ChessGameCalculator;
+import chess.domain.chess.vo.ScoreVO;
+import chess.service.ChessGameService;
 import chess.view.OutputView;
 
 public final class StatusController implements Controller {
+    private final Long userId;
     private final ChessGame chessGame;
-    private final CampType campType;
+    private final ChessGameService chessGameService;
 
-    StatusController(final ChessGame chessGame, final CampType campType) {
-        this.chessGame = chessGame;
-        this.campType = campType;
+    StatusController(final Long userId, final ChessGameService chessGameService) {
+        this.userId = userId;
+        this.chessGame = chessGameService.getChessGame(userId);
+        this.chessGameService = chessGameService;
     }
 
     @Override
-    public Controller checkCommand(final Command command, final Runnable runnable) {
+    public Controller checkCommand(final Command command) {
         if (command.isStart()) {
             throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
         }
@@ -26,7 +30,7 @@ public final class StatusController implements Controller {
             return new EndController();
         }
         if (command.isMove()) {
-            return new MoveController(chessGame, campType).move(command, runnable);
+            return new MoveController(userId, chessGameService).move(command);
         }
         return getStatus(true);
     }
@@ -36,10 +40,16 @@ public final class StatusController implements Controller {
         return true;
     }
 
+    @Override
+    public void printBoard() {
+        OutputView.printBoard(ChessBoardDtoMapper.createChessBoardDto(chessGame.getChessBoard()));
+    }
+
     Controller getStatus(final boolean isGameRun) {
         if (!isGameRun) {
             OutputView.print("킹이 사망하여 게임이 종료되었습니다!");
             runCalculator().run();
+            chessGameService.clear(userId);
             return new EndController();
         }
         runCalculator().run();
@@ -48,7 +58,8 @@ public final class StatusController implements Controller {
 
     private Runnable runCalculator() {
         return () -> {
-            ChessResultDto chessResultDto = ChessResultDtoMapper.from(ChessGameCalculator.calculate(chessGame));
+            final ScoreVO chessResult = ChessGameCalculator.calculate(chessGame);
+            final ChessResultDto chessResultDto = ChessResultDtoMapper.from(chessResult);
             OutputView.printChessResult(chessResultDto);
         };
     }
