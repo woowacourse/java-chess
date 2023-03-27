@@ -15,7 +15,7 @@ public class MoveHistory {
 
     public List<MoveDto> getSortHistory() {
         return moveDtos.stream()
-                .sorted(Comparator.comparing(MoveDto::getId))
+                .sorted(Comparator.comparing(MoveDto::getMoveTime))
                 .collect(Collectors.toList());
     }
 }
