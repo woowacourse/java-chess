@@ -5,6 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.square.Color;
 import chess.domain.square.Square;
 import chess.domain.square.Team;
+import chess.domain.state.Running;
 import chess.domain.state.State;
 import chess.domain.state.WaitingStart;
 import chess.dto.MoveDto;
@@ -12,21 +13,27 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
-    private final int notFinishedGameId;
+    private int notFinishedGameId;
     private State state;
+    private final ChessDao chessDao;
 
     public ChessGame(final ChessDao chessDao) {
         this.state = new WaitingStart();
-        if (!chessDao.existCurrentGame()) {
-            chessDao.saveInitialGame();
-        }
+        this.chessDao = chessDao;
+        createIfCurrentGameAbsent();
         this.notFinishedGameId = chessDao.findNotFinishedGameId();
     }
 
-    public void start(final ChessDao chessDao) {
+    private void createIfCurrentGameAbsent() {
+        if (!chessDao.existCurrentGame()) {
+            chessDao.saveInitialGame();
+        }
+    }
+
+    public void start() {
         this.state = state.start();
         if (chessDao.existCurrentGame()) {
-            int notFinishedGameId = chessDao.findNotFinishedGameId();
+            this.notFinishedGameId = chessDao.findNotFinishedGameId();
             List<MoveDto> moveDtos = chessDao.selectAllHistory(notFinishedGameId);
             moveByHistory(moveDtos);
         }
@@ -40,7 +47,7 @@ public class ChessGame {
         }
     }
 
-    public void move(final Square sourceSquare, final Square targetSquare, final ChessDao chessDao) {
+    public void move(final Square sourceSquare, final Square targetSquare) {
         this.state = state.move(sourceSquare, targetSquare);
         chessDao.saveHistory(MoveDto.of(sourceSquare, targetSquare), notFinishedGameId);
         if (state.isKingDead()) {
@@ -53,6 +60,12 @@ public class ChessGame {
                 Team.from(Color.WHITE), state.calculateScore(Team.from(Color.WHITE)),
                 Team.from(Color.BLACK), state.calculateScore(Team.from(Color.BLACK))
         );
+    }
+
+    public void clear() {
+        chessDao.setGameFinished(notFinishedGameId);
+        chessDao.saveInitialGame();
+        this.state = new Running();
     }
 
     public void end() {

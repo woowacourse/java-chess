@@ -15,6 +15,7 @@ public class CommandFactory {
         COMMAND_GENERATOR.put(CommandType.START, ignored -> new StartCommand());
         COMMAND_GENERATOR.put(CommandType.MOVE, MoveCommand::new);
         COMMAND_GENERATOR.put(CommandType.STATUS, ignored -> new StatusCommand());
+        COMMAND_GENERATOR.put(CommandType.CLEAR, ignored -> new ClearCommand());
         COMMAND_GENERATOR.put(CommandType.END, ignored -> new EndCommand());
     }
 

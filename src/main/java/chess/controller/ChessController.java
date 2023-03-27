@@ -56,14 +56,14 @@ public class ChessController {
     }
 
     public void start() {
-        chessGame.start(new HistoryDao());
+        chessGame.start();
         showBoard();
     }
 
     public void move(final List<String> parameters) {
         Square sourceSquare = convertSquare(parameters.get(SOURCE_SQUARE_INDEX));
         Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
-        chessGame.move(sourceSquare, targetSquare, new HistoryDao());
+        chessGame.move(sourceSquare, targetSquare);
         showBoard();
     }
 
@@ -99,5 +99,10 @@ public class ChessController {
             pieces.add(rankPieces);
         }
         return pieces;
+    }
+
+    public void clear() {
+        chessGame.clear();
+        showBoard();
     }
 }
