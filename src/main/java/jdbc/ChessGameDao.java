@@ -23,6 +23,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -80,42 +81,33 @@ public class ChessGameDao implements JdbcChessGameDao {
     @Override
     public String save(ChessGame chessGame) {
         try (final Connection connection = getConnection()) {
-            saveChessGame(connection, chessGame.getColorTurn());
-            String currentId = getLastInsertId(connection);
-            savePieces(chessGame.getChessBoard(), connection, currentId);
-            return currentId;
+            String saveId = saveChessGame(connection, chessGame.getColorTurn());
+            savePieces(chessGame.getChessBoard(), connection, saveId);
+            return saveId;
         } catch (SQLException exception) {
             throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
         }
     }
 
-    private String getLastInsertId(Connection connection) {
-        try {
-            return getId(connection);
-        } catch (SQLException exception) {
-            throw new IllegalStateException(INVALID_DATA_ERROR_MESSAGE);
-        }
-    }
-
-    private void saveChessGame(Connection connection, Color color) throws SQLException {
+    private String saveChessGame(Connection connection, Color color) throws SQLException {
         PreparedStatement chessGameSave = connection.prepareStatement(
-                "INSERT INTO chess_game(turn) VALUES(?)"
+                "INSERT INTO chess_game(turn) VALUES(?)", Statement.RETURN_GENERATED_KEYS
         );
 
         chessGameSave.setString(1, color.name());
         chessGameSave.executeUpdate();
+        return getSaveId(chessGameSave);
     }
 
-    private String getId(Connection connection) throws SQLException {
-        PreparedStatement lastInsertIdSelect = connection.prepareStatement("SELECT MAX(id) AS id FROM chess_game");
-        ResultSet resultSet = lastInsertIdSelect.executeQuery();
-        String lastInsertId = null;
+    private String getSaveId(PreparedStatement chessGameSave) throws SQLException {
+        ResultSet generatedKeys = chessGameSave.getGeneratedKeys();
+        String saveId = null;
 
-        if (resultSet.next()) {
-            lastInsertId = resultSet.getString("id");
+        if (generatedKeys.next()) {
+            saveId = generatedKeys.getString(1);
         }
 
-        return lastInsertId;
+        return saveId;
     }
 
     private void savePieces(ChessBoard chessBoard, Connection connection, String currentId) throws SQLException {
