@@ -93,7 +93,6 @@ public class DatabaseDao implements ChessBoardDao {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public void save(ChessBoard chessBoard) {
         Map<Square, Piece> pieceLocations = chessBoard.getPieceLocations().getPieceLocations();
         for (Map.Entry<Square, Piece> pieceLocation : pieceLocations.entrySet()) {
@@ -121,6 +120,7 @@ public class DatabaseDao implements ChessBoardDao {
         save(chessBoard);
     }
 
+    @Override
     public void delete() {
         final var query = "DELETE FROM chess_game";
         try (final var connection = getConnection();

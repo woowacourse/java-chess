@@ -17,7 +17,7 @@ public class InMemoryDao implements ChessBoardDao {
     }
 
     @Override
-    public void save(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+    public void delete() {
+        this.chessBoard = new ChessBoard();
     }
 }

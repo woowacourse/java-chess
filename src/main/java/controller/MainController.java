@@ -39,6 +39,9 @@ public class MainController {
             chessBoardDao.update(chessBoard);
         }
         while (gameStatus != GameStatus.END);
+        if(!chessBoard.isExistKing()){
+            chessBoardDao.delete();
+        }
     }
 
     private GameStatus executeCommand(ChessBoard chessBoard, GameStatus gameStatus) {

@@ -8,6 +8,6 @@ public interface ChessBoardDao {
 
     ChessBoard read();
 
-    void save(ChessBoard chessBoard);
+    void delete();
 
 }
