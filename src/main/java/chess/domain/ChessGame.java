@@ -16,6 +16,11 @@ public class ChessGame {
         this.turn = Turn.getFirstTurn();
     }
 
+    public ChessGame(final Board board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void start(final Command command) {
         if (command.equals(Command.START)) {
             return;
@@ -39,6 +44,10 @@ public class ChessGame {
         return board.isKingCaught();
     }
 
+    public void resume() {
+
+    }
+
     public ScoreDto getScore() {
         final Score whiteScore = board.calculateWhiteScore();
         final Score blackScore = board.calculateBlackScore();
@@ -47,5 +56,13 @@ public class ChessGame {
 
     public GameStatusDto getGameStatus() {
         return GameStatusDto.from(board);
+    }
+
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
