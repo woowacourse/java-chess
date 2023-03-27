@@ -150,12 +150,6 @@ public final class ChessBoard {
         return 0;
     }
 
-    public List<Square> getSquares() {
-        return this.squares.values()
-                .stream()
-                .collect(Collectors.toUnmodifiableList());
-    }
-
     public Map<Team, Boolean> isKingAlive() {
         return Map.of(Team.WHITE, isKingAliveByTeam(Team.WHITE), Team.BLACK, isKingAliveByTeam(Team.BLACK));
     }
@@ -165,5 +159,11 @@ public final class ChessBoard {
                 .stream()
                 .filter(square -> square.isTypeOf(PieceType.KING))
                 .anyMatch(square -> square.isMyTeam(team));
+    }
+
+    public List<Square> getSquares() {
+        return this.squares.values()
+                .stream()
+                .collect(Collectors.toUnmodifiableList());
     }
 }
