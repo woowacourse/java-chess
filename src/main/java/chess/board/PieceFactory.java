@@ -21,8 +21,7 @@ public class PieceFactory {
     public static Map<Position, Piece> createPiece() {
         final Map<Position, Piece> piecePosition = new HashMap<>();
         initPosition(piecePosition);
-        final List<Team> teams = List.of(Team.WHITE, Team.BLACK);
-        for (final Team team : teams) {
+        for (final Team team : List.of(Team.WHITE, Team.BLACK)) {
             createPawn(piecePosition, team);
             createRook(piecePosition, team);
             createKnight(piecePosition, team);

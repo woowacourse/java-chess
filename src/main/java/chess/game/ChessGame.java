@@ -11,20 +11,11 @@ public class ChessGame {
 
     public ChessGame(final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
-        this.isProcessing = false;
+        this.isProcessing = true;
     }
 
     public void movePiece(final Position from, final Position to) {
         chessBoard.movePiece(from, to);
-    }
-
-    public void receiveCommand(final Command command) {
-        if (command == Command.START) {
-            this.isProcessing = true;
-        }
-        if (command == Command.END) {
-            this.isProcessing = false;
-        }
     }
 
     public boolean isProcessing() {
@@ -46,6 +37,10 @@ public class ChessGame {
             return Team.BLACK;
         }
         return null;
+    }
+
+    public void end() {
+        isProcessing = false;
     }
 
     public ChessBoard getChessBoard() {
