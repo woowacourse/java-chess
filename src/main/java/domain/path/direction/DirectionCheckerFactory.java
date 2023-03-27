@@ -8,7 +8,7 @@ public final class DirectionCheckerFactory {
     private DirectionCheckerFactory() {
     }
 
-    static boolean isRightUpDiagonal(final PieceMove pieceMove) {
+    static boolean isRightUp(final PieceMove pieceMove) {
         final Location start = pieceMove.getStart();
         final Location end = pieceMove.getEnd();
         return start.isDiagonal(end)
@@ -16,7 +16,7 @@ public final class DirectionCheckerFactory {
             && end.isRightThan(start);
     }
 
-    static boolean isRightDownDiagonal(final PieceMove pieceMove) {
+    static boolean isRightDown(final PieceMove pieceMove) {
         final Location start = pieceMove.getStart();
         final Location end = pieceMove.getEnd();
         return start.isDiagonal(end)
@@ -24,7 +24,7 @@ public final class DirectionCheckerFactory {
             && end.isRightThan(start);
     }
 
-    static boolean isLeftUpDiagonal(final PieceMove pieceMove) {
+    static boolean isLeftUp(final PieceMove pieceMove) {
         final Location start = pieceMove.getStart();
         final Location end = pieceMove.getEnd();
         return start.isDiagonal(end)
@@ -32,7 +32,7 @@ public final class DirectionCheckerFactory {
             && start.isRightThan(end);
     }
 
-    static boolean isLeftDownDiagonal(final PieceMove pieceMove) {
+    static boolean isLeftDown(final PieceMove pieceMove) {
         final Location start = pieceMove.getStart();
         final Location end = pieceMove.getEnd();
         return start.isDiagonal(end)

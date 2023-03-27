@@ -6,10 +6,10 @@ import java.util.function.Predicate;
 
 public enum Direction {
 
-    RIGHT_UP(1, 1, DirectionCheckerFactory::isRightUpDiagonal),
-    RIGHT_DOWN(1, -1, DirectionCheckerFactory::isRightDownDiagonal),
-    LEFT_UP(-1, 1, DirectionCheckerFactory::isLeftUpDiagonal),
-    LEFT_DOWN(-1, -1, DirectionCheckerFactory::isLeftDownDiagonal),
+    RIGHT_UP(1, 1, DirectionCheckerFactory::isRightUp),
+    RIGHT_DOWN(1, -1, DirectionCheckerFactory::isRightDown),
+    LEFT_UP(-1, 1, DirectionCheckerFactory::isLeftUp),
+    LEFT_DOWN(-1, -1, DirectionCheckerFactory::isLeftDown),
     RIGHT(1, 0, DirectionCheckerFactory::isRight),
     LEFT(-1, 0, DirectionCheckerFactory::isLeft),
     DOWN(0, -1, DirectionCheckerFactory::isDown),
