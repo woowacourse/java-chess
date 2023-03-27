@@ -23,25 +23,25 @@ public enum Shape {
     }
 
     public static ChessPiece makePieceByShape(Shape inputShape, Side inputSide) {
-        if(inputShape.equals(PAWN)){
+        if (inputShape.equals(PAWN)) {
             return new Pawn(inputSide);
         }
-        if(inputShape.equals(ROOK)){
+        if (inputShape.equals(ROOK)) {
             return new Rook(inputSide);
         }
-        if(inputShape.equals(KNIGHT)){
+        if (inputShape.equals(KNIGHT)) {
             return new Knight(inputSide);
         }
-        if(inputShape.equals(BISHOP)){
+        if (inputShape.equals(BISHOP)) {
             return new Bishop(inputSide);
         }
-        if(inputShape.equals(KING)){
+        if (inputShape.equals(KING)) {
             return new King(inputSide);
         }
-        if(inputShape.equals(QUEEN)){
+        if (inputShape.equals(QUEEN)) {
             return new Queen(inputSide);
         }
-        if(inputShape.equals(EMPTY)){
+        if (inputShape.equals(EMPTY)) {
             return new Empty(inputSide);
         }
         throw new IllegalArgumentException("해당 Shape에 맞는 기물을 생성할 수 없습니다.");

@@ -24,16 +24,6 @@ public class ChessController {
         this.chessGame = chessGame;
     }
 
-//    public void startPhase() {
-//        try {
-//            int gameIdx = InputView.printGameStartMessage();
-//            OutputView.printChessBoard(chessBoard.getChessBoard());
-//        } catch (IllegalArgumentException e) {
-//            OutputView.printMessage(e.getMessage());
-//            startPhase();
-//        }
-//    }
-
     public void commandPhase() {
         while (true) {
             if (!command(Side.WHITE)) {
