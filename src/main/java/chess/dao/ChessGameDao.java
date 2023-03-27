@@ -5,6 +5,7 @@ import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
+import chess.domain.game.GameStatus;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
@@ -42,7 +43,7 @@ public class ChessGameDao {
                 preparedStatement.setString(2, positionPieceEntry.getValue().getColor().toString());
                 preparedStatement.setString(3, positionPieceEntry.getKey().getColumn().name());
                 preparedStatement.setString(4, positionPieceEntry.getKey().getRank().name());
-                //preparedStatement.setString(5, chessGame..getRank().name());
+                preparedStatement.setString(5, chessGame.getGameStatus().name());
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
@@ -63,6 +64,7 @@ public class ChessGameDao {
                 Piece piece = Piece.valueOf(resultSet.getString("piece_type"));
                 Column pieceColumn = Column.valueOf(resultSet.getString("piece_column"));
                 Rank pieceRank = Rank.valueOf(resultSet.getString("piece_rank"));
+                GameStatus gameStatus = GameStatus.valueOf(resultSet.getString("game_status"));
 
                 Position position = new Position(pieceColumn, pieceRank);
                 pieces.put(position, piece);
@@ -75,7 +77,7 @@ public class ChessGameDao {
             return null;
         }
 
-        ChessBoard chessBoard = new ChessBoard(pieces);
+        ChessBoard chessBoard = new ChessBoard(pieces, gameStatus);
 
         return new ChessGame(chessBoard);
     }
