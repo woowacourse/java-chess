@@ -36,10 +36,6 @@ public class Pieces {
                 .anyMatch(piece -> piece.isSamePosition(position));
     }
 
-    public List<Piece> getPieces() {
-        return List.copyOf(pieces);
-    }
-
     public void remove(final Piece pieceToRemove) {
         if (!pieces.contains(pieceToRemove)) {
             throw new IllegalArgumentException("[ERROR] 지우려고 하는 기물이 존재하지 않습니다.");
@@ -76,5 +72,9 @@ public class Pieces {
     public boolean containsKing(Side side) {
         return pieces.stream()
                 .anyMatch(piece -> piece.getClass() == King.class && piece.getSide() == side);
+    }
+
+    public List<Piece> getPieces() {
+        return List.copyOf(pieces);
     }
 }
