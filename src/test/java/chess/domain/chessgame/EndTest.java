@@ -1,4 +1,4 @@
-package chess.service;
+package chess.domain.chessgame;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

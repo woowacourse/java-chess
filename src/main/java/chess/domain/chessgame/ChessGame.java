@@ -1,4 +1,4 @@
-package chess.service;
+package chess.domain.chessgame;
 
 import chess.domain.board.Score;
 import chess.domain.piece.Color;
@@ -7,11 +7,11 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class ChessService {
+public class ChessGame {
 
     private State state;
 
-    public ChessService() {
+    public ChessGame() {
         state = NotStarted.getInstance();
     }
 
