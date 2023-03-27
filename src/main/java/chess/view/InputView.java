@@ -3,11 +3,14 @@ package chess.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.\n> 게임 시작 : start\n> 게임 종료 : end\n> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String PRIOR_GAME_START_MESSAGE = "이전에 진행 중인 게임을 이어 시작하려면 start 뒤에 게임 번호를 입력해 주세요 - 예. start 17";
+    private static final String PRIOR_GAME_PRINT_MESSAGE = "진행중인 게임 목록: ";
     private static final String START = "start";
     private static final String BLANK = " ";
     private static final String INIT_INPUT_ERROR_MESSAGE = "[ERROR] 게임을 시작하려면 start를 입력해 주세요";
@@ -21,8 +24,10 @@ public class InputView {
     private static final int COMMAND_INDEX = 0;
     private static final int STATUS_COMMAND_SIZE = 1;
 
-    public static int printGameStartMessage() {
+    public static int printGameStartMessage(List<Integer> gameNumbers) {
         printMessage(GAME_START_MESSAGE);
+        printMessage(PRIOR_GAME_START_MESSAGE);
+        printPriorGameNumbers(gameNumbers);
         return readInitialGameCommand();
     }
 
@@ -61,6 +66,12 @@ public class InputView {
             return splitInput;
         }
         throw new IllegalArgumentException(INVALID_COMMAND_INPUT_ERROR);
+    }
+
+    private static void printPriorGameNumbers(List<Integer> gameNumbers) {
+        System.out.print(PRIOR_GAME_PRINT_MESSAGE + gameNumbers.stream().
+                map(Object::toString).
+                collect(Collectors.joining(", ")));
     }
 
     private static boolean isMove(List<String> splitInput, String command) {

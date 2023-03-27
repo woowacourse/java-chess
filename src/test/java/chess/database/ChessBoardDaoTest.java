@@ -11,6 +11,12 @@ import chess.piece.Side;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardDaoTest {
+
+    @Test
+    void getConnection() {
+        assertDoesNotThrow(()-> new ChessGameDao().getConnection());
+    }
+
     @Test
     void addPieceInBoardTable() {
         ChessBoardDao chessBoardDao = new ChessBoardDao();

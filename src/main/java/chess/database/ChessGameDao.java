@@ -3,6 +3,8 @@ package chess.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessGameDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -39,6 +41,24 @@ public class ChessGameDao {
             final var resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return resultSet.getInt("gameIdx");
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Integer> findRemainGames() {
+        final var query = "select ChessGameDB.gameIdx\n"
+                + "from ChessGameDB, ChessBoardDB\n"
+                + "where ChessGameDB.gameIdx = ChessBoardDB.gameIdx\n"
+                + "group by gameIdx";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+            List<Integer> gameIdxs = new ArrayList<>();
+            while(resultSet.next()){
+                gameIdxs.add(resultSet.getInt("gameIdx"));
+            }
+            return gameIdxs;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
