@@ -29,15 +29,15 @@ public class BoardDao {
 
         for (final File file : File.values()) {
             for (final Rank rank : Rank.values()) {
-                final String position = file.value() + String.valueOf(rank.value());
-                board.put(Position.of(file, rank), findByPosition(boardId, position));
+                final Position position = Position.of(file, rank);
+                board.put(position, findByPosition(boardId, position));
             }
         }
         return board;
     }
 
-    private static Piece findByPosition(final int boardId, final String position) {
-        final var query = "SELECT " + position + " FROM board WHERE id = ?";
+    private static Piece findByPosition(final int boardId, final Position position) {
+        final var query = String.format("SELECT %s FROM board WHERE id = ?", position.getCoordinate());
 
         final RowMapper<Piece> mapper = resultSet -> {
             if (resultSet.next()) {
