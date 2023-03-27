@@ -50,6 +50,14 @@ public final class OutputView {
         printWelcomeMessage();
     }
 
+    public static void printSavedRoomNames(final List<String> roomNames) {
+        System.out.println("< 저장된 방 목록 >");
+        for (String roomName : roomNames) {
+            System.out.println(roomName);
+        }
+        System.out.println();
+    }
+
     public static void printErrorMessage(final String errorMessage) {
         System.out.println("[ERROR] " + errorMessage + System.lineSeparator());
     }

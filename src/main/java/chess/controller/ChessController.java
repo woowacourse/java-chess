@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessGameDao;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
@@ -11,6 +12,7 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -52,7 +54,7 @@ public final class ChessController {
             saveGame(chessGame);
         }
         if (command == Command.LOAD) {
-            chessGame.end();
+            loadGame(chessGame);
         }
         if (command == Command.END) {
             chessGame.end();
@@ -109,12 +111,22 @@ public final class ChessController {
             throw new IllegalStateException("게임이 진행중이 아닐 때는 저장할 수 없습니다.");
         }
 
-        RoomName roomName = new RoomName(InputView.readRoomName());
+        RoomName roomName = new RoomName(InputView.readSaveRoomName());
         chessGame.save(roomName);
         OutputView.printSaved(roomName.getRoomName());
     }
 
-    private void loadGame(final ChessGame chessGame){
+    private void loadGame(final ChessGame chessGame) {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        List<String> savedRoomNames = chessGameDao.findRoomNames();
+        OutputView.printSavedRoomNames(savedRoomNames);
+        String loadRoomName = InputView.readLoadRoomName();
+
+        if (!savedRoomNames.contains(loadRoomName)) {
+            throw new IllegalArgumentException("저장 목록에 존재하지 않는 방 이름입니다.");
+        }
+
 
     }
+
 }
