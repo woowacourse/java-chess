@@ -26,7 +26,7 @@ public final class Board {
     private final Map<Position, Piece> board;
     private Turn turn;
 
-    public Board(final BoardMaker boardMaker) {
+    private Board(final BoardMaker boardMaker) {
         this.board = boardMaker.createBoard();
         this.turn = new Turn(DEFAULT_START_TEAM);
     }
@@ -34,6 +34,10 @@ public final class Board {
     public Board(final Map<Position, Piece> board, final Turn turn) {
         this.board = board;
         this.turn = turn;
+    }
+
+    public static Board create() {
+        return new Board(new BoardMaker());
     }
 
     public void movePiece(final Position currentPosition, final Position targetPosition) {
@@ -59,7 +63,7 @@ public final class Board {
     private void validateMove(final Position currentPosition, final Position targetPosition, final Piece currentPositionPiece) {
         Direction correctDirection = Direction.computeDirection(currentPosition, targetPosition);
         if (correctDirection == Direction.KNIGHT) {
-            currentPositionPiece.validateMove(correctDirection, Collections.emptyList());
+            currentPositionPiece.validateMove(correctDirection, List.of(findPieceAt(targetPosition)));
             return;
         }
 
