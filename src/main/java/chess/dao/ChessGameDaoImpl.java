@@ -5,38 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import chess.dto.MoveDto;
-// CREATE TABLE user (
-// user_id BIGINT NOT NULL AUTO_INCREMENT,
-// user_name VARCHAR(8) NOT NULL,
-// update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-//
-// PRIMARY KEY (user_id)
-// );
 
-// CREATE TABLE chess_game (
-// chess_game_id BIGINT NOT NULL AUTO_INCREMENT,
-// user1_id BIGINT NOT NULL,
-// user2_id BIGINT NOT NULL,
-// update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-//
-// FOREIGN KEY (user1_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
-// FOREIGN KEY (user2_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
-//
-// PRIMARY KEY (user1_id, user2_id)
-// );
-
-// CREATE TABLE move (
-// 	id BIGINT NOT NULL AUTO_INCREMENT,
-// 	chess_game_id BIGINT NOT NULL,
-// 	source_column TINYINT NOT NULL,
-// 	source_row TINYINT NOT NULL,
-// 	target_column TINYINT NOT NULL,
-// 	target_row TINYINT NOT NULL,
-// 	update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-//
-// 	FOREIGN KEY (chess_game_id) REFERENCES chess_game(chess_game_id) ON UPDATE CASCADE ON DELETE CASCADE,
-// 	PRIMARY KEY (id)
-// );
 public class ChessGameDaoImpl implements ChessGameDao {
 
 	private final JdbcTemplate jdbcTemplate;
