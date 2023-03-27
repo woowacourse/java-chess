@@ -33,10 +33,21 @@ public enum PieceMapper {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PIECE_MESSAGE));
     }
 
+    public static PieceMapper from(String pieceView) {
+        return Arrays.stream(values())
+                .filter(it -> it.whiteTeamView.equalsIgnoreCase(pieceView))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_PIECE_MESSAGE));
+    }
+
     public String getPieceViewBy(Team team) {
         if (team == Team.BLACK) {
             return this.blackTeamView;
         }
         return this.whiteTeamView;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }
