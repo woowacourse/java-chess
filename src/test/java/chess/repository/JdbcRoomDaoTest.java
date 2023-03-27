@@ -1,4 +1,4 @@
-package repository;
+package chess.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

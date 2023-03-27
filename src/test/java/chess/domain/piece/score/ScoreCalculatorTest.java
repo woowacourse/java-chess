@@ -1,4 +1,4 @@
-package domain.piece.score;
+package chess.domain.piece.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.score.Score;
+import domain.piece.score.ScoreCalculator;
 import domain.piece.type.Pawn;
 import domain.piece.type.unrestricted.Queen;
 import domain.piece.type.unrestricted.Rook;

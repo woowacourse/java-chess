@@ -1,4 +1,4 @@
-package repository.game;
+package chess.repository.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,10 +7,11 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.repository.TestConnector;
 import dto.BoardDto;
 import dto.MoveHistoryDto;
-import repository.TestConnector;
 import repository.connector.JdbcConnector;
+import repository.game.JdbcGameDao;
 import repository.room.JdbcRoomDao;
 
 class JdbcGameDaoTest {

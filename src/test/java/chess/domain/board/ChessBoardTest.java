@@ -1,4 +1,4 @@
-package domain.board;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -11,6 +11,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import domain.board.ChessBoard;
+import domain.board.File;
+import domain.board.Rank;
+import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
 import domain.piece.score.Score;

@@ -1,4 +1,4 @@
-package domain.piece.type;
+package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.board.Square;
 import domain.piece.Camp;
+import domain.piece.type.Pawn;
 
 class PawnTest {
 

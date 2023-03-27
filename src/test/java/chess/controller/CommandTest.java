@@ -1,4 +1,4 @@
-package controller;
+package chess.controller;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

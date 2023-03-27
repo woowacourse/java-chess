@@ -1,4 +1,4 @@
-package domain.piece.factory;
+package chess.domain.piece.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
+import domain.piece.factory.PieceFactory;
 import domain.piece.type.Pawn;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;

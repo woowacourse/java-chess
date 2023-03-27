@@ -1,4 +1,4 @@
-package domain.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,6 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import domain.piece.Camp;
+import domain.piece.Piece;
 import domain.piece.type.Pawn;
 import domain.piece.type.restricted.King;
 import domain.piece.type.restricted.Knight;

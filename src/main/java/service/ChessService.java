@@ -22,7 +22,12 @@ import repository.game.JdbcGameDao;
 
 public class ChessService {
     private final ChessBoard chessBoard = new ChessBoard(new HashMap<>());
-    private final GameDao gameDao = new JdbcGameDao(new ProdConnector());
+
+    public ChessService(GameDao gameDao) {
+        this.gameDao = gameDao;
+    }
+
+    private final GameDao gameDao;
     private Camp currentCamp = Camp.WHITE;
     private boolean isOngoing;
 
