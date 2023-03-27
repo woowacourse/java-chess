@@ -6,8 +6,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Turn;
 import chess.domain.board.position.Position;
 import chess.domain.board.service.mapper.BoardMapper;
-import chess.domain.board.service.newDto.BoardModifyRequest;
-import chess.domain.board.service.newDto.BoardRegisterRequest;
+import chess.domain.board.service.dto.BoardModifyRequest;
+import chess.domain.board.service.dto.BoardRegisterRequest;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,13 +38,13 @@ class BoardCommandServiceTest {
     @BeforeEach
     void initializeData() {
         boardDao.save(
-                new chess.domain.board.service.newDto.BoardRegisterRequest("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
-                                                                           "WHITE")
+                new chess.domain.board.service.dto.BoardRegisterRequest("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
+                                                                        "WHITE")
         );
 
         boardDao.save(
-                new chess.domain.board.service.newDto.BoardRegisterRequest("P : 3 7, k : 4 7, p : 5 7",
-                                                                           "WHITE")
+                new chess.domain.board.service.dto.BoardRegisterRequest("P : 3 7, k : 4 7, p : 5 7",
+                                                                        "WHITE")
                 );
     }
 

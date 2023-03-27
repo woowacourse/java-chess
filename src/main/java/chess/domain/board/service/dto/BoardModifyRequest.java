@@ -1,17 +1,14 @@
 package chess.domain.board.service.dto;
 
-import chess.domain.board.Board;
-import chess.domain.piece.Color;
-
 public class BoardModifyRequest {
 
     private final Long id;
-    private final Board board;
-    private final Color turn;
+    private final String position;
+    private final String turn;
 
-    public BoardModifyRequest(final Long id, final Board board, final Color turn) {
+    public BoardModifyRequest(final Long id, final String position, final String turn) {
         this.id = id;
-        this.board = board;
+        this.position = position;
         this.turn = turn;
     }
 
@@ -19,11 +16,11 @@ public class BoardModifyRequest {
         return id;
     }
 
-    public Board board() {
-        return board;
+    public String position() {
+        return position;
     }
 
-    public Color turn() {
+    public String turn() {
         return turn;
     }
 }

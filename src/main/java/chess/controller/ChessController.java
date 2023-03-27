@@ -9,9 +9,6 @@ import chess.domain.board.search.BoardSearch;
 import chess.domain.board.service.BoardCommandService;
 import chess.domain.board.service.BoardQueryService;
 import chess.domain.board.service.dto.AllBoardSearchResponse;
-import chess.domain.board.service.dto.BoardModifyRequest;
-import chess.domain.board.service.dto.BoardRegisterRequest;
-import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.piece.Color;
 import chess.view.Command;
 import chess.view.InputView;
@@ -50,8 +47,8 @@ public class ChessController {
         Board board = initializeBoard();
 
         if (Command.isNewGame(newGameCommand)) {
-            final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(board, turn);
-            savedId = boardCommandService.registerBoard(boardRegisterRequest);
+//            final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(board, turn);
+//            savedId = boardCommandService.registerBoard(boardRegisterRequest);
         }
 
         if (Command.isLoadGame(newGameCommand)) {
@@ -67,10 +64,10 @@ public class ChessController {
 
             savedId = loadedGameNumber;
 
-            final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(loadedGameNumber);
-
-            board = new Board(boardSearchResponse.chessBoard());
-            turn = Color.valueOf(boardSearchResponse.turn());
+//            final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(loadedGameNumber);
+//
+////            board = new Board(boardSearchResponse.chessBoard());
+//            turn = Color.valueOf(boardSearchResponse.turn());
         }
 
         final String command = InputView.readStartCommand();
@@ -84,7 +81,7 @@ public class ChessController {
 
     private Board initializeBoard() {
         final BoardFactory boardFactory = new BoardFactory();
-        return new Board(boardFactory);
+        return null;
     }
 
     private void startGame(final Board board, Color turn, Long boardId) {
@@ -126,8 +123,8 @@ public class ChessController {
     }
 
     private void end(final Long boardId, final Board board, final Color turn) {
-        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, turn);
-        boardCommandService.modifyBoard(boardModifyRequest);
+//        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, turn);
+//        boardCommandService.modifyBoard(boardModifyRequest);
     }
 
     private void status(final Board board, final Long boardId, final Color turn) {
@@ -137,8 +134,8 @@ public class ChessController {
         final Score whiteScore = boardScore.calculateBoardScoreBy(Color.WHITE);
 
         OutputView.printWinner(whoIsWinner(blackScore, whiteScore), whiteScore, blackScore);
-        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, turn);
-        boardCommandService.modifyBoard(boardModifyRequest);
+//        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, turn);
+//        boardCommandService.modifyBoard(boardModifyRequest);
     }
 
     private Color whoIsWinner(final Score blackScore, final Score whiteScore) {

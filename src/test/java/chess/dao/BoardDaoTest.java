@@ -1,8 +1,8 @@
 package chess.dao;
 
-import chess.domain.board.service.newDto.BoardModifyRequest;
-import chess.domain.board.service.newDto.BoardRegisterRequest;
-import chess.domain.board.service.newDto.BoardSearchResponse;
+import chess.domain.board.service.dto.BoardModifyRequest;
+import chess.domain.board.service.dto.BoardRegisterRequest;
+import chess.domain.board.service.dto.BoardSearchResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

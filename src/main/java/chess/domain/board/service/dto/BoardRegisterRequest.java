@@ -1,23 +1,20 @@
 package chess.domain.board.service.dto;
 
-import chess.domain.board.Board;
-import chess.domain.piece.Color;
-
 public class BoardRegisterRequest {
 
-    private final Board board;
-    private final Color turn;
+    private final String position;
+    private final String turn;
 
-    public BoardRegisterRequest(final Board board, final Color turn) {
-        this.board = board;
+    public BoardRegisterRequest(final String position, final String turn) {
+        this.position = position;
         this.turn = turn;
     }
 
-    public Board board() {
-        return board;
+    public String position() {
+        return position;
     }
 
-    public Color turn() {
+    public String turn() {
         return turn;
     }
 }

@@ -1,22 +1,23 @@
 package chess.domain.board.service.dto;
 
-import chess.domain.board.position.Position;
-import chess.domain.piece.Piece;
-
-import java.util.Map;
-
 public class BoardSearchResponse {
 
-    private final Map<Position, Piece> chessBoard;
+    private final Long id;
+    private final String position;
     private final String turn;
 
-    public BoardSearchResponse(final Map<Position, Piece> chessBoard, final String turn) {
-        this.chessBoard = chessBoard;
+    public BoardSearchResponse(final Long id, final String position, final String turn) {
+        this.id = id;
+        this.position = position;
         this.turn = turn;
     }
 
-    public Map<Position, Piece> chessBoard() {
-        return chessBoard;
+    public Long id() {
+        return id;
+    }
+
+    public String position() {
+        return position;
     }
 
     public String turn() {

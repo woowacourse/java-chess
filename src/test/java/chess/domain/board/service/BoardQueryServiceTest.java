@@ -7,7 +7,7 @@ import chess.domain.board.Turn;
 import chess.domain.board.position.Position;
 import chess.domain.board.service.dto.AllBoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
-import chess.domain.board.service.newDto.BoardRegisterRequest;
+import chess.domain.board.service.dto.BoardRegisterRequest;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.AfterEach;

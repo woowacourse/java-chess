@@ -1,14 +1,14 @@
 package chess.config;
 
-import chess.domain.board.repository.BoardRepository;
+import chess.dao.BoardDao;
 import chess.domain.board.service.BoardCommandService;
 import chess.domain.board.service.BoardQueryService;
 import chess.domain.board.service.mapper.BoardMapper;
 
 public class ChessConfigure {
 
-    public BoardRepository boardRepository() {
-        return new BoardRepository();
+    public BoardDao boardDao() {
+        return new BoardDao();
     }
 
     public BoardMapper boardMapper() {
@@ -16,10 +16,10 @@ public class ChessConfigure {
     }
 
     public BoardQueryService boardQueryService() {
-        return new BoardQueryService(boardRepository(), boardMapper());
+        return new BoardQueryService(boardDao(), boardMapper());
     }
 
     public BoardCommandService boardCommandService() {
-        return new BoardCommandService(boardRepository(), boardMapper());
+        return new BoardCommandService(boardDao(), boardMapper());
     }
 }

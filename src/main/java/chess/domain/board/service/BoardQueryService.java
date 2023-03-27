@@ -4,7 +4,7 @@ import chess.dao.BoardDao;
 import chess.domain.board.Board;
 import chess.domain.board.service.dto.AllBoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
-import chess.domain.board.service.newDto.BoardSearchResponse;
+import chess.domain.board.service.dto.BoardSearchResponse;
 
 import java.util.ArrayList;
 import java.util.List;

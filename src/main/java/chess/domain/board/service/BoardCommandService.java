@@ -2,8 +2,8 @@ package chess.domain.board.service;
 
 import chess.dao.BoardDao;
 import chess.domain.board.service.mapper.BoardMapper;
-import chess.domain.board.service.newDto.BoardModifyRequest;
-import chess.domain.board.service.newDto.BoardRegisterRequest;
+import chess.domain.board.service.dto.BoardModifyRequest;
+import chess.domain.board.service.dto.BoardRegisterRequest;
 
 public class BoardCommandService {
 
