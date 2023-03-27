@@ -55,7 +55,7 @@ public class ChessBoard {
         pieces.put(from, EmptyPiece.getInstance());
         if (target instanceof InitialPawn) {
             Side targetSide = Side.valueOf(target.getSide());
-            pieces.put(to, InitialPawn.from(targetSide));
+            pieces.put(to, Pawn.from(targetSide));
         }
     }
 
