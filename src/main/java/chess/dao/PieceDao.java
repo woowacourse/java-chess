@@ -43,7 +43,7 @@ public class PieceDao {
     }
 
     public ChessBoard findAllByGameId(final long gameId) {
-        String queryStatement = "SELECT * FROM piece WHERE game_id = ?";
+        String queryStatement = "SELECT type, position, color FROM piece WHERE game_id = ?";
 
         return jdbcTemplate.query(queryStatement, gameId, (resultSet) -> {
             Map<Position, Piece> piecesByPosition = new HashMap<>();

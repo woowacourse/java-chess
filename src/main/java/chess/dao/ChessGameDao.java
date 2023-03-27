@@ -33,7 +33,7 @@ public class ChessGameDao {
     }
 
     public Optional<ChessGameDto> findLastGame() {
-        String queryStatement = "SELECT * FROM game WHERE is_end IS FALSE ORDER BY game_id DESC LIMIT 1";
+        String queryStatement = "SELECT game_id, turn FROM game WHERE is_end IS FALSE ORDER BY game_id DESC LIMIT 1";
 
         return jdbcTemplate.queryWithNoCondition(queryStatement, (resultSet) -> {
             if (resultSet.next()) {
