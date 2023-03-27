@@ -21,45 +21,43 @@ final class PiecesTest {
 
     @BeforeEach
     void setUp() {
-        this.whitePieces = Pieces.createWhitePieces();
-        blackPieces = Pieces.createBlackPieces(whitePieces);
+        Pieces pieces = new Pieces();
+        this.whitePieces = pieces.createWhitePieces();
+        blackPieces = pieces.createBlackPieces();
     }
 
     @Test
     @DisplayName("체스 판 기물들이 올바른 개수로 생성되어야 한다.")
     void createWhitePieces() {
-        // given, when
-        Pieces pieces = Pieces.createWhitePieces();
-
-        // then
+        // when, then
         assertAll(
                 () -> {
-                    long count = pieces.getShapeCount(PAWN);
+                    long count = whitePieces.getShapeCount(PAWN);
                     assertThat(count).isEqualTo(8);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(BISHOP);
+                    long count = whitePieces.getShapeCount(BISHOP);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(ROOK);
+                    long count = whitePieces.getShapeCount(ROOK);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(BISHOP);
+                    long count = whitePieces.getShapeCount(BISHOP);
                     assertThat(count).isEqualTo(2);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(KING);
+                    long count = whitePieces.getShapeCount(KING);
                     assertThat(count).isEqualTo(1);
                 },
 
                 () -> {
-                    long count = pieces.getShapeCount(QUEEN);
+                    long count = whitePieces.getShapeCount(QUEEN);
                     assertThat(count).isEqualTo(1);
                 }
         );

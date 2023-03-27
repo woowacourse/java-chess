@@ -1,10 +1,9 @@
 package chess.controller;
 
 import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Pieces;
-import chess.domain.Player;
+import chess.domain.CommandAction;
 import chess.domain.Players;
+import chess.domain.factory.InitPlayersFactory;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
 import chess.dto.response.PiecesResponse;
@@ -19,20 +18,20 @@ public final class ChessGameController {
 
     private Players players;
 
-    private final Map<Command, Action> commands = Map.of(
+    private final CommandAction commandAction = new CommandAction(Map.of(
             Command.START, this::start,
             Command.MOVE, this::move,
             Command.END, this::end,
-            Command.STATUS, this::status
+            Command.STATUS, this::status)
     );
 
     public void run() {
-        initializeChessBoard();
+        players = InitPlayersFactory.initializeChessBoard();
         OutputView.printStartGame();
         boolean isNotEnd = true;
         while (isOnGoing(isNotEnd)) {
             Commands commandWithArguments = readCommand(InputView::getCommands);
-            this.commands.get(commandWithArguments.getCommand()).execute(commandWithArguments);
+            commandAction.execute(commandWithArguments);
             isNotEnd = commandWithArguments.isNotEnd();
         }
         finishGame();
@@ -61,7 +60,7 @@ public final class ChessGameController {
     }
 
     private void start(final Commands commands) {
-        initializeChessBoard();
+        players = InitPlayersFactory.initializeChessBoard();
         PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
         OutputView.printInitializedChessBoard(piecesResponse);
     }
@@ -84,44 +83,6 @@ public final class ChessGameController {
     }
 
     private void end(final Commands commands) {
-    }
-
-    private void initializeChessBoard() {
-        PieceDao dao = new PieceDaoImpl();
-
-        Pieces whitePieces = getDbWhitePieces(dao);
-        Pieces blackPieces = getDbBlackPieces(dao);
-
-        Player whitePlayer = Player.fromWhitePlayer(whitePieces);
-        Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-
-        this.players = Players.of(whitePlayer, blackPlayer);
-    }
-
-    private Pieces getDbWhitePieces(PieceDao dao) {
-        List<Piece> dbWhitePieces = dao.findPieceByColor(Color.WHITE);
-        if (dbWhitePieces.isEmpty()) {
-            Pieces whitePieces = Pieces.createWhitePieces();
-            insertAll(dao, whitePieces, Color.WHITE);
-            return whitePieces;
-        }
-        return Pieces.from(dbWhitePieces);
-    }
-
-    private Pieces getDbBlackPieces(PieceDao dao) {
-        List<Piece> dbBlackPieces = dao.findPieceByColor(Color.BLACK);
-        if (dbBlackPieces.isEmpty()) {
-            Pieces blackPieces = Pieces.createBlackPieces();
-            insertAll(dao, blackPieces, Color.BLACK);
-            return blackPieces;
-        }
-        return Pieces.from(dbBlackPieces);
-    }
-
-    private void insertAll(PieceDao dao, Pieces pieces, Color color) {
-        for (Piece piece : pieces.getPieces()) {
-            dao.create(piece, color);
-        }
     }
 
 }

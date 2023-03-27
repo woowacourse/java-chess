@@ -2,6 +2,7 @@ package chess.domain.dao;
 
 import chess.domain.Color;
 import chess.domain.Piece;
+import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.Shape;
 
@@ -37,14 +38,14 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public List<Piece> findPieceByColor(final Color color) {
-        final List<Piece>[] pieces = new List[]{new ArrayList<>()};
+        List<Pieces> pieces = new ArrayList<>();
         String query = "SELECT * FROM piece WHERE color = ?";
         processQuery(query, preparedStatement -> {
             preparedStatement.setString(1, color.name());
             ResultSet rs = preparedStatement.executeQuery();
-            pieces[0] = getResults(rs, pieceMapper);
+            pieces.add(getResults(rs, pieceMapper));
         });
-        return pieces[0];
+        return pieces.get(0).getPieces();
     }
 
     @Override
@@ -72,27 +73,26 @@ public class PieceDaoImpl implements PieceDao {
 
     public void deleteAll() {
         String query = "DELETE FROM piece";
-        processQuery(query, preparedStatement -> {
-            preparedStatement.execute();
-        });
+        processQuery(query, PreparedStatement::execute);
     }
 
     private void processQuery(String query, QueryProcessor queryProcessor) {
         try (final Connection connection = dbConnection.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             queryProcessor.process(preparedStatement);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private List<Piece> getResults(ResultSet rs, RowMapper rowMapper) throws SQLException {
+    private Pieces getResults(ResultSet rs, RowMapper rowMapper) throws SQLException {
         List<Piece> results = new ArrayList<>();
         while (rs.next()) {
             Piece result = rowMapper.run(rs);
             results.add(result);
         }
-        return results;
+        return Pieces.from(results);
     }
 
 }
