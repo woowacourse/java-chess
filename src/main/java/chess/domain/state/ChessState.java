@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.dao.InMemoryChessGameDao;
+import chess.dao.InMemoryPieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.maker.PiecesGenerator;
@@ -17,7 +19,7 @@ public abstract class ChessState {
     }
 
     public static ChessState start(final PiecesGenerator piecesGenerator) {
-        return new ChessReady(ChessGame.createWith(piecesGenerator));
+        return new ChessReady(ChessGame.createWith(piecesGenerator, new InMemoryChessGameDao(), new InMemoryPieceDao()));
     }
 
     public abstract ChessState start();

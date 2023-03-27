@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.constant.ExceptionCode;
+import chess.dao.PieceDao;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -15,13 +16,27 @@ import java.util.Set;
 public class Board {
 
     private final Set<Piece> existingPieces;
+    private final PieceDao pieceDao;
 
-    private Board(final Set<Piece> pieces) {
+    private Board(final Set<Piece> pieces, final PieceDao pieceDao) {
         this.existingPieces = pieces;
+        this.pieceDao = pieceDao;
     }
 
-    public static Board createBoardWith(final PiecesGenerator piecesGenerator) {
-        return new Board(piecesGenerator.generate());
+    public static Board createWith(final PiecesGenerator piecesGenerator, final PieceDao pieceDao) {
+        final Set<Piece> generatedPieces = piecesGenerator.generate();
+
+        for (Piece piece : generatedPieces) {
+            pieceDao.addPiece(piece);
+        }
+
+        return new Board(generatedPieces, pieceDao);
+    }
+
+    public static Board loadWith(final PiecesGenerator piecesGenerator, final PieceDao pieceDao) {
+        final Set<Piece> generatedPieces = piecesGenerator.generate();
+
+        return new Board(generatedPieces, pieceDao);
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
@@ -60,6 +75,9 @@ public class Board {
         existingPieces.remove(pieceToMove);
         existingPieces.remove(pieceInTargetPosition);
         existingPieces.add(movedPiece);
+        pieceDao.deletePiece(pieceInTargetPosition);
+        pieceDao.deletePiece(pieceToMove);
+        pieceDao.addPiece(movedPiece);
     }
 
     public boolean isSameColor(final Position position, final Color otherColor) {
@@ -73,5 +91,9 @@ public class Board {
     public boolean isKingExist(final Color color) {
         return existingPieces.stream()
                 .anyMatch(piece -> piece.isSameColor(color) && PieceType.findByPiece(piece).equals(PieceType.KING));
+    }
+
+    public void removeAllPieceInDb() {
+        pieceDao.deleteAllInGame();
     }
 }

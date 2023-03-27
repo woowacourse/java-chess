@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.constant.ExceptionCode;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -32,16 +34,34 @@ public class ChessGame {
         ));
     }
 
+    private final ChessGameDao chessGameDao;
     private final Board board;
     private Color currentTurnColor;
 
-    private ChessGame(final Board board) {
+    private ChessGame(final Board board, final Color currentTurnColor, final ChessGameDao chessGameDao) {
         this.board = board;
-        this.currentTurnColor = Color.WHITE;
+        this.chessGameDao = chessGameDao;
+        this.currentTurnColor = currentTurnColor;
     }
 
-    public static ChessGame createWith(final PiecesGenerator piecesGenerator) {
-        return new ChessGame(Board.createBoardWith(piecesGenerator));
+    public static ChessGame createWith(final PiecesGenerator piecesGenerator, final ChessGameDao chessGameDao, final PieceDao pieceDao
+    ) {
+        chessGameDao.makeGameRoom(Color.WHITE);
+        return new ChessGame(Board.createWith(piecesGenerator, pieceDao
+        ),
+                Color.WHITE,
+                chessGameDao
+        );
+    }
+
+    public static ChessGame loadWith(final PiecesGenerator piecesGenerator, final ChessGameDao chessGameDao, final PieceDao pieceDao
+    ) {
+        final Color currentTurnColor = chessGameDao.findCurrentTurnColor();
+        return new ChessGame(Board.loadWith(piecesGenerator, pieceDao
+        ),
+                currentTurnColor,
+                chessGameDao
+        );
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
@@ -58,6 +78,7 @@ public class ChessGame {
 
     private void changeTurnColor() {
         currentTurnColor = currentTurnColor.getOppositeColor();
+        chessGameDao.updateCurrentTurnColor(currentTurnColor);
     }
 
     public boolean isKingCaught() {
@@ -127,6 +148,11 @@ public class ChessGame {
             return score * 2;
         }
         return score;
+    }
+
+    public void removeFromDb() {
+        chessGameDao.removeGameDataFromDb();
+        board.removeAllPieceInDb();
     }
 
     public Set<Piece> getExistingPieces() {

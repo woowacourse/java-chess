@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.TestPiecesGenerator;
 import chess.constant.ExceptionCode;
+import chess.dao.InMemoryPieceDao;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -47,7 +48,7 @@ class BoardTest {
                 new Pawn(A2, WHITE),
                 new Rook(A1, WHITE)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
         final Set<Piece> pieces = board.getExistingPieces();
 
         assertThat(pieces).extracting(Piece::getPosition, Piece::getColor, Piece::getClass)
@@ -66,7 +67,7 @@ class BoardTest {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D8, BLACK)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         board.move(D8, D5);
 
@@ -83,7 +84,7 @@ class BoardTest {
                 new Queen(D8, BLACK),
                 new Pawn(D5, WHITE)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         board.move(D8, D5);
         final Set<Piece> pieces = board.getExistingPieces();
@@ -99,7 +100,7 @@ class BoardTest {
     @DisplayName("현재 위치에 말이 없다면, 예외가 발생한다")
     void empty_position_access_throw_exception() {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of());
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         assertThatThrownBy(() -> board.move(D8, D5))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -112,7 +113,7 @@ class BoardTest {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D8, BLACK)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         assertThatThrownBy(() -> board.move(D8, E6))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -126,7 +127,7 @@ class BoardTest {
                 new Queen(D8, BLACK),
                 new Pawn(D7, BLACK)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         assertThatThrownBy(() -> board.move(D8, D5))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -140,7 +141,7 @@ class BoardTest {
                 new Queen(D8, BLACK),
                 new Pawn(D7, BLACK)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         assertThatThrownBy(() -> board.move(D8, D7))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -154,7 +155,7 @@ class BoardTest {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(List.of(
                 new Queen(D8, BLACK)
         ));
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         final boolean actual = board.isSameColor(D8, color);
 
@@ -166,7 +167,7 @@ class BoardTest {
     @DisplayName("특정 색상의 왕이 존재하는지 확인한다")
     void king_exist_check_test(final List<Piece> pieces, final Color checkingColor, final boolean expected) {
         final PiecesGenerator piecesGenerator = new TestPiecesGenerator(pieces);
-        final Board board = Board.createBoardWith(piecesGenerator);
+        final Board board = Board.createWith(piecesGenerator, new InMemoryPieceDao());
 
         final boolean actual = board.isKingExist(checkingColor);
 

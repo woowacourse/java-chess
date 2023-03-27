@@ -2,6 +2,8 @@ package chess.domain.state;
 
 import chess.TestPiecesGenerator;
 import chess.constant.ExceptionCode;
+import chess.dao.InMemoryChessGameDao;
+import chess.dao.InMemoryPieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -36,7 +38,7 @@ class ChessRunningTest {
     @Test
     @DisplayName("게임 시작 명령시 예외를 발생시킨다")
     void start_chess_command_throw_exception() {
-        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces)));
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces), new InMemoryChessGameDao(), new InMemoryPieceDao()));
 
         assertThatThrownBy(() -> chessRunning.start())
                 .isInstanceOf(IllegalStateException.class)
@@ -46,7 +48,7 @@ class ChessRunningTest {
     @Test
     @DisplayName("이동 명령시 진행중인 상태의 체스를 반환한다")
     void move_chess_command_throw_exception() {
-        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces)));
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces), new InMemoryChessGameDao(), new InMemoryPieceDao()));
 
         final ChessState state = chessRunning.move(B5, B6);
 
@@ -56,7 +58,7 @@ class ChessRunningTest {
     @Test
     @DisplayName("게임 종료 명령시 상태를 종료 변경한다")
     void end_chess_test() {
-        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces)));
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces), new InMemoryChessGameDao(), new InMemoryPieceDao()));
 
         final ChessState state = chessRunning.end();
 
@@ -66,7 +68,7 @@ class ChessRunningTest {
     @Test
     @DisplayName("말들의 점수 상태를 반환한다")
     void get_score_from_status_test() {
-        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new StartingPiecesGenerator()));
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new StartingPiecesGenerator(), new InMemoryChessGameDao(), new InMemoryPieceDao()));
 
         final GameStatus status = chessRunning.status();
 
@@ -80,7 +82,7 @@ class ChessRunningTest {
     @Test
     @DisplayName("체스말을 가져온다")
     void getting_existing_piece_test() {
-        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces)));
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces), new InMemoryChessGameDao(), new InMemoryPieceDao()));
 
         final Set<Piece> existingPieces = chessRunning.getExistingPieces();
 
@@ -90,7 +92,7 @@ class ChessRunningTest {
     @Test
     @DisplayName("게임 종료 여부를 확인한다")
     void check_if_is_end_test() {
-        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces)));
+        final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(pieces), new InMemoryChessGameDao(), new InMemoryPieceDao()));
 
         final boolean isEnd = chessRunning.isEnd();
 
@@ -101,10 +103,11 @@ class ChessRunningTest {
     @DisplayName("왕이 잡히면 게임오버 상태를 반환한다")
     void king_caught_state_check_test() {
         final ChessRunning chessRunning = new ChessRunning(ChessGame.createWith(new TestPiecesGenerator(List.of(
-                new King(E1, WHITE),
-                new King(E8, BLACK),
-                new Queen(B5, WHITE)
-        ))));
+                        new King(E1, WHITE),
+                        new King(E8, BLACK),
+                        new Queen(B5, WHITE))),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao()));
 
         final ChessState resultState = chessRunning.move(B5, E8);
 
