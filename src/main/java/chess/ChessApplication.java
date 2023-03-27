@@ -77,7 +77,7 @@ public class ChessApplication {
 		final Piece candidateKing = board.move(command.source(), command.target());
 		if (board.isKing(candidateKing)) {
 			printKingDead();
-			chessDao.init(board);
+			chessDao.init();
 			return;
 		}
 		chessDao.update(board);

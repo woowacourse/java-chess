@@ -113,7 +113,7 @@ public class ChessBoardDao implements ChessDao {
 	}
 
 	@Override
-	public void init(Board board) {
+	public void init() {
 		final var query = "TRUNCATE TABLE chess_game";
 		try (final var connection = dbConnection.getConnection();
 			 final var preparedStatement = connection.prepareStatement(query)) {

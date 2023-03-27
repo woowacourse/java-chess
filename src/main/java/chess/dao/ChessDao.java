@@ -9,5 +9,5 @@ public interface ChessDao {
 
 	void update(Board board);
 
-	void init(Board board);
+	void init();
 }
