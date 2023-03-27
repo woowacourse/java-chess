@@ -33,7 +33,7 @@ public class MovementDao {
     }
 
     public List<MovementDto> findAllBy(final Long gameId) {
-        final String sql = "SELECT * FROM MOVEMENT WHERE game_id = ? ORDER BY id DESC";
+        final String sql = "SELECT * FROM MOVEMENT WHERE game_id = ? ORDER BY id ASC";
         final List<MovementDto> moveMappers = new ArrayList<>();
 
         try (
