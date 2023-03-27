@@ -103,6 +103,7 @@ public class ChessController {
         validateNotExistGame(gameId);
         chessGame.load(gameId, chessGameDao::findBoard, chessGameDao::findGameState);
         OutputView.printLoadMessage();
+        printCheckWarning();
         OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
     }
