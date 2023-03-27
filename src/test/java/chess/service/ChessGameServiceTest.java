@@ -56,8 +56,9 @@ class ChessGameServiceTest {
         // then
         final Map<Position, Piece> squares = chessGameService.getChessBoard().getSquares();
 
-        assertThat(squares.get(E2)).isEqualTo(Piece.EMPTY);
-        assertThat(squares.get(B7)).isEqualTo(Piece.EMPTY);
+        assertThat(squares)
+                .containsEntry(E2, Piece.EMPTY)
+                .containsEntry(B7, Piece.EMPTY);
         assertThat(squares.get(E3).isSameType(PieceType.PAWN)).isTrue();
         assertThat(squares.get(B6).isSameType(PieceType.PAWN)).isTrue();
         assertThat(chessMovementDao.findAll()).hasSize(2);
@@ -75,7 +76,7 @@ class ChessGameServiceTest {
         // then
         final Map<Position, Piece> squares = chessGameService.getChessBoard().getSquares();
 
-        assertThat(squares.get(E2)).isEqualTo(Piece.EMPTY);
+        assertThat(squares).containsEntry(E2, Piece.EMPTY);
         assertThat(squares.get(E3).isSameType(PieceType.PAWN)).isTrue();
     }
 
