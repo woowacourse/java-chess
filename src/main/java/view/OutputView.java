@@ -1,9 +1,11 @@
 package view;
 
+import dao.GameDto;
 import domain.game.Position;
 import domain.game.Rank;
 import domain.game.Score;
 import domain.game.Side;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -29,6 +31,7 @@ public class OutputView {
     public void printGameGuideMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 찾기 : search");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
         System.out.println("> 게임 현황 : status");
@@ -51,6 +54,16 @@ public class OutputView {
         System.out.println("게임 상태 : " + gameStatusText);
         System.out.println("White 점수 : " + whiteScore.getNumber());
         System.out.println("Black 점수 : " + blackScore.getNumber());
+        System.out.println();
+    }
+
+    public void printGamesOfUser(List<GameDto> gameDtos) {
+        System.out.println("ID     | 사용자 이름        | 제목");
+        for (GameDto gameDto : gameDtos) {
+            System.out.print(gameDto.getGameId() + "      ");
+            System.out.print(gameDto.getUserName() + "     ");
+            System.out.print(gameDto.getTitle());
+        }
         System.out.println();
     }
 }

@@ -5,14 +5,14 @@ import java.util.Arrays;
 
 
 public enum RankMapper {
-    ONE("1", Rank.ONE),
-    TWO("2", Rank.TWO),
-    THREE("3", Rank.THREE),
-    FOUR("4", Rank.FOUR),
-    FIVE("5", Rank.FIVE),
-    SIX("6", Rank.SIX),
+    EIGHT("8", Rank.EIGHT),
     SEVEN("7", Rank.SEVEN),
-    EIGHT("8", Rank.EIGHT);
+    SIX("6", Rank.SIX),
+    FIVE("5", Rank.FIVE),
+    FOUR("4", Rank.FOUR),
+    THREE("3", Rank.THREE),
+    TWO("2", Rank.TWO),
+    ONE("1", Rank.ONE);
 
     private final String text;
     private final Rank rank;

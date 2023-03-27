@@ -1,7 +1,6 @@
 package controller.command;
 
-public class Status implements Command {
-
+public class Search implements Command {
     @Override
     public boolean isStart() {
         return false;
@@ -9,7 +8,7 @@ public class Status implements Command {
 
     @Override
     public boolean isSearch() {
-        return false;
+        return true;
     }
 
     @Override
@@ -18,13 +17,13 @@ public class Status implements Command {
     }
 
     @Override
-    public boolean isStatus() {
-        return true;
+    public boolean isEnd() {
+        return false;
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public boolean isStatus() {
+        return true;
     }
 
     @Override

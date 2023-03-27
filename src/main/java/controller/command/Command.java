@@ -8,4 +8,8 @@ public interface Command {
     boolean isEnd();
 
     boolean isStatus();
+
+    boolean isSearch();
+
+    boolean isContinue();
 }

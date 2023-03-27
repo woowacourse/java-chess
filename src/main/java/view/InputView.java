@@ -1,8 +1,10 @@
 package view;
 
 import controller.command.Command;
+import controller.command.Continue;
 import controller.command.End;
 import controller.command.Move;
+import controller.command.Search;
 import controller.command.Start;
 import controller.command.Status;
 import java.util.Arrays;
@@ -17,6 +19,9 @@ public class InputView {
         String userInput = SCANNER.nextLine();
         if (userInput.equals("start")) {
             return new Start();
+        }
+        if (userInput.equals("search")) {
+            return new Search();
         }
         if (userInput.equals("end")) {
             return new End();
@@ -46,5 +51,29 @@ public class InputView {
     public String requestUserName() {
         System.out.println("사용자 이름을 입력하세요.");
         return SCANNER.nextLine();
+    }
+
+    public String requestGameTitle() {
+        System.out.println("게임 제목을 입력하세요.");
+        return SCANNER.nextLine();
+    }
+
+    public String requestGameId() {
+        System.out.println("입장을 원하는 게임의 ID를 입력하세요.");
+        return SCANNER.nextLine();
+    }
+
+    public Command requestStartCommand() {
+        System.out.println("다시 시작을 원하면 continue, 아니라면 end를 입력해주세요.");
+        String startCommandInput = SCANNER.nextLine();
+        if (startCommandInput.equals("continue")) {
+            return new Continue();
+        }
+        if (startCommandInput.equals("end")) {
+            return new End();
+        }
+        System.out.println("잘못된 입력입니다.");
+        System.out.println();
+        return requestStartCommand();
     }
 }

@@ -18,15 +18,19 @@ public class Game {
     private static final int NO_PENALTY = 0;
 
     private final Map<Position, Piece> chessBoard;
+    private final String userName;
+    private final String title;
     private Side sideOfTurn;
 
-    public Game(Map<Position, Piece> chessBoard, Side sideOfTurn) {
+    public Game(Map<Position, Piece> chessBoard, String userName, String title, Side sideOfTurn) {
         this.chessBoard = chessBoard;
+        this.userName = userName;
+        this.title = title;
         this.sideOfTurn = sideOfTurn;
     }
 
-    public static Game create() {
-        return new Game(new ChessBoardGenerator().generate(), WHITE);
+    public static Game create(String userName, String title) {
+        return new Game(new ChessBoardGenerator().generate(), userName, title, WHITE);
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
@@ -91,10 +95,6 @@ public class Game {
     private void movePiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
         this.chessBoard.put(sourcePosition, new EmptyPiece());
         this.chessBoard.put(targetPosition, sourcePiece);
-    }
-
-    public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
     }
 
     public Side getSideOfTurn() {
@@ -179,5 +179,17 @@ public class Game {
             return PieceCategory.BLACK_PAWN;
         }
         throw new IllegalStateException("서버 내부 에러 - Pawn은 White 또는 Black 진영이어야 합니다.");
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

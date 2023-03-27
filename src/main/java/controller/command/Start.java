@@ -7,6 +7,11 @@ public class Start implements Command {
     }
 
     @Override
+    public boolean isSearch() {
+        return false;
+    }
+
+    @Override
     public boolean isMove() {
         return false;
     }
@@ -18,6 +23,11 @@ public class Start implements Command {
 
     @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isContinue() {
         return false;
     }
 }

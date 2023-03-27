@@ -37,6 +37,11 @@ public class Move implements Command {
     }
 
     @Override
+    public boolean isSearch() {
+        return false;
+    }
+
+    @Override
     public boolean isMove() {
         return true;
     }
@@ -48,6 +53,11 @@ public class Move implements Command {
 
     @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isContinue() {
         return false;
     }
 
