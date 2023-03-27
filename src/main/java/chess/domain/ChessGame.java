@@ -25,15 +25,15 @@ public class ChessGame {
         this.team = team;
     }
 
-    public void movePiece(final String source, final String destination) {
-        Square src = convertSquare(source);
-        Square dst = convertSquare(destination);
-        validateSameTeam(src);
-        Piece origin = board.move(src, dst);
+    public void movePiece(final String sourceInput, final String destinationInput) {
+        Square source = convertSquare(sourceInput);
+        Square destination = convertSquare(destinationInput);
+        validateSameTeam(source);
+        Piece origin = board.move(source, destination);
         BoardDao boardDao = new BoardDao();
-        boardDao.update(src, dst);
+        boardDao.update(source, destination);
         if (origin.getPieceType() != PieceType.EMPTY) {
-            boardDao.deleteBySquare(src);
+            boardDao.deleteBySquare(source);
         }
         changeTeam();
     }
@@ -50,8 +50,8 @@ public class ChessGame {
         }
     }
 
-    private void validateSameTeam(final Square src) {
-        if (!board.isSameTeam(src, team)) {
+    private void validateSameTeam(final Square source) {
+        if (!board.isSameTeam(source, team)) {
             throw new IllegalArgumentException("다른 팀 말을 움직여 주세요.");
         }
     }

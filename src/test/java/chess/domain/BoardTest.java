@@ -37,38 +37,38 @@ class BoardTest {
     @DisplayName("말은 규칙에 따라 움직인다.")
     void move() {
         Board board = new Board(BoardGenerator.init());
-        Square src = Square.of(A, TWO);
-        Square dst = Square.of(A, THREE);
+        Square source = Square.of(A, TWO);
+        Square destination = Square.of(A, THREE);
 
-        board.move(src, dst);
+        board.move(source, destination);
 
-        assertThat(board.getBoard().keySet()).contains(dst);
+        assertThat(board.getBoard().keySet()).contains(destination);
     }
 
     @Test
     @DisplayName("knight는 가는 길목에 말이 있어도 움직일 수 있다.")
     void knightCanMove() {
         Board board = new Board(BoardGenerator.init());
-        Square src = Square.of(B, ONE);
-        Square dst = Square.of(A, THREE);
+        Square source = Square.of(B, ONE);
+        Square destination = Square.of(A, THREE);
 
-        board.move(src, dst);
+        board.move(source, destination);
 
-        assertThat(board.getBoard().keySet()).contains(dst);
+        assertThat(board.getBoard().keySet()).contains(destination);
     }
 
     @Test
     @DisplayName("knight는 이동할 칸에 말이 있으면 이동할 수 없다.")
     void knightCannotMove() {
         Board board = new Board(BoardGenerator.init());
-        Square src = Square.of(A, TWO);
-        Square dst = Square.of(A, THREE);
-        board.move(src, dst);
+        Square source = Square.of(A, TWO);
+        Square destination = Square.of(A, THREE);
+        board.move(source, destination);
 
-        Square src1 = Square.of(B, ONE);
-        Square dst1 = Square.of(A, THREE);
+        Square source1 = Square.of(B, ONE);
+        Square destination1 = Square.of(A, THREE);
 
-        assertThrows(IllegalArgumentException.class, () -> board.move(src1, dst1));
+        assertThrows(IllegalArgumentException.class, () -> board.move(source1, destination1));
     }
 
     @Nested
@@ -80,35 +80,35 @@ class BoardTest {
         void boardInit() {
             board = new Board(BoardGenerator.init());
 
-            Square src = Square.of(A, TWO);
-            Square dst = Square.of(A, FOUR);
-            board.move(src, dst);
+            Square source = Square.of(A, TWO);
+            Square destination = Square.of(A, FOUR);
+            board.move(source, destination);
 
-            src = Square.of(B, TWO);
-            dst = Square.of(B, FOUR);
-            board.move(src, dst);
+            source = Square.of(B, TWO);
+            destination = Square.of(B, FOUR);
+            board.move(source, destination);
         }
 
         @DisplayName("knight를 제외한 다른 말들은 가는 길목에 말이 없어야 이동할 수 있다.")
         @ParameterizedTest(name = "source: ({0}, {1}), destination: ({2}, {3})")
         @CsvSource({"A,ONE,A,THREE", "C,ONE,B,TWO"})
-        void pieceCanMove(File srcFile, Rank srcRank, File dstFile, Rank dstRank) {
-            Square src = Square.of(srcFile, srcRank);
-            Square dst = Square.of(dstFile, dstRank);
+        void pieceCanMove(File sourceFile, Rank sourceRank, File destinationFile, Rank destinationRank) {
+            Square source = Square.of(sourceFile, sourceRank);
+            Square destination = Square.of(destinationFile, destinationRank);
 
-            board.move(src, dst);
+            board.move(source, destination);
 
-            assertThat(board.getBoard().keySet()).contains(dst);
+            assertThat(board.getBoard().keySet()).contains(destination);
         }
 
         @DisplayName("knight를 제외한 다른 말들은 가는 길목에 말이 있으면 이동할 수 없다.")
         @ParameterizedTest(name = "source: ({0}, {1}), destination: ({2}, {3})")
         @CsvSource({"A,ONE,A,FIVE", "D,ONE,B,THREE"})
-        void pieceCannotMove(File srcFile, Rank srcRank, File dstFile, Rank dstRank) {
-            Square src = Square.of(srcFile, srcRank);
-            Square dst = Square.of(dstFile, dstRank);
+        void pieceCannotMove(File sourceFile, Rank sourceRank, File destinationFile, Rank destinationRank) {
+            Square source = Square.of(sourceFile, sourceRank);
+            Square destination = Square.of(destinationFile, destinationRank);
 
-            assertThatThrownBy(() -> board.move(src, dst))
+            assertThatThrownBy(() -> board.move(source, destination))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이동 경로에 말이 존재합니다.");
         }
@@ -128,17 +128,17 @@ class BoardTest {
     void calculateWhiteTeamScore() {
         Board board = new Board(BoardGenerator.init());
 
-        Square src = Square.of(A, TWO);
-        Square dst = Square.of(A, FOUR);
-        board.move(src, dst);
+        Square source = Square.of(A, TWO);
+        Square destination = Square.of(A, FOUR);
+        board.move(source, destination);
 
-        src = Square.of(B, SEVEN);
-        dst = Square.of(B, FIVE);
-        board.move(src, dst);
+        source = Square.of(B, SEVEN);
+        destination = Square.of(B, FIVE);
+        board.move(source, destination);
 
-        src = Square.of(A, FOUR);
-        dst = Square.of(B, FIVE);
-        board.move(src, dst);
+        source = Square.of(A, FOUR);
+        destination = Square.of(B, FIVE);
+        board.move(source, destination);
 
         assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(37.0);
         assertThat(board.calculateTeamScore(Team.BLACK)).isEqualTo(37.0);

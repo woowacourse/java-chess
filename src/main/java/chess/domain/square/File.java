@@ -20,8 +20,8 @@ public enum File {
         this.index = index;
     }
 
-    public static int calculate(final File src, final File dst) {
-        return src.index - dst.index;
+    public static int calculate(final File source, final File destination) {
+        return source.index - destination.index;
     }
 
     public File next(final int direction) {

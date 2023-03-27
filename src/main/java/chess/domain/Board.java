@@ -20,36 +20,36 @@ public class Board {
         this.board = board;
     }
 
-    public Piece move(final Square src, final Square dst) {
-        if (!canMove(src, dst)) {
+    public Piece move(final Square source, final Square destination) {
+        if (!canMove(source, destination)) {
             throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
-        Piece srcPiece = board.getOrDefault(src, new Empty());
-        if (srcPiece.getPieceType() == PAWN && srcPiece.isInitialPawn()) {
-            srcPiece = new Pawn(srcPiece.getTeam());
+        Piece sourcePiece = board.getOrDefault(source, new Empty());
+        if (sourcePiece.getPieceType() == PAWN && sourcePiece.isInitialPawn()) {
+            sourcePiece = new Pawn(sourcePiece.getTeam());
         }
-        board.put(dst, srcPiece);
-        board.remove(src);
+        board.put(destination, sourcePiece);
+        board.remove(source);
 
-        return srcPiece;
+        return sourcePiece;
     }
 
-    private boolean canMove(final Square src, final Square dst) {
-        int fileInterval = File.calculate(src.getFile(), dst.getFile());
-        int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
+    private boolean canMove(final Square source, final Square destination) {
+        int fileInterval = File.calculate(source.getFile(), destination.getFile());
+        int rankInterval = Rank.calculate(source.getRank(), destination.getRank());
 
-        Piece srcPiece = board.getOrDefault(src, new Empty());
-        Piece dstPiece = board.getOrDefault(dst, new Empty());
-        srcPiece.validateMovement(fileInterval, rankInterval, dstPiece);
+        Piece sourcePiece = board.getOrDefault(source, new Empty());
+        Piece destinationPiece = board.getOrDefault(destination, new Empty());
+        sourcePiece.validateMovement(fileInterval, rankInterval, destinationPiece);
 
-        if (srcPiece.getPieceType() == KNIGHT) {
+        if (sourcePiece.getPieceType() == KNIGHT) {
             return true;
         }
-        return canMoveNextSquare(src, fileInterval, rankInterval);
+        return canMoveNextSquare(source, fileInterval, rankInterval);
     }
 
-    private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
-        Square square = src;
+    private boolean canMoveNextSquare(final Square source, final int fileInterval, final int rankInterval) {
+        Square square = source;
         int fileMoveDirection = getMoveDirection(fileInterval);
         int rankMoveDirection = getMoveDirection(rankInterval);
         int interval = getMoveInterval(fileInterval, rankInterval);
@@ -71,8 +71,8 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
-    public boolean isSameTeam(final Square src, final Team team) {
-        Piece piece = findPieceBy(src);
+    public boolean isSameTeam(final Square source, final Team team) {
+        Piece piece = findPieceBy(source);
         return piece.getTeam() == team;
     }
 

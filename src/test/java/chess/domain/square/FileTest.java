@@ -11,15 +11,15 @@ class FileTest {
     @DisplayName("현재 칸과 이동할 칸의 File 차를 계산한다.")
     @ParameterizedTest(name = "현재 file: {0}, 이동할 file: {1} => 차: {2}")
     @CsvSource({"a,b,-1", "a,h,-7", "c,a,2"})
-    void calculateFileInterval_success(String src, String dst, int interval) {
-        assertThat(File.calculate(File.findFileBy(src), File.findFileBy(dst))).isEqualTo(interval);
+    void calculateFileInterval_success(String source, String destination, int interval) {
+        assertThat(File.calculate(File.findFileBy(source), File.findFileBy(destination))).isEqualTo(interval);
     }
 
     @DisplayName("File의 범위를 벗어나면 예외가 발생한다.")
     @ParameterizedTest(name = "source: {0}, destination: {1}")
     @CsvSource({"a,i", "A,B"})
-    void calculateFileInterval_fail(String src, String dst) {
-        assertThatThrownBy(() -> File.calculate(File.findFileBy(src), File.findFileBy(dst)))
+    void calculateFileInterval_fail(String source, String destination) {
+        assertThatThrownBy(() -> File.calculate(File.findFileBy(source), File.findFileBy(destination)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 File을 입력했습니다.");
     }

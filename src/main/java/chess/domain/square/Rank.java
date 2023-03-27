@@ -20,8 +20,8 @@ public enum Rank {
         this.index = index;
     }
 
-    public static int calculate(final Rank src, final Rank dst) {
-        return src.index - dst.index;
+    public static int calculate(final Rank source, final Rank destination) {
+        return source.index - destination.index;
     }
 
     public Rank next(final int direction) {

@@ -11,16 +11,16 @@ class RankTest {
     @DisplayName("현재 칸과 이동할 칸의 Rank 차를 계산한다.")
     @ParameterizedTest(name = "현재 rank: {0}, 이동할 rank: {1} => 차: {2}")
     @CsvSource({"8,7,-1", "8,1,-7"})
-    void calculateRankInterval(String src, String dst, int interval) {
+    void calculateRankInterval(String source, String destination, int interval) {
 
-        assertThat(Rank.calculate(Rank.findRankBy(src), Rank.findRankBy(dst))).isEqualTo(interval);
+        assertThat(Rank.calculate(Rank.findRankBy(source), Rank.findRankBy(destination))).isEqualTo(interval);
     }
 
     @DisplayName("Rank의 범위를 벗어나면 에러가 발생한다.")
     @ParameterizedTest(name = "source: {0}, destination: {1}")
     @CsvSource({"8,0", "9,8"})
-    void calculateRankInterval_fail(String src, String dst) {
-        assertThatThrownBy(() -> Rank.calculate(Rank.findRankBy(src), Rank.findRankBy(dst)))
+    void calculateRankInterval_fail(String source, String destination) {
+        assertThatThrownBy(() -> Rank.calculate(Rank.findRankBy(source), Rank.findRankBy(destination)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 Rank를 입력했습니다.");
 
