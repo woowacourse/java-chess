@@ -27,18 +27,18 @@ class ChessPieceTest {
     @DisplayName("각 기물들이 올바르게 생성된다.")
     void shouldSuccessGeneratePieces() {
         assertSoftly(softly -> {
-            assertDoesNotThrow(() -> new King(Shape.KING, Side.BLACK));
-            assertDoesNotThrow(() -> new King(Shape.KING, Side.WHITE));
-            assertDoesNotThrow(() -> new Queen(Shape.QUEEN, Side.BLACK));
-            assertDoesNotThrow(() -> new Queen(Shape.QUEEN, Side.WHITE));
-            assertDoesNotThrow(() -> new Knight(Shape.KNIGHT, Side.BLACK));
-            assertDoesNotThrow(() -> new Knight(Shape.KNIGHT, Side.WHITE));
-            assertDoesNotThrow(() -> new Bishop(Shape.BISHOP, Side.BLACK));
-            assertDoesNotThrow(() -> new Bishop(Shape.BISHOP, Side.WHITE));
-            assertDoesNotThrow(() -> new Rook(Shape.ROOK, Side.BLACK));
-            assertDoesNotThrow(() -> new Rook(Shape.ROOK, Side.WHITE));
-            assertDoesNotThrow(() -> new Pawn(Shape.PAWN, Side.BLACK));
-            assertDoesNotThrow(() -> new Pawn(Shape.PAWN, Side.WHITE));
+            assertDoesNotThrow(() -> new King(Side.BLACK));
+            assertDoesNotThrow(() -> new King(Side.WHITE));
+            assertDoesNotThrow(() -> new Queen(Side.BLACK));
+            assertDoesNotThrow(() -> new Queen(Side.WHITE));
+            assertDoesNotThrow(() -> new Knight(Side.BLACK));
+            assertDoesNotThrow(() -> new Knight(Side.WHITE));
+            assertDoesNotThrow(() -> new Bishop(Side.BLACK));
+            assertDoesNotThrow(() -> new Bishop(Side.WHITE));
+            assertDoesNotThrow(() -> new Rook(Side.BLACK));
+            assertDoesNotThrow(() -> new Rook(Side.WHITE));
+            assertDoesNotThrow(() -> new Pawn(Side.BLACK));
+            assertDoesNotThrow(() -> new Pawn(Side.WHITE));
         });
     }
 

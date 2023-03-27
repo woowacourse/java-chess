@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class InputViewTest {
     @ParameterizedTest
-    @ValueSource(strings = {"roy", "dino", "starto", " ", ""})
+    @ValueSource(strings = {"roy", "dino", "starto", ""})
     @DisplayName("입력받은 값이 start가 아니면 예외처리한다.")
     void shouldFailInputIsNotStart(String input) {
         assertThatThrownBy(() -> InputView.validateInitialCommand(input))

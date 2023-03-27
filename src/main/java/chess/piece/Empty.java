@@ -6,8 +6,8 @@ import chess.position.Position;
 
 public class Empty extends ChessPiece {
 
-    public Empty(Shape shape, Side side) {
-        super(shape, side);
+    public Empty(Side side) {
+        super(side);
     }
 
     @Override

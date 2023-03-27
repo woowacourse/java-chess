@@ -6,8 +6,8 @@ import chess.position.MovablePosition;
 import chess.position.Position;
 
 public class Knight extends ChessPiece {
-    public Knight(Shape shape, Side side) {
-        super(shape, side);
+    public Knight(Side side) {
+        super(side);
     }
 
     @Override

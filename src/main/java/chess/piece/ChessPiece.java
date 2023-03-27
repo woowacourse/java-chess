@@ -3,15 +3,14 @@ package chess.piece;
 import chess.ChessBoard;
 import chess.position.MovablePosition;
 import chess.position.Position;
+import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class ChessPiece {
 
-    private final Shape shape;
     private final Side side;
 
-    public ChessPiece(Shape shape, Side side) {
-        this.shape = shape;
+    public ChessPiece(Side side) {
         this.side = side;
     }
 
@@ -22,14 +21,16 @@ public abstract class ChessPiece {
     }
 
     public String getName() {
+        Shape pieceShape = this.getShape();
         if (side.equals(Side.BLACK)) {
-            return shape.getBlackName();
+            return pieceShape.getBlackName();
         }
-        return shape.getWhiteName();
+        return pieceShape.getWhiteName();
     }
 
     public Shape getShape() {
-        return shape;
+        String shapeName = Arrays.asList(this.getClass().getName().split("\\.")).get(2).toUpperCase();
+        return Shape.findShape(shapeName);
     }
 
     public Side getSide() {
@@ -38,7 +39,7 @@ public abstract class ChessPiece {
 
     public double getScore(Side compareSide) {
         if (compareSide.equals(side)) {
-            return shape.getScore();
+            return this.getShape().getScore();
         }
         return 0;
     }
@@ -52,12 +53,11 @@ public abstract class ChessPiece {
             return false;
         }
         ChessPiece that = (ChessPiece) o;
-        return shape == that.shape;
+        return side == that.side;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape);
+        return Objects.hash(side);
     }
-
 }

@@ -29,6 +29,12 @@ public class ChessGame {
         this.gameIdx = gameIdx;
     }
 
+    public ChessGame(ChessBoard chessBoard) {
+        this.gameIdx = 0;
+        this.chessBoard = chessBoard;
+        this.chessGameDao = new ChessGameDao();
+    }
+
     public void addChessBoard(ChessBoardDao chessBoardDao, int gameIdx) {
         for (int file = 1; file <= 8; file++) {
             circuitRank(chessBoardDao, gameIdx, file);
@@ -65,7 +71,7 @@ public class ChessGame {
     }
 
     public void removeChessPiece(Position sourcePosition) {
-        chessBoard.getChessBoard().put(sourcePosition, new Empty(Shape.EMPTY, Side.EMPTY));
+        chessBoard.getChessBoard().put(sourcePosition, new Empty(Side.EMPTY));
     }
 
     public boolean validateMovablePosition(Position targetPosition, MovablePosition movablePosition) {

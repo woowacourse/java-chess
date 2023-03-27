@@ -50,8 +50,8 @@ class ChessBoardDaoTest {
         ChessBoard chessBoard = ChessBoard.generateChessBoard(0);
         ChessGame chessGame = new ChessGame(chessBoard, 0);
         ChessBoardDao chessBoardDao = new ChessBoardDao();
-        assertDoesNotThrow(() -> chessBoardDao.movePiece(chessGame.getGameIdx(), 2, 4, Shape.PAWN.name()));
+        assertDoesNotThrow(() -> chessBoardDao.movePiece(chessGame.getGameIdx(), 2, 4, Shape.PAWN.name(), Side.WHITE.name()));
         assertThat(chessBoardDao.findPieceType(chessGame.getGameIdx(), 2, 4)).isEqualTo(Shape.PAWN.name());
-        assertDoesNotThrow(() -> chessBoardDao.movePiece(chessGame.getGameIdx(), 2, 4, "EMPTY"));
+        assertDoesNotThrow(() -> chessBoardDao.movePiece(chessGame.getGameIdx(), 2, 4, Shape.EMPTY.name(), Side.EMPTY.name()));
     }
 }

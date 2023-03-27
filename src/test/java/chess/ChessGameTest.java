@@ -54,7 +54,7 @@ class ChessGameTest {
 
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
-        ChessPiece knight = new Knight(Shape.KNIGHT, Side.BLACK);
+        ChessPiece knight = new Knight(Side.BLACK);
         Position targetPosition = Position.initPosition(1, 3);
 
         chessGame.copyChessPiece(knight, targetPosition);
@@ -119,12 +119,12 @@ class ChessGameTest {
                 },
                 () -> {
                     chessGame.removeChessPiece(Position.of("a2"));
-                    chessGame.copyChessPiece(new Pawn(Shape.PAWN, Side.WHITE), Position.of("b3"));
+                    chessGame.copyChessPiece(new Pawn(Side.WHITE), Position.of("b3"));
                     assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(17.5);
                 },
                 () -> {
                     chessGame.removeChessPiece(Position.of("c2"));
-                    chessGame.copyChessPiece(new Pawn(Shape.PAWN, Side.WHITE), Position.of("b4"));
+                    chessGame.copyChessPiece(new Pawn(Side.WHITE), Position.of("b4"));
                     assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(17);
                 }
         );

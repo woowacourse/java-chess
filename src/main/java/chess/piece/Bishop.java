@@ -7,8 +7,8 @@ import chess.position.Position;
 
 public class Bishop extends ChessPiece {
 
-    public Bishop(Shape shape, Side side) {
-        super(shape, side);
+    public Bishop(Side side) {
+        super(side);
     }
 
     @Override

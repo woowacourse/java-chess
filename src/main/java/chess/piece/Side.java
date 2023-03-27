@@ -8,7 +8,7 @@ public enum Side {
     WHITE,
     EMPTY;
 
-    public static Side convertSide(String input) {
+    public static Side findSide(String input) {
         return Stream.of(Side.values())
                 .filter(side -> side.name().equals(input))
                 .findFirst()
