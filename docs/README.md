@@ -85,5 +85,5 @@
 ### DB
 
 - Board
-  - [ ] board id로 검색 기능
+  - [x] board id로 검색 기능
   - [ ] board 저장 기능
