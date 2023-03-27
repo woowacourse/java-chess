@@ -17,4 +17,9 @@ public class King extends NonSlidingPiece {
     protected void validateDirection(Direction direction) {
         DIRECTIONS.validateContains(direction);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

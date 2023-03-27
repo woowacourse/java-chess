@@ -19,20 +19,24 @@ import static domain.Rank.TWO;
 import static domain.piece.TeamColor.BLACK;
 import static domain.piece.TeamColor.WHITE;
 
-import domain.piece.sliding.Bishop;
 import domain.piece.Blank;
-import domain.piece.nonsliding.King;
-import domain.piece.nonsliding.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
+import domain.piece.TeamColor;
+import domain.piece.nonsliding.King;
+import domain.piece.nonsliding.Knight;
+import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
+    public static final int INITIAL_KING_SIZE = 2;
+    public static final int BOARD_SIZE = 64;
     private static final List<Square> BLACK_SQUARES = List.of(
         Square.of(A, EIGHT), Square.of(B, EIGHT), Square.of(C, EIGHT), Square.of(D, EIGHT),
         Square.of(E, EIGHT), Square.of(F, EIGHT), Square.of(G, EIGHT), Square.of(H, EIGHT),
@@ -57,27 +61,39 @@ public class ChessBoard {
     );
     private static final List<Piece> BLACK_PIECES = List.of(
         new Rook(BLACK), new Knight(BLACK), new Bishop(BLACK), new Queen(BLACK),
-        new King(BLACK), new Bishop(BLACK), new King(BLACK), new Rook(BLACK),
+        new King(BLACK), new Bishop(BLACK), new Knight(BLACK), new Rook(BLACK),
         new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK),
         new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK)
     );
     private static final List<Piece> WHITE_PIECES = List.of(
         new Rook(WHITE), new Knight(WHITE), new Bishop(WHITE), new Queen(WHITE),
-        new King(WHITE), new Bishop(WHITE), new King(WHITE), new Rook(WHITE),
+        new King(WHITE), new Bishop(WHITE), new Knight(WHITE), new Rook(WHITE),
         new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE),
         new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE)
     );
-
     private final Map<Square, Piece> locationInfo;
+    private final List<Piece> kings = new ArrayList<>(INITIAL_KING_SIZE);
 
     public ChessBoard() {
-        locationInfo = new HashMap<>();
+        locationInfo = new HashMap<>(BOARD_SIZE);
         for (int i = 0; i < BLACK_PIECES.size(); i++) {
-            locationInfo.put(BLACK_SQUARES.get(i), BLACK_PIECES.get(i));
-            locationInfo.put(WHITE_SQUARES.get(i), WHITE_PIECES.get(i));
+            Piece blackPiece = BLACK_PIECES.get(i);
+            Piece whitePiece = WHITE_PIECES.get(i);
+            initKings(blackPiece, whitePiece);
+            locationInfo.put(BLACK_SQUARES.get(i), blackPiece);
+            locationInfo.put(WHITE_SQUARES.get(i), whitePiece);
         }
         for (Square emptySquare : EMPTY_SQUARES) {
             locationInfo.put(emptySquare, Blank.getInstance());
+        }
+    }
+
+    private void initKings(Piece blackPiece, Piece whitePiece) {
+        if (blackPiece.isKing()) {
+            kings.add(blackPiece);
+        }
+        if (whitePiece.isKing()) {
+            kings.add(whitePiece);
         }
     }
 
@@ -87,6 +103,10 @@ public class ChessBoard {
 
     public void update(Square source, Square destination) {
         Piece sourcePiece = locationInfo.get(source);
+        Piece destinationPiece = locationInfo.get(destination);
+        if (destinationPiece.isKing()) {
+            kings.remove(destinationPiece);
+        }
         locationInfo.replace(destination, sourcePiece);
         locationInfo.replace(source, Blank.getInstance());
     }
@@ -99,5 +119,14 @@ public class ChessBoard {
     public boolean isBlank(Square route) {
         Piece piece = locationInfo.get(route);
         return piece.isBlank();
+    }
+
+    public int getKingSize() {
+        return kings.size();
+    }
+
+    public boolean hasNotKing(TeamColor team) {
+        return kings.stream()
+            .noneMatch(king -> king.isSameColor(team));
     }
 }

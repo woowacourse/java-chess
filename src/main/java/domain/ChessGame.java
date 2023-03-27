@@ -1,6 +1,7 @@
 package domain;
 
 import domain.piece.Piece;
+import domain.piece.TeamColor;
 import java.util.List;
 
 public class ChessGame {
@@ -28,11 +29,8 @@ public class ChessGame {
     }
 
     private boolean canNotKill(Square destination, Piece piece, Square route) {
-        return route != destination || chessBoard.isBlank(route) || piece.isSameTeam(chessBoard.find(destination));
-    }
-
-    private boolean canKill(Square destination, Piece piece, Square route) {
-        return route == destination && chessBoard.hasPiece(route) && piece.isDifferentTeam(chessBoard.find(destination));
+        return route != destination || chessBoard.isBlank(route) || piece.isSameTeam(
+            chessBoard.find(destination));
     }
 
     private void validateRoutes(Square destination, Piece piece, List<Square> routes) {
@@ -45,5 +43,19 @@ public class ChessGame {
         if (chessBoard.hasPiece(route) && canNotKill(destination, piece, route)) {
             throw new IllegalArgumentException("중간에 기물이 있어 이동할 수 없습니다.");
         }
+    }
+
+    public boolean isEnd() {
+        return chessBoard.getKingSize() != ChessBoard.INITIAL_KING_SIZE;
+    }
+
+    public TeamColor findWin() {
+        if (chessBoard.hasNotKing(TeamColor.BLACK)) {
+            return TeamColor.WHITE;
+        }
+        if (chessBoard.hasNotKing(TeamColor.WHITE)) {
+            return TeamColor.BLACK;
+        }
+        return TeamColor.EMPTY;
     }
 }
