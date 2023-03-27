@@ -17,11 +17,11 @@ public class ChessService {
     }
 
     public void saveGame(final Position fromPosition, final Position toPosition) {
-        dbChessBoardDao.save(fromPosition, toPosition);
+        dbChessBoardDao.saveNotation(fromPosition, toPosition);
     }
 
     public ChessGame checkNotation(final ChessGame game) {
-        List<Position> gameNotation = dbChessBoardDao.select();
+        List<Position> gameNotation = dbChessBoardDao.selectNotation();
         if (gameNotation != null) {
             getNotation(game, gameNotation);
         }

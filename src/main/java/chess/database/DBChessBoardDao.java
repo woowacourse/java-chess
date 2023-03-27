@@ -14,7 +14,7 @@ public final class DBChessBoardDao implements ChessGameDao {
     private final Database database = new Database();
 
     @Override
-    public void save(final Position fromPosition,final Position toPosition) {
+    public void saveNotation(final Position fromPosition, final Position toPosition) {
         File fromMoveFile = fromPosition.getFile();
         Rank fromMoveRank = fromPosition.getRank();
         File toMoveFile = toPosition.getFile();
@@ -34,7 +34,7 @@ public final class DBChessBoardDao implements ChessGameDao {
     }
 
     @Override
-    public List<Position> select() {
+    public List<Position> selectNotation() {
         List<Position> positions = new ArrayList<>();
 
         var query = "SELECT * FROM move_position ORDER BY seq ASC";
