@@ -12,22 +12,17 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ChessGameController {
-
-    private final InputView inputView;
-    private final OutputView outputView;
     private final ChessBoardDao chessBoardDao;
 
-    public ChessGameController(final InputView inputView, final OutputView outputView, final ChessBoardDao chessBoardDao) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessGameController(final ChessBoardDao chessBoardDao) {
         this.chessBoardDao = chessBoardDao;
     }
 
     public void run() {
-        outputView.printInitialMessage();
+        OutputView.printInitialMessage();
         Command command = repeatUntilNoException(this::startGame);
         ChessBoard chessBoard = loadChessBoardOrSaveNewChessBoard();
-        outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
+        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
         while (command.isPlaying()) {
             command = repeatUntilNoException(this::playTurn, chessBoard);
         }
@@ -44,14 +39,14 @@ public class ChessGameController {
     }
 
     private Command startGame() {
-        CommandDto commandDto = inputView.readCommand();
+        CommandDto commandDto = InputView.readCommand();
         Command command = Command.from(commandDto.getCommand());
         command.validateCommandInStart();
         return command;
     }
 
     private Command playTurn(final ChessBoard chessBoard) {
-        CommandDto commandDto = inputView.readCommand();
+        CommandDto commandDto = InputView.readCommand();
         Command command = Command.from(commandDto.getCommand());
         command.validateCommandInPlaying();
         executeCommand(chessBoard, commandDto, command);
@@ -64,8 +59,8 @@ public class ChessGameController {
             chessBoardDao.updateChessBoard(chessBoard);
         }
         if (command.isStatus()) {
-            outputView.printScore(Side.WHITE.name(), chessBoard.calculateScore(Side.WHITE));
-            outputView.printScore(Side.BLACK.name(), chessBoard.calculateScore(Side.BLACK));
+            OutputView.printScore(Side.WHITE.name(), chessBoard.calculateScore(Side.WHITE));
+            OutputView.printScore(Side.BLACK.name(), chessBoard.calculateScore(Side.BLACK));
         }
     }
 
@@ -74,9 +69,9 @@ public class ChessGameController {
         final Square to = Square.of(Rank.from(commandDto.getDestinationRank()), File.from(commandDto.getDestinationFile()));
         validateSameSquare(from, to);
         if (!chessBoard.canMove(from, to)) {
-            outputView.printInvalidMoveMessage();
+            OutputView.printInvalidMoveMessage();
         }
-        outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
+        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
     }
 
     private void validateSameSquare(final Square from, final Square to) {
@@ -88,7 +83,7 @@ public class ChessGameController {
     private Command confirmGameEnd(final ChessBoard chessBoard, final Command command) {
         List<String> aliveKings = chessBoard.findAliveKing();
         if (aliveKings.size() == 1) {
-            outputView.printWinner(aliveKings.get(0));
+            OutputView.printWinner(aliveKings.get(0));
             chessBoardDao.deleteChessBoard();
             return Command.END;
         }

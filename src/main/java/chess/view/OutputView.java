@@ -28,22 +28,22 @@ public class OutputView {
         return file - FILE_TO_COLUMN_CONVERTER;
     }
 
-    public void printInitialMessage() {
+    public static void printInitialMessage() {
         printMessageWithPrompt("체스 게임을 시작합니다.");
         printMessageWithPrompt("게임 시작 : start");
         printMessageWithPrompt("게임 종료 : end");
         printMessageWithPrompt("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    private void printMessageWithPrompt(final String message) {
+    private static void printMessageWithPrompt(final String message) {
         System.out.println(PROMPT + message);
     }
 
-    public void printInvalidMoveMessage() {
+    public static void printInvalidMoveMessage() {
         System.out.println("이동할 수 없습니다.");
     }
 
-    public void printChessBoard(ChessBoardDto chessBoardDto) {
+    public static void printChessBoard(ChessBoardDto chessBoardDto) {
         List<List<String>> presentChessBoard = makePresentChessBoard(chessBoardDto.getChessBoardDto());
         System.out.println();
         for (int i = 0; i < CHESSBOARD_SIZE; i++) {
@@ -55,7 +55,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private List<List<String>> makePresentChessBoard(final List<PieceDto> pieceDtos) {
+    private static List<List<String>> makePresentChessBoard(final List<PieceDto> pieceDtos) {
         List<List<String>> chessBoard = new ArrayList<>(EMPTY_CHESSBOARD);
         for (PieceDto pieceDto : pieceDtos) {
             int row = calculateRowIndex(pieceDto.getRank());
@@ -66,11 +66,11 @@ public class OutputView {
         return chessBoard;
     }
 
-    private int calculateRowIndex(final int rank) {
+    private static int calculateRowIndex(final int rank) {
         return RANK_TO_ROW_CONVERTER - rank;
     }
 
-    private String convertLetterByPiece(final String type, final String side) {
+    private static String convertLetterByPiece(final String type, final String side) {
         if (Objects.equals(type, "PAWN") || Objects.equals(type, "INITIAL_PAWN")) {
             return convertLetterBySide(" p ", side);
         }
@@ -92,7 +92,7 @@ public class OutputView {
         return " . ";
     }
 
-    private String convertLetterBySide(final String letter, final String side) {
+    private static String convertLetterBySide(final String letter, final String side) {
         if (Objects.equals(side, "BLACK")) {
             return letter.toUpperCase();
 
@@ -100,13 +100,13 @@ public class OutputView {
         return letter.toLowerCase();
     }
 
-    private void printRank(final List<String> rank) {
+    private static void printRank(final List<String> rank) {
         for (String piece : rank) {
             System.out.print(piece);
         }
     }
 
-    public void printWinner(final String side) {
+    public static void printWinner(final String side) {
         if (Objects.equals("BLACK", side)) {
             System.out.println("흑의 승리입니다.");
         }
@@ -115,7 +115,7 @@ public class OutputView {
         }
     }
 
-    public void printScore(final String side, final double score) {
+    public static void printScore(final String side, final double score) {
         if (Objects.equals("BLACK", side)) {
             System.out.println("흑의 점수는 " + score + "점입니다.");
         }

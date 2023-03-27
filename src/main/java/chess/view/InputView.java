@@ -9,16 +9,16 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public CommandDto readCommand() {
+    public static CommandDto readCommand() {
         List<String> parsedCommandInput = Arrays.asList(scanner.nextLine()
                 .split(" "));
         validate(parsedCommandInput);
         return CommandDto.from(parsedCommandInput);
     }
 
-    private void validate(List<String> parsedCommandInput) {
+    private static void validate(List<String> parsedCommandInput) {
         if (parsedCommandInput.size() == 1) {
             validateFormatWithoutArguments(parsedCommandInput);
             return;
@@ -31,7 +31,7 @@ public class InputView {
         throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
     }
 
-    private void validateFormatWithoutArguments(final List<String> parsedCommandInput) {
+    private static void validateFormatWithoutArguments(final List<String> parsedCommandInput) {
         if (!Objects.equals("start", parsedCommandInput.get(0))
                 && !Objects.equals("end", parsedCommandInput.get(0))
                 && !Objects.equals("status", parsedCommandInput.get(0))) {
@@ -39,13 +39,13 @@ public class InputView {
         }
     }
 
-    private void validateCommandWithArguments(final String parsedCommand) {
+    private static void validateCommandWithArguments(final String parsedCommand) {
         if (!Objects.equals("move", parsedCommand)) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
         }
     }
 
-    private void validateFormatWithArguments(final List<String> parsedCommandInput) {
+    private static void validateFormatWithArguments(final List<String> parsedCommandInput) {
         if ((parsedCommandInput.get(1).length() != 2
                 || parsedCommandInput.get(2).length() != 2)) {
             throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
