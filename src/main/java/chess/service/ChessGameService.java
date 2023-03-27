@@ -8,6 +8,8 @@ import chess.dto.MoveDto;
 import java.util.List;
 
 public class ChessGameService {
+    private static final int NOT_EXIST = -1;
+    
     private final ChessGame chessGame;
     private final ChessGameJdbcDao chessGameJdbcDao;
 
@@ -45,7 +47,7 @@ public class ChessGameService {
     }
 
     public void start() {
-        if (chessGameJdbcDao.findGameIdByNotFinished() == -1) {
+        if (chessGameJdbcDao.findGameIdByNotFinished() == NOT_EXIST) {
             chessGameJdbcDao.saveGame();
         }
         chessGame.start();
