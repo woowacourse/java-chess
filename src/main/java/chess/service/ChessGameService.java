@@ -78,6 +78,11 @@ public class ChessGameService {
         chessGameDao.updateStatusByGameId(RUNNING.name(), gameId); // running 상태로 업데이트
     }
 
+    public boolean isFinished(int gameId, BoardStrategy boardStrategy) {
+        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+        return chessGame.isFinished();
+    }
+
 }
 
 /**
