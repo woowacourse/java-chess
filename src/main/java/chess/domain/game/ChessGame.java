@@ -13,12 +13,14 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private GameStatus gameStatus;
 
-    public ChessGame(BoardStrategy boardStrategy) {
+    public ChessGame(BoardStrategy boardStrategy, GameStatus gameStatus) {
         this.chessBoard = new ChessBoard(boardStrategy.generate());
+        this.gameStatus = gameStatus;
     }
 
-    public ChessGame(ChessBoard chessBoard) {
+    public ChessGame(ChessBoard chessBoard, GameStatus gameStatus) {
         this.chessBoard = chessBoard;
+        this.gameStatus = gameStatus;
     }
 
     public void move(Position start, Position end) {

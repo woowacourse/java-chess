@@ -4,6 +4,7 @@ import chess.dao.ChessGameDao;
 import chess.domain.Position;
 import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
+import chess.domain.game.GameStatus;
 import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
@@ -27,7 +28,7 @@ public class Controller {
 
     public void playChessGame() {
         printStartGuideMessage();
-        ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
+        ChessGame chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.IDLE);
         ChessGameDao dao = new ChessGameDao();
         dao.save(chessGame);
         dao.select();
@@ -47,7 +48,7 @@ public class Controller {
             }
 
             if (isStart(command)) {
-                chessGame = new ChessGame(new InitialBoardStrategy());
+                chessGame = new ChessGame(new InitialBoardStrategy(),GameStatus.PLAYING);
                 printChessGame(chessGame);
             }
 

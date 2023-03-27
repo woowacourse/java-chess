@@ -54,6 +54,7 @@ public class ChessGameDao {
     public ChessGame select() {
         Map<Position, Piece> pieces = new LinkedHashMap<>();
 
+        GameStatus gameStatus = GameStatus.IDLE;
         final var query = "SELECT piece_type, piece_color, piece_column, piece_rank, game_status FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -64,7 +65,7 @@ public class ChessGameDao {
                 Piece piece = Piece.valueOf(resultSet.getString("piece_type"));
                 Column pieceColumn = Column.valueOf(resultSet.getString("piece_column"));
                 Rank pieceRank = Rank.valueOf(resultSet.getString("piece_rank"));
-                GameStatus gameStatus = GameStatus.valueOf(resultSet.getString("game_status"));
+                gameStatus = GameStatus.valueOf(resultSet.getString("game_status"));
 
                 Position position = new Position(pieceColumn, pieceRank);
                 pieces.put(position, piece);
@@ -77,9 +78,9 @@ public class ChessGameDao {
             return null;
         }
 
-        ChessBoard chessBoard = new ChessBoard(pieces, gameStatus);
+        ChessBoard chessBoard = new ChessBoard(pieces);
 
-        return new ChessGame(chessBoard);
+        return new ChessGame(chessBoard, gameStatus);
     }
 
     private Piece extractPiece(final Color pieceColor, final Piece pieceType) {
