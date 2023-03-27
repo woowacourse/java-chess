@@ -165,4 +165,8 @@ public class ChessGame {
                     .collect(toList());
         });
     }
+
+    public GameId getGameId() {
+        return gameState.getGameId(() -> gameId);
+    }
 }

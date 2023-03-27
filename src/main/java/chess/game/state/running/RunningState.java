@@ -2,6 +2,7 @@ package chess.game.state.running;
 
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.GameId;
 import chess.game.state.GameState;
 import java.util.List;
 import java.util.function.DoubleSupplier;
@@ -66,5 +67,10 @@ public abstract class RunningState implements GameState {
     @Override
     public List<String> getAllGameIds(Supplier<List<String>> supplier) {
         throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public GameId getGameId(Supplier<GameId> supplier) {
+        return supplier.get();
     }
 }

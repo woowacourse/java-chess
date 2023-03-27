@@ -1,13 +1,13 @@
 package chess.controller;
 
 import chess.dao.ChessGameDao;
-import chess.game.GameId;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.dto.PositionRequest;
 import chess.game.ChessGame;
 import chess.game.Command;
 import chess.game.GameCommand;
+import chess.game.GameId;
 import chess.game.RandomTurnStrategy;
 import chess.game.action.Action;
 import chess.view.InputView;
@@ -121,7 +121,7 @@ public class ChessController {
         while (!chessGame.isEnd()) {
             printError(this::gameLoop);
         }
-        OutputView.printWinner(chessGame.getWinner());
+        finishGame();
     }
 
     private void printError(Runnable runnable) {
@@ -129,6 +129,14 @@ public class ChessController {
             runnable.run();
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private void finishGame() {
+        Team winner = chessGame.getWinner();
+        if (winner != Team.NONE) {
+            chessGameDao.deleteGame(chessGame.getGameId());
+            OutputView.printWinner(winner);
         }
     }
 

@@ -2,6 +2,7 @@ package chess.game.state.waiting;
 
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.GameId;
 import chess.game.state.GameState;
 import chess.game.state.running.RunningState;
 import java.util.List;
@@ -78,5 +79,10 @@ public class WaitingState implements GameState {
     @Override
     public List<String> getAllGameIds(Supplier<List<String>> supplier) {
         return supplier.get();
+    }
+
+    @Override
+    public GameId getGameId(Supplier<GameId> supplier) {
+        throw new IllegalStateException(WAITING_STATE_EXCEPTION_MESSAGE);
     }
 }

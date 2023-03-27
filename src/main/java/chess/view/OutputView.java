@@ -95,9 +95,7 @@ public class OutputView {
     }
 
     public static void printWinner(Team winner) {
-        if (winner != Team.NONE) {
-            System.out.println(getTeamName(winner) + " 팀이 체크메이트로 승리했습니다.");
-        }
+        System.out.println(getTeamName(winner) + " 팀이 체크메이트로 승리했습니다.");
     }
 
     public static void printCheckWarning(Team team) {

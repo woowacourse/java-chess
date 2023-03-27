@@ -2,6 +2,7 @@ package chess.game.state.end;
 
 import chess.domain.Team;
 import chess.dto.SquareResponse;
+import chess.game.GameId;
 import chess.game.state.GameState;
 import chess.game.state.running.RunningState;
 import java.util.List;
@@ -83,5 +84,10 @@ public abstract class EndState implements GameState {
     @Override
     public List<String> getAllGameIds(Supplier<List<String>> supplier) {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public GameId getGameId(Supplier<GameId> supplier) {
+        return supplier.get();
     }
 }
