@@ -41,6 +41,7 @@ public class MainController {
         while (gameStatus != GameStatus.END);
         if(!chessBoard.isExistKing()){
             chessBoardDao.delete();
+            System.out.println("King이 죽었습니다. 게임종료!");
         }
     }
 
