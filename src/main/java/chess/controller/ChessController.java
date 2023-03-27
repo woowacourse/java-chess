@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.ChessService;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 

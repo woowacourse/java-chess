@@ -1,8 +1,9 @@
-package chess;
+package chess.service;
 
 import java.util.List;
 
 import chess.dao.ChessGameDao;
+import chess.dao.ChessGameDaoImpl;
 import chess.dao.JdbcConnector;
 import chess.domain.ChessGame;
 import chess.domain.Position;
@@ -14,10 +15,18 @@ import chess.dto.MoveDto;
 public class ChessService {
 
 	private final ChessGame game;
+	private final ChessGameDao chessGameDao;
 	private boolean isDbConnected;
 
 	public ChessService() {
 		this.game = new ChessGame();
+		this.chessGameDao = ChessGameDaoImpl.create();
+		this.isDbConnected = false;
+	}
+
+	public ChessService(final ChessGameDao chessGameDao) {
+		this.game = new ChessGame();
+		this.chessGameDao = chessGameDao;
 		this.isDbConnected = false;
 	}
 
@@ -26,7 +35,6 @@ public class ChessService {
 			return false;
 		}
 		isDbConnected = true;
-		ChessGameDao chessGameDao = ChessGameDao.create();
 		return chessGameDao.isLastGameExists();
 	}
 
@@ -36,7 +44,6 @@ public class ChessService {
 	}
 
 	public void loadLastGame() {
-		ChessGameDao chessGameDao = ChessGameDao.create();
 		List<MoveDto> moves = chessGameDao.loadMoves();
 		game.initialize();
 		for (MoveDto move : moves) {
@@ -57,7 +64,6 @@ public class ChessService {
 
 	private void saveIfDbConnected(final Position source, final Position target) {
 		if (isDbConnected) {
-			ChessGameDao chessGameDao = ChessGameDao.create();
 			MoveDto moveDto = new MoveDto(source.getColumn(), source.getRow(), target.getColumn(), target.getRow());
 			chessGameDao.saveMove(moveDto);
 		}
@@ -81,7 +87,6 @@ public class ChessService {
 
 	private void deleteMovesIfDbConnected() {
 		if (isDbConnected) {
-			ChessGameDao chessGameDao = ChessGameDao.create();
 			chessGameDao.deleteMoves();
 		}
 	}
