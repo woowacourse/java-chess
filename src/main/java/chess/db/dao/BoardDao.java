@@ -59,8 +59,6 @@ public class BoardDao {
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.getFile().getFile());
             preparedStatement.setString(2, square.getRank().getRank());
-            System.out.println(square.getFile().getFile());
-            System.out.println(square.getRank().getRank());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("id");
