@@ -11,6 +11,7 @@ import chess.domain.position.Position;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.Set;
 
 import static chess.controller.ChessState.END;
 import static chess.controller.ChessState.PROGRESS;
@@ -39,20 +40,20 @@ public class MoveCommand implements Command {
 
     @Override
     public ChessState execute(final ChessState state, final ChessGame chessGame) {
-        if (state == START || state == PROGRESS) {
-            final Board board = chessGame.getBoard();
-            final Piece sourcePiece = board.getPiece(source);
-            final Piece targetPiece = board.getPiece(target);
-
-            chessGame.move(source, target);
-            BoardDao.updateByMove(board, source, target, sourcePiece);
-            MoveLogDao.insertMove(board, source, target, sourcePiece, targetPiece);
-
-            OutputView.printBoard(board);
-            return existOpponentKing(chessGame);
+        if (!Set.of(START, PROGRESS).contains(state)) {
+            throw new IllegalArgumentException(CANNOT_MOVE_BEFORE_START_ERROR_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CANNOT_MOVE_BEFORE_START_ERROR_MESSAGE);
+        final Board board = chessGame.getBoard();
+        final Piece sourcePiece = board.getPiece(source);
+        final Piece targetPiece = board.getPiece(target);
+
+        chessGame.move(source, target);
+        BoardDao.updateByMove(board, source, target, sourcePiece);
+        MoveLogDao.insertMove(board, source, target, sourcePiece, targetPiece);
+
+        OutputView.printBoard(board);
+        return existOpponentKing(chessGame);
     }
 
     private ChessState existOpponentKing(final ChessGame chessGame) {

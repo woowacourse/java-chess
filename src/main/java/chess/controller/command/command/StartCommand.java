@@ -4,6 +4,8 @@ import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
 import chess.view.OutputView;
 
+import java.util.Set;
+
 import static chess.controller.ChessState.INIT;
 import static chess.controller.ChessState.START;
 
@@ -20,11 +22,11 @@ public class StartCommand implements Command {
 
     @Override
     public ChessState execute(final ChessState state, final ChessGame chessGame) {
-        if (state == INIT) {
-            OutputView.printBoard(chessGame.getBoard());
-            return START;
+        if (!Set.of(INIT).contains(state)) {
+            throw new IllegalArgumentException(CANNOT_START_AFTER_START_ERROR_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CANNOT_START_AFTER_START_ERROR_MESSAGE);
+        OutputView.printBoard(chessGame.getBoard());
+        return START;
     }
 }

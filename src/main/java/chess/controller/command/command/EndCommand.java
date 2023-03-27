@@ -3,6 +3,8 @@ package chess.controller.command.command;
 import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
 
+import java.util.Set;
+
 import static chess.controller.ChessState.END;
 import static chess.controller.ChessState.PROGRESS;
 import static chess.controller.ChessState.START;
@@ -20,10 +22,10 @@ public class EndCommand implements Command {
 
     @Override
     public ChessState execute(final ChessState state, final ChessGame chessGame) {
-        if (state == START || state == PROGRESS) {
-            return END;
+        if (!Set.of(START, PROGRESS).contains(state)) {
+            throw new IllegalArgumentException(CANNOT_END_BEFORE_START_ERROR_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CANNOT_END_BEFORE_START_ERROR_MESSAGE);
+        return END;
     }
 }
