@@ -14,6 +14,10 @@ public final class InputView {
         return Arrays.asList(command.split(DELIMITER));
     }
 
+    public static String getCommand() {
+        return readCommand();
+    }
+
     private static String readCommand() {
         final String command = scanner.nextLine();
         if (command == null || command.isBlank()) {

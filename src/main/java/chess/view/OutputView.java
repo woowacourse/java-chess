@@ -23,6 +23,8 @@ public final class OutputView {
             "> 흑진영 (BLACK) : %.1f\n" +
             "> 승리한 팀 : %s\n";
 
+    private static final String USER_NAME_INPUT_MESSAGE = "플레이어님의 이름을 입력해 주세요. (1~20자)";
+
     private static final String DRAW = "DRAW!";
     private static final String WHITE = "WHITE";
     private static final String BLACK = "BLACK";
@@ -30,6 +32,10 @@ public final class OutputView {
 
     public static void print(final String message) {
         System.out.println(message);
+    }
+
+    public static void printUserNameInputMessage() {
+        print(USER_NAME_INPUT_MESSAGE);
     }
 
     public static void printStartMessage() {
