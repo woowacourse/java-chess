@@ -3,6 +3,7 @@ package chess.controller;
 import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.exception.InvalidTurnException;
+import chess.dto.ChessGameDto;
 import chess.dto.SquareMoveDto;
 import chess.view.Command;
 import chess.view.InputView;
@@ -62,6 +63,7 @@ public class ChessController {
         checkStart(command);
         checkStatus(command);
         checkLoad(command);
+        checkSave(command);
         checkEnd(command);
     }
 
@@ -102,6 +104,14 @@ public class ChessController {
 
     private void load(final int id) {
         chessGame = chessGameDao.findById(id);
+    }
+
+    private void checkSave(final List<String> command) {
+        if (Command.from(command).isSaveCommand()) {
+            chessGameDao.save(ChessGameDto.of(chessGame));
+            OutputView.printGameStatus(chessGame.getGameStatus());
+            playUntilEnd();
+        }
     }
 
     private void checkEnd(final List<String> command) {

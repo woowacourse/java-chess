@@ -117,4 +117,6 @@ public enum Command {
     }
 
     public boolean isLoadCommand() { return this == LOAD; }
+
+    public boolean isSaveCommand() { return this == SAVE; }
 }

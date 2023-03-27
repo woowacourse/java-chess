@@ -28,7 +28,7 @@ public class ChessGameDto {
         return new HashMap<Square, Piece>(board);
     }
 
-    public Turn getTurn() {
-        return turn;
+    public String getTurn() {
+        return turn.getValue();
     }
 }

@@ -85,4 +85,12 @@ public final class Square {
     public int getRankDifference(final Square other) {
         return rank.getDifference(other.rank);
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

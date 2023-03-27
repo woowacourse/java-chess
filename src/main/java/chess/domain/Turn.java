@@ -30,6 +30,6 @@ public final class Turn {
     }
 
     public String getValue() {
-        return color.getValue();
+        return color.name();
     }
 }
