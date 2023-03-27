@@ -5,5 +5,6 @@ public enum ChessCommandType {
     MOVE,
     END,
     STATUS,
+    LOAD,
     ;
 }

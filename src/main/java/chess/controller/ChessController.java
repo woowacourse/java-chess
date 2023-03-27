@@ -26,7 +26,8 @@ public final class ChessController {
             ChessCommandType.START, new ChessAction(this::start),
             ChessCommandType.END, new ChessAction(this::end),
             ChessCommandType.MOVE, new ChessAction(this::move),
-            ChessCommandType.STATUS, new ChessAction(this::status)
+            ChessCommandType.STATUS, new ChessAction(this::status),
+            ChessCommandType.LOAD, new ChessAction(this::load)
     );
     private final ChessGameService gameService;
 
@@ -35,13 +36,8 @@ public final class ChessController {
     }
 
     public void run() {
-        outputView.printStartPrefix();
+        outputView.printStartPrefix(gameService.isGameExist());
         ChessGame chessGame = new ReadyGame();
-
-        if (gameService.isGameExist()) {
-            chessGame = requestNewGame();
-            printChessGameResult(chessGame);
-        }
 
         do {
             chessGame = play(chessGame);
@@ -49,15 +45,6 @@ public final class ChessController {
         } while (chessGame.isRunnableGame());
 
         printResult(chessGame);
-    }
-
-    private ChessGame requestNewGame() {
-        String command = inputView.readLoadCommand();
-        if (command.equals("y")) {
-            return gameService.loadExistGame();
-        }
-
-        return new ReadyGame().startGame();
     }
 
     private ChessGame play(ChessGame chessGame) {
@@ -112,5 +99,9 @@ public final class ChessController {
 
     private ChessGame status(List<String> commands, ChessGame chessGame) {
         return gameService.status(chessGame);
+    }
+
+    private ChessGame load(List<String> commands, ChessGame ignore) {
+        return gameService.loadExistGame();
     }
 }

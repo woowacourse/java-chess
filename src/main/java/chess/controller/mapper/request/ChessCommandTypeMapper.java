@@ -8,6 +8,7 @@ public enum ChessCommandTypeMapper {
     MOVE(ChessCommandType.MOVE,"move"),
     END(ChessCommandType.END,"end"),
     STATUS(ChessCommandType.STATUS,"status"),
+    LOAD(ChessCommandType.LOAD,"load"),
     ;
 
     private final ChessCommandType command;
@@ -21,7 +22,7 @@ public enum ChessCommandTypeMapper {
 
     public static ChessCommandType toChessCommandType(String inputCommand) {
         return Arrays.stream(ChessCommandTypeMapper.values())
-                .filter(it -> it.commandInput.equals(inputCommand))
+                .filter(it -> it.commandInput.equalsIgnoreCase(inputCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어 입니다."))
                 .command;

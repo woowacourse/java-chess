@@ -41,6 +41,10 @@ public class ChessGameService {
     }
 
     public ChessGame loadExistGame() {
+        if (!isGameExist()) {
+            throw new IllegalStateException("불러올 게임이 존재하지 않습니다.");
+        }
+
         List<PieceEntity> allPieces = pieceDao.findAllPieces();
         BoardEntity board = boardDao.findExistBoard();
         Map<Position, Piece> pieceByPosition = convertToPieceByPosition(allPieces);
