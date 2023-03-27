@@ -157,7 +157,7 @@ class BoardTest {
 	}
 
 	@Test
-	@DisplayName("초기 흰 말 점수 계산 테스트")
+	@DisplayName("검은 Pawn을 잡은 흰 말 점수 계산 테스트")
 	void whiteStatus() {
 		// given
 		final Position whiteSource = Position.of(C, TWO);
@@ -213,7 +213,7 @@ class BoardTest {
 		board.move(blackSource, blackTarget);
 		board.move(newWhiteSource, newWhiteTarget);
 		board.move(newWBlackSource, newBlackTarget);
-		board.move(newWhiteTarget,finalWhiteTarget);
+		board.move(newWhiteTarget, finalWhiteTarget);
 
 		// then
 		assertTrue(board.isKing(candidateKing));
