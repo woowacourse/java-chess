@@ -45,28 +45,32 @@ public class GameController {
         boolean whitePieceTurn = true;
 
         while (true) {
-            String[] gameCommand = InputView.readGameCommand();
-            GameCommand command = GameCommand.of(gameCommand);
+            try {
+                String[] gameCommand = InputView.readGameCommand();
+                GameCommand command = GameCommand.of(gameCommand);
 
-            if (command.equals(GameCommand.MOVE) && !whitePieceTurn) {
-                moveBlackPiece(chessGame, blackPlayer, gameCommand);
-                whitePieceTurn = true;
-                continue;
-            }
-            if (command.equals(GameCommand.MOVE) && whitePieceTurn) {
-                moveWhitePiece(chessGame, whitePlayer, gameCommand);
-                whitePieceTurn = false;
-                continue;
-            }
-            if (command.equals(GameCommand.STATUS)) {
-                showStatus(chessGame, whitePlayer, blackPlayer);
-            }
-            if (command.equals(GameCommand.END)) {
-                break;
-            }
-            if (chessGame.canEndGame(whitePlayer, blackPlayer)) {
-                OutputView.printGameEnd();
-                break;
+                if (command.equals(GameCommand.MOVE) && !whitePieceTurn) {
+                    moveBlackPiece(chessGame, blackPlayer, gameCommand);
+                    whitePieceTurn = true;
+                    continue;
+                }
+                if (command.equals(GameCommand.MOVE) && whitePieceTurn) {
+                    moveWhitePiece(chessGame, whitePlayer, gameCommand);
+                    whitePieceTurn = false;
+                    continue;
+                }
+                if (command.equals(GameCommand.STATUS)) {
+                    showStatus(chessGame, whitePlayer, blackPlayer);
+                }
+                if (command.equals(GameCommand.END)) {
+                    break;
+                }
+                if (chessGame.canEndGame(whitePlayer, blackPlayer)) {
+                    OutputView.printGameEnd();
+                    break;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

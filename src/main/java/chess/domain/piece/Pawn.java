@@ -30,8 +30,20 @@ public class Pawn extends ChessPiece {
         if (color.equals(Color.WHITE) && Direction.isMovableNorth(sourcePosition, targetPosition)) {
             return Direction.NORTH;
         }
+        if (color.equals(Color.WHITE) && Direction.isMovableNorthEast(sourcePosition, targetPosition)) {
+            return Direction.NORTH_EAST;
+        }
+        if (color.equals(Color.WHITE) && Direction.isMovableNorthWest(sourcePosition, targetPosition)) {
+            return Direction.NORTH_WEST;
+        }
         if (color.equals(Color.BLACK) && Direction.isMovableToSouth(sourcePosition, targetPosition)) {
             return Direction.SOUTH;
+        }
+        if (color.equals(Color.BLACK) && Direction.isMovableSouthEast(sourcePosition, targetPosition)) {
+            return Direction.SOUTH_EAST;
+        }
+        if (color.equals(Color.BLACK) && Direction.isMovableSouthWest(sourcePosition, targetPosition)) {
+            return Direction.SOUTH_WEST;
         }
         throw new IllegalArgumentException("[ERROR] 북쪽(화이트폰) 또는 남쪽(블랙폰) 중 이동 가능한 방향이 없습니다.");
     }
@@ -112,6 +124,6 @@ public class Pawn extends ChessPiece {
     private boolean isMovableToDiagonal(Movement movement, ChessBoard chessBoard, Color targetColor) {
         Position targetPosition = movement.findTargetPosition();
         ChessPiece targetChessPiece = chessBoard.getChessPiece(targetPosition);
-        return !targetChessPiece.equals(new Empty()) && !this.color.equals(targetColor);
+        return !targetChessPiece.equals(new Empty()) && this.color.equals(targetColor);
     }
 }
