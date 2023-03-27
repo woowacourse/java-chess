@@ -12,9 +12,9 @@ class MySqlPiecesDaoTest {
     @DisplayName("데이터베이스 커넥션 객체를 생성한다.")
     void getConnection() {
         // given
-        MySqlPiecesDao db = new MySqlPiecesDao();
+        MySqlPiecesDao piecesDao = new MySqlPiecesDao();
 
         // when, then
-        assertThat(db.getConnection()).isInstanceOf(Connection.class);
+        assertThat(piecesDao.getConnection()).isInstanceOf(Connection.class);
     }
 }
