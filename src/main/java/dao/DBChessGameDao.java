@@ -39,9 +39,7 @@ public final class DBChessGameDao implements ChessGameDao {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
+            throw new IllegalStateException("데이터베이스 연결에 실패했습니다!");
         }
     }
 
@@ -67,7 +65,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException("체스 게임 결과를 저장하는데 실패했습니다.");
             }
         }
     }
@@ -82,7 +80,7 @@ public final class DBChessGameDao implements ChessGameDao {
                 createChessStatus(chessGame);
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("체스 게임 상태를 저장하는데 실패했습니다.");
         }
     }
 
@@ -95,7 +93,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("체스 게임 상태를 생성하는데 실패했습니다.");
         }
     }
 
@@ -142,7 +140,7 @@ public final class DBChessGameDao implements ChessGameDao {
                 board.put(position, piece);
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("체스 게임 결과를 불러오는데 실패했습니다.");
         }
         return board;
     }
@@ -160,7 +158,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
             return null;
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("체스 게임의 상태를 불러오는데 실패했습니다.");
         }
     }
 
@@ -176,7 +174,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임을 업데이트하는데 실패했습니다.");
         }
     }
 
@@ -191,7 +189,7 @@ public final class DBChessGameDao implements ChessGameDao {
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임을 초기화하는데 실패했습니다.");
         }
     }
 }
