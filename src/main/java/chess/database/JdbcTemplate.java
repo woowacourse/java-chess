@@ -74,7 +74,7 @@ public final class JdbcTemplate {
 
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (!generatedKeys.next()) {
-                throw new SQLException("Update Exception! - generated key error.");
+                return null;
             }
             return generatedKeys.getLong(1);
         } catch (SQLException e) {
