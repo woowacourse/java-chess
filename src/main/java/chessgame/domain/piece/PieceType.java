@@ -6,37 +6,37 @@ public enum PieceType {
 
     KING(0) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             return new King(camp);
         }
     },
     QUEEN(9) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             return new Queen(camp);
         }
     },
     ROOK(5) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             return new Rook(camp);
         }
     },
     BISHOP(3) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             return new Bishop(camp);
         }
     },
     KNIGHT(2.5) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             return new Knight(camp);
         }
     },
     PAWN(1) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             if (camp.equals(Camp.WHITE)) {
                 return new WhitePawn();
             }
@@ -45,7 +45,7 @@ public enum PieceType {
     },
     EMPTY(0) {
         @Override
-        public Piece createPiece(Camp camp) {
+        public Piece createPiece(final Camp camp) {
             return new Empty();
         }
     };
@@ -64,5 +64,5 @@ public enum PieceType {
         return score;
     }
 
-    abstract public Piece createPiece(Camp camp);
+    abstract public Piece createPiece(final Camp camp);
 }

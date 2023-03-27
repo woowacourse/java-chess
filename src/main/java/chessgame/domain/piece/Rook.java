@@ -1,8 +1,8 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
@@ -27,7 +27,9 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isCatchable(final Camp otherCamp,
+                               final Coordinate startCoordinate,
+                               final Coordinate endCoordinate) {
         if (isSameCamp(otherCamp)) {
             return false;
         }

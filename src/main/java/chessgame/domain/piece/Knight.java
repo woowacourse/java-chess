@@ -32,7 +32,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isCatchable(final Camp otherCamp,
+                               final Coordinate startCoordinate,
+                               final Coordinate endCoordinate) {
         if (isSameCamp(otherCamp)) {
             return false;
         }

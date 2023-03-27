@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Result {
 
-    public double calculateTeamAt(Map<Coordinate, Piece> board, Camp camp) {
+    public double calculateTeamAt(final Map<Coordinate, Piece> board, final Camp camp) {
         return board.keySet()
                     .stream()
                     .filter(coordinate -> board.get(coordinate)
@@ -17,9 +17,9 @@ public class Result {
                     .sum();
     }
 
-    private double getScoreEachPiece(Map<Coordinate, Piece> board,
-                                     Coordinate targetCoordinate,
-                                     Camp camp) {
+    private double getScoreEachPiece(final Map<Coordinate, Piece> board,
+                                     final Coordinate targetCoordinate,
+                                     final Camp camp) {
         Piece targetPiece = board.get(targetCoordinate);
         if (targetPiece.isSameTypeWith(PieceType.PAWN)) {
             return getScoreByNumberOfPawnInSameColumn(board, targetCoordinate, camp);
@@ -27,9 +27,9 @@ public class Result {
         return targetPiece.score();
     }
 
-    private double getScoreByNumberOfPawnInSameColumn(Map<Coordinate, Piece> board,
-                                                      Coordinate targetCoordinate,
-                                                      Camp camp) {
+    private double getScoreByNumberOfPawnInSameColumn(final Map<Coordinate, Piece> board,
+                                                      final Coordinate targetCoordinate,
+                                                      final Camp camp) {
         long countPawnInSameColumn = board.keySet()
                                           .stream()
                                           .filter(coordinate ->
@@ -43,10 +43,10 @@ public class Result {
         return 0.5;
     }
 
-    private boolean isPawnInSameColumn(Map<Coordinate, Piece> board,
-                                       Coordinate checkCoordinate,
-                                       Coordinate targetCoordinate,
-                                       Camp camp) {
+    private boolean isPawnInSameColumn(final Map<Coordinate, Piece> board,
+                                       final Coordinate checkCoordinate,
+                                       final Coordinate targetCoordinate,
+                                       final Camp camp) {
         Piece checkPiece = board.get(checkCoordinate);
         return checkPiece.isSameCamp(camp)
                 && checkPiece.isSameTypeWith(PieceType.PAWN)

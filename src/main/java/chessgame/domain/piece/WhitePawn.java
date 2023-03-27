@@ -1,8 +1,8 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class WhitePawn extends Pawn {
     }
 
     @Override
-    public boolean isReachableWhenCatch(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isReachableWhenCatch(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }

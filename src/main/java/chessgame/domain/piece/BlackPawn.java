@@ -1,8 +1,8 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
@@ -25,13 +25,15 @@ public class BlackPawn extends Pawn {
         return isReachableByRuleAfterFirstMove(startCoordinate, endCoordinate);
     }
 
-    private boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    private boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,
+                                                   final Coordinate endCoordinate) {
         Inclination inclination = startCoordinate.getInclination(endCoordinate);
         return inclination.equals(Inclination.POSITIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 2);
     }
 
-    private boolean isReachableByRuleAfterFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+    private boolean isReachableByRuleAfterFirstMove(final Coordinate startCoordinate,
+                                                    final Coordinate endCoordinate) {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
@@ -41,7 +43,8 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    public boolean isReachableWhenCatch(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isReachableWhenCatch(final Coordinate startCoordinate,
+                                        final Coordinate endCoordinate) {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }

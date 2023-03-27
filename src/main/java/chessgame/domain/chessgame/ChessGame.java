@@ -14,7 +14,7 @@ public class ChessGame {
     private final Result result;
     private final long roomId;
 
-    public ChessGame(Map<Coordinate, Piece> board, GameRoomDto gameRoomDto) {
+    public ChessGame(final Map<Coordinate, Piece> board, final GameRoomDto gameRoomDto) {
         this.board = new Board(board);
         this.roomId = gameRoomDto.getRoomId();
         this.turn = Camp.valueOf(gameRoomDto.getTurn());

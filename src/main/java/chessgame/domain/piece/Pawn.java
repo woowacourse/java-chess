@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
-import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.chessgame.Camp;
+import chessgame.domain.coordinate.Coordinate;
 
 public abstract class Pawn extends Piece {
 
@@ -23,7 +23,9 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isCatchable(final Camp otherCamp,
+                               final Coordinate startCoordinate,
+                               final Coordinate endCoordinate) {
         if (isSameCamp(otherCamp)) {
             return false;
         }

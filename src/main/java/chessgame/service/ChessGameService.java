@@ -19,7 +19,7 @@ public class ChessGameService {
     private final GameRoomDao gameRoomDao = new GameRoomDao();
     private final PiecesDao piecesDao = new PiecesDao();
 
-    public void addNewGame(Map<Coordinate, Piece> board, Camp camp) {
+    public void addNewGame(final Map<Coordinate, Piece> board, final Camp camp) {
         gameRoomDao.addRoom(camp);
         GameRoomDto leastGameRoom = gameRoomDao.findLeastGameRoom();
 
@@ -31,7 +31,7 @@ public class ChessGameService {
         return gameRoomDao.findAllGameRoom();
     }
 
-    public GameRoomDto findGameRoomById(long roomId) {
+    public GameRoomDto findGameRoomById(final long roomId) {
         return gameRoomDao.findGameRoomById(roomId);
     }
 
@@ -39,7 +39,7 @@ public class ChessGameService {
         return gameRoomDao.findLeastGameRoom();
     }
 
-    public Map<Coordinate, Piece> findPiecesByRoomId(long roomId) {
+    public Map<Coordinate, Piece> findPiecesByRoomId(final long roomId) {
         List<PieceDto> pieceDtos = piecesDao.findPiecesByRoomId(roomId);
         validatePiecesSize(pieceDtos.size(), roomId);
 
@@ -51,14 +51,14 @@ public class ChessGameService {
         return pieces;
     }
 
-    private void validatePiecesSize(int size, long roomId) {
+    private void validatePiecesSize(final int size, final long roomId) {
         if (size != 64) {
             deleteGame(roomId);
             throw new IllegalArgumentException("[ERROR] 기물 데이터 오류로 불러올 수 없습니다. 해당 방은 삭제 됩니다.");
         }
     }
 
-    private Piece makePiece(PieceDto pieceDto) {
+    private Piece makePiece(final PieceDto pieceDto) {
         String camp = pieceDto.getCamp();
         String type = pieceDto.getType();
 
@@ -67,7 +67,7 @@ public class ChessGameService {
                         .createPiece(pieceCamp);
     }
 
-    public void updateGame(ChessGame chessGame) {
+    public void updateGame(final ChessGame chessGame) {
         long roomId = chessGame.getRoomId();
         Map<Coordinate, Piece> board = chessGame.getBoard()
                                                 .getBoard();
@@ -76,14 +76,14 @@ public class ChessGameService {
         board.forEach((coordinate, piece) -> piecesDao.updatePieceByCoordinate(roomId, coordinate, piece));
     }
 
-    public void deleteGame(ChessGame chessGame) {
+    public void deleteGame(final ChessGame chessGame) {
         long roomId = chessGame.getRoomId();
 
         piecesDao.deletePiecesByRoomId(roomId);
         gameRoomDao.deleteGameRoomById(roomId);
     }
 
-    public void deleteGame(long roomId) {
+    public void deleteGame(final long roomId) {
         piecesDao.deletePiecesByRoomId(roomId);
         gameRoomDao.deleteGameRoomById(roomId);
     }

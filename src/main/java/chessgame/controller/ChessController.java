@@ -69,7 +69,7 @@ public class ChessController {
         }
     }
 
-    private ChessGame makeGameRoom(List<String> commands) {
+    private ChessGame makeGameRoom(final List<String> commands) {
         String roomId = commands.get(ROOM_ID_INDEX);
         if (roomId.equals(NEW_ROOM)) {
             return makeNewGameRoom();
@@ -86,7 +86,7 @@ public class ChessController {
         return new ChessGame(board, gameRoomDto);
     }
 
-    private ChessGame makeAlreadyExistGameRoom(String roomId) {
+    private ChessGame makeAlreadyExistGameRoom(final String roomId) {
         GameRoomDto gameRoomDto = chessGameService.findGameRoomById(Long.parseLong(roomId));
         Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(gameRoomDto.getRoomId());
         return new ChessGame(board, gameRoomDto);
@@ -153,11 +153,11 @@ public class ChessController {
         outputView.printGameWinningResult(winner);
     }
 
-    private void printGameStatus(ChessGame chessGame) {
+    private void printGameStatus(final ChessGame chessGame) {
         outputView.printGameStatus(chessGame.getStatus());
     }
 
-    private void printGameResultWhenEnd(Command command, ChessGame chessGame) {
+    private void printGameResultWhenEnd(final Command command, final ChessGame chessGame) {
         if (command.isEnd()) {
             outputView.printGameResult(chessGame.getBoard(), chessGame.getStatus());
         }

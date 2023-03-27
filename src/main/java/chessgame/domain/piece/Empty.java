@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
-import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.chessgame.Camp;
+import chessgame.domain.coordinate.Coordinate;
 
 public class Empty extends Piece {
 
@@ -10,12 +10,14 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isReachableByRule(Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
         return false;
     }
 
     @Override
-    public boolean isCatchable(Camp otherCamp, Coordinate startCoordinate, Coordinate endCoordinate) {
+    public boolean isCatchable(final Camp otherCamp,
+                               final Coordinate startCoordinate,
+                               final Coordinate endCoordinate) {
         return false;
     }
 

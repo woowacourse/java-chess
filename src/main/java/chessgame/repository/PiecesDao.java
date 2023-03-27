@@ -24,7 +24,7 @@ public class PiecesDao {
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public void addPiece(long gameRoomId, Coordinate coordinate, Piece piece) {
+    public void addPiece(final long gameRoomId, final Coordinate coordinate, final Piece piece) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(INSERT_PIECE_QUERY)) {
             PieceType pieceType = piece.pieceType();
@@ -41,7 +41,7 @@ public class PiecesDao {
         }
     }
 
-    public List<PieceDto> findPiecesByRoomId(long roomId) {
+    public List<PieceDto> findPiecesByRoomId(final long roomId) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(FIND_PIECES_BY_ROOM_ID_QUERY)) {
             preparedStatement.setLong(1, roomId);
@@ -65,7 +65,7 @@ public class PiecesDao {
         }
     }
 
-    public void updatePieceByCoordinate(long roomId, Coordinate coordinate, Piece chagePiece) {
+    public void updatePieceByCoordinate(final long roomId, final Coordinate coordinate, final Piece chagePiece) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(UPDATE_PIECE_BY_COORDINATE_QUERY)) {
             PieceType pieceType = chagePiece.pieceType();
@@ -84,7 +84,7 @@ public class PiecesDao {
         }
     }
 
-    public void deletePiecesByRoomId(long roomId) {
+    public void deletePiecesByRoomId(final long roomId) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(DELETE_PIECES_BY_ROOM_ID_QUERY)) {
             preparedStatement.setLong(1, roomId);

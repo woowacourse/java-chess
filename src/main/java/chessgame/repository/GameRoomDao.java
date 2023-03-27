@@ -50,7 +50,7 @@ public class GameRoomDao {
         }
     }
 
-    public GameRoomDto findGameRoomById(long roomId) {
+    public GameRoomDto findGameRoomById(final long roomId) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(FIND_GAME_ROOM_QUERY)) {
             preparedStatement.setLong(1, roomId);
@@ -83,7 +83,7 @@ public class GameRoomDao {
         throw new IllegalArgumentException("[ERROR] 가장 최신 게임을 찾지 못했습니다.");
     }
 
-    public void updateGameRoomById(long roomId, Camp camp) {
+    public void updateGameRoomById(final long roomId, final Camp camp) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(UPDATE_GAME_ROOM_QUERY)) {
             preparedStatement.setString(1, camp.name());
@@ -94,7 +94,7 @@ public class GameRoomDao {
         }
     }
 
-    public void deleteGameRoomById(long roomId) {
+    public void deleteGameRoomById(final long roomId) {
         try (final var connection = databaseConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(DELETE_GAME_ROOM_QUERY)) {
             preparedStatement.setLong(1, roomId);
