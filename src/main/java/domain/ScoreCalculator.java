@@ -15,8 +15,8 @@ public class ScoreCalculator {
     public static final int STANDARD_PAWN_COUNT = 1;
 
     public double sumBlackScore(Map<Square, Piece> pieceLocations) {
-        return sumScoreWithoutPawn(pieceLocations, piece -> piece.isBlack())
-                + sumPawnScore(pieceLocations, piece -> piece.isBlack());
+        return sumScoreWithoutPawn(pieceLocations, Piece::isBlack)
+                + sumPawnScore(pieceLocations, Piece::isBlack);
     }
 
     private double sumScoreWithoutPawn(Map<Square, Piece> pieceLocations, Predicate<Piece> predicate) {
@@ -68,8 +68,8 @@ public class ScoreCalculator {
     }
 
     public double sumWhiteScore(Map<Square, Piece> pieceLocations) {
-        return sumScoreWithoutPawn(pieceLocations, piece -> piece.isWhite())
-                + sumPawnScore(pieceLocations, piece -> piece.isWhite());
+        return sumScoreWithoutPawn(pieceLocations, Piece::isWhite)
+                + sumPawnScore(pieceLocations, Piece::isWhite);
     }
 
 }
