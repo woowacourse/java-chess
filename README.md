@@ -74,3 +74,36 @@
     - [x] 사용자는 명령어를 입력한다(start, end, move, status)
   - [x] 출력
     - [x] 초기화된 체스판을 출력한다
+
+
+### 4단계 기능 요구사항
+- [ ] Piece 정보 : piece_type, team_color, rank, file
+- [ ] Chess 정보 : turn (chessBoard id 는 추후 적용 필요)
+- [ ] CRUD
+  - [ ] Create
+    - [ ] DB에서 불러 올 체스 게임이 없으면 만든다
+  - [ ] Read
+    - [ ] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
+  - [ ] Update
+    - [ ] 기물을 움직일 때마다 DB 업데이트 해준다
+    - [ ] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
+  - [ ] Delete
+    - [ ] King 이 죽으면 DB 초기화 해준다
+
+```sql 
+CREATE TABLE chess_game (
+piece_type VARCHAR(255) NOT NULL,
+piece_rank TINYINT(10) NOT NULL,
+piece_file TINYINT(10) NOT NULL,
+team VARCHAR(255) NOT NULL,
+turn VARCHAR(255) NOT NULL
+)
+
+SELECT piece_type, piece_rank, piece_file, team, turn from chess_game;
+
+INSERT INTO chess_game(piece_type, piece_rank, piece_file, team, turn) VALUES (?, ?, ?, ?, ?);
+
+DELETE FROM chess_game;
+
+TRUNCATE TABLE chess_game;
+```
