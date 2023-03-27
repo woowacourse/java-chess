@@ -57,6 +57,38 @@ public class Point {
         return new Point(file.right(), rank.down());
     }
 
+    private Point leftUpL() {
+        return new Point(file.left().left(), rank.up());
+    }
+
+    private Point leftDownL() {
+        return new Point(file.left().left(), rank.down());
+    }
+
+    private Point upLeftL() {
+        return new Point(file.left(), rank.up().up());
+    }
+
+    private Point upRightL() {
+        return new Point(file.right(), rank.up().up());
+    }
+
+    private Point rightDownL() {
+        return new Point(file.right().right(), rank.down());
+    }
+
+    private Point rightUpL() {
+        return new Point(file.right().right(), rank.up());
+    }
+
+    private Point downLeftL() {
+        return new Point(file.left(), rank.down().down());
+    }
+
+    private Point downRightL() {
+        return new Point(file.right(), rank.down().down());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +118,15 @@ public class Point {
         if (direction == Direction.LEFT_UP) return leftUp();
         if (direction == Direction.LEFT_DOWN) return leftDown();
         if (direction == Direction.RIGHT_UP) return rightUp();
+
+        if (direction == Direction.LEFT_UP_L) return leftUpL();
+        if (direction == Direction.LEFT_DOWN_L) return leftDownL();
+        if (direction == Direction.UP_LEFT_L) return upLeftL();
+        if (direction == Direction.UP_RIGHT_L) return upRightL();
+        if (direction == Direction.RIGHT_DOWN_L) return rightDownL();
+        if (direction == Direction.RIGHT_UP_L) return rightUpL();
+        if (direction == Direction.DOWN_LEFT_L) return downLeftL();
+        if (direction == Direction.DOWN_RIGHT_L) return downRightL();
         return rightDown();
     }
 }

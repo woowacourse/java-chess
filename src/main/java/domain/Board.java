@@ -37,6 +37,7 @@ public class Board {
         onCaseOfEmptyPoint(piece);
 
         List<Point> movablePoints = MovablePointFinder.findMovablePoints(fromPoint, toPoint, pieceStatus, piece);
+
         if (!movablePoints.contains(toPoint)) {
             throw new InvalidDestinationPointException();
         }
