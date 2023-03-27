@@ -12,7 +12,7 @@ public class ChessService {
 
     private final DBChessBoardDao dbChessBoardDao;
 
-    public ChessService(DBChessBoardDao dbChessBoardDao) {
+    public ChessService(final DBChessBoardDao dbChessBoardDao) {
         this.dbChessBoardDao = dbChessBoardDao;
     }
 
@@ -20,17 +20,21 @@ public class ChessService {
         dbChessBoardDao.save(fromPosition, toPosition);
     }
 
-    public ChessGame checkNotation(ChessGame game) {
+    public ChessGame checkNotation(final ChessGame game) {
         List<Position> gameNotation = dbChessBoardDao.select();
         if (gameNotation != null) {
-            for (int i = 0; i < gameNotation.size(); i += POSITION_SET_INDEX) {
-                game.move(gameNotation.get(i), gameNotation.get(i + 1));
-            }
+            getNotation(game, gameNotation);
         }
         return game;
     }
 
-    public void deleteData(boolean isKingLive) {
+    private void getNotation(final ChessGame game, final List<Position> gameNotation) {
+        for (int i = 0; i < gameNotation.size(); i += POSITION_SET_INDEX) {
+            game.move(gameNotation.get(i), gameNotation.get(i + 1));
+        }
+    }
+
+    public void deleteData(final boolean isKingLive) {
         if (!isKingLive) {
             dbChessBoardDao.delete();
         }
