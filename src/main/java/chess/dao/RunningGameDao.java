@@ -70,4 +70,17 @@ public class RunningGameDao {
         }
         return null;
     }
+
+    public void update(final RunningGameDto runningGameDto) {
+        final String query = "UPDATE running_game SET turn = ? WHERE id = ?";
+        final int id = 1;
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, runningGameDto.getTurn());
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

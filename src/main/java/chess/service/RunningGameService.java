@@ -21,4 +21,9 @@ public class RunningGameService {
     public Turn findTurnById(int runningGameId) {
         return runningGameDao.findTurnById(runningGameId);
     }
+
+    public void update(final String turn) {
+        final RunningGameDto runningGameDto = new RunningGameDto(turn);
+        runningGameDao.update(runningGameDto);
+    }
 }

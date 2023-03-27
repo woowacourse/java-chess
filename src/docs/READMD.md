@@ -164,7 +164,7 @@ classDiagram
 ### RunningGame
 - [x] 저장 기능 (처음 시작 시, 진행중인 게임이 없으면 저장)
 - [x] 조회 기능
-- [ ] 업데이트 기능 (Turn 업데이트)
+- [x] 업데이트 기능 (Turn 업데이트)
 - [ ] 삭제 기능 (게임 종료 시, 삭제)
 
 ### FinishedGame

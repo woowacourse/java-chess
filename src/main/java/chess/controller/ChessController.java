@@ -52,7 +52,7 @@ public class ChessController {
             return state;
         }
         state = changeState(chessBoard, command, state);
-        runningGameService.save(state.findCurrentTurn());
+        runningGameService.update(state.findCurrentTurn());
         OutputView.showBoard(chessBoard.pieces());
         return state;
     }

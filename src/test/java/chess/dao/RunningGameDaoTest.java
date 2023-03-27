@@ -9,6 +9,7 @@ import chess.dto.RunningGameDto;
 import java.sql.SQLException;
 import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,6 +21,17 @@ import org.junit.jupiter.api.Test;
 class RunningGameDaoTest {
 
     private final RunningGameDao runningGameDao = new RunningGameDao();
+
+    @BeforeEach
+    @Test
+    void 새로운_게임을_저장할_수_있다() {
+        // given
+        clear();
+        final RunningGameDto runningGameDto = new RunningGameDto("White");
+
+        // when & then
+        assertDoesNotThrow(() -> runningGameDao.save(runningGameDto));
+    }
 
     @AfterEach
     void clear() {
@@ -40,36 +52,30 @@ class RunningGameDaoTest {
     }
 
     @Test
-    void 새로운_게임을_저장할_수_있다() {
-        // given
-        final RunningGameDto runningGameDto = new RunningGameDto("White");
-
-        // when & then
-        assertDoesNotThrow(() -> runningGameDao.save(runningGameDto));
-    }
-
-    @Test
     void 생성된_게임이_없으면_EMPTY_LIST를_반환한다() {
+        clear();
         assertThat(runningGameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
     }
 
     @Test
     void 생성된_게임_id를_조회할_수_있다() {
-        // given
-        final RunningGameDto runningGameDto = new RunningGameDto("White");
-        runningGameDao.save(runningGameDto);
-
-        // when & then
         assertThat(runningGameDao.findAllIds().get(0)).isEqualTo(1);
     }
 
     @Test
     void 생성된_게임_id로_turn을_조회할_수_있다() {
-        // given
-        final RunningGameDto runningGameDto = new RunningGameDto("White");
-        runningGameDao.save(runningGameDto);
-
-        // when & then
         assertThat(runningGameDao.findTurnById(1)).isEqualTo(new Turn(Color.WHITE));
+    }
+
+    @Test
+    void 새로운_turn으로_업데이트할_수_있다() {
+        // given
+        final RunningGameDto runningGameDto = new RunningGameDto("Black");
+
+        // when
+        runningGameDao.update(runningGameDto);
+
+        // then
+        assertThat(runningGameDao.findTurnById(1)).isEqualTo(new Turn(Color.BLACK));
     }
 }
