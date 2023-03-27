@@ -13,6 +13,7 @@ import chess.entity.PieceEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,26 @@ class ChessBoardServiceTest {
         final ChessBoard actual = chessBoardService.getByChessGameId(1L);
         assertThat(actual)
                 .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("입력받은 위치에 해당하는 체스말을 제거한다")
+    void deletePieces() {
+        // given
+        final PieceDao pieceDao = new MockPieceDao();
+        final ChessBoardService chessBoardService = new ChessBoardService(pieceDao);
+        final PieceEntity source = PieceEntity.createWithLocation(1L, 0, 0);
+        final PieceEntity target = PieceEntity.createWithLocation(1L, 0, 1);
+        chessBoardService.savePiece(source);
+        chessBoardService.savePiece(target);
+
+        // when
+        chessBoardService.deletePieces(source, target);
+
+        // then
+        final ChessBoard actual = chessBoardService.getByChessGameId(1L);
+        assertThat(actual)
+                .isEqualTo(ChessBoard.create(Collections.emptyMap()));
     }
 
     private PieceDao createPieceDao() {

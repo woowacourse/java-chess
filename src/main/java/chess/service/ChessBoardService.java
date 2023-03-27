@@ -26,4 +26,9 @@ public class ChessBoardService {
     void savePiece(final PieceEntity pieceEntity) {
         pieceDao.save(pieceEntity);
     }
+
+    void deletePieces(final PieceEntity sourcePiece, final PieceEntity targetPiece) {
+        final Long chessGameId = sourcePiece.getChessGameId();
+        pieceDao.deleteByPositions(chessGameId, sourcePiece, targetPiece);
+    }
 }
