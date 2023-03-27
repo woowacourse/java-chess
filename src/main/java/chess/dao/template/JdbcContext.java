@@ -97,11 +97,11 @@ public class JdbcContext {
         ConnectionProvider.startTransaction();
         try {
             runnable.run();
+            ConnectionProvider.commit();
         } catch (Exception e) {
             ConnectionProvider.rollback();
             throw e;
         } finally {
-            ConnectionProvider.commit();
             ConnectionProvider.endTransaction();
         }
     }
