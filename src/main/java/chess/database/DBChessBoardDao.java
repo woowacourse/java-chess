@@ -4,30 +4,14 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public final class DBChessBoardDao implements ChessGameDao {
 
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
+    private final Database database = new Database();
 
     @Override
     public void save(final Position fromPosition,final Position toPosition) {
@@ -36,7 +20,7 @@ public final class DBChessBoardDao implements ChessGameDao {
         File toMoveFile = toPosition.getFile();
         Rank toMoveRank = toPosition.getRank();
         var query = "INSERT INTO move_position(fromMoveFile,fromMoveRank,toMoveFile,toMoveRank) VALUES(?,?,?,?)";
-        try (final var connection = getConnection();
+        try (final var connection = database.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, fromMoveFile.name());
             preparedStatement.setString(2, fromMoveRank.name());
@@ -54,7 +38,7 @@ public final class DBChessBoardDao implements ChessGameDao {
         List<Position> positions = new ArrayList<>();
 
         var query = "SELECT * FROM move_position ORDER BY seq ASC";
-        try (var connection = getConnection();
+        try (var connection = database.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -77,8 +61,8 @@ public final class DBChessBoardDao implements ChessGameDao {
     @Override
     public void delete() {
         var query = "TRUNCATE move_position";
-        try (var connection= getConnection();
-        var preparedStatement=connection.prepareStatement(query)){
+        try (var connection = database.getConnection();
+             var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
