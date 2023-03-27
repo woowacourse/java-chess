@@ -62,5 +62,10 @@ class PieceTest {
 		public boolean movableByCount(final int count) {
 			return false;
 		}
+
+		@Override
+		public PieceType type() {
+			return PieceType.ROOK;
+		}
 	}
 }
