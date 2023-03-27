@@ -6,6 +6,39 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+
+
+## 어플리케이션 실행 시, 데이터베이스 연동 방법
+- 데이터베이스 생성
+  - 해당 프로젝트의 docker 디렉터리에서 `docker-compose -p chess up -d` 명령어를 입력하여 도커를 실행시킨다.
+  - 생성된 docker 의 MySQL에 접속하여 chess 데이터베이스를 사용하도록 한다.
+  - chess 데이터베이스에 다음 DDL 을 사용하여 테이블을 생성한다.
+```sql
+CREATE TABLE `game` (
+`game_id` bigint NOT NULL AUTO_INCREMENT,
+`turn` varchar(45) NOT NULL,
+`is_end` tinyint NOT NULL,
+PRIMARY KEY (`game_id`)
+);
+
+```
+
+
+```sql
+CREATE TABLE `piece` (
+  `piece_id` bigint NOT NULL AUTO_INCREMENT,
+  `type` varchar(45) NOT NULL,
+  `position` varchar(45) NOT NULL,
+  `color` varchar(45) NOT NULL,
+  `game_id` bigint NOT NULL,
+  PRIMARY KEY (`piece_id`),
+  FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) ON UPDATE CASCADE
+);
+
+```
+
+- 만약 docker 를 사용하지 않고 local MySQL을 사용한다면, dao 패키지 내의 ConnectionProvider 클래스에서 `SERVER` 값을 자신의 로컬 MySQL에 맞는 port 로 변경한다.
+
 ## 기능 목록
 
 ### 체스 규칙
