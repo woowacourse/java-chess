@@ -31,6 +31,14 @@ public class OutputView {
         System.out.println(END_GAME_NOTICE);
     }
 
+    public void printCheckNewGameNotice() {
+        System.out.println("> 새롭게 게임을 시작하시겠습니까? (예: y, 아니오: n)");
+    }
+
+    public void printEnterSavedGameRoomNumberNotice() {
+        System.out.println("> 이어서 진행할 게임의 방 번호를 입력하세요. ex) 1");
+    }
+
     public void printScore(Map<String, Double> scores) {
         for (Entry<String, Double> entry : scores.entrySet()) {
             System.out.println(entry.getKey() + DELIMITER + entry.getValue());

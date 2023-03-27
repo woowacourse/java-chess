@@ -1,16 +1,16 @@
 package chess.controller;
 
-import static chess.domain.Command.END;
-import static chess.domain.Command.MOVE;
-import static chess.domain.Command.START;
-import static chess.domain.Command.STATUS;
+import static chess.controller.Command.END;
+import static chess.controller.Command.MOVE;
+import static chess.controller.Command.START;
+import static chess.controller.Command.STATUS;
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
-import chess.domain.Command;
 import chess.dto.BoardDto;
+import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
@@ -21,8 +21,9 @@ import java.util.function.Supplier;
 public class GameController {
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
-    private final ChessGame chessGame = new ChessGame(new Board(), WHITE);
+    private ChessGame chessGame = new ChessGame(new Board(), WHITE);
     private final Map<Command, CommandAction> commands = new EnumMap<>(Command.class);
+    private final GameService gameService = new GameService();
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -34,13 +35,50 @@ public class GameController {
 
     public void run() {
         initCommands();
-        outputView.printStartNotice();
-        Command command = readUntilValidate(this::ready);
+        Command command = START;
+        int gameId = 0;
+        boolean isNewGame = readUntilValidate(this::checkNewGame);
+        if (isNewGame) {
+            command = readUntilValidate(this::startNewGame);
+            gameId = gameService.saveGame(chessGame);
+        }
+        if (!isNewGame) {
+            gameId = startSavedGame();
+        }
         while (command != END) {
             command = readUntilValidate(this::play);
+            gameService.updateGame(chessGame, gameId);
         }
         outputView.printStartWinningTeam(chessGame.determineWinningTeam());
+        System.out.printf("게임을 진행한 방은 %d번 입니다. "
+                + "이후에 번호를 입력하면 게임을 이어서 할 수 있습니다.\n", gameId);
+    }
 
+    public boolean checkNewGame() {
+        outputView.printCheckNewGameNotice();
+        String input = inputView.readUserInput();
+        if (!input.equals("y") && !input.equals("n")) {
+            throw new IllegalArgumentException("y와 n로 입력해주세요.");
+        }
+        return input.equals("y");
+    }
+
+    public int startSavedGame() {
+        outputView.printEnterSavedGameRoomNumberNotice();
+        String input = inputView.readUserInput();
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("방번호는 숫자로 입력해주세요");
+        }
+        int gameId = Integer.parseInt(input);
+        chessGame = gameService.findGame(gameId);
+        return gameId;
+    }
+
+    public Command startNewGame() {
+        outputView.printStartNotice();
+        return readUntilValidate(this::ready);
     }
 
     private void initCommands() {
@@ -58,6 +96,8 @@ public class GameController {
 
     private Command play() {
         outputView.printTeamInTurn(chessGame.teamName());
+        BoardDto boardDto = BoardDto.of(chessGame.getBoard());
+        outputView.printChessBoard(boardDto.getPieces());
         List<String> inputs = inputView.readGameCommand();
         Command command = Command.from(inputs);
         if (command == START) {
@@ -72,15 +112,11 @@ public class GameController {
         if (command != START) {
             throw new IllegalArgumentException("start를 입력하여 게임을 실행하세요");
         }
-        BoardDto boardDto = BoardDto.of(chessGame.getBoard());
-        outputView.printChessBoard(boardDto.getPieces());
         return command;
     }
 
     private Command move(List<String> commands) {
         chessGame.movePiece(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
-        BoardDto boardDto = BoardDto.of(chessGame.getBoard());
-        outputView.printChessBoard(boardDto.getPieces());
         if (chessGame.isCheckmate()) {
             return END;
         }
