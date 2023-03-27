@@ -9,6 +9,8 @@ public enum ChessState {
     PROGRESS("PROGRESS"),
     END("END");
 
+    private static final String NOT_EXIST_COMMAND_ERROR_MESSAGE = "해당하는 게임 진행 상태가 존재하지 않습니다";
+
     private final String value;
 
     ChessState(final String value) {
@@ -19,7 +21,7 @@ public enum ChessState {
         return Arrays.stream(ChessState.values())
                 .filter(state -> state.value.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 게임 진행 상태가 존재하지 않습니다"));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_COMMAND_ERROR_MESSAGE));
     }
 
     public String getValue() {
