@@ -5,7 +5,9 @@ import chess.domain.board.Square;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ChessGame {
@@ -48,19 +50,19 @@ public class ChessGame {
         board.move(source, destination);
     }
 
-//    private void moveToDestination(final Piece piece, final Square source, final Square destination) {
-//        final List<Square> route = squares.findRoute(piece, source, destination);
-//        if (!isMovable(piece, source, route)) {
-//            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
-//        }
-//        board.move(source, destination);
-//    }
 
     private boolean isMovable(final Piece piece, final Square source, final List<Square> route) {
         if (piece.isPawn()) {
             return board.canMovePawn(source, route);
         }
         return board.canMove(source, route);
+    }
+
+    public Map<Color, Double> getResult(final Color color) {
+        Map<Color, Double> results = new HashMap<>();
+        results.put(Color.BLACK, board.resultOf(Color.BLACK));
+        results.put(Color.WHITE, board.resultOf(Color.WHITE));
+        return results;
     }
 
     public Board getBoard() {

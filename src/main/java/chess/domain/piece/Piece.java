@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Square;
+
 import java.util.List;
 
 public abstract class Piece {
@@ -18,4 +19,16 @@ public abstract class Piece {
     public abstract List<Square> findRoute(final Square source, final Square destination);
 
     public abstract boolean isPawn();
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                "type=" + this.getClass() +
+                '}';
+    }
 }

@@ -1,11 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Board {
 
@@ -68,5 +65,62 @@ public class Board {
 
     public Map<Square, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Double resultOf(final Color color) {
+        final double totalWithoutPawnScore = calculateWithoutPawn(color);
+        return totalWithoutPawnScore + calculatePawn(color);
+    }
+
+    private double calculatePawn(final Color color) {
+        int countPawn = countPawn(color);
+        int countPawnInSameFile = countPawnInSameFile(color);
+        return PieceScore.calculatePawn(countPawn, countPawnInSameFile);
+    }
+
+    private int countPawn(final Color color) {
+        return (int) board.values().stream()
+                .filter(piece -> piece.isPawn() && piece.isBlack() == color.isBlack())
+                .count();
+    }
+
+    private int countPawnInSameFile(final Color color) {
+        int countSamePawn = 0;
+        for (File file : File.values()) {
+            long countSamePawns = Arrays.stream(Rank.values())
+                    .filter(rank -> isPawnInSameFile(file, rank, color))
+                    .count();
+            if (countSamePawns > 1) {
+                countSamePawn += countSamePawns;
+            }
+        }
+        return countSamePawn;
+    }
+
+    private boolean isPawnInSameFile(File file, Rank rank, Color color) {
+        Piece piece = getPiece(file, rank);
+        return piece.isPawn() && piece.isSameColor(color);
+    }
+
+    private Piece getPiece(File file, Rank rank) {
+        return board.getOrDefault(new Square(file, rank), new Empty(Color.BLACK));
+    }
+
+    public double calculateWithoutPawn(Color color) {
+        Map<Class, Integer> numberOfPieces = new HashMap<>(Map.of(
+                Pawn.class, 0,
+                Rook.class, 0,
+                Knight.class, 0,
+                Bishop.class, 0,
+                Queen.class, 0,
+                King.class, 0
+        ));
+        for (Class pieceType : numberOfPieces.keySet()) {
+            int countPieces = (int) board.values().stream()
+                    .filter(piece -> !piece.isPawn() && piece.isBlack() == color.isBlack() && piece.getClass().equals(pieceType))
+                    .count();
+            numberOfPieces.put(pieceType, countPieces);
+        }
+        return PieceScore.calculateWithoutPawn(numberOfPieces);
     }
 }

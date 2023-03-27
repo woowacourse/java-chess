@@ -189,4 +189,22 @@ class BoardTest {
                 () -> assertThat(board.findPieceOf(destination)).containsInstanceOf(Pawn.class)
         );
     }
+
+
+    @Test
+    void 같은_파일의_폰이_2개인_경우의_점수를_계산한다() {
+        final Board board = BoardFactory.generate();
+        board.move(new Square(File.B, Rank.TWO), new Square(File.A, Rank.THREE));
+
+        assertThat(board.resultOf(Color.WHITE)).isEqualTo(37);
+    }
+
+    @Test
+    void 같은_파일의_폰이_3개인_경우의_점수를_계산한다() {
+        final Board board = BoardFactory.generate();
+        board.move(new Square(File.B, Rank.TWO), new Square(File.A, Rank.THREE));
+        board.move(new Square(File.C, Rank.TWO), new Square(File.A, Rank.FOUR));
+
+        assertThat(board.resultOf(Color.WHITE)).isEqualTo(36.5);
+    }
 }

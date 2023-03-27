@@ -62,4 +62,12 @@ public class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
 }
