@@ -4,34 +4,34 @@ import chess.chessboard.Side;
 import chess.chessboard.Square;
 import chess.chessgame.ChessGame;
 import chess.controller.*;
+import chess.dao.ChessGameDao;
+import chess.dao.ChessGameDaoImpl;
 
 public class Running implements GameStatus {
 
     private final ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
+
+    public Running(final ChessGame chessGame, final ChessGameDao chessGameDao) {
+        this.chessGame = chessGame;
+        this.chessGameDao = chessGameDao;
+    }
 
     public Running(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+        this(chessGame, new ChessGameDaoImpl());
     }
 
     @Override
     public GameStatus playGame(final Command command, final PrintAction printAction) {
-        validate(command);
+        validateNotStart(command);
 
         if (command.getCommandType() == CommandType.MOVE) {
             return move((MoveCommand) command, printAction);
         }
-        return status(printAction);
-    }
-
-    private void validate(final Command command) {
-        validateNotStart(command);
-        validateNotEnd(command);
-    }
-
-    private void validateNotEnd(final Command command) {
-        if (command.getCommandType() == CommandType.END) {
-            throw new EndCommandException("Running의 command로 END가 입력됨");
+        if (command.getCommandType() == CommandType.STATUS) {
+            return status(printAction);
         }
+        return null;
     }
 
     private GameStatus status(final PrintAction printAction) {
@@ -48,9 +48,10 @@ public class Running implements GameStatus {
         final Square sourceSquare = moveCommand.getSourceSquare();
         final Square destinationSquare = moveCommand.getDestinationSquare();
         chessGame.move(sourceSquare, destinationSquare);
+        chessGameDao.update(chessGame);
 
         if (chessGame.isKingDead()) {
-            return new Finished(chessGame);
+            return new Finished(chessGame, chessGameDao);
         }
 
         printAction.run(ChessBoardDto.of(chessGame.getChessBoard()));

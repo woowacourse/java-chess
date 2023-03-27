@@ -16,3 +16,11 @@ CREATE TABLE pieces
     PRIMARY KEY (`id`),
     FOREIGN KEY (`chess_game_id`) REFERENCES `chess_game` (`id`)
 );
+
+DELETE
+*
+FROM pieces;
+DELETE
+FROM chess_game;
+
+

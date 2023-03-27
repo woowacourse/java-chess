@@ -19,17 +19,18 @@ public class ChessGameDaoImpl implements ChessGameDao {
 
     @Override
     public void save(final ChessGame chessGame) {
-        final var pieceQuery = "INSERT INTO pieces VALUES(?, ?, ?, ?, ?)";
-        final var chessGameQuery = "INSERT INTO chess_game VALUES(?)";
+        final var pieceQuery = "INSERT INTO pieces(chess_game_id, side, type, `file`, `rank`) VALUES(?, ?, ?, ?, ?)";
+        final var chessGameQuery = "INSERT INTO chess_game(id, turn) VALUES(?, ?)";
         try (final var connection = connectionPool.getDatabaseConnection();
              final PreparedStatement psForChessGame = connection.prepareStatement(chessGameQuery);
-             final var psForPiece = connection.prepareStatement(pieceQuery);
+             final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
             final Turn turn = chessGame.getTurn();
             final ChessBoard chessBoard = chessGame.getChessBoard();
             final Map<Square, Piece> pieces = chessBoard.getPieces();
 
-            psForChessGame.setString(1, turn.getSide()
+            psForChessGame.setInt(1, 1);
+            psForChessGame.setString(2, turn.getSide()
                                             .name());
             psForChessGame.executeUpdate();
 
@@ -63,7 +64,7 @@ public class ChessGameDaoImpl implements ChessGameDao {
              final PreparedStatement psForPieces = connection.prepareStatement(piecesQuery);
              final PreparedStatement psForChessGame = connection.prepareStatement(chessGameQuery)
         ) {
-            psForChessGame.executeUpdate();
+            psForPieces.executeUpdate();
             psForChessGame.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -78,11 +79,11 @@ public class ChessGameDaoImpl implements ChessGameDao {
 
     @Override
     public Optional<ChessGame> find() {
-        final var pieceQuery = "SELECT side, type, file, rank from pieces";
+        final var pieceQuery = "SELECT side, type, `file`, `rank` from pieces";
         final var chessGameQuery = "SELECT turn from chess_game";
         try (final var connection = connectionPool.getDatabaseConnection();
              final PreparedStatement psForChessGame = connection.prepareStatement(chessGameQuery);
-             final var psForPiece = connection.prepareStatement(pieceQuery);
+             final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
             final ResultSet resultSetForChessGame = psForChessGame.executeQuery();
             Turn turn = null;
