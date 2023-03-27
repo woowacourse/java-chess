@@ -1,27 +1,45 @@
 package chess.domain.game;
 
+import chess.dao.ChessGameDao;
+import chess.dao.PiecesDao;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.controller.GameStatus;
+import chess.domain.piece.AllPiecesGenerator;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
+import chess.domain.piece.type.Piece;
+import java.util.List;
 
 public class ChessGame {
 
     private static final double PAWN_DEDUCTION_SCORE = 0.5;
 
-    private final Board board;
-    private Side turnToMove;
+    private Board board;
+    private final PiecesDao piecesDao;
+    private final ChessGameDao chessGameDao;
+    private Side turnToMove = Side.INIT;
     private GameStatus gameStatus;
 
-    public ChessGame(final Board board, final Side firstTurn, final GameStatus gameStatus) {
-        this.board = board;
-        this.turnToMove = firstTurn;
+    public ChessGame(final PiecesDao piecesDao,
+                     final ChessGameDao chessGameDao,
+                     final GameStatus gameStatus) {
+        this.piecesDao = piecesDao;
+        this.chessGameDao = chessGameDao;
         this.gameStatus = gameStatus;
     }
 
-    public void start() {
+    public void startNewGame() {
         checkGameAlreadyStart(gameStatus);
+        final Pieces allPieces = new Pieces(new AllPiecesGenerator());
+        this.board = new Board(allPieces);
         gameStatus = GameStatus.START;
+        this.turnToMove = Side.WHITE;
+
+        chessGameDao.delete();
+        chessGameDao.insertTurn(turnToMove);
+        piecesDao.delete();
+        piecesDao.insertAll(board.getPieces());
     }
 
     private void checkGameAlreadyStart(final GameStatus gameStatus) {
@@ -30,12 +48,25 @@ public class ChessGame {
         }
     }
 
+    public void load() {
+        checkGameAlreadyStart(gameStatus);
+        final List<Piece> findPieces = piecesDao.findAll();
+        if (findPieces.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 저장된 게임 정보가 없습니다. 새로운 게임을 시작해주세요.");
+        }
+        final Pieces loadedPieces = new Pieces(findPieces);
+        this.board = new Board(loadedPieces);
+        this.turnToMove = chessGameDao.selectTurn();
+        gameStatus = GameStatus.START;
+    }
+
     public void movePiece(Position sourcePosition, Position targetPosition) {
         checkGameStatus();
         final Side sourcePieceSide = board.getPieceSide(sourcePosition);
         checkTurnToMoveBySide(sourcePieceSide);
         board.movePiece(sourcePosition, targetPosition);
         changeTurnToMove();
+        chessGameDao.updateTurn(turnToMove);
         checkKingAlive();
     }
 
@@ -64,10 +95,13 @@ public class ChessGame {
             return;
         }
         gameStatus = GameStatus.KING_DEAD;
+        piecesDao.delete();
     }
 
     public void exit() {
         gameStatus = GameStatus.END;
+        piecesDao.delete();
+        piecesDao.insertAll(board.getPieces());
     }
 
     public double calculateScoreBySide(Side side) {

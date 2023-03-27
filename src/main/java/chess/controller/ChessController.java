@@ -1,15 +1,14 @@
 package chess.controller;
 
-import chess.domain.board.Board;
+import chess.dao.MySqlChessGameDao;
+import chess.dao.MySqlPiecesDao;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.board.dto.BoardDto;
 import chess.domain.game.ChessGame;
-import chess.view.GameCommand;
-import chess.domain.piece.AllPiecesGenerator;
-import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
+import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Arrays;
@@ -39,10 +38,9 @@ public class ChessController {
     }
 
     private ChessGame setUp() {
-        Board board = new Board(new Pieces(new AllPiecesGenerator()));
         OutputView.printGameStartMessage();
         OutputView.printGameCommandInputMessage();
-        return new ChessGame(board, Side.WHITE, GameStatus.INIT);
+        return new ChessGame(new MySqlPiecesDao(), new MySqlChessGameDao(), GameStatus.INIT);
     }
 
     private Runnable repeatByRunnable(Runnable runnable) {
