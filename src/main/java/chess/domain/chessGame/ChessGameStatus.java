@@ -14,6 +14,7 @@ public interface ChessGameStatus { // TODO chessGame이 State를 변수로 가�
     ChessGameStatus end();
 
     boolean isPlaying();
+
     boolean isEnd();
 
     Map<Position, String> getPrintingBoard(Board board);

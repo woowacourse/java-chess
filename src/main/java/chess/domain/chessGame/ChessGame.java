@@ -31,7 +31,7 @@ public class ChessGame {
         chessGameStatus.validateMove(currentPosition, nextPosition, movingPiece);
         checkTurn(movingPiece);
         board.move(Position.from(currentPosition), Position.from(nextPosition));
-        if(isOver(targetPiece)){
+        if (isOver(targetPiece)) {
             end();
             return;
         }
@@ -39,10 +39,7 @@ public class ChessGame {
     }
 
     private boolean isOver(Piece targetPiece) {
-        if (targetPiece.isKing()) {
-            return true;
-        }
-        return false;
+        return targetPiece.isKing();
     }
 
     public void end() {

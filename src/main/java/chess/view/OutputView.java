@@ -46,7 +46,7 @@ public class OutputView {
         }
     }
 
-    public static void printWinner(String winner){
+    public static void printWinner(String winner) {
         System.out.println(winner + "이 킹을 잡아 승리했습니다.");
     }
 }
