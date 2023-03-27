@@ -123,7 +123,7 @@ public class ChessController {
         OutputView.printPlayNewGameMessage();
         Command newGameCommand = readNewGameCommand();
         ChessGameDto chessGameDto = loadGameController.getChessGameDtoByCommand(user, newGameCommand);
-        playGame(chessGameDto.getId(), chessGameDto.getChessGame());
+        playGameWhenBothKingAlive(chessGameDto);
     }
 
     private Command readNewGameCommand() {
@@ -144,13 +144,29 @@ public class ChessController {
         throw new IllegalArgumentException("새로운 게임을 시작하려면 new, 이미 존재하는 게임을 확인하려면 exist를 입력해주세요.");
     }
 
+    private void playGameWhenBothKingAlive(ChessGameDto chessGameDto) {
+        String gameId = chessGameDto.getId();
+        ChessGame chessGame = chessGameDto.getChessGame();
+        if (chessGame.isKingDead()) {
+            printWinner(chessGame);
+            return;
+        }
+        playGame(gameId, chessGame);
+    }
+
+    private void printWinner(ChessGame chessGame) {
+        Team winner = chessGame.getWinner();
+        OutputView.printWinner(winner);
+    }
+
     private void playGame(String gameId, ChessGame chessGame) {
         OutputView.printGameCommandMessage();
         OutputView.printGameStatus(chessGame.getGameStatus());
         Command command;
-        while (chessGame.isBothKingAlive() && (command = readPlayCommand()) != Command.END) {
+        do {
+            command = readPlayCommand();
             playGameByCommand(gameId, chessGame, command);
-        }
+        } while (chessGame.isBothKingAlive() && command != Command.END);
         printWinnerWhenKingIsDead(chessGame);
     }
 
@@ -173,10 +189,11 @@ public class ChessController {
     }
 
     private void playGameByCommand(String gameId, ChessGame chessGame, Command command) {
+        if (command == Command.END) {
+            return;
+        }
         if (command == Command.MOVE) {
-            SquareDto current = readSquare();
-            SquareDto destination = readSquare();
-            move(gameId, chessGame, current, destination);
+            move(gameId, chessGame);
             return;
         }
         printPoint(chessGame);
@@ -189,8 +206,7 @@ public class ChessController {
 
     private void printWinnerWhenKingIsDead(ChessGame chessGame) {
         if (chessGame.isKingDead()) {
-            Team winner = chessGame.getWinner();
-            OutputView.printWinner(winner);
+            printWinner(chessGame);
         }
     }
 
@@ -203,12 +219,9 @@ public class ChessController {
         }
     }
 
-    private void move(
-            final String gameId,
-            final ChessGame chessGame,
-            final SquareDto currentDto,
-            final SquareDto destinationDto
-    ) {
+    private void move(final String gameId, final ChessGame chessGame) {
+        SquareDto currentDto = readSquare();
+        SquareDto destinationDto = readSquare();
         if (currentDto == null || destinationDto == null) {
             return;
         }
