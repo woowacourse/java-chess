@@ -31,4 +31,13 @@ public class ChessBoardService {
         final Long chessGameId = sourcePiece.getChessGameId();
         pieceDao.deleteByPositions(chessGameId, sourcePiece, targetPiece);
     }
+
+    void saveAll(final Long chessGameId, final Map<Position, Piece> chessBoard) {
+        for (Position position : chessBoard.keySet()) {
+            final Piece piece = chessBoard.get(position);
+            PieceEntity pieceEntity = PieceEntity.createWithChessGameId(chessGameId, position.getRank(),
+                    position.getFile(), piece.getPieceType().name(), piece.getCampType().name());
+            pieceDao.save(pieceEntity);
+        }
+    }
 }

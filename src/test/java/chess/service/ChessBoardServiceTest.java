@@ -76,6 +76,22 @@ class ChessBoardServiceTest {
                 .isEqualTo(ChessBoard.create(Collections.emptyMap()));
     }
 
+    @Test
+    @DisplayName("체스판의 모든 기물을 저장한다")
+    void saveAll() {
+        // given
+        final PieceDao pieceDao = new MockPieceDao();
+        final ChessBoardService chessBoardService = new ChessBoardService(pieceDao);
+
+        // when
+        chessBoardService.saveAll(1L, createMockChessBoard().getBoard());
+
+        // then
+        final ChessBoard actual = chessBoardService.getByChessGameId(1L);
+        assertThat(actual)
+                .isEqualTo(createMockChessBoard());
+    }
+
     private PieceDao createPieceDao() {
         final PieceDao pieceDao = new MockPieceDao();
         final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(1L);
