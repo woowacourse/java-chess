@@ -16,10 +16,7 @@ public class DatabaseConnection {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException exception) {
-//            throw new IllegalStateException("[ERROR] DB에 연결에 실패했습니다.");
-            System.err.println("DB 연결 오류:" + exception.getMessage());
-            exception.printStackTrace();
-            return null;
+            throw new IllegalStateException("[ERROR] DB에 연결에 실패했습니다.");
         }
     }
 }

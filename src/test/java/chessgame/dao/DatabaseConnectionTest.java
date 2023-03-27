@@ -1,20 +1,15 @@
 package chessgame.dao;
 
 import chessgame.repository.DatabaseConnection;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class DatabaseConnectionTest {
 
     @Test
-    void getConnection() throws SQLException {
+    void getConnection() {
         final DatabaseConnection databaseConnection = new DatabaseConnection();
 
-        try (final var connection = databaseConnection.getConnection()) {
-            assertThat(connection).isNotNull();
-        }
+        Assertions.assertDoesNotThrow(databaseConnection::getConnection);
     }
 }
