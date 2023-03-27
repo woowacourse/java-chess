@@ -36,6 +36,10 @@ public class Square {
         return coordinate;
     }
 
+    public String parseToString() {
+        return file.getValue() + String.valueOf(rank.getValue());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

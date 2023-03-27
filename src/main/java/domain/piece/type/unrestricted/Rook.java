@@ -3,16 +3,11 @@ package domain.piece.type.unrestricted;
 import java.util.List;
 
 import domain.piece.Camp;
-import domain.piece.type.Type;
+import domain.piece.type.PieceType;
 
 public class Rook extends UnrestrictedPiece {
-    public Rook(Camp camp, Type type) {
-        super(camp, type);
-    }
-
-    @Override
-    public boolean isRook() {
-        return true;
+    public Rook(Camp camp) {
+        super(camp, PieceType.ROOK);
     }
 
     @Override

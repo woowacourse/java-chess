@@ -3,16 +3,11 @@ package domain.piece.type.unrestricted;
 import java.util.List;
 
 import domain.piece.Camp;
-import domain.piece.type.Type;
+import domain.piece.type.PieceType;
 
 public class Queen extends UnrestrictedPiece {
-    public Queen(Camp camp, Type type) {
-        super(camp, type);
-    }
-
-    @Override
-    public boolean isQueen() {
-        return true;
+    public Queen(Camp camp) {
+        super(camp, PieceType.QUEEN);
     }
 
     @Override

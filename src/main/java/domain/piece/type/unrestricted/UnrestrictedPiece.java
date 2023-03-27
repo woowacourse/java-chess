@@ -7,11 +7,11 @@ import java.util.Objects;
 import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.type.Type;
+import domain.piece.type.PieceType;
 
 public abstract class UnrestrictedPiece extends Piece {
-    public UnrestrictedPiece(Camp camp, Type type) {
-        super(camp, type);
+    public UnrestrictedPiece(Camp camp, PieceType pieceType) {
+        super(camp, pieceType);
     }
 
     @Override

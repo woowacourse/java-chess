@@ -3,22 +3,24 @@ package domain.piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.board.Square;
-import domain.piece.type.Type;
+import domain.piece.score.Score;
+import domain.piece.type.PieceType;
 
 public abstract class Piece {
     protected static final int FILE = 0;
     protected static final int RANK = 1;
 
     private final Camp camp;
-    private final Type type;
+    private final PieceType pieceType;
 
-    public Piece(Camp camp, Type type) {
+    public Piece(Camp camp, PieceType pieceType) {
         this.camp = camp;
-        this.type = type;
+        this.pieceType = pieceType;
     }
 
     protected abstract void validateMovable(List<Integer> gaps);
@@ -83,35 +85,36 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isPawn() {
-        return false;
+    public boolean isSameCamp (Camp camp) {
+        return this.camp == camp;
     }
 
-    public boolean isRook() {
-        return false;
-    }
-
-    public boolean isKnight() {
-        return false;
-    }
-
-    public boolean isBishop() {
-        return false;
-    }
-
-    public boolean isQueen() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
+    public Score getScore() {
+        return pieceType.getScore();
     }
 
     public Camp getCamp() {
         return camp;
     }
 
-    public Type getType() {
-        return type;
+    public PieceType getType() {
+        return pieceType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return camp == piece.camp && pieceType == piece.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(camp, pieceType);
     }
 }
