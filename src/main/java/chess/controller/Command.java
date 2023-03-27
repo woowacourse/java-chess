@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.ChessService;
-import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.view.OutputView;
 import chess.view.InputView;
@@ -11,12 +10,13 @@ public enum Command {
 	START {
 		public Command run(final ChessService chessService) {
 			if (chessService.checkLastGameExists()) {
+				OutputView.printLoadMessage();
 				chessService.loadLastGame();
-				OutputView.printBoard(OutputRenderer.toBoardDto(chessService.getBoard()));
+				OutputView.printBoard(OutputRenderer.toViewBoardDto(chessService.getBoardAndTurn()));
 				return this;
 			}
-			ChessGame chessGame = chessService.initGame();
-			OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
+			chessService.initGame();
+			OutputView.printBoard(OutputRenderer.toViewBoardDto(chessService.getBoardAndTurn()));
 			return this;
 		}
 	},
@@ -25,7 +25,7 @@ public enum Command {
 			Position source = InputRenderer.toPosition(InputView.readPosition());
 			Position target = InputRenderer.toPosition(InputView.readPosition());
 			chessService.movePiece(source, target);
-			OutputView.printBoard(OutputRenderer.toBoardDto(chessService.getBoard()));
+			OutputView.printBoard(OutputRenderer.toViewBoardDto(chessService.getBoardAndTurn()));
 			return this;
 		}
 	},

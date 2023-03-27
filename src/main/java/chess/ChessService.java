@@ -1,34 +1,43 @@
 package chess;
 
 import java.util.List;
-import java.util.Map;
 
 import chess.dao.ChessGameDao;
+import chess.dao.JdbcConnector;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.piece.Piece;
 import chess.domain.result.TempResult;
+import chess.dto.BoardTurnDto;
 import chess.dto.MoveDto;
 
 public class ChessService {
 
 	private final ChessGame game;
+	private boolean isDbConnected;
 
 	public ChessService() {
-		game = new ChessGame();
+		this.game = new ChessGame();
+		this.isDbConnected = false;
 	}
 
 	public boolean checkLastGameExists() {
-		ChessGameDao chessGameDao = new ChessGameDao();
-		if (chessGameDao.checkConnection()) {
-			return chessGameDao.isLastGameExists();
+		if (isDBNotConnected()) {
+			return false;
 		}
-		return false;
+		isDbConnected = true;
+		ChessGameDao chessGameDao = ChessGameDao.create();
+		return chessGameDao.isLastGameExists();
+	}
+
+	private boolean isDBNotConnected() {
+		JdbcConnector jdbcConnector = new JdbcConnector();
+		return jdbcConnector.isDBNotConnected();
 	}
 
 	public void loadLastGame() {
-		List<MoveDto> moves = new ChessGameDao().loadMoves();
+		ChessGameDao chessGameDao = ChessGameDao.create();
+		List<MoveDto> moves = chessGameDao.loadMoves();
 		game.initialize();
 		for (MoveDto move : moves) {
 			Position source = new Position(move.getSourceColumn(), move.getSourceRow());
@@ -37,16 +46,21 @@ public class ChessService {
 		}
 	}
 
-	public ChessGame initGame() {
+	public void initGame() {
 		game.initialize();
-		return game;
 	}
 
 	public void movePiece(final Position source, final Position target) {
-		ChessGameDao chessGameDao = new ChessGameDao();
-		MoveDto moveDto = new MoveDto(source.getColumn(), source.getRow(), target.getColumn(), target.getRow());
-		chessGameDao.saveMove(moveDto);
+		saveIfDbConnected(source, target);
 		game.movePiece(source, target);
+	}
+
+	private void saveIfDbConnected(final Position source, final Position target) {
+		if (isDbConnected) {
+			ChessGameDao chessGameDao = ChessGameDao.create();
+			MoveDto moveDto = new MoveDto(source.getColumn(), source.getRow(), target.getColumn(), target.getRow());
+			chessGameDao.saveMove(moveDto);
+		}
 	}
 
 	public TempResult getTempResult() {
@@ -58,15 +72,21 @@ public class ChessService {
 	}
 
 	public boolean isGameDone() {
-		ChessGameDao chessGameDao = new ChessGameDao();
 		if (game.isGameDone()) {
-			chessGameDao.deleteMoves();
+			deleteMovesIfDbConnected();
 			return true;
 		}
 		return false;
 	}
 
-	public Map<Position, Piece> getBoard() {
-		return game.getBoard();
+	private void deleteMovesIfDbConnected() {
+		if (isDbConnected) {
+			ChessGameDao chessGameDao = ChessGameDao.create();
+			chessGameDao.deleteMoves();
+		}
+	}
+
+	public BoardTurnDto getBoardAndTurn() {
+		return new BoardTurnDto(game.getBoard(), game.getTurn());
 	}
 }

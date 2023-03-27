@@ -61,6 +61,11 @@ public class ChessGame {
 		return board.getBoard();
 	}
 
+	public Team getTurn() {
+		assertState(GameState.GAME_RUNNING, GameState.GAME_END);
+		return team;
+	}
+
 	private void assertState(GameState validState1, GameState... validStates) {
 		if (this.state == validState1) {
 			return;
