@@ -82,3 +82,9 @@
 - status: 현재 살아있는 말의 점수를 표시합니다.
 - save: 말의 현재 문자열 번호 기준으로 위치들을 저장합니다.
 - end: 게임을 종료합니다.
+
+### 데이터베이스 접속정보
+
+1. database.connection.ConnectionGenerator에서 접속 정보가 관리되는 중입니다.
+2. sql 파일은 ./sql 폴더에 있습니다.
+
