@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.Team;
 import chess.domain.math.Direction;
 import chess.domain.math.UnitVector;
@@ -13,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public final class Board {
 
@@ -106,27 +109,19 @@ public final class Board {
     }
 
     private Score scoreOf(final Team team) {
-        final Score sum = Score.ZERO;
-
-        for (int column = 0; column < Position.getMaxIndex(); column++) {
-            final List<Piece> oneColumnPieces = new ArrayList<>();
-            findAllyPieces(team, column, oneColumnPieces);
-            sum.add(PieceType.scoreOfOneColumnWithSingleTeam(oneColumnPieces));
-        }
-        return sum;
+        return IntStream.range(0, Position.getMaxIndex())
+                .mapToObj(column -> findOneColumnAllyPieces(column, team))
+                .map(PieceType::calculateScore)
+                .reduce(Score::add)
+                .orElse(Score.ZERO);
     }
 
-    private void findAllyPieces(final Team team, final int column, final List<Piece> oneColumnPieces) {
-        for (int row = 0; row < Position.getMaxIndex(); row++) {
-            Piece piece = board.get(Position.of(row, column));
-            addAllyPieces(team, oneColumnPieces, piece);
-        }
-    }
-
-    private void addAllyPieces(final Team team, final List<Piece> oneColumnPieces, final Piece piece) {
-        if (piece.isAlly(team)) {
-            oneColumnPieces.add(piece);
-        }
+    private List<Piece> findOneColumnAllyPieces(final int column, final Team team) {
+        return IntStream.range(0, Position.getMaxIndex())
+                .mapToObj(row -> Position.of(row, column))
+                .map(board::get)
+                .filter(piece -> piece.isAlly(team))
+                .collect(toList());
     }
 
     public Map<Position, Piece> getBoard() {
