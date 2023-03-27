@@ -1,10 +1,6 @@
 package domain.piece;
 
-import domain.point.Direction;
-
-import java.util.Map;
-
-public class BlackQueen extends Piece {
+public class BlackQueen extends Queen {
     @Override
     public String getSymbol() {
         return "Q";
@@ -13,11 +9,6 @@ public class BlackQueen extends Piece {
     @Override
     public boolean equals(Object obj) {
         return getClass() == obj.getClass();
-    }
-
-    @Override
-    public Map<Direction, Integer> getMovableRange() {
-        return null;
     }
 
     @Override
