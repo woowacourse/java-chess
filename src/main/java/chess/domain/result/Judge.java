@@ -15,26 +15,27 @@ public class Judge {
 
     public static final Side BLACK_SIDE = Side.from(Color.BLACK);
     public static final Side WHITE_SIDE = Side.from(Color.WHITE);
+    public static final Side NOTHING_SIDE = Side.from(Color.NOTHING);
 
     public static Map<Side, Score> calculateScore(Board board) {
         Map<Side, Score> scoreBySide = new HashMap<>();
-        scoreBySide.put(BLACK_SIDE, new Score(0));
-        scoreBySide.put(WHITE_SIDE, new Score(0));
 
         for (File file : File.values()) {
             double whitePawnCount = 0;
             double blackPawnCount = 0;
             for (Rank rank : Rank.values()) {
                 Piece piece = board.findPiece(file, rank);
-                Score pieceScore = new Score(piece.getRole().getScore());
                 Side side = piece.getSide();
-                scoreBySide.put(side, scoreBySide.getOrDefault(side, new Score(0)).sum(pieceScore));
-                if (piece.isRole(Role.PAWN) || piece.isRole(Role.INITIAL_PAWN)) {
-                    if (side.equals(BLACK_SIDE)) {
-                        blackPawnCount++;
-                    }
-                    if (side.equals(WHITE_SIDE)) {
-                        whitePawnCount++;
+                if (side.equals(BLACK_SIDE) || side.equals(WHITE_SIDE)) {
+                    Score pieceScore = new Score(piece.getRole().getScore());
+                    scoreBySide.put(side, scoreBySide.getOrDefault(side, new Score(0)).sum(pieceScore));
+                    if (piece.isRole(Role.PAWN) || piece.isRole(Role.INITIAL_PAWN)) {
+                        if (side.equals(BLACK_SIDE)) {
+                            blackPawnCount++;
+                        }
+                        if (side.equals(WHITE_SIDE)) {
+                            whitePawnCount++;
+                        }
                     }
                 }
             }

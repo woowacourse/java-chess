@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.piece.Piece;
 import chess.domain.result.Score;
+import chess.domain.side.Color;
 import chess.domain.side.Side;
 
 import java.util.Collections;
@@ -14,6 +15,7 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 상태 : status");
     }
 
     public void printBoard(final List<List<Piece>> pieces) {
@@ -38,9 +40,13 @@ public class OutputView {
         System.out.println("게임 종료");
     }
 
-    public void printStatus(Map<Side, Score> stauts) {
-        for (Side side : stauts.keySet()) {
-            System.out.printf("%s : %f 점\n", side.getColor().name(), stauts.get(side).getValue());
+    public void printStatus(Map<Side, Score> status) {
+        for (Side side : status.keySet()) {
+            System.out.printf("%s : %.1f 점\n", side.getColor().name(), status.get(side).getValue());
         }
+    }
+
+    public void printHigherScoreSide(Color winnerColor) {
+        System.out.println(winnerColor + " 승");
     }
 }

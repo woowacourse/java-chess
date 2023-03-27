@@ -37,9 +37,6 @@ public class Board {
         validateMovablePath(sourceSquare, direction, distance);
 
         movePiece(sourceSquare, targetSquare, sourcePiece);
-    }
-
-    public void turnSwitch() {
         turn = turn.findOpponent();
     }
 

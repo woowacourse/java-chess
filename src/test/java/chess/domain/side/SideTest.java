@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.side;
 
 import chess.domain.side.Color;
 import chess.domain.side.Side;

@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.result;
 
 import chess.domain.result.Score;
 import org.assertj.core.api.Assertions;

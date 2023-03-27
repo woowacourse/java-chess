@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.result;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
@@ -69,19 +69,12 @@ public class JudgeTest {
         //given
         Board board = BoardFactory.createInitial();
         board.makeMove(Square.from("a2"), Square.from("a3"));//무의미한 백의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("b8"), Square.from("c6"));
-        board.turnSwitch();
         board.makeMove(Square.from("a3"), Square.from("a4"));//무의미한 백의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("c6"), Square.from("b4"));
-        board.turnSwitch();
         board.makeMove(Square.from("a4"), Square.from("a5"));//무의미한 백의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("b4"), Square.from("c2"));
-        board.turnSwitch();
         board.makeMove(Square.from("a5"), Square.from("a6"));//무의미한 백의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("c2"), Square.from("e1"));//여기서 백 왕이 잡힘
         //when
         Side side = Judge.findSideKingDied(board);
@@ -95,17 +88,11 @@ public class JudgeTest {
         //given
         Board board = BoardFactory.createInitial();
         board.makeMove(Square.from("b1"), Square.from("c3"));
-        board.turnSwitch();
         board.makeMove(Square.from("a7"), Square.from("a6"));//무의미한 흑의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("c3"), Square.from("b5"));
-        board.turnSwitch();
         board.makeMove(Square.from("a6"), Square.from("a5"));//무의미한 흑의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("b5"), Square.from("c7"));
-        board.turnSwitch();
         board.makeMove(Square.from("a5"), Square.from("a4"));//무의미한 흑의 움직임
-        board.turnSwitch();
         board.makeMove(Square.from("c7"), Square.from("e8"));//여기서 흑 왕이 잡힘
         //when
         Side side = Judge.findSideKingDied(board);
