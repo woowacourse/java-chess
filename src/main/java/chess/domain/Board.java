@@ -23,6 +23,9 @@ public class Board {
 
 	private static final String PAWN_NAME = "P";
 	private static final String KING_NAME = "K";
+	private static final int NO_PAWN = 0;
+	private static final int ONE_PAWN = 1;
+	private static final int TARGET_POINT = 1;
 	private static Color thisTurn;
 	private final Map<Position, Piece> board;
 
@@ -105,7 +108,7 @@ public class Board {
 			path.add(pathPosition);
 		}
 
-		return path.subList(0, path.size() - 1);
+		return path.subList(0, path.size() - TARGET_POINT);
 	}
 
 	private void validatePathIsEmpty(final List<Position> path) {
@@ -193,10 +196,10 @@ public class Board {
 	}
 
 	private double addPawnScore(final int count) {
-		if (count == 0) {
+		if (count == NO_PAWN) {
 			return 0;
 		}
-		if (count == 1) {
+		if (count == ONE_PAWN) {
 			return PAWN.score();
 		}
 		return PAWNS.score() * count;

@@ -12,12 +12,15 @@ import chess.domain.position.Rank;
 
 public class OutputView {
 
+	private static final String FILE_LINE = "\nabcdefgh\n";
+	private static final String TAB = "\t";
+
 	public static void printBoard(final Map<Position, Piece> chessBoard, final List<Rank> ranks,
 		final List<File> files) {
 		for (final Rank rank : sortRank(ranks)) {
 			printEachPosition(chessBoard, files, rank);
 		}
-		System.out.println("\nabcdefgh\n");
+		System.out.println(FILE_LINE);
 	}
 
 	private static void printEachPosition(final Map<Position, Piece> chessBoard, final List<File> files,
@@ -26,7 +29,7 @@ public class OutputView {
 			final Position position = Position.of(file, rank);
 			System.out.print(chessBoard.get(position).name());
 		}
-		System.out.print("\t" + rank.value());
+		System.out.print(TAB + rank.value());
 		System.out.println();
 	}
 
