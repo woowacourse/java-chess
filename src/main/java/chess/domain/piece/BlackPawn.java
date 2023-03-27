@@ -8,7 +8,7 @@ import java.util.Set;
 public final class BlackPawn extends Pawn {
 
     private static final Rank INIT_RANK = Rank.SEVEN;
-    private static final double score = 1;
+    private static final double SCORE = 1;
 
     public BlackPawn() {
         super(Color.BLACK);
@@ -48,7 +48,7 @@ public final class BlackPawn extends Pawn {
     @Override
     public double getScore(Color color) {
         if (color == this.color) {
-            return score;
+            return SCORE;
         }
 
         return 0;

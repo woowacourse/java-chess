@@ -7,7 +7,7 @@ import java.util.Set;
 public final class Knight extends Normal {
 
     private static final int DISTANCE = 5;
-    private static final double score = 2.5;
+    private static final double SCORE = 2.5;
 
     public Knight(final Color color) {
         super(color);
@@ -37,7 +37,7 @@ public final class Knight extends Normal {
     @Override
     public double getScore(Color color) {
         if (color == this.color) {
-            return score;
+            return SCORE;
         }
 
         return 0;

@@ -7,6 +7,8 @@ import java.util.Set;
 
 public final class King extends Normal {
 
+    private static final int SCORE = 0;
+
     public King(final Color color) {
         super(color);
     }
@@ -36,6 +38,6 @@ public final class King extends Normal {
 
     @Override
     public double getScore(Color color) {
-        return 0;
+        return SCORE;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 
 public final class Queen extends Normal {
 
-    private static final double score = 9;
+    private static final double SCORE = 9;
 
     public Queen(final Color color) {
         super(color);
@@ -37,7 +37,7 @@ public final class Queen extends Normal {
     @Override
     public double getScore(Color color) {
         if (color == this.color) {
-            return score;
+            return SCORE;
         }
 
         return 0;

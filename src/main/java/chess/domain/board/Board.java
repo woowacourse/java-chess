@@ -104,4 +104,5 @@ public final class Board {
     public List<Squares> getSquares() {
         return new ArrayList<>(board);
     }
+
 }

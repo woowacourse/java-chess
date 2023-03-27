@@ -6,7 +6,7 @@ import java.util.Set;
 
 public final class Bishop extends Normal {
 
-    private static final double score = 3;
+    private static final double SCORE = 3;
 
     public Bishop(final Color color) {
         super(color);
@@ -35,7 +35,7 @@ public final class Bishop extends Normal {
     @Override
     public double getScore(Color color) {
         if (color == this.color) {
-            return score;
+            return SCORE;
         }
 
         return 0;
