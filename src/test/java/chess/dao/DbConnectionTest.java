@@ -6,13 +6,11 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DbChessGameDaoTest {
-
-    private final DbChessGameDao dbChessGameDao = new DbChessGameDao();
-
+class DbConnectionTest {
+    
     @Test
     public void connection() {
-        try (final var connection = dbChessGameDao.getConnection()) {
+        try (final var connection = DbConnection.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException e) {
             throw new RuntimeException(e);
