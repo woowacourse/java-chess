@@ -40,4 +40,8 @@ public class ChessBoardService {
             pieceDao.save(pieceEntity);
         }
     }
+
+    void deleteByChessGameId(final Long chessGameId) {
+        pieceDao.deleteByChessGameId(chessGameId);
+    }
 }

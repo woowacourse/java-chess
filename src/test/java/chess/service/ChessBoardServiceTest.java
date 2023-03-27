@@ -26,7 +26,8 @@ class ChessBoardServiceTest {
     @DisplayName("체스 게임 아이디로 체스판 정보를 조회한다.")
     void getByChessGameId() {
         // given
-        final PieceDao pieceDao = createPieceDao();
+        final Long chessGameId = 1L;
+        final PieceDao pieceDao = createPieceDao(chessGameId);
         final ChessBoardService chessBoardService = new ChessBoardService(pieceDao);
         final ChessBoard expected = ChessBoardHelper.createMockProgressBoard();
 
@@ -92,9 +93,26 @@ class ChessBoardServiceTest {
                 .isEqualTo(createMockChessBoard());
     }
 
-    private PieceDao createPieceDao() {
+    @Test
+    @DisplayName("체스 게임 아이디에 해당하는 모든 기물을 제거한다")
+    void deleteByChessGameId() {
+        // given
+        final Long chessGameId = 1L;
+        final PieceDao pieceDao = createPieceDao(chessGameId);
+        final ChessBoardService chessBoardService = new ChessBoardService(pieceDao);
+
+        // when
+        chessBoardService.deleteByChessGameId(chessGameId);
+
+        // then
+        final ChessBoard expected = chessBoardService.getByChessGameId(1L);
+        assertThat(expected)
+                .isEqualTo(ChessBoard.create(Collections.emptyMap()));
+    }
+
+    private PieceDao createPieceDao(final Long chessGameId) {
         final PieceDao pieceDao = new MockPieceDao();
-        final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(1L);
+        final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
         pieceEntities.forEach(pieceDao::save);
         return pieceDao;
     }
