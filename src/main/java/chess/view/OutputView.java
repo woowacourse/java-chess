@@ -1,6 +1,9 @@
 package chess.view;
 
+import chess.domain.pieces.component.Team;
+
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -16,5 +19,10 @@ public class OutputView {
             names.forEach(System.out::print);
             System.out.println();
         }
+    }
+
+    public static void printScore(Map<Team, Double> result) {
+        System.out.println("화이트팀: " + result.get(Team.WHITE));
+        System.out.println("블랙팀: " + result.get(Team.BLACK));
     }
 }
