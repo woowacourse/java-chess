@@ -4,5 +4,5 @@ import chess.controller.command.Command;
 
 @FunctionalInterface
 public interface GameAction {
-    void execute(final Command command);
+    void execute(final ChessGame game, final Command command);
 }
