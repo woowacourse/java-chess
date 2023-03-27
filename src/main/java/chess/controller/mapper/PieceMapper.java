@@ -1,6 +1,7 @@
 package chess.controller.mapper;
 
-import chess.domain.piece.*;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 
 import java.util.Arrays;
 

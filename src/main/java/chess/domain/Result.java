@@ -11,6 +11,9 @@ import java.util.Map;
 public class Result {
 
     public static final String INVALID_KING_MESSAGE = "King이 체스판 내에 없습니다.";
+    public static final double INIT_SCORE = 0.0;
+    public static final int HANDICAP_PAWN_COUNT = 1;
+    public static final double HANDICAP_PAWN_SCORE = 0.5;
     private final Team winner;
     private final Map<Team, Double> score;
 
@@ -29,8 +32,8 @@ public class Result {
 
     private static Map<Team, Double> initScore() {
         Map<Team, Double> score = new HashMap<>();
-        score.put(Team.WHITE, 0.0);
-        score.put(Team.BLACK, 0.0);
+        score.put(Team.WHITE, INIT_SCORE);
+        score.put(Team.BLACK, INIT_SCORE);
         return score;
     }
 
@@ -40,8 +43,8 @@ public class Result {
         if (team == Team.EMPTY) {
             return;
         }
-        if (piece.getPieceType() == PieceType.PAWN && chessGame.pawnCountByColumnAndTeam(position, team) > 1) {
-            score.put(team, score.get(team) + 0.5);
+        if (piece.getPieceType() == PieceType.PAWN && chessGame.pawnCountByColumnAndTeam(position, team) > HANDICAP_PAWN_COUNT) {
+            score.put(team, score.get(team) + HANDICAP_PAWN_SCORE);
             return;
         }
         score.put(team, score.get(team) + Score.findScoreBy(piece));

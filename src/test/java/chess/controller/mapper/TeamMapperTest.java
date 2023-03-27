@@ -1,7 +1,6 @@
 package chess.controller.mapper;
 
 import chess.domain.piece.Team;
-import chess.controller.mapper.TeamMapper;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

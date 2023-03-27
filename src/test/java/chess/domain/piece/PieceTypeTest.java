@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static chess.PositionFixture.B_2;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PieceTypeTest {
 

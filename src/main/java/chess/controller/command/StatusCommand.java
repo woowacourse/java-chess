@@ -1,20 +1,13 @@
 package chess.controller.command;
 
-import chess.domain.ChessGame;
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Team;
 import chess.domain.Result;
-import chess.domain.Score;
 import chess.repository.BoardDao;
 import chess.view.OutputView;
 
 import java.util.List;
 
 
-public class StatusCommand extends Command{
+public class StatusCommand extends Command {
 
     private static final String INVALID_EXECUTE_MESSAGE = "게임이 종료되어 상태를 확인하시려면 status를, 게임을 종료하려면 end를 입력해주세요.";
 

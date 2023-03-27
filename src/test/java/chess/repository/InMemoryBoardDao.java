@@ -2,7 +2,7 @@ package chess.repository;
 
 import chess.domain.ChessGame;
 
-public class InMemoryBoardDao implements BoardDao{
+public class InMemoryBoardDao implements BoardDao {
 
     private ChessGame chessGame;
 

@@ -1,7 +1,6 @@
 package chess.controller.mapper;
 
 import chess.domain.piece.PieceType;
-import chess.controller.mapper.PieceMapper;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;

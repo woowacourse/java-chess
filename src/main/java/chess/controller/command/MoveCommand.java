@@ -1,10 +1,9 @@
 package chess.controller.command;
 
+import chess.controller.mapper.PositionMapper;
 import chess.domain.ChessGame;
-import chess.domain.board.Board;
 import chess.repository.BoardDao;
 import chess.view.OutputView;
-import chess.controller.mapper.PositionMapper;
 
 import java.util.List;
 

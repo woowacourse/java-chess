@@ -7,8 +7,6 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.*;
 
-import java.sql.SQLException;
-
 import static chess.PositionFixture.B_2;
 import static chess.PositionFixture.B_3;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

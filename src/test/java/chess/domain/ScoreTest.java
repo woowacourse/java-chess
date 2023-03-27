@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.Score;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Team;
 import org.assertj.core.api.Assertions;

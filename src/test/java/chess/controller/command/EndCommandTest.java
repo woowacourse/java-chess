@@ -1,14 +1,11 @@
 package chess.controller.command;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
 import chess.repository.BoardDao;
 import chess.repository.InMemoryBoardDao;
-import chess.repository.JdbcBoardDao;
-import chess.repository.TestConnector;
 import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;

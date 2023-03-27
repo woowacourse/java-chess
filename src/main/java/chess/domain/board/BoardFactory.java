@@ -13,7 +13,7 @@ public class BoardFactory {
     public static Board createBoard() {
         Map<Position, Piece> boards = new HashMap<>();
         for (RankCoordinate rankCoordinate : RankCoordinate.getSortedRankCoordinates()) {
-            Team team = Team.of(rankCoordinate);
+            Team team = Team.from(rankCoordinate);
             addRank(boards, rankCoordinate, team);
         }
         return new Board(boards);

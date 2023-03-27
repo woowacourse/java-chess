@@ -1,6 +1,5 @@
 package chess.controller.command;
 
-import chess.domain.ChessGame;
 import chess.repository.BoardDao;
 import chess.view.OutputView;
 

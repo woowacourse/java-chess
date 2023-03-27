@@ -57,6 +57,7 @@ class StatusCommandTest {
 
         assertThat(statusCommand.getChessGameBoards().get(E_8)).isInstanceOf(Queen.class);
     }
+
     @ParameterizedTest
     @ValueSource(strings = {"status", "status ", " status", "STATUS", " status  "})
     void status를_입력받으면_StatusCommand_객체가_반환된다(String command) {

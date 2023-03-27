@@ -64,8 +64,8 @@ public class Position {
     }
 
     public boolean isStraight(Position targetPosition) {
-        return (fileCoordinate.compare(targetPosition.fileCoordinate) == 0
-                || rankCoordinate.compare(targetPosition.rankCoordinate) == 0);
+        return (fileCoordinate.compare(targetPosition.fileCoordinate) == ZERO_DISTANCE
+                || rankCoordinate.compare(targetPosition.rankCoordinate) == ZERO_DISTANCE);
     }
 
     public FileCoordinate getFileCoordinate() {

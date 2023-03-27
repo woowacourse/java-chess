@@ -3,7 +3,6 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandType;
 import chess.controller.command.StartCommand;
-import chess.domain.ChessGame;
 import chess.repository.BoardDao;
 import chess.view.InputView;
 import chess.view.OutputView;
