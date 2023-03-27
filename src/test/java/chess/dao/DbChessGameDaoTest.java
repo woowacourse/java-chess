@@ -50,7 +50,7 @@ class DbChessGameDaoTest {
                         entry.getValue().isSamePieceTypeAs(PieceType.BISHOP))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        assertThat(result).containsExactly(
+        assertThat(result).containsOnly(
                 Map.entry(A2, Bishop.instance(Team.WHITE)),
                 Map.entry(A1, Rook.instance(Team.WHITE)));
     }

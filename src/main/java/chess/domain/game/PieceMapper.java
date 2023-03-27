@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class PieceMapper {
+public final class PieceMapper {
 
     private static final Map<PieceType, Function<Team, Piece>> CACHE = new HashMap<>();
 
@@ -33,6 +33,10 @@ public class PieceMapper {
         CACHE.put(PieceType.BLACK_PAWN, piece -> BlackPawn.instance());
         CACHE.put(PieceType.WHITE_PAWN, piece -> WhitePawn.instance());
         CACHE.put(PieceType.EMPTY, piece -> Empty.instance());
+    }
+
+    private PieceMapper() {
+        throw new AssertionError();
     }
 
     public static Piece get(final PieceType pieceType, final Team team) {

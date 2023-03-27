@@ -1,7 +1,5 @@
 package chess.domain.game;
 
-import chess.dao.ChessDao;
-import chess.dao.DbChessGameDao;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -26,14 +24,12 @@ public final class ChessGame {
     public static final int COUNT_OF_PAWN_DEGRADE_SCORE = 2;
     private static final int BOARD_LENGTH = 8;
     public static final double TOTAL_BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
-    
+
     private final Map<Position, Piece> board;
-    private final ChessDao dao;
     private Turn turn;
 
     private ChessGame(final Map<Position, Piece> board, final Turn turn) {
         this.board = board;
-        this.dao = new DbChessGameDao();
         this.turn = turn;
     }
 
@@ -51,19 +47,6 @@ public final class ChessGame {
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
         }
         return new ChessGame(board, turn);
-    }
-
-    private static String render(final Piece piece) {
-        final Team team = piece.getTeam();
-        final PieceType pieceType = piece.getPieceType();
-
-        if (team.isBlack() || team.isEmpty()) {
-            return pieceType.getValue();
-        }
-        if (team.isWhite()) {
-            return pieceType.getValue().toLowerCase();
-        }
-        throw new AssertionError();
     }
 
     public Piece move(final Position source, final Position target) {
@@ -168,6 +151,19 @@ public final class ChessGame {
             }
         }
         return pieces;
+    }
+
+    private String render(final Piece piece) {
+        final Team team = piece.getTeam();
+        final PieceType pieceType = piece.getPieceType();
+
+        if (team.isBlack() || team.isEmpty()) {
+            return pieceType.getValue();
+        }
+        if (team.isWhite()) {
+            return pieceType.getValue().toLowerCase();
+        }
+        throw new AssertionError();
     }
 
     public Map<Position, Piece> getBoard() {

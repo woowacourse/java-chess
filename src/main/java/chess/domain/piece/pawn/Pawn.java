@@ -9,7 +9,6 @@ import chess.domain.piece.Team;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class Pawn extends Piece {
 
@@ -54,12 +53,6 @@ public abstract class Pawn extends Piece {
 
         public AttackStrategies(final List<MovingStrategy> strategies) {
             this.strategies = strategies;
-        }
-
-        public Optional<MovingStrategy> findStrategy(final Position source, final Position target) {
-            return strategies.stream()
-                    .filter(strategy -> strategy.movable(source, target))
-                    .findFirst();
         }
 
         private boolean contains(final MovingStrategy strategy) {
