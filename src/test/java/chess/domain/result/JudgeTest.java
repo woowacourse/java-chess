@@ -41,7 +41,7 @@ public class JudgeTest {
                 Square.from("b4"), Role.PAWN.create(Color.WHITE),
                 Square.from("b5"), Role.PAWN.create(Color.WHITE)
         );
-        Board board = BoardFactory.create(squarePiece);
+        Board board = BoardFactory.create(squarePiece, Color.WHITE);
         //when
         Map<Color, Score> scores = Judge.calculateScore(board);
         //expected

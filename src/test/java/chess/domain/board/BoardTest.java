@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.chessgame.RunningChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;

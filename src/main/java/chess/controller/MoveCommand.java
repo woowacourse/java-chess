@@ -1,7 +1,11 @@
 package chess.controller;
 
+import chess.dao.BoardDAO;
+import chess.domain.board.Square;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.KingDiedGame;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.side.Color;
 import chess.view.OutputView;
 
@@ -14,10 +18,20 @@ public class MoveCommand implements Command {
     @Override
     public ChessGame execute(final ChessGame chessGame, final List<String> input, final OutputView outputView) {
         validateMoveCommand(input);
-        String sourceSquare = input.get(SOURCE_INDEX_OF_MOVE_COMMAND);
-        String targetSquare = input.get(TARGET_INDEX_OF_MOVE_COMMAND);
-        ChessGame afterMoveChessGame = chessGame.move(sourceSquare, targetSquare);
+        String sourceSquareInput = input.get(SOURCE_INDEX_OF_MOVE_COMMAND);
+        Square sourceSquare = Square.from(sourceSquareInput);
+        Piece sourcePiece = chessGame.getBoard().findPiece(sourceSquare.getFile(), sourceSquare.getRank());
+        String targetSquareInput = input.get(TARGET_INDEX_OF_MOVE_COMMAND);
+        Square targetSquare = Square.from(targetSquareInput);
+        ChessGame afterMoveChessGame = chessGame.move(sourceSquareInput, targetSquareInput);
+        BoardDAO dao = new BoardDAO();
+        dao.updatePiece(sourceSquare, Role.VACANT_PIECE.create(Color.NOTHING));
+        dao.updatePiece(targetSquare, sourcePiece);
+        dao.updateBoard(afterMoveChessGame.getBoard().getTurn());
         printMoveResult(afterMoveChessGame, outputView);
+        if (afterMoveChessGame instanceof KingDiedGame) {
+            dao.deleteAll();
+        }
         return afterMoveChessGame;
     }
 

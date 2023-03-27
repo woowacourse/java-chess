@@ -15,6 +15,7 @@ public class InitChessGame implements ChessGame {
     @Override
     public ChessGame start() {
         Board board = BoardFactory.createInitial();
+        System.out.println("----");
         return new RunningChessGame(board);
     }
 
@@ -46,5 +47,10 @@ public class InitChessGame implements ChessGame {
     @Override
     public boolean isContinue() {
         return true;
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new IllegalArgumentException(ERROR_MESSAGE);
     }
 }

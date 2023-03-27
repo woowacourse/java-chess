@@ -86,4 +86,9 @@ public class RunningChessGame implements ChessGame {
     public boolean isContinue() {
         return true;
     }
+
+    @Override
+    public Board getBoard() {
+        return board;
+    }
 }

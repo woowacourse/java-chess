@@ -51,4 +51,9 @@ public class PauseChessGame implements ChessGame {
     public boolean isContinue() {
         return false;
     }
+
+    @Override
+    public Board getBoard() {
+        return board;
+    }
 }

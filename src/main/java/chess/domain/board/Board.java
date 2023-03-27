@@ -114,4 +114,8 @@ public class Board {
             throw new IllegalArgumentException("해당 칸으로는 이동할 수 없습니다.");
         }
     }
+
+    public Color getTurn() {
+        return turn;
+    }
 }

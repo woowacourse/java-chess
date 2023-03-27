@@ -74,4 +74,12 @@ public class Square {
         String squareFormat = String.format("%s%d", file, rank.getPosition());
         return squareFormat.toLowerCase();
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

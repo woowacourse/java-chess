@@ -20,8 +20,8 @@ public class BoardFactory {
         return new Board(board, FIRST_TURN_COLOR);
     }
 
-    public static Board create(Map<Square, Piece> board) {
-        return new Board(new LinkedHashMap<>(board), FIRST_TURN_COLOR);
+    public static Board create(Map<Square, Piece> board, Color color) {
+        return new Board(new LinkedHashMap<>(board), color);
     }
 
     private static void setup(final Map<Square, Piece> board, final Color color) {

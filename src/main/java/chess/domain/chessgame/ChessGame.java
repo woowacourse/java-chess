@@ -1,5 +1,6 @@
 package chess.domain.chessgame;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.result.Score;
 import chess.domain.side.Color;
@@ -22,4 +23,6 @@ public interface ChessGame {
     List<List<Piece>> findChessBoard();
 
     boolean isContinue();
+
+    Board getBoard();
 }
