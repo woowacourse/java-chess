@@ -32,7 +32,7 @@ public class OutputView {
         for (FileCoordinate fileCoordinate : FileCoordinate.getSortedFileCoordinates()) {
             Position position = new Position(fileCoordinate, rankCoordinate);
             Piece piece = boards.get(position);
-            String message = PieceMapper.from(piece.getPieceType()).getMessage(piece.getTeam());
+            String message = PieceMapper.from(piece.getPieceType()).getPieceViewBy(piece.getTeam());
             System.out.print(message);
         }
     }

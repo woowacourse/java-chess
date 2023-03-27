@@ -33,7 +33,7 @@ public enum PieceMapper {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PIECE_MESSAGE));
     }
 
-    String getMessage(Team team) {
+    public String getPieceViewBy(Team team) {
         if (team == Team.BLACK) {
             return this.blackTeamView;
         }
