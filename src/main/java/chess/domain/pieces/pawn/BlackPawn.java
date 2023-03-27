@@ -12,15 +12,23 @@ public final class BlackPawn extends Pawn {
     }
 
     @Override
-    protected void validateKill(final Direction correctDirection, final List<Piece> otherPieces) {
-        if (correctDirection == Direction.DOWN) {
-            return;
-        }
+    protected void validateKill(final Direction correctDirection, final List<Piece> onRoutePieces) {
+        Piece otherPiece = onRoutePieces.get(OTHER_PIECE_INDEX);
 
-        Piece otherPiece = otherPieces.get(OTHER_PIECE_INDEX);
-        if (isNotValidKill(otherPiece)) {
+        if (doesKillFront(correctDirection, otherPiece)) {
+            throw new IllegalArgumentException(INVALID_MOVE_STRAIGHT);
+        }
+        if (doesNotKillEnemy(correctDirection, otherPiece)) {
             throw new IllegalArgumentException(INVALID_MOVE_DIAGONAL);
         }
+    }
+
+    private boolean doesKillFront(final Direction correctDirection, final Piece otherPiece) {
+        return correctDirection == Direction.DOWN && !otherPiece.isNeutrality();
+    }
+
+    private boolean doesNotKillEnemy(final Direction correctDirection, final Piece otherPiece) {
+        return correctDirection != Direction.DOWN && isNotValidKill(otherPiece);
     }
 
     private boolean isNotValidKill(final Piece otherPiece) {

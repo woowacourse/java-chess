@@ -15,6 +15,7 @@ public abstract class Pawn extends Piece {
     static final String INVALID_DEFAULT_DISTANCE = "첫 이동이 아닌 폰은 1칸만 이동할 수 있습니다.";
     static final String INVALID_FIRST_DISTANCE = "처음 이동하는 폰은 2칸 이내로 이동할 수 있습니다.";
     static final String INVALID_MOVE_DIAGONAL = "대각선은 적이 있을 때만 이동할 수 있습니다.";
+    static final String INVALID_MOVE_STRAIGHT = "다른 기물이 있을 때는 수직으로 이동할 수 없습니다.";
 
     private boolean isMoved = false;
 
@@ -39,7 +40,7 @@ public abstract class Pawn extends Piece {
         checkMoved();
     }
 
-    abstract protected void validateKill(final Direction movableDirection, final List<Piece> otherPieces);
+    abstract protected void validateKill(final Direction movableDirection, final List<Piece> onRoutePieces);
 
     protected void checkMoved() {
         this.isMoved = true;
