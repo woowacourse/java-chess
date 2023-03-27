@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import java.util.List;
 
 public class TestPiece extends Piece {
+
     public TestPiece(final Color color) {
         super(color);
     }
@@ -17,6 +18,11 @@ public class TestPiece extends Piece {
 
     @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
         return false;
     }
 }
