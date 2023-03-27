@@ -8,6 +8,7 @@ import command.PlayCommandParser;
 import command.StartCommand;
 import database.dao.ChessGameDao;
 import domain.ChessGame;
+import gameinitializer.DatabaseChessAlignment;
 import gameinitializer.InitialChessAlignment;
 import java.util.List;
 import view.InputView;
@@ -21,13 +22,34 @@ public final class ChessController {
 
     public void run() {
         StartCommand startCommand = inputStartCommand();
-        if (StartCommand.START.equals(startCommand)) {
-            chessGame = ChessGame.initGame(new InitialChessAlignment());
+        if (StartCommand.START.equals(startCommand) || StartCommand.LOAD.equals(startCommand)) {
+            chessGame = initGame(startCommand);
             OutputView.printBoard(chessGame.getPieces());
             play();
         }
         OutputView.printEndedGameMessage();
     }
+
+    private ChessGame initGame(StartCommand command) {
+        if (StartCommand.START.equals(command)) {
+            return ChessGame.initGame(new InitialChessAlignment());
+        }
+        ChessGame loadChessGame = null;
+        do {
+            loadChessGame = loadChessGameWithHandling(InputView.readBoardName());
+        } while (loadChessGame == null);
+        return loadChessGame;
+    }
+
+    private ChessGame loadChessGameWithHandling(String boardName) {
+        try {
+            return ChessGame.initGame(new DatabaseChessAlignment(new ChessGameDao(), boardName));
+        } catch (Exception e) {
+            OutputView.printError(e.getMessage());
+            return null;
+        }
+    }
+
 
     private StartCommand inputStartCommand() {
         String command;

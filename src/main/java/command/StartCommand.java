@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum StartCommand {
     START,
+    LOAD,
     END;
 
     public static StartCommand from(final String command) {
