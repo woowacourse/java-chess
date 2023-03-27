@@ -4,6 +4,8 @@ import chess.domain.Position;
 import chess.view.GameState;
 
 public class Command {
+    private static final Position NOT_EXISTS = Position.of(null, null);
+
     private final GameState gameState;
     private final Position source;
     private final Position target;
@@ -19,7 +21,7 @@ public class Command {
     }
 
     public static Command from(final GameState gameState) {
-         return new Command(gameState, Position.NOT_EXISTS, Position.NOT_EXISTS);
+         return new Command(gameState, NOT_EXISTS, NOT_EXISTS);
     }
 
     public GameState getGameState() {

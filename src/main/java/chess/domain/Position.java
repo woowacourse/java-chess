@@ -5,8 +5,6 @@ import chess.domain.direction.Direction;
 import java.util.Objects;
 
 public class Position implements Comparable<Position> {
-    public static final Position NOT_EXISTS = new Position(null, null);
-
     private final Row row;
     private final Column column;
 
