@@ -40,7 +40,7 @@ public final class ChessGameDao {
             preparedStatement.setString(3, chessBoard);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("문제가 발생했습니다. 다시 save를 시도해 주세요.");
         }
     }
 
