@@ -100,4 +100,8 @@ public class ChessBoard {
     public Map<Square, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
+
+    public Turn getTurn() {
+        return turn;
+    }
 }

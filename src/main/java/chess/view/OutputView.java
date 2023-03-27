@@ -122,6 +122,5 @@ public class OutputView {
         if (Objects.equals("WHITE", side)) {
             System.out.println("백의 점수는 " + score + "점입니다.");
         }
-        System.out.println();
     }
 }

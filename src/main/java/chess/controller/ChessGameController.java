@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.database.ChessBoardDao;
 import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -14,20 +15,32 @@ public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessBoardDao chessBoardDao;
 
-    public ChessGameController(final InputView inputView, final OutputView outputView) {
+    public ChessGameController(final InputView inputView, final OutputView outputView, final ChessBoardDao chessBoardDao) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessBoardDao = chessBoardDao;
     }
 
     public void run() {
         outputView.printInitialMessage();
         Command command = repeatUntilNoException(this::startGame);
-        ChessBoard chessBoard = ChessBoardFactory.generate();
+        ChessBoard chessBoard = loadChessBoardOrSaveNewChessBoard();
         outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
         while (command.isPlaying()) {
             command = repeatUntilNoException(this::playTurn, chessBoard);
         }
+    }
+
+    private ChessBoard loadChessBoardOrSaveNewChessBoard() {
+        ChessBoard chessBoard = chessBoardDao.findChessBoard();
+        if (chessBoard == null) {
+            chessBoard = ChessBoardFactory.generate();
+            chessBoardDao.saveChessBoard(chessBoard);
+            return chessBoard;
+        }
+        return chessBoard;
     }
 
     private Command startGame() {
@@ -42,12 +55,13 @@ public class ChessGameController {
         Command command = Command.from(commandDto.getCommand());
         command.validateCommandInPlaying();
         executeCommand(chessBoard, commandDto, command);
-        return confirmGameEnd(chessBoard);
+        return confirmGameEnd(chessBoard, command);
     }
 
     private void executeCommand(final ChessBoard chessBoard, final CommandDto commandDto, final Command command) {
         if (command.isMove()) {
             updateChessBoard(chessBoard, commandDto);
+            chessBoardDao.updateChessBoard(chessBoard);
         }
         if (command.isStatus()) {
             outputView.printScore(Side.WHITE.name(), chessBoard.calculateScore(Side.WHITE));
@@ -71,13 +85,14 @@ public class ChessGameController {
         }
     }
 
-    private Command confirmGameEnd(final ChessBoard chessBoard) {
+    private Command confirmGameEnd(final ChessBoard chessBoard, final Command command) {
         List<String> aliveKings = chessBoard.findAliveKing();
         if (aliveKings.size() == 1) {
             outputView.printWinner(aliveKings.get(0));
+            chessBoardDao.deleteChessBoard();
             return Command.END;
         }
-        return Command.MOVE;
+        return command;
     }
 
     private <T> T repeatUntilNoException(Supplier<T> supplier) {
