@@ -29,13 +29,13 @@ public class GameController {
 
     public void run() {
         int gameId = selectGame();
+        outputView.printGameNumberRoomNotice(gameId);
         Command command = START;
         while (command != END) {
             command = readUntilValidate(this::play);
             gameService.updateGame(gameId);
         }
         outputView.printStartWinningTeam(gameService.winningTeams());
-        outputView.printGameNumberRoomNotice(gameId);
     }
 
     private int selectGame() {

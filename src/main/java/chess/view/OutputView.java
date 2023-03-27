@@ -23,7 +23,7 @@ public class OutputView {
     public static final int ONLY = 1;
     public static final String DELIMITER = " : ";
     public static final String START_NEW_GAME_NOTICE = "> 새롭게 게임을 시작하시겠습니까? (예: y, 아니오: n)";
-    public static final String GAME_ROOM_NUMBER_NOTICE = "게임을 진행한 방은 %d번 입니다. "
+    public static final String GAME_ROOM_NUMBER_NOTICE = "현재 게임을 진행하고 있는 방은 %d번 입니다. "
             + "이후에 번호를 입력하면 게임을 이어서 할 수 있습니다.\n";
 
 
