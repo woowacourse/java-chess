@@ -24,11 +24,10 @@ public class GameResult {
     }
 
     public double calculateScoreOfTeam(final TeamColor color) {
-        Score sum = Score.INITIAL_SCORE;
-        for (Pieces pieces : piecesByFile) {
-            sum = sum.add(pieces.calculateScoreOfTeam(color));
-        }
-        return sum.getValue();
+        return piecesByFile.stream()
+            .map(pieces -> pieces.calculateScoreOfTeam(color))
+            .reduce(Score.INITIAL_SCORE, Score::add)
+            .getValue();
     }
 
 }
