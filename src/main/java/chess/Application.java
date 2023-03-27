@@ -2,7 +2,7 @@ package chess;
 
 import chess.Service.ChessService;
 import chess.controller.ChessController;
-import chess.database.DBChessBoardDao;
+import chess.database.DbChessBoardDao;
 import chess.domain.ChessBoardMaker;
 import chess.domain.ChessGame;
 import chess.domain.Turn;
@@ -13,7 +13,7 @@ public class Application {
         ChessController controller = new ChessController(
                 new ChessService(
                         new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE)),
-                        new DBChessBoardDao()
+                        new DbChessBoardDao()
                 )
         );
         controller.run();

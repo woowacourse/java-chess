@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.piece.Camp;
+import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -41,16 +41,12 @@ public final class OutputView {
         System.out.println(message);
     }
 
-    public static void printStatusScore(final double whiteScore, final double blackScore) {
-        System.out.println("흰색 점수: " + whiteScore);
-        System.out.println("검정색 점수: " + blackScore);
+    public static void printStatusScore(final ChessGame chessGame) {
+        System.out.println("흰색 점수: " + chessGame.getWhiteScore());
+        System.out.println("검정색 점수: " + chessGame.getBlackScore());
     }
 
-    public static void printReStart() {
-        System.out.println("이전 게임을 불러옵니다.");
-    }
-
-    public static void printWinner(final Camp winnerCamp) {
-        System.out.println("승자 :" + ViewCamp.getCampName(winnerCamp));
+    public static void printWinner(final ChessGame chessGame) {
+        System.out.println("승자 :" + ViewCamp.getCampName(chessGame.getWinnerCamp()));
     }
 }

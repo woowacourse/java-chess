@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.Service.ChessService;
-import chess.domain.ChessBoard;
+import chess.domain.ChessGame;
 import chess.dto.MoveDto;
 import chess.view.ChessCommand;
 import chess.view.InputView;
@@ -42,7 +42,7 @@ public final class ChessController {
             gameCommand = play();
         }
         chessService.checkDeleteData();
-        OutputView.printWinner(chessService.getWinner());
+        OutputView.printWinner(chessService.getChessGame());
     }
 
     private ChessCommand play() {
@@ -60,7 +60,7 @@ public final class ChessController {
 
     private void start(final List<String> commands) {
         ChessCommand.validateStartCommand(commands);
-        printBoard(chessService.getChessBoard());
+        printBoard(chessService.getChessGame());
     }
 
     private void move(final List<String> commands) {
@@ -69,15 +69,15 @@ public final class ChessController {
 
         chessService.move(moveDto);
 
-        printBoard(chessService.getChessBoard());
+        printBoard(chessService.getChessGame());
     }
 
     private void status(final List<String> commands) {
         ChessCommand.validateStatusCommand(commands);
-        OutputView.printStatusScore(chessService.getWhiteScore(), chessService.getBlackScore());
+        OutputView.printStatusScore(chessService.getChessGame());
     }
 
-    private void printBoard(final ChessBoard chessBoard) {
-        OutputView.printChessState(chessBoard.getBoard());
+    private void printBoard(final ChessGame chessGame) {
+        OutputView.printChessState(chessGame.getChessBoard().getBoard());
     }
 }

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public final class DBChessBoardDao implements ChessGameDao {
+public final class DbChessBoardDao implements ChessGameDao {
 
     private final Database database = new Database();
 
