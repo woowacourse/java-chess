@@ -27,8 +27,7 @@ class ScoreCalculatorTest {
     @Test
     @DisplayName("흰색 팀의 시작 점수는 38점이다.")
     void white_start_score_is_38() {
-        BoardFactory boardFactory = new BoardFactory();
-        Score score = ScoreCalculator.calculateWhiteScore(boardFactory.make());
+        Score score = ScoreCalculator.calculateWhiteScore(BoardFactory.make());
 
         assertThat(score).isEqualTo(new Score(38));
     }
@@ -36,8 +35,7 @@ class ScoreCalculatorTest {
     @Test
     @DisplayName("흑색 팀의 시작 점수는 38점이다.")
     void black_start_score_is_38() {
-        BoardFactory boardFactory = new BoardFactory();
-        Score score = ScoreCalculator.calculateBlackScore(boardFactory.make());
+        Score score = ScoreCalculator.calculateBlackScore(BoardFactory.make());
 
         assertThat(score).isEqualTo(new Score(38));
     }
