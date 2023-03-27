@@ -106,8 +106,34 @@
 ### 필수 요구사항
 - 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다. 
 - DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+- [x] 테이블 생성
+```sql
+CREATE TABLE PIECE (
+    piece_id        int not null,
+    position_file   int not null,
+    position_rank   int not null,
+    piece_side      varchar(20) not null,
+    piece_type      varchar(20) not null
+);
+```
+- [x] Create : 진행되고 있는 체스 정보를 저장한다.
+  - [x] 생성했을 때 저장
+```sql
+INSERT INTO PIECE(position_file, position_rank, piece_side, piece_type) VALUES (?, ?, ?, ?);
+```
+- [x] Read : 저장된 체스 정보를 가져온다.
+  - [x] 시작할 때 조회
+```sql
+SELECT position_file, position_rank, piece_side, piece_type FROM PIECE;
+```
+- [x] Update : 체스 정보를 업데이트한다.
+  - [x] 게임이 끝날 때마다 업데이트
+- [x] Delete : 체스 정보를 삭제한다.
+  - [x] 게임이 끝나면 삭제
+```sql
+DELETE FROM PIECE;
+```
 
 ### 선택 요구사항 
 - 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다.
 - 사용자별로 체스 게임 기록을 관리할 수 있다.
-
