@@ -21,9 +21,14 @@ public abstract class Piece {
     }
 
     public String findName() {
-        if (color == Color.WHITE) {
+        if(color.equals(Color.NONE)){
+            return ".";
+        }
+
+        if (color.equals(Color.WHITE)) {
             return name.toLowerCase();
         }
+
         return name.toUpperCase();
     }
 
@@ -34,8 +39,6 @@ public abstract class Piece {
     public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
 
     public abstract int calculateKing(int count);
-
-    public abstract int calculatePawn(int count, Color color);
 
     private static boolean isEqualTo(Direction o1, Direction o2) {
         return (o1.getX() == o2.getX()) && (o1.getY() == o2.getY());
@@ -61,6 +64,7 @@ public abstract class Piece {
     public double getScore() {
         return score;
     }
+    public abstract int calculatePawn(int count, Color color);
 
     public boolean isPawn() {
         return name.equalsIgnoreCase("p");
@@ -70,6 +74,7 @@ public abstract class Piece {
         if (name.equals("B")) {
             return new Bishop(PieceInfo.BLACK_BISHOP_INFO);
         }
+
         if (name.equals("b")) {
             return new Bishop(PieceInfo.WHITE_BISHOP_INFO);
         }
@@ -77,6 +82,7 @@ public abstract class Piece {
         if (name.equals("k")) {
             return new King(PieceInfo.WHITE_KING_INFO);
         }
+
         if (name.equals("K")) {
             return new King(PieceInfo.BLACK_KING_INFO);
         }
@@ -84,6 +90,7 @@ public abstract class Piece {
         if (name.equals("q")) {
             return new Queen(PieceInfo.WHITE_QUEEN_INFO);
         }
+
         if (name.equals("Q")) {
             return new Queen(PieceInfo.BLACK_QUEEN_INFO);
         }
@@ -95,11 +102,23 @@ public abstract class Piece {
             return new Pawn(PieceInfo.BLACK_QUEEN_INFO);
         }
 
-        if (name.equals("n")) {
-            return new Knight(PieceInfo.WHITE_QUEEN_INFO);
+        if (name.equals("r")) {
+            return new Pawn(PieceInfo.WHITE_ROOK_INFO);
+        }
+        if (name.equals("R")) {
+            return new Pawn(PieceInfo.BLACK_ROOK_INFO);
         }
 
-        return new Knight(PieceInfo.BLACK_QUEEN_INFO);
+        if (name.equals("n")) {
+            return new Knight(PieceInfo.WHITE_KNIGHT_INFO);
+        }
+
+        if(name.equals(".")){
+            return new EmptyPiece(PieceInfo.EMPTY_INFO);
+        }
+
+        return new Knight(PieceInfo.BLACK_KNIGHT_INFO);
     }
 
+    public abstract Piece getInstance(Color pieceColor);
 }

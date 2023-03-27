@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.Position;
 import chess.domain.board.strategy.BoardStrategy;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
@@ -25,6 +26,11 @@ public class ChessGame {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE.getErrorMessage());
         }
         chessBoard.move(start, end);
+
+        if(chessBoard.getChessBoard().get(start) instanceof Pawn){
+            Pawn pawn = (Pawn)chessBoard.getChessBoard().get(start);
+            pawn.setIsFirstMove();
+        }
     }
 
     public Map<Position, Piece> getChessBoardMap() {

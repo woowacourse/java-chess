@@ -7,8 +7,6 @@ import static chess.domain.score.Score.EMPTY_SCORE;
 
 public final class EmptyPiece extends Piece {
 
-    private static final String name = ".";
-
     public EmptyPiece(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), EMPTY_SCORE.getScore());
     }
@@ -31,5 +29,10 @@ public final class EmptyPiece extends Piece {
     @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         return false;
+    }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        return new EmptyPiece(PieceInfo.EMPTY_INFO);
     }
 }

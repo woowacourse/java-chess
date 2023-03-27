@@ -61,4 +61,13 @@ public class Rook extends Piece {
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new Rook(PieceInfo.BLACK_ROOK_INFO);
+        }
+
+        return new Rook(PieceInfo.WHITE_ROOK_INFO);
+    }
 }

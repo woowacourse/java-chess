@@ -25,20 +25,36 @@ import static chess.view.OutputView.printStartGuideMessage;
 
 public class Controller {
 
+    private DbChessGameDao dbChessGameDao = new DbChessGameDao();
+
     public void playChessGame() {
         printStartGuideMessage();
-        ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
-        DbChessGameDao dao = new DbChessGameDao();
-        dao.save(chessGame);
-        dao.select();
+        ChessGame  chessGame = new ChessGame(new InitialBoardStrategy());
+        dbChessGameDao.save(chessGame);
 
-        Command command = getFirstCommand();
-        play(chessGame, command);
+        //Command command = getFirstCommand();
+        //play(chessGame, command);
+    }
+
+    private ChessGame loadChessGame() {
+        ChessGame chessGame = dbChessGameDao.select();
+        System.out.println("call");
+        printChessGame(chessGame);
+
+        System.out.println("end");
+
+        if (chessGame == null) {
+            chessGame = new ChessGame(new InitialBoardStrategy());
+            dbChessGameDao.save(chessGame);
+        }
+        return chessGame;
     }
 
     private void play(ChessGame chessGame, Command command) {
+        boolean isFirst = true;
         while (gameCondition(chessGame, command)) {
             if (isEnd(command)) {
+                dbChessGameDao.delete(chessGame);
                 break;
             }
 
@@ -47,7 +63,11 @@ public class Controller {
             }
 
             if (isStart(command)) {
-                chessGame = new ChessGame(new InitialBoardStrategy());
+               // chessGame = dbChessGameDao.select();
+                //if(!isFirst) {
+                    chessGame = new ChessGame(new InitialBoardStrategy());
+                //}
+                dbChessGameDao.update(chessGame);
                 printChessGame(chessGame);
             }
 
@@ -89,6 +109,7 @@ public class Controller {
                 }
 
                 if (isMove(command)) {
+                    dbChessGameDao.update(chessGame);
                     move(chessGame, commandDto);
 
                     if (isKingDead(chessGame)) {
