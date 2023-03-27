@@ -1,16 +1,9 @@
 package chess.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
+import chess.dao.entity.ChessGameEntity;
 import chess.domain.command.Turn;
-import chess.domain.piece.dto.FindPiecePositionDto;
-import chess.domain.piece.dto.GeneratePieceDto;
-import chess.domain.piece.dto.SavePieceDto;
-import chess.domain.piece.dto.UpdatePiecePositionDto;
-import chess.domain.service.dto.ChessGameDto;
-import chess.domain.service.dto.UpdateTurnDto;
 import chess.exception.NotFoundChessGameException;
 
 public class JdbcChessGameDao implements ChessGameDao {
@@ -22,6 +15,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
     private static final JdbcChessGameDao INSTANCE = new JdbcChessGameDao();
+    private static final long INITIAL_GAME_ID = 0L;
 
     private JdbcChessGameDao() {
     }
@@ -62,6 +56,23 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
+    public Long findRecentGameId() {
+        final String query = "SELECT * FROM chess_game ORDER BY game_id LIMIT 1";
+
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return INITIAL_GAME_ID;
+            }
+            return resultSet.getLong("game_id");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public boolean isExistPreviousChessGame(Long gameId) {
         final String query = "SELECT * FROM chess_game WHERE game_id = ?";
 
@@ -77,49 +88,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void savePiece(SavePieceDto savePieceDto) {
-        final String query = "INSERT INTO piece(piece_rank, piece_file, piece_type, side, game_id) VALUES(?, ?, ?, ?, ?)";
-
-        try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setString(1, savePieceDto.getRank());
-            preparedStatement.setString(2, savePieceDto.getFile());
-            preparedStatement.setString(3, savePieceDto.getType());
-            preparedStatement.setString(4, savePieceDto.getSide());
-            preparedStatement.setLong(5, savePieceDto.getGameId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public List<GeneratePieceDto> findAllPieceByGameId(Long gameId) {
-        final String query = "SELECT * FROM piece WHERE game_id = ?";
-
-        try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setLong(1, gameId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            List<GeneratePieceDto> generatePieceDtos = new ArrayList<>();
-            while (resultSet.next()) {
-                String pieceRank = resultSet.getString("piece_rank");
-                String pieceFile = resultSet.getString("piece_file");
-                String pieceType = resultSet.getString("piece_type");
-                String side = resultSet.getString("side");
-                generatePieceDtos.add(new GeneratePieceDto(pieceRank, pieceFile, pieceType, side));
-            }
-            return generatePieceDtos;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    @Override
-    public ChessGameDto findChessGameByGameId(Long gameId) {
+    public ChessGameEntity findChessGameByGameId(Long gameId) {
         final String query = "SELECT * FROM chess_game WHERE game_id = ?";
 
         try (final Connection connection = getConnection();
@@ -129,7 +98,10 @@ public class JdbcChessGameDao implements ChessGameDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String turnName = resultSet.getString("turn");
-                return new ChessGameDto(gameId, turnName, findAllPieceByGameId(gameId));
+                return new ChessGameEntity.Builder()
+                        .id(gameId)
+                        .turn(turnName)
+                        .build();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -138,59 +110,14 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void updatePiecePosition(UpdatePiecePositionDto updatePiecePositionDto, FindPiecePositionDto findPiecePositionDto) {
-        final String query =
-                "UPDATE piece " +
-                "SET piece_rank = ?, piece_file = ? " +
-                "WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
-
-        try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setString(1, updatePiecePositionDto.getRank());
-            preparedStatement.setString(2, updatePiecePositionDto.getFile());
-            preparedStatement.setLong(3, findPiecePositionDto.getGameId());
-            preparedStatement.setString(4, findPiecePositionDto.getRank());
-            preparedStatement.setString(5, findPiecePositionDto.getFile());
-            int updateCount = preparedStatement.executeUpdate();
-            if (updateCount > 1) {
-                throw new SQLException("[ERROR] 포지션 업데이트 되는 기물이 2개 이상입니다.");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void deletePieceByPosition(FindPiecePositionDto findPiecePositionDto) {
-        final String query =
-                "DELETE FROM piece WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
-
-        try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setLong(1, findPiecePositionDto.getGameId());
-            preparedStatement.setString(2, findPiecePositionDto.getRank());
-            preparedStatement.setString(3, findPiecePositionDto.getFile());
-
-            int updateCount = preparedStatement.executeUpdate();
-            if (updateCount > 1) {
-                throw new SQLException("[ERROR] 삭제하려는 포지션에 해당하는 기물이 2개 이상입니다.");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void updateTurn(UpdateTurnDto updateTurnDto) {
+    public void updateTurn(ChessGameEntity chessGameEntity) {
         final String query = "UPDATE chess_game SET turn = ? WHERE game_id = ?";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
-            preparedStatement.setString(1, updateTurnDto.getTurn());
-            preparedStatement.setLong(2, updateTurnDto.getGameId());
+            preparedStatement.setString(1, chessGameEntity.getTurn());
+            preparedStatement.setLong(2, chessGameEntity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
