@@ -9,7 +9,7 @@ public class Row {
 
     private final int value;
 
-    public Row(final int value) {
+    private Row(final int value) {
         this.value = value;
     }
 

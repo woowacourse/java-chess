@@ -8,7 +8,7 @@ public class Column {
 
     private final int value;
 
-    public Column(final int value) {
+    private Column(final int value) {
         this.value = value;
     }
 
