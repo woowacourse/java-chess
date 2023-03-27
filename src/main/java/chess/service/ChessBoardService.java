@@ -17,9 +17,13 @@ public class ChessBoardService {
         this.pieceDao = pieceDao;
     }
 
-    public ChessBoard getByChessGameId(final Long chessGameId) {
+    ChessBoard getByChessGameId(final Long chessGameId) {
         final List<PieceEntity> pieceEntities = pieceDao.findByChessGameId(chessGameId);
         final Map<Position, Piece> board = ChessBoardMapper.from(pieceEntities);
         return ChessBoard.create(board);
+    }
+
+    void savePiece(final PieceEntity pieceEntity) {
+        pieceDao.save(pieceEntity);
     }
 }
