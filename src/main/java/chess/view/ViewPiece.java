@@ -13,7 +13,6 @@ enum ViewPiece {
     KING(PieceType.KING, "k"),
     EMPTY(PieceType.EMPTY, ".");;
 
-
     final PieceType pieceType;
     final String name;
 
