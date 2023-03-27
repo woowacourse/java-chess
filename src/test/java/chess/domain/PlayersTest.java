@@ -9,15 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersTest {
 
+    Pieces whitePieces;
     Players players;
 
     @BeforeEach
     void setUp() {
-        Pieces whitePieces = Pieces.createWhitePieces();
-        Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
+        Pieces pieces = new Pieces();
+        whitePieces = pieces.createWhitePieces();
+        Pieces blackPieces = pieces.createBlackPieces();
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-        players = Players.of(whitePlayer, blackPlayer);
+        players = Players.of(whitePlayer, blackPlayer, Color.WHITE);
     }
 
     @Test
@@ -25,15 +27,15 @@ class PlayersTest {
     void getPiecesByColor() {
         // when, then
         Assertions.assertThat(players.getPiecesByColor(Color.WHITE).size())
-                .isEqualTo(Pieces.createWhitePieces().getPieces().size());
+                .isEqualTo(whitePieces.getPieces().size());
     }
 
     @Test
-    @DisplayName("모든 킹이 살아 있다면 true를 반환한다.")
+    @DisplayName("모든 킹이 살아 있지 않다면 false를 반환한다.")
     void everyKingAlive() {
         // when, then
         Assertions.assertThat(players.notEveryKingAlive())
-                .isTrue();
+                .isFalse();
     }
 
     @Test
