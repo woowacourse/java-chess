@@ -108,7 +108,7 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public Score getScore(){
+    public Score getScore() {
         return pieceType.score;
     }
 }

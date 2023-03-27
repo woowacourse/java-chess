@@ -48,7 +48,7 @@ public final class Square {
         return pieceState;
     }
 
-    public Score getScore(){
+    public Score getScore() {
         return this.pieceState.getScore();
     }
 }
