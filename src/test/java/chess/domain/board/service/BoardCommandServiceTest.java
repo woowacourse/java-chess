@@ -1,18 +1,14 @@
 package chess.domain.board.service;
 
-import chess.dao.BoardRegisterDao;
+import chess.dao.BoardDao;
 import chess.dao.MySqlManager;
 import chess.domain.board.Board;
+import chess.domain.board.Turn;
 import chess.domain.board.position.Position;
-import chess.domain.board.repository.BoardRepository;
-import chess.domain.board.service.dto.BoardModifyRequest;
-import chess.domain.board.service.dto.BoardRegisterRequest;
-import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
+import chess.domain.board.service.newDto.BoardModifyRequest;
+import chess.domain.board.service.newDto.BoardRegisterRequest;
 import chess.domain.piece.Color;
-import chess.domain.piece.jumper.King;
-import chess.domain.piece.pawn.Pawn;
-import chess.helper.BoardFixture;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,26 +26,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoardCommandServiceTest {
 
-    private final BoardRepository boardRepository = new BoardRepository();
+    private final BoardDao boardDao = new BoardDao();
     private final BoardMapper boardMapper = new BoardMapper();
     private final BoardCommandService boardCommandService = new BoardCommandService(
-            boardRepository, boardMapper
+            boardDao, boardMapper
     );
     private final BoardQueryService boardQueryService = new BoardQueryService(
-            boardRepository, boardMapper
+            boardDao, boardMapper
     );
 
     @BeforeEach
     void initializeData() {
-        boardRepository.save(
-                new BoardRegisterDao("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
-                                     "WHITE")
+        boardDao.save(
+                new chess.domain.board.service.newDto.BoardRegisterRequest("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
+                                                                           "WHITE")
         );
 
-        boardRepository.save(
-                new BoardRegisterDao("P : 3 7, k : 4 7, p : 5 7",
-                                     "BLACK")
-        );
+        boardDao.save(
+                new chess.domain.board.service.newDto.BoardRegisterRequest("P : 3 7, k : 4 7, p : 5 7",
+                                                                           "WHITE")
+                );
     }
 
     @AfterEach
@@ -62,15 +57,17 @@ class BoardCommandServiceTest {
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+        }
     }
 
     @Test
     @DisplayName("registerBoard() : board 를 저장할 수 있다.")
     void test_registerBoard() throws Exception {
         //given
-        final Board board = new Board(BoardFixture.createBoard());
-        final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(board, Color.WHITE);
+        final String position = "P : 3 7, k : 4 7, p : 5 7";
+
+        final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(position, "WHITE");
 
         //when
         final Long savedId = boardCommandService.registerBoard(boardRegisterRequest);
@@ -84,24 +81,19 @@ class BoardCommandServiceTest {
     void test_modifyBoard() throws Exception {
         //given P : 3 7, k : 4 7, p : 5 7
         final Long boardId = 1L;
+        final String position = "P : 3 7, k : 4 7, p : 5 7";
 
-        final Board board = new Board(Map.of(
-                new Position(3, 7), new Pawn(Color.BLACK),
-                new Position(5, 7), new Pawn(Color.BLACK),
-                new Position(4, 7), new King(Color.WHITE)
-        ));
-
-        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, Color.BLACK);
+        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, position, "WHITE");
 
         //when
         boardCommandService.modifyBoard(boardModifyRequest);
 
-        final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(boardId);
+        final Board savedBoard = boardQueryService.searchBoard(boardId);
 
         //then
         assertAll(
-                () -> assertEquals(boardSearchResponse.turn(), Color.BLACK.name()),
-                () -> assertThat(boardSearchResponse.chessBoard())
+                () -> assertEquals(savedBoard.turn(), new Turn(Color.WHITE)),
+                () -> assertThat(savedBoard.chessBoard())
                         .hasSize(3)
                         .containsKeys(
                                 new Position(3, 7),

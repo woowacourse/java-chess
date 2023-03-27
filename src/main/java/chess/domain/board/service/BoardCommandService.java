@@ -1,48 +1,29 @@
 package chess.domain.board.service;
 
-import chess.dao.BoardModifyDao;
-import chess.dao.BoardRegisterDao;
-import chess.domain.board.Board;
-import chess.domain.board.repository.BoardRepository;
-import chess.domain.board.service.dto.BoardModifyRequest;
-import chess.domain.board.service.dto.BoardRegisterRequest;
+import chess.dao.BoardDao;
 import chess.domain.board.service.mapper.BoardMapper;
+import chess.domain.board.service.newDto.BoardModifyRequest;
+import chess.domain.board.service.newDto.BoardRegisterRequest;
 
 public class BoardCommandService {
 
-    private final BoardRepository boardRepository;
+    private final BoardDao boardDao;
     private final BoardMapper boardMapper;
 
-    public BoardCommandService(final BoardRepository boardRepository, final BoardMapper boardMapper) {
-        this.boardRepository = boardRepository;
+    public BoardCommandService(final BoardDao boardDao, final BoardMapper boardMapper) {
+        this.boardDao = boardDao;
         this.boardMapper = boardMapper;
     }
 
     public Long registerBoard(BoardRegisterRequest boardRegisterRequest) {
-
-        final Board board = boardRegisterRequest.board();
-        final String position = boardMapper.mapToBoardPositionFrom(board);
-
-        final BoardRegisterDao boardRegisterDao =
-                new BoardRegisterDao(position,
-                                     boardRegisterRequest.turn().name()
-                );
-
-        return boardRepository.save(boardRegisterDao);
+        return boardDao.save(boardRegisterRequest);
     }
 
     public void modifyBoard(final BoardModifyRequest boardModifyRequest) {
-
-        final Board board = boardModifyRequest.board();
-        final String position = boardMapper.mapToBoardPositionFrom(board);
-        final String turn = boardModifyRequest.turn().name();
-
-        final BoardModifyDao boardModifyDao = new BoardModifyDao(boardModifyRequest.id(), position, turn);
-
-        boardRepository.modifyById(boardModifyDao);
+        boardDao.modifyById(boardModifyRequest);
     }
 
     public void deleteBoard(final Long boardId) {
-        boardRepository.deleteById(boardId);
+        boardDao.deleteById(boardId);
     }
 }
