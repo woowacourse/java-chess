@@ -100,10 +100,17 @@ public class ChessController {
 
     private void loadGame(GameCommand gameCommand) {
         GameId gameId = getGameId(gameCommand);
+        validateNotExistGame(gameId);
         chessGame.load(gameId, chessGameDao::findBoard, chessGameDao::findGameState);
         OutputView.printLoadMessage();
         OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void validateNotExistGame(GameId gameId) {
+        if (!chessGameDao.isExistGame(gameId)) {
+            throw new IllegalArgumentException("[ERROR] 해당 체스방이 없습니다.");
+        }
     }
 
     private void leaveGame() {
