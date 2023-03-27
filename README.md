@@ -77,11 +77,10 @@
 
 
 ### 4단계 기능 요구사항
-- [ ] Piece 정보 : piece_type, team_color, rank, file
-- [ ] Chess 정보 : turn (chessBoard id 는 추후 적용 필요)
-- [ ] CRUD
-  - [ ] Create
-    - [ ] DB에서 불러 올 체스 게임이 없으면 만든다
+- [x] Piece 정보 : piece_type, piece_rank, piece_file, color, turn
+- [x] CRUD
+  - [x] Create
+    - [x] DB에서 불러 올 보드가 없으면 만든다
   - [ ] Read
     - [ ] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
   - [ ] Update

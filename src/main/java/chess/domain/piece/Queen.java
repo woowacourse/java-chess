@@ -61,4 +61,9 @@ public final class Queen extends Piece {
 	public boolean movableByCount(final int count) {
 		return true;
 	}
+
+	@Override
+	public PieceType type() {
+		return PieceType.QUEEN;
+	}
 }

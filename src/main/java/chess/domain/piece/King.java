@@ -61,4 +61,9 @@ public final class King extends Piece {
 	public boolean movableByCount(final int count) {
 		return count == 0;
 	}
+
+	@Override
+	public PieceType type() {
+		return PieceType.KING;
+	}
 }

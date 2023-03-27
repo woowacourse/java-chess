@@ -37,4 +37,9 @@ public final class Empty extends Piece {
 	public boolean movableByCount(final int count) {
 		return false;
 	}
+
+	@Override
+	public PieceType type() {
+		return PieceType.EMPTY;
+	}
 }

@@ -26,6 +26,8 @@ public abstract class Piece {
 
 	public abstract boolean movableByCount(final int count);
 
+	public abstract PieceType type();
+
 	public boolean isSameTeam(final Color color) {
 		return this.color.equals(color);
 	}
@@ -37,7 +39,8 @@ public abstract class Piece {
 	public Position position() {
 		return position;
 	}
-	public void move(final Position target){
+
+	public void move(final Position target) {
 		position = target;
 	}
 }

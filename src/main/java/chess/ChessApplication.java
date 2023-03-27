@@ -8,15 +8,22 @@ import static chess.view.OutputView.*;
 
 import java.util.Map;
 
+import chess.dao.ChessBoardDao;
+import chess.dao.ChessDao;
 import chess.domain.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class ChessApplication {
+	private static final ChessDao chessDao = new ChessBoardDao();
 
 	public static void main(String[] args) {
-		Board board = Board.create();
+		Board board = chessDao.select();
+		if (board == null) {
+			board = Board.create();
+			chessDao.save(board);
+		}
 		start(board);
 		play(board);
 	}

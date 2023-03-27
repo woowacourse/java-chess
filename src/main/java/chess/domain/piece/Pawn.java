@@ -73,6 +73,11 @@ public final class Pawn extends Piece {
 		return isFirstMove(blackPositions, 0);
 	}
 
+	@Override
+	public PieceType type() {
+		return PieceType.PAWN;
+	}
+
 	private boolean isFirstMove(final List<Position> positions, final int count) {
 		if (positions.contains(position())) {
 			return count <= 1;

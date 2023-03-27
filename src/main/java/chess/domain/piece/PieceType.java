@@ -6,7 +6,9 @@ public enum PieceType {
 	BISHOP(3.0),
 	QUEEN(9.0),
 	PAWN(1.0),
-	PAWNS(0.5);
+	PAWNS(0.5),
+	EMPTY(0.0),
+	KING(0.0);
 
 	private final double score;
 
