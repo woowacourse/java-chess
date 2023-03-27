@@ -92,7 +92,7 @@ public final class PathValidatorFactory {
 
     public static PathValidator knightPathValidator() {
         final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.KING.getPossibleDirections()
+            PieceType.KNIGHT.getPossibleDirections()
         );
 
         return new PathValidator(
