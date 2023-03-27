@@ -79,7 +79,7 @@ public class ChessApplication {
 			// TODO: king 이 잡히면 chessBoard DB를 초기화 해준다
 			return;
 		}
-		// TODO: play 할 때마다 Piece 정보들을 update 해준다
+		chessDao.update(board);
 		printBoard(board.board(), ranks(), files());
 		play(board);
 	}

@@ -83,11 +83,11 @@
     - [x] DB에서 불러 올 보드가 없으면 만든다
   - [x] Read
     - [x] DB에 보드 정보가 저장되어 있다면 DB에서 읽어온다
-  - [ ] Update
-    - [ ] 기물을 움직일 때마다 DB 업데이트 해준다
-    - [ ] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
-  - [ ] Delete
-    - [ ] King 이 죽으면 DB 초기화 해준다
+  - [x] Update
+    - [x] 기물 움직일 때마다 DB 업데이트
+    - [x] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
+  - [x] Delete
+    - [x] King 죽으면 DB 초기화
 
 ```sql 
 CREATE TABLE chess_game (
