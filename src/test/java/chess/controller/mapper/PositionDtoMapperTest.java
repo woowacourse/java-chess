@@ -13,12 +13,11 @@ class PositionDtoMapperTest {
     @DisplayName("rank, file이 주어지면 위치에 대한 dto를 생성한다.")
     void createPositionDto() {
         // given
-        final PositionDtoMapper positionDtoMapper = new PositionDtoMapper();
         final int rank = 3;
         final int file = 3;
 
         // when, then
-        final PositionDto positionDto = assertDoesNotThrow(() -> positionDtoMapper.createPositionDto(rank, file));
+        final PositionDto positionDto = assertDoesNotThrow(() -> PositionDtoMapper.createPositionDto(rank, file));
         assertThat(positionDto)
                 .isInstanceOf(PositionDto.class);
     }

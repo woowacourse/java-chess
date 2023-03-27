@@ -17,11 +17,10 @@ class PieceDtoMapperTest {
     @DisplayName("체스말 정보가 주어지면, 체스말에 대한 dto를 생성한다.")
     void createPieceDto() {
         // given
-        final PieceDtoMapper pieceDtoMapper = new PieceDtoMapper();
         final Piece piece = new Piece(PieceType.ROOK, CampType.WHITE, new Rook());
 
         // when, then
-        final PieceDto pieceDto = assertDoesNotThrow(() -> pieceDtoMapper.createPieceDto(piece));
+        final PieceDto pieceDto = assertDoesNotThrow(() -> PieceDtoMapper.createPieceDto(piece));
         assertThat(pieceDto)
                 .isInstanceOf(PieceDto.class);
     }
