@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.controller.command.Command;
-import chess.controller.command.strategy.StrategyCommand;
+import chess.controller.command.CommandHandler;
+import chess.controller.command.command.Command;
 import chess.dao.ChessGameDao;
 import chess.dao.ChessRoomDao;
 import chess.domain.game.ChessGame;
@@ -24,7 +24,7 @@ public class ChessGameController {
 
     private ChessState play(final ChessState state, final ChessGame chessGame) {
         try {
-            StrategyCommand command = Command.bind(InputView.readCommand());
+            Command command = CommandHandler.bind(InputView.readCommand());
             return command.execute(state, chessGame);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);

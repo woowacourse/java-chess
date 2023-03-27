@@ -1,14 +1,14 @@
 package chess.controller.command.factory;
 
-import chess.controller.command.strategy.StatusCommand;
-import chess.controller.command.strategy.StrategyCommand;
+import chess.controller.command.command.Command;
+import chess.controller.command.command.StatusCommand;
 
 import java.util.List;
 
-public class StatusCommandFactory implements ActionCommandFactory {
+public class StatusCommandFactory implements CommandFactory {
 
     @Override
-    public StrategyCommand createCommand(final List<String> inputs) {
+    public Command createCommand(final List<String> inputs) {
         return StatusCommand.create();
     }
 }

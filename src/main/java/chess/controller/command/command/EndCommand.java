@@ -1,4 +1,4 @@
-package chess.controller.command.strategy;
+package chess.controller.command.command;
 
 import chess.controller.ChessState;
 import chess.domain.game.ChessGame;
@@ -7,7 +7,7 @@ import static chess.controller.ChessState.END;
 import static chess.controller.ChessState.PROGRESS;
 import static chess.controller.ChessState.START;
 
-public class EndCommand implements StrategyCommand {
+public class EndCommand implements Command {
 
     private static final String CANNOT_END_BEFORE_START_ERROR_MESSAGE = "게임을 시작하기 전에 종료할 수 없습니다";
 

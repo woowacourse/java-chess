@@ -1,4 +1,4 @@
-package chess.controller.command.strategy;
+package chess.controller.command.command;
 
 import chess.controller.ChessState;
 import chess.dao.BoardDao;
@@ -16,7 +16,7 @@ import static chess.controller.ChessState.END;
 import static chess.controller.ChessState.PROGRESS;
 import static chess.controller.ChessState.START;
 
-public class MoveCommand implements StrategyCommand {
+public class MoveCommand implements Command {
 
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
