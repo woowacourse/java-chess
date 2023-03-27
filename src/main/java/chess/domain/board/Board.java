@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.type.Piece;
-import chess.domain.piece.Direction;
+import chess.domain.piece.direction.Direction;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
