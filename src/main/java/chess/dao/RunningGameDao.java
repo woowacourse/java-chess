@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RunningGameDao {
@@ -30,7 +31,7 @@ public class RunningGameDao {
 
     public void create(final RunningGameDto runningGameDto) {
         final String query = "INSERT INTO running_game VALUES (?, ?)";
-        final int id = 1;
+        final int id = autoIncrementId();
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
@@ -69,6 +70,14 @@ public class RunningGameDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    private int autoIncrementId() {
+        List<Integer> gameIds = findAllIds();
+        if (gameIds.isEmpty()) {
+            return 1;
+        }
+        return Collections.max(gameIds) + 1;
     }
 
     public void update(final RunningGameDto runningGameDto) {
