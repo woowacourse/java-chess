@@ -19,15 +19,12 @@ public enum ColumnToNumber {
 
     public static int of(char alphabet) {
         try {
-            return convertAlphabetToColumnNumber(alphabet).getNumber();
+            String convertedAlphabet = Character.toString(alphabet);
+            ColumnToNumber columnToNumber = ColumnToNumber.valueOf(convertedAlphabet.toUpperCase());
+            return columnToNumber.getNumber();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 열 좌표값입니다.");
         }
-    }
-
-    private static ColumnToNumber convertAlphabetToColumnNumber(char alphabet) {
-        String convertedAlphabet = Character.toString(alphabet);
-        return ColumnToNumber.valueOf(convertedAlphabet.toUpperCase());
     }
 
     private int getNumber() {
