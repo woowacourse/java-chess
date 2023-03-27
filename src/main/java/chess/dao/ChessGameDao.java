@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.domain.Board;
 import chess.game.GameId;
+import chess.game.GameResult;
 import chess.game.state.GameState;
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface ChessGameDao {
     List<GameId> findAllGameId();
 
     void transaction(Runnable runnable);
+
+    void saveGameResult(String name, double score, GameResult gameResult);
 }

@@ -43,7 +43,7 @@ public abstract class EndState implements GameState {
 
     @Override
     public double getTeamScore(DoubleSupplier doubleSupplier) {
-        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+        return doubleSupplier.getAsDouble();
     }
 
     @Override

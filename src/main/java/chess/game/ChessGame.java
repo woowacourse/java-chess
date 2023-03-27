@@ -84,6 +84,14 @@ public class ChessGame {
         return gameState.getTeamScore(() -> calculateScore(team));
     }
 
+    public double getLoserScore() {
+        return getTeamScore(getWinner().opposite());
+    }
+
+    public double getWinnerScore() {
+        return getTeamScore(getWinner());
+    }
+
     private double calculateScore(Team team) {
         double pawnScore = getPawnScore(team);
         double withoutPawnScore = getWithoutPawnScore(team);

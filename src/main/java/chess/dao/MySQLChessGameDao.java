@@ -11,6 +11,7 @@ import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.game.GameId;
+import chess.game.GameResult;
 import chess.game.state.GameState;
 import chess.game.state.running.BlackCheckedState;
 import chess.game.state.running.BlackTurnState;
@@ -139,6 +140,12 @@ public class MySQLChessGameDao implements ChessGameDao {
             }
             return gameIds;
         });
+    }
+
+    @Override
+    public void saveGameResult(String name, double score, GameResult gameResult) {
+        final String query = "INSERT INTO game_result (nickname,score,result) VALUES(?,?,?)";
+        jdbcContext.insert(query, name, score, gameResult.name());
     }
 
     private enum RunningStateMapper {

@@ -8,6 +8,7 @@ import chess.game.ChessGame;
 import chess.game.Command;
 import chess.game.GameCommand;
 import chess.game.GameId;
+import chess.game.GameResult;
 import chess.game.RandomTurnStrategy;
 import chess.game.action.Action;
 import chess.view.InputView;
@@ -143,9 +144,23 @@ public class ChessController {
     private void finishGame() {
         Team winner = chessGame.getWinner();
         if (winner != Team.NONE) {
-            chessGameDao.deleteGame(chessGame.getGameId());
             OutputView.printWinner(winner);
+            saveWinnerResult();
+            saveLoserResult();
+            chessGameDao.deleteGame(chessGame.getGameId());
         }
+    }
+
+    private void saveWinnerResult() {
+        String winnerName = InputView.readWinnerName();
+        double winnerScore = chessGame.getWinnerScore();
+        chessGameDao.saveGameResult(winnerName, winnerScore, GameResult.WIN);
+    }
+
+    private void saveLoserResult() {
+        String loserName = InputView.readLoserName();
+        double loserScore = chessGame.getLoserScore();
+        chessGameDao.saveGameResult(loserName, loserScore, GameResult.LOSE);
     }
 
     private void gameLoop() {
