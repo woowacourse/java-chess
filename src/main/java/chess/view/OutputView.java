@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.List;
 
-import chess.dto.BoardDto;
+import chess.dto.ViewBoardDto;
 import chess.dto.TempResultDto;
 
 public class OutputView {
@@ -17,8 +17,14 @@ public class OutputView {
 		);
 	}
 
-	public static void printBoard(BoardDto boardDto) {
-		boardDto.getBoard().forEach(line -> System.out.println(printLine(line)));
+	public static void printLoadMessage() {
+		System.out.println("마지막으로 저장된 게임을 불러옵니다.\n");
+	}
+
+	public static void printBoard(ViewBoardDto viewBoardDto) {
+		System.out.println(viewBoardDto.getTurn() + "의 차례!");
+		viewBoardDto.getBoard()
+			.forEach(line -> System.out.println(printLine(line)));
 		System.out.println();
 	}
 
