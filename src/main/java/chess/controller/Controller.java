@@ -1,78 +1,95 @@
 package chess.controller;
 
 import chess.boardstrategy.BoardStrategy;
-import chess.domain.game.ChessGame;
+import chess.dao.ChessGameDao;
+import chess.dao.MoveDao;
+import chess.service.ChessGameService;
+import chess.view.CommandRequest;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import static chess.controller.Command.COMMAND_INDEX_IN_COMMANDLINE;
+import static chess.controller.Command.*;
 
 public class Controller {
-
-    private static final Map<Command, BiConsumer<List<String>, BoardStrategy>> actionsByCommand = new EnumMap<>(Command.class);
+    private static final int NONE_GAME_ID = -1;
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGame chessGame;
+    private final ChessGameService chessGameService;
+    private int gameId = NONE_GAME_ID;
 
-    public Controller(ChessGame chessGame) {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
-        this.chessGame = chessGame;
-        putActions();
+    public Controller(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.chessGameService = new ChessGameService(new ChessGameDao(), new MoveDao());
     }
 
-    private void putActions() {
-        actionsByCommand.put(Command.START, this::start);
-        actionsByCommand.put(Command.MOVE, this::move);
-        actionsByCommand.put(Command.END, (ignored, ignored2) -> {
-        });
-        actionsByCommand.put(Command.STATUS, this::status);
-    }
+    private final Map<Command, BiConsumer<CommandRequest, BoardStrategy>> actions =
+            Map.of(START, this::start,
+                    MOVE, this::move,
+                    STATUS, this::status,
+                    END, this::end);
 
-    public void playChessGame(BoardStrategy boardStrategy) {
+
+    //todo :(리팩터링)게임이 start없이 move부터 하는 경우 예외발생 = 게임 크리에이트가 아예 안된경우(gameId가 없음 = 게임이 존재하지 않는다)
+    //                                      = 게임id는 있는데, 게임이 시작 안한경우
+    public void run(BoardStrategy boardStrategy) {
         outputView.printStartGuideMessage();
-        Command command = Command.START;
-        while (command != Command.END && !chessGame.isFinished()) {
-            command = playChessByCommand(boardStrategy);
+        Command command = startGame(boardStrategy);
+        while (command != Command.END
+                && !chessGameService.isFinished(gameId, boardStrategy)) {
+            command = playChessByCommandRequest(boardStrategy);
         }
-        endGameByCommand();
+        finishGameByCommand(command, boardStrategy);
     }
 
-    private void endGameByCommand() {
-        if (chessGame.isFinished()) { //end입력하고 끝난거면, 상태출력하기
-            outputView.printWinner(chessGame.findWinner());
-        }
+    private Command startGame(BoardStrategy boardStrategy) {
+        CommandRequest commandRequest;
+        Command command;
+        do {
+            commandRequest = inputView.readCommandRequest();
+            command = commandRequest.getCommand();
+        } while (command != Command.START);
+        actions.get(command).accept(commandRequest, boardStrategy);
+        return command;
     }
 
-    private Command playChessByCommand(BoardStrategy boardStrategy) {
+    private Command playChessByCommandRequest(BoardStrategy boardStrategy) {
         try {
-            List<String> commandLine = inputView.readCommand();
-            Command command = Command.findCommandByString(commandLine.get(COMMAND_INDEX_IN_COMMANDLINE));
-            actionsByCommand.get(command).accept(commandLine, boardStrategy);
+            CommandRequest commandRequest = inputView.readCommandRequest();
+            Command command = commandRequest.getCommand();
+            actions.get(command).accept(commandRequest, boardStrategy);
             return command;
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
-            return playChessByCommand(boardStrategy);
+            return playChessByCommandRequest(boardStrategy);
         }
     }
 
-    private void start(List<String> commandLine, BoardStrategy boardStrategy) {
-        chessGame.start(boardStrategy);
-        outputView.printBoard(chessGame.getChessBoard());
+    public void start(CommandRequest commandRequest, BoardStrategy boardStrategy) {
+        gameId = chessGameService.start();
+        outputView.printBoard(chessGameService.findChessBoard(gameId, boardStrategy));
     }
 
-    private void move(List<String> commandLine, BoardStrategy boardStrategy) {
-        chessGame.move(commandLine);
-        outputView.printBoard(chessGame.getChessBoard());
+    public void move(CommandRequest commandRequest, BoardStrategy boardStrategy) {
+        chessGameService.move(gameId, commandRequest, boardStrategy);
+        outputView.printBoard(chessGameService.findChessBoard(gameId, boardStrategy));
     }
 
-    private void status(List<String> commandLine, BoardStrategy boardStrategy) {
-        outputView.printStatus(chessGame.status());
+    private void status(final CommandRequest commandRequest, final BoardStrategy boardStrategy) {
+        outputView.printStatus(chessGameService.findStatus(gameId, boardStrategy));
+    }
+
+    private void end(final CommandRequest commandRequest, final BoardStrategy boardStrategy) {
+        chessGameService.end(gameId, boardStrategy);
+    }
+
+    private void finishGameByCommand(Command command, BoardStrategy boardStrategy) {
+        if (command == MOVE) {
+            outputView.printWinner(chessGameService.findWinner(gameId, boardStrategy));
+        }
     }
 
 }
