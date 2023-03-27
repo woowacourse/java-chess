@@ -1,12 +1,15 @@
-package chess.controller;
+package chess.controller.room;
 
+import chess.controller.Controller;
+import chess.controller.Request;
+import chess.controller.Response;
+import chess.controller.ResponseType;
 import chess.controller.login.LoginSession;
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.dto.BoardDto;
 import chess.domain.game.Game;
-import chess.domain.game.GameSession;
 
 public class ResumeController implements Controller {
 

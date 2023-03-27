@@ -83,4 +83,12 @@ public class OutputView {
             System.out.println(roomName);
         }
     }
+
+    public void ensureRoomMessage() {
+        System.out.println("방 입장 관련 메시지를 보내주세요");
+    }
+
+    public void printFailReason(String cause) {
+        System.out.println(cause);
+    }
 }

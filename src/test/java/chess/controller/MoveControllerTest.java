@@ -1,9 +1,10 @@
 package chess.controller;
 
+import chess.controller.game.MoveController;
+import chess.controller.room.GameSession;
 import chess.domain.Position;
 import chess.domain.board.BoardGenerator;
 import chess.domain.game.Game;
-import chess.domain.game.GameSession;
 import chess.domain.piece.Color;
 import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
@@ -30,7 +31,7 @@ public class MoveControllerTest {
     }
 
     @Test
-    void Move_명령은_Baord_Session에_보드가_생성된_후_실행가능_하다() {
+    void Move_명령은_Game_Session에_보드가_생성된_후_실행가능_하다() {
         //given
         Response response = controller.execute(new Request("move a1 a2"));
 

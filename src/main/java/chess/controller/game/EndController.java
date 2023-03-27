@@ -1,11 +1,16 @@
-package chess.controller;
+package chess.controller.game;
 
+import chess.controller.Controller;
+import chess.controller.GameCommand;
+import chess.controller.Request;
+import chess.controller.Response;
+import chess.controller.ResponseType;
 import chess.controller.login.LoginSession;
+import chess.controller.room.GameSession;
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
 import chess.domain.dto.BoardSaveDto;
 import chess.domain.game.Game;
-import chess.domain.game.GameSession;
 
 public class EndController implements Controller {
     private final static EndController INSTANCE = new EndController();

@@ -1,4 +1,6 @@
-package chess.domain.game;
+package chess.controller.room;
+
+import chess.domain.game.Game;
 
 import java.util.ArrayList;
 import java.util.List;

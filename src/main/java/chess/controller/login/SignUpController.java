@@ -1,6 +1,9 @@
-package chess.controller;
+package chess.controller.login;
 
-import chess.controller.login.LoginSession;
+import chess.controller.Controller;
+import chess.controller.Request;
+import chess.controller.Response;
+import chess.controller.ResponseType;
 import chess.dao.UserDao;
 
 public class SignUpController implements Controller {

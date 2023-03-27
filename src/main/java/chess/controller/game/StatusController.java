@@ -1,8 +1,13 @@
-package chess.controller;
+package chess.controller.game;
 
+import chess.controller.Controller;
+import chess.controller.GameCommand;
+import chess.controller.Request;
+import chess.controller.Response;
+import chess.controller.ResponseType;
+import chess.controller.room.GameSession;
 import chess.domain.dto.ResultDto;
 import chess.domain.game.Game;
-import chess.domain.game.GameSession;
 import chess.domain.game.Result;
 
 public class StatusController implements Controller {
