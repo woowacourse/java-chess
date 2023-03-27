@@ -43,11 +43,6 @@ public final class King extends Piece {
         return new Path();
     }
 
-    @Override
-    public double calculateScore(final boolean ignored) {
-        return 0;
-    }
-
     private void validateAvailableDestination(final Position from, final Position to, final Movement movement) {
         if (!from.moveBy(movement).equals(to)) {
             throw new IllegalStateException("갈 수 없는 도착지입니다.");

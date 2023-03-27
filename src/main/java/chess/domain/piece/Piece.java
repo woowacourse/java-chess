@@ -17,8 +17,6 @@ public abstract class Piece {
 
     public abstract Path searchPathTo(Position from, Position to, Piece destination);
 
-    public abstract double calculateScore(boolean hasOtherPieceInSameFile);
-
     protected final void validateMovement(final Movement movement, List<Movement> availableMovements) {
         if (!availableMovements.contains(movement)) {
             throw new IllegalStateException("움직일 수 없는 방향임!");

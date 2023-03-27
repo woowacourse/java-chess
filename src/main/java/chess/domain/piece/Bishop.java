@@ -39,11 +39,6 @@ public final class Bishop extends Piece {
         return trackPath(from, to, movement);
     }
 
-    @Override
-    public double calculateScore(final boolean ignored) {
-        return 3;
-    }
-
     private Path trackPath(final Position from, final Position to, final Movement movement) {
         Position next = from;
         List<Position> positions = new ArrayList<>();

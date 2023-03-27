@@ -43,11 +43,6 @@ public final class Knight extends Piece {
         return new Path();
     }
 
-    @Override
-    public double calculateScore(final boolean ignored) {
-        return 2.5;
-    }
-
     private void validatePositionDifference(final Position from, final Position to) {
         int rankDifference = Math.abs(to.rankGap(from));
         int fileDifference = Math.abs(to.fileGap(from));

@@ -124,12 +124,14 @@ public final class Board {
             final Map<File, List<Position>> piecesByFile,
             final File file,
             final Piece piece) {
+
         final boolean hasOtherPieceInSameFile = piecesByFile.get(file)
                 .stream()
                 .filter(it -> board.get(it).isTypeOf(PAWN))
                 .filter(it -> board.get(it).color().isSameColor(piece.color()))
                 .count() >= 2;
-        return piece.calculateScore(hasOtherPieceInSameFile);
+
+        return Score.of(piece.type(), hasOtherPieceInSameFile);
     }
 
     public Map<Position, Piece> board() {

@@ -42,11 +42,6 @@ public final class Rook extends Piece {
         return trackPath(from, to, movement);
     }
 
-    @Override
-    public double calculateScore(final boolean ignored) {
-        return 5;
-    }
-
     private Path trackPath(final Position from, final Position to, final Movement movement) {
         Position next = from;
         List<Position> positions = new ArrayList<>();

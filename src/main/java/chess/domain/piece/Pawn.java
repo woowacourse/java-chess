@@ -53,14 +53,6 @@ public final class Pawn extends Piece {
         return searchPathToEnemyPosition(destination, movement);
     }
 
-    @Override
-    public double calculateScore(final boolean hasOtherPieceInSameFile) {
-        if (hasOtherPieceInSameFile) {
-            return 0.5;
-        }
-        return 1;
-    }
-
     private Path searchPathToEnemyPosition(final Piece destination, final Movement movement) {
         if (!destination.color.isDifferentColor(color)) {
             throw new IllegalStateException("같은 색의 말이 있는 곳으로는 이동할 수 없음!");

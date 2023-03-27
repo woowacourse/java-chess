@@ -40,11 +40,6 @@ public final class Queen extends Piece {
         return trackPath(from, to, movement);
     }
 
-    @Override
-    public double calculateScore(final boolean ignored) {
-        return 9;
-    }
-
     private Path trackPath(final Position from, final Position to, final Movement movement) {
         Position next = from;
         List<Position> positions = new ArrayList<>();
