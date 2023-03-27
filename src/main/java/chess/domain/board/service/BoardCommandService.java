@@ -23,7 +23,13 @@ public class BoardCommandService {
         return boardDao.save(boardRegisterRequest);
     }
 
-    public void modifyBoard(final BoardModifyRequest boardModifyRequest) {
+    public void modifyBoard(final Board board, final Long boardId) {
+
+        final BoardRegisterRequest boardRegisterRequest = boardMapper.mapToBoardRegisterRequestFrom(board);
+
+        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, boardRegisterRequest.position(),
+                                                                             boardRegisterRequest.turn());
+
         boardDao.modifyById(boardModifyRequest);
     }
 

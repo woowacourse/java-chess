@@ -6,9 +6,11 @@ import chess.domain.board.Board;
 import chess.domain.board.Turn;
 import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.position.Position;
-import chess.domain.board.service.dto.BoardModifyRequest;
 import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.jumper.King;
+import chess.domain.piece.pawn.Pawn;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,12 +82,17 @@ class BoardCommandServiceTest {
     void test_modifyBoard() throws Exception {
         //given P : 3 7, k : 4 7, p : 5 7
         final Long boardId = 1L;
-        final String position = "P : 3 7, k : 4 7, p : 5 7";
 
-        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, position, "WHITE");
+        final Map<Position, Piece> map = Map.of(
+                new Position(3, 7), new Pawn(Color.BLACK),
+                new Position(4, 7), new King(Color.WHITE),
+                new Position(5, 7), new Pawn(Color.WHITE)
+        );
+
+        final Board board = Board.bringBackPreviousGame(map, new Turn(Color.WHITE));
 
         //when
-        boardCommandService.modifyBoard(boardModifyRequest);
+        boardCommandService.modifyBoard(board, boardId);
 
         final Board savedBoard = boardQueryService.searchBoard(boardId);
 
