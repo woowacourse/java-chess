@@ -14,18 +14,14 @@ public final class ChessGame {
     private final ChessBoard chessBoard;
     private CampType currentCamp;
 
-    public ChessGame() {
+    public ChessGame(final CampType currentCamp) {
+        this.currentCamp = currentCamp;
         this.chessBoard = ChessBoard.getInstance(this);
     }
 
     public ChessGame(final ChessBoard chessBoard, final CampType currentCamp) {
         this.chessBoard = chessBoard;
         this.currentCamp = currentCamp;
-    }
-
-    public boolean run(final Position source, final Position target, final CampType currentCamp) {
-        this.currentCamp = currentCamp;
-        return play(source, target);
     }
 
     public Map<Position, Piece> getWhiteBoard() {
@@ -36,7 +32,7 @@ public final class ChessGame {
         return chessBoard.getBoardByCamp(CampType.BLACK);
     }
 
-    private boolean play(final Position source, final Position target) {
+    public void play(final Position source, final Position target) {
         validateCamp(source);
         validateTargetSameCamp(target);
         validateObstacle(source, target);
@@ -44,7 +40,12 @@ public final class ChessGame {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
         movePiece(source, target);
-        return isKingAlive();
+        currentCamp = currentCamp.changeTurn();
+    }
+
+    public boolean isKingAlive() {
+        List<Piece> aliveKings = chessBoard.getAliveKings();
+        return aliveKings.size() == ALL_KING_ALIVE_COUNT;
     }
 
     private void validateObstacle(final Position source, final Position target) {
@@ -96,11 +97,6 @@ public final class ChessGame {
         }
     }
 
-    private boolean isKingAlive() {
-        List<Piece> aliveKings = chessBoard.getAliveKings();
-        return aliveKings.size() == ALL_KING_ALIVE_COUNT;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -116,5 +112,9 @@ public final class ChessGame {
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getBoard();
+    }
+
+    public CampType getCurrentCamp() {
+        return currentCamp;
     }
 }
