@@ -2,6 +2,7 @@ package chess.controller;
 
 import static chess.view.Command.END;
 import static chess.view.Command.MOVE;
+import static chess.view.Command.RESET;
 import static chess.view.Command.SCORE;
 import static chess.view.Command.START;
 import static chess.view.InputView.readCommand;
@@ -34,6 +35,14 @@ public final class MainController {
 
         if (command == START) {
             final Board board = generateBoard();
+            printBoard(board.getBoard());
+            while (repeatUntilValidAction(() -> playChess(board)));
+            printScores(board.scores());
+        }
+        if (command == RESET) {
+            chessGameDao.deleteAll();
+            final Board board = generateBoard();
+            chessGameDao.insert(board);
             printBoard(board.getBoard());
             while (repeatUntilValidAction(() -> playChess(board)));
             printScores(board.scores());
@@ -78,6 +87,9 @@ public final class MainController {
         }
         if (command == SCORE) {
             printScores(board.scores());
+        }
+        if (command == RESET) {
+            throw new IllegalArgumentException("이미 게임을 실행중입니다. 다른 명령어를 입력해주세요.");
         }
         return true;
     }

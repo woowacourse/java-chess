@@ -6,7 +6,8 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
-    SCORE("status");
+    SCORE("status"),
+    RESET("reset");
 
     private final String command;
 
