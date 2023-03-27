@@ -1,11 +1,10 @@
 package chess.domain.board.service;
 
-import chess.dao.BoardSearchDao;
+import chess.dao.BoardDao;
 import chess.domain.board.Board;
-import chess.domain.board.repository.BoardRepository;
 import chess.domain.board.service.dto.AllBoardSearchResponse;
-import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
+import chess.domain.board.service.newDto.BoardSearchResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,32 +12,31 @@ import java.util.NoSuchElementException;
 
 public class BoardQueryService {
 
-    private final BoardRepository boardRepository;
+    private final BoardDao boardDao;
     private final BoardMapper boardMapper;
 
-    public BoardQueryService(final BoardRepository boardRepository, final BoardMapper boardMapper) {
-        this.boardRepository = boardRepository;
+    public BoardQueryService(final BoardDao boardDao, final BoardMapper boardMapper) {
+        this.boardDao = boardDao;
         this.boardMapper = boardMapper;
     }
 
-    public BoardSearchResponse searchBoard(final Long boardId) {
-        final BoardSearchDao boardSearchDao = boardRepository.findById(boardId)
-                                                             .orElseThrow(NoSuchElementException::new);
+    public Board searchBoard(final Long boardId) {
 
-        final String position = boardSearchDao.position();
 
-        final Board board = boardMapper.mapToBoardMapFrom(position);
+        final BoardSearchResponse boardSearchResponse = boardDao.findById(boardId)
+                                                                .orElseThrow(NoSuchElementException::new);
 
-        return new BoardSearchResponse(board.chessBoard(), boardSearchDao.turn());
+        return boardMapper.mapToBoardSearchResponseFrom(boardSearchResponse.position(),
+                                                        boardSearchResponse.turn());
     }
 
     public AllBoardSearchResponse searchAllBoards() {
 
-        final List<BoardSearchDao> boardSearchDaos = boardRepository.findAll();
+        final List<BoardSearchResponse> boardSearchResponses = boardDao.findAll();
         final List<Long> ids = new ArrayList<>();
 
-        for (final BoardSearchDao boardSearchDao : boardSearchDaos) {
-            ids.add(boardSearchDao.id());
+        for (final BoardSearchResponse boardSearchResponse : boardSearchResponses) {
+            ids.add(boardSearchResponse.id());
         }
 
         return new AllBoardSearchResponse(ids);

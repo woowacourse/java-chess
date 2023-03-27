@@ -1,12 +1,14 @@
 package chess.domain.board.service;
 
-import chess.dao.BoardRegisterDao;
+import chess.dao.BoardDao;
 import chess.dao.MySqlManager;
+import chess.domain.board.Board;
+import chess.domain.board.Turn;
 import chess.domain.board.position.Position;
-import chess.domain.board.repository.BoardRepository;
 import chess.domain.board.service.dto.AllBoardSearchResponse;
-import chess.domain.board.service.dto.BoardSearchResponse;
 import chess.domain.board.service.mapper.BoardMapper;
+import chess.domain.board.service.newDto.BoardRegisterRequest;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -24,22 +26,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoardQueryServiceTest {
 
-    private final BoardRepository boardRepository = new BoardRepository();
+    private final BoardDao boardDao = new BoardDao();
     private final BoardMapper boardMapper = new BoardMapper();
     private final BoardQueryService boardQueryService = new BoardQueryService(
-            boardRepository, boardMapper
+            boardDao, boardMapper
     );
 
     @BeforeEach
     void initializeData() {
-        boardRepository.save(
-                new BoardRegisterDao("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
-                                     "WHITE")
+        boardDao.save(
+                new BoardRegisterRequest("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
+                                         "WHITE")
         );
 
-        boardRepository.save(
-                new BoardRegisterDao("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
-                                     "BLACK")
+        boardDao.save(
+                new BoardRegisterRequest("K : 1 7, P : 3 7, k : 4 7, p : 5 7",
+                                         "BLACK")
         );
     }
 
@@ -62,14 +64,14 @@ class BoardQueryServiceTest {
         final Long boardId = 1L;
 
         //when
-        final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(boardId);
+        final Board board = boardQueryService.searchBoard(boardId);
 
-        final Map<Position, Piece> chessBoard = boardSearchResponse.chessBoard();
-        final String turn = boardSearchResponse.turn();
+        final Map<Position, Piece> chessBoard = board.chessBoard();
+        final Turn turn = board.turn();
 
         //then
         Assertions.assertAll(
-                () -> assertEquals(turn, "WHITE"),
+                () -> assertEquals(turn, new Turn(Color.WHITE)),
                 () -> assertThat(chessBoard).hasSize(4)
         );
     }
