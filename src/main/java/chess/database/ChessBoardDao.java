@@ -40,8 +40,8 @@ public class ChessBoardDao {
         try (final Connection connection = new ChessBoardDao().getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, turn.name());
-            preparedStatement.setString(2, square.getRank().getSymbol());
-            preparedStatement.setString(3, square.getFile().getSymbol());
+            preparedStatement.setString(2, square.getRankSymbol());
+            preparedStatement.setString(3, square.getFileSymbol());
             preparedStatement.setString(4, piece.getSide());
             preparedStatement.setString(5, piece.getName());
             preparedStatement.executeUpdate();
@@ -54,7 +54,6 @@ public class ChessBoardDao {
         final var query = "SELECT * FROM chess_board";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-
             Map<Square, Piece> pieces = makeEmptyChessBoard();
             Turn turn;
             final var resultSet = preparedStatement.executeQuery();
@@ -65,9 +64,8 @@ public class ChessBoardDao {
                             , File.from(resultSet.getString("y")));
                     Piece piece = generatePiece(resultSet.getString("type"), resultSet.getString("side"));
                     pieces.put(square, piece);
-                } while(resultSet.next());
-            }
-            else {
+                } while (resultSet.next());
+            } else {
                 return null;
             }
             return new ChessBoard(pieces, turn);

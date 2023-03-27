@@ -14,16 +14,16 @@ public class ChessBoard {
     private final Map<Square, Piece> pieces;
     private Turn turn;
 
-    public ChessBoard(Map<Square, Piece> pieces, Turn turn) {
+    public ChessBoard(final Map<Square, Piece> pieces, final Turn turn) {
         this.pieces = pieces;
         this.turn = turn;
     }
 
-    public ChessBoard(Map<Square, Piece> pieces) {
+    public ChessBoard(final Map<Square, Piece> pieces) {
         this(pieces, Turn.WHITE);
     }
 
-    public boolean canMove(Square from, Square to) {
+    public boolean canMove(final Square from, final Square to) {
         final Piece target = pieces.get(from);
         validateEmptySquare(target);
         validateTurn(target);
@@ -35,13 +35,13 @@ public class ChessBoard {
         return false;
     }
 
-    private void validateEmptySquare(Piece target) {
+    private void validateEmptySquare(final Piece target) {
         if (target == EmptyPiece.getInstance()) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다");
         }
     }
 
-    private void validateTurn(Piece target) {
+    private void validateTurn(final Piece target) {
         if (turn == Turn.WHITE && target.isBlack()) {
             throw new IllegalArgumentException("백색 기물의 차례입니다");
         }
@@ -50,7 +50,7 @@ public class ChessBoard {
         }
     }
 
-    private void updateChessBoard(Square from, Square to, Piece target) {
+    private void updateChessBoard(final Square from, final Square to, final Piece target) {
         pieces.put(to, target);
         pieces.put(from, EmptyPiece.getInstance());
         if (target instanceof InitialPawn) {
@@ -75,10 +75,10 @@ public class ChessBoard {
     }
 
     private double checkSameFilePawns(final Side side) {
-        final Map<File, Long> sameFilePawnCounts = pieces.keySet().stream()
+        final Map<String, Long> sameFilePawnCounts = pieces.keySet().stream()
                 .filter(key -> Objects.equals(pieces.get(key).getName(), PieceInfo.PAWN.name()) || Objects.equals(pieces.get(key).getName(), PieceInfo.INITIAL_PAWN.name()))
                 .filter(key -> Objects.equals(pieces.get(key).getSide(), side.name()))
-                .collect(groupingBy(Square::getFile, counting()));
+                .collect(groupingBy(Square::getFileSymbol, counting()));
 
         return sameFilePawnCounts.values()
                 .stream()

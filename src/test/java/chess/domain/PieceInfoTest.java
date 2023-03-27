@@ -14,6 +14,7 @@ public class PieceInfoTest {
     @DisplayName("addScore 메서드는")
     class calculatePiecesScore {
         final int score = 0;
+
         @ParameterizedTest(name = "0이 주어지면 {0}의 점수를 더한 {1}을 반환한다.")
         @CsvSource(value = {"PAWN,1", "ROOK,5", "BISHOP,3", "KNIGHT,2.5", "QUEEN,9", "KING,0"})
         void it_returns_increased_score(final PieceInfo pieceInfo, final double increasedScore) {

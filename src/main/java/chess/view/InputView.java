@@ -18,7 +18,7 @@ public class InputView {
         return CommandDto.from(parsedCommandInput);
     }
 
-    private static void validate(List<String> parsedCommandInput) {
+    private static void validate(final List<String> parsedCommandInput) {
         if (parsedCommandInput.size() == 1) {
             validateFormatWithoutArguments(parsedCommandInput);
             return;

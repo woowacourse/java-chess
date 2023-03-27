@@ -10,11 +10,11 @@ import java.util.Map;
 public class ChessBoardDto {
     private final List<PieceDto> chessBoardDto;
 
-    private ChessBoardDto(List<PieceDto> pieceDtos) {
+    private ChessBoardDto(final List<PieceDto> pieceDtos) {
         this.chessBoardDto = pieceDtos;
     }
 
-    public static ChessBoardDto of(Map<Square, Piece> pieces) {
+    public static ChessBoardDto of(final Map<Square, Piece> pieces) {
         List<PieceDto> pieceDtos = new ArrayList<>();
         for (Square square : pieces.keySet()) {
             pieceDtos.add(PieceDto.from(pieces.get(square), square));

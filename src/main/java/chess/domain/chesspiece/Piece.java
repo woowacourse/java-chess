@@ -13,7 +13,7 @@ public abstract class Piece {
         this.pieceInfo = pieceInfo;
     }
 
-    public abstract boolean isMovable(Square from, Square to, Piece piece);
+    public abstract boolean isMovable(final Square from, final Square to, final Piece piece);
 
     public boolean isNotSameSide(final Piece piece) {
         return this.side != piece.side;

@@ -9,7 +9,7 @@ public class CommandDto {
     private String destinationFile = "";
     private String destinationRank = "";
 
-    private CommandDto(String... strings) {
+    private CommandDto(final String... strings) {
         this.command = strings[0];
         this.sourceFile = strings[1];
         this.sourceRank = strings[2];
@@ -17,7 +17,7 @@ public class CommandDto {
         this.destinationRank = strings[4];
     }
 
-    private CommandDto(String string) {
+    private CommandDto(final String string) {
         this.command = string;
     }
 

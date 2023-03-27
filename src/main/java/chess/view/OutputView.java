@@ -43,7 +43,7 @@ public class OutputView {
         System.out.println("이동할 수 없습니다.");
     }
 
-    public static void printChessBoard(ChessBoardDto chessBoardDto) {
+    public static void printChessBoard(final ChessBoardDto chessBoardDto) {
         List<List<String>> presentChessBoard = makePresentChessBoard(chessBoardDto.getChessBoardDto());
         System.out.println();
         for (int i = 0; i < CHESSBOARD_SIZE; i++) {
