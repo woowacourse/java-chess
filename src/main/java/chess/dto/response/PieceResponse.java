@@ -16,12 +16,19 @@ public class PieceResponse {
         this.name = namingByColor(piece, color);
     }
 
-    private char namingByColor(Piece piece, Color color) {
+    private char namingByColor(final Piece piece, final Color color) {
         Shape shape = piece.getShape();
         if (color == Color.WHITE) {
-            return shape.name().toLowerCase().charAt(0);
+            return getShapeSymbol(shape, shape.name().toLowerCase());
         }
-        return shape.name().charAt(0);
+        return getShapeSymbol(shape, shape.name());
+    }
+
+    private static char getShapeSymbol(final Shape shape, final String shapeName) {
+        if (shape == Shape.KNIGHT) {
+            return shapeName.charAt(1);
+        }
+        return shapeName.charAt(0);
     }
 
     public boolean samePosition(final int rank, final int file) {
