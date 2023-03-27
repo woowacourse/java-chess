@@ -1,10 +1,8 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
 import chess.domain.position.Position;
-import chess.dto.ChessBoardDto;
 import chess.dto.CommandRequest;
-import chess.service.GameGenerationService;
+import chess.service.ChessService;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -16,13 +14,12 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private ChessGame chessGame;
-    private final GameGenerationService gameGenerationService;
+    private final ChessService chessService;
 
-    public ChessController(final GameGenerationService gameGenerationService) {
+    public ChessController(final ChessService chessService) {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.gameGenerationService = gameGenerationService;
+        this.chessService = chessService;
     }
 
     public void run() {
@@ -36,7 +33,6 @@ public class ChessController {
         while (isNotStarted) {
             isNotStarted = repeatStartRequest();
         }
-        chessGame = gameGenerationService.createGame();
         printBoard();
     }
 
@@ -57,7 +53,7 @@ public class ChessController {
     }
 
     private void printBoard() {
-        outputView.printBoard(ChessBoardDto.from(chessGame.getChessBoard()));
+        outputView.printBoard(chessService.getChessBoard());
     }
 
     private void play() {
@@ -69,7 +65,7 @@ public class ChessController {
     }
 
     private CommandRequest repeatProgressRequest() {
-        if (chessGame.isEnd()) {
+        if (chessService.isGameEnd()) {
             outputView.alertGameEnd();
         }
         CommandRequest request = null;
@@ -104,7 +100,7 @@ public class ChessController {
 
     private void progressMove(CommandRequest request) {
         try {
-            chessGame.move(Position.from(request.getSource()),
+            chessService.move(Position.from(request.getSource()),
                 Position.from(request.getDestination()));
             printBoard();
         } catch (IllegalArgumentException exception) {
@@ -119,9 +115,9 @@ public class ChessController {
     }
 
     private void printGameResult() {
-        outputView.printCurrentScore(chessGame.getCurrentScore());
+        outputView.printCurrentScore(chessService.getCurrentScore());
         try {
-            outputView.printWinner(chessGame.findWinningTeam().name());
+            outputView.printWinner(chessService.findWinningTeam());
         } catch (IllegalArgumentException exception) {
             outputView.printErrorMessage(exception);
         }

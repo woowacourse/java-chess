@@ -68,7 +68,7 @@ public class JdbcTemplate {
 
     private static void validateOnlyOneExecute(int effectedColumnCount) {
         if (effectedColumnCount != 1) {
-            System.err.println("UPDATE / DELETE 오류: " + "잘못된 쿼리 입니다.");
+            System.err.println("UPDATE 오류: " + "잘못된 쿼리 입니다.");
             throw new RuntimeException("잘못된 업데이트 입니다.");
         }
     }
@@ -80,10 +80,17 @@ public class JdbcTemplate {
                 preparedStatement.setObject(index + 1, params[index]);
             }
             int effectedColumnCount = preparedStatement.executeUpdate();
-            validateOnlyOneExecute(effectedColumnCount);
+            validateLessThanOneExecute(effectedColumnCount);
         } catch (SQLException e) {
             System.err.println("DELETE 오류: " + e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void validateLessThanOneExecute(int effectedColumnCount) {
+        if (effectedColumnCount > 1) {
+            System.err.println("DELETE 오류: " + "잘못된 쿼리 입니다.");
+            throw new RuntimeException("잘못된 업데이트 입니다.");
         }
     }
 
