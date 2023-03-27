@@ -25,6 +25,11 @@ public final class ChessGame {
         this.turn = new Turn(PRIORITY_GIVEN_COLOR);
     }
 
+    public ChessGame(final Board board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public List<Color> getWinningColor() {
         Map<Color, Double> collectedPoints = collectPoint();
         double maxPoint = calculateMaxPoint(collectPoint());
@@ -33,12 +38,11 @@ public final class ChessGame {
 
     private double calculateMaxPoint(final Map<Color, Double> collectedPoints) {
         return collectedPoints.values().stream()
-                .mapToDouble(Double::doubleValue)
-                .max()
+                .max(Double::compareTo)
                 .orElse(0.0);
     }
 
-    private static List<Color> getColorsWithMaxPoint(
+    private List<Color> getColorsWithMaxPoint(
             final Map<Color, Double> collectedPoints,
             final double maxPoint
     ) {
@@ -75,16 +79,16 @@ public final class ChessGame {
         validateNotBlocked(start, end);
     }
 
+    private void validateNotEmpty(final Coordinate start) {
+        if (board.isPieceEmptyAt(start)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 없습니다.");
+        }
+    }
+
     private void validateTurn(final Coordinate start) {
         Piece findPiece = board.findPiece(start);
         if (turn.isNotFor(findPiece)) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
-        }
-    }
-
-    private void validateNotEmpty(final Coordinate start) {
-        if (board.isPieceEmptyAt(start)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 없습니다.");
         }
     }
 
@@ -122,5 +126,9 @@ public final class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

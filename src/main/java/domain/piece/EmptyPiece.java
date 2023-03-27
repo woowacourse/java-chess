@@ -2,10 +2,14 @@ package domain.piece;
 
 import domain.piece.move.Coordinate;
 
-public class EmptyPiece extends Piece {
+public final class EmptyPiece extends Piece {
 
     public EmptyPiece() {
         super(Color.NEUTRAL);
+    }
+
+    public EmptyPiece(final Color color) {
+        super(color);
     }
 
     @Override

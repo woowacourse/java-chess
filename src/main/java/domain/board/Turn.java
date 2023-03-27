@@ -22,4 +22,8 @@ public class Turn {
     public boolean isNotFor(final Piece piece) {
         return piece.getColor() != turn;
     }
+
+    public Color color() {
+        return turn;
+    }
 }
