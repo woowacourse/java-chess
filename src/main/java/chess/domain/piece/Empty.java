@@ -62,6 +62,11 @@ public class Empty implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isSliding() {
         throw new IllegalArgumentException("기물이 존재하지 않는 위치입니다.");
     }

@@ -22,6 +22,8 @@ public interface Piece {
 
     boolean isPiece();
 
+    boolean isKing();
+
     boolean isSliding();
 
     void addPieceType(Map<PieceType, Integer> pieceCounter);

@@ -27,10 +27,21 @@ public class ChessGame {
 
     public void move(String currentPosition, String nextPosition) {
         Piece movingPiece = board.findPieceByPosition(Position.from(currentPosition));
+        Piece targetPiece = board.findPieceByPosition(Position.from(nextPosition));
         chessGameStatus.validateMove(currentPosition, nextPosition, movingPiece);
         checkTurn(movingPiece);
         board.move(Position.from(currentPosition), Position.from(nextPosition));
         turn = turn.getOppositeColor();
+        if(isOver(targetPiece)){
+            end();
+        }
+    }
+
+    private boolean isOver(Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            return true;
+        }
+        return false;
     }
 
     public void end() {

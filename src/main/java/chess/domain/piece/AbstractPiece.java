@@ -73,6 +73,11 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public void addPieceType(Map<PieceType, Integer> pieceCounter) {
         PieceType pieceType = pieceData.getPieceType();
         int pieceCount = pieceCounter.getOrDefault(pieceType, 0);
