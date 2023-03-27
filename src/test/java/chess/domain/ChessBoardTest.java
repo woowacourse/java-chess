@@ -30,16 +30,6 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("king의 개수 계산")
-    void countKingTest() {
-        ChessBoard chessBoard = ChessBoardMaker.create();
-
-        double result = chessBoard.countKing();
-
-        assertThat(result).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("원하는 진영의 king이 살아있는지 판단")
     void isKingLiveByCampTest() {
         ChessBoard chessBoard = ChessBoardMaker.create();

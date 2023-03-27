@@ -1,14 +1,14 @@
 package chess.database;
 
-import chess.domain.position.Position;
+import chess.dto.MoveDto;
 
 import java.util.List;
 
 public interface ChessGameDao {
 
-    void saveNotation(final Position fromPosition, final Position toPosition);
+    void saveNotation(final String fromPosition, final String toPosition);
 
-    List<Position> selectNotation();
+    List<MoveDto> selectNotation();
 
     void delete();
 }

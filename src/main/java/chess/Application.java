@@ -11,8 +11,9 @@ import chess.domain.piece.Camp;
 public class Application {
     public static void main(String[] args) {
         ChessController controller = new ChessController(
-                new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE)),
-                new ChessService(new DBChessBoardDao())
+                new ChessService(
+                        new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE)), new DBChessBoardDao()
+                )
         );
         controller.run();
     }

@@ -2,9 +2,10 @@ package chess.controller;
 
 import chess.Service.ChessService;
 import chess.domain.ChessBoard;
-import chess.domain.ChessGame;
-import chess.domain.position.Position;
-import chess.view.*;
+import chess.dto.MoveDto;
+import chess.view.ChessCommand;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -15,15 +16,11 @@ public final class ChessController {
     private static final int COMMAND_INDEX = 0;
     private static final int FROM_POSITION_INDEX = 1;
     private static final int TO_POSITION_INDEX = 2;
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
 
     private final Map<ChessCommand, GameAction> commandMapper = new EnumMap<>(ChessCommand.class);
     private final ChessService chessService;
-    private ChessGame game;
 
-    public ChessController(final ChessGame game, final ChessService chessService) {
-        this.game = game;
+    public ChessController(final ChessService chessService) {
         this.chessService = chessService;
         initController();
     }
@@ -32,28 +29,28 @@ public final class ChessController {
         commandMapper.put(ChessCommand.START, this::start);
         commandMapper.put(ChessCommand.MOVE, this::move);
         commandMapper.put(ChessCommand.STATUS, this::status);
-        commandMapper.put(ChessCommand.END, (ignored1, ignored2) -> {
+        commandMapper.put(ChessCommand.END, (ignored) -> {
         });
     }
 
     public void run() {
         OutputView.printStartPrefix();
-        game = chessService.checkNotation(game);
 
+        chessService.checkNotation();
         ChessCommand gameCommand = ChessCommand.WAIT;
-        while (game.isKingsLive() && gameCommand != ChessCommand.END) {
-            gameCommand = play(game);
+        while (chessService.isKingLive() && gameCommand != ChessCommand.END) {
+            gameCommand = play();
         }
-        chessService.deleteData(game.isKingsLive());
-        OutputView.printWinner(game.getWinnerCamp());
+        chessService.checkDeleteData();
+        OutputView.printWinner(chessService.getWinner());
     }
 
-    private ChessCommand play(final ChessGame game) {
+    private ChessCommand play() {
         try {
             List<String> commands = InputView.readCommand();
             ChessCommand command = ChessCommand.from(commands.get(COMMAND_INDEX));
             GameAction gameAction = commandMapper.get(command);
-            gameAction.execute(commands, game);
+            gameAction.execute(commands);
             return command;
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -61,33 +58,23 @@ public final class ChessController {
         }
     }
 
-    private void start(final List<String> commands, final ChessGame game) {
-
+    private void start(final List<String> commands) {
         ChessCommand.validateStartCommand(commands);
-        printBoard(game.getChessBoard());
+        printBoard(chessService.getChessBoard());
     }
 
-    private void move(final List<String> commands, final ChessGame game) {
+    private void move(final List<String> commands) {
         ChessCommand.validatePlayingCommand(commands);
-        String fromInput = commands.get(FROM_POSITION_INDEX);
-        String toInput = commands.get(TO_POSITION_INDEX);
+        MoveDto moveDto = MoveDto.of(commands.get(FROM_POSITION_INDEX), commands.get(TO_POSITION_INDEX));
 
-        game.move(toPosition(fromInput), toPosition(toInput));
+        chessService.move(moveDto);
 
-        chessService.saveGame(toPosition(fromInput), toPosition(toInput));
-        printBoard(game.getChessBoard());
+        printBoard(chessService.getChessBoard());
     }
 
-    private void status(final List<String> commands, final ChessGame game) {
+    private void status(final List<String> commands) {
         ChessCommand.validateStatusCommand(commands);
-        OutputView.printStatusScore(game.getWhiteScore(), game.getBlackScore());
-    }
-
-    private Position toPosition(final String positionInput) {
-        String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
-        String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
-
-        return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
+        OutputView.printStatusScore(chessService.getWhiteScore(), chessService.getBlackScore());
     }
 
     private void printBoard(final ChessBoard chessBoard) {

@@ -56,11 +56,7 @@ public final class Position {
         return Position.of(newFile, newRank);
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
+    public String getPosition() {
+        return file.name() + rank.name();
     }
 }
