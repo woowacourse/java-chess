@@ -14,8 +14,8 @@ public abstract class Piece {
 
     public abstract boolean isMovable(final Position from, final Position to);
 
-    public boolean isEmpty() {
-        return false;
+    public boolean isSameType(PieceType type) {
+        return this.pieceType == type;
     }
 
     public Team getTeam() {

@@ -6,7 +6,6 @@ import chess.domain.board.position.Rank;
 import chess.domain.board.position.RouteFinder;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.exception.PieceCannotMoveException;
 
@@ -16,6 +15,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static chess.domain.piece.PieceType.EMPTY;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.PAWN;
 
 public class ChessBoard {
 
@@ -54,7 +57,7 @@ public class ChessBoard {
         if (!fromPiece.isMovable(from, to)) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
-        if (fromPiece.getType() == PieceType.PAWN) {
+        if (fromPiece.getType() == PAWN) {
             validatePawnMovable(from, to);
         }
     }
@@ -69,7 +72,7 @@ public class ChessBoard {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
 
-        if (!isDiagonal(from, to) && !toPiece.isEmpty()) {
+        if (!isDiagonal(from, to) && !toPiece.isSameType(EMPTY)) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
     }
@@ -90,7 +93,7 @@ public class ChessBoard {
 
     private void validateRoute(final Position from, final Position to) {
         RouteFinder.findRoute(from, to).stream()
-                .filter(position -> !piecePosition.get(position).isEmpty())
+                .filter(position -> !piecePosition.get(position).isSameType(EMPTY))
                 .forEach(position -> {
                     throw new IllegalArgumentException("이동하려는 경로에 말이 존재합니다.");
                 });
@@ -142,14 +145,14 @@ public class ChessBoard {
         return Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
                         .map(rank -> Position.of(file, rank))
-                ).filter(position -> piecePosition.get(position).getType() == PieceType.PAWN)
+                ).filter(position -> piecePosition.get(position).getType() == PAWN)
                 .filter(position -> piecePosition.get(position).getTeam() == team)
                 .collect(Collectors.toList());
     }
 
     public boolean isEnd() {
         return piecePosition.values().stream()
-                .filter(piece -> piece.getType() == PieceType.KING)
+                .filter(piece -> piece.getType() == KING)
                 .count() < DEFAULT_KING_COUNT;
     }
 
