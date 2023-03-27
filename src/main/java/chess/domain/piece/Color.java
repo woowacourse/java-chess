@@ -3,8 +3,9 @@ package chess.domain.piece;
 import java.util.function.Function;
 
 public enum Color {
-    WHITE("백", String::toLowerCase),
-    BLACK("흑", String::toUpperCase);
+    WHITE("white", String::toLowerCase),
+    BLACK("black", String::toUpperCase),
+    EMPTY("empty", null);
 
     private final String name;
     private final Function<String, String> formatConverter;
