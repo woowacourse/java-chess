@@ -106,25 +106,25 @@ class BoardTest {
         @DisplayName("출발 좌표, 도착 좌표가 주어지면 출발 좌표에 있는 말이 이동한다.")
         void move() {
             List<List<Piece>> boardStatus = Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b2, c3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
             Board board = new Board(boardStatus);
 
-            board.move("a2", "a3");
+            board.move("a2", "a1");
 
             assertThat(boardStatus.get(1).get(0)).isEqualTo(new Empty());
-            assertThat(boardStatus.get(2).get(0)).isEqualTo(new OnceMovedBlackPawn());
+            assertThat(boardStatus.get(0).get(0)).isEqualTo(new OnceMovedBlackPawn());
         }
 
         @Test
         @DisplayName("출발 좌표에 아무 장기말이 없으면 예외가 발생한다.")
         void moveFromEmptyPoint() {
             List<List<Piece>> boardStatus = Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b2, c3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
 
             Board board = new Board(boardStatus);

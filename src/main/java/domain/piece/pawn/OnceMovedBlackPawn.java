@@ -15,7 +15,7 @@ public class OnceMovedBlackPawn extends Piece {
     @Override
     public Map<Direction, Integer> getMovableRange() {
         Map<Direction, Integer> movableRange = new HashMap<>();
-        movableRange.put(Direction.UP, 1);
+        movableRange.put(Direction.DOWN, 1);
         return movableRange;
     }
 

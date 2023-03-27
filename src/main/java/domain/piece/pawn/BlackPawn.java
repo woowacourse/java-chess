@@ -20,7 +20,7 @@ public class BlackPawn extends Piece {
     @Override
     public Map<Direction, Integer> getMovableRange() {
         Map<Direction, Integer> movableRange = new HashMap<>();
-        movableRange.put(Direction.UP, 2);
+        movableRange.put(Direction.DOWN, 2);
         return movableRange;
     }
 
