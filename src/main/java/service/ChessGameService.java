@@ -1,7 +1,13 @@
 package service;
 
 import dao.ChessGameDao;
+import domain.board.Board;
+import domain.board.BoardInitialImage;
 import domain.board.ChessGame;
+import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+
+import java.util.Map;
 
 public class ChessGameService {
 
@@ -13,8 +19,15 @@ public class ChessGameService {
 
     public ChessGame startGame() {
         chessGameDao.delete();
-        chessGameDao.insert(new ChessGame());
+        ChessGame chessGame = setupGame();
+        chessGameDao.insert(chessGame);
         return loadGame();
+    }
+
+    private ChessGame setupGame() {
+        Map<Coordinate, Piece> pieceLocations = BoardInitialImage.getCachedBoard();
+        Board board = new Board(pieceLocations);
+        return new ChessGame(board);
     }
 
     public ChessGame loadGame() {

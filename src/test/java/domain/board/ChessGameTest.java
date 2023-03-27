@@ -23,7 +23,9 @@ class ChessGameTest {
 
     @BeforeEach
     void setup() {
-        chessGame = new ChessGame();
+        Map<Coordinate, Piece> pieceLocations = BoardInitialImage.getCachedBoard();
+        Board board = new Board(pieceLocations);
+        chessGame = new ChessGame(board);
     }
 
     @Test

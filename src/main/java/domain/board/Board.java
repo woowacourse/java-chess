@@ -13,10 +13,6 @@ public final class Board {
 
     private final Map<Coordinate, Piece> pieceLocations;
 
-    public Board() {
-        this(BoardInitialImage.getCachedBoard());
-    }
-
     public Board(final Map<Coordinate, Piece> pieceLocations) {
         this.pieceLocations = pieceLocations;
     }

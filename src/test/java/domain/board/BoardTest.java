@@ -23,7 +23,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 좌측 바깥으로는 이동이 불가능하다")
     void moveLeftOutside() {
-        Board board = new Board();
+        Board board = new Board(BoardInitialImage.getCachedBoard());
 
         Coordinate start = new Coordinate(0, 0);
         Coordinate end = new Coordinate(0, -1);
@@ -35,7 +35,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 우측 바깥으로는 이동이 불가능하다")
     void moveRightOutside() {
-        Board board = new Board();
+        Board board = new Board(BoardInitialImage.getCachedBoard());
 
         Coordinate start = new Coordinate(0, 7);
         Coordinate end = new Coordinate(0, 8);
@@ -47,7 +47,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 위쪽 바깥으로는 이동이 불가능하다")
     void moveDownOutside() {
-        Board board = new Board();
+        Board board = new Board(BoardInitialImage.getCachedBoard());
 
         Coordinate start = new Coordinate(7, 0);
         Coordinate end = new Coordinate(8, 0);
@@ -59,7 +59,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 아래쪽 바깥으로는 이동이 불가능하다")
     void moveUpOutside() {
-        Board board = new Board();
+        Board board = new Board(BoardInitialImage.getCachedBoard());
 
         Coordinate start = new Coordinate(0, 0);
         Coordinate end = new Coordinate(-1, 0);
@@ -68,11 +68,20 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @ParameterizedTest(name = "({0}, {1})에 기물은 존재하지 않는다")
+    @CsvSource(value =  {"2:0", "5:0", "2:7", "5:7"}, delimiter = ':')
+    void isEmptyPiece(int row, int col) {
+        Board board = new Board(BoardInitialImage.getCachedBoard());
+        Coordinate coordinate = new Coordinate(row, col);
+
+        assertThat(board.isPieceEmptyAt(coordinate)).isTrue();
+    }
+
 
     @Test
     @DisplayName("화이트 팀의 기본 점수를 계산할 수 있다")
     void collectPointWhite() {
-        Board board = new Board();
+        Board board = new Board(BoardInitialImage.getCachedBoard());
 
         assertThat(board.collectPointFor(Color.WHITE))
                 .isEqualTo(38);
@@ -81,7 +90,7 @@ class BoardTest {
     @Test
     @DisplayName("블랙 팀의 기본 점수를 계산할 수 있다")
     void collectPointBlack() {
-        Board board = new Board();
+        Board board = new Board(BoardInitialImage.getCachedBoard());
 
         assertThat(board.collectPointFor(Color.BLACK))
                 .isEqualTo(38);
@@ -140,14 +149,5 @@ class BoardTest {
         Board board = new Board(mockPieceLocations);
 
         assertThat(board.allKingAlive()).isFalse();
-    }
-
-    @ParameterizedTest(name = "({0}, {1})에 기물은 존재하지 않는다")
-    @CsvSource(value =  {"2:0", "5:0", "2:7", "5:7"}, delimiter = ':')
-    void isEmptyPiece(int row, int col) {
-        Board board = new Board();
-        Coordinate coordinate = new Coordinate(row, col);
-
-        assertThat(board.isPieceEmptyAt(coordinate)).isTrue();
     }
 }

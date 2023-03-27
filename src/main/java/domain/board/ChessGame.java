@@ -16,10 +16,6 @@ public final class ChessGame {
     private final Board board;
     private final Turn turn;
 
-    public ChessGame() {
-        this(new Board());
-    }
-
     public ChessGame(final Board board) {
         this.board = board;
         this.turn = new Turn(PRIORITY_GIVEN_COLOR);
