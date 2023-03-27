@@ -64,6 +64,15 @@ public class ChessGameService {
         return chessGame.getChessBoard();
     }
 
+    public Map<Color, Double> findStatus(int gameId, BoardStrategy boardStrategy) {
+        if (!StateOfChessGame.MOVING.name().equals(chessGameDao.findGameStatusByGameId(gameId))) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다");
+        }
+        ChessGame chessGame = findChessGameByGameId(gameId,boardStrategy);
+        return chessGame.status();
+    }
+
+
 }
 
 /**
