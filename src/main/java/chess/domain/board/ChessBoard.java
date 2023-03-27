@@ -12,6 +12,7 @@ import chess.domain.piece.position.WayPoints;
 
 import chess.domain.piece.role.Pawn;
 import chess.domain.state.ChessState;
+import chess.service.PieceService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
+    private PieceService pieceService;
     private final List<Piece> pieces;
 
     public ChessBoard(final List<Piece> pieces) {

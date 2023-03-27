@@ -60,4 +60,8 @@ public class Command {
     public boolean isStatus() {
         return type == Type.STATUS;
     }
+
+    public boolean isSave() {
+        return type == Type.SAVE;
+    }
 }
