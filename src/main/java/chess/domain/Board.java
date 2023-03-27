@@ -34,6 +34,11 @@ public class Board {
 		thisTurn = WHITE;
 	}
 
+	public Board(final Map<Position, Piece> board, Color turn) {
+		this.board = board;
+		thisTurn = turn;
+	}
+
 	public static Board create() {
 		return new Board(BoardFactory.create());
 	}
@@ -138,10 +143,6 @@ public class Board {
 		return king.name().equalsIgnoreCase(KING_NAME);
 	}
 
-	public Map<Position, Piece> board() {
-		return board;
-	}
-
 	public double blackStatus() {
 		double score = 0.0;
 		for (File file : files()) {
@@ -221,5 +222,13 @@ public class Board {
 			count += pawnCount(piece.name(), WHITE);
 		}
 		return newScore + addPawnScore(count);
+	}
+
+	public Map<Position, Piece> board() {
+		return board;
+	}
+
+	public Color turn(){
+		return thisTurn;
 	}
 }

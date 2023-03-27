@@ -1,11 +1,23 @@
 package chess.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.Board;
+import chess.domain.color.Color;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class ChessBoardDao implements ChessDao {
 	private static final DBConnection dbConnection = new DBConnection();
@@ -31,7 +43,51 @@ public class ChessBoardDao implements ChessDao {
 
 	@Override
 	public Board select() {
-		return null;
+		Map<Position, Piece> board = new HashMap<>();
+		Color turn = null;
+		final var query = "SELECT piece_type, piece_rank, piece_file, color, turn from chess_game";
+		try (final var connection = dbConnection.getConnection();
+			 final var preparedStatement = connection.prepareStatement(query)) {
+			final var resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
+				Rank rank = Rank.from(resultSet.getInt("piece_rank"));
+				File file = File.from(resultSet.getString("piece_file").charAt(0));
+				Color color = Color.valueOf(resultSet.getString("color"));
+				turn = Color.valueOf(resultSet.getString("turn"));
+				Position position = Position.of(file, rank);
+				Piece piece = toPiece(pieceType, color, position);
+				board.put(position, piece);
+			}
+		} catch (final SQLException e) {
+			throw new RuntimeException(e);
+		}
+		if (board.isEmpty()) {
+			return null;
+		}
+		return new Board(board, turn);
+	}
+
+	private Piece toPiece(PieceType pieceType, Color color, Position position) {
+		if (pieceType == PieceType.ROOK) {
+			return new Rook(color, position);
+		}
+		if (pieceType == PieceType.BISHOP) {
+			return new Bishop(color, position);
+		}
+		if (pieceType == PieceType.KNIGHT) {
+			return new Knight(color, position);
+		}
+		if (pieceType == PieceType.QUEEN) {
+			return new Queen(color, position);
+		}
+		if (pieceType == PieceType.KING) {
+			return new King(color, position);
+		}
+		if (pieceType == PieceType.PAWN) {
+			return new Pawn(color, position);
+		}
+		return new Empty(Color.NONE, position);
 	}
 
 	@Override
