@@ -1,33 +1,25 @@
 package chess.domain.state;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.view.Command;
+import chess.domain.pieces.component.Team;
 
 public class BlackTurn implements State {
-
     @Override
     public boolean isEnd() {
         return false;
     }
 
     @Override
-    public State progress(Command command, Board board) {
-        if (command.isStart()) {
-            throw new IllegalArgumentException("게임이 진행중 입니다.");
-        }
-        if (command.isMove()) {
-            checkIsBlack(board, command.getCurrentPosition());
-            board.movePiece(command.getCurrentPosition(), command.getTargetPosition());
-            return new WhiteTurn();
-        }
-        return new End();
+    public void move(Runnable runnable) {
+        runnable.run();
     }
 
-    private void checkIsBlack(Board board, Position position) {
-        if (!board.getBoard().get(position).isBlackTeam()) {
-            throw new IllegalArgumentException("블랙의 차례입니다.");
-        }
+    @Override
+    public Team getTurn() {
+        return Team.BLACK;
     }
 
+    @Override
+    public void startGame() {
+        throw new IllegalStateException("게임이 이미 실행중입니다.");
+    }
 }

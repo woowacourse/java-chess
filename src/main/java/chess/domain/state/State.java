@@ -1,9 +1,13 @@
 package chess.domain.state;
 
-import chess.domain.board.Board;
-import chess.view.Command;
+import chess.domain.pieces.component.Team;
 
 public interface State {
     boolean isEnd();
-    State progress(Command command, Board board);
+
+    void move(Runnable runnable);
+
+    Team getTurn();
+
+    void startGame();
 }
