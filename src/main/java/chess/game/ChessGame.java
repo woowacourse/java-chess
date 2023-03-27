@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 public class ChessGame {
     private static final String INVALID_TURN_EXCEPTION_MESSAGE = "[ERROR] 해당 팀의 턴이 아닙니다.";
     private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
-    private static final double PAWN_COUNT_MULTIPLIER = 0.5;
+    private static final double PAWN_SCORE_MULTIPLIER = 0.5;
 
     private GameId gameId;
     private Board board;
@@ -109,7 +109,7 @@ public class ChessGame {
         if (pawnCount == 1) {
             return Role.PAWN.getScore();
         }
-        return pawnCount * Role.PAWN.getScore() * PAWN_COUNT_MULTIPLIER;
+        return pawnCount * Role.PAWN.getScore() * PAWN_SCORE_MULTIPLIER;
     }
 
     private double getWithoutPawnScore(Team team) {
