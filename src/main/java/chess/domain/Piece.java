@@ -29,7 +29,7 @@ public class Piece {
             final Position inputTargetPosition,
             final Color movablePieceColor
     ) {
-        shape.move(MoveRequest.from(
+        shape.validateDirectionByShape(MoveRequest.from(
                 positions,
                 movablePieceColor,
                 new PositionDto(position),
