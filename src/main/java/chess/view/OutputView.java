@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.controller.command.CommandType;
 import chess.dto.ChessBoardDto;
+import chess.dto.StatusDto;
 import java.util.List;
 
 public final class OutputView {
@@ -13,6 +14,7 @@ public final class OutputView {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작: " + CommandType.START.value());
         System.out.println("게임 종료: " + CommandType.END.value());
+        System.out.println("게임 현황: " + CommandType.STATUS.value());
         System.out.println("게임 이동: move source위치 target위치 - 예. move b2 b3");
     }
 
@@ -34,5 +36,13 @@ public final class OutputView {
 
     public static void printErrorMessage(final String errorMessage) {
         System.out.println("[ERROR] " + errorMessage + System.lineSeparator());
+    }
+
+    public static void printStatus(final StatusDto statusDto) {
+        System.out.println(System.lineSeparator() + "게임 점수 현황");
+        statusDto.getStatus().forEach((key, value) -> {
+            System.out.println(key + " :" + value);
+        });
+        System.out.println();
     }
 }
