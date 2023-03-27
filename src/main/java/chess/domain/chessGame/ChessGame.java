@@ -31,10 +31,11 @@ public class ChessGame {
         chessGameStatus.validateMove(currentPosition, nextPosition, movingPiece);
         checkTurn(movingPiece);
         board.move(Position.from(currentPosition), Position.from(nextPosition));
-        turn = turn.getOppositeColor();
         if(isOver(targetPiece)){
             end();
+            return;
         }
+        turn = turn.getOppositeColor();
     }
 
     private boolean isOver(Piece targetPiece) {
@@ -50,6 +51,10 @@ public class ChessGame {
 
     public boolean isPlaying() {
         return chessGameStatus.isPlaying();
+    }
+
+    public boolean isEnd() {
+        return chessGameStatus.isEnd();
     }
 
     private void checkTurn(Piece movingPiece) {

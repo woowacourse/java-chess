@@ -28,6 +28,11 @@ public class EndChessGameStatus implements ChessGameStatus {
     }
 
     @Override
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
     public Map<Position, String> getPrintingBoard(Board board) {
         throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }

@@ -28,6 +28,11 @@ public class ReadyChessGameStatus implements ChessGameStatus {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public Map<Position, String> getPrintingBoard(Board board) {
         throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
     }

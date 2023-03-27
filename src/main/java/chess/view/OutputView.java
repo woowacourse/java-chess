@@ -45,4 +45,8 @@ public class OutputView {
             System.out.println(color.getName() + " : " + scores.get(color));
         }
     }
+
+    public static void printWinner(String winner){
+        System.out.println(winner + "이 킹을 잡아 승리했습니다.");
+    }
 }

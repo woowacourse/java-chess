@@ -66,6 +66,10 @@ public class ChessGameController {
         String currentPosition = moveCommand.getCurrentPosition();
         String nextPosition = moveCommand.getNextPosition();
         chessGame.move(currentPosition, nextPosition);
+        if (chessGame.isEnd()){
+            printWinner(chessGame.getTurnName());
+            return;
+        }
         printBoard(chessGame);
     }
 
@@ -82,7 +86,9 @@ public class ChessGameController {
         OutputView.printScores(scores);
     }
 
-
+    private void printWinner(String winner){
+        OutputView.printWinner(winner);
+    }
 }
 
 interface CommandAction {

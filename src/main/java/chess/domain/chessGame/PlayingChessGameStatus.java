@@ -44,6 +44,11 @@ public class PlayingChessGameStatus implements ChessGameStatus {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public Map<Position, String> getPrintingBoard(Board board) {
         return board.getPrintingBoard();
     }
