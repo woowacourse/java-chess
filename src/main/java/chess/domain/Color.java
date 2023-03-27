@@ -19,6 +19,10 @@ public enum Color {
         return this == WHITE;
     }
 
+    public boolean isNotEmpty() {
+        return this != EMPTY;
+    }
+
     public String getPlayer() {
         return player;
     }
