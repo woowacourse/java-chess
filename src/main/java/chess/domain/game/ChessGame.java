@@ -44,7 +44,7 @@ public class ChessGame {
         chessGameDao.delete();
         chessGameDao.insertTurn(turnToMove);
         piecesDao.delete();
-        piecesDao.insertAll(board.getPieces());
+        piecesDao.insertAll(new LoadedPiecesInsertDto(board.getPieces()));
     }
 
     private void checkGameAlreadyStart(final GameStatus gameStatus) {
@@ -123,7 +123,7 @@ public class ChessGame {
     public void exit() {
         gameStatus = GameStatus.END;
         piecesDao.delete();
-        piecesDao.insertAll(board.getPieces());
+        piecesDao.insertAll(new LoadedPiecesInsertDto(board.getPieces()));
     }
 
     public double calculateScoreBySide(Side side) {

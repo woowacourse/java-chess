@@ -51,20 +51,25 @@ public class MySqlPiecesDao implements PiecesDao {
     }
 
     @Override
-    public void insertAll(List<Piece> pieces) {
+    public void insertAll(LoadedPiecesInsertDto piecesInsertDto) {
         final var query = "INSERT INTO piece(position_file, position_rank, piece_side, piece_type) VALUES (?, ?, ?, ?)";
-        for (Piece piece : pieces) {
-            final int file = piece.getFile();
-            final int rank = piece.getRank();
-            final Side side = piece.getSide();
-            final String type = piece.getClass().getSimpleName();
+        final List<Integer> files = piecesInsertDto.getFiles();
+        final List<Integer> ranks = piecesInsertDto.getRanks();
+        final List<String> sides = piecesInsertDto.getSides();
+        final List<String> pieceTypes = piecesInsertDto.getPieceTypes();
+
+        for (int pieceIndex = 0; pieceIndex < pieceTypes.size(); pieceIndex++) {
+            final int file = files.get(pieceIndex);
+            final int rank = ranks.get(pieceIndex);
+            final String side = sides.get(pieceIndex);
+            final String pieceType = pieceTypes.get(pieceIndex);
 
             try (final var connection = getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, file);
                 preparedStatement.setInt(2, rank);
-                preparedStatement.setString(3, side.name());
-                preparedStatement.setString(4, type);
+                preparedStatement.setString(3, side);
+                preparedStatement.setString(4, pieceType);
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);

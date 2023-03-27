@@ -8,10 +8,10 @@ import chess.dao.PiecesDao;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import chess.domain.game.dto.LoadedPiecesInsertDto;
+import chess.domain.game.dto.LoadedPiecesSelectDto;
 import chess.domain.piece.Side;
-import chess.domain.piece.type.Piece;
 import java.sql.Connection;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,12 +39,12 @@ class ChessGameTest {
         }
 
         @Override
-        public LoadedPiecesDto findAll() {
+        public LoadedPiecesSelectDto findAll() {
             return null;
         }
 
         @Override
-        public void insertAll(final List<Piece> pieces) {
+        public void insertAll(final LoadedPiecesInsertDto piecesInsertDto) {
 
         }
 
