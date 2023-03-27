@@ -23,7 +23,6 @@ import techcourse.fp.chess.dto.response.ChessGameInfo;
 
 public class LocalMysqlChessGameDao implements ChessGameDao {
 
-
     @Override
     public void save(final ChessGameRequest chessGameRequest) {
         try (final Connection connection = ConnectionProvider.getConnection()) {
