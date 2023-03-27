@@ -36,4 +36,14 @@ public final class Empty implements PieceState {
     public void validateRoute(final List<PieceState> pieceRoute) {
         throw new UnsupportedOperationException(EMPTY_EXCEPTION);
     }
+
+    @Override
+    public boolean isTypeOf(final PieceType pieceType) {
+        return false;
+    }
+
+    @Override
+    public Score getScore(){
+        return Score.from(0);
+    }
 }

@@ -15,5 +15,9 @@ public interface PieceState {
 
     void validateRoute(final List<PieceState> routeSquares);
 
-    boolean isMyTeam(Team team);
+    boolean isMyTeam(final Team team);
+
+    boolean isTypeOf(final PieceType pieceType);
+
+    Score getScore();
 }

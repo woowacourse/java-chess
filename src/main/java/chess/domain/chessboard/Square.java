@@ -3,6 +3,8 @@ package chess.domain.chessboard;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Score;
 import chess.domain.piece.Team;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +40,15 @@ public final class Square {
         return this.pieceState.isMyTeam(team);
     }
 
+    public boolean isTypeOf(final PieceType pieceType) {
+        return pieceState.isTypeOf(pieceType);
+    }
+
     public PieceState getPieceState() {
         return pieceState;
+    }
+
+    public Score getScore(){
+        return this.pieceState.getScore();
     }
 }
