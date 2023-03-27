@@ -1,6 +1,18 @@
 package domain.util;
 
 import domain.piece.*;
+import domain.piece.bishop.BlackBishop;
+import domain.piece.bishop.WhiteBishop;
+import domain.piece.king.BlackKing;
+import domain.piece.king.WhiteKing;
+import domain.piece.knight.BlackKnight;
+import domain.piece.knight.WhiteKnight;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
+import domain.piece.queen.BlackQueen;
+import domain.piece.queen.WhiteQueen;
+import domain.piece.rook.BlackRook;
+import domain.piece.rook.WhiteRook;
 
 import java.util.ArrayList;
 import java.util.List;

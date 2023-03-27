@@ -1,8 +1,14 @@
-package domain.piece;
+package domain.board;
 
 import domain.Board;
 import domain.exception.BlockedPathException;
 import domain.exception.InvalidDestinationPointException;
+import domain.piece.Empty;
+import domain.piece.Piece;
+import domain.piece.bishop.BlackBishop;
+import domain.piece.bishop.WhiteBishop;
+import domain.piece.pawn.WhitePawn;
+import domain.piece.rook.BlackRook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

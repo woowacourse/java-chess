@@ -1,9 +1,9 @@
-package domain.piece;
+package domain.piece.bishop;
 
-public class BlackQueen extends Queen {
+public class BlackBishop extends Bishop {
     @Override
     public String getSymbol() {
-        return "Q";
+        return "B";
     }
 
     @Override
@@ -12,12 +12,12 @@ public class BlackQueen extends Queen {
     }
 
     @Override
-    public boolean isBlack() {
-        return true;
+    public boolean isWhite() {
+        return false;
     }
 
     @Override
-    public boolean isWhite() {
-        return false;
+    public boolean isBlack() {
+        return true;
     }
 }

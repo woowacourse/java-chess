@@ -1,6 +1,18 @@
 package domain;
 
 import domain.piece.*;
+import domain.piece.bishop.BlackBishop;
+import domain.piece.bishop.WhiteBishop;
+import domain.piece.king.BlackKing;
+import domain.piece.king.WhiteKing;
+import domain.piece.knight.BlackKnight;
+import domain.piece.knight.WhiteKnight;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
+import domain.piece.queen.BlackQueen;
+import domain.piece.queen.WhiteQueen;
+import domain.piece.rook.BlackRook;
+import domain.piece.rook.WhiteRook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

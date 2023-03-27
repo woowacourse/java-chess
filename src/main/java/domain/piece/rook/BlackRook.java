@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.rook;
 
 public class BlackRook extends Rook {
     @Override

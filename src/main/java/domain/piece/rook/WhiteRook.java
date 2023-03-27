@@ -1,9 +1,9 @@
-package domain.piece;
+package domain.piece.rook;
 
-public class WhiteBishop extends Bishop {
+public class WhiteRook extends Rook {
     @Override
     public String getSymbol() {
-        return "b";
+        return "r";
     }
 
     @Override

@@ -1,5 +1,6 @@
-package domain.piece;
+package domain.piece.rook;
 
+import domain.piece.Piece;
 import domain.point.Direction;
 
 import java.util.HashMap;

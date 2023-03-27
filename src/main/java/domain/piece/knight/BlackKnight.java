@@ -1,9 +1,9 @@
-package domain.piece;
+package domain.piece.knight;
 
-public class BlackKing extends King {
+public class BlackKnight extends Knight {
     @Override
     public String getSymbol() {
-        return "K";
+        return "N";
     }
 
     @Override

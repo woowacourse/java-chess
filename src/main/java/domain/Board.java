@@ -3,6 +3,8 @@ package domain;
 import domain.exception.InvalidDestinationPointException;
 import domain.exception.TargetPieceNotFoundException;
 import domain.piece.*;
+import domain.piece.pawn.OnceMovedBlackPawn;
+import domain.piece.pawn.OneMovedWhitePawn;
 import domain.point.Point;
 import domain.util.BoardInitializer;
 import domain.util.MovablePointFinder;

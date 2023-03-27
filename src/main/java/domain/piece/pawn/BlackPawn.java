@@ -1,14 +1,15 @@
-package domain.piece;
+package domain.piece.pawn;
 
+import domain.piece.Piece;
 import domain.point.Direction;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WhitePawn extends Piece {
+public class BlackPawn extends Piece {
     @Override
     public String getSymbol() {
-        return "p";
+        return "P";
     }
 
     @Override
@@ -19,17 +20,17 @@ public class WhitePawn extends Piece {
     @Override
     public Map<Direction, Integer> getMovableRange() {
         Map<Direction, Integer> movableRange = new HashMap<>();
-        movableRange.put(Direction.DOWN, 2);
+        movableRange.put(Direction.UP, 2);
         return movableRange;
     }
 
     @Override
     public boolean isBlack() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isWhite() {
-        return true;
+        return false;
     }
 }

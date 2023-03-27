@@ -1,5 +1,7 @@
 package domain.piece;
 
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.point.Direction;
 
 import java.util.Map;

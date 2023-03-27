@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.king;
 
 public class WhiteKing extends King {
     @Override
