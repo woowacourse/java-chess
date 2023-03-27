@@ -1,4 +1,4 @@
-package chess.domain.database;
+package chess.database;
 
 public enum Database {
 

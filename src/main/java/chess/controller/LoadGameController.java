@@ -3,8 +3,8 @@ package chess.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.domain.database.Database;
-import chess.domain.database.LoadGameDao;
+import chess.database.Database;
+import chess.database.LoadGameDao;
 import chess.domain.dto.ChessGameDto;
 import chess.domain.dto.GameDto;
 import chess.domain.game.ChessGame;

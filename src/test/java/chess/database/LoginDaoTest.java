@@ -1,4 +1,4 @@
-package chess.domain.database;
+package chess.database;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

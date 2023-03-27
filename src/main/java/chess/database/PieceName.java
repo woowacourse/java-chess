@@ -1,4 +1,4 @@
-package chess.domain.database;
+package chess.database;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;

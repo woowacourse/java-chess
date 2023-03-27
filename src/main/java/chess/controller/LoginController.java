@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.database.Database;
-import chess.domain.database.LoginDao;
+import chess.database.Database;
+import chess.database.LoginDao;
 import chess.domain.game.User;
 import chess.view.Command;
 import chess.view.InputView;

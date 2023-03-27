@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import java.util.Map;
 
+import chess.database.ChessGameDao;
+import chess.database.Database;
 import chess.domain.board.Board;
-import chess.domain.database.ChessGameDao;
-import chess.domain.database.Database;
 import chess.domain.dto.GameStatusDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Point;
