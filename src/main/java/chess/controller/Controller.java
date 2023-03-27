@@ -30,6 +30,7 @@ public class Controller {
         ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
         DbChessGameDao dao = new DbChessGameDao();
         dao.save(chessGame);
+        dao.select();
 
         Command command = getFirstCommand();
         play(chessGame, command);
