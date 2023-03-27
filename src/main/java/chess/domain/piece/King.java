@@ -73,4 +73,15 @@ public class King extends Piece {
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new King(PieceInfo.BLACK_KING_INFO);
+        }
+
+        return new King(PieceInfo.WHITE_KING_INFO);
+    }
+
+
 }

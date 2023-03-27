@@ -60,4 +60,13 @@ public class Queen extends Piece {
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new Queen(PieceInfo.BLACK_QUEEN_INFO);
+        }
+
+        return new Queen(PieceInfo.WHITE_QUEEN_INFO);
+    }
 }

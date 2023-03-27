@@ -17,8 +17,7 @@ import static chess.view.ErrorMessage.MOVE_FORWARD_ERROR_GUIDE_MESSAGE;
 public class Pawn extends Piece {
 
     private final List<Direction> direction;
-
-    private Column startColumn;
+    private boolean isFirstMove = true;
 
     public Pawn(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), PAWN_DEFAULT_SCORE.getScore());
@@ -52,8 +51,7 @@ public class Pawn extends Piece {
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
         int distance = 1;
 
-
-        if (startColumn.isSameColumn(start.getColumn())) {
+        if (isFirstMove) {
             distance = 2;
         }
 
@@ -118,4 +116,18 @@ public class Pawn extends Piece {
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
     }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new Pawn(PieceInfo.BLACK_PAWN_INFO);
+        }
+
+        return new Pawn(PieceInfo.WHITE_PAWN_INFO);
+    }
+
+    public void setIsFirstMove(){
+        isFirstMove = false;
+    }
+
 }

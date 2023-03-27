@@ -77,4 +77,13 @@ public class Knight extends Piece {
 
         return direction.getX() == gapOfColumn && direction.getY() == gapOfRank;
     }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if(pieceColor.equals(Color.BLACK)){
+            return new Knight(PieceInfo.BLACK_KNIGHT_INFO);
+        }
+
+        return new Knight(PieceInfo.WHITE_KNIGHT_INFO);
+    }
 }

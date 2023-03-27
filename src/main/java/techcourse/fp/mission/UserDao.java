@@ -2,6 +2,8 @@ package techcourse.fp.mission;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public final class UserDao {
@@ -26,7 +28,7 @@ public final class UserDao {
     public void insert(User user) {
         String sql = "INSERT INTO user (user_id, name) VALUES(?, ?)";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, user.userId());
             preparedStatement.setString(2, user.name());
@@ -40,10 +42,10 @@ public final class UserDao {
     public User findByUserId(final String userId) {
         String sql = "SELECT user_id, name FROM user WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userId);
 
-            final var resultSet = preparedStatement.executeQuery();
+            final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new User(
                         resultSet.getString("user_id"),
@@ -59,7 +61,7 @@ public final class UserDao {
     public void update(User user) {
         String sql = "UPDATE user SET name = ? WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, "changedName");
             preparedStatement.setString(2, user.userId());
@@ -73,7 +75,7 @@ public final class UserDao {
     public void delete(User user) {
         String sql = "DELETE FROM user WHERE user_id = ?";
         try (final Connection connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(sql)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, user.userId());
             preparedStatement.executeUpdate();
