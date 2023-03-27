@@ -122,6 +122,23 @@ class ChessGameServiceTest {
                 .isEqualTo(new ChessGame(ChessBoard.create(Collections.emptyMap()), CampType.WHITE));
     }
 
+    @Test
+    @DisplayName("사용자의 아이디에 해당하는 체스 기물과 체스판 정보를 제거한다")
+    void clear() {
+        // given
+        final Long userId = 1L;
+        final ChessGameService chessGameService = getChessGameService(userId);
+
+        // when
+        chessGameService.clear(userId);
+
+        // then
+        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        final ChessGame expected = new ChessGame(CampType.WHITE);
+        assertThat(chessGame)
+                .isEqualTo(expected);
+    }
+
     private ChessGameService getChessGameService(final Long userId) {
         final MockChessGameDao chessGameDao = new MockChessGameDao();
         Long chessGameId = chessGameDao.save(new ChessGameEntity("WHITE", userId));

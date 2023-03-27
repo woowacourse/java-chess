@@ -47,6 +47,12 @@ public final class ChessGameService {
         chessBoardService.deletePieces(sourcePiece, targetPiece);
     }
 
+    public void clear(final Long userId) {
+        final Long chessGameId = getChessGameId(userId);
+        chessBoardService.deleteByChessGameId(chessGameId);
+        chessGameDao.deleteByUserId(userId);
+    }
+
     private ChessGame getNewChessGame(final Long userId) {
         final CampType currentCamp = CampType.WHITE;
         final Long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
