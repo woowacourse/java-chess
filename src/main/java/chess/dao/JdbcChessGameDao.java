@@ -57,7 +57,7 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public Long findRecentGameId() {
-        final String query = "SELECT * FROM chess_game ORDER BY game_id LIMIT 1";
+        final String query = "SELECT * FROM chess_game ORDER BY game_id desc LIMIT 1";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);

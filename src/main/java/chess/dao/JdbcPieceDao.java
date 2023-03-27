@@ -96,7 +96,21 @@ public class JdbcPieceDao implements PieceDao {
 
     @Override
     public void deletePieceByPosition(PieceEntity pieceEntityToDelete) {
+        final String query = "DELETE FROM piece WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
 
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setLong(1, pieceEntityToDelete.getGameId());
+            preparedStatement.setString(2, pieceEntityToDelete.getRank());
+            preparedStatement.setString(3, pieceEntityToDelete.getFile());
+            int deleteCount = preparedStatement.executeUpdate();
+            if (deleteCount > 1) {
+                throw new SQLException("[ERROR] 삭제되는 기물이 2개 이상입니다.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
