@@ -1,16 +1,18 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.domain.ChessGameService;
+import chess.domain.repository.BoardDao;
+import chess.domain.repository.PieceDao;
 
 public class Application {
 
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
+        BoardDao boardDao = new BoardDao();
+        PieceDao pieceDao = new PieceDao();
 
-        ChessController controller = new ChessController(inputView, outputView);
+        ChessGameService chessGameService = new ChessGameService(boardDao, pieceDao);
+        ChessController controller = new ChessController(chessGameService);
         controller.run();
     }
 }
