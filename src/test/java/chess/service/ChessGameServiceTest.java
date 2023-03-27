@@ -78,9 +78,27 @@ class ChessGameServiceTest {
                 "PAWN", "WHITE"));
 
         // then
-        Long chessGameId = chessGameService.getChessGameId(1L);
+        final Long chessGameId = chessGameService.getChessGameId(1L);
         assertThat(chessGameId)
                 .isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("체스 게임 아이디에 해당하는 진영 정보를 업데이트한다.")
+    void updateCurrentCamp() {
+        // given
+        final Long userId = 1L;
+        final ChessGameService chessGameService = getChessGameService(userId);
+        final CampType changedCamp = CampType.BLACK;
+
+        // when
+        chessGameService.updateCurrentCamp(1L, changedCamp);
+
+        // then
+        final ChessGame chessGame = chessGameService.getChessGame(1L);
+        final CampType campType = chessGame.getCurrentCamp();
+        assertThat(campType)
+                .isEqualTo(changedCamp);
     }
 
     private ChessGameService getChessGameService(final Long userId) {

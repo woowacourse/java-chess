@@ -39,6 +39,10 @@ public final class ChessGameService {
         chessBoardService.savePiece(pieceEntity);
     }
 
+    public void updateCurrentCamp(final Long chessGameId, final CampType currentCamp) {
+        chessGameDao.updateCurrentCampById(chessGameId, currentCamp);
+    }
+
     private ChessGame getNewChessGame(final Long userId) {
         final CampType currentCamp = CampType.WHITE;
         final Long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
