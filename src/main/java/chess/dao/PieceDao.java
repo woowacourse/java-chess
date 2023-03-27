@@ -3,7 +3,10 @@ package chess.dao;
 import chess.dto.PieceDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PieceDao {
 
@@ -39,5 +42,20 @@ public class PieceDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Integer> findAllIds() {
+        String query = "SELECT id FROM piece";
+        List<Integer> pieceIds = new ArrayList<>();
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                pieceIds.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pieceIds;
     }
 }
