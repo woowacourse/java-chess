@@ -28,11 +28,15 @@ public class Board {
 
     private final Map<Square, Piece> board;
 
-    public Board() {
-        board = generateBoard();
+    public Board(Map<Square, Piece> board) {
+        this.board = board;
     }
 
-    private Map<Square, Piece> generateBoard() {
+    public Board() {
+        this(generateBoard());
+    }
+
+    private static Map<Square, Piece> generateBoard() {
         Map<Square, Piece> board = new LinkedHashMap<>();
         List<Piece> pieces = generatePieces();
         List<Square> squares = generateSquares();
@@ -44,7 +48,7 @@ public class Board {
         return board;
     }
 
-    private List<Piece> generatePieces() {
+    private static List<Piece> generatePieces() {
         List<Piece> pieces = new ArrayList<>();
 
         pieces.addAll(generateFirstLine(Team.BLACK));
@@ -59,7 +63,7 @@ public class Board {
         return pieces;
     }
 
-    private List<Piece> generateFirstLine(Team team) {
+    private static List<Piece> generateFirstLine(Team team) {
         List<Piece> pieces = new ArrayList<>();
 
         pieces.add(new Rook(team));
@@ -74,7 +78,7 @@ public class Board {
         return pieces;
     }
 
-    private List<Piece> generateSecondLine(Team team) {
+    private static List<Piece> generateSecondLine(Team team) {
         List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
@@ -84,7 +88,7 @@ public class Board {
         return pieces;
     }
 
-    private List<Piece> generateEmptyLine() {
+    private static List<Piece> generateEmptyLine() {
         List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
@@ -94,7 +98,7 @@ public class Board {
         return pieces;
     }
 
-    private List<Square> generateSquares() {
+    private static List<Square> generateSquares() {
         return Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(File.values())
                         .map(file -> new Square(file, rank)))
@@ -184,5 +188,9 @@ public class Board {
 
     public List<Piece> getPieces() {
         return new ArrayList<>(board.values());
+    }
+
+    public Map<Square, Piece> getBoard() {
+        return board;
     }
 }

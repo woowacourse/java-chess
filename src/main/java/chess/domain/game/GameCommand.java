@@ -4,6 +4,7 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.exception.IllegalCommandException;
+import chess.exception.IllegalStartCommandException;
 import java.util.List;
 
 public class GameCommand {
@@ -13,6 +14,7 @@ public class GameCommand {
     private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
     private static final String STATUS_COMMAND = "status";
+    private static final String SAVE_COMMAND = "save";
 
     private final List<String> gameCommand;
 
@@ -33,7 +35,8 @@ public class GameCommand {
             return;
         }
 
-        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND) || command.equals(STATUS_COMMAND))) {
+        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND)
+                || command.equals(STATUS_COMMAND) || command.equals(SAVE_COMMAND))) {
             throw new IllegalCommandException();
         }
     }
@@ -44,8 +47,10 @@ public class GameCommand {
         }
     }
 
-    public boolean isStart() {
-        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND);
+    public void isStart() {
+        if (!gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND)) {
+            throw new IllegalStartCommandException();
+        }
     }
 
     public boolean isMove() {
@@ -54,6 +59,10 @@ public class GameCommand {
 
     public boolean isStatus() {
         return gameCommand.get(GameCommandIndex.COMMAND.index).equals(STATUS_COMMAND);
+    }
+
+    public boolean isSave() {
+        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(SAVE_COMMAND);
     }
 
     public List<Square> convertToSquare() {

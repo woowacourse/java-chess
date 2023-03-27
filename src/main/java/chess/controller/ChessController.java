@@ -4,6 +4,7 @@ import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.game.GameCommand;
 import chess.domain.piece.Team;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -14,23 +15,48 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessService chessService;
     private Game game;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+    public ChessController(InputView inputView, OutputView outputView, ChessService chessService) {
         this.inputView = inputView;
         this.outputView = outputView;
-        game = new Game();
+        this.chessService = chessService;
     }
+
 
     public void run() {
         outputView.printGameStartMessage();
+        start(generateGameCommand());
+        play();
+        end();
+    }
+
+    private void start(GameCommand gameCommand) {
+        try {
+            gameCommand.isStart();
+            game = loadGame();
+            outputView.printChessBoard(game.getPieces());
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
+            start(generateGameCommand());
+        }
+    }
+
+    private Game loadGame() {
+        Game game = chessService.makeGame();
+        if (chessService.makeGame() == null) {
+            return new Game();
+        }
+        return game;
+    }
+
+    private void play() {
         boolean isEnd = false;
         while (!isEnd) {
             GameCommand gameCommand = generateGameCommand();
             isEnd = executeGameCommand(gameCommand);
         }
-        outputView.printGameEndMessage();
-        printGameStatus();
     }
 
     private GameCommand generateGameCommand() {
@@ -43,27 +69,22 @@ public class ChessController {
     }
 
     private boolean executeGameCommand(GameCommand gameCommand) {
-        if (gameCommand.isStart()) {
-            start();
-            return false;
-        }
         if (gameCommand.isMove()) {
-            play(gameCommand);
+            round(gameCommand);
             return game.isGameEnd();
         }
         if (gameCommand.isStatus()) {
             printGameStatus();
             return false;
         }
+        if (gameCommand.isSave()) {
+            chessService.save(game);
+            return false;
+        }
         return true;
     }
 
-    private void start() {
-        game = new Game();
-        outputView.printChessBoard(game.getPieces());
-    }
-
-    private void play(GameCommand gameCommand) {
+    private void round(GameCommand gameCommand) {
         try {
             List<Square> squares = gameCommand.convertToSquare();
             Square source = squares.get(SOURCE_INDEX);
@@ -73,6 +94,12 @@ public class ChessController {
         } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private void end() {
+        outputView.printGameEndMessage();
+        printGameStatus();
+        chessService.delete();
     }
 
     private void printGameStatus() {

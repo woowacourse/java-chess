@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -17,7 +18,7 @@ class GameCommandTest {
     void Should_True_When_GameCommandIsStart() {
         GameCommand gameCommand = new GameCommand(List.of("start"));
 
-        assertThat(gameCommand.isStart()).isTrue();
+        assertDoesNotThrow(gameCommand::isStart);
     }
 
     @DisplayName("move 커맨드가 입력되었을 때 True를 반환한다.")

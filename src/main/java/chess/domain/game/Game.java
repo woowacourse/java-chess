@@ -15,9 +15,13 @@ public class Game {
     private final Board board;
     private Team turn;
 
+    public Game(Board board, Team turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public Game() {
-        board = new Board();
-        turn = Team.WHITE;
+        this(new Board(), Team.WHITE);
     }
 
     public void move(Square source, Square target) {
@@ -95,5 +99,13 @@ public class Game {
 
     public List<Piece> getPieces() {
         return board.getPieces();
+    }
+
+    public Team getTurn() {
+        return turn;
+    }
+
+    public Map<Square, Piece> getBoard() {
+        return board.getBoard();
     }
 }
