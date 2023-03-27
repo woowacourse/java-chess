@@ -15,7 +15,6 @@ public class GameRoomService {
 
     public void createGameRoom(String gameName) {
         int bytesLength = StringBytesCalculator.calculateBytesLength(gameName);
-        System.out.println(bytesLength);
         if (bytesLength > 10) {
             throw new IllegalArgumentException("방 이름은 한글은 최대 5글자, 영어는 최대 10글자 까지 가능합니다.");
         }
