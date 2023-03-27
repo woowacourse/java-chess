@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.controller.ChessState;
-import chess.domain.game.ChessGame;
 import chess.domain.player.Player;
 import chess.domain.room.ChessRoom;
 
@@ -19,18 +18,21 @@ public class ChessRoomDao {
                         resultSet.getString(4)
                 );
             }
-            return null;
+            return create(player);
         };
 
         return JdbcTemplate.select(query, mapper, player.getId());
     }
 
-    public static ChessRoom create(final ChessGame chessGame, final Player player) {
+    private static ChessRoom create(final Player player) {
+        final var board = BoardDao.create();
+        final var chessGame = ChessGameDao.create(board);
+
         final var query = "INSERT INTO chess_room(game_id, player_id) VALUES (?, ?)";
 
-        JdbcTemplate.executeQuery(query, chessGame.getId(), player.getId());
+        final int id = JdbcTemplate.insertAndReturnKey(query, chessGame.getId(), player.getId());
 
-        return findByPlayer(player);
+        return ChessRoom.of(id, chessGame.getId(), player.getId(), ChessState.INIT.getValue());
     }
 
     public static void updateState(final ChessRoom chessRoom, final ChessState state) {
