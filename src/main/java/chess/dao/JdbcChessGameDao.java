@@ -11,6 +11,7 @@ import chess.domain.piece.dto.SavePieceDto;
 import chess.domain.piece.dto.UpdatePiecePositionDto;
 import chess.domain.service.dto.ChessGameDto;
 import chess.domain.service.dto.UpdateTurnDto;
+import chess.exception.NotFoundChessGameException;
 
 public class JdbcChessGameDao implements ChessGameDao {
 
@@ -133,7 +134,7 @@ public class JdbcChessGameDao implements ChessGameDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalStateException("[ERROR] 체스 게임을 찾지 못했습니다.");
+        throw new NotFoundChessGameException("[ERROR] 체스 게임을 찾지 못했습니다.");
     }
 
     @Override
