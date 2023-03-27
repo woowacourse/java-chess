@@ -44,7 +44,7 @@ public class MySqlPiecesDao implements PiecesDao {
             List<Piece> pieces = new ArrayList<>();
 
             final var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 final int file = resultSet.getInt("position_file");
                 final int rank = resultSet.getInt("position_rank");
                 final String sideName = resultSet.getString("piece_side");
