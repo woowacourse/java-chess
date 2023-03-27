@@ -65,7 +65,7 @@ public class ChessController {
     private void showReplay(String gameId) {
         int lastTurn = loadGameController.getLastTurn(gameId);
         OutputView.printReplayCommandMessage();
-        int turn = 1;
+        int turn = 0;
         while (turn <= lastTurn && turn != -1) {
             printTurnStatus(gameId, turn);
             turn = getTurnByCommand(turn);
@@ -91,9 +91,9 @@ public class ChessController {
     }
 
     private int decreaseTurnWhenNotOne(int turn) {
-        if (turn == 1) {
-            OutputView.printErrorMessage("지금이 첫번째 턴입니다.");
-            return 1;
+        if (turn == 0) {
+            OutputView.printErrorMessage("현재가 초기 상황입니다.");
+            return 0;
         }
         return turn - 1;
     }

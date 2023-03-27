@@ -45,6 +45,7 @@ public class LoadGameController {
         ChessGame chessGame = new ChessGame();
         loadGameDao.createGame(userId);
         String gameId = loadGameDao.getLastGameId(userId);
+        chessGame.save(gameId);
         return new ChessGameDto(gameId, chessGame);
     }
 
