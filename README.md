@@ -54,26 +54,31 @@
 ### 설계
 
 ```sql
-CREATE TABLE game
+create table chess.game
 (
-    id       int     not null primary key,
-    finished boolean not null
-)
+    id       int auto_increment
+        primary key,
+    finished tinyint(1) default 0 not null
+);
 ```
 
 ```sql
-CREATE TABLE board
+create table chess.history
 (
-    id      int        not null primary key,
-    source  varchar(3) not null,
+    source  varchar(3) null,
     target  varchar(3) not null,
-    game_id int        not null,
-    FOREIGN KEY (game_id) REFERENCES game (id)
-) 
+    id      int auto_increment
+        primary key,
+    game_id int null,
+    constraint game_id
+        foreign key (game_id) references chess.game (id)
+);
 ```
 
 ### 요구사항
 
-- `game`의 state가 `Running`일 때 이전 게임을 불러온다.
-- state가 `End`, `WaitingStart` 일 때는 게임을 새롭게 시작한다.
-- `end`를 입력하면 현재 게임 상태와 보드 상황을 DB에 저장한다.
+- 이전 게임이 존재하면 게임을 불러온다.
+- 말이 이동할 때마다
+- `clear` 를 입력하면 진행 중인 게임을 초기화한다.
+- 킹이 죽으면 게임을 종료한 상태로 변경한다.
+- 
