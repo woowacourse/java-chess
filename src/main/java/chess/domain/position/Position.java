@@ -65,6 +65,10 @@ public class Position {
         return y == rank;
     }
 
+    public int getFileAddress() {
+        return x;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
