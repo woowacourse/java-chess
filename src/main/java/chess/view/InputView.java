@@ -72,6 +72,7 @@ public class InputView {
         System.out.print(PRIOR_GAME_PRINT_MESSAGE + gameNumbers.stream().
                 map(Object::toString).
                 collect(Collectors.joining(", ")));
+        System.out.println();
     }
 
     private static boolean isMove(List<String> splitInput, String command) {
