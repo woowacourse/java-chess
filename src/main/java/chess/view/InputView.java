@@ -17,4 +17,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
+    public CommandRequest readCommandRequest() {
+        return new CommandRequest(readCommand());
+    }
 }
