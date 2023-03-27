@@ -31,6 +31,15 @@ public final class Turn {
         return new Turn(Team.WHITE);
     }
 
+    public static Turn valueOf(final String name) {
+        Team team = Team.valueOf(name);
+        return new Turn(team);
+    }
+
+    public String name() {
+        return this.turn.name();
+    }
+
     public Team getTurn() {
         return turn;
     }

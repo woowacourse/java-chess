@@ -30,6 +30,11 @@ public final class Board {
         this.turn = new Turn(DEFAULT_START_TEAM);
     }
 
+    public Board(final Map<Position, Piece> board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void movePiece(final Position currentPosition, final Position targetPosition) {
         validateNotEquals(currentPosition, targetPosition);
 
@@ -112,5 +117,9 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

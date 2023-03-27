@@ -11,6 +11,7 @@ import static chess.view.OutputView.printFinishMessage;
 import static chess.view.OutputView.printGameStart;
 import static chess.view.OutputView.printScores;
 
+import chess.dao.ChessGameDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardMaker;
 import chess.domain.position.Position;
@@ -25,12 +26,14 @@ public final class MainController {
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int MOVE_COMMAND_SIZE = 3;
 
+    private final ChessGameDao chessGameDao = new ChessGameDao();
+
     public void run() {
         printGameStart();
         Command command = repeatUntilValidAction(this::getValidCommand);
 
         if (command == START) {
-            final Board board = new Board(new BoardMaker());
+            final Board board = generateBoard();
             printBoard(board.getBoard());
             while (repeatUntilValidAction(() -> playChess(board)));
             printScores(board.scores());
@@ -43,7 +46,18 @@ public final class MainController {
         return Command.of(inputs.get(COMMAND_INDEX));
     }
 
+    private Board generateBoard() {
+        Board board = chessGameDao.findBoard();
+
+        if (board == null) {
+            return new Board(new BoardMaker());
+        }
+        return board;
+    }
+
     private boolean playChess(final Board board) {
+        chessGameDao.updateBoard(board);
+
         List<String> inputs = readCommand();
         Command command = Command.of(inputs.get(COMMAND_INDEX));
 
@@ -74,6 +88,8 @@ public final class MainController {
 
         board.movePiece(currentPosition, targetPosition);
         printBoard(board.getBoard());
+
+        chessGameDao.updateBoard(board);
     }
 
     private void validateInputSize(final List<String> inputs) {

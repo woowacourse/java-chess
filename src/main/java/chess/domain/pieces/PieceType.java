@@ -1,8 +1,13 @@
 package chess.domain.pieces;
 
+import static chess.domain.Team.BLACK;
+
+import chess.domain.Team;
 import chess.domain.pieces.nonsliding.King;
 import chess.domain.pieces.nonsliding.Knight;
+import chess.domain.pieces.pawn.BlackPawn;
 import chess.domain.pieces.pawn.Pawn;
+import chess.domain.pieces.pawn.WhitePawn;
 import chess.domain.pieces.sliding.Bishop;
 import chess.domain.pieces.sliding.Queen;
 import chess.domain.pieces.sliding.Rook;
@@ -22,17 +27,17 @@ public enum PieceType {
     private static final int CRITERIA_OF_CALCULATE_PAWN_SCORE = 2;
     private static final double SCORE_OF_OVERLAP_PAWNS = 0.5;
 
-    private final Class<? extends Piece> piece;
+    private final Class<? extends Piece> pieceType;
     private final Score score;
 
-    PieceType(final Class<? extends Piece> piece, final Score score) {
-        this.piece = piece;
+    PieceType(final Class<? extends Piece> pieceType, final Score score) {
+        this.pieceType = pieceType;
         this.score = score;
     }
 
     public static PieceType from(final Class<? extends Piece> piece) {
         return Arrays.stream(PieceType.values())
-                .filter(pieceType -> pieceType.piece.isAssignableFrom(piece))
+                .filter(pieceType -> pieceType.pieceType.isAssignableFrom(piece))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
@@ -59,6 +64,31 @@ public enum PieceType {
         return piecesInOneColumnWithSingleTeam.stream()
                 .filter(piece1 -> from(piece1.getClass()).equals(PAWN))
                 .count();
+    }
+
+    public Piece generatePiece(final Team team) {
+        if (this.equals(PAWN)) {
+            if (team.isAlly(BLACK)) {
+                return new BlackPawn();
+            }
+            return new WhitePawn();
+        }
+        if (this.equals(KNIGHT)) {
+            return new Knight(team);
+        }
+        if (this.equals(ROOK)) {
+            return new Rook(team);
+        }
+        if (this.equals(BISHOP)) {
+            return new Bishop(team);
+        }
+        if (this.equals(QUEEN)) {
+            return new Queen(team);
+        }
+        if (this.equals(KING)) {
+            return new King(team);
+        }
+        return new EmptyPiece();
     }
 
     public Score getScore() {
