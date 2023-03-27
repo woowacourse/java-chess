@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 public class OutputView {
     public static final String TEAN_IN_TURN_NOTICE = "%s팀 차례 입니다.\n";
     public static final int DRAW = 2;
+    public static final String ENTER_GAME_NUMBER_NOTICE = "> 이어서 진행할 게임의 방 번호를 입력하세요. ex) 1";
     private static final int CHESS_BOARD_AREA = 64;
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final String EMPTY_SQUARE_DISPLAY = ".";
@@ -21,6 +22,9 @@ public class OutputView {
     public static final int FIRST_INDEX = 0;
     public static final int ONLY = 1;
     public static final String DELIMITER = " : ";
+    public static final String START_NEW_GAME_NOTICE = "> 새롭게 게임을 시작하시겠습니까? (예: y, 아니오: n)";
+    public static final String GAME_ROOM_NUMBER_NOTICE = "게임을 진행한 방은 %d번 입니다. "
+            + "이후에 번호를 입력하면 게임을 이어서 할 수 있습니다.\n";
 
 
     public void printStartNotice() {
@@ -32,11 +36,15 @@ public class OutputView {
     }
 
     public void printCheckNewGameNotice() {
-        System.out.println("> 새롭게 게임을 시작하시겠습니까? (예: y, 아니오: n)");
+        System.out.println(START_NEW_GAME_NOTICE);
     }
 
     public void printEnterSavedGameRoomNumberNotice() {
-        System.out.println("> 이어서 진행할 게임의 방 번호를 입력하세요. ex) 1");
+        System.out.println(ENTER_GAME_NUMBER_NOTICE);
+    }
+
+    public void printGameNumberRoomNotice(int gameId) {
+        System.out.printf(GAME_ROOM_NUMBER_NOTICE, gameId);
     }
 
     public void printScore(Map<String, Double> scores) {

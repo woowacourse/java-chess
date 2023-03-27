@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.repository;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
@@ -30,12 +30,10 @@ public class GameDao {
         jdbcTemplate.executeUpdate(query, gameId);
     }
 
-
     public void updateGameById(ChessGame chessGame, final int gameId) {
         final var query = "UPDATE game SET team = ?, board = ? WHERE game_id = ?";
         jdbcTemplate.executeUpdate(query, chessGame.getTeam().toString(), chessGame.getBoard().toString(), gameId);
     }
-
 
     public ChessGame findGameById(final int gameId) {
         final var query = "SELECT team, board FROM game WHERE game_id = ?";
@@ -46,7 +44,6 @@ public class GameDao {
                         Team.valueOf(resultSet.getString("team"))
                 );
             }
-
             return null;
         }, gameId);
     }
@@ -54,14 +51,20 @@ public class GameDao {
     private Board createBoard(String input) {
         Map<Square, Piece> result = new HashMap<>();
         for (String pieces : input.split(",")) {
-            Square square = Square.of(File.valueOf(pieces.split(":")[0].split(" ")[0]),
-                    Rank.valueOf(pieces.split(":")[0].split(" ")[1]));
-
-            Piece piece = Pieces.of(Team.valueOf(pieces.split(":")[1].split(" ")[0]),
-                    PieceType.valueOf(pieces.split(":")[1].split(" ")[1]));
-
+            Square square = createSquare(pieces.split(":")[0]);
+            Piece piece = createPiece(pieces.split(":")[1]);
             result.put(square, piece);
         }
         return new Board(result);
+    }
+
+    private Piece createPiece(final String input) {
+        return Pieces.of(Team.valueOf(input.split(" ")[0]),
+                PieceType.valueOf(input.split(" ")[1]));
+    }
+
+    private Square createSquare(final String input) {
+        return Square.of(File.valueOf(input.split(" ")[0]),
+                Rank.valueOf(input.split(" ")[1]));
     }
 }

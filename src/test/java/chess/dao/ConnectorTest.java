@@ -2,6 +2,7 @@ package chess.dao;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.repository.Connector;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
