@@ -1,7 +1,6 @@
 package domain.piece;
 
 import domain.position.Direction;
-import domain.position.Path;
 import domain.position.Position;
 
 import java.util.Set;
