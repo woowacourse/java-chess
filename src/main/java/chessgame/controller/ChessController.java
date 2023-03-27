@@ -15,11 +15,13 @@ import java.util.Map;
 
 public class ChessController {
 
-    public static final char ASCII_ALPHABET_A = 'a';
-    public static final int START_COORDINATE_INDEX = 1;
-    public static final int COLUMN_INDEX = 0;
-    public static final int ROW_INDEX = 1;
-    public static final int END_COORDINATE_INDEX = 2;
+    private static final char ASCII_ALPHABET_A = 'a';
+    private static final int START_COORDINATE_INDEX = 1;
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
+    private static final int END_COORDINATE_INDEX = 2;
+    private static final int ROOM_ID_INDEX = 1;
+    private static final String NEW_ROOM = "new";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -68,8 +70,8 @@ public class ChessController {
     }
 
     private ChessGame makeGameRoom(List<String> commands) {
-        String roomId = commands.get(1);
-        if (roomId.equals("new")) {
+        String roomId = commands.get(ROOM_ID_INDEX);
+        if (roomId.equals(NEW_ROOM)) {
             return makeNewGameRoom();
         }
         return makeAlreadyExistGameRoom(roomId);
