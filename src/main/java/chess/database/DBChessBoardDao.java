@@ -6,6 +6,7 @@ import chess.domain.position.Rank;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -53,7 +54,7 @@ public final class DBChessBoardDao implements ChessGameDao {
             throw new RuntimeException(e);
         }
         if (positions.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
         return positions;
     }

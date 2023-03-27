@@ -4,6 +4,7 @@ import chess.database.DBChessBoardDao;
 import chess.domain.ChessGame;
 import chess.domain.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ChessService {
@@ -22,7 +23,7 @@ public class ChessService {
 
     public ChessGame checkNotation(final ChessGame game) {
         List<Position> gameNotation = dbChessBoardDao.selectNotation();
-        if (gameNotation != null) {
+        if (gameNotation.equals(Collections.emptyList())) {
             getNotation(game, gameNotation);
         }
         return game;
