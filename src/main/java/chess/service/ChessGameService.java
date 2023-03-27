@@ -5,6 +5,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 import chess.entity.ChessGameEntity;
+import chess.entity.PieceEntity;
 
 import java.util.Optional;
 
@@ -32,6 +33,10 @@ public final class ChessGameService {
             throw new IllegalArgumentException("저장된 데이터가 존재하지 않습니다.");
         }
         return findChessGameEntity.get().getId();
+    }
+
+    public void savePiece(final PieceEntity pieceEntity) {
+        chessBoardService.savePiece(pieceEntity);
     }
 
     private ChessGame getNewChessGame(final Long userId) {

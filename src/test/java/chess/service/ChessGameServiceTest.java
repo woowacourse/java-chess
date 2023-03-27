@@ -66,6 +66,23 @@ class ChessGameServiceTest {
                 .isEqualTo(1L);
     }
 
+    @Test
+    @DisplayName("체스말 정보를 바탕으로 체스말을 저장한다")
+    void savePiece() {
+        // given
+        final Long userId = 1L;
+        final ChessGameService chessGameService = getChessGameService(userId);
+
+        // when
+        chessGameService.savePiece(PieceEntity.createWithChessGameId(1L, 1, 1,
+                "PAWN", "WHITE"));
+
+        // then
+        Long chessGameId = chessGameService.getChessGameId(1L);
+        assertThat(chessGameId)
+                .isEqualTo(1L);
+    }
+
     private ChessGameService getChessGameService(final Long userId) {
         final MockChessGameDao chessGameDao = new MockChessGameDao();
         Long chessGameId = chessGameDao.save(new ChessGameEntity("WHITE", userId));

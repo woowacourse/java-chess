@@ -13,7 +13,7 @@ import java.util.Map;
 public class ChessBoardService {
     private final PieceDao pieceDao;
 
-    public ChessBoardService(final PieceDao pieceDao) {
+    ChessBoardService(final PieceDao pieceDao) {
         this.pieceDao = pieceDao;
     }
 
