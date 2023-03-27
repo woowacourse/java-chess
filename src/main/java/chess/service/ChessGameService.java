@@ -3,12 +3,15 @@ package chess.service;
 import chess.boardstrategy.BoardStrategy;
 import chess.dao.ChessGameDao;
 import chess.dao.MoveDao;
+import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.domain.game.StateOfChessGame;
 import chess.domain.piece.Color;
+import chess.domain.piece.type.Piece;
 import chess.view.CommandRequest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static chess.domain.game.StateOfChessGame.RUNNING;
@@ -56,6 +59,10 @@ public class ChessGameService {
         return chessGame;
     }
 
+    public Map<Position, Piece> findChessBoard(int gameId, BoardStrategy boardStrategy) {
+        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+        return chessGame.getChessBoard();
+    }
 
 }
 
