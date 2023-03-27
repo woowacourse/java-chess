@@ -11,7 +11,7 @@ public enum PieceType {
 
     final Score score;
 
-    PieceType(final Score score){
+    PieceType(final Score score) {
         this.score = score;
     }
 }

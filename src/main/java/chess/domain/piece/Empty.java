@@ -43,7 +43,7 @@ public final class Empty implements PieceState {
     }
 
     @Override
-    public Score getScore(){
+    public Score getScore() {
         return Score.from(0);
     }
 }
