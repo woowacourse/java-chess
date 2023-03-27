@@ -11,36 +11,20 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DbChessGameDao implements ChessGameDao {
 
-    private static final String SERVER = "localhost:3306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "12345678";
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
+    private static final int INITIAL_BOARD_CAPACITY = 64;
 
     @Override
     public void save(final ChessGame chessGame) {
         Map<Position, Piece> piecePosition = chessGame.getChessBoard().getPiecePosition();
         for (final Map.Entry<Position, Piece> positionPieceEntry : piecePosition.entrySet()) {
             final var query = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, game_status, turn) VALUES (?, ?, ?, ?, ?, ?)";
-            try (final var connection = getConnection();
+            try (final var connection = DbConnection.getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, positionPieceEntry.getValue().getType().name());
                 preparedStatement.setString(2, positionPieceEntry.getKey().getFile().name());
@@ -57,12 +41,12 @@ public class DbChessGameDao implements ChessGameDao {
 
     @Override
     public ChessGame select() {
-        Map<Position, Piece> pieces = new HashMap<>(64);
+        Map<Position, Piece> pieces = new HashMap<>(INITIAL_BOARD_CAPACITY);
         Team turn = null;
         GameStatus gameStatus = GameStatus.IDLE;
 
         final var query = "SELECT piece_type, piece_file, piece_rank, piece_team, turn, game_status FROM chess_game";
-        try (final var connection = getConnection();
+        try (final var connection = DbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -102,7 +86,7 @@ public class DbChessGameDao implements ChessGameDao {
 
     private void delete(final ChessGame chessGame) {
         final var query = "DELETE FROM chess_game";
-        try (final var connection = getConnection();
+        try (final var connection = DbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
