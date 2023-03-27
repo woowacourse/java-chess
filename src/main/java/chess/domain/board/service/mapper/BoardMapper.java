@@ -24,8 +24,6 @@ public class BoardMapper {
 
     public BoardRegisterRequest mapToBoardRegisterRequestFrom(final Board board) {
 
-        // p:1 7,k:1 7
-
         final Map<Position, Piece> chessBoard = board.chessBoard();
 
         final String chessPosition = chessBoard.entrySet()

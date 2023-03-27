@@ -41,7 +41,7 @@ public enum Command {
         return NEW_GAME.value.equals(command);
     }
 
-    public static boolean isLoadGame(final String command) {
+    public static boolean isExistedGame(final String command) {
         return LOAD_GAME.value.equals(command);
     }
 }

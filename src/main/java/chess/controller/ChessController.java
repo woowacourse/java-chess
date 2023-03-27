@@ -24,8 +24,6 @@ import static chess.common.IndexCommand.TARGET_POSITION;
 
 public class ChessController {
 
-    private static final Long DEFAULT_BOARD_ID = 1L;
-
     private final BoardQueryService boardQueryService;
     private final BoardCommandService boardCommandService;
 
@@ -40,15 +38,30 @@ public class ChessController {
         System.out.println("새로운 게임을 시작하려면 1, 게임을 불러오려면 2를 누르세요.");
 
         final String newGameCommand = InputView.readNewGameCommand();
+        final Board board = loadChessBoard(newGameCommand);
 
-        Board board = Board.makeNewGame(new BoardFactory());
-        Long savedId = DEFAULT_BOARD_ID;
+        final String command = InputView.readStartCommand();
 
-        if (Command.isNewGame(newGameCommand)) {
-            savedId = boardCommandService.registerBoard(board);
+        if (Command.isNotStart(command)) {
+            return;
         }
 
-        if (Command.isLoadGame(newGameCommand)) {
+        startGame(board);
+    }
+
+    private Board loadChessBoard(final String newGameCommand) {
+
+        if (Command.isNewGame(newGameCommand)) {
+
+            final Board board = Board.makeNewGame(new BoardFactory());
+            final Long savedId = boardCommandService.registerBoard(board);
+
+            board.assignId(savedId);
+
+            return board;
+        }
+
+        if (Command.isExistedGame(newGameCommand)) {
             System.out.println("현재 진행하고 있는 게임 번호들입니다.");
 
             final List<Long> boardIds = boardQueryService.searchAllBoards();
@@ -57,46 +70,37 @@ public class ChessController {
 
             System.out.println("불러올 게임의 번호를 입력해주세요.");
 
-            savedId = InputView.readLoadGameCommand();
+            final long loadGameId = InputView.readLoadGameCommand();
 
-            board = boardQueryService.searchBoard(savedId);
+            return boardQueryService.searchBoard(loadGameId);
         }
 
-        final String command = InputView.readStartCommand();
-
-        if (Command.isNotStart(command)) {
-            return;
-        }
-
-        startGame(board, savedId);
+        throw new IllegalArgumentException("올바르지 않은 command 입니다.");
     }
 
-    private void startGame(final Board board, Long boardId) {
+    private void startGame(final Board board) {
 
         while (true) {
             OutputView.printBoard(board.chessBoard());
 
             final List<String> moveCommands = InputView.readMoveCommand();
-
             final String startCommand = moveCommands.get(START_COMMAND_INDEX.value());
 
             if (Command.isEnd(startCommand)) {
-                end(boardId, board);
+                end(board);
                 return;
             }
 
             if (Command.isStatus(startCommand)) {
-                status(board, boardId);
+                status(board);
                 return;
             }
 
             final Turn beforeTurn = board.turn();
 
             if (Command.isMove(startCommand)) {
-                final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION.value()));
-                final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION.value()));
-
-                board.move(fromPosition, toPosition);
+                move(board, moveCommands);
+                return;
             }
 
             final BoardSearch boardSearch = BoardSearch.countPiecePerClassTypeFrom(board.chessBoard());
@@ -109,24 +113,33 @@ public class ChessController {
         }
     }
 
-    private void end(final Long boardId, final Board board) {
-        boardCommandService.modifyBoard(board, boardId);
+    private void end(final Board board) {
+        boardCommandService.modifyBoard(board);
     }
 
-    private void status(final Board board, final Long boardId) {
+    private void status(final Board board) {
         final BoardScore boardScore = BoardScore.flatByColumnFrom(board.chessBoard());
 
         final Score blackScore = boardScore.calculateBoardScoreBy(Color.BLACK);
         final Score whiteScore = boardScore.calculateBoardScoreBy(Color.WHITE);
 
         OutputView.printWinner(whoIsWinner(blackScore, whiteScore), whiteScore, blackScore);
-        boardCommandService.modifyBoard(board, boardId);
+        boardCommandService.modifyBoard(board);
+    }
+
+    private void move(final Board board, final List<String> moveCommands) {
+        final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION.value()));
+        final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION.value()));
+
+        board.move(fromPosition, toPosition);
     }
 
     private Color whoIsWinner(final Score blackScore, final Score whiteScore) {
         if (blackScore.isGreaterThan(whiteScore)) {
             return Color.BLACK;
-        } else if (blackScore.equals(whiteScore)) {
+        }
+
+        if (blackScore.equals(whiteScore)) {
             return Color.NONE;
         }
 
