@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.boardstrategy.BoardStrategy;
+import chess.controller.Command;
 import chess.dao.ChessGameDao;
 import chess.dao.MoveDao;
 import chess.domain.board.Position;
@@ -8,7 +9,6 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.StateOfChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.type.Piece;
-import chess.view.CommandRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -38,10 +38,10 @@ public class ChessGameService {
 
     // move : 게임 아이디로, 이동에서
     //todo :(리팩터링2) boardStrategy가 ChessBoard 반환 및 반환된 체스보드로 체스 게임 생성할 수 있도록 수정하기
-    public void move(int gameId, CommandRequest commandRequest, BoardStrategy boardStrategy) {
+    public void move(int gameId, List<String> commandLine, BoardStrategy boardStrategy) {
         ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
-        chessGame.move(commandRequest.getCommandLine());
-        movementDao.add(gameId, commandRequest.getStartPosition(),commandRequest.getEndPosition());
+        chessGame.move(commandLine);
+        movementDao.add(gameId, Command.findStartSource(commandLine),Command.findTargetSource(commandLine));
         if (chessGame.isFinished()) {
             chessGameDao.updateStatusByGameId(chessGame.getStatus().name(), gameId);
             return;
