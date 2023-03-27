@@ -7,12 +7,8 @@ import chess.view.InputView;
 public class PlayerController {
 
     public Player handle() {
-        String name = InputView.readPlayerName();
-        Player player = PlayerDao.findByName(name);
-
-        if (player == null) {
-            player = PlayerDao.create(name);
-        }
+        final String name = InputView.readPlayerName();
+        final Player player = PlayerDao.findByName(name);
 
         return player;
     }

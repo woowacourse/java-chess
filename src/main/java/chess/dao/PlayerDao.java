@@ -14,17 +14,17 @@ public class PlayerDao {
                         resultSet.getString(2)
                 );
             }
-            return null;
+            return create(name);
         };
 
         return JdbcTemplate.select(query, mapper, name);
     }
 
-    public static Player create(final String name) {
+    private static Player create(final String name) {
         final var query = "INSERT INTO player(name) VALUES (?)";
 
-        JdbcTemplate.executeQuery(query, name);
+        final int id = JdbcTemplate.insertAndReturnKey(query, name);
 
-        return findByName(name);
+        return Player.of(id, name);
     }
 }
