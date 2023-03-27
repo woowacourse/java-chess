@@ -148,6 +148,7 @@ CREATE TABLE chess_game (
     board_row4 VARCHAR(255) NOT NULL,
     board_row3 VARCHAR(255) NOT NULL,
     board_row2 VARCHAR(255) NOT NULL,
-    board_row1 VARCHAR(255) NOT NULL
+    board_row1 VARCHAR(255) NOT NULL,
+    turn VARCHAR(255) NOT NULL
 );
 ```
