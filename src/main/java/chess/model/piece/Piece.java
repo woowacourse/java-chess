@@ -6,7 +6,7 @@ import chess.model.position.Distance;
 
 public final class Piece {
 
-    public static final Piece EMPTY = new Piece(PieceType.EMPTY, Camp.BLACK);
+    public static final Piece EMPTY = new Piece(PieceType.EMPTY, Camp.EMPTY);
 
     private final PieceType pieceType;
     private final Camp camp;
@@ -24,8 +24,7 @@ public final class Piece {
     }
 
     public boolean movable(final Distance distance, final Piece target) {
-        final AttackEvaluator attackEvaluator = new AttackEvaluator(this.camp, target.camp,
-                target.pieceType.isSamePieceType(PieceType.EMPTY));
+        final AttackEvaluator attackEvaluator = new AttackEvaluator(this.camp, target.camp, target.pieceType);
 
         return pieceType.movable(distance, attackEvaluator);
     }

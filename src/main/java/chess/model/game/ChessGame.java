@@ -41,7 +41,15 @@ public class ChessGame {
     }
 
     public PieceScore getScoreByCamp(final Camp camp) {
+        validateScoreCamp(camp);
+
         return chessBoard.calculateScoreByCamp(camp);
+    }
+
+    private void validateScoreCamp(final Camp camp) {
+        if (camp.isEmpty()) {
+            throw new IllegalStateException("빈 진영에 대한 점수를 계산할 수 없습니다.");
+        }
     }
 
     public Camp getCurrentCamp() {

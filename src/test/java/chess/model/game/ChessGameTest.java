@@ -22,11 +22,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.model.piece.Camp;
 import chess.model.piece.score.PieceScore;
 import chess.view.dto.ChessBoardResponse;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ChessGameTest {
 
@@ -48,7 +50,7 @@ class ChessGameTest {
 
         assertThat(chessBoardResponse).isNotNull();
     }
-    
+
     @Test
     @DisplayName("move()는 source와 target으로 동일한 Position을 건네주면 예외가 발생한다.")
     void move_givenSameSourceAndTarget_thenFail() {
@@ -136,7 +138,7 @@ class ChessGameTest {
 
     @ParameterizedTest(name = "Camp.{0}일 때 기본 점수 38점을 반환한다.")
     @DisplayName("getScoreByCamp() 테스트")
-    @EnumSource(Camp.class)
+    @MethodSource("provideGetScoreByCampArguments")
     void getScoreByCamp_givenCamp_thenReturnPieceScoreByCamp(final Camp camp) {
         // given
         chessGame.initialChessGame();
@@ -147,5 +149,23 @@ class ChessGameTest {
         // then
 
         assertThat(actual.getValue()).isEqualTo(38.0d);
+    }
+
+    private static Stream<Arguments> provideGetScoreByCampArguments() {
+        return Stream.of(
+                Arguments.of(Camp.BLACK), Arguments.of(Camp.WHITE)
+        );
+    }
+
+    @Test
+    @DisplayName("getScoreByCamp()는 Camp.EMPTY를 건네주면 예외가 발생한다.")
+    void getScoreByCamp_givenEmptyCamp_thenFail() {
+        // given
+        chessGame.initialChessGame();
+
+        // when, then
+        assertThatThrownBy(() -> chessGame.getScoreByCamp(Camp.EMPTY))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("빈 진영에 대한 점수를 계산할 수 없습니다.");
     }
 }
