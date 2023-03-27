@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.db.dao.BoardDao;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -26,7 +29,12 @@ public class ChessGame {
         Square src = convertSquare(source);
         Square dst = convertSquare(destination);
         validateSameTeam(src);
-        board.move(src, dst);
+        Piece origin = board.move(src, dst);
+        BoardDao boardDao = new BoardDao();
+        boardDao.update(src, dst);
+        if (origin.getPieceType() != PieceType.EMPTY) {
+            boardDao.deleteBySquare(src);
+        }
         changeTeam();
     }
 
@@ -56,13 +64,13 @@ public class ChessGame {
         return board.calculateTeamScore(team);
     }
 
-    public Team calculateWinnerTeam() { // TODO: 체크메이트인 경우
+    public Team calculateWinnerTeam() {
         double whiteScore = calculateTeamScore(WHITE);
         double blackScore = calculateTeamScore(BLACK);
-        if (whiteScore < blackScore) {
+        if (whiteScore < blackScore || board.isKingDead(WHITE)) {
             return BLACK;
         }
-        if (blackScore < whiteScore) {
+        if (blackScore < whiteScore || board.isKingDead(BLACK)) {
             return WHITE;
         }
         return EMPTY;

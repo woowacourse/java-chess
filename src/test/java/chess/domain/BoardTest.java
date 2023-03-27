@@ -22,13 +22,13 @@ class BoardTest {
     @Test
     @DisplayName("체스판을 생성한다.")
     void createBoard() {
-        assertDoesNotThrow(Board::new);
+        assertDoesNotThrow(() -> new Board(BoardGenerator.init()));
     }
 
     @Test
     @DisplayName("보드가 생성되면 32개의 Piece를 가진다.")
     void containsPieces() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
 
         assertThat(board.getBoard()).hasSize(32);
     }
@@ -36,7 +36,7 @@ class BoardTest {
     @Test
     @DisplayName("말은 규칙에 따라 움직인다.")
     void move() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
         Square src = Square.of(A, TWO);
         Square dst = Square.of(A, THREE);
 
@@ -48,7 +48,7 @@ class BoardTest {
     @Test
     @DisplayName("knight는 가는 길목에 말이 있어도 움직일 수 있다.")
     void knightCanMove() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
         Square src = Square.of(B, ONE);
         Square dst = Square.of(A, THREE);
 
@@ -60,7 +60,7 @@ class BoardTest {
     @Test
     @DisplayName("knight는 이동할 칸에 말이 있으면 이동할 수 없다.")
     void knightCannotMove() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
         Square src = Square.of(A, TWO);
         Square dst = Square.of(A, THREE);
         board.move(src, dst);
@@ -74,11 +74,11 @@ class BoardTest {
     @Nested
     class pieceMove {
 
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
 
         @BeforeEach
         void boardInit() {
-            board = new Board();
+            board = new Board(BoardGenerator.init());
 
             Square src = Square.of(A, TWO);
             Square dst = Square.of(A, FOUR);
@@ -117,7 +117,7 @@ class BoardTest {
     @Test
     @DisplayName("팀에 해당하는 점수를 계산한다.")
     void calculateTeamScore() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
 
         assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(38.0);
         assertThat(board.calculateTeamScore(Team.BLACK)).isEqualTo(38.0);
@@ -126,7 +126,7 @@ class BoardTest {
     @Test
     @DisplayName("같은 세로줄에 같은 팀의 폰은 0.5점으로 계산한다.")
     void calculateWhiteTeamScore() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
 
         Square src = Square.of(A, TWO);
         Square dst = Square.of(A, FOUR);
@@ -147,7 +147,7 @@ class BoardTest {
     @Test
     @DisplayName("특정 팀의 King이 죽었는지 반환한다.")
     void isKingDead() {
-        Board board = new Board();
+        Board board = new Board(BoardGenerator.init());
 
         assertThat(board.isKingDead(Team.WHITE)).isFalse();
     }

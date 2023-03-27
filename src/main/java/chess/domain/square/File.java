@@ -41,4 +41,8 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File index를 입력했습니다."));
     }
+
+    public String getFile() {
+        return file;
+    }
 }

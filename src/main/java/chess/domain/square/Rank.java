@@ -41,4 +41,8 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank Index를 입력했습니다."));
     }
+
+    public String getRank() {
+        return rank;
+    }
 }

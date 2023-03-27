@@ -16,11 +16,11 @@ import static chess.domain.piece.PieceType.*;
 public class Board {
     private final Map<Square, Piece> board;
 
-    public Board() {
-        this.board = BoardGenerator.init();
+    public Board(final Map<Square, Piece> board) {
+        this.board = board;
     }
 
-    public void move(final Square src, final Square dst) {
+    public Piece move(final Square src, final Square dst) {
         if (!canMove(src, dst)) {
             throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
@@ -30,6 +30,8 @@ public class Board {
         }
         board.put(dst, srcPiece);
         board.remove(src);
+
+        return srcPiece;
     }
 
     private boolean canMove(final Square src, final Square dst) {
@@ -93,10 +95,10 @@ public class Board {
                 .stream()
                 .filter(piece -> piece.getTeam() == team)
                 .map(piece -> piece.getPieceType().getScore())
-                .reduce(0.0-0.5*calculateSameLinePawn(team), Double::sum);
+                .reduce(0.0 - 0.5 * calculateSameLinePawn(team), Double::sum);
     }
 
-    public int calculateSameLinePawn(final Team team) {
+    private int calculateSameLinePawn(final Team team) {
         return calculatePawnNumber(team).values()
                 .stream()
                 .filter(count -> count >= 2)

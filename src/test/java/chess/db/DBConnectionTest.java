@@ -1,5 +1,7 @@
 package chess.db;
 
+import chess.domain.Team;
+import chess.domain.piece.ordinary.King;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

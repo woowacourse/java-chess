@@ -1,7 +1,11 @@
 package chess.controller;
 
+import chess.db.dao.BoardDao;
 import chess.domain.Board;
+import chess.domain.BoardGenerator;
 import chess.domain.ChessGame;
+import chess.domain.piece.Piece;
+import chess.domain.square.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -34,12 +38,23 @@ public class GameController {
 
     public void run() {
         outputView.printGameStart();
+        BoardDao boardDao = new BoardDao();
+        Map<Square, Piece> storedBoard = boardDao.select();
+        if (storedBoard == null) {
+            storedBoard = BoardGenerator.init();
+            boardDao.insert(storedBoard);
+        }
+        ChessGame chessGame = new ChessGame(new Board(storedBoard), WHITE);
+
         Command command;
-        ChessGame chessGame = new ChessGame(new Board(), WHITE);
         do {
             List<String> gameCommand = repeatUntilValidate(() -> play(chessGame));
             command = Command.from(gameCommand.get(0));
-        } while (command != END || chessGame.isGameEnd());
+        } while (command != END && !chessGame.isGameEnd());
+        if (chessGame.isGameEnd()) {
+            status(chessGame);
+            boardDao.delete();
+        }
     }
 
     public List<String> play(final ChessGame chessGame) {
@@ -59,7 +74,7 @@ public class GameController {
 
     private void validateStatus(final Command command) {
         if (command == START && status != READY) {
-            throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다. move, status, enc 중에 입력해주세요.");
+            throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다. move, status, end 중에 입력해주세요.");
         }
         if (command != START && status == READY) {
             throw new IllegalArgumentException("체스 게임이 아직 시작되지 않았습니다. start 먼저 입력해주세요.");
@@ -80,7 +95,6 @@ public class GameController {
         validateMoveCommandFormat(gameCommand);
         chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
         outputView.printChessBoard(chessGame.getBoard());
-
     }
 
     private void end(final ChessGame chessGame) {
