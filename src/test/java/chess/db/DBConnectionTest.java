@@ -1,12 +1,12 @@
 package chess.db;
 
-import chess.domain.Team;
-import chess.domain.piece.ordinary.King;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 class DBConnectionTest {
 
@@ -18,12 +18,8 @@ class DBConnectionTest {
     private static final String URL = "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION;
 
     @Test
-    @DisplayName("Mysql 연겵 테스트")
-    public void testConnection() throws Exception {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            System.out.println(connection);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @DisplayName("Mysql 연결 테스트")
+    public void testConnection() {
+        assertThatNoException().isThrownBy(DBConnection::getConnection);
     }
 }
