@@ -42,6 +42,7 @@ public enum File {
     public String symbol() {
         return this.symbol;
     }
+
     public int index() {
         return this.index;
     }
