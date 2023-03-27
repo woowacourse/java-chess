@@ -46,6 +46,10 @@ public class GameController {
 
         while (true) {
             try {
+                if (chessGame.canEndGame(whitePlayer, blackPlayer)) {
+                    OutputView.printGameEnd();
+                    break;
+                }
                 String[] gameCommand = InputView.readGameCommand();
                 GameCommand command = GameCommand.of(gameCommand);
 
@@ -63,10 +67,6 @@ public class GameController {
                     showStatus(chessGame, whitePlayer, blackPlayer);
                 }
                 if (command.equals(GameCommand.END)) {
-                    break;
-                }
-                if (chessGame.canEndGame(whitePlayer, blackPlayer)) {
-                    OutputView.printGameEnd();
                     break;
                 }
             } catch (IllegalArgumentException e) {
