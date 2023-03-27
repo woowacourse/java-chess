@@ -28,6 +28,13 @@ public enum TeamMapper {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_TEAM_MESSAGE));
     }
 
+    public static TeamMapper from(String teamView) {
+        return Arrays.stream(values())
+                .filter(it -> it.teamView.equals(teamView))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_TEAM_MESSAGE));
+    }
+
     public String getTeamView() {
         return teamView;
     }
