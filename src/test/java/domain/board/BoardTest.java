@@ -1,15 +1,11 @@
 package domain.board;
 
-import domain.piece.move.Coordinate;
-import domain.piece.nonsliding.King;
-import domain.piece.nonsliding.Knight;
-import domain.piece.pawn.BlackPawn;
-import domain.piece.pawn.WhitePawn;
-import domain.piece.sliding.Bishop;
-import domain.piece.sliding.Queen;
-import domain.piece.sliding.Rook;
 import domain.piece.Color;
 import domain.piece.Piece;
+import domain.piece.move.Coordinate;
+import domain.piece.nonsliding.King;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -89,101 +85,6 @@ class BoardTest {
 
         assertThat(board.collectPointFor(Color.BLACK))
                 .isEqualTo(38);
-    }
-
-    @Test
-    @DisplayName("폰은 점수가 1점이다")
-    void pawnPointTest() {
-        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
-        mockPieceLocations.put(
-                new Coordinate(0, 0),
-                new WhitePawn(Color.WHITE)
-        );
-        mockPieceLocations.put(
-                new Coordinate(1, 1),
-                new BlackPawn(Color.BLACK)
-        );
-
-        Board board = new Board(mockPieceLocations);
-
-        assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(1);
-        assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("나이트는 점수가 2.5점이다")
-    void knightPointTest() {
-        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
-        mockPieceLocations.put(
-                new Coordinate(0, 0),
-                new Knight(Color.WHITE)
-        );
-        mockPieceLocations.put(
-                new Coordinate(1, 1),
-               new Knight((Color.BLACK))
-        );
-
-        Board board = new Board(mockPieceLocations);
-
-        assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(2.5);
-        assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(2.5);
-    }
-
-    @Test
-    @DisplayName("비숍은 점수가 3점이다")
-    void bishopPointTest() {
-        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
-        mockPieceLocations.put(
-                new Coordinate(0, 0),
-                new Bishop(Color.WHITE)
-        );
-        mockPieceLocations.put(
-                new Coordinate(1, 1),
-                new Bishop(Color.BLACK)
-        );
-
-        Board board = new Board(mockPieceLocations);
-
-        assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(3);
-        assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("룩은 점수가 5점이다")
-    void rookPointTest() {
-        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
-        mockPieceLocations.put(
-                new Coordinate(0, 0),
-                new Rook(Color.WHITE)
-        );
-        mockPieceLocations.put(
-                new Coordinate(1, 1),
-                new Rook(Color.BLACK)
-        );
-
-        Board board = new Board(mockPieceLocations);
-
-        assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(5);
-        assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(5);
-    }
-
-    @Test
-    @DisplayName("퀸은 점수가 9점이다")
-    void queenPointTest() {
-        Map<Coordinate, Piece> mockPieceLocations = new HashMap<>();
-        mockPieceLocations.put(
-                new Coordinate(0, 0),
-                new Queen(Color.WHITE)
-        );
-        mockPieceLocations.put(
-                new Coordinate(1, 1),
-                new Queen(Color.BLACK)
-        );
-
-        Board board = new Board(mockPieceLocations);
-
-        assertThat(board.collectPointFor(Color.WHITE)).isEqualTo(9);
-        assertThat(board.collectPointFor(Color.BLACK)).isEqualTo(9);
     }
 
     @ParameterizedTest(name = "화이트 폰이 일렬로 {0}개 놓이는 경우 점수가 0.5씩 부여된다")

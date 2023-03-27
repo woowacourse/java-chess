@@ -163,4 +163,4 @@ class PawnTest {
         assertThatCode(() -> whitePawn.isAttackable(startCoordinate, endCoordinate, otherWhitePawn))
                 .doesNotThrowAnyException();
     }
-}
+    }
