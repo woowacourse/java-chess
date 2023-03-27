@@ -28,15 +28,13 @@ CREATE TABLE player
 
 CREATE TABLE chess_room
 (
-    id              BIGINT       NOT NULL AUTO_INCREMENT,
-    chess_game_id   BIGINT       NOT NULL,
-    white_player_id BIGINT       NOT NULL,
-    black_player_id BIGINT       NOT NULL,
-    state           VARCHAR(255) NOT NULL,
+    id            BIGINT       NOT NULL AUTO_INCREMENT,
+    chess_game_id BIGINT       NOT NULL,
+    player_id     BIGINT       NOT NULL,
+    state         VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (chess_game_id) REFERENCES chess_game (id),
-    FOREIGN KEY (white_player_id) REFERENCES player (id),
-    FOREIGN KEY (black_player_id) REFERENCES player (id)
+    FOREIGN KEY (player_id) REFERENCES player (id)
 );
 
 INSERT INTO chess_position (file, `rank`, piece, team)
