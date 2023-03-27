@@ -1,7 +1,5 @@
 package chess.database;
 
-import chess.ChessGame;
-import database.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,7 +22,7 @@ public class ChessGameDao {
     }
 
     public void addGame() {
-        final var query = "INSERT INTO ChessGame VALUES()";
+        final var query = "INSERT INTO ChessGameDB VALUES()";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)
         ) {
@@ -35,7 +33,7 @@ public class ChessGameDao {
     }
 
     public int findLastInsertGame() {
-        final var query = "SELECT MAX(gameIdx) \"gameIdx\" FROM ChessGame";
+        final var query = "SELECT MAX(gameIdx) \"gameIdx\" FROM ChessGameDB";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();

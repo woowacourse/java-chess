@@ -22,7 +22,7 @@ public class ChessBoardDao {
     }
 
     public void addBoard(int gameIdx, int file, int rank, String pieceType, String side) {
-        final var query = "INSERT INTO ChessBoard VALUES(?, ?, ?, ?, ?)";
+        final var query = "INSERT INTO ChessBoardDB VALUES(?, ?, ?, ?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)
         ) {
@@ -39,7 +39,7 @@ public class ChessBoardDao {
 
     public String findPieceType(int gameIdx, int file, int rank) {
         final var query = "select pieceType\n"
-                + "from ChessBoard\n"
+                + "from ChessBoardDB\n"
                 + "where gameIdx = ? and bFile = ? and bRank = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -57,7 +57,7 @@ public class ChessBoardDao {
 
     public String findPieceSide(int gameIdx, int file, int rank) {
         final var query = "select side\n"
-                + "from ChessBoard\n"
+                + "from ChessBoardDB\n"
                 + "where gameIdx = ? and bFile = ? and bRank = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -74,7 +74,7 @@ public class ChessBoardDao {
     }
 
     public void movePiece(int gameIdx, int targetFile, int targetRank, String pieceType, String pieceSide) {
-        final var query = "update ChessBoard\n"
+        final var query = "update ChessBoardDB\n"
                 + "set pieceType = ?\n"
                 + ", side = ?\n"
                 + "where gameIdx = ? and bFile = ? and bRank = ?;";

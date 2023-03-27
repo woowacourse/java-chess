@@ -23,7 +23,6 @@ public class ChessGame {
         if (gameIdx == 0) {
             chessGameDao.addGame();
             this.gameIdx = chessGameDao.findLastInsertGame();
-            System.out.println(this.gameIdx);
             addChessBoard(new ChessBoardDao(), this.gameIdx);
             return;
         }

@@ -68,7 +68,6 @@ public class ChessBoard {
                 }
             }
         }
-        System.out.println("chessBoard 이전꺼 생성");
         return new ChessBoard(chessBoard);
     }
 
