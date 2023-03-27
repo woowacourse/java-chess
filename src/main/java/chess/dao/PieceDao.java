@@ -67,4 +67,21 @@ public class PieceDao {
         }
         return Collections.max(pieceIds) + 1;
     }
+
+    public void update(final PieceDto pieceDto, final int id) {
+        final String query = "UPDATE piece SET running_game_id = ?, piece_type = ?, file_position = ?, "
+                + "rank_position = ?, color = ? WHERE id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, pieceDto.getRunningGameId());
+            preparedStatement.setString(2, pieceDto.getType());
+            preparedStatement.setString(3, pieceDto.getFile());
+            preparedStatement.setInt(4, pieceDto.getRank());
+            preparedStatement.setString(5, pieceDto.getColor());
+            preparedStatement.setInt(6, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
