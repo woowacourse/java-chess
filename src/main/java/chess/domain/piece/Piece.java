@@ -9,6 +9,7 @@ public abstract class Piece implements Cloneable {
 
     protected final Color color;
     protected PiecePosition piecePosition;
+    protected Type type;
 
     public Piece(final Color color, final PiecePosition piecePosition) {
         this.color = color;
@@ -72,5 +73,21 @@ public abstract class Piece implements Cloneable {
 
     public File file() {
         return piecePosition.file();
+    }
+
+    public String getFileToString() {
+        return String.valueOf(file().file());
+    }
+
+    public int rank() {
+        return piecePosition.rank();
+    }
+
+    public String type() {
+        return type.label();
+    }
+
+    public String getColorToString() {
+        return color.label();
     }
 }

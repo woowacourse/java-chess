@@ -42,4 +42,8 @@ public class Rank {
     public int hashCode() {
         return Objects.hash(rank);
     }
+
+    public int value() {
+        return rank;
+    }
 }

@@ -61,4 +61,8 @@ public class PiecePosition {
     public File file() {
         return file;
     }
+
+    public int rank() {
+        return rank.value();
+    }
 }

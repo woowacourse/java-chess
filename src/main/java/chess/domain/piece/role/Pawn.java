@@ -2,6 +2,7 @@ package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
@@ -18,6 +19,7 @@ public class Pawn extends Piece {
 
     public Pawn(final Color color, final PiecePosition piecePosition) {
         super(color, piecePosition);
+        this.type = Type.PAWN;
         this.isMoved = false;
     }
 
