@@ -30,7 +30,7 @@ class RunningGameDaoTest {
         final RunningGameDto runningGameDto = new RunningGameDto("White");
 
         // when & then
-        assertDoesNotThrow(() -> runningGameDao.save(runningGameDto));
+        assertDoesNotThrow(() -> runningGameDao.create(runningGameDto));
     }
 
     @AfterEach

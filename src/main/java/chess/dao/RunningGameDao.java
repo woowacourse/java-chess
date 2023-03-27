@@ -28,7 +28,7 @@ public class RunningGameDao {
         }
     }
 
-    public void save(final RunningGameDto runningGameDto) {
+    public void create(final RunningGameDto runningGameDto) {
         final String query = "INSERT INTO running_game VALUES (?, ?)";
         final int id = 1;
         try (final var connection = getConnection();
