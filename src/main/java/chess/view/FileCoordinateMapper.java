@@ -32,4 +32,12 @@ public enum FileCoordinateMapper {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
     }
+
+    public static FileCoordinate findBy(int columnNumber) {
+        return Arrays.stream(values())
+                .map(it -> it.fileCoordinate)
+                .filter(it -> it.getColumnNumber() == columnNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
+    }
 }

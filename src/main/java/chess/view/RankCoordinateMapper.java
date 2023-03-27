@@ -32,4 +32,12 @@ public enum RankCoordinateMapper {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
+
+    public static RankCoordinate findBy(int rowNumber) {
+        return Arrays.stream(values())
+                .map(it -> it.rankCoordinate)
+                .filter(it -> it.getRowNumber() == rowNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
+    }
 }
