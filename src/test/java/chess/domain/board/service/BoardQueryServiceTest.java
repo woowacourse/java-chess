@@ -5,9 +5,8 @@ import chess.dao.MySqlManager;
 import chess.domain.board.Board;
 import chess.domain.board.Turn;
 import chess.domain.board.position.Position;
-import chess.domain.board.service.dto.AllBoardSearchResponse;
-import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.board.service.dto.BoardRegisterRequest;
+import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.AfterEach;
@@ -19,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,9 +80,9 @@ class BoardQueryServiceTest {
     @DisplayName("searchAllBoards() : 사용자가 참여하고 있는 모든 Board를 조회할 수 있다.")
     void test_searchAllBoards() throws Exception {
         //when
-        final AllBoardSearchResponse allBoardSearchResponse = boardQueryService.searchAllBoards();
+        List<Long> ids = boardQueryService.searchAllBoards();
 
         //then
-        assertThat(allBoardSearchResponse.ids()).hasSize(2);
+        assertThat(ids).hasSize(2);
     }
 }

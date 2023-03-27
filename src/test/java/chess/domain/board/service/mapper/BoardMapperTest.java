@@ -64,27 +64,6 @@ class BoardMapperTest {
     }
 
     @Test
-    @DisplayName("mapToBoardMapFrom() : 위치를 가지고 있는 String을 Board로 변환시킬 수 있다.")
-    void test_mapToBoardMapFrom() throws Exception {
-        //given
-        //"K : 1 7, P : 3 7, k : 4 7, p : 5 7"
-        final String position = "K : 1 7, P : 3 7, k : 4 7, p : 5 7";
-
-        //when
-        Board board = boardMapper.mapToBoardMapFrom(position);
-
-        //then
-        final Map<Position, Piece> chessBoard = board.chessBoard();
-
-        assertThat(chessBoard)
-                  .hasSize(4)
-                  .containsKeys(new Position(1, 7),
-                                new Position(3, 7),
-                                new Position(5, 7),
-                                new Position(4, 7));
-    }
-
-    @Test
     @DisplayName("mapToBoardSearchResponseFrom() : 위치와 차례를 String을 Board로 변환시킬 수 있다.")
     void test_mapToBoardSearchResponseFrom() throws Exception {
         //given

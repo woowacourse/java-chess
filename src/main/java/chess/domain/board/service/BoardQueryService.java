@@ -2,13 +2,12 @@ package chess.domain.board.service;
 
 import chess.dao.BoardDao;
 import chess.domain.board.Board;
-import chess.domain.board.service.dto.AllBoardSearchResponse;
-import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.board.service.dto.BoardSearchResponse;
+import chess.domain.board.service.mapper.BoardMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class BoardQueryService {
 
@@ -30,16 +29,13 @@ public class BoardQueryService {
                                                         boardSearchResponse.turn());
     }
 
-    public AllBoardSearchResponse searchAllBoards() {
+    public List<Long> searchAllBoards() {
 
         final List<BoardSearchResponse> boardSearchResponses = boardDao.findAll();
-        final List<Long> ids = new ArrayList<>();
 
-        for (final BoardSearchResponse boardSearchResponse : boardSearchResponses) {
-            ids.add(boardSearchResponse.id());
-        }
-
-        return new AllBoardSearchResponse(ids);
+        return boardSearchResponses.stream()
+                                   .map(it -> it.id())
+                                   .collect(Collectors.toList());
     }
 
 }
