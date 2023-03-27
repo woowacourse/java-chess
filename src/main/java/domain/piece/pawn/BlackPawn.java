@@ -18,7 +18,7 @@ public class BlackPawn extends Piece {
     }
 
     @Override
-    public Map<Direction, Integer> getMovableRange() {
+    public Map<Direction, Integer> getMovableDirectionAndRange() {
         Map<Direction, Integer> movableRange = new HashMap<>();
         movableRange.put(Direction.DOWN, 2);
         return movableRange;

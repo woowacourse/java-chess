@@ -16,7 +16,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Map<Direction, Integer> getMovableRange() {
+    public Map<Direction, Integer> getMovableDirectionAndRange() {
         return null;
     }
 

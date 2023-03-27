@@ -23,7 +23,7 @@ public abstract class Piece {
         return (isWhite() && piece.isBlack()) || (isBlack() && piece.isWhite());
     }
 
-    public abstract Map<Direction, Integer> getMovableRange();
+    public abstract Map<Direction, Integer> getMovableDirectionAndRange();
 
     public abstract boolean isWhite();
 

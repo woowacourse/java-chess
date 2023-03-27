@@ -8,7 +8,7 @@ import java.util.Map;
 
 public abstract class Rook extends Piece {
     @Override
-    public Map<Direction, Integer> getMovableRange() {
+    public Map<Direction, Integer> getMovableDirectionAndRange() {
         Map<Direction, Integer> movableRange = new HashMap<>();
         movableRange.put(Direction.UP, 8);
         movableRange.put(Direction.DOWN, 8);

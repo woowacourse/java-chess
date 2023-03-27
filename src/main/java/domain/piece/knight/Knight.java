@@ -8,7 +8,7 @@ import java.util.Map;
 
 public abstract class Knight extends Piece {
     @Override
-    public Map<Direction, Integer> getMovableRange() {
+    public Map<Direction, Integer> getMovableDirectionAndRange() {
         HashMap<Direction, Integer> movableRange = new HashMap<>();
         movableRange.put(Direction.UP_LEFT_L, 1);
         movableRange.put(Direction.UP_RIGHT_L, 1);
