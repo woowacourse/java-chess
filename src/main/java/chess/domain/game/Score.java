@@ -1,9 +1,7 @@
 package chess.domain.game;
 
 public class Score {
-
-    private static final double DUPLICATED_PAWN_DEDUCTION_SCORE = 0.5;
-
+    
     private final double value;
 
     private Score(double score) {

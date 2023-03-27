@@ -6,15 +6,14 @@ import java.sql.SQLException;
 
 public class JdbcConnection {
 
-    private static Connection connection;
-
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-
+    private static Connection connection;
+    
     static {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
