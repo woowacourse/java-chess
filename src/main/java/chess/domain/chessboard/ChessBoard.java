@@ -17,11 +17,9 @@ import chess.domain.piece.state.Knight;
 import chess.domain.piece.state.Pawn;
 import chess.domain.piece.state.Queen;
 import chess.domain.piece.state.Rook;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public final class ChessBoard {
@@ -123,35 +121,6 @@ public final class ChessBoard {
         departure.validateRoute(routeSquares);
     }
 
-    public List<Square> getSquares() {
-        return this.squares.values()
-                .stream()
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public List<List<Square>> getSameFileSquaresByTeam(final Team team) {
-        return squaresGroupByFile(squaresGroupByTeam(team));
-    }
-
-    private Map<Coordinate, Square> squaresGroupByTeam(final Team team) {
-        return squares.entrySet()
-                .stream()
-                .filter(e -> e.getValue().isMyTeam(team))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-    }
-
-    private List<List<Square>> squaresGroupByFile(Map<Coordinate, Square> squares) {
-        final List<List<Square>> sameFileSquares = new ArrayList<>();
-        for (FileIndex fileIndex : FileIndex.files()) {
-            sameFileSquares.add(squares.entrySet()
-                    .stream()
-                    .filter(e -> e.getKey().isMyFile(fileIndex))
-                    .map(Entry::getValue)
-                    .collect(Collectors.toUnmodifiableList()));
-        }
-        return sameFileSquares;
-    }
-
     public List<Square> squaresByTeam(final Team team) {
         return squares.values()
                 .stream()
@@ -169,7 +138,7 @@ public final class ChessBoard {
         return sum;
     }
 
-    private long countContinuousPawnInFile(FileIndex fileIndex, Team team) {
+    private long countContinuousPawnInFile(final FileIndex fileIndex, final Team team) {
         long count = squares.entrySet().stream()
                 .filter(entry -> entry.getKey().isMyFile(fileIndex))
                 .filter(entry -> entry.getValue().isMyTeam(team))
@@ -179,5 +148,22 @@ public final class ChessBoard {
             return 1;
         }
         return 0;
+    }
+
+    public List<Square> getSquares() {
+        return this.squares.values()
+                .stream()
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public Map<Team, Boolean> isKingAlive() {
+        return Map.of(Team.WHITE, isKingAliveByTeam(Team.WHITE), Team.BLACK, isKingAliveByTeam(Team.BLACK));
+    }
+
+    private boolean isKingAliveByTeam(final Team team) {
+        return squares.values()
+                .stream()
+                .filter(square -> square.isTypeOf(PieceType.KING))
+                .anyMatch(square -> square.isMyTeam(team));
     }
 }

@@ -102,7 +102,13 @@ public abstract class Piece implements PieceState {
         throw new IllegalArgumentException(this.getClass().getSimpleName() + "(은)는 해당 좌표로 이동할 수 없습니다.");
     }
 
+    @Override
     public boolean isTypeOf(final PieceType pieceType) {
         return this.pieceType == pieceType;
+    }
+
+    @Override
+    public Score getScore(){
+        return pieceType.score;
     }
 }
