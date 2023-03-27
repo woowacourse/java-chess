@@ -1,5 +1,7 @@
 package chess.dao;
 
+import static chess.domain.piece.PieceType.*;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class ChessBoardDao implements ChessDao {
 			 final var preparedStatement = connection.prepareStatement(query)) {
 			final var resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
+				PieceType pieceType = valueOf(resultSet.getString("piece_type"));
 				Rank rank = Rank.from(resultSet.getInt("piece_rank"));
 				File file = File.from(resultSet.getString("piece_file").charAt(0));
 				Color color = Color.valueOf(resultSet.getString("color"));
@@ -69,22 +71,22 @@ public class ChessBoardDao implements ChessDao {
 	}
 
 	private Piece toPiece(PieceType pieceType, Color color, Position position) {
-		if (pieceType == PieceType.ROOK) {
+		if (pieceType == ROOK) {
 			return new Rook(color, position);
 		}
-		if (pieceType == PieceType.BISHOP) {
+		if (pieceType == BISHOP) {
 			return new Bishop(color, position);
 		}
-		if (pieceType == PieceType.KNIGHT) {
+		if (pieceType == KNIGHT) {
 			return new Knight(color, position);
 		}
-		if (pieceType == PieceType.QUEEN) {
+		if (pieceType == QUEEN) {
 			return new Queen(color, position);
 		}
-		if (pieceType == PieceType.KING) {
+		if (pieceType == KING) {
 			return new King(color, position);
 		}
-		if (pieceType == PieceType.PAWN) {
+		if (pieceType == PAWN) {
 			return new Pawn(color, position);
 		}
 		return new Empty(Color.NONE, position);

@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.color.Color.*;
 import static chess.domain.move.Direction.*;
+import static chess.domain.piece.PieceType.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 
@@ -65,6 +66,6 @@ public final class Rook extends Piece {
 
 	@Override
 	public PieceType type() {
-		return PieceType.ROOK;
+		return ROOK;
 	}
 }

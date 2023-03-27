@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.*;
+
 import java.util.Set;
 
 import chess.domain.color.Color;
@@ -40,6 +42,6 @@ public final class Empty extends Piece {
 
 	@Override
 	public PieceType type() {
-		return PieceType.EMPTY;
+		return EMPTY;
 	}
 }
