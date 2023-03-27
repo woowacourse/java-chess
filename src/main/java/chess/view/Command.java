@@ -66,6 +66,9 @@ public enum Command {
         if (END.keyword.equals(command)) {
             return true;
         }
+        if (SAVE.keyword.equals(command)) {
+            return true;
+        }
         return STATUS.keyword.equals(command);
     }
 

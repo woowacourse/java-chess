@@ -110,7 +110,6 @@ public class ChessController {
         if (Command.from(command).isSaveCommand()) {
             chessGameDao.save(ChessGameDto.of(chessGame));
             OutputView.printGameStatus(chessGame.getGameStatus());
-            playUntilEnd();
         }
     }
 
