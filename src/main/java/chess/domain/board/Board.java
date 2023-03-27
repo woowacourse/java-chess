@@ -11,6 +11,7 @@ import chess.domain.pieces.PieceType;
 import chess.domain.pieces.Score;
 import chess.domain.position.Position;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +91,11 @@ public final class Board {
 
     private void validateMove(final Position currentPosition, final Position targetPosition, final Piece currentPositionPiece) {
         Direction correctDirection = Direction.computeDirection(currentPosition, targetPosition);
+        if (correctDirection == Direction.KNIGHT) {
+            currentPositionPiece.validateMove(correctDirection, Collections.emptyList());
+            return;
+        }
+
         UnitVector unitVector = UnitVector.computeUnitVector(currentPosition, targetPosition);
         List<Piece> onRoutePieces = getOnRoutePieces(currentPosition, targetPosition, unitVector);
 
