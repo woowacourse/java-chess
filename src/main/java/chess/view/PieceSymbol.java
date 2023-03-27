@@ -11,7 +11,8 @@ public enum PieceSymbol {
     QUEEN(PieceType.QUEEN, "Q", "q"),
     KNIGHT(PieceType.KNIGHT, "N", "n"),
     KING(PieceType.KING, "K", "k"),
-    PAWN(PieceType.PAWN, "P", "p"),
+    BLACK_PAWN(PieceType.BLACK_PAWN, "P", "P"),
+    WHITE_PAWN(PieceType.WHITE_PAWN, "p", "p"),
     BLANK(PieceType.BLANK, " ", " ");
 
     private final PieceType pieceType;

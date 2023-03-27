@@ -1,6 +1,7 @@
 package chess.domain.chessGame;
 
 import chess.domain.PieceDto;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -16,6 +17,10 @@ public interface ChessGameState {
     void end();
 
     boolean isEnd();
+
+    boolean isReady();
+
+    Color getThisTurn();
 
     Map<Position, PieceDto> getPrintingBoard();
 }

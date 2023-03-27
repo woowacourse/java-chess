@@ -27,6 +27,13 @@ public enum File {
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 위치 입니다."));
     }
 
+
+    public static File of(String number) {
+        return Arrays.stream(values())
+                .filter(file -> Integer.toString(file.index).equals(number))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 위치 입니다."));
+    }
+
     public static File of(char symbol) {
         return Arrays.stream(values())
                 .filter(file -> file.symbol == symbol).findFirst()

@@ -111,6 +111,14 @@ public class Position {
         return this.file.equals(file);
     }
 
+    public String getFileIndex() {
+        return Integer.toString(file.getFileIndex());
+    }
+
+    public String getRankIndex() {
+        return Integer.toString(rank.getRankIndex());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

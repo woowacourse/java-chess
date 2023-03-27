@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class Board {
     public static final int KING_COUNT = 1;
+    public static final int KING_DIE_SCORE = -1;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -108,8 +109,8 @@ public class Board {
         List<Piece> pieces = board.values().stream()
                 .filter(p -> p.isSameColor(color))
                 .collect(Collectors.toList());
-        if (pieces.stream().filter(Piece::isKing).count() < KING_COUNT) {
-            return 0;
+        if (pieces.stream().noneMatch(Piece::isKing)) {
+            return KING_DIE_SCORE;
         }
         return pieces.stream()
                 .map(Piece::getScore)

@@ -4,6 +4,7 @@ import chess.KingDiedException;
 import chess.domain.Board;
 import chess.domain.PieceDto;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -19,14 +20,17 @@ public class PlayingChessGameState implements ChessGameState {
         this.currentTurn = Color.WHITE;
     }
 
+    public PlayingChessGameState(Map<Position, Piece> board, Color thisTurn) {
+        this.board = new Board(board);
+        this.currentTurn = thisTurn;
+    }
+
     @Override
     public Map<Position, PieceDto> move(String currentPositionSymbol, String nextPositionSymbol) {
-        Position currentPosition = Position.of(currentPositionSymbol);
-        Position nextPosition = Position.of(nextPositionSymbol);
         Color thisTurn = currentTurn;
         currentTurn = currentTurn.next();
         try {
-            return board.move(currentPosition, nextPosition, thisTurn);
+            return board.move(Position.of(currentPositionSymbol), Position.of(nextPositionSymbol), thisTurn);
         } catch (KingDiedException e) {
             this.isEnd = true;
             return e.getBoard();
@@ -54,7 +58,17 @@ public class PlayingChessGameState implements ChessGameState {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public Map<Position, PieceDto> getPrintingBoard() {
         return board.getPrintingBoard();
+    }
+
+    @Override
+    public Color getThisTurn() {
+        return this.currentTurn;
     }
 }

@@ -8,6 +8,7 @@ import chess.domain.piece.move_rule.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.view.OutputView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +18,10 @@ import java.util.Map;
 public class ReadyChessGameState implements ChessGameState {
 
     private static final String GAME_NOT_START_ERROR_MESSAGE = "아직 게임을 시작하지 않았습니다.";
+
+    public ReadyChessGameState() {
+        OutputView.getInstance().printStartMessage();
+    }
 
     @Override
     public Map<Position, PieceDto> move(String currentPosition, String nextPosition) {
@@ -45,8 +50,19 @@ public class ReadyChessGameState implements ChessGameState {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
     public Map<Position, PieceDto> getPrintingBoard() {
         return Collections.emptyMap();
+    }
+
+
+    @Override
+    public Color getThisTurn() {
+        return null;
     }
 
     private Map<Position, Piece> initializedBoard() {

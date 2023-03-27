@@ -15,11 +15,6 @@ public abstract class PawnMoveRule implements MoveRule {
     }
 
     @Override
-    public PieceType pieceType() {
-        return PieceType.PAWN;
-    }
-
-    @Override
     public boolean isPawnMove() {
         return true;
     }

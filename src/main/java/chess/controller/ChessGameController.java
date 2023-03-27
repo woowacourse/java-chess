@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.chessGame.ChessGameState;
-import chess.domain.chessGame.ReadyChessGameState;
 import chess.controller.command.CommandExecutorMapper;
+import chess.domain.chessGame.ChessGameState;
+import chess.repository.ChessGameDao;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -12,19 +12,36 @@ public class ChessGameController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = OutputView.getInstance();
 
+    private final ChessGameDao chessGameDao;
+
+    public ChessGameController(ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
+
     public void run() {
-        ChessGameState chessGameState = new ReadyChessGameState();
+        ChessGameState chessGameState = chessGameDao.findChessGame();
+        if (chessGameState.isReady()) {
+            outputView.printStartMessage();
+        }
         playChessGame(chessGameState);
     }
 
     private void playChessGame(ChessGameState chessGameState) {
-        outputView.printStartMessage();
         do {
-            List<String> inputCommand = inputView.inputCommand();
-            chessGameState = executeCommand(chessGameState, inputCommand);
+            printPlayingMessage(chessGameState);
+            chessGameState = executeCommand(chessGameState, inputView.inputCommand());
+            chessGameDao.updateChessGame(chessGameState);
         } while (!chessGameState.isEnd());
         outputView.printBoard(chessGameState.getPrintingBoard());
         outputView.printEndGameMessage(chessGameState.calculateScore());
+        chessGameDao.deleteAll();
+    }
+
+    private void printPlayingMessage(ChessGameState chessGameState) {
+        if (!chessGameState.isReady() && !chessGameState.isEnd()) {
+            outputView.printBoard(chessGameState.getPrintingBoard());
+            outputView.printTurnMessage(chessGameState.getThisTurn());
+        }
     }
 
     private ChessGameState executeCommand(ChessGameState chessGameState, List<String> inputCommand) {

@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.PieceDto;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class OutputView {
 
         for (Position position : pieces.keySet()) {
             List<Integer> coordinate = position.getCoordinate();
-            List<String> oneLine = board.get(coordinate.get(RANK_INDEX));
+            List<String> oneLine = board.get(7 - coordinate.get(RANK_INDEX));
             PieceDto pieceDto = pieces.get(position);
 
             setPrintingSymbol(coordinate, oneLine, pieceDto);
@@ -78,6 +79,9 @@ public class OutputView {
         System.out.println("게임이 종료되었습니다.");
         double blackScore = score.get(BLACK_SCORE_INDEX);
         double whiteScore = score.get(WHITE_SCORE_INDEX);
+        if (blackScore == whiteScore) {
+            System.out.println("점수가 같습니다. 무승부입니다.");
+        }
         if (blackScore <= 0) {
             System.out.println("흰색 진영이 승리했습니다.");
         }
@@ -102,5 +106,9 @@ public class OutputView {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public void printTurnMessage(Color thisTurn) {
+        System.out.println(thisTurn.getName() + "진영의 차례 입니다.");
     }
 }

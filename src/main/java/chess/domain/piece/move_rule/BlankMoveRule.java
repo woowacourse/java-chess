@@ -25,4 +25,5 @@ public class BlankMoveRule implements MoveRule {
     public boolean isKingMove() {
         return false;
     }
+
 }

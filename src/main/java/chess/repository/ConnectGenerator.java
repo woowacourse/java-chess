@@ -1,10 +1,10 @@
-package chess.database;
+package chess.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public final class UserDao {
+public class ConnectGenerator {
 
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
@@ -12,7 +12,7 @@ public final class UserDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    public UserDao() {
+    public ConnectGenerator() {
     }
 
     public Connection getConnection() {
@@ -24,26 +24,6 @@ public final class UserDao {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public User findByUserId(final String userId) {
-        final var query = "SELECT * FROM user WHERE user_id = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, userId);
-
-            final var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new User(
-                        resultSet.getString("user_id"),
-                        resultSet.getString("name")
-                );
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
     }
 
 }

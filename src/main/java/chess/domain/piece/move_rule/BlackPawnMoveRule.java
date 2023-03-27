@@ -1,5 +1,6 @@
 package chess.domain.piece.move_rule;
 
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -36,5 +37,10 @@ public class BlackPawnMoveRule extends PawnMoveRule {
     private boolean isTwoSquareForwardMove(Position currentPosition, Position nextPosition) {
         Position forwardTwoPosition = currentPosition.moveRankDown().moveRankDown();
         return forwardTwoPosition.equals(nextPosition);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.BLACK_PAWN;
     }
 }

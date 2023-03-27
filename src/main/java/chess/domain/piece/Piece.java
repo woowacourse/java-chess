@@ -17,6 +17,12 @@ public class Piece {
         this.pieceType = moveRule.pieceType();
     }
 
+    public Piece(PieceType pieceType, Color color) {
+        this.moveRule = pieceType.getRule();
+        this.color = color;
+        this.pieceType = pieceType;
+    }
+
     public List<Position> move(Position currentPosition, Position nextPosition) {
         return moveRule.move(currentPosition, nextPosition);
     }

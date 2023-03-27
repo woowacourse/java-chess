@@ -29,6 +29,12 @@ public enum Rank {
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 위치 입니다."));
     }
 
+    public static Rank of(String number) {
+        return Arrays.stream(values())
+                .filter(rank -> Integer.toString(rank.index).equals(number))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 위치 입니다."));
+    }
+
     public static Rank of(char symbol) {
         return Arrays.stream(values())
                 .filter(rank -> rank.symbol == symbol)
@@ -60,7 +66,7 @@ public enum Rank {
     }
 
     public int getRankIndex() {
-        return MAX_RANK - index;
+        return index;
     }
 
     private Rank prev() {
