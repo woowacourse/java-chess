@@ -10,32 +10,18 @@ public final class UserDao {
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "Eunbiichu77!"; // MySQL 서버 비밀번호
+    private static final String PASSWORD = "12345678"; // MySQL 서버 비밀번호
 
     public Connection getConnection() {
         // 드라이버 연결
         try {
-            return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/chess?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true",
-                    "root",
-                    "Eunbiichu77!"
-            );
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-//    public Connection getConnection() {
-//        // 드라이버 연결
-//        try {
-//            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-//        } catch (final SQLException e) {
-//            System.err.println("DB 연결 오류:" + e.getMessage());
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public void insert(User user) {
         String sql = "INSERT INTO user (user_id, name) VALUES(?, ?)";
@@ -71,7 +57,7 @@ public final class UserDao {
     }
 
     public void update(User user) {
-        String sql = "UPDATE user SET name = ?  WHERE user_id = ?";
+        String sql = "UPDATE user SET name = ? WHERE user_id = ?";
         try (final Connection connection = getConnection();
              final var preparedStatement = connection.prepareStatement(sql)) {
 
