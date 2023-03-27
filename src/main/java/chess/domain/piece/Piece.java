@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Turn;
 import chess.domain.board.position.Movement;
 import chess.domain.board.position.Path;
 import chess.domain.board.position.Position;
@@ -52,5 +53,9 @@ public abstract class Piece {
 
     public boolean isSameColor(Color color) {
         return this.color.isSameColor(color);
+    }
+
+    public boolean isNotMyTurn(final Turn turn) {
+        return this.color.isDifferentColor(turn.color());
     }
 }

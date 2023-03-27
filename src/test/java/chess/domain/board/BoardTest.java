@@ -36,7 +36,7 @@ class BoardTest {
         final Position to = new Position(1, 1);
 
         //when & then
-        assertThatThrownBy(() -> board.move(emptyPosition, to, Color.WHITE))
+        assertThatThrownBy(() -> board.move(emptyPosition, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발점에 말이 없습니다.");
     }
@@ -50,7 +50,7 @@ class BoardTest {
         assertTrue(board.chessBoard().containsKey(from));
         assertFalse(board.chessBoard().containsKey(to));
 
-        board.move(from, to, Color.WHITE);
+        board.move(from, to);
 
         assertFalse(board.chessBoard().containsKey(from));
         assertTrue(board.chessBoard().containsKey(to));
@@ -64,7 +64,7 @@ class BoardTest {
         final Position to = new Position(1, 3);
 
         //when & then
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.move(from, to))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("중간에 다른 기물이 존재합니다.");
     }
@@ -73,14 +73,14 @@ class BoardTest {
     @DisplayName("move() : 연속으로 같은 색의 말이 이동할 경우 IllegalArgumentException 가 밸상합니다.")
     void test_move_serialMove_IllegalArgumentException() throws Exception {
         //given
-        board.move(new Position(2, 2), new Position(2, 4), Color.WHITE);
+        board.move(new Position(2, 2), new Position(2, 4));
 
         final Position from = new Position(2, 4);
         final Position to = new Position(2, 5);
 
         //when & then
 
-        assertThatThrownBy(() -> board.move(from, to, Color.BLACK))
+        assertThatThrownBy(() -> board.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("차례에 맞는 말을 선택해 주세요");
     }

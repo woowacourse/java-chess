@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
+import chess.domain.board.Turn;
 import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.board.score.BoardScore;
@@ -8,7 +9,6 @@ import chess.domain.board.score.Score;
 import chess.domain.board.search.BoardSearch;
 import chess.domain.board.service.BoardCommandService;
 import chess.domain.board.service.BoardQueryService;
-import chess.domain.board.service.dto.AllBoardSearchResponse;
 import chess.domain.piece.Color;
 import chess.view.Command;
 import chess.view.InputView;
@@ -41,33 +41,25 @@ public class ChessController {
 
         final String newGameCommand = InputView.readNewGameCommand();
 
-        Color turn = Color.WHITE;
+        Board board = Board.makeNewGame(new BoardFactory());
         Long savedId = DEFAULT_BOARD_ID;
 
-        Board board = initializeBoard();
-
         if (Command.isNewGame(newGameCommand)) {
-//            final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(board, turn);
-//            savedId = boardCommandService.registerBoard(boardRegisterRequest);
+            savedId = boardCommandService.registerBoard(board);
         }
 
         if (Command.isLoadGame(newGameCommand)) {
             System.out.println("현재 진행하고 있는 게임 번호들입니다.");
 
-            final AllBoardSearchResponse allBoardSearchResponse = boardQueryService.searchAllBoards();
+            final List<Long> boardIds = boardQueryService.searchAllBoards();
 
-            OutputView.printGameCandidates(allBoardSearchResponse.ids());
+            OutputView.printGameCandidates(boardIds);
 
             System.out.println("불러올 게임의 번호를 입력해주세요.");
 
-            final long loadedGameNumber = InputView.readLoadGameCommand();
+            savedId = InputView.readLoadGameCommand();
 
-            savedId = loadedGameNumber;
-
-//            final BoardSearchResponse boardSearchResponse = boardQueryService.searchBoard(loadedGameNumber);
-//
-////            board = new Board(boardSearchResponse.chessBoard());
-//            turn = Color.valueOf(boardSearchResponse.turn());
+            board = boardQueryService.searchBoard(savedId);
         }
 
         final String command = InputView.readStartCommand();
@@ -76,15 +68,10 @@ public class ChessController {
             return;
         }
 
-        startGame(board, turn, savedId);
+        startGame(board, savedId);
     }
 
-    private Board initializeBoard() {
-        final BoardFactory boardFactory = new BoardFactory();
-        return null;
-    }
-
-    private void startGame(final Board board, Color turn, Long boardId) {
+    private void startGame(final Board board, Long boardId) {
 
         while (true) {
             OutputView.printBoard(board.chessBoard());
@@ -94,48 +81,46 @@ public class ChessController {
             final String startCommand = moveCommands.get(START_COMMAND_INDEX.value());
 
             if (Command.isEnd(startCommand)) {
-                end(boardId, board, turn);
+                end(boardId, board);
                 return;
             }
 
             if (Command.isStatus(startCommand)) {
-                status(board, boardId, turn);
+                status(board, boardId);
                 return;
             }
+
+            final Turn beforeTurn = board.turn();
 
             if (Command.isMove(startCommand)) {
                 final Position fromPosition = convertPositionFrom(moveCommands.get(SOURCE_POSITION.value()));
                 final Position toPosition = convertPositionFrom(moveCommands.get(TARGET_POSITION.value()));
 
-                board.move(fromPosition, toPosition, turn);
+                board.move(fromPosition, toPosition);
             }
 
             final BoardSearch boardSearch = BoardSearch.countPiecePerClassTypeFrom(board.chessBoard());
 
             if (boardSearch.isKingDead()) {
                 final BoardScore boardScore = BoardScore.flatByColumnFrom(board.chessBoard());
-                OutputView.printWinner(turn, boardScore.calculateBoardScoreBy(turn));
+                OutputView.printWinner(beforeTurn.color(), boardScore.calculateBoardScoreBy(beforeTurn.color()));
                 return;
             }
-
-            turn = turn.opposite();
         }
     }
 
-    private void end(final Long boardId, final Board board, final Color turn) {
-//        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, turn);
-//        boardCommandService.modifyBoard(boardModifyRequest);
+    private void end(final Long boardId, final Board board) {
+        boardCommandService.modifyBoard(board, boardId);
     }
 
-    private void status(final Board board, final Long boardId, final Color turn) {
+    private void status(final Board board, final Long boardId) {
         final BoardScore boardScore = BoardScore.flatByColumnFrom(board.chessBoard());
 
         final Score blackScore = boardScore.calculateBoardScoreBy(Color.BLACK);
         final Score whiteScore = boardScore.calculateBoardScoreBy(Color.WHITE);
 
         OutputView.printWinner(whoIsWinner(blackScore, whiteScore), whiteScore, blackScore);
-//        final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(boardId, board, turn);
-//        boardCommandService.modifyBoard(boardModifyRequest);
+        boardCommandService.modifyBoard(board, boardId);
     }
 
     private Color whoIsWinner(final Score blackScore, final Score whiteScore) {

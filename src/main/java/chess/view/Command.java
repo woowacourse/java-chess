@@ -30,7 +30,7 @@ public enum Command {
     }
 
     public static boolean isNotAppropriate(String command) {
-        return START.value.equals(command) || isEnd(command);
+        return isNotStart(command) && !isEnd(command);
     }
 
     public static boolean isStatus(final String command) {

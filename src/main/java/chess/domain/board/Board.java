@@ -11,7 +11,7 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> chessBoard;
-    private final Turn turn;
+    private Turn turn;
 
     private Board(final BoardFactory boardFactory) {
         this.chessBoard = boardFactory.createInitialBoard();
@@ -31,16 +31,18 @@ public class Board {
         return new Board(boardFactory);
     }
 
-    public void move(Position from, Position to, final Color nextTurn) {
+    public void move(Position from, Position to) {
         final Piece currentMovePiece = findPieceFrom(from);
 
         validateMoveFromEmpty(currentMovePiece);
-        validateTurn(currentMovePiece, nextTurn);
+        validateTurn(currentMovePiece);
 
         final Path path = currentMovePiece.searchPathTo(from, to, findPieceFrom(to));
 
         validateObstacle(path);
         movePiece(from, to);
+
+        turn = turn.change();
     }
 
     private Piece findPieceFrom(final Position position) {
@@ -53,8 +55,8 @@ public class Board {
         }
     }
 
-    private void validateTurn(final Piece currentTurnPiece, final Color nextTurn) {
-        if (currentTurnPiece.isDifferentColor(nextTurn)) {
+    private void validateTurn(final Piece currentTurnPiece) {
+        if (currentTurnPiece.isNotMyTurn(turn)) {
             throw new IllegalArgumentException("차례에 맞는 말을 선택해 주세요");
         }
     }

@@ -12,6 +12,10 @@ public class Turn {
         this.color = color;
     }
 
+    public Turn change() {
+        return new Turn(color.opposite());
+    }
+
     public Color color() {
         return color;
     }
