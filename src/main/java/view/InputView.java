@@ -19,4 +19,9 @@ public final class InputView {
     public static List<String> readPlayGameOption() {
         return Arrays.asList(SCANNER.nextLine().split(" "));
     }
+
+    public static String readBoardName() {
+        System.out.println("저장할 방 이름을 입력해주세요.");
+        return SCANNER.nextLine();
+    }
 }

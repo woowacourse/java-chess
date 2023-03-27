@@ -40,4 +40,8 @@ public final class ChessGame {
         }).sum();
         return new Score(teamScore);
     }
+
+    public Team getTeam() {
+        return thisTurn;
+    }
 }

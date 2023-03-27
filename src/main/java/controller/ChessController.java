@@ -1,10 +1,12 @@
 package controller;
 
-import static command.MoveCommand.END;
-import static command.MoveCommand.STATUS;
+import static command.PlayCommand.END;
+import static command.PlayCommand.SAVE;
+import static command.PlayCommand.STATUS;
 
-import command.MoveCommandParser;
+import command.PlayCommandParser;
 import command.StartCommand;
+import database.dao.ChessGameDao;
 import domain.ChessGame;
 import gameinitializer.InitialChessAlignment;
 import java.util.List;
@@ -51,12 +53,16 @@ public final class ChessController {
         } while (nextStep);
     }
 
-    private boolean executeCommand(final MoveCommandParser command) {
-        if (END.equals(command.getMoveCommand())) {
+    private boolean executeCommand(final PlayCommandParser command) {
+        if (END.equals(command.getPlayCommand())) {
             return false;
         }
-        if (STATUS.equals(command.getMoveCommand())) {
+        if (STATUS.equals(command.getPlayCommand())) {
             OutputView.printGameScoreStatus(chessGame);
+            return true;
+        }
+        if (SAVE.equals(command.getPlayCommand())) {
+            savaStatus();
             return true;
         }
         boolean isEndedGame = movePieceWithHandling(command);
@@ -64,7 +70,17 @@ public final class ChessController {
         return !isEndedGame;
     }
 
-    private boolean movePieceWithHandling(final MoveCommandParser command) {
+    private void savaStatus() {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        String boardId = InputView.readBoardName();
+        try {
+            chessGameDao.saveBoard(chessGame, boardId);
+        } catch (RuntimeException e) {
+            OutputView.printError(e.getMessage());
+        }
+    }
+
+    private boolean movePieceWithHandling(final PlayCommandParser command) {
         try {
             return chessGame.movePiece(command.getSource(), command.getDestination());
         } catch (IllegalArgumentException e) {
@@ -73,16 +89,16 @@ public final class ChessController {
         }
     }
 
-    private MoveCommandParser readMoveCommand() {
+    private PlayCommandParser readMoveCommand() {
         List<String> commands;
         while (validateInputMoveCommand(commands = InputView.readPlayGameOption())) {
         }
-        return MoveCommandParser.parse(commands);
+        return PlayCommandParser.parse(commands);
     }
 
     private boolean validateInputMoveCommand(List<String> commands) {
         try {
-            MoveCommandParser.parse(commands);
+            PlayCommandParser.parse(commands);
             return false;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
