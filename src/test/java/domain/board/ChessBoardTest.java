@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import domain.PieceToStringConverter;
+import domain.PieceNameConverter;
 import domain.piece.Piece;
 
 class ChessBoardTest {
@@ -47,7 +47,7 @@ class ChessBoardTest {
         void pawnTest() {
             Piece piece = chessBoard.getBoard().get(new Square(File.H, Rank.TWO));
 
-            assertThat(PieceToStringConverter.convert(piece)).isEqualTo("p");
+            assertThat(PieceNameConverter.convert(piece)).isEqualTo("p");
             assertThat(piece.isWhite()).isTrue();
         }
 
@@ -56,7 +56,7 @@ class ChessBoardTest {
         void knightTest() {
             Piece piece = chessBoard.getBoard().get(new Square(File.B, Rank.ONE));
 
-            assertThat(PieceToStringConverter.convert(piece)).isEqualTo("n");
+            assertThat(PieceNameConverter.convert(piece)).isEqualTo("n");
             assertThat(piece.isWhite()).isTrue();
         }
 
@@ -65,7 +65,7 @@ class ChessBoardTest {
         void rookTest() {
             Piece piece = chessBoard.getBoard().get(new Square(File.A, Rank.ONE));
 
-            assertThat(PieceToStringConverter.convert(piece)).isEqualTo("r");
+            assertThat(PieceNameConverter.convert(piece)).isEqualTo("r");
             assertThat(piece.isWhite()).isTrue();
         }
 
@@ -74,7 +74,7 @@ class ChessBoardTest {
         void bishopTest() {
             Piece piece = chessBoard.getBoard().get(new Square(File.C, Rank.ONE));
 
-            assertThat(PieceToStringConverter.convert(piece)).isEqualTo("b");
+            assertThat(PieceNameConverter.convert(piece)).isEqualTo("b");
             assertThat(piece.isWhite()).isTrue();
         }
 
@@ -83,7 +83,7 @@ class ChessBoardTest {
         void queenTest() {
             Piece piece = chessBoard.getBoard().get(new Square(File.D, Rank.ONE));
 
-            assertThat(PieceToStringConverter.convert(piece)).isEqualTo("q");
+            assertThat(PieceNameConverter.convert(piece)).isEqualTo("q");
             assertThat(piece.isWhite()).isTrue();
         }
 
@@ -92,7 +92,7 @@ class ChessBoardTest {
         void kingTest() {
             Piece piece = chessBoard.getBoard().get(new Square(File.E, Rank.ONE));
 
-            assertThat(PieceToStringConverter.convert(piece)).isEqualTo("k");
+            assertThat(PieceNameConverter.convert(piece)).isEqualTo("k");
             assertThat(piece.isWhite()).isTrue();
         }
     }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.PieceToStringConverter;
+import domain.PieceNameConverter;
 import domain.board.File;
 import domain.board.Rank;
 import domain.board.Square;
@@ -24,7 +24,7 @@ public class BoardResponseDto {
             .entrySet()
             .stream()
             .collect(
-                Collectors.toMap(Map.Entry::getKey, entry -> PieceToStringConverter.convert(entry.getValue())));
+                Collectors.toMap(Map.Entry::getKey, entry -> PieceNameConverter.convert(entry.getValue())));
 
         List<String> messages = new ArrayList<>();
         for (Rank value : Rank.values()) {

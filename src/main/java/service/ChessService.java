@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import dao.CampDao;
+import dao.ChessBoardDao;
+import domain.PieceNameConverter;
 import domain.PieceToScoreConverter;
-import domain.PieceToStringConverter;
 import domain.board.ChessBoard;
 import domain.board.File;
 import domain.board.Rank;
@@ -23,20 +25,36 @@ public class ChessService {
     private static final int RANK_INDEX = 1;
 
     private final ChessBoard chessBoard;
+    private final ChessBoardDao chessBoardDao;
+    private final CampDao campDao;
     private Camp currentCamp;
     private boolean ongoing;
 
     public ChessService() {
         this.chessBoard = new ChessBoard();
+        this.chessBoardDao = new ChessBoardDao();
+        this.campDao = new CampDao();
         this.currentCamp = Camp.WHITE;
-        PieceToStringConverter.init();
+        PieceNameConverter.init();
         PieceToScoreConverter.init();
     }
 
     public void start() {
+        if (!ongoing && chessBoardDao.hasData()) {
+            for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
+                chessBoard.getBoard().put(squareAndPiece.getKey(), chessBoardDao.select(squareAndPiece.getKey()));
+            }
+            chessBoardDao.update(chessBoard);
+            currentCamp = campDao.select();
+            ongoing = true;
+            return;
+        }
+
         if (!ongoing) {
             chessBoard.initialize();
             ongoing = true;
+            chessBoardDao.save(chessBoard);
+            campDao.save(currentCamp);
             return;
         }
         throw new IllegalStateException("이미 게임이 실행중입니다.");
@@ -56,6 +74,8 @@ public class ChessService {
             chessBoard.move(currentSquare, targetSquare);
             checkKingDead();
             currentCamp = currentCamp.fetchOppositeCamp();
+            chessBoardDao.update(chessBoard);
+            campDao.update(currentCamp);
             return;
         }
         throw new IllegalStateException("게임을 먼저 실행해주세요.");
@@ -67,6 +87,7 @@ public class ChessService {
             .stream()
             .filter(piece -> PieceToScoreConverter.convert(piece) == 0 && !piece.isEmpty()).count() != 2) {
             ongoing = false;
+            chessBoardDao.delete();
         }
     }
 

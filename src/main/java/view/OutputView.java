@@ -3,14 +3,12 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 
+import org.w3c.dom.ls.LSOutput;
+
 import dto.BoardResponseDto;
 import dto.ScoreResponseDto;
 
 public class OutputView {
-    private static final String DELIMITER = "";
-    private static final String EMPTY = ".";
-    private static final String SCORE_FORM = "%s : %.1f\n";
-
     private OutputView() {
     }
 
@@ -24,8 +22,8 @@ public class OutputView {
     public static void printChessBoard(BoardResponseDto boardResponseDto) {
         List<String> board = boardResponseDto.getBoard();
         if (board.stream()
-            .allMatch(rank -> Arrays.stream(rank.split(DELIMITER))
-                .allMatch(piece -> piece.equals(EMPTY)))) {
+            .allMatch(rank -> Arrays.stream(rank.split(""))
+                .allMatch(piece -> piece.equals(".")))) {
             return;
         }
 
@@ -35,7 +33,7 @@ public class OutputView {
     }
 
     public static void printScore(ScoreResponseDto scoreResponseDto) {
-        scoreResponseDto.getScore().forEach((camp, score) -> System.out.printf(SCORE_FORM, camp, score));
+        scoreResponseDto.getScore().forEach((camp, score) -> System.out.println(camp + " : " + score));
     }
 
     public static void printErrorMessage(RuntimeException e) {
