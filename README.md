@@ -133,8 +133,7 @@ I[players] --> H;
 
 ### DDL
 ```sql
-create table chess.piece
-(
+create table piece(
     id     bigint auto_increment primary key,
     `rank` bigint   null,
     file   char(2)  null,
@@ -142,14 +141,16 @@ create table chess.piece
     shape  char(16) null
 )
 
-create table chess.turn
-(
+create table turn(
    id             bigint not null auto_increment,
    current_color  char(16) default 'white',
    primary key (id)
 );
 ```
 ### DML
+> turn 테이블 생성 후 turn의 기본 값을 추가하는 쿼리입니다.
+> 
+> 처음에 한번만 실행해주세요.
 ```sql
 insert into turn values ('WHITE');
 ```
