@@ -3,7 +3,10 @@ package chess.dao;
 import chess.dto.FinishedGameDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FinishedGameDao {
 
@@ -35,5 +38,20 @@ public class FinishedGameDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Integer> findAllIds() {
+        String query = "SELECT id FROM finished_game";
+        List<Integer> finishedGameIds = new ArrayList<>();
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                finishedGameIds.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return finishedGameIds;
     }
 }
