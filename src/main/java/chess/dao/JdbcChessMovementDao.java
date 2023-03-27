@@ -11,9 +11,6 @@ import java.util.List;
 
 public class JdbcChessMovementDao implements ChessMovementDao {
 
-    private static final String SOURCE_COLUMN_NAME = "source";
-    private static final String TARGET_COLUMN_NAME = "target";
-
     private final ConnectionStrategy connectionStrategy;
 
     public JdbcChessMovementDao(final ConnectionStrategy connectionStrategy) {
@@ -37,8 +34,8 @@ public class JdbcChessMovementDao implements ChessMovementDao {
         final List<Movement> movements = new ArrayList<>();
 
         while (resultSet.next()) {
-            final String source = resultSet.getString(SOURCE_COLUMN_NAME);
-            final String target = resultSet.getString(TARGET_COLUMN_NAME);
+            final String source = resultSet.getString(Movement.SOURCE_COLUMN_NAME);
+            final String target = resultSet.getString(Movement.TARGET_COLUMN_NAME);
 
             movements.add(new Movement(source, target));
         }
