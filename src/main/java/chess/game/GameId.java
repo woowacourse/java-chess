@@ -4,7 +4,8 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class GameId {
-    private static final Pattern GAME_ID_REGEX = Pattern.compile("^[1-9]\\d{0,4}$");
+    private static final Pattern GAME_ID_REGEX = Pattern.compile("^[1-9]\\d{0,3}$");
+    private static final String INVALID_GAME_ID_EXCEPTION_MESSAGE = "[ERROR] 방번호는 1~9999 까지 숫자만 가능합니다.";
 
     private final String gameId;
 
@@ -15,7 +16,7 @@ public class GameId {
 
     private void validateGameId(String gameId) {
         if (!GAME_ID_REGEX.matcher(gameId).matches()) {
-            throw new IllegalArgumentException("[ERROR] 잘못된 형식의 체스방 ID 입니다.");
+            throw new IllegalArgumentException(INVALID_GAME_ID_EXCEPTION_MESSAGE);
         }
     }
 
