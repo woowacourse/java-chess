@@ -53,7 +53,7 @@ public class JdbcChessMovementDao implements ChessMovementDao {
 
     @Override
     public void delete() {
-        final String sql = "DELETE FROM movement";
+        final String sql = "TRUNCATE TABLE movement";
 
         executeUpdate(sql, Collections.emptyList());
     }
