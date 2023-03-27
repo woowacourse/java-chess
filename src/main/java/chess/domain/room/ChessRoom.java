@@ -28,12 +28,12 @@ public class ChessRoom {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final ChessRoom chessRoom = (ChessRoom) o;
-        return id == chessRoom.id && gameId == chessRoom.gameId && playerId == chessRoom.playerId && state == chessRoom.state;
+        return id == chessRoom.id && gameId == chessRoom.gameId && playerId == chessRoom.playerId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gameId, playerId, state);
+        return Objects.hash(id, gameId, playerId);
     }
 
     public int getId() {
@@ -42,10 +42,6 @@ public class ChessRoom {
 
     public int getGameId() {
         return gameId;
-    }
-
-    public int getPlayerId() {
-        return playerId;
     }
 
     public ChessState getState() {
