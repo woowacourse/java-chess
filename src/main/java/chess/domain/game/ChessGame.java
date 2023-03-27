@@ -7,6 +7,8 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.controller.GameStatus;
 import chess.domain.board.Rank;
+import chess.domain.game.dto.LoadedPiecesInsertDto;
+import chess.domain.game.dto.LoadedPiecesSelectDto;
 import chess.domain.piece.AllPiecesGenerator;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
@@ -53,7 +55,7 @@ public class ChessGame {
 
     public void load() {
         checkGameAlreadyStart(gameStatus);
-        final LoadedPiecesDto loadedPiecesDto = piecesDao.findAll();
+        final LoadedPiecesSelectDto loadedPiecesDto = piecesDao.findAll();
         final List<Piece> pieces = parsePieces(loadedPiecesDto);
         if (pieces.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 저장된 게임 정보가 없습니다. 새로운 게임을 시작해주세요.");
@@ -64,7 +66,7 @@ public class ChessGame {
         gameStatus = GameStatus.START;
     }
 
-    private List<Piece> parsePieces(LoadedPiecesDto piecesDto) {
+    private List<Piece> parsePieces(LoadedPiecesSelectDto piecesDto) {
         final List<Integer> files = piecesDto.getFiles();
         final List<Integer> ranks = piecesDto.getRanks();
         final List<String> sides = piecesDto.getSides();

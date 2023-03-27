@@ -1,8 +1,7 @@
 package chess.dao;
 
-import chess.domain.piece.Side;
-import chess.domain.game.LoadedPiecesDto;
-import chess.domain.piece.type.Piece;
+import chess.domain.game.dto.LoadedPiecesInsertDto;
+import chess.domain.game.dto.LoadedPiecesSelectDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -29,7 +28,7 @@ public class MySqlPiecesDao implements PiecesDao {
     }
 
     @Override
-    public LoadedPiecesDto findAll() {
+    public LoadedPiecesSelectDto findAll() {
         final var query = "SELECT position_file, position_rank, piece_side, piece_type FROM piece";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -45,7 +44,7 @@ public class MySqlPiecesDao implements PiecesDao {
                 piece_sides.add(resultSet.getString("piece_side"));
                 piece_types.add(resultSet.getString("piece_type"));
             }
-            return new LoadedPiecesDto(position_files, position_ranks, piece_sides, piece_types);
+            return new LoadedPiecesSelectDto(position_files, position_ranks, piece_sides, piece_types);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
