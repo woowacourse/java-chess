@@ -3,6 +3,7 @@ package chess.domain.piece.state;
 import chess.domain.chessboard.Coordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public final class Pawn extends Piece {
     private boolean isEnemyOnDiagonal = false;
 
     public Pawn(final Team team) {
-        super(team);
+        super(team, PieceType.PAWN);
     }
 
     @Override
