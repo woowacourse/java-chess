@@ -9,6 +9,9 @@ public enum Command {
     START("start", ""),
     NEW("new", "게임 시작 전에는 새로운 게임 만들 수 없습니다."),
     EXIST("exist", "게임 시작 전에는 이어하기를 할 수 없습니다."),
+    REPLAY("replay", ""),
+    NEXT("next", "리플레이를 실행하기 전에는 다음 수를 볼 수 없습니다."),
+    BACK("back", "리플레이를 실행하기 전에는 이전 수로 돌아갈 수 없습니다."),
     END("end", ""),
     MOVE("move", "게임 시작 전에는 기물을 이동할 수 없습니다."),
     STATUS("status", "게임 시작 전에는 승자를 확인할 수 없습니다.");

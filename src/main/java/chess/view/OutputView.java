@@ -45,7 +45,11 @@ public class OutputView {
     }
 
     public static void printNoGameExistMessage() {
-        System.out.println("진행 중이던 게임이 없습니다. 게임을 새로 시작합니다.");
+        System.out.println("진행 중이던 게임이 없습니다.");
+    }
+
+    public static void printNewGameMessage() {
+        System.out.println("게임을 새로 시작합니다.");
     }
 
     public static void printGames(List<GameDto> gameDtos) {
@@ -64,6 +68,7 @@ public class OutputView {
 
     public static void printInitialCommandMessage() {
         printMessage("게임 시작 : start");
+        printMessage("리플레이  : replay");
         printMessage("게임 종료 : end");
         System.out.println();
     }
@@ -76,6 +81,24 @@ public class OutputView {
 
     private static void printMessage(final String message) {
         System.out.println(MESSAGE_PREFIX + message);
+    }
+
+    public static void printReplayCommandMessage() {
+        System.out.println();
+        System.out.println("리플레이를 시작합니다.");
+        printMessage("다음 턴 : next");
+        printMessage("이전 턴 : back");
+        printMessage("리플레이 종료 : end");
+    }
+
+    public static void printTurn(int turn) {
+        System.out.println();
+        System.out.printf("%d번째 턴%n", turn);
+    }
+
+    public static void printReplayEndMessage() {
+        System.out.println();
+        System.out.println("리플레이가 종료되었습니다.");
     }
 
     public static void printGameStatus(final GameStatusDto gameStatusDto) {

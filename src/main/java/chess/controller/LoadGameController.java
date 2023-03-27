@@ -17,6 +17,22 @@ public class LoadGameController {
 
     private final LoadGameDao loadGameDao = new LoadGameDao(Database.PRODUCT);
 
+    public String selectGame(String userId) {
+        List<GameDto> gamesDto = loadGameDao.getGamesById(userId);
+        if (gamesDto.isEmpty()) {
+            return null;
+        }
+        return selectGame(gamesDto);
+    }
+
+    public int getLastTurn(String gameId) {
+        return loadGameDao.getLastTurnById(gameId);
+    }
+
+    public ChessGame getGameById(String gameId, int turn) {
+        return loadGameDao.getGameById(gameId, turn);
+    }
+
     public ChessGameDto getChessGameDtoByCommand(User user, Command newGameCommand) {
         String userId = user.getId();
         if (newGameCommand == Command.NEW) {
@@ -36,6 +52,7 @@ public class LoadGameController {
         List<GameDto> gamesDto = loadGameDao.getGamesById(userId);
         if (gamesDto.isEmpty()) {
             OutputView.printNoGameExistMessage();
+            OutputView.printNewGameMessage();
             return createNewGame(userId);
         }
         String gameId = selectGame(gamesDto);
@@ -63,10 +80,8 @@ public class LoadGameController {
         return gameId;
     }
 
-    private ChessGame getGameById(String id) {
-        int lastTurn = loadGameDao.getLastTurnById(id);
-        return loadGameDao.getGameById(id, lastTurn);
+    private ChessGame getGameById(String gameId) {
+        int lastTurn = getLastTurn(gameId);
+        return loadGameDao.getGameById(gameId, lastTurn);
     }
-
-
 }
