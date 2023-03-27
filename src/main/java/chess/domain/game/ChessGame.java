@@ -11,6 +11,7 @@ import static chess.view.ErrorMessage.NO_PIECE_ERROR_MESSAGE;
 
 public class ChessGame {
     private final ChessBoard chessBoard;
+    private GameStatus gameStatus;
 
     public ChessGame(BoardStrategy boardStrategy) {
         this.chessBoard = new ChessBoard(boardStrategy.generate());
@@ -33,5 +34,9 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 }

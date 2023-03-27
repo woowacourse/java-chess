@@ -7,7 +7,6 @@ import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.score.ScoreCalculator;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DbChessGameDao {
+public class ChessGameDao {
     private static final String SERVER = "localhost:3306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
@@ -36,13 +35,14 @@ public class DbChessGameDao {
         Map<Position, Piece> piecePosition = chessGame.getChessBoardMap();
 
         for (Map.Entry<Position, Piece> positionPieceEntry : piecePosition.entrySet()) {
-            final var query = "INSERT INTO chess_game(piece_type, piece_color, piece_column, piece_rank) VALUES (?, ?, ?, ?)";
+            final var query = "INSERT INTO chess_game(piece_type, piece_color, piece_column, piece_rank, game_status) VALUES (?, ?, ?, ?, ?)";
             try (final var connection = getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, positionPieceEntry.getValue().findName());
                 preparedStatement.setString(2, positionPieceEntry.getValue().getColor().toString());
                 preparedStatement.setString(3, positionPieceEntry.getKey().getColumn().name());
                 preparedStatement.setString(4, positionPieceEntry.getKey().getRank().name());
+                //preparedStatement.setString(5, chessGame..getRank().name());
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
@@ -53,7 +53,7 @@ public class DbChessGameDao {
     public ChessGame select() {
         Map<Position, Piece> pieces = new LinkedHashMap<>();
 
-        final var query = "SELECT piece_type, piece_color, piece_column, piece_rank FROM chess_game";
+        final var query = "SELECT piece_type, piece_color, piece_column, piece_rank, game_status FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 

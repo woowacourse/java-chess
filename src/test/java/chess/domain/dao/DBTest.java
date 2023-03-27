@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.dao.DbChessGameDao;
+import chess.dao.ChessGameDao;
 import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,8 @@ public class DBTest {
     void save_테스트() {
         //given
         ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
-        DbChessGameDao dbChessGameDao = new DbChessGameDao();
-        dbChessGameDao.save(chessGame);
+        ChessGameDao chessGameDao = new ChessGameDao();
+        chessGameDao.save(chessGame);
 
         //when
 

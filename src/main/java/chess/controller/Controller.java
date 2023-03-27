@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.dao.DbChessGameDao;
+import chess.dao.ChessGameDao;
 import chess.domain.Position;
 import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessGame;
@@ -28,7 +28,7 @@ public class Controller {
     public void playChessGame() {
         printStartGuideMessage();
         ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
-        DbChessGameDao dao = new DbChessGameDao();
+        ChessGameDao dao = new ChessGameDao();
         dao.save(chessGame);
         dao.select();
 
