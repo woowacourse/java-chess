@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.exception.InvalidTurnException;
 import chess.dto.SquareMoveDto;
@@ -15,7 +16,13 @@ import static chess.view.Command.MOVE_SOURCE_INDEX;
 // TODO: 커멘드 패턴 적용해보기
 public class ChessController {
 
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGameDao chessGameDao;
+    private ChessGame chessGame;
+
+    public ChessController(final ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+        this.chessGame = new ChessGame();
+    }
 
     public void run() {
         OutputView.printStartMessage();
@@ -44,6 +51,7 @@ public class ChessController {
         }
     }
 
+    // TODO: 함수형 인터페이스 고려
     private void playUntilEnd() {
         List<String> command = InputView.readCommand();
         while (Command.from(command).isMoveCommand()) {
@@ -53,6 +61,7 @@ public class ChessController {
         }
         checkStart(command);
         checkStatus(command);
+        checkLoad(command);
         checkEnd(command);
     }
 
@@ -80,6 +89,19 @@ public class ChessController {
             OutputView.printGameStatus(chessGame.getGameStatus());
             playUntilEnd();
         }
+    }
+
+    private void checkLoad(final List<String> command) {
+        if (Command.from(command).isLoadCommand()) {
+            String chessGameIdInput = command.get(1);
+            load(Integer.parseInt(chessGameIdInput));
+            OutputView.printGameStatus(chessGame.getGameStatus());
+            playUntilEnd();
+        }
+    }
+
+    private void load(final int id) {
+        chessGame = chessGameDao.findById(id);
     }
 
     private void checkEnd(final List<String> command) {

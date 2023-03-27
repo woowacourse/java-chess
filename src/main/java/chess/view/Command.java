@@ -9,11 +9,15 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
-    STATUS("status");
+    STATUS("status"),
+    LOAD("load"),
+    SAVE("save");
 
     private static final int COMMAND_KEYWORD_INDEX = 0;
     private static final int NORMAL_COMMAND_SIZE = 1;
+    private static final int LOAD_COMMAND_SIZE = 2;
     private static final int MOVE_COMMAND_SIZE = 3;
+    public static final int LOAD_ID_INDEX = 1;
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_DESTINATION_INDEX = 2;
     private static final int MOVE_SQUARE_INPUT_SIZE = 2;
@@ -35,6 +39,10 @@ public enum Command {
     private static void validateCommand(final List<String> command) {
         if (command.size() == NORMAL_COMMAND_SIZE) {
             validateNormalCommand(command.get(COMMAND_KEYWORD_INDEX));
+            return;
+        }
+        if (command.size() == LOAD_COMMAND_SIZE) {
+            validateLoad(command);
             return;
         }
         if (command.size() == MOVE_COMMAND_SIZE) {
@@ -59,6 +67,22 @@ public enum Command {
             return true;
         }
         return STATUS.keyword.equals(command);
+    }
+
+    private static void validateLoad(final List<String> command) {
+        final String loadCommand = command.get(COMMAND_KEYWORD_INDEX);
+        if (!loadCommand.equals(LOAD.keyword)) {
+            throw new CommandException();
+        }
+        validateLoadId(command.get(LOAD_ID_INDEX));
+    }
+
+    private static void validateLoadId(final String loadId) {
+        try {
+            Integer.parseInt(loadId);
+        } catch (NumberFormatException e) {
+            throw new CommandException();
+        }
     }
 
     private static void validateMove(final List<String> command) {
@@ -91,4 +115,6 @@ public enum Command {
     public boolean isStatusCommand() {
         return this == STATUS;
     }
+
+    public boolean isLoadCommand() { return this == LOAD; }
 }

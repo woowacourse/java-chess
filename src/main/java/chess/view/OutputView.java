@@ -19,7 +19,10 @@ public class OutputView {
     private static void printCommandMessage() {
         printEachStartPrefixMessage("게임 시작 : start");
         printEachStartPrefixMessage("게임 종료 : end");
+        printEachStartPrefixMessage("게임 상태 조회 : status");
+        printEachStartPrefixMessage("게임 저장 : save");
         printEachStartPrefixMessage("게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        printEachStartPrefixMessage("게임 로드 : load id - 예. load 1");
     }
 
     private static void printEachStartPrefixMessage(final String message) {
