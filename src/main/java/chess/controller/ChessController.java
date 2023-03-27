@@ -32,7 +32,7 @@ public class ChessController {
             String inputCommand = inputCommands.get(ORDER_COMMAND);
             CommandMapper commandState = CommandMapper.findCommand(inputCommand);
             Command command = commandState.getCommand();
-            return command.execute(chessGame ,inputCommands, outputView);
+            return command.execute(chessGame, inputCommands, outputView);
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return playGame(chessGame);

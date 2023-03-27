@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,7 +37,7 @@ class RookTest {
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable(final Direction direction, final int distance) {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
+        Rook rook = new Rook(Color.BLACK, Role.ROOK);
 
         // expected
         assertThat(rook.canMove(direction, distance)).isTrue();
@@ -49,7 +48,7 @@ class RookTest {
     @DisplayName("이동할 수 없는지 확인한다.")
     void isUnmovable(final Direction direction, final int distance) {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
+        Rook rook = new Rook(Color.BLACK, Role.ROOK);
 
         // expected
         assertThat(rook.canMove(direction, distance)).isFalse();
@@ -60,8 +59,8 @@ class RookTest {
     @DisplayName("공격할 수 있는지 확인한다.")
     void canAttack(final Direction direction, final int distance) {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
-        Pawn opponentPiece = new Pawn(Side.from(WHITE), Role.PAWN);
+        Rook rook = new Rook(Color.BLACK, Role.ROOK);
+        Pawn opponentPiece = new Pawn(WHITE, Role.PAWN);
 
         // expected
         assertThat(rook.canAttack(direction, distance, opponentPiece)).isTrue();
@@ -72,8 +71,8 @@ class RookTest {
     @DisplayName("공격할 수 없는지 확인한다.")
     void canNotAttack(final Direction direction, final int distance) {
         // when
-        Rook rook = new Rook(Side.from(Color.BLACK), Role.ROOK);
-        Pawn opponentPiece = new Pawn(Side.from(BLACK), Role.PAWN);
+        Rook rook = new Rook(Color.BLACK, Role.ROOK);
+        Pawn opponentPiece = new Pawn(BLACK, Role.PAWN);
 
         // expected
         assertThat(rook.canAttack(direction, distance, opponentPiece)).isFalse();

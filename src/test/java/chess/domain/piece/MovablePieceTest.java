@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,9 +29,9 @@ class PieceTest {
     @DisplayName("역할에 따른 기물이 생성된다.")
     void create(Role role, Class<Piece> expectedPieceType) {
         //given
-        Side side = Side.from(Color.BLACK);
+        Color color = Color.BLACK;
         //when
-        Piece piece = role.create(side);
+        Piece piece = role.create(color);
         //expected
         assertThat(piece).isInstanceOf(expectedPieceType);
     }
@@ -40,12 +39,12 @@ class PieceTest {
     @Test
     @DisplayName("타겟 기물이 같은 편인지 확인한다.")
     void isSameSide() {
-        Side sourceSide = Side.from(Color.WHITE);
-        Side sameSide = Side.from(Color.WHITE);
-        Side opponenetSide = Side.from(Color.BLACK);
+        Color sourceSide = Color.WHITE;
+        Color sameSide = Color.WHITE;
+        Color opponentSide = Color.BLACK;
         Piece sourcePiece = new Pawn(sourceSide, Role.PAWN);
         Piece targetPiece = new King(sameSide, Role.KING);
-        Piece opponentPiece = new Queen(opponenetSide, Role.QUEEN);
+        Piece opponentPiece = new Queen(opponentSide, Role.QUEEN);
 
         assertThat(sourcePiece.isOpponentSide(targetPiece)).isFalse();
         assertThat(sourcePiece.isOpponentSide(opponentPiece)).isTrue();

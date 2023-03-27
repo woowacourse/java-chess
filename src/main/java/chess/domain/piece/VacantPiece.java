@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.side.Side;
+import chess.domain.side.Color;
 
 public class VacantPiece extends Piece {
 
-    public VacantPiece(final Side side, final Role role) {
-        super(side, role);
+    public VacantPiece(final Color color, final Role role) {
+        super(color, role);
     }
 
     @Override

@@ -4,25 +4,23 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private static final Color FIRST_TURN_COLOR = Color.WHITE;
 
     private final Map<Square, Piece> board;
-    private Side turn;
+    private Color turn;
 
-    Board(final Map<Square, Piece> board) {
+    Board(final Map<Square, Piece> board, Color turn) {
         this.board = board;
-        this.turn = Side.from(FIRST_TURN_COLOR);
+        this.turn = turn;
     }
 
     public Piece findPiece(final File file, final Rank rank) {
-        return board.getOrDefault(Square.of(file, rank), Role.VACANT_PIECE.create(Side.from(Color.NOTHING)));
+        return board.getOrDefault(Square.of(file, rank), Role.VACANT_PIECE.create(Color.NOTHING));
     }
 
     public void makeMove(final Square sourceSquare, final Square targetSquare) {
@@ -41,7 +39,7 @@ public class Board {
     }
 
     private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
-        Piece vacantPiece = Role.VACANT_PIECE.create(Side.from(Color.NOTHING));
+        Piece vacantPiece = Role.VACANT_PIECE.create(Color.NOTHING);
         board.put(sourceSquare, vacantPiece);
         board.put(targetSquare, sourcePiece.update());
     }
@@ -61,8 +59,8 @@ public class Board {
 
     private void validateCurrentTurn(final Square sourceSquare) {
         Piece sourcePiece = board.get(sourceSquare);
-        Side sourceSide = sourcePiece.getSide();
-        if (sourceSide.isOpponent(turn) || sourcePiece.isRole(Role.VACANT_PIECE)) {
+        Color sourceColor = sourcePiece.getColor();
+        if (sourceColor.isOpponent(turn) || sourcePiece.isRole(Role.VACANT_PIECE)) {
             throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }

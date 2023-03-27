@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 import java.util.List;
 
@@ -14,8 +13,8 @@ public class Pawn extends Piece {
     protected static final List<Direction> BLACK_ATTACK_DIRECTION = List.of(SOUTH_EAST, SOUTH_WEST);
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    public Pawn(final Side side, final Role role) {
-        super(side, role);
+    public Pawn(final Color color, final Role role) {
+        super(color, role);
     }
 
     @Override
@@ -23,7 +22,7 @@ public class Pawn extends Piece {
         if (distance > MAX_MOVE_DISTANCE) {
             return false;
         }
-        if (this.side == Side.from(Color.WHITE)) {
+        if (this.color == Color.WHITE) {
             return WHITE_FORWARD_DIRECTION == direction;
         }
         return BLACK_FORWARD_DIRECTION == direction;
@@ -34,7 +33,7 @@ public class Pawn extends Piece {
         if (!isOpponentSide(target)) {
             return false;
         }
-        if (this.side == Side.from(Color.WHITE)) {
+        if (this.color == Color.WHITE) {
             return WHITE_ATTACK_DIRECTION.contains(direction) && distance == MAX_MOVE_DISTANCE;
         }
         return BLACK_ATTACK_DIRECTION.contains(direction) && distance == MAX_MOVE_DISTANCE;

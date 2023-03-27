@@ -2,7 +2,7 @@ package chess.domain.chessgame;
 
 import chess.domain.piece.Piece;
 import chess.domain.result.Score;
-import chess.domain.side.Side;
+import chess.domain.side.Color;
 
 import java.util.List;
 import java.util.Map;
@@ -15,9 +15,9 @@ public interface ChessGame {
 
     ChessGame move(final String sourceSquareInput, final String targetSquareInput);
 
-    Side findWinner();
+    Color findWinner();
 
-    Map<Side, Score> status();
+    Map<Color, Score> status();
 
     List<List<Piece>> findChessBoard();
 

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -46,7 +45,7 @@ class KnightTest {
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable(final Direction direction, final int distance) {
         // when
-        Knight knight = new Knight(Side.from(Color.BLACK), Role.KNIGHT);
+        Knight knight = new Knight(Color.BLACK, Role.KNIGHT);
 
         // expected
         assertThat(knight.canMove(direction, distance)).isTrue();
@@ -57,7 +56,7 @@ class KnightTest {
     @DisplayName("이동할 수 없는지 확인한다.")
     void isUnmovable(final Direction direction, final int distance) {
         // when
-        Knight knight = new Knight(Side.from(Color.BLACK), Role.KNIGHT);
+        Knight knight = new Knight(Color.BLACK, Role.KNIGHT);
 
         // expected
         assertThat(knight.canMove(direction, distance)).isFalse();
@@ -68,8 +67,8 @@ class KnightTest {
     @DisplayName("공격할 수 있는지 확인한다.")
     void canAttack(final Direction direction, final int distance) {
         // when
-        Knight knight = new Knight(Side.from(Color.BLACK), Role.KNIGHT);
-        Pawn opponentPiece = new Pawn(Side.from(WHITE), Role.PAWN);
+        Knight knight = new Knight(Color.BLACK, Role.KNIGHT);
+        Pawn opponentPiece = new Pawn(WHITE, Role.PAWN);
 
         // expected
         assertThat(knight.canAttack(direction, distance, opponentPiece)).isTrue();
@@ -80,8 +79,8 @@ class KnightTest {
     @DisplayName("공격할 수 없는지 확인한다.")
     void canNotAttack(final Direction direction, final int distance) {
         // when
-        Knight knight = new Knight(Side.from(Color.BLACK), Role.KNIGHT);
-        Pawn opponentPiece = new Pawn(Side.from(BLACK), Role.PAWN);
+        Knight knight = new Knight(Color.BLACK, Role.KNIGHT);
+        Pawn opponentPiece = new Pawn(BLACK, Role.PAWN);
 
         // expected
         assertThat(knight.canAttack(direction, distance, opponentPiece)).isFalse();

@@ -1,11 +1,13 @@
 package chess.domain.chessgame;
 
-import chess.domain.board.*;
+import chess.domain.board.Board;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
+import chess.domain.board.Square;
 import chess.domain.piece.Piece;
 import chess.domain.result.Judge;
 import chess.domain.result.Score;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RunningChessGame implements ChessGame {
-    public static final Side BLACK = Side.from(Color.BLACK);
-    public static final Side WHITE = Side.from(Color.WHITE);
-    public static final Side NOTHING = Side.from(Color.NOTHING);
 
     private final Board board;
 
@@ -42,30 +41,30 @@ public class RunningChessGame implements ChessGame {
     }
 
     private ChessGame checkKingDead() {
-        Side sideKingDied = Judge.findSideKingDied(board);
-        if (sideKingDied.equals(NOTHING)) {
+        Color sideKingDied = Judge.findSideKingDied(board);
+        if (sideKingDied.equals(Color.NOTHING)) {
             return this;
         }
         return new KingDiedGame(board);
     }
 
     @Override
-    public Side findWinner() {
-        Map<Side, Score> sideScore = status();
-        Score blackScore = sideScore.get(BLACK);
-        Score whiteScore = sideScore.get(WHITE);
+    public Color findWinner() {
+        Map<Color, Score> sideScore = status();
+        Score blackScore = sideScore.get(Color.BLACK);
+        Score whiteScore = sideScore.get(Color.WHITE);
         //TODO: compareTo로 바꾸기
         if (blackScore.getValue() > whiteScore.getValue()) {
-            return BLACK;
+            return Color.BLACK;
         }
         if (blackScore.getValue() < whiteScore.getValue()) {
-            return WHITE;
+            return Color.WHITE;
         }
-        return Side.from(Color.NOTHING);
+        return Color.NOTHING;
     }
 
     @Override
-    public Map<Side, Score> status() {
+    public Map<Color, Score> status() {
         return Judge.calculateScore(board);
     }
 

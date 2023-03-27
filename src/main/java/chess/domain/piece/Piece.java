@@ -1,22 +1,21 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 public abstract class Piece {
-    protected final Side side;
+    protected final Color color;
     protected final Role role;
 
-    public Piece(Side side, Role role) {
-        this.side = side;
+    public Piece(Color color, Role role) {
+        this.color = color;
         this.role = role;
     }
 
     public boolean isOpponentSide(final Piece targetPiece) {
-        if (side.equals(Side.from(Color.NOTHING))) {
+        if (color.equals(Color.NOTHING)) {
             return false;
         }
-        return side.findOpponent().equals(targetPiece.side);
+        return color.findOpponent().equals(targetPiece.color);
     }
 
     public boolean isRole(Role role) {
@@ -27,16 +26,12 @@ public abstract class Piece {
         return this.role != Role.VACANT_PIECE;
     }
 
-    public Side getSide() {
-        return side;
-    }
-
     public Role getRole() {
         return role;
     }
 
     public Color getColor() {
-        return side.getColor();
+        return color;
     }
 
     public abstract boolean canMove(final Direction direction, final int distance);

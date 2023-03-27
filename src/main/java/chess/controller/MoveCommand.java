@@ -3,7 +3,6 @@ package chess.controller;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.KingDiedGame;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import chess.view.OutputView;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class MoveCommand implements Command {
     private void printMoveResult(ChessGame chessGame, OutputView outputView) {
         outputView.printBoard(chessGame.findChessBoard());
         if (chessGame instanceof KingDiedGame) {
-            Color winnerColor = chessGame.findWinner().getColor();
+            Color winnerColor = chessGame.findWinner();
             outputView.printHigherScoreSide(winnerColor);
         }
     }

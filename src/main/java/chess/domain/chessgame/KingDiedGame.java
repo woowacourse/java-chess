@@ -7,7 +7,6 @@ import chess.domain.piece.Piece;
 import chess.domain.result.Judge;
 import chess.domain.result.Score;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +14,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class KingDiedGame implements ChessGame {
-    public static final Side BLACK = Side.from(Color.BLACK);
-    public static final Side WHITE = Side.from(Color.WHITE);
-    public static final Side NOTHING = Side.from(Color.NOTHING);
     public static final String ERROR_MESSAGE = "이미 게임이 종료되었습니다.";
 
     private final Board board;
@@ -42,19 +38,19 @@ public class KingDiedGame implements ChessGame {
     }
 
     @Override
-    public Side findWinner() {
-        Side sideKingDied = Judge.findSideKingDied(board);
-        if (sideKingDied.equals(BLACK)) {
-            return WHITE;
+    public Color findWinner() {
+        Color sideKingDied = Judge.findSideKingDied(board);
+        if (sideKingDied.equals(Color.BLACK)) {
+            return Color.WHITE;
         }
-        if (sideKingDied.equals(WHITE)) {
-            return BLACK;
+        if (sideKingDied.equals(Color.WHITE)) {
+            return Color.BLACK;
         }
-        return NOTHING;
+        return Color.NOTHING;
     }
 
     @Override
-    public Map<Side, Score> status() {
+    public Map<Color, Score> status() {
         return Judge.calculateScore(board);
     }
 

@@ -6,34 +6,33 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Judge {
 
-    public static final Side BLACK_SIDE = Side.from(Color.BLACK);
-    public static final Side WHITE_SIDE = Side.from(Color.WHITE);
-    public static final Side NOTHING_SIDE = Side.from(Color.NOTHING);
+    public static final Color BLACK_SIDE = Color.BLACK;
+    public static final Color WHITE_SIDE = Color.WHITE;
+    public static final Color NOTHING_SIDE = Color.NOTHING;
 
-    public static Map<Side, Score> calculateScore(Board board) {
-        Map<Side, Score> scoreBySide = new HashMap<>();
+    public static Map<Color, Score> calculateScore(Board board) {
+        Map<Color, Score> scoreBySide = new HashMap<>();
 
         for (File file : File.values()) {
             double whitePawnCount = 0;
             double blackPawnCount = 0;
             for (Rank rank : Rank.values()) {
                 Piece piece = board.findPiece(file, rank);
-                Side side = piece.getSide();
-                if (side.equals(BLACK_SIDE) || side.equals(WHITE_SIDE)) {
+                Color color = piece.getColor();
+                if (color.equals(BLACK_SIDE) || color.equals(WHITE_SIDE)) {
                     Score pieceScore = new Score(piece.getRole().getScore());
-                    scoreBySide.put(side, scoreBySide.getOrDefault(side, new Score(0)).sum(pieceScore));
+                    scoreBySide.put(color, scoreBySide.getOrDefault(color, new Score(0)).sum(pieceScore));
                     if (piece.isRole(Role.PAWN) || piece.isRole(Role.INITIAL_PAWN)) {
-                        if (side.equals(BLACK_SIDE)) {
+                        if (color.equals(BLACK_SIDE)) {
                             blackPawnCount++;
                         }
-                        if (side.equals(WHITE_SIDE)) {
+                        if (color.equals(WHITE_SIDE)) {
                             whitePawnCount++;
                         }
                     }
@@ -51,7 +50,7 @@ public class Judge {
         return scoreBySide;
     }
 
-    public static Side findSideKingDied(Board board) {
+    public static Color findSideKingDied(Board board) {
         boolean whiteKingAlive = false;
         boolean blackKingAlive = false;
 
@@ -59,21 +58,21 @@ public class Judge {
             for (Rank rank : Rank.values()) {
                 Piece piece = board.findPiece(file, rank);
                 if (piece.isRole(Role.KING)) {
-                    if (piece.getSide().equals(BLACK_SIDE)) {
+                    if (piece.getColor().equals(BLACK_SIDE)) {
                         blackKingAlive = true;
                     }
-                    if (piece.getSide().equals(WHITE_SIDE)) {
+                    if (piece.getColor().equals(WHITE_SIDE)) {
                         whiteKingAlive = true;
                     }
                 }
             }
         }
         if (whiteKingAlive && !blackKingAlive) {
-            return Side.from(Color.BLACK);
+            return BLACK_SIDE;
         }
         if (blackKingAlive && !whiteKingAlive) {
-            return Side.from(Color.WHITE);
+            return WHITE_SIDE;
         }
-        return Side.from(Color.NOTHING);
+        return NOTHING_SIDE;
     }
 }

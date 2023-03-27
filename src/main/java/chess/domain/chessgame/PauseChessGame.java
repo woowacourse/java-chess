@@ -3,7 +3,7 @@ package chess.domain.chessgame;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.result.Score;
-import chess.domain.side.Side;
+import chess.domain.side.Color;
 
 import java.util.List;
 import java.util.Map;
@@ -33,12 +33,12 @@ public class PauseChessGame implements ChessGame {
     }
 
     @Override
-    public Side findWinner() {
+    public Color findWinner() {
         throw new IllegalArgumentException(ERROR_MESSAGE);
     }
 
     @Override
-    public Map<Side, Score> status() {
+    public Map<Color, Score> status() {
         throw new IllegalArgumentException(ERROR_MESSAGE);
     }
 

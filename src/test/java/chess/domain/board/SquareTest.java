@@ -1,8 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
 import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

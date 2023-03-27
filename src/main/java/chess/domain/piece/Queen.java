@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.side.Side;
+import chess.domain.side.Color;
 
 public class Queen extends Piece {
-    public Queen(final Side side, final Role role) {
-        super(side, role);
+    public Queen(final Color color, final Role role) {
+        super(color, role);
     }
 
     @Override

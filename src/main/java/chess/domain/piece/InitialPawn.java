@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 public class InitialPawn extends Pawn {
     private static final int MOVE_DISTANCE = 2;
 
-    public InitialPawn(final Side side, final Role role) {
-        super(side, role);
+    public InitialPawn(final Color color, final Role role) {
+        super(color, role);
     }
 
     @Override
@@ -15,7 +14,7 @@ public class InitialPawn extends Pawn {
         if (distance > MOVE_DISTANCE) {
             return false;
         }
-        if (this.side == Side.from(Color.WHITE)) {
+        if (this.color == Color.WHITE) {
             return WHITE_FORWARD_DIRECTION == direction;
         }
         return BLACK_FORWARD_DIRECTION == direction;
@@ -28,6 +27,6 @@ public class InitialPawn extends Pawn {
 
     @Override
     public Piece update() {
-        return Role.PAWN.create(this.side);
+        return Role.PAWN.create(this.color);
     }
 }

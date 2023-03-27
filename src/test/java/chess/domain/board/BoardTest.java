@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,41 +21,41 @@ class BoardTest {
     static Stream<Arguments> pieceDummy() {
         return Stream.of(
                 // 폰을 제외한 백의 기물
-                Arguments.arguments(File.A, Rank.ONE, Role.ROOK, Side.from(Color.WHITE)),
-                Arguments.arguments(File.B, Rank.ONE, Role.KNIGHT, Side.from(Color.WHITE)),
-                Arguments.arguments(File.C, Rank.ONE, Role.BISHOP, Side.from(Color.WHITE)),
-                Arguments.arguments(File.D, Rank.ONE, Role.QUEEN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.E, Rank.ONE, Role.KING, Side.from(Color.WHITE)),
-                Arguments.arguments(File.F, Rank.ONE, Role.BISHOP, Side.from(Color.WHITE)),
-                Arguments.arguments(File.G, Rank.ONE, Role.KNIGHT, Side.from(Color.WHITE)),
-                Arguments.arguments(File.H, Rank.ONE, Role.ROOK, Side.from(Color.WHITE)),
+                Arguments.arguments(File.A, Rank.ONE, Role.ROOK, Color.WHITE),
+                Arguments.arguments(File.B, Rank.ONE, Role.KNIGHT, Color.WHITE),
+                Arguments.arguments(File.C, Rank.ONE, Role.BISHOP, Color.WHITE),
+                Arguments.arguments(File.D, Rank.ONE, Role.QUEEN, Color.WHITE),
+                Arguments.arguments(File.E, Rank.ONE, Role.KING, Color.WHITE),
+                Arguments.arguments(File.F, Rank.ONE, Role.BISHOP, Color.WHITE),
+                Arguments.arguments(File.G, Rank.ONE, Role.KNIGHT, Color.WHITE),
+                Arguments.arguments(File.H, Rank.ONE, Role.ROOK, Color.WHITE),
                 // 백의 폰
-                Arguments.arguments(File.A, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.B, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.C, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.D, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.E, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.F, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.G, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
-                Arguments.arguments(File.H, Rank.TWO, Role.INITIAL_PAWN, Side.from(Color.WHITE)),
+                Arguments.arguments(File.A, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.B, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.C, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.D, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.E, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.F, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.G, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
+                Arguments.arguments(File.H, Rank.TWO, Role.INITIAL_PAWN, Color.WHITE),
                 // 흑의 폰
-                Arguments.arguments(File.A, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.B, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.C, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.D, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.E, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.F, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.G, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.H, Rank.SEVEN, Role.INITIAL_PAWN, Side.from(Color.BLACK)),
+                Arguments.arguments(File.A, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.B, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.C, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.D, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.E, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.F, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.G, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
+                Arguments.arguments(File.H, Rank.SEVEN, Role.INITIAL_PAWN, Color.BLACK),
                 // 폰을 제외한 흑의 기물
-                Arguments.arguments(File.A, Rank.EIGHT, Role.ROOK, Side.from(Color.BLACK)),
-                Arguments.arguments(File.B, Rank.EIGHT, Role.KNIGHT, Side.from(Color.BLACK)),
-                Arguments.arguments(File.C, Rank.EIGHT, Role.BISHOP, Side.from(Color.BLACK)),
-                Arguments.arguments(File.D, Rank.EIGHT, Role.QUEEN, Side.from(Color.BLACK)),
-                Arguments.arguments(File.E, Rank.EIGHT, Role.KING, Side.from(Color.BLACK)),
-                Arguments.arguments(File.F, Rank.EIGHT, Role.BISHOP, Side.from(Color.BLACK)),
-                Arguments.arguments(File.G, Rank.EIGHT, Role.KNIGHT, Side.from(Color.BLACK)),
-                Arguments.arguments(File.H, Rank.EIGHT, Role.ROOK, Side.from(Color.BLACK))
+                Arguments.arguments(File.A, Rank.EIGHT, Role.ROOK, Color.BLACK),
+                Arguments.arguments(File.B, Rank.EIGHT, Role.KNIGHT, Color.BLACK),
+                Arguments.arguments(File.C, Rank.EIGHT, Role.BISHOP, Color.BLACK),
+                Arguments.arguments(File.D, Rank.EIGHT, Role.QUEEN, Color.BLACK),
+                Arguments.arguments(File.E, Rank.EIGHT, Role.KING, Color.BLACK),
+                Arguments.arguments(File.F, Rank.EIGHT, Role.BISHOP, Color.BLACK),
+                Arguments.arguments(File.G, Rank.EIGHT, Role.KNIGHT, Color.BLACK),
+                Arguments.arguments(File.H, Rank.EIGHT, Role.ROOK, Color.BLACK)
         );
     }
 
@@ -75,7 +74,7 @@ class BoardTest {
     @ParameterizedTest
     @MethodSource("pieceDummy")
     @DisplayName("초기 세팅 후 위치를 확인한다.")
-    void create(final File file, final Rank rank, final Role expectedRole, final Side side) {
+    void create(final File file, final Rank rank, final Role expectedRole, final Color side) {
         // expected
         Piece piece = board.findPiece(file, rank);
 
