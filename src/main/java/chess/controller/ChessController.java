@@ -72,7 +72,7 @@ public class ChessController {
                 OutputView.printWinner(chessGame.findWinner());
             }
             if (runningCommand.getRunningCommandType() == RunningCommandType.MOVE) {
-                move(runningCommand.getParameters());
+                move(chessGame, runningCommand.getParameters());
             }
             if (runningCommand.getRunningCommandType() == RunningCommandType.END) {
                 chessGame.end();
@@ -94,8 +94,7 @@ public class ChessController {
         return RunningCommand.parse(commands);
     }
 
-    private void move(final List<String> movePositions) {
-        final ChessGame chessGame = chessGameDao.select();
+    private void move(final ChessGame chessGame, final List<String> movePositions) {
         final Position from = PositionConvertor.convert(movePositions.get(0));
         final Position to = PositionConvertor.convert(movePositions.get(1));
         chessGame.movePiece(from, to);
