@@ -50,4 +50,9 @@ public class OutputView {
     public static void printKingDeadMessage() {
         printMessage("King이 죽어 승자가 결정됐고, 게임이 끝났습니다.");
     }
+
+    public static void printNewGameOrLoadGameInputMessage() {
+        printMessage("> 새 게임 시작 : new" + NEWLINE
+                + "> 저장된 게임 시작 : load");
+    }
 }

@@ -75,4 +75,20 @@ public class InputView {
     private boolean isWrongEndOrStatusCommandFormat(final String input) {
         return !(input.equals(GameCommand.STATUS.getText()) || input.equals(GameCommand.END.getText()));
     }
+
+    public String inputGameStartCommand() {
+        final String input = scanner.nextLine();
+        validateGameStartCommandFormat(input);
+        return input;
+    }
+
+    private void validateGameStartCommandFormat(final String input) {
+        if (isWrongGameStartCommandFormat(input)) {
+            throw new IllegalArgumentException("[ERROR] \"new\" 또는 \"load\" 명령어만 입력 가능합니다.");
+        }
+    }
+
+    private boolean isWrongGameStartCommandFormat(final String input) {
+        return !(input.equals(GameCommand.NEW.getText()) || input.equals(GameCommand.LOAD.getText()));
+    }
 }

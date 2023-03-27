@@ -59,7 +59,7 @@ public class ChessController {
         final List<String> splitGameCommand = inputGameCommand();
         final GameCommand gameCommand = GameCommand.of(splitGameCommand.get(0));
         if (GameCommand.START == gameCommand) {
-            handleStartCommand(chessGame);
+            repeatByRunnable(() -> handleStartCommand(chessGame));
         }
         if (GameCommand.MOVE == gameCommand) {
             handleMoveCommand(chessGame, splitGameCommand);
@@ -83,7 +83,15 @@ public class ChessController {
     }
 
     private void handleStartCommand(final ChessGame chessGame) {
-        chessGame.start();
+        OutputView.printNewGameOrLoadGameInputMessage();
+        final String inputCommand = repeatUntilReturnValue(inputView::inputGameStartCommand);
+        final GameCommand startCommand = GameCommand.of(inputCommand);
+        if (startCommand == GameCommand.NEW) {
+            chessGame.startNewGame();
+        }
+        if (startCommand == GameCommand.LOAD) {
+            chessGame.load();
+        }
         OutputView.printBoard(new BoardDto(chessGame.getBoard()));
     }
 
