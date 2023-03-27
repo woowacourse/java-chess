@@ -63,4 +63,23 @@ public class PieceDaoImplTest {
         assertThat(pieceDao.findByChessGameId(1L))
                 .isEqualTo(Collections.emptyList());
     }
+
+    @Test
+    @DisplayName("체스 게임 아이디에 해당하는 체스말 정보를 제거한다")
+    void deleteByChessGameId() {
+        // given
+        final PieceDao pieceDao = new MockPieceDao();
+        final long chessGameId = 1L;
+        final PieceEntity entity1 = PieceEntity.createWithChessGameId(chessGameId, 1, 1, "PAWN", "WHITE");
+        final PieceEntity entity2 = PieceEntity.createWithChessGameId(chessGameId, 1, 1, "PAWN", "WHITE");
+        pieceDao.save(entity1);
+        pieceDao.save(entity2);
+
+        // when
+        pieceDao.deleteByChessGameId(chessGameId);
+
+        // then
+        assertThat(pieceDao.findByChessGameId(1L))
+                .isEqualTo(Collections.emptyList());
+    }
 }

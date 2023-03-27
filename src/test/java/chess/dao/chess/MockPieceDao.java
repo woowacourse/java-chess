@@ -36,6 +36,13 @@ public class MockPieceDao implements PieceDao {
         }
     }
 
+    @Override
+    public void deleteByChessGameId(final Long chessGameId) {
+        STORAGE.keySet().stream()
+                .filter(key -> Objects.equals(STORAGE.get(key).getChessGameId(), chessGameId))
+                .forEach(STORAGE::remove);
+    }
+
     private void delete(final PieceEntity pieceEntity) {
         STORAGE.entrySet().stream()
                 .filter(entry -> isSamePosition(entry.getValue(), pieceEntity))

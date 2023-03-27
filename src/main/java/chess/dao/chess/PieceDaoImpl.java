@@ -45,6 +45,14 @@ public class PieceDaoImpl implements PieceDao {
         deleteTwoByPosition(chessGameId, source, destination);
     }
 
+    @Override
+    public void deleteByChessGameId(final Long chessGameId) {
+        final String query = "DELETE FROM piece where chess_game_id = ?";
+
+        jdbcTemplate.executeUpdate(query,
+                String.valueOf(chessGameId));
+    }
+
     private void deleteOneByPosition(final Long chessGameId, final PieceEntity pieceEntity) {
         final String query = "DELETE FROM piece WHERE chess_game_id = ? " +
                 "and piece_rank = ? and piece_file = ?";

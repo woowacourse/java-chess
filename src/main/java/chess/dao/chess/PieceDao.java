@@ -10,4 +10,6 @@ public interface PieceDao {
     Long save(final PieceEntity pieceEntity);
 
     void deleteByPositions(final Long chessGameId, final PieceEntity... pieceEntity);
+
+    void deleteByChessGameId(Long chessGameId);
 }
