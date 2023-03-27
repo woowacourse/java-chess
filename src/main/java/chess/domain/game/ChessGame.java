@@ -4,6 +4,10 @@ import chess.controller.command.Command;
 import chess.controller.command.CommandType;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Coordinate;
+import chess.domain.chessboard.Square;
+import chess.domain.piece.Score;
+import chess.domain.piece.Team;
+import java.util.List;
 import java.util.Map;
 
 public final class ChessGame {
@@ -48,6 +52,28 @@ public final class ChessGame {
     public boolean isGameEnd() {
         return gameState == GameState.END;
     }
+
+    public Map<Team, Score> getScore(){
+        final List<Square> whiteTeam = chessBoard.squaresByTeam(Team.WHITE);
+        final List<Square> blackTeam = chessBoard.squaresByTeam(Team.BLACK);
+
+        final long whiteTeamPawnContinuousCount = chessBoard.countFileOfContinuousPawnByTeam(Team.WHITE);
+        final long blackTeamPawnContinuousCount = chessBoard.countFileOfContinuousPawnByTeam(Team.BLACK);
+
+        final Score whiteTeamScore = calculateScore(whiteTeam, whiteTeamPawnContinuousCount);
+        final Score blackTeamScore = calculateScore(blackTeam, blackTeamPawnContinuousCount);
+
+        return Map.of(Team.WHITE, whiteTeamScore, Team.BLACK, blackTeamScore);
+    }
+
+    private Score calculateScore(final List<Square> teamSquares, long pawnContinuousFileCount) {
+        Score score = teamSquares.stream()
+                .map(Square::getScore)
+                .reduce(Score.from(0), Score::add);
+
+        return score.subtract(Score.from(0.5).multiply(pawnContinuousFileCount));
+    }
+
 
     public ChessBoard getChessBoard() {
         return this.chessBoard;
