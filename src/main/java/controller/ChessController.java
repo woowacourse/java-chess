@@ -58,14 +58,14 @@ public class ChessController {
     }
 
     private void interact() {
-        ChessGame chessGame;
+        ChessGame chessGame = chessGameService.loadGame();
         Command command;
         do {
-            chessGame = chessGameService.loadGame();
             List<String> pureArguments = inputView.readCommand();
             command = Command.of(pureArguments);
             CommandArguments commandArguments = CommandArguments.of(pureArguments);
             commander.get(command).accept(chessGame, commandArguments);
+            chessGame = chessGameService.loadGame();
         } while (command.isNotEnd() && chessGame.isGameNotOver());
         printGameResultIfOver(chessGame);
     }
@@ -83,7 +83,7 @@ public class ChessController {
         Coordinate startCoordinate = CoordinateAdapter.convert(arguments.getRawStartCoordinate());
         Coordinate endCoordinate = CoordinateAdapter.convert(arguments.getRawEndCoordinate());
         chessGame.move(startCoordinate, endCoordinate);
-        chessGameService.updateMove(startCoordinate, endCoordinate);
+        chessGameService.updateGame(chessGame);
         printBoard(chessGame);
     }
 

@@ -1,5 +1,5 @@
 import controller.ChessController;
-import dao.DbChessGameDao;
+import dao.ChessGameDaoImp;
 import service.ChessGameService;
 import view.InputView;
 import view.OutputView;
@@ -11,7 +11,7 @@ public final class Application {
         ChessController chessController = new ChessController(
                 new InputView(new Scanner(System.in)),
                 new OutputView(),
-                new ChessGameService(new DbChessGameDao())
+                new ChessGameService(new ChessGameDaoImp())
         );
         chessController.run();
     }

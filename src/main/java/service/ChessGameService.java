@@ -2,9 +2,6 @@ package service;
 
 import dao.ChessGameDao;
 import domain.board.ChessGame;
-import domain.piece.move.Coordinate;
-
-import java.util.List;
 
 public class ChessGameService {
 
@@ -16,20 +13,16 @@ public class ChessGameService {
 
     public ChessGame startGame() {
         chessGameDao.delete();
+        chessGameDao.insert(new ChessGame());
         return loadGame();
     }
 
     public ChessGame loadGame() {
-        List<Coordinate> coordinates = chessGameDao.read();
-        ChessGame chessGame = new ChessGame();
-
-        for (int i = 0; i < coordinates.size(); i += 2) {
-            chessGame.move(coordinates.get(i), coordinates.get(i+1));
-        }
-        return chessGame;
+        return chessGameDao.read();
     }
 
-    public void updateMove(final Coordinate start, final Coordinate end) {
-        chessGameDao.create(start, end);
+    public void updateGame(final ChessGame chessGame) {
+        chessGameDao.delete();
+        chessGameDao.insert(chessGame);
     }
 }
