@@ -8,7 +8,7 @@ import java.util.List;
 public class MoveCommandFactory implements ActionCommandFactory {
 
     @Override
-    public StrategyCommand from(final List<String> inputs) {
+    public StrategyCommand createCommand(final List<String> inputs) {
         return MoveCommand.from(inputs);
     }
 }
