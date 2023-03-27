@@ -76,7 +76,7 @@ public class ChessBoard {
 
     private double checkSameFilePawns(final Side side) {
         final Map<File, Long> sameFilePawnCounts = pieces.keySet().stream()
-                .filter(key -> Objects.equals(pieces.get(key).getName(), PieceInfo.PAWN.name()))
+                .filter(key -> Objects.equals(pieces.get(key).getName(), PieceInfo.PAWN.name()) || Objects.equals(pieces.get(key).getName(), PieceInfo.INITIAL_PAWN.name()))
                 .filter(key -> Objects.equals(pieces.get(key).getSide(), side.name()))
                 .collect(groupingBy(Square::getFile, counting()));
 
