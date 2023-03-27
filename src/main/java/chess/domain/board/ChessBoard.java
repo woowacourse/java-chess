@@ -11,9 +11,9 @@ import chess.exception.PieceCannotMoveException;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static chess.domain.piece.PieceType.EMPTY;
@@ -127,16 +127,13 @@ public class ChessBoard {
     private BigDecimal calculatePawnSubScore(final List<Position> pawnPositions) {
         BigDecimal result = BigDecimal.ZERO;
 
-        List<File> files = pawnPositions.stream()
+        result = pawnPositions.stream()
                 .map(Position::getFile)
-                .collect(Collectors.toList());
-
-        for (final File file : File.values()) {
-            int pawnCount = Collections.frequency(files, file);
-            if (pawnCount > 1) {
-                result = result.add(PAWN_REDUCE_NUMBER.multiply(BigDecimal.valueOf(pawnCount)));
-            }
-        }
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .values().stream()
+                .filter(count -> count > 1)
+                .map(count -> PAWN_REDUCE_NUMBER.multiply(BigDecimal.valueOf(count)))
+                .reduce(result, BigDecimal::add);
 
         return result;
     }
