@@ -13,7 +13,7 @@ public final class End implements State {
     public End(ChessGame chessGame) {
         JdbcDAO jdbcDAO = new JdbcDAO();
         jdbcDAO.delete();
-        jdbcDAO.insert(chessGame);
+        jdbcDAO.saveGame(chessGame);
     }
 
     @Override

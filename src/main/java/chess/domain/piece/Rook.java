@@ -6,7 +6,7 @@ import java.util.Set;
 
 public final class Rook extends Normal {
 
-    private static final double score = 5;
+    private static final double SCORE = 5;
 
     public Rook(final Color color) {
         super(color);
@@ -36,7 +36,7 @@ public final class Rook extends Normal {
     @Override
     public double getScore(Color color) {
         if (color == this.color) {
-            return score;
+            return SCORE;
         }
 
         return 0;
