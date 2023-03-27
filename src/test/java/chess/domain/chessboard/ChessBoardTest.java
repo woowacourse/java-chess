@@ -1,14 +1,13 @@
 package chess.domain.chessboard;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import chess.domain.piece.Team;
 import chess.domain.piece.state.Rook;
 import java.util.List;
-import org.assertj.core.api.Assertions;
+import java.util.Map;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -94,5 +93,20 @@ class ChessBoardTest {
 
         //then
         assertThat(count).isEqualTo(1);
+    }
+
+    @Test
+    void 체스판은_각_팀의_킹의_생존여부를_가져온다() {
+        //given
+        final ChessBoard chessBoard = new ChessBoard();
+
+        //when
+        final Map<Team, Boolean> kingAlive = chessBoard.isKingAlive();
+
+        //then
+        assertSoftly(softly -> {
+            softly.assertThat(kingAlive.get(Team.WHITE)).isTrue();
+            softly.assertThat(kingAlive.get(Team.BLACK)).isTrue();
+        });
     }
 }
