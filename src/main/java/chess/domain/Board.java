@@ -13,6 +13,7 @@ import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -20,10 +21,6 @@ import chess.initial.BoardFactory;
 
 public class Board {
 
-	private static final String ROOK_NAME = "R";
-	private static final String KNIGHT_NAME = "N";
-	private static final String BISHOP_NAME = "B";
-	private static final String QUEEN_NAME = "Q";
 	private static final String PAWN_NAME = "P";
 	private static final String KING_NAME = "K";
 	private static Color thisTurn;
@@ -164,22 +161,22 @@ public class Board {
 
 	private double updateScore(final Piece piece, final Color color) {
 		if (piece.color() == color) {
-			return pieceScore(piece.name());
+			return pieceScore(piece.type());
 		}
 		return 0;
 	}
 
-	private double pieceScore(final String pieceName) {
-		if (pieceName.equalsIgnoreCase(ROOK_NAME)) {
+	private double pieceScore(final PieceType type) {
+		if (type == ROOK) {
 			return ROOK.score();
 		}
-		if (pieceName.equalsIgnoreCase(KNIGHT_NAME)) {
+		if (type == KNIGHT) {
 			return KNIGHT.score();
 		}
-		if (pieceName.equalsIgnoreCase(BISHOP_NAME)) {
+		if (type == BISHOP) {
 			return BISHOP.score();
 		}
-		if (pieceName.equalsIgnoreCase(QUEEN_NAME)) {
+		if (type == QUEEN) {
 			return QUEEN.score();
 		}
 		return 0;
