@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandFactory;
-import chess.dao.HistoryDao;
+import chess.dao.ChessJdbcDao;
 import chess.domain.ChessGame;
 import chess.domain.square.Team;
 import chess.view.InputView;
@@ -16,7 +16,7 @@ public class ChessController {
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGame = new ChessGame(new HistoryDao());
+        this.chessGame = new ChessGame(new ChessJdbcDao());
     }
 
     public void run() {

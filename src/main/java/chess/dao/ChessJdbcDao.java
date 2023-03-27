@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryDao implements ChessDao {
+public class ChessJdbcDao implements ChessDao {
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
