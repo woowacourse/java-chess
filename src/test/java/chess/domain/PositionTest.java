@@ -93,13 +93,22 @@ class PositionTest {
 
     @Test
     @DisplayName("사용자의 입력을 2차원 리스트의 좌표값으로 변환해준다.")
-    void toPositionTest_row() {
-        String input = "b2";
+    void 사용자의_입력을_행열의_좌표값으로_변환해준다_case1() {
+        String input = "g8";
+        Position position = Position.toPosition(input);
+
+        assertThat(position).isEqualTo(Position.of(0, 6));
+    }
+
+    @Test
+    @DisplayName("사용자의 입력을 2차원 리스트의 좌표값으로 변환해준다.")
+    void 사용자의_입력을_행열의_좌표값으로_변환해준다_case2() {
+        String input = "h6";
         Position position = Position.toPosition(input);
 
         assertAll(
-                () -> assertThat(position.getRow()).isEqualTo(6),
-                () -> assertThat(position.getColumn()).isEqualTo(1)
+                () -> assertThat(position.getRow()).isEqualTo(2),
+                () -> assertThat(position.getColumn()).isEqualTo(7)
         );
     }
 }

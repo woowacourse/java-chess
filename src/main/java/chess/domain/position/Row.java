@@ -6,10 +6,9 @@ public class Row {
 
     private static final int MAX_ROW = 7;
     private static final int MIN_ROW = 0;
-    static final String INVALID_RANGE_OF_VALUE = "열은 최소 0, 최대 7을 가질 수 있습니다. 입력값: ";
+    static final String INVALID_RANGE_OF_VALUE = "행은 최소 0, 최대 7을 가질 수 있습니다.";
 
     private final int row;
-
 
     public Row(final int row) {
         validateRow(row);
@@ -18,7 +17,7 @@ public class Row {
 
     private void validateRow(final int row) {
         if (row < MIN_ROW || row > MAX_ROW) {
-            throw new IllegalArgumentException(INVALID_RANGE_OF_VALUE + row);
+            throw new IllegalArgumentException(INVALID_RANGE_OF_VALUE);
         }
     }
 

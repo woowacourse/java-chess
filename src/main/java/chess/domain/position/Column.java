@@ -6,7 +6,7 @@ public class Column {
 
     private static final int MAX_COLUMN = 7;
     private static final int MIN_COLUMN = 0;
-    static final String INVALID_RANGE_OF_VALUE = "열은 최소 0, 최대 7을 가질 수 있습니다. 입력값: ";
+    static final String INVALID_RANGE_OF_VALUE = "열은 최소 0, 최대 7을 가질 수 있습니다.";
 
     private final int column;
 
@@ -17,7 +17,7 @@ public class Column {
 
     private void validateColumn(final int column) {
         if (column < MIN_COLUMN || column > MAX_COLUMN) {
-            throw new IllegalArgumentException(INVALID_RANGE_OF_VALUE + column);
+            throw new IllegalArgumentException(INVALID_RANGE_OF_VALUE);
         }
     }
 

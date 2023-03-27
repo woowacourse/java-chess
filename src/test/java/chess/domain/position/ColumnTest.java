@@ -17,7 +17,7 @@ class ColumnTest {
     void 열은_최소_0_최대_7을_가질_수_있다_실패(int column) {
         assertThatIllegalArgumentException().isThrownBy(
                 () -> new Column(column)
-        ).withMessage(INVALID_RANGE_OF_VALUE + column);
+        ).withMessage(INVALID_RANGE_OF_VALUE);
     }
 
     @ParameterizedTest(name = "열은 최소 0, 최대 7을 가질 수 있다. 입력값: {0}")
