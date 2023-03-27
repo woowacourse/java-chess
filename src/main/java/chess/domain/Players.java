@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
+import chess.domain.dao.TurnDao;
+import chess.domain.dao.TurnDaoImpl;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -10,16 +12,17 @@ import static java.util.stream.Collectors.toList;
 
 public class Players {
 
+    private final TurnDao turnDao = new TurnDaoImpl();
     private final List<Player> players;
     private Color current;
 
-    private Players(final List<Player> players) {
+    private Players(final List<Player> players, final Color color) {
         this.players = players;
-        this.current = Color.WHITE;
+        this.current = color;
     }
 
-    public static Players of(final Player whitePlayer, final Player blackPlayer) {
-        return new Players(List.of(whitePlayer, blackPlayer));
+    public static Players of(Player whitePlayer, Player blackPlayer, Color currentTurn) {
+        return new Players(List.of(whitePlayer, blackPlayer), currentTurn);
     }
 
     private void validateMovingRoute(final Position fromPosition, final Position toPosition) {
@@ -89,11 +92,8 @@ public class Players {
     }
 
     private void changeTurn() {
-        if (current == Color.WHITE) {
-            current = Color.BLACK;
-            return;
-        }
-        current = Color.WHITE;
+        Color changeColor = Color.changeColor(current);
+        turnDao.update(changeColor);
     }
 
     private void move(final Position sourcePosition, final Position targetPosition) {

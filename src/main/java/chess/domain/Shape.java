@@ -27,7 +27,7 @@ public enum Shape {
         this.validateDirection = validateDirection;
     }
 
-    public void move(final MoveRequest request) {
+    public void validateDirectionByShape(final MoveRequest request) {
         this.validateDirection.accept(request);
     }
 
