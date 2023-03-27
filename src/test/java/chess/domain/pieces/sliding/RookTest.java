@@ -2,6 +2,7 @@ package chess.domain.pieces.sliding;
 
 import static chess.domain.pieces.Piece.INVALID_DIRECTION;
 import static chess.domain.pieces.Piece.INVALID_MOVE_EXIST_ALLY;
+import static chess.domain.pieces.sliding.SlidingPiece.INVALID_MOVE_JUMP_OTHER_PIECE;
 import static chess.domain.pieces.sliding.SlidingPiece.INVALID_TEAM;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -99,6 +100,16 @@ class RookTest {
         assertThatNoException().isThrownBy(
                 () -> rook.validateMove(Direction.UP, pieces)
         );
+    }
+
+    @Test
+    @DisplayName("룩은 기물을 뛰어넘을 수 없다")
+    void 룩은_기물을_뛰어넘을_수_없다() {
+        var pieces = List.of(new EmptyPiece(), new WhitePawn(), new EmptyPiece());
+
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> rook.validateMove(Direction.UP, pieces)
+        ).withMessage(INVALID_MOVE_JUMP_OTHER_PIECE);
     }
 
     @Test
