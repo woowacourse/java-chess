@@ -54,7 +54,7 @@ public class PieceDao {
             preparedStatement.setInt(2, rank);
 
             final var resultSet = preparedStatement.executeQuery();
-            
+
             if (resultSet.next()) {
                 return PieceNameConverter.convert(resultSet.getString("piece_type"));
             }

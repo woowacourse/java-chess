@@ -83,7 +83,7 @@ public class ChessGame {
     private void checkTeam(Position a) {
         Team team = board.getTeam(a);
         if (state.getTurn() != team) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
     }
 
