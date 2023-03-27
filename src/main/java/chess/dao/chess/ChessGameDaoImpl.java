@@ -41,4 +41,12 @@ public final class ChessGameDaoImpl implements ChessGameDao {
                 currentCamp.name(),
                 String.valueOf(id));
     }
+
+    @Override
+    public void deleteByUserId(final Long userId) {
+        final String query = "DELETE FROM chess_game where user_id = ?";
+
+        jdbcTemplate.executeUpdate(query,
+                String.valueOf(userId));
+    }
 }

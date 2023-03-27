@@ -11,4 +11,6 @@ public interface ChessGameDao {
     Long save(final ChessGameEntity chessGameEntity);
 
     void updateCurrentCampById(Long id, CampType currentCamp);
+
+    void deleteByUserId(Long userId);
 }

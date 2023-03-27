@@ -74,4 +74,20 @@ class ChessGameDaoImplTest {
         assertThat(actual)
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("사용자의 아이디에 해당하는 체스 게임을 제거한다")
+    void deleteByUserId() {
+        // given
+        final ChessGameDao chessGameDao = new MockChessGameDao();
+        chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+
+        // when
+        chessGameDao.deleteByUserId(1L);
+
+        // then
+        final Optional<ChessGameEntity> actual = chessGameDao.findByUserId(1L);
+        assertThat(actual)
+                .isEqualTo(Optional.empty());
+    }
 }

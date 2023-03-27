@@ -4,6 +4,7 @@ import chess.domain.chess.CampType;
 import chess.entity.ChessGameEntity;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -31,5 +32,12 @@ public class MockChessGameDao implements ChessGameDao {
     public void updateCurrentCampById(final Long id, final CampType currentCamp) {
         final ChessGameEntity chessGameEntity = STORAGE.get(id);
         STORAGE.put(id, new ChessGameEntity(currentCamp.name(), chessGameEntity.getUserId()));
+    }
+
+    @Override
+    public void deleteByUserId(final Long userId) {
+        STORAGE.keySet().stream()
+                .filter(key -> Objects.equals(STORAGE.get(key).getUserId(), userId))
+                .forEach(STORAGE::remove);
     }
 }
