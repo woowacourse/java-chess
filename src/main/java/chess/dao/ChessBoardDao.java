@@ -74,4 +74,15 @@ public class ChessBoardDao implements ChessGameDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void init(ChessGame chessGame) {
+        final var query = "TRUNCATE TABLE chess_game";
+        try (final var connection = dbConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

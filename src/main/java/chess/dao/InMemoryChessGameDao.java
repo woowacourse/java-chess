@@ -19,6 +19,10 @@ public class InMemoryChessGameDao implements ChessGameDao {
     @Override
     public void update(ChessGame chessGame) {
         this.chessGame = chessGame;
+    }
 
+    @Override
+    public void init(ChessGame chessGame) {
+        this.chessGame = null;
     }
 }

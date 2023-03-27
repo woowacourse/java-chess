@@ -9,4 +9,5 @@ public interface ChessGameDao {
 
     void update(ChessGame chessGame);
 
+    void init(ChessGame chessGame);
 }
