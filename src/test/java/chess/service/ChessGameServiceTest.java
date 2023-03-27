@@ -11,6 +11,7 @@ import chess.entity.PieceEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -99,6 +100,26 @@ class ChessGameServiceTest {
         final CampType campType = chessGame.getCurrentCamp();
         assertThat(campType)
                 .isEqualTo(changedCamp);
+    }
+
+    @Test
+    @DisplayName("입력받은 위치에 해당하는 체스말을 제거한다")
+    void deletePieces() {
+        // given
+        final Long userId = 1L;
+        final MockChessGameDao chessGameDao = new MockChessGameDao();
+        chessGameDao.save(new ChessGameEntity("WHITE", userId));
+        final ChessGameService chessGameService = new ChessGameService(chessGameDao, new ChessBoardService(new MockPieceDao()));
+        final PieceEntity source = PieceEntity.createWithLocation(1L, 0, 0);
+        final PieceEntity target = PieceEntity.createWithLocation(1L, 0, 1);
+
+        // when
+        chessGameService.deletePieces(source, target);
+
+        // then
+        final ChessGame actual = chessGameService.getChessGame(1L);
+        assertThat(actual)
+                .isEqualTo(new ChessGame(ChessBoard.create(Collections.emptyMap()), CampType.WHITE));
     }
 
     private ChessGameService getChessGameService(final Long userId) {

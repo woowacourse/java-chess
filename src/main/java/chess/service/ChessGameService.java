@@ -43,6 +43,10 @@ public final class ChessGameService {
         chessGameDao.updateCurrentCampById(chessGameId, currentCamp);
     }
 
+    public void deletePieces(final PieceEntity sourcePiece, final PieceEntity targetPiece) {
+        chessBoardService.deletePieces(sourcePiece, targetPiece);
+    }
+
     private ChessGame getNewChessGame(final Long userId) {
         final CampType currentCamp = CampType.WHITE;
         final Long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
