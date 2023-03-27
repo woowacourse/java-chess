@@ -1,7 +1,5 @@
 package chess.service;
 
-import chess.dao.ChessGameDao;
-import chess.dao.DataBaseChessGameDao;
 import chess.domain.board.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -10,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessService {
-
-    private static final ChessGameDao CHESS_GAME_DAO = new DataBaseChessGameDao();
 
     private State state;
 
@@ -48,6 +44,6 @@ public class ChessService {
     }
 
     public List<Long> findAllId() {
-        return CHESS_GAME_DAO.findAllId();
+        return state.findAllId();
     }
 }

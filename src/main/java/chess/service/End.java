@@ -4,6 +4,7 @@ import chess.domain.board.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class End implements State {
@@ -45,6 +46,11 @@ public class End implements State {
 
     @Override
     public State load(final long id) {
+        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+    }
+
+    @Override
+    public List<Long> findAllId() {
         throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
     }
 }

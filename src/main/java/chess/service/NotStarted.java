@@ -11,6 +11,7 @@ import chess.domain.board.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class NotStarted implements State {
@@ -60,5 +61,10 @@ public class NotStarted implements State {
     public State load(final long gameId) {
         final Turn turn = CHESS_GAME_DAO.loadTurn(gameId);
         return new Started(BOARD_DAO.loadBoard(gameId, turn), gameId);
+    }
+
+    @Override
+    public List<Long> findAllId() {
+        return CHESS_GAME_DAO.findAllId();
     }
 }

@@ -9,6 +9,7 @@ import chess.domain.board.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class Started implements State {
@@ -61,5 +62,10 @@ public class Started implements State {
     @Override
     public State load(final long id) {
         throw new UnsupportedOperationException(STARTED_CANT_EXECUTE_START_MESSAGE);
+    }
+
+    @Override
+    public List<Long> findAllId() {
+        return CHESS_GAME_DAO.findAllId();
     }
 }
