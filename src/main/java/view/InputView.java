@@ -7,7 +7,7 @@ public class InputView {
         this.inputReader = inputReader;
     }
 
-    public BootingCommand getGameBootingCommand() {
-        return BootingCommand.findByCommand(inputReader.readInput());
+    public Command getGameCommand() {
+        return new Command(inputReader.readInput());
     }
 }

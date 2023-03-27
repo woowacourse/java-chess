@@ -1,7 +1,8 @@
 package controller;
 
 import domain.Board;
-import view.BootingCommand;
+import exception.GameFinishedException;
+import view.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -16,15 +17,20 @@ public class ChessController {
 
     public void boot() {
         outputView.printAskingBootingCommandMessage();
-        BootingCommand command = inputView.getGameBootingCommand();
-        while (command.isStart()) {
-            printBoardStatus();
-            command = inputView.getGameBootingCommand();
+
+        Board board = new Board();
+        while (true) {
+            Command command = inputView.getGameCommand();
+            try {
+                command.execute(board);
+                printBoardStatus(board);
+            } catch (GameFinishedException ignored) {
+                break;
+            }
         }
     }
 
-    private void printBoardStatus() {
-        Board board = Board.initialize();
+    private void printBoardStatus(Board board) {
         outputView.printStatus(board.findCurrentStatus());
     }
 }

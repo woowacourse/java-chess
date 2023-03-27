@@ -19,8 +19,13 @@ public class Board {
         this.pieceStatus = pieceStatus;
     }
 
-    public static Board initialize() {
-        return new Board(BoardInitializer.initializeBoard());
+    public Board() {
+        this.pieceStatus = new ArrayList<>();
+    }
+
+    public void initialize() {
+        pieceStatus.clear();
+        pieceStatus.addAll(BoardInitializer.initializeBoard());
     }
 
     public List<List<Piece>> findCurrentStatus() {
