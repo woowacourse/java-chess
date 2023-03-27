@@ -4,6 +4,7 @@ import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 class BoardTest {
@@ -170,6 +172,51 @@ class BoardTest {
 
 		// then
 		assertThat(board.whiteStatus()).isEqualTo(37.0);
+	}
+
+	@Test
+	@DisplayName("킹이 살아있으면 게임은 계속된다")
+	void continueWhenKingAlive() {
+		// given
+		final Position whiteSource = Position.of(C, TWO);
+		final Position whiteTarget = Position.of(C, FOUR);
+		final Position blackSource = Position.of(D, SEVEN);
+		final Position blackTarget = Position.of(D, FIVE);
+		final Piece candidateKing = board.board().get(blackTarget);
+
+		// when
+		board.move(whiteSource, whiteTarget);
+		board.move(blackSource, blackTarget);
+		board.move(whiteTarget, blackTarget);
+
+		// then
+		assertFalse(board.isKing(candidateKing));
+	}
+
+	@Test
+	@DisplayName("킹이 죽으면 게임은 종료된다")
+	void endWhenKingDead() {
+		// given
+		final Position whiteSource = Position.of(E, TWO);
+		final Position whiteTarget = Position.of(E, FOUR);
+		final Position blackSource = Position.of(D, SEVEN);
+		final Position blackTarget = Position.of(D, FIVE);
+		final Position newWhiteSource = Position.of(F, ONE);
+		final Position newWhiteTarget = Position.of(B, FIVE);
+		final Position newWBlackSource = Position.of(E, SEVEN);
+		final Position newBlackTarget = Position.of(E, SIX);
+		final Position finalWhiteTarget = Position.of(E, EIGHT);
+		final Piece candidateKing = board.board().get(finalWhiteTarget);
+
+		// when
+		board.move(whiteSource, whiteTarget);
+		board.move(blackSource, blackTarget);
+		board.move(newWhiteSource, newWhiteTarget);
+		board.move(newWBlackSource, newBlackTarget);
+		board.move(newWhiteTarget,finalWhiteTarget);
+
+		// then
+		assertTrue(board.isKing(candidateKing));
 	}
 
 }

@@ -75,4 +75,8 @@ public class OutputView {
 	public static void printErrorMessage(String errorMessage) {
 		System.out.println("[ERROR] " + errorMessage);
 	}
+
+	public static void printKingDead() {
+		System.out.println("King이 잡혀 게임을 종료합니다");
+	}
 }

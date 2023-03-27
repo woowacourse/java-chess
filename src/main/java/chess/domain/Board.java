@@ -25,6 +25,7 @@ public class Board {
 	private static final String BISHOP_NAME = "B";
 	private static final String QUEEN_NAME = "Q";
 	private static final String PAWN_NAME = "P";
+	private static final String KING_NAME = "K";
 	private static Color thisTurn;
 	private final Map<Position, Piece> board;
 
@@ -37,7 +38,7 @@ public class Board {
 		return new Board(BoardFactory.create());
 	}
 
-	public void move(final Position source, final Position target) {
+	public Piece move(final Position source, final Position target) {
 		validateSourceNotEmpty(source);
 		isTurn(source);
 		validateDifferentPosition(source, target);
@@ -48,7 +49,7 @@ public class Board {
 		validateMovable(piece, unit);
 		validatePath(source, target, unit, piece);
 
-		movePiece(source, target, piece);
+		return movePiece(source, target, piece);
 	}
 
 	private void validateSourceNotEmpty(final Position source) {
@@ -123,11 +124,18 @@ public class Board {
 		}
 	}
 
-	private void movePiece(final Position source, final Position target, final Piece piece) {
+	private Piece movePiece(final Position source, final Position target, final Piece piece) {
+		final Piece candidateKing = board.get(target);
 		piece.move(target);
 		board.put(target, piece);
 		board.put(source, new Empty(NONE, source));
 		thisTurn = thisTurn.switchTurn();
+
+		return candidateKing;
+	}
+
+	public boolean isKing(final Piece king) {
+		return king.name().equalsIgnoreCase(KING_NAME);
 	}
 
 	public Map<Position, Piece> board() {
