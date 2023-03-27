@@ -5,6 +5,7 @@ import chess.dao.connection.ConnectionDriver;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,5 +35,19 @@ public class MoveDao {
             throw new IllegalArgumentException("게임이 존재하지 않습니다."+e.getMessage());
         }
     }
- 
+
+    public void add(final int gameId, final String startPosition, final String endPosition) {
+        String query = "INSERT INTO move (game_id, start_position, end_position) VALUE (?, ?, ?)";
+
+        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query,
+                Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setObject(1, gameId);
+            preparedStatement.setObject(2, startPosition);
+            preparedStatement.setObject(3, endPosition);
+            preparedStatement.executeUpdate();
+
+        } catch (final SQLException e) {
+            throw new IllegalArgumentException("INSERT 오류:" + e.getMessage());
+        }
+    }
 }
