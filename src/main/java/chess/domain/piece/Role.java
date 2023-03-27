@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Team;
 import java.util.function.Function;
 
-public enum Role { // TODO: 2023/03/24 팩터리로 양방향 의존 끊기
+public enum Role {
 
     PAWN(1, Pawn::new),
     ROOK(5, Rook::new),

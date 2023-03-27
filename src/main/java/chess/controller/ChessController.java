@@ -22,11 +22,13 @@ public class ChessController {
     }
 
     public void run() {
-        List<Integer> roomNumbers = ChessDao.getInstance().fetchAllRoomNumbers();
+        List<Integer> roomNumbers = chessDao.fetchAllRoomNumbers();
         OutputView.printRoomList(roomNumbers);
+
         RoomNumber roomNumber = createRoomNumber(roomNumbers);
         GameRoom gameRoom = createGameRoom(roomNumber, roomNumbers.size());
-        joinGameRoom(gameRoom);
+
+        playGame(gameRoom);
         clearRoomIfKingDead(gameRoom, roomNumbers.size());
     }
 
@@ -55,7 +57,7 @@ public class ChessController {
         return chessDao.fetchGameRoom(roomNumber);
     }
 
-    public void joinGameRoom(GameRoom gameRoom) {
+    public void playGame(GameRoom gameRoom) {
         OutputView.printGameGuide();
         while (gameRoom.isGameNotEnd()) {
             executeCommand(gameRoom);
