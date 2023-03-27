@@ -48,7 +48,7 @@ public class MoveCommand implements StrategyCommand {
             BoardDao.updateByMove(board, source, target, sourcePiece);
             MoveLogDao.insertMove(board, source, target, sourcePiece, targetPiece);
 
-            OutputView.printBoard(chessGame.getBoard());
+            OutputView.printBoard(board);
             return existOpponentKing(chessGame);
         }
 
