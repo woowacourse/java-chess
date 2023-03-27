@@ -16,7 +16,7 @@ public class JdbcDAO implements ChessDAO{
     }
 
     @Override
-    public void insert(ChessGame chessGame) {
+    public void saveGame(ChessGame chessGame) {
 
         final Board board = chessGame.board();
 
