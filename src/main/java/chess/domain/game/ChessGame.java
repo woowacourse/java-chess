@@ -3,24 +3,38 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;
+import chess.repository.dao.ChessGameDao;
+import chess.repository.dao.PieceDao;
 
 public class ChessGame {
 
+    private int id;
     private State state;
     private Turn turn;
     private final Board board;
+    private final ChessGameDao chessGameDao;
+    private final PieceDao pieceDao;
 
-    public ChessGame(final Board board) {
+
+    public ChessGame(final Board board, final Turn turn, final ChessGameDao chessGameDao, final PieceDao pieceDao) {
+        this.id = 0;
         this.state = State.RUN;
-        this.turn = Turn.WHITE;
+        this.turn = turn;
         this.board = board;
+        this.chessGameDao = chessGameDao;
+        this.pieceDao = pieceDao;
     }
 
     public void movePiece(final Position source, final Position target) {
         checkPlayable();
         checkTurn(source);
+
         board.move(source, target);
+        pieceDao.move(id, source, target);
+
         changeTurn();
+        chessGameDao.update(this);
+
         checkKingCaptured();
     }
 
@@ -65,6 +79,18 @@ public class ChessGame {
 
     public boolean isStart() {
         return state.isStart();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 
     public Board getBoard() {

@@ -8,8 +8,16 @@ import static chess.controller.Command.STATUS;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
+import chess.domain.game.ChessGameFactory;
 import chess.domain.game.Status;
+import chess.domain.game.Turn;
 import chess.domain.position.Position;
+import chess.dto.ChessGameDto;
+import chess.dto.PieceDto;
+import chess.repository.dao.ChessGameDao;
+import chess.repository.dao.JdbcChessGameDao;
+import chess.repository.dao.JdbcPieceDao;
+import chess.repository.dao.PieceDao;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -44,14 +52,42 @@ public class ChessController {
     }
 
     public void run() {
-        final Board board = BoardFactory.generateBoard();
-        final ChessGame chessGame = new ChessGame(board);
+        final ChessGameDao chessGameDao = new JdbcChessGameDao();
+        final PieceDao pieceDao = new JdbcPieceDao();
+        ChessGame chessGame = null;
+
+        final List<String> command = inputView.readCommand();
+        final String mainCommand = command.get(0);
+
+        if (mainCommand.equals("new")) {
+            final Board board = BoardFactory.generateBoard();
+            chessGame = new ChessGame(board, Turn.WHITE, chessGameDao, pieceDao);
+            chessGameDao.save(chessGame);
+            
+            final int chessGameId = chessGameDao.findLastInsertId();
+            chessGame.setId(chessGameId);
+            pieceDao.saveAll(chessGameId, PieceDto.from(board));
+        }
+        if (mainCommand.equals("enter")) {
+            final int chessGameId = Integer.parseInt(command.get(1));
+            final ChessGameDto chessGameDto = chessGameDao.findById(chessGameId);
+            final List<PieceDto> pieceDtos = pieceDao.findAllByChessGameId(chessGameId);
+            chessGame = ChessGameFactory.generateChessGame(chessGameDto, pieceDtos, chessGameDao, pieceDao);
+        }
 
         outputView.printStartMessage();
 
         while (chessGame.isRunnable()) {
             play(chessGame);
         }
+    }
+
+    private void newGame() {
+
+    }
+
+    private void enterGame() {
+
     }
 
     private void play(final ChessGame chessGame) {
