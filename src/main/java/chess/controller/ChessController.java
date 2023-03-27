@@ -8,7 +8,6 @@ import chess.dto.PositionRequest;
 import chess.dto.SquareResponse;
 import chess.game.ChessGame;
 import chess.game.Turn;
-import chess.service.BoardService;
 import chess.service.ChessGameService;
 import chess.view.*;
 
@@ -24,11 +23,9 @@ public class ChessController {
     private static final int TARGET_INDEX = 2;
 
     private final ChessGameService chessGameService;
-    private final BoardService boardService;
 
-    public ChessController(ChessGameService chessGameService, BoardService boardService) {
+    public ChessController(ChessGameService chessGameService) {
         this.chessGameService = chessGameService;
-        this.boardService = boardService;
     }
 
     public void start() {
@@ -50,7 +47,6 @@ public class ChessController {
         Board board = new Board(BoardFactory.create());
         ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
         chessGameService.save(chessGame, GameStatus.CONTINUING.name());
-        boardService.save(chessGame.getChessBoard(), chessGame.getId());
         start(chessGame);
     }
 
@@ -93,7 +89,6 @@ public class ChessController {
             return GameStatus.CONTINUING;
         }
         chessGameService.update(chessGame, GameStatus.CONTINUING.name());
-        boardService.update(chessGame.getChessBoard(), chessGame.getId());
         return GameStatus.END;
     }
 
@@ -111,7 +106,6 @@ public class ChessController {
     private GameStatus canContinue(ChessGame chessGame) {
         if (chessGame.isEndCondition()) {
             chessGameService.update(chessGame, GameStatus.END.name());
-            boardService.update(chessGame.getChessBoard(), chessGame.getId());
             Team losingTeam = chessGame.getCurrentTurn().getTeam();
             Team winningTeam = chessGame.getCurrentTurn().next().getTeam();
             OutputView.printEndMessage(winningTeam, losingTeam);
