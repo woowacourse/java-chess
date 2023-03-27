@@ -10,7 +10,6 @@ class ChessGameDaoImpTest {
 
     private final ChessGameDaoImp chessGameDaoImp = new ChessGameDaoImp();
 
-
     @Test
     void getConnection() {
         try (final var connection = chessGameDaoImp.getConnection()) {
