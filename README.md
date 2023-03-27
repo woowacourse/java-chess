@@ -125,32 +125,24 @@
 
 ### 기능 요구사항
 
-- [ ] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
-- [ ] DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+- [x] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+- [x] DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
 
 ### SQL 구조
 
 ```sql
-CREATE TABLE game {
+CREATE TABLE game (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  player_turn VARCHAR(255) NOT NULL
-}
+  turn VARCHAR(255) NOT NULL
+);
 
-CRATE TABLE piece {
+CREATE TABLE piece (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  game_id INT
-  type VARCHAR(255) NOT NULL
-  file VARCHAR(255) NOT NULL
-  rank VARCHAR(255) NOT NULL
-  team VARCHAR(255) NOT NULL
-  
-  FOREIGN KEY (game_id)
-  REFERENCES Game(id) ON UPDATE CASCADE
-}
-
-INSERT INTO game(player_turn) VALUES(?)
-DELETE FROM game;
-
-INSERT INTO piece(game_id, type, file, rank, team, isMoved) VALUES(?,?,?,?,?,?)
-DELETE FROM piece
+  game_id INT NOT NULL,
+  FOREIGN KEY(game_id) REFERENCES game(id) ON UPDATE CASCADE,
+  piece_type VARCHAR(255) NOT NULL,
+  piece_file VARCHAR(255) NOT NULL,
+  piece_rank VARCHAR(255) NOT NULL,
+  piece_team VARCHAR(255) NOT NULL
+);
 ```
