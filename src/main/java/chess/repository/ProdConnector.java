@@ -1,18 +1,19 @@
-package chess.dao;
+package chess.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class BoardDao {
+public class ProdConnector implements Connector {
+
 
     private static final String SERVER = "localhost:3306";
     private static final String DATABASE = "chess";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "xxxx";
 
+    @Override
     public Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE, USERNAME, PASSWORD);
         } catch (final SQLException e) {
