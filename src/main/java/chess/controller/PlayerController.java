@@ -6,10 +6,13 @@ import chess.view.InputView;
 
 public class PlayerController {
 
+    private final PlayerDao playerDao = new PlayerDao();
+
     public Player handle() {
         final String name = InputView.readPlayerName();
-        final Player player = PlayerDao.findByName(name);
+        playerDao.createIfNotExist(name);
 
-        return player;
+        return playerDao.findByName(name)
+                .orElseThrow(() -> new RuntimeException("플레이어 생성 실패"));
     }
 }
