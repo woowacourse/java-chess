@@ -105,13 +105,10 @@ public class Board {
     }
 
     public boolean hasKing(Team team) {
-        for (Square square : board.keySet()) {
-            Piece piece = board.get(square);
-            if (piece.isAlly(team) && piece.isKing()) {
-                return true;
-            }
-        }
-        return false;
+        return board.keySet()
+                .stream()
+                .map(board::get)
+                .anyMatch(piece -> piece.isAlly(team) && piece.isKing());
     }
 
     public Map<Square, Piece> getBoard() {
