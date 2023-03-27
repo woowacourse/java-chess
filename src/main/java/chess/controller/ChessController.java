@@ -19,6 +19,7 @@ import java.util.Map;
 public final class ChessController {
 
     private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int SIMPLE_COMMAND_SIZE = 1;
     private static final OutputView outputView = new OutputView();
     private static final InputView inputView = new InputView();
 
@@ -80,13 +81,12 @@ public final class ChessController {
     }
 
     private ChessGame start(List<String> commands, ChessGame chessGame) {
+        validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
         return gameService.start(chessGame);
     }
 
     private ChessGame move(List<String> commands, ChessGame chessGame) {
-        if (commands.size() != MOVE_COMMAND_SIZE) {
-            throw new IllegalArgumentException("이동 명령은 명령어를 포함하여 시작점과 도착점이 존재해야 합니다.");
-        }
+        validateInputCommandSize(commands, MOVE_COMMAND_SIZE);
 
         Position from = PositionMapper.toPosition(commands.get(1));
         Position to = PositionMapper.toPosition(commands.get(2));
@@ -94,14 +94,25 @@ public final class ChessController {
     }
 
     private ChessGame end(List<String> commands, ChessGame chessGame) {
+        validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
         return gameService.end(chessGame);
     }
 
     private ChessGame status(List<String> commands, ChessGame chessGame) {
+        validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
         return gameService.status(chessGame);
     }
 
     private ChessGame load(List<String> commands, ChessGame ignore) {
+        validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
         return gameService.loadExistGame();
+    }
+
+    private void validateInputCommandSize(List<String> commands, int size) {
+        if (commands.size() == size) {
+            return;
+        }
+
+        throw new IllegalArgumentException("옳바른 명령을 입력하세요. ex) start, move a2 a3, load");
     }
 }
