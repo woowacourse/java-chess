@@ -62,7 +62,7 @@ public final class ChessGameDao {
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                roomNames.add(0,resultSet.getString("room_name"));
+                roomNames.add(0, resultSet.getString("room_name"));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);

@@ -25,9 +25,11 @@ public class ChessBoardParser {
         final Map<SquareCoordinate, SquareState> squares = new LinkedHashMap<>();
 
         final char rank = '1';
-        for (int i = 0; i < RANK_SIZE ; i++) {
-            int index = (RANK_SIZE-1-i) * RANK_SIZE;
-            parseChessBoardEachRank(squares, oneLineChessBoardMark.substring(index, index+8), (char) (rank + i));
+        for (int i = 0; i < RANK_SIZE; i++) {
+            int index = (RANK_SIZE - 1 - i) * RANK_SIZE;
+            String rankMark = oneLineChessBoardMark.substring(index, index + RANK_SIZE);
+
+            parseChessBoardEachRank(squares, rankMark, (char) (rank + i));
         }
 
         return squares;
@@ -37,7 +39,10 @@ public class ChessBoardParser {
 
         final char file = 'a';
         for (int i = 0; i < FILE_SIZE; i++) {
-            squares.put(SquareCoordinate.of(makeAlphanumeric((char) (file + i), rank)), SquareParser.getSquareStateByMark(rankMark.substring(i, i + 1)));
+            SquareCoordinate squareCoordinate = SquareCoordinate.of(makeAlphanumeric((char) (file + i), rank));
+            SquareState square = SquareParser.getSquareStateByMark(rankMark.substring(i, i + 1));
+
+            squares.put(squareCoordinate, square);
         }
     }
 

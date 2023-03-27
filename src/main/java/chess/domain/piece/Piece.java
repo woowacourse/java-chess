@@ -98,7 +98,7 @@ public abstract class Piece implements SquareState {
     }
 
     protected final void throwCanNotMoveException() {
-        throw new IllegalArgumentException(this.team.name()+" 팀의 "+this.getClass().getSimpleName() + "(은)는 해당 좌표로 이동할 수 없습니다.");
+        throw new IllegalArgumentException(this.team.name() + " 팀의 " + this.getClass().getSimpleName() + "(은)는 해당 좌표로 이동할 수 없습니다.");
     }
 
     @Override
