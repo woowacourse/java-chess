@@ -2,18 +2,13 @@ package dao;
 
 import chess.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -142,7 +137,7 @@ public final class DBChessGameDao implements ChessGameDao {
                 }
                 final Color color = Color.valueOf(pieceColorString);
 
-                Piece piece = extractPiece(pieceType, color);
+                Piece piece = pieceType.generate(color);
 
                 board.put(position, piece);
             }
@@ -152,29 +147,10 @@ public final class DBChessGameDao implements ChessGameDao {
         return board;
     }
 
-    private Piece extractPiece(final PieceType pieceType, final Color color) {
-        switch (pieceType) {
-            case KING:
-                return King.from(color);
-            case QUEEN:
-                return Queen.from(color);
-            case BISHOP:
-                return Bishop.from(color);
-            case KNIGHT:
-                return Knight.from(color);
-            case ROOK:
-                return Rook.from(color);
-            case PAWN:
-                return Pawn.from(color);
-            default:
-                throw new UnsupportedOperationException("안된다구요!");
-        }
-    }
-
     private Color selectTurn() {
         final var query = "SELECT * FROM chess_status;";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query);
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);
              final ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (resultSet.next()) {
