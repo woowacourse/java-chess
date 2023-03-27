@@ -1,7 +1,5 @@
 package chess.controller;
 
-import chess.domain.database.ChessGameDao;
-import chess.domain.database.Database;
 import chess.domain.dto.ChessGameDto;
 import chess.domain.game.ChessGame;
 import chess.domain.game.User;
@@ -16,7 +14,6 @@ import chess.view.dto.SquareDto;
 
 public class ChessController {
 
-    private final ChessGameDao chessGameDao = new ChessGameDao(Database.PRODUCT);
     private final LoadGameController loadGameController = new LoadGameController();
 
     public void run() {
@@ -237,7 +234,7 @@ public class ChessController {
         try {
             movePiece(chessGame, currentDto, destinationDto);
             OutputView.printGameStatus(chessGame.getGameStatus());
-            chessGameDao.save(gameId, chessGame);
+            chessGame.save(gameId);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

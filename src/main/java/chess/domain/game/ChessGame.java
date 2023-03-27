@@ -3,6 +3,8 @@ package chess.domain.game;
 import java.util.Map;
 
 import chess.domain.board.Board;
+import chess.domain.database.ChessGameDao;
+import chess.domain.database.Database;
 import chess.domain.dto.GameStatusDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Point;
@@ -22,6 +24,11 @@ public class ChessGame {
     public ChessGame(Board board, Turn turn) {
         this.board = board;
         this.turn = turn;
+    }
+
+    public void save(final String gameId) {
+        ChessGameDao chessGameDao = new ChessGameDao(Database.PRODUCT);
+        chessGameDao.save(gameId, this);
     }
 
     public void move(final Square current, final Square destination) {
