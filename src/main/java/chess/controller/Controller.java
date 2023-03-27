@@ -3,9 +3,7 @@ package chess.controller;
 import chess.dao.DbChessGameDao;
 import chess.domain.Position;
 import chess.domain.board.strategy.InitialBoardStrategy;
-import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
-import chess.domain.game.GameStatus;
 import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
@@ -13,8 +11,7 @@ import chess.view.Command;
 
 import java.util.Map;
 
-import static chess.domain.game.GameStatus.GAME_OVER;
-import static chess.domain.game.GameStatus.IDLE;
+import static chess.view.Command.isEnd;
 import static chess.view.Command.isMove;
 import static chess.view.Command.isStart;
 import static chess.view.Command.isStatus;
@@ -29,52 +26,57 @@ import static chess.view.OutputView.printStartGuideMessage;
 public class Controller {
 
     private DbChessGameDao dbChessGameDao = new DbChessGameDao();
-    private Command command;
 
     public void playChessGame() {
         printStartGuideMessage();
-        ChessGame chessGame = loadChessGame();
+        ChessGame  chessGame = new ChessGame(new InitialBoardStrategy());
+        dbChessGameDao.save(chessGame);
 
-        //command = getFirstCommand();
-        initCommend(chessGame);
-        play(chessGame);
-    }
-
-    private void initCommend(ChessGame chessGame) {
-        if (chessGame.getGameStatus().equals(GameStatus.PLAYING)) {
-            return;
-        }
-        CommandDto commandDto = readStateCommand();
-        Command command = commandDto.getCommand();
-        chessGame.receiveCommand(command);
-        dbChessGameDao.update(chessGame);
+        //Command command = getFirstCommand();
+        //play(chessGame, command);
     }
 
     private ChessGame loadChessGame() {
         ChessGame chessGame = dbChessGameDao.select();
+        System.out.println("call");
+        printChessGame(chessGame);
+
+        System.out.println("end");
 
         if (chessGame == null) {
-            chessGame = new ChessGame(new InitialBoardStrategy(), IDLE);
+            chessGame = new ChessGame(new InitialBoardStrategy());
             dbChessGameDao.save(chessGame);
         }
-
         return chessGame;
     }
 
-    private void play(ChessGame chessGame) {
-        while (!isEnd(chessGame)) {
-           ChessGame chessGame1 = dbChessGameDao.select();
-            ChessBoard chessBoard = chessGame1.getChessBoard();
-            printBoard(new BoardDto(chessBoard.getChessBoard()));
-            chessGame.receiveCommand(inputCommand(chessGame));
-            dbChessGameDao.update(chessGame);
+    private void play(ChessGame chessGame, Command command) {
+        boolean isFirst = true;
+        while (gameCondition(chessGame, command)) {
+            if (isEnd(command)) {
+                dbChessGameDao.delete(chessGame);
+                break;
+            }
+
+            if (isStatus(command)) {
+                printScores(chessGame.getChessBoard());
+            }
+
+            if (isStart(command)) {
+               // chessGame = dbChessGameDao.select();
+                //if(!isFirst) {
+                    chessGame = new ChessGame(new InitialBoardStrategy());
+                //}
+                dbChessGameDao.update(chessGame);
+                printChessGame(chessGame);
+            }
+
+            command = inputCommand(chessGame);
         }
     }
 
-    private boolean isEnd(ChessGame chessGame) {
-        GameStatus gameStatus = chessGame.getGameStatus();
-        return isKingDead(chessGame)
-                || gameStatus == IDLE || gameStatus == GAME_OVER;
+    private boolean gameCondition(ChessGame chessGame, Command command) {
+        return !isKingDead(chessGame) && (isStart(command) || isStatus(command));
     }
 
     private Command getFirstCommand() {
@@ -149,9 +151,5 @@ public class Controller {
     private void printChessGame(ChessGame chessGame) {
         BoardDto boardDto = new BoardDto(chessGame.getChessBoardMap());
         printBoard(boardDto);
-    }
-
-    public Command getCommand() {
-        return command;
     }
 }

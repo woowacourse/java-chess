@@ -74,6 +74,7 @@ public abstract class Piece {
         if (name.equals("B")) {
             return new Bishop(PieceInfo.BLACK_BISHOP_INFO);
         }
+
         if (name.equals("b")) {
             return new Bishop(PieceInfo.WHITE_BISHOP_INFO);
         }
@@ -81,29 +82,31 @@ public abstract class Piece {
         if (name.equals("k")) {
             return new King(PieceInfo.WHITE_KING_INFO);
         }
+
         if (name.equals("K")) {
             return new King(PieceInfo.BLACK_KING_INFO);
+        }
+
+        if (name.equals("q")) {
+            return new Queen(PieceInfo.WHITE_QUEEN_INFO);
+        }
+
+        if (name.equals("Q")) {
+            return new Queen(PieceInfo.BLACK_QUEEN_INFO);
         }
 
         if (name.equals("p")) {
             return new Pawn(PieceInfo.WHITE_PAWN_INFO);
         }
         if (name.equals("P")) {
-            return new Pawn(PieceInfo.BLACK_PAWN_INFO);
-        }
-
-        if (name.equals("q")) {
-            return new Queen(PieceInfo.WHITE_QUEEN_INFO);
-        }
-        if (name.equals("Q")) {
-            return new Queen(PieceInfo.BLACK_QUEEN_INFO);
+            return new Pawn(PieceInfo.BLACK_QUEEN_INFO);
         }
 
         if (name.equals("r")) {
-            return new Rook(PieceInfo.WHITE_ROOK_INFO);
+            return new Pawn(PieceInfo.WHITE_ROOK_INFO);
         }
         if (name.equals("R")) {
-            return new Rook(PieceInfo.BLACK_ROOK_INFO);
+            return new Pawn(PieceInfo.BLACK_ROOK_INFO);
         }
 
         if (name.equals("n")) {

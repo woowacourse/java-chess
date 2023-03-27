@@ -3,9 +3,7 @@ package chess.domain.game;
 import chess.domain.Position;
 import chess.domain.board.strategy.BoardStrategy;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.view.Command;
 
 import java.util.Map;
 
@@ -13,16 +11,13 @@ import static chess.view.ErrorMessage.NO_PIECE_ERROR_MESSAGE;
 
 public class ChessGame {
     private final ChessBoard chessBoard;
-    private GameStatus gameStatus;
 
-    public ChessGame(BoardStrategy boardStrategy, GameStatus gameStatus) {
+    public ChessGame(BoardStrategy boardStrategy) {
         this.chessBoard = new ChessBoard(boardStrategy.generate());
-        this.gameStatus = gameStatus;
     }
 
-    public ChessGame(ChessBoard chessBoard, GameStatus gameStatus) {
+    public ChessGame(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
-        this.gameStatus = gameStatus;
     }
 
     public void move(Position start, Position end) {
@@ -30,17 +25,6 @@ public class ChessGame {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE.getErrorMessage());
         }
         chessBoard.move(start, end);
-
-        if(chessBoard.getChessBoard().get(start) instanceof Pawn){
-            Pawn pawn = (Pawn)chessBoard.getChessBoard().get(start);
-            pawn.setIsFirstMove();
-        }
-    }
-
-    public void receiveCommand(final Command command) {
-        if (this.gameStatus != GameStatus.GAME_OVER) {
-            this.gameStatus = command.getStatus();
-        }
     }
 
     public Map<Position, Piece> getChessBoardMap() {
@@ -49,9 +33,5 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
-    }
-
-    public GameStatus getGameStatus() {
-        return gameStatus;
     }
 }
