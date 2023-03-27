@@ -6,7 +6,7 @@ import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.domain.point.Points;
 import chess.dto.Command;
- import chess.dto.MovementDto;
+import chess.dto.MovementDto;
 
 import java.util.List;
 
