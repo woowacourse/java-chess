@@ -4,10 +4,10 @@ import chess.dao.BoardDao;
 import chess.dao.MySqlManager;
 import chess.domain.board.Board;
 import chess.domain.board.Turn;
+import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.position.Position;
-import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.board.service.dto.BoardModifyRequest;
-import chess.domain.board.service.dto.BoardRegisterRequest;
+import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,12 +65,10 @@ class BoardCommandServiceTest {
     @DisplayName("registerBoard() : board 를 저장할 수 있다.")
     void test_registerBoard() throws Exception {
         //given
-        final String position = "P : 3 7, k : 4 7, p : 5 7";
-
-        final BoardRegisterRequest boardRegisterRequest = new BoardRegisterRequest(position, "WHITE");
+        final Board board = Board.makeNewGame(new BoardFactory());
 
         //when
-        final Long savedId = boardCommandService.registerBoard(boardRegisterRequest);
+        final Long savedId = boardCommandService.registerBoard(board);
 
         //then
         assertEquals(3, savedId);

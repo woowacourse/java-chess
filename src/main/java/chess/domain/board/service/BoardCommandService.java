@@ -1,6 +1,7 @@
 package chess.domain.board.service;
 
 import chess.dao.BoardDao;
+import chess.domain.board.Board;
 import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.board.service.dto.BoardModifyRequest;
 import chess.domain.board.service.dto.BoardRegisterRequest;
@@ -15,7 +16,10 @@ public class BoardCommandService {
         this.boardMapper = boardMapper;
     }
 
-    public Long registerBoard(BoardRegisterRequest boardRegisterRequest) {
+    public Long registerBoard(final Board board) {
+
+        final BoardRegisterRequest boardRegisterRequest = boardMapper.mapToBoardRegisterRequestFrom(board);
+
         return boardDao.save(boardRegisterRequest);
     }
 
