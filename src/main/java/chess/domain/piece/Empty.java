@@ -14,12 +14,12 @@ public class Empty extends ChessPiece {
     }
 
     @Override
-    Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
+    public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
         throw new IllegalArgumentException("[ERROR] Empty 객체는 이동 방향을 가질 수 없습니다.");
     }
 
     @Override
-    int findDistance(Direction direction, Position sourcePosition, Position targetPosition) {
+    public int findDistance(Direction direction, Position sourcePosition, Position targetPosition) {
         throw new IllegalArgumentException("[ERROR] Empty 객체는 이동 거리를 가질 수 없습니다.");
     }
 

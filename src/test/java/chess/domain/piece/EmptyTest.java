@@ -13,6 +13,4 @@ class EmptyTest {
 
         assertDoesNotThrow(Empty::new);
     }
-
-
 }

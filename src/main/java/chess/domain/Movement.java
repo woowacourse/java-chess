@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.piece.Empty;
 
+import java.util.Objects;
+
 public class Movement {
 
     private final Position sourcePosition;
@@ -52,5 +54,18 @@ public class Movement {
 
     public int getDistance() {
         return distance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movement movement = (Movement) o;
+        return distance == movement.distance && Objects.equals(sourcePosition, movement.sourcePosition) && direction == movement.direction;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sourcePosition, direction, distance);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum Column {
     A('a', "a"),
     B('b', "b"),
-    C('c',"c"),
+    C('c', "c"),
     D('d', "d"),
     E('e', "e"),
     F('f', "f"),
@@ -27,10 +27,10 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 컬럼을 찾을 수 없습니다."));
     }
 
-    public static boolean isInChessBoardRange(int columnSequence) {
-        return Arrays.stream(Rank.values())
-                .map(Rank::getSequence)
-                .anyMatch(rank -> rank == columnSequence);
+    public static boolean isInChessBoardRange(char columnSequence) {
+        return Arrays.stream(Column.values())
+                .map(Column::getSequence)
+                .anyMatch(column -> column == columnSequence);
     }
 
     public String getName() {

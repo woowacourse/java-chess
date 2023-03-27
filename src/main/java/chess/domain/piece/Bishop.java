@@ -24,7 +24,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
+    public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
         if (Direction.isMovableNorthEast(sourcePosition, targetPosition)) {
             return Direction.NORTH_EAST;
         }

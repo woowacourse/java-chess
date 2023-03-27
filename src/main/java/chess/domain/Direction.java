@@ -119,6 +119,7 @@ public enum Direction {
         int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
         return columnDistanceFromTargetToSource == SOUTH_SOUTH_EAST.columnVector && rankDistanceFromTargetToSource == SOUTH_SOUTH_EAST.rankVector;
     }
+
     public static boolean isMovableSouthSouthWest(Position sourcePosition, Position targetPosition) {
         int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
         int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);

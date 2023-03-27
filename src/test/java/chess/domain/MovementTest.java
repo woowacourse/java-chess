@@ -78,17 +78,4 @@ public class MovementTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 포지션은 체스판 범위 밖입니다.");
     }
-
-
-//    @Test
-//    @DisplayName("초기 포지션에 위치한 화이트폰은 북쪽으로 2칸을 이동할 수 있다.")
-//    void shouldSucceedWhitePawnMoveToNorthTwoDistance() {
-//        Position sourcePosition = Position.findPosition("a2");
-//        Direction direction = Direction.NORTH;
-//        int distance = 2;
-//        Movement movement = new Movement(sourcePosition, direction, distance);
-//        Pawn whitePawn = new Pawn(Color.WHITE);
-//
-//        org.assertj.core.api.Assertions.assertThat(movement.isFirstMovement(whitePawn)).isTrue();
-//    }
 }

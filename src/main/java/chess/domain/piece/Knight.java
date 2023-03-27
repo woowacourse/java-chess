@@ -27,7 +27,7 @@ Knight extends ChessPiece {
     }
 
     @Override
-    Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
+    public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
         if (Direction.isMovableNorthNorthEast(sourcePosition, targetPosition)) {
             return Direction.NORTH_NORTH_EAST;
         }
@@ -56,7 +56,7 @@ Knight extends ChessPiece {
     }
 
     @Override
-    int findDistance(Direction direction, Position sourcePosition, Position targetPosition) {
+    public int findDistance(Direction direction, Position sourcePosition, Position targetPosition) {
         validateDirection(direction);
         int distance = 0;
         while (sourcePosition != targetPosition) {

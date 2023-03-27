@@ -4,40 +4,41 @@ import chess.domain.piece.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private final static String WHITE_ROOK_LEFT = "a1";
-    private final static String WHITE_ROOK_RIGHT = "h1";
-    private final static String BLACK_ROOK_LEFT = "a8";
-    private final static String BLACK_ROOK_RIGHT = "h8";
-    private final static String WHITE_KNIGHT_LEFT = "b1";
-    private final static String WHITE_KNIGHT_RIGHT = "g1";
-    private final static String BLACK_KNIGHT_LEFT = "b8";
-    private final static String BLACK_KNIGHT_RIGHT = "g8";
-    private final static String WHITE_BISHOP_LEFT = "c1";
-    private final static String WHITE_BISHOP_RIGHT = "f1";
-    private final static String BLACK_BISHOP_LEFT = "c8";
-    private final static String BLACK_BISHOP_RIGHT = "f8";
-    private final static String WHITE_QUEEN = "d1";
-    private final static String BLACK_QUEEN = "d8";
-    private final static String WHITE_KING = "e1";
-    private final static String BLACK_KING = "e8";
-    private final static String WHITE_PAWN_FIRST = "a2";
-    private final static String WHITE_PAWN_SECOND = "b2";
-    private final static String WHITE_PAWN_THIRD = "c2";
-    private final static String WHITE_PAWN_FOURTH = "d2";
-    private final static String WHITE_PAWN_FIFTH = "e2";
-    private final static String WHITE_PAWN_SIXTH = "f2";
-    private final static String WHITE_PAWN_SEVENTH = "g2";
-    private final static String WHITE_PAWN_EIGHT = "h2";
-    private final static String BLACK_PAWN_FIRST = "a7";
-    private final static String BLACK_PAWN_SECOND = "b7";
-    private final static String BLACK_PAWN_THIRD = "c7";
-    private final static String BLACK_PAWN_FOURTH = "d7";
-    private final static String BLACK_PAWN_FIFTH = "e7";
-    private final static String BLACK_PAWN_SIXTH = "f7";
-    private final static String BLACK_PAWN_SEVENTH = "g7";
-    private final static String BLACK_PAWN_EIGHT = "h7";
+    public final static String WHITE_ROOK_LEFT = "a1";
+    public final static String WHITE_ROOK_RIGHT = "h1";
+    public final static String BLACK_ROOK_LEFT = "a8";
+    public final static String BLACK_ROOK_RIGHT = "h8";
+    public final static String WHITE_KNIGHT_LEFT = "b1";
+    public final static String WHITE_KNIGHT_RIGHT = "g1";
+    public final static String BLACK_KNIGHT_LEFT = "b8";
+    public final static String BLACK_KNIGHT_RIGHT = "g8";
+    public final static String WHITE_BISHOP_LEFT = "c1";
+    public final static String WHITE_BISHOP_RIGHT = "f1";
+    public final static String BLACK_BISHOP_LEFT = "c8";
+    public final static String BLACK_BISHOP_RIGHT = "f8";
+    public final static String WHITE_QUEEN = "d1";
+    public final static String BLACK_QUEEN = "d8";
+    public final static String WHITE_KING = "e1";
+    public final static String BLACK_KING = "e8";
+    public final static String WHITE_PAWN_FIRST = "a2";
+    public final static String WHITE_PAWN_SECOND = "b2";
+    public final static String WHITE_PAWN_THIRD = "c2";
+    public final static String WHITE_PAWN_FOURTH = "d2";
+    public final static String WHITE_PAWN_FIFTH = "e2";
+    public final static String WHITE_PAWN_SIXTH = "f2";
+    public final static String WHITE_PAWN_SEVENTH = "g2";
+    public final static String WHITE_PAWN_EIGHT = "h2";
+    public final static String BLACK_PAWN_FIRST = "a7";
+    public final static String BLACK_PAWN_SECOND = "b7";
+    public final static String BLACK_PAWN_THIRD = "c7";
+    public final static String BLACK_PAWN_FOURTH = "d7";
+    public final static String BLACK_PAWN_FIFTH = "e7";
+    public final static String BLACK_PAWN_SIXTH = "f7";
+    public final static String BLACK_PAWN_SEVENTH = "g7";
+    public final static String BLACK_PAWN_EIGHT = "h7";
 
     private static final int MIN_RANK_LEVEL_FOR_EMPTY = 3;
     private static final int MAX_RANK_LEVEL_FOR_EMPTY = 6;
@@ -142,11 +143,9 @@ public class ChessBoard {
         throw new IllegalArgumentException("[ERROR] 해당 색상의 기물을 선택할 수 없습니다.");
     }
 
-
     public void movePiece(ChessPiece chessPiece, Position targetPosition) {
         chessBoard.put(targetPosition, chessPiece);
     }
-
 
     public void removePiece(Position sourcePosition) {
         chessBoard.put(sourcePosition, new Empty());
@@ -164,81 +163,10 @@ public class ChessBoard {
         return chessBoard;
     }
 
-
-    //    Map<Position, ChessPiece> chessBoard;
-//
-//    private ChessBoard(Map<Position, ChessPiece> chessBoard) {
-//        this.chessBoard = chessBoard;
-//    }
-//
-//    public static ChessBoard generateChessBoard() {
-//        Map<Position, ChessPiece> chessBoard = new HashMap<>();
-//        generateRook(chessBoard);
-//        generateKnight(chessBoard);
-//        generateBishop(chessBoard);
-//        generateQueen(chessBoard);
-//        generateKing(chessBoard);
-//        generatePawn(chessBoard);
-//        initEmptySpace(chessBoard);
-//        return new ChessBoard(chessBoard);
-//    }
-//
-//    private static void generateRook(Map<Position, ChessPiece> chessBoard) {
-//        chessBoard.put(Position.initPosition(1, 1), new Rook(Side.WHITE));
-//        chessBoard.put(Position.initPosition(8, 1), new Rook(Side.WHITE));
-//        chessBoard.put(Position.initPosition(1, 8), new Rook(Side.BLACK));
-//        chessBoard.put(Position.initPosition(8, 8), new Rook(Side.BLACK));
-//    }
-//
-//    private static void generateKing(Map<Position, ChessPiece> chessBoard) {
-//        chessBoard.put(Position.initPosition(5, 1), new King(Side.WHITE));
-//        chessBoard.put(Position.initPosition(5, 8), new King(Side.BLACK));
-//    }
-//
-//    private static void generateKnight(Map<Position, ChessPiece> chessBoard) {
-//        chessBoard.put(Position.initPosition(2, 1), new Knight(Side.WHITE));
-//        chessBoard.put(Position.initPosition(7, 1), new Knight(Side.WHITE));
-//        chessBoard.put(Position.initPosition(2, 8), new Knight(Side.BLACK));
-//        chessBoard.put(Position.initPosition(7, 8), new Knight(Side.BLACK));
-//    }
-//
-//    private static void generateBishop(Map<Position, ChessPiece> chessBoard) {
-//        chessBoard.put(Position.initPosition(3, 1), new Bishop(Side.WHITE));
-//        chessBoard.put(Position.initPosition(6, 1), new Bishop(Side.WHITE));
-//        chessBoard.put(Position.initPosition(3, 8), new Bishop(Side.BLACK));
-//        chessBoard.put(Position.initPosition(6, 8), new Bishop(Side.BLACK));
-//    }
-//
-//    private static void generateQueen(Map<Position, ChessPiece> chessBoard) {
-//        chessBoard.put(Position.initPosition(4, 1), new Queen(Side.WHITE));
-//        chessBoard.put(Position.initPosition(4, 8), new Queen(Side.BLACK));
-//    }
-//
-//    private static void generatePawn(Map<Position, ChessPiece> chessBoard) {
-//        for (int horizontal = 1; horizontal <= 8; horizontal++) {
-//            chessBoard.put(Position.initPosition(horizontal, 2), new Pawn(Side.WHITE));
-//            chessBoard.put(Position.initPosition(horizontal, 7), new Pawn(Side.BLACK));
-//        }
-//    }
-//
-//    private static void initEmptySpace(Map<Position, ChessPiece> chessBoard) {
-//        for (int horizontal = 1; horizontal <= 8; horizontal++) {
-//            circuitVertical(chessBoard, horizontal);
-//        }
-//    }
-//
-//    private static void circuitVertical(Map<Position, ChessPiece> chessBoard, int i) {
-//        for (int vertical = 3; vertical <= 6; vertical++) {
-//            chessBoard.put(Position.initPosition(i, vertical), new Empty(Side.BLANK));
-//        }
-//    }
-//
-//    public ChessPiece getChessPieceByPosition(Position position) {
-//        return chessBoard.get(position);
-//    }
-//
-//    public Map<Position, ChessPiece> getChessBoard() {
-//        return chessBoard;
-//    }
+    public Map<Position, ChessPiece> getChessPiecesByColor(Color color) {
+        return chessBoard.entrySet().stream()
+                .filter(positionChessPieceEntry -> positionChessPieceEntry.getValue().getColor().equals(color))
+                .collect(Collectors.toMap(positionChessPieceEntry -> positionChessPieceEntry.getKey(), positionChessPieceEntry -> positionChessPieceEntry.getValue()));
+    }
 }
 

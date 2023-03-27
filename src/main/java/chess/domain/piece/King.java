@@ -25,7 +25,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
+    public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
         if (Direction.isMovableToEast(sourcePosition, targetPosition)) {
             return Direction.EAST;
         }

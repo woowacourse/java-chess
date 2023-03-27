@@ -16,11 +16,11 @@ public abstract class ChessPiece {
 
     abstract Shape selectShape(Color color);
 
-    abstract Direction findMovableDirection(Position sourcePosition, Position targetPosition);
+    public abstract Direction findMovableDirection(Position sourcePosition, Position targetPosition);
 
-    abstract int findDistance(Direction direction, Position sourcePosition, Position targetPosition);
+    public abstract int findDistance(Direction direction, Position sourcePosition, Position targetPosition);
 
-    abstract boolean isMovable(Movement movement, ChessBoard chessBoard);
+    public abstract boolean isMovable(Movement movement, ChessBoard chessBoard);
 
     public String getShape() {
         return shape.getShape();

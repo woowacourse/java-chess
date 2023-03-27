@@ -1,6 +1,5 @@
-package chess;
+package chess.domain;
 
-import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

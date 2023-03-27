@@ -26,7 +26,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
+    public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
         if (color.equals(Color.WHITE) && Direction.isMovableNorth(sourcePosition, targetPosition)) {
             return Direction.NORTH;
         }
