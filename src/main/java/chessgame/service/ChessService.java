@@ -1,35 +1,30 @@
 package chessgame.service;
 
-import chessgame.dao.ConnectionGenerator;
 import chessgame.dao.GameDao;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Game;
 
-import java.sql.Connection;
-
 public class ChessService {
-    private final Connection connection;
     private final GameDao gameDao = new GameDao();
 
     public ChessService() {
-        this.connection = ConnectionGenerator.getConnection();
     }
 
     public Game setGame(String gameName) {
-        Game readGame = gameDao.read(gameName, connection);
+        Game readGame = gameDao.read(gameName);
         if (readGame == null) {
             return new Game(new Board(ChessBoardFactory.create()), gameName);
         }
-        readGame.setTeamState(gameDao.findTurnByGame(gameName, connection));
+        readGame.setTeamState(gameDao.findTurnByGame(gameName));
         return readGame;
     }
 
     public void removeGame(Game game) {
-        gameDao.remove(game.getName(), connection);
+        gameDao.remove(game.getName());
     }
 
     public void saveGame(Game game) {
-        gameDao.save(game.board(), game.getName(), game.getTurn(), connection);
+        gameDao.save(game.board(), game.getName(), game.getTurn());
     }
 }

@@ -17,7 +17,7 @@ class GameTest {
 
     @BeforeEach
     void before() {
-        game = new Game(new Board(ChessBoardFactory.create()),"test");
+        game = new Game(new Board(ChessBoardFactory.create()), "test");
     }
 
     @Test

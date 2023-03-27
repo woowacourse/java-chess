@@ -17,28 +17,30 @@ import java.util.Map;
 
 public class GameDao {
 
-    public void save(Board board, String gameName, State turn, Connection connection) {
+    public void save(Board board, String gameName, State turn) {
         Map<Point, Piece> boardMap = board.getBoard();
-        insertGame(gameName, turn, connection);
-        insertBoard(boardMap, gameName, connection);
+        insertGame(gameName, turn);
+        insertBoard(boardMap, gameName);
     }
 
-    private void insertGame(String gameName, State turn, Connection connection) {
+    private void insertGame(String gameName, State turn) {
         final String query = "insert into game (name, team_turn) values (?, ?)";
-        try(final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionGenerator.getConnection();
+        final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.setString(2, turn.getClass().getSimpleName());
             preparedStatement.execute();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void insertBoard(Map<Point, Piece> boardMap, String gameName, Connection connection) {
+    private void insertBoard(Map<Point, Piece> boardMap, String gameName) {
         final String query = "insert into board (board_name, piece_file, piece_rank, piece_type, piece_team) values (?, ?, ?, ?, ?)";
-        try(final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             insertPiece(boardMap, gameName, preparedStatement);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -54,9 +56,10 @@ public class GameDao {
         }
     }
 
-    public Game read(String gameName, Connection connection) {
+    public Game read(String gameName) {
         final String query = "SELECT * FROM Board where board_name = ?";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
             return makeGame(makeBoard(resultSet), gameName);
@@ -86,10 +89,11 @@ public class GameDao {
         return new Game(new Board(board), gameName);
     }
 
-    public void remove(String gameName, Connection connection) {
+    public void remove(String gameName) {
         final String query = "delete from game where name = ?";
 
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.execute();
         } catch (final SQLException e) {
@@ -97,10 +101,11 @@ public class GameDao {
         }
     }
 
-    public String findTurnByGame(String gameName, Connection connection) {
+    public String findTurnByGame(String gameName) {
         final String query = "select team_turn from game where name = ?";
 
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
