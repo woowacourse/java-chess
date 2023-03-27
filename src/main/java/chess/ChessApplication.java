@@ -1,27 +1,15 @@
 package chess;
 
+import chess.config.ChessConfig;
 import chess.controller.ChessController;
-import chess.dao.ChessMovementDao;
-import chess.dao.ConnectionStrategy;
-import chess.dao.JdbcChessMovementDao;
-import chess.dao.MySqlConnectionStrategy;
-import chess.model.game.ChessGame;
 import chess.service.ChessGameService;
-import chess.view.InputView;
-import chess.view.OutputView;
-import java.util.Scanner;
 
 public class ChessApplication {
 
     public static void main(String[] args) {
-        final Scanner scanner = new Scanner(System.in);
-        final InputView inputView = new InputView(scanner);
-        final OutputView outputView = new OutputView();
-        final ChessController chessController = new ChessController(inputView, outputView);
-        final ChessGame chessGame = new ChessGame();
-        final ConnectionStrategy connectionStrategy = new MySqlConnectionStrategy();
-        final ChessMovementDao chessMovementDao = new JdbcChessMovementDao(connectionStrategy);
-        final ChessGameService chessGameService = new ChessGameService(chessGame, chessMovementDao);
+        final ChessConfig chessConfig = new ChessConfig();
+        final ChessController chessController = chessConfig.chessController();
+        final ChessGameService chessGameService = chessConfig.chessGameService();
 
         chessController.start(chessGameService);
     }
