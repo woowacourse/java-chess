@@ -30,8 +30,10 @@ public final class DbChessGameDao implements ChessDao {
     @Override
     public void save(final ChessGameSaveDto dto) {
         final String sql = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, last_turn) VALUES (?, ?, ?, ?, ?)";
-        try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
+        ) {
+
             for (int i = 0; i < dto.getSize(); i++) {
                 preparedStatement.setString(1, dto.getPieceTypes().get(i));
                 preparedStatement.setString(2, dto.getPieceFiles().get(i));
@@ -48,9 +50,10 @@ public final class DbChessGameDao implements ChessDao {
     @Override
     public ChessGameLoadDto loadGame() {
         final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
-        try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
-            final ResultSet resultSet = preparedStatement.executeQuery();
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
+             final ResultSet resultSet = preparedStatement.executeQuery();
+        ) {
             final List<String> piece_type = new ArrayList<>();
             final List<String> piece_file = new ArrayList<>();
             final List<String> piece_ranks = new ArrayList<>();
@@ -73,9 +76,10 @@ public final class DbChessGameDao implements ChessDao {
     @Override
     public boolean hasHistory() {
         final String sql = "SELECT piece_type, piece_file, piece_rank, piece_team, last_turn FROM chess_game";
-        try (final Connection connection = getConnection()) {
-            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
-            final ResultSet resultSet = preparedStatement.executeQuery();
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(sql);
+             final ResultSet resultSet = preparedStatement.executeQuery();
+        ) {
             return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
