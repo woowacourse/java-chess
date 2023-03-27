@@ -69,4 +69,14 @@ public class Empty implements Piece {
     @Override
     public void addPieceType(Map<PieceType, Integer> pieceCounter) {
     }
+
+    @Override
+    public String getPieceTypeName() {
+        return "EMPTY";
+    }
+
+    @Override
+    public String getColorName() {
+        return "EMPTY";
+    }
 }
