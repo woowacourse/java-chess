@@ -25,4 +25,7 @@ public interface Piece {
     boolean isSliding();
 
     void addPieceType(Map<PieceType, Integer> pieceCounter);
+
+    String getPieceTypeName();
+    String getColorName();
 }

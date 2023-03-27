@@ -97,7 +97,7 @@ public class Board {
     }
 
     private boolean isDuplicatePawn(PieceType pieceType, int count) {
-        return pieceType.equals(PieceType.PAWN) && count > 1;
+        return pieceType.isDuplicateDemeritPieceType() && count > 1;
     }
 
     private Map<PieceType, Integer> getCountOfTeamPieceByFile(File file, Color color) {
@@ -129,5 +129,9 @@ public class Board {
                 .filter(position -> position.isSameFile(file))
                 .collect(Collectors.toList());
         return positions;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }

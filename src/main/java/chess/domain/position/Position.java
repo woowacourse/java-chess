@@ -100,12 +100,12 @@ public class Position {
         return Position.of(fileDirection.move(this.file), rankDirection.move(this.rank, 1));
     }
 
-    public List<Integer> getCoordinate() {
-        List<Integer> coordinate = new ArrayList<>();
+    public String getRankName() {
+        return rank.name();
+    }
 
-        coordinate.add(rank.getRankIndex());
-        coordinate.add(file.getFileIndex());
-        return coordinate;
+    public String getFileName() {
+        return file.name();
     }
 
     public boolean isSameRank(Rank other) {

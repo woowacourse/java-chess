@@ -80,6 +80,16 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public String getPieceTypeName() {
+        return pieceData.getPieceTypeName();
+    }
+
+    @Override
+    public String getColorName() {
+        return pieceData.getColorName();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
