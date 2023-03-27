@@ -47,7 +47,7 @@ public class BoardFactory {
 
     public static Map<Position, Piece> createEmptyBoard() {
         Map<Position, Piece> squares = new HashMap<>();
-        for (int y = 1; y < BOARD_ROW_SIZE; y++) {
+        for (int y = 0; y < BOARD_ROW_SIZE; y++) {
             squares.putAll(generateRow(ignore -> Empty.INSTANCE, y));
         }
         return squares;
