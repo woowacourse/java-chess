@@ -40,10 +40,9 @@ public final class Board {
         validateNotEquals(currentPosition, targetPosition);
 
         Piece currentPositionPiece = findPieceAt(currentPosition);
-        checkAndChangeTurn(currentPositionPiece, turn);
-
         validateMove(currentPosition, targetPosition, currentPositionPiece);
 
+        checkAndChangeTurn(currentPositionPiece, turn);
         move(currentPosition, targetPosition);
     }
 
