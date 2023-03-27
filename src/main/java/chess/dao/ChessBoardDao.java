@@ -32,7 +32,7 @@ public class ChessBoardDao implements ChessDao {
 		}
 	}
 
-	private static void insert(Board chessBoard, Map.Entry<Position, Piece> boardEntry) {
+	private void insert(final Board chessBoard, final Map.Entry<Position, Piece> boardEntry) {
 		final var query = "INSERT INTO chess_game(piece_type, piece_rank, piece_file, color, turn) VALUES (?, ?, ?, ?, ?)";
 		try (final var connection = dbConnection.getConnection();
 			 final var preparedStatement = connection.prepareStatement(query)) {
@@ -74,7 +74,7 @@ public class ChessBoardDao implements ChessDao {
 		return new Board(board, turn);
 	}
 
-	private Piece toPiece(PieceType pieceType, Color color, Position position) {
+	private Piece toPiece(final PieceType pieceType, final Color color, final Position position) {
 		if (pieceType == ROOK) {
 			return new Rook(color, position);
 		}
@@ -97,7 +97,7 @@ public class ChessBoardDao implements ChessDao {
 	}
 
 	@Override
-	public void update(Board board) {
+	public void update(final Board board) {
 		delete();
 		save(board);
 	}
