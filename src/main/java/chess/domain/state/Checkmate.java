@@ -11,7 +11,7 @@ public class Checkmate extends Finished{
     }
 
     @Override
-    public String findWinner() {
+    public String findCurrentTurn() {
         return winner.convertToColorLabel();
     }
 }

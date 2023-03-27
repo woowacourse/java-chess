@@ -1,4 +1,4 @@
-package chess.domain.piece.type;
+package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;

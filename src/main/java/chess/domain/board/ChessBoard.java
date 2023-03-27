@@ -10,7 +10,7 @@ import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
 
-import chess.domain.piece.type.Pawn;
+import chess.domain.piece.role.Pawn;
 import chess.domain.state.ChessState;
 import java.util.ArrayList;
 import java.util.HashMap;

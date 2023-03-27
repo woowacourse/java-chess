@@ -5,12 +5,12 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Pawn;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
+import chess.domain.piece.role.Bishop;
+import chess.domain.piece.role.King;
+import chess.domain.piece.role.Knight;
+import chess.domain.piece.role.Pawn;
+import chess.domain.piece.role.Queen;
+import chess.domain.piece.role.Rook;
 
 import java.util.HashMap;
 import java.util.List;
