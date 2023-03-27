@@ -9,12 +9,24 @@ import java.util.stream.Collectors;
 public class Point {
     private static final Map<String, Point> cache = new HashMap<>(64);
 
+    private final int pointNo;
     private final File file;
     private final Rank rank;
 
-    private Point(File file, Rank rank) {
+    private Point(int pointNo, File file, Rank rank) {
+        this.pointNo = pointNo;
         this.file = file;
         this.rank = rank;
+    }
+
+    private Point(File file, Rank rank) {
+        this.pointNo = 0;
+        this.file = file;
+        this.rank = rank;
+    }
+
+    public static Point of(int pointNo, File file, Rank rank) {
+        return cache.computeIfAbsent(toKey(file, rank), ignore -> new Point(pointNo, file, rank));
     }
 
     public static Point of(File file, Rank rank) {
@@ -69,5 +81,13 @@ public class Point {
             .stream()
             .map(rank -> Point.of(this.file, rank))
             .collect(Collectors.toList());
+    }
+
+    public String getFile() {
+        return String.valueOf(file.getValue());
+    }
+
+    public String getRank() {
+        return String.valueOf(rank.getValue());
     }
 }

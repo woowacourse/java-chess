@@ -9,7 +9,7 @@ public class Queen implements Piece {
     private final Team team;
     private final double score = 9;
 
-    private Queen(Team team) {
+    Queen(Team team) {
         this.team = team;
     }
 
@@ -56,5 +56,10 @@ public class Queen implements Piece {
     @Override
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
+    }
+
+    @Override
+    public String name() {
+        return "queen";
     }
 }

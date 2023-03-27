@@ -2,6 +2,8 @@ package chessgame.controller;
 
 import java.util.Optional;
 
+import chessgame.dao.BoardDao;
+import chessgame.domain.Board;
 import chessgame.domain.Game;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -9,14 +11,26 @@ import chessgame.view.OutputView;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final BoardDao boardDao;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+    public ChessController(InputView inputView, OutputView outputView, BoardDao boardDao) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.boardDao = boardDao;
     }
 
     public void run() {
-        Game game = new Game();
+        int boardNo = inputView.readBoardNo(boardDao.findRunningBoards());
+        Board board;
+        if (boardNo == 0) {
+            boardDao.addBoard();
+            boardDao.addPoints(boardDao.findLastBoardNo());
+            board = boardDao.findBoardByNo(boardDao.findLastBoardNo());
+        } else {
+            board = boardDao.findBoardByNo(boardNo);
+        }
+        boardDao.findBoardByNo(boardNo);
+        Game game = new Game(board);
         playGame(game);
     }
 

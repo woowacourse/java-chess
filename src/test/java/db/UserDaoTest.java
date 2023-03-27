@@ -32,8 +32,8 @@ class UserDaoTest {
 
     @Test
     public void updateUserId() {
-        final var user = new User("testUserId", "testUser");
-        userDao.updateUserId(user, "kero2");
+        final var user = new User("kero2", "testUser");
+        userDao.updateUserId(user, "kero");
 
         assertThat(userDao.findByUserId("kero")).isNotNull();
     }

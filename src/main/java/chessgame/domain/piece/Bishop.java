@@ -54,6 +54,11 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public String name() {
+        return "bishop";
+    }
+
+    @Override
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
     }

@@ -25,7 +25,7 @@ class BoardTest {
     @Test
     @DisplayName("모든 좌표값을 가진 보드를 생성한다")
     void Should_NotThrowException_When_ConstructBord() {
-        assertDoesNotThrow(Board::new);
+        assertDoesNotThrow(() -> new Board());
     }
 
     @Test

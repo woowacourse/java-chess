@@ -51,4 +51,8 @@ public enum Rank {
             .filter(rank -> this != rank)
             .collect(Collectors.toList());
     }
+
+    public int getValue() {
+        return value;
+    }
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import chessgame.controller.Command;
+import chessgame.domain.Board;
 import chessgame.domain.Game;
 
 class GameTest {
@@ -21,7 +22,7 @@ class GameTest {
 
         @BeforeEach
         void before() {
-            game = new Game();
+            game = new Game(new Board());
         }
 
         @Test
@@ -67,7 +68,7 @@ class GameTest {
 
         @BeforeEach
         void before() {
-            game = new Game();
+            game = new Game(new Board());
             game.setFrom(Command.of("start"));
         }
 

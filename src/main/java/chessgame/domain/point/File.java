@@ -43,4 +43,8 @@ public enum File {
 
         return find(result);
     }
+
+    public char getValue() {
+        return value;
+    }
 }

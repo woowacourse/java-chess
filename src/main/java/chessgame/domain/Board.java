@@ -10,10 +10,16 @@ import chessgame.domain.point.Point;
 import chessgame.domain.point.Points;
 
 public class Board {
+    private final int boardNo;
     private final Map<Point, Piece> board;
 
     public Board() {
-        this.board = GameBoardFactory.create();
+        this(0, GameBoardFactory.create());
+    }
+
+    public Board(int boardNo, Map<Point, Piece> board) {
+        this.boardNo = boardNo;
+        this.board = board;
     }
 
     public void move(Points points, Team turn) {

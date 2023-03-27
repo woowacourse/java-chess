@@ -16,4 +16,6 @@ public interface Piece {
     boolean isPawn();
 
     boolean isKing();
+
+    String name();
 }

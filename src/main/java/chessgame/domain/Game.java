@@ -11,8 +11,8 @@ public class Game {
     private final Scores scores;
     private State state;
 
-    public Game() {
-        this.board = new Board();
+    public Game(Board board) {
+        this.board = board;
         this.scores = new Scores();
         this.state = new Ready();
     }
