@@ -35,16 +35,16 @@ public enum PieceType {
         this.score = score;
     }
 
-    public static PieceType from(final Class<? extends Piece> piece) {
+    public static PieceType from(final Piece piece) {
         return Arrays.stream(PieceType.values())
-                .filter(pieceType -> pieceType.pieceType.isAssignableFrom(piece))
+                .filter(pieceType -> pieceType.pieceType.isAssignableFrom(piece.getClass()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
 
-    public static Score scoreOfOneColumnWithSingleTeam(final List<Piece> piecesInOneColumnWithSingleTeam) {
-        Score totalScore = totalScore(piecesInOneColumnWithSingleTeam);
-        long pawnCount = getPawnCount(piecesInOneColumnWithSingleTeam);
+    public static Score calculateScore(final List<Piece> pieces) {
+        Score totalScore = totalScore(pieces);
+        long pawnCount = getPawnCount(pieces);
 
         if (pawnCount >= CRITERIA_OF_CALCULATE_PAWN_SCORE) {
             return totalScore.subtract(SCORE_OF_OVERLAP_PAWNS * pawnCount);
@@ -52,17 +52,17 @@ public enum PieceType {
         return totalScore;
     }
 
-    private static Score totalScore(final List<Piece> piecesInOneColumnWithSingleTeam) {
-        return piecesInOneColumnWithSingleTeam.stream()
-                .map(piece -> from(piece.getClass()))
+    private static Score totalScore(final List<Piece> pieces) {
+        return pieces.stream()
+                .map(PieceType::from)
                 .map(PieceType::getScore)
                 .reduce(Score::add)
                 .orElse(Score.ZERO);
     }
 
-    private static long getPawnCount(final List<Piece> piecesInOneColumnWithSingleTeam) {
-        return piecesInOneColumnWithSingleTeam.stream()
-                .filter(piece1 -> from(piece1.getClass()).equals(PAWN))
+    private static long getPawnCount(final List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> from(piece).equals(PAWN))
                 .count();
     }
 

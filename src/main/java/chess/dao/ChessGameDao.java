@@ -39,7 +39,7 @@ public final class ChessGameDao {
             Piece piece = entry.getValue();
 
             executeUpdate(query, String.valueOf(position.getRow()), String.valueOf(position.getColumn()),
-                    PieceType.from(piece.getClass()).name(), piece.getTeam().name(), turn.name());
+                    PieceType.from(piece).name(), piece.getTeam().name(), turn.name());
         }
     }
 
@@ -96,7 +96,7 @@ public final class ChessGameDao {
             Position position = entry.getKey();
             Piece piece = entry.getValue();
 
-            executeUpdate(query, PieceType.from(piece.getClass()).name(), piece.getTeam().name(),
+            executeUpdate(query, PieceType.from(piece).name(), piece.getTeam().name(),
                     board.getTurn().name(), String.valueOf(position.getRow()), String.valueOf(position.getColumn()));
         }
     }
