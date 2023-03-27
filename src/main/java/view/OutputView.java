@@ -71,4 +71,8 @@ public class OutputView {
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
+
+    public void printExceptionMessage(String message) {
+        System.out.printf("[ERROR] %s%n", message);
+    }
 }

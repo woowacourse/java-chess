@@ -19,15 +19,21 @@ public class ChessController {
         outputView.printAskingBootingCommandMessage();
 
         Board board = new Board();
-        while (true) {
+        controlGame(board);
+    }
+
+    private void controlGame(Board board) {
+        try {
             Command command = inputView.getGameCommand();
-            try {
-                command.execute(board);
-                printBoardStatus(board);
-            } catch (GameFinishedException ignored) {
-                break;
-            }
+            command.execute(board);
+            printBoardStatus(board);
+        } catch (GameFinishedException e) {
+            return;
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
         }
+
+        controlGame(board);
     }
 
     private void printBoardStatus(Board board) {
