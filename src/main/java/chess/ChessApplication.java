@@ -69,6 +69,7 @@ public class ChessApplication {
 		}
 		if (command.isStatus()) {
 			printStatus(board.blackStatus(), board.whiteStatus());
+			play(board);
 		}
 	}
 
