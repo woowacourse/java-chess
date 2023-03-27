@@ -1,9 +1,14 @@
 package chess.dao;
 
+import chess.domain.board.Turn;
+import chess.domain.piece.Color;
 import chess.dto.RunningGameDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RunningGameDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -34,5 +39,35 @@ public class RunningGameDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Integer> findAllIds() {
+        String query = "SELECT id FROM running_game";
+        List<Integer> runningGameIds = new ArrayList<>();
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                runningGameIds.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return runningGameIds;
+    }
+
+    public Turn findTurnById(final int id) {
+        String query = "SELECT turn FROM running_game WHERE id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new Turn(Color.ofString(resultSet.getString("turn")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

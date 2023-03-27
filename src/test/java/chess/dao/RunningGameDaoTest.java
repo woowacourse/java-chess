@@ -3,8 +3,11 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Turn;
+import chess.domain.piece.Color;
 import chess.dto.RunningGameDto;
 import java.sql.SQLException;
+import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -43,5 +46,30 @@ class RunningGameDaoTest {
 
         // when & then
         assertDoesNotThrow(() -> runningGameDao.save(runningGameDto));
+    }
+
+    @Test
+    void 생성된_게임이_없으면_EMPTY_LIST를_반환한다() {
+        assertThat(runningGameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
+    }
+
+    @Test
+    void 생성된_게임_id를_조회할_수_있다() {
+        // given
+        final RunningGameDto runningGameDto = new RunningGameDto("White");
+        runningGameDao.save(runningGameDto);
+
+        // when & then
+        assertThat(runningGameDao.findAllIds().get(0)).isEqualTo(1);
+    }
+
+    @Test
+    void 생성된_게임_id로_turn을_조회할_수_있다() {
+        // given
+        final RunningGameDto runningGameDto = new RunningGameDto("White");
+        runningGameDao.save(runningGameDto);
+
+        // when & then
+        assertThat(runningGameDao.findTurnById(1)).isEqualTo(new Turn(Color.WHITE));
     }
 }

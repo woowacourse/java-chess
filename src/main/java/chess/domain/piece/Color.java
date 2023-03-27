@@ -13,4 +13,8 @@ public enum Color {
     public String label() {
         return label;
     }
+
+    public static Color ofString(String input) {
+        return Color.valueOf(input.toUpperCase());
+    }
 }
