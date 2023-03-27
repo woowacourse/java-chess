@@ -18,10 +18,20 @@ public enum PieceType {
     }
 
     public static Piece toPiece(final PieceType pieceType, final TeamColor color) {
+        if (pieceType == PAWN) {
+            return getPawn(color);
+        }
         return Arrays.stream(values())
                 .filter(it -> it.name().equalsIgnoreCase(pieceType.name()))
                 .map(it -> it.toPiece.apply(pieceType, color))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("기물을 찾을 수 없습니다."));
+    }
+
+    private static Pawn getPawn(TeamColor color) {
+        if (color == TeamColor.BLACK) {
+            return new BlackPawn(PieceType.PAWN);
+        }
+        return new WhitePawn(PieceType.PAWN);
     }
 }
