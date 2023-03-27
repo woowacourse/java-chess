@@ -22,8 +22,8 @@ public class ChessBoardDao implements ChessGameDao {
             try (final var connection = dbConnection.getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, boardEntry.getValue().getPieceType().name());
-                preparedStatement.setString(2, Integer.toString(boardEntry.getKey().getRank()));
-                preparedStatement.setString(3, Integer.toString(boardEntry.getKey().getFile()));
+                preparedStatement.setInt(2, boardEntry.getKey().getRank());
+                preparedStatement.setInt(3, boardEntry.getKey().getFile());
                 preparedStatement.setString(4, boardEntry.getValue().getTeamColor().name());
                 preparedStatement.setString(5, chessGame.getCurrentTeamColor().name());
                 preparedStatement.executeUpdate();
@@ -43,8 +43,8 @@ public class ChessBoardDao implements ChessGameDao {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
-                int rank = Integer.parseInt(resultSet.getString("piece_rank"));
-                int file = Integer.parseInt(resultSet.getString("piece_file"));
+                int rank = resultSet.getInt("piece_rank");
+                int file = resultSet.getInt("piece_file");
                 TeamColor teamColor = TeamColor.valueOf(resultSet.getString("team"));
                 turn = TeamColor.valueOf(resultSet.getString("turn"));
                 Piece piece = PieceType.toPiece(pieceType, teamColor);
