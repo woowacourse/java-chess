@@ -2,8 +2,9 @@ package chess.domain.game;
 
 public enum StateOfChessGame {
 
-    RUNNING(true, false),
+    STARTED(true, false),
     MOVING(true, false),
+    PAUSED(true, false),
     FINISHED(true, true);
 
     private final boolean isStarted;
@@ -12,6 +13,10 @@ public enum StateOfChessGame {
     StateOfChessGame(final boolean isStarted, final boolean isFinished) {
         this.isStarted = isStarted;
         this.isFinished = isFinished;
+    }
+
+    public boolean isSameStateWith(String state) {
+        return this.name().equals(state);
     }
 
     public boolean isStarted() {

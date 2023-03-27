@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static chess.domain.game.StateOfChessGame.RUNNING;
+import static chess.domain.game.StateOfChessGame.*;
 
 public class ChessGameService {
 
@@ -26,31 +26,58 @@ public class ChessGameService {
         this.chessGameDao = chessGameDao;
         this.movementDao = movementDao;
     }
+    private static final int NONE_GAME_ID = -1;
+    private int gameId = NONE_GAME_ID;
 
-    //start : 이전 게임 id 불러오기 or 체스 게임 db에 새 게임 생성 및 id 반환 => 게임의 상태 moving으로 바꾼다
+    public boolean isRunning() {
+        Optional<Integer> lastChessGameId = chessGameDao.findLastGameId();
+        int gameId = lastChessGameId.orElseThrow(() -> new IllegalArgumentException("게임이 시작되지 않았습니다"));
+        String status = chessGameDao.findGameStatusByGameId(gameId);
+        return !FINISHED.isSameStateWith(status) && !PAUSED.isSameStateWith(status);
+    }
+
     public int start() {
-        Optional<Integer> lastChessGameId = chessGameDao.findLastGameIdByStatus(RUNNING.name());
-        int gameId = lastChessGameId.orElseGet(() ->
-                chessGameDao.add(RUNNING.name(), DEFAULT_TURN.name()));
+        if(gameId != NONE_GAME_ID) {
+            throw new IllegalArgumentException("게임이 이미 시작되었습니다");
+        }
+        Optional<Integer> lastChessGameId = chessGameDao.findLastGameId();
+        gameId = lastChessGameId.orElseGet(() ->
+                chessGameDao.add(STARTED.name(), DEFAULT_TURN.name()));
+        if (FINISHED.isSameStateWith(chessGameDao.findGameStatusByGameId(gameId))) {
+            gameId = chessGameDao.add(STARTED.name(), DEFAULT_TURN.name());
+        }
         chessGameDao.updateStatusByGameId(StateOfChessGame.MOVING.name(), gameId);
         return gameId;
     }
 
-    // move : 게임 아이디로, 이동에서
-    //todo :(리팩터링2) boardStrategy가 ChessBoard 반환 및 반환된 체스보드로 체스 게임 생성할 수 있도록 수정하기
-    public void move(int gameId, List<String> commandLine, BoardStrategy boardStrategy) {
-        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+    public void move(List<String> commandLine, BoardStrategy boardStrategy) {
+        validateGameStarted();
+        ChessGame chessGame = loadChessGameByGameId(boardStrategy);
         chessGame.move(commandLine);
-        movementDao.add(gameId, Command.findStartSource(commandLine),Command.findTargetSource(commandLine));
+        movementDao.add(gameId, Command.findStartSource(commandLine), Command.findTargetSource(commandLine));
         if (chessGame.isFinished()) {
             chessGameDao.updateStatusByGameId(chessGame.getStatus().name(), gameId);
             return;
         }
-        chessGameDao.updateTurn(chessGame.getTurn().name(), gameId); //
+        chessGameDao.updateTurn(chessGame.getTurn().name(), gameId);
     }
 
-    //todo : (리팩터링3) gameid의 상태가 moving 인 경우만
-    private ChessGame findChessGameByGameId(final int gameId, BoardStrategy boardStrategy) {
+    private void validateGameStarted() {
+        if (gameId == NONE_GAME_ID) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다");
+        }
+        String status = chessGameDao.findGameStatusByGameId(gameId);
+        if (!MOVING.isSameStateWith(status)) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다");
+        }
+    }
+
+    public Map<Position, Piece> findChessBoard(BoardStrategy boardStrategy) {
+        ChessGame chessGame = loadChessGameByGameId(boardStrategy);
+        return chessGame.getChessBoard();
+    }
+
+    private ChessGame loadChessGameByGameId(BoardStrategy boardStrategy) {
         List<List<String>> moveCommandLines = movementDao.findMovesByGameId(gameId);
 
         ChessGame chessGame = new ChessGame();
@@ -58,91 +85,37 @@ public class ChessGameService {
         moveCommandLines.forEach(chessGame::move);
         return chessGame;
     }
-
-    public Map<Position, Piece> findChessBoard(int gameId, BoardStrategy boardStrategy) {
-        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
-        return chessGame.getChessBoard();
-    }
-
-    public Map<Color, Double> findStatus(int gameId, BoardStrategy boardStrategy) {
-        if (!StateOfChessGame.MOVING.name().equals(chessGameDao.findGameStatusByGameId(gameId))) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다");
-        }
-        ChessGame chessGame = findChessGameByGameId(gameId,boardStrategy);
+    public Map<Color, Double> findStatus(BoardStrategy boardStrategy) {
+        validateGameStarted();
+        ChessGame chessGame = loadChessGameByGameId(boardStrategy);
         return chessGame.status();
     }
 
-    public void end(int gameId, BoardStrategy boardStrategy) {
-        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
-        chessGame.end();
-        chessGameDao.updateStatusByGameId(RUNNING.name(), gameId); // running 상태로 업데이트
+    public void end() {
+        validateGameStarted();
+        chessGameDao.updateStatusByGameId(PAUSED.name(), gameId);
     }
 
-    public boolean isFinished(int gameId, BoardStrategy boardStrategy) {
-        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
-        return chessGame.isFinished();
-    }
-
-    public Color findWinner(int gameId, BoardStrategy boardStrategy) {
-        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+    public Color findWinner(BoardStrategy boardStrategy) {
+        validateGameIsFinished();
+        ChessGame chessGame = loadChessGameByGameId(boardStrategy);
         return chessGame.findWinner();
     }
 
+    private void validateGameIsFinished() {
+        if (gameId == NONE_GAME_ID) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다");
+        }
+        String status = chessGameDao.findGameStatusByGameId(gameId);
+        if (!FINISHED.isSameStateWith(status)) {
+            throw new IllegalArgumentException("게임이 종료되지 않았습니다");
+        }
+    }
+
+    public boolean isFinished() {
+        Optional<Integer> lastChessGameId = chessGameDao.findLastGameId();
+        int gameId = lastChessGameId.orElseThrow(() -> new IllegalArgumentException("게임이 시작되지 않았습니다"));
+        String status = chessGameDao.findGameStatusByGameId(gameId);
+        return FINISHED.isSameStateWith(status);
+    }
 }
-
-/**
- *
-
- // move : 게임 아이디로, 이동에서
- //todo :(리팩터링2) boardStrategy가 ChessBoard 반환 및 반환된 체스보드로 체스 게임 생성할 수 있도록 수정하기
- public void move(int gameId, CommandRequest commandRequest, BoardStrategy boardStrategy) {
- ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
- chessGame.move(commandRequest.getCommandLine());
- movementDao.add(gameId, commandRequest.getStartPosition(),commandRequest.getEndPosition());
- if (chessGame.isFinished()) {
- chessGameDao.updateStatusByGameId(chessGame.getStatus().name(), gameId);
- return;
- }
- chessGameDao.updateTurn(chessGame.getTurn().name(), gameId); //
- }
-
- //todo : (리팩터링3) gameid의 상태가 moving 인 경우만
- private ChessGame findChessGameByGameId(final int gameId, BoardStrategy boardStrategy) {
- List<List<String>> moveCommandLines = movementDao.findMovesByGameId(gameId);
-
- ChessGame chessGame = new ChessGame();
- chessGame.start(boardStrategy);
- moveCommandLines.forEach(chessGame::move);
- return chessGame;
- }
-
- public Map<Position, Piece> findChessBoard(int gameId, BoardStrategy boardStrategy) {
- ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
- return chessGame.getChessBoard();
- }
-
- public Map<Color, Double> findStatus(int gameId, BoardStrategy boardStrategy) {
- if (!StateOfChessGame.MOVING.name().equals(chessGameDao.findGameStatusByGameId(gameId))) {
- throw new IllegalArgumentException("게임이 시작되지 않았습니다");
- }
- ChessGame chessGame = findChessGameByGameId(gameId,boardStrategy);
- return chessGame.status();
- }
-
- public void end(int gameId, BoardStrategy boardStrategy) {
- ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
- chessGame.end();
- chessGameDao.updateStatusByGameId(RUNNING.name(), gameId); // running 상태로 업데이트
- }
-
- public boolean isFinished(int gameId, BoardStrategy boardStrategy) {
- ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
- return chessGame.isFinished();
- }
-
- public Color findWinner(int gameId, BoardStrategy boardStrategy) {
- ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
- return chessGame.findWinner();
- }
- */
-

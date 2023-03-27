@@ -27,7 +27,7 @@ public class ChessGame {
     public ChessGame() {
         this.chessBoard = new ChessBoard();
         this.turn = Color.WHITE;
-        this.stateOfChessGame = StateOfChessGame.RUNNING;
+        this.stateOfChessGame = StateOfChessGame.STARTED;
     }
 
     public void start(BoardStrategy boardStrategy) {
@@ -35,6 +35,12 @@ public class ChessGame {
         stateOfChessGame = StateOfChessGame.MOVING;
     }
 
+    /**
+     * todo : (String start, String end)로 변경하기!
+     * 질문: Position생성을 chessGame에서 하는 게 맞나요 아니면,
+     * Gameservice에서 뷰에서 넘어온 command(명령어)에 따른 Postion 객체 생성까지 책임지는 게 맞을까요?
+     * chessGame에서 command 클래스가 가지고 있는 상수를 가져와 쓰는게 이상하게 느껴집니다.
+     */
     public void move(List<String> commandLine) {
         if(!stateOfChessGame.isStarted()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다");
@@ -86,7 +92,7 @@ public class ChessGame {
     }
 
     public void end() {
-        stateOfChessGame = StateOfChessGame.RUNNING;
+        stateOfChessGame = StateOfChessGame.STARTED;
     }
 
     public Map<Position, Piece> getChessBoard() {

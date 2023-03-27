@@ -32,6 +32,20 @@ public class ChessGameDao {
         }
     }
 
+    public Optional<Integer> findLastGameId() {
+        String query = "SELECT * FROM game ORDER BY game_id DESC LIMIT 1";
+
+        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultSet.getInt(1));
+        } catch (final SQLException e) {
+            throw new IllegalArgumentException("게임이 존재하지 않습니다."+ e.getMessage());
+        }
+    }
+
     public int add(String status, String turn) {
         String query = "INSERT INTO game (status, turn) VALUES (?, ?)";
         try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query,
@@ -88,6 +102,5 @@ public class ChessGameDao {
             throw new IllegalArgumentException("게임이 존재하지 않습니다.");
         }
     }
-
 
 }
