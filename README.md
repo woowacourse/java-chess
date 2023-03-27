@@ -56,18 +56,19 @@
 ```sql
 CREATE TABLE game
 (
-    id       int         not null primary key,
-    board_id int         not null,
-    state    varchar(10) not null
+    id       int     not null primary key,
+    finished boolean not null
 )
 ```
 
 ```sql
 CREATE TABLE board
 (
-    id     int         not null primary key,
-    square varchar(3)  not null,
-    role   varchar(20) not null
+    id      int        not null primary key,
+    source  varchar(3) not null,
+    target  varchar(3) not null,
+    game_id int        not null,
+    FOREIGN KEY (game_id) REFERENCES game (id)
 ) 
 ```
 
