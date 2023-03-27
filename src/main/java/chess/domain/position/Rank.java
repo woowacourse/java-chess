@@ -38,6 +38,10 @@ public enum Rank {
                 .orElse(null);
     }
 
+    public static Rank of(String symbol) {
+        return Rank.of(symbol.charAt(0));
+    }
+
     public Rank move(int distance) {
         if (this.index + distance < MIN_RANK) {
             return Rank.of(MIN_RANK);
