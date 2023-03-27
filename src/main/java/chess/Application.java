@@ -12,7 +12,8 @@ public class Application {
     public static void main(String[] args) {
         ChessController controller = new ChessController(
                 new ChessService(
-                        new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE)), new DBChessBoardDao()
+                        new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE)),
+                        new DBChessBoardDao()
                 )
         );
         controller.run();

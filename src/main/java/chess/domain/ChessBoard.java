@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 public final class ChessBoard {
 
-    public static final double DEDUCT_PAWN_SCORE = 0.5;
-    public static final int INITIAL_VALUE = 0;
-    public static final int KING_COUNT = 2;
+    private static final double DEDUCT_PAWN_SCORE = 0.5;
+    private static final int INITIAL_VALUE = 0;
+    private static final int KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
 
