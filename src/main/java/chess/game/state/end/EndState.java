@@ -78,7 +78,7 @@ public abstract class EndState implements GameState {
 
     @Override
     public void leaveGame(Runnable runnable) {
-        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+        runnable.run();
     }
 
     @Override

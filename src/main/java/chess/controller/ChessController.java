@@ -67,6 +67,9 @@ public class ChessController {
         chessGame.checkCheckmate();
         changeTurn();
         OutputView.printBoard(chessGame.getBoard());
+        if (chessGame.isEnd()) {
+            finishGame();
+        }
     }
 
     private void changeTurn() {
@@ -81,6 +84,29 @@ public class ChessController {
         if (chessGame.isChecked()) {
             OutputView.printCheckWarning(chessGame.getTurn());
         }
+    }
+
+    private void finishGame() {
+        Team winner = chessGame.getWinner();
+        if (winner != Team.NONE) {
+            OutputView.printWinner(winner);
+            saveWinnerResult();
+            saveLoserResult();
+            chessGameDao.deleteGame(chessGame.getGameId());
+            leaveGame();
+        }
+    }
+
+    private void saveWinnerResult() {
+        String winnerName = InputView.readWinnerName();
+        double winnerScore = chessGame.getWinnerScore();
+        chessGameDao.saveGameResult(winnerName, winnerScore, GameResult.WIN);
+    }
+
+    private void saveLoserResult() {
+        String loserName = InputView.readLoserName();
+        double loserScore = chessGame.getLoserScore();
+        chessGameDao.saveGameResult(loserName, loserScore, GameResult.LOSE);
     }
 
     private void getGameStatus() {
@@ -130,7 +156,6 @@ public class ChessController {
         while (!chessGame.isEnd()) {
             printError(this::gameLoop);
         }
-        finishGame();
     }
 
     private void printError(Runnable runnable) {
@@ -139,28 +164,6 @@ public class ChessController {
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
-    }
-
-    private void finishGame() {
-        Team winner = chessGame.getWinner();
-        if (winner != Team.NONE) {
-            OutputView.printWinner(winner);
-            saveWinnerResult();
-            saveLoserResult();
-            chessGameDao.deleteGame(chessGame.getGameId());
-        }
-    }
-
-    private void saveWinnerResult() {
-        String winnerName = InputView.readWinnerName();
-        double winnerScore = chessGame.getWinnerScore();
-        chessGameDao.saveGameResult(winnerName, winnerScore, GameResult.WIN);
-    }
-
-    private void saveLoserResult() {
-        String loserName = InputView.readLoserName();
-        double loserScore = chessGame.getLoserScore();
-        chessGameDao.saveGameResult(loserName, loserScore, GameResult.LOSE);
     }
 
     private void gameLoop() {
