@@ -131,6 +131,7 @@ public class ChessController {
         Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
         boolean isKing = chessGame.move(startCoordinate, endCoordinate);
         if (isKing) {
+            printGameWinnerWhenCatchKing(chessGame);
             chessGameService.deleteGame(chessGame);
             return Command.END;
         }
@@ -142,6 +143,12 @@ public class ChessController {
         int row = Character.getNumericValue(frontCoordinate.charAt(ROW_INDEX)) - 1;
         int column = (int) frontCoordinate.charAt(COLUMN_INDEX) - ASCII_ALPHABET_A;
         return Coordinate.createOnBoard(row, column);
+    }
+
+    private void printGameWinnerWhenCatchKing(final ChessGame chessGame) {
+        Camp winner = chessGame.getTurn()
+                               .change();
+        outputView.printGameWinningResult(winner);
     }
 
     private void printGameStatus(ChessGame chessGame) {

@@ -19,6 +19,7 @@ public class OutputView {
             "> 게임 상태 출력 : status" + System.lineSeparator() +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + System.lineSeparator();
     private static final String GAME_STATUS = "%s 점수 : %.1f점" + System.lineSeparator();
+    private static final String GAME_WINNER = "%s 팀이 승리했습니다" + System.lineSeparator();
     private static final int BOARD_RANK = 8;
     private static final int BOARD_FILE = 8;
 
@@ -52,14 +53,19 @@ public class OutputView {
     }
 
     public void printGameStatus(final Map<Camp, Double> status) {
-        status.forEach((key, value) -> System.out.printf(GAME_STATUS,
-                CampMapper.getTarget(key), value));
+        status.forEach(
+                (key, value) -> System.out.printf(GAME_STATUS, CampMapper.getTarget(key), value)
+        );
     }
 
     public void printGameResult(final Board board,
                                 final Map<Camp, Double> status) {
         printGameStatus(status);
         printBoard(board);
+    }
+
+    public void printGameWinningResult(final Camp winningCamp) {
+        System.out.printf(GAME_WINNER, CampMapper.getTarget(winningCamp));
     }
 
     public void printExceptionMessage(final String message) {
