@@ -38,4 +38,8 @@ public enum TeamMapper {
     public String getTeamView() {
         return teamView;
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }

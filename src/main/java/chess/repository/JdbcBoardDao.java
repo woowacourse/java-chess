@@ -1,10 +1,16 @@
 package chess.repository;
 
 import chess.domain.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.FileCoordinate;
 import chess.domain.board.Position;
+import chess.domain.board.RankCoordinate;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
+import chess.view.FileCoordinateMapper;
 import chess.view.PieceMapper;
+import chess.view.RankCoordinateMapper;
 import chess.view.TeamMapper;
 
 import java.sql.Connection;
@@ -53,8 +59,27 @@ public class JdbcBoardDao implements BoardDao {
 
     @Override
     public ChessGame selectChessGame() {
+        final var query = "SELECT * FROM PIECE";
+        try (final var connection = connector.getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
 
-        return null;
+            Map<Position, Piece> boards = new HashMap<>();
+            Team turn = null;
+            while (resultSet.next()) {
+                turn = TeamMapper.from(resultSet.getString("turn")).getTeam();
+                PieceType pieceType = PieceMapper.from(resultSet.getString("piece_type")).getPieceType();
+                FileCoordinate pieceColumn = FileCoordinateMapper.findBy(Integer.parseInt(resultSet.getString("piece_column")));
+                RankCoordinate pieceRow = RankCoordinateMapper.findBy(Integer.parseInt(resultSet.getString("piece_row")));
+                Team pieceTeam = TeamMapper.from(resultSet.getString("piece_team")).getTeam();
+                Position position = new Position(pieceColumn, pieceRow);
+                Piece piece = pieceType.of(pieceTeam, position);
+                boards.put(position, piece);
+            }
+            return new ChessGame(new Board(boards), turn);
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

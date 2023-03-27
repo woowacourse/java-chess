@@ -30,6 +30,6 @@ public enum PieceType {
         if (this == ROOK) {
             return new Rook(team, position);
         }
-        return EMPTY.of(team, position);
+        return Empty.create(position);
     }
 }
