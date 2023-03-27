@@ -3,8 +3,6 @@ package chess.domain.board;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.domain.board.position.RouteFinder;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.exception.PieceCannotMoveException;
@@ -17,18 +15,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static chess.domain.piece.PieceType.EMPTY;
-import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.PAWN;
 
 public class ChessBoard {
 
-    private static final BigDecimal PAWN_REDUCE_NUMBER = BigDecimal.valueOf(0.5);
-    private static final int DEFAULT_KING_COUNT = 2;
+    private static final BigDecimal PAWN_REDUCE_NUMBER = new BigDecimal("0.5");
 
-    private final Map<Position, Piece> piecePosition;
+    private final PiecePosition piecePosition;
 
     private ChessBoard(final Map<Position, Piece> piecePosition) {
-        this.piecePosition = piecePosition;
+        this.piecePosition = new PiecePosition(piecePosition);
     }
 
     public static ChessBoard createBoard() {
@@ -41,8 +37,8 @@ public class ChessBoard {
     }
 
     public Piece movePiece(final Position from, final Position to) {
-        Piece fromPiece = piecePosition.get(from);
-        Piece toPiece = piecePosition.get(to);
+        Piece fromPiece = piecePosition.findPieceByPosition(from);
+        Piece toPiece = piecePosition.findPieceByPosition(to);
 
         validateMovable(from, to);
         validateAlly(fromPiece, toPiece);
@@ -53,7 +49,7 @@ public class ChessBoard {
     }
 
     private void validateMovable(final Position from, final Position to) {
-        final Piece fromPiece = piecePosition.get(from);
+        final Piece fromPiece = piecePosition.findPieceByPosition(from);
         if (!fromPiece.isMovable(from, to)) {
             throw new PieceCannotMoveException(fromPiece.getType());
         }
@@ -63,8 +59,8 @@ public class ChessBoard {
     }
 
     private void validatePawnMovable(final Position from, final Position to) {
-        final Piece fromPiece = piecePosition.get(from);
-        final Piece toPiece = piecePosition.get(to);
+        final Piece fromPiece = piecePosition.findPieceByPosition(from);
+        final Piece toPiece = piecePosition.findPieceByPosition(to);
 
         Team fromPieceTeam = fromPiece.getTeam();
 
@@ -92,17 +88,15 @@ public class ChessBoard {
     }
 
     private void validateRoute(final Position from, final Position to) {
-        RouteFinder.findRoute(from, to).stream()
-                .filter(position -> !piecePosition.get(position).isSameType(EMPTY))
+        PiecePosition.findRoute(from, to).stream()
+                .filter(position -> !piecePosition.findPieceByPosition(position).isSameType(EMPTY))
                 .forEach(position -> {
                     throw new IllegalArgumentException("이동하려는 경로에 말이 존재합니다.");
                 });
     }
 
     private void move(final Position from, final Position to) {
-        final Piece fromPiece = piecePosition.get(from);
-        piecePosition.put(from, new EmptyPiece());
-        piecePosition.put(to, fromPiece);
+        piecePosition.replace(from, to);
     }
 
     public BigDecimal calculateScore(final Team team) {
@@ -117,7 +111,7 @@ public class ChessBoard {
     }
 
     private BigDecimal getOrdinalScore(final Team team) {
-        return piecePosition.values().stream()
+        return piecePosition.get().values().stream()
                 .filter(piece -> piece.getTeam() == team)
                 .map(piece -> piece.getType().getScore())
                 .reduce(BigDecimal::add)
@@ -142,22 +136,20 @@ public class ChessBoard {
         return Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
                         .map(rank -> Position.of(file, rank))
-                ).filter(position -> piecePosition.get(position).getType() == PAWN)
-                .filter(position -> piecePosition.get(position).getTeam() == team)
+                ).filter(position -> piecePosition.findPieceByPosition(position).getType() == PAWN)
+                .filter(position -> piecePosition.findPieceByPosition(position).getTeam() == team)
                 .collect(Collectors.toList());
     }
 
     public boolean isEnd() {
-        return piecePosition.values().stream()
-                .filter(piece -> piece.getType() == KING)
-                .count() < DEFAULT_KING_COUNT;
+        return piecePosition.isKingAvailable();
     }
 
     public Map<Position, Piece> getPiecePosition() {
-        return Map.copyOf(piecePosition);
+        return Map.copyOf(piecePosition.get());
     }
 
     public Piece get(final Position from) {
-        return piecePosition.get(from);
+        return piecePosition.findPieceByPosition(from);
     }
 }
