@@ -56,7 +56,7 @@ public class ChessBoardDao implements ChessGameDao {
         if (board.isEmpty()) {
             return null;
         }
-        return new ChessGame(new ChessBoard(board), turn);
+        return new ChessGame(new ChessBoard(board), turn.changeTurn());
     }
 
     @Override
