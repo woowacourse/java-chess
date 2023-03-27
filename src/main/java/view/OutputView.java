@@ -23,6 +23,10 @@ public final class OutputView {
         System.out.println(GAME_GUIDE_MESSAGE);
     }
 
+    public void printGameEndMessage() {
+        System.out.println(GAME_END_MESSAGE);
+    }
+
     public void printExceptionMessage(final String message) {
         System.out.println(message);
     }
@@ -34,7 +38,6 @@ public final class OutputView {
     }
 
     public void printGameResult(final String gameResult) {
-        System.out.println(GAME_END_MESSAGE);
         System.out.println(gameResult);
     }
 

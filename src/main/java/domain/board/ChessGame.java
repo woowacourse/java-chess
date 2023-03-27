@@ -16,13 +16,14 @@ public final class ChessGame {
     private final Board board;
     private final Turn turn;
 
-    public ChessGame() {
-        this(new Board());
-    }
-
     public ChessGame(final Board board) {
         this.board = board;
         this.turn = new Turn(PRIORITY_GIVEN_COLOR);
+    }
+
+    public ChessGame(final Board board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
     }
 
     public List<Color> getWinningColor() {
@@ -33,12 +34,11 @@ public final class ChessGame {
 
     private double calculateMaxPoint(final Map<Color, Double> collectedPoints) {
         return collectedPoints.values().stream()
-                .mapToDouble(Double::doubleValue)
-                .max()
+                .max(Double::compareTo)
                 .orElse(0.0);
     }
 
-    private static List<Color> getColorsWithMaxPoint(
+    private List<Color> getColorsWithMaxPoint(
             final Map<Color, Double> collectedPoints,
             final double maxPoint
     ) {
@@ -61,41 +61,48 @@ public final class ChessGame {
 
     public void move(final Coordinate start, final Coordinate end) {
         validate(start, end);
-        Piece findPiece = board.findSquare(start);
-        board.replaceWithEmptySquare(start);
-        board.replaceSquare(end, findPiece);
+        Piece findPiece = board.findPiece(start);
+        board.replaceWithEmptyPiece(start);
+        board.replacePiece(end, findPiece);
         turn.invert();
     }
 
     private void validate(final Coordinate start, final Coordinate end) {
         validateNotEmpty(start);
         validateTurn(start);
+        validateSameColor(start, end);
         validateMoveByRule(start, end);
         validateNotBlocked(start, end);
     }
 
+    private void validateNotEmpty(final Coordinate start) {
+        if (board.isPieceEmptyAt(start)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 없습니다.");
+        }
+    }
+
     private void validateTurn(final Coordinate start) {
-        Piece findPiece = board.findSquare(start);
+        Piece findPiece = board.findPiece(start);
         if (turn.isNotFor(findPiece)) {
             throw new IllegalArgumentException("[ERROR] 현재는 해당 팀의 턴이 아닙니다.");
         }
     }
 
-    private void validateNotEmpty(final Coordinate start) {
-        if (board.isSquareEmptyAt(start)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치에는 기물이 없습니다.");
+    private void validateSameColor(final Coordinate start, final Coordinate end) {
+        if (board.findPiece(start).getColor() == board.findPiece(end).getColor()) {
+            throw new IllegalArgumentException("[ERROR] 같은 팀이 있는 곳으로 이동할 수 없습니다.");
         }
     }
 
     private void validateMoveByRule(final Coordinate start, final Coordinate end) {
-        if (board.isMovable(start, end)) {
+        if (board.isMovable(start, end) || board.isAttackable(start, end)) {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 방향으로 이동할 수 없습니다.");
     }
 
     private void validateNotBlocked(final Coordinate start, final Coordinate end) {
-        Piece piece = board.findSquare(start);
+        Piece piece = board.findPiece(start);
         if (piece.canJump() || isNotBlockedWhenCantReap(start, end)) {
             return;
         }
@@ -106,7 +113,7 @@ public final class ChessGame {
         Coordinate directionVector = DirectionVector.calculate(start, end);
         Coordinate indexCoordinate = start.add(directionVector);
 
-        while (board.isSquareEmptyAt(indexCoordinate) &&
+        while (board.isPieceEmptyAt(indexCoordinate) &&
                 !indexCoordinate.equals(end)) {
             indexCoordinate = indexCoordinate.add(directionVector);
         }
@@ -115,5 +122,9 @@ public final class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

@@ -3,8 +3,8 @@ package domain.board;
 import domain.piece.move.Coordinate;
 import domain.piece.nonsliding.King;
 import domain.piece.nonsliding.Knight;
-import domain.piece.pawn.BlackInitPawn;
-import domain.piece.pawn.WhiteInitPawn;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
@@ -54,7 +54,7 @@ public final class BoardInitialImage {
 
     private static void makeWhitePawnExistRank() {
         for (int file = 0; file < FILE_SIZE; file++) {
-            initializedBoardImage.put(iterator, new WhiteInitPawn(Color.WHITE));
+            initializedBoardImage.put(iterator, new WhitePawn(Color.WHITE));
             updateIterator();
         }
     }
@@ -74,7 +74,7 @@ public final class BoardInitialImage {
 
     private static void makeBlackPawnExistRank() {
         for (int file = 0; file < FILE_SIZE; file++) {
-            initializedBoardImage.put(iterator, new BlackInitPawn(Color.BLACK));
+            initializedBoardImage.put(iterator, new BlackPawn(Color.BLACK));
             updateIterator();
         }
     }

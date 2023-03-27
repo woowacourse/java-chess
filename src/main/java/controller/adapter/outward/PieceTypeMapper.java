@@ -36,7 +36,7 @@ public final class PieceTypeMapper {
     }
 
     private static String makeUpperCaseIfCampIsBlack(final Piece piece, final String message) {
-        if (piece.hasSameColorWith(Color.BLACK)) {
+        if (piece.getColor() == Color.BLACK) {
             return message.toUpperCase();
         }
         return message;

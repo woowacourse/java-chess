@@ -21,13 +21,22 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovableWhenMovingNotVariates(
+    public boolean isMovable(
             final Coordinate start,
             final Coordinate end
     ) {
         Inclination inclination = Inclination.of(start.getInclination(end));
 
         return DIRECTION.canBeDirectionOf(inclination);
+    }
+
+    @Override
+    public boolean isAttackable(
+            final Coordinate start,
+            final Coordinate end,
+            final Piece target
+    ) {
+        return isMovable(start, end);
     }
 
     @Override

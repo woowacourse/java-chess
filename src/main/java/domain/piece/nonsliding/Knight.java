@@ -14,12 +14,10 @@ public final class Knight extends Piece {
             Inclination.ZERO_POINT_FIVE, Inclination.MINUS_ZERO_POINT_FIVE,
             Inclination.TWO, Inclination.MINUS_TWO
     ));
-
     private static final List<Coordinate> availableCoordinateDifferences = List.of(
             new Coordinate(1, 2),
             new Coordinate(2, 1)
     );
-
     private static final double POINT = 2.5;
 
     public Knight(final Color color) {
@@ -27,7 +25,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovableWhenMovingNotVariates(
+    public boolean isMovable(
             final Coordinate start,
             final Coordinate end
     ) {
@@ -36,6 +34,15 @@ public final class Knight extends Piece {
 
         return DIRECTION.canBeDirectionOf(inclination) &&
                 availableCoordinateDifferences.contains(coordinateDifference);
+    }
+
+    @Override
+    public boolean isAttackable(
+            final Coordinate start,
+            final Coordinate end,
+            final Piece target
+    ) {
+        return isMovable(start, end);
     }
 
     @Override

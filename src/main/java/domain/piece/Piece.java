@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.piece.move.Situation;
 import domain.piece.move.Coordinate;
 
 public abstract class Piece {
@@ -11,29 +10,19 @@ public abstract class Piece {
         this.color = color;
     }
 
-
     public static Piece ofEmpty() {
         return new EmptyPiece();
     }
 
-    public boolean isMovable(
-            final Coordinate start,
-            final Coordinate end,
-            final Situation situation
-    ) {
-        validateIsNotSameColor(situation);
-        return isMovableWhenMovingNotVariates(start, end);
-    }
-
-    private void validateIsNotSameColor(final Situation situation) {
-        if (situation.meetColleague()) {
-            throw new IllegalArgumentException("[ERROR] 같은 팀이 존재하는 곳으로 이동할 수 없습니다.");
-        }
-    }
-
-    protected abstract boolean isMovableWhenMovingNotVariates(
+    public abstract boolean isMovable(
             final Coordinate start,
             final Coordinate end
+    );
+
+    public abstract boolean isAttackable(
+            final Coordinate start,
+            final Coordinate end,
+            final Piece target
     );
 
     public boolean canJump() {
@@ -48,12 +37,8 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean hasSameColorWith(final Color otherColor) {
-        return color == otherColor;
-    }
-
-    public boolean hasSameColorWith(final Piece otherPiece) {
-        return color == otherPiece.color;
+    public Color getColor() {
+        return color;
     }
 
     public double getPoint() {
