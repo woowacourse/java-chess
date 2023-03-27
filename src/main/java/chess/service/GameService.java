@@ -20,7 +20,7 @@ public class GameService {
         return moveDao.findAllByRoomId(roomId);
     }
 
-    public void create(long roomId, String source, String target) {
+    public void createMove(long roomId, String source, String target) {
         moveDao.save(roomId, Move.from(source, target));
     }
 

@@ -94,6 +94,6 @@ public class GameController extends Controller {
     private void move(Game game, GameRequest request) {
         MoveRequest moveRequest = request.getMoveRequest();
         game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
-        gameService.create(roomId, moveRequest.getSource(), moveRequest.getTarget());
+        gameService.createMove(roomId, moveRequest.getSource(), moveRequest.getTarget());
     }
 }
