@@ -72,6 +72,11 @@ public class ChessGameService {
         return chessGame.status();
     }
 
+    public void end(int gameId, BoardStrategy boardStrategy) {
+        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+        chessGame.end();
+        chessGameDao.updateStatusByGameId(RUNNING.name(), gameId); // running 상태로 업데이트
+    }
 
 }
 
