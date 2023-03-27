@@ -17,6 +17,7 @@ public class OutputView {
 		for (final Rank rank : sortRank(ranks)) {
 			printEachPosition(chessBoard, files, rank);
 		}
+		System.out.println("\nabcdefgh");
 	}
 
 	private static void printEachPosition(final Map<Position, Piece> chessBoard, final List<File> files,
@@ -25,6 +26,7 @@ public class OutputView {
 			final Position position = Position.of(file, rank);
 			System.out.print(chessBoard.get(position).name());
 		}
+		System.out.print("\t" + rank.value());
 		System.out.println();
 	}
 
