@@ -7,8 +7,12 @@ import java.util.function.Consumer;
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
 import chess.dao.JdbcChessGameDao;
+import chess.domain.ChessGame;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
+import chess.domain.service.ChessGameService;
 
 public class CommandManager {
 
@@ -23,7 +27,8 @@ public class CommandManager {
     private CommandStatus commandStatus;
 
     public CommandManager() {
-        this.commandStatus = new Init(JdbcChessGameDao.getInstance());
+        ChessGameService initChessGameService = new ChessGameService();
+        this.commandStatus = new Init(initChessGameService);
     }
 
     public void execute(Commands commands) {

@@ -4,42 +4,33 @@ import java.util.List;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
-import chess.dao.ChessGameDao;
-import chess.dao.JdbcChessGameDao;
-import chess.domain.piece.dto.SavePieceDto;
-import chess.domain.service.ChessGame;
-import chess.domain.board.Board;
+import chess.domain.ChessGame;
 import chess.domain.board.GameResultBySide;
 import chess.domain.board.ResultCalculator;
 import chess.domain.board.ScoreBySide;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
-import chess.domain.service.dto.ChessGameDto;
+import chess.domain.service.ChessGameService;
 
 public class Init implements CommandStatus {
 
-    private final ChessGameDao chessGameDao;
+    private final ChessGameService chessGameService;
 
-    public Init(ChessGameDao chessGameDao) {
-        this.chessGameDao = chessGameDao;
+    public Init(ChessGameService chessGameService) {
+        this.chessGameService = chessGameService;
     }
 
     @Override
     public CommandStatus start() {
-        Board board = new Board(new Pieces());
-        Long gameId = chessGameDao.saveNewChessGame();
-        for (Piece piece : board.getPieces()) {
-            chessGameDao.savePiece(new SavePieceDto(piece, gameId));
-        }
-        return new Play(new ChessGame(gameId, board, Turn.WHITE), chessGameDao);
+        chessGameService.saveNewChessGame();
+        return new Play(chessGameService);
     }
 
     @Override
     public CommandStatus restart(Long previousGameId) {
-        if (chessGameDao.isExistPreviousChessGame(previousGameId)) {
-            ChessGameDto chessGameDto = chessGameDao.findChessGameByGameId(previousGameId);
-            return new Play(chessGameDto.generateChessGame(), chessGameDao);
+        if (chessGameService.isExistPreviousChessGame(previousGameId)) {
+            ChessGame findChessGame = chessGameService.findChessGameByGameId(previousGameId);
+            return new Play(new ChessGameService(findChessGame));
         }
         throw new IllegalArgumentException("[ERROR] 이전 게임 ID에 해당하는 게임을 찾지 못했습니다.");
     }
