@@ -3,9 +3,8 @@ package chess.domain.repository.entity;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.repository.dto.FileDtoMapper;
-import chess.domain.repository.dto.PieceDtoMapper;
-import chess.domain.repository.dto.RankDtoMapper;
+import chess.domain.repository.mapper.PieceDtoMapper;
+import chess.domain.repository.mapper.PositionValueConverter;
 
 public class PieceEntity {
     private final String position;
@@ -23,7 +22,7 @@ public class PieceEntity {
     public static PieceEntity of(Position position, Piece piece, Long boardId) {
         String pieceType = PieceDtoMapper.convertToPieceValue(piece);
         String camp = getCampName(piece);
-        String positionValue = getPositionValue(position);
+        String positionValue = PositionValueConverter.convertToValue(position);
 
         return new PieceEntity(positionValue, pieceType, camp, boardId);
     }
@@ -34,12 +33,6 @@ public class PieceEntity {
         }
 
         return Camp.WHITE.name();
-    }
-
-    private static String getPositionValue(Position position) {
-        String fileValue = FileDtoMapper.convertToFileValue(position.getFile());
-        String rankValue = RankDtoMapper.convertToRankValue(position.getRank());
-        return fileValue + rankValue;
     }
 
     public String getPosition() {

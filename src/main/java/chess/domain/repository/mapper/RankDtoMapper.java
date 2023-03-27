@@ -1,4 +1,4 @@
-package chess.domain.repository.dto;
+package chess.domain.repository.mapper;
 
 import chess.domain.position.Rank;
 import java.util.Arrays;

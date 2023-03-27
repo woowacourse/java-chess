@@ -16,9 +16,10 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.repository.BoardDao;
 import chess.domain.repository.PieceDao;
-import chess.domain.repository.dto.FileDtoMapper;
-import chess.domain.repository.dto.PieceDtoMapper;
-import chess.domain.repository.dto.RankDtoMapper;
+import chess.domain.repository.mapper.FileDtoMapper;
+import chess.domain.repository.mapper.PieceDtoMapper;
+import chess.domain.repository.mapper.PositionValueConverter;
+import chess.domain.repository.mapper.RankDtoMapper;
 import chess.domain.repository.entity.BoardEntity;
 import chess.domain.repository.entity.PieceEntity;
 import java.util.ArrayList;
@@ -111,7 +112,15 @@ public class ChessGameService {
 
     public ChessGame move(ChessGame chessGame, Position from, Position to) {
         ChessGameCommand moveCommand = new MoveCommand(from, to);
-        return moveCommand.execute(chessGame);
+        ChessGame movedGame = moveCommand.execute(chessGame);
+
+        String fromValue = PositionValueConverter.convertToValue(from);
+        String toValue = PositionValueConverter.convertToValue(to);
+        if (pieceDao.isExistByPosition(toValue)) {
+            pieceDao.deleteByPosition(toValue);
+        }
+        pieceDao.updatePiecePositionTo(fromValue, toValue);
+        return movedGame;
     }
 
     public ChessGame status(ChessGame chessGame) {

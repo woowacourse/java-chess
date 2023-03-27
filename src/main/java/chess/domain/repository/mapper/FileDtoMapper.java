@@ -1,17 +1,17 @@
-package chess.domain.repository.dto;
+package chess.domain.repository.mapper;
 
 import chess.domain.position.File;
 import java.util.Arrays;
 
 public enum FileDtoMapper {
-    A(File.A, "A"),
-    B(File.B, "B"),
-    C(File.C, "C"),
-    D(File.D, "D"),
-    E(File.E, "E"),
-    F(File.F, "F"),
-    G(File.G, "G"),
-    H(File.H, "H"),
+    A(File.A, "a"),
+    B(File.B, "b"),
+    C(File.C, "c"),
+    D(File.D, "d"),
+    E(File.E, "e"),
+    F(File.F, "f"),
+    G(File.G, "g"),
+    H(File.H, "h"),
     ;
 
     private final File file;
@@ -32,7 +32,7 @@ public enum FileDtoMapper {
 
     public static File convertToFile(String fileValue) {
         return Arrays.stream(FileDtoMapper.values())
-                .filter(it -> it.value.equals(fileValue))
+                .filter(it -> it.value.equalsIgnoreCase(fileValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일 입니다."))
                 .file;
