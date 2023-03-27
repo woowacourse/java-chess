@@ -103,12 +103,12 @@ public class MySQLChessGameDao implements ChessGameDao {
         saveGameState(gameId, gameState);
     }
 
-    public void deleteAllBoard(GameId gameId) {
+    private void deleteAllBoard(GameId gameId) {
         String query = "DELETE FROM board WHERE game_id = ?";
         jdbcContext.update(query, gameId.getGameId());
     }
 
-    public void deleteGameState(GameId gameId) {
+    private void deleteGameState(GameId gameId) {
         String query = "DELETE FROM state WHERE game_id = ?";
         jdbcContext.update(query, gameId.getGameId());
     }
