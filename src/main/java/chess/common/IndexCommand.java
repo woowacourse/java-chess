@@ -8,8 +8,7 @@ public enum IndexCommand {
     POSITION_COLUMN(0),
     POSITION_ROW(1),
     POSITION_INDEX(1),
-    PIECE_INDEX(0)
-    ;
+    PIECE_INDEX(0);
 
     private final int value;
 

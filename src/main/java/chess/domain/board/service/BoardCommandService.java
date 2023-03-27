@@ -2,9 +2,9 @@ package chess.domain.board.service;
 
 import chess.dao.BoardDao;
 import chess.domain.board.Board;
-import chess.domain.board.service.mapper.BoardMapper;
 import chess.domain.board.service.dto.BoardModifyRequest;
 import chess.domain.board.service.dto.BoardRegisterRequest;
+import chess.domain.board.service.mapper.BoardMapper;
 
 public class BoardCommandService {
 
@@ -29,7 +29,8 @@ public class BoardCommandService {
 
         final BoardModifyRequest boardModifyRequest = new BoardModifyRequest(board.id(),
                                                                              boardRegisterRequest.position(),
-                                                                             boardRegisterRequest.turn());
+                                                                             boardRegisterRequest.turn()
+        );
 
         boardDao.modifyById(boardModifyRequest);
     }

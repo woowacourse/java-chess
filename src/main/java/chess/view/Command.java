@@ -7,9 +7,7 @@ public enum Command {
     END("end"),
     STATUS("status"),
     NEW_GAME("1"),
-    LOAD_GAME("2")
-
-    ;
+    LOAD_GAME("2");
 
     private final String value;
 

@@ -1,11 +1,11 @@
 package chess.domain.board.score;
 
-import chess.domain.piece.slider.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.jumper.King;
 import chess.domain.piece.jumper.Knight;
 import chess.domain.piece.pawn.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.slider.Bishop;
 import chess.domain.piece.slider.Queen;
 import chess.domain.piece.slider.Rook;
 
@@ -13,7 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static chess.domain.board.score.PieceScore.*;
+import static chess.domain.board.score.PieceScore.BISHOP;
+import static chess.domain.board.score.PieceScore.KING;
+import static chess.domain.board.score.PieceScore.KNIGHT;
+import static chess.domain.board.score.PieceScore.LOOK;
+import static chess.domain.board.score.PieceScore.PAWN;
+import static chess.domain.board.score.PieceScore.QUEEN;
 
 public class ColumnPiece {
 
@@ -35,7 +40,6 @@ public class ColumnPiece {
     public ColumnPiece(final List<Piece> pieces) {
         this.pieces = List.copyOf(pieces);
     }
-
 
     public Score calculatePiecesScore(final Color color) {
 

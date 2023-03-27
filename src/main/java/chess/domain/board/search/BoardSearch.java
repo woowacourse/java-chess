@@ -1,8 +1,8 @@
 package chess.domain.board.search;
 
 import chess.domain.board.position.Position;
-import chess.domain.piece.jumper.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.jumper.King;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,7 +26,8 @@ public class BoardSearch {
                                          .collect(Collectors.groupingBy(
                                                  it -> it.getValue().getClass(),
                                                  Collectors.summingInt(value -> ELEMENTS_UNIT_VALUE)
-                                         )));
+                                         ))
+        );
     }
 
     public boolean isKingDead() {

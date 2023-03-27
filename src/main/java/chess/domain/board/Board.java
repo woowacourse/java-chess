@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Board {
 
-    private Long id;
     private final Map<Position, Piece> chessBoard;
+    private Long id;
     private Turn turn;
 
     private Board(final BoardFactory boardFactory) {

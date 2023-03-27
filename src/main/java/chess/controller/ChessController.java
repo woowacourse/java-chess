@@ -34,7 +34,6 @@ public class ChessController {
     }
 
     public void run() {
-
         System.out.println("새로운 게임을 시작하려면 1, 게임을 불러오려면 2를 누르세요.");
 
         final String newGameCommand = InputView.readNewGameCommand();

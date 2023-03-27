@@ -88,7 +88,7 @@ public class BoardDao {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
 
-            return mappingToBoardDaosFrom(resultSet);
+            return mappingToBoardDtosFrom(resultSet);
         } catch (SQLException e) {
             System.err.println("DB 조회 오류: " + e.getMessage());
         }
@@ -96,7 +96,7 @@ public class BoardDao {
         return Collections.emptyList();
     }
 
-    private List<BoardSearchResponse> mappingToBoardDaosFrom(final ResultSet resultSet) {
+    private List<BoardSearchResponse> mappingToBoardDtosFrom(final ResultSet resultSet) {
         try {
             List<BoardSearchResponse> boardSearchResponses = new ArrayList<>();
 

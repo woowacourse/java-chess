@@ -21,12 +21,13 @@ public class BoardQueryService {
 
     public Board searchBoard(final Long boardId) {
 
-
         final BoardSearchResponse boardSearchResponse = boardDao.findById(boardId)
                                                                 .orElseThrow(NoSuchElementException::new);
 
         return boardMapper.mapToBoardSearchResponseFrom(boardSearchResponse.position(),
-                                                        boardSearchResponse.turn(), boardSearchResponse.id());
+                                                        boardSearchResponse.turn(),
+                                                        boardSearchResponse.id()
+        );
     }
 
     public List<Long> searchAllBoards() {
