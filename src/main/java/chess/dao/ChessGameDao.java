@@ -9,28 +9,13 @@ import chess.domain.game.GameStatus;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ChessGameDao {
-    private static final String SERVER = "localhost:3306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "12345678"; // MySQL 서버 비밀번호
+import static chess.dao.JdbcConnector.getConnection;
 
-    public Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+public class ChessGameDao {
 
     public void save(final ChessGame chessGame) {
         Map<Position, Piece> piecePosition = chessGame.getChessBoardMap();
