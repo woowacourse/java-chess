@@ -1,10 +1,16 @@
 package chess.controller;
 
-import static chess.controller.Command.END;
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.START;
-import static chess.controller.Command.STATUS;
+import static chess.controller.command.GameCommand.END;
+import static chess.controller.command.GameCommand.MOVE;
+import static chess.controller.command.GameCommand.START;
+import static chess.controller.command.GameCommand.STATUS;
+import static chess.controller.command.RoomCommand.ENTER;
+import static chess.controller.command.RoomCommand.NEW;
 
+import chess.controller.action.GameAction;
+import chess.controller.action.RoomAction;
+import chess.controller.command.GameCommand;
+import chess.controller.command.RoomCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
@@ -32,16 +38,27 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Map<Command, Action> commandAction;
+    private final Map<RoomCommand, RoomAction> roomCommandAction;
+    private final Map<GameCommand, GameAction> gameCommandAction;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.commandAction = initCommandAction();
+        this.roomCommandAction = initRoomCommandAction();
+        this.gameCommandAction = initGameCommandAction();
     }
 
-    private Map<Command, Action> initCommandAction() {
-        Map<Command, Action> commandMapper = new HashMap<>();
+    private Map<RoomCommand, RoomAction> initRoomCommandAction() {
+        Map<RoomCommand, RoomAction> commandMapper = new HashMap<>();
+
+        commandMapper.put(NEW, (chessGameDao, pieceDao, ignored) -> newGame(chessGameDao, pieceDao));
+        commandMapper.put(ENTER, this::enterGame);
+
+        return commandMapper;
+    }
+
+    private Map<GameCommand, GameAction> initGameCommandAction() {
+        Map<GameCommand, GameAction> commandMapper = new HashMap<>();
 
         commandMapper.put(START, (chessGame, ignored) -> start(chessGame));
         commandMapper.put(END, (chessGame, ignored) -> end(chessGame));
@@ -52,28 +69,7 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessGameDao chessGameDao = new JdbcChessGameDao();
-        final PieceDao pieceDao = new JdbcPieceDao();
-        ChessGame chessGame = null;
-
-        final List<String> command = inputView.readCommand();
-        final String mainCommand = command.get(0);
-
-        if (mainCommand.equals("new")) {
-            final Board board = BoardFactory.generateBoard();
-            chessGame = new ChessGame(board, Turn.WHITE, chessGameDao, pieceDao);
-            chessGameDao.save(chessGame);
-            
-            final int chessGameId = chessGameDao.findLastInsertId();
-            chessGame.setId(chessGameId);
-            pieceDao.saveAll(chessGameId, PieceDto.from(board));
-        }
-        if (mainCommand.equals("enter")) {
-            final int chessGameId = Integer.parseInt(command.get(1));
-            final ChessGameDto chessGameDto = chessGameDao.findById(chessGameId);
-            final List<PieceDto> pieceDtos = pieceDao.findAllByChessGameId(chessGameId);
-            chessGame = ChessGameFactory.generateChessGame(chessGameDto, pieceDtos, chessGameDao, pieceDao);
-        }
+        final ChessGame chessGame = startChessGame();
 
         outputView.printStartMessage();
 
@@ -82,20 +78,48 @@ public class ChessController {
         }
     }
 
-    private void newGame() {
-
+    private ChessGame startChessGame() {
+        try {
+            final List<String> roomCommand = inputView.readRoomCommand();
+            final RoomCommand mainRoomCommand = RoomCommand.from(roomCommand.get(MAIN_COMMAND_INDEX));
+            final RoomAction roomAction = roomCommandAction.get(mainRoomCommand);
+            return roomAction.execute(new JdbcChessGameDao(), new JdbcPieceDao(), roomCommand);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return startChessGame();
+        }
     }
 
-    private void enterGame() {
+    private ChessGame newGame(final ChessGameDao chessGameDao, final PieceDao pieceDao) {
+        final Board board = BoardFactory.generateBoard();
+        ChessGame chessGame = new ChessGame(board, Turn.WHITE, chessGameDao, pieceDao);
+        chessGameDao.save(chessGame);
 
+        final int chessGameId = chessGameDao.findLastInsertId();
+        chessGame.setId(chessGameId);
+        pieceDao.saveAll(chessGameId, PieceDto.from(board));
+
+        return chessGame;
+    }
+
+    private ChessGame enterGame(final ChessGameDao chessGameDao, final PieceDao pieceDao,
+                                final List<String> roomCommand) {
+        if (roomCommand.size() != 2) {
+            throw new IllegalArgumentException("잘못된 명령어입니다.");
+        }
+        final int chessGameId = Integer.parseInt(roomCommand.get(1));
+        final ChessGameDto chessGameDto = chessGameDao.findById(chessGameId);
+        final List<PieceDto> pieceDtos = pieceDao.findAllByChessGameId(chessGameId);
+
+        return ChessGameFactory.generateChessGame(chessGameDto, pieceDtos, chessGameDao, pieceDao);
     }
 
     private void play(final ChessGame chessGame) {
         try {
-            final List<String> command = inputView.readCommand();
-            final Command mainCommand = Command.from(command.get(MAIN_COMMAND_INDEX));
-            final Action action = commandAction.get(mainCommand);
-            action.execute(chessGame, command);
+            final List<String> gameCommand = inputView.readGameCommand();
+            final GameCommand mainGameCommand = GameCommand.from(gameCommand.get(MAIN_COMMAND_INDEX));
+            final GameAction gameAction = gameCommandAction.get(mainGameCommand);
+            gameAction.execute(chessGame, gameCommand);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
             play(chessGame);

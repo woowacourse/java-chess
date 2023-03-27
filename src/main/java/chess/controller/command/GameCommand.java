@@ -1,8 +1,8 @@
-package chess.controller;
+package chess.controller.command;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum GameCommand {
 
     START("start"),
     END("end"),
@@ -11,13 +11,13 @@ public enum Command {
 
     private final String symbol;
 
-    Command(final String symbol) {
+    GameCommand(final String symbol) {
         this.symbol = symbol;
     }
 
-    public static Command from(final String symbol) {
+    public static GameCommand from(final String symbol) {
        return Arrays.stream(values())
-                .filter(command -> command.symbol.equals(symbol))
+                .filter(gameCommand -> gameCommand.symbol.equals(symbol))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
