@@ -1,10 +1,11 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.domain.ChessGame;
+import chess.view.OutputView;
 
 public class EndCommand implements Command {
     @Override
-    public void execute(final ChessController chessController) {
-        chessController.end();
+    public void execute(final ChessGame chessGame, final OutputView outputView) {
+        chessGame.end();
     }
 }

@@ -167,6 +167,6 @@ public class Board {
                 .filter(piece -> piece.hasSameRole(KING))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("킹이 존재하지 않습니다."))
-                .getSide();
+                .getTeam();
     }
 }

@@ -8,9 +8,12 @@ import static chess.domain.piece.Role.PAWN;
 import static chess.domain.piece.Role.QUEEN;
 import static chess.domain.piece.Role.ROOK;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.square.Color;
 import chess.domain.square.Team;
+import chess.dto.BoardDto;
+import chess.dto.PieceDto;
+import chess.dto.PieceOfRankDto;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -26,40 +29,44 @@ public class OutputView {
         System.out.println("> 게임 초기화 : clear");
     }
 
-    public void printBoard(final List<List<Piece>> pieces) {
-        Collections.reverse(pieces);
-        for (List<Piece> rank : pieces) {
-            for (Piece piece : rank) {
-                System.out.print(convertPiece(piece));
+    public void printBoard(final BoardDto boardDto) {
+        List<PieceOfRankDto> pieceOfRankDtos = boardDto.getBoard();
+        Collections.reverse(pieceOfRankDtos);
+        for (PieceOfRankDto pieceOfRankDto : pieceOfRankDtos) {
+            for (PieceDto pieceDto : pieceOfRankDto.getPieceDtos()) {
+                System.out.print(convertPiece(pieceDto));
             }
             System.out.println();
         }
     }
 
-    private String convertPiece(final Piece piece) {
-        if (piece.hasSameRole(PAWN) || piece.hasSameRole(INITIAL_PAWN)) {
-            return convertSide(piece, "p");
+    private String convertPiece(final PieceDto pieceDto) {
+        Role role = pieceDto.getRole();
+        Color color = pieceDto.getColor();
+
+        if (role == PAWN || role == INITIAL_PAWN) {
+            return convertSide(color, "p");
         }
-        if (piece.hasSameRole(ROOK)) {
-            return convertSide(piece, "r");
+        if (role == ROOK) {
+            return convertSide(color, "r");
         }
-        if (piece.hasSameRole(KNIGHT)) {
-            return convertSide(piece, "n");
+        if (role == KNIGHT) {
+            return convertSide(color, "n");
         }
-        if (piece.hasSameRole(BISHOP)) {
-            return convertSide(piece, "b");
+        if (role == BISHOP) {
+            return convertSide(color, "b");
         }
-        if (piece.hasSameRole(QUEEN)) {
-            return convertSide(piece, "q");
+        if (role == QUEEN) {
+            return convertSide(color, "q");
         }
-        if (piece.hasSameRole(KING)) {
-            return convertSide(piece, "k");
+        if (role == KING) {
+            return convertSide(color, "k");
         }
         return ".";
     }
 
-    private String convertSide(final Piece piece, final String convertedPiece) {
-        if (piece.getColor().equals(Color.BLACK)) {
+    private String convertSide(final Color color, final String convertedPiece) {
+        if (color == Color.BLACK) {
             return convertedPiece.toUpperCase();
         }
         return convertedPiece.toLowerCase();

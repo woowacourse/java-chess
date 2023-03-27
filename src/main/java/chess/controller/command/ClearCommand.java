@@ -1,10 +1,14 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.domain.ChessGame;
+import chess.dto.BoardDto;
+import chess.view.OutputView;
 
 public class ClearCommand implements Command {
     @Override
-    public void execute(ChessController chessController) {
-        chessController.clear();
+    public void execute(final ChessGame chessGame, final OutputView outputView) {
+        chessGame.clear();
+        BoardDto boardDto = BoardDto.from(chessGame.getBoard());
+        outputView.printBoard(boardDto);
     }
 }

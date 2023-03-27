@@ -1,7 +1,8 @@
 package chess.controller.command;
 
-import chess.controller.ChessController;
+import chess.domain.ChessGame;
+import chess.view.OutputView;
 
 public interface Command {
-    void execute(final ChessController chessController);
+    void execute(final ChessGame chessGame, final OutputView outputView);
 }
