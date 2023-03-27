@@ -31,7 +31,7 @@ class PositionTest {
     @Test
     @DisplayName("방향 생성")
     void get_direction() {
-        Position ceneter = Position.from("d4");
+        Position center = Position.from("d4");
         Position n = Position.from("d5");
         Position ne = Position.from("e5");
         Position e = Position.from("e4");
@@ -40,14 +40,14 @@ class PositionTest {
         Position sw = Position.from("c3");
         Position w = Position.from("c4");
         Position nw = Position.from("c5");
-        Assertions.assertThat(ceneter.calculateDirection(n)).isEqualTo(Direction.N);
-        Assertions.assertThat(ceneter.calculateDirection(ne)).isEqualTo(Direction.NE);
-        Assertions.assertThat(ceneter.calculateDirection(e)).isEqualTo(Direction.E);
-        Assertions.assertThat(ceneter.calculateDirection(se)).isEqualTo(Direction.SE);
-        Assertions.assertThat(ceneter.calculateDirection(s)).isEqualTo(Direction.S);
-        Assertions.assertThat(ceneter.calculateDirection(sw)).isEqualTo(Direction.SW);
-        Assertions.assertThat(ceneter.calculateDirection(w)).isEqualTo(Direction.W);
-        Assertions.assertThat(ceneter.calculateDirection(nw)).isEqualTo(Direction.NW);
+        Assertions.assertThat(center.calculateDirection(n)).isEqualTo(Direction.N);
+        Assertions.assertThat(center.calculateDirection(ne)).isEqualTo(Direction.NE);
+        Assertions.assertThat(center.calculateDirection(e)).isEqualTo(Direction.E);
+        Assertions.assertThat(center.calculateDirection(se)).isEqualTo(Direction.SE);
+        Assertions.assertThat(center.calculateDirection(s)).isEqualTo(Direction.S);
+        Assertions.assertThat(center.calculateDirection(sw)).isEqualTo(Direction.SW);
+        Assertions.assertThat(center.calculateDirection(w)).isEqualTo(Direction.W);
+        Assertions.assertThat(center.calculateDirection(nw)).isEqualTo(Direction.NW);
     }
     
     @Test
