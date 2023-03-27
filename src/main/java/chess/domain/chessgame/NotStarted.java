@@ -1,13 +1,13 @@
 package chess.domain.chessgame;
 
-import chess.dao.BoardDao;
-import chess.dao.ChessGameDao;
-import chess.dao.DataBaseBoardDao;
-import chess.dao.DataBaseChessGameDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Score;
 import chess.domain.board.Turn;
+import chess.domain.dao.BoardDao;
+import chess.domain.dao.ChessGameDao;
+import chess.domain.dao.DataBaseBoardDao;
+import chess.domain.dao.DataBaseChessGameDao;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

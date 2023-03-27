@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.domain.dao;
 
 import chess.domain.board.Turn;
 import org.junit.jupiter.api.DisplayName;
