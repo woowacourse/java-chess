@@ -99,14 +99,14 @@ public abstract class Piece {
             return new Pawn(PieceInfo.WHITE_PAWN_INFO);
         }
         if (name.equals("P")) {
-            return new Pawn(PieceInfo.BLACK_QUEEN_INFO);
+            return new Pawn(PieceInfo.BLACK_PAWN_INFO);
         }
 
         if (name.equals("r")) {
-            return new Pawn(PieceInfo.WHITE_ROOK_INFO);
+            return new Rook(PieceInfo.WHITE_ROOK_INFO);
         }
         if (name.equals("R")) {
-            return new Pawn(PieceInfo.BLACK_ROOK_INFO);
+            return new Rook(PieceInfo.BLACK_ROOK_INFO);
         }
 
         if (name.equals("n")) {
