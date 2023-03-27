@@ -58,7 +58,7 @@ public class ChessGame {
         return board.canMove(source, route);
     }
 
-    public Map<Color, Double> getResult(final Color color) {
+    public Map<Color, Double> getResult() {
         Map<Color, Double> results = new HashMap<>();
         results.put(Color.BLACK, board.resultOf(Color.BLACK));
         results.put(Color.WHITE, board.resultOf(Color.WHITE));
@@ -67,5 +67,9 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public boolean isFinished() {
+        return !board.hasBothKing();
     }
 }

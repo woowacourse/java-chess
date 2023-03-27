@@ -123,4 +123,11 @@ public class Board {
         }
         return PieceScore.calculateWithoutPawn(numberOfPieces);
     }
+
+    public boolean hasBothKing() {
+        long countKing = board.values().stream()
+                .filter(piece -> piece.isKing())
+                .count();
+        return countKing == 2;
+    }
 }

@@ -20,6 +20,8 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
+    public abstract boolean isKing();
+
     public boolean isSameColor(Color color) {
         return this.color == color;
     }

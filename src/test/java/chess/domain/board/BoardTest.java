@@ -207,4 +207,14 @@ class BoardTest {
 
         assertThat(board.resultOf(Color.WHITE)).isEqualTo(36.5);
     }
+
+    @Test
+    void 게임이_종료되었는지_판단한다() {
+        final Board board = BoardFactory.generate();
+        final Square destination = new Square(File.E, Rank.ONE);
+        final Square source = new Square(File.E, Rank.TWO);
+        board.move(source, destination);
+
+        assertThat(board.hasBothKing()).isFalse();
+    }
 }

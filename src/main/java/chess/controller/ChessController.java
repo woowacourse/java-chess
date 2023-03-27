@@ -49,8 +49,17 @@ public class ChessController {
             MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
             chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
             outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
-            gameCommandInput = inputView.readChessGameCommand();
+            gameCommandInput = getReadChessGameCommand();
         }
+    }
+
+    private String getReadChessGameCommand() {
+        System.out.println(chessGame.isFinished());
+        if (chessGame.isFinished()) {
+            outputView.printResult(chessGame.getResult());
+            return "end";
+        }
+        return inputView.readChessGameCommand();
     }
 
     private <T> T repeatUntilGetValidInput(final Supplier<T> inputReader) {

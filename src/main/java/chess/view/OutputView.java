@@ -1,6 +1,9 @@
 package chess.view;
 
 import chess.controller.dto.ChessBoardDto;
+import chess.domain.piece.Color;
+
+import java.util.Map;
 
 public class OutputView {
 
@@ -19,5 +22,10 @@ public class OutputView {
 
     public void printErrorMessage(final String message) {
         System.out.println("[ERROR] " + message);
+    }
+
+    public void printResult(Map<Color, Double> result) {
+        System.out.println("흰색 팀 점수: " + result.get(Color.WHITE));
+        System.out.println("검은색 팀 점수: " + result.get(Color.BLACK));
     }
 }

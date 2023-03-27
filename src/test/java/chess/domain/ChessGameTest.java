@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.domain.board.BoardFactory;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.board.Square;
+import chess.domain.board.*;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
