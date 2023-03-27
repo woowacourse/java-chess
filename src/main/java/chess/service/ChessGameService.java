@@ -51,7 +51,6 @@ public final class ChessGameService {
             piece_team.add(entry.getValue().getTeam().name());
             last_turn.add(chessGame.getTurn().name());
         }
-
         return new ChessGameSaveDto(piece_type, piece_file,
                 piece_rank, piece_team, last_turn);
     }

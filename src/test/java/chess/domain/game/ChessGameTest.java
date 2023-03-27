@@ -38,7 +38,7 @@ class ChessGameTest {
     @DisplayName("보드의 사이즈가 8 x 8이 아니라면 생성시 예외를 반환한다.")
     @Test
     void create_fail() {
-        assertThatThrownBy(() -> ChessGame.from(Collections.emptyMap()))
+        assertThatThrownBy(() -> ChessGame.of(Collections.emptyMap()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스판의 사이즈는 8 x 8 여야합니다.");
     }
@@ -66,7 +66,7 @@ class ChessGameTest {
             final Position givenPosition = A1;
             rawBoard.put(givenPosition, Rook.instance(Team.WHITE));
 
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when && then
             assertThatNoException().isThrownBy(() -> chessGame.move(givenPosition, A3));
         }
@@ -78,7 +78,7 @@ class ChessGameTest {
             final Map<Position, Piece> rawBoard = createEmptyBoard();
             final Position givenPosition = A1;
             rawBoard.put(givenPosition, Rook.instance(Team.WHITE));
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when && then
             assertThatThrownBy(() -> chessGame.move(givenPosition, PositionFixtures.B2))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -96,7 +96,7 @@ class ChessGameTest {
             final Position givenTargetPosition = PositionFixtures.A2;
             rawBoard.put(givenTargetPosition, Rook.instance(Team.WHITE));
 
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when && then
             assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalStateException.class)
@@ -115,7 +115,7 @@ class ChessGameTest {
             final Position givenPathPosition = PositionFixtures.A2;
             rawBoard.put(givenPathPosition, Rook.instance(Team.WHITE));
 
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when && then
             assertThatThrownBy(() -> chessGame.move(givenPosition, A3))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -138,7 +138,7 @@ class ChessGameTest {
 
             final Position givenTargetPosition = PositionFixtures.A5;
 
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when  && then
             assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -157,7 +157,7 @@ class ChessGameTest {
             final Position givenTargetPosition = PositionFixtures.A4;
             rawBoard.put(givenTargetPosition, BlackPawn.instance());
 
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when  && then
             assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -175,7 +175,7 @@ class ChessGameTest {
 
             final Position givenTargetPosition = PositionFixtures.B4;
 
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
             //when  && then
             assertThatThrownBy(() -> chessGame.move(givenSourcePosition, givenTargetPosition))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -200,7 +200,7 @@ class ChessGameTest {
         @DisplayName("흰색 진영의 점수를 구한다.")
         @Test
         void score_test() {
-            ChessGame chessGame = ChessGame.from(rawBoard);
+            ChessGame chessGame = ChessGame.of(rawBoard);
             final double result = chessGame.calculateScoreByTeam(Team.WHITE);
             assertThat(result).isEqualTo(19.5);
         }
@@ -210,7 +210,7 @@ class ChessGameTest {
         void score_test2() {
             rawBoard.put(A2, InitialWhitePawn.instance());
             rawBoard.put(A3, WhitePawn.instance());
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
 
             final double result = chessGame.calculateScoreByTeam(Team.WHITE);
             assertThat(result).isEqualTo(20.5);
@@ -222,7 +222,7 @@ class ChessGameTest {
             rawBoard.put(A2, InitialWhitePawn.instance());
             rawBoard.put(A3, WhitePawn.instance());
             rawBoard.put(A4, WhitePawn.instance());
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
 
             final double result = chessGame.calculateScoreByTeam(Team.WHITE);
             assertThat(result).isEqualTo(21.0);
@@ -231,7 +231,7 @@ class ChessGameTest {
         @DisplayName("검은색 진영의 점수를 구한다.")
         @Test
         void score_test4() {
-            final ChessGame chessGame = ChessGame.from(rawBoard);
+            final ChessGame chessGame = ChessGame.of(rawBoard);
 
             final double result = chessGame.calculateScoreByTeam(Team.BLACK);
             assertThat(result).isEqualTo(0);

@@ -2,12 +2,12 @@ package chess.controller;
 
 import chess.dao.DbChessGameDao;
 import chess.domain.game.ChessGame;
-import chess.domain.game.ChessGameFactory;
 import chess.domain.game.File;
 import chess.domain.game.PieceMapper;
 import chess.domain.game.Position;
 import chess.domain.game.Rank;
 import chess.domain.game.Turn;
+import chess.domain.gameFactory.DefaultGameFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
@@ -81,11 +81,11 @@ public final class ChessController {
         }
         if (chessGameService.hasHistory()) {
             final ChessGameLoadDto chessGameLoadDto = chessGameService.loadGame();
-            chessGame = ChessGame.from(parseBoard(chessGameLoadDto), parseTurn(chessGameLoadDto));
+            chessGame = ChessGame.of(parseBoard(chessGameLoadDto), parseTurn(chessGameLoadDto));
             ioViewResolver.outputViewResolve(chessGame.printBoard());
             return MOVE;
         }
-        chessGame = ChessGameFactory.generate();
+        chessGame = new DefaultGameFactory().generate();
         ioViewResolver.outputViewResolve(chessGame.printBoard());
         return MOVE;
     }

@@ -38,7 +38,7 @@ public final class ChessGame {
         this.turn = turn;
     }
 
-    public static ChessGame from(final Map<Position, Piece> board) {
+    public static ChessGame of(final Map<Position, Piece> board) {
         if (board.size() != TOTAL_BOARD_SIZE) {
             throw new IllegalArgumentException(
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
@@ -46,7 +46,7 @@ public final class ChessGame {
         return new ChessGame(board, Turn.create());
     }
 
-    public static ChessGame from(final Map<Position, Piece> board, final Turn turn) {
+    public static ChessGame of(final Map<Position, Piece> board, final Turn turn) {
         if (board.size() != TOTAL_BOARD_SIZE) {
             throw new IllegalArgumentException(
                     String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
@@ -170,7 +170,7 @@ public final class ChessGame {
         return new PrintBoardDto(pieces);
     }
 
-    private List<String> parseBoardDto(final Map<Position, Piece> board) {
+    public List<String> parseBoardDto(final Map<Position, Piece> board) {
         List<String> pieces = new ArrayList<>();
         for (int rankOrder = Rank.MAX_ORDER; rankOrder >= Rank.MIN_ORDER; rankOrder--) {
             for (int fileOrder = File.MIN_ORDER; fileOrder <= File.MAX_ORDER; fileOrder++) {
