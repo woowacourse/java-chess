@@ -620,4 +620,28 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(A7, A5))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("승자를 구할 수 있다.")
+    @Test
+    void blackWin() {
+        //given
+        final Board board = Board.create(ChessAlignmentMock.testStrategy(Map.of(D4, new King(Team.BLACK))));
+
+        //when
+
+        //then
+        org.assertj.core.api.Assertions.assertThat(board.getWinner()).isEqualTo(Team.BLACK);
+    }
+
+    @DisplayName("승자를 구할 수 있다.")
+    @Test
+    void whiteWin() {
+        //given
+        final Board board = Board.create(ChessAlignmentMock.testStrategy(Map.of(D4, new King(Team.WHITE))));
+
+        //when
+
+        //then
+        org.assertj.core.api.Assertions.assertThat(board.getWinner()).isEqualTo(Team.WHITE);
+    }
 }

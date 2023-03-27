@@ -1,8 +1,6 @@
 import database.ChessDao;
 import database.DbChessDao;
 import domain.Room;
-import domain.board.Board;
-import domain.board.InitialChessAlignment;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -25,18 +23,16 @@ public final class Application {
     private static final String NO_SUCH_RANK = "행은 1 ~ 8 을 입력해야 합니다.";
     private static final String INVALID_COMMAND = "move, end, status 명령어만 가능합니다.";
     private static final String INVALID_MOVE_COMMAND_SIZE = "move b2 b3 등으로 입력해야 합니다.";
-    private static final String NO_SUCH_ROOM = "존재하지 않는 방 번호입니다.";
-
-    private static final ChessDao chessDao = new DbChessDao();
 
     public static void main(final String[] args) {
+        final DbChessDao dao = new DbChessDao();
         final Command startCommand = readStartCommand();
 
         if (Command.LOAD.equals(startCommand)) {
-            playLoadedGame();
+            playLoadGame(dao);
         }
         if (Command.START.equals(startCommand)) {
-            playNewGame();
+            playNewGame(dao);
         }
     }
 
@@ -60,57 +56,43 @@ public final class Application {
         }
     }
 
-    private static void playLoadedGame() {
-        final List<Room> rooms = chessDao.findAllRooms();
+    private static void playLoadGame(final ChessDao dao) {
+        final List<Room> rooms = ChessGame.findAllRooms(dao);
         OutputView.printRooms(rooms);
 
         final int roomId = InputView.readRoomNumber();
-        validateRoomExist(rooms, roomId);
+        final ChessGame chessGame = ChessGame.loadGame(dao, roomId);
 
-        final Board board = chessDao.findBoardByRoomId(roomId);
-        final ChessGame chessGame = ChessGame.loadGame(board);
-
-        chessDao.deleteBoard(roomId);
-        play(chessGame, roomId);
+        play(chessGame);
     }
 
-    private static void validateRoomExist(final List<Room> rooms, final int roomId) {
-        if (rooms.stream().noneMatch(room -> room.getId() == roomId)) {
-            throw new IllegalArgumentException(NO_SUCH_ROOM);
-        }
-    }
-
-    private static void playNewGame() {
-        final ChessGame chessGame = ChessGame.initGame(new InitialChessAlignment());
-
+    private static void playNewGame(final ChessDao dao) {
         final String roomName = InputView.readRoomName();
-        final long roomId = chessDao.saveRoom(new Room(roomName));
-
-        chessDao.saveBoard(chessGame.getBoard(), roomId);
-        play(chessGame, roomId);
+        final ChessGame chessGame = ChessGame.initGame(dao, new Room(roomName));
+        play(chessGame);
     }
 
-    private static void play(ChessGame chessGame, long roomId) {
+    private static void play(final ChessGame chessGame) {
         OutputView.printBoard(chessGame.getBoard());
 
         while (true) {
             try {
-                playByCommand(chessGame, roomId);
+                playByCommand(chessGame);
                 break;
             } catch (IllegalArgumentException e) {
                 OutputView.printError(e.getMessage());
             }
         }
-        printWinner(chessGame, roomId);
+        printWinner(chessGame);
     }
 
-    private static void playByCommand(final ChessGame chessGame, final long roomId) {
+    private static void playByCommand(final ChessGame chessGame) {
         while (chessGame.winnerNotExist()) {
             final List<String> gameOption = InputView.readPlayGameOption();
             Command command = Command.from(gameOption.get(COMMAND_OFFSET));
 
             if (Command.END.equals(command)) {
-                chessDao.saveBoard(chessGame.getBoard(), roomId);
+                chessGame.save();
                 break;
             }
             if (Command.START.equals(command)) {
@@ -136,7 +118,7 @@ public final class Application {
         OutputView.printBoard(chessGame.getBoard());
     }
 
-    private static Position getPositionFrom(final List<String> gameOption, int target) {
+    private static Position getPositionFrom(final List<String> gameOption, final int target) {
         final String inputPosition = gameOption.get(target);
 
         String fileInput = String.valueOf(inputPosition.charAt(FILE_OFFSET));
@@ -145,7 +127,7 @@ public final class Application {
         return Position.of(parseFile(fileInput), parseRank(rankInput));
     }
 
-    private static File parseFile(String input) {
+    private static File parseFile(final String input) {
         try {
             return File.valueOf(input.toUpperCase());
         } catch (IllegalArgumentException e) {
@@ -153,7 +135,7 @@ public final class Application {
         }
     }
 
-    private static Rank parseRank(String input) {
+    private static Rank parseRank(final String input) {
         try {
             final int inputRank = Integer.parseInt(input);
             return Arrays.stream(Rank.values())
@@ -166,10 +148,10 @@ public final class Application {
         }
     }
 
-    private static void printWinner(final ChessGame chessGame, final long roomId) {
+    private static void printWinner(final ChessGame chessGame) {
         if (!chessGame.winnerNotExist()) {
             OutputView.printWinner(chessGame.getWinner());
-            chessDao.deleteRoom(roomId);
+            chessGame.delete();
         }
     }
 }
