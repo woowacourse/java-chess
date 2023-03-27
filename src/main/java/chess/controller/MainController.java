@@ -14,7 +14,6 @@ import static chess.view.OutputView.printScores;
 
 import chess.dao.ChessGameDao;
 import chess.domain.board.Board;
-import chess.domain.board.BoardMaker;
 import chess.domain.position.Position;
 import chess.view.Command;
 import java.util.List;
@@ -27,25 +26,22 @@ public final class MainController {
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int MOVE_COMMAND_SIZE = 3;
 
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao;
+
+    public MainController(final ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
 
     public void run() {
         printGameStart();
         Command command = repeatUntilValidAction(this::getValidCommand);
 
         if (command == START) {
-            final Board board = generateBoard();
-            printBoard(board.getBoard());
-            while (repeatUntilValidAction(() -> playChess(board)));
-            printScores(board.scores());
+            startGame();
         }
         if (command == RESET) {
             chessGameDao.deleteAll();
-            final Board board = generateBoard();
-            chessGameDao.insert(board);
-            printBoard(board.getBoard());
-            while (repeatUntilValidAction(() -> playChess(board)));
-            printScores(board.scores());
+            startGame();
         }
         printFinishMessage();
     }
@@ -55,11 +51,19 @@ public final class MainController {
         return Command.of(inputs.get(COMMAND_INDEX));
     }
 
+    private void startGame() {
+        final Board board = generateBoard();
+        chessGameDao.insert(board);
+        printBoard(board.getBoard());
+        while (repeatUntilValidAction(() -> playChess(board)));
+        printScores(board.scores());
+    }
+
     private Board generateBoard() {
         Board board = chessGameDao.findBoard();
 
         if (board == null) {
-            return new Board(new BoardMaker());
+            return Board.create();
         }
         return board;
     }
@@ -77,7 +81,7 @@ public final class MainController {
         if (command == END) {
             return false;
         }
-        if (command == START) {
+        if (command == START || command == RESET) {
             throw new IllegalArgumentException("이미 게임을 실행중입니다. 다른 명령어를 입력해주세요.");
         }
         if (command == MOVE) {
@@ -87,9 +91,6 @@ public final class MainController {
         }
         if (command == SCORE) {
             printScores(board.scores());
-        }
-        if (command == RESET) {
-            throw new IllegalArgumentException("이미 게임을 실행중입니다. 다른 명령어를 입력해주세요.");
         }
         return true;
     }

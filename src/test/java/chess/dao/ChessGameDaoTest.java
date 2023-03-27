@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardMaker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,7 @@ class ChessGameDaoTest {
     @Test
     @DisplayName("board에 대한 정보를 DB에 insert 한다")
     void board에_대한_정보를_DB에_insert_한다() {
-        Board board = new Board(new BoardMaker());
+        Board board = Board.create();
 
         assertThatNoException().isThrownBy(
                 () -> chessGameDao.insert(board)
@@ -47,7 +46,7 @@ class ChessGameDaoTest {
     @Test
     @DisplayName("테이블이 비어있지 않으면 Board를 반환한다.")
     void 테이블이_비어있지_않으면_Board를_반환한다() {
-        chessGameDao.insert(new Board(new BoardMaker()));
+        chessGameDao.insert(Board.create());
         Assertions.assertAll(
                 () -> assertThat(chessGameDao.findBoard()).isNotNull(),
                 () -> assertThatNoException().isThrownBy(chessGameDao::findBoard)
@@ -63,7 +62,7 @@ class ChessGameDaoTest {
     @Test
     @DisplayName("board에 대한 정보를 모두 업데이트한다")
     void board에_대한_정보를_모두_업데이트한다() {
-        Board board = new Board(new BoardMaker());
+        Board board = Board.create();
 
         assertThatNoException().isThrownBy(
                 () -> chessGameDao.updateBoard(board)
