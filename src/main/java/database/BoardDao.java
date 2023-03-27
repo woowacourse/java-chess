@@ -72,8 +72,30 @@ public class BoardDao {
         }
     }
 
+    public void insertBoard(final Map<Location, Piece> board) {
+        board.forEach((key, value) -> insertPiece(key, value, Turn.white()));
+    }
+
     public void updateBoard(final Map<Location, Piece> board, final Turn turn) {
         board.forEach((key, value) -> updatePiece(key, value, turn));
+    }
+
+    private void insertPiece(final Location location, final Piece piece, final Turn turn) {
+        final String query = "INSERT INTO board VALUES(?,?,?,?,?,?)";
+        try (
+            final Connection connection = databaseConnector.getConnection();
+            final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(query)
+        ) {
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setInt(2, location.getRow());
+            preparedStatement.setInt(3, location.getCol());
+            preparedStatement.setString(4, piece.getType().name());
+            preparedStatement.setString(5, piece.getCamp().name());
+            preparedStatement.setString(6, turn.getCamp().name());
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 
     private void updatePiece(final Location location, final Piece piece, final Turn turn) {

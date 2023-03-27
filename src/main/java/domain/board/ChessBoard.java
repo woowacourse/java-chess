@@ -43,6 +43,8 @@ public final class ChessBoard {
             initializeRow(row);
         }
         turn = Turn.white();
+        BoardDao boardDao = new BoardDao(new DatabaseConnector());
+        boardDao.insertBoard(board);
     }
 
     private void initializeRow(final int rowValue) {
