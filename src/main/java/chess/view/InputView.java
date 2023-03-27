@@ -28,13 +28,12 @@ public class InputView {
         String input = scanner.nextLine();
         final List<String> splitGameCommand = Arrays.asList(input.split(GAME_COMMAND_DELIMITER));
         final String gameCommand = splitGameCommand.get(GAME_COMMAND_INDEX);
-
         validateGameCommandFormat(splitGameCommand);
         validateMoveGameCommandRank(splitGameCommand, gameCommand);
 
         return splitGameCommand;
     }
-
+  
     private void validateGameCommandFormat(final List<String> splitGameCommand) {
         final String gameCommand = splitGameCommand.get(GAME_COMMAND_INDEX);
         final int splitGameCommandSize = splitGameCommand.size();
