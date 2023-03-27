@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
@@ -36,5 +37,13 @@ public enum Direction {
 
     public Position calculate(final Position before) {
         return before.calculate(this.rankMove, this.fileMove);
+    }
+
+    public static Direction findDirection(final int file, final int rank) {
+        return Arrays.stream(values())
+                .filter(it -> it.fileMove == file)
+                .filter(it -> it.rankMove == rank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("방향을 찾을 수 없습니다."));
     }
 }

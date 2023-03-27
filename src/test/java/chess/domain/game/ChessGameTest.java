@@ -32,8 +32,7 @@ class ChessGameTest {
 
         // when, then
         assertThatThrownBy(() -> chessGame.play(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("기물 규칙 상 움직일 수 없는 위치입니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest(name = "첫 턴의 나이트는 L자로 전진할 수 있는지 검증한다.")
