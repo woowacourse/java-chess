@@ -76,7 +76,7 @@ public class ChessApplication {
 		final Piece candidateKing = board.move(command.source(), command.target());
 		if (board.isKing(candidateKing)) {
 			printKingDead();
-			// TODO: king 이 잡히면 chessBoard DB를 초기화 해준다
+			chessDao.init(board);
 			return;
 		}
 		chessDao.update(board);
