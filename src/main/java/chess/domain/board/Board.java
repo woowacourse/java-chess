@@ -1,15 +1,21 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Role.BLANK;
+import static chess.domain.piece.Role.INITIAL_PAWN;
+import static chess.domain.piece.Role.KING;
+import static chess.domain.piece.Role.PAWN;
+
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.square.*;
-
+import chess.domain.square.Color;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import chess.domain.square.Team;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import static chess.domain.piece.Role.*;
 
 public class Board {
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
@@ -70,7 +76,8 @@ public class Board {
         }
     }
 
-    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
+    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece,
+                                    final int distance) {
         boolean possible = isPossibleMove(targetSquare, direction, sourcePiece, distance);
 
         if (!possible) {
@@ -78,7 +85,8 @@ public class Board {
         }
     }
 
-    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
+    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final Piece sourcePiece,
+                                   final int distance) {
         if (board.containsKey(targetSquare)) {
             return sourcePiece.canAttack(direction, distance, board.get(targetSquare));
         }

@@ -8,22 +8,44 @@ import chess.domain.square.Team;
 import chess.domain.state.State;
 import chess.domain.state.WaitingStart;
 import chess.dto.MoveDto;
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
+    private final int notFinishedGameId;
     private State state;
 
-    public ChessGame() {
+    public ChessGame(final ChessDao chessDao) {
         this.state = new WaitingStart();
+        if (!chessDao.existCurrentGame()) {
+            chessDao.saveInitialGame();
+        }
+        this.notFinishedGameId = chessDao.findNotFinishedGameId();
     }
 
-    public void start() {
+    public void start(final ChessDao chessDao) {
         this.state = state.start();
+        if (chessDao.existCurrentGame()) {
+            int notFinishedGameId = chessDao.findNotFinishedGameId();
+            List<MoveDto> moveDtos = chessDao.selectAllHistory(notFinishedGameId);
+            moveByHistory(moveDtos);
+        }
+    }
+
+    private void moveByHistory(final List<MoveDto> moveDtos) {
+        for (MoveDto moveDto : moveDtos) {
+            Square source = Square.from(moveDto.getSource());
+            Square target = Square.from(moveDto.getTarget());
+            this.state = state.move(source, target);
+        }
     }
 
     public void move(final Square sourceSquare, final Square targetSquare, final ChessDao chessDao) {
         this.state = state.move(sourceSquare, targetSquare);
-        chessDao.saveHistory(MoveDto.of(sourceSquare, targetSquare));
+        chessDao.saveHistory(MoveDto.of(sourceSquare, targetSquare), notFinishedGameId);
+        if (state.isKingDead()) {
+            chessDao.setGameFinished(notFinishedGameId);
+        }
     }
 
     public Map<Team, Double> status() {

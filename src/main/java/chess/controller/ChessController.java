@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandFactory;
+import chess.dao.HistoryDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
@@ -10,7 +11,6 @@ import chess.domain.square.Square;
 import chess.domain.square.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class ChessController {
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGame = new ChessGame();
+        this.chessGame = new ChessGame(new HistoryDao());
     }
 
     public void run() {
@@ -56,15 +56,15 @@ public class ChessController {
     }
 
     public void start() {
-        chessGame.start();
+        chessGame.start(new HistoryDao());
         showBoard();
     }
 
     public void move(final List<String> parameters) {
-        showBoard();
         Square sourceSquare = convertSquare(parameters.get(SOURCE_SQUARE_INDEX));
         Square targetSquare = convertSquare(parameters.get(TARGET_SQUARE_INDEX));
-        chessGame.move(sourceSquare, targetSquare);
+        chessGame.move(sourceSquare, targetSquare, new HistoryDao());
+        showBoard();
     }
 
     public void calculate() {

@@ -4,9 +4,15 @@ import chess.dto.MoveDto;
 import java.util.List;
 
 public interface ChessDao {
-    void saveHistory(MoveDto moveDto);
+    void saveHistory(MoveDto moveDto, int notFinishedGameId);
 
-    void deleteAllHistory();
+    List<MoveDto> selectAllHistory(int notFinishedGameId);
 
-    List<MoveDto> selectAllHistory();
+    void saveInitialGame();
+
+    int findNotFinishedGameId();
+
+    boolean existCurrentGame();
+
+    void setGameFinished(final int gameId);
 }
