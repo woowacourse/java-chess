@@ -89,10 +89,10 @@ class BoardCommandServiceTest {
                 new Position(5, 7), new Pawn(Color.WHITE)
         );
 
-        final Board board = Board.bringBackPreviousGame(map, new Turn(Color.WHITE));
+        final Board board = Board.bringBackPreviousGame(map, new Turn(Color.WHITE), boardId);
 
         //when
-        boardCommandService.modifyBoard(board, boardId);
+        boardCommandService.modifyBoard(board);
 
         final Board savedBoard = boardQueryService.searchBoard(boardId);
 

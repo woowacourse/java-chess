@@ -26,7 +26,7 @@ public class BoardQueryService {
                                                                 .orElseThrow(NoSuchElementException::new);
 
         return boardMapper.mapToBoardSearchResponseFrom(boardSearchResponse.position(),
-                                                        boardSearchResponse.turn());
+                                                        boardSearchResponse.turn(), boardSearchResponse.id());
     }
 
     public List<Long> searchAllBoards() {
@@ -34,7 +34,7 @@ public class BoardQueryService {
         final List<BoardSearchResponse> boardSearchResponses = boardDao.findAll();
 
         return boardSearchResponses.stream()
-                                   .map(it -> it.id())
+                                   .map(BoardSearchResponse::id)
                                    .collect(Collectors.toList());
     }
 

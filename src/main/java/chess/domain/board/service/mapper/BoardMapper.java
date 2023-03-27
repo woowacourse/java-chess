@@ -44,7 +44,7 @@ public class BoardMapper {
     }
 
     public Board mapToBoardSearchResponseFrom(final String position,
-                                              final String turn) {
+                                              final String turn, final Long id) {
 
         final Map<Position, Piece> chessBoard =
                 Arrays.stream(position.split(PIECE_REGEX))
@@ -64,7 +64,7 @@ public class BoardMapper {
                       ));
 
 
-        return Board.bringBackPreviousGame(chessBoard, new Turn(Color.valueOf(turn)));
+        return Board.bringBackPreviousGame(chessBoard, new Turn(Color.valueOf(turn)), id);
     }
 
 }

@@ -32,7 +32,7 @@ class BoardMapperTest {
                        new Position(3, 7), new Pawn(Color.BLACK),
                        new Position(4, 7), new King(Color.WHITE),
                        new Position(5, 7), new Pawn(Color.WHITE)
-                ), new Turn(Color.WHITE));
+                ), new Turn(Color.WHITE), 1L);
 
         //when
         //"K : 1 7, P : 3 7, k : 4 7, p : 5 7"
@@ -72,7 +72,7 @@ class BoardMapperTest {
         final String turn = "WHITE";
 
         //when
-        Board board = boardMapper.mapToBoardSearchResponseFrom(position, turn);
+        Board board = boardMapper.mapToBoardSearchResponseFrom(position, turn, 1L);
 
         //then
         final Map<Position, Piece> chessBoard = board.chessBoard();

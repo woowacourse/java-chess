@@ -93,7 +93,7 @@ class BoardTest {
         final Turn turn = new Turn(Color.BLACK);
 
         //when
-        final Board previousGame = Board.bringBackPreviousGame(board, turn);
+        final Board previousGame = Board.bringBackPreviousGame(board, turn, 1L);
 
         final Map<Position, Piece> savedChessBoard = previousGame.chessBoard();
         final Turn savedTurn = previousGame.turn();

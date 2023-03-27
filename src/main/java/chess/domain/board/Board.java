@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Board {
 
+    private Long id;
     private final Map<Position, Piece> chessBoard;
     private Turn turn;
 
@@ -18,13 +19,14 @@ public class Board {
         this.turn = new Turn(Color.WHITE);
     }
 
-    private Board(final Map<Position, Piece> chessBoard, Turn turn) {
-        this.chessBoard = Map.copyOf(chessBoard);
+    private Board(final Long id, final Map<Position, Piece> chessBoard, final Turn turn) {
+        this.id = id;
+        this.chessBoard = chessBoard;
         this.turn = turn;
     }
 
-    public static Board bringBackPreviousGame(final Map<Position, Piece> board, final Turn turn) {
-        return new Board(board, turn);
+    public static Board bringBackPreviousGame(final Map<Position, Piece> board, final Turn turn, final Long id) {
+        return new Board(id, board, turn);
     }
 
     public static Board makeNewGame(final BoardFactory boardFactory) {
@@ -72,11 +74,19 @@ public class Board {
         chessBoard.put(to, movingPiece);
     }
 
+    public void assignId(final Long id) {
+        this.id = id;
+    }
+
     public Map<Position, Piece> chessBoard() {
         return Map.copyOf(chessBoard);
     }
 
     public Turn turn() {
         return turn;
+    }
+
+    public Long id() {
+        return id;
     }
 }
