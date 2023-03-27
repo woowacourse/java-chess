@@ -22,18 +22,18 @@ class KnightTest {
     void 나이트는_같은_랭크의_좌표로_움직일_수_있다() {
         //given
         final Knight knight = new Knight(Team.BLACK);
-        final Coordinate c3 = Coordinate.of("c3");
-        final Coordinate a4 = Coordinate.of("a4");
-        final Coordinate b1 = Coordinate.of("b1");
-        final Coordinate d5 = Coordinate.of("d5");
-        final Coordinate e2 = Coordinate.of("e2");
+        final Coordinate c3 = Coordinate.from("c3");
+        final Coordinate a4 = Coordinate.from("a4");
+        final Coordinate b1 = Coordinate.from("b1");
+        final Coordinate d5 = Coordinate.from("d5");
+        final Coordinate e2 = Coordinate.from("e2");
 
         //when & then
         assertSoftly((softly) -> {
-            softly.assertThat(knight.findRoute(c3, a4)).containsExactly(Coordinate.of("a4"));
-            softly.assertThat(knight.findRoute(c3, b1)).containsExactly(Coordinate.of("b1"));
-            softly.assertThat(knight.findRoute(c3, d5)).containsExactly(Coordinate.of("d5"));
-            softly.assertThat(knight.findRoute(c3, e2)).containsExactly(Coordinate.of("e2"));
+            softly.assertThat(knight.findRoute(c3, a4)).containsExactly(Coordinate.from("a4"));
+            softly.assertThat(knight.findRoute(c3, b1)).containsExactly(Coordinate.from("b1"));
+            softly.assertThat(knight.findRoute(c3, d5)).containsExactly(Coordinate.from("d5"));
+            softly.assertThat(knight.findRoute(c3, e2)).containsExactly(Coordinate.from("e2"));
         });
     }
 
@@ -41,8 +41,8 @@ class KnightTest {
     void 나이트가_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final Knight knight = new Knight(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b8 = Coordinate.of("b8");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b8 = Coordinate.from("b8");
 
         //when & then
         assertThatThrownBy(() -> knight.findRoute(a1, b8))

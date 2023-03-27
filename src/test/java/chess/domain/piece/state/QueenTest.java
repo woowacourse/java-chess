@@ -22,11 +22,11 @@ class QueenTest {
     void 퀸은_같은_파일의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate a3 = Coordinate.of("a3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate a3 = Coordinate.from("a3");
 
         //when & then
-        assertThat(queen.findRoute(a1, a3)).containsExactly(Coordinate.of("a2"), Coordinate.of("a3"));
+        assertThat(queen.findRoute(a1, a3)).containsExactly(Coordinate.from("a2"), Coordinate.from("a3"));
     }
 
 
@@ -34,20 +34,20 @@ class QueenTest {
     void 퀸은_같은_랭크의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate e1 = Coordinate.of("e1");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate e1 = Coordinate.from("e1");
 
         //when & then
-        assertThat(queen.findRoute(a1, e1)).containsExactly(Coordinate.of("b1"), Coordinate.of("c1")
-                , Coordinate.of("d1"), Coordinate.of("e1"));
+        assertThat(queen.findRoute(a1, e1)).containsExactly(Coordinate.from("b1"), Coordinate.from("c1")
+                , Coordinate.from("d1"), Coordinate.from("e1"));
     }
 
     @Test
     void 퀸이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b3 = Coordinate.of("b3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b3 = Coordinate.from("b3");
 
         //when & then
         assertThatThrownBy(() -> queen.findRoute(a1, b3))
@@ -59,11 +59,11 @@ class QueenTest {
     void 퀸은_우상향_대각선의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate c3 = Coordinate.of("c3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate c3 = Coordinate.from("c3");
 
         //when & then
-        assertThat(queen.findRoute(a1, c3)).containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
+        assertThat(queen.findRoute(a1, c3)).containsExactly(Coordinate.from("b2"), Coordinate.from("c3"));
     }
 
 
@@ -71,11 +71,11 @@ class QueenTest {
     void 퀸은_좌상향_대각선의_좌표로_움직일_수_있다() {
         //given
         final Queen queen = new Queen(Team.BLACK);
-        final Coordinate c3 = Coordinate.of("c3");
-        final Coordinate e1 = Coordinate.of("e1");
+        final Coordinate c3 = Coordinate.from("c3");
+        final Coordinate e1 = Coordinate.from("e1");
 
         //when & then
-        assertThat(queen.findRoute(c3, e1)).containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
+        assertThat(queen.findRoute(c3, e1)).containsExactly(Coordinate.from("d2"), Coordinate.from("e1"));
     }
 
     @Test

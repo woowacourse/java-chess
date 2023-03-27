@@ -33,7 +33,7 @@ public final class Command {
 
     private static List<Coordinate> getCoordinate(List<String> options) {
         return options.stream()
-                .map(Coordinate::of)
+                .map(Coordinate::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 

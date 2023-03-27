@@ -21,8 +21,8 @@ class RookTest {
     void 룩이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final Rook rook = new Rook(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b3 = Coordinate.of("b3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b3 = Coordinate.from("b3");
 
         //when & then
         Assertions.assertThatThrownBy(() -> rook.findRoute(a1, b3))
@@ -34,11 +34,11 @@ class RookTest {
     void 룩은_같은_파일의_좌표로_움직일_수_있다() {
         //given
         final Rook rook = new Rook(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate a3 = Coordinate.of("a3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate a3 = Coordinate.from("a3");
 
         //when & then
-        Assertions.assertThat(rook.findRoute(a1, a3)).containsExactly(Coordinate.of("a2"), Coordinate.of("a3"));
+        Assertions.assertThat(rook.findRoute(a1, a3)).containsExactly(Coordinate.from("a2"), Coordinate.from("a3"));
     }
 
 
@@ -46,12 +46,12 @@ class RookTest {
     void 룩은_같은_랭크의_좌표로_움직일_수_있다() {
         //given
         final Rook rook = new Rook(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate e1 = Coordinate.of("e1");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate e1 = Coordinate.from("e1");
 
         //when & then
-        Assertions.assertThat(rook.findRoute(a1, e1)).containsExactly(Coordinate.of("b1"), Coordinate.of("c1")
-                , Coordinate.of("d1"), Coordinate.of("e1"));
+        Assertions.assertThat(rook.findRoute(a1, e1)).containsExactly(Coordinate.from("b1"), Coordinate.from("c1")
+                , Coordinate.from("d1"), Coordinate.from("e1"));
     }
 
     @Test
