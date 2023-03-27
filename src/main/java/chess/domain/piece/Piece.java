@@ -27,5 +27,6 @@ public interface Piece {
     void addPieceType(Map<PieceType, Integer> pieceCounter);
 
     String getPieceTypeName();
+
     String getColorName();
 }

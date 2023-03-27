@@ -4,9 +4,9 @@ import static chess.domain.piece.moveRule.TestFixture.A1;
 import static chess.domain.piece.moveRule.TestFixture.B2;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;

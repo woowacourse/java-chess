@@ -2,10 +2,11 @@ package chess.domain.command;
 
 import java.util.List;
 
-public class StatusCommand implements Command{
+public class StatusCommand implements Command {
     public StatusCommand(List<String> commands) {
         validateCommandsLength(commands);
     }
+
     @Override
     public void validateCommandsLength(List<String> commands) {
         if (commands.size() != 1) {

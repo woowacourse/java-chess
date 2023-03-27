@@ -31,11 +31,11 @@ public class PieceData {
         return color.isEqual(other);
     }
 
-    public String getPieceTypeName(){
+    public String getPieceTypeName() {
         return pieceType.toString();
     }
 
-    public String getColorName(){
+    public String getColorName() {
         return color.toString();
     }
 

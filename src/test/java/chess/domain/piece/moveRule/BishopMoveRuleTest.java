@@ -1,14 +1,12 @@
 package chess.domain.piece.moveRule;
 
 import static chess.domain.piece.moveRule.TestFixture.A1;
-import static chess.domain.piece.moveRule.TestFixture.B2;
 import static chess.domain.piece.moveRule.TestFixture.B3;
-import static chess.domain.piece.moveRule.TestFixture.D4;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;

@@ -47,6 +47,10 @@ public class ChessGame {
         }
     }
 
+    public boolean isEmpty() {
+        return board.size() == 0;
+    }
+
     public String getTurnName() {
         return turn.toString();
     }

@@ -15,14 +15,14 @@ import org.junit.jupiter.api.Test;
 
 public class BoardTest {
     @Test
-    void 팀_기물_점수_계산(){
+    void 팀_기물_점수_계산() {
         Board board = new Board();
         double score = board.calculateScoreByColor(Color.BLACK);
         assertThat(score).isEqualTo(38);
     }
 
     @Test
-    void 세로줄에_폰이_겹칠때_팀_기물_점수_계산(){
+    void 세로줄에_폰이_겹칠때_팀_기물_점수_계산() {
         Map<Position, Piece> boardWhenDuplicatePawn = new HashMap<>();
         boardWhenDuplicatePawn.put(A1, Pawn.from(Color.BLACK));
         boardWhenDuplicatePawn.put(A3, Pawn.from(Color.BLACK));

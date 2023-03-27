@@ -1,4 +1,4 @@
-package chess.domain.dao;
+package chess.dao;
 
 import chess.domain.board.Board;
 import chess.domain.chessGame.ChessGame;
@@ -24,7 +24,7 @@ public class ChessGameDao {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    private static Map<String, ChessGameStatus> chessGameStatusMapper = new HashMap<>();
+    private static final Map<String, ChessGameStatus> chessGameStatusMapper = new HashMap<>();
 
     static {
         chessGameStatusMapper.put("ready", new ReadyChessGameStatus());
@@ -93,8 +93,8 @@ public class ChessGameDao {
                 turn = Color.valueOf(resultSet.getString("turn"));
                 chessGameStatus = chessGameStatusMapper.get(resultSet.getString("status"));
                 PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
-                File file = File.of(resultSet.getString("piece_file"));
-                Rank rank = Rank.of(resultSet.getString("piece_rank"));
+                File file = File.valueOf(resultSet.getString("piece_file"));
+                Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
                 Color pieceColor = Color.valueOf(resultSet.getString("piece_color"));
 
                 Position position = Position.of(file, rank);

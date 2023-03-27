@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessGameDao;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.CommandType;
@@ -23,10 +24,18 @@ public class ChessGameController {
     }
 
     public void play() {
-        ChessGame chessGame = new ChessGame();
+        ChessGameDao chessGameDao = new ChessGameDao();
+        ChessGame chessGame = chessGameDao.select();
+
+        if (chessGame.isEmpty()) {
+            chessGame = new ChessGame();
+            chessGameDao.save(chessGame);
+        }
+
         OutputView.printStartMessage();
         do {
             executeCorrectCommand(chessGame);
+            chessGameDao.update(chessGame);
         } while (chessGame.isPlaying());
     }
 
@@ -68,7 +77,7 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getPrintingBoard());
     }
 
-    private void printScores(ChessGame chessGame, Command command){
+    private void printScores(ChessGame chessGame, Command command) {
         Map<Color, Double> scores = chessGame.getScores();
         OutputView.printScores(scores);
     }

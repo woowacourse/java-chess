@@ -29,18 +29,19 @@ public enum PieceType {
         return color.formatName(name);
     }
 
-    public double getScore(){
+    public double getScore() {
         return score;
     }
+
     public boolean isDuplicateDemeritPieceType() {
         return isDuplicateDemeritPieceType;
     }
 
-    public double getDuplicatePawnScore(){
+    public double getDuplicatePawnScore() {
         return 0.5;
     }
 
-    public Piece getPiece(Color color){
+    public Piece getPiece(Color color) {
         return pieceGenerator.apply(color);
     }
 }

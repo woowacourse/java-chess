@@ -4,12 +4,11 @@ import static chess.domain.piece.moveRule.TestFixture.A1;
 import static chess.domain.piece.moveRule.TestFixture.A5;
 import static chess.domain.piece.moveRule.TestFixture.A7;
 import static chess.domain.piece.moveRule.TestFixture.B2;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.InitPawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 import chess.domain.piece.moveRule.pawn.BlackPawnMoveRule;
 import chess.domain.piece.moveRule.pawn.WhitePawnMoveRule;
 import chess.domain.position.Position;

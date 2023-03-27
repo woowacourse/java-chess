@@ -41,7 +41,7 @@ public class OutputView {
 
     public static void printScores(Map<Color, Double> scores) {
         System.out.println("각 팀의 점수");
-        for(Color color : scores.keySet()){
+        for (Color color : scores.keySet()) {
             System.out.println(color.getName() + " : " + scores.get(color));
         }
     }

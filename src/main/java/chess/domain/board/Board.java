@@ -131,6 +131,10 @@ public class Board {
         return positions;
     }
 
+    public int size() {
+        return board.size();
+    }
+
     public Map<Position, Piece> getBoard() {
         return board;
     }
