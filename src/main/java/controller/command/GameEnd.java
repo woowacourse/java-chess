@@ -32,6 +32,7 @@ public class GameEnd extends GameCommand {
         throw new UnsupportedOperationException("[ERROR] 게임이 종료되어 명령어를 입력할 수 없습니다.");
     }
 
+    @Override
     public boolean isEnd() {
         return true;
     }

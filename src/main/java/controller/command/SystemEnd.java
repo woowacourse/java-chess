@@ -15,6 +15,7 @@ public class SystemEnd extends Command {
         return this;
     }
 
+    @Override
     public boolean isEnd() {
         return true;
     }
