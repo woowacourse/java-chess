@@ -12,19 +12,17 @@ import java.util.List;
 
 public enum CommandHandler {
 
-    START("start", 1, new StartCommandFactory()),
-    MOVE("move", 3, new MoveCommandFactory()),
-    STATUS("status", 1, new StatusCommandFactory()),
-    END("end", 1, new EndCommandFactory());
+    START(1, new StartCommandFactory()),
+    MOVE(3, new MoveCommandFactory()),
+    STATUS(1, new StatusCommandFactory()),
+    END(1, new EndCommandFactory());
 
     private static final int COMMAND_INDEX = 0;
 
-    private final String value;
     private final int size;
     private final CommandFactory commandFactory;
 
-    CommandHandler(final String value, final int size, final CommandFactory commandFactory) {
-        this.value = value;
+    CommandHandler(final int size, final CommandFactory commandFactory) {
         this.size = size;
         this.commandFactory = commandFactory;
     }
@@ -39,7 +37,7 @@ public enum CommandHandler {
     }
 
     private static boolean isSameCommand(final List<String> input, final CommandHandler commandHandler) {
-        return commandHandler.value.equals(input.get(COMMAND_INDEX));
+        return commandHandler.name().equals(input.get(COMMAND_INDEX));
     }
 
     private static boolean isSameSize(final List<String> input, final CommandHandler commandHandler) {

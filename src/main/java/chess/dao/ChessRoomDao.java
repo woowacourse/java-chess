@@ -32,12 +32,12 @@ public class ChessRoomDao {
 
         final int id = JdbcTemplate.insertAndReturnKey(query, chessGame.getId(), player.getId());
 
-        return ChessRoom.of(id, chessGame.getId(), player.getId(), ChessState.INIT.getValue());
+        return ChessRoom.of(id, chessGame.getId(), player.getId(), ChessState.INIT.name());
     }
 
     public static void updateState(final ChessRoom chessRoom, final ChessState state) {
         final var query = "UPDATE chess_room SET state = ? WHERE id = ?";
 
-        JdbcTemplate.executeQuery(query, state.getValue(), chessRoom.getId());
+        JdbcTemplate.executeQuery(query, state.name(), chessRoom.getId());
     }
 }
