@@ -6,7 +6,7 @@ public final class Turn {
 
     private final Color color;
 
-    private Turn(final Color color) {
+    public Turn(final Color color) {
         this.color = color;
     }
 
@@ -27,5 +27,9 @@ public final class Turn {
 
     public boolean isBlack() {
         return color.equals(Color.BLACK);
+    }
+
+    public String getValue() {
+        return color.getValue();
     }
 }
