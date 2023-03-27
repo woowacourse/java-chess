@@ -27,7 +27,7 @@ class ChessGameDaoTest {
 
     @Test
     void 게임을_DB에_저장한다() {
-        ChessBoardFormatter chessBoardFormatter = ChessBoardFormatter.toString(new ChessBoard(ChessFactory.create()));
+        ChessBoardFormatter chessBoardFormatter = ChessBoardFormatter.from(new ChessBoard(ChessFactory.create()));
         RoomName testRoomName = new RoomName("test_room");
 
         assertDoesNotThrow(() ->

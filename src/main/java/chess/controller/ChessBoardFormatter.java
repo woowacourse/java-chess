@@ -16,7 +16,7 @@ public final class ChessBoardFormatter {
         this.chessBoardMark = chessBoardMark;
     }
 
-    public static ChessBoardFormatter toString(final ChessBoard chessBoard) {
+    public static ChessBoardFormatter from(final ChessBoard chessBoard) {
         return new ChessBoardFormatter(getChessBoardMark(chessBoard));
     }
 

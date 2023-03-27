@@ -1,5 +1,6 @@
 package chess.domain.chessgame.state;
 
+import chess.dao.ChessGameData;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessFactory;
@@ -22,6 +23,11 @@ public class Ready implements GameState {
     public Ready(final WinningStatusByKing winningStatusByKing, final ChessBoard chessBoard) {
         this.winningStatusByKing = winningStatusByKing;
         this.chessBoard = chessBoard;
+    }
+
+    @Override
+    public boolean isReady() {
+        return true;
     }
 
     @Override
@@ -59,6 +65,11 @@ public class Ready implements GameState {
     @Override
     public GameState save(RoomName roomName) {
         throw new IllegalStateException(READY_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public GameState load(ChessGameData chessGameData) {
+        return new Running(chessGameData.getChessBoard(), chessGameData.getTurn());
     }
 
     @Override

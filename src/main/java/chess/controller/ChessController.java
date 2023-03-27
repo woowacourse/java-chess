@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.dao.ChessGameDao;
+import chess.dao.ChessGameData;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
@@ -67,7 +68,7 @@ public final class ChessController {
     }
 
     private void showChessBoard(final ChessBoard chessBoard) {
-        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.toString(chessBoard);
+        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.from(chessBoard);
         OutputView.printChessBoard(convertedChessBoard);
     }
 
@@ -117,6 +118,10 @@ public final class ChessController {
     }
 
     private void loadGame(final ChessGame chessGame) {
+        if (!chessGame.isReady()) {
+            throw new IllegalStateException("게임을 진행중일때는 다른 게임을 불러올 수 없습니다.");
+        }
+
         ChessGameDao chessGameDao = new ChessGameDao();
         List<String> savedRoomNames = chessGameDao.findRoomNames();
         OutputView.printSavedRoomNames(savedRoomNames);
@@ -126,7 +131,8 @@ public final class ChessController {
             throw new IllegalArgumentException("저장 목록에 존재하지 않는 방 이름입니다.");
         }
 
-
+        ChessGameData chessGameData = chessGameDao.findChessGame(loadRoomName);
+        chessGame.load(chessGameData);
+        showChessBoard(chessGame.getChessBoard());
     }
-
 }

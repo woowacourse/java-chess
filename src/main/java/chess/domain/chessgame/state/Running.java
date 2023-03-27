@@ -2,6 +2,7 @@ package chess.domain.chessgame.state;
 
 import chess.controller.ChessBoardFormatter;
 import chess.dao.ChessGameDao;
+import chess.dao.ChessGameData;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
@@ -23,6 +24,11 @@ public class Running implements GameState {
     public Running(final ChessBoard chessBoard, final Team currentTeam) {
         this.chessBoard = chessBoard;
         this.currentTeam = currentTeam;
+    }
+
+    @Override
+    public boolean isReady() {
+        return false;
     }
 
     @Override
@@ -67,12 +73,17 @@ public class Running implements GameState {
 
     @Override
     public GameState save(RoomName roomName) {
-        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.toString(chessBoard);
+        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.from(chessBoard);
 
         ChessGameDao chessGameDao = new ChessGameDao();
         chessGameDao.addGame(roomName, currentTeam, convertedChessBoard.getOneLineChessBoard());
 
         return new Ready();
+    }
+
+    @Override
+    public GameState load(ChessGameData chessGameData) {
+        throw new IllegalStateException(RUNNING_STATE_EXCEPTION_MESSAGE);
     }
 
     @Override

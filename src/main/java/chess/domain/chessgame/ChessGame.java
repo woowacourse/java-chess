@@ -1,5 +1,6 @@
 package chess.domain.chessgame;
 
+import chess.dao.ChessGameData;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
@@ -10,6 +11,10 @@ import chess.domain.winningstatus.WinningStatus;
 public final class ChessGame {
 
     private GameState gameState = new Ready();
+
+    public boolean isReady() {
+        return gameState.isReady();
+    }
 
     public void start() {
         gameState = gameState.start();
@@ -32,6 +37,10 @@ public final class ChessGame {
 
     public void save(RoomName roomName) {
         gameState = gameState.save(roomName);
+    }
+
+    public void load(ChessGameData chessGameData) {
+        gameState = gameState.load(chessGameData);
     }
 
     public void end() {

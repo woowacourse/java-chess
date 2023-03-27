@@ -52,4 +52,5 @@ public enum SquareMark {
     private String getMark() {
         return mark;
     }
+
 }

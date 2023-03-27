@@ -1,5 +1,6 @@
 package chess.domain.chessgame.state;
 
+import chess.dao.ChessGameData;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
@@ -7,6 +8,11 @@ import chess.domain.winningstatus.WinningStatus;
 
 public class End implements GameState {
     private static final String END_STATE_EXCEPTION_MESSAGE = "종료 상태일때 수행할 수 없는 동작입니다.";
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
 
     @Override
     public GameState start() {
@@ -40,6 +46,11 @@ public class End implements GameState {
 
     @Override
     public GameState save(RoomName roomName) {
+        throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public GameState load(ChessGameData chessGameData) {
         throw new IllegalStateException(END_STATE_EXCEPTION_MESSAGE);
     }
 

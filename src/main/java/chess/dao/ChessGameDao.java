@@ -18,6 +18,7 @@ public final class ChessGameDao {
     private static final String WHITE_MARK = "W";
     private static final String BLACK_MARK = "B";
     public static final String QUERY_SELECT_ROOM_NAMES = "SELECT room_name FROM chess_game";
+    public static final String QUERY_SELECT_CHESS_GAME = "SELECT turn, chess_board FROM chess_game WHERE room_name = ?";
     public static final String QUERY_DELETE_CHESS_GAME = "DELETE FROM chess_game WHERE room_name = ?";
 
     public Connection getConnection() {
@@ -35,7 +36,7 @@ public final class ChessGameDao {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(QUERY_INSERT_CHESS_GAME)) {
             preparedStatement.setString(1, roomName.getRoomName());
-            preparedStatement.setString(2, convertTurn(turn));
+            preparedStatement.setString(2, convertTurnToMark(turn));
             preparedStatement.setString(3, chessBoard);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
@@ -43,7 +44,7 @@ public final class ChessGameDao {
         }
     }
 
-    private String convertTurn(Team team) {
+    private String convertTurnToMark(Team team) {
         if (team == Team.WHITE) {
             return WHITE_MARK;
         }
@@ -60,7 +61,7 @@ public final class ChessGameDao {
              final var preparedStatement = connection.prepareStatement(QUERY_SELECT_ROOM_NAMES)) {
 
             final var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 roomNames.add(resultSet.getString("room_name"));
             }
         } catch (final SQLException e) {
@@ -68,6 +69,24 @@ public final class ChessGameDao {
         }
 
         return roomNames;
+    }
+
+    public ChessGameData findChessGame(final String roomName) {
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(QUERY_SELECT_CHESS_GAME)) {
+            preparedStatement.setString(1, roomName);
+
+            final var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String turn = resultSet.getString("turn");
+                String oneLineChessBoard = resultSet.getString("chess_board");
+                return new ChessGameData(turn, oneLineChessBoard);
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
     public void deleteGame(final RoomName roomName) {
