@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -128,5 +130,12 @@ public class ChessBoard {
     public boolean hasNotKing(TeamColor team) {
         return kings.stream()
             .noneMatch(king -> king.isSameColor(team));
+    }
+
+    public List<Entry<Square, Piece>> getEntriesByTeam(TeamColor team) {
+        return locationInfo.entrySet()
+            .stream()
+            .filter(entry -> entry.getValue().isSameColor(team))
+            .collect(Collectors.toList());
     }
 }

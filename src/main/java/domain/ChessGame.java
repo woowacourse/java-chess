@@ -1,8 +1,11 @@
 package domain;
 
 import domain.piece.Piece;
+import domain.piece.PieceInfo;
 import domain.piece.TeamColor;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class ChessGame {
 
@@ -57,5 +60,28 @@ public class ChessGame {
             return TeamColor.BLACK;
         }
         return TeamColor.EMPTY;
+    }
+
+    public double getScore(TeamColor team) {
+        List<Entry<Square, Piece>> teamEntries = chessBoard.getEntriesByTeam(team);
+        return getTotalScore(teamEntries) - getDuplicatePawnScore(teamEntries);
+    }
+
+    private double getTotalScore(List<Entry<Square, Piece>> teamEntries) {
+        return teamEntries.stream()
+            .mapToDouble(entry -> entry.getValue().getPieceType().getScore())
+            .sum();
+    }
+
+    private double getDuplicatePawnScore(List<Entry<Square, Piece>> teamEntries) {
+        return teamEntries.stream()
+            .filter(entry -> entry.getValue().isPawn())
+            .collect(Collectors.groupingBy(entry -> entry.getKey().getChessColumn(),
+                Collectors.counting()))
+            .values()
+            .stream()
+            .mapToDouble(Long::doubleValue)
+            .filter(count -> count >= 2)
+            .sum() * PieceInfo.PAWN.getScore() / 2;
     }
 }

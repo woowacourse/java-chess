@@ -45,8 +45,12 @@ public class Square {
         int row = rank.minus(other.rank);
         return Direction.of(column, row);
     }
-    
+
     public boolean isDifferent(Rank rank) {
         return this.rank != rank;
+    }
+
+    public ChessColumn getChessColumn() {
+        return chessColumn;
     }
 }

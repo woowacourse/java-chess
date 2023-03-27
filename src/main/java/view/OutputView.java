@@ -1,9 +1,10 @@
 package view;
 
-import domain.ChessGame;
 import domain.ChessColumn;
+import domain.ChessGame;
 import domain.Rank;
 import domain.Square;
+import domain.piece.TeamColor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,5 +56,21 @@ public class OutputView {
 
     public static void printError(Exception exception) {
         System.out.printf("[ERROR]: %s\n", exception.getMessage());
+    }
+
+    public static void printStatus(ChessGame chessGame) {
+        double blackScore = chessGame.getScore(TeamColor.BLACK);
+        double whiteScore = chessGame.getScore(TeamColor.WHITE);
+
+        System.out.printf("흑의 점수는 = %s 입니다. \n백의 점수는 = %s 입니다.\n", blackScore, whiteScore);
+    }
+
+    public static void printResult(TeamColor teamColor) {
+        if (teamColor == TeamColor.BLACK) {
+            System.out.println("흑이 승리 후, 게임이 종료되었습니다.");
+        }
+        if (teamColor == TeamColor.WHITE) {
+            System.out.println("백이 승리 후, 게임이 종료되었습니다.");
+        }
     }
 }
