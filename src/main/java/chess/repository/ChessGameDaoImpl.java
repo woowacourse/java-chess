@@ -25,20 +25,6 @@ public class ChessGameDaoImpl implements ChessGameDao {
         this.connection = connection;
     }
 
-    @Override
-    public Color findTurn() {
-        final var query = "SELECT * FROM chess_game";
-
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-            final var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return Color.from(resultSet.getString("turn"));
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
 
     @Override
     public ChessGameState findChessGame() {
@@ -58,7 +44,26 @@ public class ChessGameDaoImpl implements ChessGameDao {
     }
 
     @Override
-    public void updateTurn(Color color) {
+    public void deleteAll() {
+        deleteTurn();
+        deletePieces();
+    }
+
+    private Color findTurn() {
+        final var query = "SELECT * FROM chess_game";
+
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Color.from(resultSet.getString("turn"));
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    private void updateTurn(Color color) {
         deleteTurn();
         final var query = "insert into chess_game (turn) values (?)";
 
@@ -71,7 +76,6 @@ public class ChessGameDaoImpl implements ChessGameDao {
             throw new RuntimeException(e);
         }
     }
-
 
     private Map<Position, Piece> loadBoard() {
         final String query = "select * from piece";
@@ -97,8 +101,7 @@ public class ChessGameDaoImpl implements ChessGameDao {
         }
     }
 
-    @Override
-    public void savePieces(Map<Position, PieceDto> pieces) {
+    private void savePieces(Map<Position, PieceDto> pieces) {
         final var query = "insert into piece (x,y,color,type) values (?,?,?,?)";
 
         try (final var preparedStatement = connection.prepareStatement(query)) {
@@ -115,12 +118,6 @@ public class ChessGameDaoImpl implements ChessGameDao {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void deleteAll() {
-        deleteTurn();
-        deletePieces();
     }
 
     private void deleteTurn() {
