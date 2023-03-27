@@ -1,6 +1,5 @@
 package chess.controller.state;
 
-
 import static chess.helper.PositionFixture.B6;
 import static chess.helper.PositionFixture.B7;
 import static chess.helper.PositionFixture.E2;
@@ -15,6 +14,7 @@ import chess.model.board.ChessBoardFactory;
 import chess.model.game.ChessGame;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +27,15 @@ class StartTest {
     private static final List<Position> EMPTY = Collections.emptyList();
 
     private Start start;
-    private ChessMovementDao dao;
-    private ChessGame chessGame;
+    private ChessMovementDao chessMovementDao;
+    private ChessGameService chessGameService;
 
     @BeforeEach
     void beforeEach() {
-        chessGame = new ChessGame();
-        dao = new FakeChessMovementDao();
-        start = new Start(chessGame, dao);
+        final ChessGame chessGame = new ChessGame();
+        chessMovementDao = new FakeChessMovementDao();
+        chessGameService = new ChessGameService(chessGame, chessMovementDao);
+        start = new Start(chessGameService);
     }
 
     @Test
@@ -48,7 +49,7 @@ class StartTest {
 
         final ChessBoard initialChessBoard = ChessBoardFactory.create();
         final Map<Position, Piece> initialBoard = initialChessBoard.getBoard();
-        final Map<Position, Piece> actualBoard = chessGame.getChessBoard().getSquares();
+        final Map<Position, Piece> actualBoard = chessGameService.getChessBoard().getSquares();
 
         for (Position position : initialBoard.keySet()) {
             assertThat(actualBoard.get(position).getClass()).isEqualTo(initialBoard.get(position).getClass());
@@ -59,19 +60,19 @@ class StartTest {
     @DisplayName("execute()는 dao에 저장된 내용이 있다면 dao의 내용을 삭제하고 ChessBoard를 초기화한 뒤 Play를 반환한다")
     void execute_whenCallWithHistory_thenReturnInitialChessBoard() {
         // given
-        dao.save(E2, E3);
-        dao.save(B7, B6);
+        chessMovementDao.save(E2, E3);
+        chessMovementDao.save(B7, B6);
 
         // when
         final GameState actual = start.execute(GameCommand.MOVE, EMPTY);
 
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
-        assertThat(dao.findAll()).isEmpty();
+        assertThat(chessMovementDao.findAll()).isEmpty();
 
         final ChessBoard initialChessBoard = ChessBoardFactory.create();
         final Map<Position, Piece> initialBoard = initialChessBoard.getBoard();
-        final Map<Position, Piece> actualBoard = chessGame.getChessBoard().getSquares();
+        final Map<Position, Piece> actualBoard = chessGameService.getChessBoard().getSquares();
 
         for (Position position : initialBoard.keySet()) {
             assertThat(actualBoard.get(position).getClass()).isEqualTo(initialBoard.get(position).getClass());

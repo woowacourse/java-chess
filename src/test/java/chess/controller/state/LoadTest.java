@@ -15,6 +15,7 @@ import chess.model.game.ChessGame;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +28,15 @@ class LoadTest {
     private static final List<Position> EMPTY = Collections.emptyList();
 
     private Load load;
-    private ChessMovementDao dao;
-    private ChessGame chessGame;
+    private ChessMovementDao chessMovementDao;
+    private ChessGameService chessGameService;
 
     @BeforeEach
     void beforeEach() {
-        chessGame = new ChessGame();
-        dao = new FakeChessMovementDao();
-        load = new Load(chessGame, dao);
+        final ChessGame chessGame = new ChessGame();
+        chessMovementDao = new FakeChessMovementDao();
+        chessGameService = new ChessGameService(chessGame, chessMovementDao);
+        load = new Load(chessGameService);
     }
 
     @Test
@@ -48,7 +50,7 @@ class LoadTest {
 
         final ChessBoard initialChessBoard = ChessBoardFactory.create();
         final Map<Position, Piece> initialBoard = initialChessBoard.getBoard();
-        final Map<Position, Piece> actualBoard = chessGame.getChessBoard().getSquares();
+        final Map<Position, Piece> actualBoard = chessGameService.getChessBoard().getSquares();
 
         for (Position position : initialBoard.keySet()) {
             assertThat(actualBoard.get(position).getClass()).isEqualTo(initialBoard.get(position).getClass());
@@ -59,8 +61,8 @@ class LoadTest {
     @DisplayName("execute()는 dao에 저장된 내용이 있다면 ChessBoard를 이전 상태로 초기화한 뒤 Play를 반환한다")
     void execute_whenCallWithHistory_thenReturnInitialChessBoard() {
         // given
-        dao.save(E2, E3);
-        dao.save(B7, B6);
+        chessMovementDao.save(E2, E3);
+        chessMovementDao.save(B7, B6);
 
         // when
         final GameState actual = load.execute(GameCommand.MOVE, EMPTY);
@@ -68,7 +70,7 @@ class LoadTest {
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
 
-        final Map<Position, Piece> actualBoard = chessGame.getChessBoard().getSquares();
+        final Map<Position, Piece> actualBoard = chessGameService.getChessBoard().getSquares();
 
         assertThat(actualBoard.get(E3).isSameType(PieceType.PAWN)).isTrue();
         assertThat(actualBoard.get(B6).isSameType(PieceType.PAWN)).isTrue();

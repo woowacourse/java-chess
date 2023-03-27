@@ -1,20 +1,17 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
-import chess.dao.ChessMovementDao;
-import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.Collections;
 import java.util.List;
 
 public final class Ready implements GameState {
 
-    private final ChessGame chessGame;
-    private final ChessMovementDao chessMovementDao;
+   private final ChessGameService chessGameService;
 
-    public Ready(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
-        this.chessGame = chessGame;
-        this.chessMovementDao = chessMovementDao;
+    public Ready(final ChessGameService chessGameService) {
+        this.chessGameService = chessGameService;
     }
 
     @Override
@@ -36,10 +33,10 @@ public final class Ready implements GameState {
 
     private GameState handleGameCommand(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
-            return new Start(chessGame, chessMovementDao).execute(gameCommand, Collections.emptyList());
+            return new Start(chessGameService).execute(gameCommand, Collections.emptyList());
         }
         if (gameCommand.isLoad()) {
-            return new Load(chessGame, chessMovementDao).execute(gameCommand, Collections.emptyList());
+            return new Load(chessGameService).execute(gameCommand, Collections.emptyList());
         }
         return new End();
     }

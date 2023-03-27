@@ -3,9 +3,9 @@ package chess.model.board;
 import chess.model.piece.Camp;
 import chess.model.piece.Direction;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceType;
 import chess.model.piece.score.PieceRuleScore;
 import chess.model.piece.score.PieceScore;
-import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ChessBoard {
+public final class ChessBoard {
 
     private static final long MULTIPLE_PAWN_COUNT = 2L;
 

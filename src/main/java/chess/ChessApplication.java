@@ -6,6 +6,7 @@ import chess.dao.ConnectionStrategy;
 import chess.dao.JdbcChessMovementDao;
 import chess.dao.MySqlConnectionStrategy;
 import chess.model.game.ChessGame;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Scanner;
@@ -20,7 +21,8 @@ public class ChessApplication {
         final ChessGame chessGame = new ChessGame();
         final ConnectionStrategy connectionStrategy = new MySqlConnectionStrategy();
         final ChessMovementDao chessMovementDao = new JdbcChessMovementDao(connectionStrategy);
+        final ChessGameService chessGameService = new ChessGameService(chessGame, chessMovementDao);
 
-        chessController.start(chessGame, chessMovementDao);
+        chessController.start(chessGameService);
     }
 }

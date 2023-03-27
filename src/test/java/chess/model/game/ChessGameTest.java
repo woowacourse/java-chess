@@ -20,8 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.model.piece.Camp;
+import chess.model.piece.Piece;
 import chess.model.piece.score.PieceScore;
-import chess.view.dto.ChessBoardResponse;
+import chess.model.position.Position;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,9 +48,9 @@ class ChessGameTest {
         chessGame.initialChessGame();
 
         // then
-        final ChessBoardResponse chessBoardResponse = chessGame.getChessBoard();
+        final Map<Position, Piece> squares = chessGame.getChessBoard();
 
-        assertThat(chessBoardResponse).isNotNull();
+        assertThat(squares).isNotNull();
     }
 
     @Test

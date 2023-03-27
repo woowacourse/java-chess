@@ -3,11 +3,12 @@ package chess.model.game;
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
 import chess.model.piece.Camp;
+import chess.model.piece.Piece;
 import chess.model.piece.score.PieceScore;
 import chess.model.position.Position;
-import chess.view.dto.ChessBoardResponse;
+import java.util.Map;
 
-public class ChessGame {
+public final class ChessGame {
 
     private ChessBoard chessBoard;
     private Turn turn;
@@ -60,11 +61,7 @@ public class ChessGame {
         return turn.oppositeCamp();
     }
 
-    public ChessBoardResponse getChessBoard() {
-        try {
-            return new ChessBoardResponse(chessBoard.getBoard());
-        } catch (NullPointerException e) {
-            throw new IllegalStateException("게임을 시작하지 않았습니다.", e);
-        }
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard.getBoard();
     }
 }

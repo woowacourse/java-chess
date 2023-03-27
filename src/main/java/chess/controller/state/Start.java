@@ -1,26 +1,22 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
-import chess.dao.ChessMovementDao;
-import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.List;
 
 public final class Start extends AbstractInitialGameState {
 
-    private final ChessGame chessGame;
-    private final ChessMovementDao chessMovementDao;
+    private final ChessGameService chessGameService;
 
-    Start(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
-        this.chessGame = chessGame;
-        this.chessMovementDao = chessMovementDao;
+    Start(final ChessGameService chessGameService) {
+        this.chessGameService = chessGameService;
     }
 
     @Override
     public GameState execute(final GameCommand ignoredGameCommand, final List<Position> ignored) {
-        chessMovementDao.delete();
-        chessGame.initialChessGame();
+        chessGameService.initializeChessGame();
 
-        return new Play(chessGame, chessMovementDao);
+        return new Play(chessGameService);
     }
 }

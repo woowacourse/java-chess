@@ -2,7 +2,6 @@ package chess.model.piece.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.piece.score.PieceScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

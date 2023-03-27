@@ -18,6 +18,7 @@ import chess.dao.ChessMovementDao;
 import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,13 +30,14 @@ class PlayTest {
     private static final List<Position> EMPTY = Collections.emptyList();
 
     private GameState play;
-    private ChessMovementDao dao;
+    private ChessMovementDao chessMovementDao;
 
     @BeforeEach
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
-        dao = new FakeChessMovementDao();
-        final GameState ready = new Ready(chessGame, dao);
+        chessMovementDao = new FakeChessMovementDao();
+        final ChessGameService chessGameService = new ChessGameService(chessGame, chessMovementDao);
+        final GameState ready = new Ready(chessGameService);
 
         play = ready.execute(GameCommand.START, EMPTY);
     }
@@ -75,7 +77,7 @@ class PlayTest {
 
         // then
         assertThat(actual).isSameAs(play);
-        assertThat(dao.findAll()).hasSize(1);
+        assertThat(chessMovementDao.findAll()).hasSize(1);
     }
 
     @Test
@@ -103,7 +105,7 @@ class PlayTest {
         // then
         assertThat(actual).isExactlyInstanceOf(Result.class);
         assertThat(actual.isPrintable()).isFalse();
-        assertThat(dao.findAll()).isEmpty();
+        assertThat(chessMovementDao.findAll()).isEmpty();
     }
 
     @Test

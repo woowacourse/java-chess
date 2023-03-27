@@ -10,6 +10,7 @@ import chess.dao.ChessMovementDao;
 import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,14 +21,16 @@ class ReadyTest {
 
     private static final List<Position> EMPTY = Collections.emptyList();
 
-    private ChessGame chessGame;
     private GameState ready;
+    private ChessGameService chessGameService;
 
     @BeforeEach
     void beforeEach() {
-        chessGame = new ChessGame();
-        final ChessMovementDao dao = new FakeChessMovementDao();
-        ready = new Ready(chessGame, dao);
+        final ChessGame chessGame = new ChessGame();
+        final ChessMovementDao chessMovementDao = new FakeChessMovementDao();
+
+        chessGameService = new ChessGameService(chessGame, chessMovementDao);
+        ready = new Ready(chessGameService);
     }
 
     @Test
@@ -39,7 +42,7 @@ class ReadyTest {
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
 
-        assertThat(chessGame.getChessBoard()).isNotNull();
+        assertThat(chessGameService.getChessBoard()).isNotNull();
     }
 
     @Test
@@ -51,7 +54,7 @@ class ReadyTest {
         // then
         assertThat(actual).isExactlyInstanceOf(Play.class);
 
-        assertThat(chessGame.getChessBoard()).isNotNull();
+        assertThat(chessGameService.getChessBoard()).isNotNull();
     }
 
     @Test
@@ -80,10 +83,6 @@ class ReadyTest {
 
         // then
         assertThat(actual).isExactlyInstanceOf(End.class);
-
-        assertThatThrownBy(() -> chessGame.getChessBoard())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임을 시작하지 않았습니다.");
     }
 
     @Test

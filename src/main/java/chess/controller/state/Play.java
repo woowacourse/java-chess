@@ -1,9 +1,8 @@
 package chess.controller.state;
 
 import chess.controller.GameCommand;
-import chess.dao.ChessMovementDao;
-import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.List;
 
 public final class Play implements GameState {
@@ -11,12 +10,10 @@ public final class Play implements GameState {
     private static final int TARGET_INDEX = 1;
     private static final int SOURCE_INDEX = 0;
 
-    private final ChessGame chessGame;
-    private final ChessMovementDao chessMovementDao;
+    private final ChessGameService chessGameService;
 
-    Play(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
-        this.chessGame = chessGame;
-        this.chessMovementDao = chessMovementDao;
+    Play(final ChessGameService chessGameService) {
+        this.chessGameService = chessGameService;
     }
 
     @Override
@@ -38,13 +35,12 @@ public final class Play implements GameState {
     }
 
     private GameState handleMove(final Position source, final Position target) {
-        chessGame.move(source, target);
-        chessMovementDao.save(source, target);
+        chessGameService.move(source, target);
 
-        if (chessGame.isGameOnGoing()) {
+        if (chessGameService.isGameOnGoing()) {
             return this;
         }
-        chessMovementDao.delete();
+        chessGameService.clear();
         return new Result();
     }
 

@@ -8,6 +8,7 @@ import chess.dao.ChessMovementDao;
 import chess.helper.FakeChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.position.Position;
+import chess.service.ChessGameService;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +24,9 @@ class EndTest {
     @BeforeEach
     void beforeEach() {
         final ChessGame chessGame = new ChessGame();
-        final ChessMovementDao dao = new FakeChessMovementDao();
-        final GameState ready = new Ready(chessGame, dao);
+        final ChessMovementDao chessMovementDao = new FakeChessMovementDao();
+        final ChessGameService chessGameService = new ChessGameService(chessGame, chessMovementDao);
+        final GameState ready = new Ready(chessGameService);
         final GameState play = ready.execute(GameCommand.START, EMPTY);
 
         end = play.execute(GameCommand.END, EMPTY);

@@ -3,12 +3,11 @@ package chess.controller;
 import chess.controller.dto.PlayRequest;
 import chess.controller.state.GameState;
 import chess.controller.state.Ready;
-import chess.dao.ChessMovementDao;
-import chess.model.game.ChessGame;
 import chess.model.piece.Camp;
 import chess.model.piece.score.PieceScore;
 import chess.model.position.Position;
 import chess.model.position.PositionConverter;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.ChessGameResultResponse;
@@ -25,13 +24,13 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-    public void start(final ChessGame chessGame, final ChessMovementDao chessMovementDao) {
+    public void start(final ChessGameService chessGameService) {
         outputView.guideGameStart();
-        GameState gameState = new Ready(chessGame, chessMovementDao);
+        GameState gameState = new Ready(chessGameService);
 
         while (gameState.isContinue()) {
             gameState = run(gameState);
-            printChessBoard(gameState, chessGame);
+            printChessBoard(gameState, chessGameService);
         }
     }
 
@@ -54,15 +53,15 @@ public class ChessController {
         return gameState.execute(gameCommand, movePositions);
     }
 
-    private void printChessBoard(final GameState gameState, final ChessGame chessGame) {
+    private void printChessBoard(final GameState gameState, final ChessGameService chessGameService) {
         if (isPrintChessBoard(gameState)) {
-            printChessBoard(chessGame);
+            printChessBoard(chessGameService);
         }
         if (!gameState.isPrintable() && !gameState.isPlay()) {
             outputView.guideEndGame();
         }
         if (isPrintScoreAndGameResult(gameState)) {
-            printScoreAndResult(chessGame);
+            printScoreAndResult(chessGameService);
         }
     }
 
@@ -70,25 +69,25 @@ public class ChessController {
         return gameState.isPlay() && gameState.isPrintable();
     }
 
-    private void printChessBoard(final ChessGame chessGame) {
-        outputView.printCurrentCamp(chessGame.getCurrentCamp());
-        outputView.printChessBoard(chessGame.getChessBoard());
-    }
-
-    private void printScoreAndResult(final ChessGame chessGame) {
-        final ChessGameResultResponse chessGameResultResponse = makeChessGameResultResponse(chessGame);
-
-        outputView.printChessGameResult(chessGameResultResponse);
+    private void printChessBoard(final ChessGameService chessGameService) {
+        outputView.printCurrentCamp(chessGameService.getCurrentCamp());
+        outputView.printChessBoard(chessGameService.getChessBoard());
     }
 
     private boolean isPrintScoreAndGameResult(final GameState gameState) {
         return !gameState.isPlay() && gameState.isPrintable();
     }
 
-    private ChessGameResultResponse makeChessGameResultResponse(final ChessGame chessGame) {
-        final PieceScore blackPieceScore = chessGame.getScoreByCamp(Camp.BLACK);
-        final PieceScore whitePieceScore = chessGame.getScoreByCamp(Camp.WHITE);
-        final Camp winner = chessGame.getWinnerCamp();
+    private void printScoreAndResult(final ChessGameService chessGameService) {
+        final ChessGameResultResponse chessGameResultResponse = makeChessGameResultResponse(chessGameService);
+
+        outputView.printChessGameResult(chessGameResultResponse);
+    }
+
+    private ChessGameResultResponse makeChessGameResultResponse(final ChessGameService chessGameService) {
+        final PieceScore blackPieceScore = chessGameService.getScoreByCamp(Camp.BLACK);
+        final PieceScore whitePieceScore = chessGameService.getScoreByCamp(Camp.WHITE);
+        final Camp winner = chessGameService.getWinnerCamp();
 
         return new ChessGameResultResponse(blackPieceScore, whitePieceScore, winner);
     }
