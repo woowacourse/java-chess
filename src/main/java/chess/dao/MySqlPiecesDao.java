@@ -1,16 +1,8 @@
 package chess.dao;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import chess.domain.piece.Side;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Pawn;
+import chess.domain.game.LoadedPiecesDto;
 import chess.domain.piece.type.Piece;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,44 +29,25 @@ public class MySqlPiecesDao implements PiecesDao {
     }
 
     @Override
-    public List<Piece> findAll() {
+    public LoadedPiecesDto findAll() {
         final var query = "SELECT position_file, position_rank, piece_side, piece_type FROM piece";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            List<Piece> pieces = new ArrayList<>();
+            List<Integer> position_files = new ArrayList<>();
+            List<Integer> position_ranks = new ArrayList<>();
+            List<String> piece_sides = new ArrayList<>();
+            List<String> piece_types = new ArrayList<>();
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                final int file = resultSet.getInt("position_file");
-                final int rank = resultSet.getInt("position_rank");
-                final String sideName = resultSet.getString("piece_side");
-                final String pieceType = resultSet.getString("piece_type");
-
-                final Position position = new Position(File.of(file), Rank.of(rank));
-                pieces.add(extractPiece(sideName, pieceType, position));
+                position_files.add(resultSet.getInt("position_file"));
+                position_ranks.add(resultSet.getInt("position_rank"));
+                piece_sides.add(resultSet.getString("piece_side"));
+                piece_types.add(resultSet.getString("piece_type"));
             }
-            return pieces;
+            return new LoadedPiecesDto(position_files, position_ranks, piece_sides, piece_types);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private Piece extractPiece(final String sideName, final String pieceType, final Position position) {
-        switch (pieceType) {
-            case "King":
-                return new King(position, Side.valueOf(sideName));
-            case "Queen":
-                return new Queen(position, Side.valueOf(sideName));
-            case "Bishop":
-                return new Bishop(position, Side.valueOf(sideName));
-            case "Knight":
-                return new Knight(position, Side.valueOf(sideName));
-            case "Rook":
-                return new Rook(position, Side.valueOf(sideName));
-            case "Pawn":
-                return new Pawn(position, Side.valueOf(sideName));
-            default:
-                throw new UnsupportedOperationException();
         }
     }
 

@@ -17,10 +17,6 @@ public class Pieces {
         this.pieces = new ArrayList<>(piecesGenrator.generate());
     }
 
-    public Pieces(List<Piece> pieces) {
-        this.pieces = pieces;
-    }
-
     public Piece findPieceByPosition(final Position position) {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(position))

@@ -39,7 +39,7 @@ class ChessGameTest {
         }
 
         @Override
-        public List<Piece> findAll() {
+        public LoadedPiecesDto findAll() {
             return null;
         }
 

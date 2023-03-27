@@ -3,12 +3,15 @@ package chess.domain.game;
 import chess.dao.ChessGameDao;
 import chess.dao.PiecesDao;
 import chess.domain.board.Board;
+import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.controller.GameStatus;
+import chess.domain.board.Rank;
 import chess.domain.piece.AllPiecesGenerator;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Side;
 import chess.domain.piece.type.Piece;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
@@ -50,14 +53,31 @@ public class ChessGame {
 
     public void load() {
         checkGameAlreadyStart(gameStatus);
-        final List<Piece> findPieces = piecesDao.findAll();
-        if (findPieces.isEmpty()) {
+        final LoadedPiecesDto loadedPiecesDto = piecesDao.findAll();
+        final List<Piece> pieces = parsePieces(loadedPiecesDto);
+        if (pieces.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 저장된 게임 정보가 없습니다. 새로운 게임을 시작해주세요.");
         }
-        final Pieces loadedPieces = new Pieces(findPieces);
+        final Pieces loadedPieces = new Pieces(() -> pieces);
         this.board = new Board(loadedPieces);
         this.turnToMove = chessGameDao.selectTurn();
         gameStatus = GameStatus.START;
+    }
+
+    private List<Piece> parsePieces(LoadedPiecesDto piecesDto) {
+        final List<Integer> files = piecesDto.getFiles();
+        final List<Integer> ranks = piecesDto.getRanks();
+        final List<String> sides = piecesDto.getSides();
+        final List<String> pieceTypes = piecesDto.getPieceTypes();
+
+        final List<Piece> pieces = new ArrayList<>();
+        for (int pieceIndex = 0; pieceIndex < pieceTypes.size(); pieceIndex++) {
+            final Position position = new Position(File.of(files.get(pieceIndex)), Rank.of(ranks.get(pieceIndex)));
+            final Side side = Side.valueOf(sides.get(pieceIndex));
+            final String pieceType = pieceTypes.get(pieceIndex);
+            pieces.add(PieceMapper.get(pieceType, position, side));
+        }
+        return pieces;
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
