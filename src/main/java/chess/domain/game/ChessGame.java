@@ -58,7 +58,7 @@ public class ChessGame {
     public BigDecimal getScore(Team team) {
         return chessBoard.calculateScore(team);
     }
-    
+
     public Team getCurrentTeam() {
         return turn.getCurrentTeam();
     }
@@ -69,5 +69,9 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
+    }
+
+    public boolean isSameStatus(GameStatus status) {
+        return this.gameStatus == status;
     }
 }

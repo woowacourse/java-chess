@@ -21,7 +21,9 @@ import static chess.domain.game.Command.END;
 import static chess.domain.game.Command.MOVE;
 import static chess.domain.game.Command.START;
 import static chess.domain.game.Command.STATUS;
+import static chess.domain.game.GameStatus.GAME_OVER;
 import static chess.domain.game.GameStatus.IDLE;
+import static chess.domain.game.GameStatus.PLAYING;
 
 public class ChessController {
 
@@ -64,7 +66,7 @@ public class ChessController {
     }
 
     private void initCommend(final ChessGame chessGame) {
-        if (chessGame.getStatus() == GameStatus.PLAYING) {
+        if (chessGame.isSameStatus(PLAYING)) {
             return;
         }
         Command command = readValidateInput(this::readCommand);
@@ -105,7 +107,7 @@ public class ChessController {
     private void endGame(ChessGame chessGame) {
         renderChessBoard();
         printStatus(chessGame);
-        if (chessGame.getStatus() == GameStatus.GAME_OVER) {
+        if (chessGame.isSameStatus(GAME_OVER)) {
             System.out.println("게임 종료 " + chessGame.getCurrentTeam() + "의 패배!");
         }
     }
