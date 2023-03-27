@@ -12,24 +12,24 @@ public class Coordinate {
         this.column = column;
     }
 
-    public static Coordinate fromOnBoard(final int row, final int column) {
+    public static Coordinate createOnBoard(final int row, final int column) {
         return new Coordinate(Row.from(row), Column.from(column));
     }
 
-    public static Coordinate from(final int row, final int column) {
-        return new Coordinate(Row.fromWithoutValidate(row), Column.fromWithoutValidate(column));
+    public static Coordinate createWithoutValidate(final int row, final int column) {
+        return new Coordinate(Row.createWithoutValidate(row), Column.createWithoutValidate(column));
     }
 
     public Coordinate add(final int row, final int column) {
-        return fromOnBoard(this.row.add(row), this.column.add(column));
+        return createOnBoard(this.row.add(row), this.column.add(column));
     }
 
     public Coordinate minus(final Coordinate otherCoordinate) {
-        return from(otherCoordinate.row.minus(this.row), otherCoordinate.column.minus(this.column));
+        return createWithoutValidate(otherCoordinate.row.minus(this.row), otherCoordinate.column.minus(this.column));
     }
 
     public Coordinate minusWithAbsoluteValue(final Coordinate otherCoordinate) {
-        return fromOnBoard(this.row.absoluteOfMinus(otherCoordinate.row),
+        return createOnBoard(this.row.absoluteOfMinus(otherCoordinate.row),
                 this.column.absoluteOfMinus(otherCoordinate.column));
     }
 

@@ -17,7 +17,7 @@ public class Column {
         return new Column(value);
     }
 
-    public static Column fromWithoutValidate(final int value) {
+    public static Column createWithoutValidate(final int value) {
         return new Column(value);
     }
 

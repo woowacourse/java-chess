@@ -23,7 +23,7 @@ class PiecesDaoTest {
     @DisplayName("특정 기물을 저장할 수 있다")
     void addPiece() {
         long roomId = 1;
-        Coordinate coordinate = Coordinate.fromOnBoard(3, 4);
+        Coordinate coordinate = Coordinate.createOnBoard(3, 4);
         Piece piece = new Queen(Camp.WHITE);
 
         assertDoesNotThrow(() -> piecesDao.addPiece(roomId, coordinate, piece));
@@ -43,7 +43,7 @@ class PiecesDaoTest {
     @DisplayName("특정 게임의 아이디와 기물의 위치를 통해 기물의 타입을 수정할 수 있다")
     void updatePieceByCoordinate() {
         long roomId = 1;
-        Coordinate coordinate = Coordinate.fromOnBoard(3, 4);
+        Coordinate coordinate = Coordinate.createOnBoard(3, 4);
         Piece piece = new Rook(Camp.WHITE);
 
         assertDoesNotThrow(() ->

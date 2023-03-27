@@ -44,7 +44,7 @@ public class ChessGameService {
 
         Map<Coordinate, Piece> pieces = new HashMap<>();
         for (PieceDto pieceDto : pieceDtos) {
-            Coordinate coordinate = Coordinate.fromOnBoard(pieceDto.getRank(), pieceDto.getFile());
+            Coordinate coordinate = Coordinate.createOnBoard(pieceDto.getRank(), pieceDto.getFile());
             pieces.put(coordinate, makePiece(pieceDto));
         }
         return pieces;

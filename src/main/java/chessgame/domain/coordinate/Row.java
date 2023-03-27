@@ -18,7 +18,7 @@ public class Row {
         return new Row(value);
     }
 
-    public static Row fromWithoutValidate(final int value) {
+    public static Row createWithoutValidate(final int value) {
         return new Row(value);
     }
 

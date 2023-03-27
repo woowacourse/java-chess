@@ -44,7 +44,7 @@ public class OutputView {
     private StringBuilder makeRank(final Map<Coordinate, Piece> board, final int rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int file = 0; file < BOARD_FILE; file++) {
-            Piece piece = board.get(Coordinate.fromOnBoard(rank, file));
+            Piece piece = board.get(Coordinate.createOnBoard(rank, file));
             stringBuilder.append(PieceMapper.getTarget(piece));
         }
         stringBuilder.append(System.lineSeparator());

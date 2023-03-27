@@ -42,8 +42,8 @@ public class BoardInitialImage {
 
         Map<Coordinate, Piece> whiteBoardImage = new HashMap<>();
         for (int file = 0; file < BOARD_FILE; file++) {
-            whiteBoardImage.put(Coordinate.fromOnBoard(WHITE_BACK_RANK, file), backPieces.get(file));
-            whiteBoardImage.put(Coordinate.fromOnBoard(WHITE_FRONT_RANK, file), frontPieces.get(file));
+            whiteBoardImage.put(Coordinate.createOnBoard(WHITE_BACK_RANK, file), backPieces.get(file));
+            whiteBoardImage.put(Coordinate.createOnBoard(WHITE_FRONT_RANK, file), frontPieces.get(file));
         }
         return whiteBoardImage;
     }
@@ -73,7 +73,7 @@ public class BoardInitialImage {
     private static Map<Coordinate, Piece> makeEachEmptyRank(final int rank) {
         Map<Coordinate, Piece> emptyRank = new HashMap<>();
         for (int file = 0; file < BOARD_FILE; file++) {
-            emptyRank.put(Coordinate.fromOnBoard(rank, file), new Empty());
+            emptyRank.put(Coordinate.createOnBoard(rank, file), new Empty());
         }
 
         return emptyRank;
@@ -85,8 +85,8 @@ public class BoardInitialImage {
 
         Map<Coordinate, Piece> blackboardImage = new HashMap<>();
         for (int file = 0; file < BOARD_FILE; file++) {
-            blackboardImage.put(Coordinate.fromOnBoard(BLACK_FRONT_RANK, file), frontPieces.get(file));
-            blackboardImage.put(Coordinate.fromOnBoard(BLACK_BACK_RANK, file), backPieces.get(file));
+            blackboardImage.put(Coordinate.createOnBoard(BLACK_FRONT_RANK, file), frontPieces.get(file));
+            blackboardImage.put(Coordinate.createOnBoard(BLACK_BACK_RANK, file), backPieces.get(file));
         }
         return blackboardImage;
     }

@@ -1,7 +1,7 @@
 package chessgame.domain.piece;
 
-import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.chessgame.Camp;
+import chessgame.domain.coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,8 +15,8 @@ class KnightTest {
     @CsvSource(value = {"6:5", "6:3", "2:5", "2:3", "5:6", "3:6", "3:2", "5:2"}, delimiter = ':')
     @DisplayName("나이트 가능한 대각선 이동 테스트")
     void isReachableByRule(int row, int col) {
-        Coordinate startCoordinate = Coordinate.fromOnBoard(4, 4);
-        Coordinate endCoordinate = Coordinate.fromOnBoard(row, col);
+        Coordinate startCoordinate = Coordinate.createOnBoard(4, 4);
+        Coordinate endCoordinate = Coordinate.createOnBoard(row, col);
         Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
@@ -26,8 +26,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 불가능한 왼쪽 이동 테스트")
     void isReachableByRuleCantLeft(int distance) {
-        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 6);
-        Coordinate endCoordinate = Coordinate.fromOnBoard(0, 6 - distance);
+        Coordinate startCoordinate = Coordinate.createOnBoard(0, 6);
+        Coordinate endCoordinate = Coordinate.createOnBoard(0, 6 - distance);
         Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -37,8 +37,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 불가능한 오른쪽 이동 테스트")
     void isReachableByRuleCantRight(int distance) {
-        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
-        Coordinate endCoordinate = Coordinate.fromOnBoard(0, distance);
+        Coordinate startCoordinate = Coordinate.createOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.createOnBoard(0, distance);
         Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -48,8 +48,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 불가능한 위로 이동 테스트")
     void isReachableByRuleCantUp(int distance) {
-        Coordinate startCoordinate = Coordinate.fromOnBoard(0, 0);
-        Coordinate endCoordinate = Coordinate.fromOnBoard(distance, 0);
+        Coordinate startCoordinate = Coordinate.createOnBoard(0, 0);
+        Coordinate endCoordinate = Coordinate.createOnBoard(distance, 0);
         Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
@@ -59,8 +59,8 @@ class KnightTest {
     @ValueSource(ints = {1, 3, 5})
     @DisplayName("나이트 가능한 아래로 이동 테스트")
     void isReachableByRuleCantDown(int distance) {
-        Coordinate startCoordinate = Coordinate.fromOnBoard(6, 0);
-        Coordinate endCoordinate = Coordinate.fromOnBoard(6 - distance, 0);
+        Coordinate startCoordinate = Coordinate.createOnBoard(6, 0);
+        Coordinate endCoordinate = Coordinate.createOnBoard(6 - distance, 0);
         Knight knight = new Knight(Camp.WHITE);
 
         assertThat(knight.isReachableByRule(startCoordinate, endCoordinate)).isFalse();

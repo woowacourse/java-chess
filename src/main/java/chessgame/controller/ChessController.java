@@ -141,7 +141,7 @@ public class ChessController {
     private Coordinate convertCoordinate(final String frontCoordinate) {
         int row = Character.getNumericValue(frontCoordinate.charAt(ROW_INDEX)) - 1;
         int column = (int) frontCoordinate.charAt(COLUMN_INDEX) - ASCII_ALPHABET_A;
-        return Coordinate.fromOnBoard(row, column);
+        return Coordinate.createOnBoard(row, column);
     }
 
     private void printGameStatus(ChessGame chessGame) {

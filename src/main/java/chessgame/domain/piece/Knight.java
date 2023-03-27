@@ -1,8 +1,8 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
-import chessgame.domain.chessgame.Camp;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ public class Knight extends Piece {
             TWO, MINUS_TWO, HALF, MINUS_HALF
     );
     private static final List<Coordinate> availableCoordinateDifferences = List.of(
-            Coordinate.fromOnBoard(1, 2),
-            Coordinate.fromOnBoard(2, 1)
+            Coordinate.createOnBoard(1, 2),
+            Coordinate.createOnBoard(2, 1)
     );
 
     public Knight(final Camp camp) {

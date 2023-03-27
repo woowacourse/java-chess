@@ -16,22 +16,22 @@ class ResultTest {
 
     @BeforeAll
     static void initBoard() {
-        board.put(Coordinate.fromOnBoard(0, 4), new Rook(Camp.WHITE));
-        board.put(Coordinate.fromOnBoard(0, 5), new King(Camp.WHITE));
-        board.put(Coordinate.fromOnBoard(1, 5), new WhitePawn());
-        board.put(Coordinate.fromOnBoard(1, 6), new WhitePawn());
-        board.put(Coordinate.fromOnBoard(2, 5), new WhitePawn());
-        board.put(Coordinate.fromOnBoard(2, 7), new WhitePawn());
-        board.put(Coordinate.fromOnBoard(3, 5), new Knight(Camp.WHITE));
-        board.put(Coordinate.fromOnBoard(4, 6), new Queen(Camp.WHITE));
+        board.put(Coordinate.createOnBoard(0, 4), new Rook(Camp.WHITE));
+        board.put(Coordinate.createOnBoard(0, 5), new King(Camp.WHITE));
+        board.put(Coordinate.createOnBoard(1, 5), new WhitePawn());
+        board.put(Coordinate.createOnBoard(1, 6), new WhitePawn());
+        board.put(Coordinate.createOnBoard(2, 5), new WhitePawn());
+        board.put(Coordinate.createOnBoard(2, 7), new WhitePawn());
+        board.put(Coordinate.createOnBoard(3, 5), new Knight(Camp.WHITE));
+        board.put(Coordinate.createOnBoard(4, 6), new Queen(Camp.WHITE));
 
-        board.put(Coordinate.fromOnBoard(5, 1), new BlackPawn());
-        board.put(Coordinate.fromOnBoard(5, 4), new Queen(Camp.BLACK));
-        board.put(Coordinate.fromOnBoard(6, 0), new BlackPawn());
-        board.put(Coordinate.fromOnBoard(6, 2), new BlackPawn());
-        board.put(Coordinate.fromOnBoard(6, 3), new Bishop(Camp.BLACK));
-        board.put(Coordinate.fromOnBoard(7, 1), new King(Camp.BLACK));
-        board.put(Coordinate.fromOnBoard(7, 2), new Rook(Camp.BLACK));
+        board.put(Coordinate.createOnBoard(5, 1), new BlackPawn());
+        board.put(Coordinate.createOnBoard(5, 4), new Queen(Camp.BLACK));
+        board.put(Coordinate.createOnBoard(6, 0), new BlackPawn());
+        board.put(Coordinate.createOnBoard(6, 2), new BlackPawn());
+        board.put(Coordinate.createOnBoard(6, 3), new Bishop(Camp.BLACK));
+        board.put(Coordinate.createOnBoard(7, 1), new King(Camp.BLACK));
+        board.put(Coordinate.createOnBoard(7, 2), new Rook(Camp.BLACK));
     }
 
     @Test
