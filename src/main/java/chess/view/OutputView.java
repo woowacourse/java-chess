@@ -71,7 +71,7 @@ public class OutputView {
     }
 
     private String convertLetterByPiece(final String type, final String side) {
-        if (Objects.equals(type, "PAWN")) {
+        if (Objects.equals(type, "PAWN") || Objects.equals(type, "INITIAL_PAWN")) {
             return convertLetterBySide(" p ", side);
         }
         if (Objects.equals(type, "ROOK")) {

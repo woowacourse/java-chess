@@ -11,7 +11,7 @@ public class Rook extends Piece {
         super(side, PieceInfo.ROOK);
     }
 
-    public static Rook of(final Side side) {
+    public static Rook from(final Side side) {
         if (side == Side.BLACK) {
             return BLACK_ROOK;
         }

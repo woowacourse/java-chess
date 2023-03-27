@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class KingTest {
 
     @Nested
-    @DisplayName("of 메서드는")
-    class of {
+    @DisplayName("from 메서드는")
+    class from {
         @Nested
         @DisplayName("진영이 주어지면")
         class given_team {
             @Test
             @DisplayName("해당 진영의 King을 1개 생성한다")
             void it_returns_king() {
-                King king = King.of(Side.BLACK);
+                King king = King.from(Side.BLACK);
                 assertThat(king.getSide()).isEqualTo("BLACK");
             }
         }
@@ -34,15 +34,15 @@ public class KingTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            King whiteKing = King.of(Side.WHITE);
+            King whiteKing = King.from(Side.WHITE);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.FIVE, File.D);
             Square movableSquare2 = Square.of(Rank.FIVE, File.E);
             Square movableSquare3 = Square.of(Rank.FOUR, File.C);
             Square movableSquare4 = Square.of(Rank.THREE, File.D);
             Square movableSquare5 = Square.of(Rank.THREE, File.E);
-            Queen whiteQueen = Queen.of(Side.WHITE);
-            Queen blackQueen = Queen.of(Side.BLACK);
+            Queen whiteQueen = Queen.from(Side.WHITE);
+            Queen blackQueen = Queen.from(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")

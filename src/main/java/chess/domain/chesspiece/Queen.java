@@ -12,7 +12,7 @@ public class Queen extends Piece {
         super(side, PieceInfo.QUEEN);
     }
 
-    public static Queen of(final Side side) {
+    public static Queen from(final Side side) {
         if (side == Side.BLACK) {
             return BLACK_QUEEN;
         }

@@ -2,6 +2,7 @@ package chess.domain.chesspiece;
 
 public enum PieceInfo {
     EMPTY_PIECE(0),
+    INITIAL_PAWN(1),
     PAWN(1),
     ROOK(5),
     BISHOP(3),

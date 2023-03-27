@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class QueenTest {
 
     @Nested
-    @DisplayName("of 메서드는")
-    class of {
+    @DisplayName("from 메서드는")
+    class from {
         @Nested
         @DisplayName("진영이 주어지면")
         class given_team {
             @Test
             @DisplayName("해당 진영의 Queen을 1개 생성한다")
             void it_returns_queen() {
-                Queen queen = Queen.of(Side.BLACK);
+                Queen queen = Queen.from(Side.BLACK);
                 assertThat(queen.getSide()).isEqualTo("BLACK");
             }
         }
@@ -34,13 +34,13 @@ public class QueenTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            Queen whiteQueen = Queen.of(Side.WHITE);
+            Queen whiteQueen = Queen.from(Side.WHITE);
             Square from = Square.of(Rank.FOUR, File.D);
             Square movableSquare1 = Square.of(Rank.ONE, File.G);
             Square movableSquare2 = Square.of(Rank.FOUR, File.H);
             Square unable = Square.of(Rank.THREE, File.B);
             Bishop whiteBishop = Bishop.of(Side.WHITE);
-            Queen blackQueen = Queen.of(Side.BLACK);
+            Queen blackQueen = Queen.from(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")

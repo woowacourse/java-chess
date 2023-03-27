@@ -11,7 +11,7 @@ public class Knight extends Piece {
         super(side, PieceInfo.KNIGHT);
     }
 
-    public static Knight of(final Side side) {
+    public static Knight from(final Side side) {
         if (side == Side.BLACK) {
             return BLACK_KNIGHT;
         }

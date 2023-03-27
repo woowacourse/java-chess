@@ -3,19 +3,20 @@ package chess.domain.chesspiece;
 import chess.domain.Side;
 import chess.domain.Square;
 
-public class Pawn extends Piece {
-    private static final Pawn BLACK_PAWN = new Pawn(Side.BLACK);
-    private static final Pawn WHITE_PAWN = new Pawn(Side.WHITE);
 
-    Pawn(Side side) {
-        super(side, PieceInfo.PAWN);
+public class InitialPawn extends Piece {
+    private static final InitialPawn BLACK_INITIAL_PAWN = new InitialPawn(Side.BLACK);
+    private static final InitialPawn WHITE_INITIAL_PAWN = new InitialPawn(Side.WHITE);
+
+    private InitialPawn(Side side) {
+        super(side, PieceInfo.INITIAL_PAWN);
     }
 
-    public static Pawn from(final Side side) {
+    public static InitialPawn from(final Side side) {
         if (side == Side.BLACK) {
-            return BLACK_PAWN;
+            return BLACK_INITIAL_PAWN;
         }
-        return WHITE_PAWN;
+        return WHITE_INITIAL_PAWN;
     }
 
     @Override
@@ -25,14 +26,14 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveForward(final Square from, final Square to, final Piece piece) {
-        boolean targetInMovableRange = isPawnsMovableRange(from, to);
+        boolean targetInMovableRange = isPawnsInitialMovableRange(from, to);
         return targetInMovableRange && piece.isEmpty();
     }
 
-    private boolean isPawnsMovableRange(final Square from, final Square to) {
+    private boolean isPawnsInitialMovableRange(final Square from, final Square to) {
         final int rankDistance = from.rankDistanceTo(to);
         return isBackOf(from, to) &&
-                rankDistance == 1 &&
+                (rankDistance == 1 || rankDistance == 2) &&
                 from.fileDistanceTo(to) == 0;
     }
 

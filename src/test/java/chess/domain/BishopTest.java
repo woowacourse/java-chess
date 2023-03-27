@@ -41,7 +41,7 @@ public class BishopTest {
             Square movableSquare2 = Square.of(Rank.SIX, File.B);
             Square unable = Square.of(Rank.THREE, File.B);
             Bishop whiteBishop2 = Bishop.of(Side.WHITE);
-            Queen blackQueen = Queen.of(Side.BLACK);
+            Queen blackQueen = Queen.from(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")
