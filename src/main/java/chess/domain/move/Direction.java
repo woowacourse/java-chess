@@ -23,7 +23,7 @@ public enum Direction {
 	KNIGHT_DOWN_LEFT(-1, -2),
 	KNIGHT_LEFT_DOWN(-2, -1),
 	KNIGHT_LEFT_UP(-2, 1),
-	NOWHERE(10,10);
+	NOWHERE(10, 10);
 
 	private final int dx;
 	private final int dy;
