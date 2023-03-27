@@ -35,9 +35,11 @@ class BoardMapperTest {
                 ), new Turn(Color.WHITE), 1L);
 
         //when
-        //"K : 1 7, P : 3 7, k : 4 7, p : 5 7"
+        //"p:5 7,k:4 7,P:3 7,K:1 7"
         final BoardRegisterRequest boardRegisterRequest =
                 boardMapper.mapToBoardRegisterRequestFrom(board);
+
+        System.out.println(boardRegisterRequest.position());
 
         Map<Position, Class<?>> resultMap =
 
@@ -67,8 +69,8 @@ class BoardMapperTest {
     @DisplayName("mapToBoardSearchResponseFrom() : 위치와 차례를 String을 Board로 변환시킬 수 있다.")
     void test_mapToBoardSearchResponseFrom() throws Exception {
         //given
-        //"K : 1 7, P : 3 7, k : 4 7, p : 5 7"
-        final String position = "K : 1 7, P : 3 7, k : 4 7, p : 5 7";
+        //"p:5 7,k:4 7,P:3 7,K:1 7"
+        final String position = "p:5 7,k:4 7,P:3 7,K:1 7";
         final String turn = "WHITE";
 
         //when

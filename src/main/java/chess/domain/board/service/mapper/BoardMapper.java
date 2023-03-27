@@ -18,13 +18,13 @@ import static chess.common.IndexCommand.POSITION_ROW;
 
 public class BoardMapper {
 
-    private static final String POSITION_AND_PIECE_DELIM = " : ";
-    private static final String PIECE_DELIM = ", ";
+    private static final String POSITION_AND_PIECE_DELIM = ":";
+    private static final String PIECE_DELIM = ",";
     private static final String POSITION_DELIM = " ";
-    private static final String PIECE_REGEX = ",";
-    private static final String POSITION_REGEX = ":";
 
     public BoardRegisterRequest mapToBoardRegisterRequestFrom(final Board board) {
+
+        // p:1 7,k:1 7
 
         final Map<Position, Piece> chessBoard = board.chessBoard();
 
@@ -47,8 +47,8 @@ public class BoardMapper {
                                               final String turn, final Long id) {
 
         final Map<Position, Piece> chessBoard =
-                Arrays.stream(position.split(PIECE_REGEX))
-                      .map(s -> s.split(POSITION_REGEX))
+                Arrays.stream(position.split(PIECE_DELIM))
+                      .map(s -> s.split(POSITION_AND_PIECE_DELIM))
                       .collect(Collectors.toMap(
                               arr -> {
                                   final String[] s = arr[POSITION_INDEX.value()].trim()
