@@ -120,3 +120,35 @@
 
 - King
   - [x]  잡히는 경우 경기가 끝나기 때문에 점수가 없다.
+
+## [4단계 미션]
+
+### 기능 요구사항
+
+- [ ] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+- [ ] DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+
+### SQL 구조
+
+```sql
+CREATE TABLE game {
+  id  PRIMARY_KEY
+  player_turn VARCHAR(255) NOT NULL
+}
+
+CRATE TABLE piece {
+  id PRIMARY_KEY
+  game_id FOREIN_KEY
+  type VARCHAR(255) NOT NULL
+  file VARCHAR(255) NOT NULL
+  rank VARCHAR(255) NOT NULL
+  team VARCHAR(255) NOT NULL
+  isMoved BOOLEAN false
+}
+
+INSERT INTO game(player_turn) VALUES(?)
+DELETE FROM game;
+
+INSERT INTO piece(game_id, type, file, rank, team, isMoved) VALUES(?,?,?,?,?,?)
+DELETE FROM piece
+```
