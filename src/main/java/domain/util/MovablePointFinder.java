@@ -1,6 +1,5 @@
 package domain.util;
 
-import domain.exception.BlockedPathException;
 import domain.exception.PointOutOfBoardException;
 import domain.piece.Piece;
 import domain.point.Direction;
@@ -67,7 +66,8 @@ public class MovablePointFinder {
     }
 
     private static void onCaseOfPieceBetWeenPath(List<List<Piece>> pieceStatus, List<Point> movablePoints, Point toPoint, Piece piece) {
-        for (Point movablePoint : movablePoints) {
+        List<Point> copyOfMovablePoints = new ArrayList<>(movablePoints);
+        for (Point movablePoint : copyOfMovablePoints) {
             Piece pieceOnMovablePoint = pieceStatus
                     .get(movablePoint.findIndexFromBottom())
                     .get(movablePoint.findIndexFromLeft());
@@ -77,7 +77,7 @@ public class MovablePointFinder {
             }
 
             if (!pieceOnMovablePoint.isEmpty()) {
-                throw new BlockedPathException();
+                movablePoints.remove(movablePoint);
             }
         }
     }

@@ -1,7 +1,6 @@
 package domain.board;
 
 import domain.Board;
-import domain.exception.BlockedPathException;
 import domain.exception.InvalidDestinationPointException;
 import domain.piece.Empty;
 import domain.piece.Piece;
@@ -77,9 +76,9 @@ class KnightTest {
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             List<List<Piece>> boardStatus = Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()), // a5, b5, c5, d5, e5
-                    Arrays.asList(new Empty(), new Empty(), new BlackPawn(), new BlackPawn(), new Empty()), // a4, b4, c4, d4, e4
-                    Arrays.asList(new Empty(), new Empty(), new WhiteKnight(), new Empty(), new Empty()), // a3, b3, c3, d3, e3
-                    Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()), // a2, b2, c2, d2, e2
+                    Arrays.asList(new Empty(), new BlackPawn(), new BlackPawn(), new BlackPawn(), new Empty()), // a4, b4, c4, d4, e4
+                    Arrays.asList(new Empty(), new BlackPawn(), new WhiteKnight(), new BlackPawn(), new Empty()), // a3, b3, c3, d3, e3
+                    Arrays.asList(new Empty(), new BlackPawn(), new BlackPawn(), new BlackPawn(), new Empty()), // a2, b2, c2, d2, e2
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()) // a1, b1, c1, d1, e1
             );
             Board board = new Board(boardStatus);
@@ -98,7 +97,7 @@ class KnightTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("a3", "b1"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
     }
 }

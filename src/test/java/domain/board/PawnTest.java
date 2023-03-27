@@ -1,7 +1,6 @@
 package domain.board;
 
 import domain.Board;
-import domain.exception.BlockedPathException;
 import domain.exception.InvalidDestinationPointException;
 import domain.piece.Empty;
 import domain.piece.Piece;
@@ -99,7 +98,7 @@ public class PawnTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("b3", "b1"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test
@@ -114,7 +113,7 @@ public class PawnTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("b4", "b2"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
     }
 
@@ -195,7 +194,7 @@ public class PawnTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("b2", "b4"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test
@@ -210,7 +209,7 @@ public class PawnTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("b2", "b4"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
     }
 }

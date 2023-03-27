@@ -1,7 +1,6 @@
 package domain.board;
 
 import domain.Board;
-import domain.exception.BlockedPathException;
 import domain.exception.InvalidDestinationPointException;
 import domain.piece.Empty;
 import domain.piece.Piece;
@@ -74,7 +73,7 @@ class BishopTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("a3", "c1"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test
@@ -88,7 +87,7 @@ class BishopTest {
             Board board = new Board(boardStatus);
 
             assertThatThrownBy(() -> board.move("a3", "c1"))
-                    .isInstanceOf(BlockedPathException.class);
+                    .isInstanceOf(InvalidDestinationPointException.class);
         }
     }
 }
