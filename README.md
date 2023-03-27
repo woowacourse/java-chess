@@ -57,11 +57,21 @@
 - [x] 특정 좌표로 움직일 수 있는지 판단할 수 있다
 
 ### 데이터베이스 
-- [ ] `start`커맨드가 입력되면 게임 데이터를 생성한다. **(생성)**
-- [ ] `move` 커맨드가 입력되면 게임 데이터가 기록된다. **(삽입)**
-- [ ] `end` 커맨드가 입력되면 게임 데이터를 삭제한다. **(삭제)**
-- [ ] `status` 커맨드가 입력되면 게임 데이터가 조회된다. **(조회)**
+- [x] `start`커맨드가 입력되면 게임 데이터를 생성한다. **(생성)**
+- [x] `move` 커맨드가 입력되면 게임 데이터가 기록된다. **(삽입)**
+- [x] `end` 커맨드가 입력되면 게임 데이터를 삭제한다. **(삭제)**
+- [x] `status` 커맨드가 입력되면 게임 데이터가 조회된다. **(조회)**
 
+### TABLE
+```
+CREATE TABLE chess_game (
+  piece_row VARCHAR(255) NOT NULL,
+  piece_col VARCHAR(255) NOT NULL,
+  piece VARCHAR(255) NOT NULL,
+  piece_color VARCHAR(255) NOT NULL,
+  turn VARCHAR(255) NOT NULL
+);
+```
 ---
 
 ### 이동 규칙
