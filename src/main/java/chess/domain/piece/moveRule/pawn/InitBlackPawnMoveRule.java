@@ -49,6 +49,6 @@ public class InitBlackPawnMoveRule implements MoveRule {
 
     @Override
     public PieceType pieceType() {
-        return PieceType.PAWN;
+        return PieceType.INIT_PAWN;
     }
 }

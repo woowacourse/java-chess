@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.piece.InitPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
-import chess.domain.piece.moveRule.pawn.PawnMoveRule;
+import chess.domain.piece.moveRule.pawn.BlackPawnMoveRule;
+import chess.domain.piece.moveRule.pawn.WhitePawnMoveRule;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +22,8 @@ import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class InitPawnMoveRuleTest {
-    private final MoveRule blackMoveRule = PawnMoveRule.of(Color.BLACK);
-    private final MoveRule whiteMoveRule = PawnMoveRule.of(Color.WHITE);
+    private final MoveRule blackMoveRule = BlackPawnMoveRule.getInstance();
+    private final MoveRule whiteMoveRule = WhitePawnMoveRule.getInstance();
     private Piece blackPiece;
     private Piece whitePiece;
     private Map<Position, Piece> board;
