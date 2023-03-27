@@ -14,6 +14,7 @@ import domain.Rank;
 import domain.Square;
 import domain.piece.Bishop;
 import domain.piece.King;
+import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.PieceLocations;
@@ -78,7 +79,7 @@ public class DatabaseDao implements ChessBoardDao {
     private Piece getPiece(PieceType pieceType, TeamColor teamColor) {
         switch (pieceType) {
             case KNIGHT:
-                return new King(teamColor);
+                return new Knight(teamColor);
             case PAWN:
                 return new Pawn(teamColor);
             case ROOK:
