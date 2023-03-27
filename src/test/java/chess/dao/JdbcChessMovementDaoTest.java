@@ -6,52 +6,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class JdbcChessMovementDaoTest {
 
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"; // MySQL 옵션
-    private static final String USERNAME = "user"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "password"; // MySQL 서버 비밀번호
-
-    private static Connection connection;
     private ChessMovementDao dao;
-
-    @BeforeAll
-    static void beforeAll() {
-        try {
-            connection = DriverManager
-                    .getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @BeforeEach
     void beforeEach() {
-        dao = new JdbcChessMovementDao(connection);
+        final ConnectionStrategy connectionStrategy = new MySqlConnectionStrategy();
+        dao = new JdbcChessMovementDao(connectionStrategy);
 
-        try (final PreparedStatement preparedStatement = connection.prepareStatement("TRUNCATE TABLE movement")) {
+
+        try (final Connection connection = connectionStrategy.findConnection();
+                final PreparedStatement preparedStatement = connection.prepareStatement("TRUNCATE TABLE movement")) {
             preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @AfterAll
-    static void afterAll() {
-        try {
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

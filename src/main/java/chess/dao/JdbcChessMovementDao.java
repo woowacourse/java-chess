@@ -14,17 +14,18 @@ public class JdbcChessMovementDao implements ChessMovementDao {
     private static final String SOURCE_COLUMN_NAME = "source";
     private static final String TARGET_COLUMN_NAME = "target";
 
-    private final Connection connection;
+    private final ConnectionStrategy connectionStrategy;
 
-    public JdbcChessMovementDao(final Connection connection) {
-        this.connection = connection;
+    public JdbcChessMovementDao(final ConnectionStrategy connectionStrategy) {
+        this.connectionStrategy = connectionStrategy;
     }
 
     @Override
     public List<Movement> findAll() {
         final String sql = "SELECT * FROM movement";
 
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (final Connection connection = connectionStrategy.findConnection();
+                final PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 final ResultSet resultSet = preparedStatement.executeQuery()) {
             return mapToMovementFromResultSet(resultSet);
         } catch (SQLException e) {
@@ -59,7 +60,8 @@ public class JdbcChessMovementDao implements ChessMovementDao {
     }
 
     private void executeUpdate(final String sql, final List<String> parameters) {
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final Connection connection = connectionStrategy.findConnection();
+                final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             setupPreparedStatement(parameters, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
