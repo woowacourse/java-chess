@@ -17,17 +17,12 @@ public final class ChessBoard {
 
     public static final double DEDUCT_PAWN_SCORE = 0.5;
     public static final int INITIAL_VALUE = 0;
+    public static final int KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
 
     public ChessBoard(final Map<Position, Piece> board) {
         this.board = board;
-    }
-
-    public int countKing() {
-        return (int) board.values().stream()
-                .filter(Piece::isKing)
-                .count();
     }
 
     public boolean isKingLiveByCamp(final Camp camp) {
@@ -102,6 +97,16 @@ public final class ChessBoard {
     private int countPawn(final Map<Camp, List<Piece>> groupingByCamp, final Camp camp) {
         return (int) groupingByCamp.get(camp).stream()
                 .filter(piece -> piece.equals(new Pawn(camp)))
+                .count();
+    }
+
+    public boolean isKingsLive() {
+        return countKing() == KING_COUNT;
+    }
+
+    private int countKing() {
+        return (int) board.values().stream()
+                .filter(Piece::isKing)
                 .count();
     }
 
