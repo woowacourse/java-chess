@@ -14,7 +14,7 @@ import chess.dao.entity.PieceEntity;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Score;
-import chess.domain.command.Turn;
+import chess.controller.command.Turn;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 

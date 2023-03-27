@@ -3,7 +3,7 @@ package chess.dao;
 import java.sql.*;
 
 import chess.dao.entity.ChessGameEntity;
-import chess.domain.command.Turn;
+import chess.controller.command.Turn;
 import chess.exception.NotFoundChessGameException;
 
 public class JdbcChessGameDao implements ChessGameDao {

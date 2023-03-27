@@ -1,4 +1,4 @@
-package chess.domain.command;
+package chess.controller.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.command.Commands;
-import chess.domain.command.GameCommand;
+import chess.controller.command.Commands;
+import chess.controller.command.GameCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

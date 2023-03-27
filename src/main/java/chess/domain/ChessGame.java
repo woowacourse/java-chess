@@ -4,7 +4,7 @@ import java.util.List;
 
 import chess.domain.board.Board;
 import chess.domain.board.Score;
-import chess.domain.command.Turn;
+import chess.controller.command.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.position.Position;

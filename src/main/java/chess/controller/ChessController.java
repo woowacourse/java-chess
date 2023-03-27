@@ -4,8 +4,8 @@ import java.util.List;
 
 import chess.controller.dto.GameResultBySideDto;
 import chess.controller.dto.ScoreBySideDto;
-import chess.domain.command.CommandManager;
-import chess.domain.command.Commands;
+import chess.controller.command.CommandManager;
+import chess.controller.command.Commands;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;

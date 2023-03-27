@@ -1,8 +1,9 @@
-package chess.domain.command;
+package chess.controller.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.controller.command.*;
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.piece.Pieces;

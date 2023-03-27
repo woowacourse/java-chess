@@ -1,7 +1,8 @@
-package chess.domain.command;
+package chess.controller.command;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.controller.command.End;
 import chess.domain.board.GameResultBySide;
 import chess.domain.board.ResultCalculator;
 import chess.domain.board.ScoreBySide;

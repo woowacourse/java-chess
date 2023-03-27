@@ -1,10 +1,9 @@
-package chess.domain.command;
+package chess.controller.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.dao.ChessGameDao;
-import chess.dao.JdbcChessGameDao;
+import chess.controller.command.*;
 import chess.domain.board.Board;
 import chess.domain.board.GameResultBySide;
 import chess.domain.board.ResultCalculator;
