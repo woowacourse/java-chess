@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardInitializer {
+
+    public static final int LOWEST_EMPTY_RANK = 2;
+    public static final int HIGHEST_EMPTY_RANK = 5;
+    public static final int FILE_SIZE = 8;
+
     private BoardInitializer() {
     }
 
@@ -33,14 +38,14 @@ public class BoardInitializer {
     }
 
     private static void initializeEmptyRanks(List<List<Piece>> status) {
-        for (int rankIndex = 2; rankIndex <= 5; rankIndex++) {
+        for (int rankIndex = LOWEST_EMPTY_RANK; rankIndex <= HIGHEST_EMPTY_RANK; rankIndex++) {
             initializeEmptyRank(status);
         }
     }
 
     private static void initializeEmptyRank(List<List<Piece>> status) {
         List<Piece> rank = new ArrayList<>();
-        for (int fileIndex = 0; fileIndex < 8; fileIndex++) {
+        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
             rank.add(new Empty());
         }
         status.add(rank);
@@ -61,7 +66,7 @@ public class BoardInitializer {
 
     private static void initializeSecondWhiteRank(List<List<Piece>> status) {
         List<Piece> rank = new ArrayList<>();
-        for (int fileIndex = 0; fileIndex < 8; fileIndex++) {
+        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
             rank.add(new WhitePawn());
         }
         status.add(rank);
@@ -82,7 +87,7 @@ public class BoardInitializer {
 
     private static void initializeSecondBlackRank(List<List<Piece>> status) {
         List<Piece> rank = new ArrayList<>();
-        for (int fileIndex = 0; fileIndex < 8; fileIndex++) {
+        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
             rank.add(new BlackPawn());
         }
         status.add(rank);
