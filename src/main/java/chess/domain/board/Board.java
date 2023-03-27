@@ -101,7 +101,7 @@ public class Board {
     }
 
     private void move(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
-        board.put(targetSquare, sourcePiece.currentState());
+        board.put(targetSquare, sourcePiece.nextState());
         board.remove(sourceSquare);
         turn = turn.findOpponent();
     }

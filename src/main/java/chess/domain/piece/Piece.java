@@ -24,7 +24,7 @@ public abstract class Piece {
         return this.role == role;
     }
 
-    public Piece currentState() {
+    public Piece nextState() {
         return this;
     }
 

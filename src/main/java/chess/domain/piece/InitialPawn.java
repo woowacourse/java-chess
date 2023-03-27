@@ -27,7 +27,7 @@ public class InitialPawn extends Pawn {
     }
 
     @Override
-    public Piece currentState() {
+    public Piece nextState() {
         return Role.PAWN.create(team);
     }
 }
