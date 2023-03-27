@@ -84,4 +84,15 @@ public class PieceDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void delete(final int id) {
+        final String query = "DELETE FROM piece WHERE id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
