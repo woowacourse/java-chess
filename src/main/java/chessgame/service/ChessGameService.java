@@ -41,6 +41,7 @@ public class ChessGameService {
 
     public Map<Coordinate, Piece> findPiecesByRoomId(long roomId) {
         List<PieceDto> pieceDtos = piecesDao.findPiecesByRoomId(roomId);
+        validatePiecesSize(pieceDtos.size(), roomId);
 
         Map<Coordinate, Piece> pieces = new HashMap<>();
         for (PieceDto pieceDto : pieceDtos) {
@@ -48,6 +49,13 @@ public class ChessGameService {
             pieces.put(coordinate, makePiece(pieceDto));
         }
         return pieces;
+    }
+
+    private void validatePiecesSize(int size, long roomId) {
+        if (size != 64) {
+            deleteGame(roomId);
+            throw new IllegalArgumentException("[ERROR] 기물 데이터 오류로 불러올 수 없습니다. 해당 방은 삭제 됩니다.");
+        }
     }
 
     private Piece makePiece(PieceDto pieceDto) {
@@ -71,6 +79,11 @@ public class ChessGameService {
     public void deleteGame(ChessGame chessGame) {
         long roomId = chessGame.getRoomId();
 
+        piecesDao.deletePiecesByRoomId(roomId);
+        gameRoomDao.deleteGameRoomById(roomId);
+    }
+
+    public void deleteGame(long roomId) {
         piecesDao.deletePiecesByRoomId(roomId);
         gameRoomDao.deleteGameRoomById(roomId);
     }
