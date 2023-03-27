@@ -12,6 +12,15 @@ import java.util.List;
 
 public class DataBaseChessGameDao implements ChessGameDao {
 
+    private static final DataBaseChessGameDao INSTANCE = new DataBaseChessGameDao();
+
+    private DataBaseChessGameDao() {
+    }
+
+    public static DataBaseChessGameDao getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public List<Long> findAllId() {
         final String findAllGameId = "SELECT id FROM chess_game";

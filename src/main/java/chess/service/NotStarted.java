@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class NotStarted implements State {
 
-    private static final ChessGameDao CHESS_GAME_DAO = new DataBaseChessGameDao();
-    private static final BoardDao BOARD_DAO = new DataBaseBoardDao();
+    private static final ChessGameDao CHESS_GAME_DAO = DataBaseChessGameDao.getInstance();
+    private static final BoardDao BOARD_DAO = DataBaseBoardDao.getInstance();
     private static final String NOT_STARTED_CANT_EXECUTE_START_MESSAGE =
             "시작되지 않은 상태에선 해당 명령을 실행할 수 없습니다.";
     private static final NotStarted INSTANCE = new NotStarted();

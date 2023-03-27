@@ -25,6 +25,7 @@ import java.util.function.Function;
 public class DataBaseBoardDao implements BoardDao {
 
     private static final Map<PieceType, Function<Color, Piece>> PIECE_MAPPER = new EnumMap<>(PieceType.class);
+    private static final DataBaseBoardDao INSTANCE = new DataBaseBoardDao();
 
     static {
         PIECE_MAPPER.put(PieceType.PAWN, Pawn::new);
@@ -33,6 +34,13 @@ public class DataBaseBoardDao implements BoardDao {
         PIECE_MAPPER.put(PieceType.ROOK, Rook::new);
         PIECE_MAPPER.put(PieceType.QUEEN, Queen::new);
         PIECE_MAPPER.put(PieceType.KING, King::new);
+    }
+
+    private DataBaseBoardDao() {
+    }
+
+    public static DataBaseBoardDao getInstance() {
+        return INSTANCE;
     }
 
     @Override

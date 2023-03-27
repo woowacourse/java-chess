@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 
 class BoardDaoTest {
 
+    private static final BoardDao boardDao = new MemoryBoardDao();
+
     @Test
     @DisplayName("보드를 저장하는 기능 테스트")
     void test_saveBoard() {
@@ -25,7 +27,6 @@ class BoardDaoTest {
     @Test
     @DisplayName("보드를 불러오는 기능 테스트")
     void test_loadBoard() {
-        final BoardDao boardDao = new DataBaseBoardDao();
         final OutputView outputView = new OutputView();
         final Board board = boardDao.loadBoard(2L, new Turn());
 
