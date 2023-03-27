@@ -10,7 +10,7 @@ public class ClearAction implements Action {
         if (chessGameService.isNotStart()) {
             throw new IllegalArgumentException("start를 해주세요");
         }
-        chessGameService.clear();
+        chessGameService.finishedGame();
         outputView.printStatus(chessGameService.getGameResult());
         outputView.printClear();
         outputView.printStart();

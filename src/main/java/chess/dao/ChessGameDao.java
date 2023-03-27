@@ -5,9 +5,13 @@ import java.util.List;
 
 public interface ChessGameDao {
 
-    void saveMove(MoveDto moveDto);
+    void saveMove(MoveDto moveDto, int gameId);
 
-    List<MoveDto> findAll();
+    List<MoveDto> findByGameId(int gameId);
 
-    void deleteAll();
+    int findGameIdByNotFinished();
+
+    void saveGame();
+
+    void finishedGame();
 }

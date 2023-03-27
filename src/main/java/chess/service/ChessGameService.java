@@ -17,14 +17,16 @@ public class ChessGameService {
     }
 
     public void move(MoveDto moveDto) {
+        int gameId = chessGameJdbcDao.findGameIdByNotFinished();
         Position sourcePosition = Position.of(moveDto.getSource());
         Position targetPosition = Position.of(moveDto.getTarget());
         chessGame.move(sourcePosition, targetPosition);
-        chessGameJdbcDao.saveMove(moveDto);
+        chessGameJdbcDao.saveMove(moveDto, gameId);
     }
 
     public GameResult loadBoard() {
-        List<MoveDto> histories = chessGameJdbcDao.findAll();
+        int gameId = chessGameJdbcDao.findGameIdByNotFinished();
+        List<MoveDto> histories = chessGameJdbcDao.findByGameId(gameId);
         MoveHistory moveHistory = new MoveHistory(histories);
         for (MoveDto moveDto : moveHistory.getSortHistory()) {
             Position sourcePosition = Position.of(moveDto.getSource());
@@ -36,13 +38,16 @@ public class ChessGameService {
 
     public boolean isGameEnd() {
         if (chessGame.isEnd()) {
-            clear();
+            finishedGame();
             return true;
         }
         return false;
     }
 
     public void start() {
+        if (chessGameJdbcDao.findGameIdByNotFinished() == -1) {
+            chessGameJdbcDao.saveGame();
+        }
         chessGame.start();
     }
 
@@ -54,7 +59,7 @@ public class ChessGameService {
         return chessGame.getResult();
     }
 
-    public void clear() {
-        chessGameJdbcDao.deleteAll();
+    public void finishedGame() {
+        chessGameJdbcDao.finishedGame();
     }
 }
