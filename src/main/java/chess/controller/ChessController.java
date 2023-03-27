@@ -29,6 +29,10 @@ public class ChessController {
                 printChessBoard(chessGame.getChessBoard());
             }
         });
+        if (chessGame.isEnd()) {
+            // king 이 잡혀서 게임이 종료되면 DB 초기화
+            chessGameDao.init(chessGame);
+        }
     }
 
     private void play(ChessGame chessGame, Consumer<State> consumer) {
