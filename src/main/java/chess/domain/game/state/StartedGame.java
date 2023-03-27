@@ -34,4 +34,9 @@ public abstract class StartedGame implements ChessGame {
     public GameResult calculateResult() {
         throw new IllegalStateException(GAME_NOT_END);
     }
+
+    @Override
+    public Camp getCurrentCamp() {
+        return this.turnCamp;
+    }
 }

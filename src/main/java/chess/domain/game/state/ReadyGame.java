@@ -48,4 +48,9 @@ public class ReadyGame implements ChessGame {
     public GameResult calculateResult() {
         throw new IllegalStateException(NOT_START_GAME);
     }
+
+    @Override
+    public Camp getCurrentCamp() {
+        return INIT_CAMP;
+    }
 }

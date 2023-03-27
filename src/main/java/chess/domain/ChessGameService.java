@@ -78,17 +78,23 @@ public class ChessGameService {
     }
 
     public ChessGame start(ChessGame chessGame) {
-        ChessGameCommand statusCommand = new StartCommand();
-        ChessGame readyGame = statusCommand.execute(chessGame);
-        saveInitialBoard();
+        cleanUpGame();
 
-        return readyGame;
+        ChessGameCommand statusCommand = new StartCommand();
+        ChessGame startedGame = statusCommand.execute(chessGame);
+        saveInitialBoard();
+        return startedGame;
+    }
+
+    public void cleanUpGame() {
+        pieceDao.deleteAll();
+        boardDao.deleteAll();
     }
 
     private void saveInitialBoard() {
         ChessBoard initialChessBoard = ChessBoardFactory.getInitialChessBoard();
         try {
-            Long newBoardId = boardDao.saveBoard(Camp.WHITE.name(), "START");
+            Long newBoardId = boardDao.saveBoard(Camp.WHITE.name());
             List<PieceEntity> pieceEntities = getPieceEntities(initialChessBoard, newBoardId);
             pieceDao.savePieces(pieceEntities);
         } catch (RuntimeException e) {
@@ -114,12 +120,14 @@ public class ChessGameService {
         ChessGameCommand moveCommand = new MoveCommand(from, to);
         ChessGame movedGame = moveCommand.execute(chessGame);
 
-        String fromValue = PositionValueConverter.convertToValue(from);
         String toValue = PositionValueConverter.convertToValue(to);
         if (pieceDao.isExistByPosition(toValue)) {
             pieceDao.deleteByPosition(toValue);
         }
+
+        String fromValue = PositionValueConverter.convertToValue(from);
         pieceDao.updatePiecePositionTo(fromValue, toValue);
+        boardDao.updateCamp(movedGame.getCurrentCamp().name());
         return movedGame;
     }
 

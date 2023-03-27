@@ -8,13 +8,12 @@ import java.sql.Statement;
 
 public class BoardDao {
 
-    public Long saveBoard(String turn, String state) {
-        String saveBoardWithDefaultQuery = "INSERT INTO board (turn, state) VALUES (?, ?)";
+    public Long saveBoard(String turn) {
+        String saveBoardWithDefaultQuery = "INSERT INTO board (turn) VALUES (?)";
 
         try (Connection connection = ConnectionGenerator.getConnection();
              var preparedStatement = connection.prepareStatement(saveBoardWithDefaultQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, turn);
-            preparedStatement.setString(2, state);
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -47,10 +46,7 @@ public class BoardDao {
              final var preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new BoardEntity(
-                        resultSet.getString(2),
-                        resultSet.getString(3)
-                );
+                return new BoardEntity(resultSet.getString(2));
             }
 
             throw new SQLException();
@@ -66,6 +62,18 @@ public class BoardDao {
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
 
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateCamp(String currentCamp) {
+        final var query = "UPDATE board as b SET b.turn = ?";
+        try (final var connection = ConnectionGenerator.getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, currentCamp);
+
+            preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

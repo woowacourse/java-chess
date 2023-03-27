@@ -6,9 +6,9 @@ import java.util.Arrays;
 public enum ChessCommandTypeMapper {
     START(ChessCommandType.START,"start"),
     MOVE(ChessCommandType.MOVE,"move"),
-    END(ChessCommandType.END,"end"),
+    PAUSE(ChessCommandType.PAUSE,"pause"),
     STATUS(ChessCommandType.STATUS,"status"),
-    LOAD(ChessCommandType.LOAD,"load"),
+    FETCH(ChessCommandType.FETCH,"fetch"),
     ;
 
     private final ChessCommandType command;

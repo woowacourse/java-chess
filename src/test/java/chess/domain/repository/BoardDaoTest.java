@@ -18,7 +18,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("보드 생성 테스트")
     void saveBoardTest() {
-        Long savedId = boardDao.saveBoard("WHITE", "READY");
+        Long savedId = boardDao.saveBoard("WHITE");
 
         assertThat(savedId).isInstanceOf(Long.class);
     }

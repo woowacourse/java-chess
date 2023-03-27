@@ -5,6 +5,7 @@ import chess.controller.mapper.request.PositionMapper;
 import chess.domain.ChessGameService;
 import chess.domain.game.ChessCommandType;
 import chess.domain.game.result.GameResult;
+import chess.domain.game.result.MatchResult;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.ReadyGame;
 import chess.domain.piece.Piece;
@@ -25,10 +26,10 @@ public final class ChessController {
 
     private final Map<ChessCommandType, ChessAction> actions = Map.of(
             ChessCommandType.START, new ChessAction(this::start),
-            ChessCommandType.END, new ChessAction(this::end),
+            ChessCommandType.PAUSE, new ChessAction(this::end),
             ChessCommandType.MOVE, new ChessAction(this::move),
             ChessCommandType.STATUS, new ChessAction(this::status),
-            ChessCommandType.LOAD, new ChessAction(this::load)
+            ChessCommandType.FETCH, new ChessAction(this::load)
     );
     private final ChessGameService gameService;
 
@@ -74,9 +75,13 @@ public final class ChessController {
 
     private void printResult(ChessGame chessGame) {
         GameResult gameResult = chessGame.calculateResult();
-        List<String> results =
-                GameResultFormatter.convertToGameResult(gameResult);
+        if (gameResult.getMatchResult() == MatchResult.PAUSE) {
+            outputView.printPausedMessage();
+            return;
+        }
 
+        gameService.cleanUpGame();
+        List<String> results = GameResultFormatter.convertToGameResult(gameResult);
         outputView.printResult(results);
     }
 
@@ -113,6 +118,6 @@ public final class ChessController {
             return;
         }
 
-        throw new IllegalArgumentException("옳바른 명령을 입력하세요. ex) start, move a2 a3, load");
+        throw new IllegalArgumentException("옳바른 명령을 입력하세요. ex) start, move a2 a3, fetch");
     }
 }

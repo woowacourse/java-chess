@@ -13,21 +13,19 @@ import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 public enum PieceDtoMapper {
-    PAWN(Pawn.class, "Pawn", Pawn::new),
-    BISHOP(Bishop.class, "Bishop", Bishop::new),
-    KING(King.class, "King", King::new),
-    KNIGHT(Knight.class, "Knight", Knight::new),
-    QUEEN(Queen.class, "Queen", Queen::new),
-    ROOK(Rook.class, "Rook", Rook::new),
+    PAWN(Pawn.class, Pawn::new),
+    BISHOP(Bishop.class, Bishop::new),
+    KING(King.class, King::new),
+    KNIGHT(Knight.class, Knight::new),
+    QUEEN(Queen.class, Queen::new),
+    ROOK(Rook.class, Rook::new),
     ;
 
     private final Class<? extends Piece> piece;
-    private final String value;
     private final Function<Camp, Piece> convert;
 
-    PieceDtoMapper(Class<? extends Piece> piece, String value, Function<Camp, Piece> convert) {
+    PieceDtoMapper(Class<? extends Piece> piece, Function<Camp, Piece> convert) {
         this.piece = piece;
-        this.value = value;
         this.convert = convert;
     }
 
@@ -36,11 +34,12 @@ public enum PieceDtoMapper {
                 .filter(it -> it.piece.isInstance(piece))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new)
-                .value;
+                .name();
     }
+
     public static Piece convertToPiece(String pieceValue, Camp camp) {
         return Arrays.stream(PieceDtoMapper.values())
-                .filter(it -> it.value.equals(pieceValue))
+                .filter(it -> it.name().equalsIgnoreCase(pieceValue))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new)
                 .convert

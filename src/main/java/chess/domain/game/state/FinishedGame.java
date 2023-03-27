@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;
 import chess.domain.position.Position;
@@ -43,5 +44,10 @@ public abstract class FinishedGame implements ChessGame {
     @Override
     public Map<Position, Piece> getPiecesPosition() {
         return this.chessBoard.getPiecesPosition();
+    }
+
+    @Override
+    public Camp getCurrentCamp() {
+        throw new IllegalStateException(GAME_ALREADY_END);
     }
 }
