@@ -1,12 +1,16 @@
 package chess.controller.state;
 
-import chess.model.dto.PlayDto;
+import chess.controller.GameCommand;
+import chess.model.position.Position;
+import java.util.List;
 
 public interface GameState {
 
-    GameState execute(final PlayDto request);
+    GameState execute(final GameCommand gameCommand, final List<Position> movePositions);
 
     boolean isContinue();
 
     boolean isPlay();
+
+    boolean isPrintable();
 }

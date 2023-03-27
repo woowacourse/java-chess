@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.controller.dto.PlayRequest;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -9,7 +10,6 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final String DELIMITER = " ";
-    private static final String DEFAULT_POSITION = "A1";
     private static final int COMMAND_INDEX = 0;
     private static final int MAXIMUM_COMMAND_SIZE = 3;
     private static final int MINIMUM_COMMAND_SIZE = 1;
@@ -42,10 +42,12 @@ public class InputView {
 
     private PlayRequest createPlayRequest(final List<String> commands) {
         if (commands.size() == MINIMUM_COMMAND_SIZE) {
-            return new PlayRequest(commands.get(COMMAND_INDEX), DEFAULT_POSITION, DEFAULT_POSITION);
+            return new PlayRequest(commands.get(COMMAND_INDEX), Collections.emptyList());
         }
         if (commands.size() == MAXIMUM_COMMAND_SIZE) {
-            return new PlayRequest(commands.get(COMMAND_INDEX), commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+            final List<String> movePositions = List.of(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+
+            return new PlayRequest(commands.get(COMMAND_INDEX), movePositions);
         }
         throw new IllegalArgumentException("유효하지 않은 명령어입니다.");
     }

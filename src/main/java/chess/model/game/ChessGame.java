@@ -2,10 +2,13 @@ package chess.model.game;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardFactory;
+import chess.model.piece.Camp;
+import chess.model.piece.Piece;
+import chess.model.piece.score.PieceScore;
 import chess.model.position.Position;
-import chess.view.dto.ChessBoardResponse;
+import java.util.Map;
 
-public class ChessGame {
+public final class ChessGame {
 
     private ChessBoard chessBoard;
     private Turn turn;
@@ -18,7 +21,8 @@ public class ChessGame {
     public void move(final Position source, final Position target) {
         validateInitialChessGame();
         validatePosition(source, target);
-        chessBoard.move(source, target, turn.findNextPlayer());
+        chessBoard.move(source, target, turn.findPlayer());
+        turn.processNextTurn();
     }
 
     private void validateInitialChessGame() {
@@ -33,11 +37,31 @@ public class ChessGame {
         }
     }
 
-    public ChessBoardResponse getChessBoard() {
-        try {
-            return new ChessBoardResponse(chessBoard.getBoard());
-        } catch (NullPointerException e) {
-            throw new IllegalStateException("게임을 시작하지 않았습니다.", e);
+    public boolean isGameOnGoing() {
+        return chessBoard.canPlayGame(turn.findPlayer());
+    }
+
+    public PieceScore getScoreByCamp(final Camp camp) {
+        validateScoreCamp(camp);
+
+        return chessBoard.calculateScoreByCamp(camp);
+    }
+
+    private void validateScoreCamp(final Camp camp) {
+        if (camp.isEmpty()) {
+            throw new IllegalStateException("빈 진영에 대한 점수를 계산할 수 없습니다.");
         }
+    }
+
+    public Camp getCurrentCamp() {
+        return turn.findPlayer();
+    }
+
+    public Camp getWinnerCamp() {
+        return turn.oppositeCamp();
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard.getBoard();
     }
 }

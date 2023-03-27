@@ -37,6 +37,16 @@ class PositionTest {
     }
 
     @Test
+    @DisplayName("findRankPositionByFile()은 file을 건네주면 해당 file에 해당하는 rank를 반환한다.")
+    void findRankPositionByFile_givenFile_thenReturnRankPosition() {
+        // when
+        final RankPosition actual = Position.findRankPositionByFile(A);
+
+        // then
+        assertThat(actual.getPositions()).hasSize(8);
+    }
+
+    @Test
     @DisplayName("differ()는 다른 Position을 건네주면 각 Position의 거리를 반환한다.")
     void differ_givenOtherPosition_thenReturnDistance() {
         // when

@@ -1,6 +1,8 @@
 package chess.model.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,5 +23,9 @@ public class RankPosition {
 
     public Position findByRank(final Rank rank) {
         return rankPosition.get(rank);
+    }
+
+    public List<Position> getPositions() {
+        return new ArrayList<>(rankPosition.values());
     }
 }

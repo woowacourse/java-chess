@@ -1,26 +1,22 @@
 package chess.controller.dto;
 
+import java.util.List;
+
 public class PlayRequest {
 
     private final String command;
-    private final String source;
-    private final String target;
+    private final List<String> movePositions;
 
-    public PlayRequest(final String command, final String source, final String target) {
+    public PlayRequest(final String command, final List<String> movePositions) {
         this.command = command;
-        this.source = source;
-        this.target = target;
+        this.movePositions = movePositions;
     }
 
     public String getCommand() {
         return command;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public String getTarget() {
-        return target;
+    public List<String> getMovePositions() {
+        return movePositions;
     }
 }

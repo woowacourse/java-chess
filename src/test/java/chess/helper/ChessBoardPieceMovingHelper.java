@@ -2,7 +2,6 @@ package chess.helper;
 
 import chess.model.board.ChessBoard;
 import chess.model.piece.Piece;
-import chess.model.piece.type.Empty;
 import chess.model.position.Position;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -22,7 +21,7 @@ public final class ChessBoardPieceMovingHelper {
             final Piece sourcePiece = squares.get(source);
 
             squares.put(target, sourcePiece.pick());
-            squares.put(source, Empty.EMPTY_PIECE);
+            squares.put(source, Piece.EMPTY);
 
             board.set(chessBoard, squares);
         } catch (Exception e) {

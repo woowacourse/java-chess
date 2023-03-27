@@ -3,12 +3,21 @@ package chess.model.board;
 import chess.model.piece.Camp;
 import chess.model.piece.Direction;
 import chess.model.piece.Piece;
-import chess.model.piece.type.Empty;
+import chess.model.piece.PieceType;
+import chess.model.piece.score.PieceRuleScore;
+import chess.model.piece.score.PieceScore;
 import chess.model.position.Distance;
+import chess.model.position.File;
 import chess.model.position.Position;
+import chess.model.position.RankPosition;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class ChessBoard {
+public final class ChessBoard {
+
+    private static final long MULTIPLE_PAWN_COUNT = 2L;
 
     private final Map<Position, Piece> board;
 
@@ -68,7 +77,73 @@ public class ChessBoard {
 
     private void updateBoard(final Position source, final Piece sourcePiece, final Position target) {
         board.put(target, sourcePiece.pick());
-        board.put(source, Empty.EMPTY_PIECE);
+        board.put(source, Piece.EMPTY);
+    }
+
+    public boolean canPlayGame(final Camp camp) {
+        return board.keySet().stream()
+                .anyMatch(position -> isAliveKing(position, camp));
+    }
+
+    private boolean isAliveKing(final Position position, final Camp camp) {
+        final Piece piece = board.get(position);
+
+        return piece.isSameTeam(camp) && piece.isSameType(PieceType.KING);
+    }
+
+    public PieceScore calculateScoreByCamp(final Camp camp) {
+        final List<PieceScore> campPieceScore = convertToPieceScoreByCamp(camp);
+        final PieceScore totalPieceScore = calculateTotalPieceScore(campPieceScore);
+        final PieceScore pawnOffsetScore = calculateTotalPawnOffsetScore(camp);
+
+        return totalPieceScore.minus(pawnOffsetScore);
+    }
+
+    private List<PieceScore> convertToPieceScoreByCamp(final Camp camp) {
+        return board.keySet().stream()
+                .map(board::get)
+                .filter(piece -> piece.isSameTeam(camp))
+                .map(Piece::score)
+                .collect(Collectors.toList());
+    }
+
+    private PieceScore calculateTotalPieceScore(final List<PieceScore> campPieceScore) {
+        return campPieceScore.stream()
+                .reduce(PieceRuleScore.ZERO.score(), PieceScore::plus);
+    }
+
+    private PieceScore calculateTotalPawnOffsetScore(final Camp camp) {
+        return Arrays.stream(File.values())
+                .map(file -> calculatePawnOffsetScoreByFile(file, camp))
+                .reduce(PieceRuleScore.ZERO.score(), PieceScore::plus);
+    }
+
+    private PieceScore calculatePawnOffsetScoreByFile(final File file, final Camp camp) {
+        final RankPosition rankPosition = Position.findRankPositionByFile(file);
+        final long count = countPawn(camp, rankPosition);
+
+        return calculatePawnOffsetScoreByFilePawnCount(count);
+    }
+
+    private long countPawn(final Camp camp, final RankPosition rankPosition) {
+        return rankPosition.getPositions().stream()
+                .map(board::get)
+                .filter(piece -> piece.isSameType(PieceType.PAWN) || piece.isSameType(PieceType.INITIAL_PAWN))
+                .filter(piece -> piece.isSameTeam(camp))
+                .count();
+    }
+
+    private PieceScore calculatePawnOffsetScoreByFilePawnCount(final long count) {
+        if (count < MULTIPLE_PAWN_COUNT) {
+            return PieceRuleScore.ZERO.score();
+        }
+
+        PieceScore pawnOffsetScore = PieceRuleScore.ZERO.score();
+
+        for (int i = 0; i < count; i++) {
+            pawnOffsetScore = pawnOffsetScore.plus(PieceRuleScore.PAWN_OFFSET.score());
+        }
+        return pawnOffsetScore;
     }
 
     public Map<Position, Piece> getBoard() {
