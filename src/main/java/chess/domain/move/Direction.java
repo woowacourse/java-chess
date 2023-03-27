@@ -25,6 +25,10 @@ public enum Direction {
 	KNIGHT_LEFT_UP(-2, 1),
 	NOWHERE(10, 10);
 
+	private static final int STAY = 0;
+	private static final int Y_AXIS = 0;
+	private static final int X_AXIS = 0;
+
 	private final int dx;
 	private final int dy;
 
@@ -64,34 +68,34 @@ public enum Direction {
 	}
 
 	private static Direction calculateLinear(int dx, int dy) {
-		if (dx == 0) {
+		if (dx == STAY) {
 			return calculateVertical(dy);
 		}
 		return calculateHorizontal(dx);
 	}
 
 	private static Direction calculateVertical(final int dy) {
-		if (dy < 0) {
+		if (dy < Y_AXIS) {
 			return DOWN;
 		}
 		return UP;
 	}
 
 	private static Direction calculateHorizontal(int dx) {
-		if (dx < 0) {
+		if (dx < X_AXIS) {
 			return LEFT;
 		}
 		return RIGHT;
 	}
 
 	private static Direction calculateDiagonal(final int dx, final int dy) {
-		if (dx < 0 && dy > 0) {
+		if (dx < X_AXIS && dy > Y_AXIS) {
 			return LEFT_UP;
 		}
-		if (dx < 0 && dy < 0) {
+		if (dx < X_AXIS && dy < Y_AXIS) {
 			return LEFT_DOWN;
 		}
-		if (dx > 0 && dy > 0) {
+		if (dx > X_AXIS && dy > Y_AXIS) {
 			return RIGHT_UP;
 		}
 		return RIGHT_DOWN;
