@@ -26,7 +26,7 @@ public class ChessController {
         while (state.isRunnable()) {
             state = chessState(chessBoard, state);
         }
-        OutputView.printResult(state.findWinner());
+        OutputView.printResult(state.findCurrentTurn());
     }
 
     private ChessState chessState(final ChessBoard chessBoard, ChessState state) {

@@ -15,5 +15,5 @@ public interface ChessState {
 
     ChessState finish();
 
-    String findWinner();
+    String findCurrentTurn();
 }

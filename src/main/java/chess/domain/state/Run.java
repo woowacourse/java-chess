@@ -44,4 +44,9 @@ public class Run extends Runnable {
     public ChessState finish() {
         return new Checkmate(turn);
     }
+
+    @Override
+    public String findCurrentTurn() {
+        return turn.convertToColorLabel();
+    }
 }

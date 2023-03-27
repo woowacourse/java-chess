@@ -28,4 +28,9 @@ public class Initialize extends Runnable {
     public ChessState finish() {
         throw new IllegalStateException();
     }
+
+    @Override
+    public String findCurrentTurn() {
+        throw new IllegalStateException();
+    }
 }

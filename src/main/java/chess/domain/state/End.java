@@ -3,7 +3,7 @@ package chess.domain.state;
 public class End extends Finished {
 
     @Override
-    public String findWinner() {
+    public String findCurrentTurn() {
         return null;
     }
 }
