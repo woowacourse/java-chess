@@ -9,8 +9,6 @@ import domain.Rank;
 import domain.Square;
 
 public class OutputView {
-
-    public static final int CHESS_COLUMN_SIZE = 8;
     private final static List<Square> squares = makeSquares();
 
     private static List<Square> makeSquares() {
@@ -46,7 +44,7 @@ public class OutputView {
     }
 
     private void addNewLine(StringBuilder stringBuilder, int count) {
-        if (count % CHESS_COLUMN_SIZE == 0) {
+        if (count % ChessColumn.values().length == 0) {
             stringBuilder.append("\n");
         }
     }
