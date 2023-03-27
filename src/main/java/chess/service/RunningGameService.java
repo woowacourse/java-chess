@@ -18,12 +18,16 @@ public class RunningGameService {
         return runningGameDao.findAllIds();
     }
 
-    public Turn findTurnById(int runningGameId) {
+    public Turn findTurnById(final int runningGameId) {
         return runningGameDao.findTurnById(runningGameId);
     }
 
     public void update(final String turn) {
         final RunningGameDto runningGameDto = new RunningGameDto(turn);
         runningGameDao.update(runningGameDto);
+    }
+
+    public void delete(final int runningGameId) {
+        runningGameDao.delete(runningGameId);
     }
 }

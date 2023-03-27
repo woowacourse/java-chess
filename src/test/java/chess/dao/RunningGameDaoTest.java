@@ -78,4 +78,13 @@ class RunningGameDaoTest {
         // then
         assertThat(runningGameDao.findTurnById(1)).isEqualTo(new Turn(Color.BLACK));
     }
+
+    @Test
+    void 진행중인_게임을_삭제할_수_있다() {
+        // given & when
+        runningGameDao.delete(1);
+
+        // then
+        assertThat(runningGameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
+    }
 }
