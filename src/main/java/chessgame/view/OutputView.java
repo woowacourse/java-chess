@@ -16,6 +16,7 @@ public class OutputView {
             "> 게임 시작 : start 방ID 혹은 new" + System.lineSeparator() +
             "> 존재하는 방 ID : %s" + System.lineSeparator() +
             "> 게임 종료 : end" + System.lineSeparator() +
+            "> 게임 상태 출력 : status" + System.lineSeparator() +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + System.lineSeparator();
     private static final String GAME_STATUS = "%s 점수 : %.1f점" + System.lineSeparator();
     private static final int BOARD_RANK = 8;
