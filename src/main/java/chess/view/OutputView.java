@@ -38,7 +38,7 @@ public class OutputView {
 
     public static void printScores(ChessBoard chessBoard) {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
-        System.out.println("black의 점수: " + scoreCalculator.getScoreByColor(chessBoard,Color.BLACK));
+        System.out.println("black의 점수: " + scoreCalculator.getScoreByColor(chessBoard, Color.BLACK));
         System.out.println("white의 점수: " + scoreCalculator.getScoreByColor(chessBoard, Color.WHITE));
     }
 

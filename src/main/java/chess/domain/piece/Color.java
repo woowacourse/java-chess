@@ -5,7 +5,7 @@ public enum Color {
     WHITE,
     NONE;
 
-    public static boolean isSameColor(Color color, Color compareColor){
+    public static boolean isSameColor(Color color, Color compareColor) {
         return color.equals(compareColor);
     }
 }

@@ -20,26 +20,6 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public String findName() {
-        if(color.equals(Color.NONE)){
-            return ".";
-        }
-
-        if (color.equals(Color.WHITE)) {
-            return name.toLowerCase();
-        }
-
-        return name.toUpperCase();
-    }
-
-    public Direction findDirection(Position start, Position end) {
-        return Direction.findDirectionByGap(start, end, this);
-    }
-
-    public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
-
-    public abstract int calculateKing(int count);
-
     private static boolean isEqualTo(Direction o1, Direction o2) {
         return (o1.getX() == o2.getX()) && (o1.getY() == o2.getY());
     }
@@ -49,25 +29,6 @@ public abstract class Piece {
                 || isEqualTo(direction, TOP_RIGHT)
                 || isEqualTo(direction, BOTTOM_LEFT)
                 || isEqualTo(direction, BOTTOM_RIGHT);
-    }
-
-    public abstract boolean findDirection(Direction direction, Position start, Position end, Piece piece);
-
-    public boolean isSameColor(Color color) {
-        return this.color.equals(color);
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public double getScore() {
-        return score;
-    }
-    public abstract int calculatePawn(int count, Color color);
-
-    public boolean isPawn() {
-        return name.equalsIgnoreCase("p");
     }
 
     public static Piece valueOf(String name) {
@@ -113,11 +74,49 @@ public abstract class Piece {
             return new Knight(PieceInfo.WHITE_KNIGHT_INFO);
         }
 
-        if(name.equals(".")){
+        if (name.equals(".")) {
             return new EmptyPiece(PieceInfo.EMPTY_INFO);
         }
 
         return new Knight(PieceInfo.BLACK_KNIGHT_INFO);
+    }
+
+    public String findName() {
+        if (color.equals(Color.NONE)) {
+            return ".";
+        }
+
+        if (color.equals(Color.WHITE)) {
+            return name.toLowerCase();
+        }
+
+        return name.toUpperCase();
+    }
+
+    public Direction findDirection(Position start, Position end) {
+        return Direction.findDirectionByGap(start, end, this);
+    }
+
+    public abstract boolean isMovable(Position start, Position end, Color colorOfDestination);
+
+    public abstract int calculateKing(int count);
+
+    public abstract boolean findDirection(Direction direction, Position start, Position end, Piece piece);
+
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public boolean isPawn() {
+        return name.equalsIgnoreCase("p");
     }
 
     public abstract Piece getInstance(Color pieceColor);

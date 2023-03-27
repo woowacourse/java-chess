@@ -43,11 +43,6 @@ public class Queen extends Piece {
     }
 
     @Override
-    public int calculatePawn(int count, Color color) {
-        return count;
-    }
-
-    @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         int gapOfRank = start.findGapOfRank(end);
         int gapOfColumn = start.findGapOfColum(end);

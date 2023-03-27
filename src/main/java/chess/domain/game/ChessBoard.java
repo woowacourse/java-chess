@@ -6,7 +6,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceInfo;
-import chess.view.Command;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -12,7 +12,6 @@ import chess.view.Command;
 
 import java.util.Map;
 
-import static chess.view.Command.isEnd;
 import static chess.view.Command.isMove;
 import static chess.view.Command.isStart;
 import static chess.view.Command.isStatus;
@@ -26,6 +25,7 @@ import static chess.view.OutputView.printStartGuideMessage;
 
 public class Controller {
 
+    private static final int KING_COUNT = 2;
     private ChessGameDao dao = new ChessGameDao();
 
     public void playChessGame() {
@@ -33,7 +33,7 @@ public class Controller {
         ChessGame chessGame = loadChessGame();
         printChessGame(chessGame);
         Command command = getFirstCommand();
-        play2(chessGame, command);
+        play(chessGame, command);
         //play(chessGame, command);
     }
 
@@ -48,7 +48,7 @@ public class Controller {
         return chessGame;
     }
 
-    private void play2(ChessGame chessGame, Command command) {
+    private void play(ChessGame chessGame, Command command) {
         while (!isGameEnd(chessGame)) {
             if (isStatus(command)) {
                 printScores(chessGame.getChessBoard());
@@ -65,30 +65,6 @@ public class Controller {
     private boolean isGameEnd(ChessGame chessGame) {
         GameStatus gameStatus = chessGame.getGameStatus();
         return isKingDead(chessGame) || gameStatus.equals(GameStatus.GAME_OVER);
-    }
-
-    private void play(ChessGame chessGame, Command command) {
-        while (gameCondition(chessGame, command)) {
-            if (isEnd(command)) {
-                dao.delete(chessGame);
-                break;
-            }
-
-            if (isStatus(command)) {
-                printScores(chessGame.getChessBoard());
-            }
-
-            if (isStart(command)) {
-                chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.PLAYING);
-                printChessGame(chessGame);
-            }
-
-            command = inputCommand(chessGame);
-        }
-    }
-
-    private boolean gameCondition(ChessGame chessGame, Command command) {
-        return !isKingDead(chessGame) && (isStart(command) || isStatus(command));
     }
 
     private Command getFirstCommand() {
@@ -165,7 +141,7 @@ public class Controller {
             count = piece.calculateKing(count);
         }
 
-        return count < 2;
+        return count < KING_COUNT;
     }
 
     private void printChessGame(ChessGame chessGame) {

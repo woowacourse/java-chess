@@ -56,11 +56,6 @@ public class King extends Piece {
     }
 
     @Override
-    public int calculatePawn(int count, Color color) {
-        return count;
-    }
-
-    @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         int gapOfRank = start.findGapOfRank(end);
         int gapOfColumn = start.findGapOfColum(end);
@@ -82,6 +77,4 @@ public class King extends Piece {
 
         return new King(PieceInfo.WHITE_KING_INFO);
     }
-
-
 }

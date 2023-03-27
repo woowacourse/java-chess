@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.direction.Direction;
-import chess.domain.Column;
 import chess.domain.Position;
 
 import java.util.List;
@@ -96,14 +95,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public int calculatePawn(int count, Color color) {
-        if (this.isSameColor((color))) {
-            return count + 1;
-        }
-        return count;
-    }
-
-    @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         int gapOfRank = start.findGapOfRank(end);
         int gapOfColumn = start.findGapOfColum(end);
@@ -125,9 +116,4 @@ public class Pawn extends Piece {
 
         return new Pawn(PieceInfo.WHITE_PAWN_INFO);
     }
-
-    public void setIsFirstMove(){
-        isFirstMove = false;
-    }
-
 }
