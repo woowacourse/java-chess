@@ -21,6 +21,8 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
+    public abstract String getType();
+
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
@@ -31,5 +33,9 @@ public abstract class Piece {
                 "color=" + color +
                 "type=" + this.getClass() +
                 '}';
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

@@ -49,4 +49,9 @@ public class Bishop extends Piece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public String getType() {
+        return "Bishop";
+    }
 }

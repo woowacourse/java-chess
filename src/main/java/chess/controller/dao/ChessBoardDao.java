@@ -1,6 +1,5 @@
 package chess.controller.dao;
 
-import chess.domain.ChessGame;
 import chess.domain.board.*;
 import chess.domain.piece.*;
 
@@ -16,8 +15,9 @@ public class ChessBoardDao {
     public Board findAll() {
         final String queryGetPieces = "select * from piece;";
         try (
-                final var connection = dbConnection.getConnection();
-                final var preparedStatement = connection.prepareStatement(queryGetPieces)) {
+            final var connection = dbConnection.getConnection();
+            final var preparedStatement = connection.prepareStatement(queryGetPieces)
+        ) {
             ResultSet resultSetForBoard = preparedStatement.executeQuery();
             if (resultSetForBoard.next()) {
                 Map<Square, Piece> board = new HashMap<>();
@@ -32,27 +32,28 @@ public class ChessBoardDao {
                 }
                 return new Board(board);
             }
+            throw new IllegalArgumentException("현재 저장된 체스 보드가 없습니다.");
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     private Piece createPiece(String type, Color color) {
-        if (type == "PAWN") {
-            return new Pawn(color);
-        } else if (type == "KNIGHT") {
-            return new Knight(color);
-        } else if (type == "KING") {
-            return new King(color);
-        } else if (type == "ROOK") {
-            return new Rook(color);
-        } else if (type == "BISHOP") {
-            return new Bishop(color);
-        } else if (type == "QUEEN") {
-            return new Queen(color);
+        switch (type) {
+            case "Pawn":
+                return new Pawn(color);
+            case "Knight":
+                return new Knight(color);
+            case "King":
+                return new King(color);
+            case "Rook":
+                return new Rook(color);
+            case "Bishop":
+                return new Bishop(color);
+            case "Queen":
+                return new Queen(color);
         }
-        return null;
+        return new Empty(color);
     }
 
 }

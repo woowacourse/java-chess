@@ -22,16 +22,4 @@ public final class DBConnection {
         }
     }
 
-//    public int save(ChessBoardDto chessBoardDto) {
-//        final var query = "INSERT INTO movement(source, destination) VALUES(?, ?)";
-//        try (
-//            final var connection = getConnection();
-//            final var preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setString(1, chessBoardDto.getLines());
-//            preparedStatement.setString(2, chessBoardDto.destinationCoordinate());
-//            return preparedStatement.executeUpdate();
-//        } catch (final SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

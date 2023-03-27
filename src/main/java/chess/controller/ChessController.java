@@ -51,7 +51,6 @@ public class ChessController {
     }
 
     private String getReadChessGameCommand(ChessGame savedChessGame) {
-        System.out.println(savedChessGame.isFinished());
         if (savedChessGame.isFinished()) {
             outputView.printResult(savedChessGame.getResult());
             ChessGameDao chessGameDao = new ChessGameDao();

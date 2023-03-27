@@ -51,4 +51,9 @@ public class Queen extends Piece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public String getType() {
+        return "Queen";
+    }
 }

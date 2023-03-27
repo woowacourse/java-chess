@@ -71,4 +71,8 @@ public class ChessGame {
     public boolean isFinished() {
         return !board.hasBothKing();
     }
+
+    public Color getTurn() {
+        return movableTurn.oppositeTurn();
+    }
 }

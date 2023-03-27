@@ -70,4 +70,12 @@ public class Square {
                 ", rank=" + rank +
                 '}';
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }
