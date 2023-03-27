@@ -32,15 +32,11 @@ public class MainController {
 
     public void run() {
         ChessBoard chessBoard = chessBoardDao.read();
-        if (chessBoard == null) {
-            chessBoard = new ChessBoard();
-        }
         inputView.printStartMessage();
         GameStatus gameStatus = GameStatus.INIT;
         do {
             gameStatus = executeCommand(chessBoard, gameStatus);
             chessBoardDao.update(chessBoard);
-            chessBoardDao.save(chessBoard);
         }
         while (gameStatus != GameStatus.END);
     }
