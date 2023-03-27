@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.database.dao.ChessDao;
+import chess.database.dao.Notation;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
@@ -26,33 +28,21 @@ public class ChessGameController {
     }
 
     public void run() {
+        ChessDao chessDao = new ChessDao();
         ChessGame chessGame = new ChessGame(BoardFactory.createBoard());
-
         outputView.printStartMessage();
-
-        List<String> inputCommand = inputView.readGameCommand();
-
-        playChess(chessGame, inputCommand);
-
+        playChessGame(chessDao, chessGame);
+        chessDao.deleteNotation();
     }
 
-    private void playChess(ChessGame chessGame, List<String> inputCommand) {
-        while (isNotEnd(inputCommand)) {
-            try {
-                if (inputCommand.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
-                    outputView.printWin(chessGame.calculateScore());
-                }
-                chessGame = createNewChessGame(chessGame, inputCommand);
-                tryChessMove(chessGame, inputCommand);
-                outputView.printBoard(chessGame.getBoard());
-                if (chessGame.isGameOver()) {
-                    break;
-                }
-                inputCommand = inputView.readGameCommand();
-            } catch (IllegalArgumentException exception) {
-                System.out.println(exception.getMessage());
-                inputCommand = inputView.readGameCommand();
+    private void playChessGame(final ChessDao chessDao, final ChessGame chessGame) {
+        List<String> inputCommand = inputView.readGameCommand();
+        while (!chessGame.isGameOver() && isNotEnd(inputCommand)) {
+            playChessRound(chessGame, inputCommand, chessDao);
+            if (chessGame.isGameOver()) {
+                break;
             }
+            inputCommand = inputView.readGameCommand();
         }
     }
 
@@ -60,18 +50,43 @@ public class ChessGameController {
         return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
     }
 
-    private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand) {
-        if (inputCommand.get(COMMAND_INDEX).startsWith(MOVE_COMMAND)) {
-            Position source = Position.from(inputCommand.get(SELECTED_PIECE));
-            Position destination = Position.from(inputCommand.get(DESTINATION));
-            chessGame.move(source, destination);
+    private void playChessRound(ChessGame chessGame, List<String> command, ChessDao chessDao) {
+        try {
+            executeForCommand(chessGame, command, chessDao);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
-    private ChessGame createNewChessGame(ChessGame chessGame, final List<String> inputCommand) {
-        if (inputCommand.get(COMMAND_INDEX).equals(START_COMMAND)) {
-            chessGame = new ChessGame(BoardFactory.createBoard());
+    private void executeForCommand(ChessGame chessGame, List<String> command, ChessDao chessDao) {
+        if (command.get(COMMAND_INDEX).equals(START_COMMAND)) {
+            startGame(chessGame, chessDao);
         }
-        return chessGame;
+        if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
+            tryChessMove(chessGame, command, chessDao);
+        }
+        if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
+            printScore(chessGame);
+        }
+    }
+
+    private void startGame(final ChessGame chessGame, final ChessDao chessDao) {
+        List<Notation> notations = chessDao.readNotation();
+        for (Notation notation : notations) {
+            chessGame.move(Position.from(notation.getSource()), Position.from(notation.getTarget()));
+        }
+        outputView.printBoard(chessGame.getBoard());
+    }
+
+    private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand, final ChessDao chessDao) {
+        Position source = Position.from(inputCommand.get(SELECTED_PIECE));
+        Position destination = Position.from(inputCommand.get(DESTINATION));
+        chessGame.move(source, destination);
+        chessDao.addNotation(source, destination);
+        outputView.printBoard(chessGame.getBoard());
+    }
+
+    private void printScore(final ChessGame chessGame) {
+        outputView.printWin(chessGame.calculateScore());
     }
 }
