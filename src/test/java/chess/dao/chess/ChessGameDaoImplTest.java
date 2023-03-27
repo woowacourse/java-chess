@@ -1,5 +1,6 @@
 package chess.dao.chess;
 
+import chess.domain.chess.CampType;
 import chess.entity.ChessGameEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,5 +56,22 @@ class ChessGameDaoImplTest {
         // then
         assertThat(savedChessGameId)
                 .isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("체스 게임 아이디에 해당하는 게임의 현재 진영을 업데이트한다")
+    void updateCurrentCampById() {
+        // given
+        final ChessGameDao chessGameDao = new MockChessGameDao();
+        final Long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+        final Optional<ChessGameEntity> expected = Optional.of(new ChessGameEntity("BLACK", 1L));
+
+        // when
+        chessGameDao.updateCurrentCampById(savedChessGameId, CampType.BLACK);
+
+        // then
+        final Optional<ChessGameEntity> actual = chessGameDao.findByUserId(1L);
+        assertThat(actual)
+                .isEqualTo(expected);
     }
 }
