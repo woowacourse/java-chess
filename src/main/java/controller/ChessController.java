@@ -17,8 +17,16 @@ import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final String userName;
+
+    public ChessController() {
+        this.inputView = new InputView();
+        this.outputView = new OutputView();
+        //TODO 중복 체크하기
+        this.userName = this.inputView.requestUserName();
+    }
 
     public void run() {
         this.outputView.printGameGuideMessage();

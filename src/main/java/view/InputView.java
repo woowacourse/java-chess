@@ -42,4 +42,9 @@ public class InputView {
             throw new IllegalArgumentException("올바른 움직임을 입력해주세요. 예) move b2 b4");
         }
     }
+
+    public String requestUserName() {
+        System.out.println("사용자 이름을 입력하세요.");
+        return SCANNER.nextLine();
+    }
 }
