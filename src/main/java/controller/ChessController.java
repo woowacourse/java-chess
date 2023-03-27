@@ -40,7 +40,7 @@ public final class ChessController {
         }
         if (command == GameCommand.START) {
             chessGame.ready();
-            chessGame.initialize();
+            chessGame.makeBoard();
             printBoard();
         }
     }
@@ -49,6 +49,7 @@ public final class ChessController {
         while (chessGame.isReady()) {
             executeUntilDoesNotThrowException(() -> reactCommand(getPlayCommands()));
         }
+        outputView.printEndMessage();
     }
 
     private List<String> getPlayCommands() {
@@ -73,7 +74,7 @@ public final class ChessController {
             chessGame.end();
             return;
         }
-        chessGame.initialize();
+        chessGame.makeBoard();
         printBoard();
     }
 

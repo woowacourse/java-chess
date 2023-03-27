@@ -14,6 +14,13 @@ public final class Piece {
         this.pathValidator = pathValidator;
     }
 
+    public static Piece of(final PieceType pieceType, final Camp camp) {
+        return new Piece(
+            new PieceState(pieceType, camp),
+            PathValidatorFactory.findByPieceType(pieceType)
+        );
+    }
+
     public static Piece pawnBelongs(final Camp camp) {
         return new Piece(
             new PieceState(PieceType.PAWN, camp),

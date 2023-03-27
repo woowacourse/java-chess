@@ -28,4 +28,12 @@ public final class Turn {
     public boolean isTurn(Camp camp) {
         return this.camp == camp;
     }
+
+    public static Turn byCampName(String campName) {
+        return new Turn(Camp.findByName(campName));
+    }
+
+    public Camp getCamp() {
+        return camp;
+    }
 }

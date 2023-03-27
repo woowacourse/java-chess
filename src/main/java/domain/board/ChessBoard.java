@@ -1,5 +1,7 @@
 package domain.board;
 
+import database.BoardDao;
+import database.DatabaseConnector;
 import domain.board.piece.Camp;
 import domain.board.piece.Piece;
 import domain.board.piece.PieceType;
@@ -25,6 +27,16 @@ public final class ChessBoard {
     private static final int ONE_KING_EXIST = 1;
     private final Map<Location, Piece> board = new HashMap<>();
     private Turn turn = Turn.white();
+
+    public void makeBoard() {
+        BoardDao boardDao = new BoardDao(new DatabaseConnector());
+        if (boardDao.isHistoryExist()) {
+            boardDao.loadBoard(board);
+            turn = boardDao.loadTurn();
+            return;
+        }
+        initializeBoard();
+    }
 
     public void initializeBoard() {
         for (int row = 0; row < MAX_RANGE; row++) {
@@ -140,5 +152,9 @@ public final class ChessBoard {
 
     public Map<Location, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

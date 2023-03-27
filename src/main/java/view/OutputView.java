@@ -38,4 +38,8 @@ public final class OutputView {
         System.out.println("검은 진영 : " + blackScore);
         System.out.println("하얀 진영 : " + whiteScore);
     }
+
+    public void printEndMessage() {
+        System.out.println("게임이 종료되었습니다.");
+    }
 }

@@ -1,6 +1,8 @@
 package domain;
 
 import controller.MoveCommand;
+import database.BoardDao;
+import database.DatabaseConnector;
 import domain.board.ChessBoard;
 import domain.board.piece.Piece;
 import domain.path.location.Location;
@@ -15,13 +17,18 @@ public final class ChessGame {
         this.chessBoard = chessBoard;
     }
 
-    public void initialize() {
+    public void makeBoard() {
+        chessBoard.makeBoard();
+    }
+
+    public void initializeBoard() {
         chessBoard.initializeBoard();
     }
 
     public void move(MoveCommand moveCommand) {
         chessBoard.move(moveCommand.getStart(), moveCommand.getEnd());
         if (chessBoard.isOneKingExist()) {
+            initializeBoard();
             end();
         }
     }
@@ -32,6 +39,8 @@ public final class ChessGame {
 
     public void end() {
         isReady = false;
+        BoardDao boardDao = new BoardDao(new DatabaseConnector());
+        boardDao.updateBoard(chessBoard.getBoard(), chessBoard.getTurn());
     }
 
     public boolean isReady() {

@@ -1,6 +1,7 @@
 package domain.board.piece;
 
 import domain.path.direction.Direction;
+import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
@@ -72,5 +73,12 @@ public enum PieceType {
 
     public List<Direction> getPossibleDirections() {
         return possibleDirections;
+    }
+
+    public static PieceType findByName(String name) {
+        return Arrays.stream(values())
+            .filter(pieceType -> pieceType.name().equals(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당 이름의 기물이 존재하지 않습니다."));
     }
 }

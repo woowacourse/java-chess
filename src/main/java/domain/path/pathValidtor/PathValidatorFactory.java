@@ -13,6 +13,28 @@ public final class PathValidatorFactory {
     private PathValidatorFactory() {
     }
 
+    public static PathValidator findByPieceType(PieceType pieceType) {
+        if (pieceType == PieceType.ROOK) {
+            return rookPathValidator();
+        }
+        if (pieceType == PieceType.BISHOP) {
+            return bishopPathValidator();
+        }
+        if (pieceType == PieceType.QUEEN) {
+            return queenPathValidator();
+        }
+        if (pieceType == PieceType.KING) {
+            return kingPathValidator();
+        }
+        if (pieceType == PieceType.KNIGHT) {
+            return knightPathValidator();
+        }
+        if (pieceType == PieceType.PAWN) {
+            return pawnPathValidator();
+        }
+        return emptyPiecePathValidator();
+    }
+
     public static PathValidator rookPathValidator() {
         final DirectionValidation directionValidation = DirectionValidation.of(
             PieceType.ROOK.getPossibleDirections()
