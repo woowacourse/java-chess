@@ -17,9 +17,9 @@ public final class ChessGameDao {
     private static final String QUERY_INSERT_CHESS_GAME = "INSERT INTO chess_game VALUES(?, ?, ?, default)";
     private static final String WHITE_MARK = "W";
     private static final String BLACK_MARK = "B";
-    public static final String QUERY_SELECT_ROOM_NAMES = "SELECT room_name FROM chess_game";
-    public static final String QUERY_SELECT_CHESS_GAME = "SELECT turn, chess_board FROM chess_game WHERE room_name = ?";
-    public static final String QUERY_DELETE_CHESS_GAME = "DELETE FROM chess_game WHERE room_name = ?";
+    private static final String QUERY_SELECT_ROOM_NAMES = "SELECT room_name FROM chess_game";
+    private static final String QUERY_SELECT_CHESS_GAME = "SELECT turn, chess_board FROM chess_game WHERE room_name = ?";
+    private static final String QUERY_DELETE_CHESS_GAME = "DELETE FROM chess_game WHERE room_name = ?";
 
     public Connection getConnection() {
         // 드라이버 연결
@@ -62,7 +62,7 @@ public final class ChessGameDao {
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                roomNames.add(resultSet.getString("room_name"));
+                roomNames.add(0,resultSet.getString("room_name"));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);

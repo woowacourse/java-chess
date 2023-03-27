@@ -39,7 +39,7 @@ public class Running implements GameState {
     @Override
     public void move(final SquareCoordinate from, final SquareCoordinate to) {
         if (chessBoard.isDifferentTeam(currentTeam, from)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("다른 팀의 턴에는 기물을 움직일 수 없습니다.");
         }
 
         chessBoard.move(from, to);

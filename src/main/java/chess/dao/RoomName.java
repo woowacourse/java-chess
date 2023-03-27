@@ -1,7 +1,7 @@
 package chess.dao;
 
 public class RoomName {
-    public static final int MAX_ROOM_NAME_LENGTH = 12;
+    private static final int MAX_ROOM_NAME_LENGTH = 12;
 
     private final String roomName;
 

@@ -8,7 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoardParser {
-    public static final int RANK_SIZE = 8;
+    private static final int RANK_SIZE = 8;
+    private static final int FILE_SIZE = 8;
 
     private final ChessBoard chessBoard;
 
@@ -24,8 +25,9 @@ public class ChessBoardParser {
         final Map<SquareCoordinate, SquareState> squares = new LinkedHashMap<>();
 
         final char rank = '1';
-        for (int i = RANK_SIZE - 1; i >= 0; i--) {
-            parseChessBoardEachRank(squares, oneLineChessBoardMark.substring(i * RANK_SIZE, i * RANK_SIZE + 8), (char) (rank + i));
+        for (int i = 0; i < RANK_SIZE ; i++) {
+            int index = (RANK_SIZE-1-i) * RANK_SIZE;
+            parseChessBoardEachRank(squares, oneLineChessBoardMark.substring(index, index+8), (char) (rank + i));
         }
 
         return squares;
@@ -34,7 +36,7 @@ public class ChessBoardParser {
     private static void parseChessBoardEachRank(final Map<SquareCoordinate, SquareState> squares, final String rankMark, final char rank) {
 
         final char file = 'a';
-        for (int i = 0; i < RANK_SIZE; i++) {
+        for (int i = 0; i < FILE_SIZE; i++) {
             squares.put(SquareCoordinate.of(makeAlphanumeric((char) (file + i), rank)), SquareParser.getSquareStateByMark(rankMark.substring(i, i + 1)));
         }
     }
