@@ -1,10 +1,14 @@
 package chess.service;
 
+import chess.boardstrategy.BoardStrategy;
 import chess.dao.ChessGameDao;
 import chess.dao.MoveDao;
+import chess.domain.game.ChessGame;
 import chess.domain.game.StateOfChessGame;
 import chess.domain.piece.Color;
+import chess.view.CommandRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static chess.domain.game.StateOfChessGame.RUNNING;
@@ -28,6 +32,30 @@ public class ChessGameService {
         chessGameDao.updateStatusByGameId(StateOfChessGame.MOVING.name(), gameId);
         return gameId;
     }
+
+    // move : 게임 아이디로, 이동에서
+    //todo :(리팩터링2) boardStrategy가 ChessBoard 반환 및 반환된 체스보드로 체스 게임 생성할 수 있도록 수정하기
+    public void move(int gameId, CommandRequest commandRequest, BoardStrategy boardStrategy) {
+        ChessGame chessGame = findChessGameByGameId(gameId, boardStrategy);
+        chessGame.move(commandRequest.getCommandLine());
+        movementDao.add(gameId, commandRequest.getStartPosition(),commandRequest.getEndPosition());
+        if (chessGame.isFinished()) {
+            chessGameDao.updateStatusByGameId(chessGame.getStatus().name(), gameId);
+            return;
+        }
+        chessGameDao.updateTurn(chessGame.getTurn().name(), gameId); //
+    }
+
+    //todo : (리팩터링3) gameid의 상태가 moving 인 경우만
+    private ChessGame findChessGameByGameId(final int gameId, BoardStrategy boardStrategy) {
+        List<List<String>> moveCommandLines = movementDao.findMovesByGameId(gameId);
+
+        ChessGame chessGame = new ChessGame();
+        chessGame.start(boardStrategy);
+        moveCommandLines.forEach(chessGame::move);
+        return chessGame;
+    }
+
 
 }
 
