@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import chess.board.ChessBoard;
 import chess.board.Position;
+import chess.dao.ChessGameDao;
 import chess.dto.ChessBoardDto;
 import chess.game.ChessGame;
 import chess.game.Command;
@@ -19,12 +20,12 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
 
-    public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame) {
+    public ChessController(final InputView inputView, final OutputView outputView, final ChessGameDao chessGameDao) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGame = chessGame;
+        this.chessGameDao = chessGameDao;
     }
 
     public void run() {
@@ -32,8 +33,13 @@ public class ChessController {
         processGame();
     }
 
-    // TODO: move에 대한 재입력 로직 추가, 왕이 죽었을 때 승리팀을 알려주도록(기존의 view를 사용해서 승리팀을 알려줄지, 그냥 승리팀만 보여줄지  전자가 더 좋아보이긴 함)
     private void processGame() {
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame == null) {
+            chessGame = new ChessGame(new ChessBoard());
+            chessGameDao.save(chessGame);
+        }
+
         final Command firstCommand = repeat(this::readFirstCommand);
         chessGame.receiveCommand(firstCommand);
 
@@ -44,7 +50,6 @@ public class ChessController {
             final Command command = repeat(() -> readMoveCommand(movePositions));
             if (command == Command.END) {
                 outputView.printScore(chessGame.calculateScore(Team.WHITE), chessGame.calculateScore(Team.BLACK));
-                outputView.printWinner(chessGame.findWinner());
                 break;
             }
             if (command == Command.STATUS) {
@@ -53,6 +58,7 @@ public class ChessController {
                 continue;
             }
 
+            // TODO: move에 대한 재입력 로직 추가
             move(movePositions);
         }
         outputView.printWinner(chessGame.findWinner());
@@ -78,6 +84,7 @@ public class ChessController {
     }
 
     private void renderChessBoard() {
+        final ChessGame chessGame = chessGameDao.select();
         final ChessBoard chessBoard = chessGame.getChessBoard();
         final ChessBoardDto chessBoardDto = ChessBoardDto.toView(chessBoard);
         outputView.printChessBoard(chessBoardDto);
@@ -95,9 +102,11 @@ public class ChessController {
     }
 
     private void move(final List<String> movePositions) {
+        final ChessGame chessGame = chessGameDao.select();
         final Position from = PositionConvertor.convert(movePositions.get(0));
         final Position to = PositionConvertor.convert(movePositions.get(1));
         chessGame.movePiece(from, to);
+        chessGameDao.update(chessGame);
     }
 
     private <T> T repeat(final Supplier<T> function) {

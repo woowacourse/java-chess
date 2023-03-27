@@ -25,7 +25,7 @@ public class ChessBoard {
         this.board = board;
     }
 
-    static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
+    public static ChessBoard createBoardByRule(final Map<Position, Piece> piecePosition) {
         return new ChessBoard(piecePosition);
     }
 
@@ -159,7 +159,7 @@ public class ChessBoard {
         }
     }
 
-    public boolean isGameOver(final Team team) {
+    public boolean isKingKilled(final Team team) {
         return board.values()
                 .stream()
                 .filter(Piece::isKing)

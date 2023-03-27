@@ -556,7 +556,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
         // when & then
-        assertThat(chessBoard.isGameOver(Team.WHITE)).isTrue();
+        assertThat(chessBoard.isKingKilled(Team.WHITE)).isTrue();
     }
 
     @Test
@@ -567,7 +567,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
 
         // when & then
-        assertThat(chessBoard.isGameOver(Team.WHITE)).isFalse();
+        assertThat(chessBoard.isKingKilled(Team.WHITE)).isFalse();
     }
 
     @ParameterizedTest

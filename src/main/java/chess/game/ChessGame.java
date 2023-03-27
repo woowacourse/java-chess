@@ -28,7 +28,7 @@ public class ChessGame {
     }
 
     public boolean isProcessing() {
-        if (chessBoard.isGameOver(Team.WHITE) || chessBoard.isGameOver(Team.BLACK)) {
+        if (chessBoard.isKingKilled(Team.WHITE) || chessBoard.isKingKilled(Team.BLACK)) {
             isProcessing = false;
         }
         return isProcessing;
