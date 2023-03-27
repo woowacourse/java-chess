@@ -6,7 +6,7 @@ import chess.controller.state.Ready;
 import chess.dao.ChessMovementDao;
 import chess.model.game.ChessGame;
 import chess.model.piece.Camp;
-import chess.model.piece.PieceScore;
+import chess.model.piece.score.PieceScore;
 import chess.model.position.Position;
 import chess.model.position.PositionConverter;
 import chess.view.InputView;

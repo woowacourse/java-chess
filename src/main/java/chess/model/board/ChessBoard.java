@@ -3,7 +3,8 @@ package chess.model.board;
 import chess.model.piece.Camp;
 import chess.model.piece.Direction;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceScore;
+import chess.model.piece.score.PieceRuleScore;
+import chess.model.piece.score.PieceScore;
 import chess.model.piece.PieceType;
 import chess.model.position.Distance;
 import chess.model.position.File;
@@ -108,13 +109,13 @@ public class ChessBoard {
 
     private PieceScore calculateTotalPieceScore(final List<PieceScore> campPieceScore) {
         return campPieceScore.stream()
-                .reduce(PieceScore.ZERO, PieceScore::plus);
+                .reduce(PieceRuleScore.ZERO.score(), PieceScore::plus);
     }
 
     private PieceScore calculateTotalPawnOffsetScore(final Camp camp) {
         return Arrays.stream(File.values())
                 .map(file -> calculatePawnOffsetScoreByFile(file, camp))
-                .reduce(PieceScore.ZERO, PieceScore::plus);
+                .reduce(PieceRuleScore.ZERO.score(), PieceScore::plus);
     }
 
     private PieceScore calculatePawnOffsetScoreByFile(final File file, final Camp camp) {
@@ -134,13 +135,13 @@ public class ChessBoard {
 
     private PieceScore calculatePawnOffsetScoreByFilePawnCount(final long count) {
         if (count < MULTIPLE_PAWN_COUNT) {
-            return PieceScore.ZERO;
+            return PieceRuleScore.ZERO.score();
         }
 
-        PieceScore pawnOffsetScore = PieceScore.ZERO;
+        PieceScore pawnOffsetScore = PieceRuleScore.ZERO.score();
 
         for (int i = 0; i < count; i++) {
-            pawnOffsetScore = pawnOffsetScore.plus(PieceScore.PAWN_OFFSET);
+            pawnOffsetScore = pawnOffsetScore.plus(PieceRuleScore.PAWN_OFFSET.score());
         }
         return pawnOffsetScore;
     }

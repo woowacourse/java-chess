@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.helper.ChessBoardPieceMovingHelper;
 import chess.model.piece.Camp;
-import chess.model.piece.PieceScore;
+import chess.model.piece.score.PieceScore;
 import chess.model.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

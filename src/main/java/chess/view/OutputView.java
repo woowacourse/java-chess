@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.model.piece.Camp;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceScore;
+import chess.model.piece.score.PieceScore;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;

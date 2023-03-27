@@ -1,6 +1,7 @@
 package chess.model.piece;
 
 import chess.model.piece.movement.AttackEvaluator;
+import chess.model.piece.score.PieceScore;
 import chess.model.position.Distance;
 
 public final class Piece {
