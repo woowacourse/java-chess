@@ -5,7 +5,9 @@ import chess.domain.board.Position;
 import chess.domain.pieces.component.Team;
 import chess.domain.pieces.component.Type;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
     protected static final String INVALID_EMPTY_TEAM = "[ERROR] EmptyPiece 의 팀은 NEUTRALITY 여야 합니다.";
@@ -14,9 +16,11 @@ public abstract class Piece {
     protected final Team team;
     protected Type type;
     protected List<Direction> directions;
+    private static final Map<Piece, String> piecesAndStrings = new HashMap<>();
 
-    public Piece(final Team team) {
+    public Piece(final Team team, final Type type) {
         this.team = team;
+        this.type = type;
     }
 
     public Type getType() {
@@ -26,7 +30,6 @@ public abstract class Piece {
     public Team getTeam() {
         return this.team;
     }
-
 
     public void checkDirection(Direction direction) {
         if (!this.directions.contains(direction)) {
@@ -40,12 +43,16 @@ public abstract class Piece {
         }
     }
 
-    public boolean isBlackTeam(){
+    public boolean isBlackTeam() {
         return this.team == Team.BLACK;
     }
 
-    public boolean isWhiteTeam(){
+    public boolean isWhiteTeam() {
         return this.team == Team.WHITE;
+    }
+
+    public boolean isPawn() {
+        return this.type == Type.PAWN;
     }
 
     abstract public void validateTeam(final Team team);

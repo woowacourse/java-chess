@@ -15,8 +15,8 @@ public class BlackPawn extends Piece {
     private static final int TWO_STEP = 2;
     private static final int ONE_STEP = 1;
 
-    public BlackPawn() {
-        super(BLACK);
+    public BlackPawn(Type type) {
+        super(BLACK, type);
         this.directions = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
         validateTeam(team);
         this.type = Type.PAWN;

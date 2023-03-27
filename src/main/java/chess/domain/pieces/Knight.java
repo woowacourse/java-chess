@@ -1,8 +1,8 @@
 package chess.domain.pieces;
 
+import chess.domain.Direction;
 import chess.domain.board.Position;
 import chess.domain.pieces.component.Team;
-import chess.domain.Direction;
 import chess.domain.pieces.component.Type;
 
 import java.util.List;
@@ -11,8 +11,8 @@ import static chess.domain.Direction.KNIGHT;
 
 public class Knight extends Piece {
 
-    public Knight(final Team team) {
-        super(team);
+    public Knight(final Team team,final Type type) {
+        super(team,type);
         this.directions = List.of(KNIGHT);
         validateTeam(team);
         this.type = Type.KNIGHT;

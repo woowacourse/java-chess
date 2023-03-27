@@ -15,8 +15,8 @@ public class WhitePawn extends Piece {
     private static final int TWO_STEP = 2;
     private static final int ONE_STEP = 1;
 
-    public WhitePawn() {
-        super(WHITE);
+    public WhitePawn(Type type) {
+        super(WHITE, type);
         this.directions = List.of(UP, UP_LEFT, UP_RIGHT);
         validateTeam(team);
         this.type = Type.PAWN;

@@ -10,8 +10,8 @@ import java.util.List;
 
 public final class EmptyPiece extends Piece {
 
-    public EmptyPiece(final Team team) {
-        super(team);
+    public EmptyPiece(final Team team, final Type type) {
+        super(team, type);
         this.directions = new ArrayList<>();
         validateTeam(team);
         this.type = Type.NO_PIECE;

@@ -11,8 +11,8 @@ import static chess.domain.Direction.*;
 
 public class Rook extends Piece {
 
-    public Rook(final Team team) {
-        super(team);
+    public Rook(final Team team, final Type type) {
+        super(team, type);
         this.directions = List.of(UP, DOWN, LEFT, RIGHT);
         validateTeam(team);
         this.type = Type.ROOK;

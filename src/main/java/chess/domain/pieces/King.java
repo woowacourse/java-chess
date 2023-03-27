@@ -13,8 +13,8 @@ public class King extends Piece {
 
     private static final int STEP = 1;
 
-    public King(final Team team) {
-        super(team);
+    public King(final Team team, final Type type) {
+        super(team, type);
         this.directions = List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
         validateTeam(team);
         this.type = Type.KING;

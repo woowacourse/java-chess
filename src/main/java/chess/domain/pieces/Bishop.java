@@ -11,11 +11,10 @@ import static chess.domain.Direction.*;
 
 public class Bishop extends Piece {
 
-    public Bishop(final Team team) {
-        super(team);
+    public Bishop(final Team team, final Type type) {
+        super(team, type);
         this.directions = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
         validateTeam(team);
-        this.type = Type.BISHOP;
     }
 
     @Override
