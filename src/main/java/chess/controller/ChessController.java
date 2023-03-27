@@ -116,9 +116,9 @@ public final class ChessController {
         if (chessGame == null) {
             throw new IllegalArgumentException("체스 게임은 아직 시작하지 않았습니다.");
         }
-        chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
-        if (chessGame.isKingDead()) {
-            ioViewResolver.outputViewResolve(chessGame.getWinner());
+        final Piece deadPiece = chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
+        if (deadPiece.isSamePieceTypeAs(PieceType.KING)) {
+            ioViewResolver.outputViewResolve(chessGame.getWinner(deadPiece));
             return END;
         }
         ioViewResolver.outputViewResolve(chessGame.printBoard());
