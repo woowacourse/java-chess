@@ -59,8 +59,11 @@ public final class ChessController {
             ChessGameCommand command = ChessGameCommand.from(commands.get(COMMAND_INDEX));
             commandMapper.get(command).execute(commands);
             return command;
-        } catch (RuntimeException exception) {
+        } catch (IllegalArgumentException | IllegalStateException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
+            return EMPTY;
+        } catch (Exception exception) {
+            OutputView.printExceptionMessage("예기치 못한 예외가 발생했습니다.");
             return EMPTY;
         }
     }
