@@ -1,18 +1,21 @@
 package chess.dao;
 
 import chess.domain.Board;
+import chess.game.GameId;
 import chess.game.state.GameState;
 
 public interface ChessGameDao {
-    Board findBoard(String gameId);
+    Board findBoard(GameId gameId);
 
-    GameState findGameState(String gameId);
+    GameState findGameState(GameId gameId);
 
-    void saveChessGame(String gameId, Board board, GameState gameState);
+    void saveChessGame(GameId gameId, Board board, GameState gameState);
 
-    void createChessGame(String gameId, Board board, GameState gameState);
+    void createChessGame(GameId gameId, Board board, GameState gameState);
 
-    boolean isExistGame(String gameId);
+    boolean isExistGame(GameId gameId);
+
+    void deleteGame(GameId gameId);
 
     void transaction(Runnable runnable);
 }

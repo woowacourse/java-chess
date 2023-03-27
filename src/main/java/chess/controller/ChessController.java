@@ -52,7 +52,7 @@ public class ChessController {
     }
 
     private void validateExistGame(GameId gameId) {
-        if (chessGameDao.isExistGame(gameId.getGameId())) {
+        if (chessGameDao.isExistGame(gameId)) {
             throw new IllegalArgumentException("[ERROR] 이미 존재하는 체스방 입니다.");
         }
     }
@@ -101,7 +101,7 @@ public class ChessController {
 
     private void leaveGame() {
         chessGame.leave();
-        OutputView.printStartMessage();
+        OutputView.printCommandMessage();
     }
 
     private void endGame() {
@@ -110,6 +110,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
+        OutputView.printCommandMessage();
         while (!chessGame.isEnd()) {
             printError(this::gameLoop);
         }

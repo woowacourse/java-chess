@@ -1,8 +1,9 @@
 package chess.dao;
 
 import chess.domain.Board;
+import chess.game.GameId;
 import chess.game.state.GameState;
 
 public interface SaveLogic {
-    void save(String gameId, Board board, GameState gameState);
+    void save(GameId gameId, Board board, GameState gameState);
 }

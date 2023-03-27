@@ -1,5 +1,6 @@
 package chess.game;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class GameId {
@@ -20,6 +21,23 @@ public class GameId {
 
     public String getGameId() {
         return gameId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GameId)) {
+            return false;
+        }
+        GameId gameId1 = (GameId) o;
+        return Objects.equals(gameId, gameId1.gameId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameId);
     }
 }
 

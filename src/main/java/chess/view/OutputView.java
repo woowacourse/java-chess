@@ -9,10 +9,10 @@ public class OutputView {
     private static final int BOARD_SIZE = 8;
     private static final String ROW_DELIMITER = "";
     private static final String GAME_START_MESSAGE = "체스 게임을 시작합니다.";
-    private static final String COMMAND_START_MESSAGE = "> 게임 시작 : start";
-    private static final String COMMAND_MOVE_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String COMMAND_START_MESSAGE = "> 게임 시작 : start <gameID>";
+    private static final String COMMAND_MOVE_MESSAGE = "> 게임 이동 : move <source> <target> - 예. move b2 b3";
     private static final String COMMAND_SAVE_MESSAGE = "> 게임 저장 : save";
-    private static final String COMMAND_LOAD_MESSAGE = "> 게임 불러오기 : load";
+    private static final String COMMAND_LOAD_MESSAGE = "> 게임 불러오기 : load <gameID>";
     private static final String COMMAND_LEAVE_MESSAGE = "> 게임 나가기 : leave";
     private static final String COMMAND_STATUS_MESSAGE = "> 현재 점수 : status";
     private static final String COMMAND_END_MESSAGE = "> 게임 종료 : end";
@@ -22,6 +22,9 @@ public class OutputView {
 
     public static void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
+    }
+
+    public static void printCommandMessage() {
         System.out.println(COMMAND_START_MESSAGE);
         System.out.println(COMMAND_MOVE_MESSAGE);
         System.out.println(COMMAND_SAVE_MESSAGE);

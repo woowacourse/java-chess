@@ -137,14 +137,14 @@ public class ChessGame {
     }
 
     public void save(SaveLogic saveLogic) {
-        gameState.saveGame(() -> saveLogic.save(gameId.getGameId(), board, gameState));
+        gameState.saveGame(() -> saveLogic.save(gameId, board, gameState));
     }
 
     public void load(GameId gameId, LoadLogic<Board> boardLoadLogic, LoadLogic<GameState> gameStateLoadLogic) {
         this.gameState.loadGame(() -> {
             this.gameId = gameId;
-            this.board = boardLoadLogic.load(gameId.getGameId());
-            this.gameState = gameStateLoadLogic.load(gameId.getGameId());
+            this.board = boardLoadLogic.load(gameId);
+            this.gameState = gameStateLoadLogic.load(gameId);
         });
     }
 

@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.game.GameId;
+
 public interface LoadLogic<T> {
-    T load(String gameId);
+    T load(GameId gameId);
 }
