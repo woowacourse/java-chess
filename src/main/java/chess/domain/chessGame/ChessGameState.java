@@ -6,12 +6,12 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public interface ChessGameStatus { // TODO chessGame이 State를 변수로 가지고있게 리팩토링 필요
-    ChessGameStatus start();
+public interface ChessGameState { // TODO chessGame이 State를 변수로 가지고있게 리팩토링 필요
+    ChessGameState start();
 
     void validateMove(String currentPosition, String nextPosition, Piece movingPiece);
 
-    ChessGameStatus end();
+    ChessGameState end();
 
     boolean isPlaying();
 

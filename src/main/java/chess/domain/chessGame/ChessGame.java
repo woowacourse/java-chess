@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class ChessGame {
-    private ChessGameStatus chessGameStatus = new ReadyChessGameStatus();
+    private ChessGameState chessGameState = new ReadyChessGameState();
     private final Board board;
     private Color turn = Color.WHITE;
 
@@ -15,20 +15,20 @@ public class ChessGame {
         board = new Board();
     }
 
-    public ChessGame(Board board, ChessGameStatus chessGameStatus, Color turn) {
+    public ChessGame(Board board, ChessGameState chessGameState, Color turn) {
         this.board = board;
-        this.chessGameStatus = chessGameStatus;
+        this.chessGameState = chessGameState;
         this.turn = turn;
     }
 
     public void start() {
-        chessGameStatus = chessGameStatus.start();
+        chessGameState = chessGameState.start();
     }
 
     public void move(String currentPosition, String nextPosition) {
         Piece movingPiece = board.findPieceByPosition(Position.from(currentPosition));
         Piece targetPiece = board.findPieceByPosition(Position.from(nextPosition));
-        chessGameStatus.validateMove(currentPosition, nextPosition, movingPiece);
+        chessGameState.validateMove(currentPosition, nextPosition, movingPiece);
         checkTurn(movingPiece);
         board.move(Position.from(currentPosition), Position.from(nextPosition));
         if (isOver(targetPiece)) {
@@ -43,15 +43,15 @@ public class ChessGame {
     }
 
     public void end() {
-        chessGameStatus = chessGameStatus.end();
+        chessGameState = chessGameState.end();
     }
 
     public boolean isPlaying() {
-        return chessGameStatus.isPlaying();
+        return chessGameState.isPlaying();
     }
 
     public boolean isEnd() {
-        return chessGameStatus.isEnd();
+        return chessGameState.isEnd();
     }
 
     private void checkTurn(Piece movingPiece) {
@@ -69,11 +69,11 @@ public class ChessGame {
     }
 
     public Map<Position, String> getPrintingBoard() {
-        return chessGameStatus.getPrintingBoard(board);
+        return chessGameState.getPrintingBoard(board);
     }
 
     public Map<Color, Double> getScores() {
-        return chessGameStatus.getScores(board);
+        return chessGameState.getScores(board);
     }
 
     public Map<Position, Piece> getBoard() {
@@ -81,7 +81,7 @@ public class ChessGame {
     }
 
     public String getStatusName() {
-        return chessGameStatus.getName();
+        return chessGameState.getName();
     }
 
 }

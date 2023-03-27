@@ -2,10 +2,10 @@ package chess.dao;
 
 import chess.domain.board.Board;
 import chess.domain.chessGame.ChessGame;
-import chess.domain.chessGame.ChessGameStatus;
-import chess.domain.chessGame.EndChessGameStatus;
-import chess.domain.chessGame.PlayingChessGameStatus;
-import chess.domain.chessGame.ReadyChessGameStatus;
+import chess.domain.chessGame.ChessGameState;
+import chess.domain.chessGame.EndChessGameState;
+import chess.domain.chessGame.PlayingChessGameState;
+import chess.domain.chessGame.ReadyChessGameState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -24,12 +24,12 @@ public class ChessGameDao {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    private static final Map<String, ChessGameStatus> chessGameStatusMapper = new HashMap<>();
+    private static final Map<String, ChessGameState> chessGameStatusMapper = new HashMap<>();
 
     static {
-        chessGameStatusMapper.put("ready", new ReadyChessGameStatus());
-        chessGameStatusMapper.put("playing", new PlayingChessGameStatus());
-        chessGameStatusMapper.put("end", new EndChessGameStatus());
+        chessGameStatusMapper.put("ready", new ReadyChessGameState());
+        chessGameStatusMapper.put("playing", new PlayingChessGameState());
+        chessGameStatusMapper.put("end", new EndChessGameState());
     }
 
     public Connection getConnection() {
@@ -83,7 +83,7 @@ public class ChessGameDao {
     public ChessGame select() {
         Map<Position, Piece> board = new HashMap<>();
         Color turn = Color.WHITE;
-        ChessGameStatus chessGameStatus = new ReadyChessGameStatus();
+        ChessGameState chessGameState = new ReadyChessGameState();
 
         final var query = "SELECT turn, status, piece_type, piece_file, piece_rank, piece_color FROM chess_game";
         try (final var connection = getConnection();
@@ -91,7 +91,7 @@ public class ChessGameDao {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 turn = Color.valueOf(resultSet.getString("turn"));
-                chessGameStatus = chessGameStatusMapper.get(resultSet.getString("status"));
+                chessGameState = chessGameStatusMapper.get(resultSet.getString("status"));
                 PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
                 File file = File.valueOf(resultSet.getString("piece_file"));
                 Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
@@ -105,6 +105,6 @@ public class ChessGameDao {
             throw new RuntimeException(e);
         }
 
-        return new ChessGame(new Board(board), chessGameStatus, turn);
+        return new ChessGame(new Board(board), chessGameState, turn);
     }
 }

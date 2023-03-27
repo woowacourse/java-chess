@@ -7,10 +7,10 @@ import chess.domain.position.Position;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class PlayingChessGameStatus implements ChessGameStatus {
+public class PlayingChessGameState implements ChessGameState {
 
     @Override
-    public ChessGameStatus start() {
+    public ChessGameState start() {
         throw new IllegalArgumentException("이미 플레이중인 게임입니다.");
     }
 
@@ -34,8 +34,8 @@ public class PlayingChessGameStatus implements ChessGameStatus {
     }
 
     @Override
-    public ChessGameStatus end() {
-        return new EndChessGameStatus();
+    public ChessGameState end() {
+        return new EndChessGameState();
     }
 
     @Override
