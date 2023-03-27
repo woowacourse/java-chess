@@ -33,7 +33,7 @@ public class GameController {
         commandAction.put(START, (chessGame, ignore) -> start(chessGame));
         commandAction.put(STATUS, (chessGame, ignore) -> status(chessGame));
         commandAction.put(MOVE, this::move);
-        commandAction.put(END, (chessGame, ignore) -> end(chessGame));
+        commandAction.put(END, (chessGame, ignore) -> end());
     }
 
     public void run() {
@@ -97,7 +97,7 @@ public class GameController {
         outputView.printChessBoard(chessGame.getBoard());
     }
 
-    private void end(final ChessGame chessGame) {
+    private void end() {
     }
 
     private void validateMoveCommandFormat(final List<String> gameCommand) {
