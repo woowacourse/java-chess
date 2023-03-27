@@ -69,7 +69,12 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessGame chessGame = startChessGame();
+        final ChessGameDao chessGameDao = new JdbcChessGameDao();
+        final PieceDao pieceDao = new JdbcPieceDao();
+
+        outputView.printExistChessGameId(chessGameDao.findAll());
+
+        final ChessGame chessGame = startChessGame(chessGameDao, pieceDao);
 
         outputView.printStartMessage();
 
@@ -78,15 +83,15 @@ public class ChessController {
         }
     }
 
-    private ChessGame startChessGame() {
+    private ChessGame startChessGame(final ChessGameDao chessGameDao, final PieceDao pieceDao) {
         try {
             final List<String> roomCommand = inputView.readRoomCommand();
             final RoomCommand mainRoomCommand = RoomCommand.from(roomCommand.get(MAIN_COMMAND_INDEX));
             final RoomAction roomAction = roomCommandAction.get(mainRoomCommand);
-            return roomAction.execute(new JdbcChessGameDao(), new JdbcPieceDao(), roomCommand);
+            return roomAction.execute(chessGameDao, pieceDao, roomCommand);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
-            return startChessGame();
+            return startChessGame(chessGameDao, pieceDao);
         }
     }
 

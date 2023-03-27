@@ -13,7 +13,7 @@ public class InputView {
 
     public List<String> readRoomCommand() {
         System.out.println("새로운 게임 : new");
-        System.out.println("기존의 게임 : enter 방번호  (예시) enter 14");
+        System.out.println("기존의 게임 : enter 방 번호  (예시) enter 14");
         return List.of(scanner.nextLine().split(" "));
     }
 

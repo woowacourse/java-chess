@@ -7,9 +7,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 public class JdbcChessGameDao implements ChessGameDao {
+
+    @Override
+    public List<ChessGameDto> findAll() {
+        final String sql = "SELECT * FROM chess_game";
+        final List<ChessGameDto> chessGameDtos = new ArrayList<>();
+
+        try (final Connection connection = ConnectionManager.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                final int id = resultSet.getInt("id");
+                final String turn = resultSet.getString("turn");
+                chessGameDtos.add(ChessGameDto.of(id, turn));
+            }
+            return chessGameDtos;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void save(final ChessGame chessGame) {
