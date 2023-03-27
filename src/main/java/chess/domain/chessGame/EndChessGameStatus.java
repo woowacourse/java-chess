@@ -4,12 +4,11 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.Map;
 
-public class EndChessGameState implements ChessGameState {
+public class EndChessGameStatus implements ChessGameStatus {
     @Override
-    public ChessGameState start() {
+    public ChessGameStatus start() {
         throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 
@@ -19,7 +18,7 @@ public class EndChessGameState implements ChessGameState {
     }
 
     @Override
-    public ChessGameState end() {
+    public ChessGameStatus end() {
         throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 
@@ -36,5 +35,10 @@ public class EndChessGameState implements ChessGameState {
     @Override
     public Map<Color, Double> getScores(Board board) {
         throw new IllegalArgumentException("이미 종료된 게임입니다.");
+    }
+
+    @Override
+    public String getName() {
+        return "end";
     }
 }
