@@ -23,14 +23,6 @@ public abstract class Piece {
 
     protected abstract List<Square> findRoutes(Square source, Square destination);
 
-    public PieceInfo getPieceType() {
-        return pieceInfo;
-    }
-
-    public boolean isDifferentTeam(Piece piece) {
-        return teamColor.isDifferent(piece.teamColor);
-    }
-
     public boolean isSameTeam(Piece piece) {
         return teamColor.isSame(piece.teamColor);
     }
@@ -53,5 +45,13 @@ public abstract class Piece {
 
     public boolean isKing() {
         return false;
+    }
+
+    public PieceInfo getPieceType() {
+        return pieceInfo;
+    }
+
+    public TeamColor getTeamColor() {
+        return teamColor;
     }
 }

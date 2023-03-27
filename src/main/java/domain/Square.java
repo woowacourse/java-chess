@@ -53,4 +53,8 @@ public class Square {
     public ChessColumn getChessColumn() {
         return chessColumn;
     }
+
+    public Rank getRank() {
+        return rank;
+    }
 }

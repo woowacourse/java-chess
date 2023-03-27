@@ -10,6 +10,10 @@ public class Turn {
         this.currentOrder = TeamColor.WHITE;
     }
 
+    public Turn(TeamColor currentOrder) {
+        this.currentOrder = currentOrder;
+    }
+
     public void nextOrder() {
         if (currentOrder.isBlack()) {
             currentOrder = TeamColor.WHITE;
@@ -27,6 +31,10 @@ public class Turn {
 
     private boolean isRightOrder(Piece piece) {
         return piece.isSameColor(currentOrder);
+    }
+
+    public TeamColor getCurrentOrder() {
+        return currentOrder;
     }
 }
 

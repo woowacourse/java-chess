@@ -17,6 +17,11 @@ public class ChessGame {
         turn = new Turn();
     }
 
+    public ChessGame(ChessBoard chessBoard, Turn turn) {
+        this.chessBoard = chessBoard;
+        this.turn = turn;
+    }
+
     public Piece find(Square square) {
         return chessBoard.find(square);
     }
@@ -83,5 +88,13 @@ public class ChessGame {
             .mapToDouble(Long::doubleValue)
             .filter(count -> count >= 2)
             .sum() * PieceInfo.PAWN.getScore() / 2;
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }

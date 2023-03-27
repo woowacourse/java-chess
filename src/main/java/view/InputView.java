@@ -1,5 +1,6 @@
 package view;
 
+import domain.ChessGame;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -46,5 +47,13 @@ public class InputView {
             return;
         }
         throw new IllegalArgumentException("잘못된 입력입니다.");
+    }
+
+    public static int readGameRoom(List<ChessGame> games) {
+        for (int i = 0; i < games.size(); i++) {
+            System.out.println(i + "번 방");
+        }
+        System.out.println("위의 방들 중 하나를 입력해주세요.");
+        return Integer.parseInt(scanner.nextLine());
     }
 }

@@ -28,11 +28,11 @@ import domain.piece.nonsliding.Knight;
 import domain.piece.sliding.Bishop;
 import domain.piece.sliding.Queen;
 import domain.piece.sliding.Rook;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -74,29 +74,32 @@ public class ChessBoard {
         new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE)
     );
     private final Map<Square, Piece> locationInfo;
-    private final List<Piece> kings = new ArrayList<>(INITIAL_KING_SIZE);
+    private final List<Piece> kings;
 
     public ChessBoard() {
         locationInfo = new HashMap<>(BOARD_SIZE);
         for (int i = 0; i < BLACK_PIECES.size(); i++) {
             Piece blackPiece = BLACK_PIECES.get(i);
             Piece whitePiece = WHITE_PIECES.get(i);
-            initKings(blackPiece, whitePiece);
             locationInfo.put(BLACK_SQUARES.get(i), blackPiece);
             locationInfo.put(WHITE_SQUARES.get(i), whitePiece);
         }
         for (Square emptySquare : EMPTY_SQUARES) {
             locationInfo.put(emptySquare, Blank.getInstance());
         }
+        kings = initKings();
     }
 
-    private void initKings(Piece blackPiece, Piece whitePiece) {
-        if (blackPiece.isKing()) {
-            kings.add(blackPiece);
-        }
-        if (whitePiece.isKing()) {
-            kings.add(whitePiece);
-        }
+    public ChessBoard(Map<Square, Piece> locationInfo) {
+        this.locationInfo = locationInfo;
+        kings = initKings();
+    }
+
+    private List<Piece> initKings() {
+        return locationInfo.values()
+            .stream()
+            .filter(Piece::isKing)
+            .collect(Collectors.toList());
     }
 
     public Piece find(Square square) {
@@ -137,5 +140,9 @@ public class ChessBoard {
             .stream()
             .filter(entry -> entry.getValue().isSameColor(team))
             .collect(Collectors.toList());
+    }
+
+    public Set<Entry<Square, Piece>> getEntries() {
+        return locationInfo.entrySet();
     }
 }
