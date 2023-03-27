@@ -31,6 +31,6 @@ out/
 ### VS Code ###
 .vscode/
 
-## db ##
-/main/java/chess/db/
-.ibd
+## mysql
+/db/mysql/config
+/db/mysql/data
