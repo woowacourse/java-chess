@@ -1,11 +1,8 @@
-package chess.domain;
+package chess.domain.path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.path.Direction;
-import chess.domain.path.MovablePaths;
-import chess.domain.path.Path;
 import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
