@@ -49,10 +49,10 @@ public class Board {
     }
 
     private boolean isPieceExists(final Position position) {
-        return !isPieceNonExists(position);
+        return !isNotPieceExists(position);
     }
 
-    private boolean isPieceNonExists(final Position position) {
+    private boolean isNotPieceExists(final Position position) {
         return board.get(position).equals(Empty.getInstance());
     }
 
