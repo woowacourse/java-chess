@@ -15,12 +15,11 @@ public final class Board {
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
     private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
     private final Map<Location, Piece> board;
-    private final ScoreCalculator scoreCalculator;
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
 
 
-    public Board(final Map<Location, Piece> board, final ScoreCalculator scoreCalculator) {
+    public Board(final Map<Location, Piece> board) {
         this.board = board;
-        this.scoreCalculator = scoreCalculator;
     }
 
     public void initialize() {

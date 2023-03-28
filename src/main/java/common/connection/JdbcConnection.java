@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JdbcConnection {
+public final class JdbcConnection {
 
     private static final String DATABASE_URL = "jdbc:mysql://localhost:13306/chess";
     private static final String USER_NAME = "root";

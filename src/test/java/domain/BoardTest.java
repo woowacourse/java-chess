@@ -23,7 +23,7 @@ class BoardTest {
     public void testCreate() {
         //given
         //when
-        final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+        final Board board = new Board(new HashMap<>());
         board.initialize();
 
         //then
@@ -42,7 +42,7 @@ class BoardTest {
         @DisplayName("흰 진영 순서일 때 검은 진영을 움직인다.")
         @Test
         public void testMoveFailBlack() {
-            final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+            final Board board = new Board(new HashMap<>());
             board.initialize();
 
             assertThatThrownBy(
@@ -53,7 +53,7 @@ class BoardTest {
         @DisplayName("검은 진영 순서일 때 흰 진영을 움직인다.")
         @Test
         public void testMoveFailWhite() {
-            final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+            final Board board = new Board(new HashMap<>());
             board.initialize();
 
             assertThatThrownBy(
@@ -70,7 +70,7 @@ class BoardTest {
         @DisplayName("흰생 진영의 순서일 때 흰색 진영의 돌을 움직인다.")
         public void testMoveWhite() {
             //given
-            final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+            final Board board = new Board(new HashMap<>());
             board.initialize();
 
             //when
@@ -85,7 +85,7 @@ class BoardTest {
         @DisplayName("검은색 진영의 순서일 때 검은색 진영의 돌을 움직인다.")
         public void testMoveBlack() {
             //given
-            final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+            final Board board = new Board(new HashMap<>());
             board.initialize();
 
             //when
@@ -101,7 +101,7 @@ class BoardTest {
     @DisplayName("초기 상태에서 흰색 돌 점수를 계산한다.")
     public void testCalculateWhiteScore() {
         //given
-        final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+        final Board board = new Board(new HashMap<>());
         board.initialize();
 
         //when
@@ -115,7 +115,7 @@ class BoardTest {
     @DisplayName("초기 상태에서 검은색 돌 점수를 계산한다.")
     public void testCalculateBlackScore() {
         //given
-        final Board board = new Board(new HashMap<>(), new ScoreCalculator());
+        final Board board = new Board(new HashMap<>());
         board.initialize();
 
         //when
