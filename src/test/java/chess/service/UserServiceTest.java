@@ -23,26 +23,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        mockUserDao = new UserDao() {
-            private final List<User> users = new ArrayList<>();
-            private int index = 0;
-
-            @Override
-            public void save(final String name) {
-                users.add(new User(++index, name));
-            }
-
-            @Override
-            public Optional<User> findByName(final String name) {
-                return users.stream()
-                        .filter(user -> user.getName().equals(name))
-                        .findFirst();
-            }
-
-            @Override
-            public void deleteAll() {
-            }
-        };
+        mockUserDao = new UserDaoStub();
         userService = new UserService(mockUserDao);
     }
 
@@ -96,5 +77,26 @@ public class UserServiceTest {
                 () -> assertThat(result.getId()).isPositive(),
                 () -> assertThat(result.getName()).isEqualTo("herb")
         );
+    }
+
+    private class UserDaoStub implements UserDao {
+        private final List<User> users = new ArrayList<>();
+        private int index = 0;
+
+        @Override
+        public void save(final String name) {
+            users.add(new User(++index, name));
+        }
+
+        @Override
+        public Optional<User> findByName(final String name) {
+            return users.stream()
+                    .filter(user -> user.getName().equals(name))
+                    .findFirst();
+        }
+
+        @Override
+        public void deleteAll() {
+        }
     }
 }

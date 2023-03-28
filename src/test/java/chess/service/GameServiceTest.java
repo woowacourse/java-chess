@@ -38,20 +38,7 @@ public class GameServiceTest {
 
     @BeforeEach
     void setUp() {
-        mockGameDao = new GameDao() {
-            @Override
-            public void save(final MoveDto moveDto, final int roomId) {
-            }
-
-            @Override
-            public List<MoveDto> findAllByRoomId(final int roomId) {
-                return List.of();
-            }
-
-            @Override
-            public void deleteAll() {
-            }
-        };
+        mockGameDao = new GameDaoStub();
     }
 
     private static List<PieceType> toPieceTypes(final Map<Position, Piece> board) {
@@ -169,5 +156,20 @@ public class GameServiceTest {
         assertThatThrownBy(() -> gameService.move(new MoveDto("h5", "e8"), roomId))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임을 찾을 수 없습니다.");
+    }
+
+    private class GameDaoStub implements GameDao {
+        @Override
+        public void save(final MoveDto moveDto, final int roomId) {
+        }
+
+        @Override
+        public List<MoveDto> findAllByRoomId(final int roomId) {
+            return List.of();
+        }
+
+        @Override
+        public void deleteAll() {
+        }
     }
 }

@@ -23,34 +23,7 @@ class RoomServiceTest {
 
     @BeforeEach
     void setUp() {
-        mockRoomDao = new RoomDao() {
-            private final List<Room> rooms = new ArrayList<>();
-            private int index = 0;
-
-            @Override
-            public void save(final String roomName, final int userId) {
-                final Room room = new Room(++index, roomName, userId);
-                rooms.add(room);
-            }
-
-            @Override
-            public List<Room> findAllByUserId(final int userId) {
-                return rooms.stream()
-                        .filter(room -> room.getUserId() == userId)
-                        .collect(Collectors.toList());
-            }
-
-            @Override
-            public Optional<Room> findById(final int roomId) {
-                return rooms.stream()
-                        .filter(room -> room.getId() == roomId)
-                        .findFirst();
-            }
-
-            @Override
-            public void deleteAll() {
-            }
-        };
+        mockRoomDao = new RoomDaoStub();
         roomService = new RoomService(mockRoomDao);
     }
 
@@ -122,5 +95,34 @@ class RoomServiceTest {
                 () -> assertThat(room.getId()).isEqualTo(1),
                 () -> assertThat(room.getName()).isEqualTo("방1")
         );
+    }
+
+    private class RoomDaoStub implements RoomDao {
+        private final List<Room> rooms = new ArrayList<>();
+        private int index = 0;
+
+        @Override
+        public void save(final String roomName, final int userId) {
+            final Room room = new Room(++index, roomName, userId);
+            rooms.add(room);
+        }
+
+        @Override
+        public List<Room> findAllByUserId(final int userId) {
+            return rooms.stream()
+                    .filter(room -> room.getUserId() == userId)
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public Optional<Room> findById(final int roomId) {
+            return rooms.stream()
+                    .filter(room -> room.getId() == roomId)
+                    .findFirst();
+        }
+
+        @Override
+        public void deleteAll() {
+        }
     }
 }
