@@ -7,7 +7,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,24 +18,12 @@ import java.util.Map;
 
 public final class DBChessGameDao implements ChessGameDao {
 
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            throw new IllegalStateException("데이터베이스 연결에 실패했습니다!");
-        }
-    }
+    private final DBConnection dbConnection = new DBConnection();
 
     @Override
     public List<String> gameIds() {
         final var query = "SELECT game_id FROM chess_status;";
-        try (final var connection = getConnection();
+        try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query);
              final ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -65,7 +52,7 @@ public final class DBChessGameDao implements ChessGameDao {
             final Piece piece = entry.getValue();
 
             final var query = "INSERT INTO chess_game (position, piece_type, piece_color, game_id) VALUES (?, ?, ?, ?);";
-            try (final var connection = getConnection();
+            try (final var connection = dbConnection.getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
 
                 preparedStatement.setString(1, position.file().command() + position.rank().command());
@@ -83,7 +70,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
     private void saveChessStatus(final ChessGame chessGame, final String gameId) {
         final var query = "SELECT * FROM chess_status WHERE game_id=?;";
-        try (final var connection = getConnection();
+        try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, Integer.parseInt(gameId));
@@ -101,7 +88,7 @@ public final class DBChessGameDao implements ChessGameDao {
     @Override
     public String createChessStatus(final ChessGame chessGame) {
         final var query = "INSERT INTO chess_status (turn) VALUE (?);";
-        try (final var connection = getConnection();
+        try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, chessGame.turn().name());
             preparedStatement.executeUpdate();
@@ -133,7 +120,7 @@ public final class DBChessGameDao implements ChessGameDao {
         final Map<Position, Piece> board = new HashMap<>();
 
         final var query = "SELECT * FROM chess_game WHERE game_id=?;";
-        try (final var connection = getConnection();
+        try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, Integer.parseInt(gameId));
@@ -170,7 +157,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
     private Color selectTurn(final String gameId) {
         final var query = "SELECT * FROM chess_status WHERE game_id=?;";
-        try (final Connection connection = getConnection();
+        try (final Connection connection = dbConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, Integer.parseInt(gameId));
 
@@ -194,7 +181,7 @@ public final class DBChessGameDao implements ChessGameDao {
         save(chessGame, gameId);
 
         final var query = "UPDATE chess_status SET turn=? WHERE game_id=?;";
-        try (final var connection = getConnection();
+        try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, chessGame.turn().name());
             preparedStatement.setString(2, gameId);
@@ -213,7 +200,7 @@ public final class DBChessGameDao implements ChessGameDao {
 
     private void resetChessGame(final String gameId) {
         final var query = "DELETE FROM chess_game WHERE game_id=?;";
-        try (final var connection = getConnection();
+        try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameId);
 
