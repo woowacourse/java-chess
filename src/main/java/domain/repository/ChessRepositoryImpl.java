@@ -8,7 +8,7 @@ import domain.piece.Piece;
 import domain.type.Color;
 import java.util.Map;
 
-public class ChessRepositoryImpl implements ChessRepository {
+public final class ChessRepositoryImpl implements ChessRepository {
 
     private final BoardDao boardDao;
     private final PieceDao pieceDao;

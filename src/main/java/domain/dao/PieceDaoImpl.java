@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PieceDaoImpl implements PieceDao {
+public final class PieceDaoImpl implements PieceDao {
 
     private static final String FIND_PIECE_SQL = "select * from piece where `board_id` = ?";
     private static final String INSERT_PIECE_SQL = "insert into piece "

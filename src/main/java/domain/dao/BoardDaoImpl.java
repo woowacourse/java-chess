@@ -5,7 +5,7 @@ import domain.type.Color;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class BoardDaoImpl implements BoardDao {
+public final class BoardDaoImpl implements BoardDao {
 
     private static final String FIND_COLOR_SQL = "select `color` from board where `id` = ?";
     private static final String COUNT_SQL = "select count(*) from board where `id` = ?";
