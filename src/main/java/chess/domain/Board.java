@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.cache.BoardCache;
+import chess.cache.PieceCache;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
@@ -15,6 +16,13 @@ public final class Board {
         this.board = board;
     }
 
+    public static Board create(){
+        final Map<Position, Piece> board = new HashMap<>();
+        board.putAll(BoardCache.create());
+        board.putAll(PieceCache.create());
+        return new Board(board);
+    }
+
     public static Board from(Map<Position, Piece> piece) {
         final Map<Position, Piece> board = new HashMap<>();
         board.putAll(BoardCache.create());
@@ -22,16 +30,18 @@ public final class Board {
         return new Board(board);
     }
 
-    public Piece move(final Position source, final Position target, final Color color) {
+    public Board move(final Position source, final Position target, final Color color) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
         validateInvalidColor(color, sourcePiece);
         validateInvalidMove(source, target, sourcePiece, targetPiece);
 
-        board.put(source, Empty.create());
-        board.put(target, sourcePiece);
-        return targetPiece;
+        Map<Position, Piece> newBoard = new HashMap<>(board);
+
+        newBoard.put(source, Empty.create());
+        newBoard.put(target, sourcePiece);
+        return new Board(newBoard);
     }
 
     private void validateInvalidColor(final Color currentColor, final Piece sourcePiece) {
