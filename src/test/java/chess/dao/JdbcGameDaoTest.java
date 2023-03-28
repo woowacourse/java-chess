@@ -31,7 +31,6 @@ class JdbcGameDaoTest {
     @Test
     public void save() {
         Board board = Board.create();
-
         ChessGame chessGame = new ChessGame(board, Color.BLACK, GameStatus.MOVE);
         gameDao.save(1, GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn()));
     }
@@ -89,8 +88,6 @@ class JdbcGameDaoTest {
         GameInfoDto gameInfo = gameDao.findById(1);
         assertThat(givenGame.getTurn()).isEqualTo(gameInfo.getTurn());
         assertThat(givenGame.getStatus()).isEqualTo(gameInfo.getStatus());
-
-        // Board에 대한 테스트는 어떻게?
     }
 
     @Test
@@ -105,8 +102,6 @@ class JdbcGameDaoTest {
         GameInfoDto findGameInfo = gameDao.findById(1);
         assertThat(findGameInfo.getTurn()).isEqualTo(newGame.getTurn());
         assertThat(findGameInfo.getStatus()).isEqualTo(newGame.getStatus());
-
-        // Board에 대한 테스트는 어떻게?
     }
 
     @Test
@@ -119,5 +114,4 @@ class JdbcGameDaoTest {
 
         assertThat(gameDao.findById(1)).isNull();
     }
-
 }

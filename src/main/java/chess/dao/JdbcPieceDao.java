@@ -1,19 +1,33 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.File;
-import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.PieceInfoDto;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class JdbcPieceDao implements PieceDao {
+
+    @Override
+    public void save(int gameId, List<PieceInfoDto> save) {
+        for (PieceInfoDto pieceInfo : save) {
+            final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
+            try (final var connection = ConnectionProvider.getConnection();
+                 final var preparedStatement = connection.prepareStatement(pieceQuery)) {
+                preparedStatement.setInt(1, gameId);
+                preparedStatement.setString(2, pieceInfo.getPosition().getFile().name());
+                preparedStatement.setString(3, pieceInfo.getPosition().getRank().name());
+                preparedStatement.setString(4, pieceInfo.getPiece().getType().name());
+                preparedStatement.setString(5, pieceInfo.getPiece().getColor().name());
+                preparedStatement.executeUpdate();
+            } catch (final SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     @Override
     public List<PieceInfoDto> findById(int gameId) {
@@ -40,54 +54,21 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public void save(int gameId, ChessGame chessGame) {
-        Map<Position, Piece> positionAndMap = chessGame.getBoard().getPositionAndPiece();
-        for (final Map.Entry<Position, Piece> positionPieceEntry : positionAndMap.entrySet()) {
-            final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
+    public void updateById(int gameId, List<PieceInfoDto> update) {
+        for (PieceInfoDto pieceInfo : update) {
+            final var sourceQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
             try (final var connection = ConnectionProvider.getConnection();
-                 final var preparedStatement = connection.prepareStatement(pieceQuery)) {
-                preparedStatement.setInt(1, gameId);
-                preparedStatement.setString(2, positionPieceEntry.getKey().getFile().name());
-                preparedStatement.setString(3, positionPieceEntry.getKey().getRank().name());
-                preparedStatement.setString(4, positionPieceEntry.getValue().getType().name());
-                preparedStatement.setString(5, positionPieceEntry.getValue().getColor().name());
+                 final var preparedStatement = connection.prepareStatement(sourceQuery)) {
+                preparedStatement.setString(1, pieceInfo.getPiece().getType().name());
+                preparedStatement.setString(2, pieceInfo.getPiece().getColor().name());
+                preparedStatement.setInt(3, gameId);
+                preparedStatement.setString(4, pieceInfo.getPosition().getFile().name());
+                preparedStatement.setString(5, pieceInfo.getPosition().getRank().name());
+
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
-    }
-
-    @Override
-    public void updateById(int gameId, List<PieceInfoDto> update) {
-        PieceInfoDto source = update.get(0);
-        final var sourceQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
-        try (final var connection = ConnectionProvider.getConnection();
-             final var preparedStatement = connection.prepareStatement(sourceQuery)) {
-            preparedStatement.setString(1, source.getPiece().getType().name());
-            preparedStatement.setString(2, source.getPiece().getColor().name());
-            preparedStatement.setInt(3, gameId);
-            preparedStatement.setString(4, source.getPosition().getFile().name());
-            preparedStatement.setString(5, source.getPosition().getRank().name());
-
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        PieceInfoDto destination = update.get(1);
-        final var destinationQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
-        try (final var connection = ConnectionProvider.getConnection();
-             final var preparedStatement = connection.prepareStatement(destinationQuery)) {
-            preparedStatement.setString(1, destination.getPiece().getType().name());
-            preparedStatement.setString(2, destination.getPiece().getColor().name());
-            preparedStatement.setInt(3, gameId);
-            preparedStatement.setString(4, destination.getPosition().getFile().name());
-            preparedStatement.setString(5, destination.getPosition().getRank().name());
-
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 

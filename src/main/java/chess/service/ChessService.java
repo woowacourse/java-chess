@@ -50,19 +50,27 @@ public class ChessService {
 
     public void start(int gameId) {
         chessGame.start();
+
+        Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
+        List<PieceInfoDto> pieces = new ArrayList<>();
+        for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
+            pieces.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+        }
+
         gameDao.save(gameId, makeGameInfoDto());
-        pieceDao.save(gameId, chessGame);
+        pieceDao.save(gameId, pieces);
     }
 
     public void move(int gameId, List<String> arguments) {
-        Map<Position, Piece> updatePiece = chessGame.move(arguments);
-        List<PieceInfoDto> updatePieceInfos = new ArrayList<>();
-        for (Entry<Position, Piece> positionAndPiece : updatePiece.entrySet()) {
-            updatePieceInfos.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+        Map<Position, Piece> update = chessGame.move(arguments);
+
+        List<PieceInfoDto> updatePieces = new ArrayList<>();
+        for (Entry<Position, Piece> positionAndPiece : update.entrySet()) {
+            updatePieces.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
         }
 
         gameDao.updateById(gameId, makeGameInfoDto());
-        pieceDao.updateById(gameId, updatePieceInfos);
+        pieceDao.updateById(gameId, updatePieces);
     }
 
     private GameInfoDto makeGameInfoDto() {
