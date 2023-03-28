@@ -20,8 +20,8 @@ class PieceDaoTest {
 
     private final TestJdbcContext testJdbcContext = new TestJdbcContext();
     private final JdbcConnection jdbcConnection = new JdbcConnection();
-    private final PieceDao pieceDao = new PieceDao(testJdbcContext);
-    private final BoardDao boardDao = new BoardDao(testJdbcContext);
+    private final PieceDao pieceDao = new PieceDaoImpl(testJdbcContext);
+    private final BoardDao boardDao = new BoardDaoImpl(testJdbcContext);
     private final Map<Location, Piece> board = Map.of(
         Location.of(1, 2), Pawn.makeBlack(),
         Location.of(2, 2), King.makeBlack(),

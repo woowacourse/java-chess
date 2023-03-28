@@ -13,7 +13,7 @@ class BoardDaoTest {
 
     private final TestJdbcContext testJdbcContext = new TestJdbcContext();
     private final JdbcConnection jdbcConnection = new JdbcConnection();
-    private final BoardDao boardDao = new BoardDao(testJdbcContext);
+    private final BoardDao boardDao = new BoardDaoImpl(testJdbcContext);
 
     @BeforeEach
     public void setConnection() {
