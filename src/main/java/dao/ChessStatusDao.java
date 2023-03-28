@@ -1,6 +1,5 @@
 package dao;
 
-import chess.domain.piece.Color;
 import java.util.List;
 
 public interface ChessStatusDao {

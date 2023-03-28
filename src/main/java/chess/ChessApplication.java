@@ -3,8 +3,8 @@ package chess;
 import chess.controller.ChessController;
 import chess.service.ChessService;
 import dao.ChessStatusDao;
-import dao.DBPieceDao;
 import dao.DBChessStatusDao;
+import dao.DBPieceDao;
 
 public final class ChessApplication {
     public static void main(String[] args) {
