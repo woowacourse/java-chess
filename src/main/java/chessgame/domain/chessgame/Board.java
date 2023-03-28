@@ -5,6 +5,7 @@ import chessgame.domain.piece.Empty;
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.PieceType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -12,7 +13,7 @@ public class Board {
     private final Map<Coordinate, Piece> board;
 
     public Board(Map<Coordinate, Piece> board) {
-        this.board = board;
+        this.board = new HashMap<>(board);
     }
 
     public boolean checkCamp(final Coordinate coordinate, final Camp camp) {
