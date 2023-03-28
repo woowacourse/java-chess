@@ -1,10 +1,6 @@
-package chess.domain.gamefactory;
+package chess.domain.game;
 
-import chess.domain.game.ChessGame;
-import chess.domain.game.File;
-import chess.domain.game.Position;
-import chess.domain.game.Rank;
-import chess.domain.game.Turn;
+import chess.domain.gamefactory.ChessGameFactory;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
