@@ -22,7 +22,7 @@ public class ConnectionGenerator {
         } catch (final SQLException error) {
             System.err.println("DB 연결 오류:" + error.getMessage());
             error.printStackTrace();
-            throw new IllegalArgumentException("데이터베이스에 연결할 수 없습니다");
+            throw new RuntimeException("데이터베이스에 연결할 수 없습니다");
         }
     }
 }

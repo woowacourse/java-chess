@@ -24,7 +24,7 @@ public class MoveDao {
             preparedStatement.setString(2, moveDto.getTarget());
             preparedStatement.executeUpdate();
         } catch (final SQLException error) {
-            throw new IllegalArgumentException("기보 저장 중 에러가 발생했습니다.");
+            throw new RuntimeException("기보 저장 중 에러가 발생했습니다.");
         }
     }
 
@@ -44,7 +44,7 @@ public class MoveDao {
             }
             return result;
         } catch (final SQLException error) {
-            throw new IllegalArgumentException("기보 가져오는 중 에러가 발생했습니다.");
+            throw new RuntimeException("기보 가져오는 중 에러가 발생했습니다.");
         }
     }
 
@@ -55,7 +55,7 @@ public class MoveDao {
             preparedStatement.executeUpdate();
         } catch (final SQLException error) {
             System.out.println(error);
-            throw new IllegalArgumentException("기보 초기화 중 에러가 발생했습니다");
+            throw new RuntimeException("기보 초기화 중 에러가 발생했습니다");
         }
     }
 }
