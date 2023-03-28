@@ -5,17 +5,17 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import dao.ChessGameDao;
 import dao.ChessStatusDao;
-import dao.DBChessGameDao;
 import java.util.List;
 import java.util.Map;
 
 public class ChessService {
 
-    private final DBChessGameDao chessGameDao;
+    private final ChessGameDao chessGameDao;
     private final ChessStatusDao chessStatusDao;
 
-    public ChessService(final DBChessGameDao chessGameDao, final ChessStatusDao chessStatusDao) {
+    public ChessService(final ChessGameDao chessGameDao, final ChessStatusDao chessStatusDao) {
         this.chessGameDao = chessGameDao;
         this.chessStatusDao = chessStatusDao;
     }
@@ -25,7 +25,7 @@ public class ChessService {
     }
 
     public ChessGame select(final String gameId) {
-        final Map<Position, Piece> board = chessGameDao.selectBoard(gameId);
+        final Map<Position, Piece> board = chessGameDao.select(gameId);
         if (board.isEmpty()) {
             return null;
         }
@@ -36,22 +36,22 @@ public class ChessService {
     }
 
     public String createChessStatus(ChessGame chessGame) {
-        return chessStatusDao.createChessStatus(chessGame);
+        return chessStatusDao.create(chessGame);
     }
 
     public void save(ChessGame chessGame, String gameId) {
-        chessGameDao.saveChessGame(chessGame, gameId);
-        chessStatusDao.saveChessStatus(chessGame, gameId);
+        chessGameDao.save(chessGame, gameId);
+        chessStatusDao.save(chessGame, gameId);
     }
 
     public void update(ChessGame chessGame, String gameId) {
-        chessGameDao.resetChessGame(gameId);
-        chessGameDao.saveChessGame(chessGame, gameId);
-        chessStatusDao.saveChessStatus(chessGame, gameId);
+        chessGameDao.reset(gameId);
+        chessGameDao.save(chessGame, gameId);
+        chessStatusDao.save(chessGame, gameId);
         chessStatusDao.update(chessGame, gameId);
     }
 
     public void reset(final String gameId) {
-        chessGameDao.resetChessGame(gameId);
+        chessGameDao.reset(gameId);
     }
 }

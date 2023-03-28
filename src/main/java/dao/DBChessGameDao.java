@@ -7,34 +7,16 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class DBChessGameDao {
+public final class DBChessGameDao implements ChessGameDao {
 
     private final DBConnection dbConnection = new DBConnection();
 
-    public List<String> gameIds() {
-        final var query = "SELECT game_id FROM chess_status;";
-        try (final var connection = dbConnection.getConnection();
-             final var preparedStatement = connection.prepareStatement(query);
-             final ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            List<String> gameIds = new ArrayList<>();
-            while (resultSet.next()) {
-                final String gameId = resultSet.getString("game_id");
-                gameIds.add(gameId);
-            }
-
-            return gameIds;
-        } catch (final SQLException e) {
-            throw new IllegalStateException("체스 게임 상태를 저장하는데 실패했습니다.");
-        }
-    }
-
-    public void saveChessGame(final ChessGame chessGame, final String gameId) {
+    @Override
+    public void save(final ChessGame chessGame, final String gameId) {
         final Map<Position, Piece> board = chessGame.board();
         for (final Map.Entry<Position, Piece> entry : board.entrySet()) {
             final Position position = entry.getKey();
@@ -51,13 +33,13 @@ public final class DBChessGameDao {
 
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
-                System.out.println(e.getErrorCode());
                 throw new IllegalStateException("체스 게임 결과를 저장하는데 실패했습니다.");
             }
         }
     }
 
-    public Map<Position, Piece> selectBoard(final String gameId) {
+    @Override
+    public Map<Position, Piece> select(final String gameId) {
         final Map<Position, Piece> board = new HashMap<>();
 
         final var query = "SELECT * FROM chess_game WHERE game_id=?;";
@@ -90,13 +72,13 @@ public final class DBChessGameDao {
                 board.put(position, piece);
             }
         } catch (final SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalStateException("체스 게임 결과를 불러오는데 실패했습니다.");
         }
         return board;
     }
 
-    public void resetChessGame(final String gameId) {
+    @Override
+    public void reset(final String gameId) {
         final var query = "DELETE FROM chess_game WHERE game_id=?;";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -104,7 +86,6 @@ public final class DBChessGameDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalStateException("게임을 초기화하는데 실패했습니다.");
         }
     }

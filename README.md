@@ -44,6 +44,12 @@
 
     ```sql
 
+    CREATE TABLE chess_status (
+        game_id INT AUTO_INCREMENT,
+        turn VARCHAR(255) NOT NULL,
+        PRIMARY KEY (game_id)
+    );
+
     CREATE TABLE chess_game (
         position VARCHAR(255) NOT NULL,
         piece_type VARCHAR(255),
@@ -51,12 +57,6 @@
         game_id INT NOT NULL,
         piece_id INT AUTO_INCREMENT,
         PRIMARY KEY (piece_id)
-    );
-
-    CREATE TABLE chess_status (
-        game_id INT AUTO_INCREMENT,
-        turn VARCHAR(255) NOT NULL,
-        PRIMARY KEY (game_id)
     );
 
     ```
