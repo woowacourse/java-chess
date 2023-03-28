@@ -83,7 +83,7 @@ public final class ChessController {
             final ChessGame chessGame = chessGameDao.findById(Integer.parseInt(id));
             outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
             return chessGame;
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return loadGame();
         }

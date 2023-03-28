@@ -82,7 +82,7 @@ public class LocalMysqlChessGameDao implements ChessGameDao {
 
             return new ChessGame(new Board(board, turn));
         } catch (SQLException e) {
-            return null;
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

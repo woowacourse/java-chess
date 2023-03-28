@@ -12,20 +12,15 @@ public class ConnectionProvider {
     private static final String URL = "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION;
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-    private static Connection connection;
 
     private ConnectionProvider() {
     }
 
-    static {
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            throw new IllegalStateException("데이터베이스에 연결할 수 없습니다.");
-        }
-    }
-
     public static Connection getConnection() {
-        return connection;
+        try {
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            throw new IllegalStateException("데이터베이스 연결에 실패했습니다.");
+        }
     }
 }

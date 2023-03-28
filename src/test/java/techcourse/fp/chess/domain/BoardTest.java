@@ -31,7 +31,6 @@ import techcourse.fp.chess.domain.piece.ordinary.Rook;
 
 class BoardTest {
 
-
     @DisplayName("보드의 사이즈가 맞으면 정상적으로 생성한다.")
     @Test
     void create_success() {
