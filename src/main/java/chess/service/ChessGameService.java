@@ -37,21 +37,20 @@ public final class ChessGameService {
     }
 
     private ChessGameSaveDto parseDto(final ChessGame chessGame) {
-        final List<String> piece_type = new ArrayList<>();
-        final List<String> piece_file = new ArrayList<>();
-        final List<String> piece_rank = new ArrayList<>();
-        final List<String> piece_team = new ArrayList<>();
-        final List<String> last_turn = new ArrayList<>();
+        final List<String> pieceType = new ArrayList<>();
+        final List<String> pieceFile = new ArrayList<>();
+        final List<String> pieceRank = new ArrayList<>();
+        final List<String> pieceTeam = new ArrayList<>();
+        final List<String> lastTurn = new ArrayList<>();
 
         final Map<Position, Piece> board = chessGame.getBoard();
         for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-            piece_type.add(entry.getValue().getPieceType().name());
-            piece_file.add(entry.getKey().getFile().name());
-            piece_rank.add(entry.getKey().getRank().name());
-            piece_team.add(entry.getValue().getTeam().name());
-            last_turn.add(chessGame.getTurn().name());
+            pieceType.add(entry.getValue().getPieceType().name());
+            pieceFile.add(entry.getKey().getFile().name());
+            pieceRank.add(entry.getKey().getRank().name());
+            pieceTeam.add(entry.getValue().getTeam().name());
+            lastTurn.add(chessGame.getTurn().name());
         }
-        return new ChessGameSaveDto(piece_type, piece_file,
-                piece_rank, piece_team, last_turn);
+        return new ChessGameSaveDto(pieceType, pieceFile, pieceRank, pieceTeam, lastTurn);
     }
 }
