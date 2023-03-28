@@ -42,14 +42,16 @@
   );
 
   CREATE TABLE board(
+  id INT NOT NULL AUTO_INCREMENT,
   chess_game_id INT NOT NULL,
   position_column INT NOT NULL,
   position_row INT NOT NULL,
   piece_type VARCHAR(8) NOT NULL,
   piece_team VARCHAR(8) NOT NULL,
   
-  PRIMARY KEY(chess_game_id, position_column, position_row),
-  CONSTRAINT `fk_chess_game_id` FOREIGN KEY (`chess_game_id`) REFERENCES `chess_game` (`id`) ON DELETE CASCADE
+  PRIMARY KEY(id),
+  CONSTRAINT `fk_chess_game_id` FOREIGN KEY (`chess_game_id`) REFERENCES `chess_game` (`id`) ON DELETE CASCADE,
+  UNIQUE idx_chess_game_position (chess_game_id, position_column, position_row)
   );
 
   INSERT INTO chess_game(turn) VALUES (?);
