@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,6 +13,8 @@ import java.util.stream.Stream;
 import static chess.domain.Shape.BISHOP;
 import static chess.domain.Shape.KNIGHT;
 import static chess.domain.Shape.ROOK;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public final class Pieces {
 
@@ -146,4 +149,13 @@ public final class Pieces {
                 '}';
     }
 
+    public Map<Character, Long> countPawnPerFile() {
+        return pieces.stream()
+                .filter(piece -> piece.isSameShape(Shape.PAWN))
+                .collect(groupingBy(piece -> piece.getPosition().getFileValue(), counting()));
+    }
+
+    public double getTotalScore() {
+        return pieces.stream().mapToDouble(Piece::getScore).sum();
+    }
 }

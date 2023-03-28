@@ -1,6 +1,5 @@
 package chess.domain;
 
-
 import java.util.Objects;
 
 public class Score {
@@ -15,8 +14,16 @@ public class Score {
         return new Score(value);
     }
 
-    public Score subtract(final Score other) {
-        return new Score(this.value - other.value);
+    public static Score subtract(final Pieces pieces) {
+        long pawnSameFileCount = pieces.countPawnPerFile().values().stream()
+                .filter(value -> value > 1)
+                .mapToLong(l -> l)
+                .sum();
+
+        double value = pawnSameFileCount * 0.5;
+        double totalScore = pieces.getTotalScore();
+
+        return new Score(totalScore - value);
     }
 
     public double getValue() {

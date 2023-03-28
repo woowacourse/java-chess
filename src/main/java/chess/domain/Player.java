@@ -56,19 +56,7 @@ public class Player {
     }
 
     public Score getTotalScore() {
-        long pawnSameFileCount = countPawnPerFile().values().stream()
-                .filter(value -> value > 1)
-                .count();
-
-        Score subtrahend = Score.from(pawnSameFileCount * 0.5);
-        Score total = Score.from(pieces.getPieces().stream().mapToDouble(Piece::getScore).sum());
-        return total.subtract(subtrahend);
-    }
-
-    private Map<Character, Long> countPawnPerFile() {
-        return pieces.getPieces().stream()
-                .filter(piece -> piece.isSameShape(Shape.PAWN))
-                .collect(groupingBy(piece -> piece.getPosition().getFileValue(), counting()));
+        return Score.subtract(pieces);
     }
 
     public String getColorName() {
