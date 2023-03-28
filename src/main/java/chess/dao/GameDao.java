@@ -3,7 +3,7 @@ package chess.dao;
 import chess.domain.ChessGame;
 import java.util.List;
 
-public interface ChessGameDao {
+public interface GameDao {
     List<Integer> findAllPossibleId();
     List<Integer> findAllImpossibleId();
     ChessGame findById(int gameId);

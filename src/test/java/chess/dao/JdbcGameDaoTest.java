@@ -11,8 +11,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class JdbcChessGameDaoTest {
-    private final JdbcChessGameDao gameDao = new JdbcChessGameDao();
+class JdbcGameDaoTest {
+    private final JdbcGameDao gameDao = new JdbcGameDao();
 
     @BeforeEach
     public void deleteAll() {
