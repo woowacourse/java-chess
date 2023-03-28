@@ -11,16 +11,16 @@ public final class Coordinate {
     private static final int DIRECTION_CONVERTER = -1;
     private static final Map<String, Coordinate> cache = new HashMap<>();
 
-    private final char fileIndex;
-    private final char rankIndex;
+    private final FileIndex file;
+    private final RankIndex rank;
 
     private Coordinate(final String alphanumeric) {
         validateAlphanumeric(alphanumeric);
-        this.fileIndex = parsingFileIndex(alphanumeric);
-        this.rankIndex = parsingRankIndex(alphanumeric);
+        this.file = parsingFileIndex(alphanumeric);
+        this.rank = parsingRankIndex(alphanumeric);
     }
 
-    public static Coordinate of(final String alphanumeric) {
+    public static Coordinate from(final String alphanumeric) {
         return cache.computeIfAbsent(alphanumeric, key -> new Coordinate(alphanumeric));
     }
 
@@ -30,32 +30,36 @@ public final class Coordinate {
         }
     }
 
-    private char parsingFileIndex(final String alphanumeric) {
-        return alphanumeric.charAt(FILE_PARSE_INDEX);
+    private FileIndex parsingFileIndex(final String alphanumeric) {
+        return FileIndex.of(alphanumeric.charAt(FILE_PARSE_INDEX));
     }
 
-    private char parsingRankIndex(final String alphanumeric) {
-        return alphanumeric.charAt(RANK_PARSE_INDEX);
+    private RankIndex parsingRankIndex(final String alphanumeric) {
+        return RankIndex.of(alphanumeric.charAt(RANK_PARSE_INDEX));
     }
 
     public boolean isSameRank(final Coordinate other) {
-        return this.rankIndex == other.rankIndex;
+        return this.rank == other.rank;
     }
 
     public boolean isSameFile(final Coordinate other) {
-        return this.fileIndex == other.fileIndex;
+        return this.file == other.file;
+    }
+
+    public boolean isMyFile(final FileIndex fileIndex) {
+        return this.file == fileIndex;
     }
 
     public boolean isPositiveDiagonal(final Coordinate other) {
-        final int rankDistance = other.rankIndex - this.rankIndex;
-        final int fileDistance = other.fileIndex - this.fileIndex;
+        final int rankDistance = other.rank.index - this.rank.index;
+        final int fileDistance = other.file.index - this.file.index;
 
         return rankDistance == fileDistance;
     }
 
     public boolean isNegativeDiagonal(final Coordinate other) {
-        final int rankDistance = other.rankIndex - this.rankIndex;
-        final int fileDistance = other.fileIndex - this.fileIndex;
+        final int rankDistance = other.rank.index - this.rank.index;
+        final int fileDistance = other.file.index - this.file.index;
 
         return rankDistance == (DIRECTION_CONVERTER * fileDistance);
     }
@@ -77,26 +81,26 @@ public final class Coordinate {
     }
 
     public int calculateFileDistance(final Coordinate other) {
-        return other.fileIndex - this.fileIndex;
+        return other.file.index - this.file.index;
     }
 
     public int calculateRankDistance(final Coordinate other) {
-        return other.rankIndex - this.rankIndex;
+        return other.rank.index - this.rank.index;
     }
 
     public Coordinate horizontalMove(final int step) {
-        return Coordinate.of(addIndex(fileIndex, step) + rankIndex);
+        return Coordinate.from(addIndex(file.index, step) + rank);
     }
 
     public Coordinate verticalMove(final int step) {
-        return Coordinate.of(fileIndex + addIndex(rankIndex, step));
+        return Coordinate.from(file.index + addIndex(rank.index, step));
     }
 
     public Coordinate positiveDiagonalMove(final int step) {
-        return Coordinate.of(addIndex(fileIndex, step) + addIndex(rankIndex, step));
+        return Coordinate.from(addIndex(file.index, step) + addIndex(rank.index, step));
     }
 
     public Coordinate negativeDiagonalMove(final int step) {
-        return Coordinate.of(subtractIndex(fileIndex, step) + addIndex(rankIndex, step));
+        return Coordinate.from(subtractIndex(file.index, step) + addIndex(rank.index, step));
     }
 }

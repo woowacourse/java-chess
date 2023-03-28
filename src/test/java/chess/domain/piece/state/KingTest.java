@@ -22,18 +22,18 @@ class KingTest {
     void 킹은_한칸_위_아래_좌_우로_움직일_수_있다() {
         //given
         final King king = new King(Team.BLACK);
-        final Coordinate b1 = Coordinate.of("b1");
-        final Coordinate b2 = Coordinate.of("b2");
-        final Coordinate b3 = Coordinate.of("b3");
-        final Coordinate a2 = Coordinate.of("a2");
-        final Coordinate c2 = Coordinate.of("c2");
+        final Coordinate b1 = Coordinate.from("b1");
+        final Coordinate b2 = Coordinate.from("b2");
+        final Coordinate b3 = Coordinate.from("b3");
+        final Coordinate a2 = Coordinate.from("a2");
+        final Coordinate c2 = Coordinate.from("c2");
 
         //when & then
         assertSoftly((softly) -> {
-            softly.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.of("b3"));
-            softly.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.of("b1"));
-            softly.assertThat(king.findRoute(b2, a2)).containsExactly(Coordinate.of("a2"));
-            softly.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.of("c2"));
+            softly.assertThat(king.findRoute(b2, b3)).containsExactly(Coordinate.from("b3"));
+            softly.assertThat(king.findRoute(b2, b1)).containsExactly(Coordinate.from("b1"));
+            softly.assertThat(king.findRoute(b2, a2)).containsExactly(Coordinate.from("a2"));
+            softly.assertThat(king.findRoute(b2, c2)).containsExactly(Coordinate.from("c2"));
         });
     }
 
@@ -41,18 +41,18 @@ class KingTest {
     void 킹은_한칸_대각선으로_움직일_수_있다() {
         //given
         final King king = new King(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b2 = Coordinate.of("b2");
-        final Coordinate a3 = Coordinate.of("a3");
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate c3 = Coordinate.of("c3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b2 = Coordinate.from("b2");
+        final Coordinate a3 = Coordinate.from("a3");
+        final Coordinate c1 = Coordinate.from("c1");
+        final Coordinate c3 = Coordinate.from("c3");
 
         //when & then
         assertSoftly((softly) -> {
-            softly.assertThat(king.findRoute(b2, a1)).containsExactly(Coordinate.of("a1"));
-            softly.assertThat(king.findRoute(b2, a3)).containsExactly(Coordinate.of("a3"));
-            softly.assertThat(king.findRoute(b2, c1)).containsExactly(Coordinate.of("c1"));
-            softly.assertThat(king.findRoute(b2, c3)).containsExactly(Coordinate.of("c3"));
+            softly.assertThat(king.findRoute(b2, a1)).containsExactly(Coordinate.from("a1"));
+            softly.assertThat(king.findRoute(b2, a3)).containsExactly(Coordinate.from("a3"));
+            softly.assertThat(king.findRoute(b2, c1)).containsExactly(Coordinate.from("c1"));
+            softly.assertThat(king.findRoute(b2, c3)).containsExactly(Coordinate.from("c3"));
         });
     }
 
@@ -61,8 +61,8 @@ class KingTest {
     void 킹이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final King king = new King(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b3 = Coordinate.of("b3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b3 = Coordinate.from("b3");
 
         //when & then
         assertThatThrownBy(() -> king.findRoute(a1, b3))

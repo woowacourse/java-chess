@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public final class ChessBoardDto {
 
-    public static final int RANK_SIZE = 8;
+    private static final int RANK_SIZE = 8;
 
     private final List<List<String>> chessBoard;
 

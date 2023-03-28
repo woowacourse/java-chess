@@ -9,6 +9,7 @@ import static chess.domain.chessboard.RankIndex.SEVENTH;
 import static chess.domain.chessboard.RankIndex.SIXTH;
 import static chess.domain.chessboard.RankIndex.THIRD;
 
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.piece.state.Bishop;
 import chess.domain.piece.state.King;
@@ -43,7 +44,7 @@ public final class ChessBoard {
 
         char file = A.index;
         for (Square square : sideSquares) {
-            this.squares.put(Coordinate.of(makeAlphanumeric(file++, rank)), square);
+            this.squares.put(Coordinate.from(makeAlphanumeric(file++, rank)), square);
         }
     }
 
@@ -65,7 +66,7 @@ public final class ChessBoard {
 
     private void createPawnRankByTeam(final char rank, final Team team) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), createPawnSquareByTeam(team));
+            squares.put(Coordinate.from(makeAlphanumeric(file, rank)), createPawnSquareByTeam(team));
         }
     }
 
@@ -81,7 +82,7 @@ public final class ChessBoard {
 
     private void createBlankRank(final char rank) {
         for (char file = A.index; file <= H.index; file++) {
-            squares.put(Coordinate.of(makeAlphanumeric(file, rank)), new Square());
+            squares.put(Coordinate.from(makeAlphanumeric(file, rank)), new Square());
         }
     }
 
@@ -118,6 +119,46 @@ public final class ChessBoard {
                 .collect(Collectors.toUnmodifiableList());
 
         departure.validateRoute(routeSquares);
+    }
+
+    public List<Square> squaresByTeam(final Team team) {
+        return squares.values()
+                .stream()
+                .filter(square -> square.isMyTeam(team))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public long countFileOfContinuousPawnByTeam(final Team team) {
+        long sum = 0;
+
+        for (FileIndex fileIndex : FileIndex.files()) {
+            sum += countContinuousPawnInFile(fileIndex, team);
+        }
+
+        return sum;
+    }
+
+    private long countContinuousPawnInFile(final FileIndex fileIndex, final Team team) {
+        long count = squares.entrySet().stream()
+                .filter(entry -> entry.getKey().isMyFile(fileIndex))
+                .filter(entry -> entry.getValue().isMyTeam(team))
+                .filter(entry -> entry.getValue().isTypeOf(PieceType.PAWN))
+                .count();
+        if (count > 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public Map<Team, Boolean> isKingAlive() {
+        return Map.of(Team.WHITE, isKingAliveByTeam(Team.WHITE), Team.BLACK, isKingAliveByTeam(Team.BLACK));
+    }
+
+    private boolean isKingAliveByTeam(final Team team) {
+        return squares.values()
+                .stream()
+                .filter(square -> square.isTypeOf(PieceType.KING))
+                .anyMatch(square -> square.isMyTeam(team));
     }
 
     public List<Square> getSquares() {

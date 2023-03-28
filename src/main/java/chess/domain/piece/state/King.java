@@ -2,6 +2,7 @@ package chess.domain.piece.state;
 
 import chess.domain.chessboard.Coordinate;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public final class King extends Piece {
     private static final int MIN_MOVE_DISTANCE = 1;
 
     public King(final Team team) {
-        super(team);
+        super(team, PieceType.KING);
     }
 
     @Override

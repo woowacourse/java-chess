@@ -3,6 +3,7 @@ package chess.domain.piece.state;
 import chess.domain.chessboard.Coordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public final class Knight extends Piece {
     private static final int ONE_STEP = 1;
 
     public Knight(final Team team) {
-        super(team);
+        super(team, PieceType.KNIGHT);
     }
 
     @Override

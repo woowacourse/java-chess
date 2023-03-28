@@ -21,8 +21,8 @@ class BishopTest {
     void 비숍이_갈_수_없는_좌표이면_예외가_발생한다() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b3 = Coordinate.of("b3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b3 = Coordinate.from("b3");
 
         //when & then
         Assertions.assertThatThrownBy(() -> bishop.findRoute(a1, b3))
@@ -34,12 +34,12 @@ class BishopTest {
     void 비숍은_우상향_대각선의_좌표로_움직일_수_있다() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate c3 = Coordinate.of("c3");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate c3 = Coordinate.from("c3");
 
         //when & then
         Assertions.assertThat(bishop.findRoute(a1, c3))
-                .containsExactly(Coordinate.of("b2"), Coordinate.of("c3"));
+                .containsExactly(Coordinate.from("b2"), Coordinate.from("c3"));
     }
 
 
@@ -47,12 +47,12 @@ class BishopTest {
     void 비숍은_좌상향_대각선의_좌표로_움직일_수_있다() {
         //given
         final Bishop bishop = new Bishop(Team.BLACK);
-        final Coordinate c3 = Coordinate.of("c3");
-        final Coordinate e1 = Coordinate.of("e1");
+        final Coordinate c3 = Coordinate.from("c3");
+        final Coordinate e1 = Coordinate.from("e1");
 
         //when & then
         Assertions.assertThat(bishop.findRoute(c3, e1))
-                .containsExactly(Coordinate.of("d2"), Coordinate.of("e1"));
+                .containsExactly(Coordinate.from("d2"), Coordinate.from("e1"));
     }
 
     @Test

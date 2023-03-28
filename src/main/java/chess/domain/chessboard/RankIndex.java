@@ -1,5 +1,7 @@
 package chess.domain.chessboard;
 
+import java.util.Arrays;
+
 public enum RankIndex {
     FIRST('1'),
     SECOND('2'),
@@ -14,5 +16,14 @@ public enum RankIndex {
 
     RankIndex(final char index) {
         this.index = index;
+    }
+
+    static RankIndex of(final char value) {
+        return Arrays.stream(RankIndex.values())
+                .filter(it -> it.index == value)
+                .findAny()
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException("해당 Rank 가 없습니다.");
+                });
     }
 }

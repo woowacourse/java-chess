@@ -17,7 +17,7 @@ class CoordinateTest {
         final String alphanumeric = "o9";
 
         //when & then
-        assertThatThrownBy(() -> Coordinate.of(alphanumeric))
+        assertThatThrownBy(() -> Coordinate.from(alphanumeric))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 좌표값입니다.o9");
     }
@@ -28,7 +28,7 @@ class CoordinateTest {
         final String alphanumeric = "a3";
 
         //when
-        final Coordinate coordinate = Coordinate.of(alphanumeric);
+        final Coordinate coordinate = Coordinate.from(alphanumeric);
 
         //then
         assertSoftly((softly) -> {
@@ -44,44 +44,44 @@ class CoordinateTest {
     @Test
     void 좌표는_입력받은_숫자만큼_상하로_움직일_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate a1 = Coordinate.from("a1");
 
         //when & then
-        assertThat(a1.verticalMove(1)).isEqualTo(Coordinate.of("a2"));
+        assertThat(a1.verticalMove(1)).isEqualTo(Coordinate.from("a2"));
     }
 
     @Test
     void 좌표는_입력받은_숫자만큼_좌우로_움직일_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate a1 = Coordinate.from("a1");
 
         //when & then
-        assertThat(a1.horizontalMove(1)).isEqualTo(Coordinate.of("b1"));
+        assertThat(a1.horizontalMove(1)).isEqualTo(Coordinate.from("b1"));
     }
 
     @Test
     void 좌표는_입력받은_숫자만큼_기울기가_양수인_대각선으로_움직일_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
+        final Coordinate a1 = Coordinate.from("a1");
 
         //when & then
-        assertThat(a1.positiveDiagonalMove(1)).isEqualTo(Coordinate.of("b2"));
+        assertThat(a1.positiveDiagonalMove(1)).isEqualTo(Coordinate.from("b2"));
     }
 
     @Test
     void 좌표는_입력받은_숫자만큼_기울기가_음수인_대각선으로_움직일_수_있다() {
         //given
-        final Coordinate b1 = Coordinate.of("b1");
+        final Coordinate b1 = Coordinate.from("b1");
 
         //when & then
-        assertThat(b1.negativeDiagonalMove(1)).isEqualTo(Coordinate.of("a2"));
+        assertThat(b1.negativeDiagonalMove(1)).isEqualTo(Coordinate.from("a2"));
     }
 
     @Test
     void 좌표는_다른_좌표와_같은_랭크인지_검사할_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b1 = Coordinate.of("b1");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b1 = Coordinate.from("b1");
 
         //when & then
         assertThat(a1.isSameRank(b1)).isTrue();
@@ -90,8 +90,8 @@ class CoordinateTest {
     @Test
     void 좌표는_다른_좌표와_같은_파일인지_검사할_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate a2 = Coordinate.of("a2");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate a2 = Coordinate.from("a2");
 
         //when & then
         assertThat(a1.isSameFile(a2)).isTrue();
@@ -100,8 +100,8 @@ class CoordinateTest {
     @Test
     void 좌표는_다른_좌표와의_랭크_차를_계산할_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate a5 = Coordinate.of("a5");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate a5 = Coordinate.from("a5");
 
         //when & then
         assertThat(a1.calculateRankDistance(a5)).isEqualTo(4);
@@ -110,8 +110,8 @@ class CoordinateTest {
     @Test
     void 좌표는_다른_좌표와의_파일_차를_계산할_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate e1 = Coordinate.of("e1");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate e1 = Coordinate.from("e1");
 
         //when & then
         assertThat(a1.calculateFileDistance(e1)).isEqualTo(4);
@@ -120,9 +120,9 @@ class CoordinateTest {
     @Test
     void 좌표는_다른_좌표가_우상향_대각선에_있는지_검사할_수_있다() {
         //given
-        final Coordinate a1 = Coordinate.of("a1");
-        final Coordinate b2 = Coordinate.of("b2");
-        final Coordinate h8 = Coordinate.of("h8");
+        final Coordinate a1 = Coordinate.from("a1");
+        final Coordinate b2 = Coordinate.from("b2");
+        final Coordinate h8 = Coordinate.from("h8");
 
         //when & then
         assertSoftly((softly) -> {
@@ -134,12 +134,12 @@ class CoordinateTest {
     @Test
     void 좌표는_다른_좌표와_좌상향_대각선에_있는지_검사할_수_있다() {
         //given
-        final Coordinate b6 = Coordinate.of("b6");
-        final Coordinate c5 = Coordinate.of("c5");
-        final Coordinate e3 = Coordinate.of("e3");
+        final Coordinate b6 = Coordinate.from("b6");
+        final Coordinate c5 = Coordinate.from("c5");
+        final Coordinate e3 = Coordinate.from("e3");
 
-        final Coordinate c1 = Coordinate.of("c1");
-        final Coordinate a3 = Coordinate.of("a3");
+        final Coordinate c1 = Coordinate.from("c1");
+        final Coordinate a3 = Coordinate.from("a3");
         //when & then
         assertSoftly((softly) -> {
             assertThat(b6.isNegativeDiagonal(c5)).isTrue();

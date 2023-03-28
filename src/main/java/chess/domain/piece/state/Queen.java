@@ -2,13 +2,14 @@ package chess.domain.piece.state;
 
 import chess.domain.chessboard.Coordinate;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.List;
 
 public final class Queen extends Piece {
 
     public Queen(final Team team) {
-        super(team);
+        super(team, PieceType.QUEEN);
     }
 
     @Override
