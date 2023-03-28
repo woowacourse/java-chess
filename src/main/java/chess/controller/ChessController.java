@@ -3,9 +3,8 @@ package chess.controller;
 import chess.controller.dto.CommandDto;
 import chess.controller.dto.InputRenderer;
 import chess.controller.dto.OutputRenderer;
-import chess.domain.ChessGame;
 import chess.domain.position.Position;
-import chess.service.RoomService;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -23,16 +22,16 @@ public final class ChessController {
 
     private final ErrorController errorController;
     private final Map<Command, Action> commandMapper;
-    private final RoomService roomService;
+    private final ChessGameService chessGameService;
 
-    public ChessController(final ErrorController errorController, final RoomService roomService) {
+    public ChessController(final ErrorController errorController, final ChessGameService chessGameService) {
         this.errorController = errorController;
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::move,
                 STATUS, this::status
         );
-        this.roomService = roomService;
+        this.chessGameService = chessGameService;
     }
 
     public void run() {
@@ -56,9 +55,8 @@ public final class ChessController {
     }
 
     public CommandDto start(final CommandDto commandDto) {
-        ChessGame chessGame = roomService.getChessGame();
-        OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
-        OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
+        OutputView.printBoard(OutputRenderer.toBoardDto(chessGameService.getBoard()));
+        OutputView.printTurn(OutputRenderer.toTeamDto(chessGameService.getTurn()));
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
@@ -68,35 +66,32 @@ public final class ChessController {
             List<Integer> target = commandDto.getTarget();
             Position sourcePosition = new Position(source.get(0), source.get(1));
             Position targetPosition = new Position(target.get(0), target.get(1));
-            roomService.updateRoom(sourcePosition, targetPosition);
-            ChessGame chessGame = roomService.getChessGame();
-            OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
-            OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
+            chessGameService.move(sourcePosition, targetPosition);
+            OutputView.printBoard(OutputRenderer.toBoardDto(chessGameService.getBoard()));
+            OutputView.printTurn(OutputRenderer.toTeamDto(chessGameService.getTurn()));
         });
 
         return checkGameOver();
     }
 
     private CommandDto checkGameOver() {
-        final ChessGame chessGame = roomService.getChessGame();
-        if (chessGame.isGameEnd()) {
+        if (chessGameService.isGameEnd()) {
             OutputView.printFinishMessage();
-            inquireStatus(chessGame);
-            roomService.deleteRoom();
+            inquireStatus();
+            chessGameService.delete();
             return new CommandDto(END);
         }
         return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    private void inquireStatus(ChessGame chessGame) {
-        OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGame.getTotalScore(WHITE)));
-        OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGame.getTotalScore(BLACK)));
-        OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGame.getWinTeam()));
+    private void inquireStatus() {
+        OutputView.printStatus(OutputRenderer.toStatusDto(WHITE, chessGameService.getTotalScore(WHITE)));
+        OutputView.printStatus(OutputRenderer.toStatusDto(BLACK, chessGameService.getTotalScore(BLACK)));
+        OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGameService.getWinTeam()));
     }
 
     public CommandDto status(final CommandDto commandDto) {
-        ChessGame chessGame = roomService.getChessGame();
-        inquireStatus(chessGame);
+        inquireStatus();
         return readCommand(List.of(MOVE, STATUS, END));
     }
 }

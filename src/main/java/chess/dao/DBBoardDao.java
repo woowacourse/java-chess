@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 public class DBBoardDao {
 
-    public void save(final int chessGameId, final Board board) {
+    public void insert(final int chessGameId, final Board board) {
         final Map<Position, Piece> positionsAndPieces = board.getBoard();
         for (final Map.Entry<Position, Piece> entry : positionsAndPieces.entrySet()) {
             final Position position = entry.getKey();
@@ -71,7 +71,7 @@ public class DBBoardDao {
 
     public void update(final int chessGameId, final Board board) {
         delete(chessGameId);
-        save(chessGameId, board);
+        insert(chessGameId, board);
     }
 
     public void delete(final int chessGameId) {

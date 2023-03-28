@@ -1,6 +1,7 @@
 package chess.controller.dto;
 
 import chess.domain.BoardProvider;
+import chess.domain.Room;
 import chess.domain.piece.PieceProvider;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
@@ -66,5 +67,11 @@ public final class OutputRenderer {
 
     public static TeamDto toTeamDto(final Team team) {
         return new TeamDto((TEAM_TO_STRING.get(team)));
+    }
+
+    public static List<Integer> toRoomDto(List<Room> rooms) {
+        return rooms.stream()
+                .map(Room::getId)
+                .collect(Collectors.toList());
     }
 }

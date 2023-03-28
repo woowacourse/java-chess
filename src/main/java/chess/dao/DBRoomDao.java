@@ -1,7 +1,6 @@
 package chess.dao;
 
-import chess.domain.Board;
-import chess.domain.ChessGame;
+import chess.domain.Room;
 import chess.domain.piece.Team;
 
 import java.sql.Connection;
@@ -12,33 +11,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DBChessGameDao {
+public final class DBRoomDao {
 
-    private final DBBoardDao dbBoardDao;
-
-    public DBChessGameDao(DBBoardDao dbBoardDao) {
-        this.dbBoardDao = dbBoardDao;
-    }
-
-    public int insert(final ChessGame chessGame) {
+    public int insert(final Room room) {
         final var query = "INSERT INTO chess_game(turn) VALUES (?);";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setString(1, chessGame.getTurn().name());
+            preparedStatement.setString(1, room.getTurn().name());
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-            final int id = resultSet.getInt(1);
-            dbBoardDao.save(id, chessGame.getBoard());
-            return id;
+            return resultSet.getInt(1);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ChessGame select(final int id) {
+    public Room select(final int id) {
         final var query = "SELECT * FROM chess_game WHERE id = ?";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -48,8 +39,8 @@ public final class DBChessGameDao {
 
             if (resultSet.next()) {
                 final Team turn = Team.valueOf(resultSet.getString("turn"));
-                final Board board = dbBoardDao.select(id);
-                return new ChessGame(board, turn);
+                //final Board board = dbBoardDao.select(id);
+                return new Room(id, null, turn);
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -57,42 +48,42 @@ public final class DBChessGameDao {
         return null;
     }
 
-    public List<Integer> selectAllId() {
-        List<Integer> id = new ArrayList<>();
-        final var query = "SELECT id FROM chess_game";
+    public List<Room> selectAll() {
+        List<Room> rooms = new ArrayList<>();
+        final var query = "SELECT * FROM chess_game";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                id.add(resultSet.getInt("id"));
+                int id = resultSet.getInt("id");
+                Team turn = Team.valueOf(resultSet.getString("turn"));
+                rooms.add(new Room(id, null, turn));
             }
-
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        return id;
+        return rooms;
     }
 
-    public void update(final int id, final ChessGame chessGame) {
+    public void update(final Room room) {
         final var query = "UPDATE chess_game SET turn = ? WHERE id = ?;";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, chessGame.getTurn().name());
-            preparedStatement.setInt(2, id);
+            preparedStatement.setString(1, room.getTurn().name());
+            preparedStatement.setInt(2, room.getId());
             preparedStatement.executeUpdate();
-            dbBoardDao.update(id, chessGame.getBoard());
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void delete(final int id) {
+    public void delete(final Room room) {
         final var query = "DELETE FROM chess_game WHERE id = ?;";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, room.getId());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

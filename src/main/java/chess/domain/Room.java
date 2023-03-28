@@ -7,18 +7,23 @@ import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.EMPTY;
 import static chess.domain.piece.Team.WHITE;
 
-public final class ChessGame {
-
+public class Room {
+    private final Integer id;
     private final Board board;
     private Team turn;
 
-    public ChessGame(final Board board, final Team turn) {
+    public Room(Integer id, Board board, Team turn) {
+        this.id = id;
         this.board = board;
         this.turn = turn;
     }
 
-    public static ChessGame create() {
-        return new ChessGame(BoardGenerator.createBoard(), WHITE);
+    public static Room create() {
+        return new Room(null, null, EMPTY);
+    }
+
+    public static Room from(final Integer id) {
+        return new Room(id, BoardGenerator.createBoard(), WHITE);
     }
 
     public void movePiece(final Position from, final Position to) {
@@ -82,6 +87,10 @@ public final class ChessGame {
         }
 
         return decideWinTeamByScore();
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public Team getTurn() {
