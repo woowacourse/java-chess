@@ -1,6 +1,8 @@
 package chess.domain;
 
+import chess.dao.BoardDao;
 import chess.dao.GameDao;
+import chess.dao.JdbcTemplate;
 import chess.domain.piece.Piece;
 import chess.domain.state.*;
 import chess.dto.CommandDto;
@@ -14,27 +16,34 @@ import java.util.stream.Stream;
 
 public final class ChessGame {
     private final GameDao gameDao;
+    private final BoardDao boardDao;
     private final int gameId;
     private State state;
 
-    private ChessGame(final State state, final GameDao gameDao, final int gameId) {
+    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final int gameId) {
         this.state = state;
         this.gameDao = gameDao;
+        this.boardDao = boardDao;
         this.gameId = gameId;
     }
 
-    public static ChessGame from(GameDao gameDao) throws SQLException {
+    public static ChessGame from(final GameDao gameDao, final BoardDao boardDao) throws SQLException {
         GameDto gameDto = gameDao.findByLastGame();
 
         if (gameDto.isEnd()) {
             final State state = new Ready(Board.create(), Color.EMPTY);
-            gameDao.createGame(Board.create().getBoard());
-            return new ChessGame(state, gameDao, gameDto.getId() + 1);
+
+            JdbcTemplate.batchTransaction(() -> {
+                int gameId = gameDao.create().getId();
+                boardDao.create(Board.create().getBoard(), gameId);
+            });
+
+            return new ChessGame(state, gameDao, boardDao, gameDto.getId() + 1);
         }
 
-        Board board = Board.from(gameDao.findByLastGameBoard(gameDto.getId()));
+        Board board = Board.from(boardDao.findByLastGameBoard(gameDto.getId()));
         final State state = new Ready(board, Color.valueOf(gameDto.getColor()));
-        return new ChessGame(state, gameDao, gameDto.getId());
+        return new ChessGame(state, gameDao, boardDao, gameDto.getId());
     }
 
     public Map<Position, Piece> getBoard() {
@@ -59,11 +68,17 @@ public final class ChessGame {
 
     public void move(final CommandDto commandDto) {
         State newState = state.move(commandDto.getSource(), commandDto.getTarget());
+
         if (newState.getClass() == GameEnd.class) {
-            gameDao.updateGameStatus(true, gameId);
+            gameDao.update(true, gameId);
         }
 
-        gameDao.movePiece(newState.getBoard(), gameId, newState.getColor());
+        JdbcTemplate.batchTransaction(() -> {
+            boardDao.deleteAll(gameId);
+            gameDao.update(state.getColor().reverse(), gameId);
+            boardDao.create(newState.getBoard(), gameId);
+        });
+
         state = newState;
     }
 
