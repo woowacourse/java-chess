@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 public enum PieceType {
     EMPTY(0),
-    KING(0),
+    KING(Double.MAX_VALUE),
     QUEEN(9),
     ROOK(5),
     BISHOP(3),

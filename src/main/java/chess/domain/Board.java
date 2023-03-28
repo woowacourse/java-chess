@@ -18,6 +18,7 @@ import static chess.domain.piece.PieceType.PAWN;
 public final class Board implements BoardProvider {
 
     private static final int LINE_SIZE = 8;
+    public static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> board;
 
@@ -96,6 +97,7 @@ public final class Board implements BoardProvider {
         return board.values()
                 .stream()
                 .filter(piece -> piece.isTeam(team))
+                .filter(piece -> !piece.isPieceType(KING))
                 .map(Piece::getScore)
                 .collect(Collectors.toList());
     }
@@ -105,7 +107,7 @@ public final class Board implements BoardProvider {
         for (int i = 0; i < LINE_SIZE; i++) {
             pawnCount += countPawnsInSameColumn(i, team);
         }
-        return pawnCount * 0.5;
+        return pawnCount * PAWN_MINUS_SCORE;
     }
 
     public Map<Position, Piece> getBoard() {

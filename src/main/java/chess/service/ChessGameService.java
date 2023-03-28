@@ -32,7 +32,6 @@ public final class ChessGameService {
         }
         Board board = boardDao.select(id);
         return new Room(id, board, turn);
-
     }
 
     public void move(final Position sourcePosition, final Position targetPosition) {
