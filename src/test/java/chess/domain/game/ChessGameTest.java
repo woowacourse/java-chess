@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.pieces.Empty;
+import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Team;
 import chess.factory.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -39,5 +40,20 @@ class ChessGameTest {
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("이동이 이루어진 후 체스게임을 초기화 체스 판은 초기의 판으로 돌아온다.")
+    void white_team_turn_when_initChessGame_execute() {
+        // given
+        Board board = BoardFactory.createBoard();
+        ChessGame chessGame = new ChessGame(board);
+        chessGame.move(Position.from("a2"), Position.from("a4"));
+
+        // when
+        chessGame.initChessGame();
+
+        // then
+        assertThat(chessGame.getBoard().get(Position.from("a2"))).isEqualTo(new Pawn(Team.WHITE));
     }
 }

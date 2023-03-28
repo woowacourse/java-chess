@@ -19,6 +19,7 @@ public class ChessGameService {
 
     public ChessGame loadGame() {
         List<Notation> notations = chessDao.readNotation();
+        chessGame.initChessGame();
         for (Notation notation : notations) {
             chessGame.move(Position.from(notation.getSource()), Position.from(notation.getTarget()));
         }

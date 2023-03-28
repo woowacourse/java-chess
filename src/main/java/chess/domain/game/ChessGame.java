@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Team;
+import chess.factory.BoardFactory;
 import java.util.Collections;
 import java.util.Map;
 
@@ -20,6 +21,14 @@ public class ChessGame {
     public ChessGame(final Board board) {
         this.turn = Turn.WHITE_TEAM_TURN;
         this.board = board;
+    }
+
+    public void initChessGame() {
+        Board initChessBoard = BoardFactory.createBoard();
+        for(Position key : initChessBoard.getBoard().keySet()) {
+            this.board.getBoard().replace(key, initChessBoard.findPiece(key));
+        }
+        this.turn = Turn.WHITE_TEAM_TURN;
     }
 
     public void move(final Position source, final Position destination) {
