@@ -13,7 +13,7 @@ public class Status extends GameCommand {
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.select();
+        ChessBoard chessBoard = chessBoardDao.find();
         ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard.getBlackPieces(), chessBoard.getWhitePieces());
         OutputView.printStatusResult(scoreCalculator.getBlackScore(), scoreCalculator.getWhiteScore());
         return readNextCommand();

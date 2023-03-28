@@ -13,7 +13,7 @@ public class Initialize extends GameCommand {
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.select();
+        ChessBoard chessBoard = chessBoardDao.find();
         OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
         return readNextCommand();
     }

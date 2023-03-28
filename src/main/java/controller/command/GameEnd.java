@@ -13,7 +13,7 @@ public class GameEnd extends GameCommand {
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.select();
+        ChessBoard chessBoard = chessBoardDao.find();
         if (chessBoard.isGameEnded()) {
             showGameEndResult(chessBoard);
             chessBoardDao.delete();

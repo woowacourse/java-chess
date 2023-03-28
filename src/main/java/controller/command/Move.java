@@ -18,7 +18,7 @@ public class Move extends GameCommand {
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.select();
+        ChessBoard chessBoard = chessBoardDao.find();
         executeMove(chessBoard);
         chessBoardDao.update(chessBoard);
 

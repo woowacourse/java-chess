@@ -63,7 +63,7 @@ public class JdbcChessBoardDao implements ChessBoardDao {
     }
 
     @Override
-    public ChessBoard select() {
+    public ChessBoard find() {
         // Todo: 체스 보드 생성해주기
         Map<Position, Piece> loadBoard = new HashMap<>();
         Color turnOfColor = null;
