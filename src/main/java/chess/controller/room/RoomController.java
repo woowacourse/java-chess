@@ -10,7 +10,7 @@ import static chess.controller.room.RoomCommand.ROOM_ID_INDEX;
 
 import chess.controller.Action;
 import chess.controller.CommandMapper;
-import chess.controller.Controller;
+import chess.controller.SubController;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.domain.room.Room;
@@ -20,7 +20,7 @@ import chess.view.output.RoomOutputView;
 import java.util.List;
 import java.util.Map;
 
-public class RoomController implements Controller {
+public class RoomController implements SubController {
     private final RoomInputView inputView;
     private final RoomOutputView outputView;
     private final RoomService roomService;

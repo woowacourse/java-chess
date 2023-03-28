@@ -33,7 +33,7 @@ public class ControllerFactory {
     private static final JdbcTemplate JDBC_TEMPLATE = new JdbcTemplate(FixedConnectionPool.getInstance());
 
     static {
-        final CommandMapper<MainCommand, Controller> mainCommandMapper = new CommandMapper<>(Map.of(
+        final CommandMapper<MainCommand, SubController> mainCommandMapper = new CommandMapper<>(Map.of(
                 MainCommand.USER, userController(),
                 MainCommand.ROOM, roomController(),
                 MainCommand.START, gameController(),
@@ -42,7 +42,7 @@ public class ControllerFactory {
         INSTANCE = new MainController(new MainInputView(SCANNER), new MainOutputView(), mainCommandMapper);
     }
 
-    private static Controller userController() {
+    private static SubController userController() {
         return new UserController(new UserInputView(SCANNER), new UserOutputView(), new UserService(userDao()));
     }
 
@@ -50,7 +50,7 @@ public class ControllerFactory {
         return new UserJdbcDao(JDBC_TEMPLATE);
     }
 
-    private static Controller roomController() {
+    private static SubController roomController() {
         return new RoomController(new RoomInputView(SCANNER), new RoomOutputView(), new RoomService(roomDao()));
     }
 
@@ -58,7 +58,7 @@ public class ControllerFactory {
         return new RoomJdbcDao(JDBC_TEMPLATE);
     }
 
-    private static Controller gameController() {
+    private static SubController gameController() {
         return new GameController(new GameInputView(SCANNER), new GameOutputView(), new GameService(gameDao()));
     }
 
@@ -66,7 +66,7 @@ public class ControllerFactory {
         return new GameJdbcDao(JDBC_TEMPLATE);
     }
 
-    private static Controller empty() {
+    private static SubController empty() {
         return () -> {
         };
     }

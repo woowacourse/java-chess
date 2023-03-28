@@ -9,7 +9,7 @@ import static chess.controller.game.GameCommand.STATUS;
 
 import chess.controller.Action;
 import chess.controller.CommandMapper;
-import chess.controller.Controller;
+import chess.controller.SubController;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.dto.MoveDto;
@@ -19,7 +19,7 @@ import chess.view.output.GameOutputView;
 import java.util.List;
 import java.util.Map;
 
-public class GameController implements Controller {
+public class GameController implements SubController {
     private final GameInputView inputView;
     private final GameOutputView outputView;
     private final GameService gameService;

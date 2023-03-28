@@ -9,7 +9,7 @@ import static chess.controller.user.UserCommand.REGISTER;
 
 import chess.controller.Action;
 import chess.controller.CommandMapper;
-import chess.controller.Controller;
+import chess.controller.SubController;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.domain.user.User;
@@ -19,7 +19,7 @@ import chess.view.output.UserOutputView;
 import java.util.List;
 import java.util.Map;
 
-public class UserController implements Controller {
+public class UserController implements SubController {
     private final UserInputView inputView;
     private final UserOutputView outputView;
     private final UserService userService;
