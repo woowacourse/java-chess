@@ -120,7 +120,7 @@ class PawnTest {
         Piece promotedPawn = pawn.getPromotionResult(new Position(4, 0));
 
         assertThat(promotedPawn.isPieceType(PieceType.QUEEN)).isTrue();
-        assertThat(promotedPawn.isTeam(Team.BLACK)).isTrue();
+        assertThat(promotedPawn.isSameTeam(Team.BLACK)).isTrue();
     }
 
     @Test
@@ -130,7 +130,7 @@ class PawnTest {
         Piece promotedPawn = pawn.getPromotionResult(new Position(4, 7));
 
         assertThat(promotedPawn.isPieceType(PieceType.QUEEN)).isTrue();
-        assertThat(promotedPawn.isTeam(Team.WHITE)).isTrue();
+        assertThat(promotedPawn.isSameTeam(Team.WHITE)).isTrue();
     }
 
 }
