@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.dao.BoardDao;
 import chess.dao.GameDao;
-import chess.dao.JdbcTemplate;
+import chess.dao.Transaction;
 import chess.domain.piece.Piece;
 import chess.domain.state.*;
 import chess.dto.CommandDto;
@@ -17,11 +17,11 @@ import java.util.stream.Stream;
 public final class ChessGame {
     private final GameDao gameDao;
     private final BoardDao boardDao;
-    private final JdbcTemplate jdbcTemplate;
+    private final Transaction jdbcTemplate;
     private final int gameId;
     private State state;
 
-    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final JdbcTemplate jdbcTemplate, final int gameId) {
+    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final Transaction jdbcTemplate, final int gameId) {
         this.state = state;
         this.gameDao = gameDao;
         this.boardDao = boardDao;
@@ -29,7 +29,7 @@ public final class ChessGame {
         this.gameId = gameId;
     }
 
-    public static ChessGame from(final GameDao gameDao, final BoardDao boardDao, final JdbcTemplate jdbcTemplate) throws SQLException {
+    public static ChessGame from(final GameDao gameDao, final BoardDao boardDao, final Transaction jdbcTemplate) throws SQLException {
         GameDto gameDto = gameDao.findByLastGame();
 
         if (gameDto.isEnd()) {

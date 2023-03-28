@@ -3,7 +3,7 @@ package chess.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class JdbcTemplate {
+public class JdbcTemplate implements Transaction {
     private final Connection connection;
 
     public JdbcTemplate(final Connection connection) {
