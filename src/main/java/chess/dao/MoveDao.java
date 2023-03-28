@@ -54,7 +54,6 @@ public class MoveDao {
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException error) {
-            System.out.println(error);
             throw new RuntimeException("기보 초기화 중 에러가 발생했습니다");
         }
     }
