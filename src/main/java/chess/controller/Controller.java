@@ -40,10 +40,7 @@ public final class Controller {
             chessGame.end();
             OutputView.printEnd();
         });
-        commandController.register(Command.STATUS, command -> {
-            chessGame.identity();
-            printStatus();
-        });
+        commandController.register(Command.STATUS, command -> printStatus());
         commandController.register(Command.MOVE, command -> {
             chessGame.move(command);
             OutputView.printChessBoard(chessGame.getBoard());
