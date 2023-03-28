@@ -1,39 +1,81 @@
 package chess.domain;
 
-import chess.cache.PieceCache;
+import chess.dao.GameDao;
 import chess.domain.piece.Piece;
+import chess.domain.state.*;
+import chess.dto.CommandDto;
+import chess.dto.GameDto;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ChessGame {
-    private final Board board;
-    private final Color color;
+public final class ChessGame {
+    private final GameDao gameDao;
+    private final int gameId;
+    private State state;
 
-    private ChessGame(final Board board, final Color color) {
-        this.board = board;
-        this.color = color;
+    private ChessGame(final State state, final GameDao gameDao, final int gameId) {
+        this.state = state;
+        this.gameDao = gameDao;
+        this.gameId = gameId;
     }
 
-    public static ChessGame create() {
-        return new ChessGame(Board.from(PieceCache.create()), Color.WHITE);
-    }
+    public static ChessGame from(GameDao gameDao) throws SQLException {
+        GameDto gameDto = gameDao.findByLastGame();
 
-    public static ChessGame restart(Board board, Color color) {
-        return new ChessGame(board, color);
-    }
-
-    public ChessGame next() {
-        if (color == Color.WHITE) {
-            return new ChessGame(board, Color.BLACK);
+        if (gameDto.isEnd()) {
+            final State state = new Ready(Board.create(), Color.EMPTY);
+            gameDao.createGame(Board.create().getBoard());
+            return new ChessGame(state, gameDao, gameDto.getId() + 1);
         }
-        return new ChessGame(board, Color.WHITE);
+
+        Board board = Board.from(gameDao.findByLastGameBoard(gameDto.getId()));
+        final State state = new Ready(board, Color.valueOf(gameDto.getColor()));
+        return new ChessGame(state, gameDao, gameDto.getId());
     }
 
-    public Piece move(final Position source, final Position target) {
-        return board.move(source, target, color);
+    public Map<Position, Piece> getBoard() {
+        return state.getBoard();
+    }
+
+    public boolean isNotEnd() {
+        return state.getClass() != End.class;
+    }
+
+    public boolean isGameEnd() {
+        return state.getClass() == GameEnd.class;
+    }
+
+    public boolean isRunning() {
+        return state.getClass() == Running.class;
+    }
+
+    public boolean isNotGameEnd() {
+        return state.getClass() != GameEnd.class;
+    }
+
+    public void move(final CommandDto commandDto) {
+        State newState = state.move(commandDto.getSource(), commandDto.getTarget());
+        if (newState.getClass() == GameEnd.class) {
+            gameDao.updateGameStatus(true, gameId);
+        }
+
+        gameDao.movePiece(newState.getBoard(), gameId, newState.getColor());
+        state = newState;
+    }
+
+    public void start() {
+        state = state.start();
+    }
+
+    public void end() {
+        state = state.end();
+    }
+
+    public void identity() {
     }
 
     public double calculateScore(Color color) {
@@ -45,7 +87,7 @@ public class ChessGame {
 
     private Stream<Map.Entry<PieceType, Double>> calculateColumnScore(final Color color, final Row row) {
         Map<PieceType, Double> columnScore = Arrays.stream(Column.values())
-                .map(column -> board.getPiece(Position.of(row, column)))
+                .map(column -> state.getBoard().get(Position.of(row, column)))
                 .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.groupingBy(Piece::getPieceType, Collectors.summingDouble(Piece::getScore)));
 
@@ -68,11 +110,7 @@ public class ChessGame {
         return entry.getKey() == PieceType.PAWN && entry.getValue() > pawnCount;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getBoard();
-    }
-
     public Color getColor() {
-        return color;
+        return state.getColor();
     }
 }

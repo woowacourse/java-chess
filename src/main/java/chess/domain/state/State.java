@@ -1,19 +1,20 @@
 package chess.domain.state;
 
-import chess.domain.ChessGame;
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.piece.Piece;
+
+import java.util.Map;
 
 public abstract class State {
-    protected final ChessGame chessGame;
+    private final Board board;
+    private final Color color;
 
-    protected State(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    protected State(final Board board, final Color color) {
+        this.board = board;
+        this.color = color;
     }
-
-    public abstract boolean isEnd();
-
-    public abstract boolean isGameEnd();
 
     public abstract State move(Position source, Position target);
 
@@ -21,7 +22,19 @@ public abstract class State {
 
     public abstract State end();
 
-    public abstract double calculateScore(Color color);
+    protected final Color color() {
+        return color;
+    }
 
-    public abstract Color getColor();
+    protected final Board board() {
+        return board;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }

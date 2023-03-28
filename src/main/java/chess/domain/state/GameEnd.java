@@ -1,22 +1,12 @@
 package chess.domain.state;
 
-import chess.domain.ChessGame;
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.Position;
 
-public class GameEnd extends State{
-    protected GameEnd(final ChessGame ChessGame) {
-        super(ChessGame);
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public boolean isGameEnd() {
-        return true;
+public final class GameEnd extends State {
+    GameEnd(final Board board, final Color color) {
+        super(board, color);
     }
 
     @Override
@@ -26,21 +16,11 @@ public class GameEnd extends State{
 
     @Override
     public State start() {
-        return new Running(ChessGame.create());
+        return new Running(Board.create(), Color.EMPTY);
     }
 
     @Override
     public State end() {
-        return new End(chessGame);
-    }
-
-    @Override
-    public double calculateScore(Color color) {
-        return chessGame.calculateScore(color);
-    }
-
-    @Override
-    public Color getColor() {
-        return chessGame.getColor();
+        return new End(board(), color());
     }
 }
