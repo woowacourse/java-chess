@@ -124,8 +124,8 @@ public class JdbcChessGameDao implements ChessGameDao {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {
             preparedStatement.setInt(1, gameId);
-            preparedStatement.setString(2, chessGame.getStatus().getLabel());
-            preparedStatement.setString(3, chessGame.getTurn().getLabel());
+            preparedStatement.setString(2, chessGame.getStatus().name());
+            preparedStatement.setString(3, chessGame.getTurn().name());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -137,10 +137,10 @@ public class JdbcChessGameDao implements ChessGameDao {
             try (final var connection = getConnection();
                  final var preparedStatement = connection.prepareStatement(pieceQuery)) {
                 preparedStatement.setInt(1, gameId);
-                preparedStatement.setString(2, positionPieceEntry.getKey().getFile().getLabel());
-                preparedStatement.setString(3, positionPieceEntry.getKey().getRank().getLabel());
-                preparedStatement.setString(4, positionPieceEntry.getValue().getType().getLabel());
-                preparedStatement.setString(5, positionPieceEntry.getValue().getColor().getLabel());
+                preparedStatement.setString(2, positionPieceEntry.getKey().getFile().name());
+                preparedStatement.setString(3, positionPieceEntry.getKey().getRank().name());
+                preparedStatement.setString(4, positionPieceEntry.getValue().getType().name());
+                preparedStatement.setString(5, positionPieceEntry.getValue().getColor().name());
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
@@ -179,6 +179,14 @@ public class JdbcChessGameDao implements ChessGameDao {
         final var gameQuery = "DELETE FROM game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        final var pieceQuery = "DELETE FROM piece";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
