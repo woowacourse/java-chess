@@ -52,33 +52,16 @@ public class ChessService {
         chessGame.start();
 
         Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
-        List<PieceInfoDto> pieces = new ArrayList<>();
-        for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
-            pieces.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
-        }
 
         gameDao.save(gameId, makeGameInfoDto());
-        pieceDao.save(gameId, pieces);
+        pieceDao.save(gameId, makePieceInfoDtos(board));
     }
 
     public void move(int gameId, List<String> arguments) {
         Map<Position, Piece> update = chessGame.move(arguments);
 
-        List<PieceInfoDto> updatePieces = new ArrayList<>();
-        for (Entry<Position, Piece> positionAndPiece : update.entrySet()) {
-            updatePieces.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
-        }
-
         gameDao.updateById(gameId, makeGameInfoDto());
-        pieceDao.updateById(gameId, updatePieces);
-    }
-
-    private GameInfoDto makeGameInfoDto() {
-        return GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn());
-    }
-
-    private PieceInfoDto makePieceInfoDto(Position position, Piece piece) {
-        return PieceInfoDto.create(position, piece);
+        pieceDao.updateById(gameId, makePieceInfoDtos(update));
     }
 
     public Map<Color, Double> status() {
@@ -88,6 +71,22 @@ public class ChessService {
     public void end(int gameId) {
         chessGame.end();
         gameDao.updateById(gameId, makeGameInfoDto());
+    }
+
+    private GameInfoDto makeGameInfoDto() {
+        return GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn());
+    }
+
+    private List<PieceInfoDto> makePieceInfoDtos(Map<Position, Piece> board) {
+        List<PieceInfoDto> pieces = new ArrayList<>();
+        for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
+            pieces.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+        }
+        return pieces;
+    }
+
+    private PieceInfoDto makePieceInfoDto(Position position, Piece piece) {
+        return PieceInfoDto.create(position, piece);
     }
 
     public boolean canPlay() {
