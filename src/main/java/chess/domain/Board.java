@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
@@ -11,17 +10,13 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class Board {
 
-    public static final int WHITE_GENERALS_RANK = 0;
-    public static final int WHITE_PAWNS_RANK = 1;
-    public static final int BLACK_PAWNS_RANK = 6;
-    public static final int BLACK_GENERALS_RANK = 7;
     private static final double MULTIPLE_PAWN_POINT = 0.5;
     private static final double MULTIPLE_PAWN_COUNT = 2;
 
@@ -32,33 +27,9 @@ public class Board {
     }
 
     public static Board create() {
-        Map<Position, Piece> board = new TreeMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Position position = Position.from(file, rank);
-                board.put(position, Empty.create(Color.NONE));
-            }
-        }
+        Map<Position, Piece> board = new HashMap<>();
+        board.putAll(BoardGenerator.generate());
         return new Board(board);
-    }
-
-    public void initialize() {
-        List<Piece> whiteGenerals = PieceFactory.createWhiteGenerals();
-        List<Piece> whitePawns = PieceFactory.createWhitePawns();
-        List<Piece> blackPawns = PieceFactory.createBlackPawns();
-        List<Piece> blackGenerals = PieceFactory.createBlackGenerals();
-        for (Position position : board.keySet()) {
-            placePieceAtPosition(whiteGenerals, position, WHITE_GENERALS_RANK);
-            placePieceAtPosition(whitePawns, position, WHITE_PAWNS_RANK);
-            placePieceAtPosition(blackPawns, position, BLACK_PAWNS_RANK);
-            placePieceAtPosition(blackGenerals, position, BLACK_GENERALS_RANK);
-        }
-    }
-
-    private void placePieceAtPosition(final List<Piece> pieces, final Position position, int rank) {
-        if (position.isRank(rank)) {
-            board.put(position, pieces.get(position.getFile().getIndex()));
-        }
     }
 
     public void validateSourcePiece(final Position source, final Color color) {
