@@ -13,8 +13,9 @@ public final class ChessGameApplication {
 
         GameDao gameDao = new GameJdbcDao(ConnectionGenerator.getConnection());
         BoardDao boardDao = new BoardJdbcDao(ConnectionGenerator.getConnection());
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionGenerator.getConnection());
 
-        ChessGame chessGame = ChessGame.from(gameDao, boardDao);
+        ChessGame chessGame = ChessGame.from(gameDao, boardDao, jdbcTemplate);
 
         Controller controller = new Controller(commandController, chessGame);
         controller.run();

@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcTemplate {
-    private static final Connection connection = ConnectionGenerator.getConnection();
+    private final Connection connection;
 
-    private JdbcTemplate() {
+    public JdbcTemplate(final Connection connection) {
+        this.connection = connection;
     }
 
-    public static void batchTransaction(Runnable... transactions) {
+    public void batchTransaction(Runnable... transactions) {
         try {
             connection.setAutoCommit(false);
 
@@ -26,8 +27,7 @@ public class JdbcTemplate {
         }
     }
 
-
-    public static void rollback(Connection connection) {
+    private void rollback(Connection connection) {
         try {
             connection.rollback();
         } catch (SQLException ex) {
@@ -35,7 +35,7 @@ public class JdbcTemplate {
         }
     }
 
-    public static void setAutoCommitTrue(Connection connection) {
+    private void setAutoCommitTrue(Connection connection) {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {

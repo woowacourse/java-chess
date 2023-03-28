@@ -17,53 +17,36 @@ import java.util.stream.Stream;
 public final class ChessGame {
     private final GameDao gameDao;
     private final BoardDao boardDao;
+    private final JdbcTemplate jdbcTemplate;
     private final int gameId;
     private State state;
 
-    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final int gameId) {
+    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final JdbcTemplate jdbcTemplate, final int gameId) {
         this.state = state;
         this.gameDao = gameDao;
         this.boardDao = boardDao;
+        this.jdbcTemplate = jdbcTemplate;
         this.gameId = gameId;
     }
 
-    public static ChessGame from(final GameDao gameDao, final BoardDao boardDao) throws SQLException {
+    public static ChessGame from(final GameDao gameDao, final BoardDao boardDao, final JdbcTemplate jdbcTemplate) throws SQLException {
         GameDto gameDto = gameDao.findByLastGame();
 
         if (gameDto.isEnd()) {
             final State state = new Ready(Board.create(), Color.EMPTY);
 
-            JdbcTemplate.batchTransaction(() -> {
+            jdbcTemplate.batchTransaction(() -> {
                 int gameId = gameDao.create().getId();
                 boardDao.create(Board.create().getBoard(), gameId);
             });
 
-            return new ChessGame(state, gameDao, boardDao, gameDto.getId() + 1);
+            int nextId = gameDto.getId() + 1;
+            return new ChessGame(state, gameDao, boardDao, jdbcTemplate, nextId);
         }
 
         Board board = Board.from(boardDao.findByLastGameBoard(gameDto.getId()));
         final State state = new Ready(board, Color.valueOf(gameDto.getColor()));
-        return new ChessGame(state, gameDao, boardDao, gameDto.getId());
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return state.getBoard();
-    }
-
-    public boolean isNotEnd() {
-        return state.getClass() != End.class;
-    }
-
-    public boolean isGameEnd() {
-        return state.getClass() == GameEnd.class;
-    }
-
-    public boolean isRunning() {
-        return state.getClass() == Running.class;
-    }
-
-    public boolean isNotGameEnd() {
-        return state.getClass() != GameEnd.class;
+        return new ChessGame(state, gameDao, boardDao, jdbcTemplate, gameDto.getId());
     }
 
     public void move(final CommandDto commandDto) {
@@ -73,7 +56,7 @@ public final class ChessGame {
             gameDao.update(true, gameId);
         }
 
-        JdbcTemplate.batchTransaction(() -> {
+        jdbcTemplate.batchTransaction(() -> {
             boardDao.deleteAll(gameId);
             gameDao.update(state.getColor().reverse(), gameId);
             boardDao.create(newState.getBoard(), gameId);
@@ -88,9 +71,6 @@ public final class ChessGame {
 
     public void end() {
         state = state.end();
-    }
-
-    public void identity() {
     }
 
     public double calculateScore(Color color) {
@@ -123,6 +103,26 @@ public final class ChessGame {
         final int pawnCount = 1;
 
         return entry.getKey() == PieceType.PAWN && entry.getValue() > pawnCount;
+    }
+
+    public boolean isNotEnd() {
+        return state.getClass() != End.class;
+    }
+
+    public boolean isGameEnd() {
+        return state.getClass() == GameEnd.class;
+    }
+
+    public boolean isRunning() {
+        return state.getClass() == Running.class;
+    }
+
+    public boolean isNotGameEnd() {
+        return state.getClass() != GameEnd.class;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return state.getBoard();
     }
 
     public Color getColor() {
