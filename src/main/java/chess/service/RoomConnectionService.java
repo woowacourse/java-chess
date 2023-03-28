@@ -13,7 +13,7 @@ public class RoomConnectionService {
     }
 
     public Room createRoom() {
-        int id = roomDao.insert(Room.create());
+        int id = roomDao.insert(Room.createEmpty());
         return connectRoom(id);
     }
 

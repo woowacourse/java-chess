@@ -18,7 +18,7 @@ public class Room {
         this.turn = turn;
     }
 
-    public static Room create() {
+    public static Room createEmpty() {
         return new Room(null, null, EMPTY);
     }
 
