@@ -31,7 +31,7 @@ public class BoardResult {
     private double calculateTotalPoints(final Color color) {
         return board.values().stream()
                 .filter(piece -> piece.color() == color)
-                .mapToDouble(pieceType -> pieceType.point())
+                .mapToDouble(Piece::point)
                 .sum();
     }
 
@@ -39,7 +39,7 @@ public class BoardResult {
         final Map<File, List<Position>> positionsByPawn = board.keySet().stream()
                 .filter(key -> board.get(key).type() == PieceType.PAWN)
                 .filter(key -> board.get(key).color() == color)
-                .collect(Collectors.groupingBy(position -> position.file()));
+                .collect(Collectors.groupingBy(Position::file));
 
         return positionsByPawn.values().stream()
                 .filter(pawnPositions -> pawnPositions.size() >= PAWN_COUNT)
