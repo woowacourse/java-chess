@@ -7,6 +7,7 @@ import chess.domain.board.PieceProvider;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Game;
 import chess.domain.game.Status;
+import chess.history.History;
 import chess.history.MoveHistory;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,7 +18,7 @@ public class ChessController {
     
     private final InputView inputView;
     private final OutputView outputView;
-    private final MoveHistory history;
+    private final History history = MoveHistory.create();
     
     private final Map<CommandType, Executor> executorMap = Map.of(
             CommandType.START, this::executeStartCommand,
@@ -29,7 +30,6 @@ public class ChessController {
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.history = new MoveHistory();
     }
     
     public void run() {
@@ -65,13 +65,13 @@ public class ChessController {
     
     private void executeMoveCommand(final Command command, final Game chessGame) {
         command.update(chessGame);
-        this.history.add(command);
+        command.addHistory(this.history);
         this.printBoard(chessGame);
     }
     
     private void executeStartCommand(final Command command, final Game chessGame) {
         command.update(chessGame);
-        this.history.getCommands().forEach(c -> c.update(chessGame));
+        this.history.apply(chessGame);
         this.printBoard(chessGame);
     }
     

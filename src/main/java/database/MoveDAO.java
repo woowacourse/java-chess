@@ -1,10 +1,10 @@
 package database;
 
-import chess.command.Command;
-import chess.command.MoveCommand;
+import chess.history.Move;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,35 +22,37 @@ public final class MoveDAO {
         this.tableName = tableName;
     }
     
-    public void addMove(final MoveCommand command) {
-        final var query = String.format("INSERT INTO %s (`from`,`to`) VALUES(?, ?)", this.tableName);
+    public void addMove(final Move move) {
+        final var query = String.format("INSERT INTO %s VALUES(?, ?, ?)", this.tableName);
         try (final var connection = this.getConnection();
                 final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, command.getFrom().getLabel());
-            preparedStatement.setString(2, command.getTo().getLabel());
+            preparedStatement.setTimestamp(1, new Timestamp(move.getID()));
+            preparedStatement.setString(2, move.getFromLabel());
+            preparedStatement.setString(3, move.getToLabel());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
     
-    public List<Command> fetchCommands() {
+    public List<Move> fetchAllMoves() {
         final var query = String.format("SELECT * FROM %s", this.tableName);
-        List<Command> commands = new ArrayList<>();
+        List<Move> moves = new ArrayList<>();
         try (final var connection = this.getConnection();
                 final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                final var timestamp = resultSet.getTimestamp("id");
+                final var id = timestamp.getTime();
                 final var from = resultSet.getString("from");
                 final var to = resultSet.getString("to");
-                final var command = new MoveCommand(List.of(from, to));
-                commands.add(command);
+                moves.add(Move.create(id, from, to));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
         
-        return commands;
+        return moves;
     }
     
     public void resetMoves() {

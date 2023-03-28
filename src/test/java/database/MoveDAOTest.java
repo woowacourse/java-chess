@@ -2,11 +2,12 @@ package database;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.command.Command;
-import chess.command.MoveCommand;
+import chess.domain.position.Position;
+import chess.history.Move;
 import java.sql.SQLException;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MoveDAOTest {
@@ -23,18 +24,20 @@ class MoveDAOTest {
     }
     
     @Test
+    @DisplayName("이동 기록을 추가한다.")
     public void addMove() {
         this.moveDAO.resetMoves();
-        MoveCommand moveCommand = new MoveCommand(List.of("a2", "a3"));
-        this.moveDAO.addMove(moveCommand);
-        MoveCommand moveCommand2 = new MoveCommand(List.of("a3", "a4"));
-        this.moveDAO.addMove(moveCommand2);
+        Move move = Move.create(Position.from("a2"), Position.from("a3"));
+        this.moveDAO.addMove(move);
+        Move move2 = Move.create(Position.from("a3"), Position.from("a4"));
+        this.moveDAO.addMove(move2);
     }
     
     @Test
-    public void fetchCommands() {
-        List<Command> commands = this.moveDAO.fetchCommands();
-        Assertions.assertThat(commands).isNotNull();
-        Assertions.assertThat(commands.size()).isEqualTo(2);
+    @DisplayName("이동 기록을 모두 가져온다.")
+    public void fetchMoves() {
+        List<Move> moves = this.moveDAO.fetchAllMoves();
+        Assertions.assertThat(moves).isNotNull();
+        Assertions.assertThat(moves.size()).isEqualTo(2);
     }
 }

@@ -1,44 +1,39 @@
 package chess.history;
 
-import chess.command.Command;
-import chess.command.CommandType;
-import chess.command.MoveCommand;
+import chess.domain.game.ActionHandler;
 import database.MoveDAO;
 import java.util.List;
 
 public final class MoveHistory implements History {
     
-    public static final String INVALID_COMMAND_ADDED_ERROR_MESSAGE =
-            HISTORY_ERROR_PREFIX + "이동 기록에 이동 명령어가 아닌 명령어가 추가되었습니다.";
-    private final MoveDAO moveDAO = new MoveDAO("moves");
     
-    private final List<Command> commands;
+    private static final MoveDAO MOVE_DAO = new MoveDAO("moves");
     
-    public MoveHistory() {
-        this.commands = this.moveDAO.fetchCommands();
+    private final List<Move> moveHistory;
+    
+    private MoveHistory(final List<Move> moveHistory) {
+        this.moveHistory = moveHistory;
     }
     
-    private void validateCommand(final Command command) {
-        if (command.getType() != CommandType.MOVE) {
-            throw new IllegalArgumentException(INVALID_COMMAND_ADDED_ERROR_MESSAGE);
-        }
+    public static MoveHistory create() {
+        return new MoveHistory(MOVE_DAO.fetchAllMoves());
     }
     
     @Override
-    public void add(final Command command) {
-        this.commands.add(command);
-        this.validateCommand(command);
-        this.moveDAO.addMove((MoveCommand) command);
+    public void add(final Move move) {
+        this.moveHistory.add(move);
+        MOVE_DAO.addMove(move);
     }
     
     @Override
     public void reset() {
-        this.commands.clear();
-        this.moveDAO.resetMoves();
+    
     }
     
     @Override
-    public List<Command> getCommands() {
-        return this.commands;
+    public void apply(final ActionHandler action) {
+        System.out.println("전 이동 기록을 적용합니다.");
+        this.moveHistory.forEach(move -> action.move(move.getFrom(), move.getTo()));
     }
+    
 }

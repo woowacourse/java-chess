@@ -1,15 +1,12 @@
 package chess.history;
 
-import chess.command.Command;
-import java.util.List;
+import chess.domain.game.ActionHandler;
 
 public interface History {
     
-    String HISTORY_ERROR_PREFIX = "[HISTORY ERROR] ";
-    
-    void add(Command command);
+    void add(Move move);
     
     void reset();
     
-    List<Command> getCommands();
+    void apply(ActionHandler action);
 }

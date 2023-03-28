@@ -2,6 +2,7 @@ package chess.command;
 
 import chess.domain.game.ActionHandler;
 import chess.domain.game.Status;
+import chess.history.History;
 import java.util.List;
 
 public class StartCommand implements Command {
@@ -22,14 +23,21 @@ public class StartCommand implements Command {
     }
     
     @Override
+    public Status query(final ActionHandler action) {
+        throw new UnsupportedOperationException(
+                COMMAND_ERROR_PREFIX + this.type + INVALID_QUERY_ERROR_MESSAGE);
+    }
+    
+    @Override
     public void update(final ActionHandler action) {
         action.start();
     }
     
     @Override
-    public Status query(final ActionHandler action) {
+    public void addHistory(final History history) {
         throw new UnsupportedOperationException(
-                COMMAND_ERROR_PREFIX + this.type + INVALID_QUERY_ERROR_MESSAGE);
+                COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
+        
     }
     
     @Override

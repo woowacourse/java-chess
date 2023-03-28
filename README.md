@@ -2,6 +2,24 @@
 
 ## 미션 4 기능 목록
 
+### DDL 정보
+
+```sql
+CREATE TABLE moves
+(
+    id     TIMESTAMP(3) PRIMARY KEY,
+    `from` VARCHAR(2) NOT NULL,
+    `to`   VARCHAR(2) NOT NULL
+);
+
+CREATE TABLE moves_test
+(
+    id     TIMESTAMP(3) PRIMARY KEY,
+    `from` VARCHAR(2) NOT NULL,
+    `to`   VARCHAR(2) NOT NULL
+);
+```
+
 ### MoveHistory
 
 - [x] DAO를 통해 Command를 저장한다.

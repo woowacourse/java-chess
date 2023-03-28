@@ -2,6 +2,7 @@ package chess.command;
 
 import chess.domain.game.ActionHandler;
 import chess.domain.game.Status;
+import chess.history.History;
 
 public interface Command {
     
@@ -14,6 +15,8 @@ public interface Command {
     Status query(ActionHandler action);
     
     void update(ActionHandler action);
+    
+    void addHistory(History history);
     
     CommandType getType();
     
