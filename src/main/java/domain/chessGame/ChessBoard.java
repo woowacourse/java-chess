@@ -12,6 +12,7 @@ import java.util.Map;
 
 public final class ChessBoard {
 
+    public static final int NUMBER_OF_KING_IN_UNFINISHED_GAME = 2;
     private final Map<Position, Piece> chessBoard;
     private Color turnOfColor;
 
@@ -111,7 +112,10 @@ public final class ChessBoard {
     }
 
     public boolean isGameEnded() {
-        return chessBoard.values().stream().filter(Piece::isKing).count() != 2;
+        return NUMBER_OF_KING_IN_UNFINISHED_GAME != chessBoard.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() ;
     }
 
     public Map<Position, Piece> getBlackPieces() {
