@@ -59,10 +59,38 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public void updateById(int gameId, ChessGame chessGame) {
-        deleteById(gameId);
-        save(gameId, chessGame);
+    public void updateById(int gameId, List<PieceInfoDto> update) {
+        PieceInfoDto source = update.get(0);
+        final var sourceQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
+        try (final var connection = ConnectionProvider.getConnection();
+             final var preparedStatement = connection.prepareStatement(sourceQuery)) {
+            preparedStatement.setString(1, source.getPiece().getType().name());
+            preparedStatement.setString(2, source.getPiece().getColor().name());
+            preparedStatement.setInt(3, gameId);
+            preparedStatement.setString(4, source.getPosition().getFile().name());
+            preparedStatement.setString(5, source.getPosition().getRank().name());
+
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        PieceInfoDto destination = update.get(1);
+        final var destinationQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
+        try (final var connection = ConnectionProvider.getConnection();
+             final var preparedStatement = connection.prepareStatement(destinationQuery)) {
+            preparedStatement.setString(1, destination.getPiece().getType().name());
+            preparedStatement.setString(2, destination.getPiece().getColor().name());
+            preparedStatement.setInt(3, gameId);
+            preparedStatement.setString(4, destination.getPosition().getFile().name());
+            preparedStatement.setString(5, destination.getPosition().getRank().name());
+
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Override
     public void deleteById(int gameId) {

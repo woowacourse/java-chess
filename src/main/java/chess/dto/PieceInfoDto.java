@@ -22,6 +22,10 @@ public class PieceInfoDto {
         return new PieceInfoDto(position, piece);
     }
 
+    public static PieceInfoDto create(Position position, Piece piece) {
+        return new PieceInfoDto(position, piece);
+    }
+
     public Position getPosition() {
         return position;
     }

@@ -10,8 +10,10 @@ import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.GameInfoDto;
 import chess.dto.PieceInfoDto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -34,32 +36,41 @@ public class ChessService {
 
     public void loadChessGame(int gameId) {
         GameInfoDto gameInfo = gameDao.findById(gameId);
-        List<PieceInfoDto> pieceInfos = pieceDao.findById(gameId);
-        Map<Position, Piece> board = pieceInfos.stream()
-                .collect(Collectors.toMap(PieceInfoDto::getPosition, PieceInfoDto::getPiece));
-
         if (gameInfo == null) {
             this.chessGame = new ChessGame();
-            gameDao.save(gameId, chessGame);
-            pieceDao.save(gameId, chessGame);
             return;
         }
 
+        List<PieceInfoDto> pieceInfos = pieceDao.findById(gameId);
+        Map<Position, Piece> board = pieceInfos.stream()
+                .collect(Collectors.toMap(PieceInfoDto::getPosition, PieceInfoDto::getPiece));
         ChessGame existedChessGame = new ChessGame(new Board(board), gameInfo.getTurn(), gameInfo.getStatus());
-
         this.chessGame = existedChessGame;
     }
 
     public void start(int gameId) {
         chessGame.start();
-        gameDao.updateById(gameId, chessGame);
-        pieceDao.updateById(gameId, chessGame);
+        gameDao.save(gameId, makeGameInfoDto());
+        pieceDao.save(gameId, chessGame);
     }
 
     public void move(int gameId, List<String> arguments) {
-        chessGame.move(arguments);
-        gameDao.updateById(gameId, chessGame);
-        pieceDao.updateById(gameId, chessGame);
+        Map<Position, Piece> updatePiece = chessGame.move(arguments);
+        List<PieceInfoDto> updatePieceInfos = new ArrayList<>();
+        for (Entry<Position, Piece> positionAndPiece : updatePiece.entrySet()) {
+            updatePieceInfos.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+        }
+
+        gameDao.updateById(gameId, makeGameInfoDto());
+        pieceDao.updateById(gameId, updatePieceInfos);
+    }
+
+    private GameInfoDto makeGameInfoDto() {
+        return GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn());
+    }
+
+    private PieceInfoDto makePieceInfoDto(Position position, Piece piece) {
+        return PieceInfoDto.create(position, piece);
     }
 
     public Map<Color, Double> status() {
@@ -68,8 +79,7 @@ public class ChessService {
 
     public void end(int gameId) {
         chessGame.end();
-        gameDao.updateById(gameId, chessGame);
-        pieceDao.updateById(gameId, chessGame);
+        gameDao.updateById(gameId, makeGameInfoDto());
     }
 
     public boolean canPlay() {

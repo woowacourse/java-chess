@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
@@ -29,11 +30,11 @@ public class ChessGame {
         if (status != GameStatus.START) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
-        board.initialize();
+//        board.initialize();
         status = GameStatus.MOVE;
     }
     
-    public void move(final List<String> arguments) {
+    public Map<Position, Piece> move(final List<String> arguments) {
         if (status != GameStatus.MOVE) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
@@ -44,6 +45,12 @@ public class ChessGame {
         checkCatchKing(destination);
         board.replace(source, destination);
         turn = turn.reverse();
+
+        Map<Position, Piece> update = new HashMap<>();
+        update.put(source, Empty.create(Color.NONE));
+        update.put(destination, board.getPieceAtPosition(destination));
+
+        return update;
     }
 
     private void checkPieceCanMove(final Position source, final Position destination) {
