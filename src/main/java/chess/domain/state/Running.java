@@ -18,7 +18,7 @@ public final class Running extends State {
         if (capturePiece.isSamePieceType(PieceType.KING)) {
             return new GameEnd(newBoard, color());
         }
-        return new Running(newBoard, nextColor());
+        return new Running(newBoard, color().reverse());
     }
 
     @Override
@@ -29,12 +29,5 @@ public final class Running extends State {
     @Override
     public State end() {
         return new End(board(), color());
-    }
-
-    Color nextColor() {
-        if (color() == Color.WHITE) {
-            return Color.BLACK;
-        }
-        return Color.WHITE;
     }
 }

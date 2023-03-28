@@ -16,18 +16,11 @@ public final class Ready extends State {
 
     @Override
     public State start() {
-        return new Running(board(), nextColor());
+        return new Running(board(), color().reverse());
     }
 
     @Override
     public State end() {
         return new End(board(), color());
-    }
-
-    Color nextColor() {
-        if (color() == Color.WHITE) {
-            return Color.BLACK;
-        }
-        return Color.WHITE;
     }
 }
