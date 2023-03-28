@@ -1,12 +1,18 @@
 package chess.repository;
 
 import chess.db.JdbcTemplate;
+import chess.db.RowMapper;
 import chess.domain.room.Room;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class RoomJdbcDao implements RoomDao {
+    private final RowMapper<Room> rowMapper = resultSet -> {
+        final int id = resultSet.getInt("id");
+        final String name = resultSet.getString("name");
+        final int findUserId = resultSet.getInt("user_id");
+        return new Room(id, name, findUserId);
+    };
     private final JdbcTemplate jdbcTemplate;
 
     public RoomJdbcDao(final JdbcTemplate jdbcTemplate) {
@@ -24,29 +30,12 @@ public class RoomJdbcDao implements RoomDao {
 
     @Override
     public List<Room> findAllByUserId(final int userId) {
-        return jdbcTemplate.query("select * from room where user_id = ?", resultSet -> {
-            final List<Room> result = new ArrayList<>();
-            while (resultSet.next()) {
-                final int id = resultSet.getInt("id");
-                final String name = resultSet.getString("name");
-                final int findUserId = resultSet.getInt("user_id");
-                result.add(new Room(id, name, findUserId));
-            }
-            return result;
-        }, userId);
+        return jdbcTemplate.query("select * from room where user_id = ?", rowMapper, userId);
     }
 
     @Override
     public Optional<Room> findById(final int roomId) {
-        return jdbcTemplate.query("select * from room where id = ?", resultSet -> {
-            if (resultSet.next()) {
-                final int id = resultSet.getInt("id");
-                final String name = resultSet.getString("name");
-                final int findUserId = resultSet.getInt("user_id");
-                return Optional.of(new Room(id, name, findUserId));
-            }
-            return Optional.empty();
-        }, roomId);
+        return jdbcTemplate.queryForSingleResult("select * from room where id = ?", rowMapper, roomId);
     }
 
     @Override

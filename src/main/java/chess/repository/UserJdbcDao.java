@@ -1,10 +1,16 @@
 package chess.repository;
 
 import chess.db.JdbcTemplate;
+import chess.db.RowMapper;
 import chess.domain.user.User;
 import java.util.Optional;
 
 public class UserJdbcDao implements UserDao {
+    private final RowMapper<User> rowMapper = resultSet -> {
+        final int id = resultSet.getInt("id");
+        final String findName = resultSet.getString("name");
+        return new User(id, findName);
+    };
     private final JdbcTemplate jdbcTemplate;
 
     public UserJdbcDao(final JdbcTemplate jdbcTemplate) {
@@ -18,14 +24,7 @@ public class UserJdbcDao implements UserDao {
 
     @Override
     public Optional<User> findByName(final String name) {
-        return jdbcTemplate.query("SELECT * FROM user WHERE name = ?", resultSet -> {
-            if (resultSet.next()) {
-                final int id = resultSet.getInt("id");
-                final String findName = resultSet.getString("name");
-                return Optional.of(new User(id, findName));
-            }
-            return Optional.empty();
-        }, name);
+        return jdbcTemplate.queryForSingleResult("SELECT * FROM user WHERE name = ?", rowMapper, name);
     }
 
     public void deleteAll() {
