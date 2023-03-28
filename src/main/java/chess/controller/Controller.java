@@ -34,7 +34,6 @@ public class Controller {
         printChessGame(chessGame);
         Command command = getFirstCommand();
         play(chessGame, command);
-        //play(chessGame, command);
     }
 
     private ChessGame loadChessGame() {

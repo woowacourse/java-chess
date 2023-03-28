@@ -67,10 +67,6 @@ public class ChessGameDao {
         return new ChessGame(chessBoard, gameStatus);
     }
 
-    private Piece extractPiece(final Color pieceColor, final Piece pieceType) {
-        return pieceType.getInstance(pieceColor);
-    }
-
     public void update(final ChessGame chessGame) {
         delete(chessGame);
         save(chessGame);
