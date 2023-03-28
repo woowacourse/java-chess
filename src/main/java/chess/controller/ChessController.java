@@ -23,6 +23,7 @@ import java.util.Map;
 public final class ChessController {
     private final Map<ChessGameCommand, ChessGameAction> commandMapper;
     private final ChessGameDao chessGameDao;
+    private String gameId;
 
     public ChessController(ChessGameDao chessGameDao) {
         this.commandMapper = Map.of(
@@ -35,12 +36,14 @@ public final class ChessController {
     }
 
     public void run() {
-        String gameIdCommand = readGameIdCommand();
+        gameId = readGameIdCommand(); // 1, 2, .. 5, null(new)
+        if (gameId == null) {
+            createGame();
+        }
 
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(gameId);
         if (chessGame == null) {
-            chessGame = new ChessGame(new BoardFactory().createInitialBoard());
-            chessGameDao.save(chessGame);
+            createGame();
         }
 
         OutputView.printStartMessage();
@@ -53,6 +56,12 @@ public final class ChessController {
                 OutputView.printWinner(chessGame.winner());
             }
         }
+    }
+
+    private void createGame() {
+        ChessGame chessGame = new ChessGame(new BoardFactory().createInitialBoard());
+        gameId = chessGameDao.createChessStatus(chessGame);
+        chessGameDao.save(chessGame, gameId);
     }
 
     private String readGameIdCommand() {
@@ -84,13 +93,13 @@ public final class ChessController {
     }
 
     private void start(final List<String> commands) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(gameId);
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
         OutputView.printBoard(chessGame.board());
     }
 
     private void movePiece(final List<String> commands) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(gameId);
         validateCommandsSize(commands, MOVE_COMMAND_SIZE);
         Position from = searchPosition(commands.get(FROM_INDEX));
         Position to = searchPosition(commands.get(TO_INDEX));
@@ -98,18 +107,18 @@ public final class ChessController {
         chessGame.move(from, to);
         OutputView.printBoard(chessGame.board());
 
-        chessGameDao.update(chessGame);
+        chessGameDao.update(chessGame, gameId);
     }
 
     private void showStatus(final List<String> commands) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(gameId);
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         OutputView.printScore(chessGame.calculateScore());
     }
 
     private void end(final List<String> commands) {
-        ChessGame chessGame = chessGameDao.select();
+        ChessGame chessGame = chessGameDao.select(gameId);
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         if (!chessGame.isEnd()) {
@@ -118,7 +127,7 @@ public final class ChessController {
         }
 
         OutputView.printWinner(chessGame.winner());
-        chessGameDao.reset();
+        chessGameDao.reset(gameId);
     }
 
     private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {

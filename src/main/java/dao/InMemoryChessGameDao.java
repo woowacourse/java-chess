@@ -12,22 +12,27 @@ public final class InMemoryChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void save(final ChessGame chessGame) {
+    public void save(final ChessGame chessGame, final String gameId) {
         this.chessGame = chessGame;
     }
 
     @Override
-    public ChessGame select() {
+    public String createChessStatus(final ChessGame chessGame) {
+        return null;
+    }
+
+    @Override
+    public ChessGame select(final String gameId) {
         return chessGame;
     }
 
     @Override
-    public void update(final ChessGame chessGame) {
+    public void update(final ChessGame chessGame, final String gameId) {
         this.chessGame = chessGame;
     }
 
     @Override
-    public void reset() {
+    public void reset(final String gameId) {
         this.chessGame = null;
     }
 }

@@ -7,11 +7,13 @@ public interface ChessGameDao {
 
     List<String> gameIds();
 
-    void save(ChessGame chessGame);
+    void save(ChessGame chessGame, final String gameId);
 
-    ChessGame select();
+    String createChessStatus(final ChessGame chessGame);
 
-    void update(ChessGame chessGame);
+    ChessGame select(final String gameId);
 
-    void reset();
+    void update(ChessGame chessGame, final String gameId);
+
+    void reset(final String gameId);
 }
