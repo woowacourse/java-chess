@@ -22,15 +22,15 @@ public class PlayerDao {
         return Optional.ofNullable(JdbcTemplate.select(query, mapper, name));
     }
 
-    private void create(final String name) {
-        final var query = "INSERT INTO player(name) VALUES (?)";
-
-        JdbcTemplate.executeQuery(query, name);
-    }
-
     public void createIfNotExist(final String name) {
         if (findByName(name).isEmpty()) {
             create(name);
         }
+    }
+
+    private void create(final String name) {
+        final var query = "INSERT INTO player(name) VALUES (?)";
+
+        JdbcTemplate.executeQuery(query, name);
     }
 }

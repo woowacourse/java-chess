@@ -54,10 +54,6 @@ public final class Position {
         return target.rank() - this.rank();
     }
 
-    public String getCoordinate() {
-        return file.value() + String.valueOf(rank.value());
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

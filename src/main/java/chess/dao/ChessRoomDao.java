@@ -35,15 +35,15 @@ public class ChessRoomDao {
         JdbcTemplate.executeQuery(query, chessGameDto.getId(), playerDto.getId(), "INIT");
     }
 
-    public void updateState(final ChessRoomDto chessRoomDto, final ChessState state) {
-        final var query = "UPDATE chess_room SET state = ? WHERE id = ?";
-
-        JdbcTemplate.executeQuery(query, state.name(), chessRoomDto.getId());
-    }
-
     public void createIfNotExist(final PlayerDto playerDto) {
         if (findByPlayer(playerDto).isEmpty()) {
             create(playerDto);
         }
+    }
+
+    public void updateState(final ChessRoomDto chessRoomDto, final ChessState state) {
+        final var query = "UPDATE chess_room SET state = ? WHERE id = ?";
+
+        JdbcTemplate.executeQuery(query, state.name(), chessRoomDto.getId());
     }
 }
