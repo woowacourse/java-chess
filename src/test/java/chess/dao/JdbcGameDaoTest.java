@@ -21,7 +21,7 @@ class JdbcGameDaoTest {
     }
     @Test
     public void connection() {
-        try (final var connection = gameDao.getConnection()) {
+        try (final var connection = ConnectionProvider.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -31,33 +31,28 @@ class JdbcGameDaoTest {
     @Test
     public void save() {
         Board board = Board.create();
-        board.initialize();
 
         ChessGame chessGame = new ChessGame(board, Color.BLACK, GameStatus.MOVE);
-        gameDao.save(1, chessGame);
+        gameDao.save(1, GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn()));
     }
 
     @Test
     public void findAllPossibleId() {
         Board board1 = Board.create();
-        board1.initialize();
         ChessGame moveStateChessGame = new ChessGame(board1, Color.BLACK, GameStatus.MOVE);
-        gameDao.save(1, moveStateChessGame);
+        gameDao.save(1, GameInfoDto.create(moveStateChessGame.getStatus(), moveStateChessGame.getTurn()));
 
         Board board2 = Board.create();
-        board2.initialize();
         ChessGame startStateChessGame = new ChessGame(board2, Color.BLACK, GameStatus.START);
-        gameDao.save(2, startStateChessGame);
+        gameDao.save(2, GameInfoDto.create(startStateChessGame.getStatus(), startStateChessGame.getTurn()));
 
         Board board3 = Board.create();
-        board3.initialize();
         ChessGame endStateChessGame = new ChessGame(board3, Color.BLACK, GameStatus.END);
-        gameDao.save(3, endStateChessGame);
+        gameDao.save(3, GameInfoDto.create(endStateChessGame.getStatus(), endStateChessGame.getTurn()));
 
         Board board4 = Board.create();
-        board4.initialize();
         ChessGame catchStateChessGame = new ChessGame(board4, Color.BLACK, GameStatus.CATCH);
-        gameDao.save(4, catchStateChessGame);
+        gameDao.save(4, GameInfoDto.create(catchStateChessGame.getStatus(), catchStateChessGame.getTurn()));
 
         List<Integer> possibleId = gameDao.findAllPossibleId();
         assertThat(possibleId).contains(1,2);
@@ -66,24 +61,20 @@ class JdbcGameDaoTest {
     @Test
     public void findAllImpossibleId() {
         Board board1 = Board.create();
-        board1.initialize();
         ChessGame moveStateChessGame = new ChessGame(board1, Color.BLACK, GameStatus.MOVE);
-        gameDao.save(1, moveStateChessGame);
+        gameDao.save(1, GameInfoDto.create(moveStateChessGame.getStatus(), moveStateChessGame.getTurn()));
 
         Board board2 = Board.create();
-        board2.initialize();
         ChessGame startStateChessGame = new ChessGame(board2, Color.BLACK, GameStatus.START);
-        gameDao.save(2, startStateChessGame);
+        gameDao.save(2, GameInfoDto.create(startStateChessGame.getStatus(), startStateChessGame.getTurn()));
 
         Board board3 = Board.create();
-        board3.initialize();
         ChessGame endStateChessGame = new ChessGame(board3, Color.BLACK, GameStatus.END);
-        gameDao.save(3, endStateChessGame);
+        gameDao.save(3, GameInfoDto.create(endStateChessGame.getStatus(), endStateChessGame.getTurn()));
 
         Board board4 = Board.create();
-        board4.initialize();
         ChessGame catchStateChessGame = new ChessGame(board4, Color.BLACK, GameStatus.CATCH);
-        gameDao.save(4, catchStateChessGame);
+        gameDao.save(4, GameInfoDto.create(catchStateChessGame.getStatus(), catchStateChessGame.getTurn()));
 
         List<Integer> possibleId = gameDao.findAllImpossibleId();
         assertThat(possibleId).contains(3,4);
@@ -92,9 +83,8 @@ class JdbcGameDaoTest {
     @Test
     public void findById() {
         Board board = Board.create();
-        board.initialize();
         ChessGame givenGame = new ChessGame(board, Color.BLACK, GameStatus.MOVE);
-        gameDao.save(1, givenGame);
+        gameDao.save(1, GameInfoDto.create(givenGame.getStatus(), givenGame.getTurn()));
 
         GameInfoDto gameInfo = gameDao.findById(1);
         assertThat(givenGame.getTurn()).isEqualTo(gameInfo.getTurn());
@@ -106,12 +96,11 @@ class JdbcGameDaoTest {
     @Test
     public void updateById() {
         Board board = Board.create();
-        board.initialize();
         ChessGame givenGame = new ChessGame(board, Color.BLACK, GameStatus.MOVE);
-        gameDao.save(1, givenGame);
+        gameDao.save(1, GameInfoDto.create(givenGame.getStatus(), givenGame.getTurn()));
 
         ChessGame newGame = new ChessGame(board, Color.WHITE, GameStatus.END);
-        gameDao.updateById(1, newGame);
+        gameDao.updateById(1, GameInfoDto.create(newGame.getStatus(), newGame.getTurn()));
 
         GameInfoDto findGameInfo = gameDao.findById(1);
         assertThat(findGameInfo.getTurn()).isEqualTo(newGame.getTurn());
@@ -123,9 +112,8 @@ class JdbcGameDaoTest {
     @Test
     public void deleteById() {
         Board board = Board.create();
-        board.initialize();
         ChessGame givenGame = new ChessGame(board, Color.BLACK, GameStatus.MOVE);
-        gameDao.save(1, givenGame);
+        gameDao.save(1, GameInfoDto.create(givenGame.getStatus(), givenGame.getTurn()));
 
         gameDao.deleteById(1);
 

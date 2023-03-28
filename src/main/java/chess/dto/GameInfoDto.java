@@ -16,6 +16,10 @@ public class GameInfoDto {
         return new GameInfoDto(GameStatus.valueOf(status), Color.valueOf(turn));
     }
 
+    public static GameInfoDto create(GameStatus status, Color turn) {
+        return new GameInfoDto(status, turn);
+    }
+
     public GameStatus getStatus() {
         return status;
     }

@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.domain.ChessGame;
 import chess.dto.GameInfoDto;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,13 +65,13 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public void save(int gameId, ChessGame chessGame) {
+    public void save(int gameId, GameInfoDto gameInfoDto) {
         final var gameQuery = "INSERT INTO game VALUES(?, ?, ?)";
         try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {
             preparedStatement.setInt(1, gameId);
-            preparedStatement.setString(2, chessGame.getStatus().name());
-            preparedStatement.setString(3, chessGame.getTurn().name());
+            preparedStatement.setString(2, gameInfoDto.getStatus().name());
+            preparedStatement.setString(3, gameInfoDto.getTurn().name());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -80,9 +79,9 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public void updateById(int gameId, ChessGame chessGame) {
+    public void updateById(int gameId, GameInfoDto gameInfoDto) {
         deleteById(gameId);
-        save(gameId, chessGame);
+        save(gameId, gameInfoDto);
     }
 
     @Override
