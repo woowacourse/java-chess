@@ -86,5 +86,5 @@
 ### 데이터베이스 접속정보
 
 1. database.connection.ConnectionGenerator에서 접속 정보가 관리되는 중입니다.
-2. sql 파일은 ./sql 폴더에 있습니다.
+2. docker-compose -p chess up -d로 docker/docker-compose.yml 파일을 실행하면 DB 환경이 도커로 구성됩니다.
 
