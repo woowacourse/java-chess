@@ -35,6 +35,8 @@ public final class ChessController {
     }
 
     public void run() {
+        String gameIdCommand = readGameIdCommand();
+
         ChessGame chessGame = chessGameDao.select();
         if (chessGame == null) {
             chessGame = new ChessGame(new BoardFactory().createInitialBoard());
@@ -51,6 +53,19 @@ public final class ChessController {
                 OutputView.printWinner(chessGame.winner());
             }
         }
+    }
+
+    private String readGameIdCommand() {
+        final List<String> gameIds = chessGameDao.gameIds();
+        String gameIdCommand = InputView.readGameId(gameIds);
+
+        if (gameIdCommand.equalsIgnoreCase("new")) {
+            return null;
+        }
+        if (!gameIds.contains(gameIdCommand)) {
+            throw new IllegalArgumentException("올바른 게임방을 입력해 주세요.");
+        }
+        return gameIdCommand;
     }
 
     private ChessGameCommand play() {

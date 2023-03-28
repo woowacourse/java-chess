@@ -11,23 +11,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class DBChessGameDao implements ChessGameDao {
-
-    /*
-    CREATE TABLE chess_game (
-        position VARCHAR(255) NOT NULL,
-        piece_type VARCHAR(255),
-        piece_color VARCHAR(255)
-    );
-
-    CREATE TABLE chess_status (
-        turn VARCHAR(255) NOT NULL
-    )
-    */
 
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
@@ -40,6 +29,25 @@ public final class DBChessGameDao implements ChessGameDao {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
             throw new IllegalStateException("데이터베이스 연결에 실패했습니다!");
+        }
+    }
+
+    @Override
+    public List<String> gameIds() {
+        final var query = "SELECT game_id FROM chess_status;";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query);
+             final ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            List<String> gameIds = new ArrayList<>();
+            while (resultSet.next()) {
+                final String gameId = resultSet.getString("game_id");
+                gameIds.add(gameId);
+            }
+
+            return gameIds;
+        } catch (final SQLException e) {
+            throw new IllegalStateException("체스 게임 상태를 저장하는데 실패했습니다.");
         }
     }
 
