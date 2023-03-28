@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: 상태로 묶기
 public enum Command {
 
     START("start"),
