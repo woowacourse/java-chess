@@ -46,4 +46,28 @@ class BishopTest {
 
         assertThat(positions).containsExactlyInAnyOrder(D4, E3, F2, G1);
     }
+    
+    @DisplayName("흑색 비숍은 점수가 3점이다")
+    @Test
+    void getScore_blackThree() {
+        var bishop = new Bishop(Color.BLACK);
+
+        assertThat(bishop.getScore(Color.BLACK)).isEqualTo(3.0);
+    }
+
+    @DisplayName("백색 비숍은 점수가 3점이다")
+    @Test
+    void getScore_whiteThree() {
+        var bishop = new Bishop(Color.WHITE);
+
+        assertThat(bishop.getScore(Color.WHITE)).isEqualTo(3.0);
+    }
+
+    @DisplayName("다른 색의 비숍은 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var bishop = new Bishop(Color.BLACK);
+
+        assertThat(bishop.getScore(Color.WHITE)).isEqualTo(0);
+    }
 }

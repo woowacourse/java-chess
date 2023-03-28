@@ -39,11 +39,35 @@ class KnightTest {
     @Test
     @DisplayName("잘못된 타겟이면 예외가 발생한다")
     void computePath_illegal_exception() {
-        final var kngiht = new Knight(Color.BLACK);
+        final var knight = new Knight(Color.BLACK);
         final var source = B4;
         final var target = E4;
 
-        assertThatThrownBy(() -> kngiht.computePathWithValidate(source, target))
+        assertThatThrownBy(() -> knight.computePathWithValidate(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("흑색 나이트는 점수가 2.5점이다")
+    @Test
+    void getScore_black_twoPointFive() {
+        var piece = new Knight(Color.BLACK);
+
+        assertThat(piece.getScore(Color.BLACK)).isEqualTo(2.5);
+    }
+
+    @DisplayName("백색 나이트는 점수가 2.5점이다")
+    @Test
+    void getScore_white_twoPointFive() {
+        var piece = new Knight(Color.WHITE);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(2.5);
+    }
+
+    @DisplayName("다른 색의 나이트는 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var piece = new Knight(Color.BLACK);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
     }
 }

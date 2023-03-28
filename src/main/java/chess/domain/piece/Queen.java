@@ -6,17 +6,19 @@ import java.util.Set;
 
 public final class Queen extends Normal {
 
+    private static final double SCORE = 9;
+
     public Queen(final Color color) {
         super(color);
     }
 
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
-        if (canQueenMove(source, target)) {
-            return source.computeCrossOrDiagonalPath(target);
+    protected Set<Position> computePath(final Position source, final Position target) {
+        if (!canQueenMove(source, target)) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
+        return source.computeCrossOrDiagonalPath(target);
     }
 
     @Override
@@ -30,5 +32,14 @@ public final class Queen extends Normal {
         var inclination = source.computeInclination(target);
 
         return fileSub == SAME_SQUARE || rankSub == SAME_SQUARE || Math.abs(inclination) == INCLINATION;
+    }
+
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return SCORE;
+        }
+
+        return 0;
     }
 }

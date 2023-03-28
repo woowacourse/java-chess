@@ -8,18 +8,23 @@ import java.util.Set;
 public final class BlackPawn extends Pawn {
 
     private static final Rank INIT_RANK = Rank.SEVEN;
+    private static final double SCORE = 1;
 
     public BlackPawn() {
         super(Color.BLACK);
     }
 
+    public BlackPawn(Color color) {
+        super(Color.WHITE);
+    }
+
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
-        if (canPawnMove(source, target, DOWN)) {
-            return generateTargetPath(source, target);
+    protected Set<Position> computePath(final Position source, final Position target) {
+        if (!canPawnMove(source, target, DOWN)) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
+        return generateTargetPath(source, target);
     }
 
     @Override
@@ -39,5 +44,13 @@ public final class BlackPawn extends Pawn {
         if (Math.abs(source.rankSub(target)) == TWO_SQUARES && !source.isRank(INIT_RANK)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
+    }
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return SCORE;
+        }
+
+        return 0;
     }
 }

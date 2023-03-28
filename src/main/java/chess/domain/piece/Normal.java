@@ -11,9 +11,10 @@ public abstract class Normal extends Piece {
         super(color);
     }
 
-    public boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
+    protected boolean canMove(Map<Position, Boolean> isEmptyPosition, Position source, Position target) {
         isEmptyPosition = new HashMap<>(isEmptyPosition);
         isEmptyPosition.remove(target);
+
         return isEmptyPosition.keySet()
                 .stream()
                 .allMatch(isEmptyPosition::get);

@@ -4,9 +4,11 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Color;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static chess.domain.board.Positions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessGameTest {
@@ -22,5 +24,75 @@ class ChessGameTest {
         final var target = A3;
         chessGame.playTurn(source, target);
         assertThat(chessGame.getTurn()).isEqualTo(Color.BLACK);
+    }
+
+    @DisplayName("킹이 죽었는지 알 수 있다")
+    @Test
+    void isKingDead_true() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.playTurn(E2, E4);
+        chessGame.playTurn(D7, D5);
+        chessGame.playTurn(E1, E2);
+        chessGame.playTurn(D8, D7);
+        chessGame.playTurn(A2, A4);
+        chessGame.playTurn(D7, F5);
+        chessGame.playTurn(A4, A5);
+        chessGame.playTurn(F5, G4);
+        chessGame.playTurn(A5, A6);
+        chessGame.playTurn(G4, E2);
+
+        assertThat(chessGame.isKingDead()).isTrue();
+    }
+
+    @DisplayName("킹이 안죽었다")
+    @Test
+    void isKingDead_false() {
+        ChessGame chessGame = new ChessGame();
+        assertThat(chessGame.isKingDead()).isFalse();
+    }
+
+
+    @DisplayName("초기 백의 점수를 계산한다")
+    @Test
+    void calculateScore_White() {
+        ChessGame chessGame = new ChessGame();
+        assertThat(chessGame.calculateWhiteScore()).isEqualTo(38);
+    }
+
+    @DisplayName("초기 흑의 점수를 계산한다")
+    @Test
+    void calculateScore_Black() {
+        ChessGame chessGame = new ChessGame();
+        assertThat(chessGame.calculateBlackScore()).isEqualTo(38);
+    }
+
+    @DisplayName("file1에 whitePawn이 2개이면 전체는 37점")
+    @Test
+    void calculateFileScore() {
+        var chessGame = new ChessGame();
+
+        chessGame.playTurn(B2, B4);
+        chessGame.playTurn(A7, A5);
+        chessGame.playTurn(B4, A5);
+
+        assertThat(chessGame.calculateWhiteScore()).isEqualTo(37);
+    }
+
+    @DisplayName("file1에 whitePawn이 3개이면 전체는 36.5점")
+    @Test
+    void calculateWhiteScore_asdf() {
+        var chessGame = new ChessGame();
+
+        chessGame.playTurn(B2, B4);
+        chessGame.playTurn(A7, A5);
+        chessGame.playTurn(B4, A5);
+        chessGame.playTurn(B7, B5);
+        chessGame.playTurn(C2, C4);
+        chessGame.playTurn(A8, A6);
+        chessGame.playTurn(C4, B5);
+        chessGame.playTurn(C7, C6);
+        chessGame.playTurn(B5, A6);
+
+        AssertionsForClassTypes.assertThat(chessGame.calculateWhiteScore()).isEqualTo(36.5);
     }
 }

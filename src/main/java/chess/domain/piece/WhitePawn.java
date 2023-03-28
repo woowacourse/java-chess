@@ -8,18 +8,23 @@ import java.util.Set;
 public final class WhitePawn extends Pawn {
 
     private static final Rank INIT_RANK = Rank.TWO;
+    private static final double SCORE = 1;
 
     public WhitePawn() {
         super(Color.WHITE);
     }
 
+    public WhitePawn(Color color) {
+        super(Color.WHITE);
+    }
+
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
-        if (canPawnMove(source, target, UP)) {
-            return generateTargetPath(source, target);
+    protected Set<Position> computePath(final Position source, final Position target) {
+        if (!canPawnMove(source, target, UP)) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
 
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
+        return generateTargetPath(source, target);
     }
 
     @Override
@@ -39,5 +44,14 @@ public final class WhitePawn extends Pawn {
         if (Math.abs(source.rankSub(target)) == TWO_SQUARES && !source.isRank(INIT_RANK)) {
             throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
+    }
+
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return SCORE;
+        }
+
+        return 0;
     }
 }

@@ -64,7 +64,7 @@ class RookTest {
         var rook = new Rook(Color.BLACK);
         final var source = C4;
         final var target = C7;
-        boolean actual = rook.canMove(Map.of(C5, true, C6, true, C7, false), source, target);
+        boolean actual = rook.canMoveWithValidate(Map.of(C5, true, C6, true, C7, false), source, target);
 
         assertThat(actual).isTrue();
     }
@@ -74,7 +74,7 @@ class RookTest {
         var rook = new Rook(Color.BLACK);
         final var source = C4;
         final var target = C7;
-        boolean actual = rook.canMove(Map.of(C5, true, C6, true, C7, false), source, target);
+        boolean actual = rook.canMoveWithValidate(Map.of(C5, true, C6, true, C7, false), source, target);
 
         assertThat(actual).isTrue();
     }
@@ -84,8 +84,32 @@ class RookTest {
         var rook = new Rook(Color.BLACK);
         final var source = C4;
         final var target = C7;
-        boolean actual = rook.canMove(Map.of(C5, true, C6, false, C7, true), source, target);
+        boolean actual = rook.canMoveWithValidate(Map.of(C5, true, C6, false, C7, true), source, target);
 
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("흑색 룩은 점수가 5점이다")
+    @Test
+    void getScore_blackThree() {
+        var piece = new Rook(Color.BLACK);
+
+        assertThat(piece.getScore(Color.BLACK)).isEqualTo(5);
+    }
+
+    @DisplayName("백색 룩은 점수가 5점이다")
+    @Test
+    void getScore_whiteThree() {
+        var piece = new Rook(Color.WHITE);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(5);
+    }
+
+    @DisplayName("다른 색의 룩은 점수가 0점이다")
+    @Test
+    void getScore_zero() {
+        var piece = new Rook(Color.BLACK);
+
+        assertThat(piece.getScore(Color.WHITE)).isEqualTo(0);
     }
 }

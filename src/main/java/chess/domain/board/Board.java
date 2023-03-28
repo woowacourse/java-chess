@@ -11,9 +11,6 @@ import java.util.stream.Collectors;
 public final class Board {
 
     private static final String CAN_NOT_MOVE_EXCEPTION_MESSAGE = "유효한 움직임이 아닙니다.";
-    private static final String TURN_EXCEPTION_MESSAGE = "의 턴입니다.";
-    private static final String CAN_NOT_MOVE_TO_SAME_COLOR_EXCEPTION_MESSAGE = "자신의 기물이 있는 곳으로 이동할 수 없습니다.";
-    private static final String EMPTY_SOURCE_EXCEPTION_MESSAGE = "움직이려는 기물의 위치는 빈 공간입니다.";
 
     private final List<Squares> board = new ArrayList<>();
 
@@ -31,32 +28,17 @@ public final class Board {
     public void play(Position source, Position target, Color color) {
         Square sourceSquare = getSquare(source);
         Square targetSquare = getSquare(target);
-        validateEmpty(sourceSquare);
-        validateTurn(sourceSquare, color);
-        validateSameColor(sourceSquare, targetSquare);
-        Set<Position> movablePath = sourceSquare.computePath(source, target);
-        Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
+
+        var movablePath = sourceSquare.computePath(source, target, targetSquare, color);
+        var isEmptySquare = generateIsEmptySquare(movablePath);
 
         validateMove(source, target, sourceSquare, isEmptySquare);
         move(sourceSquare, targetSquare);
     }
 
-    private void validateEmpty(Square sourceSquare) {
-        if (sourceSquare.equalsColor(Color.NONE)) {
-            throw new IllegalArgumentException(EMPTY_SOURCE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateTurn(final Square sourceSquare, final Color color) {
-        if (!sourceSquare.equalsColor(color)) {
-            throw new IllegalArgumentException(color.name() + TURN_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateSameColor(final Square sourceSquare, final Square targetSquare) {
-        if (sourceSquare.equalsColor(targetSquare)) {
-            throw new UnsupportedOperationException(CAN_NOT_MOVE_TO_SAME_COLOR_EXCEPTION_MESSAGE);
-        }
+    public boolean isKingDead(Color color) {
+        return board.stream()
+                .noneMatch(squares -> squares.findKing(color));
     }
 
     private void validateMove(final Position source, final Position target, final Square sourceSquare, final Map<Position, Boolean> isEmptySquare) {
@@ -77,14 +59,51 @@ public final class Board {
         sourceSquare.makeEmpty();
     }
 
-    private Square getSquare(final Position source) {
+    public Square getSquare(final Position source) {
         int rank = source.getRank();
         int file = source.getFile();
         Squares squares = board.get(rank);
         return squares.get(file);
     }
 
+    private double calculateFileScore(final Color color, final int file) {
+        double sum = board.stream()
+                .mapToDouble(squares -> squares.getScoreFromFile(color, file))
+                .sum();
+
+        return sum - calculatePawnScore(color, file);
+    }
+
+    private double calculatePawnScore(Color color, int file) {
+        final int count = countPawn(color, file);
+        if (count == 1) {
+            return 0;
+        }
+        return count * 0.5;
+    }
+
+    public double calculateTotalScore(final Color color) {
+        double sum = 0;
+        for (int i = 0; i < board.size(); i++) {
+            sum = sum + calculateFileScore(color, i);
+        }
+
+        return sum;
+    }
+
+    private int countPawn(final Color color, final int file) {
+        return (int) board.stream()
+                .filter(squares -> squares.hasPawnAtFile(color, file))
+                .count();
+    }
+
+    public void set(Position p, Square square) {
+        Squares squares = board.get(p.getRank());
+        squares.set(p.getFile(), square);
+    }
+
     public List<Squares> getSquares() {
         return new ArrayList<>(board);
     }
+
 }

@@ -6,16 +6,19 @@ import java.util.Set;
 
 public final class Bishop extends Normal {
 
+    private static final double SCORE = 3;
+
     public Bishop(final Color color) {
         super(color);
     }
 
     @Override
-    public Set<Position> computePath(final Position source, final Position target) {
-        if (canBishopMove(source, target)) {
-            return source.computeDiagonalPath(target);
+    protected Set<Position> computePath(final Position source, final Position target) {
+        if (!canBishopMove(source, target)) {
+            throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
         }
-        throw new IllegalArgumentException(CAN_NOT_MOVE_EXCEPTION_MESSAGE);
+
+        return source.computeDiagonalPath(target);
     }
 
     @Override
@@ -27,5 +30,14 @@ public final class Bishop extends Normal {
         var inclination = source.computeInclination(target);
 
         return Math.abs(inclination) == INCLINATION;
+    }
+
+    @Override
+    public double getScore(Color color) {
+        if (color == this.color) {
+            return SCORE;
+        }
+
+        return 0;
     }
 }

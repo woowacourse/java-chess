@@ -52,6 +52,12 @@ public final class Squares {
         return new Squares(list);
     }
 
+    public boolean findKing(Color color) {
+        return squares.stream()
+                .anyMatch(square -> square.pieceKind() == Kind.KING &&
+                        square.equalsColor(color));
+    }
+
     public Square get(final int file) {
         return squares.get(file);
     }
@@ -60,5 +66,20 @@ public final class Squares {
         return squares.stream()
                 .map(Square::getPiece)
                 .collect(Collectors.toList());
+    }
+
+    public double getScoreFromFile(Color color, int file) {
+        return squares.get(file).getScore(color);
+    }
+
+    public boolean hasPawnAtFile(Color color, int file) {
+        Square square = squares.get(file);
+
+        return square.equalsColor(color) &&
+                square.pieceKind() == Kind.PAWN;
+    }
+
+    public void set(int file, Square square) {
+        squares.set(file, square);
     }
 }

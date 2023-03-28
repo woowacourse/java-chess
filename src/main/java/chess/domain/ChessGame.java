@@ -17,9 +17,38 @@ public final class ChessGame {
         this.turn = Color.WHITE;
     }
 
+    public ChessGame(Board board, Color turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void playTurn(Position source, Position target) {
         board.play(source, target, turn);
         this.turn = changeTurn();
+    }
+
+    public boolean isKingDead() {
+        return board.isKingDead(turn);
+    }
+
+    public Color winner() {
+        if (calculateWhiteScore() > calculateBlackScore()) {
+            return Color.WHITE;
+        }
+
+        if (calculateWhiteScore() < calculateBlackScore()) {
+            return Color.BLACK;
+        }
+
+        return Color.NONE;
+    }
+
+    public double calculateWhiteScore() {
+        return board.calculateTotalScore(Color.WHITE);
+    }
+
+    public double calculateBlackScore() {
+        return board.calculateTotalScore(Color.BLACK);
     }
 
     private Color changeTurn() {
@@ -35,5 +64,9 @@ public final class ChessGame {
 
     public List<Squares> getBoard() {
         return board.getSquares();
+    }
+
+    public Board board() {
+        return board;
     }
 }

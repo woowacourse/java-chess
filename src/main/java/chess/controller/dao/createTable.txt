@@ -1,0 +1,7 @@
+CREATE TABLE chessGame(
+square_file varchar(255) NOT NULL,
+square_rank varchar(255) NOT NULL,
+piece_color varchar(255) NOT NULL,
+piece_kind varchar(255) NOT NULL,
+class_name varchar(255) NOT NULL
+);
