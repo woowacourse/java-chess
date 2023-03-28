@@ -3,6 +3,7 @@ package common;
 import common.connection.JdbcConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.function.Supplier;
 
 public final class JdbcContextImpl implements JdbcContext {
 
@@ -26,11 +27,11 @@ public final class JdbcContextImpl implements JdbcContext {
     }
 
     @Override
-    public <T> void makeTransactionUnit(final TransactionStrategy<T> transactionStrategy) {
+    public <T> void makeTransactionUnit(final Supplier<T> supplier) {
         makeConnection();
         try {
             connection.setAutoCommit(false);
-            transactionStrategy.execute(connection);
+            supplier.get();
             connection.commit();
         } catch (SQLException exception) {
             rollback(connection);

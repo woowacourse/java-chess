@@ -30,7 +30,7 @@ class PieceDaoTest {
     @Test
     @DisplayName("insert 테스트")
     public void testInsert() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test";
             boardDao.insert(boardId, Color.WHITE);
@@ -50,7 +50,7 @@ class PieceDaoTest {
     @Test
     @DisplayName("update 테스트")
     public void testUpdate() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test";
             boardDao.insert(boardId, Color.WHITE);
@@ -78,7 +78,7 @@ class PieceDaoTest {
     @Test
     @DisplayName("boardId와 일치하는 모든 조각 테스트")
     public void testFindAllByBoardId() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test";
             boardDao.insert(boardId, Color.WHITE);

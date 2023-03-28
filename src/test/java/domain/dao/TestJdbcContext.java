@@ -6,6 +6,7 @@ import common.connection.JdbcConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.util.function.Supplier;
 
 public class TestJdbcContext implements JdbcContext {
 
@@ -17,6 +18,7 @@ public class TestJdbcContext implements JdbcContext {
         this.connection = jdbcConnection.getConnection();
     }
 
+    @Override
     public <T> T workWithTransaction(final TransactionStrategy<T> transactionStrategy) {
         try {
             connection.setAutoCommit(false);
@@ -28,13 +30,13 @@ public class TestJdbcContext implements JdbcContext {
     }
 
     @Override
-    public <T> void makeTransactionUnit(final TransactionStrategy<T> transactionStrategy) {
+    public <T> void makeTransactionUnit(final Supplier<T> supplier) {
         makeConnection();
         try {
             connection.setTransactionIsolation(connection.TRANSACTION_READ_UNCOMMITTED);
             connection.setAutoCommit(false);
             final Savepoint savepoint = connection.setSavepoint();
-            transactionStrategy.execute(connection);
+            supplier.get();
             connection.rollback(savepoint);
         } catch (SQLException e) {
             throw new RuntimeException(e);

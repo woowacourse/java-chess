@@ -64,7 +64,7 @@ public final class ChessGame {
     }
 
     public void findPreviousGame(final String boardId) {
-        jdbcContext.makeTransactionUnit(connection -> {
+        jdbcContext.makeTransactionUnit(() -> {
             this.board = chessRepository.findBoardById(boardId);
             this.color = chessRepository.findLastColorFromBoardById(boardId);
             this.boardId = boardId;
@@ -73,7 +73,7 @@ public final class ChessGame {
     }
 
     public void save() {
-        jdbcContext.makeTransactionUnit(connection -> {
+        jdbcContext.makeTransactionUnit(() -> {
             if (chessRepository.existBoard(boardId)) {
                 chessRepository.update(boardId, board.getBoard(), color);
                 return null;

@@ -16,7 +16,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("insert 테스트")
     public void testInsert() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
@@ -34,7 +34,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("update 테스트")
     public void testUpdate() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
@@ -52,7 +52,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("가장 최근 색 찾기 테스트")
     public void testFindLastColor() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
@@ -70,7 +70,7 @@ class BoardDaoTest {
     @Test
     @DisplayName("id와 일치하는 개수 찾기 테스트")
     public void testCount() {
-        testJdbcContext.makeTransactionUnit(connection -> {
+        testJdbcContext.makeTransactionUnit(() -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
