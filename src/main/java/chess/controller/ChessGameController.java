@@ -59,13 +59,13 @@ public class ChessGameController {
     }
 
     private void executeForCommand(final ChessGameService chessGameService, final List<String> command) {
-        if (command.get(COMMAND_INDEX).equals(START_COMMAND)) {
+        if (START_COMMAND.equals(command.get(COMMAND_INDEX))) {
             startGame(chessGameService);
         }
-        if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
+        if (MOVE_COMMAND.equals(command.get(COMMAND_INDEX))) {
             tryChessMove(chessGameService, command);
         }
-        if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
+        if (STATUS_COMMAND.equals(command.get(COMMAND_INDEX))) {
             printScore(chessGameService);
         }
     }
