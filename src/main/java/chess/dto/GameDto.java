@@ -1,18 +1,24 @@
 package chess.dto;
 
-import chess.domain.Color;
-
 public class GameDto {
-    public static final GameDto EMPTY = new GameDto(0, true, Color.EMPTY.name());
+    public static final GameDto EMPTY = new GameDto(null, null, null);
 
-    private final int id;
-    private final boolean status;
+    private final Integer id;
+    private final Boolean status;
     private final String color;
 
-    public GameDto(final int id, final boolean status, final String color) {
+    private GameDto(final Integer id, final Boolean status, final String color) {
         this.id = id;
         this.status = status;
         this.color = color;
+    }
+
+    public static GameDto from(final int id, final Boolean status, final String color) {
+        return new GameDto(id, status, color);
+    }
+
+    public static GameDto of(final int id) {
+        return new GameDto(id, null, null);
     }
 
     public int getId() {
