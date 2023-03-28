@@ -6,6 +6,7 @@ import chess.db.JdbcTemplate;
 import chess.db.TestConnectionPool;
 import chess.domain.room.Room;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,9 +81,10 @@ public class RoomJdbcDaoTest {
         final int roomId = rooms.get(0).getId();
 
         // when
-        final Room room = roomDao.findById(roomId);
+        final Optional<Room> room = roomDao.findById(roomId);
 
         // then
-        assertThat(room.getName()).isEqualTo("방1");
+        final Room result = room.get();
+        assertThat(result.getName()).isEqualTo("방1");
     }
 }

@@ -4,6 +4,7 @@ import chess.db.JdbcTemplate;
 import chess.domain.room.Room;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomJdbcDao implements RoomDao {
     private final JdbcTemplate jdbcTemplate;
@@ -36,15 +37,15 @@ public class RoomJdbcDao implements RoomDao {
     }
 
     @Override
-    public Room findById(final int roomId) {
+    public Optional<Room> findById(final int roomId) {
         return jdbcTemplate.query("select * from room where id = ?", resultSet -> {
             if (resultSet.next()) {
                 final int id = resultSet.getInt("id");
                 final String name = resultSet.getString("name");
                 final int findUserId = resultSet.getInt("user_id");
-                return new Room(id, name, findUserId);
+                return Optional.of(new Room(id, name, findUserId));
             }
-            return null;
+            return Optional.empty();
         }, roomId);
     }
 

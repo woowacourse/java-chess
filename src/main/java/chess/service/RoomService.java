@@ -20,10 +20,8 @@ public class RoomService {
     }
 
     public Room findById(final int id, final int userId) {
-        final Room room = roomDao.findById(id);
-        if (room == null) {
-            throw new IllegalArgumentException("아이디에 해당하는 방이 없습니다.");
-        }
+        final Room room = roomDao.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("아이디에 해당하는 방이 없습니다."));
         if (room.isNotCreatedBy(userId)) {
             throw new IllegalArgumentException("방의 주인이 아닙니다.");
         }

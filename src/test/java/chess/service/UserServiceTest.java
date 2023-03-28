@@ -8,6 +8,7 @@ import chess.domain.user.User;
 import chess.repository.UserDao;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -32,11 +33,10 @@ public class UserServiceTest {
             }
 
             @Override
-            public User findByName(final String name) {
+            public Optional<User> findByName(final String name) {
                 return users.stream()
                         .filter(user -> user.getName().equals(name))
-                        .findFirst()
-                        .orElse(null);
+                        .findFirst();
             }
 
             @Override

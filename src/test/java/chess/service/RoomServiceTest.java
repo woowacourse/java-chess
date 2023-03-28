@@ -8,6 +8,7 @@ import chess.domain.room.Room;
 import chess.repository.RoomDao;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -40,11 +41,10 @@ class RoomServiceTest {
             }
 
             @Override
-            public Room findById(final int roomId) {
+            public Optional<Room> findById(final int roomId) {
                 return rooms.stream()
                         .filter(room -> room.getId() == roomId)
-                        .findFirst()
-                        .orElse(null);
+                        .findFirst();
             }
 
             @Override
