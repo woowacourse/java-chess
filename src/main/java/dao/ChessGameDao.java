@@ -1,15 +1,16 @@
 package dao;
 
-import chess.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
 public interface ChessGameDao {
 
-    void save(ChessGame chessGame, final String gameId);
+    void createPiece(final Position position, final Piece piece, final String gameId);
 
-    Map<Position, Piece> select(final String gameId);
+    Map<Position, Piece> read(final String gameId);
 
-    void reset(final String gameId);
+    void update(final Position from, final Position to, final String gameId);
+
+    void deleteAll(final String gameId);
 }

@@ -20,17 +20,17 @@ public class ChessService {
         this.chessStatusDao = chessStatusDao;
     }
 
-    public List<String> gameIds() {
-        return chessStatusDao.gameIds();
+    public List<String> readGameIds() {
+        return chessStatusDao.readGameIds();
     }
 
-    public ChessGame select(final String gameId) {
-        final Map<Position, Piece> board = chessGameDao.select(gameId);
+    public ChessGame readChessGame(final String gameId) {
+        final Map<Position, Piece> board = chessGameDao.read(gameId);
         if (board.isEmpty()) {
             return null;
         }
 
-        Color turn = chessStatusDao.selectTurn(gameId);
+        Color turn = chessStatusDao.readTurn(gameId);
 
         return new ChessGame(new Board(board), turn);
     }
@@ -39,19 +39,21 @@ public class ChessService {
         return chessStatusDao.create(chessGame);
     }
 
-    public void save(ChessGame chessGame, String gameId) {
-        chessGameDao.save(chessGame, gameId);
-        chessStatusDao.save(chessGame, gameId);
-    }
-
-    public void update(ChessGame chessGame, String gameId) {
-        chessGameDao.reset(gameId);
-        chessGameDao.save(chessGame, gameId);
-        chessStatusDao.save(chessGame, gameId);
-        chessStatusDao.update(chessGame, gameId);
+    public void createChessGame(ChessGame chessGame, String gameId) {
+        final Map<Position, Piece> board = chessGame.board();
+        for (final Map.Entry<Position, Piece> entry : board.entrySet()) {
+            final Position position = entry.getKey();
+            final Piece piece = entry.getValue();
+            chessGameDao.createPiece(position, piece, gameId);
+        }
     }
 
     public void reset(final String gameId) {
-        chessGameDao.reset(gameId);
+        chessGameDao.deleteAll(gameId);
+    }
+
+    public void update(final ChessGame chessGame, final Position from, final Position to, final String gameId) {
+        chessStatusDao.update(chessGame, gameId);
+        chessGameDao.update(from, to, gameId);
     }
 }

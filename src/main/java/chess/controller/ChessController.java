@@ -36,12 +36,12 @@ public final class ChessController {
     }
 
     public void run() {
-        gameId = readGameIdCommand(); // 1, 2, .. 5, null(new)
+        gameId = readGameIdCommand();
         if (gameId == null) {
             createGame();
         }
 
-        ChessGame chessGame = chessService.select(gameId);
+        ChessGame chessGame = chessService.readChessGame(gameId);
         if (chessGame == null) {
             createGame();
         }
@@ -58,23 +58,27 @@ public final class ChessController {
         }
     }
 
+    private String readGameIdCommand() {
+        try {
+            final List<String> gameIds = chessService.readGameIds();
+            String gameIdCommand = InputView.readGameId(gameIds);
+
+            if (gameIdCommand.equalsIgnoreCase("new")) {
+                return null;
+            }
+            if (!gameIds.contains(gameIdCommand)) {
+                throw new IllegalArgumentException("올바른 게임방을 입력해 주세요.");
+            }
+            return gameIdCommand;
+        } catch (IllegalStateException exception) {
+            return readGameIdCommand();
+        }
+    }
+
     private void createGame() {
         ChessGame chessGame = new ChessGame(new BoardFactory().createInitialBoard());
         gameId = chessService.createChessStatus(chessGame);
-        chessService.save(chessGame, gameId);
-    }
-
-    private String readGameIdCommand() {
-        final List<String> gameIds = chessService.gameIds();
-        String gameIdCommand = InputView.readGameId(gameIds);
-
-        if (gameIdCommand.equalsIgnoreCase("new")) {
-            return null;
-        }
-        if (!gameIds.contains(gameIdCommand)) {
-            throw new IllegalArgumentException("올바른 게임방을 입력해 주세요.");
-        }
-        return gameIdCommand;
+        chessService.createChessGame(chessGame, gameId);
     }
 
     private ChessGameCommand play() {
@@ -93,13 +97,13 @@ public final class ChessController {
     }
 
     private void start(final List<String> commands) {
-        ChessGame chessGame = chessService.select(gameId);
+        ChessGame chessGame = chessService.readChessGame(gameId);
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
         OutputView.printBoard(chessGame.board());
     }
 
     private void movePiece(final List<String> commands) {
-        ChessGame chessGame = chessService.select(gameId);
+        ChessGame chessGame = chessService.readChessGame(gameId);
         validateCommandsSize(commands, MOVE_COMMAND_SIZE);
         Position from = searchPosition(commands.get(FROM_INDEX));
         Position to = searchPosition(commands.get(TO_INDEX));
@@ -107,18 +111,18 @@ public final class ChessController {
         chessGame.move(from, to);
         OutputView.printBoard(chessGame.board());
 
-        chessService.update(chessGame, gameId);
+        chessService.update(chessGame, from, to, gameId);
     }
 
     private void showStatus(final List<String> commands) {
-        ChessGame chessGame = chessService.select(gameId);
+        ChessGame chessGame = chessService.readChessGame(gameId);
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         OutputView.printScore(chessGame.calculateScore());
     }
 
     private void end(final List<String> commands) {
-        ChessGame chessGame = chessService.select(gameId);
+        ChessGame chessGame = chessService.readChessGame(gameId);
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         if (!chessGame.isEnd()) {

@@ -14,7 +14,7 @@ public final class DBChessStatusDao implements ChessStatusDao {
     private final DBConnection dbConnection = new DBConnection();
 
     @Override
-    public List<String> gameIds() {
+    public List<String> readGameIds() {
         final var query = "SELECT game_id FROM chess_status;";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query);
@@ -33,8 +33,8 @@ public final class DBChessStatusDao implements ChessStatusDao {
     }
 
     @Override
-    public Color selectTurn(final String gameId) {
-        final var query = "SELECT * FROM chess_status WHERE game_id=?;";
+    public Color readTurn(final String gameId) {
+        final var query = "SELECT turn FROM chess_status WHERE game_id=?;";
         try (final Connection connection = dbConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, Integer.parseInt(gameId));
@@ -42,33 +42,12 @@ public final class DBChessStatusDao implements ChessStatusDao {
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 final String turnString = resultSet.getString("turn");
-                System.out.println(turnString);
                 return Color.valueOf(turnString);
             }
 
             return null;
         } catch (final SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalStateException("체스 게임의 상태를 불러오는데 실패했습니다.");
-        }
-    }
-
-    @Override
-    public void save(final ChessGame chessGame, final String gameId) {
-        final var query = "SELECT * FROM chess_status WHERE game_id=?;";
-        try (final var connection = dbConnection.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, Integer.parseInt(gameId));
-
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                create(chessGame);
-                // TODO: Service 에서 해줄 수 있을 것 같다! -ㅎㅂ
-            }
-        } catch (final SQLException e) {
-            System.out.println(e.getMessage());
-            throw new IllegalStateException("체스 게임 상태를 저장하는데 실패했습니다.");
         }
     }
 
@@ -86,7 +65,6 @@ public final class DBChessStatusDao implements ChessStatusDao {
             }
             return null;
         } catch (final SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalStateException("체스 게임 상태를 생성하는데 실패했습니다.");
         }
     }
@@ -101,7 +79,6 @@ public final class DBChessStatusDao implements ChessStatusDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalStateException("게임을 업데이트하는데 실패했습니다.");
         }
     }
