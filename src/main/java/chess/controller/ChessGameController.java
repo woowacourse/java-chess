@@ -1,10 +1,10 @@
 package chess.controller;
 
 import chess.database.dao.ChessDao;
-import chess.database.dao.Notation;
 import chess.domain.board.Position;
 import chess.domain.game.ChessGame;
 import chess.factory.BoardFactory;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -30,16 +30,17 @@ public class ChessGameController {
     public void run() {
         ChessDao chessDao = new ChessDao();
         ChessGame chessGame = new ChessGame(BoardFactory.createBoard());
+        ChessGameService chessGameService = new ChessGameService(chessGame, chessDao);
         outputView.printStartMessage();
-        playChessGame(chessDao, chessGame);
+        playChessGame(chessGameService);
         chessDao.deleteNotation();
     }
 
-    private void playChessGame(final ChessDao chessDao, final ChessGame chessGame) {
+    private void playChessGame(final ChessGameService chessGameService) {
         List<String> inputCommand = inputView.readGameCommand();
-        while (!chessGame.isGameOver() && isNotEnd(inputCommand)) {
-            playChessRound(chessGame, inputCommand, chessDao);
-            if (chessGame.isGameOver()) {
+        while (!chessGameService.gameOver() && isNotEnd(inputCommand)) {
+            playChessRound(chessGameService, inputCommand);
+            if (chessGameService.gameOver()) {
                 break;
             }
             inputCommand = inputView.readGameCommand();
@@ -50,43 +51,39 @@ public class ChessGameController {
         return !inputCommand.get(COMMAND_INDEX).equals(END_COMMAND);
     }
 
-    private void playChessRound(ChessGame chessGame, List<String> command, ChessDao chessDao) {
+    private void playChessRound(final ChessGameService chessGameService, final List<String> command) {
         try {
-            executeForCommand(chessGame, command, chessDao);
+            executeForCommand(chessGameService, command);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
         }
     }
 
-    private void executeForCommand(ChessGame chessGame, List<String> command, ChessDao chessDao) {
+    private void executeForCommand(final ChessGameService chessGameService, final List<String> command) {
         if (command.get(COMMAND_INDEX).equals(START_COMMAND)) {
-            startGame(chessGame, chessDao);
+            startGame(chessGameService);
         }
         if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
-            tryChessMove(chessGame, command, chessDao);
+            tryChessMove(chessGameService, command);
         }
         if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
-            printScore(chessGame);
+            printScore(chessGameService);
         }
     }
 
-    private void startGame(final ChessGame chessGame, final ChessDao chessDao) {
-        List<Notation> notations = chessDao.readNotation();
-        for (Notation notation : notations) {
-            chessGame.move(Position.from(notation.getSource()), Position.from(notation.getTarget()));
-        }
+    private void startGame(final ChessGameService chessGameService) {
+        ChessGame chessGame = chessGameService.loadGame();
         outputView.printBoard(chessGame.getBoard());
     }
 
-    private void tryChessMove(final ChessGame chessGame, final List<String> inputCommand, final ChessDao chessDao) {
-        Position source = Position.from(inputCommand.get(SELECTED_PIECE));
-        Position destination = Position.from(inputCommand.get(DESTINATION));
-        chessGame.move(source, destination);
-        chessDao.addNotation(source, destination);
+    private void tryChessMove(final ChessGameService chessGameService, final List<String> command) {
+        Position source = Position.from(command.get(SELECTED_PIECE));
+        Position destination = Position.from(command.get(DESTINATION));
+        ChessGame chessGame = chessGameService.movePiece(source, destination);
         outputView.printBoard(chessGame.getBoard());
     }
 
-    private void printScore(final ChessGame chessGame) {
-        outputView.printWin(chessGame.calculateScore());
+    private void printScore(final ChessGameService chessGameService) {
+        outputView.printWin(chessGameService.getScore());
     }
 }

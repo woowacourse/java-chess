@@ -82,4 +82,4 @@
 - [x] 폰의 white와 black 각각으로 관리
 - [x] 움직임에 대한 검증 로직을 더 세분화 하기
 - [x] piece 타입 만들기
-- [ ] domain과 Dao를 연결해주는 service 계층 추가
+- [x] domain과 Dao를 연결해주는 service 계층 추가
