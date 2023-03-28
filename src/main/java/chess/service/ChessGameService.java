@@ -32,8 +32,11 @@ public class ChessGameService {
     }
 
     public boolean gameOver() {
-        chessDao.deleteNotation();
-        return chessGame.isGameOver();
+        if (chessGame.isGameOver()) {
+            chessDao.deleteNotation();
+            return true;
+        }
+        return false;
     }
 
     public Score getScore() {
