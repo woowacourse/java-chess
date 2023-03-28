@@ -1,4 +1,4 @@
-package chess.domain.movingStrategy;
+package chess.domain.movingstrategy;
 
 public final class MoveDownTwoLeft extends KnightMovingStrategy {
     private static final MoveDownTwoLeft INSTANCE = new MoveDownTwoLeft(-1, -2);

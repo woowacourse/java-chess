@@ -1,11 +1,11 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.movingStrategy.MoveLeftUp;
-import chess.domain.movingStrategy.MoveRightUp;
-import chess.domain.movingStrategy.MoveUp;
-import chess.domain.movingStrategy.MoveUpUp;
-import chess.domain.movingStrategy.MovingStrategies;
-import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.movingstrategy.MoveLeftUp;
+import chess.domain.movingstrategy.MoveRightUp;
+import chess.domain.movingstrategy.MoveUp;
+import chess.domain.movingstrategy.MoveUpUp;
+import chess.domain.movingstrategy.MovingStrategies;
+import chess.domain.movingstrategy.MovingStrategy;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 

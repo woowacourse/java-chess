@@ -6,7 +6,7 @@ import chess.domain.game.PieceMapper;
 import chess.domain.game.Position;
 import chess.domain.game.Rank;
 import chess.domain.game.Turn;
-import chess.domain.gameFactory.FakeGameFactory;
+import chess.domain.gamefactory.FakeGameFactory;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;

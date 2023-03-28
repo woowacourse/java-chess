@@ -1,7 +1,7 @@
 package techcourse.fp.movingStrategy;
 
-import chess.domain.movingStrategy.MoveUpTwoRight;
-import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.movingstrategy.MoveUpTwoRight;
+import chess.domain.movingstrategy.MovingStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

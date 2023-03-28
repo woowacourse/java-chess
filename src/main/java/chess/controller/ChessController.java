@@ -7,7 +7,7 @@ import chess.domain.game.PieceMapper;
 import chess.domain.game.Position;
 import chess.domain.game.Rank;
 import chess.domain.game.Turn;
-import chess.domain.gameFactory.DefaultGameFactory;
+import chess.domain.gamefactory.DefaultGameFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
