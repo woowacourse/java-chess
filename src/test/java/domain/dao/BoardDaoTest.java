@@ -4,26 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import common.connection.JdbcConnection;
 import domain.type.Color;
-import java.sql.SQLException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardDaoTest {
 
-    private final TestJdbcContext testJdbcContext = new TestJdbcContext();
     private final JdbcConnection jdbcConnection = new JdbcConnection();
+    private final TestJdbcContext testJdbcContext = new TestJdbcContext(jdbcConnection);
     private final BoardDao boardDao = new BoardDaoImpl(testJdbcContext);
-
-    @BeforeEach
-    public void setConnection() {
-        testJdbcContext.setConnection(jdbcConnection.getConnection());
-    }
 
     @Test
     @DisplayName("insert 테스트")
-    public void testInsert() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testInsert() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
@@ -40,8 +33,8 @@ class BoardDaoTest {
 
     @Test
     @DisplayName("update 테스트")
-    public void testUpdate() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testUpdate() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
@@ -58,8 +51,8 @@ class BoardDaoTest {
 
     @Test
     @DisplayName("가장 최근 색 찾기 테스트")
-    public void testFindLastColor() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testFindLastColor() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;
@@ -76,8 +69,8 @@ class BoardDaoTest {
 
     @Test
     @DisplayName("id와 일치하는 개수 찾기 테스트")
-    public void testCount() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testCount() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test1";
             final Color color = Color.WHITE;

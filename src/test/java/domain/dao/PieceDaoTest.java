@@ -10,16 +10,14 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.type.Color;
-import java.sql.SQLException;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoTest {
 
-    private final TestJdbcContext testJdbcContext = new TestJdbcContext();
     private final JdbcConnection jdbcConnection = new JdbcConnection();
+    private final TestJdbcContext testJdbcContext = new TestJdbcContext(jdbcConnection);
     private final PieceDao pieceDao = new PieceDaoImpl(testJdbcContext);
     private final BoardDao boardDao = new BoardDaoImpl(testJdbcContext);
     private final Map<Location, Piece> board = Map.of(
@@ -29,15 +27,10 @@ class PieceDaoTest {
         Location.of(4, 2), Knight.makeBlack()
     );
 
-    @BeforeEach
-    public void setConnection() {
-        testJdbcContext.setConnection(jdbcConnection.getConnection());
-    }
-
     @Test
     @DisplayName("insert 테스트")
-    public void testInsert() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testInsert() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test";
             boardDao.insert(boardId, Color.WHITE);
@@ -56,8 +49,8 @@ class PieceDaoTest {
 
     @Test
     @DisplayName("update 테스트")
-    public void testUpdate() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testUpdate() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test";
             boardDao.insert(boardId, Color.WHITE);
@@ -84,8 +77,8 @@ class PieceDaoTest {
 
     @Test
     @DisplayName("boardId와 일치하는 모든 조각 테스트")
-    public void testFindAllByBoardId() throws SQLException {
-        testJdbcContext.testWithRollback(connection -> {
+    public void testFindAllByBoardId() {
+        testJdbcContext.makeTransactionUnit(connection -> {
             //given
             final String boardId = "test";
             boardDao.insert(boardId, Color.WHITE);
