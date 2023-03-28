@@ -1,5 +1,6 @@
 package domain;
 
+import common.JdbcContext;
 import domain.piece.Piece;
 import domain.repository.ChessRepository;
 import domain.type.Color;
@@ -9,12 +10,14 @@ import java.util.HashMap;
 public final class ChessGame {
 
     private final ChessRepository chessRepository;
+    private final JdbcContext jdbcContext;
     private String boardId;
     private Board board;
     private Color color;
 
-    public ChessGame(final ChessRepository chessRepository) {
+    public ChessGame(final ChessRepository chessRepository, final JdbcContext jdbcContext) {
         this.chessRepository = chessRepository;
+        this.jdbcContext = jdbcContext;
     }
 
     public void initialize(final String boardId) {
@@ -61,17 +64,23 @@ public final class ChessGame {
     }
 
     public void findPreviousGame(final String boardId) {
-        this.board = chessRepository.findBoardById(boardId);
-        this.color = chessRepository.findLastColorFromBoardById(boardId);
-        this.boardId = boardId;
+        jdbcContext.makeTransactionUnit(connection -> {
+            this.board = chessRepository.findBoardById(boardId);
+            this.color = chessRepository.findLastColorFromBoardById(boardId);
+            this.boardId = boardId;
+            return null;
+        });
     }
 
     public void save() {
-        if (chessRepository.existBoard(boardId)) {
-            chessRepository.update(boardId, board.getBoard(), color);
-            return;
-        }
-        chessRepository.insert(boardId, board.getBoard(), color);
+        jdbcContext.makeTransactionUnit(connection -> {
+            if (chessRepository.existBoard(boardId)) {
+                chessRepository.update(boardId, board.getBoard(), color);
+                return null;
+            }
+            chessRepository.insert(boardId, board.getBoard(), color);
+            return null;
+        });
     }
 
     public Board getBoard() {

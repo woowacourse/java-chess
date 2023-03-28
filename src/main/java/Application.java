@@ -22,11 +22,11 @@ public class Application {
     }
 
     private static ChessGame makeChessGame() {
-        return new ChessGame(chessRepository());
+        final JdbcContext jdbcContext = makeJdbcContext();
+        return new ChessGame(chessRepository(jdbcContext), jdbcContext);
     }
 
-    private static ChessRepository chessRepository() {
-        final JdbcContext jdbcContext = makeJdbcContext();
+    private static ChessRepository chessRepository(final JdbcContext jdbcContext) {
         return new ChessRepositoryImpl(new BoardDaoImpl(jdbcContext), new PieceDaoImpl(jdbcContext));
     }
 

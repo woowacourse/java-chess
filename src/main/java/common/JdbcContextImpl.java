@@ -7,24 +7,50 @@ import java.sql.SQLException;
 public final class JdbcContextImpl implements JdbcContext {
 
     private final JdbcConnection jdbcConnection;
+    private Connection connection;
 
     public JdbcContextImpl(final JdbcConnection jdbcConnection) {
         this.jdbcConnection = jdbcConnection;
+        this.connection = jdbcConnection.getConnection();
     }
 
     @Override
     public <T> T workWithTransaction(final TransactionStrategy<T> transactionStrategy) {
-        final Connection connection = jdbcConnection.getConnection();
         try {
             connection.setAutoCommit(false);
-            final T result = transactionStrategy.execute(connection);
+            return transactionStrategy.execute(connection);
+        } catch (SQLException exception) {
+            rollback(connection);
+            throw new IllegalStateException(exception);
+        }
+    }
+
+    @Override
+    public <T> void makeTransactionUnit(final TransactionStrategy<T> transactionStrategy) {
+        makeConnection();
+        try {
+            connection.setAutoCommit(false);
+            transactionStrategy.execute(connection);
             connection.commit();
-            return result;
         } catch (SQLException exception) {
             rollback(connection);
             throw new IllegalStateException(exception);
         } finally {
             close(connection);
+        }
+    }
+
+    private void makeConnection() {
+        if (isClosed()) {
+            connection = jdbcConnection.getConnection();
+        }
+    }
+
+    private boolean isClosed() {
+        try {
+            return connection.isClosed();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
