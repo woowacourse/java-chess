@@ -37,10 +37,10 @@ public class Board {
     }
 
     private boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (isMovableByRule(startCoordinate, endCoordinate)) {
+        if (!isMovableByRule(startCoordinate, endCoordinate)) {
             throw new IllegalArgumentException("[ERROR] 해당 기물의 규칙에 어긋나는 움직임입니다.");
         }
-        if (isNotBlocked(startCoordinate, endCoordinate)) {
+        if (!isNotBlocked(startCoordinate, endCoordinate)) {
             throw new IllegalArgumentException("[ERROR] 경로에 말이 있어 이동이 불가능합니다.");
         }
         return true;
