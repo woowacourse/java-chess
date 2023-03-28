@@ -33,7 +33,6 @@ public class ChessGameController {
         ChessGameService chessGameService = new ChessGameService(chessGame, chessDao);
         outputView.printStartMessage();
         playChessGame(chessGameService);
-        chessDao.deleteNotation();
     }
 
     private void playChessGame(final ChessGameService chessGameService) {

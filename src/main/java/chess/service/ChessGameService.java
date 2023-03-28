@@ -32,6 +32,7 @@ public class ChessGameService {
     }
 
     public boolean gameOver() {
+        chessDao.deleteNotation();
         return chessGame.isGameOver();
     }
 
