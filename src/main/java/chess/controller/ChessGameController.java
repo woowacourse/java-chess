@@ -66,7 +66,7 @@ public final class ChessGameController {
     }
 
     private void status(final Commands commands) {
-        OutputView.printStatus(players.calculateScore());
+        OutputView.printStatus(players.calculateScore(), players.getTurn());
     }
 
     private void move(final Commands commands) {

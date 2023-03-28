@@ -153,11 +153,14 @@ public class Players {
                 .getValue();
     }
 
+    public Color getTurn() {
+        return current;
+    }
+
     @Override
     public String toString() {
         return "Players{" +
                 "players=" + players +
                 '}';
     }
-
 }

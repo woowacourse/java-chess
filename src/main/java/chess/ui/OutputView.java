@@ -1,5 +1,6 @@
 package chess.ui;
 
+import chess.domain.Color;
 import chess.dto.response.PiecesResponse;
 
 import static chess.domain.Pieces.FIRST_FILE_OF_BLACK;
@@ -55,8 +56,8 @@ public final class OutputView {
         System.out.println("[ERROR]: " + message);
     }
 
-    public static void printStatus(final double calculateScore) {
-        System.out.println("score : " + calculateScore + System.lineSeparator());
+    public static void printStatus(final double calculateScore, final Color turn) {
+        System.out.println(turn + " score : " + calculateScore + System.lineSeparator());
     }
 
     public static void printWinner(final String color) {
