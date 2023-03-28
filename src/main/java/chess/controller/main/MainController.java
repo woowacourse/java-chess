@@ -7,16 +7,16 @@ import chess.controller.CommandMapper;
 import chess.controller.SubController;
 import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
-import chess.view.input.MainInputView;
+import chess.view.input.InputView;
 import chess.view.output.MainOutputView;
 
 public class MainController {
-    private final MainInputView inputView;
+    private final InputView inputView;
     private final MainOutputView outputView;
     private final CommandMapper<MainCommand, SubController> commandMapper;
 
     public MainController(
-            final MainInputView inputView,
+            final InputView inputView,
             final MainOutputView outputView,
             final CommandMapper<MainCommand, SubController> commandMapper
     ) {
@@ -36,7 +36,8 @@ public class MainController {
 
     private MainCommand readCommand() {
         try {
-            final String command = inputView.readCommand(UserSession.getName(), RoomSession.getName());
+            outputView.printCommands(UserSession.getName(), RoomSession.getName());
+            final String command = inputView.readCommand();
             final MainCommand mainCommand = MainCommand.from(command);
             final SubController controller = commandMapper.getValue(mainCommand);
             controller.run();

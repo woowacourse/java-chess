@@ -14,19 +14,19 @@ import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.dto.MoveDto;
 import chess.service.GameService;
-import chess.view.input.GameInputView;
+import chess.view.input.InputView;
 import chess.view.output.GameOutputView;
 import java.util.List;
 import java.util.Map;
 
 public class GameController implements SubController {
-    private final GameInputView inputView;
+    private final InputView inputView;
     private final GameOutputView outputView;
     private final GameService gameService;
     private final CommandMapper<GameCommand, Action> commandMapper;
 
     public GameController(
-            final GameInputView inputView,
+            final InputView inputView,
             final GameOutputView outputView,
             final GameService gameService
     ) {
@@ -60,7 +60,8 @@ public class GameController implements SubController {
 
     private GameCommand play() {
         try {
-            final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
+            outputView.printCommands(UserSession.getName(), RoomSession.getName());
+            final List<String> commands = inputView.readCommands();
             final GameCommand command = GameCommand.from(commands);
             command.validateCommandsSize(commands);
             final Action action = commandMapper.getValue(command);

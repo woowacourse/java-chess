@@ -14,19 +14,19 @@ import chess.controller.session.RoomSession;
 import chess.controller.session.UserSession;
 import chess.domain.user.User;
 import chess.service.UserService;
-import chess.view.input.UserInputView;
+import chess.view.input.InputView;
 import chess.view.output.UserOutputView;
 import java.util.List;
 import java.util.Map;
 
 public class UserController implements SubController {
-    private final UserInputView inputView;
+    private final InputView inputView;
     private final UserOutputView outputView;
     private final UserService userService;
     private final CommandMapper<UserCommand, Action> commandMapper;
 
     public UserController(
-            final UserInputView inputView,
+            final InputView inputView,
             final UserOutputView outputView,
             final UserService userService
     ) {
@@ -55,7 +55,8 @@ public class UserController implements SubController {
 
     private UserCommand play() {
         try {
-            final List<String> commands = inputView.readCommand(UserSession.getName(), RoomSession.getName());
+            outputView.printCommands(UserSession.getName(), RoomSession.getName());
+            final List<String> commands = inputView.readCommands();
             final UserCommand command = UserCommand.from(commands);
             command.validateCommandsSize(commands);
             final Action action = commandMapper.getValue(command);

@@ -16,10 +16,7 @@ import chess.repository.UserJdbcDao;
 import chess.service.GameService;
 import chess.service.RoomService;
 import chess.service.UserService;
-import chess.view.input.GameInputView;
-import chess.view.input.MainInputView;
-import chess.view.input.RoomInputView;
-import chess.view.input.UserInputView;
+import chess.view.input.InputView;
 import chess.view.output.GameOutputView;
 import chess.view.output.MainOutputView;
 import chess.view.output.RoomOutputView;
@@ -29,7 +26,7 @@ import java.util.Scanner;
 
 public class ControllerFactory {
     private static final MainController INSTANCE;
-    private static final Scanner SCANNER = new Scanner(System.in);
+    private static final InputView INPUT_VIEW = new InputView(new Scanner(System.in));
     private static final JdbcTemplate JDBC_TEMPLATE = new JdbcTemplate(FixedConnectionPool.getInstance());
 
     static {
@@ -37,13 +34,14 @@ public class ControllerFactory {
                 MainCommand.USER, userController(),
                 MainCommand.ROOM, roomController(),
                 MainCommand.START, gameController(),
-                MainCommand.END, empty()
+                MainCommand.END, () -> {
+                }
         ));
-        INSTANCE = new MainController(new MainInputView(SCANNER), new MainOutputView(), mainCommandMapper);
+        INSTANCE = new MainController(INPUT_VIEW, new MainOutputView(), mainCommandMapper);
     }
 
     private static SubController userController() {
-        return new UserController(new UserInputView(SCANNER), new UserOutputView(), new UserService(userDao()));
+        return new UserController(INPUT_VIEW, new UserOutputView(), new UserService(userDao()));
     }
 
     private static UserDao userDao() {
@@ -51,7 +49,7 @@ public class ControllerFactory {
     }
 
     private static SubController roomController() {
-        return new RoomController(new RoomInputView(SCANNER), new RoomOutputView(), new RoomService(roomDao()));
+        return new RoomController(INPUT_VIEW, new RoomOutputView(), new RoomService(roomDao()));
     }
 
     private static RoomDao roomDao() {
@@ -59,16 +57,11 @@ public class ControllerFactory {
     }
 
     private static SubController gameController() {
-        return new GameController(new GameInputView(SCANNER), new GameOutputView(), new GameService(gameDao()));
+        return new GameController(INPUT_VIEW, new GameOutputView(), new GameService(gameDao()));
     }
 
     private static GameDao gameDao() {
         return new GameJdbcDao(JDBC_TEMPLATE);
-    }
-
-    private static SubController empty() {
-        return () -> {
-        };
     }
 
     public static MainController mainController() {
