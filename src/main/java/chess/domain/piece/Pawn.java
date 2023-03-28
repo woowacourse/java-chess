@@ -9,6 +9,8 @@ public class Pawn extends ChessPiece {
     public static final List<Direction> MOVABLE_DIRECTION = List.of(Direction.NORTH, Direction.SOUTH, Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     public static final int MAX_MOVEMENT_OF_INIT_PAWN = 2;
     public static final int MAX_MOVEMENT_OF_NON_INIT_PAWN = 1;
+    public static final int WHITE_PAWN_INIT_RANK = 2;
+    public static final int BLACK_PAWN_INIT_RANK = 7;
 
     public Pawn(Color color) {
         super(color);
@@ -77,11 +79,11 @@ public class Pawn extends ChessPiece {
     }
 
     public boolean isFirstMovement(Position position) {
-        if (this.color.equals(Color.WHITE) && position.isInWhitePawnInitRank()) {
+        if (this.color.equals(Color.WHITE) && isWhitePawnInInitRank(position)) {
             return true;
         }
 
-        return this.color.equals(Color.BLACK) && position.isInBlackPawnInitRank();
+        return this.color.equals(Color.BLACK) && isBlackPawnInInitRank(position);
     }
 
     @Override
@@ -125,5 +127,13 @@ public class Pawn extends ChessPiece {
         Position targetPosition = movement.findTargetPosition();
         ChessPiece targetChessPiece = chessBoard.getChessPiece(targetPosition);
         return !targetChessPiece.equals(new Empty()) && this.color.equals(targetColor);
+    }
+
+    private boolean isWhitePawnInInitRank(Position position) {
+        return position.getRankSequence() == WHITE_PAWN_INIT_RANK;
+    }
+
+    private boolean isBlackPawnInInitRank(Position position) {
+        return position.getRankSequence() == BLACK_PAWN_INIT_RANK;
     }
 }

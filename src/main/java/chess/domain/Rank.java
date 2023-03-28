@@ -33,6 +33,14 @@ public enum Rank {
                 .anyMatch(rank -> rank == rankValue);
     }
 
+    public static String findRankName(int sequence) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.sequence == sequence)
+                .map(Rank::getName)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 포지션은 체스판 범위 밖입니다."));
+    }
+
     public String getName() {
         return name;
     }

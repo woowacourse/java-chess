@@ -6,27 +6,30 @@ import java.util.Objects;
 
 public class Position {
 
-    public static final Map<String, Position> POSITION_CACHE = new HashMap<>();
-    public static final int WHITE_PAWN_INIT_RANK = 2;
-    public static final int BLACK_PAWN_INIT_RANK = 7;
-
-    static {
-        for (Rank rank : Rank.values()) {
-            for (Column column : Column.values()) {
-                String columnName = column.getName();
-                String rankName = rank.getName();
-                POSITION_CACHE.put(columnName + rankName, new Position(Column.findColumn(columnName), Rank.findRank(rankName)));
-            }
-        }
-    }
+    public static final Map<String, Position> POSITION_CACHE = initPositionCache();
 
     private final Column column;
     private final Rank rank;
 
-
     private Position(Column column, Rank rank) {
         this.column = column;
         this.rank = rank;
+    }
+
+    private static Map<String, Position> initPositionCache() {
+        Map<String, Position> positionCache = new HashMap<>();
+        for (Rank rank : Rank.values()) {
+            addPositionByEachRank(rank, positionCache);
+        }
+        return positionCache;
+    }
+
+    private static void addPositionByEachRank(Rank rank, Map<String, Position> positionCache) {
+        for (Column column : Column.values()) {
+            String columnName = column.getName();
+            String rankName = rank.getName();
+            positionCache.put(columnName + rankName, new Position(Column.findColumn(columnName), Rank.findRank(rankName)));
+        }
     }
 
     public static Position findPosition(String position) {
@@ -37,15 +40,9 @@ public class Position {
     }
 
     public Position getMovingPosition(Direction direction) {
-        char columSequence = column.getSequence();
-        int rankSequence = rank.getSequence();
-        int ColumnVector = direction.getColumnVector();
-        int RankVector = direction.getRankVector();
-        char a = (char) (columSequence + ColumnVector);
-        int b = rankSequence + RankVector;
-        String positionCacheKey = a + String.valueOf(b);
-        validateBorderOfChessBoard(positionCacheKey);
-        return POSITION_CACHE.get(positionCacheKey);
+        String positionCacheKeyMovedToDirection = direction.findColumnNameMovedToDirection(this.column) + direction.findRankMovedToDirection(this.rank);
+        validateBorderOfChessBoard(positionCacheKeyMovedToDirection);
+        return POSITION_CACHE.get(positionCacheKeyMovedToDirection);
     }
 
     public void validateBorderOfChessBoard(String positionCacheKey) {
@@ -66,14 +63,6 @@ public class Position {
 
     public int getRankDistanceFromTargetToSource(Position targetPosition) {
         return targetPosition.getRankSequence() - rank.getSequence();
-    }
-
-    public boolean isInWhitePawnInitRank() {
-        return rank.getSequence() == WHITE_PAWN_INIT_RANK;
-    }
-
-    public boolean isInBlackPawnInitRank() {
-        return rank.getSequence() == BLACK_PAWN_INIT_RANK;
     }
 
     public char getColumnSequence() {

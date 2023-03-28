@@ -143,12 +143,11 @@ public enum Direction {
         return direction.equals(EAST) || direction.equals(WEST) || direction.equals(SOUTH) || direction.equals(NORTH);
     }
 
-
-    public int getColumnVector() {
-        return columnVector;
+    public String findColumnNameMovedToDirection(Column column) {
+        return Column.findColumnName((char) (column.getSequence() + this.columnVector));
     }
 
-    public int getRankVector() {
-        return rankVector;
+    public String findRankMovedToDirection(Rank rank) {
+        return Rank.findRankName(rank.getSequence() + this.rankVector);
     }
 }

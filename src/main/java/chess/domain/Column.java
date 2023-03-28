@@ -27,6 +27,14 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 컬럼을 찾을 수 없습니다."));
     }
 
+    public static String findColumnName(char sequence) {
+        return Arrays.stream(values())
+                .filter(column -> column.sequence == sequence)
+                .map(Column::getName)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 포지션은 체스판 범위 밖입니다."));
+    }
+
     public static boolean isInChessBoardRange(char columnSequence) {
         return Arrays.stream(Column.values())
                 .map(Column::getSequence)

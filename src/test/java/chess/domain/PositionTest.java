@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static chess.domain.Position.POSITION_CACHE;
 import static chess.domain.Position.findPosition;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PositionTest {
 
@@ -105,63 +103,5 @@ class PositionTest {
         int expectedRankDistance = 3;
 
         assertThat(sourcePosition.getRankDistanceFromTargetToSource(targetPosition)).isEqualTo(expectedRankDistance);
-    }
-
-    @Test
-    @DisplayName("포지션 객체가 화이트폰의 초기 Rank위치(2)에 존재할 경우 true를 반환")
-    void shouldSucceedCheckWhitePawnIn2ndRankTrue() {
-        Position position1 = Position.findPosition("a2");
-        Position position2 = Position.findPosition("d2");
-        Position position3 = Position.findPosition("h2");
-
-        assertAll(
-                () -> assertThat(position1.isInWhitePawnInitRank()).isTrue(),
-                () -> assertThat(position2.isInWhitePawnInitRank()).isTrue(),
-                () -> assertThat(position3.isInWhitePawnInitRank()).isTrue()
-        );
-
-    }
-
-    @Test
-    @DisplayName("포지션 객체가 화이트폰의 초기 Rank위치(2)에 존재하지 않을 경우 false를 반환")
-    void shouldSucceedCheckWhitePawnIn2ndRankFalse() {
-        Position position1 = Position.findPosition("a3");
-        Position position2 = Position.findPosition("d5");
-        Position position3 = Position.findPosition("h7");
-
-        assertAll(
-                () -> assertThat(position1.isInWhitePawnInitRank()).isFalse(),
-                () -> assertThat(position2.isInWhitePawnInitRank()).isFalse(),
-                () -> assertThat(position3.isInWhitePawnInitRank()).isFalse()
-        );
-    }
-
-    @Test
-    @DisplayName("포지션 객체가 블랙폰의 초기 Rank위치(7)에 존재할 경우 true를 반환")
-    void shouldSucceedCheckBlackPawnIn2ndRankTrue() {
-        Position position1 = Position.findPosition("a7");
-        Position position2 = Position.findPosition("d7");
-        Position position3 = Position.findPosition("h7");
-
-        System.out.println(POSITION_CACHE);
-        assertAll(
-                () -> assertThat(position1.isInBlackPawnInitRank()).isTrue(),
-                () -> assertThat(position2.isInBlackPawnInitRank()).isTrue(),
-                () -> assertThat(position3.isInBlackPawnInitRank()).isTrue()
-        );
-    }
-
-    @Test
-    @DisplayName("포지션 객체가 블랙폰의 초기 Rank위치(7)에 존재하지 않을 경우 false를 반환")
-    void shouldSucceedCheckBlackPawnIn2ndRankFalse() {
-        Position position1 = Position.findPosition("a2");
-        Position position2 = Position.findPosition("d4");
-        Position position3 = Position.findPosition("h6");
-
-        assertAll(
-                () -> assertThat(position1.isInBlackPawnInitRank()).isFalse(),
-                () -> assertThat(position2.isInBlackPawnInitRank()).isFalse(),
-                () -> assertThat(position3.isInBlackPawnInitRank()).isFalse()
-        );
     }
 }
