@@ -5,7 +5,7 @@ import chess.controller.dto.InputRenderer;
 import chess.controller.dto.OutputRenderer;
 import chess.domain.ChessGame;
 import chess.domain.position.Position;
-import chess.domain.room.Room;
+import chess.service.RoomService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -23,16 +23,16 @@ public final class ChessController {
 
     private final ErrorController errorController;
     private final Map<Command, Action> commandMapper;
-    private final Room room;
+    private final RoomService roomService;
 
-    public ChessController(final ErrorController errorController, final Room room) {
+    public ChessController(final ErrorController errorController, final RoomService roomService) {
         this.errorController = errorController;
         this.commandMapper = Map.of(
                 START, this::start,
                 MOVE, this::move,
                 STATUS, this::status
         );
-        this.room = room;
+        this.roomService = roomService;
     }
 
     public void run() {
@@ -56,7 +56,7 @@ public final class ChessController {
     }
 
     public CommandDto start(final CommandDto commandDto) {
-        ChessGame chessGame = room.connectRoom();
+        ChessGame chessGame = roomService.getChessGame();
         OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
         OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
         return readCommand(List.of(MOVE, STATUS, END));
@@ -68,8 +68,8 @@ public final class ChessController {
             List<Integer> target = commandDto.getTarget();
             Position sourcePosition = new Position(source.get(0), source.get(1));
             Position targetPosition = new Position(target.get(0), target.get(1));
-            room.updateRoom(sourcePosition, targetPosition);
-            ChessGame chessGame = room.connectRoom();
+            roomService.updateRoom(sourcePosition, targetPosition);
+            ChessGame chessGame = roomService.getChessGame();
             OutputView.printBoard(OutputRenderer.toBoardDto(chessGame.getBoard()));
             OutputView.printTurn(OutputRenderer.toTeamDto(chessGame.getTurn()));
         });
@@ -78,11 +78,11 @@ public final class ChessController {
     }
 
     private CommandDto checkGameOver() {
-        final ChessGame chessGame = room.connectRoom();
+        final ChessGame chessGame = roomService.getChessGame();
         if (chessGame.isGameEnd()) {
             OutputView.printFinishMessage();
             inquireStatus(chessGame);
-            room.deleteRoom();
+            roomService.deleteRoom();
             return new CommandDto(END);
         }
         return readCommand(List.of(MOVE, STATUS, END));
@@ -95,7 +95,7 @@ public final class ChessController {
     }
 
     public CommandDto status(final CommandDto commandDto) {
-        ChessGame chessGame = room.connectRoom();
+        ChessGame chessGame = roomService.getChessGame();
         inquireStatus(chessGame);
         return readCommand(List.of(MOVE, STATUS, END));
     }

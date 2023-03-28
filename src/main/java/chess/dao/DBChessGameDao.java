@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DBChessGameDao implements ChessGameDao {
+public final class DBChessGameDao {
 
     private final DBBoardDao dbBoardDao;
 
@@ -20,7 +20,6 @@ public final class DBChessGameDao implements ChessGameDao {
         this.dbBoardDao = dbBoardDao;
     }
 
-    @Override
     public int save(final ChessGame chessGame) {
         final var query = "INSERT INTO chess_game(turn) VALUES (?);";
         try (final Connection connection = DBConnection.getConnection();
@@ -39,7 +38,6 @@ public final class DBChessGameDao implements ChessGameDao {
         }
     }
 
-    @Override
     public ChessGame select(final int id) {
         final var query = "SELECT * FROM chess_game WHERE id = ?";
         try (final Connection connection = DBConnection.getConnection();
@@ -51,7 +49,7 @@ public final class DBChessGameDao implements ChessGameDao {
             if (resultSet.next()) {
                 final Team turn = Team.valueOf(resultSet.getString("turn"));
                 final Board board = dbBoardDao.select(id);
-                return new ChessGame(id, board, turn);
+                return new ChessGame(board, turn);
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -59,7 +57,6 @@ public final class DBChessGameDao implements ChessGameDao {
         return null;
     }
 
-    @Override
     public List<Integer> selectAllId() {
         List<Integer> id = new ArrayList<>();
         final var query = "SELECT id FROM chess_game";
@@ -77,21 +74,19 @@ public final class DBChessGameDao implements ChessGameDao {
         return id;
     }
 
-    @Override
-    public void update(final ChessGame chessGame) {
+    public void update(final int id, final ChessGame chessGame) {
         final var query = "UPDATE chess_game SET turn = ? WHERE id = ?;";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, chessGame.getTurn().name());
-            preparedStatement.setInt(2, chessGame.getId());
+            preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
-            dbBoardDao.update(chessGame.getId(), chessGame.getBoard());
+            dbBoardDao.update(id, chessGame.getBoard());
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
     public void delete(final int id) {
         final var query = "DELETE FROM chess_game WHERE id = ?;";
         try (final Connection connection = DBConnection.getConnection();
