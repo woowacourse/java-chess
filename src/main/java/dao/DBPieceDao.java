@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class DBChessGameDao implements ChessGameDao {
+public final class DBPieceDao implements PieceDao {
 
     private final DBConnection dbConnection = new DBConnection();
 

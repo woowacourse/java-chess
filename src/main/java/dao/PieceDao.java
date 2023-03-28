@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public interface ChessGameDao {
+public interface PieceDao {
 
     void createPiece(final Position position, final Piece piece, final String gameId);
 

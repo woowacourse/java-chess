@@ -5,18 +5,18 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import dao.ChessGameDao;
+import dao.PieceDao;
 import dao.ChessStatusDao;
 import java.util.List;
 import java.util.Map;
 
 public final class ChessService {
 
-    private final ChessGameDao chessGameDao;
+    private final PieceDao pieceDao;
     private final ChessStatusDao chessStatusDao;
 
-    public ChessService(final ChessGameDao chessGameDao, final ChessStatusDao chessStatusDao) {
-        this.chessGameDao = chessGameDao;
+    public ChessService(final PieceDao pieceDao, final ChessStatusDao chessStatusDao) {
+        this.pieceDao = pieceDao;
         this.chessStatusDao = chessStatusDao;
     }
 
@@ -25,13 +25,12 @@ public final class ChessService {
     }
 
     public ChessGame readChessGame(final String gameId) {
-        final Map<Position, Piece> board = chessGameDao.read(gameId);
+        final Map<Position, Piece> board = pieceDao.read(gameId);
         if (board.isEmpty()) {
             return null;
         }
 
         Color turn = Color.valueOf(chessStatusDao.readTurn(gameId));
-
         return new ChessGame(new Board(board), turn);
     }
 
@@ -44,16 +43,20 @@ public final class ChessService {
         for (final Map.Entry<Position, Piece> entry : board.entrySet()) {
             final Position position = entry.getKey();
             final Piece piece = entry.getValue();
-            chessGameDao.createPiece(position, piece, gameId);
+            pieceDao.createPiece(position, piece, gameId);
         }
     }
 
     public void deleteAll(final String gameId) {
-        chessGameDao.deleteAll(gameId);
+        pieceDao.deleteAll(gameId);
     }
 
     public void update(final ChessGame chessGame, final Position from, final Position to, final String gameId) {
         chessStatusDao.update(chessGame.turn().name(), gameId);
-        chessGameDao.update(from, to, gameId);
+        pieceDao.update(from, to, gameId);
+    }
+
+    private static String convert(final Position position) {
+        return position.file().command() + position.rank().command();
     }
 }
