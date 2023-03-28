@@ -20,7 +20,7 @@ public final class DBChessGameDao {
         this.dbBoardDao = dbBoardDao;
     }
 
-    public int save(final ChessGame chessGame) {
+    public int insert(final ChessGame chessGame) {
         final var query = "INSERT INTO chess_game(turn) VALUES (?);";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
