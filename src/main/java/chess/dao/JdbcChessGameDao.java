@@ -39,8 +39,8 @@ public class JdbcChessGameDao implements ChessGameDao {
         final var query = "SELECT game_id FROM game WHERE game_status != ? AND game_status != ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, "end");
-            preparedStatement.setString(2, "catch");
+            preparedStatement.setString(1, "END");
+            preparedStatement.setString(2, "CATCH");
 
             final var resultSet = preparedStatement.executeQuery();
             List<Integer> ids = new ArrayList<>();
@@ -58,8 +58,8 @@ public class JdbcChessGameDao implements ChessGameDao {
         final var query = "SELECT game_id FROM game WHERE game_status = ? OR game_status = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, "end");
-            preparedStatement.setString(2, "catch");
+            preparedStatement.setString(1, "END");
+            preparedStatement.setString(2, "CATCH");
 
             final var resultSet = preparedStatement.executeQuery();
             List<Integer> ids = new ArrayList<>();
@@ -86,8 +86,8 @@ public class JdbcChessGameDao implements ChessGameDao {
             final var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                gameStatus = GameStatus.findByLabel(resultSet.getString("game_status"));
-                turn = Color.findByLabel(resultSet.getString("game_turn"));
+                gameStatus = GameStatus.valueOf(resultSet.getString("game_status"));
+                turn = Color.valueOf(resultSet.getString("game_turn"));
             } else {
                 return null;
             }
@@ -102,10 +102,10 @@ public class JdbcChessGameDao implements ChessGameDao {
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                File pieceFile = File.findByLabel(resultSet.getString("piece_file"));
-                Rank pieceRank = Rank.findByLabel(resultSet.getString("piece_rank"));
-                Color color = Color.findByLabel(resultSet.getString("piece_team"));
-                PieceType pieceType = PieceType.findByLabel(resultSet.getString("piece_type"));
+                File pieceFile = File.valueOf(resultSet.getString("piece_file"));
+                Rank pieceRank = Rank.valueOf(resultSet.getString("piece_rank"));
+                Color color = Color.valueOf(resultSet.getString("piece_team"));
+                PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
 
                 Position position = Position.from(pieceFile, pieceRank);
                 Piece piece = pieceType.getInstance(color);

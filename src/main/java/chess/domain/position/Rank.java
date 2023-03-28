@@ -34,10 +34,6 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."));
     }
     
-    public String getLabel() {
-        return label;
-    }
-    
     public int getIndex() {
         return index;
     }

@@ -35,10 +35,6 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_ERROR_MESSAGE));
     }
     
-    public String getLabel() {
-        return this.label;
-    }
-    
     public int getIndex() {
         return this.index;
     }
