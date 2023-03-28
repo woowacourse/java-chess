@@ -39,7 +39,6 @@ public final class DBRoomDao {
 
             if (resultSet.next()) {
                 final Team turn = Team.valueOf(resultSet.getString("turn"));
-                //final Board board = dbBoardDao.select(id);
                 return new Room(id, null, turn);
             }
         } catch (final SQLException e) {
@@ -70,6 +69,7 @@ public final class DBRoomDao {
         final var query = "UPDATE chess_game SET turn = ? WHERE id = ?;";
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, room.getTurn().name());
             preparedStatement.setInt(2, room.getId());
             preparedStatement.executeUpdate();
