@@ -94,6 +94,7 @@ public class Players {
     private void changeTurn() {
         Color changeColor = Color.changeColor(current);
         turnDao.update(changeColor);
+        current = changeColor;
     }
 
     private void move(final Position sourcePosition, final Position targetPosition) {
