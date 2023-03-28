@@ -24,7 +24,7 @@ public abstract class Piece implements PieceProvider {
         return this.pieceType == pieceType;
     }
 
-    public boolean isTeam(final Team team) {
+    public boolean isSameTeam(final Team team) {
         return this.team == team;
     }
 

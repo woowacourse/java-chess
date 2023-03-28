@@ -72,11 +72,11 @@ public final class Board implements BoardProvider {
     public boolean isKingDead(final Team team) {
         return board.values()
                 .stream()
-                .noneMatch(piece -> piece.isPieceType(KING) && piece.isTeam(team));
+                .noneMatch(piece -> piece.isPieceType(KING) && piece.isSameTeam(team));
     }
 
     public boolean isTeamInPositionMatched(final Position position, final Team expected) {
-        return board.get(position).isTeam(expected);
+        return board.get(position).isSameTeam(expected);
     }
 
     private long countPawnsInSameColumn(final int column, final Team team) {
@@ -84,7 +84,7 @@ public final class Board implements BoardProvider {
                 .stream()
                 .filter(position -> position.isColumn(column))
                 .map(board::get)
-                .filter(piece -> piece.isPieceType(PAWN) && piece.isTeam(team))
+                .filter(piece -> piece.isPieceType(PAWN) && piece.isSameTeam(team))
                 .count();
 
         if (pawnCount > 1) {
@@ -96,7 +96,7 @@ public final class Board implements BoardProvider {
     public List<Double> getScores(final Team team) {
         return board.values()
                 .stream()
-                .filter(piece -> piece.isTeam(team))
+                .filter(piece -> piece.isSameTeam(team))
                 .filter(piece -> !piece.isPieceType(KING))
                 .map(Piece::getScore)
                 .collect(Collectors.toList());
