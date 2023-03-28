@@ -67,11 +67,11 @@ public class ChessBoard {
 
     private boolean isKingAt(Position position) {
         Piece target = piecesByPosition.get(position);
-        return target.getType() == PieceType.KING;
+        return target.isSameType(PieceType.KING);
     }
 
     private boolean isEmptyPosition(final Position position) {
-        return piecesByPosition.get(position).getType() == PieceType.EMPTY;
+        return piecesByPosition.get(position).isEmpty();
     }
 
     private void switchCampTurn() {

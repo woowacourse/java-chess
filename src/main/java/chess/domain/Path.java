@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class Path {
                 .filter(position -> !position.equals(source))
                 .filter(position -> !position.equals(destination))
                 .map(piecesByPosition::get)
-                .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
+                .anyMatch(Piece::isEmpty);
     }
 
     public List<Position> positions() {

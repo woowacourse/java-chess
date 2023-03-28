@@ -27,7 +27,7 @@ public enum PieceName {
 
     public static String findNameByPiece(final Piece piece) {
         PieceName foundName = Arrays.stream(values())
-                .filter(pieceName -> pieceName.type == piece.getType())
+                .filter(pieceName -> piece.isSameType(pieceName.type))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_ERROR_MESSAGE));
         return foundName.getName(piece.getCamp());

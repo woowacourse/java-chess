@@ -30,7 +30,7 @@ public abstract class Piece {
     }
 
     private void validateMoveByPieceRule(Position source, Position destination, Piece target) {
-        if (target.getType() == PieceType.EMPTY) {
+        if (target.isEmpty()) {
             validateMoveToEmpty(source, destination);
             return;
         }
@@ -71,9 +71,16 @@ public abstract class Piece {
         return camp;
     }
 
-    // TODO isSameType 으로 변경
-    public PieceType getType() {
-        return type;
+    public String getTypeName() {
+        return type.name();
+    }
+
+    public boolean isSameType(PieceType pieceType) {
+        return type == pieceType;
+    }
+
+    public boolean isEmpty() {
+        return type == PieceType.EMPTY;
     }
 
     @Override
