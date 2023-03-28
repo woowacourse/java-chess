@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Direction {
 
     EAST(1, 0),
@@ -30,117 +32,14 @@ public enum Direction {
         this.rankVector = rankVector;
     }
 
-    public static boolean isMovableToEast(Position sourcePosition, Position targetPosition) {
-        char sourceColumn = sourcePosition.getColumnSequence();
-        int sourceRank = sourcePosition.getRankSequence();
-        char targetColumn = targetPosition.getColumnSequence();
-        int targetRank = targetPosition.getRankSequence();
+    public static Direction findDirectionFromSourceToTarget(Position sourcePosition, Position targetPosition) {
+        int columnVector = sourcePosition.calculateColumnVector(targetPosition);
+        int rankVector = sourcePosition.calculateRankVector(targetPosition);
 
-        return sourceColumn < targetColumn && sourceRank == targetRank;
-    }
-
-    public static boolean isMovableToWest(Position sourcePosition, Position targetPosition) {
-        char sourceColumn = sourcePosition.getColumnSequence();
-        int sourceRank = sourcePosition.getRankSequence();
-        char targetColumn = targetPosition.getColumnSequence();
-        int targetRank = targetPosition.getRankSequence();
-
-        return sourceColumn > targetColumn && sourceRank == targetRank;
-    }
-
-    public static boolean isMovableToSouth(Position sourcePosition, Position targetPosition) {
-        char sourceColumn = sourcePosition.getColumnSequence();
-        int sourceRank = sourcePosition.getRankSequence();
-        char targetColumn = targetPosition.getColumnSequence();
-        int targetRank = targetPosition.getRankSequence();
-
-        return sourceColumn == targetColumn && sourceRank > targetRank;
-    }
-
-    public static boolean isMovableNorth(Position sourcePosition, Position targetPosition) {
-        char sourceColumn = sourcePosition.getColumnSequence();
-        int sourceRank = sourcePosition.getRankSequence();
-        char targetColumn = targetPosition.getColumnSequence();
-        int targetRank = targetPosition.getRankSequence();
-
-        return sourceColumn == targetColumn && sourceRank < targetRank;
-    }
-
-    public static boolean isMovableNorthEast(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource > 0 && rankDistanceFromTargetToSource > 0 && columnDistanceFromTargetToSource == rankDistanceFromTargetToSource;
-    }
-
-    public static boolean isMovableNorthWest(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource < 0 && rankDistanceFromTargetToSource > 0 && -columnDistanceFromTargetToSource == rankDistanceFromTargetToSource;
-    }
-
-    public static boolean isMovableSouthEast(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource > 0 && rankDistanceFromTargetToSource < 0 && columnDistanceFromTargetToSource == -rankDistanceFromTargetToSource;
-    }
-
-    public static boolean isMovableSouthWest(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource < 0 && rankDistanceFromTargetToSource < 0 && columnDistanceFromTargetToSource == rankDistanceFromTargetToSource;
-    }
-
-    public static boolean isMovableNorthNorthEast(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == NORTH_NORTH_EAST.columnVector && rankDistanceFromTargetToSource == NORTH_NORTH_EAST.rankVector;
-    }
-
-    public static boolean isMovableNorthNorthWest(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == NORTH_NORTH_WEST.columnVector && rankDistanceFromTargetToSource == NORTH_NORTH_WEST.rankVector;
-    }
-
-    public static boolean isMovableNorthEastEast(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == NORTH_EAST_EAST.columnVector && rankDistanceFromTargetToSource == NORTH_EAST_EAST.rankVector;
-    }
-
-    public static boolean isMovableNorthWestWest(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == NORTH_WEST_WEST.columnVector && rankDistanceFromTargetToSource == NORTH_WEST_WEST.rankVector;
-    }
-
-    public static boolean isMovableSouthSouthEast(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == SOUTH_SOUTH_EAST.columnVector && rankDistanceFromTargetToSource == SOUTH_SOUTH_EAST.rankVector;
-    }
-
-    public static boolean isMovableSouthSouthWest(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == SOUTH_SOUTH_WEST.columnVector && rankDistanceFromTargetToSource == SOUTH_SOUTH_WEST.rankVector;
-    }
-
-    public static boolean isMovableSouthEastEast(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == SOUTH_EAST_EAST.columnVector && rankDistanceFromTargetToSource == SOUTH_EAST_EAST.rankVector;
-
-    }
-
-    public static boolean isMovableSouthWestWest(Position sourcePosition, Position targetPosition) {
-        int columnDistanceFromTargetToSource = sourcePosition.getColumnDistanceFromTargetToSource(targetPosition);
-        int rankDistanceFromTargetToSource = sourcePosition.getRankDistanceFromTargetToSource(targetPosition);
-        return columnDistanceFromTargetToSource == SOUTH_WEST_WEST.columnVector && rankDistanceFromTargetToSource == SOUTH_WEST_WEST.rankVector;
-    }
-
-    public static boolean isRookDirection(Direction direction) {
-        return direction.equals(EAST) || direction.equals(WEST) || direction.equals(SOUTH) || direction.equals(NORTH);
+        return Arrays.stream(values())
+                .filter(direction -> direction.columnVector == columnVector && direction.rankVector == rankVector)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 이동 가능한 방향이 존재하지 않습니다."));
     }
 
     public String findColumnNameMovedToDirection(Column column) {

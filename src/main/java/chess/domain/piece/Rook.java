@@ -25,19 +25,11 @@ public class Rook extends ChessPiece {
 
     @Override
     public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
-        if (Direction.isMovableToEast(sourcePosition, targetPosition)) {
-            return Direction.EAST;
-        }
-        if (Direction.isMovableToWest(sourcePosition, targetPosition)) {
-            return Direction.WEST;
-        }
-        if (Direction.isMovableToSouth(sourcePosition, targetPosition)) {
-            return Direction.SOUTH;
-        }
-        if (Direction.isMovableNorth(sourcePosition, targetPosition)) {
-            return Direction.NORTH;
-        }
-        throw new IllegalArgumentException("[ERROR] 동서남북 중 이동 가능한 방향이 없습니다.");
+        Direction direction = Direction.findDirectionFromSourceToTarget(sourcePosition, targetPosition);
+
+        validateDirection(direction);
+
+        return direction;
     }
 
 
@@ -55,7 +47,7 @@ public class Rook extends ChessPiece {
 
     public void validateDirection(Direction direction) {
         if (!MOVABLE_DIRECTION.contains(direction)) {
-            throw new IllegalArgumentException("[ERROR] 해당 방향으로는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 동서남북 중 이동 가능한 방향이 없습니다.");
         }
     }
 

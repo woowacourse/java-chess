@@ -28,31 +28,11 @@ Knight extends ChessPiece {
 
     @Override
     public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
-        if (Direction.isMovableNorthNorthEast(sourcePosition, targetPosition)) {
-            return Direction.NORTH_NORTH_EAST;
-        }
-        if (Direction.isMovableNorthNorthWest(sourcePosition, targetPosition)) {
-            return Direction.NORTH_NORTH_WEST;
-        }
-        if (Direction.isMovableNorthEastEast(sourcePosition, targetPosition)) {
-            return Direction.NORTH_EAST_EAST;
-        }
-        if (Direction.isMovableNorthWestWest(sourcePosition, targetPosition)) {
-            return Direction.NORTH_WEST_WEST;
-        }
-        if (Direction.isMovableSouthSouthEast(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_SOUTH_EAST;
-        }
-        if (Direction.isMovableSouthSouthWest(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_SOUTH_WEST;
-        }
-        if (Direction.isMovableSouthEastEast(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_EAST_EAST;
-        }
-        if (Direction.isMovableSouthWestWest(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_WEST_WEST;
-        }
-        throw new IllegalArgumentException("[ERROR] 나이트의 이동 경로에 해당하지 않습니다.");
+        Direction direction = Direction.findDirectionFromSourceToTarget(sourcePosition, targetPosition);
+
+        validateDirection(direction);
+
+        return direction;
     }
 
     @Override
@@ -69,7 +49,7 @@ Knight extends ChessPiece {
 
     public void validateDirection(Direction direction) {
         if (!MOVABLE_DIRECTION.contains(direction)) {
-            throw new IllegalArgumentException("[ERROR] 해당 방향으로는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 나이트의 이동 경로에 해당하지 않습니다.");
         }
     }
 

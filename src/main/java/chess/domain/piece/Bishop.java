@@ -25,19 +25,11 @@ public class Bishop extends ChessPiece {
 
     @Override
     public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
-        if (Direction.isMovableNorthEast(sourcePosition, targetPosition)) {
-            return Direction.NORTH_EAST;
-        }
-        if (Direction.isMovableNorthWest(sourcePosition, targetPosition)) {
-            return Direction.NORTH_WEST;
-        }
-        if (Direction.isMovableSouthEast(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_EAST;
-        }
-        if (Direction.isMovableSouthWest(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_WEST;
-        }
-        throw new IllegalArgumentException("[ERROR] 북동,북서,남동,남서 방향 중 이동 가능한 방향이 없습니다.");
+        Direction direction = Direction.findDirectionFromSourceToTarget(sourcePosition, targetPosition);
+
+        validateDirection(direction);
+
+        return direction;
     }
 
     @Override
@@ -54,7 +46,7 @@ public class Bishop extends ChessPiece {
 
     public void validateDirection(Direction direction) {
         if (!MOVABLE_DIRECTION.contains(direction)) {
-            throw new IllegalArgumentException("[ERROR] 해당 방향으로는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 북동,북서,남동,남서 방향 중 이동 가능한 방향이 없습니다.");
         }
     }
 

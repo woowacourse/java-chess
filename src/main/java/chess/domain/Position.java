@@ -65,6 +65,76 @@ public class Position {
         return targetPosition.getRankSequence() - rank.getSequence();
     }
 
+    public boolean isDiagonalMovement(Position targetPosition) {
+        return Math.abs(getColumnDistanceFromTargetToSource(targetPosition)) == Math.abs(getRankDistanceFromTargetToSource(targetPosition));
+    }
+
+    public boolean isCrossMovement(Position targetPosition) {
+        if (getColumnDistanceFromTargetToSource(targetPosition) == 0 && Math.abs(getRankDistanceFromTargetToSource(targetPosition)) > 0) {
+            return true;
+        }
+        return Math.abs(getColumnDistanceFromTargetToSource(targetPosition)) > 0 && getRankDistanceFromTargetToSource(targetPosition) == 0;
+    }
+
+    public int calculateColumnVector(Position targetPosition) {
+        if (isDiagonalMovement(targetPosition)) {
+            return calculateDiagonalColumnVector(targetPosition);
+        }
+        if (isCrossMovement(targetPosition)) {
+            return calculateCrossColumnVector(targetPosition);
+        }
+        return getColumnDistanceFromTargetToSource(targetPosition);
+    }
+
+    public int calculateRankVector(Position targetPosition) {
+        if (isDiagonalMovement(targetPosition)) {
+            return calculateDiagonalRankVector(targetPosition);
+        }
+        if (isCrossMovement(targetPosition)) {
+            return calculateCrossRankVector(targetPosition);
+        }
+        return getRankDistanceFromTargetToSource(targetPosition);
+    }
+
+    public int calculateDiagonalColumnVector(Position targetPosition) {
+        if (!isDiagonalMovement(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 대각선 방향으로 이동하지 않으므로 Column Vector를 구할 수 없습니다.");
+        }
+        int columnDistance = getColumnDistanceFromTargetToSource(targetPosition);
+        return columnDistance / Math.abs(columnDistance);
+    }
+
+    public int calculateDiagonalRankVector(Position targetPosition) {
+        if (!isDiagonalMovement(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 대각선 방향으로 이동하지 않으므로 Rank Vector를 구할 수 없습니다.");
+        }
+        int rankDistance = getRankDistanceFromTargetToSource(targetPosition);
+        return rankDistance / Math.abs(rankDistance);
+
+    }
+
+    public int calculateCrossColumnVector(Position targetPosition) {
+        if (!isCrossMovement(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 십자 방향으로 이동하지 않으므로 Column Vector를 구할 수 없습니다.");
+        }
+        int columnDistance = getColumnDistanceFromTargetToSource(targetPosition);
+        if (columnDistance == 0) {
+            return columnDistance;
+        }
+        return columnDistance / Math.abs(columnDistance);
+    }
+
+    public int calculateCrossRankVector(Position targetPosition) {
+        if (!isCrossMovement(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 십자 방향으로 이동하지 않으므로 Rank Vector를 구할 수 없습니다.");
+        }
+        int rankDistance = getRankDistanceFromTargetToSource(targetPosition);
+        if (rankDistance == 0) {
+            return rankDistance;
+        }
+        return rankDistance / Math.abs(rankDistance);
+    }
+
     public char getColumnSequence() {
         return column.getSequence();
     }

@@ -4,302 +4,84 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DirectionTest {
 
     @Test
-    @DisplayName("현재 위치에서 정 동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueEastDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("h2");
+    @DisplayName("source Position과 target Poistion을 입력할 때 이동 방향이 반환된다.")
+    void shouldSucceedToFindDirectionFromSourcePositionToTargetPosition() {
+        Position sourcePosition1 = Position.findPosition("d3");
+        Position targetPosition1 = Position.findPosition("d1");
+        Direction expectedDirection1 = Direction.SOUTH;
 
-        assertThat(Direction.isMovableToEast(sourcePosition, targetPosition)).isTrue();
+        Position sourcePosition2 = Position.findPosition("d3");
+        Position targetPosition2 = Position.findPosition("c3");
+        Direction expectedDirection2 = Direction.WEST;
+
+        Position sourcePosition3 = Position.findPosition("b1");
+        Position targetPosition3 = Position.findPosition("b3");
+        Direction expectedDirection3 = Direction.NORTH;
+
+        Position targetPosition4 = Position.findPosition("e3");
+        Position sourcePosition4 = Position.findPosition("d3");
+        Direction expectedDirection4 = Direction.EAST;
+
+        Position sourcePosition5 = Position.findPosition("d3");
+        Position targetPosition5 = Position.findPosition("b1");
+        Direction expectedDirection5 = Direction.SOUTH_WEST;
+
+        Position sourcePosition6 = Position.findPosition("d3");
+        Position targetPosition6 = Position.findPosition("e4");
+        Direction expectedDirection6 = Direction.NORTH_EAST;
+
+        Position sourcePosition7 = Position.findPosition("d3");
+        Position targetPosition7 = Position.findPosition("e2");
+        Direction expectedDirection7 = Direction.SOUTH_EAST;
+
+        Position sourcePosition8 = Position.findPosition("d3");
+        Position targetPosition8 = Position.findPosition("c4");
+        Direction expectedDirection8 = Direction.NORTH_WEST;
+
+        Position sourcePosition9 = Position.findPosition("d3");
+        Position targetPosition9 = Position.findPosition("e5");
+        Direction expectedDirection9 = Direction.NORTH_NORTH_EAST;
+
+        Position sourcePosition10 = Position.findPosition("d3");
+        Position targetPosition10 = Position.findPosition("f2");
+        Direction expectedDirection10 = Direction.SOUTH_EAST_EAST;
+
+        assertAll(
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition1, targetPosition1)).isEqualTo(expectedDirection1),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition2, targetPosition2)).isEqualTo(expectedDirection2),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition3, targetPosition3)).isEqualTo(expectedDirection3),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition4, targetPosition4)).isEqualTo(expectedDirection4),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition5, targetPosition5)).isEqualTo(expectedDirection5),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition6, targetPosition6)).isEqualTo(expectedDirection6),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition7, targetPosition7)).isEqualTo(expectedDirection7),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition8, targetPosition8)).isEqualTo(expectedDirection8),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition9, targetPosition9)).isEqualTo(expectedDirection9),
+                () -> assertThat(Direction.findDirectionFromSourceToTarget(sourcePosition10, targetPosition10)).isEqualTo(expectedDirection10)
+        );
     }
 
     @Test
-    @DisplayName("현재 위치에서 정 동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseEastDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("h3");
+    @DisplayName("이동 방향이 올바르지 않을 때 예외가 발생한다.")
+    void shouldFailToFindDirectionFromSourcePositionToTargetPosition() {
+        Position sourcePosition1 = Position.findPosition("e6");
+        Position targetPosition1 = Position.findPosition("d1");
 
-        assertThat(Direction.isMovableToWest(sourcePosition, targetPosition)).isFalse();
-    }
+        Position sourcePosition2 = Position.findPosition("d3");
+        Position targetPosition2 = Position.findPosition("a8");
 
-    @Test
-    @DisplayName("현재 위치에서 정 서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueWestDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("c2");
-
-        assertThat(Direction.isMovableToWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseWestDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("c3");
-
-        assertThat(Direction.isMovableToWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 남쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("f1");
-
-        assertThat(Direction.isMovableToSouth(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 남쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("g1");
-
-        assertThat(Direction.isMovableToSouth(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 북쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("f4");
-
-        assertThat(Direction.isMovableNorth(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 북쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthDirection() {
-        Position sourcePosition = Position.findPosition("f2");
-        Position targetPosition = Position.findPosition("g4");
-
-        assertThat(Direction.isMovableNorth(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 북동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthEastDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("f5");
-
-        assertThat(Direction.isMovableNorthEast(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 북동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthEastDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("f6");
-
-        assertThat(Direction.isMovableNorthEast(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 북서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthWestDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("b5");
-
-        assertThat(Direction.isMovableNorthWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 북서쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthWestDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("b6");
-
-        assertThat(Direction.isMovableNorthWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 남동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthEastDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("f1");
-
-        assertThat(Direction.isMovableSouthEast(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 남동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthEastDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("f3");
-
-        assertThat(Direction.isMovableSouthEast(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 남서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthWestDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("b1");
-
-        assertThat(Direction.isMovableSouthWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 정 남서쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthWestDirection() {
-        Position sourcePosition = Position.findPosition("d3");
-        Position targetPosition = Position.findPosition("b3");
-
-        assertThat(Direction.isMovableSouthWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북북동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthNorthEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("d5");
-
-        assertThat(Direction.isMovableNorthNorthEast(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북북동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthNorthEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("d6");
-
-        assertThat(Direction.isMovableNorthNorthEast(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북북서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthNorthWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("b5");
-
-        assertThat(Direction.isMovableNorthNorthWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북북서쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthNorthWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("a5");
-
-        assertThat(Direction.isMovableNorthNorthWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북동동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthEastEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("e4");
-
-        assertThat(Direction.isMovableNorthEastEast(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북동동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthEastEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("e5");
-
-        assertThat(Direction.isMovableNorthEastEast(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북서서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueNorthWestWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("a4");
-
-        assertThat(Direction.isMovableNorthWestWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 북서서쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseNorthWestWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("a5");
-
-        assertThat(Direction.isMovableNorthWestWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남남동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthSouthEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("d1");
-
-        assertThat(Direction.isMovableSouthSouthEast(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남남동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthSouthEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("d2");
-
-        assertThat(Direction.isMovableSouthSouthEast(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남남서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthSouthWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("b1");
-
-        assertThat(Direction.isMovableSouthSouthWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남남서쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthSouthWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("a1");
-
-        assertThat(Direction.isMovableSouthSouthWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남동동쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthEastEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("e2");
-
-        assertThat(Direction.isMovableSouthEastEast(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남동동쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthEastEastDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("e3");
-
-        assertThat(Direction.isMovableSouthEastEast(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남서서쪽에 목표 위치가 존재할 때 true를 리턴한다")
-    void shouldSucceedToCheckTrueSouthWestWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("a2");
-
-        assertThat(Direction.isMovableSouthWestWest(sourcePosition, targetPosition)).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 위치에서 남서서쪽에 목표 위치가 존재하지 않을 때 false를 리턴한다")
-    void shouldSucceedToCheckFalseSouthWestWestDirection() {
-        Position sourcePosition = Position.findPosition("c3");
-        Position targetPosition = Position.findPosition("a1");
-
-        assertThat(Direction.isMovableSouthWestWest(sourcePosition, targetPosition)).isFalse();
-    }
-
-    @Test
-    @DisplayName("Direction이 Rook의 움직임에 해당되면 true를 리턴한다.")
-    void shouldSucceedToCheckRookDirectionTrue() {
-        Direction rookDirection = Direction.EAST;
-
-        assertThat(Direction.isRookDirection(rookDirection)).isTrue();
+        assertAll(
+                () -> assertThatThrownBy(() -> Direction.findDirectionFromSourceToTarget(sourcePosition1, targetPosition1))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("[ERROR] 이동 가능한 방향이 존재하지 않습니다."),
+                () -> assertThatThrownBy(() -> Direction.findDirectionFromSourceToTarget(sourcePosition2, targetPosition2))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("[ERROR] 이동 가능한 방향이 존재하지 않습니다.")
+        );
     }
 }

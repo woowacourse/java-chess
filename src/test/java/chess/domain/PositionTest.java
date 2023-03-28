@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static chess.domain.Position.findPosition;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PositionTest {
 
@@ -103,5 +104,161 @@ class PositionTest {
         int expectedRankDistance = 3;
 
         assertThat(sourcePosition.getRankDistanceFromTargetToSource(targetPosition)).isEqualTo(expectedRankDistance);
+    }
+
+    @Test
+    @DisplayName("두 포지션 객체가 입력 될 때 대각선 방향으로 이동하면 true를 반환한다.")
+    void shouldSucceedToCheckDiagonalMovement() {
+        Position sourcePosition = Position.findPosition("d3");
+        Position targetPosition = Position.findPosition("f5");
+
+        assertThat(sourcePosition.isDiagonalMovement(targetPosition)).isTrue();
+    }
+
+    @Test
+    @DisplayName("두 포지션 객체가 입력 될 때 대각선 방향으로 이동하지 않으면 false를 반환한다.")
+    void shouldFailToCheckDiagonalMovement() {
+        Position sourcePosition = Position.findPosition("d3");
+        Position targetPosition = Position.findPosition("f6");
+
+        assertThat(sourcePosition.isDiagonalMovement(targetPosition)).isFalse();
+    }
+
+    @Test
+    @DisplayName("두 포지션 객체가 입력 될 때 십자 방향으로 이동하면 true를 반환한다.")
+    void shouldSucceedToCheckCrossMovement() {
+        Position sourcePosition = Position.findPosition("d3");
+        Position targetPosition = Position.findPosition("f3");
+
+        assertThat(sourcePosition.isCrossMovement(targetPosition)).isTrue();
+    }
+
+    @Test
+    @DisplayName("두 포지션 객체가 입력 될 때 십자 방향으로 이동하지 않으면 false를 반환한다.")
+    void shouldFailToCheckCrossMovement() {
+        Position sourcePosition = Position.findPosition("d3");
+        Position targetPosition = Position.findPosition("f4");
+
+        assertThat(sourcePosition.isCrossMovement(targetPosition)).isFalse();
+    }
+
+    @Test
+    @DisplayName("이동 방향이 대각선일 때 Column의 벡터를 반환한다.")
+    void shouldSucceedToFindDiagonalColumnVector() {
+        Position sourcePosition = Position.findPosition("d3");
+        Position targetPosition = Position.findPosition("b1");
+        int expectedVector = -1;
+
+        assertThat(sourcePosition.calculateDiagonalColumnVector(targetPosition)).isEqualTo(expectedVector);
+    }
+
+    @Test
+    @DisplayName("이동 방향이 대각선일 때 rank의 벡터를 반환한다.")
+    void shouldSucceedToFindDiagonalRankVector() {
+        Position sourcePosition = Position.findPosition("d3");
+        Position targetPosition = Position.findPosition("b1");
+        int expectedVector = -1;
+
+        assertThat(sourcePosition.calculateDiagonalRankVector(targetPosition)).isEqualTo(expectedVector);
+    }
+
+    @Test
+    @DisplayName("이동 방향이 십자 방향일 때 Column의 벡터를 반환한다.")
+    void shouldSucceedToFindCrossColumnVector() {
+        Position sourcePosition1 = Position.findPosition("d3");
+        Position targetPosition1 = Position.findPosition("d1");
+        int expectedVector1 = 0;
+
+        Position sourcePosition2 = Position.findPosition("d3");
+        Position targetPosition2 = Position.findPosition("b3");
+        int expectedVector2 = -1;
+
+        assertAll(
+                () -> assertThat(sourcePosition1.calculateCrossColumnVector(targetPosition1)).isEqualTo(expectedVector1),
+                () -> assertThat(sourcePosition2.calculateCrossColumnVector(targetPosition2)).isEqualTo(expectedVector2)
+        );
+    }
+
+    @Test
+    @DisplayName("이동 방향이 십자 방향일 때 Rank의 벡터를 반환한다.")
+    void shouldSucceedToFindCrossRankVector() {
+        Position sourcePosition1 = Position.findPosition("d3");
+        Position targetPosition1 = Position.findPosition("d1");
+        int expectedVector1 = -1;
+
+        Position sourcePosition2 = Position.findPosition("d3");
+        Position targetPosition2 = Position.findPosition("b3");
+        int expectedVector2 = 0;
+
+        assertAll(
+                () -> assertThat(sourcePosition1.calculateCrossRankVector(targetPosition1)).isEqualTo(expectedVector1),
+                () -> assertThat(sourcePosition2.calculateCrossRankVector(targetPosition2)).isEqualTo(expectedVector2)
+        );
+    }
+
+    @Test
+    @DisplayName("source포지션과 target포지션을 입력할 때 column벡터를 반환한다.")
+    void shouldSucceedToFindColumnVector() {
+
+        Position sourcePosition1 = Position.findPosition("d3");
+        Position targetPosition1 = Position.findPosition("d1");
+        int expectedVector1 = 0;
+
+        Position sourcePosition2 = Position.findPosition("d3");
+        Position targetPosition2 = Position.findPosition("b3");
+        int expectedVector2 = -1;
+
+        Position sourcePosition3 = Position.findPosition("d3");
+        Position targetPosition3 = Position.findPosition("b1");
+        int expectedVector3 = -1;
+
+        Position sourcePosition4 = Position.findPosition("d3");
+        Position targetPosition4 = Position.findPosition("f1");
+        int expectedVector4 = 1;
+
+        Position sourcePosition5 = Position.findPosition("d3");
+        Position targetPosition5 = Position.findPosition("f2");
+        int expectedVector5 = 2;
+
+        assertAll(
+                () -> assertThat(sourcePosition1.calculateColumnVector(targetPosition1)).isEqualTo(expectedVector1),
+                () -> assertThat(sourcePosition2.calculateColumnVector(targetPosition2)).isEqualTo(expectedVector2),
+                () -> assertThat(sourcePosition3.calculateColumnVector(targetPosition3)).isEqualTo(expectedVector3),
+                () -> assertThat(sourcePosition4.calculateColumnVector(targetPosition4)).isEqualTo(expectedVector4),
+                () -> assertThat(sourcePosition5.calculateColumnVector(targetPosition5)).isEqualTo(expectedVector5)
+        );
+    }
+
+    @Test
+    @DisplayName("source포지션과 target포지션을 입력할 때 rank벡터를 반환한다.")
+    void shouldSucceedToFindRankVector() {
+
+        Position sourcePosition1 = Position.findPosition("d3");
+        Position targetPosition1 = Position.findPosition("d1");
+        int expectedVector1 = -1;
+
+        Position sourcePosition2 = Position.findPosition("d3");
+        Position targetPosition2 = Position.findPosition("b3");
+        int expectedVector2 = 0;
+
+        Position sourcePosition3 = Position.findPosition("d3");
+        Position targetPosition3 = Position.findPosition("b1");
+        int expectedVector3 = -1;
+
+        Position sourcePosition4 = Position.findPosition("d3");
+        Position targetPosition4 = Position.findPosition("f5");
+        int expectedVector4 = 1;
+
+        Position sourcePosition5 = Position.findPosition("d3");
+        Position targetPosition5 = Position.findPosition("e5");
+        int expectedVector5 = 2;
+
+        assertAll(
+                () -> assertThat(sourcePosition1.calculateRankVector(targetPosition1)).isEqualTo(expectedVector1),
+                () -> assertThat(sourcePosition2.calculateRankVector(targetPosition2)).isEqualTo(expectedVector2),
+                () -> assertThat(sourcePosition3.calculateRankVector(targetPosition3)).isEqualTo(expectedVector3),
+                () -> assertThat(sourcePosition4.calculateRankVector(targetPosition4)).isEqualTo(expectedVector4),
+                () -> assertThat(sourcePosition5.calculateRankVector(targetPosition5)).isEqualTo(expectedVector5)
+        );
     }
 }
