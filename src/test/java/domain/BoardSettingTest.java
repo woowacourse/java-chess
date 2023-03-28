@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.config.BoardSetting;
 import domain.piece.Piece;
 import domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;

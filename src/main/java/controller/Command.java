@@ -7,7 +7,8 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
-    ;
+    STATUS("status"),
+    ENTER("enter");
 
     private final String input;
 
@@ -19,8 +20,6 @@ public enum Command {
         return Arrays.stream(Command.values())
             .filter(command -> command.input.equals(input))
             .findAny()
-            .orElseThrow(
-                () -> new IllegalArgumentException("올바르지 않은 입력입니다.")
-            );
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 입력입니다."));
     }
 }

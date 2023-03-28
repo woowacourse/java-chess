@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.config.BoardSetting;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import java.util.HashMap;
@@ -94,5 +95,33 @@ class BoardTest {
             assertThat(board.findPiece(BLACK_PAWN_START).isNotEmpty()).isFalse();
             assertThat(board.findPiece(BLACK_PAWN_END)).isEqualTo(Pawn.makeBlack());
         }
+    }
+
+    @Test
+    @DisplayName("초기 상태에서 흰색 돌 점수를 계산한다.")
+    public void testCalculateWhiteScore() {
+        //given
+        final Board board = new Board(new HashMap<>());
+        board.initialize();
+
+        //when
+        final double result = board.calculateWhiteScore();
+
+        //then
+        assertThat(result).isEqualTo(38D);
+    }
+
+    @Test
+    @DisplayName("초기 상태에서 검은색 돌 점수를 계산한다.")
+    public void testCalculateBlackScore() {
+        //given
+        final Board board = new Board(new HashMap<>());
+        board.initialize();
+
+        //when
+        final double result = board.calculateBlackScore();
+
+        //then
+        assertThat(result).isEqualTo(38D);
     }
 }

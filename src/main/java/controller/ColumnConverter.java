@@ -25,7 +25,7 @@ public enum ColumnConverter {
         final ColumnConverter columnConverter = Arrays.stream(ColumnConverter.values())
             .filter(view -> view.sign.equals(sign))
             .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException("해당 위치는 존재하지 않습니다."));
         return columnConverter.column;
     }
 }

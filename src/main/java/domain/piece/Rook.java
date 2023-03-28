@@ -4,7 +4,7 @@ import domain.Section;
 import domain.type.Color;
 import domain.type.PieceType;
 
-public class Rook extends SlidingPiece {
+public final class Rook extends SlidingPiece {
 
     private Rook(final Color color) {
         super(color, PieceType.ROOK);

@@ -1,18 +1,21 @@
 package domain;
 
+import domain.config.BoardSetting;
 import domain.piece.EmptyPiece;
 import domain.piece.Piece;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Board {
+public final class Board {
 
     private static final String IMPOSSIBLE_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     private static final String WHITE_TURN_ERROR_MESSAGE = "흰 진영 차례입니다.";
     private static final String BLACK_TURN_ERROR_MESSAGE = "검은 진영 차례입니다.";
     private final Map<Location, Piece> board;
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
 
 
     public Board(final Map<Location, Piece> board) {
@@ -20,37 +23,40 @@ public class Board {
     }
 
     public void initialize() {
-        for (int column = 1; column <= 8; column++) {
-            putToBoard(column);
-        }
+        IntStream.rangeClosed(1, 8)
+            .forEach(this::putToBoard);
     }
 
     private void putToBoard(final int column) {
-        for (int row = 1; row <= 8; row++) {
+        IntStream.rangeClosed(1, 8).forEach(row -> {
             final Piece piece = BoardSetting.findPiece(Location.of(column, row));
             board.put(Location.of(column, row), piece);
-        }
+        });
     }
 
-    public void moveWhite(final Location start, final Location end) {
+    public Piece moveWhite(final Location start, final Location end) {
         final Piece piece = findPiece(start);
         if (piece.isBlack()) {
             throw new IllegalArgumentException(WHITE_TURN_ERROR_MESSAGE);
         }
-        move(start, end);
+        return move(start, end);
     }
 
-    public void moveBlack(final Location start, final Location end) {
+    public Piece moveBlack(final Location start, final Location end) {
         final Piece piece = findPiece(start);
         if (piece.isWhite()) {
             throw new IllegalArgumentException(BLACK_TURN_ERROR_MESSAGE);
         }
-        move(start, end);
+        return move(start, end);
     }
 
-    private void move(final Location start, final Location end) {
+    public Piece findPiece(final Location location) {
+        return board.get(location);
+    }
+
+    private Piece move(final Location start, final Location end) {
         canMove(start, end);
-        convert(start, end);
+        return convert(start, end);
     }
 
     private void canMove(final Location startLocation, final Location endLocation) {
@@ -78,12 +84,22 @@ public class Board {
             .anyMatch(Piece::isNotEmpty);
     }
 
-    private void convert(final Location start, final Location end) {
+    private Piece convert(final Location start, final Location end) {
+        final Piece endPiece = board.get(end);
         board.replace(end, board.get(start));
         board.replace(start, EmptyPiece.make());
+        return endPiece;
     }
 
-    public Piece findPiece(final Location location) {
-        return board.get(location);
+    public double calculateWhiteScore() {
+        return scoreCalculator.calculateWhite(board);
+    }
+
+    public double calculateBlackScore() {
+        return scoreCalculator.calculateBlack(board);
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
