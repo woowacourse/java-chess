@@ -5,11 +5,9 @@ import chess.domain.piece.Color;
 import java.util.List;
 
 public interface ChessStatusDao {
-    List<String> gameIds();
+    List<String> readGameIds();
 
-    Color selectTurn(final String gameId);
-
-    void save(final ChessGame chessGame, final String gameId);
+    Color readTurn(final String gameId);
 
     String create(final ChessGame chessGame);
 
