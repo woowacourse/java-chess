@@ -16,14 +16,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public final class Board {
 
-    private static final int STACKED_PAWN = 2;
     private static final double STACKED_PAWN_SCORE = 0.5;
     private static final int BOTH_KINGS_ALIVE = 2;
     private static final int WINNER_COLOR_INDEX = 0;
+    private static final int DOUBLE_PAWN = 2;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -90,24 +90,23 @@ public final class Board {
 
     private void validateBasicInfo(final Color color, final Position source, final Position target) {
         validateIsEmptySquare(source);
-        validateLegalSourceColor(source, color);
-        validateLegalTargetColor(source, target);
+        validateSourceColor(source, color);
+        validateTargetColor(source, target);
     }
 
     private void validateIsEmptySquare(final Position source) {
         if (getPiece(source).isEmpty()) {
             throw new IllegalArgumentException("비어있는 칸입니다.");
         }
-
     }
 
-    private void validateLegalSourceColor(final Position source, final Color color) {
+    private void validateSourceColor(final Position source, final Color color) {
         if (getPiece(source).differsColor(color)) {
             throw new IllegalArgumentException("움직일 수 있는 기물이 아닙니다.");
         }
     }
 
-    private void validateLegalTargetColor(final Position source, final Position target) {
+    private void validateTargetColor(final Position source, final Position target) {
         if (getPiece(source).equalsColor(getPiece(target))) {
             throw new IllegalArgumentException("자신의 기물이 있는 곳으로 이동할 수 없습니다.");
         }
@@ -129,22 +128,24 @@ public final class Board {
                 .filter(piece -> piece.equalsColor(color))
                 .mapToDouble(Piece::getScore).sum();
 
-        for (File value : File.values()) {
-            long count = board.keySet().stream()
-                    .filter(position -> board.get(position).equalsColor(color))
-                    .filter(position -> position.isFileEquals(value))
-                    .filter(position -> board.get(position).getKind() == Kind.PAWN)
-                    .count();
-            sum = minusStackPawnPoint(sum, count);
-        }
+        Map<String, Long> pawnsByFile = countPawnsByFile(color);
+        long stackedPawnsCount = sumStackedPawns(pawnsByFile);
+        sum -= stackedPawnsCount * STACKED_PAWN_SCORE;
+
         return sum;
     }
 
-    private double minusStackPawnPoint(double sum, final long count) {
-        if (count >= STACKED_PAWN) {
-            sum = sum - count * STACKED_PAWN_SCORE;
-        }
-        return sum;
+    private Map<String, Long> countPawnsByFile(final Color color) {
+        return board.keySet().stream()
+                .filter(position -> board.get(position).equalsColor(color))
+                .filter(position -> board.get(position).getKind() == Kind.PAWN)
+                .collect(groupingBy(Position::getFile, counting()));
+    }
+
+    private Long sumStackedPawns(final Map<String, Long> pawnsByFile) {
+        return pawnsByFile.values().stream()
+                .filter(value -> value >= DOUBLE_PAWN)
+                .reduce(0L, Long::sum);
     }
 
     public Color computeWinner() {
