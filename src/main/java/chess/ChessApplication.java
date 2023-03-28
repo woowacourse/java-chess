@@ -2,9 +2,9 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.service.ChessService;
-import dao.ChessStatusDao;
-import dao.DBChessStatusDao;
-import dao.DBPieceDao;
+import chess.dao.ChessStatusDao;
+import chess.dao.DBChessStatusDao;
+import chess.dao.DBPieceDao;
 
 public final class ChessApplication {
     public static void main(String[] args) {

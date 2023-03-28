@@ -87,4 +87,4 @@
 - [x] PieceType의 Field로 Function을 가지면 가능할것 같아요 :)
 - [x] Piece는 Piece 그 자체이고, 세로줄(File)이라는 개념은 별도의 객체가 가지고 있어야 한다는 말이었습니다.
 - [x] DB 연결 실패 시 null을 리턴하기보단 예외를 던져주면 좋을것 같아요. nullPointerException을 마주치면 당황스럽겠죠?
-- [ ] InMemoryDB 를 test패키지로 이동시키고, 그걸가지고 save와 update, reset을 테스트 하시는게 좋을것 같아요.
+- [ ] InMemoryDB 를 test패키지로 이동시키고, 그걸가지고 CRUD를 테스트 하시는게 좋을것 같아요.

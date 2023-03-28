@@ -1,4 +1,4 @@
-package dao;
+package chess.dao;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
