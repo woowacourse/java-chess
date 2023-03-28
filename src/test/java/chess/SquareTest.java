@@ -37,8 +37,10 @@ class SquareTest {
 
     @Test
     void t() throws SQLException {
+        RoomDao roomDao = new RoomDao();
+        NotationDao notationDao = new NotationDao();
         int i = 1;
-        NotationDao.deleteByRoomId(i);
-        RoomDao.deleteRoom(i);
+        notationDao.deleteByRoomId(i);
+        roomDao.deleteRoom(i);
     }
 }

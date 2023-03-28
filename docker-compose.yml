@@ -9,11 +9,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: chess
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
       TZ: Asia/Seoul
     volumes:
       - ./db/mysql/data:/var/lib/mysql
       - ./db/mysql/config:/etc/mysql/conf.d
       - ./db/mysql/init/init.sql:/docker-entrypoint-initdb.d/init.sql
-  ##     - ./db/mysql/init:/docker-entrypoint-initdb.d

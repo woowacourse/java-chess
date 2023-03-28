@@ -7,8 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.validateMove.SourceMoveValidator;
 import chess.domain.validateMove.ValidateData;
 import chess.room.Move;
-import chess.room.Room;
-import chess.room.RoomDao;
+import chess.room.RoomService;
 
 import java.sql.SQLException;
 
@@ -17,18 +16,19 @@ public class ChessGame {
     private static final String NOT_YOUR_PIECE_MESSAGE = "해당 위치에는 당신의 Piece가 없습니다.";
     private final Chessboard chessboard;
     private Camp turn;
-    private Room room;
+    private RoomService roomService;
 
     public ChessGame() {
         chessboard = new Chessboard();
         BoardInitializer.initializeBoard(chessboard);
         turn = Camp.WHITE;
+        roomService = new RoomService();
     }
 
     public void move(final Square source, final Square target) throws SQLException {
         validateTurn(source);
         moveOnePiece(source, target);
-        room.updateMove(source, target);
+        roomService.updateMove(source, target);
     }
 
     private void moveOnePiece(final Square source, final Square target) {
@@ -68,27 +68,21 @@ public class ChessGame {
         if (getChessboard().isKingSurvive()) {
             return true;
         }
-        room.deleteRoom();
+        roomService.deleteRoom();
         return false;
     }
 
     public boolean isRoom(final String name) throws SQLException {
-        try {
-            this.room = RoomDao.FindByName(name);
-            return true;
-        } catch (SQLException e) {
-            this.room = RoomDao.addRoom(name);
-            return false;
-        }
+        return roomService.isRoom(name);
     }
 
     public void resumeNotation() throws SQLException {
-        for (Move note : room.getNotation()) {
+        for (Move note : roomService.getNotation()) {
             moveOnePiece(note.getSource(), note.getTarget());
         }
     }
 
     public void deleteNotation() throws SQLException {
-        room.deleteNotation();
+        roomService.deleteNotation();
     }
 }

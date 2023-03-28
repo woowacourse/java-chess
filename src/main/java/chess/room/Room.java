@@ -1,10 +1,5 @@
 package chess.room;
 
-import chess.domain.board.Square;
-
-import java.sql.SQLException;
-import java.util.List;
-
 public class Room {
     private final int roomId;
     private int turn;
@@ -14,24 +9,23 @@ public class Room {
         turn = 1;
     }
 
-    public List<Move> getNotation() throws SQLException {
-        Notation notation = NotationDao.findByRoomId(roomId);
-        this.turn = NotationDao.findLastTurn(roomId) + 1;
-        return notation.getNotation();
+    public int getRoomId() {
+        return roomId;
     }
 
-    public void updateMove(final Square source, final Square target) throws SQLException {
-        NotationDao.addNotation(roomId, turn, new Move(source, target));
-        turn++;
+    public int getTurn() {
+        return turn;
     }
 
-    public void deleteNotation() throws SQLException {
-        turn = 1;
-        NotationDao.deleteByRoomId(roomId);
+    public void putTurn(int turn) {
+        this.turn = turn + 1;
     }
 
-    public void deleteRoom() throws SQLException {
-        NotationDao.deleteByRoomId(roomId);
-        RoomDao.deleteRoom(roomId);
+    public void reset() {
+        this.turn = 1;
+    }
+
+    public void nextTurn() {
+        this.turn++;
     }
 }

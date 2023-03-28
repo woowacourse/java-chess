@@ -9,7 +9,7 @@ public class RoomDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    private static Connection getConnection() {
+    private Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
@@ -19,7 +19,7 @@ public class RoomDao {
         }
     }
 
-    public static Room addRoom(final String name) throws SQLException {
+    public Room addRoom(final String name) throws SQLException {
         final String query = "insert into room(name) values(?)";
         final Connection connection = getConnection();
         final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -28,7 +28,7 @@ public class RoomDao {
         return FindByName(name);
     }
 
-    public static Room FindByName(final String name) throws SQLException {
+    public Room FindByName(final String name) throws SQLException {
         final String query = "select * from room where name = ?";
         final Connection connection = getConnection();
         final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -40,7 +40,7 @@ public class RoomDao {
         throw new SQLException("해당하는 방이 없습니다");
     }
 
-    public static void deleteRoom(final int roomId) throws SQLException {
+    public void deleteRoom(final int roomId) throws SQLException {
         final String query = "delete from room where id = ?";
         final Connection connection = getConnection();
         final PreparedStatement preparedStatement = connection.prepareStatement(query);
