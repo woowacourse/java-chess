@@ -1,11 +1,16 @@
 package domain.piece;
 
+import domain.Rank;
+import domain.Square;
+
 public enum PawnState {
     INIT_BLACK(Directions.InitBlackPawn),
     INIT_WHITE(Directions.InitWhitePawn),
     BLACK(Directions.BlackPawn),
     WHITE(Directions.WhitePawn);
 
+    public static final Rank INIT_BLACK_RANK = Rank.SEVEN;
+    public static final Rank INIT_WHITE_RANK = Rank.TWO;
     private final Directions directions;
 
     PawnState(Directions directions) {
@@ -30,7 +35,17 @@ public enum PawnState {
         return this;
     }
 
-    public void validateDirection(Direction vector) {
-        directions.validateContains(vector);
+    public boolean isMoved(Square square) {
+        if (this == BLACK || this == WHITE) {
+            return true;
+        }
+        if (this == INIT_BLACK) {
+            return square.isDifferent(INIT_BLACK_RANK);
+        }
+        return square.isDifferent(INIT_WHITE_RANK);
+    }
+
+    public void validateDirection(Direction direction) {
+        directions.validateContains(direction);
     }
 }

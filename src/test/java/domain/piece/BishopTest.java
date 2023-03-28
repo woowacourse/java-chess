@@ -18,9 +18,9 @@ class BishopTest {
     @DisplayName("대각선 어디든 갈 수있다")
     @ParameterizedTest(name = "{index} : {0} => {1}")
     @MethodSource("parametersProvider1")
-    void move_success(Square src, Square dest, List<Square> expected) {
+    void move_success(Square source, Square destination, List<Square> expected) {
         Bishop bishop = new Bishop(TeamColor.WHITE);
-        List<Square> actual = bishop.findRoutes(src, dest);
+        List<Square> actual = bishop.findRoutes(source, destination);
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -55,10 +55,10 @@ class BishopTest {
     @DisplayName("대각선 방향이 아니면 갈 수 없다.")
     @ParameterizedTest(name = "{index} : {0} !=> {1}")
     @MethodSource("parametersProvider2")
-    void move_fail(Square src, Square dest) {
+    void move_fail(Square source, Square destination) {
         Bishop bishop = new Bishop(TeamColor.WHITE);
 
-        Assertions.assertThatThrownBy(() -> bishop.findRoutes(src, dest))
+        Assertions.assertThatThrownBy(() -> bishop.findRoutes(source, destination))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("해당 방향으로 갈 수 없습니다.");
     }

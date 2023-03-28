@@ -14,10 +14,10 @@ public abstract class NonSlidingPiece extends Piece {
     }
 
     @Override
-    public List<Square> findRoutes(Square src, Square dest) {
-        Direction direction = dest.calculateVector(src);
+    public List<Square> findRoutes(Square source, Square destination) {
+        Direction direction = destination.calculateVector(source);
         validateDirection(direction);
-        return List.of(dest);
+        return List.of(destination);
     }
 
     protected abstract void validateDirection(Direction direction);

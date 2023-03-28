@@ -13,33 +13,54 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Square> findRoutes(Square src, Square dest) {
-        Direction vector = dest.calculateVector(src);
-        state.validateDirection(vector);
-
-        return getSquares(src, dest, vector);
+    public List<Square> findRoutes(Square source, Square destination, Piece pieceOfDestination) {
+        checkState(source);
+        validatePawnMove(source, destination, pieceOfDestination);
+        return findRoutes(source, destination);
     }
 
-    private List<Square> getSquares(Square src, Square dest, Direction vector) {
-        if (vector.equals(Direction.TOP_TOP)) {
-            return List.of(src.add(Direction.TOP), src.add(Direction.TOP_TOP));
+    private void validatePawnMove(Square source, Square destination, Piece pieceOfDestination) {
+        if (isDiagonal(source, destination) && canNotKill(pieceOfDestination)) {
+            throw new IllegalArgumentException("대각선으로 갈 수 없습니다.");
         }
-        if (vector.equals(Direction.BOTTOM_BOTTOM)) {
-            return List.of(src.add(Direction.BOTTOM), src.add(Direction.BOTTOM_BOTTOM));
+        if (isLinear(source, destination) && pieceOfDestination.isNotBlank()) {
+            throw new IllegalArgumentException("폰은 기물이 있으면 앞으로 갈 수 없습니다.");
         }
-        return List.of(dest);
     }
 
-    public void changeState() {
-        state = state.next();
+    private boolean canNotKill(Piece pieceOfDestination) {
+        return pieceOfDestination.isBlank() || isSameTeam(pieceOfDestination);
     }
 
-    public boolean isLinear(Square src, Square dest) {
-        return !isDiagonal(src, dest);
+    @Override
+    protected List<Square> findRoutes(Square source, Square destination) {
+        Direction direction = destination.calculateVector(source);
+        state.validateDirection(direction);
+        return getSquares(source, destination, direction);
     }
 
-    public boolean isDiagonal(Square src, Square dest) {
-        Direction vector = src.calculateVector(dest);
-        return Directions.Diagonal.contains(vector);
+    public void checkState(Square source) {
+        if (state.isMoved(source)) {
+            state = state.next();
+        }
+    }
+
+    private List<Square> getSquares(Square source, Square destination, Direction direction) {
+        if (direction.equals(Direction.TOP_TOP)) {
+            return List.of(source.add(Direction.TOP), source.add(Direction.TOP_TOP));
+        }
+        if (direction.equals(Direction.BOTTOM_BOTTOM)) {
+            return List.of(source.add(Direction.BOTTOM), source.add(Direction.BOTTOM_BOTTOM));
+        }
+        return List.of(destination);
+    }
+
+    public boolean isLinear(Square source, Square destination) {
+        return !isDiagonal(source, destination);
+    }
+
+    public boolean isDiagonal(Square source, Square destination) {
+        Direction direction = source.calculateVector(destination);
+        return Directions.Diagonal.contains(direction);
     }
 }

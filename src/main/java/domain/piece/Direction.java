@@ -76,13 +76,5 @@ public class Direction {
     public int getY() {
         return y;
     }
-
-    @Override
-    public String toString() {
-        return "Vectorr{" +
-            "x=" + x +
-            ", y=" + y +
-            '}';
-    }
 }
 

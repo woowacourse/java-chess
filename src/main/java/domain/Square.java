@@ -46,11 +46,15 @@ public class Square {
         return Direction.of(column, row);
     }
 
-    @Override
-    public String toString() {
-        return "Square{" +
-            "chessColumn=" + chessColumn +
-            ", rank=" + rank +
-            '}';
+    public boolean isDifferent(Rank rank) {
+        return this.rank != rank;
+    }
+
+    public ChessColumn getChessColumn() {
+        return chessColumn;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

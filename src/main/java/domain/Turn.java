@@ -3,11 +3,15 @@ package domain;
 import domain.piece.Piece;
 import domain.piece.TeamColor;
 
-public class Rule {
+public class Turn {
     private TeamColor currentOrder;
 
-    public Rule() {
+    public Turn() {
         this.currentOrder = TeamColor.WHITE;
+    }
+
+    public Turn(TeamColor currentOrder) {
+        this.currentOrder = currentOrder;
     }
 
     public void nextOrder() {
@@ -27,6 +31,10 @@ public class Rule {
 
     private boolean isRightOrder(Piece piece) {
         return piece.isSameColor(currentOrder);
+    }
+
+    public TeamColor getCurrentOrder() {
+        return currentOrder;
     }
 }
 

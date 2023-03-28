@@ -18,11 +18,11 @@ class KnightTest {
     @DisplayName("상, 하, 좌, 우 방향의 왼쪽, 오른쪽 대각선으로 점프할 수 있다.")
     @ParameterizedTest(name = "{index} : {0} => {1}")
     @MethodSource("parametersProvider1")
-    void move_success(Square src, Square dest) {
+    void move_success(Square source, Square destination) {
         Knight knight = new Knight(TeamColor.WHITE);
-        List<Square> actual = knight.findRoutes(src, dest);
+        List<Square> actual = knight.findRoutes(source, destination);
 
-        Assertions.assertThat(actual).isEqualTo(List.of(dest));
+        Assertions.assertThat(actual).isEqualTo(List.of(destination));
     }
 
     static Stream<Arguments> parametersProvider1() {
@@ -41,10 +41,10 @@ class KnightTest {
     @DisplayName("상, 하, 좌, 우 방향의 왼쪽, 오른쪽 대각선외에는 점프하지 못한다.")
     @ParameterizedTest(name = "{index} : {0} !=> {1}")
     @MethodSource("parametersProvider2")
-    void move_fail(Square src, Square dest) {
+    void move_fail(Square source, Square destination) {
         Knight knight = new Knight(TeamColor.WHITE);
 
-        Assertions.assertThatThrownBy(() -> knight.findRoutes(src, dest))
+        Assertions.assertThatThrownBy(() -> knight.findRoutes(source, destination))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("해당 목적지로 갈 수 없습니다.");
     }
