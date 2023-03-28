@@ -11,16 +11,25 @@ import static chess.view.ErrorMessage.NO_PIECE_ERROR_MESSAGE;
 
 public class ChessGame {
     private final ChessBoard chessBoard;
+    private GameStatus gameStatus;
 
-    public ChessGame(BoardStrategy boardStrategy) {
+    public ChessGame(BoardStrategy boardStrategy, GameStatus gameStatus) {
         this.chessBoard = new ChessBoard(boardStrategy.generate());
+        this.gameStatus = gameStatus;
     }
 
-    public void move(Position start, Position end) {
+    public ChessGame(ChessBoard chessBoard, GameStatus gameStatus) {
+        this.chessBoard = chessBoard;
+        this.gameStatus = gameStatus;
+    }
+
+    public ChessBoard move(Position start, Position end) {
         if (chessBoard.getChessBoard().get(start) instanceof EmptyPiece) {
             throw new IllegalArgumentException(NO_PIECE_ERROR_MESSAGE.getErrorMessage());
         }
         chessBoard.move(start, end);
+
+        return chessBoard;
     }
 
     public Map<Position, Piece> getChessBoardMap() {
@@ -29,5 +38,9 @@ public class ChessGame {
 
     public ChessBoard getChessBoard() {
         return chessBoard;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 }

@@ -3,6 +3,7 @@ package chess.domain.score;
 import chess.domain.board.strategy.InitialBoardStrategy;
 import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
+import chess.domain.game.GameStatus;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,7 +18,7 @@ class ScoreCalculatorTest {
     @Test
     void 초기_점수_테스트() {
         //given
-        ChessGame chessGame = new ChessGame(new InitialBoardStrategy());
+        ChessGame chessGame = new ChessGame(new InitialBoardStrategy(), GameStatus.PLAYING);
         ChessBoard chessBoard = new ChessBoard(chessGame.getChessBoardMap());
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 

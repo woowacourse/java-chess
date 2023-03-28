@@ -51,7 +51,7 @@ public enum Column {
         return index;
     }
 
-    public boolean isSameColumn(Column column){
+    public boolean isSameColumn(Column column) {
         return this.equals(column);
     }
 }

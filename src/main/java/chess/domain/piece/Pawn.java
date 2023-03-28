@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.direction.Direction;
-import chess.domain.Column;
 import chess.domain.Position;
 
 import java.util.List;
@@ -17,13 +16,11 @@ import static chess.view.ErrorMessage.MOVE_FORWARD_ERROR_GUIDE_MESSAGE;
 public class Pawn extends Piece {
 
     private final List<Direction> direction;
+    private boolean isFirstMove = true;
 
-    private Column startColumn;
-
-    public Pawn(PieceInfo pieceInfo, Column startColumn) {
+    public Pawn(PieceInfo pieceInfo) {
         super(pieceInfo.getName(), pieceInfo.getColor(), PAWN_DEFAULT_SCORE.getScore());
         this.direction = createDirectionByColor(pieceInfo.getColor());
-        this.startColumn = startColumn;
     }
 
     private List<Direction> createDirectionByColor(Color color) {
@@ -53,8 +50,7 @@ public class Pawn extends Piece {
         int absGapOfRank = Math.abs(start.findGapOfRank(end));
         int distance = 1;
 
-
-        if (startColumn.isSameColumn(start.getColumn())) {
+        if (isFirstMove) {
             distance = 2;
         }
 
@@ -99,14 +95,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public int calculatePawn(int count, Color color) {
-        if (this.isSameColor((color))) {
-            return count + 1;
-        }
-        return count;
-    }
-
-    @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         int gapOfRank = start.findGapOfRank(end);
         int gapOfColumn = start.findGapOfColum(end);
@@ -118,5 +106,14 @@ public class Pawn extends Piece {
         }
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
+    }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new Pawn(PieceInfo.BLACK_PAWN_INFO);
+        }
+
+        return new Pawn(PieceInfo.WHITE_PAWN_INFO);
     }
 }

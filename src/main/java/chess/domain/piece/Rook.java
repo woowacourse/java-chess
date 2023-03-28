@@ -44,11 +44,6 @@ public class Rook extends Piece {
     }
 
     @Override
-    public int calculatePawn(int count, Color color) {
-        return count;
-    }
-
-    @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         int gapOfRank = start.findGapOfRank(end);
         int gapOfColumn = start.findGapOfColum(end);
@@ -60,5 +55,14 @@ public class Rook extends Piece {
         }
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
+    }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new Rook(PieceInfo.BLACK_ROOK_INFO);
+        }
+
+        return new Rook(PieceInfo.WHITE_ROOK_INFO);
     }
 }

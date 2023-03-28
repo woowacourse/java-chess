@@ -14,7 +14,7 @@ public enum PieceInfo {
     BLACK_PAWN_INFO(Color.BLACK, "P"),
     BLACK_QUEEN_INFO(Color.BLACK, "Q"),
     BLACK_ROOK_INFO(Color.BLACK, "R"),
-    EMPTY_INFO(Color.NONE,".");
+    EMPTY_INFO(Color.NONE, ".");
 
     private final Color color;
     private final String name;

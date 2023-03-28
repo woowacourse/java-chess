@@ -1,18 +1,22 @@
 package chess.view;
 
+import chess.domain.game.GameStatus;
+
 import static chess.view.ErrorMessage.NO_COMMAND_ERROR_GUIDE_MESSAGE;
 
 public enum Command {
 
-    START("start"),
-    MOVE("move"),
-    END("end"),
-    STATUS("status");
+    START("start", GameStatus.PLAYING),
+    MOVE("move", GameStatus.PLAYING),
+    END("end", GameStatus.GAME_OVER),
+    STATUS("status", GameStatus.PLAYING);
 
     private final String value;
+    private GameStatus gameStatus;
 
-    Command(String value) {
+    Command(String value, GameStatus gameStatus) {
         this.value = value;
+        this.gameStatus = gameStatus;
     }
 
     public static Command findCommandByName(String input) {
@@ -38,5 +42,9 @@ public enum Command {
 
     public static boolean isMove(Command command) {
         return command.equals(Command.MOVE);
+    }
+
+    public GameStatus getStatus() {
+        return gameStatus;
     }
 }

@@ -25,6 +25,7 @@ public class Bishop extends Piece {
         checkMovableToDestination(destinationColor);
         return true;
     }
+
     private void checkDirection(Direction direction) {
         if (!Bishop.direction.contains(direction)) {
             throw new IllegalArgumentException(MOVE_DIRECTION_ERROR_GUIDE_MESSAGE.getErrorMessage());
@@ -43,11 +44,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public int calculatePawn(int count,Color color) {
-        return count;
-    }
-
-    @Override
     public boolean findDirection(Direction direction, Position start, Position end, Piece piece) {
         int gapOfRank = start.findGapOfRank(end);
         int gapOfColumn = start.findGapOfColum(end);
@@ -59,5 +55,14 @@ public class Bishop extends Piece {
         }
 
         return direction.getX() * absX == gapOfColumn && direction.getY() * absY == gapOfRank;
+    }
+
+    @Override
+    public Piece getInstance(Color pieceColor) {
+        if (pieceColor.equals(Color.BLACK)) {
+            return new Bishop(PieceInfo.BLACK_BISHOP_INFO);
+        }
+
+        return new Bishop(PieceInfo.WHITE_BISHOP_INFO);
     }
 }
