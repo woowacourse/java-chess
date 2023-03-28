@@ -15,7 +15,6 @@ public class InitChessGame implements ChessGame {
     @Override
     public ChessGame start() {
         Board board = BoardFactory.createInitial();
-        System.out.println("----");
         return new RunningChessGame(board);
     }
 

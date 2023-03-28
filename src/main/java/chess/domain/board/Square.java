@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Square {
     private static final Map<String, Square> CACHE;
@@ -67,6 +68,10 @@ public class Square {
         File nextFile = file.getNextFile(fileUnit);
         Rank nextRank = rank.getNextRank(rankUnit);
         return of(nextFile, nextRank);
+    }
+
+    public static List<Square> findAllSquare() {
+        return new ArrayList<>(CACHE.values());
     }
 
     @Override

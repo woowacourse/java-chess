@@ -23,6 +23,10 @@ public class Board {
         return board.getOrDefault(Square.of(file, rank), Role.VACANT_PIECE.create(Color.NOTHING));
     }
 
+    public Piece findPiece(final Square square) {
+        return board.getOrDefault(square, Role.VACANT_PIECE.create(Color.NOTHING));
+    }
+
     public void makeMove(final Square sourceSquare, final Square targetSquare) {
         validateSourceAndTarget(sourceSquare, targetSquare);
 

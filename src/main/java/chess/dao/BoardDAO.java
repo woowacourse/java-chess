@@ -8,7 +8,6 @@ import chess.domain.piece.Role;
 import chess.domain.side.Color;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,53 +28,43 @@ public class BoardDAO {
         }
     }
 
-
     // TODO: 게임방 여러개 만들기
-    public ChessGame select() {
-        String query = "SELECT id, turn " +
+    public ChessGame select(final Long chessGameId) {
+        String queryChessGame = "SELECT turn " +
                 "FROM board b " +
-                "WHERE id = 1 ";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+                "WHERE id = ? ";
+
+        String queryPieces = "SELECT file, ranks, color, role " +
+                "FROM board_piece " +
+                "WHERE board_id = ?";
+
+        try (
+                final var connection = getConnection();
+                final var preparedStatementChessGame = connection.prepareStatement(queryChessGame);
+                final var preparedStatementPiece = connection.prepareStatement(queryPieces)
+        ) {
+            preparedStatementChessGame.setLong(1, chessGameId);
+            ResultSet resultSet = preparedStatementChessGame.executeQuery();
             if (resultSet.next()) {
-                long chessGameId = resultSet.getLong(1);
-                String turn = resultSet.getString(2);
+                String turnName = resultSet.getString("turn");
+                Color turn = Color.findByName(turnName);
 
-                Color[] colors = Color.values();
-                Color boardColor = Arrays.stream(colors)
-                        .filter(colorName -> colorName.name().equals(turn))
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("진영 없음"));
-
-                String queryPieces = "SELECT file, ranks, color, role " +
-                        "FROM board_piece " +
-                        "WHERE board_id = ?";
-
-                PreparedStatement preparedStatement2 = connection.prepareStatement(queryPieces);
-                preparedStatement2.setLong(1, 1);
-                ResultSet resultSet2 = preparedStatement2.executeQuery();
+                preparedStatementPiece.setLong(1, 1);
+                ResultSet resultSet2 = preparedStatementPiece.executeQuery();
                 Map<Square, Piece> board = new LinkedHashMap<>();
                 while (resultSet2.next()) {
                     String file = resultSet2.getString(1);
                     int rank = resultSet2.getInt(2);
-                    String color = resultSet2.getString(3);
-                    String role = resultSet2.getString(4);
+                    String colorName = resultSet2.getString(3);
+                    String roleName = resultSet2.getString(4);
 
-                    Color pieceColor = Arrays.stream(colors)
-                            .filter(colorName -> colorName.name().equals(color))
-                            .findFirst()
-                            .orElseThrow(() -> new IllegalArgumentException("진영 없음"));
+                    Role role = Role.findRoleByName(roleName);
+                    Color color = Color.findByName(colorName);
                     Square square = Square.from(file + rank);
-                    Role[] roles = Role.values();
-                    Role pieceRole = Arrays.stream(roles)
-                            .filter(roleName -> roleName.name().equals(role))
-                            .findFirst()
-                            .orElseThrow(() -> new IllegalArgumentException("피스가 없음"));
-                    Piece piece = pieceRole.create(pieceColor);
+                    Piece piece = role.create(color);
                     board.put(square, piece);
                 }
-                Board loadBoard = BoardFactory.create(board, boardColor);
+                Board loadBoard = BoardFactory.create(board, turn);
                 return new RunningChessGame(loadBoard);
             }
             return null;
@@ -85,30 +74,29 @@ public class BoardDAO {
     }
 
     public void insert(ChessGame chessGame) {
-        String query = "INSERT INTO board(id, turn) " +
+        String queryBoard = "INSERT INTO board(id, turn) " +
                 "VALUES(1, ?); ";
-        System.out.println(chessGame);
+        String queryPiece = "INSERT INTO board_piece(board_id, file, ranks, role, color) " +
+                "VALUES (1, ?, ?, ?, ?); ";
         Board board = chessGame.getBoard();
-        System.out.println(chessGame);
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (
+                final var connection = getConnection();
+                final var preparedStatement = connection.prepareStatement(queryBoard);
+                final var preparedStatementPiece = connection.prepareStatement(queryPiece)
+        ) {
             preparedStatement.setString(1, board.getTurn().name());
             preparedStatement.executeUpdate();
 
-            for (File file : File.values()) {
-                for (Rank rank : Rank.values()) {
-                    Piece piece = board.findPiece(file, rank);
-                    Role role = piece.getRole();
-                    Color color = piece.getColor();
-                    String queryPiece = "INSERT INTO board_piece(board_id, file, ranks, role, color) " +
-                            "VALUES (1, ?, ?, ?, ?); ";
-                    PreparedStatement preparedStatementPiece = connection.prepareStatement(queryPiece);
-                    preparedStatementPiece.setString(1, file.name());
-                    preparedStatementPiece.setInt(2, rank.getPosition());
-                    preparedStatementPiece.setString(3, role.name());
-                    preparedStatementPiece.setString(4, color.name());
-                    preparedStatementPiece.executeUpdate();
-                }
+            for (Square square : Square.findAllSquare()) {
+                Piece piece = board.findPiece(square);
+                Role role = piece.getRole();
+                Color color = piece.getColor();
+                preparedStatementPiece.setString(1, square.getFile().name());
+                preparedStatementPiece.setInt(2, square.getRank().getPosition());
+                preparedStatementPiece.setString(3, role.name());
+                preparedStatementPiece.setString(4, color.name());
+                preparedStatementPiece.executeUpdate();
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -119,8 +107,10 @@ public class BoardDAO {
         String query = "UPDATE board_piece " +
                 "SET role = ?, color = ? " +
                 "WHERE ranks = ? AND file = ? ";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (
+                final var connection = getConnection();
+                final var preparedStatement = connection.prepareStatement(query)
+        ) {
             preparedStatement.setString(1, piece.getRole().name());
             preparedStatement.setString(2, piece.getColor().name());
             preparedStatement.setInt(3, Integer.parseInt(square.toString().substring(1, 2)));
@@ -135,8 +125,10 @@ public class BoardDAO {
         String query = "UPDATE board " +
                 "SET turn = ? " +
                 "WHERE id = 1 ";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (
+                final var connection = getConnection();
+                final var preparedStatement = connection.prepareStatement(query)
+        ) {
             preparedStatement.setString(1, color.name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -145,6 +137,5 @@ public class BoardDAO {
     }
 
     public void deleteAll() {
-
     }
 }

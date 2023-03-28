@@ -1,5 +1,7 @@
 package chess.domain.side;
 
+import java.util.Arrays;
+
 public enum Color {
     WHITE,
     BLACK,
@@ -23,5 +25,13 @@ public enum Color {
             return target == WHITE;
         }
         return false;
+    }
+
+    public static Color findByName(String name) {
+        Color[] colors = Color.values();
+        return Arrays.stream(colors)
+                .filter(colorName -> colorName.name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("진영 없음"));
     }
 }

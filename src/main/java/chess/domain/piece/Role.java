@@ -4,6 +4,7 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.side.Color;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,14 @@ public enum Role {
 
     public double getScore() {
         return score;
+    }
+
+    public static Role findRoleByName(String name) {
+        Role[] roles = Role.values();
+        return Arrays.stream(roles)
+                .filter(roleName -> roleName.name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("피스가 없음"));
     }
 
     @FunctionalInterface
