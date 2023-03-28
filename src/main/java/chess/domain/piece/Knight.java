@@ -48,5 +48,5 @@ public class Knight extends Piece {
     public double sumPointsOf(final List<Position> existingPositions) {
         return (type.getPoint()) * (existingPositions.size());
     }
-    
+
 }

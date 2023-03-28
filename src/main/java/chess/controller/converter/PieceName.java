@@ -30,7 +30,7 @@ public enum PieceName {
                 .filter(pieceName -> pieceName.type == piece.getType())
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_ERROR_MESSAGE));
-        return foundName.getName(piece.getColor());
+        return foundName.getName(piece.getCamp());
     }
 
     public String getName(Camp camp) {

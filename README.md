@@ -235,7 +235,9 @@ sequenceDiagram
         - [x] CampSwitcher 불필요한 전략 패턴 삭제
         - [x] 변경이 없는 도메인 규칙에 대해서는 생성자 내부에서 설정해주기(Camp)
     - [x] view 의 Command 삭제, ActionMapper 에서 명령어 직접 정의하기
-    - [ ] Piece.canMove~() 에서 이동방향 검증까지 직접 할 수 있도록 개선
+    - [ ] Piece 인스턴스 캐싱
+    - [x] Piece.canMove~() 에서 이동방향 검증까지 직접 할 수 있도록 개선
+        - Piece 로 체스판의 이동 검증 로직 책임 위임 및 통합
 - 코드 관련
     - [x] 테스트 하드코딩 개선
     - [x] 의미하는 바를 알기 어려운 매개변수 개선
@@ -245,4 +247,8 @@ sequenceDiagram
         - [x] ChessBoard 의 조건 관련 연산 메서드 분리
     - [x] 개행, 단락 정리
         - [x] Piece 별 Directions 개행 수정
+    - [ ] Dao 템플릿 적용하여 중복 코드 제거
+    - [ ] JDBC 자원 close 해주기
+    - [ ] Connection 사용 최적화
+    - [ ] Dao 예외 구체적인 예외로 변경
     - [ ] Enum 탐색 로직 map 사용 대신 바로 stream 쓰기 (확인 필요)
