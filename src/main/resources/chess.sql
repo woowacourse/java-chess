@@ -21,3 +21,9 @@ CREATE TABLE Move
     target  varchar(2),
     room_id int
 );
+
+ALTER TABLE Room
+    ADD FOREIGN KEY (user_id) REFERENCES User (`id`);
+
+ALTER TABLE Move
+    ADD FOREIGN KEY (room_id) REFERENCES Room (`id`);
