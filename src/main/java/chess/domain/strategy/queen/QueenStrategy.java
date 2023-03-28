@@ -1,9 +1,9 @@
 package chess.domain.strategy.queen;
 
-import chess.dto.request.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 import chess.domain.strategy.bishop.BishopStrategy;
 import chess.domain.strategy.rook.RookStrategy;
+import chess.dto.request.MoveRequest;
 
 
 public class QueenStrategy implements PieceStrategy {

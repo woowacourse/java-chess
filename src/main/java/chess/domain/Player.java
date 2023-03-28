@@ -1,11 +1,7 @@
 package chess.domain;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class Player {
 

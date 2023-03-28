@@ -1,8 +1,8 @@
 package chess.domain.strategy.knight;
 
+import chess.domain.strategy.PieceStrategy;
 import chess.dto.PositionDto;
 import chess.dto.request.MoveRequest;
-import chess.domain.strategy.PieceStrategy;
 
 public class KnightStrategy implements PieceStrategy {
 

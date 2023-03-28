@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.domain.Position;
-
 import java.util.Objects;
 
 public class PositionDto {

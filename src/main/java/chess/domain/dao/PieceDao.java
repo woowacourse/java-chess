@@ -3,7 +3,6 @@ package chess.domain.dao;
 import chess.domain.Color;
 import chess.domain.Piece;
 import chess.domain.Position;
-
 import java.util.List;
 
 public interface PieceDao {

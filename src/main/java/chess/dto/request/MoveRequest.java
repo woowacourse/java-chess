@@ -3,7 +3,6 @@ package chess.dto.request;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.dto.PositionDto;
-
 import java.util.List;
 
 public class MoveRequest {

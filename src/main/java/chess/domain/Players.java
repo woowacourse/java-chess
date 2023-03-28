@@ -1,14 +1,13 @@
 package chess.domain;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
 import chess.domain.dao.TurnDao;
 import chess.domain.dao.TurnDaoImpl;
-
 import java.math.BigInteger;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class Players {
 

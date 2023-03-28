@@ -1,8 +1,8 @@
 package chess.controller;
 
-import java.util.List;
-
 import static chess.controller.Command.MOVE;
+
+import java.util.List;
 
 public class Commands {
 

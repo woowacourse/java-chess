@@ -1,7 +1,6 @@
 package chess.domain.dao;
 
 import chess.domain.Color;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

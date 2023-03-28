@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.dto.PositionDto;
 import chess.dto.request.MoveRequest;
-
 import java.util.List;
 import java.util.Objects;
 

@@ -1,5 +1,11 @@
 package chess.domain;
 
+import static chess.domain.Shape.BISHOP;
+import static chess.domain.Shape.KNIGHT;
+import static chess.domain.Shape.ROOK;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,12 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static chess.domain.Shape.BISHOP;
-import static chess.domain.Shape.KNIGHT;
-import static chess.domain.Shape.ROOK;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public final class Pieces {
 

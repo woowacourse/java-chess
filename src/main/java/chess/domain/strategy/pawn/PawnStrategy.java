@@ -1,15 +1,14 @@
 package chess.domain.strategy.pawn;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.dto.PositionDto;
-import chess.dto.request.MoveRequest;
-import chess.domain.strategy.PieceStrategy;
-
-import java.util.List;
-
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
+
+import chess.domain.Color;
+import chess.domain.Position;
+import chess.domain.strategy.PieceStrategy;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
+import java.util.List;
 
 public class PawnStrategy implements PieceStrategy {
 
