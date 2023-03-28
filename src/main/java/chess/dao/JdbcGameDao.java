@@ -1,21 +1,12 @@
 package chess.dao;
 
-import chess.domain.Board;
 import chess.domain.ChessGame;
-import chess.domain.Color;
-import chess.domain.GameStatus;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.position.File;
-import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.dto.GameInfoDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class JdbcGameDao implements GameDao {
     private static final String SERVER = "localhost:3306"; // MySQL 서버 주소
@@ -73,11 +64,7 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public ChessGame findById(int gameId) {
-        GameStatus gameStatus = GameStatus.NONE;
-        Color turn = Color.NONE;
-        Map<Position, Piece> pieces = new HashMap<>(64);
-
+    public GameInfoDto findById(int gameId) {
         final var gameQuery = "SELECT * FROM game WHERE game_id = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {
@@ -86,36 +73,13 @@ public class JdbcGameDao implements GameDao {
             final var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                gameStatus = GameStatus.valueOf(resultSet.getString("game_status"));
-                turn = Color.valueOf(resultSet.getString("game_turn"));
+                return GameInfoDto.create(resultSet.getString("game_status"), resultSet.getString("game_turn"));
             } else {
                 return null;
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-
-        final var pieceQuery = "SELECT * FROM piece WHERE game_id = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
-            preparedStatement.setInt(1, gameId);
-
-            final var resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                File pieceFile = File.valueOf(resultSet.getString("piece_file"));
-                Rank pieceRank = Rank.valueOf(resultSet.getString("piece_rank"));
-                Color color = Color.valueOf(resultSet.getString("piece_team"));
-                PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
-
-                Position position = Position.from(pieceFile, pieceRank);
-                Piece piece = pieceType.getInstance(color);
-                pieces.put(position, piece);
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return new ChessGame(new Board(pieces), turn, gameStatus);
     }
 
     @Override
@@ -129,22 +93,6 @@ public class JdbcGameDao implements GameDao {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
-        }
-
-        Map<Position, Piece> positionAndMap = chessGame.getBoard().getPositionAndPiece();
-        for (final Map.Entry<Position, Piece> positionPieceEntry : positionAndMap.entrySet()) {
-            final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
-            try (final var connection = getConnection();
-                 final var preparedStatement = connection.prepareStatement(pieceQuery)) {
-                preparedStatement.setInt(1, gameId);
-                preparedStatement.setString(2, positionPieceEntry.getKey().getFile().name());
-                preparedStatement.setString(3, positionPieceEntry.getKey().getRank().name());
-                preparedStatement.setString(4, positionPieceEntry.getValue().getType().name());
-                preparedStatement.setString(5, positionPieceEntry.getValue().getColor().name());
-                preparedStatement.executeUpdate();
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -164,29 +112,13 @@ public class JdbcGameDao implements GameDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-
-        final var pieceQuery = "DELETE FROM piece WHERE game_id = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
-            preparedStatement.setInt(1, gameId);
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
+    @Override
     public void deleteAll() {
         final var gameQuery = "DELETE FROM game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        final var pieceQuery = "DELETE FROM piece";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);

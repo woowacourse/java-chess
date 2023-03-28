@@ -6,6 +6,7 @@ import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.GameStatus;
+import chess.dto.GameInfoDto;
 import java.sql.SQLException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,9 +96,9 @@ class JdbcGameDaoTest {
         ChessGame givenGame = new ChessGame(board, Color.BLACK, GameStatus.MOVE);
         gameDao.save(1, givenGame);
 
-        ChessGame findGame = gameDao.findById(1);
-        assertThat(givenGame.getTurn()).isEqualTo(findGame.getTurn());
-        assertThat(givenGame.getStatus()).isEqualTo(findGame.getStatus());
+        GameInfoDto gameInfo = gameDao.findById(1);
+        assertThat(givenGame.getTurn()).isEqualTo(gameInfo.getTurn());
+        assertThat(givenGame.getStatus()).isEqualTo(gameInfo.getStatus());
 
         // Board에 대한 테스트는 어떻게?
     }
@@ -112,9 +113,9 @@ class JdbcGameDaoTest {
         ChessGame newGame = new ChessGame(board, Color.WHITE, GameStatus.END);
         gameDao.updateById(1, newGame);
 
-        ChessGame findGame = gameDao.findById(1);
-        assertThat(findGame.getTurn()).isEqualTo(newGame.getTurn());
-        assertThat(findGame.getStatus()).isEqualTo(newGame.getStatus());
+        GameInfoDto findGameInfo = gameDao.findById(1);
+        assertThat(findGameInfo.getTurn()).isEqualTo(newGame.getTurn());
+        assertThat(findGameInfo.getStatus()).isEqualTo(newGame.getStatus());
 
         // Board에 대한 테스트는 어떻게?
     }

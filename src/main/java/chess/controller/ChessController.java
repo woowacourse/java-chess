@@ -1,9 +1,7 @@
 package chess.controller;
 
-import chess.controller.dto.BoardDto;
 import chess.dao.JdbcGameDao;
 import chess.dao.JdbcPieceDao;
-import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.service.ChessService;
 import chess.view.InputView;
@@ -21,7 +19,7 @@ public class ChessController {
         chessService = new ChessService(new JdbcGameDao(), new JdbcPieceDao());
         commandMapper.put("start", (gameId, ignore) -> start(gameId));
         commandMapper.put("move", (gameId, arguments) -> move(gameId, arguments));
-        commandMapper.put("status", (gameId, ignore) -> status(gameId));
+        commandMapper.put("status", (ignore1, ignore2) -> status());
         commandMapper.put("end", (gameId, ignore) -> end(gameId));
     }
 
@@ -67,7 +65,7 @@ public class ChessController {
         OutputView.printBoard(chessService.getBoard());
     }
 
-    private void status(int gameId) {
+    private void status() {
         showStatus();
     }
 

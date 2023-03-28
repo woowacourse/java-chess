@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.controller.dto.BoardDto;
-import chess.controller.dto.RankDto;
+import chess.dto.BoardDto;
+import chess.dto.RankDto;
 import chess.domain.Color;
 import java.util.List;
 import java.util.Map;
