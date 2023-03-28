@@ -8,36 +8,19 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.PieceInfoDto;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class JdbcPieceDao implements PieceDao {
-    private static final String SERVER = "localhost:3306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-    private static final String USERNAME = "username"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "password"; // MySQL 서버 비밀번호
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public List<PieceInfoDto> findById(int gameId) {
         List<PieceInfoDto> pieces = new ArrayList<>();
 
         final var pieceQuery = "SELECT * FROM piece WHERE game_id = ?";
-        try (final var connection = getConnection();
+        try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(pieceQuery)) {
             preparedStatement.setInt(1, gameId);
 
@@ -61,7 +44,7 @@ public class JdbcPieceDao implements PieceDao {
         Map<Position, Piece> positionAndMap = chessGame.getBoard().getPositionAndPiece();
         for (final Map.Entry<Position, Piece> positionPieceEntry : positionAndMap.entrySet()) {
             final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
-            try (final var connection = getConnection();
+            try (final var connection = ConnectionProvider.getConnection();
                  final var preparedStatement = connection.prepareStatement(pieceQuery)) {
                 preparedStatement.setInt(1, gameId);
                 preparedStatement.setString(2, positionPieceEntry.getKey().getFile().name());
@@ -84,7 +67,7 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void deleteById(int gameId) {
         final var pieceQuery = "DELETE FROM piece WHERE game_id = ?";
-        try (final var connection = getConnection();
+        try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(pieceQuery)) {
             preparedStatement.setInt(1, gameId);
             preparedStatement.executeUpdate();
@@ -96,7 +79,7 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void deleteAll() {
         final var pieceQuery = "DELETE FROM piece";
-        try (final var connection = getConnection();
+        try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(pieceQuery)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
