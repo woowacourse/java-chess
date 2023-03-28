@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ControllerFactory {
-    private static final Controller INSTANCE;
+    private static final MainController INSTANCE;
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final JdbcTemplate JDBC_TEMPLATE = new JdbcTemplate(FixedConnectionPool.getInstance());
 
@@ -71,7 +71,7 @@ public class ControllerFactory {
         };
     }
 
-    public static Controller mainController() {
+    public static MainController mainController() {
         return INSTANCE;
     }
 }

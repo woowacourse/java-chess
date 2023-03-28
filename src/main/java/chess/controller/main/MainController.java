@@ -10,7 +10,7 @@ import chess.controller.session.UserSession;
 import chess.view.input.MainInputView;
 import chess.view.output.MainOutputView;
 
-public class MainController implements Controller {
+public class MainController {
     private final MainInputView inputView;
     private final MainOutputView outputView;
     private final CommandMapper<MainCommand, Controller> commandMapper;
@@ -24,8 +24,7 @@ public class MainController implements Controller {
         this.outputView = outputView;
         this.commandMapper = commandMapper;
     }
-
-    @Override
+    
     public void run() {
         MainCommand command = EMPTY;
         while (command != END) {
