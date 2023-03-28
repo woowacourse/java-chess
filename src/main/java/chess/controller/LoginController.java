@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.database.Database;
+import chess.database.DatabaseName;
 import chess.database.LoginDao;
 import chess.domain.game.User;
 import chess.view.Command;
@@ -9,7 +9,7 @@ import chess.view.OutputView;
 
 public class LoginController {
 
-    private final LoginDao loginDao = new LoginDao(Database.PRODUCT);
+    private final LoginDao loginDao = new LoginDao(DatabaseName.PRODUCT);
 
     public User getUser() {
         OutputView.printWelcomeMessage();

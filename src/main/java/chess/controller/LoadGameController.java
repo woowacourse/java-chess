@@ -3,7 +3,7 @@ package chess.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.database.Database;
+import chess.database.DatabaseName;
 import chess.database.LoadGameDao;
 import chess.domain.dto.ChessGameDto;
 import chess.domain.dto.GameDto;
@@ -15,7 +15,7 @@ import chess.view.OutputView;
 
 public class LoadGameController {
 
-    private final LoadGameDao loadGameDao = new LoadGameDao(Database.PRODUCT);
+    private final LoadGameDao loadGameDao = new LoadGameDao(DatabaseName.PRODUCT);
 
     public String selectGame(String userId) {
         List<GameDto> gamesDto = loadGameDao.getGamesById(userId);

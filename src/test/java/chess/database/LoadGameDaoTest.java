@@ -15,21 +15,18 @@ import org.junit.jupiter.api.Test;
 
 class LoadGameDaoTest {
 
-    private final ChessGameDao chessGameDao = new ChessGameDao(Database.TEST);
-    private final LoadGameDao loadGameDao = new LoadGameDao(Database.TEST);
+    private final ChessGameDao chessGameDao = new ChessGameDao(DatabaseName.TEST);
+    private final LoadGameDao loadGameDao = new LoadGameDao(DatabaseName.TEST);
+    private Database database;
 
     @BeforeEach
     void setUp() {
-        Connection connection = loadGameDao.getConnection();
+        database = new Database(DatabaseName.TEST);
+        Connection connection = database.getConnection();
         assert connection != null;
         ChessTest.clearAll(connection);
         ChessTest.createMockUser(connection, "odo27", "mangmoong");
         ChessTest.createMockGame(connection, "100", "odo27");
-    }
-
-    @Test
-    void connection() {
-        assertThat(loadGameDao.getConnection()).isNotNull();
     }
 
     @Test
@@ -53,7 +50,7 @@ class LoadGameDaoTest {
 
     @Test
     void get_last_game_id() {
-        Connection connection = loadGameDao.getConnection();
+        Connection connection = database.getConnection();
         ChessTest.createMockGame(connection, "101", "odo27");
         ChessTest.createMockGame(connection, "102", "odo27");
         assertThat(loadGameDao.getLastGameId("odo27")).isEqualTo("102");

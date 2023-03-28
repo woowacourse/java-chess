@@ -1,17 +1,31 @@
 package chess.database;
 
-public enum Database {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-    PRODUCT("chess"),
-    TEST("chess_test");
+public class Database {
 
-    private final String name;
+    private static final String JDBC_MYSQL = "jdbc:mysql://";
 
-    Database(String name) {
-        this.name = name;
+    private final Configuration configuration = Configuration.getInstance();
+    private final DatabaseName databaseName;
+
+    public Database(final DatabaseName databaseName) {
+        this.databaseName = databaseName;
     }
 
-    public String getName() {
-        return name;
+    public Connection getConnection() {
+        try {
+            return DriverManager.getConnection(getUrl(), configuration.getUsername(), configuration.getPassword());
+        } catch (final SQLException e) {
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String getUrl() {
+        return JDBC_MYSQL + configuration.getServer() + "/" + databaseName.getName() + configuration.getOption();
     }
 }

@@ -11,20 +11,16 @@ import org.junit.jupiter.api.Test;
 
 class LoginDaoTest {
 
-    private final LoginDao loginDao = new LoginDao(Database.TEST);
+    private final LoginDao loginDao = new LoginDao(DatabaseName.TEST);
 
     @BeforeEach
     void setUp() {
-        Connection connection = loginDao.getConnection();
+        Database database = new Database(DatabaseName.TEST);
+        Connection connection = database.getConnection();
         assert connection != null;
         ChessTest.clearAll(connection);
         ChessTest.createMockUser(connection, "odo27", "mangmoong");
         ChessTest.createMockGame(connection, "100", "odo27");
-    }
-
-    @Test
-    void connection() {
-        assertThat(loginDao.getConnection()).isNotNull();
     }
 
     @Test

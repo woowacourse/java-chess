@@ -1,7 +1,6 @@
 package chess.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,26 +14,16 @@ public class LoginDao {
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
-    private final String database;
+    private final Database database;
 
-    public LoginDao(final Database database) {
-        this.database = database.getName();
-    }
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + database + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    public LoginDao(final DatabaseName databaseName) {
+        database = new Database(databaseName);
     }
 
     public User getUserById(String id) {
         final String query = "SELECT * FROM User WHERE user_id = ?";
         try (
-                Connection connection = getConnection();
+                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, id);
@@ -53,7 +42,7 @@ public class LoginDao {
     public void addUser(User user) {
         final String query = "INSERT INTO User (user_id, nickname) VALUES (?, ?)";
         try (
-                Connection connection = getConnection();
+                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, user.getId());

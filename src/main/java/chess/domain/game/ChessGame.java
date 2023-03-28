@@ -3,7 +3,7 @@ package chess.domain.game;
 import java.util.Map;
 
 import chess.database.ChessGameDao;
-import chess.database.Database;
+import chess.database.DatabaseName;
 import chess.domain.board.Board;
 import chess.domain.dto.GameStatusDto;
 import chess.domain.piece.Piece;
@@ -27,7 +27,7 @@ public class ChessGame {
     }
 
     public void save(final String gameId) {
-        ChessGameDao chessGameDao = new ChessGameDao(Database.PRODUCT);
+        ChessGameDao chessGameDao = new ChessGameDao(DatabaseName.PRODUCT);
         chessGameDao.save(gameId, this);
     }
 

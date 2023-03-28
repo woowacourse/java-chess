@@ -1,7 +1,6 @@
 package chess.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,31 +21,16 @@ import chess.domain.square.Square;
 
 public class LoadGameDao {
 
-    private static final String SERVER = "localhost:13306";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "user";
-    private static final String PASSWORD = "password";
+    private final Database database;
 
-    private final String database;
-
-    public LoadGameDao(final Database database) {
-        this.database = database.getName();
-    }
-
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + database + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    public LoadGameDao(final DatabaseName databaseName) {
+        database = new Database(databaseName);
     }
 
     public List<GameDto> getGamesById(String id) {
         final String query = "SELECT * FROM Game WHERE user_id = ? ORDER BY created_at DESC";
         try (
-                Connection connection = getConnection();
+                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, id);
@@ -67,7 +51,7 @@ public class LoadGameDao {
     public int getLastTurnById(String gameId) {
         final String query = "SELECT MAX(turn) AS result FROM Board WHERE game_id = ?";
         try (
-                Connection connection = getConnection();
+                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setInt(1, Integer.parseInt(gameId));
@@ -81,7 +65,7 @@ public class LoadGameDao {
 
     public ChessGame getGameById(String gameId, int turn) {
         final String query = "SELECT * FROM Board WHERE game_id = ? and turn = ?";
-        try (Connection connection = getConnection();
+        try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)
         ) {
             Map<Square, Piece> board = new HashMap<>();
@@ -110,7 +94,7 @@ public class LoadGameDao {
     public void createGame(String userId) {
         final String query = "INSERT INTO Game (user_id) VALUES (?)";
         try (
-                Connection connection = getConnection();
+                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, userId);
@@ -123,7 +107,7 @@ public class LoadGameDao {
     public String getLastGameId(String userId) {
         final String query = "SELECT MAX(game_id) AS result FROM Game WHERE user_id = ?";
         try (
-                Connection connection = getConnection();
+                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, userId);
