@@ -143,7 +143,7 @@ public final class Application {
                     .filter(rank -> inputRank == rank.getValue())
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_RANK));
-        } catch (IllegalArgumentException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException(NO_SUCH_RANK);
         }
     }
