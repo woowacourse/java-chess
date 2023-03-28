@@ -124,12 +124,12 @@ class BoardTest {
     class getScoresTest {
 
         @Test
-        @DisplayName("백 팀의 초기 점수를 리스트로 가져온다.")
+        @DisplayName("백 팀의 초기 점수를 리스트로 가져온다. 단, 왕의 점수는 제외하고 가져온다.")
         void getScoresTest1() {
             Board board = BoardGenerator.createBoard();
             List<Double> scores = board.getScores(Team.WHITE);
 
-            assertThat(scores).containsOnly(0.0, 9.0, 5.0, 5.0, 3.0, 3.0, 2.5, 2.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+            assertThat(scores).containsOnly(9.0, 5.0, 5.0, 3.0, 3.0, 2.5, 2.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
         }
     }
 
