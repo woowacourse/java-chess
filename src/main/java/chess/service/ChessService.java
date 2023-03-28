@@ -30,13 +30,13 @@ public final class ChessService {
             return null;
         }
 
-        Color turn = chessStatusDao.readTurn(gameId);
+        Color turn = Color.valueOf(chessStatusDao.readTurn(gameId));
 
         return new ChessGame(new Board(board), turn);
     }
 
     public String createChessStatus(ChessGame chessGame) {
-        return chessStatusDao.create(chessGame);
+        return chessStatusDao.create(chessGame.turn().name());
     }
 
     public void createChessGame(ChessGame chessGame, String gameId) {
@@ -53,7 +53,7 @@ public final class ChessService {
     }
 
     public void update(final ChessGame chessGame, final Position from, final Position to, final String gameId) {
-        chessStatusDao.update(chessGame, gameId);
+        chessStatusDao.update(chessGame.turn().name(), gameId);
         chessGameDao.update(from, to, gameId);
     }
 }

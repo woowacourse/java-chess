@@ -1,7 +1,5 @@
 package dao;
 
-import chess.ChessGame;
-import chess.domain.piece.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +31,7 @@ public final class DBChessStatusDao implements ChessStatusDao {
     }
 
     @Override
-    public Color readTurn(final String gameId) {
+    public String readTurn(final String gameId) {
         final var query = "SELECT turn FROM chess_status WHERE game_id=?;";
         try (final Connection connection = dbConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -41,40 +39,40 @@ public final class DBChessStatusDao implements ChessStatusDao {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                final String turnString = resultSet.getString("turn");
-                return Color.valueOf(turnString);
+                return resultSet.getString("turn");
             }
 
-            return null;
+            throw new IllegalStateException("체스 게임의 순서에 대한 정보를 불러올 수 없습니다.");
         } catch (final SQLException e) {
             throw new IllegalStateException("체스 게임의 상태를 불러오는데 실패했습니다.");
         }
     }
 
     @Override
-    public String create(final ChessGame chessGame) {
+    public String create(final String turn) {
         final var query = "INSERT INTO chess_status (turn) VALUE (?);";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, chessGame.turn().name());
+            preparedStatement.setString(1, turn);
             preparedStatement.executeUpdate();
 
             final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 return generatedKeys.getString(1);
             }
-            return null;
+
+            throw new IllegalArgumentException("체스 게임의 상태를 생성할 수 없습니다.");
         } catch (final SQLException e) {
             throw new IllegalStateException("체스 게임 상태를 생성하는데 실패했습니다.");
         }
     }
 
     @Override
-    public void update(final ChessGame chessGame, final String gameId) {
+    public void update(final String turn, final String gameId) {
         final var query = "UPDATE chess_status SET turn=? WHERE game_id=?;";
         try (final var connection = dbConnection.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, chessGame.turn().name());
+            preparedStatement.setString(1, turn);
             preparedStatement.setString(2, gameId);
 
             preparedStatement.executeUpdate();
@@ -83,3 +81,4 @@ public final class DBChessStatusDao implements ChessStatusDao {
         }
     }
 }
+;
