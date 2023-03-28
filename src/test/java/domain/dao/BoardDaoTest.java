@@ -2,7 +2,7 @@ package domain.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import common.connection.JdbcConnection;
+import common.JdbcConnection;
 import domain.type.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

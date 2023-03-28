@@ -2,7 +2,7 @@ package domain.dao;
 
 import common.JdbcContext;
 import common.TransactionStrategy;
-import common.connection.JdbcConnection;
+import common.JdbcConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;

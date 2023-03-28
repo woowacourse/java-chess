@@ -1,6 +1,6 @@
 import common.JdbcContext;
 import common.JdbcContextImpl;
-import common.connection.JdbcConnection;
+import common.JdbcConnection;
 import controller.ChessController;
 import domain.ChessGame;
 import domain.dao.BoardDaoImpl;

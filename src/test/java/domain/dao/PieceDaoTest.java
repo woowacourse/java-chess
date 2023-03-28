@@ -2,7 +2,7 @@ package domain.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import common.connection.JdbcConnection;
+import common.JdbcConnection;
 import domain.Location;
 import domain.piece.King;
 import domain.piece.Knight;

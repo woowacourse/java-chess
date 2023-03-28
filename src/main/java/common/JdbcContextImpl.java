@@ -1,6 +1,5 @@
 package common;
 
-import common.connection.JdbcConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.Supplier;
