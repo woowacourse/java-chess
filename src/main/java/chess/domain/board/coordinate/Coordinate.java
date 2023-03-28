@@ -8,10 +8,6 @@ public class Coordinate implements Comparable<Coordinate> {
     private final Column column;
     private final Row row;
     
-    public Coordinate(String[] sourceCoordinate) {
-        this(parseColumn(sourceCoordinate), parseRow(sourceCoordinate));
-    }
-    
     private Coordinate(char column, int row) {
         this(Column.from(column), Row.from(row));
     }
@@ -19,14 +15,6 @@ public class Coordinate implements Comparable<Coordinate> {
     public Coordinate(Column column, Row row) {
         this.column = column;
         this.row = row;
-    }
-    
-    private static char parseColumn(String[] sourceCoordinate) {
-        return sourceCoordinate[0].charAt(0);
-    }
-    
-    private static int parseRow(String[] sourceCoordinate) {
-        return Integer.parseInt(sourceCoordinate[1]);
     }
     
     public Coordinate nextCoordinate(Direction direction) {
