@@ -7,7 +7,7 @@ public enum PieceType {
     KNIGHT("N", "n", 2.5),
     BISHOP("B", "b", 3.0),
     QUEEN("Q", "q", 9.0),
-    KING("K", "k", 0);
+    KING("K", "k", Double.MAX_VALUE);
 
     private final String blackName;
     private final String whiteName;

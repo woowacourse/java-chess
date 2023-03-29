@@ -35,7 +35,7 @@ class RefereeTest {
     @BeforeAll
     static void setup() {
         Map<Position, Piece> blackPieces = Map.of(
-                Position.of("b8"), new King(Color.BLACK),
+                Position.of("b8"), new Knight(Color.BLACK),
                 Position.of("c8"), new Rook(Color.BLACK),
                 Position.of("a7"), new Pawn(Color.BLACK),
                 Position.of("c7"), new Pawn(Color.BLACK),
@@ -52,7 +52,7 @@ class RefereeTest {
                 Position.of("f2"), new Pawn(Color.WHITE),
                 Position.of("g2"), new Pawn(Color.WHITE),
                 Position.of("e1"), new Rook(Color.WHITE),
-                Position.of("f1"), new King(Color.WHITE)
+                Position.of("f1"), new Bishop(Color.WHITE)
         );
 
         pieces = new HashMap<>();
@@ -67,7 +67,7 @@ class RefereeTest {
         double score = new Referee(pieces).calculateScore(Color.BLACK);
 
         // then
-        assertThat(score).isEqualTo(20);
+        assertThat(score).isEqualTo(22.5);
     }
 
     @Test
@@ -77,6 +77,6 @@ class RefereeTest {
         double score = new Referee(pieces).calculateScore(Color.WHITE);
 
         // then
-        assertThat(score).isEqualTo(19.5);
+        assertThat(score).isEqualTo(22.5);
     }
 }
