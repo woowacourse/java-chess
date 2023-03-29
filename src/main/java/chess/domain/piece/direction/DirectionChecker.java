@@ -1,6 +1,6 @@
 package chess.domain.piece.direction;
 
-public class DirectionCheckerFactory {
+public class DirectionChecker {
     static boolean isUp(final int xDirection, final int yDirection) {
         Direction direction = Direction.UP;
         return xDirection == direction.x && yDirection >= direction.y;

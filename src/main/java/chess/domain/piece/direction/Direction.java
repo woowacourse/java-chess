@@ -4,22 +4,22 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Direction {
-    UP(0, 1, DirectionCheckerFactory::isUp),
-    UP_RIGHT(1, 1, DirectionCheckerFactory::isUpRight),
-    RIGHT(1, 0, DirectionCheckerFactory::isRight),
-    DOWN_RIGHT(1, -1, DirectionCheckerFactory::isDownRight),
-    DOWN(0, -1, DirectionCheckerFactory::isDown),
-    DOWN_LEFT(-1, -1, DirectionCheckerFactory::isDownLeft),
-    LEFT(-1, 0, DirectionCheckerFactory::isLeft),
-    UP_LEFT(-1, 1, DirectionCheckerFactory::isUpLeft),
-    UP_UP_RIGHT(1, 2, DirectionCheckerFactory::isUpUpRight),
-    UP_UP_LEFT(-1, 2, DirectionCheckerFactory::isUpUpLeft),
-    RIGHT_RIGHT_UP(2, 1, DirectionCheckerFactory::isRightRightUp),
-    RIGHT_RIGHT_DOWN(2, -1, DirectionCheckerFactory::isRightRightDown),
-    DOWN_DOWN_RIGHT(1, -2, DirectionCheckerFactory::isDownDownRight),
-    DOWN_DOWN_LEFT(-1, -2, DirectionCheckerFactory::isDownDownLeft),
-    LEFT_LEFT_UP(-2, 1, DirectionCheckerFactory::isLeftLeftUp),
-    LEFT_LEFT_DOWN(-2, -1, DirectionCheckerFactory::isLeftLeftDown);
+    UP(0, 1, DirectionChecker::isUp),
+    UP_RIGHT(1, 1, DirectionChecker::isUpRight),
+    RIGHT(1, 0, DirectionChecker::isRight),
+    DOWN_RIGHT(1, -1, DirectionChecker::isDownRight),
+    DOWN(0, -1, DirectionChecker::isDown),
+    DOWN_LEFT(-1, -1, DirectionChecker::isDownLeft),
+    LEFT(-1, 0, DirectionChecker::isLeft),
+    UP_LEFT(-1, 1, DirectionChecker::isUpLeft),
+    UP_UP_RIGHT(1, 2, DirectionChecker::isUpUpRight),
+    UP_UP_LEFT(-1, 2, DirectionChecker::isUpUpLeft),
+    RIGHT_RIGHT_UP(2, 1, DirectionChecker::isRightRightUp),
+    RIGHT_RIGHT_DOWN(2, -1, DirectionChecker::isRightRightDown),
+    DOWN_DOWN_RIGHT(1, -2, DirectionChecker::isDownDownRight),
+    DOWN_DOWN_LEFT(-1, -2, DirectionChecker::isDownDownLeft),
+    LEFT_LEFT_UP(-2, 1, DirectionChecker::isLeftLeftUp),
+    LEFT_LEFT_DOWN(-2, -1, DirectionChecker::isLeftLeftDown);
 
     final int x;
     final int y;
