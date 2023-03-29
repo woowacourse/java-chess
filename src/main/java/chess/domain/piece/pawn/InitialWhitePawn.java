@@ -24,9 +24,4 @@ public final class InitialWhitePawn extends Pawn {
     public static InitialWhitePawn instance() {
         return INSTANCE;
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return true;
-    }
 }

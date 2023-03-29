@@ -28,8 +28,6 @@ public abstract class Piece {
 
     public abstract List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam);
 
-    public abstract boolean isInitialPawn();
-
     public final boolean isSamePieceTypeAs(final PieceType pieceType) {
         return pieceType == this.pieceType;
     }

@@ -22,9 +22,4 @@ public final class BlackPawn extends Pawn {
     public static BlackPawn instance() {
         return INSTANCE;
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return false;
-    }
 }

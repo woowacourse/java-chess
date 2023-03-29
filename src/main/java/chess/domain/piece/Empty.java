@@ -23,9 +23,4 @@ public final class Empty extends Piece {
     public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam) {
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public boolean isInitialPawn() {
-        return false;
-    }
 }

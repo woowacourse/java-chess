@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.game.utils.ParsingUtil;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -10,7 +11,6 @@ import chess.dto.outputView.PrintBoardDto;
 import chess.dto.outputView.PrintTotalScoreDto;
 import chess.dto.outputView.PrintWinnerDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,10 +42,10 @@ public final class ChessGame {
     public Piece move(final Position source, final Position target) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
-
         validateEmptyPiece(sourcePiece);
         validateTurn(sourcePiece);
         validatePath(sourcePiece.findPath(source, target, targetPiece.getTeam()));
+
         switchPiece(source, target, sourcePiece);
         turn = turn.next();
         return targetPiece;
@@ -77,10 +77,10 @@ public final class ChessGame {
     }
 
     private Piece checkInitialPawn(final Piece piece) {
-        if (piece.isInitialPawn() && piece.isWhite()) {
+        if (piece.isSamePieceTypeAs(PieceType.INITIAL_WHITE_PAWN)) {
             return WhitePawn.instance();
         }
-        if (piece.isInitialPawn() && piece.isBlack()) {
+        if (piece.isSamePieceTypeAs(PieceType.INITIAL_BLACK_PAWN)) {
             return BlackPawn.instance();
         }
         return piece;
@@ -99,33 +99,8 @@ public final class ChessGame {
     }
 
     public PrintBoardDto printBoard() {
-        final List<String> pieces = parseBoardDto(getBoard());
+        final List<String> pieces = ParsingUtil.parseBoardDto(getBoard());
         return new PrintBoardDto(pieces);
-    }
-
-    public List<String> parseBoardDto(final Map<Position, Piece> board) {
-        List<String> pieces = new ArrayList<>();
-        for (int rankOrder = Rank.MAX_ORDER; rankOrder >= Rank.MIN_ORDER; rankOrder--) {
-            for (int fileOrder = File.MIN_ORDER; fileOrder <= File.MAX_ORDER; fileOrder++) {
-                final Position position = Position.of(File.of(fileOrder), Rank.of(rankOrder));
-                final Piece piece = board.get(position);
-                pieces.add(render(piece));
-            }
-        }
-        return pieces;
-    }
-
-    private String render(final Piece piece) {
-        final Team team = piece.getTeam();
-        final PieceType pieceType = piece.getPieceType();
-
-        if (team.isBlack() || team.isEmpty()) {
-            return pieceType.getValue();
-        }
-        if (team.isWhite()) {
-            return pieceType.getValue().toLowerCase();
-        }
-        throw new AssertionError();
     }
 
     public Map<Position, Piece> getBoard() {
