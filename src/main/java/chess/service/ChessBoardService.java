@@ -20,9 +20,9 @@ public class ChessBoardService {
 
     public ChessBoard findChessBoardById(int boardId) {
         Map<Position, Piece> piecesByPosition = boardPiecesDao.find(boardId)
-                .orElse(PieceInitializer.createPiecesWithPosition());
+                .orElseGet(PieceInitializer::createPiecesWithPosition);
         ChessBoardStatus status = boardStatusesDao.findByBoardId(boardId)
-                .orElse(new ChessBoardStatus(Camp.WHITE, false));
+                .orElseGet(() -> new ChessBoardStatus(Camp.WHITE, false));
         return new ChessBoard(boardId, piecesByPosition, status);
     }
 

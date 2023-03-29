@@ -232,7 +232,7 @@ sequenceDiagram
     - [ ] Connection 사용 최적화
     - [x] King 공격 확인 메서드 분리
     - [x] 모호한 메서드명 수정
-    - [ ] 필요 시 Optional orElse 대신 orElseGet 쓰기
+    - [x] 필요 시 Optional orElse 대신 orElseGet 쓰기
 - DB 관련
     - [ ] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기
     - [ ] DB 작동 테스트는 테스트용 테이블 만들어서 작성하기
