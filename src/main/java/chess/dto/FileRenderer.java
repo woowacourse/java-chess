@@ -17,9 +17,9 @@ public enum FileRenderer {
     private final String command;
     private final File file;
 
-    FileRenderer(String command, File rank) {
+    FileRenderer(String command, File file) {
         this.command = command;
-        this.file = rank;
+        this.file = file;
     }
 
     static public File render(String input) {
