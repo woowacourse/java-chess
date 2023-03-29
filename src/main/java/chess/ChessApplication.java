@@ -1,12 +1,20 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.controller.ChessGameController;
+import chess.controller.ChessRoomController;
+import chess.controller.PlayerController;
+import chess.dto.ChessRoomDto;
+import chess.dto.PlayerDto;
 
 public class ChessApplication {
 
     public static void main(String[] args) {
-        ChessController controller = new ChessController();
+        PlayerController playerController = new PlayerController();
+        ChessRoomController chessRoomController = new ChessRoomController();
+        ChessGameController chessGameController = new ChessGameController();
 
-        controller.run();
+        PlayerDto playerDto = playerController.handle();
+        ChessRoomDto chessRoomDto = chessRoomController.handle(playerDto);
+        chessGameController.run(chessRoomDto);
     }
 }

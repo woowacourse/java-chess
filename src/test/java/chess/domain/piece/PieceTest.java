@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PieceTest {
 
-    Piece piece;
+    private Piece piece;
 
     @BeforeEach
     void setUp() {

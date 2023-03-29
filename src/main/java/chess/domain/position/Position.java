@@ -18,10 +18,21 @@ public final class Position {
     }
 
     public static Position from(final String input) {
+        validateInputLength(input);
         File file = File.of(input.charAt(FILE_INDEX));
         Rank rank = Rank.of(input.charAt(RANK_INDEX));
 
         return new Position(file, rank);
+    }
+
+    private static void validateInputLength(final String input) {
+        if (isNotTwoLength(input)) {
+            throw new IllegalArgumentException("위치는 2글자입니다 (ex. a1, d3, h8)");
+        }
+    }
+
+    private static boolean isNotTwoLength(final String input) {
+        return input.length() != 2;
     }
 
     public static Position of(final File file, final Rank rank) {
@@ -43,14 +54,6 @@ public final class Position {
         return target.rank() - this.rank();
     }
 
-    public char file() {
-        return file.value();
-    }
-
-    public int rank() {
-        return rank.value();
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -62,5 +65,13 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public char file() {
+        return file.value();
+    }
+
+    public int rank() {
+        return rank.value();
     }
 }

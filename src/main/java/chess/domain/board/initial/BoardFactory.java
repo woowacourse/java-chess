@@ -16,7 +16,8 @@ public final class BoardFactory {
     private BoardFactory() {
     }
 
-    public static Board from(final Map<Position, Piece> board) {
+    public static Board create() {
+        final Map<Position, Piece> board = new HashMap<>();
         fillEmpty(board);
         fillPieces(board);
         return new Board(board);

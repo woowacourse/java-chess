@@ -19,11 +19,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
-    Board board;
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.from(new HashMap<>());
+        board = BoardFactory.create();
     }
 
     @Test

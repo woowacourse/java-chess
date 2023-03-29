@@ -111,6 +111,10 @@ public class Board {
         board.put(source, new Empty(Team.NONE));
     }
 
+    public Piece getPiece(final Position position) {
+        return board.get(position);
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
