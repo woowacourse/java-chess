@@ -1,28 +1,34 @@
 package chess.domain.board;
 
-import static java.util.Map.entry;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
 public final class Score {
 
-    private static final Map<PieceType, Score> pieceScoreMapper = Map.ofEntries(
-            entry(PieceType.PAWN, new Score(1)),
-            entry(PieceType.KNIGHT, new Score(2.5)),
-            entry(PieceType.BISHOP, new Score(3)),
-            entry(PieceType.ROOK, new Score(5)),
-            entry(PieceType.QUEEN, new Score(9)),
-            entry(PieceType.KING, new Score(0))
-    );
+    private static final Map<PieceType, Score> PIECE_SCORE_MAPPER;
+
     private static final int DUPLICATE_SAME_FILE_PAWN_LIMIT = 2;
     private static final Score ZERO = new Score(0);
     private static final double PAWN_DECREASE = 0.5;
+
+    static {
+        final Map<PieceType, Score> pieceScoreMapper = new EnumMap<>(PieceType.class);
+        pieceScoreMapper.put(PieceType.PAWN, new Score(1));
+        pieceScoreMapper.put(PieceType.KNIGHT, new Score(2.5));
+        pieceScoreMapper.put(PieceType.BISHOP, new Score(3));
+        pieceScoreMapper.put(PieceType.ROOK, new Score(5));
+        pieceScoreMapper.put(PieceType.QUEEN, new Score(9));
+        pieceScoreMapper.put(PieceType.KING, new Score(0));
+        PIECE_SCORE_MAPPER = Collections.unmodifiableMap(pieceScoreMapper);
+    }
 
     private final double value;
 
@@ -34,7 +40,7 @@ public final class Score {
         final Score subtrahend = new Score(sumPawnCountInSameFileOver2(board) * PAWN_DECREASE);
         return board.values()
                 .stream()
-                .map(piece -> pieceScoreMapper.get(piece.getPieceType()))
+                .map(piece -> PIECE_SCORE_MAPPER.get(piece.getPieceType()))
                 .reduce(ZERO, Score::sum)
                 .subtract(subtrahend);
     }
