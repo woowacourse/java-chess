@@ -18,6 +18,7 @@ public enum CommandHandler {
     END(1, new EndCommandFactory());
 
     private static final int COMMAND_INDEX = 0;
+    private static final String NOT_EXIST_COMMAND_ERROR_MESSAGE = "입력값은 `start`, `move source target`, `status`, `end`만 가능합니다.";
 
     private final int size;
     private final CommandFactory commandFactory;
@@ -33,7 +34,7 @@ public enum CommandHandler {
                 .filter(commandHandler -> isSameSize(input, commandHandler))
                 .map(commandHandler -> commandHandler.commandFactory.createCommand(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("입력값은 `start`, `move source target`, `status`, `end`만 가능합니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_COMMAND_ERROR_MESSAGE));
     }
 
     private static boolean isSameCommand(final List<String> input, final CommandHandler commandHandler) {

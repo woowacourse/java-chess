@@ -5,6 +5,8 @@ import java.sql.Statement;
 
 public class JdbcTemplate {
 
+    private static final String NOT_RETURN_ID_ERROR_MESSAGE = "id가 생성되지 않았습니다";
+
     public static void executeQuery(final String query, final Object... parameters) {
         try (final var connection = DBConnection.get()) {
             final var preparedStatement = connection.prepareStatement(query);
@@ -37,7 +39,7 @@ public class JdbcTemplate {
             throw new RuntimeException(e);
         }
 
-        throw new RuntimeException("id가 생성되지 않았습니다");
+        throw new RuntimeException(NOT_RETURN_ID_ERROR_MESSAGE);
     }
 
     public static <T> T select(final String query, final RowMapper<T> rowMapper, final Object... parameters) {
