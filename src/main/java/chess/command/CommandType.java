@@ -21,6 +21,6 @@ public enum CommandType {
                 .filter(value -> value.name.equals(command))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        Command.COMMAND_ERROR_PREFIX + INVALID_COMMAND_ERROR_MESSAGE));
+                        Command2.COMMAND_ERROR_PREFIX + INVALID_COMMAND_ERROR_MESSAGE));
     }
 }
