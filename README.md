@@ -228,7 +228,7 @@ sequenceDiagram
     - [x] Jdbc 템플릿 적용하여 Dao 중복 코드 제거
     - [x] Dao 메서드명 일반적인 방식으로 변경
     - [x] 부적절한 Dao 클래스명 수정
-    - [ ] Dao SqlException 런타임예외로 전환, 예외메시지 구체화
+    - [x] SQLException 런타임예외로 전환, 예외메시지 구체화
     - [ ] Connection 사용 최적화
     - [x] King 공격 확인 메서드 분리
     - [x] 모호한 메서드명 수정

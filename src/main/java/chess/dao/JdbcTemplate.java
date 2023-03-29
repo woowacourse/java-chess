@@ -8,6 +8,7 @@ import java.util.List;
 
 public class JdbcTemplate {
 
+    private static final String WRONG_QUERY_ERROR_MESSAGE_FORMAT = "DB 쿼리 오류: %s";
     private final ConnectionManager connectionManager = new ConnectionManager();
 
     public <T> void executeUpdate(String query, List<Object> parameters) {
@@ -15,20 +16,19 @@ public class JdbcTemplate {
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             setParameters(preparedStatement, parameters);
             preparedStatement.executeUpdate();
-            // TODO SQL 예외 무엇으로 던지고, 어디서 어떻게 처리할 것인지?
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new RuntimeException(String.format(WRONG_QUERY_ERROR_MESSAGE_FORMAT, query), exception.getCause());
         }
     }
 
-    public <T> T executeQuery(String sql, List<Object> parameters, RowMapper<T> rowMapper) {
+    public <T> T executeQuery(String query, List<Object> parameters, RowMapper<T> rowMapper) {
         try (final Connection connection = connectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             setParameters(preparedStatement, parameters);
             ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet);
         } catch (SQLException exception) {
-            throw new RuntimeException(exception);
+            throw new RuntimeException(String.format(WRONG_QUERY_ERROR_MESSAGE_FORMAT, query), exception.getCause());
         }
     }
 
