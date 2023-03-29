@@ -17,7 +17,7 @@ public class ConnectionUtil {
     private ConnectionUtil() {
     }
 
-    public static Connection connection() {
+    public static Connection getConnection() {
         try {
             return DriverManager.getConnection(CONNECTION_FORM, USER_NAME, PASSWORD);
         } catch (SQLException e) {

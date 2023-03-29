@@ -12,7 +12,7 @@ public class GameDao {
     public Optional<GameDto> findBy(final long gameId) {
         final String sql = "SELECT * FROM GAME WHERE id = ?";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             ps.setLong(1, gameId);
@@ -35,7 +35,7 @@ public class GameDao {
         final List<GameDto> gameDtos = new ArrayList<>();
         final String sql = "SELECT * FROM GAME WHERE id != ? ORDER BY id DESC LIMIT 10";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             ps.setLong(1, gameId);
@@ -58,7 +58,7 @@ public class GameDao {
     public long save(final boolean isEnd, final Color lastPlayer) {
         final String sql = "INSERT INTO GAME(is_end, turn_color) VALUES(?, ?)";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
             ps.setBoolean(1, isEnd);
@@ -78,7 +78,7 @@ public class GameDao {
     public boolean deleteBy(final long gameId) {
         final String sql = "DELETE FROM GAME WHERE id = ?";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             ps.setLong(1, gameId);
@@ -92,7 +92,7 @@ public class GameDao {
     public boolean deleteAll() {
         final String sql = "DELETE FROM GAME WHERE 1=1";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             return ps.executeUpdate() >= 0;

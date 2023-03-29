@@ -12,7 +12,7 @@ class ConnectionUtilTest {
     @Test
     void dbConnection() throws Exception {
         // given & when
-        final Connection connection = ConnectionUtil.connection();
+        final Connection connection = ConnectionUtil.getConnection();
 
         // then
         assertThat(connection.isValid(1)).isTrue();

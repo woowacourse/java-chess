@@ -13,7 +13,7 @@ public class MovementDao {
     public long save(final Command command, final Color color, final long gameId) {
         final String sql = "INSERT INTO MOVEMENT(square_source, square_target, square_color, game_id) VALUES(?, ?, ?, ?)";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
             ps.setString(1, command.getSource().toString());
@@ -37,7 +37,7 @@ public class MovementDao {
         final List<MovementDto> moveMappers = new ArrayList<>();
 
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             ps.setLong(1, gameId);
@@ -69,7 +69,7 @@ public class MovementDao {
     public boolean deleteAll() {
         final String sql = "DELETE FROM MOVEMENT WHERE 1=1";
         try (
-                final Connection connection = ConnectionUtil.connection();
+                final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             return ps.executeUpdate() >= 0;
