@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.dto.ChessBoardStatus;
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +39,8 @@ public class ChessBoard {
 
     public void move(Position source, Position destination) {
         Piece movingPiece = findPieceAtSourcePosition(source);
-        boolean isKingChecked = updatePiecesByPosition(source, destination, movingPiece);
-        if (!isKingChecked) {
-            switchCampTurn();
-        }
-        this.isOver = isKingChecked;
+        updatePiecesByPosition(source, destination, movingPiece);
+        updateBoardStatus();
     }
 
     private Piece findPieceAtSourcePosition(final Position source) {
@@ -57,21 +54,26 @@ public class ChessBoard {
         return piece;
     }
 
-    private boolean updatePiecesByPosition(final Position source, final Position destination, final Piece movingPiece) {
-        movingPiece.validateMove(source, destination, piecesByPosition);
-        boolean isKingAttacked = isKingAt(destination);
-        piecesByPosition.put(destination, movingPiece);
-        piecesByPosition.put(source, Empty.getInstance());
-        return isKingAttacked;
-    }
-
-    private boolean isKingAt(Position position) {
-        Piece target = piecesByPosition.get(position);
-        return target.isSameType(PieceType.KING);
-    }
-
     private boolean isEmptyPosition(final Position position) {
         return piecesByPosition.get(position).isEmpty();
+    }
+
+    private void updatePiecesByPosition(final Position source, final Position destination, final Piece movingPiece) {
+        movingPiece.validateMove(source, destination, piecesByPosition);
+        piecesByPosition.put(destination, movingPiece);
+        piecesByPosition.put(source, Empty.getInstance());
+    }
+
+    private void updateBoardStatus() {
+        if (isKingAttacked()) {
+            isOver = true;
+            return;
+        }
+        switchCampTurn();
+    }
+
+    private boolean isKingAttacked() {
+        return !(piecesByPosition.containsValue(new King(currentTurnCamp.transfer())));
     }
 
     private void switchCampTurn() {

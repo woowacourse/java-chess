@@ -224,14 +224,14 @@ sequenceDiagram
         - Piece 로 체스판의 이동 검증 로직 책임 위임 및 통합
     - [ ] ActionMapper `Enum 요소 조회 비용` vs `Map 클래스로 변경 후, static 상수로 인한 메모리 사용` 비교
     - [x] GameStatus 패키지 이동, 검증 로직 의존관계 없애기
-    - [ ] King 공격 확인 메서드 분리
 - 코드 관련
     - [ ] Dao 템플릿 적용하여 중복 코드 제거
     - [ ] JDBC 자원 close 해주기
     - [ ] Connection 사용 최적화
     - [ ] Dao SqlException 런타임예외로 전환, 예외메시지 구체화
     - [ ] Dao 메서드명 일반적인 방식으로 변경
-    - [ ] 모호한 메서드명 수정
+    - [x] King 공격 확인 메서드 분리
+    - [x] 모호한 메서드명 수정
     - [ ] 부적절한 Dao 클래스명 수정
     - [ ] 필요 시 Optional orElse 대신 orElseGet 쓰기
 - DB 관련
