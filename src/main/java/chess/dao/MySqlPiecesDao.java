@@ -31,19 +31,19 @@ public class MySqlPiecesDao implements PiecesDao {
         final var query = "SELECT position_file, position_rank, piece_side, piece_type FROM piece";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            List<Integer> position_files = new ArrayList<>();
-            List<Integer> position_ranks = new ArrayList<>();
-            List<String> piece_sides = new ArrayList<>();
-            List<String> piece_types = new ArrayList<>();
+            List<Integer> files = new ArrayList<>();
+            List<Integer> ranks = new ArrayList<>();
+            List<String> sides = new ArrayList<>();
+            List<String> types = new ArrayList<>();
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                position_files.add(resultSet.getInt("position_file"));
-                position_ranks.add(resultSet.getInt("position_rank"));
-                piece_sides.add(resultSet.getString("piece_side"));
-                piece_types.add(resultSet.getString("piece_type"));
+                files.add(resultSet.getInt("position_file"));
+                ranks.add(resultSet.getInt("position_rank"));
+                sides.add(resultSet.getString("piece_side"));
+                types.add(resultSet.getString("piece_type"));
             }
-            return new LoadedPiecesSelectDto(position_files, position_ranks, piece_sides, piece_types);
+            return new LoadedPiecesSelectDto(files, ranks, sides, types);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
