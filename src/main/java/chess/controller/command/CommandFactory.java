@@ -8,21 +8,6 @@ import java.util.function.Function;
 
 public final class CommandFactory {
 
-    private enum CommandType {
-        START,
-        END,
-        MOVE,
-        LOAD,
-        STATUS;
-
-        public static CommandType from(final String input) {
-            return Arrays.stream(CommandType.values())
-                    .filter(commandType -> commandType.name().equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어입니다."));
-        }
-    }
-
     private static final Map<CommandType, Function<List<String>, Command>> commands = new EnumMap<>(CommandType.class);
 
     private CommandFactory() {
@@ -40,5 +25,20 @@ public final class CommandFactory {
         Request request = Request.from(command);
         CommandType commandType = CommandType.from(request.getCommand());
         return commands.get(commandType).apply(request.getParameters());
+    }
+
+    private enum CommandType {
+        START,
+        END,
+        MOVE,
+        LOAD,
+        STATUS;
+
+        public static CommandType from(final String input) {
+            return Arrays.stream(CommandType.values())
+                    .filter(commandType -> commandType.name().equals(input))
+                    .findAny()
+                    .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어입니다."));
+        }
     }
 }

@@ -23,13 +23,13 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
+    public boolean canMove(final Map<Position, Boolean> isEmptyPositions, final Position source, final Position target) {
         if (source.isFileEquals(target)) {
-            return isEmptyPosition.keySet()
+            return isEmptyPositions.keySet()
                     .stream()
-                    .allMatch(isEmptyPosition::get);
+                    .allMatch(isEmptyPositions::get);
         }
-        return !isEmptyPosition.get(target);
+        return !isEmptyPositions.get(target);
     }
 
     @Override
