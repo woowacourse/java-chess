@@ -65,4 +65,15 @@ public class UserDao {
 
         return null;
     }
+
+    public void deleteUserId(User user) {
+        final var query = " DELETE from user WHERE user_id = ? ";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, user.userId());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
