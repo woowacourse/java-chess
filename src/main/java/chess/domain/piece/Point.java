@@ -16,6 +16,9 @@ public enum Point {
     QUEEN(9, Queen.class),
     KING(0, King.class);
 
+    public static final int NUMBER_OF_FILE = 8;
+    public static final int INITIAL_COUNT = 0;
+
     private final double point;
     private final Class<? extends Piece> pieceClass;
 
@@ -25,29 +28,49 @@ public enum Point {
     }
 
     public static double calculatePointByTeam(final Team team, final Map<Square, Piece> board) {
-        double sum = 0;
         List<Integer> counts = getCounts();
-        for (Square square : board.keySet()) {
-            Piece piece = board.get(square);
-            if (piece.isAlly(team)) {
-                if (piece.isPawn()) {
-                    addCount(counts, square.getFileNumber());
-                }
-                sum += getPoint(piece);
-            }
-        }
-        for (int count : counts) {
-            if (count == 1) {
-                sum += PAWN.point;
-            }
-        }
+        double sum = board.keySet().stream()
+                .peek(square -> addCountWhenPieceIsAllyPawn(board.get(square), team, counts, square))
+                .mapToDouble(square -> getPointWhenPieceIsAlly(board.get(square), team))
+                .sum();
+        sum += getPawnAdditionalPoint(counts);
         return sum;
+    }
+
+    private static void addCountWhenPieceIsAllyPawn(Piece piece, Team team, List<Integer> counts, Square square) {
+        if (isAllyPawn(piece, team)) {
+            addCount(counts, square.getFileNumber());
+        }
+    }
+
+    private static double getPointWhenPieceIsAlly(Piece piece, Team team) {
+        if (piece.isAlly(team)) {
+            return getPoint(piece);
+        }
+        return 0;
+    }
+
+    private static double getPawnAdditionalPoint(List<Integer> counts) {
+        return counts.stream()
+                .mapToDouble(Point::getPawnPointWhenCountIsOne)
+                .sum();
+    }
+
+    private static double getPawnPointWhenCountIsOne(int count) {
+        if (count == 1) {
+            return PAWN.point;
+        }
+        return 0;
+    }
+
+    private static boolean isAllyPawn(Piece piece, Team team) {
+        return piece.isAlly(team) && piece.isPawn();
     }
 
     private static List<Integer> getCounts() {
         List<Integer> counts = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            counts.add(0);
+        for (int i = 0; i < NUMBER_OF_FILE; i++) {
+            counts.add(INITIAL_COUNT);
         }
         return counts;
     }
