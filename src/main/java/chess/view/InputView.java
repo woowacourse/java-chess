@@ -64,12 +64,11 @@ public final class InputView {
 
     private static CommandDto insertIntoCommandDto(List<String> userInput) {
         GameCommand gameCommand = recognizeGameCommand(userInput);
-        String startPosition = null;
-        String endPosition = null;
         if (userInput.size() == 3) {
-            startPosition = userInput.get(1);
-            endPosition = userInput.get(2);
+            String startPosition = userInput.get(1);
+            String endPosition = userInput.get(2);
+            return CommandDto.of(gameCommand, startPosition, endPosition);
         }
-        return CommandDto.of(gameCommand, startPosition, endPosition);
+        return CommandDto.of(gameCommand);
     }
 }

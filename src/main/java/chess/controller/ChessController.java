@@ -48,10 +48,28 @@ public final class ChessController {
         }
     }
 
+    private ChessBoard setUpChessBoard() {
+        ChessBoard chessBoard = chessGameDao.select();
+        if (chessBoard != null) {
+            return chessBoard;
+        }
+        ChessBoardGenerator generator = new ChessBoardGenerator();
+        chessBoard = new ChessBoard(generator.generate(), Color.WHITE);
+        return chessBoard;
+    }
+
+    private void showChessBoardStatus(ChessBoard chessBoard) {
+        Map<Position, Piece> chessBoardStatus = chessBoard.getChessBoard();
+        String turn = chessBoard.getTurn();
+        ChessBoardDto chessBoardDto = ChessBoardDto.of(BoardToString.convert(chessBoardStatus));
+        OutputView.printChessBoard(chessBoardDto);
+        OutputView.printTurn(turn);
+    }
+
     private void checkKingAlive(ChessBoard chessBoard) {
         if (chessBoard.isKingDead()) {
             chessGameDao.delete(chessBoard);
-            throw new IllegalStateException("[ERROR] King이 죽었기 때문에 끝난 게임입니다.");
+            OutputView.printKingDeadMessage();
         }
     }
 
@@ -64,22 +82,19 @@ public final class ChessController {
         }
     }
 
-    private ChessBoard setUpChessBoard() {
-        ChessBoard chessBoard = chessGameDao.select();
-        if (chessBoard != null) {
-            return chessBoard;
+    private void playGame(ChessBoard chessBoard) {
+        checkKingAlive(chessBoard);
+        CommandDto commandDto = InputView.readPlayingCommand();
+        while (isGameNotEnd(commandDto, chessBoard)) {
+            executePlayingCommand(chessBoard, commandDto);
+            commandDto = readPlayingCommandIfKingAlive(chessBoard);
         }
-        ChessBoardGenerator generator = new ChessBoardGenerator();
-        chessBoard = new ChessBoard(generator.generate(), Color.WHITE);
-        return chessBoard;
+        checkKingAlive(chessBoard);
     }
 
-    private void playGame(ChessBoard chessBoard) {
-        CommandDto commandDto = InputView.readPlayingCommand();
-        while (commandDto.getGameCommand() != GameCommand.END) {
-            executePlayingCommand(chessBoard, commandDto);
-            commandDto = InputView.readPlayingCommand();
-        }
+    private boolean isGameNotEnd(CommandDto commandDto, ChessBoard chessBoard) {
+        return (commandDto.getGameCommand() != GameCommand.END) &&
+                (!chessBoard.isKingDead());
     }
 
     private void executePlayingCommand(ChessBoard chessBoard, CommandDto commandDto) {
@@ -98,16 +113,7 @@ public final class ChessController {
 
         chessBoard.movePiece(Position.of(startInput), Position.of(endInput));
         showChessBoardStatus(chessBoard);
-        checkKingAlive(chessBoard);
         chessGameDao.update(chessBoard);
-    }
-
-    private void showChessBoardStatus(ChessBoard chessBoard) {
-        Map<Position, Piece> chessBoardStatus = chessBoard.getChessBoard();
-        String turn = chessBoard.getTurn();
-        ChessBoardDto chessBoardDto = ChessBoardDto.of(BoardToString.convert(chessBoardStatus));
-        OutputView.printChessBoard(chessBoardDto);
-        OutputView.printTurn(turn);
     }
 
     private void showStatus(ChessBoard chessBoard) {
@@ -140,5 +146,12 @@ public final class ChessController {
             return Color.WHITE;
         }
         return null;
+    }
+
+    private CommandDto readPlayingCommandIfKingAlive(ChessBoard chessBoard) {
+        if (chessBoard.isKingDead()) {
+            return CommandDto.of(GameCommand.END);
+        }
+        return InputView.readPlayingCommand();
     }
 }

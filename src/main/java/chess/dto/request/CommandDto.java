@@ -14,8 +14,18 @@ public final class CommandDto {
         this.endPosition = endPosition;
     }
 
+    private CommandDto(GameCommand gameCommand) {
+        this.gameCommand = gameCommand;
+        this.startPosition = null;
+        this.endPosition = null;
+    }
+
     public static CommandDto of(GameCommand gameCommand, String startPosition, String endPosition) {
         return new CommandDto(gameCommand, startPosition, endPosition);
+    }
+
+    public static CommandDto of(GameCommand gameCommand) {
+        return new CommandDto(gameCommand);
     }
 
     public GameCommand getGameCommand() {

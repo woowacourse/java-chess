@@ -47,4 +47,8 @@ public final class OutputView {
         System.out.println("===========");
         System.out.println(turn + "의 차례");
     }
+
+    public static void printKingDeadMessage() {
+        System.out.println("King이 죽었으므로 게임을 종료합니다.");
+    }
 }
