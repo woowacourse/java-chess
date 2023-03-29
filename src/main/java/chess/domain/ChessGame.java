@@ -5,7 +5,6 @@ import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.state.FinishedState;
 import chess.domain.state.GameState;
-import chess.domain.state.LoadingState;
 import chess.domain.state.ReadyState;
 import chess.domain.state.RunningState;
 import java.util.HashMap;
@@ -28,10 +27,6 @@ public class ChessGame {
         return new ChessGame(chessBoard, ReadyState.STATE);
     }
 
-    public boolean isRunningOrFinished() {
-        return state.isFinished() || state.isRunning();
-    }
-
     public boolean isFinished() {
         return state.isFinished();
     }
@@ -43,26 +38,12 @@ public class ChessGame {
         });
     }
 
-    public void enterLoad(Runnable runnable) {
-        state.enterLoad(() -> {
-            state = LoadingState.STATE;
-            runnable.run();
-        });
-    }
-
     public void loadGame(Supplier<List<Path>> supplier) {
         state.loadGame(() -> {
             List<Path> paths = supplier.get();
             paths.forEach((path) ->
                 chessBoard.move(path.getSource(), path.getDestination()));
             state = RunningState.STATE;
-        });
-    }
-
-    public void cancelLoad(Runnable runnable) {
-        state.cancelLoad(() -> {
-            state = ReadyState.STATE;
-            runnable.run();
         });
     }
 
@@ -87,6 +68,10 @@ public class ChessGame {
             return Team.BLACK;
         }
         return Team.EMPTY;
+    }
+
+    public Team findTeamByTurn() {
+        return chessBoard.findTeamByTurn();
     }
 
     public void finishGame() {

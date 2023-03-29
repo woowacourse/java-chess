@@ -14,23 +14,15 @@ public class OutputView {
     }
     public void printGameGuide() {
         System.out.println(String.format("> 게임 시작 : %s", Command.START.getValue()));
-        System.out.println(String.format("> 이전 게임 조회 : %s", Command.LOAD.getValue()));
+        System.out.println(String.format("> 이전 게임 이어하기 : %s", Command.LOAD.getValue()));
         System.out.println(String.format("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3"
             , Command.MOVE.getValue(), Command.MOVE.getValue()));
         System.out.println(String.format("> 게임 점수 확인 : %s", Command.STATUS.getValue()));
         System.out.println(String.format("> 게임 종료 : %s", Command.END.getValue()));
     }
-
-    public void printLoadGuide() {
-        System.out.println("> 이전에 하던 게임 기록이 남아있습니다. 이어하시겠습니까?");
-        System.out.println(String.format("> 이어하기 : %s", Command.CONTINUE.getValue()));
-        System.out.println(String.format("> 돌아가기 : %s", Command.CANCEL.getValue()));
+    public void printTurn(Team team){
+        System.out.println(String.format("> %s 진영의 차례입니다.",team.toString()));
     }
-
-    public void printCannotLoadMessage() {
-        System.out.println("> 이전에 하던 게임 기록이 없습니다.");
-    }
-
     public void printChessBoard(ChessBoardDto chessBoardDto) {
         System.out.println();
         for (String oneFile : chessBoardDto.getBoard()) {

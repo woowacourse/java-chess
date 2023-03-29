@@ -155,6 +155,10 @@ public class ChessBoard {
             .reduce(Score.ZERO, Score::add);
     }
 
+    public Team findTeamByTurn(){
+        return turn.findCurrentTeam();
+    }
+
     public List<Square> getSquares() {
         return squares;
     }

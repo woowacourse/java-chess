@@ -4,11 +4,7 @@ public interface GameState {
 
     void startGame(Runnable runnable);
 
-    void enterLoad(Runnable runnable);
-
     void loadGame(Runnable runnable);
-
-    void cancelLoad(Runnable runnable);
 
     void movePiece(Runnable runnable);
 
@@ -17,5 +13,6 @@ public interface GameState {
     void finishGame(Runnable runnable);
 
     boolean isRunning();
+
     boolean isFinished();
 }

@@ -21,7 +21,6 @@ public class ChessController {
     private final OutputView outputView;
     private final ChessGameDao chessGameDao;
     private final Connection connection;
-    private int gameId;
 
     public ChessController(final InputView inputView, final OutputView outputView,
         final ChessGameDao chessGameDao, final Connection connection) {
@@ -35,61 +34,56 @@ public class ChessController {
         ChessGame game = ChessGame.createGame();
         outputView.printReadyMessage();
         outputView.printGameGuide();
-        Map<Command, ChessAction> actionMap = cretateCommandActionMap(game);
+        Map<Command, ChessReadyAction> createActionBoard = cretateReadyCommandActionBoard(game);
+        Map<Command, ChessRunningAction> updateActionBoard = cretateCommandActionBoard(game);
 
+        int gameId = loadGameId(createActionBoard, game);
         while (!game.isFinished()) {
-            gameLoop(actionMap, game);
+            gameLoop(updateActionBoard, game, gameId);
         }
     }
 
-    private Map<Command, ChessAction> cretateCommandActionMap(ChessGame game) {
-        Map<Command, ChessAction> actionMap = new HashMap<>();
-        actionMap.put(Command.START, new ChessAction(ignore -> startGame(game)));
-        actionMap.put(Command.LOAD, new ChessAction(ignore -> enterLoad(game)));
-        actionMap.put(Command.CONTINUE, new ChessAction(ignore -> loadGame(game)));
-        actionMap.put(Command.CANCEL, new ChessAction(ignore -> cancelLoad(game)));
-        actionMap.put(Command.MOVE, new ChessAction(commands -> movePiece(game, commands)));
-        actionMap.put(Command.STATUS, new ChessAction(ignore -> displayGameStatus(game)));
-        actionMap.put(Command.END, new ChessAction(ignore -> finishGame(game)));
+    private Map<Command, ChessReadyAction> cretateReadyCommandActionBoard(ChessGame game) {
+        Map<Command, ChessReadyAction> actionMap = new HashMap<>();
+        actionMap.put(Command.START, new ChessReadyAction((ignore) -> startGame(game)));
+        actionMap.put(Command.LOAD, new ChessReadyAction((gameId) -> loadGame(game, gameId)));
         return actionMap;
     }
 
-    private void startGame(ChessGame game) {
+    private Map<Command, ChessRunningAction> cretateCommandActionBoard(ChessGame game) {
+        Map<Command, ChessRunningAction> actionMap = new HashMap<>();
+        actionMap.put(Command.MOVE,
+            new ChessRunningAction((commands, gameId) -> movePiece(game, commands, gameId)));
+        actionMap.put(Command.STATUS,
+            new ChessRunningAction((ignore1, ignore2) -> displayGameStatus(game)));
+        actionMap.put(Command.END, new ChessRunningAction((ignore1, ignore2) -> finishGame(game)));
+        return actionMap;
+    }
+
+    private int startGame(ChessGame game) {
         game.startGame(() -> {
             chessGameDao.insertGame(connection);
-            gameId = chessGameDao.selectLastInsertedID(connection);
         });
+        return chessGameDao.selectLastInsertedID(connection);
     }
 
-    private void enterLoad(ChessGame game) {
-        game.enterLoad(() -> {
-            gameId = chessGameDao.findRunningGameId(connection);
-            if (gameId < 0) {
-                outputView.printCannotLoadMessage();
-                cancelLoad(game);
-                return;
-            }
-            outputView.printLoadGuide();
-        });
-    }
-
-    private void loadGame(ChessGame game) {
+    private int loadGame(ChessGame game, int gameId) {
+        if (gameId < 0) {
+            throw new IllegalArgumentException("이전에 하던 게임 기록이 없습니다.");
+        }
         game.loadGame(() -> chessGameDao.findAllHistoryById(gameId, connection));
+        return gameId;
     }
 
-    private void cancelLoad(ChessGame game) {
-        game.cancelLoad(()->outputView.printGameGuide());
-    }
-
-    private void movePiece(ChessGame game, List<String> commands) {
+    private void movePiece(ChessGame game, List<String> commands, int gameId) {
         String source = commands.get(SOURCE_POSITION_INDEX);
         String destination = commands.get(DEST_POSITION_INDEX);
         game.executeMove(source, destination);
         chessGameDao.insertMoveHistory(gameId, source, destination, connection);
-        checkGameNotFinished(game);
+        checkGameNotFinished(game, gameId);
     }
 
-    private void checkGameNotFinished(ChessGame game) {
+    private void checkGameNotFinished(ChessGame game, int gameId) {
         Team winner = game.findWinner();
         if (winner.isRealTeam()) {
             outputView.printWinner(winner);
@@ -113,17 +107,33 @@ public class ChessController {
         }
     }
 
-    private void gameLoop(Map<Command, ChessAction> actionMap, ChessGame game) {
+    private int loadGameId(Map<Command, ChessReadyAction> createActionBoard, ChessGame game) {
         try {
+            int gameId = chessGameDao.findRunningGameId(connection);
             List<String> commands = inputView.readCommands();
             Command command = extractCommand(commands);
-            actionMap.getOrDefault(command, ChessAction.INVALID_ACTION).execute(commands);
-            if (game.isRunningOrFinished()) {
-                outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
-            }
+            gameId = createActionBoard.getOrDefault(command, ChessReadyAction.INVALID_ACTION)
+                .execute(gameId);
+            outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
+            return gameId;
         } catch (Exception e) {
             outputView.printError(e.getMessage());
-            gameLoop(actionMap, game);
+            return loadGameId(createActionBoard, game);
+        }
+    }
+
+    private void gameLoop(Map<Command, ChessRunningAction> actionMap, ChessGame game, int gameId) {
+        try {
+            outputView.printTurn(game.findTeamByTurn());
+            List<String> commands = inputView.readCommands();
+            Command command = extractCommand(commands);
+            actionMap.getOrDefault(command, ChessRunningAction.INVALID_ACTION)
+                .execute(commands, gameId);
+            outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
+
+        } catch (Exception e) {
+            outputView.printError(e.getMessage());
+            gameLoop(actionMap, game, gameId);
         }
     }
 
