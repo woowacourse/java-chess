@@ -1,7 +1,6 @@
 package chess.controller;
 
-import chess.dao.BoardDao;
-import chess.dao.GameRoomDao;
+import chess.dao.JdbcDao;
 import chess.domain.ChessGame;
 import chess.domain.RoomName;
 import chess.domain.board.Chessboard;
@@ -24,14 +23,12 @@ import java.util.function.Supplier;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final BoardDao boardDao;
-    private final GameRoomDao gameRoomDao;
+    private final JdbcDao jdbcDao;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.boardDao = new BoardDao();
-        this.gameRoomDao = new GameRoomDao();
+        this.jdbcDao = new JdbcDao();
     }
 
     public void run() {
@@ -54,17 +51,8 @@ public class ChessController {
         setRecordedBoard(chessGame);
     }
 
-    private void setCorrectTurn(ChessGame chessGame) {
-        gameRoomDao.findByRoomName(chessGame.getRoomName())
-                .ifPresent(gameRoom -> {
-                    if (!gameRoom.isWhiteTurn()) {
-                        chessGame.passTurn();
-                    }
-                });
-    }
-
     private void setRecordedBoard(ChessGame chessGame) {
-        List<BoardDto> recordedBoard = boardDao.findAllByRoomName(chessGame.getRoomName());
+        List<BoardDto> recordedBoard = jdbcDao.findBoardByRoomName(chessGame.getRoomName());
 
         Chessboard chessboard = chessGame.getChessboard();
         for (BoardDto boardDto : recordedBoard) {
@@ -73,6 +61,15 @@ public class ChessController {
 
             chessboard.putPiece(source, piece);
         }
+    }
+
+    private void setCorrectTurn(ChessGame chessGame) {
+        jdbcDao.findGameRoomByName(chessGame.getRoomName())
+                .ifPresent(gameRoom -> {
+                    if (!gameRoom.isWhiteTurn()) {
+                        chessGame.passTurn();
+                    }
+                });
     }
 
     private boolean isStartCommand() {
@@ -156,29 +153,29 @@ public class ChessController {
 
     private void updateGameState(ChessGame chessGame) {
         if (!chessGame.isBothKingAlive()) {
-            boardDao.deleteAllByRoomName(chessGame.getRoomName());
-            gameRoomDao.deleteByRoomName(chessGame.getRoomName());
+            jdbcDao.deleteAllByName(chessGame.getRoomName());
             return;
         }
 
-        if (gameRoomDao.findByRoomName(chessGame.getRoomName()).isEmpty()) {
-            gameRoomDao.save(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
-            boardDao.save(createBoardDto(chessGame));
+        if (jdbcDao.findGameRoomByName(chessGame.getRoomName()).isEmpty()) {
+            GameRoomDto gameRoomDto = new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn());
+            jdbcDao.save(createBoardDto(chessGame), gameRoomDto);
             return;
         }
 
-        boardDao.update(createBoardDto(chessGame));
-        gameRoomDao.update(new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn()));
+        GameRoomDto gameRoomDto = new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn());
+        jdbcDao.update(createBoardDto(chessGame), gameRoomDto);
     }
 
     private List<BoardDto> createBoardDto(ChessGame chessGame) {
         Chessboard board = chessGame.getChessboard();
+
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (Square square : board.getBoardMap().keySet()) {
             String source = SquareRenderer.render(square);
             String piece = PieceRenderer.render(board.getPieceAt(square));
 
-            boardDtoList.add(new BoardDto(source, piece, chessGame.getRoomName()));
+            boardDtoList.add(new BoardDto(source, piece));
         }
 
         return boardDtoList;
