@@ -166,10 +166,10 @@ public class ChessController {
     }
 
     private <T> T readValidateInput(final Supplier<T> function) {
-        Optional<T> input;
-        do {
+        Optional<T> input = repeatByEx(function);
+        while (input.isEmpty()) {
             input = repeatByEx(function);
-        } while (input.isEmpty());
+        }
         return input.get();
     }
 

@@ -21,7 +21,7 @@ public class DbChessGameDao implements ChessGameDao {
 
     @Override
     public void save(final ChessGame chessGame) {
-        Map<Position, Piece> piecePosition = chessGame.getChessBoard().getPiecePosition();
+        Map<Position, Piece> piecePosition = chessGame.getChessBoard().getPiecePosition().get();
         for (final Map.Entry<Position, Piece> positionPieceEntry : piecePosition.entrySet()) {
             final var query = "INSERT INTO chess_game(piece_type, piece_file, piece_rank, piece_team, game_status, turn) VALUES (?, ?, ?, ?, ?, ?)";
             try (final var connection = DbConnection.getConnection();

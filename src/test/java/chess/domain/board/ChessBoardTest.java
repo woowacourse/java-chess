@@ -10,7 +10,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
 import chess.exception.PieceCannotMoveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -41,7 +40,6 @@ import static chess.fixture.PositionFixture.C2;
 import static chess.fixture.PositionFixture.D1;
 import static chess.fixture.PositionFixture.D4;
 import static chess.fixture.PositionFixture.D5;
-import static chess.fixture.PositionFixture.D6;
 import static chess.fixture.PositionFixture.D8;
 import static chess.fixture.PositionFixture.E1;
 import static chess.fixture.PositionFixture.E4;
@@ -75,7 +73,8 @@ class ChessBoardTest {
         //given
         ChessBoard chessBoard = ChessBoard.createBoard();
         //when & then
-        assertThat(chessBoard.getPiecePosition().size())
+        PiecePosition piecePosition = chessBoard.getPiecePosition();
+        assertThat(piecePosition.get().size())
                 .isEqualTo(64);
     }
 
@@ -556,7 +555,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Pawn.class);
         }
@@ -569,7 +568,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Rook.class);
         }
@@ -582,7 +581,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Knight.class);
         }
@@ -595,7 +594,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Bishop.class);
         }
@@ -606,7 +605,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(D1))
                     .isInstanceOf(Queen.class);
         }
@@ -617,7 +616,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(E1))
                     .isInstanceOf(King.class);
         }
@@ -635,7 +634,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Pawn.class);
         }
@@ -648,7 +647,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Rook.class);
         }
@@ -661,7 +660,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Knight.class);
         }
@@ -674,7 +673,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(position))
                     .isInstanceOf(Bishop.class);
         }
@@ -685,7 +684,7 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(D8))
                     .isInstanceOf(Queen.class);
         }
@@ -696,34 +695,9 @@ class ChessBoardTest {
             ChessBoard chessBoard = ChessBoard.createBoard();
 
             //when & then
-            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition();
+            Map<Position, Piece> piecePosition = chessBoard.getPiecePosition().get();
             assertThat(piecePosition.get(E8))
                     .isInstanceOf(King.class);
         }
-    }
-
-    @Test
-    void 주어진_팀의_점수를_구할_수_있다() {
-        //given
-        ChessBoard chessBoard = ChessBoard.createBoard();
-
-        //when & then
-        assertThat(chessBoard.calculateScore(Team.WHITE).intValue())
-                .isEqualTo(INIT_SCORE);
-
-    }
-
-    @Test
-    void 폰이_세로로_겹쳤을_때_점수계산() {
-        //given
-        piecePosition.put(D4, PAWN_WHITE);
-        piecePosition.put(D5, PAWN_WHITE);
-        piecePosition.put(D6, PAWN_WHITE);
-
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(piecePosition);
-
-        assertThat(chessBoard.calculateScore(Team.WHITE).doubleValue())
-                .isEqualTo(1.5);
-
     }
 }

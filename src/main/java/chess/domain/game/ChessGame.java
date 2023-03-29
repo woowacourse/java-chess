@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.board.PiecePosition;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -56,7 +57,8 @@ public class ChessGame {
     }
 
     public BigDecimal calculateScore(Team team) {
-        return chessBoard.calculateScore(team);
+        PiecePosition piecePosition = chessBoard.getPiecePosition();
+        return piecePosition.calculateScore(team);
     }
 
     public Team getCurrentTeam() {
