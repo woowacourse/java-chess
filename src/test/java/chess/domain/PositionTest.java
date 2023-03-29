@@ -28,7 +28,7 @@ class PositionTest {
 
         Assertions.assertThatThrownBy(() -> Position.findPosition(position))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 Position은 존재하지 않습니다.");
+                .hasMessage("[ERROR] 위치값의 형식이 옳지 않습니다.");
     }
 
     @Test

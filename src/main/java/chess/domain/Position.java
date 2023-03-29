@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Position {
 
@@ -33,10 +34,18 @@ public class Position {
     }
 
     public static Position findPosition(String position) {
+        validate(position);
         if (POSITION_CACHE.containsKey(position)) {
             return POSITION_CACHE.get(position);
         }
         throw new IllegalArgumentException("[ERROR] 해당 Position은 존재하지 않습니다.");
+    }
+
+    private static void validate(String position) {
+        String pattern = "[a-h][1-8]";
+        if (!Pattern.matches(pattern, position)) {
+            throw new IllegalArgumentException("[ERROR] 위치값의 형식이 옳지 않습니다.");
+        }
     }
 
     public Position getMovingPosition(Direction direction) {

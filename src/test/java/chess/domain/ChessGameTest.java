@@ -22,8 +22,9 @@ class ChessGameTest {
     @DisplayName("게임 시작 후 블랙 피스를 먼저 움직이면 예외가 발생한다.")
     void shouldFailToMoveBlackPieceFirst() {
         ChessGame chessGame = new ChessGame(ChessBoard.GenerateChessBoard());
+        chessGame.startGame();
 
-        assertThatThrownBy(() -> chessGame.movePiece(Position.findPosition("a7"), Position.findPosition("a6")))
+        assertThatThrownBy(() -> chessGame.move(Position.findPosition("a7"), Position.findPosition("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 상대편 기물은 이동할 수 없습니다.");
     }
@@ -35,8 +36,9 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         Position sourcePosition = Position.findPosition("a2");
         Position targetPosition = Position.findPosition("a3");
+        chessGame.startGame();
 
-        chessGame.movePiece(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition);
 
         assertThat(chessGame.getChessBoard().get(targetPosition)).isEqualTo(new Pawn(Color.WHITE));
     }
@@ -48,10 +50,11 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         Position sourcePosition = Position.findPosition("a2");
         Position targetPosition = Position.findPosition("a3");
+        chessGame.startGame();
 
-        chessGame.movePiece(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition);
 
-        assertThatThrownBy(() -> chessGame.movePiece(Position.findPosition("b2"), Position.findPosition("b3")))
+        assertThatThrownBy(() -> chessGame.move(Position.findPosition("b2"), Position.findPosition("b3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 상대편 기물은 이동할 수 없습니다.");
     }
@@ -63,28 +66,10 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
         Position sourcePosition = Position.findPosition("a2");
         Position targetPosition = Position.findPosition("a3");
+        chessGame.startGame();
 
-        chessGame.movePiece(sourcePosition, targetPosition);
+        chessGame.move(sourcePosition, targetPosition);
 
-        assertDoesNotThrow(() -> chessGame.movePiece(Position.findPosition("b7"), Position.findPosition("b6")));
-    }
-
-    @Test
-    @DisplayName("화이트 킹과 블랙 킹 둘 중 하나가 존재하지 않으면 true를 반환한다.")
-    void ReturnTrueWhenWhiteKingOrBlackKingNotExist() {
-        ChessBoard chessBoard = ChessBoard.GenerateChessBoard();
-        ChessGame chessGame = new ChessGame(chessBoard);
-        chessBoard.removePiece(Position.findPosition("e1"));
-
-        assertThat(chessGame.canEndGame()).isTrue();
-    }
-
-    @Test
-    @DisplayName("화이트 킹과 블랙 킹 둘 다 존재하면 false를 반환한다.")
-    void ReturnTrueWhenWhiteKingAndBlackKingAllExist() {
-        ChessBoard chessBoard = ChessBoard.GenerateChessBoard();
-        ChessGame chessGame = new ChessGame(chessBoard);
-
-        assertThat(chessGame.canEndGame()).isFalse();
+        assertDoesNotThrow(() -> chessGame.move(Position.findPosition("b7"), Position.findPosition("b6")));
     }
 }
