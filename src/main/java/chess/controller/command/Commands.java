@@ -16,6 +16,8 @@ public class Commands {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
     private static final int PREVIOUS_GAME_ID_INDEX = 1;
+    private static final int CORRECT_MOVE_COMMAND_SIZE = 3;
+    private static final int CORRECT_RESTART_COMMAND_SIZE = 2;
 
     private final List<String> commands;
 
@@ -26,10 +28,10 @@ public class Commands {
 
     private void validate(List<String> commands) {
         GameCommand gameCommand = GameCommand.from(commands.get(COMMAND_INDEX));
-        if (gameCommand == GameCommand.MOVE && commands.size() != 3) {
+        if (gameCommand == GameCommand.MOVE && commands.size() != CORRECT_MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException("[ERROR] move 명령어는 소스 위치와 타겟 위치를 모두 입력해야 합니다.");
         }
-        if (gameCommand == GameCommand.RESTART && commands.size() != 2) {
+        if (gameCommand == GameCommand.RESTART && commands.size() != CORRECT_RESTART_COMMAND_SIZE) {
             throw new IllegalArgumentException("[ERROR] restart 명령어는 이전 게임 ID를 형식에 맞게 정확히 입력해야합니다.");
         }
     }
