@@ -86,7 +86,7 @@ public final class ChessGame {
         return piece;
     }
 
-    public PrintWinnerDto getWinner(final Piece deadPiece) {
+    public PrintWinnerDto getWinnerTeam(final Piece deadPiece) {
         final Team deadPieceTeam = deadPiece.getTeam();
         final Team opponentTeam = deadPieceTeam.getOpponentTeam();
         return new PrintWinnerDto(opponentTeam.name());

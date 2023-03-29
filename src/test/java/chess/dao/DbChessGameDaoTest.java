@@ -13,7 +13,6 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.dto.game.ChessGameLoadDto;
-import chess.service.ChessGameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,27 +27,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DbChessGameDaoTest {
 
-    private final ChessDao dao = new DbChessGameDao();
-    private final ChessGameService chessGameService = new ChessGameService(dao);
     private ChessGame chessGame;
 
     @BeforeEach
     void init() {
-        System.out.println("dao = " + dao);
-        try {
-            dao.delete();
-            chessGame = new FakeGameFactory().generate();
-            chessGameService.save(chessGame);
-        } catch (RuntimeException ignored) {
-        }
+        chessGame = new FakeGameFactory().generate();
     }
 
     @Test
     void name() {
         try {
-            final ChessGameLoadDto dto = dao.loadGame();
-            final ChessGame parsedChessGame = parse(dto);
-            final Map<Position, Piece> board = parsedChessGame.getBoard();
+            final Map<Position, Piece> board = chessGame.getBoard();
             final Map<Position, Piece> result = board.entrySet()
                     .stream()
                     .filter(entry -> entry.getValue().isSamePieceTypeAs(PieceType.ROOK) ||
@@ -60,7 +49,6 @@ class DbChessGameDaoTest {
                     Map.entry(A1, Rook.instance(Team.WHITE)));
         } catch (RuntimeException ignored) {
         }
-
     }
 
     private ChessGame parse(final ChessGameLoadDto dto) {

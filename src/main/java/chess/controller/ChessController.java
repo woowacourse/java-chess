@@ -100,7 +100,7 @@ public final class ChessController {
         }
         final Piece deadPiece = chessGame.move(getPosition(input, SOURCE_INDEX), getPosition(input, TARGET_INDEX));
         if (deadPiece.isSamePieceTypeAs(PieceType.KING)) {
-            ioViewResolver.outputViewResolve(chessGame.getWinner(deadPiece));
+            ioViewResolver.outputViewResolve(chessGame.getWinnerTeam(deadPiece));
             return END;
         }
         ioViewResolver.outputViewResolve(chessGame.printBoard());
