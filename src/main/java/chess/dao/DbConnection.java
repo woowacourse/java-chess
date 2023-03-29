@@ -13,7 +13,11 @@ public class DbConnection {
 
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            Connection connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            if (connection == null) {
+                throw new SQLException("connection이 존재하지 않습니다");
+            }
+            return connection;
         } catch (final SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
