@@ -17,7 +17,7 @@ public final class MoveCommand implements Command {
     private static final int TARGET_INDEX = 1;
 
     private final OutputView outputView = new OutputView();
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = ChessGameDao.getInstace();
 
     private final List<String> parameters;
 

@@ -7,7 +7,7 @@ import chess.view.OutputView;
 public final class StartCommand implements Command {
 
     private final OutputView outputView = new OutputView();
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = ChessGameDao.getInstace();
 
     @Override
     public void execute(ChessGame chessGame) {

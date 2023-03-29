@@ -12,7 +12,7 @@ public final class LoadCommand implements Command {
     private static final int GAME_ID_INDEX = 0;
     private static final int GAME_ID_PARAMETERS_SIZE = 1;
 
-    private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final ChessGameDao chessGameDao = ChessGameDao.getInstace();
     private final OutputView outputView = new OutputView();
     private final Long parameters;
 

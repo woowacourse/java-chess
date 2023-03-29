@@ -21,10 +21,13 @@ public final class ChessGameDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    private final Connection connection;
+    private static final ChessGameDao chessGameDao = new ChessGameDao();
 
-    public ChessGameDao() {
-        this.connection = getConnection();
+    private ChessGameDao() {
+    }
+
+    public static ChessGameDao getInstace() {
+        return chessGameDao;
     }
 
     public Connection getConnection() {
@@ -39,7 +42,8 @@ public final class ChessGameDao {
 
     public Long createGame() {
         String sql = "INSERT INTO game SET turn = 'WHITE'";
-        try (var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (final var connection = this.getConnection();
+             var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -63,7 +67,8 @@ public final class ChessGameDao {
                             "piece = ?," +
                             "color = ?," +
                             "game_id = ?";
-                    try (var preparedStatement = connection.prepareStatement(sql)) {
+                    try (final var connection = this.getConnection();
+                         var preparedStatement = connection.prepareStatement(sql)) {
                         preparedStatement.setString(1, PositionStringMapper.mapping(position));
                         preparedStatement.setString(2, piece.getName());
                         preparedStatement.setString(3, piece.getColor().name());
@@ -93,7 +98,8 @@ public final class ChessGameDao {
 
     private void updateTurn(final Long gameId, final String turn) {
         String sql = "UPDATE game SET turn = ? WHERE game_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final var connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, turn);
             preparedStatement.setLong(2, gameId);
             preparedStatement.executeUpdate();
@@ -107,7 +113,8 @@ public final class ChessGameDao {
                 "ON DUPLICATE KEY UPDATE " +
                 "piece = ?," +
                 "color = ? ";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final var connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, mappingTarget);
             preparedStatement.setString(2, piece.getName());
             preparedStatement.setString(3, piece.getColor().name());
@@ -124,7 +131,8 @@ public final class ChessGameDao {
         String sql = "DELETE FROM board " +
                 "WHERE position = ?" +
                 "AND game_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final var connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, mappingSource);
             preparedStatement.setLong(2, gameId);
             preparedStatement.executeUpdate();
@@ -138,8 +146,8 @@ public final class ChessGameDao {
         Map<Position, Piece> board = new HashMap<>();
 
         String sql = "SELECT * FROM board WHERE game_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (final var connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -158,7 +166,8 @@ public final class ChessGameDao {
 
     private String findTurnById(Long gameId) {
         String sql = "SELECT * FROM game WHERE game_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final var connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, gameId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -176,7 +185,8 @@ public final class ChessGameDao {
                 "JOIN board ON game.game_id = board.game_id " +
                 "WHERE game.game_id = ?";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (final var connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
