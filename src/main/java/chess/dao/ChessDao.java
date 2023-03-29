@@ -16,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +43,6 @@ public final class ChessDao {
     }
 
     private Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
@@ -58,32 +58,20 @@ public final class ChessDao {
 
     private void saveBoard(final ChessBoard chessBoard, final RoomNumber roomNumber) {
         clearByRoomNumber(roomNumber);
+        final int turn = chessBoard.getTurn().getTurn();
+        int insertedRoomNumber = saveTurn(turn, roomNumber.getRoomNumber());
         final List<Square> squares = chessBoard.getSquares();
         for (Square square : squares) {
-            saveOneSquare(square, roomNumber.getRoomNumber());
+            saveOneSquare(square, insertedRoomNumber);
         }
-        final int turn = chessBoard.getTurn().getTurn();
-        saveTurn(turn, roomNumber.getRoomNumber());
     }
 
     public void clearByRoomNumber(final RoomNumber roomNumber) {
         clearBoard(roomNumber.getRoomNumber());
-        clearState(roomNumber.getRoomNumber());
     }
 
     private void clearBoard(final int roomNumber) {
-        final String query = "DELETE FROM board WHERE room_number = ?";
-        try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, roomNumber);
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void clearState(final int roomNumber) {
-        final String query = "DELETE FROM state WHERE room_number = ?";
+        final String query = "DELETE FROM board where room_number = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, roomNumber);
@@ -94,13 +82,15 @@ public final class ChessDao {
     }
 
     private void saveOneSquare(final Square square, int roomNumber) {
-        String rank = square.getPosition().getRank().name();
-        String file = square.getPosition().getFile().name();
-        String role = square.getPiece().getRole().name();
-        String team = square.getPiece().getTeam().name();
+
         final String query = "INSERT INTO board(piece_rank, piece_file, piece_role, piece_team, room_number) VALUES (?, ?, ?, ?, ?)";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            String rank = square.getPosition().getRank().name();
+            String file = square.getPosition().getFile().name();
+            String role = square.getPiece().getRole().name();
+            String team = square.getPiece().getTeam().name();
+
             preparedStatement.setString(1, rank);
             preparedStatement.setString(2, file);
             preparedStatement.setString(3, role);
@@ -112,13 +102,31 @@ public final class ChessDao {
         }
     }
 
-    private void saveTurn(final int turn, final int roomNumber) {
-        final String query = "INSERT INTO state (turn, room_number) VALUES (?, ?)";
+    private int saveTurn(final int turn, final int roomNumber) {
+
+        if (roomNumber == 0) {
+            final String query = "INSERT INTO room (turn) VALUES (?)";
+            try (final Connection connection = getConnection();
+                 final PreparedStatement preparedStatement = connection.prepareStatement(query,
+                         Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setInt(1, turn);
+                preparedStatement.executeUpdate();
+                final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                throw new IllegalStateException("정상적으로 insert 되지 않았습니다.");
+            } catch (final SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        final String query = "UPDATE room SET turn = ? WHERE id = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, String.valueOf(turn));
+            preparedStatement.setInt(1, turn);
             preparedStatement.setInt(2, roomNumber);
             preparedStatement.execute();
+            return roomNumber;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
@@ -126,7 +134,7 @@ public final class ChessDao {
 
     public List<Integer> fetchAllRoomNumbers() {
         final List<Integer> roomNumbers = new ArrayList<>();
-        final String query = "SELECT room_number FROM state";
+        final String query = "SELECT id from room";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -154,7 +162,7 @@ public final class ChessDao {
     }
 
     private Turn fetchTurn(final int roomNumber) {
-        final String stateSelectQuery = "SELECT * FROM state where room_number = ?";
+        final String stateSelectQuery = "SELECT * from room where id = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(stateSelectQuery)) {
             preparedStatement.setInt(1, roomNumber);
@@ -169,7 +177,7 @@ public final class ChessDao {
     }
 
     private void fetchBoard(final List<Square> squares, final int roomNumber) {
-        final String boardSelectQuery = "SELECT * FROM board WHERE room_number = ?";
+        final String boardSelectQuery = "SELECT * FROM board where room_number = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(boardSelectQuery)) {
             preparedStatement.setInt(1, roomNumber);
