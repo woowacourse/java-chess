@@ -62,6 +62,23 @@ public class Board {
         turn = turn.nextTurn();
     }
 
+    public double whiteScore() {
+        return calculateScore(Color.WHITE);
+    }
+
+    public double blackScore() {
+        return calculateScore(Color.BLACK);
+    }
+
+    private double calculateScore(final Color color) {
+        final BoardResult boardResult = BoardResult.create(getBoard());
+        return boardResult.calculatePoints(color);
+    }
+
+    public boolean isKingDead() {
+        return isKingDead(Color.WHITE) || isKingDead(Color.BLACK);
+    }
+
     public boolean isKingDead(final Color color) {
         return !isKingAlive(color);
     }
