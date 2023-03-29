@@ -22,11 +22,6 @@ public final class MoveHistory2 implements History2 {
     }
     
     @Override
-    public void fetch(final int gameID) {
-        this.moveHistory.addAll(MOVE_DAO.fetchMoves(gameID));
-    }
-    
-    @Override
     public void add(final Move move) {
         this.moveHistory.add(move);
         MOVE_DAO.addMove(move, this.gameID);

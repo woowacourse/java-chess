@@ -1,9 +1,12 @@
 package chess.view;
 
+import static java.lang.String.format;
+
 import chess.controller.BoardDTO;
 import chess.domain.game.Status;
 import chess.domain.piece.Color;
 import chess.domain.piece.Score;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -56,4 +59,14 @@ public class OutputView {
         System.out.println(COLOR_MAP.get(color) + "의 점수: " + score.getScore());
     }
     
+    public void printNoPlayableGame() {
+        System.out.println("이전의 게임이 없습니다. 새로운 게임을 시작해주세요.");
+    }
+    
+    public void printPlayableGameNumbers(final List<Integer> gameNumbers) {
+        System.out.println("이전에 진행했던 게임의 번호입니다.");
+        gameNumbers.stream()
+                .map(n -> format("게임 번호: %d", n))
+                .forEach(System.out::println);
+    }
 }
