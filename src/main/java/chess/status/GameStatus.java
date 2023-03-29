@@ -1,13 +1,16 @@
 package chess.status;
 
-import chess.controller.Command;
-import chess.controller.PrintAction;
-import chess.dao.ChessGameDaoImpl;
+import chess.chessboard.ChessBoard;
+import chess.chessboard.Position;
+import chess.chessboard.Side;
 
 public interface GameStatus {
-    static GameStatus getInitialStatus() {
-        return new Ready(new ChessGameDaoImpl());
-    }
 
-    GameStatus playGame(Command command, PrintAction printAction);
+    boolean isMoveValid(ChessBoard chessBoard, Position from, Position to);
+
+    GameStatus nextStatus(ChessBoard chessBoard);
+
+    boolean isGameOver();
+
+    Side getWinner();
 }
