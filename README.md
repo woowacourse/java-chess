@@ -1,5 +1,84 @@
 # java-chess
 
+## 추가 미션 구현 목록
+
+### DDL 정보
+
+```sql
+CREATE TABLE game
+(
+    id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE game_test
+(
+    id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+create table move
+(
+    id      TIMESTAMP(3) PRIMARY KEY,
+    `from`  VARCHAR(2) NOT NULL,
+    `to`    VARCHAR(2) NOT NULL,
+    game_id INT,
+    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE
+);
+
+create table move_test
+(
+    id      TIMESTAMP(3) PRIMARY KEY,
+    `from`  VARCHAR(2) NOT NULL,
+    `to`    VARCHAR(2) NOT NULL,
+    game_id INT,
+    FOREIGN KEY (game_id) REFERENCES game_test (id) ON DELETE CASCADE
+);
+```
+
+- 게임 번호 저장을 위한 game 테이블 생성
+- 게임 번호를 외래키로 가지는 move 테이블 생성
+- 각 테이블 별로 테스트용 테이블 생성
+
+### GameDAO
+
+- [x] 게임번호를 Database에 추가한다.
+- [x] 게임번호를 Database에서 삭제한다.
+- [x] 게임번호를 Database에서 불러온다.
+- [x] Database를 초기화한다.
+
+### MoveDAO
+
+- [x] 게임 번호를 통해 database에서 움직임을 불러온다.
+- [x] 게임 번호를 통해 database에 움직임을 저장한다.
+- [x] database를 초기화한다.
+
+### GameHistory
+
+- [x] 게임을 생성한다.
+- [x] 게임 번호들을 불러온다.
+- [x] 게임을 삭제한다.
+- [x] 전체 게임을 초기화한다.
+
+### MoveHistory
+
+- [x] 게임 번호를 통해 움직임을 불러온다.
+- [x] 게임 번호를 통해 움직임을 저장한다.
+- [x] 전체 움직임을 초기화한다.
+
+### ReadyGame
+
+- [x] 게임을 생성한다.
+- [x] 게임을 시작하면 RunGame으로 전환한다.
+
+### RunGame
+
+- [x] 게임을 종료하면 EndGame으로 전환한다.
+- [x] move 명령을 실행한다.
+- [x] status 명령을 실행한다.
+
+### EndGame
+
+- [x] 게임이 종료되었음을 알린다.
+
 ## 미션 4 기능 목록
 
 ### DDL 정보
