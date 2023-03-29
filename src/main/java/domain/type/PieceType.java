@@ -7,6 +7,16 @@ public enum PieceType implements Type {
     KNIGHT,
     BISHOP,
     ROOK,
-    PAWN
+    PAWN;
+
+    @Override
+    public boolean isSame(final Type type) {
+        return this == type;
+    }
+
+    @Override
+    public boolean isDifferent(final Type type) {
+        return this != type;
+    }
 
 }

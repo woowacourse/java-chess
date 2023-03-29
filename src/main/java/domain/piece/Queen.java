@@ -1,24 +1,15 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
-import domain.squarestatus.Piece;
+import domain.piece.abstractpiece.SlidingPiece;
+import domain.position.Position;
 import domain.type.PieceType;
 
-public final class Queen extends Piece implements VariableMover {
+public final class Queen extends SlidingPiece {
+
+    private static final int STAY = 0;
 
     public Queen(final Color color) {
         super(color, PieceType.QUEEN);
-    }
-
-    @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
-
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
-
-        return new Route(findPositions(source, target, moveX, moveY));
     }
 
     @Override
@@ -30,19 +21,20 @@ public final class Queen extends Piece implements VariableMover {
     }
 
     private static boolean isMove(final int diffX, final int diffY) {
-        return diffX != 0 || diffY != 0;
+        return diffX != STAY || diffY != STAY;
     }
 
     private static boolean isRookMovable(final int diffX, final int diffY) {
-        return (diffX == 0 || diffY == 0);
+        return (diffX == STAY || diffY == STAY);
     }
 
     private static boolean isBishopMovable(final int diffX, final int diffY) {
         return (diffX == diffY);
     }
 
-    private int getMoveCoordinate(final int diff) {
-        return Integer.compare(diff, 0);
+    @Override
+    protected int getMoveCoordinate(final int diff) {
+        return Integer.compare(diff, STAY);
     }
 
 }

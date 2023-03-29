@@ -1,7 +1,6 @@
 package controller;
 
-import domain.chessboard.ChessBoard;
-import domain.chessgame.ChessGame;
+import service.ChessService;
 import view.InputView;
 import view.OutputView;
 
@@ -10,28 +9,28 @@ import java.util.function.Consumer;
 
 public final class ChessGameController {
 
-    private GameStatus gameStatus;
+    private final ChessService chessService;
+
+    public ChessGameController(final ChessService chessService) {
+        this.chessService = chessService;
+    }
+
 
     public void run() {
         OutputView.printStartMessage();
-        gameStatus = new Start(new ChessGame(ChessBoard.generate()));
 
-        while (gameStatus.isKeepGaming()) {
-            retryOnError(this::playGame);
-        }
+        final GameStatus gameStatus = new GameStatus(chessService);
+
+        do {
+            retryOnError(gameStatus::playTurn);
+        } while (gameStatus.isKeepGaming());
+        gameStatus.noticeKingDead();
     }
 
-    private void playGame(List<String> inputs) {
-        gameStatus = gameStatus.setGameStatus(inputs);
-        gameStatus.playTurn(inputs);
-
-        OutputView.printChessBoard(gameStatus.getChessBoard());
-    }
-
-    private void retryOnError(Consumer<List<String>> playGame) {
+    private void retryOnError(final Consumer<List<String>> playGame) {
         try {
             playGame.accept(InputView.readline());
-        } catch (IllegalStateException exception) {
+        } catch (IllegalArgumentException | IllegalStateException | IndexOutOfBoundsException exception) {
             OutputView.printErrorMessage(exception.getMessage());
         }
     }

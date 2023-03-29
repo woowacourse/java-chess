@@ -3,7 +3,8 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public final class InputView {
 
@@ -15,7 +16,7 @@ public final class InputView {
         final String input = scanner.nextLine().strip();
         final List<String> inputs = Arrays.stream(input.split(" ", -1))
                 .map(String::strip)
-                .collect(Collectors.toList());
+                .collect(toList());
 
         validate(inputs);
         return inputs;

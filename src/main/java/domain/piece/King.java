@@ -1,22 +1,16 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
-import domain.squarestatus.Piece;
+import domain.piece.abstractpiece.JumperPiece;
+import domain.position.Position;
 import domain.type.PieceType;
 
-import java.util.Collections;
+public final class King extends JumperPiece {
 
-public final class King extends Piece {
+    private static final int STAY = 0;
+    private static final int MAX_DIFF = 2;
 
     public King(final Color color) {
         super(color, PieceType.KING);
-    }
-
-    @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
-        return new Route(Collections.emptyList());
     }
 
     @Override
@@ -24,7 +18,7 @@ public final class King extends Piece {
         int diffY = Math.abs(target.diffY(source));
         int diffX = Math.abs(target.diffX(source));
 
-        return (diffY != 0 || diffX != 0) && (diffX < 2 && diffY < 2);
+        return (diffY != STAY || diffX != STAY) && (diffX < MAX_DIFF && diffY < MAX_DIFF);
     }
 
 }

@@ -1,7 +1,6 @@
 package domain.squarestatus;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
+import domain.position.Position;
 import domain.piece.Color;
 import domain.type.PieceType;
 import domain.type.Type;
@@ -17,16 +16,23 @@ public abstract class Piece implements SquareStatus {
     }
 
     @Override
-    public abstract Route findRoute(final Position source, final Position target);
-
-    @Override
-    public final Type getType() {
-        return pieceType;
+    public final boolean isSameColor(final Color color) {
+        return this.color.isSame(color);
     }
 
     @Override
-    public final Color getColor() {
-        return color;
+    public final boolean isDifferentColor(final Color color) {
+        return this.color.isDifferent(color);
+    }
+
+    @Override
+    public final boolean isSameType(final Type type) {
+        return this.pieceType.isSame(type);
+    }
+
+    @Override
+    public final boolean isDifferentType(final Type type) {
+        return this.pieceType.isDifferent(type);
     }
 
     protected final void validateMovable(final Position source, final Position target) {
@@ -37,5 +43,15 @@ public abstract class Piece implements SquareStatus {
     }
 
     protected abstract boolean isMovable(final Position source, final Position target);
+
+    @Override
+    public final Type getType() {
+        return pieceType;
+    }
+
+    @Override
+    public final Color getColor() {
+        return color;
+    }
 
 }

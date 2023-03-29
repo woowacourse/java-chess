@@ -1,67 +1,42 @@
 package view;
 
-import domain.chessboard.ChessBoard;
-import domain.chessboard.Row;
-import domain.chessboard.Square;
-import domain.piece.Color;
-import domain.type.EmptyType;
-
-import java.util.List;
+import controller.ChessBoardDto;
+import controller.ScoreDto;
 
 public final class OutputView {
 
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
+        System.out.println("> 새 게임 시작 : new");
+        System.out.println("> 게임 불러오기 : load");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
-        System.out.println("> 좌표 안내");
-        System.out.println("RNBQKBNR  8 (rank 8)\n" +
-                "PPPPPPPP  7\n" +
-                "........  6\n" +
-                "........  5\n" +
-                "........  4\n" +
-                "........  3\n" +
-                "pppppppp  2\n" +
-                "rnbqkbnr  1 (rank 1)\n" +
-                "\n" +
-                "abcdefgh\n");
-    }
-
-    public static void printNotice(String message) {
-        System.out.println(message);
-    }
-
-    public static void printErrorMessage(String message) {
-        System.out.printf("[ERROR] : %s%n", message);
-    }
-
-    public static void printChessBoard(ChessBoard chessBoard) {
-        final List<Row> rows = chessBoard.getChessBoard();
-
-        System.out.print(System.lineSeparator());
-        for (Row row : rows) {
-            printRow(row);
-        }
-        System.out.print(System.lineSeparator());
-    }
-
-    private static void printRow(final Row row) {
-        final List<Square> squares = row.getRow();
-
-        for (Square square : squares) {
-            System.out.print(convertPieceToElement(square));
-        }
+        System.out.println("> 게임 점수 : status");
         System.out.println();
     }
 
-    private static String convertPieceToElement(final Square square) {
-        final String elementName = ChessBoardElement.getElementName(square.getType());
+    public static void printNotice(final String message) {
+        System.out.println(System.lineSeparator() + message);
+    }
 
-        if (square.isDifferentType(EmptyType.EMPTY) && square.isSameColor(Color.BLACK)) {
-            return elementName.toUpperCase();
+    public static void printErrorMessage(final String message) {
+        System.out.printf("[ERROR] : %s%n", message);
+    }
+
+    public static void printChessBoard(final ChessBoardDto chessBoardDto) {
+        System.out.print(System.lineSeparator());
+
+        for (int i = 0; i < 8; i++) {
+            System.out.printf("%s  %d%n", chessBoardDto.getRows().get(i), 8 - i);
         }
-        return elementName;
+
+        System.out.println(System.lineSeparator() + "abcdefgh" + System.lineSeparator());
+    }
+
+    public static void printScore(final ScoreDto scoreDto) {
+        System.out.printf("White : %.1f%n", scoreDto.getWhiteScore());
+        System.out.printf("Black : %.1f%n", scoreDto.getBlackScore());
+        System.out.println(scoreDto.getWinner());
     }
 
 }

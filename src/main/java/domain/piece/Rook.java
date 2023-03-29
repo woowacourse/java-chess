@@ -1,24 +1,15 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
-import domain.squarestatus.Piece;
+import domain.piece.abstractpiece.SlidingPiece;
+import domain.position.Position;
 import domain.type.PieceType;
 
-public final class Rook extends Piece implements VariableMover {
+public final class Rook extends SlidingPiece {
+
+    private static final int STAY = 0;
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);
-    }
-
-    @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
-
-        int moveX = getMoveCoordinate(target.diffX(source));
-        int moveY = getMoveCoordinate(target.diffY(source));
-
-        return new Route(findPositions(source, target, moveX, moveY));
     }
 
     @Override
@@ -27,7 +18,7 @@ public final class Rook extends Piece implements VariableMover {
     }
 
     public int getMoveCoordinate(final int diff) {
-        return Integer.compare(diff, 0);
+        return Integer.compare(diff, STAY);
     }
 
 }

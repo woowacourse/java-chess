@@ -1,8 +1,8 @@
-package view;
+package controller;
 
 import domain.type.EmptyType;
-import domain.type.Type;
 import domain.type.PieceType;
+import domain.type.Type;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public enum ChessBoardElement {
         return Arrays.stream(values())
                 .filter(value -> value.type == type)
                 .findFirst()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new IllegalStateException("일치하는 기물이 없습니다."));
     }
 
     public static String getElementName(final Type type) {

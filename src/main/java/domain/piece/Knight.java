@@ -1,22 +1,16 @@
 package domain.piece;
 
-import domain.coordinate.Position;
-import domain.coordinate.Route;
-import domain.squarestatus.Piece;
+import domain.piece.abstractpiece.JumperPiece;
+import domain.position.Position;
 import domain.type.PieceType;
 
-import java.util.Collections;
+public final class Knight extends JumperPiece {
 
-public final class Knight extends Piece {
+    private static final int MIN_DIFF = 1;
+    private static final int MAX_DIFF = 2;
 
     public Knight(final Color color) {
         super(color, PieceType.KNIGHT);
-    }
-
-    @Override
-    public Route findRoute(final Position source, final Position target) {
-        validateMovable(source, target);
-        return new Route(Collections.emptyList());
     }
 
     @Override
@@ -24,7 +18,7 @@ public final class Knight extends Piece {
         int diffY = Math.abs(target.diffY(source));
         int diffX = Math.abs(target.diffX(source));
 
-        return (diffX == 1 && diffY == 2) || (diffX == 2 && diffY == 1);
+        return (diffX == MIN_DIFF && diffY == MAX_DIFF) || (diffX == MAX_DIFF && diffY == MIN_DIFF);
     }
 
 }

@@ -1,23 +1,16 @@
-package domain.coordinate;
+package domain.position;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Position {
 
-    private static final List<List<Position>> CACHE;
-    private static final int COLUMN_SIZE = 8;
-    private static final int ROW_SIZE = 8;
+    private static final Map<Integer, Row> CACHE = new HashMap<>();
 
     private final int x;
     private final int y;
-
-    static {
-        CACHE = new ArrayList<>();
-        addColumn();
-    }
 
     private Position(final int x, final int y) {
         this.x = x;
@@ -25,43 +18,33 @@ public final class Position {
     }
 
     public static Position of(final int x, final int y) {
+        CACHE.computeIfAbsent(y, k -> new Row(new HashMap<>()))
+                .putIfAbsent(x, new Position(x, y));
+
         return CACHE.get(y)
-                .get(x);
+                .getPosition(x);
     }
 
-    private static void addColumn() {
-        for (int y = 0; y < COLUMN_SIZE; y++) {
-            CACHE.add(new ArrayList<>());
-            addRow(y);
-        }
-    }
-
-    private static void addRow(final int y) {
-        for (int x = 0; x < ROW_SIZE; x++) {
-            CACHE.get(y).add(new Position(x, y));
-        }
-    }
-
-    public int diffY(Position otherPosition) {
+    public int diffY(final Position otherPosition) {
         return this.y - otherPosition.y;
     }
 
-    public int diffX(Position otherPosition) {
+    public int diffX(final Position otherPosition) {
         return this.x - otherPosition.x;
     }
 
-    public Position move(int moveX, int moveY) {
-        return Position.of(x + moveX, y + moveY);
+    public Position move(final Position direction) {
+        return Position.of(this.x + direction.x, this.y + direction.y);
     }
 
-    public boolean isDiagonally(Position otherPosition) {
+    public boolean isDiagonally(final Position otherPosition) {
         final int diffX = getDiffX(otherPosition);
         final int diffY = getDiffY(otherPosition);
 
         return (diffX != 0 || diffY != 0) && (diffX == diffY);
     }
 
-    public boolean isStraight(Position otherPosition) {
+    public boolean isStraight(final Position otherPosition) {
         final int diffX = getDiffX(otherPosition);
         final int diffY = getDiffY(otherPosition);
 
