@@ -7,7 +7,7 @@ import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
-import chess.dto.PieceRenderer;
+import chess.util.PieceRenderer;
 
 public class OutputView {
     private static final String WHITE = "WHITE";

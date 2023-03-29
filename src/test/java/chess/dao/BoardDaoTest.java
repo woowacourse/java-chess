@@ -7,8 +7,8 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.dto.BoardDto;
-import chess.dto.PieceRenderer;
-import chess.dto.SquareRenderer;
+import chess.util.PieceRenderer;
+import chess.util.SquareRenderer;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;

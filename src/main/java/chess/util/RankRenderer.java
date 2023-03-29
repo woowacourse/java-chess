@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.util;
 
 import chess.domain.board.Rank;
 
