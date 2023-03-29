@@ -29,9 +29,9 @@ public class ChessBoardFactory {
         return new ChessBoard(squares, new Turn());
     }
 
-    private static Stream<Square> createSquaresFromOneFile(final Rank temp) {
+    private static Stream<Square> createSquaresFromOneFile(final Rank rank) {
         return Arrays.stream(File.values())
-                .map(rank -> new Square(Position.of(rank, temp), createPiece(rank, temp)));
+                .map(file -> new Square(Position.of(file, rank), createPiece(file, rank)));
     }
 
     private static Piece createPiece(File file, Rank rank) {

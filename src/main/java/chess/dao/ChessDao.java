@@ -189,5 +189,4 @@ public final class ChessDao {
         final Team team = Team.valueOf(resultSet.getString(5));
         squares.add(new Square(Position.of(file, rank), role.createPiece(team)));
     }
-
 }
