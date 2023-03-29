@@ -6,8 +6,9 @@ import domain.position.Route;
 import domain.squarestatus.Piece;
 import domain.type.PieceType;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class SlidingPiece extends Piece {
 
@@ -26,14 +27,8 @@ public abstract class SlidingPiece extends Piece {
     protected abstract int getMoveCoordinate(final int diffY);
 
     private List<Position> findPositions(final Position source, final Position target, final Position direction) {
-        final List<Position> positions = new ArrayList<>();
-        Position position = source.move(direction);
-
-        while (position != target) {
-            positions.add(position);
-            position = position.move(direction);
-        }
-        return positions;
+        return Stream.iterate(source.move(direction), position -> !position.equals(target), position -> position.move(direction))
+                .collect(Collectors.toList());
     }
 
     private Position findDirection(final Position source, final Position target) {
