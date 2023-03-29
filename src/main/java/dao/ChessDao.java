@@ -60,7 +60,7 @@ public final class ChessDao {
     }
 
     public void deleteAll() {
-        final String query = "DELETE FROM move";
+        final String query = "TRUNCATE TABLE move";
 
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
