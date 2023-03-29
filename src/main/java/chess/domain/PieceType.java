@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.piece.*;
 import chess.domain.point.Point;
 
-import java.util.List;
 import java.util.function.Function;
 
 public enum PieceType {
@@ -23,11 +22,8 @@ public enum PieceType {
         this.createPiece = createPiece;
     }
 
-    public static Point sum(final List<PieceType> pieceTypes) {
-        return pieceTypes.stream()
-                .map(pieceType -> pieceType.point)
-                .reduce(Point::plus)
-                .orElse(Point.ZERO);
+    public Point getPoint() {
+        return point;
     }
 
     public Piece newInstance(final Color color) {

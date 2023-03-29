@@ -42,9 +42,16 @@ public final class Points {
                 .flatMap(this::createPieceTypes)
                 .collect(Collectors.toList());
 
-        final Point totalPoint = PieceType.sum(pieceTypes);
-        final Point penaltyPoint = PAWN_PENALTY_POINT.times(pawnDuplicatedColumnCount);
-        return totalPoint.minus(penaltyPoint);
+        final Point penalty = PAWN_PENALTY_POINT.times(pawnDuplicatedColumnCount);
+
+        return sum(pieceTypes).minus(penalty);
+    }
+
+    private Point sum(final List<PieceType> pieceTypes) {
+        return pieceTypes.stream()
+                .map(PieceType::getPoint)
+                .reduce(Point::plus)
+                .orElse(Point.ZERO);
     }
 
     private Stream<PieceType> createPieceTypes(final Piece piece) {
