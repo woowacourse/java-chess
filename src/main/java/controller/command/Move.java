@@ -23,7 +23,7 @@ public final class Move implements Command {
         final String target = inputs.get(TARGET_INDEX);
 
         chessService.move(source, target);
-        final ChessBoardDto chessBoardDto = ChessBoardDto.from(chessService.getChessBoard());
+        final ChessBoardDto chessBoardDto = new ChessBoardDto(chessService.getRows());
 
         OutputView.printChessBoard(chessBoardDto);
     }

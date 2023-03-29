@@ -3,8 +3,6 @@ package view;
 import controller.ChessBoardDto;
 import controller.ScoreDto;
 
-import java.util.List;
-
 public final class OutputView {
 
     public static void printStartMessage() {
@@ -25,33 +23,14 @@ public final class OutputView {
         System.out.printf("[ERROR] : %s%n", message);
     }
 
-    public static void printChessBoard(final ChessBoardDto chessBoard) {
+    public static void printChessBoard(final ChessBoardDto chessBoardDto) {
         System.out.print(System.lineSeparator());
 
-        printRow(chessBoard.getRow1());
-        System.out.printf("  %d%n", 8);
-        printRow(chessBoard.getRow2());
-        System.out.printf("  %d%n", 7);
-        printRow(chessBoard.getRow3());
-        System.out.printf("  %d%n", 6);
-        printRow(chessBoard.getRow4());
-        System.out.printf("  %d%n", 5);
-        printRow(chessBoard.getRow5());
-        System.out.printf("  %d%n", 4);
-        printRow(chessBoard.getRow6());
-        System.out.printf("  %d%n", 3);
-        printRow(chessBoard.getRow7());
-        System.out.printf("  %d%n", 2);
-        printRow(chessBoard.getRow8());
-        System.out.printf("  %d%n", 1);
+        for (int i = 0; i < 8; i++) {
+            System.out.printf("%s  %d%n", chessBoardDto.getRows().get(i), 8 - i);
+        }
 
         System.out.println(System.lineSeparator() + "abcdefgh" + System.lineSeparator());
-    }
-
-    private static void printRow(final List<String> chessBoardElements) {
-        for (String chessBoardElement : chessBoardElements) {
-            System.out.print(chessBoardElement);
-        }
     }
 
     public static void printScore(final ScoreDto scoreDto) {

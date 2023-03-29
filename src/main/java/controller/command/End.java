@@ -17,7 +17,7 @@ public final class End implements Command {
 
     @Override
     public void playTurn(final List<String> inputs) {
-        final ChessBoardDto chessBoardDto = ChessBoardDto.from(chessService.getChessBoard());
+        final ChessBoardDto chessBoardDto = new ChessBoardDto(chessService.getRows());
         final ScoreDto scoreDto = ScoreDto.of(chessService.getWhiteScore(), chessService.getBlackScore());
 
         OutputView.printNotice("> 최종 결과");

@@ -1,17 +1,23 @@
 package service;
 
+import controller.ChessBoardElement;
 import dao.ChessDao;
+import dao.MoveDto;
 import domain.chessboard.ChessBoard;
 import domain.chessgame.ChessGame;
 import domain.piece.Color;
 import domain.position.Position;
 import domain.position.PositionFactory;
-import dao.MoveDto;
+import domain.squarestatus.SquareStatus;
+import domain.type.EmptyType;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class ChessService {
 
+    private static final int ROW_SIZE = 8;
     private final ChessGame chessGame;
     private final ChessDao chessDao;
 
@@ -41,16 +47,37 @@ public final class ChessService {
         return chessGame.isKingAlive();
     }
 
-    public ChessBoard getChessBoard() {
-        return chessGame.getChessBoard();
-    }
-
     public double getWhiteScore() {
         return chessGame.calculateScore(Color.WHITE);
     }
 
     public double getBlackScore() {
         return chessGame.calculateScore(Color.BLACK);
+    }
+
+    public List<String> getRows() {
+        List<String> rows = new ArrayList<>(ROW_SIZE);
+        for (int i = 0; i < ROW_SIZE; i++) {
+            rows.add(convertRowToChessBoardElement(i));
+        }
+        return rows;
+    }
+
+    private String convertRowToChessBoardElement(final int order) {
+        final ChessBoard chessBoard = chessGame.getChessBoard();
+        return PositionFactory.findRow(order).stream()
+                .map(chessBoard::findPosition)
+                .map(this::convertPieceToElement)
+                .collect(Collectors.joining());
+    }
+
+    private String convertPieceToElement(final SquareStatus squareStatus) {
+        final String elementName = ChessBoardElement.getElementName(squareStatus.getType());
+
+        if (squareStatus.isDifferentType(EmptyType.EMPTY) && squareStatus.isSameColor(Color.BLACK)) {
+            return elementName.toUpperCase();
+        }
+        return elementName;
     }
 
     private void loadGame() {

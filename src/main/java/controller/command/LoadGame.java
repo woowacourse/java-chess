@@ -18,7 +18,7 @@ public final class LoadGame implements Command {
     public void playTurn(final List<String> inputs) {
         chessService.initializeBoard();
         chessService.startLoadGame();
-        final ChessBoardDto chessBoardDto = ChessBoardDto.from(chessService.getChessBoard());
+        final ChessBoardDto chessBoardDto = new ChessBoardDto(chessService.getRows());
 
         OutputView.printNotice("불러온 게임을 시작합니다.");
         OutputView.printChessBoard(chessBoardDto);
