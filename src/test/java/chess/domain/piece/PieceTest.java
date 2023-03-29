@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.game.Score;
+import chess.domain.position.Move;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,11 @@ public class PieceTest {
 
         public PieceImplement(Color color) {
             super(color, PieceType.BISHOP);
+        }
+
+        @Override
+        public boolean canMove(Move move, Piece targetPiece) {
+            return false;
         }
 
         @Override

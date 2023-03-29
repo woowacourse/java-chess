@@ -103,6 +103,23 @@
 ```mermaid
 classDiagram
     Piece <-- Pawn
+    Piece <-- StrategyPiece
+    Piece: +Color color
+    Piece: +PieceType type
+    Piece: +canMove() {abstract} boolean 
+    Pawn: +canMove() boolean
+    StrategyPiece: +canMove() boolean
+    
+    class PieceType
+    PieceType: -double score
+    PieceType: -MoveStrategy moveStrategy
+    
+    class MoveStrategy
+    MoveStrategy: +canMove() boolean
+    
+    <<abstract>> Piece
+    <<enum>> PieceType
+    <<interface>> MoveStrategy
 ```
 
 ### 테이블 DDL

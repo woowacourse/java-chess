@@ -7,13 +7,13 @@ public class PieceResponse {
 
     private final int fileIndex;
     private final int rankIndex;
-    private final String Color;
+    private final String color;
     private final String type;
 
-    public PieceResponse(int fileIndex, int rankIndex, String color, String type) {
+    private PieceResponse(int fileIndex, int rankIndex, String color, String type) {
         this.fileIndex = fileIndex;
         this.rankIndex = rankIndex;
-        Color = color;
+        this.color = color;
         this.type = type;
     }
 
@@ -34,7 +34,7 @@ public class PieceResponse {
     }
 
     public String getColor() {
-        return Color;
+        return color;
     }
 
     public String getType() {

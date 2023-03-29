@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.StrategyPiece;
 import chess.domain.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,9 +29,9 @@ class GameResultTest {
         Map<Position, Piece> pieces = Map.of(
                 new Position("c2"), new Pawn(WHITE),
                 new Position("d2"), new Pawn(WHITE),
-                new Position("f2"), new Piece(WHITE, ROOK),
+                new Position("f2"), new StrategyPiece(WHITE, ROOK),
                 new Position("e2"), new Pawn(BLACK),
-                new Position("a2"), new Piece(BLACK, KING)
+                new Position("a2"), new StrategyPiece(BLACK, KING)
         );
         gameResult = new GameResult(pieces);
     }
@@ -48,10 +49,10 @@ class GameResultTest {
         Map<Position, Piece> pieces = Map.of(
                 new Position("c2"), new Pawn(WHITE),
                 new Position("d2"), new Pawn(WHITE),
-                new Position("f2"), new Piece(WHITE, ROOK),
+                new Position("f2"), new StrategyPiece(WHITE, ROOK),
                 new Position("e2"), new Pawn(BLACK),
-                new Position("a2"), new Piece(WHITE, KING),
-                new Position("a1"), new Piece(BLACK, KING)
+                new Position("a2"), new StrategyPiece(WHITE, KING),
+                new Position("a1"), new StrategyPiece(BLACK, KING)
         );
         gameResult = new GameResult(pieces);
 
@@ -64,8 +65,8 @@ class GameResultTest {
         Map<Position, Piece> pieces = Map.of(
                 new Position("c2"), new Pawn(WHITE),
                 new Position("e2"), new Pawn(BLACK),
-                new Position("a2"), new Piece(WHITE, KING),
-                new Position("a1"), new Piece(BLACK, KING)
+                new Position("a2"), new StrategyPiece(WHITE, KING),
+                new Position("a1"), new StrategyPiece(BLACK, KING)
         );
         gameResult = new GameResult(pieces);
 
@@ -84,7 +85,7 @@ class GameResultTest {
         Map<Position, Piece> pieces = Map.of(
                 new Position("c2"), new Pawn(WHITE),
                 new Position("d2"), new Pawn(WHITE),
-                new Position("f2"), new Piece(WHITE, ROOK),
+                new Position("f2"), new StrategyPiece(WHITE, ROOK),
                 new Position("e2"), new Pawn(BLACK)
         );
         gameResult = new GameResult(pieces);
@@ -109,7 +110,7 @@ class GameResultTest {
                 new Position("c3"), new Pawn(WHITE),
                 new Position("d3"), new Pawn(WHITE),
                 new Position("e2"), new Pawn(BLACK),
-                new Position("f2"), new Piece(WHITE, ROOK)
+                new Position("f2"), new StrategyPiece(WHITE, ROOK)
         );
         gameResult = new GameResult(pieces);
 

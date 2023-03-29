@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.game.Score;
 import chess.domain.position.Move;
 
-public class Piece {
+public abstract class Piece {
 
     protected final Color color;
     protected final PieceType type;
@@ -20,9 +20,7 @@ public class Piece {
         }
     }
 
-    public boolean canMove(Move move, Piece targetPiece) {
-        return type.getMoveStrategy().canMove(move);
-    }
+    public abstract boolean canMove(Move move, Piece targetPiece);
 
     public boolean isSameColor(Piece target) {
         if (target == null) {

@@ -4,6 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.StrategyPiece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -24,14 +25,14 @@ public class BoardFactory {
 
     private static Map<File, Piece> createFirstLine(Color color) {
         return new HashMap<>() {{
-            put(File.A, new Piece(color, PieceType.ROOK));
-            put(File.B, new Piece(color, PieceType.KNIGHT));
-            put(File.C, new Piece(color, PieceType.BISHOP));
-            put(File.D, new Piece(color, PieceType.QUEEN));
-            put(File.E, new Piece(color, PieceType.KING));
-            put(File.F, new Piece(color, PieceType.BISHOP));
-            put(File.G, new Piece(color, PieceType.KNIGHT));
-            put(File.H, new Piece(color, PieceType.ROOK));
+            put(File.A, new StrategyPiece(color, PieceType.ROOK));
+            put(File.B, new StrategyPiece(color, PieceType.KNIGHT));
+            put(File.C, new StrategyPiece(color, PieceType.BISHOP));
+            put(File.D, new StrategyPiece(color, PieceType.QUEEN));
+            put(File.E, new StrategyPiece(color, PieceType.KING));
+            put(File.F, new StrategyPiece(color, PieceType.BISHOP));
+            put(File.G, new StrategyPiece(color, PieceType.KNIGHT));
+            put(File.H, new StrategyPiece(color, PieceType.ROOK));
         }};
     }
 
