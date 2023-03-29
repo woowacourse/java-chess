@@ -13,7 +13,7 @@ public class MovablePointFinder {
     private MovablePointFinder() {
     }
 
-    public static List<Point> addPoints(Point from, Point to, List<List<Piece>> pieceStatus, Piece piece) {
+    public static List<Point> addPoints(Piece piece, Point from, Point to, List<List<Piece>> pieceStatus) {
         final List<Point> points = new ArrayList<>();
         Map<Direction, Integer> directionsAndRanges = piece.getMovableDirectionAndRange();
 
