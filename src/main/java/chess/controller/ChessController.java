@@ -1,8 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.Score;
 import chess.domain.chessgame.ChessGame;
-import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;
@@ -61,8 +59,7 @@ public class ChessController {
     }
 
     private void status(final ChessGame chessGame) {
-        final Map<Color, Score> status = chessGame.status();
-        outputView.printStatus(status);
+        outputView.printStatus(chessGame.status());
     }
 
     private void end(final ChessGame chessGame) {
