@@ -35,10 +35,6 @@ public class MoveDto {
         return targetPosition;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public LocalDateTime getMoveTime() {
         return moveTime;
     }
