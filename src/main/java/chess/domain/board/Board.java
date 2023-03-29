@@ -180,7 +180,8 @@ public final class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return new HashMap<>(board);
+        return board.entrySet().stream()
+                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override
