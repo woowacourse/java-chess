@@ -172,3 +172,15 @@ classDiagram
 - [x] 조회 기능
 - [x] 업데이트 기능 (Piece 움직인 경우)
 - [x] 삭제 기능 (Piece 잡힌 경우)
+
+---
+
+## 3, 4단계 리팩토링 요구 사항
+
+- [x] running_game 테이블, finished_game 테이블 => game 테이블
+- [ ] game 테이블 CRUD 미완성 부분 완성하기
+- [ ] piece 테이블 CRUD 미완성 부분 완성하기
+- [ ] 변수에 불필요한 prefix 제거
+- [ ] DB 접속 정보 및 커넥션 별도로 관리
+- [ ] autoIncrementId 메서드 삭제
+- [ ] save 출력 메시지 추가
