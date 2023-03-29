@@ -26,14 +26,14 @@ public class ChessJdbcDao implements ChessDao {
     }
 
     @Override
-    public void saveHistory(final MoveDto moveDto, final int gameRoomId) {
+    public void saveHistory(final MoveDto moveDto, final int gameId) {
         final String historySaveQuery = "INSERT INTO history(source, target, game_id) VALUES (?,?,?)";
 
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(historySaveQuery)) {
             preparedStatement.setString(1, moveDto.getSource());
             preparedStatement.setString(2, moveDto.getTarget());
-            preparedStatement.setInt(3, gameRoomId);
+            preparedStatement.setInt(3, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -41,13 +41,13 @@ public class ChessJdbcDao implements ChessDao {
     }
 
     @Override
-    public List<MoveDto> selectAllHistory(int notFinishedGameId) {
+    public List<MoveDto> selectAllHistory(int gameId) {
         String selectAllQuery = "SELECT source, target FROM history WHERE game_id = ?";
         List<MoveDto> moveDtos = new ArrayList<>();
 
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(selectAllQuery)) {
-            preparedStatement.setInt(1, notFinishedGameId);
+            preparedStatement.setInt(1, gameId);
             ResultSet historyResult = preparedStatement.executeQuery();
             while (historyResult.next()) {
                 moveDtos.add(makeHistory(historyResult));
