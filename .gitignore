@@ -30,3 +30,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### DB ###
+docker/
+!docker/docker-compose.yml
