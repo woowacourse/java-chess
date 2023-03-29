@@ -11,7 +11,6 @@ import chess.domain.board.Rank;
 import chess.domain.game.dto.LoadedPiecesInsertDto;
 import chess.domain.game.dto.LoadedPiecesSelectDto;
 import chess.domain.piece.Side;
-import java.sql.Connection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,10 +32,6 @@ class ChessGameTest {
     }
 
     class FakePiecesDao implements PiecesDao {
-        @Override
-        public Connection getConnection() {
-            return null;
-        }
 
         @Override
         public LoadedPiecesSelectDto findAll() {
@@ -55,10 +50,6 @@ class ChessGameTest {
     }
 
     class FakeChessGameDao implements ChessGameDao {
-        @Override
-        public Connection getConnection() {
-            return null;
-        }
 
         @Override
         public Side selectTurn() {
