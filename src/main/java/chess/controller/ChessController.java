@@ -21,19 +21,19 @@ public class ChessController {
     private final ChessGameService chessGameService;
     private final Map<GameCommand, GameAction> commandMapper = new EnumMap<>(GameCommand.class);
 
+    public ChessController(OutputView outputView, InputView inputView, ChessGameService chessGameService) {
+        this.outputView = outputView;
+        this.inputView = inputView;
+        this.chessGameService = chessGameService;
+        init();
+    }
+
     private void init() {
         commandMapper.put(START, this::start);
         commandMapper.put(MOVE, this::move);
         commandMapper.put(STATUS, this::status);
         commandMapper.put(CLEAR, this::clear);
         commandMapper.put(END, (chessGame, commands) -> END);
-    }
-
-    public ChessController(OutputView outputView, InputView inputView, ChessGameService chessGameService) {
-        this.outputView = outputView;
-        this.inputView = inputView;
-        this.chessGameService = chessGameService;
-        init();
     }
 
     public void run() {

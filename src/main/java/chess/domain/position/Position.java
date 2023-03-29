@@ -79,12 +79,12 @@ public class Position {
                 .collect(toList());
     }
 
-    public FileCoordinate getFileCoordinate() {
-        return fileCoordinate;
+    public boolean isSameRank(RankCoordinate other) {
+        return rankCoordinate == other;
     }
 
-    public RankCoordinate getRankCoordinate() {
-        return rankCoordinate;
+    public FileCoordinate getFileCoordinate() {
+        return fileCoordinate;
     }
 
     @Override
@@ -102,9 +102,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(fileCoordinate, rankCoordinate);
-    }
-
-    public boolean isSameRank(RankCoordinate other) {
-        return rankCoordinate == other;
     }
 }
