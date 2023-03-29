@@ -69,10 +69,10 @@ public class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board;
+        return Map.copyOf(board);
     }
 
     public Turn getTurn() {
-        return turn;
+        return new Turn(turn.getTurn());
     }
 }
