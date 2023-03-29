@@ -34,11 +34,7 @@ public final class ChessGame {
     }
 
     public static ChessGame of(final Map<Position, Piece> board) {
-        if (board.size() != TOTAL_BOARD_SIZE) {
-            throw new IllegalArgumentException(
-                    String.format("체스판의 사이즈는 %d x %d 여야합니다.", BOARD_LENGTH, BOARD_LENGTH));
-        }
-        return new ChessGame(board, Turn.create());
+        return of(board, Turn.create());
     }
 
     public static ChessGame of(final Map<Position, Piece> board, final Turn turn) {
