@@ -4,6 +4,8 @@ import domain.Board;
 import domain.exception.InvalidDestinationPointException;
 import domain.piece.Empty;
 import domain.piece.Piece;
+import domain.piece.king.BlackKing;
+import domain.piece.king.WhiteKing;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.pawn.OnceMovedBlackPawn;
 import domain.piece.pawn.OneMovedWhitePawn;
@@ -11,6 +13,8 @@ import domain.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -115,6 +119,21 @@ public class PawnTest {
             assertThatThrownBy(() -> board.move("b4", "b2"))
                     .isInstanceOf(InvalidDestinationPointException.class);
         }
+
+        @ParameterizedTest(name = "{displayName} - {0}")
+        @ValueSource(strings = {"a1", "c1"})
+        @DisplayName("검은색 기물의 전진 방향 대각선으로 상대 기물이 있다면, 상대 기물이 있는 위치로 이동할 수 있다.")
+        void enemyOnDiagonal(String target) {
+            List<List<Piece>> boardStatus = Arrays.asList(
+                    Arrays.asList(new WhiteKing(), new Empty(), new WhitePawn()), // a1, b1, c1
+                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
+                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+            );
+            Board board = new Board(boardStatus);
+
+            assertDoesNotThrow(() -> board.move("b2", target));
+        }
     }
 
     @Nested
@@ -210,6 +229,21 @@ public class PawnTest {
 
             assertThatThrownBy(() -> board.move("b2", "b4"))
                     .isInstanceOf(InvalidDestinationPointException.class);
+        }
+
+        @ParameterizedTest(name = "{displayName} - {0}")
+        @ValueSource(strings = {"a3", "c3"})
+        @DisplayName("검은색 기물의 전진 방향 대각선으로 상대 기물이 있다면, 상대 기물이 있는 위치로 이동할 수 있다.")
+        void enemyOnDiagonal(String target) {
+            List<List<Piece>> boardStatus = Arrays.asList(
+                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
+                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
+                    Arrays.asList(new BlackKing(), new Empty(), new BlackPawn()), // a3, b3, c3
+                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+            );
+            Board board = new Board(boardStatus);
+
+            assertDoesNotThrow(() -> board.move("b2", target));
         }
     }
 }
