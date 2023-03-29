@@ -1,7 +1,10 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Path;
 import domain.position.Position;
+
+import java.util.Set;
 
 public abstract class Piece {
 
@@ -23,7 +26,11 @@ public abstract class Piece {
 
     public abstract boolean isMovablePath(Position start, Path path);
 
-    protected abstract boolean isMovableDirection(Position start, Position nextPosition);
+    protected boolean isMovableDirection(Position start, Position nextPosition) {
+        Direction nextDirection = Direction.of(start, nextPosition);
+        Set<Direction> PieceMovableDirections = getMovableDirections();
+        return PieceMovableDirections.contains(nextDirection);
+    }
 
     protected abstract boolean isMovableDistance(int distance);
 
@@ -45,4 +52,6 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    protected abstract Set<Direction> getMovableDirections();
 }

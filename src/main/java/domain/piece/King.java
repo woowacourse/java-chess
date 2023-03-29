@@ -8,8 +8,6 @@ import java.util.Set;
 
 public final class King extends Piece {
 
-    public static final Set<Direction> KING_MOVABLE_DIRECTIONS = Set.of(Direction.CROSS, Direction.DIAGONAL);
-
     public King(Color color) {
         super(PieceName.KING, color);
     }
@@ -20,11 +18,11 @@ public final class King extends Piece {
                 isMovableDistance(path.size());
     }
 
-    @Override
-    protected boolean isMovableDirection(Position start, Position nextPosition) {
-        Direction nextDirection = Direction.of(start, nextPosition);
-        return KING_MOVABLE_DIRECTIONS.contains(nextDirection);
-    }
+//    @Override
+//    protected boolean isMovableDirection(Position start, Position nextPosition) {
+//        Direction nextDirection = Direction.of(start, nextPosition);
+//        return KING_MOVABLE_DIRECTIONS.contains(nextDirection);
+//    }
 
     @Override
     protected boolean isMovableDistance(int distance) {
@@ -39,5 +37,10 @@ public final class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    protected Set<Direction> getMovableDirections() {
+        return Set.of(Direction.CROSS, Direction.DIAGONAL);
     }
 }
