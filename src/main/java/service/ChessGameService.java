@@ -4,16 +4,10 @@ import dao.PieceDao;
 import domain.chessGame.ChessBoard;
 import domain.chessGame.ChessBoardGenerator;
 import domain.chessGame.ScoreCalculator;
-import domain.piece.Bishop;
-import domain.piece.BlackPawn;
 import domain.piece.Color;
-import domain.piece.King;
-import domain.piece.Knight;
 import domain.piece.Piece;
+import domain.piece.PieceMaker;
 import domain.piece.PieceName;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.piece.WhitePawn;
 import domain.position.Position;
 import dto.ChessBoardStateDto;
 import dto.ChessGameScoreDto;
@@ -72,25 +66,8 @@ public class ChessGameService {
     }
 
     private Piece makePiece(PieceName pieceName, Color pieceColor) {
-        switch (pieceName) {
-            case KING:
-                return new King(pieceColor);
-            case PAWN:
-                if (pieceColor == Color.BLACK) {
-                    return new BlackPawn();
-                }
-                return new WhitePawn();
-            case ROOK:
-                return new Rook(pieceColor);
-            case QUEEN:
-                return new Queen(pieceColor);
-            case BISHOP:
-                return new Bishop(pieceColor);
-            case KNIGHT:
-                return new Knight(pieceColor);
-            default:
-                throw new UnsupportedOperationException("[ERROR] DB를 불러오는 과정에서 오류가 발생했습니다.");
-        }
+        PieceMaker pieceMaker = PieceMaker.from(pieceName);
+        return pieceMaker.make(pieceColor);
     }
 
     private List<PieceDto> makePieceDtos(ChessBoard chessBoard) {
