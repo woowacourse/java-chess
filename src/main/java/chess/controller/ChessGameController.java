@@ -5,7 +5,7 @@ import chess.controller.status.AppStatus;
 import chess.controller.util.InputExceptionHandler;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
-import chess.serviece.ChessGameService;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,10 +17,6 @@ public class ChessGameController {
 
     public ChessGameController() {
         this.chessGameService = new ChessGameService();
-    }
-
-    public void validateCommandRequest(CommandRequest commandRequest) {
-        chessGameService.validateCommand(commandRequest);
     }
 
     public AppStatus start(CommandRequest commandRequest) {

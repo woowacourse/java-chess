@@ -1,15 +1,18 @@
 package chess.service;
 
-import static chess.controller.status.GameStatus.RUNNING;
+import static chess.service.status.GameStatus.RUNNING;
 
-import chess.controller.status.GameStatus;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
+import chess.domain.piece.Piece;
 import chess.dto.ChessBoardStatus;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
+import chess.service.status.GameStatus;
+import chess.service.status.GameStatusValidator;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGameService {
 
@@ -26,11 +29,13 @@ public class ChessGameService {
     }
 
     public void start(int boardId) {
+        GameStatusValidator.validateStart(gameStatus);
         gameStatus = RUNNING;
         this.chessBoard = chessBoardService.findChessBoardById(boardId);
     }
 
     public void move(CommandRequest commandRequest) {
+        GameStatusValidator.validateMove(gameStatus);
         chessBoard.move(
                 Position.from(commandRequest.getSourceCoordinate()),
                 Position.from(commandRequest.getDestinationCoordinate())
@@ -43,6 +48,7 @@ public class ChessGameService {
     }
 
     public void end(CommandRequest commandRequest) {
+        GameStatusValidator.validateEnd(gameStatus);
         gameStatus = GameStatus.READY;
     }
 
@@ -51,11 +57,16 @@ public class ChessGameService {
     }
 
     public GameResultResponse computeResult(CommandRequest commandRequest) {
+        GameStatusValidator.validateStatus(gameStatus);
         return new GameResultResponse(
                 chessBoard.calculateScoreByCamp(Camp.WHITE),
                 chessBoard.calculateScoreByCamp(Camp.BLACK),
                 chessBoard.status().getCurrentTurn().name()
         );
+    }
+
+    public Map<Position, Piece> readBoard() {
+        return chessBoard.piecesByPosition();
     }
 
 }
