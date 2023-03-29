@@ -1,10 +1,13 @@
 package domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.PieceLocations;
+import domain.piece.PieceType;
 
 public class ChessBoard {
 
@@ -87,18 +90,23 @@ public class ChessBoard {
         return pieceLocations.hasPiece(route);
     }
 
+    public boolean isExistKing() {
+        return isExistKing(pieceLocations.getPieceLocations(), Piece::isBlack)
+                && isExistKing(pieceLocations.getPieceLocations(), Piece::isWhite);
+    }
+
+    private boolean isExistKing(Map<Square, Piece> pieceLocations, Predicate<Piece> predicate) {
+        return pieceLocations.values().stream()
+                .filter(s -> s.pieceType() == PieceType.KING)
+                .anyMatch(predicate);
+    }
+
     public double getBlackScore() {
         return scoreCalculator.sumBlackScore(pieceLocations.getPieceLocations());
     }
 
     public double getWhiteScore() {
         return scoreCalculator.sumWhiteScore(pieceLocations.getPieceLocations());
-    }
-
-    public boolean isExistKing() {
-        KingFinder kingFinder = new KingFinder();
-        return kingFinder.isExistKing(pieceLocations.getPieceLocations(), Piece::isBlack)
-                && kingFinder.isExistKing(pieceLocations.getPieceLocations(), Piece::isWhite);
     }
 
     public PieceLocations getPieceLocations() {
