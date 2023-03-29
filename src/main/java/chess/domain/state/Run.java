@@ -18,7 +18,7 @@ public class Run extends Runnable {
             throw new IllegalArgumentException("이미 진행중입니다");
         }
         if (command.isEnd()) {
-            return new End();
+            return new End(turn);
         }
         validateSize(command);
         return this;

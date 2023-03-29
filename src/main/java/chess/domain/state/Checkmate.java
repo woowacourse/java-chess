@@ -4,14 +4,17 @@ import chess.domain.board.Turn;
 
 public class Checkmate extends Finished{
 
-    private final Turn winner;
-
     public Checkmate(final Turn turn) {
-        this.winner = turn;
+        this.turn = turn;
+    }
+
+    @Override
+    public boolean isCheckmate() {
+        return true;
     }
 
     @Override
     public String findCurrentTurn() {
-        return winner.convertToColorLabel();
+        return turn.convertToColorLabel();
     }
 }

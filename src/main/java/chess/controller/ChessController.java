@@ -29,46 +29,51 @@ public class ChessController {
 
     public void start() {
         OutputView.printStartMessage();
-        final List<Integer> gameIds = gameService.findAllIds();
+        final List<Integer> gameIds = gameService.findAllIdsByIsRunning(true);
         initializeWithDB(gameIds);
     }
 
     private void initializeWithDB(List<Integer> gameIds) {
         if (gameIds.isEmpty()) {
             final ChessBoard chessBoard = ChessBoardFactory.create();
-            gameService.create();
-            pieceService.create(chessBoard, 1);
+            final int gameId = gameService.create();
+            pieceService.create(chessBoard, gameId);
             final ChessState state = new Initialize();
-            run(chessBoard, state, 1);
+            run(chessBoard, state, gameId);
             return;
         }
         final ChessBoard chessBoard = new ChessBoard(pieceService.findAllPieces());
         final ChessState state = new Run(gameService.findTurnById(gameIds.get(0)));
+        OutputView.showBoard(chessBoard.pieces());
         run(chessBoard, state, gameIds.get(0));
     }
 
     private void run(final ChessBoard chessBoard, ChessState state, final int gameId) {
         while (state.isRunnable()) {
-            state = chessState(chessBoard, state);
+            state = chessState(chessBoard, state, gameId);
         }
-        pieceService.deleteAll();
-        gameService.delete(gameId);
-        OutputView.printResult(state.findCurrentTurn());
+        if (state.isCheckmate()) {
+            pieceService.deleteAll();
+            gameService.updateIsRunning(gameId, false);
+            OutputView.printCheckmateResult(state.findCurrentTurn());
+        }
+        OutputView.printEndResult();
     }
 
-    private ChessState chessState(final ChessBoard chessBoard, ChessState state) {
+    private ChessState chessState(final ChessBoard chessBoard, ChessState state, final int gameId) {
         try {
             final Command command = Command.parse(new ArrayList<>(InputView.readCommand()));
-            state = executeByCommand(chessBoard, command, state);
+            state = executeByCommand(chessBoard, command, state, gameId);
         } catch (Exception e) {
             System.out.println("[ERROR] " + e.getMessage());
         }
         return state;
     }
 
-    private ChessState executeByCommand(final ChessBoard chessBoard, final Command command, ChessState state) {
+    private ChessState executeByCommand(final ChessBoard chessBoard, final Command command, ChessState state,
+                                        final int gameId) {
         if (command.isSave()) {
-            gameService.update(state.findCurrentTurn());
+            gameService.updateTurn(gameId, state.findCurrentTurn());
             pieceService.deleteAll();
             pieceService.create(chessBoard, 1);
         }
@@ -77,7 +82,7 @@ public class ChessController {
             return state;
         }
         state = changeState(chessBoard, command, state);
-        gameService.update(state.findCurrentTurn());
+        gameService.updateTurn(gameId, state.findCurrentTurn());
         OutputView.showBoard(chessBoard.pieces());
         return state;
     }

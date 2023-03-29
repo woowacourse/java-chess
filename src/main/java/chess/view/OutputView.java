@@ -70,12 +70,12 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
     }
 
-    public static void printResult(final String winner) {
-        if (winner == null) {
-            System.out.println("게임이 종료되었습니다.");
-            return;
-        }
+    public static void printCheckmateResult(final String winner) {
         System.out.printf("%s이(가) 이겼습니다.%n", winner);
+    }
+
+    public static void printEndResult() {
+        System.out.println("게임이 종료되었습니다.");
     }
 
     public static void printTeamScore(final Color color, final Double score) {

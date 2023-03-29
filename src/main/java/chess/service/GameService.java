@@ -9,25 +9,28 @@ public class GameService {
 
     private final GameDao gameDao = new GameDao();
 
-    public void create() {
+    public int create() {
         final GameDto gameDto = GameDto.create();
-        gameDao.create(gameDto);
+        return gameDao.create(gameDto);
     }
 
-    public List<Integer> findAllIds() {
-        return gameDao.findAllIds();
+    public List<Integer> findAllIdsByIsRunning(final boolean isRunning) {
+        final GameDto gameDto = GameDto.from(isRunning);
+        return gameDao.findAllIdsByIsRunning(gameDto);
     }
 
-    public Turn findTurnById(final int runningGameId) {
-        return gameDao.findTurnById(runningGameId);
+    public Turn findTurnById(final int id) {
+        final GameDto gameDto = GameDto.from(id);
+        return gameDao.findTurnById(gameDto);
     }
 
-    public void update(final String turn) {
-        final GameDto gameDto = GameDto.from(turn);
-        gameDao.update(gameDto);
+    public void updateTurn(final int id, final String turn) {
+        final GameDto gameDto = GameDto.of(id, turn);
+        gameDao.updateTurn(gameDto);
     }
 
-    public void delete(final int runningGameId) {
-        gameDao.delete(runningGameId);
+    public void updateIsRunning(final int id, final boolean isRunning) {
+        final GameDto gameDto = GameDto.of(id, isRunning);
+        gameDao.updateIsRunning(gameDto);
     }
 }

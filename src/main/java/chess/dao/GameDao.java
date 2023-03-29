@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,38 +29,44 @@ public class GameDao {
         }
     }
 
-    public void create(final GameDto gameDto) {
+    public int create(final GameDto gameDto) {
         final String query = "INSERT INTO game(turn, is_running) VALUES (?, ?)";
         try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+             final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, gameDto.getTurn());
             preparedStatement.setBoolean(2, gameDto.getIsRunning());
             preparedStatement.executeUpdate();
+            final ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+        return -1;
     }
 
-    public List<Integer> findAllIds() {
-        String query = "SELECT id FROM game";
-        List<Integer> runningGameIds = new ArrayList<>();
+    public List<Integer> findAllIdsByIsRunning(final GameDto gameDto) {
+        String query = "SELECT id FROM game WHERE is_running = ?";
+        List<Integer> ids = new ArrayList<>();
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setBoolean(1, gameDto.getIsRunning());
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                runningGameIds.add(resultSet.getInt("id"));
+                ids.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return runningGameIds;
+        return ids;
     }
 
-    public Turn findTurnById(final int id) {
+    public Turn findTurnById(final GameDto gameDto) {
         String query = "SELECT turn FROM game WHERE id = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, gameDto.getId());
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new Turn(Color.ofString(resultSet.getString("turn")));
@@ -70,13 +77,24 @@ public class GameDao {
         return null;
     }
 
-    public void update(final GameDto gameDto) {
+    public void updateTurn(final GameDto gameDto) {
         final String query = "UPDATE game SET turn = ? WHERE id = ?";
-        final int id = 1;
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameDto.getTurn());
-            preparedStatement.setInt(2, id);
+            preparedStatement.setInt(2, gameDto.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateIsRunning(final GameDto gameDto) {
+        final String query = "UPDATE game SET is_running = ? WHERE id = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setBoolean(1, gameDto.getIsRunning());
+            preparedStatement.setInt(2, gameDto.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,9 +1,12 @@
 package chess.domain.state;
 
+import chess.domain.board.Turn;
 import chess.domain.piece.Color;
 import chess.domain.state.command.Command;
 
 public abstract class Finished implements ChessState {
+
+    protected Turn turn;
 
     @Override
     public boolean isRunnable() {
