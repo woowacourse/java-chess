@@ -64,7 +64,7 @@ public final class ChessBoard {
         return new HashMap<>(chessBoard);
     }
 
-    public Color getTurn() {
-        return turn;
+    public String getTurn() {
+        return turn.name();
     }
 }

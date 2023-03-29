@@ -114,7 +114,7 @@ public final class ChessController {
 
     private void showChessBoardStatus(ChessBoard chessBoard) {
         Map<Position, Piece> chessBoardStatus = chessBoard.getChessBoard();
-        String turn = chessBoard.getTurn().name();
+        String turn = chessBoard.getTurn();
         ChessBoardDto chessBoardDto = ChessBoardDto.of(BoardToString.convert(chessBoardStatus));
         OutputView.printChessBoard(chessBoardDto);
         OutputView.printTurn(turn);

@@ -10,9 +10,9 @@ import chess.utils.StringToBoard;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class DbChessGameDao implements ChessGameDao {
 
@@ -34,14 +34,14 @@ public final class DbChessGameDao implements ChessGameDao {
 
     @Override
     public void save(ChessBoard chessBoard) {
-        final var query = "INSERT  chess_game (board_row8, board_row7, board_row6, board_row5, board_row4, board_row3, board_row2, board_row1, turn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final var query = "INSERT  chess_game (board_Row8to1, turn) VALUES (?, ?)";
         List<String> convertToString = BoardToString.convert(chessBoard.getChessBoard());
+        String board_Row8to1 = convertToString.stream()
+                .collect(Collectors.joining(","));
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            for (int i = 1; i <= convertToString.size(); i++) {
-                preparedStatement.setString(i, convertToString.get(i - 1));
-            }
-            preparedStatement.setString(9, chessBoard.getTurn().name());
+            preparedStatement.setString(1, board_Row8to1);
+            preparedStatement.setString(2, chessBoard.getTurn());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -50,20 +50,13 @@ public final class DbChessGameDao implements ChessGameDao {
 
     @Override
     public ChessBoard select() {
-        final var query = "SELECT board_row8, board_row7, board_row6, board_row5, board_row4, board_row3, board_row2, board_row1, turn FROM chess_game";
+        final var query = "SELECT board_Row8to1, turn FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                List<String> chessBoardText = new ArrayList<>();
-                chessBoardText.add(resultSet.getString("board_row8"));
-                chessBoardText.add(resultSet.getString("board_row7"));
-                chessBoardText.add(resultSet.getString("board_row6"));
-                chessBoardText.add(resultSet.getString("board_row5"));
-                chessBoardText.add(resultSet.getString("board_row4"));
-                chessBoardText.add(resultSet.getString("board_row3"));
-                chessBoardText.add(resultSet.getString("board_row2"));
-                chessBoardText.add(resultSet.getString("board_row1"));
+                String board_Row8to1 = resultSet.getString("board_Row8to1");
+                List<String> chessBoardText = List.of(board_Row8to1.split(","));
 
                 Map<Position, Piece> chessBoard = StringToBoard.convert(chessBoardText);
                 Color turn = Color.valueOf(resultSet.getString("turn"));
