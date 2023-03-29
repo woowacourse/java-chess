@@ -86,7 +86,7 @@ public final class Board {
     }
 
     public void confirmMove(final Position source, final Position target, Color color) {
-        validateBasicInfo(color, source, target);
+        validate(color, source, target);
 
         Set<Position> movablePath = getPiece(source).computePath(source, target);
         Map<Position, Boolean> isEmptySquare = generateIsEmptySquare(movablePath);
@@ -103,7 +103,7 @@ public final class Board {
                 ));
     }
 
-    private void validateBasicInfo(final Color color, final Position source, final Position target) {
+    private void validate(final Color color, final Position source, final Position target) {
         validateIsEmptySquare(source);
         validateSourceColor(source, color);
         validateTargetColor(source, target);
