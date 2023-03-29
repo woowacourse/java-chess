@@ -1,5 +1,6 @@
 package controller.command.start;
 
+import database.connection.ConnectionGenerator;
 import database.dao.ChessGameDao;
 import domain.ChessGame;
 import gameinitializer.DatabaseChessAlignment;
@@ -12,10 +13,10 @@ public final class LoadCommand implements StartAction {
 
 
     @Override
-    public ChessGame init(final Map<Integer, String> parameters) {
+    public ChessGame init(final Map<Integer, String> parameters, final ConnectionGenerator connectionGenerator) {
         validateParameters(parameters);
         String boardNumber = parameters.get(BOARD_NAME_PARAMETER);
-        return ChessGame.initGame(new DatabaseChessAlignment(new ChessGameDao(), boardNumber));
+        return ChessGame.initGame(new DatabaseChessAlignment(new ChessGameDao(connectionGenerator), boardNumber));
     }
 
     private void validateParameters(final Map<Integer, String> parameters) {

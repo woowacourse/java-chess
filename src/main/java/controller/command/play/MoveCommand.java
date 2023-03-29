@@ -1,5 +1,6 @@
 package controller.command.play;
 
+import database.connection.ConnectionGenerator;
 import domain.ChessGame;
 import domain.position.Positions;
 import java.util.Map;
@@ -11,7 +12,8 @@ public final class MoveCommand implements PlayAction {
     private static final int DESTINATION_PARAMETER = 2;
 
     @Override
-    public boolean execute(final ChessGame chessGame, final Map<Integer, String> parameters) {
+    public boolean execute(final ChessGame chessGame, final Map<Integer, String> parameters,
+                           final ConnectionGenerator connectionGenerator) {
         validateParameters(parameters);
         boolean isEndedGame = chessGame.movePiece(
                 Positions.from(parameters.get(SOURCE_PARAMETER)),

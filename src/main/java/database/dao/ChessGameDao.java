@@ -16,10 +16,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public final class ChessGameDao {
+    private final ConnectionGenerator connectionGenerator;
+
+    public ChessGameDao(final ConnectionGenerator connectionGenerator) {
+
+        this.connectionGenerator = connectionGenerator;
+    }
+
     public void saveBoard(ChessGame chessGame, String boardName) {
         final long boardId = saveBoardTeamAndReturnBoardId(boardName, chessGame.getTeam());
         final var query = "insert into board_pieces(board_id, position, type, team) values(?, ?, ?, ?)";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = connectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             for (Entry<Position, Piece> entry : chessGame.getPieces().entrySet()) {
                 preparedStatement.setLong(1, boardId);
@@ -35,7 +42,7 @@ public final class ChessGameDao {
 
     private long saveBoardTeamAndReturnBoardId(String boardName, Team team) {
         final var query = "insert into board(board_name, start_team) value(?, ?);";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = connectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, boardName);
             preparedStatement.setString(2, team.name());
@@ -55,7 +62,7 @@ public final class ChessGameDao {
         Map<Position, Piece> pieces = new HashMap<>();
         long boardId = findBoardIdByBoardName(boardName);
         final var query = "select type, team, position from board_pieces where board_id = ?";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = connectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, boardId);
 
@@ -78,7 +85,7 @@ public final class ChessGameDao {
 
     private long findBoardIdByBoardName(final String boardName) {
         final var query = "select id from board where board_name = ?";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = connectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, boardName);
 
@@ -94,7 +101,7 @@ public final class ChessGameDao {
 
     public Team findStartTeamByBoardName(final String boardName) {
         final var query = "select start_team from board where board_name = ?";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = connectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, boardName);
 

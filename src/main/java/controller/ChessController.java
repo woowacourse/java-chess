@@ -4,6 +4,7 @@ import controller.command.play.PlayAction;
 import controller.command.play.PlayCommandType;
 import controller.command.start.StartAction;
 import controller.command.start.StartCommandType;
+import database.connection.ConnectionGenerator;
 import domain.ChessGame;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +16,10 @@ public final class ChessController {
 
     private static final int COMMAND_HEAD_INDEX = 0;
 
-    public ChessController() {
+    public final ConnectionGenerator connectionGenerator;
+
+    public ChessController(final ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
     }
 
     public void run() {
@@ -38,9 +42,8 @@ public final class ChessController {
     private ChessGame initChessGame(List<String> command) {
         try {
             StartAction startAction = StartCommandType.from(command.get(COMMAND_HEAD_INDEX));
-            ChessGame chessGame = startAction.init(ParameterParser.parsingParameterFromCommand(command));
-            return chessGame;
-        } catch (IllegalArgumentException e) {
+            return startAction.init(ParameterParser.parsingParameterFromCommand(command), connectionGenerator);
+        } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
             return null;
         }
@@ -56,8 +59,9 @@ public final class ChessController {
     private boolean readPlayCommandAndExecute(final List<String> command, final ChessGame chessGame) {
         try {
             PlayAction playAction = PlayCommandType.from(command.get(COMMAND_HEAD_INDEX));
-            return playAction.execute(chessGame, ParameterParser.parsingParameterFromCommand(command));
-        } catch (RuntimeException e) {
+            return playAction.execute(chessGame, ParameterParser.parsingParameterFromCommand(command),
+                    connectionGenerator);
+        } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
             return true;
         }

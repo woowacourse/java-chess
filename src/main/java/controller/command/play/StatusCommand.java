@@ -1,5 +1,6 @@
 package controller.command.play;
 
+import database.connection.ConnectionGenerator;
 import domain.ChessGame;
 import java.util.Map;
 import view.OutputView;
@@ -8,7 +9,8 @@ public final class StatusCommand implements PlayAction {
     private static final int STATUS_COMMAND_PARAMETER_SIZE = 0;
 
     @Override
-    public boolean execute(final ChessGame chessGame, final Map<Integer, String> parameters) {
+    public boolean execute(final ChessGame chessGame, final Map<Integer, String> parameters,
+                           final ConnectionGenerator connectionGenerator) {
         validateParameters(parameters);
         OutputView.printGameScoreStatus(chessGame);
         return true;
