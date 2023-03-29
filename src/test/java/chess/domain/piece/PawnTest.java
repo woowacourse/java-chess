@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PawnTest {
+public class PawnTest {
 
     public static final Position B5 = new Position(File.B, Rank.FIVE);
     public static final Position A4 = new Position(File.A, Rank.FOUR);

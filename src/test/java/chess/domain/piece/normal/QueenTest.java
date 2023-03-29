@@ -1,6 +1,5 @@
-package chess.domain.piece;
+package chess.domain.piece.normal;
 
-import chess.domain.piece.normal.Queen;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -14,9 +13,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static chess.domain.piece.BishopTest.C5;
-import static chess.domain.piece.BishopTest.E7;
-import static chess.domain.piece.KingTest.C6;
+import static chess.domain.piece.normal.BishopTest.C5;
+import static chess.domain.piece.normal.BishopTest.E7;
+import static chess.domain.piece.normal.KingTest.C6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

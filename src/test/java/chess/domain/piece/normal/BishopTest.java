@@ -1,6 +1,5 @@
-package chess.domain.piece;
+package chess.domain.piece.normal;
 
-import chess.domain.piece.normal.Bishop;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
