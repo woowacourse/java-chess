@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -34,16 +33,15 @@ public class PieceDao {
     }
 
     public void create(final PieceDto pieceDto) {
-        final String query = "INSERT INTO piece VALUES (?, ?, ?, ?, ?, ?)";
-        final int id = autoIncrementId();
+        final String query = "INSERT INTO piece(running_game_id, piece_type, file_position, rank_position, color) "
+                + "VALUES (?, ?, ?, ?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.setInt(2, pieceDto.getRunningGameId());
-            preparedStatement.setString(3, pieceDto.getType());
-            preparedStatement.setString(4, pieceDto.getFile());
-            preparedStatement.setInt(5, pieceDto.getRank());
-            preparedStatement.setString(6, pieceDto.getColor());
+            preparedStatement.setInt(1, pieceDto.getRunningGameId());
+            preparedStatement.setString(2, pieceDto.getType());
+            preparedStatement.setString(3, pieceDto.getFile());
+            preparedStatement.setInt(4, pieceDto.getRank());
+            preparedStatement.setString(5, pieceDto.getColor());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -84,14 +82,6 @@ public class PieceDao {
             throw new RuntimeException(e);
         }
         return null;
-    }
-
-    private int autoIncrementId() {
-        List<Integer> pieceIds = findAllIds();
-        if (pieceIds.isEmpty()) {
-            return 1;
-        }
-        return Collections.max(pieceIds) + 1;
     }
 
     public void update(final PieceDto pieceDto, final int id) {

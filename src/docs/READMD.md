@@ -182,5 +182,5 @@ classDiagram
 - [ ] piece 테이블 CRUD 미완성 부분 완성하기
 - [ ] 변수에 불필요한 prefix 제거
 - [ ] DB 접속 정보 및 커넥션 별도로 관리
-- [ ] autoIncrementId 메서드 삭제
+- [x] autoIncrementId 메서드 삭제
 - [ ] save 출력 메시지 추가
