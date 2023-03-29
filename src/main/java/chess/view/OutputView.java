@@ -2,11 +2,10 @@ package chess.view;
 
 import chess.controller.ChessBoardDto;
 import chess.controller.PieceDto;
-import chess.controller.ResultDto;
 import chess.controller.ScoreDto;
+import chess.dto.ResultDto;
 
 import java.util.List;
-import java.util.Objects;
 
 public class OutputView {
 
@@ -61,10 +60,8 @@ public class OutputView {
 
     public void printResult(final ResultDto resultDto) {
         final String winner = resultDto.getWinner();
-        if (Objects.equals(winner, "EMPTY")) {
-            printScore(resultDto.getScoreDto());
-            return;
-        }
-        System.out.println("winner: " + winner);
+
+        System.out.println(winner + "가 왕을 잡았습니다!");
+        System.out.println("승자: " + winner);
     }
 }

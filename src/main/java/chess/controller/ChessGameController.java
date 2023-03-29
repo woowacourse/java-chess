@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.status.GameStatus;
+import chess.chessgame.ChessGame;
+import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -20,26 +21,31 @@ public class ChessGameController {
     }
 
     public void run() {
-        setPrintActions();
-        GameStatus gameStatus = GameStatus.getInitialStatus();
-        Command gameCommand = Command.EMPTY_COMMAND;
+//        setPrintActions();
+//
+//        Command gameCommand = Command.EMPTY_COMMAND;
+//
+//        outputView.printInstructions();
+//
+//        while (gameCommand.getCommandType() != CommandType.END) {
+//            try {
+//                gameCommand = inputView.readCommand();
+//                final PrintAction printAction = commandToPrintAction.get(gameCommand.getCommandType());
+//                gameStatus = gameStatus.processCommand(gameCommand, printAction);
+//            } catch (IllegalArgumentException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+    }
 
-        outputView.printInstructions();
-
-        while (gameCommand.getCommandType() != CommandType.END) {
-            try {
-                gameCommand = inputView.readCommand();
-                final PrintAction printAction = commandToPrintAction.get(gameCommand.getCommandType());
-                gameStatus = gameStatus.processCommand(gameCommand, printAction);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+    private void printResultIfGameOver(final ChessGameService chessGameService, final ChessGame chessGame) {
+        if (chessGameService.isGameOver(chessGame)) {
+            outputView.printResult(chessGameService.getResult(chessGame));
         }
     }
 
     private void setPrintActions() {
         commandToPrintAction.put(CommandType.START, chessBoardDto -> outputView.printChessBoard((ChessBoardDto) chessBoardDto));
         commandToPrintAction.put(CommandType.MOVE, chessBoardDto -> outputView.printChessBoard((ChessBoardDto) chessBoardDto));
-        commandToPrintAction.put(CommandType.STATUS, resultDto -> outputView.printResult((ResultDto) resultDto));
     }
 }

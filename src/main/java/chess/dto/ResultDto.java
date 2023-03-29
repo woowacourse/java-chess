@@ -1,10 +1,10 @@
-package chess.controller;
+package chess.dto;
 
-public class WinnerDto {
+public class ResultDto {
 
     private final String winner;
 
-    public WinnerDto(final String winner) {
+    public ResultDto(final String winner) {
         this.winner = winner;
     }
 
