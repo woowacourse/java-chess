@@ -7,5 +7,9 @@ public enum PieceType {
     BISHOP,
     ROOK,
     QUEEN,
-    KING
+    KING;
+
+    public boolean isPawn() {
+        return PAWN == this;
+    }
 }

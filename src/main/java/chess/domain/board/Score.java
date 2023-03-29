@@ -1,8 +1,12 @@
 package chess.domain.board;
 
 import static java.util.Map.entry;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
 import java.util.Map;
 import java.util.Objects;
 
@@ -16,9 +20,9 @@ public final class Score {
             entry(PieceType.QUEEN, new Score(9)),
             entry(PieceType.KING, new Score(0))
     );
-    static final int DUPLICATE_SAME_FILE_PAWN_LIMIT = 2;
-    static final Score ZERO = new Score(0);
-    static final double PAWN_WEIGHT = 0.5;
+    private static final int DUPLICATE_SAME_FILE_PAWN_LIMIT = 2;
+    private static final Score ZERO = new Score(0);
+    private static final double PAWN_DECREASE = 0.5;
 
     private final double value;
 
@@ -26,8 +30,24 @@ public final class Score {
         this.value = value;
     }
 
-    public static Score mapPieceScore(final PieceType pieceType) {
-        return pieceScoreMapper.get(pieceType);
+    public static Score calculateScore(final Map<Position, Piece> board) {
+        final Score subtrahend = new Score(sumPawnCountInSameFileOver2(board) * PAWN_DECREASE);
+        return board.values()
+                .stream()
+                .map(piece -> pieceScoreMapper.get(piece.getPieceType()))
+                .reduce(ZERO, Score::sum)
+                .subtract(subtrahend);
+    }
+
+    private static long sumPawnCountInSameFileOver2(final Map<Position, Piece> board) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getPieceType().isPawn())
+                .collect(groupingBy(entry -> entry.getKey().file(), counting()))
+                .values()
+                .stream()
+                .filter(count -> count >= Score.DUPLICATE_SAME_FILE_PAWN_LIMIT)
+                .reduce(0L, Long::sum);
     }
 
     public Score sum(final Score addition) {

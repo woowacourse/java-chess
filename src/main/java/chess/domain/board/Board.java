@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import chess.domain.piece.Color;
@@ -50,30 +48,10 @@ public class Board {
     public Map<Color, Score> calculateScore() {
         final Map<Position, Piece> blackBoard = filterByColor(Color.BLACK);
         final Map<Position, Piece> whiteBoard = filterByColor(Color.WHITE);
-        final Score blackScore = calculateScore(blackBoard);
-        final Score whiteScore = calculateScore(whiteBoard);
+        final Score blackScore = Score.calculateScore(blackBoard);
+        final Score whiteScore = Score.calculateScore(whiteBoard);
 
         return Map.of(Color.BLACK, blackScore, Color.WHITE, whiteScore);
-    }
-
-    private Score calculateScore(final Map<Position, Piece> board) {
-        final Score subtrahend = new Score(sumPawnCountInSameFileOver2(board) * Score.PAWN_WEIGHT);
-        return board.values()
-                .stream()
-                .map(piece -> Score.mapPieceScore(piece.getPieceType()))
-                .reduce(Score.ZERO, Score::sum)
-                .subtract(subtrahend);
-    }
-
-    private long sumPawnCountInSameFileOver2(final Map<Position, Piece> board) {
-        return board.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().getPieceType() == PieceType.PAWN)
-                .collect(groupingBy(entry -> entry.getKey().file(), counting()))
-                .values()
-                .stream()
-                .filter(count -> count >= 2)
-                .reduce(0L, Long::sum);
     }
 
     private Map<Position, Piece> filterByColor(final Color color) {
