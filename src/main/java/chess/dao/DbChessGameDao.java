@@ -44,6 +44,7 @@ public final class DbChessGameDao implements ChessDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException ignored) {
         }
     }
 
@@ -70,6 +71,8 @@ public final class DbChessGameDao implements ChessDao {
             return new ChessGameLoadDto(piece_type, piece_file, piece_ranks, piece_teams, last_turn);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException e) {
+            return null;
         }
     }
 
@@ -83,6 +86,8 @@ public final class DbChessGameDao implements ChessDao {
             return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }catch (NullPointerException e) {
+            return false;
         }
     }
 
@@ -94,6 +99,7 @@ public final class DbChessGameDao implements ChessDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException ignored) {
         }
     }
 }
