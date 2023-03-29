@@ -18,12 +18,12 @@ public enum ViewRank {
     private final Rank rank;
     private final String viewRank;
 
-    ViewRank(Rank rank, String viewRank) {
+    ViewRank(final Rank rank, final String viewRank) {
         this.rank = rank;
         this.viewRank = viewRank;
     }
 
-    public static Rank from(String viewRank) {
+    public static Rank from(final String viewRank) {
         return Arrays.stream(ViewRank.values())
                 .filter(it -> it.viewRank.equals(viewRank))
                 .findFirst()

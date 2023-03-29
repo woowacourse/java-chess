@@ -7,12 +7,17 @@ import chess.domain.position.move.PieceMove;
 
 public final class King extends Piece {
 
-    public King(Camp camp) {
+    public King(final Camp camp) {
         super(camp, PieceSymbol.KING);
     }
 
     @Override
-    public PieceMove getMovement(Position from, Position to) {
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public PieceMove getMovement(final Position from, final Position to) {
         if (isPieceRule(from, to)) {
             return new BlockingMove();
         }
@@ -21,7 +26,7 @@ public final class King extends Piece {
     }
 
     @Override
-    boolean isPieceRule(Position from, Position to) {
+    boolean isPieceRule(final Position from, final Position to) {
         int fileGap = Math.abs(to.calculateFileGap(from));
         int rankGap = Math.abs(to.calculateRankGap(from));
 

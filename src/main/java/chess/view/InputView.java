@@ -9,7 +9,7 @@ public final class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String MOVE_DELIMITER = " ";
 
-    public List<String> readCommand() {
+    public static List<String> readCommand() {
         return Arrays.asList(scanner.nextLine().split(MOVE_DELIMITER));
     }
 }

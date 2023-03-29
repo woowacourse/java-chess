@@ -23,7 +23,7 @@ public enum ViewFile {
         this.viewFile = viewFile;
     }
 
-    public static File from(String viewFile) {
+    public static File from(final String viewFile) {
         return Arrays.stream(ViewFile.values())
                 .filter(it -> it.viewFile.equals(viewFile))
                 .findFirst()

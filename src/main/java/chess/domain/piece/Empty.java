@@ -11,7 +11,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public PieceMove getMovement(Position from, Position to) {
+    public PieceMove getMovement(final Position from, final Position to) {
         return new InvalidMove();
     }
 

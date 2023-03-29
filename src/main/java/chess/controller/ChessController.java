@@ -1,13 +1,11 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.ChessBoardMaker;
+import chess.Service.ChessService;
 import chess.domain.ChessGame;
-import chess.domain.Turn;
-import chess.domain.piece.Camp;
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.view.*;
+import chess.dto.MoveDto;
+import chess.view.ChessCommand;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -18,71 +16,68 @@ public final class ChessController {
     private static final int COMMAND_INDEX = 0;
     private static final int FROM_POSITION_INDEX = 1;
     private static final int TO_POSITION_INDEX = 2;
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
 
     private final Map<ChessCommand, GameAction> commandMapper = new EnumMap<>(ChessCommand.class);
-    private final OutputView outputView;
-    private final InputView inputView;
-    private final ChessGame game;
+    private final ChessService chessService;
 
-    public ChessController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-        this.game = new ChessGame(ChessBoardMaker.create(), new Turn(Camp.WHITE));
+    public ChessController(final ChessService chessService) {
+        this.chessService = chessService;
         initController();
     }
 
     private void initController() {
         commandMapper.put(ChessCommand.START, this::start);
         commandMapper.put(ChessCommand.MOVE, this::move);
-        commandMapper.put(ChessCommand.END, ignored -> {
+        commandMapper.put(ChessCommand.STATUS, this::status);
+        commandMapper.put(ChessCommand.END, (ignored) -> {
         });
     }
 
     public void run() {
-        outputView.printStartPrefix();
+        OutputView.printStartPrefix();
+
+        chessService.checkNotation();
         ChessCommand gameCommand = ChessCommand.WAIT;
-        while (gameCommand != ChessCommand.END) {
+        while (chessService.isKingLive() && gameCommand != ChessCommand.END) {
             gameCommand = play();
         }
+        chessService.checkDeleteData();
+        OutputView.printWinner(chessService.getChessGame());
     }
 
     private ChessCommand play() {
         try {
-            List<String> commands = inputView.readCommand();
+            List<String> commands = InputView.readCommand();
             ChessCommand command = ChessCommand.from(commands.get(COMMAND_INDEX));
             GameAction gameAction = commandMapper.get(command);
             gameAction.execute(commands);
             return command;
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return ChessCommand.WAIT;
         }
     }
 
-    private void start(List<String> commands) {
+    private void start(final List<String> commands) {
         ChessCommand.validateStartCommand(commands);
-        printBoard(game.getChessBoard());
+        printBoard(chessService.getChessGame());
     }
 
-
-    private void move(List<String> commands) {
+    private void move(final List<String> commands) {
         ChessCommand.validatePlayingCommand(commands);
-        String fromInput = commands.get(FROM_POSITION_INDEX);
-        String toInput = commands.get(TO_POSITION_INDEX);
-        game.move(toPosition(fromInput), toPosition(toInput), new Path());
-        printBoard(game.getChessBoard());
+        MoveDto moveDto = MoveDto.of(commands.get(FROM_POSITION_INDEX), commands.get(TO_POSITION_INDEX));
+
+        chessService.move(moveDto);
+
+        printBoard(chessService.getChessGame());
     }
 
-    private Position toPosition(String positionInput) {
-        String fileInput = String.valueOf(positionInput.charAt(FILE_INDEX));
-        String rankInput = String.valueOf(positionInput.charAt(RANK_INDEX));
-
-        return Position.of(ViewFile.from(fileInput), ViewRank.from(rankInput));
+    private void status(final List<String> commands) {
+        ChessCommand.validateStatusCommand(commands);
+        OutputView.printStatusScore(chessService.getChessGame());
     }
 
-    private void printBoard(ChessBoard chessBoard) {
-        outputView.printChessState(chessBoard.getBoard());
+    private void printBoard(final ChessGame chessGame) {
+        OutputView.printChessState(chessGame.getChessBoard().getBoard());
     }
 }

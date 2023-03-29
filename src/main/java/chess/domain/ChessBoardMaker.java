@@ -22,7 +22,7 @@ public final class ChessBoardMaker {
         return new ChessBoard(board);
     }
 
-    private static void setUpNobilityPiece(Map<Position, Piece> board, Rank rank, Camp camp) {
+    private static void setUpNobilityPiece(final Map<Position, Piece> board, final Rank rank, final Camp camp) {
         board.put(Position.of(File.A, rank), new Rook(camp));
         board.put(Position.of(File.B, rank), new Knight(camp));
         board.put(Position.of(File.C, rank), new Bishop(camp));
@@ -33,20 +33,20 @@ public final class ChessBoardMaker {
         board.put(Position.of(File.H, rank), new Rook(camp));
     }
 
-    private static void makeEmpty(Map<Position, Piece> board) {
+    private static void makeEmpty(final Map<Position, Piece> board) {
         setUpBlank(board, Rank.SIX);
         setUpBlank(board, Rank.FIVE);
         setUpBlank(board, Rank.FOUR);
         setUpBlank(board, Rank.THREE);
     }
 
-    private static void setUpPawn(Map<Position, Piece> board, Rank rank, Camp camp) {
+    private static void setUpPawn(final Map<Position, Piece> board, final Rank rank, final Camp camp) {
         for (File file : File.values()) {
             board.put(Position.of(file, rank), new Pawn(camp));
         }
     }
 
-    private static void setUpBlank(Map<Position, Piece> board, Rank rank) {
+    private static void setUpBlank(final Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
             board.put(Position.of(file, rank), new Empty());
         }

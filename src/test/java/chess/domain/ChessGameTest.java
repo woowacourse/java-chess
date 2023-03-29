@@ -4,7 +4,6 @@ import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.position.File;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +24,7 @@ class ChessGameTest {
         Position whiteRookPosition = Position.of(File.A, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
 
-        assertThatThrownBy(() -> chessGame.move(whiteRookPosition, toPosition, new Path()))
+        assertThatThrownBy(() -> chessGame.move(whiteRookPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -38,7 +37,7 @@ class ChessGameTest {
         Position whiteKnightPosition = Position.of(File.B, Rank.ONE);
         Position toPosition = Position.of(File.A, Rank.THREE);
 
-        assertDoesNotThrow(() -> chessGame.move(whiteKnightPosition, toPosition, new Path()));
+        assertDoesNotThrow(() -> chessGame.move(whiteKnightPosition, toPosition));
     }
 
     @Test
@@ -50,7 +49,7 @@ class ChessGameTest {
         Position emptyPosition = Position.of(File.A, Rank.THREE);
         Position toPosition = Position.of(File.A, Rank.FOUR);
 
-        assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition, new Path()))
+        assertThatThrownBy(() -> chessGame.move(emptyPosition, toPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,7 +62,7 @@ class ChessGameTest {
         ChessBoard chessBoard = ChessBoardMaker.create();
         ChessGame chessGame = new ChessGame(chessBoard, new Turn(Camp.WHITE));
 
-        chessGame.move(whitePawnPosition, emptyPosition, new Path());
+        chessGame.move(whitePawnPosition, emptyPosition);
 
         assertThat(chessBoard.getBoard().get(whitePawnPosition)).isInstanceOf(Empty.class);
         assertThat(chessBoard.getBoard().get(emptyPosition)).isInstanceOf(Pawn.class);

@@ -7,12 +7,12 @@ import chess.domain.position.move.PieceMove;
 
 public final class Bishop extends Piece {
 
-    public Bishop(Camp camp) {
+    public Bishop(final Camp camp) {
         super(camp, PieceSymbol.BISHOP);
     }
 
     @Override
-    public PieceMove getMovement(Position from, Position to) {
+    public PieceMove getMovement(final Position from, final Position to) {
         if (isPieceRule(from, to)) {
             return new BlockingMove();
         }
@@ -21,7 +21,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    boolean isPieceRule(Position from, Position to) {
+    boolean isPieceRule(final Position from, final Position to) {
         int fileGap = to.calculateFileGap(from);
         int rankGap = to.calculateRankGap(from);
 

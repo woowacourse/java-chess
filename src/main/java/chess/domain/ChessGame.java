@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
@@ -15,50 +16,51 @@ public final class ChessGame {
     private final ChessBoard chessBoard;
     private Turn turnCamp;
 
-    public ChessGame(ChessBoard chessBoard, Turn turnCamp) {
+    public ChessGame(final ChessBoard chessBoard, final Turn turnCamp) {
         this.turnCamp = turnCamp;
         this.chessBoard = chessBoard;
     }
 
-    public void move(Position fromPosition, Position toPosition, Path path) {
+    public void move(final Position fromPosition, final Position toPosition) {
         validateBeforeMoveTo(fromPosition, toPosition);
         PieceMove pieceMove = getPieceMove(fromPosition, toPosition);
 
+        Path path = new Path();
         path.judgeBetweenStuck(
                 chessBoard.choiceBetweenPiece(path.getBetweenPositions(fromPosition, toPosition)),
                 pieceMove);
-        validateLastMovable(chessBoard.choicePiece(toPosition), pieceMove, true);
+        validateLastMovable(chessBoard.choosePiece(toPosition), pieceMove, true);
 
         chessBoard.movePieceOn(fromPosition, toPosition);
         changeTurn();
     }
 
-    private PieceMove getPieceMove(Position fromPosition, Position toPosition) {
-        Piece fromPiece = chessBoard.choicePiece(fromPosition);
+    private PieceMove getPieceMove(final Position fromPosition, final Position toPosition) {
+        Piece fromPiece = chessBoard.choosePiece(fromPosition);
 
         return fromPiece.getMovement(fromPosition, toPosition);
     }
 
-    public void validateBeforeMoveTo(Position fromPosition, Position toPosition) {
-        validatePickExistPiece(chessBoard.choicePiece(fromPosition));
-        validateTurnCamp(chessBoard.choicePiece(fromPosition));
-        validateSameCamp(chessBoard.choicePiece(fromPosition), chessBoard.choicePiece(toPosition));
+    public void validateBeforeMoveTo(final Position fromPosition, final Position toPosition) {
+        validatePickExistPiece(chessBoard.choosePiece(fromPosition));
+        validateTurnCamp(chessBoard.choosePiece(fromPosition));
+        validateSameCamp(chessBoard.choosePiece(fromPosition), chessBoard.choosePiece(toPosition));
         validateEqualPosition(fromPosition, toPosition);
     }
 
-    private void validateTurnCamp(Piece fromPiece) {
-        if (turnCamp.isMyTurn(fromPiece)) {
+    private void validateTurnCamp(final Piece fromPiece) {
+        if (!turnCamp.isMyTurn(fromPiece)) {
             throw new IllegalArgumentException(TURN_MISMATCHED_ERROR_MESSAGE);
         }
     }
 
-    private void validatePickExistPiece(Piece fromPiece) {
+    private void validatePickExistPiece(final Piece fromPiece) {
         if (fromPiece.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_CHOICE_ERROR_MESSAGE);
         }
     }
 
-    private void validateSameCamp(Piece fromPiece, Piece toPiece) {
+    private void validateSameCamp(final Piece fromPiece, final Piece toPiece) {
         if (fromPiece.isEmpty()) {
             return;
         }
@@ -67,20 +69,56 @@ public final class ChessGame {
         }
     }
 
-    private void validateEqualPosition(Position fromPosition, Position toPosition) {
+    private void validateEqualPosition(final Position fromPosition, final Position toPosition) {
         if (fromPosition.equals(toPosition)) {
             throw new IllegalArgumentException(SAME_POSITION_ERROR_MESSAGE);
         }
     }
 
-    public void validateLastMovable(Piece piece, PieceMove pieceMove, boolean lastPiece) {
+    public void validateLastMovable(final Piece piece, final PieceMove pieceMove, final boolean lastPiece) {
         if (!pieceMove.isMovable(piece, lastPiece)) {
             throw new IllegalArgumentException(UNABLE_TO_MOVE_ERROR_MESSAGE);
         }
     }
 
+    public boolean isKingsLive() {
+        return chessBoard.isKingsLive();
+    }
+
     private void changeTurn() {
         this.turnCamp = turnCamp.convert(turnCamp);
+    }
+
+    public double calculateWhiteScore() {
+        return chessBoard.calculateTotalScoreByCamp(Camp.WHITE);
+    }
+
+    public double calculateBlackScore() {
+        return chessBoard.calculateTotalScoreByCamp(Camp.BLACK);
+    }
+
+    public Camp determineWinnerCamp() {
+        if (chessBoard.isKingsLive()) {
+            return calculateWinnerByScore();
+        }
+        return calculateWinnerByKingLive();
+    }
+
+    private Camp calculateWinnerByKingLive() {
+        if (chessBoard.isKingLiveByCamp(Camp.WHITE)) {
+            return Camp.WHITE;
+        }
+        return Camp.BLACK;
+    }
+
+    private Camp calculateWinnerByScore() {
+        if (chessBoard.calculateTotalScoreByCamp(Camp.WHITE) > chessBoard.calculateTotalScoreByCamp(Camp.BLACK)) {
+            return Camp.WHITE;
+        }
+        if (chessBoard.calculateTotalScoreByCamp(Camp.WHITE) < chessBoard.calculateTotalScoreByCamp(Camp.BLACK)) {
+            return Camp.BLACK;
+        }
+        return Camp.NEUTRAL;
     }
 
     public ChessBoard getChessBoard() {
