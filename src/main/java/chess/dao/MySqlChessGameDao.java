@@ -13,7 +13,6 @@ public class MySqlChessGameDao implements ChessGameDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    @Override
     public Connection getConnection() {
         // 드라이버 연결
         try {
