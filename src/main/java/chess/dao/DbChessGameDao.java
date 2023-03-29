@@ -33,7 +33,7 @@ public final class DbChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void save(ChessBoard chessBoard) {
+    public void insert(ChessBoard chessBoard) {
         final var query = "INSERT  chess_game (board_Row8to1, turn) VALUES (?, ?)";
         List<String> convertToString = BoardToString.convert(chessBoard.getChessBoard());
         String board_Row8to1 = convertToString.stream()
@@ -71,7 +71,7 @@ public final class DbChessGameDao implements ChessGameDao {
     @Override
     public void update(ChessBoard chessBoard) {
         delete(chessBoard);
-        save(chessBoard);
+        insert(chessBoard);
     }
 
     @Override

@@ -4,7 +4,7 @@ import chess.domain.chessGame.ChessBoard;
 
 public interface ChessGameDao  {
 
-    void save(ChessBoard chessBoard);
+    void insert(ChessBoard chessBoard);
 
     ChessBoard select();
 
