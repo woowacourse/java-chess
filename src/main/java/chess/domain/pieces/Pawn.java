@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final Row INIT_BLACK_PAWN_ROW_POSITION = Row.SEVEN;
+    private static final Row INIT_WHITE_PAWN_ROW_POSITION = Row.TWO;
+
     private static final List<PawnDirection> WHITE_PAWN_FIRST_MOVE_DIRECTION = List.of(
         PawnDirection.WHITE_PAWN_MOVE,
         PawnDirection.WHITE_PAWN_DOUBLE_MOVE,
@@ -34,8 +37,6 @@ public class Pawn extends Piece {
         PawnDirection.BLACK_PAWN_LEFT_DIAGONAL_ATTACK
     );
 
-    private static final Row INIT_BLACK_PAWN_ROW_POSITION = Row.SEVEN;
-    private static final Row INIT_WHITE_PAWN_ROW_POSITION = Row.TWO;
 
     private boolean isFirstMove;
 

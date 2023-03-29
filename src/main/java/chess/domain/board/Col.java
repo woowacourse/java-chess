@@ -37,4 +37,8 @@ public enum Col {
     public int subPositionFromArrivePosition(final Col colOfSource) {
         return this.column - colOfSource.column;
     }
+
+    public String makeToString() {
+        return String.valueOf(this.column);
+    }
 }

@@ -14,10 +14,6 @@ public class Board {
         this.board = board;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
     public Piece findPiece(final Position position) {
         return board.get(position);
     }
@@ -40,6 +36,10 @@ public class Board {
         Piece destinationPiece = findPiece(destination);
         return (sourcePiece.isWhiteTeam() && destinationPiece.isBlackTeam())
             || (sourcePiece.isBlackTeam() && destinationPiece.isWhiteTeam());
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 
     private void validateMoveSamePosition(final Position source, final Position destination) {
