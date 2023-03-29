@@ -1,6 +1,5 @@
-package dto;
+package controller;
 
-import controller.ChessBoardElement;
 import domain.chessboard.ChessBoard;
 import domain.piece.Color;
 import domain.position.PositionFactory;

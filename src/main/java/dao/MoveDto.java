@@ -1,4 +1,4 @@
-package dto;
+package dao;
 
 public class MoveDto {
 

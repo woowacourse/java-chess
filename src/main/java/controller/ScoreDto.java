@@ -1,4 +1,4 @@
-package dto;
+package controller;
 
 public class ScoreDto {
 

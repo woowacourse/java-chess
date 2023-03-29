@@ -1,7 +1,7 @@
 package controller.command;
 
-import dto.ChessBoardDto;
-import dto.ScoreDto;
+import controller.ChessBoardDto;
+import controller.ScoreDto;
 import service.ChessService;
 import view.OutputView;
 

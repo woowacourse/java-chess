@@ -6,7 +6,7 @@ import domain.chessgame.ChessGame;
 import domain.piece.Color;
 import domain.position.Position;
 import domain.position.PositionFactory;
-import dto.MoveDto;
+import dao.MoveDto;
 
 import java.util.List;
 

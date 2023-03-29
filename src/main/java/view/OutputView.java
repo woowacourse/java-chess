@@ -1,7 +1,7 @@
 package view;
 
-import dto.ChessBoardDto;
-import dto.ScoreDto;
+import controller.ChessBoardDto;
+import controller.ScoreDto;
 
 import java.util.List;
 

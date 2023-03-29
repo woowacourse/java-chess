@@ -1,7 +1,5 @@
 package dao;
 
-import dto.MoveDto;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
