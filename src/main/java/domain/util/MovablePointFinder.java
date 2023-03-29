@@ -18,76 +18,56 @@ public class MovablePointFinder {
         Map<Direction, Integer> directionsAndRanges = piece.getMovableDirectionAndRange();
 
         directionsAndRanges.forEach((direction, range)
-                -> addPoints(from, points, direction, range));
-
-        removeInvalidPoints(to, pieceStatus, piece, points);
+                -> addPointsThroughDirection(points, from, to, direction, range, pieceStatus));
 
         return points;
     }
 
-    private static void removeInvalidPoints(Point to, List<List<Piece>> pieceStatus, Piece piece, List<Point> points) {
-        removePointOutOfBoard(pieceStatus, points);
-        removePointsAlreadyAssigned(pieceStatus, points, to, piece);
-    }
-
-    private static void addPoints(Point point, List<Point> points, Direction direction, Integer range) {
-        if (range != null) {
-            addPointsThroughDirection(point, points, direction, range);
-        }
-    }
-
-    private static void addPointsThroughDirection(Point point, List<Point> points, Direction direction, Integer range) {
-        Point movablePoint = point;
+    private static void addPointsThroughDirection(List<Point> points, Point fromPoint, Point toPoint, Direction direction, Integer range, List<List<Piece>> pieceStatus) {
+        List<Point> pointsThroughDirection = new ArrayList<>();
+        Point current = fromPoint;
         for (int count = 0; count < range; count++) {
-            movablePoint = addPointThroughDirection(points, direction, movablePoint);
+            current = findPointThroughDirection(direction, current);
+
+            if (current.equals(toPoint)) {
+                Piece pieceOnTargetPoint = findPiece(pieceStatus, toPoint);
+                if (!pieceOnTargetPoint.isEmpty() && !findPiece(pieceStatus, fromPoint).isOppositeWith(pieceOnTargetPoint)) {
+                    rollback(points, pointsThroughDirection);
+                    return;
+                }
+                pointsThroughDirection.add(current);
+                break;
+            }
+
+            try {
+                Piece piece = findPiece(pieceStatus, current);
+                if (!piece.isEmpty()) {
+                    rollback(points, pointsThroughDirection);
+                    return;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                continue;
+            }
+
+            pointsThroughDirection.add(current);
         }
+        points.addAll(pointsThroughDirection);
     }
 
-    private static Point addPointThroughDirection(List<Point> movablePoints, Direction direction, Point movablePoint) {
+    private static Point findPointThroughDirection(Direction direction, Point point) {
         try {
-            movablePoint = movablePoint.move(direction);
-            movablePoints.add(movablePoint);
+            point = point.move(direction);
         } catch (PointOutOfBoardException ignored) {}
-        return movablePoint;
+        return point;
     }
 
-    private static void removePointOutOfBoard(List<List<Piece>> pieceStatus, List<Point> movablePoints) {
-        List<Point> tempPoints = new ArrayList<>(movablePoints);
-        for (Point movablePoint : movablePoints) {
-            checkAndRemovePointOutOfBoard(pieceStatus, tempPoints, movablePoint);
-        }
-        movablePoints.clear();
-        movablePoints.addAll(tempPoints);
-    }
-
-    private static void checkAndRemovePointOutOfBoard(List<List<Piece>> pieceStatus, List<Point> newMovablePoints, Point movablePoint) {
-        try {
-            findPiece(pieceStatus, movablePoint);
-        } catch (IndexOutOfBoundsException e) {
-            newMovablePoints.remove(movablePoint);
-        }
-    }
-
-    private static void removePointsAlreadyAssigned(List<List<Piece>> pieceStatus, List<Point> points, Point point, Piece piece) {
-        List<Point> copyOfMovablePoints = new ArrayList<>(points);
-        for (Point targetPoint : copyOfMovablePoints) {
-            Piece targetPiece = findPiece(pieceStatus, targetPoint);
-            removePointAlreadyAssigned(points, point, piece, targetPoint, targetPiece);
-        }
+    private static void rollback(List<Point> points, List<Point> pointsThroughDirection) {
+        points.removeAll(pointsThroughDirection);
     }
 
     private static Piece findPiece(List<List<Piece>> pieceStatus, Point point) {
         return pieceStatus
                 .get(point.findIndexFromBottom())
                 .get(point.findIndexFromLeft());
-    }
-
-    private static void removePointAlreadyAssigned(List<Point> points, Point point, Piece piece, Point targetPoint, Piece targetPiece) {
-        if (targetPoint.equals(point) && piece.isOppositeWith(targetPiece)) {
-            return;
-        }
-        if (!targetPiece.isEmpty()) {
-            points.remove(targetPoint);
-        }
     }
 }
