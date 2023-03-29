@@ -3,7 +3,6 @@ package chess.controller;
 import chess.dao.BoardDao;
 import chess.dao.GameRoomDao;
 import chess.domain.ChessGame;
-import chess.view.Command;
 import chess.domain.RoomName;
 import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
@@ -13,6 +12,7 @@ import chess.dto.BoardDto;
 import chess.dto.GameRoomDto;
 import chess.dto.PieceRenderer;
 import chess.dto.SquareRenderer;
+import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -35,18 +35,21 @@ public class ChessController {
     }
 
     public void run() {
-        RoomName roomName = new RoomName(inputView.requestRoomName());
+        RoomName roomName = new RoomName(retryOnInvalidUserInput(inputView::requestRoomName));
         ChessGame chessGame = new ChessGame(roomName);
 
         outputView.printStartMessage();
-        initialize(chessGame);
+        initializeGameState(chessGame);
         if (retryOnInvalidUserInput(this::isStartCommand)) {
             play(chessGame);
         }
-        finalize(chessGame);
+        outputView.printChessBoard(chessGame.getChessboard());
+        outputView.printScoreMessage(chessGame);
+
+        updateGameState(chessGame);
     }
 
-    private void initialize(ChessGame chessGame) {
+    private void initializeGameState(ChessGame chessGame) {
         setCorrectTurn(chessGame);
         setRecordedBoard(chessGame);
     }
@@ -149,13 +152,6 @@ public class ChessController {
 
     private PieceType requestPieceType() {
         return retryOnInvalidUserInput(inputView::requestPiece);
-    }
-
-    private void finalize(ChessGame chessGame) {
-        outputView.printChessBoard(chessGame.getChessboard());
-        outputView.printScoreMessage(chessGame);
-
-        updateGameState(chessGame);
     }
 
     private void updateGameState(ChessGame chessGame) {
