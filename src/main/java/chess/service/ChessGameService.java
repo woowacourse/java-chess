@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ChessGameService {
     private static final int NOT_EXIST = -1;
-    
+
     private final ChessGame chessGame;
     private final ChessGameJdbcDao chessGameJdbcDao;
 
@@ -47,7 +47,7 @@ public class ChessGameService {
     }
 
     public void start() {
-        if (chessGameJdbcDao.findGameIdByNotFinished() == NOT_EXIST) {
+        if (!chessGameJdbcDao.isExistNotFinishedGame()) {
             chessGameJdbcDao.saveGame();
         }
         chessGame.start();

@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dto.MoveDto;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -31,8 +32,9 @@ public class ChessGameJdbcDao implements ChessGameDao {
     public List<MoveDto> findByGameId(int gameId) {
         var query = "SELECT * FROM move_history WHERE game_id = (?)";
         List<MoveDto> moveHistories = new ArrayList<>();
+
         try (var connection = ConnectionGenerator.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameId);
             var resultSet = preparedStatement.executeQuery();
 
@@ -82,6 +84,21 @@ public class ChessGameJdbcDao implements ChessGameDao {
         try (var connection = ConnectionGenerator.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean isExistNotFinishedGame() {
+        var query = "SELECT EXISTS(SELECT * FROM game WHERE finished = false)";
+        try (var connection = ConnectionGenerator.getConnection();
+             var preparedStatement = connection.prepareStatement(query)) {
+            var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getBoolean(1);
+            }
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

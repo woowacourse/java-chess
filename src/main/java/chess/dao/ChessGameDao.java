@@ -14,4 +14,6 @@ public interface ChessGameDao {
     void saveGame();
 
     void finishedGame();
+
+    boolean isExistNotFinishedGame();
 }
