@@ -1,35 +1,25 @@
 package chess.domain;
 
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 
 public class Turn {
-    private final int count;
+    private final Camp turn;
 
     public Turn() {
-        this.count = 0;
+        this.turn = Camp.WHITE;
     }
 
-    private Turn(int count) {
-        this.count = count;
+    private Turn(Camp turn) {
+        this.turn = turn;
     }
 
     public Turn nextTurn() {
-        return new Turn(count + 1);
+        return new Turn(turn.getOpposite());
     }
 
     public boolean isMoveOrder(Piece piece) {
-        if (piece.isWhite()) {
-            return isWhiteTurn();
-        }
-
-        return isBlackTurn();
+        return piece.isSameCamp(turn);
     }
 
-    private boolean isWhiteTurn() {
-        return count % 2 == 0;
-    }
-
-    private boolean isBlackTurn() {
-        return count % 2 == 1;
-    }
 }
