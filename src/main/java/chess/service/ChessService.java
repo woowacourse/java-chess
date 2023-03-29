@@ -8,8 +8,7 @@ import chess.dao.JdbcConnector;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.result.TempResult;
-import chess.dto.BoardTurnDto;
+import chess.domain.result.ScoreAndWinnerResult;
 import chess.dto.MoveDto;
 
 public class ChessService {
@@ -44,7 +43,7 @@ public class ChessService {
 	}
 
 	public void loadLastGame() {
-		List<MoveDto> moves = chessGameDao.loadMoves();
+		List<MoveDto> moves = chessGameDao.findMoves();
 		game.initialize();
 		for (MoveDto move : moves) {
 			Position source = new Position(move.getSourceColumn(), move.getSourceRow());
@@ -69,7 +68,7 @@ public class ChessService {
 		}
 	}
 
-	public TempResult getTempResult() {
+	public ScoreAndWinnerResult getTempResult() {
 		return game.getTempResult();
 	}
 
@@ -87,11 +86,11 @@ public class ChessService {
 
 	private void deleteMovesIfDbConnected() {
 		if (isDbConnected) {
-			chessGameDao.deleteMoves();
+			chessGameDao.deleteAllMoves();
 		}
 	}
 
-	public BoardTurnDto getBoardAndTurn() {
-		return new BoardTurnDto(game.getBoard(), game.getTurn());
+	public BoardAndTurn getBoardAndTurn() {
+		return new BoardAndTurn(game.getBoard(), game.getTurn());
 	}
 }

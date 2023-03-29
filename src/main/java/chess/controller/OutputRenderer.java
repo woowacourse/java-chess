@@ -9,8 +9,8 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.result.TempResult;
-import chess.dto.BoardTurnDto;
+import chess.domain.result.ScoreAndWinnerResult;
+import chess.service.BoardAndTurn;
 import chess.dto.ViewBoardDto;
 import chess.dto.TempResultDto;
 
@@ -34,7 +34,7 @@ public class OutputRenderer {
 		TURN_TO_STRING.put(Team.EMPTY, "무승부");
 	}
 
-	public static ViewBoardDto toViewBoardDto(final BoardTurnDto boardTurn) {
+	public static ViewBoardDto toViewBoardDto(final BoardAndTurn boardTurn) {
 		Map<Position, Piece> board = boardTurn.getBoard();
 		List<Position> positions = new ArrayList<>(board.keySet());
 		sortPositions(positions);
@@ -83,7 +83,7 @@ public class OutputRenderer {
 		return sign;
 	}
 
-	public static TempResultDto toTempResultDto(final TempResult result) {
+	public static TempResultDto toTempResultDto(final ScoreAndWinnerResult result) {
 		String winner = TURN_TO_STRING.get(result.getWinner());
 		String whiteScore = to10DividedString(result.getWhiteScoreMultipliedBy10());
 		String blackScore = to10DividedString(result.getBlackScoreMultipliedBy10());

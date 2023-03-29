@@ -9,14 +9,14 @@ public class ChessController {
 	public void run() {
 		final ChessService chessService = new ChessService();
 		OutputView.printInitialMessage();
-		Command lastCommand;
+		Command latestCommand;
 		do {
-			lastCommand = runInputCommand(chessService);
+			latestCommand = runInputCommand(chessService);
 			if (chessService.isGameDone()) {
 				OutputView.printWinner(chessService.getFinalWinner().toString());
 				return;
 			}
-		} while (lastCommand != Command.END);
+		} while (latestCommand != Command.END);
 	}
 
 	private Command runInputCommand(final ChessService chessService) {

@@ -18,14 +18,13 @@ public class ChessGameDaoImpl implements ChessGameDao {
 		return new ChessGameDaoImpl(new JdbcTemplate());
 	}
 
-
-
 	@Override
 	public boolean isLastGameExists() {
 		final String query = "SELECT COUNT(*) as cnt FROM move";
 		final List<Object> parameters = Collections.emptyList();
 		return jdbcTemplate.executeQuery(
 			query,
+			parameters,
 			resultSet -> {
 				while (resultSet.next()) {
 					if (resultSet.getInt("cnt") > 0) {
@@ -33,8 +32,7 @@ public class ChessGameDaoImpl implements ChessGameDao {
 					}
 				}
 				return false;
-				},
-			parameters
+				}
 		);
 	}
 
@@ -52,11 +50,12 @@ public class ChessGameDaoImpl implements ChessGameDao {
 	}
 
 	@Override
-	public List<MoveDto> loadMoves() {
+	public List<MoveDto> findMoves() {
 		final String query = "SELECT * FROM move";
 		final List<Object> parameters = Collections.emptyList();
 		return jdbcTemplate.executeQuery(
 			query,
+			parameters,
 			resultSet -> {
 				List<MoveDto> moves = new ArrayList<>();
 				while (resultSet.next()) {
@@ -67,13 +66,12 @@ public class ChessGameDaoImpl implements ChessGameDao {
 					moves.add(new MoveDto(sourceColumn, sourceRow, targetColumn, targetRow));
 				}
 				return moves;
-			},
-			parameters
+			}
 		);
 	}
 
 	@Override
-	public void deleteMoves() {
+	public void deleteAllMoves() {
 		final String query = "DELETE FROM move";
 		final List<Object> parameters = Collections.emptyList();
 		jdbcTemplate.executeUpdate(query, parameters);

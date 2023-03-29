@@ -19,7 +19,7 @@ class ChessGameTest {
 
 	@Nested
 	@DisplayName("게임 상태 관련 테스트")
-	class ServiceStateTest {
+	class GameStateTest {
 
 		@Test
 		@DisplayName("초기화 이전에 move를 시도할 경우 예외가 발생해야 한다.")

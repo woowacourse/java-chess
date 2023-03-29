@@ -6,20 +6,20 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 
-public class TempResult {
+public class ScoreAndWinnerResult {
 
 	private final Score whiteScore;
 	private final Score blackScore;
 
-	private TempResult(final Score whiteScore, final Score blackScore) {
+	private ScoreAndWinnerResult(final Score whiteScore, final Score blackScore) {
 		this.whiteScore = whiteScore;
 		this.blackScore = blackScore;
 	}
 
-	public static TempResult from(final Map<Position, Piece> board) {
+	public static ScoreAndWinnerResult from(final Map<Position, Piece> board) {
 		Score whiteScore = Score.of(Team.WHITE, board);
 		Score blackScore = Score.of(Team.BLACK, board);
-		return new TempResult(whiteScore, blackScore);
+		return new ScoreAndWinnerResult(whiteScore, blackScore);
 	}
 
 	public Team getWinner() {

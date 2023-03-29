@@ -8,6 +8,6 @@ public interface ChessGameDao {
 
 	boolean isLastGameExists();
 	void saveMove(MoveDto moveDto);
-	List<MoveDto> loadMoves();
-	void deleteMoves();
+	List<MoveDto> findMoves();
+	void deleteAllMoves();
 }

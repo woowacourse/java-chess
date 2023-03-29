@@ -24,7 +24,7 @@ public class JdbcTemplate {
 		}
 	}
 
-	public <T> T executeQuery(final String query, final RowMapper<T> rowMapper, final List<Object> parameters) {
+	public <T> T executeQuery(final String query, final List<Object> parameters, final RowMapper<T> rowMapper) {
 		try (
 			final Connection connection = connectionManager.getConnection();
 			final PreparedStatement preparedStatement = connection.prepareStatement(query)

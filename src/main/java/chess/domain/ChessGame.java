@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
-import chess.domain.result.TempResult;
+import chess.domain.result.ScoreAndWinnerResult;
 
 public class ChessGame {
 
@@ -42,9 +42,9 @@ public class ChessGame {
 		this.state = state;
 	}
 
-	public TempResult getTempResult() {
+	public ScoreAndWinnerResult getTempResult() {
 		assertState(GameState.GAME_RUNNING);
-		return TempResult.from(board.getBoard());
+		return ScoreAndWinnerResult.from(board.getBoard());
 	}
 
 	public Team getFinalWinner() {

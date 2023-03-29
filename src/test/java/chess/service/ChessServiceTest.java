@@ -41,14 +41,14 @@ class ChessServiceTest {
 		}
 
 		@Override
-		public List<MoveDto> loadMoves() {
+		public List<MoveDto> findMoves() {
 			MoveDto move1 = new MoveDto(1, 1, 1, 3);
 			MoveDto move2 = new MoveDto(1, 6, 1, 4);
 			return List.of(move1, move2);
 		}
 
 		@Override
-		public void deleteMoves() {
+		public void deleteAllMoves() {
 
 		}
 	}
