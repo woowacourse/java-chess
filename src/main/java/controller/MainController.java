@@ -41,7 +41,7 @@ public class MainController {
         while (gameStatus != GameStatus.END);
         if(!chessBoard.isExistKing()){
             chessBoardDao.delete();
-            System.out.println("King이 죽었습니다. 게임종료!");
+            outputView.printGameEndMessage();
         }
     }
 
@@ -88,7 +88,7 @@ public class MainController {
         if (commandType == CommandType.STATUS) {
             return new StatusCommand(outputView, chessBoard);
         }
-        return new EndCommand();
+        return new EndCommand(outputView);
     }
 
 }
