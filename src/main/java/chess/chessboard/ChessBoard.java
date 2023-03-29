@@ -15,44 +15,46 @@ public class ChessBoard {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public Piece move(final Square source, final Square destination) {
-        final Piece pieceToMove = pieces.get(source);
-        validateNotEmpty(pieceToMove);
-        validateMovablePath(source, destination);
+    public Piece moveAndCapture(final Square source, final Square destination) {
+        final Piece pieceOfSource = pieces.get(source);
+        final Piece pieceOfDestination = pieces.get(destination);
 
-        return movePiece(source, destination);
+        validateNotEmptyPiece(pieceOfSource);
+        validateIsValidPath(source, destination);
+
+        move(source, destination);
+
+        return pieceOfDestination;
     }
 
-    private Piece movePiece(final Square source, final Square destination) {
-        final Piece pieceToMove = pieces.get(source);
-        final Piece existingPiece = pieces.get(destination);
+    private void move(final Square source, final Square destination) {
+        final Piece pieceOfSource = pieces.get(source);
+        final Piece pieceOfDestination = pieces.get(destination);
 
-        pieces.put(destination, pieceToMove);
+        pieces.put(destination, pieceOfSource);
         pieces.put(source, EmptyPiece.getInstance());
-
-        return existingPiece;
     }
 
-    private void validateNotEmpty(final Piece target) {
+    private void validateNotEmptyPiece(final Piece target) {
         if (target == EmptyPiece.getInstance()) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다");
         }
     }
 
-    private void validateMovablePath(final Square source, final Square destination) {
-        if (isNotValidMove(source, destination)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다");
+    private void validateIsValidPath(final Square source, final Square destination) {
+        if (isValidMove(source, destination)) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다");
         }
         if (hasObstacleAlongPath(source, destination)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다");
+            throw new IllegalArgumentException("경로에 다른 기물이 존재합니다");
         }
     }
 
-    private boolean isNotValidMove(final Square source, final Square destination) {
-        final Piece pieceToMove = pieces.get(source);
+    private boolean isValidMove(final Square source, final Square destination) {
+        final Piece pieceOfSource = pieces.get(source);
         final Piece pieceOfDestination = pieces.get(destination);
 
-        return !pieceToMove.isMovable(source, destination, pieceOfDestination);
+        return !pieceOfSource.isMovable(source, destination, pieceOfDestination);
     }
 
     private boolean hasObstacleAlongPath(final Square source, final Square destination) {
@@ -71,10 +73,8 @@ public class ChessBoard {
     public Map<Square, Piece> getPieces(final Side side) {
         return pieces.entrySet()
                      .stream()
-                     .filter(squarePieceEntry -> {
-                         final Piece piece = squarePieceEntry.getValue();
-                         return piece.isSameSide(side);
-                     })
+                     .filter(squarePieceEntry -> squarePieceEntry.getValue()
+                                                                 .hasSideOf(side))
                      .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 

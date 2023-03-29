@@ -28,7 +28,7 @@ public class ChessGame {
         validatePlayerTurn(source);
         validateGameContinuing();
 
-        final Piece capturedPiece = chessBoard.move(source, destination);
+        final Piece capturedPiece = chessBoard.moveAndCapture(source, destination);
 
         checkWinnerDecided(capturedPiece);
 

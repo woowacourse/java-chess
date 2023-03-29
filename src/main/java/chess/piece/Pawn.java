@@ -65,7 +65,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isAtInitialPosition(final Square square) {
-        if (isSameSide(Side.WHITE)) {
+        if (hasSideOf(Side.WHITE)) {
             return square.isAtRank(WHITE_PAWN_INITIAL_RANK);
         }
         return square.isAtRank(BLACK_PAWN_INITIAL_RANK);

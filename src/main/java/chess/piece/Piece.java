@@ -27,7 +27,7 @@ public abstract class Piece {
 
     abstract public boolean isMovable(Square source, Square to, Piece piece);
 
-    public boolean isSameSide(final Side side) {
+    public boolean hasSideOf(final Side side) {
         return this.side == side;
     }
 

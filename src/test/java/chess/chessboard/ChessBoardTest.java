@@ -149,7 +149,7 @@ class ChessBoardTest {
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("앞의 칸에 기물이 존재한다면 false를 반환한다")
@@ -163,9 +163,9 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("경로에 다른 기물이 존재합니다");
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재한다면 true를 반환한다")
@@ -179,7 +179,7 @@ class ChessBoardTest {
                 pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재하지 않는다면 false를 반환한다")
@@ -192,12 +192,12 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
-                assertThatThrownBy(() -> chessBoard.move(source, Square.of(Rank.SIX, File.C)))
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, Square.of(Rank.SIX, File.C)))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
             }
         }
 
@@ -214,7 +214,7 @@ class ChessBoardTest {
                                          .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("대각선 내에 기물이 존재한다면 false를 반환한다")
@@ -228,9 +228,9 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("경로에 다른 기물이 존재합니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어있다면 true를 반환한다")
@@ -244,9 +244,9 @@ class ChessBoardTest {
                 pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
-                chessBoard.move(destination, source);
-                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
+                chessBoard.moveAndCapture(destination, source);
+                assertThat(chessBoard.moveAndCapture(source, Square.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -259,9 +259,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
             }
         }
 
@@ -278,7 +278,7 @@ class ChessBoardTest {
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("작선 내에 기물이 존재한다면 false를 반환한다")
@@ -292,9 +292,9 @@ class ChessBoardTest {
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("경로에 다른 기물이 존재합니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
@@ -308,9 +308,9 @@ class ChessBoardTest {
                 pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
-                chessBoard.move(destination, source);
-                assertThat(chessBoard.move(source, Square.of(Rank.SEVEN, File.D))).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
+                chessBoard.moveAndCapture(destination, source);
+                assertThat(chessBoard.moveAndCapture(source, Square.of(Rank.SEVEN, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -323,9 +323,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
             }
         }
 
@@ -344,9 +344,9 @@ class ChessBoardTest {
                 pieces.put(destination, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination)).isEqualTo(expected);
-                chessBoard.move(destination, source);
-                assertThat(chessBoard.move(source, Square.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
+                chessBoard.moveAndCapture(destination, source);
+                assertThat(chessBoard.moveAndCapture(source, Square.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -359,9 +359,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
             }
         }
 
@@ -380,9 +380,9 @@ class ChessBoardTest {
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isEqualTo(EmptyPiece.getInstance());
-                chessBoard.move(destination1, source);
-                assertThat(chessBoard.move(source, destination2)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination1)).isEqualTo(EmptyPiece.getInstance());
+                chessBoard.moveAndCapture(destination1, source);
+                assertThat(chessBoard.moveAndCapture(source, destination2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("이동 경로 상에 기물이 존재한다면 false를 반환한다")
@@ -398,12 +398,12 @@ class ChessBoardTest {
                 pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination1))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination1))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
-                assertThatThrownBy(() -> chessBoard.move(source, destination2))
+                        .hasMessage("경로에 다른 기물이 존재합니다");
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination2))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("경로에 다른 기물이 존재합니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
@@ -417,9 +417,9 @@ class ChessBoardTest {
                 pieces.put(destination1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isEqualTo(expected);
-                chessBoard.move(destination1, source);
-                assertThat(chessBoard.move(source, destination2)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination1)).isEqualTo(expected);
+                chessBoard.moveAndCapture(destination1, source);
+                assertThat(chessBoard.moveAndCapture(source, destination2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -433,12 +433,12 @@ class ChessBoardTest {
                 pieces.put(destination2, King.getKingOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination1))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination1))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
-                assertThatThrownBy(() -> chessBoard.move(source, destination2))
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination2))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
             }
         }
 
@@ -457,9 +457,9 @@ class ChessBoardTest {
                 pieces.put(destination1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.move(source, destination1)).isEqualTo(expected);
-                chessBoard.move(destination1, source);
-                assertThat(chessBoard.move(source, destination2)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveAndCapture(source, destination1)).isEqualTo(expected);
+                chessBoard.moveAndCapture(destination1, source);
+                assertThat(chessBoard.moveAndCapture(source, destination2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
@@ -471,9 +471,9 @@ class ChessBoardTest {
                 pieces.put(destination, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.move(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("갈 수 없는 경로입니다");
+                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
             }
         }
     }
@@ -493,7 +493,7 @@ class ChessBoardTest {
         void it_returns_black_pieces() {
             assertThat(chessBoard.getPieces(Side.BLACK)
                                  .values())
-                    .allMatch(piece -> piece.isSameSide(Side.BLACK))
+                    .allMatch(piece -> piece.hasSideOf(Side.BLACK))
                     .hasSize(16);
         }
 
@@ -502,7 +502,7 @@ class ChessBoardTest {
         void it_returns_white_pieces() {
             assertThat(chessBoard.getPieces(Side.WHITE)
                                  .values())
-                    .allMatch(piece -> piece.isSameSide(Side.WHITE))
+                    .allMatch(piece -> piece.hasSideOf(Side.WHITE))
                     .hasSize(16);
         }
     }

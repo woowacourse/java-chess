@@ -32,7 +32,7 @@ public class PieceDto {
             outputFormat = "k";
         }
 
-        if (piece.isSameSide(Side.BLACK)) {
+        if (piece.hasSideOf(Side.BLACK)) {
             outputFormat = outputFormat.toUpperCase();
         }
 
