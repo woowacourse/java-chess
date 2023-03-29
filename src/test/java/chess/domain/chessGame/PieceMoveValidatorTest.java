@@ -23,8 +23,6 @@ class PieceMoveValidatorTest {
                 Position.of(2, 2), new Rook(Color.WHITE),
                 Position.of(5, 2), new Rook(Color.BLACK));
 
-        PieceMoveValidator pieceMoveValidator = new PieceMoveValidator(setupBoard);
-
         @Test
         @DisplayName("목표 좌표에 말이 없고 경로 상에 다른 말이 없으면 예외가 발생하지 않는다.")
         void moveToBlankTest() {
@@ -34,7 +32,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatNoException()
-                    .isThrownBy(() -> pieceMoveValidator.checkPieceCanMove(start, end));
+                    .isThrownBy(() -> PieceMoveValidator.checkPieceCanMove(setupBoard, start, end));
         }
 
         @Test
@@ -46,7 +44,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatNoException()
-                    .isThrownBy(() -> pieceMoveValidator.checkPieceCanMove(start, end));
+                    .isThrownBy(() -> PieceMoveValidator.checkPieceCanMove(setupBoard, start, end));
 
         }
     }
@@ -60,8 +58,6 @@ class PieceMoveValidatorTest {
                 Position.of(4, 2), new Rook(Color.BLACK),
                 Position.of(6, 2), new Rook(Color.BLACK));
 
-        PieceMoveValidator pieceMoveValidator = new PieceMoveValidator(setupBoard);
-
         @Test
         @DisplayName("출발 좌표에 말이 존재하지 않는 경우 예외가 발생한다.")
         void noPieceInStartTest() {
@@ -70,7 +66,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatIllegalArgumentException()
-                    .isThrownBy(() -> pieceMoveValidator.checkPieceExistInStartPosition(start))
+                    .isThrownBy(() -> PieceMoveValidator.checkPieceExistInStartPosition(setupBoard, start))
                     .withMessage("[ERROR] 출발 좌표 위치에 말이 존재하지 않습니다.");
         }
 
@@ -82,7 +78,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatIllegalArgumentException()
-                    .isThrownBy(() -> pieceMoveValidator.checkTurn(start, Color.WHITE))
+                    .isThrownBy(() -> PieceMoveValidator.checkTurn(setupBoard, start, Color.WHITE))
                     .withMessage("[ERROR] WHITE의 차례입니다.");
         }
 
@@ -95,7 +91,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatIllegalArgumentException()
-                    .isThrownBy(() -> pieceMoveValidator.checkPieceCanMove(start, end))
+                    .isThrownBy(() -> PieceMoveValidator.checkPieceCanMove(setupBoard, start, end))
                             .withMessage("[ERROR] 선택한 말은 목표 좌표로 이동이 불가능합니다.");
         }
 
@@ -108,7 +104,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatIllegalArgumentException()
-                    .isThrownBy(() -> pieceMoveValidator.checkPieceCanMove(start, end))
+                    .isThrownBy(() -> PieceMoveValidator.checkPieceCanMove(setupBoard, start, end))
                             .withMessage("[ERROR] 진행 경로 상에 다른 말이 존재합니다.");
         }
 
@@ -121,7 +117,7 @@ class PieceMoveValidatorTest {
 
             // expect
             assertThatIllegalArgumentException()
-                    .isThrownBy(() -> pieceMoveValidator.checkPieceCanMove(start, end))
+                    .isThrownBy(() -> PieceMoveValidator.checkPieceCanMove(setupBoard, start, end))
                     .withMessage("[ERROR] 목표 좌표에 같은 색 말이 있으면 이동이 불가능합니다.");
         }
     }

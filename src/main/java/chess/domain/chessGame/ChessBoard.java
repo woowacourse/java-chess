@@ -34,17 +34,10 @@ public final class ChessBoard {
     }
 
     private void validateCanMove(Position startPosition, Position endPosition) {
-        PieceMoveValidator pieceMoveValidator = new PieceMoveValidator(chessBoard);
-        pieceMoveValidator.checkPieceExistInStartPosition(startPosition);
-        pieceMoveValidator.checkTurn(startPosition, turn);
+        PieceMoveValidator.checkPieceExistInStartPosition(chessBoard, startPosition);
+        PieceMoveValidator.checkTurn(chessBoard, startPosition, turn);
 
-        Piece startPiece = chessBoard.get(startPosition);
-        if (startPiece.getPieceType() == PieceType.PAWN) {
-            PawnMoveValidator pawnMoveValidator = new PawnMoveValidator(chessBoard);
-            pawnMoveValidator.checkPawnCanMove(startPosition, endPosition);
-        }
-
-        pieceMoveValidator.checkPieceCanMove(startPosition, endPosition);
+        PieceMoveValidator.checkPieceCanMove(chessBoard, startPosition, endPosition);
     }
 
     private void executeMove(Position startPosition, Position endPosition) {

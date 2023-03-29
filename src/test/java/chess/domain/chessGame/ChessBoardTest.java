@@ -155,4 +155,18 @@ class ChessBoardTest {
             assertThat(movedPiece).isInstanceOf(Pawn.class);
         }
     }
+
+    @Test
+    @DisplayName("흑색과 백색 중 누구의 차례인지 반환할 수 있다.")
+    void getTurnTest() {
+        // given
+        Map<Position, Piece> board = Map.of(Position.of(2, 2), new Pawn(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(board, Color.WHITE);
+
+        // when
+        String turn = chessBoard.getTurn();
+
+        // then
+        assertThat(turn).isEqualTo("WHITE");
+    }
 }

@@ -9,41 +9,38 @@ import java.util.Map;
 
 public final class PawnMoveValidator {
 
-    private final Map<Position, Piece> chessBoard;
-
-    public PawnMoveValidator(Map<Position, Piece> chessBoard) {
-        this.chessBoard = chessBoard;
+    private PawnMoveValidator() {
     }
 
-    public void checkPawnCanMove(Position startPosition, Position endPosition) {
+    public static void checkPawnCanMove(Map<Position, Piece> chessBoard, Position startPosition, Position endPosition) {
         List<Position> routeFromStartToEnd = Position.getRouteOf(startPosition, endPosition);
         Piece startPiece = chessBoard.get(startPosition);
 
         if (startPiece.isMovableRoute(routeFromStartToEnd)) {
-            checkPawnCanMoveForward(startPosition, endPosition);
-            checkPawnCanMoveDiagonal(startPosition, endPosition);
+            checkPawnCanMoveForward(chessBoard, startPosition, endPosition);
+            checkPawnCanMoveDiagonal(chessBoard, startPosition, endPosition);
         }
     }
 
-    private void checkPawnCanMoveForward(Position startPosition, Position endPosition) {
+    private static void checkPawnCanMoveForward(Map<Position, Piece> chessBoard, Position startPosition, Position endPosition) {
         if (Direction.of(startPosition, endPosition) == Direction.CROSS) {
-            checkBlankInEndPosition(endPosition);
+            checkBlankInEndPosition(chessBoard, endPosition);
         }
     }
 
-    private void checkBlankInEndPosition(Position endPosition) {
+    private static void checkBlankInEndPosition(Map<Position, Piece> chessBoard, Position endPosition) {
         if (chessBoard.containsKey(endPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 전진할 때 말이 없는 곳으로만 전진할 수 있습니다.");
         }
     }
 
-    private void checkPawnCanMoveDiagonal(Position startPosition, Position endPosition) {
+    private static void checkPawnCanMoveDiagonal(Map<Position, Piece> chessBoard, Position startPosition, Position endPosition) {
         if (Direction.of(startPosition, endPosition) == Direction.DIAGONAL) {
-            checkExistPieceInEndPosition(endPosition);
+            checkExistPieceInEndPosition(chessBoard, endPosition);
         }
     }
 
-    private void checkExistPieceInEndPosition(Position endPosition) {
+    private static void checkExistPieceInEndPosition(Map<Position, Piece> chessBoard, Position endPosition) {
         if (!chessBoard.containsKey(endPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선 이동 경로에 말이 없으면 이동이 불가능합니다.");
         }
