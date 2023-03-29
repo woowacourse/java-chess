@@ -34,8 +34,8 @@ public class ChessController {
         ChessGame game = ChessGame.createGame();
         outputView.printReadyMessage();
         outputView.printGameGuide();
-        Map<Command, ChessReadyAction> createActionBoard = cretateReadyCommandActionBoard(game);
-        Map<Command, ChessRunningAction> updateActionBoard = cretateCommandActionBoard(game);
+        Map<Command, ChessReadyAction> createActionBoard = createReadyCommandActionBoard(game);
+        Map<Command, ChessRunningAction> updateActionBoard = createCommandActionBoard(game);
 
         int gameId = loadGameId(createActionBoard, game);
         while (!game.isFinished()) {
@@ -43,14 +43,14 @@ public class ChessController {
         }
     }
 
-    private Map<Command, ChessReadyAction> cretateReadyCommandActionBoard(ChessGame game) {
+    private Map<Command, ChessReadyAction> createReadyCommandActionBoard(ChessGame game) {
         Map<Command, ChessReadyAction> actionMap = new HashMap<>();
         actionMap.put(Command.START, new ChessReadyAction((ignore) -> startGame(game)));
         actionMap.put(Command.LOAD, new ChessReadyAction((gameId) -> loadGame(game, gameId)));
         return actionMap;
     }
 
-    private Map<Command, ChessRunningAction> cretateCommandActionBoard(ChessGame game) {
+    private Map<Command, ChessRunningAction> createCommandActionBoard(ChessGame game) {
         Map<Command, ChessRunningAction> actionMap = new HashMap<>();
         actionMap.put(Command.MOVE,
             new ChessRunningAction((commands, gameId) -> movePiece(game, commands, gameId)));
