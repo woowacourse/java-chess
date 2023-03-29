@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MemoryBoardDao implements BoardDao {
+public class MemoryPieceDao implements PieceDao {
 
     private final Map<Long, Board> boards = new HashMap<>();
 

@@ -2,9 +2,9 @@ package chess.domain.chessgame;
 
 import chess.domain.board.Board;
 import chess.domain.board.Score;
-import chess.domain.dao.BoardDao;
+import chess.domain.dao.PieceDao;
 import chess.domain.dao.ChessGameDao;
-import chess.domain.dao.DataBaseBoardDao;
+import chess.domain.dao.DataBasePieceDao;
 import chess.domain.dao.DataBaseChessGameDao;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class Started implements State {
 
     private static final ChessGameDao CHESS_GAME_DAO = DataBaseChessGameDao.getInstance();
-    private static final BoardDao BOARD_DAO = DataBaseBoardDao.getInstance();
+    private static final PieceDao BOARD_DAO = DataBasePieceDao.getInstance();
     private static final String STARTED_CANT_EXECUTE_START_MESSAGE = "시작된 상태에선 해당 명령을 실행할 수 없습니다.";
 
     private final Board board;

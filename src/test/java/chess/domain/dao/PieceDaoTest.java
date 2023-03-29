@@ -3,9 +3,9 @@ package chess.domain.dao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardDaoTest {
+class PieceDaoTest {
 
-    private static long gameId = 0L;
+    private final long gameId = 0L;
 
     @Test
     @DisplayName("보드를 저장하는 기능 테스트")

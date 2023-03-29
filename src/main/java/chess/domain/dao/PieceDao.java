@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Turn;
 import chess.domain.position.Position;
 
-public interface BoardDao {
+public interface PieceDao {
 
     void saveBoard(final Board board, final long gameId);
 
