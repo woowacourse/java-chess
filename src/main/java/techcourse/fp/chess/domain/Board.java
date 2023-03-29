@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.domain.piece.PieceType;
 import techcourse.fp.chess.domain.piece.Turn;
@@ -38,7 +38,7 @@ public final class Board {
         validateObstacle(path);
 
         board.put(target, sourcePiece);
-        board.put(source, Empty.create());
+        board.put(source, EmptyPiece.create());
 
         turn.nextTurn();
     }

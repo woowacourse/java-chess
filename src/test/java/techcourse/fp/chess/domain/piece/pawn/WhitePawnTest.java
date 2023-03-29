@@ -11,7 +11,7 @@ import static techcourse.fp.chess.domain.PositionFixtures.H2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 
 public class WhitePawnTest {
 
@@ -48,7 +48,7 @@ public class WhitePawnTest {
         @DisplayName("성공한다.")
         @Test
         void fail_test4() {
-            assertThat(whitePawn.findPath(A2, A3, Empty.create())).isEmpty();
+            assertThat(whitePawn.findPath(A2, A3, EmptyPiece.create())).isEmpty();
         }
 
         @DisplayName("실패한다 - 도착지에 아군 기물 존재")
@@ -76,7 +76,7 @@ public class WhitePawnTest {
         @DisplayName("성공한다.")
         @Test
         void fail_test7() {
-            assertThat(whitePawn.findPath(A2, A4, Empty.create())).containsExactly(A3);
+            assertThat(whitePawn.findPath(A2, A4, EmptyPiece.create())).containsExactly(A3);
         }
 
         @DisplayName("실패 한다. - 도착지에 아군 기물 존재")
@@ -98,7 +98,7 @@ public class WhitePawnTest {
         @DisplayName("실패 한다. - 폰이 최초 이동이 아닌 경우")
         @Test
         void fail_by_start_position() {
-            assertThatThrownBy(() -> whitePawn.findPath(A3, A5, Empty.create()))
+            assertThatThrownBy(() -> whitePawn.findPath(A3, A5, EmptyPiece.create()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.domain.piece.Turn;
 import techcourse.fp.chess.domain.piece.ordinary.Rook;
@@ -271,7 +271,7 @@ class BoardTest {
         final Map<Position, Piece> board = new HashMap<>();
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), Empty.create());
+                board.put(Position.of(file, rank), EmptyPiece.create());
             }
         }
 

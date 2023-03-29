@@ -23,7 +23,7 @@ public class PieceFactory {
         factory.put(PieceType.ROOK, Rook::create);
         factory.put(PieceType.BISHOP, Bishop::create);
         factory.put(PieceType.KNIGHT, Knight::create);
-        factory.put(PieceType.EMPTY, color -> Empty.create());
+        factory.put(PieceType.EMPTY, color -> EmptyPiece.create());
         factory.put(PieceType.PAWN, color -> {
 
             if (color.isBlack()) {
