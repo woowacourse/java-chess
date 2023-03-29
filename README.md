@@ -152,5 +152,5 @@ create table turn(
 > 
 > 처음에 한번만 실행해주세요.
 ```sql
-insert into turn values ('WHITE');
+insert into turn (current_color) values ('WHITE');
 ```

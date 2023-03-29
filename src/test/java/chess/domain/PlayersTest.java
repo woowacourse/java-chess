@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersTest {
 
-    Pieces whitePieces;
-    Players players;
+    private Pieces whitePieces;
+    private Players players;
 
     @BeforeEach
     void setUp() {
