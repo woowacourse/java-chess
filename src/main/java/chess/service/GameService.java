@@ -1,17 +1,17 @@
 package chess.service;
 
-import chess.dao.RunningGameDao;
+import chess.dao.GameDao;
 import chess.domain.board.Turn;
-import chess.dto.RunningGameDto;
+import chess.dto.GameDto;
 import java.util.List;
 
-public class RunningGameService {
+public class GameService {
 
-    private final RunningGameDao runningGameDao = new RunningGameDao();
+    private final GameDao runningGameDao = new GameDao();
 
     public void create(final String turn) {
-        final RunningGameDto runningGameDto = new RunningGameDto(turn);
-        runningGameDao.create(runningGameDto);
+        final GameDto gameDto = new GameDto(turn, true);
+        runningGameDao.create(gameDto);
     }
 
     public List<Integer> findAllIds() {
@@ -23,8 +23,8 @@ public class RunningGameService {
     }
 
     public void update(final String turn) {
-        final RunningGameDto runningGameDto = new RunningGameDto(turn);
-        runningGameDao.update(runningGameDto);
+        final GameDto gameDto = new GameDto(turn, true);
+        runningGameDao.update(gameDto);
     }
 
     public void delete(final int runningGameId) {

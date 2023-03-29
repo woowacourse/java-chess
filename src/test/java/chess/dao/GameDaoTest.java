@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Turn;
 import chess.domain.piece.Color;
-import chess.dto.RunningGameDto;
+import chess.dto.GameDto;
 import java.sql.SQLException;
 import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
@@ -17,26 +17,26 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@DisplayName("RunningGameDao 는")
-class RunningGameDaoTest {
+@DisplayName("GameDao 는")
+class GameDaoTest {
 
-    private final RunningGameDao runningGameDao = new RunningGameDao();
+    private final GameDao gameDao = new GameDao();
 
     @BeforeEach
     @Test
     void 새로운_게임을_저장할_수_있다() {
         // given
         clear();
-        final RunningGameDto runningGameDto = new RunningGameDto("White");
+        final GameDto gameDto = new GameDto("White", true);
 
         // when & then
-        assertDoesNotThrow(() -> runningGameDao.create(runningGameDto));
+        assertDoesNotThrow(() -> gameDao.create(gameDto));
     }
 
     @AfterEach
     void clear() {
-        final String query = "DELETE FROM running_game";
-        try (final var connection = runningGameDao.getConnection();
+        final String query = "DELETE FROM game";
+        try (final var connection = gameDao.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
@@ -46,7 +46,7 @@ class RunningGameDaoTest {
 
     @Test
     public void connection() throws SQLException {
-        try (final var connection = runningGameDao.getConnection()) {
+        try (final var connection = gameDao.getConnection()) {
             assertThat(connection).isNotNull();
         }
     }
@@ -54,37 +54,37 @@ class RunningGameDaoTest {
     @Test
     void 생성된_게임이_없으면_EMPTY_LIST를_반환한다() {
         clear();
-        assertThat(runningGameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
+        assertThat(gameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
     }
 
     @Test
     void 생성된_게임_id를_조회할_수_있다() {
-        assertThat(runningGameDao.findAllIds().get(0)).isEqualTo(1);
+        assertThat(gameDao.findAllIds().get(0)).isEqualTo(1);
     }
 
     @Test
     void 생성된_게임_id로_turn을_조회할_수_있다() {
-        assertThat(runningGameDao.findTurnById(1)).isEqualTo(new Turn(Color.WHITE));
+        assertThat(gameDao.findTurnById(1)).isEqualTo(new Turn(Color.WHITE));
     }
 
     @Test
     void 새로운_turn으로_업데이트할_수_있다() {
         // given
-        final RunningGameDto runningGameDto = new RunningGameDto("Black");
+        final GameDto gameDto = new GameDto("Black", true);
 
         // when
-        runningGameDao.update(runningGameDto);
+        gameDao.update(gameDto);
 
         // then
-        assertThat(runningGameDao.findTurnById(1)).isEqualTo(new Turn(Color.BLACK));
+        assertThat(gameDao.findTurnById(1)).isEqualTo(new Turn(Color.BLACK));
     }
 
     @Test
     void 진행중인_게임을_삭제할_수_있다() {
         // given & when
-        runningGameDao.delete(1);
+        gameDao.delete(1);
 
         // then
-        assertThat(runningGameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
+        assertThat(gameDao.findAllIds()).isEqualTo(Collections.EMPTY_LIST);
     }
 }

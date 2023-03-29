@@ -3,7 +3,7 @@ package chess.dao;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.dto.PieceDto;
-import chess.dto.RunningGameDto;
+import chess.dto.GameDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -19,7 +19,7 @@ class PieceDaoTest {
     @Test
     void 기물을_저장할_수_있다() {
         // given
-        new RunningGameDao().create(new RunningGameDto("White"));
+        new GameDao().create(new GameDto("White", true));
         final PieceDto pieceDto = new PieceDto(1, "Pawn", "a", 2, "White");
 
         // when & then
