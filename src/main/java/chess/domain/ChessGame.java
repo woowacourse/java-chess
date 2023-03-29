@@ -4,7 +4,7 @@ import chess.domain.exception.StartCommandException;
 import chess.dto.GameStatusDto;
 import chess.dto.ScoreDto;
 import chess.dto.SquareMoveDto;
-import chess.view.Command;
+import chess.controller.command.CommandType;
 
 public class ChessGame {
 
@@ -21,8 +21,8 @@ public class ChessGame {
         this.turn = turn;
     }
 
-    public void start(final Command command) {
-        if (command.equals(Command.START)) {
+    public void start(final CommandType commandType) {
+        if (commandType.equals(CommandType.START)) {
             return;
         }
         throw new StartCommandException();
