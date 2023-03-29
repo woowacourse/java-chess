@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Position {
 
     private static final Map<Integer, Position> cache = new HashMap<>();
+    private static final Map<Character, Integer> ColumnMapper = new HashMap<>();
+    private static final Map<Character, Integer> RowMapper = new HashMap<>();
     public static final List<Integer> PADDING_ROWS = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     public static final List<Integer> PADDING_COLUMNS = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     public static final List<Integer> ORDERED_ROWS = List.of(8, 7, 6, 5, 4, 3, 2, 1);
     public static final List<Integer> ORDERED_COLUMNS = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+    public static final List<Character> ORDERED_COLUMNS_ALPHABETS = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
+    public static final int DECIMAL_SYSTEM_RADIX = 10;
     public static final int COLUMN_INDEX = 0;
     public static final int ROW_INDEX = 1;
 
@@ -20,6 +25,11 @@ public final class Position {
         for (int row : PADDING_ROWS) {
             setUpColumnsByRow(row);
         }
+        for (int row : ORDERED_ROWS) {
+            RowMapper.put(Character.forDigit(row, DECIMAL_SYSTEM_RADIX), row);
+        }
+        IntStream.range(0, ORDERED_COLUMNS.size())
+                .forEach(index -> ColumnMapper.put(ORDERED_COLUMNS_ALPHABETS.get(index), ORDERED_COLUMNS.get(index)));
     }
 
     private final int row;
@@ -32,10 +42,15 @@ public final class Position {
 
     public static Position of(String inputPoint) {
         validateInputPointSize(inputPoint);
-        int row = RowToNumber.of(inputPoint.charAt(ROW_INDEX));
-        int column = ColumnToNumber.of(inputPoint.charAt(COLUMN_INDEX));
-
-        return Position.of(row, column);
+//        int row = RowToNumber.of(inputPoint.charAt(ROW_INDEX));
+//        int column = ColumnToNumber.of(inputPoint.charAt(COLUMN_INDEX));
+        try {
+            int row = RowMapper.get(inputPoint.charAt(ROW_INDEX));
+            int column = ColumnMapper.get(inputPoint.charAt(COLUMN_INDEX));
+            return Position.of(row, column);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("[ERROR] 적절하지 않은 좌표 값 형식을 입력하셨습니다.");
+        }
     }
 
     private static void validateInputPointSize(String inputPoint) {
