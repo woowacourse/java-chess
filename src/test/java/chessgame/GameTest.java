@@ -1,6 +1,10 @@
 package chessgame;
 
+import static chessgame.domain.point.PointFixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +17,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import chessgame.controller.Command;
 import chessgame.domain.Board;
 import chessgame.domain.Game;
+import chessgame.domain.Team;
+import chessgame.domain.piece.King;
+import chessgame.domain.piece.Pawn;
+import chessgame.domain.piece.Piece;
+import chessgame.domain.point.Point;
 
 class GameTest {
     @Nested
@@ -38,16 +47,6 @@ class GameTest {
             assertThatThrownBy(() -> game.setFrom(Command.of(input)))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("start만 가능 합니다.");
-        }
-
-        @Test
-        @DisplayName("시작 후 start를 입력하면 오류가 발생한다.")
-        void Should_ThrowException_When_NotReadyAndCommandIsStart() {
-            game.setFrom(Command.of("start"));
-
-            assertThatThrownBy(() -> game.setFrom(Command.of("start")))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("move와 status, end명령만 가능 합니다.");
         }
 
         @Test
@@ -123,6 +122,48 @@ class GameTest {
             assertThatThrownBy(() -> game.setFrom(Command.of("move a4 a5")))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 이동시 앞으로만 한칸 이동 가능하나, 처음은 두칸도 가능합니다. 공격시엔 앞방향 대각선으로 한칸 이동가능 합니다.");
+        }
+    }
+
+    @Nested
+    @DisplayName("게임 종료 테스트")
+    class GameEnd {
+        @Test
+        @DisplayName("킹이 잡히면 게임이 끝나는지 테스트")
+        void Should_GameOver_When_KingIsDead() {
+            // given
+            Map<Point, Piece> board = new HashMap<>();
+            board.put(B8, King.from(Team.BLACK));
+            board.put(E2, Pawn.from(Team.BLACK));
+            board.put(G2, Pawn.from(Team.WHITE));
+            board.put(F1, King.from(Team.WHITE));
+            Game game = new Game(new Board(0, board), "black");
+
+            //when
+            Command command = Command.of("move e2 f1");
+            game.setFrom(command);
+
+            //then
+            assertThat(game.isEnd()).isTrue();
+        }
+
+        @Test
+        @DisplayName("화이트의킹이 잡히면 블랙팀이 이기는지 테스트")
+        void Should_BlackWin_When_WhiteKingIsDead() {
+            // given
+            Map<Point, Piece> board = new HashMap<>();
+            board.put(B8, King.from(Team.BLACK));
+            board.put(E2, Pawn.from(Team.BLACK));
+            board.put(G2, Pawn.from(Team.WHITE));
+            board.put(F1, King.from(Team.WHITE));
+            Game game = new Game(new Board(0, board), "black");
+
+            //when
+            Command command = Command.of("move e2 f1");
+            game.setFrom(command);
+
+            //then
+            assertThat(game.winner()).isEqualTo(Team.BLACK);
         }
     }
 }

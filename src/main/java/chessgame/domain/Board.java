@@ -17,6 +17,10 @@ public class Board {
         this(0, GameBoardFactory.create());
     }
 
+    public Board(int lastBoardNo) {
+        this(lastBoardNo, GameBoardFactory.create());
+    }
+
     public Board(int boardNo, Map<Point, Piece> board) {
         this.boardNo = boardNo;
         this.board = board;
