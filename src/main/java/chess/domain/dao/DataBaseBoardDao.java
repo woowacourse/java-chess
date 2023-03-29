@@ -80,7 +80,6 @@ public class DataBaseBoardDao implements BoardDao {
             preparedStatement.setInt(5, from.rank().value());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +95,6 @@ public class DataBaseBoardDao implements BoardDao {
             preparedStatement.setInt(3, to.rank().value());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

@@ -17,10 +17,11 @@ public class Position {
     }
 
     public Movement convertMovement(final Position from) {
-        int rankGap = rank.calculateRankGap(from.rank);
-        int fileGap = file.calculateFileGap(from.file);
+        final int rankGap = rank.calculateRankGap(from.rank);
+        final int fileGap = file.calculateFileGap(from.file);
 
-        int greatestCommonDivisor = findGreatestCommonDivisor(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
+        final int greatestCommonDivisor =
+                findGreatestCommonDivisor(Math.max(rankGap, fileGap), Math.min(rankGap, fileGap));
 
         return Movement.of(fileGap / greatestCommonDivisor,
                 rankGap / greatestCommonDivisor);
