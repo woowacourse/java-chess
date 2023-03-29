@@ -2,6 +2,7 @@ package chess.chessboard;
 
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +63,13 @@ public class ChessBoard {
                      .stream()
                      .map(pieces::get)
                      .anyMatch(piece -> piece != EmptyPiece.getInstance());
+    }
+
+    public boolean isKingDead() {
+        return pieces.values()
+                     .stream()
+                     .filter(PieceType::isKing)
+                     .count() < PieceType.ALL_KING_COUNT;
     }
 
     public Side getPieceSideAt(final Position position) {

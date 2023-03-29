@@ -10,10 +10,16 @@ public enum PieceType {
     EMPTY(0),
     ;
 
+    public static final int ALL_KING_COUNT = 2;
+
     private final double score;
 
     PieceType(final double score) {
         this.score = score;
+    }
+
+    public static boolean isKing(final Piece piece) {
+        return piece.getPieceType() == KING;
     }
 
     public double getScore() {

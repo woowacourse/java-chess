@@ -11,6 +11,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.PieceFixture.BLACK_KING;
+import static chess.PieceFixture.WHITE_KING;
+import static chess.PositionFixture.THREE_B;
+import static chess.PositionFixture.TWO_B;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -504,6 +508,26 @@ class ChessBoardTest {
                                  .values())
                     .allMatch(piece -> piece.hasSideOf(Side.WHITE))
                     .hasSize(16);
+        }
+    }
+
+    @Nested
+    @DisplayName("isKingDead 메서드는")
+    class isKingDead {
+        @Test
+        @DisplayName("King 개수가 두 개보다 작지 않으면 false를 반환한다")
+        void test1() {
+            final ChessBoard chessBoard = new ChessBoard(Map.of(TWO_B, BLACK_KING, THREE_B, WHITE_KING));
+
+            assertThat(chessBoard.isKingDead()).isFalse();
+        }
+
+        @Test
+        @DisplayName("King 개수가 두 개보다 작으면 true를 반환한다")
+        void test2() {
+            final ChessBoard chessBoard = new ChessBoard(Map.of(TWO_B, BLACK_KING));
+
+            assertThat(chessBoard.isKingDead()).isTrue();
         }
     }
 }
