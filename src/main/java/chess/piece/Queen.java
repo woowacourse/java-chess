@@ -14,7 +14,7 @@ public class Queen extends Piece {
 
     @Override
     protected void validatePathByType(final Position from, final Position to, final Map<Position, Piece> board) {
-        if (isDiagonal(from, to)) {
+        if (isSameInterval(from, to)) {
             validateDiagonal(from, to, board);
             return;
         }
@@ -23,11 +23,6 @@ public class Queen extends Piece {
             return;
         }
         throw new IllegalArgumentException("Queen이 이동할 수 없는 경로입니다.");
-    }
-
-
-    private boolean isDiagonal(final Position from, final Position to) {
-        return isSameInterval(from, to);
     }
 
     private boolean isSameInterval(final Position from, final Position to) {

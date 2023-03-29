@@ -12,10 +12,6 @@ public class Position {
         this.rank = rank;
     }
 
-    public boolean isSamePosition(final Position to) {
-        return this.equals(to);
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
