@@ -33,34 +33,38 @@ public class ChessController {
     }
     
     public int selectGame(GameHistory gameHistory) {
-        // Parse Start Options
-        // new
-        // continue
         try {
             String input = this.inputView.readStartOption();
             if (input.equals("new")) {
-                gameHistory.add();
-                return gameHistory.getLastGameID();
+                return this.generateNewGame(gameHistory);
             }
             if (input.equals("continue")) {
                 List<Integer> gameNumbers = gameHistory.getGameNumbers();
                 this.outputView.printPlayableGameNumbers(gameNumbers);
                 if (gameNumbers.isEmpty()) {
                     this.outputView.printNoPlayableGame();
-                    gameHistory.add();
-                    return gameHistory.getLastGameID();
+                    return this.generateNewGame(gameHistory);
                 }
                 int gameNumber = this.inputView.readGameNumber();
-                if (!gameNumbers.contains(gameNumber)) {
-                    throw new IllegalArgumentException("[GAME NUMBER ERROR] 올바른 게임 번호를 입력해주세요.");
-                }
+                this.doestNotContainGameNumber(gameNumbers, gameNumber);
                 return gameNumber;
             }
-            throw new IllegalArgumentException("[START OPTION ERROR] 올바른 옵션을 입력해주세요.");
+            throw new IllegalArgumentException("[OPTION ERROR] 올바른 옵션을 입력해주세요.");
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
             return this.selectGame(gameHistory);
         }
+    }
+    
+    private void doestNotContainGameNumber(final List<Integer> gameNumbers, final int gameNumber) {
+        if (!gameNumbers.contains(gameNumber)) {
+            throw new IllegalArgumentException("[SELECT ERROR] 올바른 게임 번호를 입력해주세요.");
+        }
+    }
+    
+    private int generateNewGame(final GameHistory gameHistory) {
+        gameHistory.add();
+        return gameHistory.getLastGameID();
     }
     
     public void run(int id) {
@@ -74,6 +78,7 @@ public class ChessController {
             moveHistory.clear(id);
         }
     }
+    
     
     private Game runGame(final Game chessGame, final History moveHistory) {
         try {
