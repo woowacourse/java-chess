@@ -18,7 +18,7 @@ public class MySQLChessGameDao implements ChessGameDao {
             }
             return -1;
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임 정보를 불러오는 데 실패하였습니다.");
         }
     }
 
@@ -37,7 +37,7 @@ public class MySQLChessGameDao implements ChessGameDao {
             }
             return histories;
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임 정보를 불러오는 데 실패하였습니다.");
         }
     }
 
@@ -46,7 +46,7 @@ public class MySQLChessGameDao implements ChessGameDao {
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임을 저장하는 데 실패하였습니다.");
         }
     }
 
@@ -59,7 +59,7 @@ public class MySQLChessGameDao implements ChessGameDao {
             preparedStatement.setString(3, destination);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임 기록을 저장하는 데 실패하였습니다.");
         }
     }
 
@@ -71,7 +71,7 @@ public class MySQLChessGameDao implements ChessGameDao {
             preparedStatement.setInt(2, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임 정보를 업데이트 하는 데 실패하였습니다.");
         }
     }
 
@@ -84,7 +84,7 @@ public class MySQLChessGameDao implements ChessGameDao {
             }
             return -1;
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("게임 정보를 불러오는 데 실패하였습니다.");
         }
     }
 }

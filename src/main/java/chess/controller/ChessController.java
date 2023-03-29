@@ -116,7 +116,7 @@ public class ChessController {
                 .execute(gameId);
             outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
             return gameId;
-        } catch (Exception e) {
+        } catch (final IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
             outputView.printError(e.getMessage());
             return loadGameId(createActionBoard, game);
         }
@@ -131,7 +131,7 @@ public class ChessController {
                 .execute(commands, gameId);
             outputView.printChessBoard(new ChessBoardDto(game.getChessBoard()));
 
-        } catch (Exception e) {
+        } catch (final IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
             outputView.printError(e.getMessage());
             gameLoop(actionMap, game, gameId);
         }
