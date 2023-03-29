@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
-    Board board;
+    private Board board;
 
     @BeforeEach
     void setUp() {
