@@ -35,8 +35,8 @@ public class StatusCommand implements Command {
         final Board board = BoardFactory.create();
         final ChessGame chessGame = ChessGame.of(MoveLogDao.load(chessGameDto, board), chessGameDto.getTurn());
 
-        Score white = chessGame.calculateScore(WHITE);
-        Score black = chessGame.calculateScore(BLACK);
+        final Score white = chessGame.calculateScore(WHITE);
+        final Score black = chessGame.calculateScore(BLACK);
 
         OutputView.printStatus(white, black);
         OutputView.printScoreWinning(white, black);

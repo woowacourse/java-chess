@@ -27,7 +27,7 @@ public class ChessGameController {
 
     private ChessState play(final ChessState state, final ChessGameDto chessGameDto) {
         try {
-            Command command = CommandHandler.bind(InputView.readCommand());
+            final Command command = CommandHandler.bind(InputView.readCommand());
             return command.execute(state, chessGameDto);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);

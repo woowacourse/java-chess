@@ -31,12 +31,12 @@ public class MoveLogDao {
         final Map<Position, Piece> loadBoard = new HashMap<>(board.getBoard());
 
         for (MoveLogDto moveLogDto : findAll(chessGameDto)) {
-            ChessPositionDto sourcePositionDto = ChessPositionDao.findById(moveLogDto.getSourcePositionId());
-            ChessPositionDto targetPositionDto = ChessPositionDao.findById(moveLogDto.getTargetPositionId());
+            final var sourcePositionDto = ChessPositionDao.findById(moveLogDto.getSourcePositionId());
+            final var targetPositionDto = ChessPositionDao.findById(moveLogDto.getTargetPositionId());
 
-            final Position sourcePosition = Position.of(sourcePositionDto.getFile(), sourcePositionDto.getRank());
-            final Position targetPosition = Position.of(targetPositionDto.getFile(), targetPositionDto.getRank());
-            final Piece sourcePiece = PieceMaker.bind(sourcePositionDto.getPieceName(), sourcePositionDto.getTeamName());
+            final var sourcePosition = Position.of(sourcePositionDto.getFile(), sourcePositionDto.getRank());
+            final var targetPosition = Position.of(targetPositionDto.getFile(), targetPositionDto.getRank());
+            final var sourcePiece = PieceMaker.bind(sourcePositionDto.getPieceName(), sourcePositionDto.getTeamName());
 
             loadBoard.put(targetPosition, sourcePiece);
             loadBoard.put(sourcePosition, new Empty(Team.NONE));
@@ -49,7 +49,7 @@ public class MoveLogDao {
         final var query = "SELECT * FROM move_log WHERE chess_game_id = ?";
 
         final RowMapper<List<MoveLogDto>> mapper = resultSet -> {
-            List<MoveLogDto> moveLogDtos = new ArrayList<>();
+            final List<MoveLogDto> moveLogDtos = new ArrayList<>();
             while (resultSet.next()) {
                 moveLogDtos.add(MoveLogDto.of(
                         resultSet.getInt(1),
