@@ -1,8 +1,11 @@
 package chess.domain.position;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Position {
 
@@ -12,7 +15,15 @@ public class Position {
     private static final Map<String, Position> CACHE;
 
     static {
-        CACHE = new HashMap<>();
+        CACHE = Arrays.stream(Rank.values())
+                .flatMap(Position::createPositionsFromOneFile)
+                .collect(Collectors.toMap(position -> position.file.name() + position.rank.name(),
+                        Function.identity()));
+    }
+
+    private static Stream<Position> createPositionsFromOneFile(final Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> new Position(file, rank));
     }
 
     private Position(File file, Rank rank) {
@@ -21,16 +32,13 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
-        final String key = file.name() + rank.name();
-        CACHE.putIfAbsent(key, new Position(file, rank));
-        return CACHE.get(key);
+        return CACHE.get(file.name() + rank.name());
     }
 
     public static Position from(String rawPosition) {
         File file = File.valueOf(rawPosition.substring(0, 1).toUpperCase());
         Rank rank = Rank.from(Integer.parseInt(rawPosition.substring(1)));
-        CACHE.putIfAbsent(rawPosition.toUpperCase(), new Position(file, rank));
-        return CACHE.get(rawPosition.toUpperCase());
+        return Position.of(file, rank);
     }
 
     public int calculateFileDistance(final Position source) {
