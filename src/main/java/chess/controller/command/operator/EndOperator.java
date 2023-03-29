@@ -2,6 +2,7 @@ package chess.controller.command.operator;
 
 import chess.controller.ChessController;
 import chess.controller.command.CommandType;
+import chess.controller.command.EndCommand;
 import chess.domain.ChessGame;
 import chess.renderer.CommendRenderer;
 
@@ -18,6 +19,7 @@ public class EndOperator extends Operator {
     @Override
     public boolean operate(final List<String> command) {
         if (CommendRenderer.isSame(command.get(0), CommandType.END)) {
+            chessController.setCommend(new EndCommand(chessController));
             return false;
         }
         throw new IllegalArgumentException(NO_COMMAND_MESSAGE);
