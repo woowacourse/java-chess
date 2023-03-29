@@ -6,12 +6,12 @@ public class PawnMoveValidator implements ValidateMove {
     private ValidateMove next;
 
     @Override
-    public void setNext(ValidateMove validateMove) {
+    public void setNext(final ValidateMove validateMove) {
         this.next = validateMove;
     }
 
     @Override
-    public boolean validate(ValidateData validateData) {
+    public boolean validate(final ValidateData validateData) {
         if (validateData.isSourceNotTypeOf(PieceType.PAWN)) {
             setNext(new EtcMoveValidator());
             return next.validate(validateData);
@@ -22,7 +22,7 @@ public class PawnMoveValidator implements ValidateMove {
         return validateData.isOpposite();
     }
 
-    private static boolean isPossibleToMove(ValidateData validateData) {
+    private static boolean isPossibleToMove(final ValidateData validateData) {
         return validateData.isEmptyInRoute()
                 && validateData.isTargetTypeOf(PieceType.EMPTY);
     }

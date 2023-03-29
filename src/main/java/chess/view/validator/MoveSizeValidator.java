@@ -11,7 +11,7 @@ public class MoveSizeValidator implements InputValidator {
     }
 
     @Override
-    public void validate(InputRequest inputRequest) {
+    public void validate(final InputRequest inputRequest) {
         if (inputRequest.contains(ValidateType.MOVE_SIZE)) {
             validateInput(inputRequest);
         }
@@ -19,7 +19,7 @@ public class MoveSizeValidator implements InputValidator {
         next.validate(inputRequest);
     }
 
-    private static void validateInput(InputRequest inputRequest) {
+    private static void validateInput(final InputRequest inputRequest) {
         if (inputRequest.getValue().size() != COMMEND_SIZE && inputRequest.getValue().get(0).equals(MOVE)) {
             throw new IllegalArgumentException(WRONG_COMMEND_MESSAGE);
         }

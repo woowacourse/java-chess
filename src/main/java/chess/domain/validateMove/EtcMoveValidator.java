@@ -2,11 +2,11 @@ package chess.domain.validateMove;
 
 public class EtcMoveValidator implements ValidateMove {
     @Override
-    public void setNext(ValidateMove validateMove) {
+    public void setNext(final ValidateMove validateMove) {
     }
 
     @Override
-    public boolean validate(ValidateData validateData) {
+    public boolean validate(final ValidateData validateData) {
         if (validateData.isEmptyInRoute()) {
             return validateData.isNotSameCamp();
         }

@@ -5,7 +5,7 @@ public enum Camp {
     WHITE,
     NONE;
 
-    public boolean isOpposite(Camp otherCamp) {
+    public boolean isOpposite(final Camp otherCamp) {
         if (otherCamp == NONE) {
             return false;
         }

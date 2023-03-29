@@ -13,7 +13,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
+    public boolean canMove(final Square source, final Square target) {
         return source.isSameFile(target) || source.isSameRank(target);
     }
 

@@ -1,38 +1,59 @@
 package chess.controller;
 
 import chess.controller.command.Command;
+import chess.controller.command.ResumeCommand;
 import chess.controller.command.StartCommand;
 import chess.domain.ChessGame;
 import chess.view.InputView;
+import chess.view.OutputView;
+
+import java.sql.SQLException;
 
 public class ChessController {
-    private final InputView inputView;
     private Command command;
 
     public ChessController() {
-        this.inputView = new InputView();
         this.command = new StartCommand(this);
     }
 
-    public void run() {
-        ChessGame chessGame = new ChessGame();
-        inputView.printStartChess();
+    public void run() throws SQLException {
+        final ChessGame chessGame = new ChessGame();
+        createRoom(chessGame);
         boolean keepPlaying = catchException(chessGame);
         while (keepPlaying) {
             keepPlaying = catchException(chessGame);
         }
     }
 
-    private boolean catchException(ChessGame chessGame) {
+    private void createRoom(final ChessGame chessGame) throws SQLException {
+        final boolean isRoom = catchRoomException(chessGame);
+        InputView.printStartChess();
+        if (isRoom) {
+            this.command = new ResumeCommand(this);
+            InputView.printResume();
+        }
+        InputView.endCommand();
+    }
+
+    private boolean catchRoomException(final ChessGame chessGame) throws SQLException {
+        try {
+            return chessGame.isRoom(InputView.printInputRoom());
+        } catch (final IllegalArgumentException errorMessage) {
+            OutputView.printError(errorMessage);
+            return catchRoomException(chessGame);
+        }
+    }
+
+    private boolean catchException(final ChessGame chessGame) throws SQLException {
         try {
             return command.operate(chessGame);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
+        } catch (final IllegalArgumentException errorMassage) {
+            OutputView.printError(errorMassage);
         }
         return true;
     }
 
-    public void setCommend(Command command) {
+    public void setCommend(final Command command) {
         this.command = command;
     }
 }

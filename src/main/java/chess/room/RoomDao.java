@@ -1,0 +1,53 @@
+package chess.room;
+
+import java.sql.*;
+
+public class RoomDao {
+    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
+    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
+    private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private static final String USERNAME = "root"; //  MySQL 서버 아이디
+    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
+
+    private Connection getConnection() {
+        try {
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+        } catch (final SQLException e) {
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Room addRoom(final String name) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            final String query = "insert into room(name) values(?)";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.executeUpdate();
+            return FindByName(name);
+        }
+    }
+
+    public Room FindByName(final String name) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            final String query = "select * from room where name = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new Room(resultSet.getInt(1));
+            }
+            throw new SQLException("해당하는 방이 없습니다");
+        }
+    }
+
+    public void deleteRoom(final int roomId) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            final String query = "delete from room where id = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            preparedStatement.executeUpdate();
+        }
+    }
+}
