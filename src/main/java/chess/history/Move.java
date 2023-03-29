@@ -2,7 +2,7 @@ package chess.history;
 
 import chess.domain.position.Position;
 
-public final class Move implements Entity {
+public final class Move {
     
     private final long id;
     private final Position from;
