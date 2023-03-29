@@ -1,6 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.game.utils.ParsingUtil;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -10,6 +9,7 @@ import chess.domain.piece.pawn.WhitePawn;
 import chess.dto.outputView.PrintBoardDto;
 import chess.dto.outputView.PrintTotalScoreDto;
 import chess.dto.outputView.PrintWinnerDto;
+import chess.utils.ParseToDto;
 
 import java.util.List;
 import java.util.Map;
@@ -99,8 +99,7 @@ public final class ChessGame {
     }
 
     public PrintBoardDto printBoard() {
-        final List<String> pieces = ParsingUtil.parseBoardDto(getBoard());
-        return new PrintBoardDto(pieces);
+        return ParseToDto.parseToPrintBoardDto(getBoard());
     }
 
     public Map<Position, Piece> getBoard() {
