@@ -24,10 +24,9 @@ class BoardTest {
         Map<Position, Piece> pieces = Map.of(POSITION_1_4, BLACK_PAWN);
         Board board = Board.from(pieces);
         //when
-        board.move(POSITION_1_4, POSITION_1_5, Color.BLACK);
+        Board newBoard = board.move(POSITION_1_4, POSITION_1_5, Color.BLACK);
         //then
-        Assertions.assertThat(board.getBoard().get(POSITION_1_5)).isInstanceOf(Pawn.class);
-        Assertions.assertThat(board.getBoard().get(POSITION_1_4)).isInstanceOf(Empty.class);
+        Assertions.assertThat(newBoard.getBoard().get(POSITION_1_5)).isInstanceOf(Pawn.class);
     }
 
     @Test
@@ -38,10 +37,10 @@ class BoardTest {
                 , POSITION_2_0, WHITE_PAWN);
         Board board = Board.from(pieces);
         //when
-        board.move(POSITION_1_1, POSITION_2_0, Color.BLACK);
+        Board newBoard = board.move(POSITION_1_1, POSITION_2_0, Color.BLACK);
         //then
-        Assertions.assertThat(board.getBoard().get(POSITION_2_0)).isInstanceOf(Pawn.class);
-        Assertions.assertThat(board.getBoard().get(POSITION_1_1)).isInstanceOf(Empty.class);
+        Assertions.assertThat(newBoard.getBoard().get(POSITION_2_0)).isInstanceOf(Pawn.class);
+        Assertions.assertThat(newBoard.getBoard().get(POSITION_1_1)).isInstanceOf(Empty.class);
     }
 
     @Test
