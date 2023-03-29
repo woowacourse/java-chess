@@ -3,7 +3,7 @@ package chess.controller;
 import chess.dao.BoardDao;
 import chess.dao.GameRoomDao;
 import chess.domain.ChessGame;
-import chess.domain.Command;
+import chess.view.Command;
 import chess.domain.RoomName;
 import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
