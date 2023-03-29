@@ -1,10 +1,7 @@
 package view;
 
-import domain.piece.Piece;
-import domain.position.Position;
-
-import java.util.List;
-import java.util.Map;
+import dto.ChessBoardStateDto;
+import dto.ChessGameScoreDto;
 
 public final class OutputView {
 
@@ -29,28 +26,12 @@ public final class OutputView {
         System.out.println(START_MESSAGE);
     }
 
-    public static void printChessBoard(List<Position> allPosition, Map<Position, Piece> chessBoard) {
+    public static void printChessBoardState(ChessBoardStateDto chessBoardStateDto) {
         System.out.println();
-        int lineBreak = 0;
-        for (Position position : allPosition) {
-            lineBreak++;
-            printPieceOrDot(chessBoard, position);
-            lineBreakByRow(lineBreak);
+        for (String rowState : chessBoardStateDto.getBoardState()) {
+            System.out.println(rowState);
         }
         System.out.println();
-    }
-
-    private static void lineBreakByRow(int lineBreak) {
-        if (lineBreak % 8 == 0)
-            System.out.println();
-    }
-
-    private static void printPieceOrDot(Map<Position, Piece> chessBoard, Position position) {
-        if (chessBoard.containsKey(position)) {
-            System.out.print(chessBoard.get(position).getName());
-            return;
-        }
-        System.out.print(".");
     }
 
     public static void printNotSystemCommandMessage() {
@@ -61,11 +42,11 @@ public final class OutputView {
         System.out.println(IMPROPER_GAME_COMMAND_MESSAGE);
     }
 
-    public static void printStatusResult(double blackScore, double whiteScore) {
+    public static void printStatusResult(ChessGameScoreDto chessGameScoreDto) {
         System.out.println(STATUS_RESULT_HEADER_MESSAGE);
-        System.out.printf(BLACK_SCORE_MESSAGE_FORMAT, blackScore);
-        System.out.printf(WHITE_SCORE_MESSAGE_FORMAT, whiteScore);
-        printWinResult(blackScore, whiteScore);
+        System.out.printf(BLACK_SCORE_MESSAGE_FORMAT, chessGameScoreDto.getBlackScore());
+        System.out.printf(WHITE_SCORE_MESSAGE_FORMAT, chessGameScoreDto.getWhiteScore());
+        printWinResult(chessGameScoreDto.getBlackScore(), chessGameScoreDto.getWhiteScore());
     }
 
     private static void printWinResult(double blackScore, double whiteScore) {

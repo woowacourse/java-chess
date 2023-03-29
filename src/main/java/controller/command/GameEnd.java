@@ -1,30 +1,26 @@
 package controller.command;
 
-import dao.ChessBoardDao;
-import domain.chessGame.ChessBoard;
-import domain.chessGame.ScoreCalculator;
+import service.ChessGameService;
 import view.OutputView;
 
 public class GameEnd extends GameCommand {
 
-    protected GameEnd(ChessBoardDao chessBoardDao) {
-        super(chessBoardDao);
+    protected GameEnd(ChessGameService chessGameService) {
+        super(chessGameService);
     }
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.find();
-        if (chessBoard.isGameEnded()) {
-            showGameEndResult(chessBoard);
-            chessBoardDao.delete();
+        if (chessGameService.isGameEnded()) {
+            showGameEndResult();
+            chessGameService.deleteChessBoard();
         }
         return this;
     }
 
-    private static void showGameEndResult(ChessBoard chessBoard) {
+    private void showGameEndResult() {
         OutputView.printEndGameMessage();
-        ScoreCalculator scoreCalculator = new ScoreCalculator(chessBoard.getBlackPieces(), chessBoard.getWhitePieces());
-        OutputView.printStatusResult(scoreCalculator.getBlackScore(), scoreCalculator.getWhiteScore());
+        OutputView.printStatusResult(chessGameService.calculateScore());
     }
 
     @Override

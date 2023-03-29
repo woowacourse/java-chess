@@ -1,6 +1,7 @@
 package controller.command;
 
-import dao.JdbcChessBoardDao;
+import dao.JdbcPieceDao;
+import service.ChessGameService;
 import view.InputView;
 import view.OutputView;
 
@@ -10,7 +11,7 @@ public final class SystemBoot extends Command {
 
     protected enum SystemCommandType {
         START,
-        END;
+        END
     }
 
     public SystemBoot() {
@@ -25,7 +26,7 @@ public final class SystemBoot extends Command {
     protected Command readNextCommand() {
         SystemCommandType command = receiveSystemCommand();
         if (command == SystemCommandType.START) {
-            return new Initialize(new JdbcChessBoardDao());
+            return new Initialize(new ChessGameService(new JdbcPieceDao()));
         }
         return new SystemEnd();
     }

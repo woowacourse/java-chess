@@ -1,20 +1,17 @@
 package controller.command;
 
-import dao.ChessBoardDao;
-import domain.chessGame.ChessBoard;
-import domain.position.Position;
+import service.ChessGameService;
 import view.OutputView;
 
 public class Initialize extends GameCommand {
 
-    protected Initialize(ChessBoardDao chessBoardDao) {
-        super(chessBoardDao);
+    protected Initialize(ChessGameService chessGameService) {
+        super(chessGameService);
     }
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.find();
-        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
+        OutputView.printChessBoardState(chessGameService.makeChessBoardState());
         return readNextCommand();
     }
 

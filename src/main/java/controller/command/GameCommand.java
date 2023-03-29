@@ -1,6 +1,6 @@
 package controller.command;
 
-import dao.ChessBoardDao;
+import service.ChessGameService;
 import view.InputView;
 import view.OutputView;
 
@@ -11,13 +11,13 @@ public abstract class GameCommand extends Command {
     protected enum GameCommandType {
         MOVE,
         STATUS,
-        END;
+        END
     }
 
-    protected final ChessBoardDao chessBoardDao;
+    protected final ChessGameService chessGameService;
 
-    protected GameCommand(ChessBoardDao chessBoardDao) {
-        this.chessBoardDao = chessBoardDao;
+    protected GameCommand(ChessGameService chessGameService) {
+        this.chessGameService = chessGameService;
     }
 
     @Override
@@ -26,12 +26,12 @@ public abstract class GameCommand extends Command {
         GameCommandType commandType = GameCommandType.valueOf(commandInput.get(0).toUpperCase());
 
         if (commandType == GameCommandType.MOVE) {
-            return new Move(chessBoardDao, commandInput);
+            return new Move(chessGameService, commandInput);
         }
         if (commandType == GameCommandType.STATUS) {
-            return new Status(chessBoardDao);
+            return new Status(chessGameService);
         }
-        return new GameEnd(chessBoardDao);
+        return new GameEnd(chessGameService);
     }
 
     private List<String> receiveGameCommandInput() {

@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-class JdbcChessBoardDaoTest {
+class JdbcPieceDaoTest {
 
-    private final JdbcChessBoardDao jdbcChessBoardDao = new JdbcChessBoardDao();
+    private final JdbcPieceDao jdbcChessBoardDao = new JdbcPieceDao();
 
     @Test
     public void connection() {

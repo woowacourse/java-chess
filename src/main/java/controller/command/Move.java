@@ -1,8 +1,6 @@
 package controller.command;
 
-import dao.ChessBoardDao;
-import domain.chessGame.ChessBoard;
-import domain.position.Position;
+import service.ChessGameService;
 import view.OutputView;
 
 import java.util.List;
@@ -11,27 +9,25 @@ public class Move extends GameCommand {
 
     private final List<String> commandInput;
 
-    protected Move(ChessBoardDao chessBoardDao, List<String> commandInput) {
-        super(chessBoardDao);
+    protected Move(ChessGameService chessGameService, List<String> commandInput) {
+        super(chessGameService);
         this.commandInput = commandInput;
     }
 
     @Override
     public Command execute() {
-        ChessBoard chessBoard = chessBoardDao.find();
-        executeMove(chessBoard);
-        chessBoardDao.update(chessBoard);
+        executeMove();
 
-        if (chessBoard.isGameEnded()) {
-            return new GameEnd(chessBoardDao);
+        if (chessGameService.isGameEnded()) {
+            return new GameEnd(chessGameService);
         }
         return readNextCommand();
     }
 
-    private void executeMove(ChessBoard chessBoard) {
+    private void executeMove() {
         try {
             validateCommandInputSize();
-            movePiece(chessBoard);
+            movePiece();
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
@@ -43,12 +39,9 @@ public class Move extends GameCommand {
         }
     }
 
-    private void movePiece(ChessBoard chessBoard) {
-        Position start = Position.of(commandInput.get(1));
-        Position end = Position.of(commandInput.get(2));
-
-        chessBoard.movePiece(start, end);
-        OutputView.printChessBoard(Position.getAllPosition(), chessBoard.getChessBoard());
+    private void movePiece() {
+        chessGameService.move(commandInput);
+        OutputView.printChessBoardState(chessGameService.makeChessBoardState());
     }
 
     @Override

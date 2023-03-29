@@ -39,7 +39,7 @@ class PositionTest {
                 .collect(toList());
 
         // when
-        List<Position> setPosition = Position.getAllPosition();
+        List<Position> setPosition = Position.getAllPositions();
 
         // then
         assertThat(setPosition)

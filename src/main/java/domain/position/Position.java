@@ -1,10 +1,10 @@
 package domain.position;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public final class Position {
@@ -42,8 +42,6 @@ public final class Position {
 
     public static Position of(String inputPoint) {
         validateInputPointSize(inputPoint);
-//        int row = RowToNumber.of(inputPoint.charAt(ROW_INDEX));
-//        int column = ColumnToNumber.of(inputPoint.charAt(COLUMN_INDEX));
         try {
             int row = RowMapper.get(inputPoint.charAt(ROW_INDEX));
             int column = ColumnMapper.get(inputPoint.charAt(COLUMN_INDEX));
@@ -54,7 +52,7 @@ public final class Position {
     }
 
     private static void validateInputPointSize(String inputPoint) {
-        if(inputPoint.length() != 2) {
+        if (inputPoint.length() != 2) {
             throw new IllegalArgumentException("[ERROR] 입력된 좌표값 길이가 적절하지 않습니다.");
         }
     }
@@ -74,11 +72,20 @@ public final class Position {
         return cache.get(Objects.hash(row + rowGap, column + columnGap));
     }
 
-    public static List<Position> getAllPosition() {
-        return ORDERED_ROWS.stream()
-                .flatMap(row -> ORDERED_COLUMNS.stream()
-                        .map(column -> Position.of(row, column)))
-                .collect(Collectors.toList());
+    public static List<List<Position>> getAllPositions() {
+        List<List<Position>> allPositions = new ArrayList<>();
+        for (int row : ORDERED_ROWS) {
+            allPositions.add(makeRowPositions(row));
+        }
+        return allPositions;
+    }
+
+    private static List<Position> makeRowPositions(int row) {
+        List<Position> rowPositions = new ArrayList<>();
+        for (int column : ORDERED_COLUMNS) {
+            rowPositions.add(Position.of(row, column));
+        }
+        return rowPositions;
     }
 
     public int calculateRowGap(Position other) {
