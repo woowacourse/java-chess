@@ -1,4 +1,4 @@
-package chess.serviece;
+package chess.service;
 
 import chess.dao.boardpieces.BoardPiecesDao;
 import chess.dao.boardpieces.LocalBoardPiecesDao;

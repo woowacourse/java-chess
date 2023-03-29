@@ -1,15 +1,15 @@
-package chess.serviece;
+package chess.service;
+
+import static chess.controller.status.GameStatus.RUNNING;
 
 import chess.controller.status.GameStatus;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.dto.ChessBoardStatus;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGameService {
 
@@ -26,7 +26,7 @@ public class ChessGameService {
     }
 
     public void start(int boardId) {
-        gameStatus = GameStatus.RUNNING;
+        gameStatus = RUNNING;
         this.chessBoard = chessBoardService.findChessBoardById(boardId);
     }
 
@@ -56,10 +56,6 @@ public class ChessGameService {
                 chessBoard.calculateScoreByCamp(Camp.BLACK),
                 chessBoard.status().getCurrentTurn().name()
         );
-    }
-
-    public Map<Position, Piece> readBoard() {
-        return chessBoard.piecesByPosition();
     }
 
 }
