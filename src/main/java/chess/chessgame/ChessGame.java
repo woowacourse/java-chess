@@ -5,6 +5,7 @@ import chess.chessboard.Position;
 import chess.chessboard.Side;
 import chess.piece.Piece;
 import chess.piece.PieceType;
+import chess.status.GameStatus;
 
 import java.util.Map;
 
@@ -13,6 +14,7 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private Side turn;
     private Side winner;
+    private GameStatus gameStatus;
 
     public ChessGame(final Side turn, final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
@@ -64,6 +66,10 @@ public class ChessGame {
 
     public boolean isKingDead() {
         return winner != Side.EMPTY;
+    }
+
+    public boolean isGameOver() {
+        return gameStatus.isGameOver();
     }
 
     public ChessBoard getChessBoard() {
