@@ -4,7 +4,7 @@ import chess.domain.piece.Team;
 
 public class Turn {
 
-    private int turn;
+    private final int turn;
 
     public Turn() {
         this.turn = 0;
@@ -14,8 +14,8 @@ public class Turn {
         this.turn = turn;
     }
 
-    public void next() {
-        turn++;
+    public Turn next() {
+        return new Turn(turn + 1);
     }
 
     public Team getCurrentTeam() {

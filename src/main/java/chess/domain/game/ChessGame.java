@@ -14,7 +14,7 @@ import chess.domain.square.Square;
 public class ChessGame {
 
     private final Board board;
-    private final Turn turn;
+    private Turn turn;
 
     public ChessGame() {
         this.board = Board.create();
@@ -34,7 +34,7 @@ public class ChessGame {
     public void move(final Square current, final Square destination) {
         checkTurn(current);
         board.move(current, destination);
-        turn.next();
+        turn = turn.next();
     }
 
     private void checkTurn(final Square square) {
