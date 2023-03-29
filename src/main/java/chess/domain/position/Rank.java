@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import java.util.Arrays;
+import java.util.Map;
 
 public enum Rank {
 
@@ -13,6 +13,11 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final Map<Integer, Rank> RANK_MAPPER = Map.ofEntries(
+            Map.entry(ONE.value, ONE), Map.entry(TWO.value, TWO), Map.entry(THREE.value, THREE),
+            Map.entry(FOUR.value, FOUR), Map.entry(FIVE.value, FIVE), Map.entry(SIX.value, SIX),
+            Map.entry(SEVEN.value, SEVEN), Map.entry(EIGHT.value, EIGHT)
+    );
     static final String RANK_NOT_FOUND_MESSAGE = "일치하는 Rank를 찾을 수 없습니다.";
 
     private final int value;
@@ -22,10 +27,10 @@ public enum Rank {
     }
 
     static Rank from(int value) {
-        return Arrays.stream(values())
-                .filter(it -> it.value == value)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(RANK_NOT_FOUND_MESSAGE));
+        if (!RANK_MAPPER.containsKey(value)) {
+            throw new IllegalArgumentException(RANK_NOT_FOUND_MESSAGE);
+        }
+        return RANK_MAPPER.get(value);
     }
 
     public int value() {

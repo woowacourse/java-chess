@@ -24,7 +24,7 @@ class FileTest {
 
         assertThatThrownBy(() -> File.from(unvalidatedValue))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(File.FILE_NOT_FOUND_EXCEPTION);
+                .hasMessage(File.FILE_NOT_FOUND_MESSAGE);
     }
 
     @Test
