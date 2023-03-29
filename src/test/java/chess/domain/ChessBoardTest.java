@@ -40,8 +40,6 @@ class ChessBoardTest {
     @DisplayName("정해진 게임 규칙에 따라, 말을 움직일 때마다 진영 턴을 전환한다.")
     @Test
     void 진영_턴_전환() {
-        chessBoard = new ChessBoard(1);
-
         chessBoard.move(Position.of(1, 2), Position.of(1, 4));
 
         assertThatThrownBy(() -> chessBoard.move(Position.of(1, 4), Position.of(1, 5)))

@@ -50,7 +50,7 @@ public class Path {
                 .filter(position -> !position.equals(source))
                 .filter(position -> !position.equals(destination))
                 .map(piecesByPosition::get)
-                .anyMatch(Piece::isEmpty);
+                .anyMatch(piece -> !piece.isEmpty());
     }
 
     public List<Position> positions() {
