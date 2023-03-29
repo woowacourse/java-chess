@@ -216,8 +216,6 @@ sequenceDiagram
 
 ## 리뷰 반영 및 리팩터링 목록
 
-- 요구사항 관련
-    - [ ] 방 입장 시 방 번호 선택 / 0 입력 시 새 방 개설하도록 변경
 - 설계 관련
     - [ ] Piece 인스턴스 캐싱
     - [x] Piece.canMove~() 에서 이동방향 검증까지 직접 할 수 있도록 개선
@@ -236,7 +234,7 @@ sequenceDiagram
     - [x] 필요 시 Optional orElse 대신 orElseGet 쓰기
 - DB 관련
     - [x] 게임오버 여부 컬럼 boolean(tinyint) 타입으로 변경
-    - [ ] 사용자 방 개설 로직 변경에 따라, board_id를 별도 Key로 지정하지 않고 인덱스 사용
+    - [x] init DDL 불필요한 KEY 명시 삭제
     - [ ] 새로운 방 개설 시 바로 board_statuses 반영
     - [ ] insert + update 단일 책임 위배일까?
     - [ ] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기
