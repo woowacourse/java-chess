@@ -1,9 +1,9 @@
 package chess.piece;
 
 import chess.chessboard.File;
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,96 +39,96 @@ class PawnTest {
         @Nested
         @DisplayName("움직인적 없는 Pawn에 대해")
         class context1 {
-            Square initialPosition = Square.of(Rank.TWO, File.A);
-            Square oneSquareAhead = Square.of(Rank.FOUR, File.A);
-            Square twoSquareAhead = Square.of(Rank.THREE, File.A);
-            Square oneDiagonalSquareAhead = Square.of(Rank.THREE, File.B);
+            Position initialPosition = Position.of(Rank.TWO, File.A);
+            Position onePositionAhead = Position.of(Rank.FOUR, File.A);
+            Position twoPositionAhead = Position.of(Rank.THREE, File.A);
+            Position oneDiagonalPositionAhead = Position.of(Rank.THREE, File.B);
 
 
             @Test
             @DisplayName("한 칸 혹은 두 칸 앞에 기물이 없으면 true를 반환한다")
             void it_returns_true1() {
                 assertAll(
-                        () -> assertThat(whitePawn.isMovable(initialPosition, oneSquareAhead, EmptyPiece.getInstance())).isTrue(),
-                        () -> assertThat(whitePawn.isMovable(initialPosition, twoSquareAhead, EmptyPiece.getInstance())).isTrue()
+                        () -> assertThat(whitePawn.isMovable(initialPosition, onePositionAhead, EmptyPiece.getInstance())).isTrue(),
+                        () -> assertThat(whitePawn.isMovable(initialPosition, twoPositionAhead, EmptyPiece.getInstance())).isTrue()
                 );
             }
 
             @Test
             @DisplayName("대각선 한 칸 앞에 적 기물이 있으면 true를 반환한다")
             void it_returns_true2() {
-                assertThat(whitePawn.isMovable(initialPosition, oneDiagonalSquareAhead, blackQueen)).isTrue();
+                assertThat(whitePawn.isMovable(initialPosition, oneDiagonalPositionAhead, blackQueen)).isTrue();
             }
 
             @Test
             @DisplayName("이동 불가능한 위치라면 false를 반환한다")
             void it_returns_false1() {
-                Square sameRankSquare = Square.of(Rank.TWO, File.B);
-                Square backSquare = Square.of(Rank.ONE, File.A);
+                Position sameRankPosition = Position.of(Rank.TWO, File.B);
+                Position backPosition = Position.of(Rank.ONE, File.A);
 
-                assertThat(whitePawn.isMovable(initialPosition, sameRankSquare, blackQueen)).isFalse();
-                assertThat(whitePawn.isMovable(initialPosition, backSquare, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(initialPosition, sameRankPosition, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(initialPosition, backPosition, blackQueen)).isFalse();
             }
 
             @Test
             @DisplayName("한 칸 혹은 두 칸 앞에 기물이 있으면 false를 반환한다")
             void it_returns_false2() {
-                assertThat(whitePawn.isMovable(initialPosition, oneSquareAhead, blackQueen)).isFalse();
-                assertThat(whitePawn.isMovable(initialPosition, twoSquareAhead, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(initialPosition, onePositionAhead, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(initialPosition, twoPositionAhead, blackQueen)).isFalse();
             }
 
             @Test
             @DisplayName("대각선 한 칸 앞에 적 기물이 아니면 false를 반환한다")
             void it_returns_false3() {
-                assertThat(whitePawn.isMovable(initialPosition, oneDiagonalSquareAhead, whiteQueen)).isFalse();
-                assertThat(whitePawn.isMovable(initialPosition, oneDiagonalSquareAhead, EmptyPiece.getInstance())).isFalse();
+                assertThat(whitePawn.isMovable(initialPosition, oneDiagonalPositionAhead, whiteQueen)).isFalse();
+                assertThat(whitePawn.isMovable(initialPosition, oneDiagonalPositionAhead, EmptyPiece.getInstance())).isFalse();
             }
         }
 
         @Nested
         @DisplayName("이동한 적 있는 Pawn에 대하여")
         class context2 {
-            Square sourcePosition = Square.of(Rank.THREE, File.B);
-            Square oneSquareAhead = Square.of(Rank.FOUR, File.B);
-            Square oneLeftDiagonalSquareAhead = Square.of(Rank.FOUR, File.A);
-            Square oneRightDiagonalSquareAhead = Square.of(Rank.FOUR, File.C);
-            Square twoSquaresAhead = Square.of(Rank.FIVE, File.B);
-            Square sameRankSquare = Square.of(Rank.THREE, File.C);
-            Square backSquare = Square.of(Rank.TWO, File.B);
+            Position sourcePosition = Position.of(Rank.THREE, File.B);
+            Position onePositionAhead = Position.of(Rank.FOUR, File.B);
+            Position oneLeftDiagonalPositionAhead = Position.of(Rank.FOUR, File.A);
+            Position oneRightDiagonalPositionAhead = Position.of(Rank.FOUR, File.C);
+            Position twoSquaresAhead = Position.of(Rank.FIVE, File.B);
+            Position sameRankPosition = Position.of(Rank.THREE, File.C);
+            Position backPosition = Position.of(Rank.TWO, File.B);
 
 
             @Test
             @DisplayName("한 칸 앞에 기물이 없으면 true를 반환한다")
             void it_returns_movable1() {
-                assertThat(whitePawn.isMovable(sourcePosition, oneSquareAhead, EmptyPiece.getInstance())).isTrue();
+                assertThat(whitePawn.isMovable(sourcePosition, onePositionAhead, EmptyPiece.getInstance())).isTrue();
             }
 
             @Test
             @DisplayName("대각선 한 칸 앞에 적 기물이 있으면 true를 반환한다")
             void it_returns_movable2() {
-                assertThat(whitePawn.isMovable(sourcePosition, oneLeftDiagonalSquareAhead, blackQueen)).isTrue();
-                assertThat(whitePawn.isMovable(sourcePosition, oneRightDiagonalSquareAhead, blackQueen)).isTrue();
+                assertThat(whitePawn.isMovable(sourcePosition, oneLeftDiagonalPositionAhead, blackQueen)).isTrue();
+                assertThat(whitePawn.isMovable(sourcePosition, oneRightDiagonalPositionAhead, blackQueen)).isTrue();
             }
 
             @Test
             @DisplayName("이동 불가능한 위치라면 false를 반환한다")
             void it_returns_not_movable1() {
                 assertThat(whitePawn.isMovable(sourcePosition, twoSquaresAhead, blackQueen)).isFalse();
-                assertThat(whitePawn.isMovable(sourcePosition, sameRankSquare, blackQueen)).isFalse();
-                assertThat(whitePawn.isMovable(sourcePosition, backSquare, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(sourcePosition, sameRankPosition, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(sourcePosition, backPosition, blackQueen)).isFalse();
             }
 
             @Test
             @DisplayName("한 칸 앞에 기물이 있으면 false를 반환한다")
             void it_returns_not_movable2() {
-                assertThat(whitePawn.isMovable(sourcePosition, oneSquareAhead, blackQueen)).isFalse();
+                assertThat(whitePawn.isMovable(sourcePosition, onePositionAhead, blackQueen)).isFalse();
             }
 
             @Test
             @DisplayName("대각선 한 칸 앞에 적 기물이 아니면 false를 반환한다")
             void it_returns_not_movable3() {
-                assertThat(whitePawn.isMovable(sourcePosition, oneLeftDiagonalSquareAhead, whiteQueen)).isFalse();
-                assertThat(whitePawn.isMovable(sourcePosition, oneRightDiagonalSquareAhead, EmptyPiece.getInstance())).isFalse();
+                assertThat(whitePawn.isMovable(sourcePosition, oneLeftDiagonalPositionAhead, whiteQueen)).isFalse();
+                assertThat(whitePawn.isMovable(sourcePosition, oneRightDiagonalPositionAhead, EmptyPiece.getInstance())).isFalse();
             }
         }
     }

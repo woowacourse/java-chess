@@ -1,9 +1,9 @@
 package chess.piece;
 
 import chess.chessboard.File;
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -36,10 +36,10 @@ class RookTest {
         class given_another_piece {
             Rook whiteRook = Rook.getRooksOf(Side.WHITE)
                                  .get(0);
-            Square source = Square.of(Rank.ONE, File.A);
-            Square movableSquare1 = Square.of(Rank.ONE, File.C);
-            Square movableSquare2 = Square.of(Rank.THREE, File.A);
-            Square unable = Square.of(Rank.TWO, File.B);
+            Position source = Position.of(Rank.ONE, File.A);
+            Position movablePosition1 = Position.of(Rank.ONE, File.C);
+            Position movablePosition2 = Position.of(Rank.THREE, File.A);
+            Position unable = Position.of(Rank.TWO, File.B);
             Rook whiteRook2 = Rook.getRooksOf(Side.WHITE)
                                   .get(1);
             Queen blackQueen = Queen.getQueenOf(Side.BLACK);
@@ -48,16 +48,16 @@ class RookTest {
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")
             void it_returns_movable() {
                 assertAll(
-                        () -> assertThat(whiteRook.isMovable(source, movableSquare1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteRook.isMovable(source, movableSquare2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteRook.isMovable(source, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                        () -> assertThat(whiteRook.isMovable(source, movablePosition1, blackQueen)).isTrue(),
+                        () -> assertThat(whiteRook.isMovable(source, movablePosition2, blackQueen)).isTrue(),
+                        () -> assertThat(whiteRook.isMovable(source, movablePosition1, EmptyPiece.getInstance())).isTrue()
                 );
             }
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 같은 진영인 경우 false를 반환한다")
             void it_returns_not_movable1() {
-                assertThat(whiteRook.isMovable(source, movableSquare1, whiteRook2)).isFalse();
+                assertThat(whiteRook.isMovable(source, movablePosition1, whiteRook2)).isFalse();
             }
 
             @Test

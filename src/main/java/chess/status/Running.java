@@ -1,7 +1,7 @@
 package chess.status;
 
+import chess.chessboard.Position;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 import chess.chessgame.ChessGame;
 import chess.controller.*;
 import chess.dao.ChessGameDao;
@@ -22,7 +22,7 @@ public class Running implements GameStatus {
     }
 
     @Override
-    public GameStatus playGame(final Command command, final PrintAction printAction) {
+    public GameStatus processCommand(final Command command, final PrintAction printAction) {
         validateNotStart(command);
 
         if (command.getCommandType() == CommandType.MOVE) {
@@ -45,9 +45,9 @@ public class Running implements GameStatus {
     }
 
     private GameStatus move(final MoveCommand moveCommand, final PrintAction printAction) {
-        final Square sourceSquare = moveCommand.getSourceSquare();
-        final Square destinationSquare = moveCommand.getDestinationSquare();
-        chessGame.move(sourceSquare, destinationSquare);
+        final Position sourcePosition = moveCommand.getSourceSquare();
+        final Position destinationPosition = moveCommand.getDestinationSquare();
+        chessGame.move(sourcePosition, destinationPosition);
         chessGameDao.update(chessGame);
 
         if (chessGame.isKingDead()) {

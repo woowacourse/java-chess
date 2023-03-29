@@ -37,9 +37,9 @@ class PlayerScoreTest {
             final List<Pawn> pawns = Pawn.getPawnsOf(Side.BLACK);
             final Pawn pawn1 = pawns.get(0);
             final Pawn pawn2 = pawns.get(1);
-            final Square square1 = Square.of(Rank.TWO, File.B);
-            final Square square2 = Square.of(Rank.THREE, File.B);
-            final Map<Square, Piece> pieces = Map.of(square1, pawn1, square2, pawn2);
+            final Position position1 = Position.of(Rank.TWO, File.B);
+            final Position position2 = Position.of(Rank.THREE, File.B);
+            final Map<Position, Piece> pieces = Map.of(position1, pawn1, position2, pawn2);
             chessBoard = new ChessBoard(pieces);
 
             final PlayerScore actual = PlayerScore.from(chessBoard.getPieces(Side.BLACK));

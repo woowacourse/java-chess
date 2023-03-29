@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessboard.Position;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 
 public abstract class Piece {
 
@@ -25,7 +25,7 @@ public abstract class Piece {
         return this.side == Side.EMPTY;
     }
 
-    abstract public boolean isMovable(Square source, Square to, Piece piece);
+    abstract public boolean isMovable(Position source, Position to, Piece piece);
 
     public boolean hasSideOf(final Side side) {
         return this.side == side;

@@ -26,25 +26,25 @@ public class ChessGameDaoImpl implements ChessGameDao {
         ) {
             final Side turn = chessGame.getTurn();
             final ChessBoard chessBoard = chessGame.getChessBoard();
-            final Map<Square, Piece> pieces = chessBoard.getPieces();
+            final Map<Position, Piece> pieces = chessBoard.getPieces();
 
             psForChessGame.setInt(1, 1);
             psForChessGame.setString(2, turn.name());
             psForChessGame.executeUpdate();
 
-            for (final Map.Entry<Square, Piece> squarePieceEntry : pieces.entrySet()) {
-                final Piece piece = squarePieceEntry.getValue();
-                final Square square = squarePieceEntry.getKey();
+            for (final Map.Entry<Position, Piece> positionPieceEntry : pieces.entrySet()) {
+                final Piece piece = positionPieceEntry.getValue();
+                final Position position = positionPieceEntry.getKey();
 
                 psForPiece.setInt(1, 1);
                 psForPiece.setString(2, piece.getSide()
                                              .name());
                 psForPiece.setString(3, piece.getPieceType()
                                              .name());
-                psForPiece.setString(4, square.getFile()
-                                              .name());
-                psForPiece.setString(5, square.getRank()
-                                              .name());
+                psForPiece.setString(4, position.getFile()
+                                                .name());
+                psForPiece.setString(5, position.getRank()
+                                                .name());
 
                 psForPiece.executeUpdate();
             }
@@ -89,15 +89,15 @@ public class ChessGameDaoImpl implements ChessGameDao {
             if (resultSetForChessGame.next()) {
                 turn = Side.valueOf(resultSetForChessGame.getString("turn"));
             }
-            Map<Square, Piece> map = new HashMap<>();
+            Map<Position, Piece> map = new HashMap<>();
             final ResultSet resultSetForPieces = psForPiece.executeQuery();
             while (resultSetForPieces.next()) {
                 final Side side = Side.valueOf(resultSetForPieces.getString("side"));
                 final PieceType type = PieceType.valueOf(resultSetForPieces.getString("type"));
                 final File file = File.valueOf(resultSetForPieces.getString("file"));
                 final Rank rank = Rank.valueOf(resultSetForPieces.getString("rank"));
-                final Square square = Square.of(rank, file);
-                map.put(square, PieceFactory.generate(type, side));
+                final Position position = Position.of(rank, file);
+                map.put(position, PieceFactory.generate(type, side));
             }
             if (turn == null) {
                 return Optional.empty();

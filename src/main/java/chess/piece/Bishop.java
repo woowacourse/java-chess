@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessboard.Position;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +36,11 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square destination, final Piece piece) {
+    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
         return isDiagonal(source, destination) && isNotSameSide(piece);
     }
 
-    private boolean isDiagonal(final Square source, final Square destination) {
+    private boolean isDiagonal(final Position source, final Position destination) {
         source.validateNotSameSquare(destination);
 
         final int verticalDistance = source.calculateVerticalDistance(destination);

@@ -1,8 +1,8 @@
 package chess.piece;
 
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +38,16 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square destination, final Piece pieceAtDestination) {
+    public boolean isMovable(final Position source, final Position destination, final Piece pieceAtDestination) {
         return canMoveForward(source, destination, pieceAtDestination) ||
                 isCatchable(source, destination, pieceAtDestination);
     }
 
-    private boolean canMoveForward(final Square source, final Square destination, final Piece pieceAtDestination) {
+    private boolean canMoveForward(final Position source, final Position destination, final Piece pieceAtDestination) {
         return pieceAtDestination.isEmpty() && isForwardMovableRange(source, destination);
     }
 
-    private boolean isForwardMovableRange(final Square source, final Square destination) {
+    private boolean isForwardMovableRange(final Position source, final Position destination) {
         source.validateNotSameSquare(destination);
 
         final int verticalDistance = source.calculateVerticalDistance(destination);
@@ -57,25 +57,25 @@ public final class Pawn extends Piece {
                 isForwardMovableDistance(verticalDistance, horizontalDistance, source);
     }
 
-    private boolean isForwardMovableDistance(final int verticalDistance, final int horizontalDistance, final Square sourceSquare) {
-        if (isAtInitialPosition(sourceSquare)) {
+    private boolean isForwardMovableDistance(final int verticalDistance, final int horizontalDistance, final Position sourcePosition) {
+        if (isAtInitialPosition(sourcePosition)) {
             return horizontalDistance == 0 && (verticalDistance == 1 || verticalDistance == 2);
         }
         return horizontalDistance == 0 && verticalDistance == 1;
     }
 
-    private boolean isAtInitialPosition(final Square square) {
+    private boolean isAtInitialPosition(final Position position) {
         if (hasSideOf(Side.WHITE)) {
-            return square.isAtRank(WHITE_PAWN_INITIAL_RANK);
+            return position.isAtRank(WHITE_PAWN_INITIAL_RANK);
         }
-        return square.isAtRank(BLACK_PAWN_INITIAL_RANK);
+        return position.isAtRank(BLACK_PAWN_INITIAL_RANK);
     }
 
-    private boolean isCatchable(final Square source, final Square destination, final Piece piece) {
+    private boolean isCatchable(final Position source, final Position destination, final Piece piece) {
         return isOppositeSide(piece) && isCatchableRange(source, destination);
     }
 
-    private boolean isCatchableRange(final Square source, final Square destination) {
+    private boolean isCatchableRange(final Position source, final Position destination) {
         source.validateNotSameSquare(destination);
 
         final int verticalDistance = source.calculateVerticalDistance(destination);

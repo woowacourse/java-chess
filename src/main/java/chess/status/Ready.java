@@ -26,7 +26,7 @@ public class Ready implements GameStatus {
     }
 
     @Override
-    public GameStatus playGame(final Command command, final PrintAction printAction) {
+    public GameStatus processCommand(final Command command, final PrintAction printAction) {
         validateStartCommand(command);
 
         final Optional<ChessGame> optionalChessGame = chessGameDao.find();

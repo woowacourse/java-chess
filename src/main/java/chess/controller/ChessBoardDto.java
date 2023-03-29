@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.chessboard.ChessBoard;
 import chess.chessboard.File;
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
-import chess.chessboard.Square;
 import chess.piece.Piece;
 
 import java.util.ArrayList;
@@ -21,25 +21,25 @@ public class ChessBoardDto {
     }
 
     public static ChessBoardDto of(ChessBoard chessBoard) {
-        final Map<Square, Piece> chessBoardPieces = chessBoard.getPieces();
+        final Map<Position, Piece> chessBoardPieces = chessBoard.getPieces();
         final List<List<PieceDto>> pieceDtos = initChessBoard();
 
-        for (Square square : chessBoardPieces.keySet()) {
-            final PieceDto nextPieceDto = getNextPieceDto(chessBoardPieces, square);
-            addNextPieceDto(pieceDtos, square, nextPieceDto);
+        for (Position position : chessBoardPieces.keySet()) {
+            final PieceDto nextPieceDto = getNextPieceDto(chessBoardPieces, position);
+            addNextPieceDto(pieceDtos, position, nextPieceDto);
         }
         return new ChessBoardDto(pieceDtos);
     }
 
-    private static PieceDto getNextPieceDto(final Map<Square, Piece> chessBoardPieces, final Square square) {
-        final Piece piece = chessBoardPieces.get(square);
+    private static PieceDto getNextPieceDto(final Map<Position, Piece> chessBoardPieces, final Position position) {
+        final Piece piece = chessBoardPieces.get(position);
 
         return PieceDto.from(piece);
     }
 
-    private static void addNextPieceDto(final List<List<PieceDto>> pieceDtos, final Square square, final PieceDto nextPieceDto) {
-        final int rowIndex = getRowIndex(square);
-        final int columnIndex = getColumnIndex(square);
+    private static void addNextPieceDto(final List<List<PieceDto>> pieceDtos, final Position position, final PieceDto nextPieceDto) {
+        final int rowIndex = getRowIndex(position);
+        final int columnIndex = getColumnIndex(position);
         final List<PieceDto> row = pieceDtos.get(rowIndex);
 
         row.set(columnIndex, nextPieceDto);
@@ -59,14 +59,14 @@ public class ChessBoardDto {
         return new ArrayList<>(Collections.nCopies(CHESS_BOARD_SIZE, null));
     }
 
-    private static int getRowIndex(final Square square) {
-        final Rank rank = square.getRank();
+    private static int getRowIndex(final Position position) {
+        final Rank rank = position.getRank();
 
         return CHESS_BOARD_SIZE - rank.getPosition();
     }
 
-    private static int getColumnIndex(final Square square) {
-        final File file = square.getFile();
+    private static int getColumnIndex(final Position position) {
+        final File file = position.getFile();
 
         return file.getPosition() - 1;
     }

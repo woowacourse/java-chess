@@ -9,13 +9,13 @@ import java.util.Map;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class ChessBoard {
-    private final Map<Square, Piece> pieces;
+    private final Map<Position, Piece> pieces;
 
-    public ChessBoard(Map<Square, Piece> pieces) {
+    public ChessBoard(Map<Position, Piece> pieces) {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public Piece moveAndCapture(final Square source, final Square destination) {
+    public Piece moveAndCapture(final Position source, final Position destination) {
         final Piece pieceOfSource = pieces.get(source);
         final Piece pieceOfDestination = pieces.get(destination);
 
@@ -27,7 +27,7 @@ public class ChessBoard {
         return pieceOfDestination;
     }
 
-    private void move(final Square source, final Square destination) {
+    private void move(final Position source, final Position destination) {
         final Piece pieceOfSource = pieces.get(source);
         final Piece pieceOfDestination = pieces.get(destination);
 
@@ -41,7 +41,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateIsValidPath(final Square source, final Square destination) {
+    private void validateIsValidPath(final Position source, final Position destination) {
         if (isValidMove(source, destination)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다");
         }
@@ -50,35 +50,35 @@ public class ChessBoard {
         }
     }
 
-    private boolean isValidMove(final Square source, final Square destination) {
+    private boolean isValidMove(final Position source, final Position destination) {
         final Piece pieceOfSource = pieces.get(source);
         final Piece pieceOfDestination = pieces.get(destination);
 
         return !pieceOfSource.isMovable(source, destination, pieceOfDestination);
     }
 
-    private boolean hasObstacleAlongPath(final Square source, final Square destination) {
-        return source.squaresOfPath(destination)
+    private boolean hasObstacleAlongPath(final Position source, final Position destination) {
+        return source.positionsOfPath(destination)
                      .stream()
                      .map(pieces::get)
                      .anyMatch(piece -> piece != EmptyPiece.getInstance());
     }
 
-    public Side getPieceSideAt(final Square square) {
-        final Piece piece = pieces.get(square);
+    public Side getPieceSideAt(final Position position) {
+        final Piece piece = pieces.get(position);
 
         return piece.getSide();
     }
 
-    public Map<Square, Piece> getPieces(final Side side) {
+    public Map<Position, Piece> getPieces(final Side side) {
         return pieces.entrySet()
                      .stream()
-                     .filter(squarePieceEntry -> squarePieceEntry.getValue()
-                                                                 .hasSideOf(side))
+                     .filter(positionPieceEntry -> positionPieceEntry.getValue()
+                                                                     .hasSideOf(side))
                      .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public Map<Square, Piece> getPieces() {
+    public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
 }

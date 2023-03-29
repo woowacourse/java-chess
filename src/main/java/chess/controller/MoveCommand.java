@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.chessboard.File;
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
-import chess.chessboard.Square;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,8 +33,8 @@ public class MoveCommand implements Command {
         }
     }
 
-    public Square getSourceSquare() {
-        return Square.of(getSourceRank(), getSourceFile());
+    public Position getSourceSquare() {
+        return Position.of(getSourceRank(), getSourceFile());
     }
 
     private File getSourceFile() {
@@ -51,8 +51,8 @@ public class MoveCommand implements Command {
         return options.get(0);
     }
 
-    public Square getDestinationSquare() {
-        return Square.of(getDestinationRank(), getDestinationFile());
+    public Position getDestinationSquare() {
+        return Position.of(getDestinationRank(), getDestinationFile());
     }
 
     private File getDestinationFile() {

@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessboard.Position;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 
 public class Queen extends Piece {
 
@@ -25,12 +25,12 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square destination, final Piece piece) {
+    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
         return isNotSameSide(piece) &&
                 (isLine(source, destination) || isDiagonal(source, destination));
     }
 
-    private boolean isDiagonal(final Square source, final Square destination) {
+    private boolean isDiagonal(final Position source, final Position destination) {
         source.validateNotSameSquare(destination);
 
         final int verticalDistance = source.calculateVerticalDistance(destination);
@@ -43,7 +43,7 @@ public class Queen extends Piece {
         return verticalDistance == horizontalDistance;
     }
 
-    private boolean isLine(final Square source, final Square destination) {
+    private boolean isLine(final Position source, final Position destination) {
         source.validateNotSameSquare(destination);
 
         final int verticalDistance = source.calculateVerticalDistance(destination);

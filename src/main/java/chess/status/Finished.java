@@ -21,7 +21,7 @@ public class Finished implements GameStatus {
     }
 
     @Override
-    public GameStatus playGame(final Command command, final PrintAction printAction) {
+    public GameStatus processCommand(final Command command, final PrintAction printAction) {
         if (command.getCommandType() == CommandType.END) {
             chessGameDao.delete();
         }

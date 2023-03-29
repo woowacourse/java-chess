@@ -1,8 +1,8 @@
 package chess.chessgame;
 
 import chess.chessboard.ChessBoard;
+import chess.chessboard.Position;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 import chess.piece.Piece;
 import chess.piece.PieceType;
 
@@ -24,7 +24,7 @@ public class ChessGame {
         this(Side.initialTurn(), chessBoard);
     }
 
-    public void move(final Square source, final Square destination) {
+    public void move(final Position source, final Position destination) {
         validatePlayerTurn(source);
         validateGameContinuing();
 
@@ -55,7 +55,7 @@ public class ChessGame {
         winner = Side.WHITE;
     }
 
-    private void validatePlayerTurn(final Square source) {
+    private void validatePlayerTurn(final Position source) {
         final Side side = chessBoard.getPieceSideAt(source);
         if (!turn.isTurnOf(side)) {
             throw new IllegalArgumentException("공격 순서가 잘못되었습니다");
@@ -71,7 +71,7 @@ public class ChessGame {
     }
 
     public double getScore(Side side) {
-        final Map<Square, Piece> piecesOfSide = chessBoard.getPieces(side);
+        final Map<Position, Piece> piecesOfSide = chessBoard.getPieces(side);
         final PlayerScore playerScore = PlayerScore.from(piecesOfSide);
         return playerScore.getPlayerScore();
     }

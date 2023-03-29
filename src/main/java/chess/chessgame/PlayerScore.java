@@ -1,7 +1,7 @@
 package chess.chessgame;
 
 import chess.chessboard.File;
-import chess.chessboard.Square;
+import chess.chessboard.Position;
 import chess.piece.Piece;
 import chess.piece.PieceType;
 
@@ -22,7 +22,7 @@ public class PlayerScore {
         this.playerScore = playerScore;
     }
 
-    public static PlayerScore from(final Map<Square, Piece> pieces) {
+    public static PlayerScore from(final Map<Position, Piece> pieces) {
         final double nonPawnScore = calculateNonPawnScore(pieces.values());
         final double pawnScore = calculatePawnScore(pieces);
 
@@ -36,7 +36,7 @@ public class PlayerScore {
                      .sum();
     }
 
-    private static double calculatePawnScore(final Map<Square, Piece> pieces) {
+    private static double calculatePawnScore(final Map<Position, Piece> pieces) {
         final Map<File, Long> fileCount = countPawnByFile(pieces);
 
         return fileCount.values()
@@ -45,14 +45,14 @@ public class PlayerScore {
                         .sum();
     }
 
-    private static Map<File, Long> countPawnByFile(final Map<Square, Piece> pieces) {
+    private static Map<File, Long> countPawnByFile(final Map<Position, Piece> pieces) {
         return pieces.keySet()
                      .stream()
-                     .filter(square -> {
-                         final Piece piece = pieces.get(square);
+                     .filter(position -> {
+                         final Piece piece = pieces.get(position);
                          return piece.getPieceType() == PieceType.PAWN;
                      })
-                     .map(Square::getFile)
+                     .map(Position::getFile)
                      .collect(groupingBy(Function.identity(), counting()));
     }
 

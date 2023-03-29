@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessboard.Position;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,11 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square source, final Square destination, final Piece piece) {
+    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
         return isNotSameSide(piece) && isLine(source, destination);
     }
 
-    private boolean isLine(final Square source, final Square destination) {
+    private boolean isLine(final Position source, final Position destination) {
         source.validateNotSameSquare(destination);
 
         final int verticalDistance = source.calculateVerticalDistance(destination);

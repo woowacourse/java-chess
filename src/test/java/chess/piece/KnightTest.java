@@ -1,9 +1,9 @@
 package chess.piece;
 
 import chess.chessboard.File;
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,10 +33,10 @@ public class KnightTest {
     class isMovable {
         Knight whiteKnight = Knight.getKnightsOf(Side.WHITE)
                                    .get(0);
-        Square sourceSquare = Square.of(Rank.FOUR, File.D);
-        Square movableSquare1 = Square.of(Rank.TWO, File.C);
-        Square movableSquare2 = Square.of(Rank.FIVE, File.F);
-        Square unMovableSquare = Square.of(Rank.TWO, File.B);
+        Position sourcePosition = Position.of(Rank.FOUR, File.D);
+        Position movablePosition1 = Position.of(Rank.TWO, File.C);
+        Position movablePosition2 = Position.of(Rank.FIVE, File.F);
+        Position unMovablePosition = Position.of(Rank.TWO, File.B);
         Knight whiteKnight2 = Knight.getKnightsOf(Side.WHITE)
                                     .get(1);
         Queen blackQueen = Queen.getQueenOf(Side.BLACK);
@@ -50,7 +50,7 @@ public class KnightTest {
                 @Test
                 @DisplayName("false를 반환한다")
                 void it_returns_false() {
-                    assertThat(whiteKnight.isMovable(sourceSquare, movableSquare1, whiteKnight2)).isFalse();
+                    assertThat(whiteKnight.isMovable(sourcePosition, movablePosition1, whiteKnight2)).isFalse();
                 }
             }
 
@@ -61,9 +61,9 @@ public class KnightTest {
                 @DisplayName("true를 반환한다")
                 void it_returns_true() {
                     assertAll(
-                            () -> assertThat(whiteKnight.isMovable(sourceSquare, movableSquare1, blackQueen)).isTrue(),
-                            () -> assertThat(whiteKnight.isMovable(sourceSquare, movableSquare2, blackQueen)).isTrue(),
-                            () -> assertThat(whiteKnight.isMovable(sourceSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                            () -> assertThat(whiteKnight.isMovable(sourcePosition, movablePosition1, blackQueen)).isTrue(),
+                            () -> assertThat(whiteKnight.isMovable(sourcePosition, movablePosition2, blackQueen)).isTrue(),
+                            () -> assertThat(whiteKnight.isMovable(sourcePosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
                     );
                 }
             }
@@ -75,7 +75,7 @@ public class KnightTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteKnight.isMovable(sourceSquare, unMovableSquare, blackQueen)).isFalse();
+                assertThat(whiteKnight.isMovable(sourcePosition, unMovablePosition, blackQueen)).isFalse();
             }
         }
     }

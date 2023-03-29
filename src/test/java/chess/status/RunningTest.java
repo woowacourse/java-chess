@@ -36,9 +36,9 @@ class RunningTest {
                                        .get(0);
             final King blackKing = King.getKingOf(Side.BLACK);
             final EmptyPiece emptyPiece = EmptyPiece.getInstance();
-            final Square B2 = Square.of(Rank.TWO, File.B);
-            final Square B3 = Square.of(Rank.THREE, File.B);
-            final Square C3 = Square.of(Rank.THREE, File.C);
+            final Position B2 = Position.of(Rank.TWO, File.B);
+            final Position B3 = Position.of(Rank.THREE, File.B);
+            final Position C3 = Position.of(Rank.THREE, File.C);
 
             chessGame = new ChessGame(new ChessBoard(Map.of(B2, whitePawn, C3, blackKing, B3, emptyPiece)));
         }
@@ -48,7 +48,7 @@ class RunningTest {
         void it_throws_exception1(String commandString) {
             final Command command = Command.from(List.of(commandString));
 
-            assertThatThrownBy(() -> new Running(chessGame).playGame(command, dummyAction))
+            assertThatThrownBy(() -> new Running(chessGame).processCommand(command, dummyAction))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("게임은 이미 진행 중입니다");
         }
@@ -58,7 +58,7 @@ class RunningTest {
         void it_returns_running1() {
             final Command command = Command.from(List.of("move", "b2", "b3"));
 
-            assertThat(new Running(chessGame).playGame(command, dummyAction)).isInstanceOf(Running.class);
+            assertThat(new Running(chessGame).processCommand(command, dummyAction)).isInstanceOf(Running.class);
         }
 
         @Test
@@ -66,7 +66,7 @@ class RunningTest {
         void it_returns_running2() {
             final Command command = Command.from(List.of("status"));
 
-            assertThat(new Running(chessGame).playGame(command, dummyAction)).isInstanceOf(Running.class);
+            assertThat(new Running(chessGame).processCommand(command, dummyAction)).isInstanceOf(Running.class);
         }
 
         @Test
@@ -74,7 +74,7 @@ class RunningTest {
         void it_returns_finished() {
             final Command command = Command.from(List.of("move", "b2", "c3"));
 
-            assertThat(new Running(chessGame).playGame(command, dummyAction)).isInstanceOf(Finished.class);
+            assertThat(new Running(chessGame).processCommand(command, dummyAction)).isInstanceOf(Finished.class);
         }
     }
 }

@@ -34,9 +34,9 @@ class FinishedTest {
                                        .get(0);
             final King blackKing = King.getKingOf(Side.BLACK);
             final EmptyPiece emptyPiece = EmptyPiece.getInstance();
-            final Square B2 = Square.of(Rank.TWO, File.B);
-            final Square B3 = Square.of(Rank.THREE, File.B);
-            final Square C3 = Square.of(Rank.THREE, File.C);
+            final Position B2 = Position.of(Rank.TWO, File.B);
+            final Position B3 = Position.of(Rank.THREE, File.B);
+            final Position C3 = Position.of(Rank.THREE, File.C);
 
             chessGame = new ChessGame(new ChessBoard(Map.of(B2, whitePawn, C3, blackKing, B3, emptyPiece)));
         }
@@ -46,7 +46,7 @@ class FinishedTest {
         void it_throws_exception() {
             final Command command = Command.from(List.of("move", "b2", "b3"));
 
-            assertThatThrownBy(() -> new Finished(chessGame).playGame(command, dummyAction))
+            assertThatThrownBy(() -> new Finished(chessGame).processCommand(command, dummyAction))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("게임이 종료되었습니다");
         }
@@ -56,7 +56,7 @@ class FinishedTest {
         void it_throws_exception2() {
             final Command command = Command.from(List.of("start"));
 
-            assertThatThrownBy(() -> new Finished(chessGame).playGame(command, dummyAction))
+            assertThatThrownBy(() -> new Finished(chessGame).processCommand(command, dummyAction))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("게임이 종료되었습니다");
         }
@@ -66,7 +66,7 @@ class FinishedTest {
         void it_shows_winner() {
             final Command command = Command.from(List.of("status"));
 
-            assertThat(new Finished(chessGame).playGame(command, dummyAction)).isInstanceOf(Finished.class);
+            assertThat(new Finished(chessGame).processCommand(command, dummyAction)).isInstanceOf(Finished.class);
         }
     }
 }

@@ -3,44 +3,44 @@ package chess.chessboard;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Square {
+public class Position {
 
-    private static final Map<Integer, Square> cache = new HashMap<>();
+    private static final Map<Integer, Position> cache = new HashMap<>();
 
     private final Rank rank;
     private final File file;
 
-    private Square(final Rank rank, final File file) {
+    private Position(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public static Square of(final Rank rank, final File file) {
-        return cache.computeIfAbsent(toKey(rank, file), key -> new Square(rank, file));
+    public static Position of(final Rank rank, final File file) {
+        return cache.computeIfAbsent(toKey(rank, file), key -> new Position(rank, file));
     }
 
     private static Integer toKey(final Rank rank, final File file) {
         return Objects.hash(rank, file);
     }
 
-    public boolean isBackOf(final Square other, final Side side) {
+    public boolean isBackOf(final Position other, final Side side) {
         if (side == Side.WHITE) {
             return other.rank.isBiggerThan(this.rank);
         }
         return this.rank.isBiggerThan(other.rank);
     }
 
-    public List<Square> squaresOfPath(Square destination) {
+    public List<Position> positionsOfPath(Position destination) {
         if (isLine(destination)) {
-            return squaresOfLine(destination);
+            return positionsOfLine(destination);
         }
         if (isDiagonal(destination)) {
-            return squaresOfDiagonal(destination);
+            return positionsOfDiagonal(destination);
         }
         return Collections.emptyList();
     }
 
-    private boolean isLine(final Square other) {
+    private boolean isLine(final Position other) {
         validateNotSameSquare(other);
 
         final int verticalDistance = calculateVerticalDistance(other);
@@ -53,7 +53,7 @@ public class Square {
         return verticalDistance == 0 || horizontalDistance == 0;
     }
 
-    private boolean isDiagonal(final Square other) {
+    private boolean isDiagonal(final Position other) {
         validateNotSameSquare(other);
 
         final int verticalDistance = calculateVerticalDistance(other);
@@ -66,55 +66,55 @@ public class Square {
         return verticalDistance == horizontalDistance;
     }
 
-    public void validateNotSameSquare(final Square other) {
+    public void validateNotSameSquare(final Position other) {
         if (this == other) {
-            throw new IllegalArgumentException("같은 위치의 square입니다");
+            throw new IllegalArgumentException("같은 위치의 position입니다");
         }
     }
 
-    private List<Square> squaresOfLine(final Square otherSquare) {
-        assert isLine(otherSquare);
+    private List<Position> positionsOfLine(final Position otherPosition) {
+        assert isLine(otherPosition);
 
-        if (isAtRank(otherSquare.rank)) {
-            return squaresOfRank(otherSquare);
+        if (isAtRank(otherPosition.rank)) {
+            return positionsOfRank(otherPosition);
         }
-        return squaresOfFile(otherSquare);
+        return positionsOfFile(otherPosition);
     }
 
-    private List<Square> squaresOfRank(final Square other) {
+    private List<Position> positionsOfRank(final Position other) {
         return File.filesBetween(this.file, other.file)
                    .stream()
-                   .map(foundFile -> Square.of(rank, foundFile))
+                   .map(foundFile -> Position.of(rank, foundFile))
                    .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Square> squaresOfFile(final Square otherSquare) {
-        return Rank.ranksBetween(this.rank, otherSquare.rank)
+    private List<Position> positionsOfFile(final Position otherPosition) {
+        return Rank.ranksBetween(this.rank, otherPosition.rank)
                    .stream()
-                   .map(foundRank -> Square.of(foundRank, file))
+                   .map(foundRank -> Position.of(foundRank, file))
                    .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Square> squaresOfDiagonal(final Square otherSquare) {
-        assert isDiagonal(otherSquare);
+    private List<Position> positionsOfDiagonal(final Position otherPosition) {
+        assert isDiagonal(otherPosition);
 
-        final List<Rank> ranks = Rank.ranksBetween(this.rank, otherSquare.rank);
-        final List<File> files = File.filesBetween(this.file, otherSquare.file);
-        final List<Square> squares = new ArrayList<>();
+        final List<Rank> ranks = Rank.ranksBetween(this.rank, otherPosition.rank);
+        final List<File> files = File.filesBetween(this.file, otherPosition.file);
+        final List<Position> positions = new ArrayList<>();
 
         for (int i = 0; i < ranks.size(); i++) {
-            final Square nextSquare = Square.of(ranks.get(i), files.get(i));
-            squares.add(nextSquare);
+            final Position nextPosition = Position.of(ranks.get(i), files.get(i));
+            positions.add(nextPosition);
         }
 
-        return squares;
+        return positions;
     }
 
-    public int calculateVerticalDistance(final Square other) {
+    public int calculateVerticalDistance(final Position other) {
         return rank.distanceTo(other.rank);
     }
 
-    public int calculateHorizontalDistance(final Square other) {
+    public int calculateHorizontalDistance(final Position other) {
         return file.distanceTo(other.file);
     }
 

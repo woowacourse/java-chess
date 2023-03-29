@@ -27,7 +27,7 @@ class ReadyTest {
         void it_throws_exception(String commandString) {
             final Command command = Command.from(List.of(commandString));
 
-            assertThatThrownBy(() -> new Ready().playGame(command, dummyAction))
+            assertThatThrownBy(() -> new Ready().processCommand(command, dummyAction))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("게임이 진행 중이지 않습니다");
         }
@@ -37,7 +37,7 @@ class ReadyTest {
         void it_initialize_game() {
             final Command command = Command.from(List.of("start"));
 
-            assertThat(new Ready().playGame(command, dummyAction)).isInstanceOf(Running.class);
+            assertThat(new Ready().processCommand(command, dummyAction)).isInstanceOf(Running.class);
         }
     }
 }

@@ -1,9 +1,9 @@
 package chess.piece;
 
 import chess.chessboard.File;
+import chess.chessboard.Position;
 import chess.chessboard.Rank;
 import chess.chessboard.Side;
-import chess.chessboard.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,10 +33,10 @@ public class BishopTest {
     class isMovable {
         Bishop whiteBishop = Bishop.getBishopsOf(Side.WHITE)
                                    .get(0);
-        Square sourceSquare = Square.of(Rank.FOUR, File.D);
-        Square movableSquare1 = Square.of(Rank.ONE, File.G);
-        Square movableSquare2 = Square.of(Rank.SIX, File.B);
-        Square unMovableSquare = Square.of(Rank.THREE, File.B);
+        Position sourcePosition = Position.of(Rank.FOUR, File.D);
+        Position movablePosition1 = Position.of(Rank.ONE, File.G);
+        Position movablePosition2 = Position.of(Rank.SIX, File.B);
+        Position unMovablePosition = Position.of(Rank.THREE, File.B);
         Bishop whiteBishop2 = Bishop.getBishopsOf(Side.WHITE)
                                     .get(1);
         Queen blackQueen = Queen.getQueenOf(Side.BLACK);
@@ -51,9 +51,9 @@ public class BishopTest {
                 @DisplayName("true를 반환한다")
                 void it_returns_true() {
                     assertAll(
-                            () -> assertThat(whiteBishop.isMovable(sourceSquare, movableSquare1, blackQueen)).isTrue(),
-                            () -> assertThat(whiteBishop.isMovable(sourceSquare, movableSquare2, blackQueen)).isTrue(),
-                            () -> assertThat(whiteBishop.isMovable(sourceSquare, movableSquare1, EmptyPiece.getInstance())).isTrue()
+                            () -> assertThat(whiteBishop.isMovable(sourcePosition, movablePosition1, blackQueen)).isTrue(),
+                            () -> assertThat(whiteBishop.isMovable(sourcePosition, movablePosition2, blackQueen)).isTrue(),
+                            () -> assertThat(whiteBishop.isMovable(sourcePosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
                     );
                 }
             }
@@ -64,7 +64,7 @@ public class BishopTest {
                 @Test
                 @DisplayName("false를 반환한다")
                 void it_returns_false() {
-                    assertThat(whiteBishop.isMovable(sourceSquare, movableSquare1, whiteBishop2)).isFalse();
+                    assertThat(whiteBishop.isMovable(sourcePosition, movablePosition1, whiteBishop2)).isFalse();
                 }
             }
         }
@@ -75,7 +75,7 @@ public class BishopTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteBishop.isMovable(sourceSquare, unMovableSquare, blackQueen)).isFalse();
+                assertThat(whiteBishop.isMovable(sourcePosition, unMovablePosition, blackQueen)).isFalse();
             }
         }
     }

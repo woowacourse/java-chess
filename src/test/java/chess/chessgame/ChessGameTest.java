@@ -24,12 +24,12 @@ class ChessGameTest {
         @Nested
         @DisplayName("이동 순서가 있는데")
         class sequence {
-            Square whiteSource1 = Square.of(Rank.TWO, File.B);
-            Square blackSource = Square.of(Rank.SEVEN, File.C);
-            Square whiteDestination1 = Square.of(Rank.FOUR, File.B);
-            Square blackDestination = Square.of(Rank.FIVE, File.C);
-            Square whiteSource2 = Square.of(Rank.FOUR, File.B);
-            Square whiteDestination2 = Square.of(Rank.FIVE, File.C);
+            Position whiteSource1 = Position.of(Rank.TWO, File.B);
+            Position blackSource = Position.of(Rank.SEVEN, File.C);
+            Position whiteDestination1 = Position.of(Rank.FOUR, File.B);
+            Position blackDestination = Position.of(Rank.FIVE, File.C);
+            Position whiteSource2 = Position.of(Rank.FOUR, File.B);
+            Position whiteDestination2 = Position.of(Rank.FIVE, File.C);
 
 
             @Test
