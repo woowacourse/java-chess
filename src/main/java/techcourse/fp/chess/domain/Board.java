@@ -70,8 +70,8 @@ public final class Board {
     }
 
     private boolean hasObstacle(final List<Position> path) {
-        return !path.stream()
-                .allMatch(position -> board.get(position).isEmpty());
+        return path.stream()
+                .anyMatch(position -> board.get(position).isNotEmpty());
     }
 
     public Map<Position, Piece> getBoard() {

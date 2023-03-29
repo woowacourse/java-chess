@@ -7,8 +7,6 @@ public enum Color {
     WHITE,
     EMPTY;
 
-
-
     public static Color createByName(String name) {
         return Arrays.stream(values())
                 .filter(color -> color.name().equalsIgnoreCase(name))
@@ -46,5 +44,9 @@ public enum Color {
 
     public boolean isEmpty() {
         return this == EMPTY;
+    }
+
+    public boolean isNotEmpty() {
+        return this != EMPTY;
     }
 }

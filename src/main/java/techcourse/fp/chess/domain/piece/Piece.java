@@ -24,6 +24,10 @@ public abstract class Piece {
         return color.isEmpty();
     }
 
+    public boolean isNotEmpty() {
+        return color.isNotEmpty();
+    }
+
     public boolean isSamePieceType(PieceType other) {
         return pieceType == other;
     }
