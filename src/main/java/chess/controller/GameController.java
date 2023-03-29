@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.ChessBoard;
+import chess.domain.ChessGame;
+import chess.domain.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -39,60 +41,40 @@ public class GameController {
 
     private void playGame(ChessGame chessGame) {
 
-        Player whitePlayer = new Player(Color.WHITE);
-        Player blackPlayer = new Player(Color.BLACK);
-
-        boolean whitePieceTurn = true;
-
         while (true) {
             try {
-                if (chessGame.canEndGame(whitePlayer, blackPlayer)) {
-                    OutputView.printGameEnd();
-                    break;
-                }
+            if (chessGame.canEndGame()) {
+                OutputView.printGameEnd();
+                break;
+            }
                 String[] gameCommand = InputView.readGameCommand();
                 GameCommand command = GameCommand.of(gameCommand);
 
-                if (command.equals(GameCommand.MOVE) && !whitePieceTurn) {
-                    moveBlackPiece(chessGame, blackPlayer, gameCommand);
-                    whitePieceTurn = true;
+                if (command.equals(GameCommand.MOVE)) {
+                    movePiece(chessGame, gameCommand);
                     continue;
                 }
-                if (command.equals(GameCommand.MOVE) && whitePieceTurn) {
-                    moveWhitePiece(chessGame, whitePlayer, gameCommand);
-                    whitePieceTurn = false;
-                    continue;
-                }
-                if (command.equals(GameCommand.STATUS)) {
-                    showStatus(chessGame, whitePlayer, blackPlayer);
-                }
+            if (command.equals(GameCommand.STATUS)) {
+                showStatus(chessGame);
+            }
                 if (command.equals(GameCommand.END)) {
                     break;
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+
         }
     }
 
-    private void moveWhitePiece(ChessGame chessGame, Player player, String[] gameCommand) {
+    private void movePiece(ChessGame chessGame, String[] gameCommand) {
         Position sourcePosition = GameCommand.getSourcePosition(gameCommand);
         Position targetPosition = GameCommand.getTargetPosition(gameCommand);
-        chessGame.moveWhitePiece(player, sourcePosition, targetPosition);
+        chessGame.movePiece(sourcePosition, targetPosition);
         OutputView.printChessBoard(chessGame.getChessBoard());
     }
 
-    private void moveBlackPiece(ChessGame chessGame, Player player, String[] gameCommand) {
-        Position sourcePosition = GameCommand.getSourcePosition(gameCommand);
-        Position targetPosition = GameCommand.getTargetPosition(gameCommand);
-        chessGame.moveBlackPiece(player, sourcePosition, targetPosition);
-        OutputView.printChessBoard(chessGame.getChessBoard());
-    }
-
-    private void showStatus(ChessGame chessGame, Player whitePlayer, Player blackPlayer) {
-        Result whiteResult = chessGame.calculateWhiteResult(whitePlayer);
-        OutputView.printWhiteResult(whiteResult);
-        Result blackResult = chessGame.calculateBlackResult(blackPlayer);
-        OutputView.printBlackResult(blackResult);
+    private void showStatus(ChessGame chessGame) {
+        OutputView.printResults(chessGame.calculateResults());
     }
 }

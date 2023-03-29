@@ -4,6 +4,7 @@ import chess.domain.Position;
 import chess.domain.Result;
 import chess.domain.piece.ChessPiece;
 
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -23,12 +24,9 @@ public class OutputView {
         }
     }
 
-    public static void printWhiteResult(Result whiteResult) {
-        System.out.printf("White Pieces Score : %f\n", whiteResult.getScore());
-    }
-
-    public static void printBlackResult(Result blackResult) {
-        System.out.printf("Black Pieces Score : %f\n", blackResult.getScore());
+    public static void printResults(List<Result> results) {
+        System.out.printf("White Pieces Score : %f\n", results.get(0).getScore());
+        System.out.printf("Black Pieces Score : %f\n", results.get(1).getScore());
     }
 
     public static void printGameEnd() {

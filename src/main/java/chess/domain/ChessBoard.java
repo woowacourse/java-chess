@@ -166,7 +166,15 @@ public class ChessBoard {
     public Map<Position, ChessPiece> getChessPiecesByColor(Color color) {
         return chessBoard.entrySet().stream()
                 .filter(positionChessPieceEntry -> positionChessPieceEntry.getValue().getColor().equals(color))
-                .collect(Collectors.toMap(positionChessPieceEntry -> positionChessPieceEntry.getKey(), positionChessPieceEntry -> positionChessPieceEntry.getValue()));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public boolean isWhiteKing() {
+        return chessBoard.containsValue(new King(Color.WHITE));
+    }
+
+    public boolean isBlackKing() {
+        return chessBoard.containsValue(new King(Color.BLACK));
     }
 }
 

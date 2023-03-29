@@ -1,52 +1,54 @@
 package chess.domain;
 
 import chess.domain.piece.ChessPiece;
-import chess.domain.piece.King;
 
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
 
     private final ChessBoard chessBoard;
+    private Color color;
 
     public ChessGame(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
+        this.color = Color.WHITE;
     }
 
-    public void moveWhitePiece(Player player, Position sourcePosition, Position targetPosition) {
-        ChessPiece chessPiece = player.findChessPiece(chessBoard, sourcePosition);
-        Movement movement = player.findMovement(chessPiece, sourcePosition, targetPosition);
-        if (player.canMoveSourcePiece(chessBoard, chessPiece, movement)) {
+    public void movePiece(Position sourcePosition, Position targetPosition) {
+        ChessPiece chessPiece = chessBoard.getChessPiece(sourcePosition);
+        validateColor(chessPiece);
+        Movement movement = findMovement(chessPiece, sourcePosition, targetPosition);
+        if (chessPiece.isMovable(movement, chessBoard)) {
             chessBoard.movePiece(chessPiece, targetPosition);
             chessBoard.removePiece(sourcePosition);
         }
+        this.color = color.getOppositeColor();
     }
 
-    public void moveBlackPiece(Player player, Position sourcePosition, Position targetPosition) {
-        ChessPiece chessPiece = player.findChessPiece(chessBoard, sourcePosition);
-        Movement movement = player.findMovement(chessPiece, sourcePosition, targetPosition);
-        if (player.canMoveSourcePiece(chessBoard, chessPiece, movement)) {
-            chessBoard.movePiece(chessPiece, targetPosition);
-            chessBoard.removePiece(sourcePosition);
+    private void validateColor(ChessPiece chessPiece) {
+        if (!this.color.equals(chessPiece.getColor())) {
+            throw new IllegalArgumentException("[ERROR] 상대편 기물은 이동할 수 없습니다.");
         }
+    }
+
+    private Movement findMovement(ChessPiece chessPiece, Position sourcePosition, Position targetPosition) {
+        Direction direction = chessPiece.findMovableDirection(sourcePosition, targetPosition);
+        int distance = chessPiece.findDistance(direction, sourcePosition, targetPosition);
+        return new Movement(sourcePosition, direction, distance);
+    }
+
+    public List<Result> calculateResults() {
+        Result whiteResult = Result.of(chessBoard.getChessPiecesByColor(Color.WHITE), Color.WHITE);
+        Result blackResult = Result.of(chessBoard.getChessPiecesByColor(Color.BLACK), Color.BLACK);
+        return List.of(whiteResult, blackResult);
+    }
+
+    public boolean canEndGame() {
+        return (!chessBoard.isWhiteKing() || !chessBoard.isBlackKing());
     }
 
     public Map<Position, ChessPiece> getChessBoard() {
         return chessBoard.getChessBoard();
-    }
-
-    public Result calculateWhiteResult(Player whitePlayer) {
-        Map<Position, ChessPiece> playerPieces = whitePlayer.findPlayerPieces(chessBoard);
-        return whitePlayer.calculateResult(playerPieces);
-    }
-
-    public Result calculateBlackResult(Player blackPlayer) {
-        Map<Position, ChessPiece> playerPieces = blackPlayer.findPlayerPieces(chessBoard);
-        return blackPlayer.calculateResult(playerPieces);
-    }
-
-    public boolean canEndGame(Player whitePlayer, Player blackPlayer) {
-        return !whitePlayer.findPlayerPieces(chessBoard).containsValue(new King(Color.WHITE))
-                || !blackPlayer.findPlayerPieces(chessBoard).containsValue(new King(Color.BLACK));
     }
 }
