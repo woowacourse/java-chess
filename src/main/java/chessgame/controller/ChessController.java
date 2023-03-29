@@ -2,7 +2,8 @@ package chessgame.controller;
 
 import java.util.Optional;
 
-import chessgame.dao.BoardDao;
+import chessgame.db.BoardDao;
+import chessgame.db.BoardService;
 import chessgame.domain.Board;
 import chessgame.domain.Game;
 import chessgame.view.InputView;
@@ -11,60 +12,53 @@ import chessgame.view.OutputView;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final BoardDao boardDao;
 
-    public ChessController(InputView inputView, OutputView outputView, BoardDao boardDao) {
+    public ChessController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.boardDao = boardDao;
     }
 
-    public void run() {
-        int boardNo = inputView.readBoardNo(boardDao.findRunningBoards());
-        Board board;
-        if (boardNo == 0) {
-            boardDao.addBoard();
-            boardDao.addPoints(boardDao.findLastBoardNo());
-            board = boardDao.findBoardByNo(boardDao.findLastBoardNo());
-        } else {
-            board = boardDao.findBoardByNo(boardNo);
+    public void run(BoardDao boardDao) {
+        BoardService boardService = new BoardService(boardDao);
+        Game game = loadGame(boardService);
+        playGame(game, boardService);
+    }
+
+    private Game loadGame(BoardService boardService) {
+        Optional<Board> board;
+        int boardNo;
+        do {
+            boardNo = inputView.readBoardNo(boardService.getRunningBoards());
+            board = getBoard(boardService, boardNo);
+        } while (board.isEmpty());
+        return new Game(board.get(), boardService.getState(boardNo));
+    }
+
+    private Optional<Board> getBoard(BoardService boardService, int boardNo) {
+        try {
+            Board board = boardService.getBoard(boardNo);
+            return Optional.of(board);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMsg(e.getMessage());
+            return Optional.empty();
         }
-        boardDao.findBoardByNo(boardNo);
-        Game game = new Game(board);
-        playGame(game);
     }
 
-    private void playGame(Game game) {
+    private void playGame(Game game, BoardService boardService) {
         outputView.printStartMessage();
         do {
             eachTurn(game);
+            boardService.updateBoard(game);
         } while (game.isNotEnd());
     }
 
     private void eachTurn(Game game) {
-        Command command = readCommand();
         try {
+            Command command = Command.of(inputView.readCommand());
             game.setFrom(command);
+            printChessBoard(command, game);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMsg(e.getMessage());
-        }
-        printChessBoard(command, game);
-    }
-
-    private Command readCommand() {
-        Optional<Command> command;
-        do {
-            command = generateCommand();
-        } while (command.isEmpty());
-        return command.get();
-    }
-
-    private Optional<Command> generateCommand() {
-        try {
-            return Optional.of(Command.of(inputView.readCommand()));
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMsg(e.getMessage());
-            return Optional.empty();
         }
     }
 

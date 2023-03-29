@@ -9,7 +9,7 @@ public class BlackTurn implements Running {
 
     @Override
     public void changeState(Game game, Command command) {
-        if (!(command.isMove() || command.isEnd() || command.isStatus())) {
+        if (command.isNotRunningCommand()) {
             throw new IllegalArgumentException("move와 status, end명령만 가능 합니다.");
         }
         if (command.isStatus()) {
@@ -32,6 +32,11 @@ public class BlackTurn implements Running {
     @Override
     public Team team() {
         return team;
+    }
+
+    @Override
+    public String name() {
+        return team.getName();
     }
 
     @Override

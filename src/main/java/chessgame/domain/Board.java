@@ -111,4 +111,8 @@ public class Board {
             .filter(Piece::isKing)
             .count() < 2;
     }
+
+    public int number() {
+        return boardNo;
+    }
 }

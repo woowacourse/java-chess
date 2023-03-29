@@ -17,6 +17,12 @@ public class Game {
         this.state = new Ready();
     }
 
+    public Game(Board board, String state) {
+        this.board = board;
+        this.scores = new Scores();
+        this.state = State.from(state);
+    }
+
     public void setFrom(Command command) {
         state.changeState(this, command);
     }
@@ -28,12 +34,15 @@ public class Game {
     public void setState(Command command, State state) {
         if (isRunning()) {
             movePiece(command.points());
-            if (board().isOver()) {
-                this.state = new End(this.state.team());
-            } else {
-                this.state = state;
-            }
+            this.state = checkBoardIsOver(state);
         }
+    }
+
+    private State checkBoardIsOver(State state) {
+        if (board().isOver()) {
+            return new End(this.state.team());
+        }
+        return this.state = state;
     }
 
     public boolean isRunning() {
@@ -68,5 +77,9 @@ public class Game {
 
     public Team winner() {
         return state.team();
+    }
+
+    public String state() {
+        return state.name();
     }
 }

@@ -7,6 +7,8 @@ import chessgame.domain.Game;
 import chessgame.domain.Team;
 
 public class End implements State {
+    public static final String STATE_NAME = "end";
+
     private final List<Team> winners;
 
     public End(Team winner) {
@@ -33,6 +35,11 @@ public class End implements State {
     @Override
     public boolean isNotEnd() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return STATE_NAME;
     }
 
     @Override
