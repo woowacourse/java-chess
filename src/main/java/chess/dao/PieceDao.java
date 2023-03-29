@@ -6,7 +6,7 @@ import chess.dao.entity.PieceEntity;
 
 public interface PieceDao {
 
-    Long findRecentPieceId();
+    long findRecentPieceId();
 
     void savePiece(PieceEntity pieceEntity);
 

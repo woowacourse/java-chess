@@ -2,14 +2,14 @@ package chess.dao.entity;
 
 public class ChessGameEntity {
 
-    private Long id;
+    private long id;
     private String turn;
 
     public static class Builder {
-        private Long id;
+        private long id;
         private String turn;
 
-        public Builder id(Long id) {
+        public Builder id(long id) {
             this.id = id;
             return this;
         }
@@ -29,7 +29,7 @@ public class ChessGameEntity {
         turn = builder.turn;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

@@ -36,7 +36,7 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public Long findRecentPieceId() {
+    public long findRecentPieceId() {
         final String query = "SELECT id FROM piece ORDER BY id desc LIMIT 1";
 
         try (final Connection connection = getConnection();

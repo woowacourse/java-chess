@@ -36,9 +36,9 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public Long saveNewChessGame() {
+    public long saveNewChessGame() {
         final String query = "INSERT INTO chess_game(turn) VALUES(?)";
-        Long autoIncrementValue = 0L;
+        long autoIncrementValue = 0L;
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -56,7 +56,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public Long findRecentGameId() {
+    public long findRecentGameId() {
         final String query = "SELECT * FROM chess_game ORDER BY game_id desc LIMIT 1";
 
         try (final Connection connection = getConnection();
@@ -73,7 +73,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public boolean isExistPreviousChessGame(Long gameId) {
+    public boolean isExistPreviousChessGame(long gameId) {
         final String query = "SELECT * FROM chess_game WHERE game_id = ?";
 
         try (final Connection connection = getConnection();
@@ -88,7 +88,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public ChessGameEntity findChessGameByGameId(Long gameId) {
+    public ChessGameEntity findChessGameByGameId(long gameId) {
         final String query = "SELECT * FROM chess_game WHERE game_id = ?";
 
         try (final Connection connection = getConnection();

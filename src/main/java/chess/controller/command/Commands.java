@@ -63,7 +63,7 @@ public class Commands {
         return new Position(sourceFile, sourceRank);
     }
 
-    public Long getPreviousGameId() {
+    public long getPreviousGameId() {
          return Long.parseLong(commands.get(PREVIOUS_GAME_ID_INDEX));
     }
 }

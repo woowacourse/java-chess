@@ -22,24 +22,24 @@ public class PieceEntity {
         createPieces.put("QUEEN", Queen::new);
     }
 
-    private Long id;
+    private long id;
     private String rank;
     private String file;
     private String type;
     private String side;
-    private Long gameId;
+    private long gameId;
 
     public static class Builder {
 
-        private Long id;
+        private long id;
         private String rank;
         private String file;
         private String type;
         private String side;
-        private Long gameId;
+        private long gameId;
 
 
-        public Builder id(Long id) {
+        public Builder id(long id) {
             this.id = id;
             return this;
         }
@@ -64,7 +64,7 @@ public class PieceEntity {
             return this;
         }
 
-        public Builder gameId(Long gameId) {
+        public Builder gameId(long gameId) {
             this.gameId = gameId;
             return this;
         }
@@ -90,7 +90,7 @@ public class PieceEntity {
         return positionSidePieceBiFunction.apply(position, side);
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -110,7 +110,7 @@ public class PieceEntity {
         return side;
     }
 
-    public Long getGameId() {
+    public long getGameId() {
         return gameId;
     }
 }

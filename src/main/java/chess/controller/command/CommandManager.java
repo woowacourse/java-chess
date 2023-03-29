@@ -32,7 +32,7 @@ public class CommandManager {
     }
 
     private void restart(Commands commands) {
-        Long previousGameId = commands.getPreviousGameId();
+        long previousGameId = commands.getPreviousGameId();
         this.commandStatus = commandStatus.restart(previousGameId);
     }
 

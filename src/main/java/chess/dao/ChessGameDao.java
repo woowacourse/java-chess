@@ -4,12 +4,12 @@ import chess.dao.entity.ChessGameEntity;
 
 public interface ChessGameDao {
 
-    Long saveNewChessGame();
-    Long findRecentGameId();
+    long saveNewChessGame();
+    long findRecentGameId();
 
-    boolean isExistPreviousChessGame(Long gameId);
+    boolean isExistPreviousChessGame(long gameId);
 
-    ChessGameEntity findChessGameByGameId(Long gameId);
+    ChessGameEntity findChessGameByGameId(long gameId);
 
     void updateTurn(ChessGameEntity chessGameEntity);
 }
