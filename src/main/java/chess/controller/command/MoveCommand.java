@@ -1,7 +1,6 @@
 package chess.controller.command;
 
 import chess.dao.ChessGameDao;
-import chess.dao.ChessGameDaoImpl;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Position;
@@ -18,14 +17,15 @@ public final class MoveCommand implements Command {
     private static final int TARGET_INDEX = 1;
 
     private final OutputView outputView = new OutputView();
-    private final ChessGameDao chessGameDaoImpl = ChessGameDaoImpl.getInstance();
+    private final ChessGameDao chessGameDao;
 
     private final List<String> parameters;
 
-    public MoveCommand(List<String> parameters) {
+    public MoveCommand(final ChessGameDao chessGameDao, List<String> parameters) {
         validateTwoPosition(parameters);
         validatePositionLength(parameters);
         this.parameters = parameters;
+        this.chessGameDao = chessGameDao;
     }
 
     private void validateTwoPosition(final List<String> parameters) {
@@ -48,11 +48,11 @@ public final class MoveCommand implements Command {
         Position source = PositionParser.parse(parameters.get(SOURCE_INDEX));
         Position target = PositionParser.parse(parameters.get(TARGET_INDEX));
         chessGame.playTurn(source, target);
-        chessGameDaoImpl.updateGame(chessGame, source, target);
+        chessGameDao.updateGame(chessGame, source, target);
         outputView.printBoard(chessGame.getBoard());
         if (chessGame.computeWinner() != Color.NONE) {
             outputView.printWinner(chessGame.computeWinner());
-            chessGameDaoImpl.deleteGameById(chessGame.getGameId());
+            chessGameDao.deleteGameById(chessGame.getGameId());
             chessGame.end();
         }
     }

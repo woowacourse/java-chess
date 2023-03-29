@@ -21,13 +21,7 @@ public final class ChessGameDaoImpl implements ChessGameDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    private static final ChessGameDao CHESS_GAME_DAO_IMPL = new ChessGameDaoImpl();
-
-    private ChessGameDaoImpl() {
-    }
-
-    public static ChessGameDao getInstance() {
-        return CHESS_GAME_DAO_IMPL;
+    public ChessGameDaoImpl() {
     }
 
     public Connection getConnection() {

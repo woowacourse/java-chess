@@ -1,5 +1,7 @@
 package chess.controller.command;
 
+import chess.dao.ChessGameDaoImpl;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
@@ -14,9 +16,9 @@ public final class CommandFactory {
     }
 
     static {
-        commands.put(CommandType.START, ignored -> new StartCommand());
-        commands.put(CommandType.LOAD, parameters -> new LoadCommand(parameters));
-        commands.put(CommandType.MOVE, parameters -> new MoveCommand(parameters));
+        commands.put(CommandType.START, ignored -> new StartCommand(new ChessGameDaoImpl()));
+        commands.put(CommandType.LOAD, parameters -> new LoadCommand(new ChessGameDaoImpl(), parameters));
+        commands.put(CommandType.MOVE, parameters -> new MoveCommand(new ChessGameDaoImpl(), parameters));
         commands.put(CommandType.STATUS, ignored -> new StatusCommand());
         commands.put(CommandType.END, ignored -> new EndCommand());
     }
