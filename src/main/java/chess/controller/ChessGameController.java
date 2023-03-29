@@ -27,7 +27,7 @@ public class ChessGameController {
         OutputView.printGameStart();
 
         Command command = getInitCommand(chessGameService, board);
-        board = checkLoad(chessGameService, board, command);
+        board = checkLoadCommand(chessGameService, board, command);
         while (command != END) {
             command = start(chessGameService, board);
         }
@@ -44,16 +44,17 @@ public class ChessGameController {
         return command;
     }
 
-    private Board checkLoad(final ChessGameService chessGameService, Board board, final Command command) {
+    private Board checkLoadCommand(final ChessGameService chessGameService, Board board, final Command command) {
         if (command == LOAD) {
-            board = loadBoard(chessGameService, board);
+            board = loadStoredBoard(chessGameService, board);
             OutputView.printBoard(board.getBoard());
         }
+
         return board;
     }
 
 
-    private Board loadBoard(final ChessGameService chessGameService, final Board board) {
+    private Board loadStoredBoard(final ChessGameService chessGameService, final Board board) {
         final List<MoveDto> logs = chessGameService.load();
         for (MoveDto moveDto : logs) {
             final String source = moveDto.getSource();
@@ -61,6 +62,7 @@ public class ChessGameController {
 
             board.move(source, target);
         }
+
         return board;
     }
 
