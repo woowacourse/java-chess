@@ -48,7 +48,7 @@ public class MoveDao {
         }
     }
 
-    public void clear() {
+    public void delete() {
         final String query = "DELETE FROM move";
 
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {

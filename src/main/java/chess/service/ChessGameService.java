@@ -23,6 +23,6 @@ public class ChessGameService {
     }
 
     public void clear() {
-        moveDao.clear();
+        moveDao.delete();
     }
 }
