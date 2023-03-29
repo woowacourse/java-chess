@@ -20,7 +20,6 @@ public class ConnectionGenerator {
         try {
             return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (final SQLException error) {
-            System.err.println("DB 연결 오류:" + error.getMessage());
             error.printStackTrace();
             throw new RuntimeException("데이터베이스에 연결할 수 없습니다");
         }
