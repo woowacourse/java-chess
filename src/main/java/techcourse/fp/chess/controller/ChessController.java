@@ -117,12 +117,8 @@ public final class ChessController {
     }
 
     private void move(final CommandRequest commandRequest, ChessGame chessGame) {
-        try {
-            chessGame.move(commandRequest.getSource(), commandRequest.getTarget());
-            outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-        }
+        chessGame.move(commandRequest.getSource(), commandRequest.getTarget());
+        outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
     }
 
     private void save(final CommandRequest commandRequest, final ChessGame chessGame) {

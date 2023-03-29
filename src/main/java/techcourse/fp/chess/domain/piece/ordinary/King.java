@@ -14,6 +14,11 @@ public final class King extends OrdinaryPiece {
     }
 
     public static King create(final Color color) {
-        return new King(color, PieceType.KING,new NoneSlidingStrategy(Direction.ofKing()));
+        return new King(color, PieceType.KING, new NoneSlidingStrategy(Direction.ofKing()));
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

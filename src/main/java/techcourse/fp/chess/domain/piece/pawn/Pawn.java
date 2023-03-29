@@ -52,4 +52,9 @@ public abstract class Pawn extends Piece {
     }
 
     protected abstract boolean isStartPosition(final Position source);
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.EmptyPiece;
 import techcourse.fp.chess.domain.piece.Piece;
-import techcourse.fp.chess.domain.piece.PieceType;
 import techcourse.fp.chess.domain.piece.Turn;
 
 public final class Board {
@@ -46,7 +45,7 @@ public final class Board {
     public boolean isGameEnd() {
         return board.values()
                 .stream()
-                .filter(piece -> piece.isSamePieceType(PieceType.KING))
+                .filter(Piece::isKing)
                 .count() < NUMBER_OF_KING;
     }
 
@@ -54,7 +53,12 @@ public final class Board {
         if (!isGameEnd()) {
             throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");
         }
-        return turn.getPreviousTurn();
+
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("킹이 존재하지 않습니다."))
+                .getColor();
     }
 
     private void validateTurn(final Piece sourcePiece) {

@@ -16,4 +16,9 @@ public final class Bishop extends OrdinaryPiece {
     public static Bishop create(final Color color) {
         return new Bishop(color, PieceType.BISHOP,new SlidingStrategy(Direction.ofBishop()));
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

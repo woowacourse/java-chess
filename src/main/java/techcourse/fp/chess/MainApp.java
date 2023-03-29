@@ -6,6 +6,8 @@ import techcourse.fp.chess.dao.LocalMysqlChessGameDao;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 
+
+//TODO: DTO 및 Controller 개선
 public final class MainApp {
 
     public static void main(String[] args) {
