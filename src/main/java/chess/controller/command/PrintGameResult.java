@@ -19,7 +19,6 @@ public class PrintGameResult implements CommandStatus {
     public PrintGameResult(final ResultCalculator resultCalculator, final ChessGameService chessGameService) {
         this.resultCalculator = resultCalculator;
         this.chessGameService = chessGameService;
-
     }
 
     @Override
