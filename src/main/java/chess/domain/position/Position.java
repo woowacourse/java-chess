@@ -6,6 +6,10 @@ public final class Position {
 
     private static final int NEAR_DISTANCE_EXCLUDE = 2;
     private static final int INDEX_ADJUST = 1;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+    private static final char FILE_CHAR_ADJUST = 'A';
+    private static final char RANK_CHAR_ADJUST = '0';
 
     private final File file;
     private final Rank rank;
@@ -16,12 +20,12 @@ public final class Position {
     }
 
     public static Position from(final String position) {
-        char c = position.charAt(0);
-        char d = position.charAt(1);
-        File from = File.from(c - 'A' + INDEX_ADJUST);
-        Rank from1 = Rank.from(d - '0');
+        char fileIndex = position.charAt(FILE_INDEX);
+        char rankIndex = position.charAt(RANK_INDEX);
+        File file = File.from(fileIndex - FILE_CHAR_ADJUST + INDEX_ADJUST);
+        Rank rank = Rank.from(rankIndex - RANK_CHAR_ADJUST);
 
-        return new Position(from, from1);
+        return new Position(file, rank);
     }
 
     public boolean isFileEquals(final Position target) {
