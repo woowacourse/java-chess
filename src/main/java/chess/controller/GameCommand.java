@@ -1,6 +1,6 @@
 package chess.controller;
 
-import java.util.Arrays;
+import java.util.Map;
 
 public enum GameCommand {
 
@@ -13,7 +13,11 @@ public enum GameCommand {
     public static final int MOVE_COMMAND_SIZE = 3;
     public static final int LOAD_COMMAND_SIZE = 2;
     public static final int DEFAULT_COMMAND_SIZE = 1;
-    private static final String COMMAND_NOT_FOUND_MESSAGE = "해당하는 명령어가 없습니다.";
+    private static final String COMMAND_NOT_FOUND_MESSAGE = "해당하는 명령어를 찾을 수 없습니다.";
+    private static final Map<String, GameCommand> COMMAND_MAPPER = Map.of(
+            START.value, START, START.value, STATUS, LOAD.value, LOAD,
+            MOVE.value, MOVE, END.value, END
+    );
 
     private final String value;
 
@@ -22,9 +26,9 @@ public enum GameCommand {
     }
 
     public static GameCommand from(final String commandString) {
-        return Arrays.stream(GameCommand.values())
-                .filter(command -> command.value.equals(commandString))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(COMMAND_NOT_FOUND_MESSAGE));
+        if (COMMAND_MAPPER.containsKey(commandString)) {
+            throw new IllegalArgumentException(COMMAND_NOT_FOUND_MESSAGE);
+        }
+        return COMMAND_MAPPER.get(commandString);
     }
 }
