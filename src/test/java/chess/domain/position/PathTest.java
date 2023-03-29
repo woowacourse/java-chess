@@ -21,9 +21,11 @@ class PathTest {
         //given
         Path path = Path.of(A1, A6);
         Path path2 = Path.of(A1, C1);
+
         //when
         boolean straight = path.isStraight();
         boolean straight2 = path2.isStraight();
+
         //then
         assertAll(
                 () -> assertThat(straight).isTrue(),
@@ -37,9 +39,11 @@ class PathTest {
         //given
         Path path = Path.of(A1, D4);
         Path path2 = Path.of(A6, C1);
+
         //when
         boolean straight = path.isStraight();
         boolean straight2 = path2.isStraight();
+
         //then
         assertAll(
                 () -> assertThat(straight).isFalse(),
@@ -53,9 +57,11 @@ class PathTest {
         //given
         Path path = Path.of(A1, C3);
         Path path2 = Path.of(E1, C3);
+
         //when
         boolean diagonal = path.isDiagonal();
         boolean diagonal2 = path2.isDiagonal();
+
         //then
         assertAll(
                 () -> assertThat(diagonal).isTrue(),

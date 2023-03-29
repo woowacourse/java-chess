@@ -38,8 +38,10 @@ class ChessGameTest {
     void end_onGoing_false() {
         //given
         final var chessGame = new ChessGame();
+
         //when
         chessGame.end();
+
         //then
         assertThat(chessGame.isOnGoing()).isFalse();
     }
