@@ -20,31 +20,34 @@ public class RoomDao {
     }
 
     public Room addRoom(final String name) throws SQLException {
-        final String query = "insert into room(name) values(?)";
-        final Connection connection = getConnection();
-        final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, name);
-        preparedStatement.executeUpdate();
-        return FindByName(name);
+        try (final Connection connection = getConnection()) {
+            final String query = "insert into room(name) values(?)";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.executeUpdate();
+            return FindByName(name);
+        }
     }
 
     public Room FindByName(final String name) throws SQLException {
-        final String query = "select * from room where name = ?";
-        final Connection connection = getConnection();
-        final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, name);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            return new Room(resultSet.getInt(1));
+        try (final Connection connection = getConnection()) {
+            final String query = "select * from room where name = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new Room(resultSet.getInt(1));
+            }
+            throw new SQLException("해당하는 방이 없습니다");
         }
-        throw new SQLException("해당하는 방이 없습니다");
     }
 
     public void deleteRoom(final int roomId) throws SQLException {
-        final String query = "delete from room where id = ?";
-        final Connection connection = getConnection();
-        final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, roomId);
-        preparedStatement.executeUpdate();
+        try (final Connection connection = getConnection()) {
+            final String query = "delete from room where id = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            preparedStatement.executeUpdate();
+        }
     }
 }

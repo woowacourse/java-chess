@@ -26,22 +26,28 @@ public class NotationDao {
     }
 
     public void addNotation(final Room room, final Move move) throws SQLException {
-        String query = "insert into notation values(?,?,?,?)";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, room.getRoomId());
-        preparedStatement.setString(2, move.getSourceString());
-        preparedStatement.setString(3, move.getTargetString());
-        preparedStatement.setInt(4, room.getTurn());
-        preparedStatement.executeUpdate();
+        try (final Connection connection = getConnection()) {
+            final String query = "insert into notation values(?,?,?,?)";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, room.getRoomId());
+            preparedStatement.setString(2, move.getSourceString());
+            preparedStatement.setString(3, move.getTargetString());
+            preparedStatement.setInt(4, room.getTurn());
+            preparedStatement.executeUpdate();
+        }
     }
 
     public List<Move> findByRoomId(final int roomId) throws SQLException {
-        String query = "select source,target from notation where room_id = ?";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, roomId);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        try (final Connection connection = getConnection()) {
+            final String query = "select source,target from notation where room_id = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            return getNotation(resultSet);
+        }
+    }
+
+    private List<Move> getNotation(ResultSet resultSet) throws SQLException {
         List<Move> notation = new ArrayList<>();
         while (resultSet.next()) {
             notation.add(makeMove(resultSet));
@@ -50,12 +56,17 @@ public class NotationDao {
     }
 
     public int findLastTurn(final int roomId) throws SQLException {
+        try (Connection connection = getConnection()) {
+            String query = "select turn from notation where room_id =?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return findTurn(resultSet);
+        }
+    }
+
+    private static int findTurn(ResultSet resultSet) throws SQLException {
         int turn = 1;
-        String query = "select turn from notation where room_id =?";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, roomId);
-        ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             turn = resultSet.getInt(1);
         }
@@ -73,10 +84,11 @@ public class NotationDao {
     }
 
     public void deleteByRoomId(final int roomId) throws SQLException {
-        final String query = "delete from notation where room_id = ?";
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, roomId);
-        preparedStatement.executeUpdate();
+        try (Connection connection = getConnection()) {
+            final String query = "delete from notation where room_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            preparedStatement.executeUpdate();
+        }
     }
 }
