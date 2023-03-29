@@ -1,6 +1,7 @@
 package chess.controller.command;
 
 import chess.dao.ChessGameDao;
+import chess.dao.ChessGameDaoImpl;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Running;
 import chess.view.OutputView;
@@ -12,7 +13,7 @@ public final class LoadCommand implements Command {
     private static final int GAME_ID_INDEX = 0;
     private static final int GAME_ID_PARAMETERS_SIZE = 1;
 
-    private final ChessGameDao chessGameDao = ChessGameDao.getInstace();
+    private final ChessGameDao chessGameDaoImpl = ChessGameDaoImpl.getInstance();
     private final OutputView outputView = new OutputView();
     private final Long parameters;
 
@@ -25,7 +26,7 @@ public final class LoadCommand implements Command {
 
     @Override
     public void execute(ChessGame chessGame) {
-        Running gameLoaded = chessGameDao.findGameById(parameters);
+        Running gameLoaded = chessGameDaoImpl.findGameById(parameters);
         chessGame.setGameId(parameters);
         chessGame.load(gameLoaded);
         outputView.printBoard(chessGame.getBoard());
