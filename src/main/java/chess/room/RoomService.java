@@ -26,7 +26,7 @@ public class RoomService {
     }
 
     public List<Move> getNotation() throws SQLException {
-        int roomId = room.getRoomId();
+        final int roomId = room.getRoomId();
         this.room.putTurn(notationDao.findLastTurn(roomId));
         return notationDao.findByRoomId(roomId);
     }
@@ -42,7 +42,7 @@ public class RoomService {
     }
 
     public void deleteRoom() throws SQLException {
-        int roomId = room.getRoomId();
+        final int roomId = room.getRoomId();
         notationDao.deleteByRoomId(roomId);
         roomDao.deleteRoom(roomId);
     }
