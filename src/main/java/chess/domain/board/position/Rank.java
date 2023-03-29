@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import chess.domain.piece.Team;
 
@@ -24,14 +24,14 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank of(final int index) {
+    public static Rank from(final int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~8이여야합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("Rank의 index는 1~" + Rank.values().length + "이여야합니다."));
     }
 
-    public static Rank from(final Team team, final boolean isPawn) {
+    public static Rank of(final Team team, final boolean isPawn) {
         if (team == Team.WHITE) {
             if (isPawn) {
                 return TWO;
@@ -57,7 +57,17 @@ public enum Rank {
         final int max = Math.max(from.index, to.index);
 
         return IntStream.rangeClosed(min, max)
-                .mapToObj(Rank::of)
+                .mapToObj(Rank::from)
+                .collect(Collectors.toList());
+    }
+
+    public static List<Rank> sliceBetweenExcludeEnd(final Rank from, final Rank to) {
+        final int min = Math.min(from.index, to.index);
+        final int max = Math.max(from.index, to.index);
+
+        return IntStream.range(min, max)
+                .skip(1)
+                .mapToObj(Rank::from)
                 .collect(Collectors.toList());
     }
 

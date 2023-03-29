@@ -2,6 +2,7 @@ package chess.domain.game;
 
 public enum GameStatus {
     IDLE,
-    START,
+    PLAYING,
+    GAME_OVER,
     ;
 }

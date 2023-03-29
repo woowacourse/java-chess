@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +18,8 @@ import static chess.fixture.PositionFixture.C4;
 import static chess.fixture.PositionFixture.C7;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class PawnTest {
 
     @Nested

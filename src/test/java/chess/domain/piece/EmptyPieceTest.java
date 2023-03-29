@@ -1,12 +1,16 @@
 package chess.domain.piece;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static chess.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.B3;
 
+@SuppressWarnings("NonAsciiCharacters")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class EmptyPieceTest {
 
     @Test

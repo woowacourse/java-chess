@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
@@ -10,62 +13,57 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class PieceFactory {
 
-    public static void createPiece(final Map<Position, Piece> piecePosition) {
-        initPosition(piecePosition);
-        List<Team> teams = List.of(Team.BLACK, Team.WHITE);
-        for (final Team team : teams) {
-            createPawn(piecePosition, Rank.from(team, true), team);
-            createRook(piecePosition, Rank.from(team, false), team);
-            createKnight(piecePosition, Rank.from(team, false), team);
-            createBishop(piecePosition, Rank.from(team, false), team);
-            createQueen(piecePosition, Rank.from(team, false), team);
-            createKing(piecePosition, Rank.from(team, false), team);
-        }
+    private static final Map<Position, Piece> CACHE = new HashMap<>();
+
+    static {
+        CACHE.putAll(initializePiece(Team.WHITE, Rank.ONE));
+        CACHE.putAll(initializePawn(Team.WHITE, Rank.TWO));
+        CACHE.putAll(initializeEmptyPiece(List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)));
+        CACHE.putAll(initializePawn(Team.BLACK, Rank.SEVEN));
+        CACHE.putAll(initializePiece(Team.BLACK, Rank.EIGHT));
     }
 
-    public static void createEmptyPiece(final Map<Position, Piece> piecePosition) {
-        initPosition(piecePosition);
+    public static Map<Position, Piece> createPiece() {
+        return new HashMap<>(CACHE);
     }
 
-    private static void initPosition(final Map<Position, Piece> piecePosition) {
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                piecePosition.put(Position.of(file, rank), new EmptyPiece());
-            }
-        }
+    public static Map<Position, Piece> createEmptyPiece() {
+        return initializeEmptyPiece(List.of(Rank.ONE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT));
     }
 
-    private static void createPawn(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
-        for (final File file : File.values()) {
-            piecePosition.put(Position.of(file, rank), new Pawn(team));
-        }
+    private static Map<Position, Piece> initializePiece(final Team team, final Rank rank) {
+        final List<Piece> pieces = List.of(
+                new Rook(team), new Knight(team), new Bishop(team), new Queen(team),
+                new King(team), new Bishop(team), new Knight(team), new Rook(team)
+        );
+        final List<File> files = Arrays.stream(File.values()).collect(toList());
+
+        return IntStream.range(0, pieces.size())
+                .boxed()
+                .collect(toMap(index -> Position.of(files.get(index), rank), pieces::get));
     }
 
-    private static void createRook(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
-        piecePosition.put(Position.of(File.A, rank), new Rook(team));
-        piecePosition.put(Position.of(File.H, rank), new Rook(team));
+    private static Map<Position, Piece> initializePawn(final Team team, final Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> Position.of(file, rank))
+                .collect(toMap(Function.identity(), ignore -> new Pawn(team)));
     }
 
-    private static void createKnight(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
-        piecePosition.put(Position.of(File.B, rank), new Knight(team));
-        piecePosition.put(Position.of(File.G, rank), new Knight(team));
-    }
-
-    private static void createBishop(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
-        piecePosition.put(Position.of(File.C, rank), new Bishop(team));
-        piecePosition.put(Position.of(File.F, rank), new Bishop(team));
-    }
-
-    private static void createQueen(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
-        piecePosition.put(Position.of(File.D, rank), new Queen(team));
-    }
-
-    private static void createKing(final Map<Position, Piece> piecePosition, final Rank rank, final Team team) {
-        piecePosition.put(Position.of(File.E, rank), new King(team));
+    private static Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
+        return ranks.stream()
+                .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
+                .collect(toMap(Function.identity(), ignore -> new EmptyPiece()));
     }
 }

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 
 public final class Pawn extends Piece {
 
@@ -12,12 +12,11 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position from, final Position to) {
-
-        if (team == Team.WHITE) {
+        if (getTeam() == Team.WHITE) {
             return isWhitePawnMovable(from, to);
         }
 
-        if (team == Team.BLACK) {
+        if (getTeam() == Team.BLACK) {
             return isBlackPawnMovable(from, to);
         }
 
@@ -25,7 +24,6 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhitePawnMovable(final Position from, final Position to) {
-
         final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
         final int rankInterval = getRankInterval(to.getRank(), from.getRank());
 
@@ -41,7 +39,6 @@ public final class Pawn extends Piece {
     }
 
     private boolean isBlackPawnMovable(final Position from, final Position to) {
-
         final int fileInterval = File.calculateInterval(from.getFile(), to.getFile());
         final int rankInterval = getRankInterval(from.getRank(), to.getRank());
 

@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("File의 index는 1~8이여야합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("File의 index는 1~" + File.values().length + "이여야합니다."));
     }
 
     public static int calculateInterval(final File from, final File to) {
@@ -42,7 +42,13 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
-    public int getIndex() {
-        return index;
+    public static List<File> sliceBetweenExcludeEnd(final File from, final File to) {
+        final int min = Math.min(from.index, to.index);
+        final int max = Math.max(from.index, to.index);
+
+        return IntStream.range(min, max)
+                .skip(1)
+                .mapToObj(File::from)
+                .collect(Collectors.toList());
     }
 }

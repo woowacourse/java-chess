@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 
 public final class EmptyPiece extends Piece {
 
@@ -11,10 +11,5 @@ public final class EmptyPiece extends Piece {
     @Override
     public boolean isMovable(final Position from, final Position to) {
         throw new UnsupportedOperationException("빈 말은 움직일 수 없습니다.");
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
     }
 }
