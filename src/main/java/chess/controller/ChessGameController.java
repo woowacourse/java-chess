@@ -38,6 +38,13 @@ public class ChessGameController {
 //        }
     }
 
+    private void printScores(final ChessGameService chessGameService, final ChessGame chessGame) {
+        if (chessGame.isGameOver()) {
+            throw new IllegalArgumentException("게임이 진행 중이지 않습니다");
+        }
+        outputView.printScore(chessGameService.calculateScores(chessGame));
+    }
+
     private void printResultIfGameOver(final ChessGameService chessGameService, final ChessGame chessGame) {
         if (chessGameService.isGameOver(chessGame)) {
             outputView.printResult(chessGameService.getResult(chessGame));

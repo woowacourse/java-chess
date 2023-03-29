@@ -22,6 +22,10 @@ public enum PieceType {
         return piece.getPieceType() == KING;
     }
 
+    public static boolean isPawn(final Piece piece) {
+        return piece.getPieceType() == PAWN;
+    }
+
     public double getScore() {
         return score;
     }

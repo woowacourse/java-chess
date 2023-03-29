@@ -1,20 +1,22 @@
 package chess.controller;
 
+import chess.chessgame.PlayerScore;
+
 public class ScoreDto {
 
-    private final double whiteScore;
-    private final double blackScore;
+    private final PlayerScore whiteScore;
+    private final PlayerScore blackScore;
 
-    public ScoreDto(final double whiteScore, final double blackScore) {
+    public ScoreDto(final PlayerScore whiteScore, final PlayerScore blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
 
     public double getWhiteScore() {
-        return whiteScore;
+        return whiteScore.getPlayerScore();
     }
 
     public double getBlackScore() {
-        return blackScore;
+        return blackScore.getPlayerScore();
     }
 }

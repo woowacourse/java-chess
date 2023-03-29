@@ -16,6 +16,7 @@ import static java.util.stream.Collectors.groupingBy;
 public class PlayerScore {
 
     private static final double MAJORITY_PAWN_SCORE = 0.5;
+
     private final double playerScore;
 
     PlayerScore(final double playerScore) {
@@ -31,7 +32,7 @@ public class PlayerScore {
 
     private static double calculateNonPawnScore(final Collection<Piece> pieces) {
         return pieces.stream()
-                     .filter(piece -> piece.getPieceType() != PieceType.PAWN)
+                     .filter(PieceType::isPawn)
                      .mapToDouble(Piece::getScore)
                      .sum();
     }
@@ -48,10 +49,7 @@ public class PlayerScore {
     private static Map<File, Long> countPawnByFile(final Map<Position, Piece> pieces) {
         return pieces.keySet()
                      .stream()
-                     .filter(position -> {
-                         final Piece piece = pieces.get(position);
-                         return piece.getPieceType() == PieceType.PAWN;
-                     })
+                     .filter(position -> PieceType.isPawn(pieces.get(position)))
                      .map(Position::getFile)
                      .collect(groupingBy(Function.identity(), counting()));
     }
@@ -61,6 +59,10 @@ public class PlayerScore {
             return MAJORITY_PAWN_SCORE * count;
         }
         return PieceType.PAWN.getScore() * count;
+    }
+
+    public double getPlayerScore() {
+        return playerScore;
     }
 
     @Override
@@ -78,9 +80,5 @@ public class PlayerScore {
     @Override
     public int hashCode() {
         return Objects.hash(playerScore);
-    }
-
-    public double getPlayerScore() {
-        return playerScore;
     }
 }

@@ -76,10 +76,10 @@ public class ChessGame {
         return chessBoard;
     }
 
-    public double getScore(Side side) {
-        final Map<Position, Piece> piecesOfSide = chessBoard.getPieces(side);
-        final PlayerScore playerScore = PlayerScore.from(piecesOfSide);
-        return playerScore.getPlayerScore();
+    public PlayerScore calculateScore(Side player) {
+        final Map<Position, Piece> piecesOfPlayer = chessBoard.getPieces(player);
+
+        return PlayerScore.from(piecesOfPlayer);
     }
 
     public String getWinner() {
