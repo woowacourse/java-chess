@@ -6,12 +6,12 @@ import java.util.Optional;
 
 public interface BoardStatusesDao {
 
-    List<Integer> findAvailableBoardIds();
+    List<Integer> findAllNotOverBoardIds();
 
-    Optional<ChessBoardStatus> find(int boardId);
+    Optional<ChessBoardStatus> findByBoardId(int boardId);
 
     void insertOrUpdate(int boardId, ChessBoardStatus status);
 
     void delete(int boardId);
-    
+
 }

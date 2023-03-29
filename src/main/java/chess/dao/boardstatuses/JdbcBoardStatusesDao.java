@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class LocalBoardStatusesDao implements BoardStatusesDao {
+public class JdbcBoardStatusesDao implements BoardStatusesDao {
 
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-    public List<Integer> findAvailableBoardIds() {
+    public List<Integer> findAllNotOverBoardIds() {
         final String query = "SELECT board_id FROM board_statuses WHERE is_over = 'N'";
 
         return jdbcTemplate.executeQuery(query, Collections.emptyList(), resultSet -> {
@@ -25,7 +25,7 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
     }
 
     @Override
-    public Optional<ChessBoardStatus> find(final int boardId) {
+    public Optional<ChessBoardStatus> findByBoardId(final int boardId) {
         final String query = "SELECT current_turn, is_over FROM board_statuses WHERE board_id = ? AND is_over = 'N'";
 
         final ChessBoardStatus result = jdbcTemplate.executeQuery(query, List.of(boardId), resultSet -> {

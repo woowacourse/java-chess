@@ -226,12 +226,12 @@ sequenceDiagram
     - [x] GameStatus 패키지 이동, 검증 로직 의존관계 없애기
 - 코드 관련
     - [x] Jdbc 템플릿 적용하여 Dao 중복 코드 제거
-    - [ ] Connection 사용 최적화
+    - [x] Dao 메서드명 일반적인 방식으로 변경
+    - [x] 부적절한 Dao 클래스명 수정
     - [ ] Dao SqlException 런타임예외로 전환, 예외메시지 구체화
-    - [ ] Dao 메서드명 일반적인 방식으로 변경
+    - [ ] Connection 사용 최적화
     - [x] King 공격 확인 메서드 분리
     - [x] 모호한 메서드명 수정
-    - [ ] 부적절한 Dao 클래스명 수정
     - [ ] 필요 시 Optional orElse 대신 orElseGet 쓰기
 - DB 관련
     - [ ] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기

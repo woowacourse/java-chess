@@ -11,19 +11,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-public class LocalBoardPiecesDao implements BoardPiecesDao {
+public class JdbcBoardPiecesDao implements BoardPiecesDao {
 
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
     @Override
     public Optional<Map<Position, Piece>> find(final int boardId) {
-        final String sql = "SELECT p.position_file, p.position_rank, p.piece_type, p.piece_camp "
+        final String query = "SELECT p.position_file, p.position_rank, p.piece_type, p.piece_camp "
                 + "FROM board_pieces as p, board_statuses as s "
                 + "WHERE p.board_id = ? "
                 + "AND p.board_id = s.board_id "
                 + "AND s.is_over = 'N'";
 
-        Map<Position, Piece> result = jdbcTemplate.executeQuery(sql, List.of(boardId), resultSet -> {
+        Map<Position, Piece> result = jdbcTemplate.executeQuery(query, List.of(boardId), resultSet -> {
             Map<Position, Piece> piecesByPosition = new HashMap<>();
             while (resultSet.next()) {
                 int file = resultSet.getInt(1);
@@ -49,7 +49,7 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
     }
 
     private void insertOrUpdatePiece(final int boardId, final Position position, final Piece piece) {
-        final String sql = "INSERT INTO board_pieces "
+        final String query = "INSERT INTO board_pieces "
                 + "(board_id, position_file, position_rank, piece_type, piece_camp) "
                 + "VALUES (?, ?, ?, ?, ?) "
                 + "ON DUPLICATE KEY UPDATE "
@@ -60,7 +60,7 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
         String pieceTypeName = piece.getTypeName();
         String pieceCampName = piece.getCamp().name();
 
-        jdbcTemplate.executeUpdate(sql, List.of(
+        jdbcTemplate.executeUpdate(query, List.of(
                 boardId, file, rank, pieceTypeName, pieceCampName,
                 file, rank, pieceTypeName, pieceCampName
         ));
@@ -68,8 +68,8 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
 
     @Override
     public void delete(int boardId) {
-        final String sql = "DELETE FROM board_pieces WHERE board_id = ?";
+        final String query = "DELETE FROM board_pieces WHERE board_id = ?";
 
-        jdbcTemplate.executeUpdate(sql, List.of(boardId));
+        jdbcTemplate.executeUpdate(query, List.of(boardId));
     }
 }

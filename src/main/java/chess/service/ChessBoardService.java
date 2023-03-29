@@ -1,9 +1,9 @@
 package chess.service;
 
 import chess.dao.boardpieces.BoardPiecesDao;
-import chess.dao.boardpieces.LocalBoardPiecesDao;
+import chess.dao.boardpieces.JdbcBoardPiecesDao;
 import chess.dao.boardstatuses.BoardStatusesDao;
-import chess.dao.boardstatuses.LocalBoardStatusesDao;
+import chess.dao.boardstatuses.JdbcBoardStatusesDao;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.domain.PieceInitializer;
@@ -15,13 +15,13 @@ import java.util.Map;
 
 public class ChessBoardService {
 
-    private final BoardPiecesDao boardPiecesDao = new LocalBoardPiecesDao();
-    private final BoardStatusesDao boardStatusesDao = new LocalBoardStatusesDao();
+    private final BoardPiecesDao boardPiecesDao = new JdbcBoardPiecesDao();
+    private final BoardStatusesDao boardStatusesDao = new JdbcBoardStatusesDao();
 
     public ChessBoard findChessBoardById(int boardId) {
         Map<Position, Piece> piecesByPosition = boardPiecesDao.find(boardId)
                 .orElse(PieceInitializer.createPiecesWithPosition());
-        ChessBoardStatus status = boardStatusesDao.find(boardId)
+        ChessBoardStatus status = boardStatusesDao.findByBoardId(boardId)
                 .orElse(new ChessBoardStatus(Camp.WHITE, false));
         return new ChessBoard(boardId, piecesByPosition, status);
     }
@@ -32,6 +32,6 @@ public class ChessBoardService {
     }
 
     public List<Integer> findAllBoardIds() {
-        return boardStatusesDao.findAvailableBoardIds();
+        return boardStatusesDao.findAllNotOverBoardIds();
     }
 }
