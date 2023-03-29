@@ -1,37 +1,19 @@
 package dao;
 
 import dto.PieceDto;
+import util.DBUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcPieceDao implements PieceDao {
 
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
-
-    public Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @Override
     public void save(List<PieceDto> pieceDtos) {
         for (PieceDto pieceDto : pieceDtos) {
             final var query = "INSERT INTO chess_board(piece_name, piece_color, piece_row, piece_column, turn) VALUES (?, ?, ?, ?, ?)";
-            try (final var connection = getConnection();
+            try (final var connection = DBUtil.getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, pieceDto.getName());
                 preparedStatement.setString(2, pieceDto.getPieceColor());
@@ -51,7 +33,7 @@ public class JdbcPieceDao implements PieceDao {
         List<PieceDto> pieceDtos = new ArrayList<>();
 
         final var query = "SELECT piece_name, piece_color, piece_row, piece_column, turn FROM chess_board";
-        try (final var connection = getConnection();
+        try (final var connection = DBUtil.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
             final var resultSet = preparedStatement.executeQuery();
@@ -79,7 +61,7 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void delete() {
         final var query = "DELETE FROM chess_board";
-        try (final var connection = getConnection();
+        try (final var connection = DBUtil.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
