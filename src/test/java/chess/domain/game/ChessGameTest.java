@@ -60,4 +60,21 @@ class ChessGameTest {
         chessGame.startGame();
         assertThat(chessGame.isOnGoing()).isTrue();
     }
+
+    @Test
+    @DisplayName("이동 후에 턴이 바뀐다.")
+    void turnChange_afterMove() {
+        //given
+        final var chessGame = new ChessGame();
+        chessGame.startGame();
+        final var source = new Position(File.A, Rank.TWO);
+        final var target = new Position(File.A, Rank.FOUR);
+        chessGame.playTurn(source, target);
+
+        //when
+        String turn = chessGame.getTurn();
+
+        //then
+        assertThat(turn).isEqualTo("BLACK");
+    }
 }
