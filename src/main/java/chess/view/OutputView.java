@@ -42,11 +42,11 @@ public final class OutputView {
     }
 
     public static void printStatusScore(final ChessGame chessGame) {
-        System.out.println("흰색 점수: " + chessGame.getWhiteScore());
-        System.out.println("검정색 점수: " + chessGame.getBlackScore());
+        System.out.println("흰색 점수: " + chessGame.calculateWhiteScore());
+        System.out.println("검정색 점수: " + chessGame.calculateBlackScore());
     }
 
     public static void printWinner(final ChessGame chessGame) {
-        System.out.println("승자 :" + ViewCamp.getCampName(chessGame.getWinnerCamp()));
+        System.out.println("승자 :" + ViewCamp.getCampName(chessGame.determineWinnerCamp()));
     }
 }

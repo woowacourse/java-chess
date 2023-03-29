@@ -89,29 +89,29 @@ public final class ChessGame {
         this.turnCamp = turnCamp.convert(turnCamp);
     }
 
-    public double getWhiteScore() {
+    public double calculateWhiteScore() {
         return chessBoard.calculateTotalScoreByCamp(Camp.WHITE);
     }
 
-    public double getBlackScore() {
+    public double calculateBlackScore() {
         return chessBoard.calculateTotalScoreByCamp(Camp.BLACK);
     }
 
-    public Camp getWinnerCamp() {
+    public Camp determineWinnerCamp() {
         if (chessBoard.isKingsLive()) {
-            return getWinnerByScore();
+            return calculateWinnerByScore();
         }
-        return getWinnerByKingLive();
+        return calculateWinnerByKingLive();
     }
 
-    private Camp getWinnerByKingLive() {
+    private Camp calculateWinnerByKingLive() {
         if (chessBoard.isKingLiveByCamp(Camp.WHITE)) {
             return Camp.WHITE;
         }
         return Camp.BLACK;
     }
 
-    private Camp getWinnerByScore() {
+    private Camp calculateWinnerByScore() {
         if (chessBoard.calculateTotalScoreByCamp(Camp.WHITE) > chessBoard.calculateTotalScoreByCamp(Camp.BLACK)) {
             return Camp.WHITE;
         }
