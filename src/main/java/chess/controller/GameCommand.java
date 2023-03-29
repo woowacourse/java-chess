@@ -10,6 +10,7 @@ import java.util.List;
 public enum GameCommand {
     INIT,
     START,
+    FIRST_MOVE,
     MOVE,
     STATUS,
     END;
@@ -61,5 +62,9 @@ public enum GameCommand {
 
     public boolean isEnd() {
         return this == END;
+    }
+
+    public boolean isFirstMove() {
+        return this == FIRST_MOVE;
     }
 }
