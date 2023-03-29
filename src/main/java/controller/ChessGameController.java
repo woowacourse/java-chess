@@ -1,5 +1,6 @@
 package controller;
 
+import service.ChessService;
 import view.InputView;
 import view.OutputView;
 
@@ -8,18 +9,21 @@ import java.util.function.Consumer;
 
 public final class ChessGameController {
 
-    private final GameStatus gameStatus;
+    private final ChessService chessService;
 
-    public ChessGameController(final GameStatus gameStatus) {
-        this.gameStatus = gameStatus;
+    public ChessGameController(final ChessService chessService) {
+        this.chessService = chessService;
     }
+
 
     public void run() {
         OutputView.printStartMessage();
 
-        while (gameStatus.isKeepGaming()) {
+        final GameStatus gameStatus = new GameStatus(chessService);
+
+        do {
             retryOnError(gameStatus::playTurn);
-        }
+        } while (gameStatus.isKeepGaming());
         gameStatus.noticeKingDead();
     }
 
