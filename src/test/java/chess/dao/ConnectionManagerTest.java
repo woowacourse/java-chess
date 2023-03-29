@@ -13,7 +13,8 @@ class ConnectionManagerTest {
     @DisplayName("DB 커넥션을 반환한다.")
     @Test
     void DB_커넥션_반환() {
-        try (Connection connection = ConnectionManager.getConnection()) {
+        ConnectionManager connectionManager = new ConnectionManager();
+        try (Connection connection = connectionManager.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException exception) {
             Assertions.fail(exception.getMessage());

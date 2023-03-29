@@ -1,75 +1,58 @@
 package chess.dao.boardstatuses;
 
-import chess.dao.ConnectionManager;
+import chess.dao.JdbcTemplate;
 import chess.domain.Camp;
 import chess.dto.ChessBoardStatus;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 public class LocalBoardStatusesDao implements BoardStatusesDao {
 
-    public List<Integer> findAvailableBoardIds() {
-        final String sql = "SELECT board_id FROM board_statuses WHERE is_over = 'N'";
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        List<Integer> ids = new ArrayList<>();
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+    public List<Integer> findAvailableBoardIds() {
+        final String query = "SELECT board_id FROM board_statuses WHERE is_over = 'N'";
+
+        return jdbcTemplate.executeQuery(query, Collections.emptyList(), resultSet -> {
+            List<Integer> ids = new ArrayList<>();
             while (resultSet.next()) {
                 ids.add(resultSet.getInt(1));
             }
             return ids;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     @Override
     public Optional<ChessBoardStatus> find(final int boardId) {
-        final String sql = "SELECT current_turn, is_over FROM board_statuses WHERE board_id = ?";
+        final String query = "SELECT current_turn, is_over FROM board_statuses WHERE board_id = ? AND is_over = 'N'";
 
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, boardId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+        final ChessBoardStatus result = jdbcTemplate.executeQuery(query, List.of(boardId), resultSet -> {
             if (resultSet.next()) {
-                Camp currentTurn = Camp.valueOf(resultSet.getString(1));
-                boolean isOver = convertIsOver(resultSet.getString(2));
-                return Optional.of(new ChessBoardStatus(currentTurn, isOver));
+                return new ChessBoardStatus(
+                        Camp.valueOf(resultSet.getString(1)), convertIsOver(resultSet.getString(2))
+                );
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return Optional.empty();
+            return null;
+        });
+
+        return Optional.ofNullable(result);
     }
 
     @Override
     public void insertOrUpdate(final int boardId, final ChessBoardStatus status) {
-        final String sql = "INSERT INTO board_statuses (board_id, current_turn, is_over)"
+        final String query = "INSERT INTO board_statuses (board_id, current_turn, is_over)"
                 + "VALUES (?, ?, ?)"
-                + "ON DUPLICATE KEY UPDATE current_turn = ?, is_over = ?;";
+                + "ON DUPLICATE KEY UPDATE current_turn = ?, is_over = ?";
 
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            String currentTurn = status.getCurrentTurn().name();
-            String isOver = convertIsOver(status.isOver());
+        final String currentTurn = status.getCurrentTurn().name();
+        final String isOver = convertIsOver(status.isOver());
 
-            preparedStatement.setInt(1, boardId);
-            preparedStatement.setString(2, currentTurn);
-            preparedStatement.setString(3, isOver);
-            preparedStatement.setString(4, currentTurn);
-            preparedStatement.setString(5, isOver);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query, List.of(
+                boardId, currentTurn, isOver,
+                currentTurn, isOver
+        ));
     }
 
     private boolean convertIsOver(String result) {
@@ -85,16 +68,9 @@ public class LocalBoardStatusesDao implements BoardStatusesDao {
 
     @Override
     public void delete(final int boardId) {
-        final String sql = "DELETE FROM board_statuses WHERE board_id = ?";
+        final String query = "DELETE FROM board_statuses WHERE board_id = ?";
 
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, boardId);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query, List.of(boardId));
     }
 
 }

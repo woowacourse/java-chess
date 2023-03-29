@@ -1,20 +1,19 @@
 package chess.dao.boardpieces;
 
-import chess.dao.ConnectionManager;
+import chess.dao.JdbcTemplate;
 import chess.domain.Camp;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
 public class LocalBoardPiecesDao implements BoardPiecesDao {
+
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
     @Override
     public Optional<Map<Position, Piece>> find(final int boardId) {
@@ -24,12 +23,8 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
                 + "AND p.board_id = s.board_id "
                 + "AND s.is_over = 'N'";
 
-        Map<Position, Piece> piecesByPosition = new HashMap<>();
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, boardId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+        Map<Position, Piece> result = jdbcTemplate.executeQuery(sql, List.of(boardId), resultSet -> {
+            Map<Position, Piece> piecesByPosition = new HashMap<>();
             while (resultSet.next()) {
                 int file = resultSet.getInt(1);
                 int rank = resultSet.getInt(2);
@@ -37,13 +32,13 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
                 Camp pieceCamp = Camp.valueOf(resultSet.getString(4));
                 piecesByPosition.put(Position.of(file, rank), pieceType.createPiece(pieceCamp));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (piecesByPosition.isEmpty()) {
+            return piecesByPosition;
+        });
+
+        if (result.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(piecesByPosition);
+        return Optional.of(result);
     }
 
     @Override
@@ -60,34 +55,21 @@ public class LocalBoardPiecesDao implements BoardPiecesDao {
                 + "ON DUPLICATE KEY UPDATE "
                 + "position_file = ?, position_rank = ?, piece_type = ?, piece_camp = ?";
 
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, boardId);
-            preparedStatement.setInt(2, position.getFile());
-            preparedStatement.setInt(3, position.getRank());
-            preparedStatement.setString(4, piece.getType().name());
-            preparedStatement.setString(5, piece.getColor().name());
-            preparedStatement.setInt(6, position.getFile());
-            preparedStatement.setInt(7, position.getRank());
-            preparedStatement.setString(8, piece.getType().name());
-            preparedStatement.setString(9, piece.getColor().name());
+        int file = position.getFile();
+        int rank = position.getRank();
+        String pieceTypeName = piece.getTypeName();
+        String pieceCampName = piece.getCamp().name();
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(sql, List.of(
+                boardId, file, rank, pieceTypeName, pieceCampName,
+                file, rank, pieceTypeName, pieceCampName
+        ));
     }
 
     @Override
     public void delete(int boardId) {
         final String sql = "DELETE FROM board_pieces WHERE board_id = ?";
 
-        try (final Connection connection = ConnectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, boardId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(sql, List.of(boardId));
     }
 }

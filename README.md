@@ -225,8 +225,7 @@ sequenceDiagram
     - [ ] ActionMapper `Enum 요소 조회 비용` vs `Map 클래스로 변경 후, static 상수로 인한 메모리 사용` 비교
     - [x] GameStatus 패키지 이동, 검증 로직 의존관계 없애기
 - 코드 관련
-    - [ ] Dao 템플릿 적용하여 중복 코드 제거
-    - [ ] JDBC 자원 close 해주기
+    - [x] Jdbc 템플릿 적용하여 Dao 중복 코드 제거
     - [ ] Connection 사용 최적화
     - [ ] Dao SqlException 런타임예외로 전환, 예외메시지 구체화
     - [ ] Dao 메서드명 일반적인 방식으로 변경
