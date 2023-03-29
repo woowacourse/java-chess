@@ -27,7 +27,7 @@ class GameDaoTest {
     void 새로운_게임을_저장할_수_있다() {
         // given
         clear();
-        final GameDto gameDto = new GameDto("White", true);
+        final GameDto gameDto = GameDto.create();
 
         // when & then
         assertDoesNotThrow(() -> gameDao.create(gameDto));
@@ -70,7 +70,7 @@ class GameDaoTest {
     @Test
     void 새로운_turn으로_업데이트할_수_있다() {
         // given
-        final GameDto gameDto = new GameDto("Black", true);
+        final GameDto gameDto = GameDto.from("Black");
 
         // when
         gameDao.update(gameDto);

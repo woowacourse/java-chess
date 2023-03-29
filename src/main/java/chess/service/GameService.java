@@ -7,27 +7,27 @@ import java.util.List;
 
 public class GameService {
 
-    private final GameDao runningGameDao = new GameDao();
+    private final GameDao gameDao = new GameDao();
 
-    public void create(final String turn) {
-        final GameDto gameDto = new GameDto(turn, true);
-        runningGameDao.create(gameDto);
+    public void create() {
+        final GameDto gameDto = GameDto.create();
+        gameDao.create(gameDto);
     }
 
     public List<Integer> findAllIds() {
-        return runningGameDao.findAllIds();
+        return gameDao.findAllIds();
     }
 
     public Turn findTurnById(final int runningGameId) {
-        return runningGameDao.findTurnById(runningGameId);
+        return gameDao.findTurnById(runningGameId);
     }
 
     public void update(final String turn) {
-        final GameDto gameDto = new GameDto(turn, true);
-        runningGameDao.update(gameDto);
+        final GameDto gameDto = GameDto.from(turn);
+        gameDao.update(gameDto);
     }
 
     public void delete(final int runningGameId) {
-        runningGameDao.delete(runningGameId);
+        gameDao.delete(runningGameId);
     }
 }

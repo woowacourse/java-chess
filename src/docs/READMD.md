@@ -180,6 +180,7 @@ classDiagram
 - [x] running_game 테이블, finished_game 테이블 => game 테이블
 - [ ] game 테이블 CRUD 미완성 부분 완성하기
 - [ ] piece 테이블 CRUD 미완성 부분 완성하기
+- [x] game 테이블 create 할 때, 파라미터를 넘겨주지 않도록 수정
 - [ ] 변수에 불필요한 prefix 제거
 - [ ] DB 접속 정보 및 커넥션 별도로 관리
 - [x] autoIncrementId 메서드 삭제

@@ -36,7 +36,7 @@ public class ChessController {
     private void initializeWithDB(List<Integer> gameIds) {
         if (gameIds.isEmpty()) {
             final ChessBoard chessBoard = ChessBoardFactory.create();
-            gameService.create("White");
+            gameService.create();
             pieceService.create(chessBoard, 1);
             final ChessState state = new Initialize();
             run(chessBoard, state, 1);
