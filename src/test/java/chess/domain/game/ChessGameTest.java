@@ -201,7 +201,7 @@ class ChessGameTest {
         @Test
         void score_test() {
             ChessGame chessGame = ChessGame.of(rawBoard);
-            final double result = chessGame.calculateScoreByTeam(Team.WHITE);
+            final double result = ScoreCalculator.calculateScoreByTeam(Team.WHITE, chessGame.getBoard());
             assertThat(result).isEqualTo(19.5);
         }
 
@@ -211,8 +211,8 @@ class ChessGameTest {
             rawBoard.put(A2, InitialWhitePawn.instance());
             rawBoard.put(A3, WhitePawn.instance());
             final ChessGame chessGame = ChessGame.of(rawBoard);
+            final double result = ScoreCalculator.calculateScoreByTeam(Team.WHITE, chessGame.getBoard());
 
-            final double result = chessGame.calculateScoreByTeam(Team.WHITE);
             assertThat(result).isEqualTo(20.5);
         }
 
@@ -224,7 +224,7 @@ class ChessGameTest {
             rawBoard.put(A4, WhitePawn.instance());
             final ChessGame chessGame = ChessGame.of(rawBoard);
 
-            final double result = chessGame.calculateScoreByTeam(Team.WHITE);
+            final double result = ScoreCalculator.calculateScoreByTeam(Team.WHITE, chessGame.getBoard());
             assertThat(result).isEqualTo(21.0);
         }
 
@@ -233,7 +233,7 @@ class ChessGameTest {
         void score_test4() {
             final ChessGame chessGame = ChessGame.of(rawBoard);
 
-            final double result = chessGame.calculateScoreByTeam(Team.BLACK);
+            final double result = ScoreCalculator.calculateScoreByTeam(Team.BLACK, chessGame.getBoard());
             assertThat(result).isEqualTo(0);
         }
     }

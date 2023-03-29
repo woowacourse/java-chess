@@ -13,15 +13,9 @@ import chess.dto.outputView.PrintWinnerDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import static chess.domain.piece.pawn.Pawn.DEGRADED_SCORE;
-import static java.util.stream.Collectors.groupingBy;
-
 
 public final class ChessGame {
 
-    public static final int COUNT_OF_PAWN_DEGRADE_SCORE = 2;
     private static final int BOARD_LENGTH = 8;
     public static final double TOTAL_BOARD_SIZE = Math.pow(BOARD_LENGTH, 2);
 
@@ -92,35 +86,6 @@ public final class ChessGame {
         return piece;
     }
 
-    double calculateScoreByTeam(final Team team) {
-        final double totalScore = board.values()
-                .stream()
-                .filter(piece -> piece.isSameTeamWith(team))
-                .mapToDouble(Piece::getScore)
-                .sum();
-
-        final Map<File, Long> pieceCountByFile = board.entrySet()
-                .stream()
-                .filter(entry -> isPawn(entry.getValue()))
-                .filter(entry -> entry.getValue().isSameTeamWith(team))
-                .collect(groupingBy(e -> e.getKey().getFile(), Collectors.counting()));
-
-        final double totalMinusScore = pieceCountByFile.values()
-                .stream()
-                .filter(entries -> entries >= COUNT_OF_PAWN_DEGRADE_SCORE)
-                .mapToDouble(entries -> entries * DEGRADED_SCORE)
-                .sum();
-
-        return totalScore - totalMinusScore;
-    }
-
-    private boolean isPawn(final Piece piece) {
-        return piece.isSamePieceTypeAs(PieceType.INITIAL_WHITE_PAWN) ||
-                piece.isSamePieceTypeAs(PieceType.INITIAL_BLACK_PAWN) ||
-                piece.isSamePieceTypeAs(PieceType.WHITE_PAWN) ||
-                piece.isSamePieceTypeAs(PieceType.BLACK_PAWN);
-    }
-
     public PrintWinnerDto getWinner(final Piece deadPiece) {
         final Team deadPieceTeam = deadPiece.getTeam();
         final Team opponentTeam = deadPieceTeam.getOpponentTeam();
@@ -129,7 +94,8 @@ public final class ChessGame {
 
     public PrintTotalScoreDto calculateScore() {
         return new PrintTotalScoreDto(
-                calculateScoreByTeam(Team.WHITE), calculateScoreByTeam(Team.BLACK));
+                ScoreCalculator.calculateScoreByTeam(Team.WHITE, board),
+                ScoreCalculator.calculateScoreByTeam(Team.BLACK, board));
     }
 
     public PrintBoardDto printBoard() {
