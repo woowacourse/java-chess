@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class Pawn extends Piece {
@@ -26,14 +27,18 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination) {
-        if (nowInitialPosition(source)) {
-            return firstMovable(source, destination);
+    public Optional<Position> move(final Position source, final Position destination) {
+        if (nowInitialPosition(source) && firstMovable(source, destination)) {
+            return Optional.of(destination);
         }
-        if (isBlack()) {
-            return source.moveDown(ONE_STEP).equals(destination);
+        if (isBlack() && source.moveDown(ONE_STEP).equals(destination)) {
+            return Optional.of(destination);
         }
-        return source.moveUp(ONE_STEP).equals(destination);
+        if (isWhite() && source.moveUp(ONE_STEP).equals(destination)) {
+            return Optional.of(destination);
+        }
+
+        return Optional.empty();
     }
 
     private boolean firstMovable(final Position source, final Position destination) {
@@ -51,16 +56,19 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isEatable(final Position source, final Position destination) {
+    public Optional<Position> eat(final Position source, final Position destination) {
         if (isBlack() &&
                 Objects.equals(destination, validateEdgeDestination(source, DOWN, LEFT)) ||
                 Objects.equals(destination, validateEdgeDestination(source, DOWN, RIGHT))) {
-            return true;
+            return Optional.of(destination);
+        }
+        if (isWhite() &&
+                Objects.equals(destination, validateEdgeDestination(source, UP, LEFT)) ||
+                Objects.equals(destination, validateEdgeDestination(source, UP, RIGHT))) {
+            return Optional.of(destination);
         }
 
-        return !isBlack() &&
-                Objects.equals(destination, validateEdgeDestination(source, UP, LEFT)) ||
-                Objects.equals(destination, validateEdgeDestination(source, UP, RIGHT));
+        return Optional.empty();
     }
 
     @Override

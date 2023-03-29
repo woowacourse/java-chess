@@ -22,7 +22,7 @@ class KingTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(destination -> king.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> king.move(source, destination).isPresent());
     }
 
     @DisplayName("킹은 여덟 방향으로 한 칸이 아니면 이동할 수 없다.")
@@ -37,6 +37,6 @@ class KingTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(destination -> king.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> king.move(source, destination).isEmpty());
     }
 }

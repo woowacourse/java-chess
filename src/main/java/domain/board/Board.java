@@ -72,23 +72,16 @@ public final class Board {
     }
 
     private boolean killDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isEatable(source, destination)) {
-            Piece deadPiece = board.get(destination);
-            boolean endedGame = deadPiece.isEndGameIfDead();
-            board.put(destination, board.remove(source));
-            return endedGame;
-        }
-
-        throw new IllegalArgumentException(INVALID_MOVEMENT);
+        Piece deadPiece = board.get(destination);
+        boolean endedGame = deadPiece.isEndGameIfDead();
+        board.put(piece.eat(source, destination).orElseThrow(() -> new IllegalArgumentException(INVALID_MOVEMENT)),
+                board.remove(source));
+        return endedGame;
     }
 
     private void moveDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isMovable(source, destination)) {
-            board.put(destination, board.remove(source));
-            return;
-        }
-
-        throw new IllegalArgumentException(INVALID_MOVEMENT);
+        board.put(piece.move(source, destination).orElseThrow(() -> new IllegalArgumentException(INVALID_MOVEMENT)),
+                board.remove(source));
     }
 
     public Map<Position, Piece> getPieces() {

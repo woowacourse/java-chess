@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.position.Position;
 import java.util.Map;
+import java.util.Optional;
 
 public final class Rook extends Piece {
 
@@ -12,13 +13,17 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination) {
-        return source.isStraight(destination);
+    public Optional<Position> move(final Position source, final Position destination) {
+        if (source.isStraight(destination)) {
+            return Optional.of(destination);
+        }
+
+        return Optional.empty();
     }
 
     @Override
-    public boolean isEatable(final Position source, final Position destination) {
-        return isMovable(source, destination);
+    public Optional<Position> eat(final Position source, final Position destination) {
+        return move(source, destination);
     }
 
     @Override

@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.position.Position;
 import java.util.Map;
+import java.util.Optional;
 
 public final class King extends Piece {
 
@@ -14,17 +15,20 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination) {
+    public Optional<Position> move(final Position source, final Position destination) {
         if (source.isDiagonal(destination) && source.getDistance(destination) == DIAGONAL_ONE_STEP) {
-            return true;
+            return Optional.of(destination);
+        }
+        if (source.isStraight(destination) && source.getDistance(destination) == ONE_STEP) {
+            return Optional.of(destination);
         }
 
-        return source.isStraight(destination) && source.getDistance(destination) == ONE_STEP;
+        return Optional.empty();
     }
 
     @Override
-    public boolean isEatable(final Position source, final Position destination) {
-        return isMovable(source, destination);
+    public Optional<Position> eat(final Position source, final Position destination) {
+        return move(source, destination);
     }
 
     @Override
