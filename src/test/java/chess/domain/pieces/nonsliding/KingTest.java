@@ -3,6 +3,7 @@ package chess.domain.pieces.nonsliding;
 import static chess.domain.pieces.Piece.INVALID_MOVE_EXIST_ALLY;
 import static chess.domain.pieces.nonsliding.King.INVALID_MOVE_DISTANCE;
 import static chess.domain.pieces.nonsliding.NonSlidingPiece.INVALID_TEAM;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
@@ -94,5 +95,11 @@ class KingTest {
         assertThatNoException().isThrownBy(
                 () -> king.validateMove(Direction.UP, pieces)
         );
+    }
+
+    @Test
+    @DisplayName("킹이 맞다")
+    void 킹이_아니다() {
+        assertThat(king.isKing()).isTrue();
     }
 }

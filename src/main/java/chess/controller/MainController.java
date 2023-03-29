@@ -1,97 +1,123 @@
 package chess.controller;
 
-import static chess.controller.ExceptionHandler.repeatUntilValidInput;
 import static chess.view.Command.END;
 import static chess.view.Command.MOVE;
+import static chess.view.Command.RESET;
+import static chess.view.Command.SCORE;
 import static chess.view.Command.START;
 import static chess.view.InputView.readCommand;
 import static chess.view.OutputView.printBoard;
+import static chess.view.OutputView.printError;
 import static chess.view.OutputView.printFinishMessage;
 import static chess.view.OutputView.printGameStart;
+import static chess.view.OutputView.printScores;
 
-import chess.domain.Position;
+import chess.dao.ChessGameDao;
 import chess.domain.board.Board;
-import chess.domain.board.BoardMaker;
-import chess.domain.math.PositionConverter;
+import chess.domain.position.Position;
 import chess.view.Command;
 import java.util.List;
+import java.util.function.Supplier;
 
 public final class MainController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int CURRENT_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
-    private static final int ONLY_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
 
-    private final Board board = new Board(new BoardMaker());
+    private final ChessGameDao chessGameDao;
+
+    public MainController(final ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
 
     public void run() {
         printGameStart();
-        List<String> inputs = repeatUntilValidInput(this::readValidCommand);
-        Command command = Command.of(inputs.get(COMMAND_INDEX));
+        Command command = repeatUntilValidAction(this::getValidCommand);
 
         if (command == START) {
-            printBoard(board.getBoard());
-            while (repeatUntilValidInput(this::playChess));
+            startGame();
+        }
+        if (command == RESET) {
+            chessGameDao.deleteAll();
+            startGame();
         }
         printFinishMessage();
     }
 
-    private List<String> readValidCommand() {
+    private Command getValidCommand() {
         List<String> inputs = readCommand();
-        validateCommand(inputs.get(COMMAND_INDEX));
-        validateInputSize(inputs);
-
-        return inputs;
+        return Command.of(inputs.get(COMMAND_INDEX));
     }
 
-    private boolean playChess() {
-        List<String> inputs = repeatUntilValidInput(this::readValidCommand);
+    private void startGame() {
+        final Board board = generateBoard();
+        chessGameDao.insert(board);
+        printBoard(board.getBoard());
+        while (repeatUntilValidAction(() -> playChess(board)));
+        printScores(board.scores());
+    }
+
+    private Board generateBoard() {
+        Board board = chessGameDao.findBoard();
+
+        if (board == null) {
+            return Board.create();
+        }
+        return board;
+    }
+
+    private boolean playChess(final Board board) {
+        chessGameDao.updateBoard(board);
+
+        List<String> inputs = readCommand();
         Command command = Command.of(inputs.get(COMMAND_INDEX));
 
-        return executeCommand(inputs, command);
+        return executeCommand(board, inputs, command);
     }
 
-    private boolean executeCommand(final List<String> inputs, final Command command) {
+    private boolean executeCommand(final Board board, final List<String> inputs, final Command command) {
         if (command == END) {
             return false;
         }
-        if (command == START) {
+        if (command == START || command == RESET) {
             throw new IllegalArgumentException("이미 게임을 실행중입니다. 다른 명령어를 입력해주세요.");
         }
         if (command == MOVE) {
-            movePiece(inputs);
-            printBoard(board.getBoard());
+            validateInputSize(inputs);
+            movePiece(board, inputs);
+            return board.isKingAlive();
+        }
+        if (command == SCORE) {
+            printScores(board.scores());
         }
         return true;
     }
 
-    private void movePiece(final List<String> inputs) {
-        Position currentPosition = PositionConverter.toPosition(inputs.get(CURRENT_POSITION_INDEX));
-        Position targetPosition = PositionConverter.toPosition(inputs.get(TARGET_POSITION_INDEX));
+    private void movePiece(final Board board, final List<String> inputs) {
+        Position currentPosition = Position.toPosition(inputs.get(CURRENT_POSITION_INDEX));
+        Position targetPosition = Position.toPosition(inputs.get(TARGET_POSITION_INDEX));
 
         board.movePiece(currentPosition, targetPosition);
-    }
+        printBoard(board.getBoard());
 
-    private void validateCommand(final String commandValue) {
-        try {
-            Command.of(commandValue);
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
+        chessGameDao.updateBoard(board);
     }
 
     private void validateInputSize(final List<String> inputs) {
-        int size = inputs.size();
-
-        if (isValidInputSize(size)) {
+        if (inputs.size() == MOVE_COMMAND_SIZE) {
             return;
         }
         throw new IllegalArgumentException("입력이 잘못되었습니다. 다시 입력해주세요.");
     }
 
-    private boolean isValidInputSize(final int size) {
-        return size == ONLY_COMMAND_SIZE || size == MOVE_COMMAND_SIZE;
+    private <T> T repeatUntilValidAction(final Supplier<T> reader) {
+        try {
+            return reader.get();
+        } catch (IllegalArgumentException e) {
+            printError(e.getMessage());
+            return repeatUntilValidAction(reader);
+        }
     }
 }

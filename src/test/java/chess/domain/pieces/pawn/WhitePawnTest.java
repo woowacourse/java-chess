@@ -4,6 +4,8 @@ import static chess.domain.pieces.Piece.INVALID_DIRECTION;
 import static chess.domain.pieces.Piece.INVALID_MOVE_EXIST_ALLY;
 import static chess.domain.pieces.pawn.Pawn.INVALID_DEFAULT_DISTANCE;
 import static chess.domain.pieces.pawn.Pawn.INVALID_FIRST_DISTANCE;
+import static chess.domain.pieces.pawn.Pawn.INVALID_MOVE_DIAGONAL;
+import static chess.domain.pieces.pawn.Pawn.INVALID_MOVE_STRAIGHT;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -56,6 +58,14 @@ class WhitePawnTest {
         assertThatNoException().isThrownBy(
                 () -> whitePawn.validateMove(Direction.UP_RIGHT, List.of(new BlackPawn()))
         );
+    }
+
+    @Test
+    @DisplayName("대각선으로 가는 경우 빈칸이면 갈 수 없습니다.")
+    void 대각선으로_가는_경우_빈칸이면_갈_수_없습니다() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> whitePawn.validateMove(Direction.UP_RIGHT, List.of(new EmptyPiece()))
+        ).withMessage(INVALID_MOVE_DIAGONAL);
     }
 
     @Test
@@ -116,4 +126,25 @@ class WhitePawnTest {
         ).withMessage(INVALID_DEFAULT_DISTANCE);
     }
 
+    @Test
+    @DisplayName("킹이 아니다")
+    void 킹이_아니다() {
+        assertThat(whitePawn.isKing()).isFalse();
+    }
+
+    @Test
+    @DisplayName("정면에 상대방 기물이 있을 땐 이동하지 못한다.")
+    void 정면에_상대방_기물이_있을_땐_이동하지_못한다() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> whitePawn.validateMove(Direction.UP, List.of(new BlackPawn()))
+        ).withMessage(INVALID_MOVE_STRAIGHT);
+    }
+
+    @Test
+    @DisplayName("정면에 아군 기물이 있을 땐 이동하지 못한다.")
+    void 정면에_아군_기물이_있을_땐_이동하지_못한다() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> whitePawn.validateMove(Direction.UP, List.of(new WhitePawn()))
+        ).withMessage(INVALID_MOVE_EXIST_ALLY);
+    }
 }

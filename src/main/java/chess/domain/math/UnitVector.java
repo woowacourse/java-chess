@@ -1,6 +1,6 @@
 package chess.domain.math;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import java.util.Arrays;
 
 public enum UnitVector {
@@ -21,7 +21,7 @@ public enum UnitVector {
         this.column = column;
     }
 
-    public static UnitVector compute(final Position current, final Position target) {
+    public static UnitVector computeUnitVector(final Position current, final Position target) {
         int rowUnit = unit(target.getRow() - current.getRow());
         int colUnit = unit(target.getColumn() - current.getColumn());
 

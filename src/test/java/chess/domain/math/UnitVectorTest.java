@@ -10,7 +10,7 @@ import static chess.domain.math.UnitVector.UP_LEFT;
 import static chess.domain.math.UnitVector.UP_RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,72 +19,72 @@ class UnitVectorTest {
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_up() {
-        var current = new Position(5, 1);
-        var target = new Position(4, 1);
+        var current = Position.of(5, 1);
+        var target = Position.of(4, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(UP);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(UP);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_down() {
-        var current = new Position(0, 0);
-        var target = new Position(1, 0);
+        var current = Position.of(0, 0);
+        var target = Position.of(1, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(DOWN);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(DOWN);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_left() {
-        var current = new Position(0, 1);
-        var target = new Position(0, 0);
+        var current = Position.of(0, 1);
+        var target = Position.of(0, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(LEFT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(LEFT);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_right() {
-        var current = new Position(0, 0);
-        var target = new Position(0, 1);
+        var current = Position.of(0, 0);
+        var target = Position.of(0, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(RIGHT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(RIGHT);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_upRight() {
-        var current = new Position(1, 0);
-        var target = new Position(0, 1);
+        var current = Position.of(1, 0);
+        var target = Position.of(0, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(UP_RIGHT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(UP_RIGHT);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_downRight() {
-        var current = new Position(0, 0);
-        var target = new Position(1, 1);
+        var current = Position.of(0, 0);
+        var target = Position.of(1, 1);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(DOWN_RIGHT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(DOWN_RIGHT);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_downLeft() {
-        var current = new Position(0, 1);
-        var target = new Position(1, 0);
+        var current = Position.of(0, 1);
+        var target = Position.of(1, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(DOWN_LEFT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(DOWN_LEFT);
     }
 
     @Test
     @DisplayName("현재 위치와 목표 위치를 받아 단위 벡터를 계산해준다.")
     void ofTest_upLeft() {
-        var current = new Position(1, 1);
-        var target = new Position(0, 0);
+        var current = Position.of(1, 1);
+        var target = Position.of(0, 0);
 
-        assertThat(UnitVector.compute(current, target)).isEqualTo(UP_LEFT);
+        assertThat(UnitVector.computeUnitVector(current, target)).isEqualTo(UP_LEFT);
     }
 }

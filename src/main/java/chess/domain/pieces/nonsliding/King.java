@@ -27,4 +27,9 @@ public final class King extends NonSlidingPiece {
         }
         throw new IllegalArgumentException(INVALID_MOVE_DISTANCE);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
