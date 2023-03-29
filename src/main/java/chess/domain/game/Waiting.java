@@ -15,7 +15,7 @@ public final class Waiting implements GameStatus {
 
     @Override
     public GameStatus start() {
-        return new Running(Board.initializeBoard(), Color.WHITE);
+        return new Running(Board.createInitialBoard(), Color.WHITE);
     }
 
     @Override

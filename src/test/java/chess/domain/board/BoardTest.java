@@ -35,12 +35,13 @@ class BoardTest {
     private static final Position H3 = new Position(File.H, Rank.THREE);
     private static final Position F4 = new Position(File.F, Rank.FOUR);
     private static final Position G4 = new Position(File.G, Rank.FOUR);
-    private final Board board = Board.initializeBoard();
+
+    private final Board initialBoard = Board.createInitialBoard();
 
     @Test
     @DisplayName("자신의 기물이 아닌 것을 움직일 수 없다")
     void cannotMoveOpponent() {
-        assertThatThrownBy(() -> board.confirmMove(A7, A6, Color.WHITE))
+        assertThatThrownBy(() -> initialBoard.confirmMove(A7, A6, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("움직일 수 있는");
     }
@@ -48,7 +49,7 @@ class BoardTest {
     @Test
     @DisplayName("빈 칸을 움직일 수 없다")
     void cannotMoveEmpty() {
-        assertThatThrownBy(() -> board.confirmMove(A3, A4, Color.WHITE))
+        assertThatThrownBy(() -> initialBoard.confirmMove(A3, A4, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("비어있는");
     }
@@ -56,7 +57,7 @@ class BoardTest {
     @Test
     @DisplayName("자신의 기물을 목표로 움직일 수 없다")
     void cannotMoveToOwnPiece() {
-        assertThatThrownBy(() -> board.confirmMove(A1, A2, Color.WHITE))
+        assertThatThrownBy(() -> initialBoard.confirmMove(A1, A2, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("자신의 기물이");
     }
@@ -64,7 +65,7 @@ class BoardTest {
     @Test
     @DisplayName("유효한 움직임이 아니면 예외가 발생한다")
     void illegalMoveTest() {
-        assertThatThrownBy(() -> board.confirmMove(A2, A7, Color.WHITE))
+        assertThatThrownBy(() -> initialBoard.confirmMove(A2, A7, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

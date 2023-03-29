@@ -24,65 +24,68 @@ public final class Board {
     private static final int BOTH_KINGS_ALIVE = 2;
     private static final int WINNER_COLOR_INDEX = 0;
     private static final int DOUBLE_PAWN = 2;
+
+    private static final Map<Position, Piece> initialBoard = new HashMap<>();
+
+    static {
+        initializeBlackPieces();
+        initializeBlackPawns();
+        initializeWhitePawns();
+        initializeWhitePieces();
+    }
+
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public static Board initializeBoard() {
-        final Map<Position, Piece> board = new HashMap<>();
-
-        initializeBlackPieces(board);
-        initializeBlackPawns(board);
-        initializeWhitePawns(board);
-        initializeWhitePieces(board);
-
-        return new Board(board);
+    public static Board createInitialBoard() {
+        return new Board(new HashMap<>(initialBoard));
     }
 
-    private static void initializeBlackPieces(final Map<Position, Piece> board) {
-        board.put(new Position(File.A, Rank.EIGHT), new Rook(Color.BLACK));
-        board.put(new Position(File.B, Rank.EIGHT), new Knight(Color.BLACK));
-        board.put(new Position(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
-        board.put(new Position(File.D, Rank.EIGHT), new Queen(Color.BLACK));
-        board.put(new Position(File.E, Rank.EIGHT), new King(Color.BLACK));
-        board.put(new Position(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
-        board.put(new Position(File.G, Rank.EIGHT), new Knight(Color.BLACK));
-        board.put(new Position(File.H, Rank.EIGHT), new Rook(Color.BLACK));
+    private static void initializeBlackPieces() {
+        initialBoard.put(new Position(File.A, Rank.EIGHT), new Rook(Color.BLACK));
+        initialBoard.put(new Position(File.B, Rank.EIGHT), new Knight(Color.BLACK));
+        initialBoard.put(new Position(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
+        initialBoard.put(new Position(File.D, Rank.EIGHT), new Queen(Color.BLACK));
+        initialBoard.put(new Position(File.E, Rank.EIGHT), new King(Color.BLACK));
+        initialBoard.put(new Position(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
+        initialBoard.put(new Position(File.G, Rank.EIGHT), new Knight(Color.BLACK));
+        initialBoard.put(new Position(File.H, Rank.EIGHT), new Rook(Color.BLACK));
     }
 
-    private static void initializeBlackPawns(final Map<Position, Piece> board) {
-        board.put(new Position(File.A, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.B, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.C, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.E, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.F, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.G, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.put(new Position(File.H, Rank.SEVEN), new Pawn(Color.BLACK));
+    private static void initializeBlackPawns() {
+        initialBoard.put(new Position(File.A, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.B, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.C, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.E, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.F, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.G, Rank.SEVEN), new Pawn(Color.BLACK));
+        initialBoard.put(new Position(File.H, Rank.SEVEN), new Pawn(Color.BLACK));
     }
 
-    private static void initializeWhitePawns(final Map<Position, Piece> board) {
-        board.put(new Position(File.A, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.B, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.C, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.D, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.E, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.F, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.G, Rank.TWO), new Pawn(Color.WHITE));
-        board.put(new Position(File.H, Rank.TWO), new Pawn(Color.WHITE));
+    private static void initializeWhitePawns() {
+        initialBoard.put(new Position(File.A, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.B, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.C, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.D, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.E, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.F, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.G, Rank.TWO), new Pawn(Color.WHITE));
+        initialBoard.put(new Position(File.H, Rank.TWO), new Pawn(Color.WHITE));
     }
 
-    private static void initializeWhitePieces(final Map<Position, Piece> board) {
-        board.put(new Position(File.A, Rank.ONE), new Rook(Color.WHITE));
-        board.put(new Position(File.B, Rank.ONE), new Knight(Color.WHITE));
-        board.put(new Position(File.C, Rank.ONE), new Bishop(Color.WHITE));
-        board.put(new Position(File.D, Rank.ONE), new Queen(Color.WHITE));
-        board.put(new Position(File.E, Rank.ONE), new King(Color.WHITE));
-        board.put(new Position(File.F, Rank.ONE), new Bishop(Color.WHITE));
-        board.put(new Position(File.G, Rank.ONE), new Knight(Color.WHITE));
-        board.put(new Position(File.H, Rank.ONE), new Rook(Color.WHITE));
+    private static void initializeWhitePieces() {
+        initialBoard.put(new Position(File.A, Rank.ONE), new Rook(Color.WHITE));
+        initialBoard.put(new Position(File.B, Rank.ONE), new Knight(Color.WHITE));
+        initialBoard.put(new Position(File.C, Rank.ONE), new Bishop(Color.WHITE));
+        initialBoard.put(new Position(File.D, Rank.ONE), new Queen(Color.WHITE));
+        initialBoard.put(new Position(File.E, Rank.ONE), new King(Color.WHITE));
+        initialBoard.put(new Position(File.F, Rank.ONE), new Bishop(Color.WHITE));
+        initialBoard.put(new Position(File.G, Rank.ONE), new Knight(Color.WHITE));
+        initialBoard.put(new Position(File.H, Rank.ONE), new Rook(Color.WHITE));
     }
 
     public void confirmMove(final Position source, final Position target, Color color) {
