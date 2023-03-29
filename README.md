@@ -66,6 +66,24 @@
 
 #### DB 연결
 
+table 생성 ddl sql
+```sql
+CREATE TABLE gameRooms (
+    room_id INTEGER NOT NULL ,
+    turn_color VARCHAR(5) NOT NULL ,
+    PRIMARY KEY (room_id)
+);
+
+CREATE TABLE pieces (
+    position_file VARCHAR(5) NOT NULL,
+    position_rank VARCHAR(5) NOT NULL,
+    type VARCHAR(10) NOT NULL ,
+    color VARCHAR(5) NOT NULL ,
+    room_id INTEGER NOT NULL ,
+    PRIMARY KEY (position_file, position_rank, room_id)
+);
+```
+
 - [x] 게임 방에 대한 정보를 저장한다
   - 현제 턴의 색상 정보를 저장한다
 - [ ] 진행중인 게임의 정보를 불러오거나 새게임을 실행한다
