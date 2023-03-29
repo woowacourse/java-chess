@@ -229,14 +229,16 @@ sequenceDiagram
     - [x] Dao 메서드명 일반적인 방식으로 변경
     - [x] 부적절한 Dao 클래스명 수정
     - [x] SQLException 런타임예외로 전환, 예외메시지 구체화
+        - [ ] 적절한 예외 정의해서 던지도록 수정
     - [ ] Connection 사용 최적화
     - [x] King 공격 확인 메서드 분리
     - [x] 모호한 메서드명 수정
     - [x] 필요 시 Optional orElse 대신 orElseGet 쓰기
 - DB 관련
-    - [ ] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기
-    - [ ] DB 작동 테스트는 테스트용 테이블 만들어서 작성하기
+    - [x] 게임오버 여부 컬럼 boolean(tinyint) 타입으로 변경
     - [ ] 사용자 방 개설 로직 변경에 따라, board_id를 별도 Key로 지정하지 않고 인덱스 사용
-    - [ ] is_over 컬럼 boolean / tinyint 타입으로 변경
     - [ ] 새로운 방 개설 시 바로 board_statuses 반영
     - [ ] insert + update 단일 책임 위배일까?
+    - [ ] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기
+    - [ ] DB 작동 테스트는 테스트용 테이블 만들어서 작성하기
+    - [ ] **PR 요청 전에 init.sql 수정**

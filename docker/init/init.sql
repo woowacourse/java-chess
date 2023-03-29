@@ -1,7 +1,7 @@
 CREATE TABLE `board_statuses` (
                                   `board_id` int NOT NULL,
                                   `current_turn` varchar(10) NOT NULL,
-                                  `is_over` char(1) NOT NULL,
+                                  `is_over` tinyint NOT NULL,
                                   PRIMARY KEY (`board_id`)
 );
 
