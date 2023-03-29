@@ -12,7 +12,6 @@ public enum File {
     G(7),
     H(8);
 
-    private static final int NEAR_INDEX = 1;
     private final int value;
 
     File(final int value) {
@@ -28,22 +27,6 @@ public enum File {
 
     public File moveTo(final int distance) {
         return File.from(this.value - distance);
-    }
-
-    public File plus() {
-        int filePlused = this.value + NEAR_INDEX;
-        return Arrays.stream(File.values())
-                .filter(file -> file.value == filePlused)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
-    }
-
-    public File minus() {
-        int fileMinused = this.value - NEAR_INDEX;
-        return Arrays.stream(File.values())
-                .filter(file -> file.value == fileMinused)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다"));
     }
 
     public int sub(final File file) {

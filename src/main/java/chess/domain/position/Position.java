@@ -32,10 +32,6 @@ public final class Position {
         return file.equals(target.file);
     }
 
-    public boolean isFileEquals(final File file) {
-        return this.file.equals(file);
-    }
-
     public boolean isRankEquals(final Position target) {
         return rank.equals(target.rank);
     }
@@ -101,10 +97,5 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    @Override
-    public String toString() {
-        return file.toString() + rank.getValue();
     }
 }
