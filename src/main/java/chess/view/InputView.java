@@ -11,15 +11,25 @@ public final class InputView {
     private static final String DELIMITER = " ";
     private static final Scanner scanner = new Scanner(System.in);
 
+    private static final Set<GameCommand> INITIAL_COMMAND = Set.of(GameCommand.START, GameCommand.END);
     private static final Set<Integer> COMMAND_NECESSARY_WORD = Set.of(1, 3);
 
     private InputView() {
     }
 
-    public static CommandDto readInitialCommand() {
+    public static CommandDto readOnlyInitialCommand() {
+        try {
+            return readInitialCommand();
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return readOnlyInitialCommand();
+        }
+    }
+
+    private static CommandDto readInitialCommand() {
         List<String> userInput = readUserInput();
         GameCommand gameCommand = recognizeGameCommand(userInput);
-        while (gameCommand == GameCommand.MOVE) {
+        while (!INITIAL_COMMAND.contains(gameCommand)) {
             OutputView.printNotStartedGameMessage();
             userInput = readUserInput();
             gameCommand = recognizeGameCommand(userInput);

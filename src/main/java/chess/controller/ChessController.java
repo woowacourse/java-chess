@@ -16,7 +16,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 public final class ChessController {
 
@@ -32,18 +31,9 @@ public final class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        CommandDto commandDto = repeat(InputView::readInitialCommand);
+        CommandDto commandDto = InputView.readOnlyInitialCommand();
         if (commandDto.getGameCommand() == GameCommand.START) {
             startGame();
-        }
-    }
-
-    private <T> T repeat(Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (IllegalArgumentException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return repeat(supplier);
         }
     }
 
