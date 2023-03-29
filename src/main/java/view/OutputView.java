@@ -3,8 +3,6 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 
-import org.w3c.dom.ls.LSOutput;
-
 import dto.BoardResponseDto;
 import dto.ScoreResponseDto;
 

@@ -20,7 +20,8 @@ public abstract class Piece {
 
     public abstract boolean canMove(Map<Square, Piece> squares, Square targetSquare);
 
-<<<<<<< HEAD
+<<<<<<<HEAD
+
     protected boolean isValidRange(int fileIndex, int rankIndex) {
         return fileIndex >= MIN_FILE_INDEX
             && fileIndex <= MAX_FILE_INDEX
@@ -29,7 +30,11 @@ public abstract class Piece {
     }
 
 =======
->>>>>>> parent of 075b4fd (refactor: 중복 메서드 제거 및 이름 변경)
+    >>>>>>>
+    parent of 075
+
+    b4fd(refactor:중복 메서드 제거 및 이름 변경)
+
     protected boolean isOppositeCamp(Piece piece) {
         return (isWhite() == piece.isBlack() || isBlack() == piece.isWhite()) && !piece.isEmpty();
     }

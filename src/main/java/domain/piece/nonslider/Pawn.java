@@ -80,9 +80,9 @@ public class Pawn extends Piece {
         return targetDirection.stream()
             .filter(direction ->
                 currentFileCoordinate + directionUnit * direction.getFile() >= MIN_FILE_INDEX
-            && currentFileCoordinate + directionUnit * direction.getFile() <= MAX_FILE_INDEX
-            && currentRankCoordinate + directionUnit * direction.getRank() >= MIN_RANK_INDEX
-            && currentRankCoordinate + directionUnit * direction.getRank() <= MAX_RANK_INDEX)
+                    && currentFileCoordinate + directionUnit * direction.getFile() <= MAX_FILE_INDEX
+                    && currentRankCoordinate + directionUnit * direction.getRank() >= MIN_RANK_INDEX
+                    && currentRankCoordinate + directionUnit * direction.getRank() <= MAX_RANK_INDEX)
             .map(direction -> new Square(currentFileCoordinate + directionUnit * direction.getFile(),
                 currentRankCoordinate + directionUnit * direction.getRank())).collect(Collectors.toList());
     }
