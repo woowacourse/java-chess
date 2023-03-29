@@ -1,22 +1,25 @@
 package controller;
 
-import command.play.PlayAction;
-import command.play.PlayCommandType;
-import command.start.StartAction;
-import command.start.StartCommandType;
+import controller.command.play.PlayAction;
+import controller.command.play.PlayCommandType;
+import controller.command.start.StartAction;
+import controller.command.start.StartCommandType;
 import domain.ChessGame;
 import java.util.List;
 import java.util.Objects;
+import util.ParameterParser;
 import view.InputView;
 import view.OutputView;
 
 public final class ChessController {
+
+    private static final int COMMAND_HEAD_INDEX = 0;
+
     public ChessController() {
     }
 
     public void run() {
-        StartAction startAction = inputStartCommand();
-        ChessGame chessGame = startAction.init();
+        ChessGame chessGame = readStartCommandAndInitGame();
         if (Objects.nonNull(chessGame)) {
             OutputView.printBoard(chessGame.getPieces());
             play(chessGame);
@@ -24,51 +27,37 @@ public final class ChessController {
         OutputView.printEndedGameMessage();
     }
 
-    private StartAction inputStartCommand() {
-        List<String> command;
-        while (validateInputStartCommand(command = InputView.readStartGameCommand())) {
-        }
-        return StartCommandType.from(command);
+    private ChessGame readStartCommandAndInitGame() {
+        ChessGame chessGame = null;
+        do {
+            chessGame = initChessGame(InputView.readStartGameCommand());
+        } while (Objects.isNull(chessGame));
+        return chessGame;
     }
 
-    private boolean validateInputStartCommand(List<String> command) {
+    private ChessGame initChessGame(List<String> command) {
         try {
-            StartCommandType.from(command);
-            return false;
+            StartAction startAction = StartCommandType.from(command.get(COMMAND_HEAD_INDEX));
+            ChessGame chessGame = startAction.init(ParameterParser.parsingParameterFromCommand(command));
+            return chessGame;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return true;
+            return null;
         }
     }
 
     private void play(final ChessGame chessGame) {
-        boolean nextStep;
+        boolean stillPlaying;
         do {
-            nextStep = executeCommand(readMoveCommand(), chessGame);
-        } while (nextStep);
+            stillPlaying = readPlayCommandAndExecute(InputView.readPlayGameOption(), chessGame);
+        } while (stillPlaying);
     }
 
-    private boolean executeCommand(final PlayAction command, final ChessGame chessGame) {
+    private boolean readPlayCommandAndExecute(final List<String> command, final ChessGame chessGame) {
         try {
-            return command.execute(chessGame);
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-        }
-        return true;
-    }
-
-    private PlayAction readMoveCommand() {
-        List<String> commands;
-        while (validateInputMoveCommand(commands = InputView.readPlayGameOption())) {
-        }
-        return PlayCommandType.from(commands);
-    }
-
-    private boolean validateInputMoveCommand(List<String> commands) {
-        try {
-            PlayCommandType.from(commands);
-            return false;
-        } catch (IllegalArgumentException e) {
+            PlayAction playAction = PlayCommandType.from(command.get(COMMAND_HEAD_INDEX));
+            return playAction.execute(chessGame, ParameterParser.parsingParameterFromCommand(command));
+        } catch (RuntimeException e) {
             OutputView.printError(e.getMessage());
             return true;
         }
