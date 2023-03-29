@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.chessboard.*;
 import chess.chessgame.ChessGame;
-import chess.chessgame.Turn;
 import chess.piece.Piece;
 import chess.piece.PieceFactory;
 import chess.piece.PieceType;
@@ -25,13 +24,12 @@ public class ChessGameDaoImpl implements ChessGameDao {
              final PreparedStatement psForChessGame = connection.prepareStatement(chessGameQuery);
              final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
-            final Turn turn = chessGame.getTurn();
+            final Side turn = chessGame.getTurn();
             final ChessBoard chessBoard = chessGame.getChessBoard();
             final Map<Square, Piece> pieces = chessBoard.getPieces();
 
             psForChessGame.setInt(1, 1);
-            psForChessGame.setString(2, turn.getSide()
-                                            .name());
+            psForChessGame.setString(2, turn.name());
             psForChessGame.executeUpdate();
 
             for (final Map.Entry<Square, Piece> squarePieceEntry : pieces.entrySet()) {
@@ -86,10 +84,10 @@ public class ChessGameDaoImpl implements ChessGameDao {
              final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
             final ResultSet resultSetForChessGame = psForChessGame.executeQuery();
-            Turn turn = null;
+            Side turn = null;
 
             if (resultSetForChessGame.next()) {
-                turn = Turn.from(Side.valueOf(resultSetForChessGame.getString("turn")));
+                turn = Side.valueOf(resultSetForChessGame.getString("turn"));
             }
             Map<Square, Piece> map = new HashMap<>();
             final ResultSet resultSetForPieces = psForPiece.executeQuery();

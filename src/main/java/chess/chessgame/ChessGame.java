@@ -11,17 +11,17 @@ import java.util.Map;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private Turn turn;
+    private Side turn;
     private Side winner;
 
-    public ChessGame(final Turn turn, final ChessBoard chessBoard) {
+    public ChessGame(final Side turn, final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
         this.turn = turn;
         this.winner = Side.EMPTY;
     }
 
     public ChessGame(final ChessBoard chessBoard) {
-        this(Turn.initialTurn(), chessBoard);
+        this(Side.initialTurn(), chessBoard);
     }
 
     public void move(final Square source, final Square destination) {
@@ -80,7 +80,7 @@ public class ChessGame {
         return winner.name();
     }
 
-    public Turn getTurn() {
+    public Side getTurn() {
         return turn;
     }
 }

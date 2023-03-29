@@ -2,8 +2,8 @@ package chess.status;
 
 import chess.chessboard.ChessBoard;
 import chess.chessboard.ChessBoardFactory;
+import chess.chessboard.Side;
 import chess.chessgame.ChessGame;
-import chess.chessgame.Turn;
 import chess.controller.ChessBoardDto;
 import chess.controller.Command;
 import chess.controller.CommandType;
@@ -31,7 +31,7 @@ public class Ready implements GameStatus {
 
         final Optional<ChessGame> optionalChessGame = chessGameDao.find();
         final ChessBoard chessBoard = new ChessBoardFactory().generate();
-        final ChessGame chessGame = optionalChessGame.orElse(new ChessGame(Turn.initialTurn(), chessBoard));
+        final ChessGame chessGame = optionalChessGame.orElse(new ChessGame(Side.initialTurn(), chessBoard));
 
         printAction.run(ChessBoardDto.of(chessGame.getChessBoard()));
 
