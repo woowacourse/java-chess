@@ -8,11 +8,11 @@ import java.util.List;
 
 public class PositionConvertor {
 
-    private final Position from;
-    private final Position to;
-
     private static final int MOVE_FROM_INDEX = 1;
     private static final int MOVE_TO_INDEX = 2;
+
+    private final Position from;
+    private final Position to;
 
     public PositionConvertor(List<String> commands) {
         validate(commands);
