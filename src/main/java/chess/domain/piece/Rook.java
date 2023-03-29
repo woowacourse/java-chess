@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 
 public class Rook extends Piece {
-
     private static final Rook WHITE = new Rook(Color.WHITE);
     private static final Rook BLACK = new Rook(Color.BLACK);
     private static final int VALID_GAP = 0;

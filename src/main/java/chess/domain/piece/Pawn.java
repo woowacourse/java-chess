@@ -2,12 +2,11 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.PAWN;
 
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Map;
 
 public class Pawn extends Piece {
-
     private static final Pawn WHITE = new Pawn(Color.WHITE);
     private static final Pawn BLACK = new Pawn(Color.BLACK);
     private static final Map<Color, Integer> GAP_LOWER_BOUND = Map.of(Color.WHITE, -1, Color.BLACK, 1);
@@ -45,14 +44,14 @@ public class Pawn extends Piece {
             return false;
         }
         final int rankGap = start.calculateRankGap(end);
-        return canMoveStraightOne(color(), rankGap) || canMoveStraightTwo(start, color(), rankGap);
+        return canMoveStraight(color(), rankGap) || canMoveStraightDoubleStep(start, color(), rankGap);
     }
 
-    private static boolean canMoveStraightOne(final Color color, final int rankGap) {
+    private boolean canMoveStraight(final Color color, final int rankGap) {
         return rankGap == GAP_LOWER_BOUND.get(color);
     }
 
-    private static boolean canMoveStraightTwo(final Position start, final Color color, final int rankGap) {
+    private boolean canMoveStraightDoubleStep(final Position start, final Color color, final int rankGap) {
         return rankGap == GAP_UPPER_BOUND.get(color) && start.isSameRank(INITIAL_RANK.get(color));
     }
 

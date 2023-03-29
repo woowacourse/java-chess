@@ -2,10 +2,9 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.KING;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 
 public class King extends Piece {
-
     private static final King WHITE = new King(Color.WHITE);
     private static final King BLACK = new King(Color.BLACK);
     private static final int GAP_LOWER_BOUND = 0;

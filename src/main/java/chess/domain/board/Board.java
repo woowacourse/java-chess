@@ -1,112 +1,77 @@
 package chess.domain.board;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import java.util.Arrays;
+import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.IntStream;
 
 public class Board {
+    private static final int VALID_KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
     private Color turn;
 
     public Board() {
-        this(Collections.emptyMap(), Color.WHITE);
+        this(new HashMap<>(), Color.WHITE);
     }
 
     private Board(final Map<Position, Piece> board, final Color turn) {
-        this.board = new HashMap<>(board);
+        this.board = board;
         this.turn = turn;
     }
 
     public void initialize() {
-        board.putAll(initializePiece(Color.WHITE, Rank.ONE));
-        board.putAll(initializePawn(Color.WHITE, Rank.TWO));
-        board.putAll(initializeEmptyPiece(List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)));
-        board.putAll(initializePawn(Color.BLACK, Rank.SEVEN));
-        board.putAll(initializePiece(Color.BLACK, Rank.EIGHT));
+        board.putAll(BoardGenerator.generate());
     }
 
-    private Map<Position, Piece> initializePiece(final Color color, final Rank rank) {
-        final List<Piece> pieces = List.of(
-                Rook.from(color), Knight.from(color), Bishop.from(color), Queen.from(color),
-                King.from(color), Bishop.from(color), Knight.from(color), Rook.from(color)
-        );
-        final List<File> files = Arrays.stream(File.values()).collect(toList());
+    public void move(final Position source, final Position target) {
+        if (isGameOver()) {
+            throw new IllegalStateException("게임을 진행할 수 있는 상태가 아닙니다.");
+        }
+        final Piece piece = board.get(source);
 
-        return IntStream.range(0, pieces.size())
-                .boxed()
-                .collect(toMap(index -> Position.of(files.get(index), rank), pieces::get));
+        validate(source, target, piece);
+        movePiece(source, target, piece);
+        turn = turn.nextTurn();
     }
 
-    private Map<Position, Piece> initializePawn(final Color color, final Rank rank) {
-        return Arrays.stream(File.values())
-                .map(file -> Position.of(file, rank))
-                .collect(toMap(Function.identity(), ignore -> Pawn.from(color)));
+    public boolean isGameOver() {
+        return VALID_KING_COUNT != board.values().stream()
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .count();
     }
 
-    private Map<Position, Piece> initializeEmptyPiece(final List<Rank> ranks) {
-        return ranks.stream()
-                .flatMap(rank -> Arrays.stream(File.values()).map(file -> Position.of(file, rank)))
-                .collect(toMap(Function.identity(), ignore -> Empty.create()));
-    }
-
-    public void move(final String source, final String target) {
-        final Position sourcePosition = Position.from(source);
-        final Position targetPosition = Position.from(target);
-        final Piece piece = board.get(sourcePosition);
-
-        validate(sourcePosition, targetPosition, piece);
-        movePiece(sourcePosition, targetPosition, piece);
-    }
-
-    private void validate(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        if (turn.isOpponent(piece.color())) {
+    private void validate(final Position source, final Position target, final Piece piece) {
+        if (piece.isNotSameColor(turn)) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
-        if (!piece.isMovable(sourcePosition, targetPosition, board.get(targetPosition))) {
+        if (piece.isNotMovable(source, target, board.get(target))) {
             throw new IllegalArgumentException("올바르지 않은 이동 명령어 입니다.");
         }
-        if (isPieceExistsBetweenPosition(sourcePosition, targetPosition)) {
+        if (isPieceExistsBetweenPosition(source, target)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있을 수 없습니다.");
         }
     }
 
-    private boolean isPieceExistsBetweenPosition(final Position sourcePosition, final Position targetPosition) {
-        return sourcePosition.between(targetPosition).stream()
+    private boolean isPieceExistsBetweenPosition(final Position source, final Position target) {
+        return source.between(target).stream()
                 .anyMatch(this::isPieceExists);
     }
 
     private boolean isPieceExists(final Position position) {
-        return !board.get(position).equals(Empty.create());
+        return !board.get(position).equals(Empty.instance());
     }
 
-    private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        board.put(targetPosition, piece);
-        board.put(sourcePosition, Empty.create());
-        turn = turn.nextTurn();
+    private void movePiece(final Position source, final Position target, final Piece piece) {
+        board.put(target, piece);
+        board.put(source, Empty.instance());
     }
 
-    public boolean isInitialized() {
-        return board.size() != 0;
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
+    public final GameResult getResult() {
+        return new GameResult(Collections.unmodifiableMap(board));
     }
 }

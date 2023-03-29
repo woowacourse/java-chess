@@ -1,16 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 
 public class Empty extends Piece {
-
     private static final Empty EMPTY = new Empty();
 
     private Empty() {
         super(Color.EMPTY, PieceType.EMPTY);
     }
 
-    public static Empty create() {
+    public static Empty instance() {
         return EMPTY;
     }
 

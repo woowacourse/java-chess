@@ -1,14 +1,13 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Position.of;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static chess.domain.piece.Empty.create;
+import static chess.domain.position.Position.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -42,7 +41,7 @@ public class PawnTest {
             @CsvSource({"D, ONE", "E, ONE", "F, ONE"})
             void 이동할_수_없다(final File file, final Rank rank) {
                 // when
-                final Piece target = create();
+                final Piece target = Empty.instance();
 
                 // then
                 assertThat(pawn.isMovable(start, of(file, rank), target)).isFalse();
@@ -56,7 +55,7 @@ public class PawnTest {
             @CsvSource({"E, THREE", "E, FOUR"})
             void 기물이_존재하지_않으면_움직일_수_있다(final File file, final Rank rank) {
                 // when
-                final Piece target = create();
+                final Piece target = Empty.instance();
 
                 // then
                 assertThat(pawn.isMovable(start, of(file, rank), target)).isTrue();
@@ -90,7 +89,7 @@ public class PawnTest {
             @CsvSource({"F, THREE", "D, THREE"})
             void 상대방의_기물이_존재하지_않으면_움직일_수_없다(final File file, final Rank rank) {
                 // when
-                final Piece target = create();
+                final Piece target = Empty.instance();
 
                 // then
                 assertThat(pawn.isMovable(start, of(file, rank), target)).isFalse();
@@ -111,7 +110,7 @@ public class PawnTest {
             @CsvSource({"D, EIGHT", "E, EIGHT", "F, EIGHT"})
             void 이동할_수_없다(final File file, final Rank rank) {
                 // when
-                final Piece target = create();
+                final Piece target = Empty.instance();
 
                 // then
                 assertThat(pawn.isMovable(start, of(file, rank), target)).isFalse();
@@ -125,7 +124,7 @@ public class PawnTest {
             @CsvSource({"E, SIX", "E, FIVE"})
             void 기물이_존재하지_않으면_움직일_수_있다(final File file, final Rank rank) {
                 // when
-                final Piece target = create();
+                final Piece target = Empty.instance();
 
                 // then
                 assertThat(pawn.isMovable(start, of(file, rank), target)).isTrue();
@@ -159,7 +158,7 @@ public class PawnTest {
             @CsvSource({"D, SIX", "F, SIX"})
             void 상대방의_기물이_존재하지_않으면_움직일_수_없다(final File file, final Rank rank) {
                 // when
-                final Piece target = create();
+                final Piece target = Empty.instance();
 
                 // then
                 assertThat(pawn.isMovable(start, of(file, rank), target)).isFalse();
