@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -38,11 +39,12 @@ class PositionTest {
                         .map(column -> Position.of(row, column)))
                 .collect(toList());
 
-        // when
-        List<Position> setPosition = Position.getAllPositions();
+        List<List<Position>> setPositions = Position.getAllPositions();
+        List<Position> flattenSetPositions = new ArrayList<>();
+        setPositions.forEach(flattenSetPositions::addAll);
 
         // then
-        assertThat(setPosition)
+        assertThat(flattenSetPositions)
                 .containsAll(expectedPositions)
                 .hasSize(64);
     }
