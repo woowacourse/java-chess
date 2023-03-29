@@ -33,10 +33,6 @@ public class Position {
         return findGreatestCommonDivisor(num2, num1 % num2);
     }
 
-    public Position moveBy(final Movement movement) {
-        return movement.move(file, rank);
-    }
-
     public int rankDifference(final Position other) {
         return Math.abs(this.rank.value() - other.rank.value());
     }
@@ -47,10 +43,6 @@ public class Position {
 
     public boolean isEqualRank(final Rank rank) {
         return rank == this.rank;
-    }
-
-    public boolean isEqualFile(final File file) {
-        return file == this.file;
     }
 
     public File file() {

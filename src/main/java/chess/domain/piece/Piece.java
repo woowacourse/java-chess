@@ -52,7 +52,7 @@ public abstract class Piece {
         Position next = from;
         final Deque<Position> positions = new LinkedList<>();
         while (!next.equals(to)) {
-            next = next.moveBy(movement);
+            next = movement.move(next);
             positions.add(next);
         }
         positions.removeLast();

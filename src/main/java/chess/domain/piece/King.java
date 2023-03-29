@@ -36,7 +36,7 @@ public class King extends Piece {
     }
 
     private void validateMoveCount(final Position from, final Position to, final Movement movement) {
-        if (!from.moveBy(movement).equals(to)) {
+        if (!movement.move(from).equals(to)) {
             throw new IllegalArgumentException(KING_MOVE_OVER_ONE_MESSAGE);
         }
     }
