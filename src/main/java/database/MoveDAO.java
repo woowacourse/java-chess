@@ -22,24 +22,26 @@ public final class MoveDAO {
         this.tableName = tableName;
     }
     
-    public void addMove(final Move move) {
-        final var query = String.format("INSERT INTO %s VALUES(?, ?, ?)", this.tableName);
+    public void addMove(final Move move, final int gameID) {
+        final var query = String.format("INSERT INTO %s VALUES(?, ?, ?, ?)", this.tableName);
         try (final var connection = this.getConnection();
                 final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setTimestamp(1, new Timestamp(move.getID()));
             preparedStatement.setString(2, move.getFromLabel());
             preparedStatement.setString(3, move.getToLabel());
+            preparedStatement.setInt(4, gameID);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
     
-    public List<Move> fetchAllMoves() {
-        final var query = String.format("SELECT * FROM %s", this.tableName);
+    public List<Move> fetchMoves(final int gameID) {
+        final var query = String.format("SELECT * FROM %s WHERE game_id = ?", this.tableName);
         List<Move> moves = new ArrayList<>();
         try (final var connection = this.getConnection();
                 final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameID);
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 final var timestamp = resultSet.getTimestamp("id");
@@ -53,16 +55,6 @@ public final class MoveDAO {
         }
         
         return moves;
-    }
-    
-    public void resetMoves() {
-        final var query = String.format("DELETE FROM %s", this.tableName);
-        try (final var connection = this.getConnection();
-                final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
     
     public Connection getConnection() {

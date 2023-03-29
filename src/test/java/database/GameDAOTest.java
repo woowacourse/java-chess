@@ -47,7 +47,7 @@ class GameDAOTest {
         gameDAO.addGame();
         gameDAO.addGame();
         int lastGameID = gameDAO.getLastGameID();
-        MoveDAO2 moveDAO = new MoveDAO2("move_test");
+        MoveDAO moveDAO = new MoveDAO("move_test");
         moveDAO.addMove(Move.create(Position.from("a2"), Position.from("a3")), lastGameID);
         moveDAO.addMove(Move.create(Position.from("a7"), Position.from("a6")), lastGameID);
         gameDAO.resetGame(lastGameID);

@@ -11,7 +11,7 @@ class ReadyGameTest {
     @DisplayName("준비 상태 게임 시작 테스트")
     void start_game_test() {
         ReadyGame readyGame = new ReadyGame();
-        Game2 game = readyGame.start();
+        Game game = readyGame.start();
         Assertions.assertThat(game).isInstanceOf(RunGame.class);
     }
     

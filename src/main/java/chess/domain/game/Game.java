@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-public interface Game2 extends ActionHandler2, BoardProvider {
+public interface Game extends ActionHandler, BoardProvider {
     
     String GAME_ERROR_PREFIX = "[GAME ERROR] ";
     

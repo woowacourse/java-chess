@@ -1,24 +1,24 @@
 package chess.history;
 
-import chess.domain.game.ActionHandler2;
-import database.MoveDAO2;
+import chess.domain.game.ActionHandler;
+import database.MoveDAO;
 import java.util.List;
 
-public final class MoveHistory2 implements History2 {
+public final class MoveHistory implements History {
     
     
-    private static final MoveDAO2 MOVE_DAO = new MoveDAO2("move");
+    private static final MoveDAO MOVE_DAO = new MoveDAO("move");
     private final List<Move> moveHistory;
     private final int gameID;
     
-    private MoveHistory2(final List<Move> moveHistory, final int gameID) {
+    private MoveHistory(final List<Move> moveHistory, final int gameID) {
         this.moveHistory = moveHistory;
         this.gameID = gameID;
     }
     
-    public static MoveHistory2 create(final int gameID) {
+    public static MoveHistory create(final int gameID) {
         List<Move> moves = MOVE_DAO.fetchMoves(gameID);
-        return new MoveHistory2(moves, gameID);
+        return new MoveHistory(moves, gameID);
     }
     
     @Override
@@ -33,7 +33,7 @@ public final class MoveHistory2 implements History2 {
     }
     
     @Override
-    public void apply(final ActionHandler2 action) {
+    public void apply(final ActionHandler action) {
         System.out.println("전 이동 기록을 적용합니다.");
         this.moveHistory.forEach(move -> action.move(move.getFrom(), move.getTo()));
     }

@@ -1,41 +1,41 @@
 package chess.command;
 
-import chess.domain.game.ActionHandler2;
-import chess.domain.game.Game2;
+import chess.domain.game.ActionHandler;
+import chess.domain.game.Game;
 import chess.domain.game.Status;
-import chess.history.History2;
+import chess.history.History;
 import java.util.List;
 
-public class StartCommand2 implements Command2 {
+public class EndCommand implements Command {
     
-    public static final int START_ARGUMENTS_SIZE = 0;
+    public static final int END_ARGUMENTS_SIZE = 0;
     
-    private final CommandType type = CommandType.START;
+    private final CommandType type = CommandType.END;
     
-    public StartCommand2(final List<String> arguments) {
+    public EndCommand(final List<String> arguments) {
         this.validate(arguments);
     }
     
     private void validate(final List<String> arguments) {
-        if (arguments.size() != START_ARGUMENTS_SIZE) {
+        if (arguments.size() != END_ARGUMENTS_SIZE) {
             throw new IllegalArgumentException(
                     COMMAND_ERROR_PREFIX + this.type + INVALID_ARGUMENT_ERROR_MESSAGE);
         }
     }
     
     @Override
-    public Status query(final ActionHandler2 action) {
+    public Status query(final ActionHandler action) {
         throw new UnsupportedOperationException(
                 COMMAND_ERROR_PREFIX + this.type + INVALID_QUERY_ERROR_MESSAGE);
     }
     
     @Override
-    public Game2 update(final ActionHandler2 action) {
-        return action.start();
+    public Game update(final ActionHandler action) {
+        return action.end();
     }
     
     @Override
-    public void addHistory(final History2 history) {
+    public void addHistory(final History history) {
         throw new UnsupportedOperationException(
                 COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
         

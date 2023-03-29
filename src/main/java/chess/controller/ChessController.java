@@ -1,33 +1,33 @@
 package chess.controller;
 
-import chess.command.Command2;
-import chess.command.CommandFactory2;
+import chess.command.Command;
+import chess.command.CommandFactory;
 import chess.command.CommandType;
 import chess.domain.board.PieceProvider;
-import chess.domain.game.Game2;
+import chess.domain.game.Game;
 import chess.domain.game.ReadyGame;
 import chess.domain.game.Status;
 import chess.history.GameHistory;
-import chess.history.History2;
-import chess.history.MoveHistory2;
+import chess.history.History;
+import chess.history.MoveHistory;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-public class ChessController2 {
+public class ChessController {
     
     private final InputView inputView;
     private final OutputView outputView;
     
-    private final Map<CommandType, Executor2> executorMap = Map.of(
+    private final Map<CommandType, Executor> executorMap = Map.of(
             CommandType.START, this::executeStartCommand,
             CommandType.MOVE, this::executeMoveCommand,
             CommandType.END, this::executeEndCommand,
             CommandType.STATUS, this::executeQueryCommand
     );
     
-    public ChessController2(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -65,8 +65,8 @@ public class ChessController2 {
     
     public void run(int id) {
         this.outputView.printGameStartMessage();
-        Game2 chessGame = new ReadyGame();
-        History2 moveHistory = MoveHistory2.create(id);
+        Game chessGame = new ReadyGame();
+        History moveHistory = MoveHistory.create(id);
         while (chessGame.isContinued()) {
             chessGame = this.runGame(chessGame, moveHistory);
         }
@@ -75,10 +75,10 @@ public class ChessController2 {
         }
     }
     
-    private Game2 runGame(final Game2 chessGame, final History2 moveHistory) {
+    private Game runGame(final Game chessGame, final History moveHistory) {
         try {
-            Command2 command = this.parseCommand();
-            Executor2 executor = this.executorMap.get(command.getType());
+            Command command = this.parseCommand();
+            Executor executor = this.executorMap.get(command.getType());
             return executor.execute(command, chessGame, moveHistory);
         } catch (Exception e) {
             this.outputView.printError(e.getMessage());
@@ -86,37 +86,37 @@ public class ChessController2 {
         }
     }
     
-    private Command2 parseCommand() {
+    private Command parseCommand() {
         List<String> commandLineLiteral = this.inputView.readCommand();
-        return CommandFactory2.generateCommand(commandLineLiteral);
+        return CommandFactory.generateCommand(commandLineLiteral);
     }
     
     
-    private Game2 executeEndCommand(final Command2 command, final Game2 chessGame, final History2 moveHistory) {
+    private Game executeEndCommand(final Command command, final Game chessGame, final History moveHistory) {
         return command.update(chessGame);
     }
     
-    private Game2 executeMoveCommand(final Command2 command, final Game2 chessGame, final History2 moveHistory) {
-        Game2 updatedGame = command.update(chessGame);
+    private Game executeMoveCommand(final Command command, final Game chessGame, final History moveHistory) {
+        Game updatedGame = command.update(chessGame);
         command.addHistory(moveHistory);
         this.printBoard(updatedGame);
         return updatedGame;
     }
     
-    private Game2 executeStartCommand(final Command2 command, final Game2 chessGame, final History2 moveHistory) {
-        Game2 updatedGame = command.update(chessGame);
+    private Game executeStartCommand(final Command command, final Game chessGame, final History moveHistory) {
+        Game updatedGame = command.update(chessGame);
         moveHistory.apply(updatedGame);
         this.printBoard(updatedGame);
         return updatedGame;
     }
     
-    private Game2 executeQueryCommand(final Command2 command, final Game2 chessGame, final History2 moveHistory) {
+    private Game executeQueryCommand(final Command command, final Game chessGame, final History moveHistory) {
         Status status = command.query(chessGame);
         this.outputView.printStatus(status);
         return chessGame;
     }
     
-    private void printBoard(final Game2 chessGame) {
+    private void printBoard(final Game chessGame) {
         PieceProvider board = chessGame.getBoard();
         String boardString = BoardMapper.map(board);
         this.outputView.printBoard(BoardDTO.create(boardString));

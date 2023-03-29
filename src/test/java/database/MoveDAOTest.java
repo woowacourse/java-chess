@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class MoveDAO2Test {
+class MoveDAOTest {
     
-    private static final MoveDAO2 MOVE_DAO = new MoveDAO2("move_test");
+    private static final MoveDAO MOVE_DAO = new MoveDAO("move_test");
     
     @Test
     @DisplayName("이동 기록을 추가합니다.")

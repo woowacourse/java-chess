@@ -5,7 +5,7 @@ import chess.domain.board.PieceProvider;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public class RunGame implements Game2 {
+public class RunGame implements Game {
     
     public static final String GAME_HAS_ALREADY_STARTED = GAME_ERROR_PREFIX + "게임이 이미 시작되었습니다.";
     
@@ -18,12 +18,12 @@ public class RunGame implements Game2 {
     }
     
     @Override
-    public Game2 start() {
+    public Game start() {
         throw new IllegalStateException(GAME_HAS_ALREADY_STARTED);
     }
     
     @Override
-    public Game2 move(final Position from, final Position to) {
+    public Game move(final Position from, final Position to) {
         this.board.checkColor(from, to, this.turn);
         this.board.checkRoute(from, to);
         this.board.move(from, to);
@@ -37,7 +37,7 @@ public class RunGame implements Game2 {
     }
     
     @Override
-    public Game2 end() {
+    public Game end() {
         return new EndGame();
     }
     

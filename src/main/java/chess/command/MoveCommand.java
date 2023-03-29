@@ -1,14 +1,14 @@
 package chess.command;
 
-import chess.domain.game.ActionHandler2;
-import chess.domain.game.Game2;
+import chess.domain.game.ActionHandler;
+import chess.domain.game.Game;
 import chess.domain.game.Status;
 import chess.domain.position.Position;
-import chess.history.History2;
+import chess.history.History;
 import chess.history.Move;
 import java.util.List;
 
-public class MoveCommand2 implements Command2 {
+public class MoveCommand implements Command {
     
     public static final int MOVE_ARGUMENTS_SIZE = 2;
     
@@ -16,7 +16,7 @@ public class MoveCommand2 implements Command2 {
     
     private final Move move;
     
-    public MoveCommand2(final List<String> arguments) {
+    public MoveCommand(final List<String> arguments) {
         this.validate(arguments);
         final Position from = Position.from(arguments.get(0));
         final Position to = Position.from(arguments.get(1));
@@ -31,18 +31,18 @@ public class MoveCommand2 implements Command2 {
     }
     
     @Override
-    public Status query(final ActionHandler2 action) {
+    public Status query(final ActionHandler action) {
         throw new UnsupportedOperationException(
                 COMMAND_ERROR_PREFIX + this.type + INVALID_QUERY_ERROR_MESSAGE);
     }
     
     @Override
-    public Game2 update(final ActionHandler2 action) {
+    public Game update(final ActionHandler action) {
         return action.move(this.move.getFrom(), this.move.getTo());
     }
     
     @Override
-    public void addHistory(final History2 history) {
+    public void addHistory(final History history) {
         history.add(this.move);
     }
     

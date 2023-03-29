@@ -1,18 +1,18 @@
 package chess.command;
 
-import chess.domain.game.ActionHandler2;
-import chess.domain.game.Game2;
+import chess.domain.game.ActionHandler;
+import chess.domain.game.Game;
 import chess.domain.game.Status;
-import chess.history.History2;
+import chess.history.History;
 import java.util.List;
 
-public class StatusCommand2 implements Command2 {
+public class StatusCommand implements Command {
     
     public static final int STATUS_ARGUMENTS_SIZE = 0;
     
     private final CommandType type = CommandType.STATUS;
     
-    public StatusCommand2(final List<String> arguments) {
+    public StatusCommand(final List<String> arguments) {
         this.validate(arguments);
     }
     
@@ -24,18 +24,18 @@ public class StatusCommand2 implements Command2 {
     }
     
     @Override
-    public Status query(final ActionHandler2 action) {
+    public Status query(final ActionHandler action) {
         return action.status();
     }
     
     @Override
-    public Game2 update(ActionHandler2 action) {
+    public Game update(ActionHandler action) {
         throw new UnsupportedOperationException(
                 COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
     }
     
     @Override
-    public void addHistory(final History2 history) {
+    public void addHistory(final History history) {
         throw new UnsupportedOperationException(
                 COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
     }
