@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PieceDaoImpl implements PieceDao {
 
-    private final DBConnection dbConnection = new DBConnection();
+    private final DBConnection dbConnection = DBConnection.getInstance();
     private final RowMapper pieceMapper = rs -> {
         String shape = rs.getString("shape");
         int rank = rs.getInt("rank");

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TurnDaoImpl implements TurnDao {
 
-    private final DBConnection dbConnection = new DBConnection();
+    private final DBConnection dbConnection = DBConnection.getInstance();
 
     @Override
     public void create(final Color color) {
