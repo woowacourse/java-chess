@@ -13,6 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class JdbcChessGameDao implements ChessGameDao {
 
+    private static final String ID_COLUMN = "id";
+    private static final String TURN_COLUMN = "turn";
+
     @Override
     public List<ChessGameDto> findAll() {
         final String sql = "SELECT * FROM chess_game";
@@ -22,8 +25,8 @@ public class JdbcChessGameDao implements ChessGameDao {
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                final int id = resultSet.getInt("id");
-                final String turn = resultSet.getString("turn");
+                final int id = resultSet.getInt(ID_COLUMN);
+                final String turn = resultSet.getString(TURN_COLUMN);
                 chessGameDtos.add(ChessGameDto.of(id, turn));
             }
             return chessGameDtos;
@@ -72,7 +75,7 @@ public class JdbcChessGameDao implements ChessGameDao {
             preparedStatement.setInt(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return ChessGameDto.of(resultSet.getInt("id"), resultSet.getString("turn"));
+                return ChessGameDto.of(resultSet.getInt(ID_COLUMN), resultSet.getString(TURN_COLUMN));
             }
             return null;
         } catch (SQLException e) {
