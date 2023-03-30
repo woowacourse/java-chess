@@ -1,6 +1,7 @@
 package chess.game;
 
 import chess.board.ChessBoard;
+import chess.board.GameScore;
 import chess.board.Position;
 import chess.piece.Team;
 
@@ -26,14 +27,15 @@ public class ChessGame {
     }
 
     public double calculateScore(final Team team) {
-        return chessBoard.calculateScore(team);
+        return chessBoard.getGameScore().calculateScore(team);
     }
 
     public Team findWinner() {
-        if (chessBoard.calculateScore(Team.WHITE) > chessBoard.calculateScore(Team.BLACK)) {
+        final GameScore gameScore = chessBoard.getGameScore();
+        if (gameScore.calculateScore(Team.WHITE) > gameScore.calculateScore(Team.BLACK)) {
             return Team.WHITE;
         }
-        if (chessBoard.calculateScore(Team.WHITE) < chessBoard.calculateScore(Team.BLACK)) {
+        if (gameScore.calculateScore(Team.WHITE) < gameScore.calculateScore(Team.BLACK)) {
             return Team.BLACK;
         }
         return Team.EMPTY;

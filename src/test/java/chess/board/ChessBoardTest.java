@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import chess.fixture.EmptyBoardFixture;
 import chess.fixture.PositionFixture;
 import chess.piece.Bishop;
-import chess.piece.BlackPawn;
 import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.Pawn;
@@ -562,41 +561,5 @@ class ChessBoardTest {
 
         // when & then
         assertThat(chessBoard.isKingKilled(Team.WHITE)).isFalse();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK:18", "WHITE:17"}, delimiter = ':')
-    void calculateScore메서드는_각_팀에_해당하는_점수를_반환한다(Team team, double score) {
-        // given
-        board.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
-        board.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
-        board.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
-        board.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
-        board.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
-        board.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
-        board.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
-
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
-
-        // when & then
-        assertThat(chessBoard.calculateScore(team)).isEqualTo(score);
-    }
-
-    @Test
-    void calculateScore메서드는_세로_줄에_폰이_두개_이상이면_점수의_절반으로_계산한다() {
-        // given
-        board.put(new Position(File.A, Rank.FOUR), new Queen(Team.BLACK));
-        board.put(new Position(File.B, Rank.FOUR), new Queen(Team.WHITE));
-        board.put(new Position(File.A, Rank.FIVE), new Bishop(Team.BLACK));
-        board.put(new Position(File.B, Rank.FIVE), new Bishop(Team.WHITE));
-        board.put(new Position(File.A, Rank.SIX), new Rook(Team.BLACK));
-        board.put(new Position(File.B, Rank.SIX), new Rook(Team.WHITE));
-        board.put(new Position(File.A, Rank.SEVEN), new BlackPawn());
-        board.put(new Position(File.A, Rank.THREE), new BlackPawn());
-
-        ChessBoard chessBoard = ChessBoard.createBoardByRule(board);
-
-        // when & then
-        assertThat(chessBoard.calculateScore(Team.BLACK)).isEqualTo(18);
     }
 }
