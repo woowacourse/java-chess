@@ -1,7 +1,7 @@
 package chess.domain.chessGame;
 
 import chess.domain.Board;
-import chess.domain.PieceDto;
+import chess.dto.PieceDto;
 import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move_rule.*;

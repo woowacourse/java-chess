@@ -1,7 +1,6 @@
 package chess;
 
-import chess.domain.PieceDto;
-import chess.domain.piece.Piece;
+import chess.dto.PieceDto;
 import chess.domain.position.Position;
 
 import java.util.Map;

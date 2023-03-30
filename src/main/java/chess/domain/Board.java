@@ -6,6 +6,7 @@ import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.dto.PieceDto;
 
 import java.util.HashMap;
 import java.util.List;

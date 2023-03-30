@@ -2,7 +2,7 @@ package chess.domain.chessGame;
 
 import chess.KingDiedException;
 import chess.domain.Board;
-import chess.domain.PieceDto;
+import chess.dto.PieceDto;
 import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

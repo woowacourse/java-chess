@@ -1,6 +1,6 @@
 package chess.repository;
 
-import chess.domain.PieceDto;
+import chess.dto.PieceDto;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.chessGame.PlayingChessGame;
 import chess.domain.chessGame.ReadyChessGame;

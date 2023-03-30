@@ -1,6 +1,6 @@
 package chess.domain.chessGame;
 
-import chess.domain.PieceDto;
+import chess.dto.PieceDto;
 import chess.domain.piece.PlayingCamp;
 import chess.domain.position.Position;
 
