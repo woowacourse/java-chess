@@ -11,9 +11,8 @@ public enum GameCommand {
     MOVE("move"),
     END("end");
 
-    public static final int MOVE_COMMAND_SIZE = 3;
-    public static final int LOAD_COMMAND_SIZE = 2;
-    public static final int DEFAULT_COMMAND_SIZE = 1;
+    public static final int MOVE_PARAMETER_SIZE = 2;
+    public static final int LOAD_PARAMETER_SIZE = 1;
     private static final Map<String, GameCommand> COMMAND_MAPPER = Map.of(
             START.value, START, STATUS.value, STATUS, LOAD.value, LOAD,
             MOVE.value, MOVE, END.value, END

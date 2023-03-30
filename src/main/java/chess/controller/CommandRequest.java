@@ -5,56 +5,29 @@ import chess.model.exception.GameIdTypeException;
 import chess.model.exception.RequestNotContainIdException;
 import chess.model.exception.RequestNotContainPositionException;
 import java.util.List;
-import java.util.Optional;
 
 public class CommandRequest {
 
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    private static final String REQUEST_IS_NOT_VALIDATE_SIZE_MESSAGE = "올바른 명령을 입력해주십시오.";
     private static final int COMMAND_INDEX = 0;
-    private static final int GAME_ID_INDEX = 1;
-    private static final int FROM_POSITION_INDEX = 1;
-    private static final int TO_POSITION_INDEX = 2;
+    private static final int PARAMETER_START_INDEX = 1;
+    private static final int FROM_INDEX = 0;
+    private static final int TO_INDEX = 1;
+    private static final int ID_INDEX = 0;
 
     private final GameCommand gameCommand;
-    private final Optional<Position> from;
-    private final Optional<Position> to;
-    private final Optional<Long> id;
+    private final List<String> parameters;
 
-    private CommandRequest(final GameCommand gameCommand) {
+    private CommandRequest(final GameCommand gameCommand, final List<String> parameters) {
         this.gameCommand = gameCommand;
-        from = Optional.empty();
-        to = Optional.empty();
-        id = Optional.empty();
-    }
-
-    private CommandRequest(final GameCommand gameCommand, final String from, final String to) {
-        this.gameCommand = gameCommand;
-        this.from = Optional.of(renderPosition(from));
-        this.to = Optional.of(renderPosition(to));
-        this.id = Optional.empty();
-    }
-
-    private CommandRequest(final GameCommand gameCommand, final String id) {
-        this.gameCommand = gameCommand;
-        this.from = Optional.empty();
-        this.to = Optional.empty();
-        this.id = Optional.of(renderId(id));
+        this.parameters = parameters;
     }
 
     public static CommandRequest from(final List<String> request) {
         final GameCommand command = GameCommand.from(request.get(COMMAND_INDEX));
-        if (request.size() == GameCommand.MOVE_COMMAND_SIZE && command == GameCommand.MOVE) {
-            return new CommandRequest(command, request.get(FROM_POSITION_INDEX), request.get(TO_POSITION_INDEX));
-        }
-        if (request.size() == GameCommand.LOAD_COMMAND_SIZE && command == GameCommand.LOAD) {
-            return new CommandRequest(command, request.get(GAME_ID_INDEX));
-        }
-        if (request.size() == GameCommand.DEFAULT_COMMAND_SIZE) {
-            return new CommandRequest(command);
-        }
-        throw new IllegalArgumentException(REQUEST_IS_NOT_VALIDATE_SIZE_MESSAGE);
+        final List<String> parameters = request.subList(PARAMETER_START_INDEX, request.size());
+        return new CommandRequest(command, parameters);
     }
 
     private static Position renderPosition(final String position) {
@@ -76,14 +49,31 @@ public class CommandRequest {
     }
 
     public Position getFrom() {
-        return from.orElseThrow(RequestNotContainPositionException::new);
+        validateMove();
+        return renderPosition(parameters.get(FROM_INDEX));
     }
 
     public Position getTo() {
-        return to.orElseThrow(RequestNotContainPositionException::new);
+        validateMove();
+        return renderPosition(parameters.get(TO_INDEX));
+    }
+
+    private void validateMove() {
+        if (gameCommand != GameCommand.MOVE
+                && parameters.size() != GameCommand.MOVE_PARAMETER_SIZE) {
+            throw new RequestNotContainPositionException();
+        }
     }
 
     public Long getId() {
-        return id.orElseThrow(RequestNotContainIdException::new);
+        validateLoad();
+        return renderId(parameters.get(ID_INDEX));
+    }
+
+    private void validateLoad() {
+        if (gameCommand != GameCommand.LOAD
+                && parameters.size() != GameCommand.LOAD_PARAMETER_SIZE) {
+            throw new RequestNotContainIdException();
+        }
     }
 }
