@@ -29,7 +29,6 @@ public class ChessController {
         this.inputView = new InputView();
         this.outputView = new OutputView();
         this.gameDao = new GameDao();
-        //TODO 중복 체크하기
         this.userName = this.inputView.requestUserName();
     }
 
