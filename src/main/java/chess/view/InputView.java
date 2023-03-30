@@ -1,6 +1,6 @@
 package chess.view;
 
-import dto.CommandDto;
+import chess.dto.CommandDto;
 
 import java.util.Arrays;
 import java.util.List;

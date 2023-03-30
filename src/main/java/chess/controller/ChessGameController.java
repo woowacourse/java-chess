@@ -4,8 +4,8 @@ import chess.database.ChessBoardDao;
 import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputView;
-import dto.ChessBoardDto;
-import dto.CommandDto;
+import chess.dto.ChessBoardDto;
+import chess.dto.CommandDto;
 
 import java.util.List;
 import java.util.function.Function;
