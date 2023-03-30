@@ -86,17 +86,6 @@ public class ChessController {
         processIfClear(chessGame);
     }
 
-    private void processIfClear(final ChessGame chessGame) {
-        if (chessGame.isClear()) {
-            final Side winner = chessGame.calculateWinner();
-
-            chessGameService.delete();
-            OutputView.printKingDie(winner);
-            OutputView.printScore(chessGame.calculateScore(Side.WHITE), chessGame.calculateScore(Side.BLACK));
-            OutputView.printWinner(winner);
-        }
-    }
-
     private InitCommand inputInitCommand() {
         try {
             final String command = InputView.readInitCommand();
@@ -149,6 +138,17 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             executeCommand(chessGame);
+        }
+    }
+
+    private void processIfClear(final ChessGame chessGame) {
+        if (chessGame.isClear()) {
+            final Side winner = chessGame.calculateWinner();
+
+            chessGameService.delete();
+            OutputView.printKingDie(winner);
+            OutputView.printScore(chessGame.calculateScore(Side.WHITE), chessGame.calculateScore(Side.BLACK));
+            OutputView.printWinner(winner);
         }
     }
 }
