@@ -5,6 +5,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+docker/
 ### STS ###
 .apt_generated
 .classpath
