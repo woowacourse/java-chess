@@ -81,7 +81,7 @@ public class BoardDao {
     }
 
     private void insertPiece(final Location location, final Piece piece, final Turn turn) {
-        final String query = "INSERT INTO board VALUES(?,?,?,?,?,?)";
+        final String query = "INSERT INTO BOARD VALUES(?,?,?,?,?,?)";
         try (
             final Connection connection = databaseConnector.getConnection();
             final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(query)
@@ -99,7 +99,7 @@ public class BoardDao {
     }
 
     private void updatePiece(final Location location, final Piece piece, final Turn turn) {
-        final String query = "UPDATE board SET piece=?, camp=?, turn =? where board_row=? AND board_column=?";
+        final String query = "UPDATE BOARD SET piece=?, camp=?, turn =? where board_row=? AND board_column=?";
         try (
             final Connection connection = databaseConnector.getConnection();
             final PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(query)
