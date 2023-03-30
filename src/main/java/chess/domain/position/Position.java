@@ -60,13 +60,11 @@ public final class Position {
     }
 
     public boolean isUpsideDiagonalPosition(Position target) {
-        Direction direction = Direction.findDirection(target.file - this.file, target.rank - this.rank);
-        return direction.equals(Direction.UP_LEFT) || direction.equals(Direction.UP_RIGHT);
+        return Direction.isUpsideDiagonal(target.file - this.file, target.rank - this.rank);
     }
 
     public boolean isDownSideDiagonalPosition(Position target) {
-        Direction direction = Direction.findDirection(target.file - this.file, target.rank - this.rank);
-        return direction.equals(Direction.DOWN_LEFT) || direction.equals(Direction.DOWN_RIGHT);
+        return Direction.isDownsideDiagonal(target.file - this.file, target.rank - this.rank);
     }
 
     @Override
