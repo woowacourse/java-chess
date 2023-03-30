@@ -28,6 +28,7 @@ public final class ChessController {
         if (commandDto.getGameCommand() == GameCommand.START) {
             startGame(user);
         }
+        InputView.closeScanner();
     }
 
     private String readUser() {

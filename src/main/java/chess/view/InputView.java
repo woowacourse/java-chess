@@ -75,4 +75,8 @@ public final class InputView {
         }
         return CommandDto.of(gameCommand);
     }
+
+    public static void closeScanner() {
+        scanner.close();
+    }
 }
