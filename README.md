@@ -125,7 +125,7 @@
 
 - [x] `KingDead` 상태가 되면 결과를 출력한다.
 
-- [ ] 출력에 대한 호출은 `State`가 아닌 `Controller`에서 담당한다.
+- [x] 출력에 대한 호출은 `State`가 아닌 `Controller`에서 담당한다.
 
 - [x] 에러 메시지 출력 기능은 `Controller`가 아닌 `View`에서 담당한다.
 
