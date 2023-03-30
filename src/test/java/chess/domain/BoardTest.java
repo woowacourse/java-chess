@@ -1,11 +1,9 @@
 package chess.domain;
 
-import chess.KingDiedException;
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.move_rule.*;
 import chess.domain.position.Position;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -56,14 +54,21 @@ class BoardTest {
     }
 
     @Test
-    void 킹이_잡히면_예외를_발생시킨다() {
-        Map<Position, Piece> piecePositions = new HashMap<>();
-        piecePositions.put(B1, new Piece(KingMoveRule.getInstance(), PlayingCamp.BLACK));
-        piecePositions.put(A1, new Piece(QueenMoveRule.getInstance(), PlayingCamp.WHITE));
-        Board board = new Board(piecePositions);
+    void 왕이_잡히면_보드는_finish_상태가_된다() {
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(A5, new Piece(KingMoveRule.getInstance(), PlayingCamp.BLACK));
+        pieces.put(B2, new Piece(BishopMoveRule.getInstance(), PlayingCamp.BLACK));
+        pieces.put(C1, new Piece(KnightMoveRule.getInstance(), PlayingCamp.BLACK));
 
-        Assertions.assertThatThrownBy(() -> board.move(A1, B1, PlayingCamp.WHITE))
-                .isInstanceOf(KingDiedException.class)
-                .hasMessage("왕이 잡혔습니다. 게임이 종료됩니다.");
+        pieces.put(G1, new Piece(KingMoveRule.getInstance(), PlayingCamp.WHITE));
+        pieces.put(A3, new Piece(QueenMoveRule.getInstance(), PlayingCamp.WHITE));
+        pieces.put(H4, new Piece(KnightMoveRule.getInstance(), PlayingCamp.WHITE));
+        Board board = new Board(pieces);
+
+        //when
+        board.move(A3, A5, PlayingCamp.WHITE);
+
+        //then
+        assertThat(board.isFinished()).isTrue();
     }
 }
