@@ -44,13 +44,14 @@ public class ChessController {
     }
 
     private void repeatMove(ChessGame savedChessGame) {
-        while (isRunnable(savedChessGame)) {
+        while (checkRunnable(savedChessGame)) {
             runCommand(savedChessGame, inputView.readChessGameCommand());
         }
     }
 
-    private static boolean isRunnable(ChessGame savedChessGame) {
+    private static boolean checkRunnable(ChessGame savedChessGame) {
         if (savedChessGame.isFinished()) {
+            outputView.printWinner(savedChessGame.getWinner());
             ChessGameDao chessGameDao = new ChessGameDao();
             chessGameDao.save(new ChessGame(BoardFactory.generate(), ChessGame.FIRST_TURN));
             return false;

@@ -28,4 +28,8 @@ public class OutputView {
         System.out.println("흰색 팀 점수: " + result.get(Color.WHITE));
         System.out.println("검은색 팀 점수: " + result.get(Color.BLACK));
     }
+
+    public void printWinner(String winner) {
+        System.out.println("이긴 진영 : " + winner);
+    }
 }

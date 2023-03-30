@@ -5,10 +5,7 @@ import chess.domain.board.Square;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ChessGame {
 
@@ -84,5 +81,16 @@ public class ChessGame {
 
     public boolean isPaused() {
         return pause;
+    }
+
+    public String getWinner() {
+        Map<Color, Double> result = getResult();
+        List<Color> orderedResult = new ArrayList<>(result.keySet());
+        orderedResult.sort(Comparator.comparing(result::get));
+        Collections.reverse(orderedResult);
+        if (orderedResult.get(0) == orderedResult.get(1)) {
+            return String.join(", ", Color.WHITE.name(), Color.BLACK.name());
+        }
+        return orderedResult.get(0).name();
     }
 }
