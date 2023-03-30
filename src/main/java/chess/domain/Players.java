@@ -11,17 +11,18 @@ import java.util.List;
 
 public class Players {
 
-    private final TurnDao turnDao = new TurnDaoImpl();
+    private final TurnDao turnDao;
     private final List<Player> players;
     private Color current;
 
-    private Players(final List<Player> players, final Color color) {
+    private Players(final List<Player> players, final TurnDao turnDao) {
         this.players = players;
-        this.current = color;
+        this.turnDao = turnDao;
+        this.current = turnDao.getCurrentTurn();
     }
 
-    public static Players of(Player whitePlayer, Player blackPlayer, Color currentTurn) {
-        return new Players(List.of(whitePlayer, blackPlayer), currentTurn);
+    public static Players of(Player whitePlayer, Player blackPlayer, TurnDao turnDao) {
+        return new Players(List.of(whitePlayer, blackPlayer), turnDao);
     }
 
     private void validateMovingRoute(final Position fromPosition, final Position toPosition) {

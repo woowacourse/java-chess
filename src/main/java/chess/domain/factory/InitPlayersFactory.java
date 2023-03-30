@@ -13,18 +13,15 @@ import java.util.List;
 
 public class InitPlayersFactory {
 
-    public static Players initializeChessBoard() {
+    public static Players initializeChessBoard(PieceDao pieceDao, TurnDao turnDao) {
 
-        PieceDao dao = new PieceDaoImpl();
-        TurnDao turnDao = new TurnDaoImpl();
-
-        Pieces whitePieces = getDbWhitePieces(dao);
-        Pieces blackPieces = getDbBlackPieces(dao);
+        Pieces whitePieces = getDbWhitePieces(pieceDao);
+        Pieces blackPieces = getDbBlackPieces(pieceDao);
 
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
 
-        return Players.of(whitePlayer, blackPlayer, turnDao.getCurrentTurn());
+        return Players.of(whitePlayer, blackPlayer, turnDao);
     }
 
     private static Pieces getDbWhitePieces(PieceDao dao) {

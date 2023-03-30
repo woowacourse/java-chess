@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.CommandAction;
 import chess.domain.Players;
 import chess.domain.dao.PieceDao;
-import chess.domain.dao.PieceDaoImpl;
+import chess.domain.dao.TurnDao;
 import chess.domain.factory.InitPlayersFactory;
 import chess.dto.response.PiecesResponse;
 import chess.ui.InputView;
@@ -14,18 +14,50 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ChessGameController {
-
-    private Players players;
-
     private final CommandAction commandAction = new CommandAction(Map.of(
             Command.START, this::start,
             Command.MOVE, this::move,
             Command.END, this::end,
             Command.STATUS, this::status)
     );
+    private final TurnDao turnDao;
+    private final PieceDao pieceDao;
+    private Players players;
+
+    public ChessGameController(TurnDao turnDao, PieceDao pieceDao) {
+        this.turnDao = turnDao;
+        this.pieceDao = pieceDao;
+    }
+
+    private void start(final Commands commands) {
+        players = InitPlayersFactory.initializeChessBoard(pieceDao, turnDao);
+        PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
+        OutputView.printInitializedChessBoard(piecesResponse);
+    }
+
+    private void move(final Commands commands) {
+        String inputMovablePiece = commands.getMovablePiece();
+        String inputTargetPosition = commands.getTargetPosition();
+
+        try {
+            players.movePiece(inputMovablePiece, inputTargetPosition);
+            OutputView.printChessBoardStatus(
+                    new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK)));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private void end(final Commands commands) {
+    }
+
+    private void status(final Commands commands) {
+        OutputView.printStatus(players.calculateScore());
+    }
+
 
     public void run() {
-        players = InitPlayersFactory.initializeChessBoard();
+        players = InitPlayersFactory.initializeChessBoard(pieceDao, turnDao);
         OutputView.printStartGame();
         boolean isNotEnd = true;
         while (isOnGoing(isNotEnd)) {
@@ -43,8 +75,7 @@ public final class ChessGameController {
     private void finishGame() {
         if (players.notEveryKingAlive()) {
             OutputView.printWinner(players.getWinnerColorName());
-            PieceDao dao = new PieceDaoImpl();
-            dao.deleteAll();
+            pieceDao.deleteAll();
         }
     }
 
@@ -56,32 +87,6 @@ public final class ChessGameController {
             OutputView.printErrorMessage(e.getMessage());
             return readCommand(commandReader);
         }
-    }
-
-    private void start(final Commands commands) {
-        players = InitPlayersFactory.initializeChessBoard();
-        PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
-        OutputView.printInitializedChessBoard(piecesResponse);
-    }
-
-    private void status(final Commands commands) {
-        OutputView.printStatus(players.calculateScore());
-    }
-
-    private void move(final Commands commands) {
-        String inputMovablePiece = commands.getMovablePiece();
-        String inputTargetPosition = commands.getTargetPosition();
-
-        try {
-            players.movePiece(inputMovablePiece, inputTargetPosition);
-            OutputView.printChessBoardStatus(
-                    new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK)));
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-        }
-    }
-
-    private void end(final Commands commands) {
     }
 
 }
