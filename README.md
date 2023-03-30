@@ -63,6 +63,17 @@
 
 ---
 
+## Table
+- [x] 기보를 저장할 수 있다.
+```sql
+CREATE TABLE Move (
+    id bigint auto_increment primary key,
+    source char(2) not null,
+    target char(2) not null
+);
+```
+
+
 ## Flow Chart
 
 ![flow-chart](./docs/chess.drawio.png)
