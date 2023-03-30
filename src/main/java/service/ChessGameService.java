@@ -1,6 +1,6 @@
 package service;
 
-import dao.ChessGameDao;
+import dao.JdbcChessGameDao;
 import domain.game.Board;
 import domain.game.ChessGame;
 import dto.dao.ChessGameDaoResponseDto;
@@ -9,9 +9,9 @@ import dto.service.ChessGameCreateResponseDto;
 import java.util.List;
 
 public class ChessGameService {
-    private final ChessGameDao boardDao;
+    private final JdbcChessGameDao boardDao;
 
-    public ChessGameService(ChessGameDao boardDao) {
+    public ChessGameService(JdbcChessGameDao boardDao) {
         this.boardDao = boardDao;
     }
 
