@@ -131,7 +131,8 @@ public class ChessController {
         Map<Side, Double> scores = scoreBoard.calculateScore();
         outputView.printGameScores(scores);
 
-        scoreBoard.calculateWinner(scores);
+        Side winner = scoreBoard.calculateWinner(scores);
+        outputView.printWinner(winner);
     }
 
     private void moveCommandExecute(ChessGame chessGame, List<String> commands) {
