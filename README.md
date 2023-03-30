@@ -294,3 +294,32 @@
 - [x] ChessController
   - 기존의 ChessGame -> ChessGameDao 로 변경
   - 입장할 체스 게임의 ID 를 인스턴스 변수로 추가
+
+### DDL 
+
+- Chess Game
+```sql
+CREATE TABLE `chess_game` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `turn` varchar(45) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id_UNIQUE` (`id`)
+)
+```
+
+- Chess Board
+```sql
+CREATE TABLE `chess_board` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `x` int NOT NULL,
+    `y` int NOT NULL,
+    `piece_type` varchar(45) NOT NULL,
+    `piece_color` varchar(45) NOT NULL,
+    `game_id` int NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id_UNIQUE` (`id`),
+    KEY `game_id` (`game_id`),
+    CONSTRAINT `chess_board_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `chess_game` (`id`) ON DELETE CASCADE
+)
+```
+
