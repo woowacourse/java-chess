@@ -19,9 +19,4 @@ public final class King extends OrdinaryPiece {
                 PieceType.KING,
                 new NoneSlidingStrategy(new Directions(Direction.ofKing())));
     }
-
-    @Override
-    public boolean isKing() {
-        return true;
-    }
 }

@@ -17,9 +17,4 @@ public final class EmptyPiece extends Piece {
     public List<Position> findPath(final Position source, final Position target, final Piece targetPiece) {
         throw new IllegalStateException("시작점에 기물이 존재하지 않습니다.");
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

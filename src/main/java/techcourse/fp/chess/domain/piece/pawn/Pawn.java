@@ -61,9 +61,4 @@ public abstract class Pawn extends Piece {
     private List<Position> createTwoStepPath(final Position source) {
         return List.of(Position.of(source.getFile(), Rank.of(source.getRankOrder() + moveDirection.getRank())));
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

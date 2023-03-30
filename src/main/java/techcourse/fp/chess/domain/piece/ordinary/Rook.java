@@ -17,9 +17,4 @@ public final class Rook extends OrdinaryPiece {
     public static Rook create(final Color color) {
         return new Rook(color, PieceType.ROOK, new SlidingStrategy(new Directions(Direction.ofRook())));
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

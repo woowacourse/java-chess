@@ -17,10 +17,5 @@ public final class Knight extends OrdinaryPiece {
     public static Knight create(final Color color) {
         return new Knight(color, PieceType.KNIGHT, new NoneSlidingStrategy(new Directions(Direction.ofKnight())));
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }
 

@@ -17,10 +17,5 @@ public final class Queen extends OrdinaryPiece {
     public static Queen create(final Color color) {
         return new Queen(color, PieceType.QUEEN, new SlidingStrategy(new Directions(Direction.ofQueen())));
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }
 

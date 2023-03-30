@@ -16,7 +16,13 @@ public abstract class Piece {
     public abstract List<Position> findPath(final Position source, final Position target,
                                             final Piece targetPiece);
 
-    public abstract boolean isKing();
+    public boolean isKing() {
+        return pieceType == PieceType.KING;
+    }
+
+    public boolean isPawn() {
+        return pieceType == PieceType.PAWN;
+    }
 
     public boolean isSameColor(Color other) {
         return color == other;

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.stream.LongStream;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.Piece;
-import techcourse.fp.chess.domain.piece.PieceType;
 
 public class ScoreCalculator {
 
@@ -35,7 +34,7 @@ public class ScoreCalculator {
                 .filter(position -> position.getFile() == file)
                 .map(position -> board.get(position))
                 .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> piece.isSamePieceType(PieceType.PAWN))
+                .filter(Piece::isPawn)
                 .count();
     }
 }
