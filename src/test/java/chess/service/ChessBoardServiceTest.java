@@ -1,5 +1,8 @@
 package chess.service;
 
+import static chess.service.ChessBoardFixture.FIXTURE_BOARD_ID;
+import static chess.service.ChessBoardFixture.createServiceOfBoard;
+import static chess.service.ChessBoardFixture.createServiceOfOverBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -28,7 +31,7 @@ class ChessBoardServiceTest {
         Camp existingBoardTurn = Camp.BLACK;
         chessBoardService = createServiceOfBoard(existingBoardTurn);
 
-        ChessBoard existing = chessBoardService.loadChessBoard(1);
+        ChessBoard existing = chessBoardService.loadChessBoard(FIXTURE_BOARD_ID);
         ChessBoard created = chessBoardService.loadChessBoard(2);
 
         assertThat(existing.status().getCurrentTurn())
@@ -37,20 +40,11 @@ class ChessBoardServiceTest {
                 .isEqualTo(Camp.WHITE);
     }
 
-    private ChessBoardService createServiceOfBoard(Camp existingBoardTurn) {
-        InMemoryBoardPiecesDao boardPiecesDao = new InMemoryBoardPiecesDao();
-        boardPiecesDao.insertOrUpdate(1, PieceInitializer.createPiecesWithPosition());
-
-        InMemoryBoardStatusesDao boardStatusesDao = new InMemoryBoardStatusesDao();
-        boardStatusesDao.insertOrUpdate(1, new ChessBoardStatus(existingBoardTurn, false));
-
-        return new ChessBoardService(boardPiecesDao, boardStatusesDao);
-    }
-
     @DisplayName("주어진 보드 정보를 저장한다.")
     @Test
     void 체스보드_저장() {
-        final ChessBoard chessBoard = new ChessBoard(1, PieceInitializer.createPiecesWithPosition(),
+        final ChessBoard chessBoard = new ChessBoard(FIXTURE_BOARD_ID,
+                PieceInitializer.createPiecesWithPosition(),
                 new ChessBoardStatus(Camp.BLACK, false));
 
         assertDoesNotThrow(() -> chessBoardService.saveChessBoard(chessBoard));
@@ -63,16 +57,6 @@ class ChessBoardServiceTest {
 
         assertThat(chessBoardService.findAllNotOverBoardIds())
                 .isEmpty();
-    }
-
-    private ChessBoardService createServiceOfOverBoard() {
-        InMemoryBoardPiecesDao boardPiecesDao = new InMemoryBoardPiecesDao();
-        boardPiecesDao.insertOrUpdate(1, PieceInitializer.createPiecesWithPosition());
-
-        InMemoryBoardStatusesDao boardStatusesDao = new InMemoryBoardStatusesDao();
-        boardStatusesDao.insertOrUpdate(1, new ChessBoardStatus(Camp.WHITE, true));
-
-        return new ChessBoardService(boardPiecesDao, boardStatusesDao);
     }
 
 }
