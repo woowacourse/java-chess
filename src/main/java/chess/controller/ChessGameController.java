@@ -3,10 +3,11 @@ package chess.controller;
 import chess.controller.converter.BoardConverter;
 import chess.controller.status.AppStatus;
 import chess.controller.util.InputExceptionHandler;
-import chess.dao.boardpieces.JdbcBoardPiecesDao;
-import chess.dao.boardstatuses.JdbcBoardStatusesDao;
+import chess.dao.boardpieces.BoardPiecesDao;
+import chess.dao.boardstatuses.BoardStatusesDao;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
+import chess.service.ChessBoardService;
 import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,8 +18,8 @@ public class ChessGameController {
             OutputView::printInputErrorMessage);
     private final ChessGameService chessGameService;
 
-    public ChessGameController() {
-        this.chessGameService = new ChessGameService(new JdbcBoardPiecesDao(), new JdbcBoardStatusesDao());
+    public ChessGameController(BoardPiecesDao boardPiecesDao, BoardStatusesDao boardStatusesDao) {
+        this.chessGameService = new ChessGameService(new ChessBoardService(boardPiecesDao, boardStatusesDao));
     }
 
     public AppStatus start(CommandRequest commandRequest) {
