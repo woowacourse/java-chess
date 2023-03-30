@@ -4,13 +4,15 @@ import chess.controller.command.Command;
 import chess.controller.command.CommandType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public final class InputRenderer {
 
+    private static final Pattern NUMBER_REGEX = Pattern.compile("^-?[0-9]+$");
+    private static final int COMMAND_TYPE_INDEX = 0;
     private static final Map<String, Integer> FILE_TO_COLUMN = new HashMap<>();
     private static final Map<String, Integer> RANK_TO_ROW = new HashMap<>();
 
@@ -34,36 +36,63 @@ public final class InputRenderer {
         RANK_TO_ROW.put("8", 7);
     }
 
-    public static Command toCommand(final String string) {
-        CommandType commandType = toCommandType(string);
-        if (commandType != CommandType.MOVE && commandType != CommandType.LOAD) {
+    public static Command toCommand(final List<String> strings) {
+        CommandType commandType = toCommandType(strings.get(COMMAND_TYPE_INDEX));
+        if (hasOnlyCommandTypeCase(commandType)) {
+            validateNoOtherArgument(strings);
             return new Command(commandType);
         }
 
-        List<String> inputArguments = Arrays.asList(string.split(" "));
         if (commandType == CommandType.LOAD) {
-            return new Command(commandType, Integer.parseInt(inputArguments.get(1)));
+            String argument = strings.get(1);
+            validateNumber(argument);
+            validateNotBigNumber(argument);
+            return new Command(commandType, Integer.parseInt(argument));
         }
 
-        if (inputArguments.size() != 3) {
-            throw new IllegalArgumentException("올바른 명령어를 입력해주세요. 예. move b2 b3");
-        }
+        validateTwoMoreArguments(strings);
         List<Integer> arguments = new ArrayList<>();
-        arguments.addAll(toColumnAndRow(inputArguments.get(1)));
-        arguments.addAll(toColumnAndRow(inputArguments.get(2)));
+        arguments.addAll(toColumnAndRow(strings.get(1)));
+        arguments.addAll(toColumnAndRow(strings.get(2)));
         return new Command(commandType, arguments);
     }
 
     private static CommandType toCommandType(final String string) {
         try {
-            return CommandType.valueOf(getUpperCasedFirstWord(string));
+            return CommandType.valueOf(string.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
     }
 
-    private static String getUpperCasedFirstWord(final String string) {
-        return string.split(" ")[0].toUpperCase();
+    private static void validateNoOtherArgument(List<String> strings) {
+        if (strings.size() > 1) {
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
+        }
+    }
+
+    private static void validateNumber(String input) {
+        if (!NUMBER_REGEX.matcher(input).matches()) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
+
+    private static void validateNotBigNumber(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("서비스 규모가 작아서 큰 단위의 숫자는 지원하지 않습니다.");
+        }
+    }
+
+    private static void validateTwoMoreArguments(List<String> strings) {
+        if (strings.size() != 3) {
+            throw new IllegalArgumentException("올바른 명령어를 입력해주세요. 예. move b2 b3");
+        }
+    }
+
+    private static boolean hasOnlyCommandTypeCase(CommandType commandType) {
+        return commandType != CommandType.MOVE && commandType != CommandType.LOAD;
     }
 
     private static List<Integer> toColumnAndRow(final String rawPosition) {
