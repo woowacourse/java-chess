@@ -23,7 +23,6 @@ import java.util.Map;
 public final class ChessController {
     private final Map<ChessGameCommand, ChessGameAction> commandMapper;
     private final ChessService chessService;
-    private String gameId;
 
     public ChessController(ChessService chessService) {
         this.commandMapper = Map.of(
@@ -36,9 +35,9 @@ public final class ChessController {
     }
 
     public void run() {
-        gameId = readGameIdCommand();
+        String gameId = readGameIdCommand();
         if (gameId == null) {
-            createGame();
+            gameId = createGame();
         }
 
         ChessGame chessGame = chessService.readChessGame(gameId);
@@ -75,10 +74,11 @@ public final class ChessController {
         }
     }
 
-    private void createGame() {
+    private String createGame() {
         ChessGame chessGame = new ChessGame(new BoardFactory().createInitialBoard());
-        gameId = chessService.createChessStatus(chessGame);
-        chessService.createChessGame(chessGame, gameId);
+        final String gameId = chessService.createChessStatus(chessGame);
+        chessService.createChessGame(chessGame);
+        return gameId;
     }
 
     private ChessGameCommand play() {
@@ -97,13 +97,13 @@ public final class ChessController {
     }
 
     private void start(final List<String> commands) {
-        ChessGame chessGame = chessService.readChessGame(gameId);
+        ChessGame chessGame = chessService.readChessGame();
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
         OutputView.printBoard(chessGame.board());
     }
 
     private void movePiece(final List<String> commands) {
-        ChessGame chessGame = chessService.readChessGame(gameId);
+        ChessGame chessGame = chessService.readChessGame();
         validateCommandsSize(commands, MOVE_COMMAND_SIZE);
         Position from = searchPosition(commands.get(FROM_INDEX));
         Position to = searchPosition(commands.get(TO_INDEX));
@@ -111,18 +111,18 @@ public final class ChessController {
         chessGame.move(from, to);
         OutputView.printBoard(chessGame.board());
 
-        chessService.update(chessGame, from, to, gameId);
+        chessService.update(chessGame, from, to);
     }
 
     private void showStatus(final List<String> commands) {
-        ChessGame chessGame = chessService.readChessGame(gameId);
+        ChessGame chessGame = chessService.readChessGame();
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         OutputView.printScore(chessGame.calculateScore());
     }
 
     private void end(final List<String> commands) {
-        ChessGame chessGame = chessService.readChessGame(gameId);
+        ChessGame chessGame = chessService.readChessGame();
         validateCommandsSize(commands, DEFAULT_COMMAND_SIZE);
 
         if (!chessGame.isEnd()) {
@@ -131,7 +131,7 @@ public final class ChessController {
         }
 
         OutputView.printWinner(chessGame.winner());
-        chessService.deleteAll(gameId);
+        chessService.deleteAll();
     }
 
     private static void validateCommandsSize(final List<String> commands, final int moveCommandSize) {
