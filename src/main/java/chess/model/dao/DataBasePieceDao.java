@@ -12,9 +12,6 @@ import chess.model.domain.piece.PieceType;
 import chess.model.domain.piece.Queen;
 import chess.model.domain.piece.Rook;
 import chess.model.domain.position.Position;
-import chess.model.exception.QueryFailException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.EnumMap;
@@ -99,13 +96,6 @@ public class DataBasePieceDao implements PieceDao {
 
     @Override
     public void deleteBoard(final long gameId) {
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement preparedStatement =
-                     connection.prepareStatement(DELETE_BOARD_QUERY)) {
-            preparedStatement.setLong(1, gameId);
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new QueryFailException();
-        }
+        jdbcTemplate.executeUpdate(DELETE_BOARD_QUERY, gameId);
     }
 }

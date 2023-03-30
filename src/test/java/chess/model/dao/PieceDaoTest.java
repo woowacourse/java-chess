@@ -1,12 +1,18 @@
 package chess.model.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.model.domain.board.Board;
 import chess.model.domain.board.BoardFactory;
 import chess.model.domain.board.Turn;
 import chess.model.domain.piece.Color;
+import chess.model.domain.piece.Piece;
+import chess.model.domain.position.Position;
 import java.sql.SQLException;
+import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,11 +62,26 @@ class PieceDaoTest {
     @Test
     @DisplayName("기물의 위치를 업데이트하는 기능 테스트")
     void test_updatePiecePosition() {
+        final Position from = new Position(2, 2);
+        final Position to = new Position(2, 4);
+
+        pieceDao.updatePiecePosition(from, to, TEST_GAME_ID);
+        final Map<Position, Piece> board = pieceDao.loadBoard(TEST_GAME_ID, TEST_TURN)
+                .getBoard();
+
+        assertAll(
+                () -> assertFalse(board.containsKey(from)),
+                () -> assertTrue(board.containsKey(to))
+        );
     }
 
     @Test
     @DisplayName("관련 테이블을 삭제하는 기능 테스트")
     void test_deleteBoard() {
+        pieceDao.deleteBoard(TEST_GAME_ID);
+        final Board board = pieceDao.loadBoard(TEST_GAME_ID, TEST_TURN);
 
+        assertThat(board.getBoard())
+                .containsExactly();
     }
 }
