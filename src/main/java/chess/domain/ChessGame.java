@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.score.Score;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -51,10 +51,11 @@ public class ChessGame {
     }
 
     public Map<Team, Score> getScoreAllTeam() {
-        Map<Team, Score> scores = new HashMap<>();
+        Map<Team, Score> scores = new EnumMap<>(Team.class);
 
-        scores.put(Team.WHITE, board.calculateScore(Team.WHITE));
-        scores.put(Team.BLACK, board.calculateScore(Team.BLACK));
+        for (Team team : Team.values()) {
+            scores.put(team, board.calculateScore(team));
+        }
 
         return scores;
     }

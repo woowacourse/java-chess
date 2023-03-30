@@ -5,7 +5,6 @@ import chess.domain.Team;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.score.Score;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,8 @@ public class ScoreCalculator {
                     PieceType.Rook, new Score(5),
                     PieceType.Bishop, new Score(3),
                     PieceType.Knight, new Score(2.5),
-                    PieceType.Pawn, new Score(1));
+                    PieceType.Pawn, new Score(1),
+                    PieceType.Empty, new Score(0));
     private static final Score PAWN_WITH_SAME_FILE = new Score(0.5);
 
     public static Score calculateScore(Map<Position, Piece> board, Team team) {
