@@ -11,7 +11,7 @@ public enum TeamMapper {
     EMPTY(Team.EMPTY, "없음");
 
     private static final String INVALID_TEAM_MESSAGE = "잘못된 팀을 입력했습니다.";
-    
+
     private final Team team;
     private final String teamView;
 

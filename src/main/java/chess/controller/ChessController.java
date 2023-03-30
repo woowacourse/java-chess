@@ -23,7 +23,7 @@ public class ChessController {
 
     public void run() {
         outputView.printStart();
-        while (!command.isSameType(CommandType.END)) {
+        while (command.isDifferentType(CommandType.END)) {
             playChessGame();
         }
     }

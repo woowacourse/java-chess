@@ -28,6 +28,10 @@ public abstract class Command {
         return this.commandType == commandType;
     }
 
+    public boolean isDifferentType(CommandType commandType) {
+        return !isSameType(commandType);
+    }
+
     public Map<Position, Piece> getChessGameBoards() {
         ChessGame chessGame = boardDao.selectChessGame();
         return Collections.unmodifiableMap(chessGame.getBoard());
