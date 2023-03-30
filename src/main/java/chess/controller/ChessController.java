@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.game.GameCommand;
@@ -45,7 +47,7 @@ public class ChessController {
 
     private Game loadGame() {
         Optional<Game> game = chessService.makeGame();
-        return game.orElseGet(Game::new);
+        return game.orElseGet(() -> new Game(new Board(new BoardFactory().generateBoard()), Team.WHITE));
     }
 
     private void play() {
@@ -102,7 +104,7 @@ public class ChessController {
     private void printGameStatus() {
         double whiteScore = game.calculateScoreOfTeam(Team.WHITE);
         double blackScore = game.calculateScoreOfTeam(Team.BLACK);
-        Team winner = game.calculateWinner(whiteScore, blackScore);
+        Team winner = Team.calculateWinner(whiteScore, blackScore);
 
         outputView.printScoreMessage(whiteScore, blackScore);
         outputView.printWinnerMessage(winner);

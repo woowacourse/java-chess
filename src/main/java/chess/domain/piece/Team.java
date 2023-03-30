@@ -27,4 +27,14 @@ public enum Team {
         }
         return EMPTY;
     }
+
+    public static Team calculateWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            return Team.WHITE;
+        }
+        if (blackScore > whiteScore) {
+            return Team.BLACK;
+        }
+        return Team.EMPTY;
+    }
 }

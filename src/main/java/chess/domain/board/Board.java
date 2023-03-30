@@ -26,29 +26,30 @@ public class Board {
 
     public void move(Square source, Square target) {
         validateMovable(source, target);
-
-        if (board.get(source).isSamePieceType(PieceType.PAWN)) {
-            board.put(source, new Pawn(board.get(source).getTeam(), IS_MOVED));
+        Piece sourcePiece = board.get(source);
+        if (sourcePiece.isSamePieceType(PieceType.PAWN)) {
+            Team currentTeam = sourcePiece.getTeam();
+            board.put(source, new Pawn(currentTeam, IS_MOVED));
         }
-        board.put(target, board.get(source));
+        board.put(target, sourcePiece);
         board.put(source, new Empty());
     }
 
     public void validateMovable(Square source, Square target) {
+        Piece sourcePiece = board.get(source);
         Direction direction = Direction.calculateDirection(source, target);
-
         validatePathBlocked(source, target, direction);
-        if (board.get(source).isSamePieceType(PieceType.PAWN)) {
+        if (sourcePiece.isSamePieceType(PieceType.PAWN)) {
             validatePawnPathBlocked(target, direction);
         }
-        board.get(source).validateMovableRange(source, target);
+        sourcePiece.validateMovableRange(source, target);
     }
 
     private void validatePathBlocked(Square source, Square target, Direction direction) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        if (isBlocked(source, target, direction) && !board.get(source).isSamePieceType(PieceType.KNIGHT)) {
+        if (isBlocked(source, target, direction) && !sourcePiece.isSamePieceType(PieceType.KNIGHT)) {
             throw new PathBlockedException();
         }
         if (sourcePiece.isSameTeam(targetPiece.getTeam())) {
@@ -93,10 +94,48 @@ public class Board {
         return kingCount == 1;
     }
 
+    public double calculateScoreOfTeam(Team team) {
+        double score = 0;
+        Map<Piece, Square> pieces = getTeamPieces(team);
+        Map<Piece, Integer> pawnPiece = getPawnPieces(pieces);
+        for (Entry<Piece, Square> entry : pieces.entrySet()) {
+            PieceType pieceType = entry.getKey().getPieceType();
+            score += pieceType.getScore();
+            score -= pawnDuplicateMinusScore(pawnPiece, entry.getValue(), pieceType);
+        }
+        return score;
+    }
+
     public Map<Piece, Square> getTeamPieces(Team team) {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
                 .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
+    }
+
+    private Map<Piece, Integer> getPawnPieces(Map<Piece, Square> pieces) {
+        return pieces.entrySet().stream()
+                .filter(entry -> entry.getKey().isSamePieceType(PieceType.PAWN))
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> entry.getValue().getFileToInt()
+                ));
+    }
+
+    private double pawnDuplicateMinusScore(Map<Piece, Integer> pawnPiece, Square square, PieceType pieceType) {
+        if (pieceType == PieceType.PAWN) {
+            int fileToInt = square.getFileToInt();
+            long pawnCount = pawnPiece.values().stream()
+                    .filter(file -> file.equals(fileToInt)).count();
+            return pawnMinusScore(pawnCount);
+        }
+        return 0;
+    }
+
+    private double pawnMinusScore(long pawnCount) {
+        if (pawnCount > 1) {
+            return 0.5;
+        }
+        return 0;
     }
 
     public List<Piece> getPieces() {

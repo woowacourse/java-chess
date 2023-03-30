@@ -1,25 +1,17 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.exception.TeamNotMatchException;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class Game {
 
     private final Board board;
     private Team turn;
-
-    public Game() {
-        this(new Board(new BoardFactory().generateBoard()), Team.WHITE);
-    }
 
     public Game(Board board, Team turn) {
         this.board = board;
@@ -42,52 +34,8 @@ public class Game {
         return board.haveOneKing();
     }
 
-    public Team calculateWinner(double whiteScore, double blackScore) {
-        if (whiteScore > blackScore) {
-            return Team.WHITE;
-        }
-        if (blackScore > whiteScore) {
-            return Team.BLACK;
-        }
-        return Team.EMPTY;
-    }
-
     public double calculateScoreOfTeam(Team team) {
-        double score = 0;
-        Map<Piece, Square> pieces = board.getTeamPieces(team);
-        Map<Piece, Integer> pawnPiece = getPawnPieces(pieces);
-        for (Entry<Piece, Square> entry : pieces.entrySet()) {
-            PieceType pieceType = entry.getKey().getPieceType();
-            score += pieceType.getScore();
-            score -= pawnDuplicateMinusScore(pawnPiece, entry.getValue(), pieceType);
-        }
-        return score;
-    }
-
-    private Map<Piece, Integer> getPawnPieces(Map<Piece, Square> pieces) {
-        return pieces.entrySet().stream()
-                .filter(entry -> entry.getKey().isSamePieceType(PieceType.PAWN))
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> entry.getValue().getFileToInt()
-                ));
-    }
-
-    private double pawnDuplicateMinusScore(Map<Piece, Integer> pawnPiece, Square square, PieceType pieceType) {
-        if (pieceType == PieceType.PAWN) {
-            int fileToInt = square.getFileToInt();
-            long pawnCount = pawnPiece.values().stream()
-                    .filter(file -> file.equals(fileToInt)).count();
-            return pawnMinusScore(pawnCount);
-        }
-        return 0;
-    }
-
-    private double pawnMinusScore(long pawnCount) {
-        if (pawnCount > 1) {
-            return 0.5;
-        }
-        return 0;
+        return board.calculateScoreOfTeam(team);
     }
 
     public List<Piece> getPieces() {

@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import chess.exception.PathBlockedException;
 import chess.exception.PawnMoveDiagonalException;
 import chess.exception.PawnMoveForwardException;
@@ -149,5 +150,15 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(PawnMoveDiagonalException.class)
                 .hasMessage("폰은 상대 팀이 있을 때만 대각선으로 움직일 수 있습니다.");
+    }
+
+    @DisplayName("Pawn이 같은 줄에 여러개라면 0.5점으로 계산한다.")
+    @Test
+    void Should_PawnScoreHalf_When_SameLinePawnOverThanTwo() {
+        board.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.FOUR));
+        board.move(new Square(File.C, Rank.SEVEN), new Square(File.C, Rank.FIVE));
+        board.move(new Square(File.B, Rank.FOUR), new Square(File.C, Rank.FIVE));
+
+        assertThat(board.calculateScoreOfTeam(Team.WHITE)).isEqualTo(37.0);
     }
 }
