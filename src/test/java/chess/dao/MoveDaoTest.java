@@ -22,25 +22,18 @@ class MoveDaoTest extends MoveTruncator {
     @Test
     @DisplayName("saveAll()을 테스트한다.")
     void saveAll_givenMoveDto_thenSuccess() {
-        // given
-        final MoveSaveStrategy moveSaveStrategy = new MoveSaveStrategy(A2, A3);
-
         // when, then
-        assertThatCode(() -> moveDao.save(moveSaveStrategy)).doesNotThrowAnyException();
+        assertThatCode(() -> moveDao.save(A2, A3)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("findAll()을 테스트한다.")
     void findAll_whenCall_thenReturnMoves() {
         // given
-        final MoveSaveStrategy moveSaveStrategy = new MoveSaveStrategy(A2, A3);
-        moveDao.save(moveSaveStrategy);
+        moveDao.save(A2, A3);
 
-        // when
-        final MoveFindAllStrategy moveFindAllStrategy = new MoveFindAllStrategy();
-
-        // then
-        assertThat(moveDao.findAll(moveFindAllStrategy)).hasSize(1);
+        // when, then
+        assertThat(moveDao.findAll()).hasSize(1);
     }
 
     @Test
@@ -50,7 +43,7 @@ class MoveDaoTest extends MoveTruncator {
         assertAll(
                 () -> assertThat(moveDao.hasGame()).isFalse(),
                 () -> {
-                    moveDao.save(new MoveSaveStrategy(A2, A3));
+                    moveDao.save(A2, A3);
                     assertThat(moveDao.hasGame()).isTrue();
                 }
         );

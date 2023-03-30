@@ -18,7 +18,6 @@ import chess.controller.state.Playing;
 import chess.controller.state.ProgressState;
 import chess.controller.state.Status;
 import chess.dao.MoveDaoImpl;
-import chess.dao.MoveTruncator;
 import chess.model.board.NoWhiteKingChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.pawn.WhitePawn;
@@ -31,7 +30,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PlayingTest extends MoveTruncator {
+class PlayingTest {
 
     private GameState playing;
 

@@ -17,10 +17,8 @@ import chess.controller.state.GameState;
 import chess.controller.state.Playing;
 import chess.controller.state.ProgressState;
 import chess.controller.state.Status;
+import chess.dao.FakeMoveDao;
 import chess.dao.MoveDao;
-import chess.dao.MoveDaoImpl;
-import chess.dao.MoveSaveStrategy;
-import chess.dao.MoveTruncator;
 import chess.model.ChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.PieceType;
@@ -33,7 +31,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class ProgressStateTest extends MoveTruncator {
+class ProgressStateTest {
 
     private ChessService chessService;
 
@@ -70,8 +68,8 @@ class ProgressStateTest extends MoveTruncator {
     @DisplayName("기존에 게임이 있으면 기존 체스 게임을 불러온다.")
     void hasGame_thenContinueGame() {
         // given
-        final MoveDao moveDao = new MoveDaoImpl();
-        moveDao.save(new MoveSaveStrategy(A2, A4));
+        final MoveDao moveDao = new FakeMoveDao();
+        moveDao.save(A2, A4);
         final ChessService service = new ChessService(new ChessGame(), moveDao);
 
         // when

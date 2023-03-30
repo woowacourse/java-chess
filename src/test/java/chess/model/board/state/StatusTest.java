@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.controller.state.GameState;
 import chess.controller.state.ProgressState;
-import chess.dao.MoveTruncator;
 import chess.model.Score;
 import chess.model.Scores;
 import chess.model.piece.PieceColor;
@@ -18,7 +17,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StatusTest extends MoveTruncator {
+class StatusTest {
 
     @Test
     @DisplayName("calculateScores() 호출하면 첨수가 반환된다.")
@@ -37,7 +36,7 @@ class StatusTest extends MoveTruncator {
                         .containsExactly(WHITE, BLACK),
                 () -> assertThat(mapScores(scoreBoards))
                         .containsExactly(38.0, 38.0)
-                );
+        );
 
     }
 

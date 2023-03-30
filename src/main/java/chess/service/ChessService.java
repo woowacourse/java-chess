@@ -2,8 +2,6 @@ package chess.service;
 
 import chess.dao.Move;
 import chess.dao.MoveDao;
-import chess.dao.MoveFindAllStrategy;
-import chess.dao.MoveSaveStrategy;
 import chess.model.ChessGame;
 import chess.model.Scores;
 import chess.model.piece.Piece;
@@ -31,7 +29,7 @@ public class ChessService {
     }
 
     private List<Move> findAll() {
-        return moveDao.findAll(new MoveFindAllStrategy());
+        return moveDao.findAll();
     }
 
     private boolean existGame(final List<Move> moves) {
@@ -56,7 +54,7 @@ public class ChessService {
     }
 
     public void save(final Position source, final Position target) {
-        moveDao.save(new MoveSaveStrategy(source, target));
+        moveDao.save(source, target);
     }
 
     public boolean hasGame() {

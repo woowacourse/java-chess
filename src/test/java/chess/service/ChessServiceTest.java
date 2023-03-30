@@ -9,8 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.MoveDaoImpl;
-import chess.dao.MoveSaveStrategy;
-import chess.dao.MoveTruncator;
 import chess.model.ChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
@@ -21,7 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class ChessServiceTest extends MoveTruncator {
+class ChessServiceTest {
 
     private ChessService service;
 
@@ -53,7 +51,7 @@ class ChessServiceTest extends MoveTruncator {
         void loadGame_givenData_thenLoadGame() {
             // given
             final MoveDaoImpl moveDao = new MoveDaoImpl();
-            moveDao.save(new MoveSaveStrategy(A2, A4));
+            moveDao.save(A2, A4);
             final ChessService service = new ChessService(new ChessGame(), moveDao);
 
             // when

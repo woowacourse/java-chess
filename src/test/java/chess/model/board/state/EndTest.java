@@ -3,17 +3,16 @@ package chess.model.board.state;
 import static chess.controller.GameCommand.END;
 import static chess.controller.GameCommand.MOVE;
 import static chess.controller.GameCommand.START;
-import static chess.service.ChessServiceFixture.*;
+import static chess.service.ChessServiceFixture.createService;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.state.GameState;
 import chess.controller.state.ProgressState;
-import chess.dao.MoveTruncator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EndTest extends MoveTruncator {
+class EndTest {
 
     private GameState end;
 

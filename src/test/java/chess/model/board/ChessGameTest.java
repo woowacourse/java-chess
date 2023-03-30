@@ -7,14 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.dao.MoveTruncator;
 import chess.model.ChessGame;
 import chess.model.Turn;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ChessGameTest extends MoveTruncator {
+class ChessGameTest {
 
     @Test
     @DisplayName("에러가 발생하면 현재 턴이 유지된다.")
