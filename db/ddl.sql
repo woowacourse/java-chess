@@ -6,7 +6,7 @@ create table chess.game_room
     current_turn varchar(30) not null
 );
 
-create table chess.chess_board
+create table chess.pieces
 (
     piece_type      varchar(30) not null,
     side            varchar(30) not null,

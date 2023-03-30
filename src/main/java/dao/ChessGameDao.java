@@ -38,7 +38,7 @@ public class ChessGameDao {
     }
 
     public void saveChessBoard(Map<Position, Piece> board, Side currentTurn, Long roomId) {
-        final String saveQuery = "INSERT INTO chess_board(piece_type, side, piece_rank, piece_file, game_room_id_fk) VALUES(?,?,?,?,?)";
+        final String saveQuery = "INSERT INTO pieces(piece_type, side, piece_rank, piece_file, game_room_id_fk) VALUES(?,?,?,?,?)";
         for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
             File file = pieces.getKey().getFile();
             Rank rank = pieces.getKey().getRank();
@@ -64,7 +64,7 @@ public class ChessGameDao {
 
     public ChessGameDaoResponseDto loadGame(Long roomId) {
         Map<Position, Piece> board = new HashMap<>();
-        final String loadQuery = "select piece_type, side, current_turn, piece_rank, piece_file from chess_board cb join game_room gr on" +
+        final String loadQuery = "select piece_type, side, current_turn, piece_rank, piece_file from pieces cb join game_room gr on" +
                 " cb.game_room_id_fk = gr.game_room_id where cb.game_room_id_fk = ?";
         Side lastTurn = null;
 
@@ -103,7 +103,7 @@ public class ChessGameDao {
     }
 
     public void updateChessBoard(Long roomId, Map<Position, Piece> board) {
-        final String saveQuery = "UPDATE chess_board SET piece_type = ?,side = ?,piece_rank = ?,piece_file = ? where game_room_id_fk = ? and piece_file = ? and piece_rank = ?";
+        final String saveQuery = "UPDATE pieces SET piece_type = ?,side = ?,piece_rank = ?,piece_file = ? where game_room_id_fk = ? and piece_file = ? and piece_rank = ?";
         for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
             File file = pieces.getKey().getFile();
             Rank rank = pieces.getKey().getRank();
@@ -144,7 +144,7 @@ public class ChessGameDao {
     }
 
     public boolean hasGame(Long roomId) {
-        final String loadQuery = "select piece_type from chess_board where game_room_id_fk = ?";
+        final String loadQuery = "select piece_type from pieces where game_room_id_fk = ?";
 
         try (Connection connection = connectionGenerator.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
