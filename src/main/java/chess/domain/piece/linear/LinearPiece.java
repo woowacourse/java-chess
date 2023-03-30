@@ -36,23 +36,22 @@ public final class LinearPiece implements Piece {
         return movablePositions;
     }
 
-    private List<Position> findMovablePositionByMovePattern(
-            final Position source,
-            final MovePattern movePattern,
-            final Board board) {
-
+    private List<Position> findMovablePositionByMovePattern(final Position source, final MovePattern movePattern, final Board board) {
         List<Position> movablePosition = new ArrayList<>();
         Position currentPosition = source;
         boolean canMoveMore = true;
+
         while (canMoveMore) {
             Position nextPosition = currentPosition.move(movePattern);
             canMoveMore = canMoveMore(nextPosition, board);
             movablePosition.add(nextPosition);
             currentPosition = nextPosition;
         }
+
         if (isLastPositionInvalid(source, currentPosition, board)) {
             movablePosition.remove(currentPosition);
         }
+
         return movablePosition;
     }
 

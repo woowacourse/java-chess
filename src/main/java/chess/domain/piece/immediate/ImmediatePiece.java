@@ -9,7 +9,6 @@ import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
-import org.jetbrains.annotations.Nullable;
 
 public final class ImmediatePiece implements Piece {
 
@@ -36,25 +35,23 @@ public final class ImmediatePiece implements Piece {
         return movablePositions;
     }
 
-    private List<Position> findMovablePositionByMovePattern(
-            final Position source,
-            final MovePattern movePattern,
-            final Board board) {
-
+    private List<Position> findMovablePositionByMovePattern(final Position source, final MovePattern movePattern, final Board board) {
         List<Position> movablePosition = new ArrayList<>();
         final Position nextPosition = source.move(movePattern);
+
+        if (nextPosition == null) {
+            return movablePosition;
+        }
+
         if (isNextPositionValid(source, nextPosition, board)) {
             movablePosition.add(nextPosition);
         }
+
         return movablePosition;
     }
 
-    private boolean isNextPositionValid(final Position source, @Nullable final Position nextPosition, final Board board) {
-        return isPositionNotNull(nextPosition) && !board.isAllyPosition(source, nextPosition);
-    }
-
-    private boolean isPositionNotNull(@Nullable final Position position) {
-        return position != null;
+    private boolean isNextPositionValid(final Position source, final Position nextPosition, final Board board) {
+        return !board.isAllyPosition(source, nextPosition);
     }
 
     @Override
