@@ -12,7 +12,6 @@ import chess.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessController {
     private final ChessGameDao chessGameDao;
@@ -24,22 +23,18 @@ public class ChessController {
     public void run() {
         OutputView.printStartMessage();
         ChessGame chessGame = ChessGameLoader.load(chessGameDao);
-        play(chessGame, gameStatus -> {
-            if (gameStatus.isRun()) {
-                printChessBoard(chessGame.getChessBoard());
-            }
-        });
-        if (chessGame.isEnd()) {
-            chessGameDao.init(chessGame);
-        }
+        State gameStatus = new Start(chessGame);
+        play(chessGame, gameStatus);
     }
 
-    private void play(ChessGame chessGame, Consumer<State> consumer) {
-        State gameStatus = new Start(chessGame);
-        while (gameStatus.isRun()) {
+    private void play(ChessGame chessGame, State gameStatus) {
+        while (!chessGame.isEnd() && gameStatus.isRun()) {
             gameStatus = getStatus(gameStatus);
             chessGameDao.update(chessGame);
-            consumer.accept(gameStatus);
+            printChessBoard(gameStatus, chessGame.getChessBoard());
+        }
+        if (chessGame.isEnd()) {
+            chessGameDao.init(chessGame);
         }
     }
 
@@ -54,8 +49,10 @@ public class ChessController {
         }
     }
 
-    private void printChessBoard(Map<Position, Piece> board) {
-        ChessBoardDto chessBoardDTO = new ChessBoardDto(board);
-        OutputView.print(chessBoardDTO.getBoardMessage().toString());
+    private void printChessBoard(State gameStatus, Map<Position, Piece> board) {
+        if (gameStatus.isRun()) {
+            ChessBoardDto chessBoardDTO = new ChessBoardDto(board);
+            OutputView.print(chessBoardDTO.getBoardMessage().toString());
+        }
     }
 }
