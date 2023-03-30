@@ -1,17 +1,16 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.controller.mapper.ChessBoardDtoMapper;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
 import chess.domain.piece.move.PositionConverter;
 import chess.entity.PieceEntity;
 import chess.service.ChessGameService;
-import chess.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public final class MoveController implements Controller {
 
@@ -45,8 +44,8 @@ public final class MoveController implements Controller {
     }
 
     @Override
-    public void printBoard() {
-        OutputView.printBoard(ChessBoardDtoMapper.createChessBoardDto(chessGame.getChessBoard()));
+    public Optional<ChessGame> findGame() {
+        return Optional.of(chessGame);
     }
 
     Controller move(final Command command) {

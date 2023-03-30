@@ -1,10 +1,10 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.controller.mapper.ChessBoardDtoMapper;
 import chess.domain.chess.ChessGame;
 import chess.service.ChessGameService;
-import chess.view.OutputView;
+
+import java.util.Optional;
 
 public final class StartController implements Controller {
     private final Long userId;
@@ -32,8 +32,8 @@ public final class StartController implements Controller {
     }
 
     @Override
-    public void printBoard() {
-        ChessGame chessGame = chessGameService.getChessGame(userId);
-        OutputView.printBoard(ChessBoardDtoMapper.createChessBoardDto(chessGame.getChessBoard()));
+    public Optional<ChessGame> findGame() {
+        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        return Optional.of(chessGame);
     }
 }

@@ -2,13 +2,14 @@ package chess.controller.status;
 
 import chess.controller.Command;
 import chess.controller.dto.ChessResultDto;
-import chess.controller.mapper.ChessBoardDtoMapper;
 import chess.controller.mapper.ChessResultDtoMapper;
 import chess.domain.chess.ChessGame;
 import chess.domain.chess.ChessGameCalculator;
 import chess.domain.chess.vo.ChessScore;
 import chess.service.ChessGameService;
 import chess.view.OutputView;
+
+import java.util.Optional;
 
 public final class StatusController implements Controller {
     private final Long userId;
@@ -41,8 +42,8 @@ public final class StatusController implements Controller {
     }
 
     @Override
-    public void printBoard() {
-        OutputView.printBoard(ChessBoardDtoMapper.createChessBoardDto(chessGame.getChessBoard()));
+    public Optional<ChessGame> findGame() {
+        return Optional.of(chessGame);
     }
 
     Controller getStatus(final boolean isGameRun) {

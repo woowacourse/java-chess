@@ -1,6 +1,9 @@
 package chess.controller.status;
 
 import chess.controller.Command;
+import chess.domain.chess.ChessGame;
+
+import java.util.Optional;
 
 public final class EndController implements Controller {
     EndController() {
@@ -17,6 +20,7 @@ public final class EndController implements Controller {
     }
 
     @Override
-    public void printBoard() {
+    public Optional<ChessGame> findGame() {
+        return Optional.empty();
     }
 }
