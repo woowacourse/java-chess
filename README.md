@@ -2,6 +2,15 @@
 
 ## Pair: 져니 [⛄️](http://github.com/cl8d), 제나 [❤️](https://github.com/yenawee)
 
+## 3, 4 단계 피드백 사항 및 추가 수정사항
+- [ ] Readme 에 도커 환경 세팅 설명 추가
+- [ ] DB connect 연결 에러 발생 시 처리
+- [ ] 매직 넘버 상수화 및 메소드 이름 구체화
+- [ ] Command 처리 로직 수정
+- [ ] 하나의 요청에 대해 하나의 Connection 으로 처리하도록 수정
+- [ ] update 쿼리 수정
+
+
 ## ✔ 4단계 기능 요구사항
 
 - [x] 애플리케이션 재시작 시 이전에 하던 체스 게임을 재시작할 수 있어야 한다
@@ -19,27 +28,6 @@
             - [x] Delete
               - [x] King 이 죽으면 DB 초기화 해준다
 
-- Query
-```sql
-CREATE TABLE chess_game (
-    piece_type VARCHAR(255) NOT NULL,
-    piece_rank TINYINT(10) NOT NULL,
-    piece_file TINYINT(10) NOT NULL,
-    team VARCHAR(255) NOT NULL,
-    turn VARCHAR(255) NOT NULL
-)
-             
-SELECT piece_type, piece_rank, piece_file, team, turn from chess_game;
-
-INSERT INTO chess_game(piece_type, piece_rank, piece_file, team, turn) VALUES (?, ?, ?, ?, ?); 
-
-DELETE FROM chess_game;
-
-TRUNCATE TABLE chess_game;
-
-```
-
-
 ## ✔ 3단계 기능 요구사항
 
 - [x] King 이 잡혔을 때 게임 종료
@@ -49,7 +37,7 @@ TRUNCATE TABLE chess_game;
     - [x] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5
     - [x] Pawn : 기본 1. 같은 세로 줄에 같은 색의 폰이 있으면 0.5
 
-## 1단계 피드백 사항 및 추가 수정 사항
+## 1, 2단계 피드백 사항 및 추가 수정 사항
 
 - [x] 출력 시 View 와 Domain 의존성 제거 - DTO 도입
 - [x] 매직 넘버 상수화
