@@ -57,4 +57,8 @@ public class PieceDao {
         });
     }
 
+    public void rollback() {
+        jdbcTemplate.rollback();
+    }
+
 }

@@ -15,8 +15,8 @@ public class JdbcTemplate {
 
     private final Connection connection;
 
-    public JdbcTemplate() {
-        this.connection = ConnectionProvider.getConnection();
+    public JdbcTemplate(final Connection connection) {
+        this.connection = connection;
         createTable();
     }
 
@@ -136,6 +136,15 @@ public class JdbcTemplate {
             return rowMapper.map(preparedStatement.executeQuery());
         } catch (SQLException e) {
             System.err.println("INSERT 오류: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void rollback() {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            System.err.println("ROLLBACK 오류: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

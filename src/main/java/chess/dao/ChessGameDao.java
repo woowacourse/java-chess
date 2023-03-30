@@ -58,4 +58,8 @@ public class ChessGameDao {
         });
     }
 
+    public void rollback() {
+        jdbcTemplate.rollback();
+    }
+
 }
