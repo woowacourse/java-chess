@@ -4,15 +4,15 @@ import java.util.Arrays;
 
 public enum CommandType {
 
-    START(0),
-    MOVE(2),
-    END(0),
-    STATUS(0);
+    START(1),
+    MOVE(3),
+    END(1),
+    STATUS(1);
 
-    private final int requiredParameterSize;
+    private final int requiredSize;
 
-    CommandType(final int requiredParameterSize) {
-        this.requiredParameterSize = requiredParameterSize;
+    CommandType(final int requiredSize) {
+        this.requiredSize = requiredSize;
     }
 
     public static CommandType from(final String rawCommand) {
@@ -22,7 +22,7 @@ public enum CommandType {
                 .orElseThrow(() -> new IllegalArgumentException("입력된 명령어가 올바르지 않습니다."));
     }
 
-    public boolean isAppropriateSize(final int size) {
-        return size == requiredParameterSize;
+    public boolean isNotAppropriateSize(final int size) {
+        return size != requiredSize;
     }
 }

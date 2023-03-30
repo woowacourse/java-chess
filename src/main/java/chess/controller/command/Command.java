@@ -1,7 +1,7 @@
 package chess.controller.command;
 
-import chess.domain.GameRoom;
+import chess.service.ChessService;
 
 public interface Command {
-    void execute(final GameRoom gameRoom);
+    void execute(final ChessService chessService);
 }

@@ -2,8 +2,6 @@ package chess.dao;
 
 import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
-import chess.domain.GameRoom;
-import chess.domain.RoomNumber;
 import chess.domain.Square;
 import chess.domain.Team;
 import chess.domain.Turn;
@@ -11,6 +9,7 @@ import chess.domain.piece.Role;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.service.RoomNumber;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -52,11 +51,7 @@ public final class ChessDao {
         }
     }
 
-    public void save(final GameRoom gameRoom) {
-        saveBoard(gameRoom.getChessGame().getChessBoard(), gameRoom.getRoomNumber());
-    }
-
-    private void saveBoard(final ChessBoard chessBoard, final RoomNumber roomNumber) {
+    public void save(final ChessBoard chessBoard, final RoomNumber roomNumber) {
         clearByRoomNumber(roomNumber);
         final int turn = chessBoard.getTurn().getTurn();
         int insertedRoomNumber = saveTurn(turn, roomNumber.getRoomNumber());
@@ -67,14 +62,10 @@ public final class ChessDao {
     }
 
     public void clearByRoomNumber(final RoomNumber roomNumber) {
-        clearBoard(roomNumber.getRoomNumber());
-    }
-
-    private void clearBoard(final int roomNumber) {
         final String query = "DELETE FROM board where room_number = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, roomNumber);
+            preparedStatement.setInt(1, roomNumber.getRoomNumber());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -147,17 +138,13 @@ public final class ChessDao {
         }
     }
 
-    public GameRoom fetchGameRoom(final RoomNumber roomNumber) {
-        return new GameRoom(roomNumber, fetchGame(roomNumber.getRoomNumber()));
-    }
-
-    private ChessGame fetchGame(final int roomNumber) {
-        final Turn turn = fetchTurn(roomNumber);
+    public ChessGame fetchGame(final RoomNumber roomNumber) {
+        final Turn turn = fetchTurn(roomNumber.getRoomNumber());
         if (turn.isFirst()) {
             return null;
         }
         final List<Square> squares = new ArrayList<>();
-        fetchBoard(squares, roomNumber);
+        fetchBoard(squares, roomNumber.getRoomNumber());
         return new ChessGame(new ChessBoard(squares, turn));
     }
 

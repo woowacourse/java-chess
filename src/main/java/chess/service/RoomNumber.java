@@ -1,8 +1,10 @@
-package chess.domain;
+package chess.service;
 
 import java.util.Objects;
 
 public class RoomNumber {
+
+    private static final int RAW_NEW_ROOM_NUMBER = 0;
 
     private final int roomNumber;
 
@@ -12,9 +14,13 @@ public class RoomNumber {
     }
 
     private void validate(final int roomNumber) {
-        if (roomNumber < 0) {
+        if (roomNumber < RAW_NEW_ROOM_NUMBER) {
             throw new IllegalArgumentException("방 번호는 0 이상의 값입니다.");
         }
+    }
+
+    public boolean isNewRoomNumber() {
+        return roomNumber == RAW_NEW_ROOM_NUMBER;
     }
 
     public int getRoomNumber() {
