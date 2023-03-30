@@ -1,5 +1,7 @@
 package chessgame.controller;
 
+import chessgame.domain.Board;
+import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Command;
 import chessgame.domain.Game;
 import chessgame.service.ChessService;
@@ -26,11 +28,20 @@ public class ChessController {
         try {
             outputView.printSetGameMessage();
             String gameName = inputView.readGameName();
-            return chessService.setGame(gameName);
+            return continueGame(gameName);
         } catch (Exception e) {
             outputView.printErrorMsg(e.getMessage());
             return setGame();
         }
+    }
+
+    private Game continueGame(String gameName){
+        if(chessService.hasGame(gameName)){
+            outputView.printContinueMessage();
+            String continueCommand = inputView.readContinueCommand();
+            return chessService.setGame(gameName,continueCommand);
+        }
+        return new Game(new Board(ChessBoardFactory.create()), gameName);
     }
 
     private void playGame(Game game) {
