@@ -8,8 +8,7 @@ public enum Command {
     END,
     SAVE,
     MOVE,
-    STATUS,
-    EMPTY;
+    STATUS;
 
     public static Command createInitCommand(String input) {
         final List<Command> rightCommands = List.of(START, END, LOAD);

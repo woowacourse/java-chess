@@ -3,7 +3,6 @@ package techcourse.fp.chess.domain;
 import java.util.List;
 
 public enum Direction {
-
     UP(0, 1),
     DOWN(0, -1),
     RIGHT(1, 0),

@@ -68,7 +68,7 @@ public final class ChessController {
 
     private void play(final Board board) {
         try {
-            Command command = Command.EMPTY;
+            Command command = null;
 
             while (command != Command.END) {
                 final CommandRequest commandRequest = inputView.readInPlayCommand();

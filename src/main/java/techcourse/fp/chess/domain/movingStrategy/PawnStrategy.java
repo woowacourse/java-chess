@@ -24,7 +24,6 @@ public class PawnStrategy {
         return new PawnStrategy(new Directions(Direction.ofBlackPawnAttack()), Direction.ofBlackPawnMove());
     }
 
-
     public boolean isAttackable(Position source, Position target) {
         return attackDirections.hasMovableDirection(source, target);
     }
