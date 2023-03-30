@@ -31,7 +31,6 @@ public class GameDao {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
-            System.out.println("gameTable = " + gameEntity);
             preparedStatement.setInt(1, gameEntity.getGameId());
             preparedStatement.setString(2, gameEntity.getTurn());
             preparedStatement.executeUpdate();

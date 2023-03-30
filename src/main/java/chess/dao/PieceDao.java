@@ -4,7 +4,6 @@ import chess.dao.entity.PieceEntity;
 import chess.domain.board.Position;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.PieceFactory;
-import chess.domain.pieces.component.Team;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,7 +34,6 @@ public class PieceDao {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
-            System.out.println("boardTable = " + boardTable);
             preparedStatement.setString(1, boardTable.getType());
             preparedStatement.setInt(2, boardTable.getFile());
             preparedStatement.setInt(3, boardTable.getRank());
@@ -70,9 +68,6 @@ public class PieceDao {
 
     public void updateByPiecePosition(final Position position, final Piece piece) {
         String pieceType = PieceFactory.from(piece);
-        if (piece.getTeam() == Team.WHITE) {
-            pieceType.toLowerCase();
-        }
         int file = position.getFile();
         int rank = position.getRank();
 
