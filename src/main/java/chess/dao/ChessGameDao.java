@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.config.DatabaseConfig;
 import chess.domain.board.Board;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.chessGame.ChessGameState;
@@ -11,28 +12,18 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGameDao {
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
 
-    public Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+
+    public Connection getConnection() throws IOException {
+        DatabaseConfig databaseConfig = new DatabaseConfig();
+        return databaseConfig.getConnection();
     }
 
     public void save(final ChessGame chessGame) {
@@ -53,6 +44,8 @@ public class ChessGameDao {
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -63,6 +56,8 @@ public class ChessGameDao {
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -94,6 +89,8 @@ public class ChessGameDao {
                 board.put(position, piece);
             }
         } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
