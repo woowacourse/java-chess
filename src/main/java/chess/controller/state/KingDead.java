@@ -7,6 +7,7 @@ import chess.view.OutputView;
 public class KingDead extends State {
     KingDead(final Game game) {
         super(game);
+        status();
     }
 
     @Override
