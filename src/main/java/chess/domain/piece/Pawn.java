@@ -30,16 +30,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public String getType() {
         return "Pawn";
     }

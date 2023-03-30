@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.Square;
 import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 import java.util.*;
@@ -50,7 +51,7 @@ public class ChessGame {
     }
 
     private boolean isMovable(final Piece piece, final Square source, final List<Square> route) {
-        if (piece.isPawn()) {
+        if (piece.isSameClass(Pawn.class)) {
             return board.canMovePawn(source, route);
         }
         return board.canMove(source, route);

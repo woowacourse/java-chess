@@ -80,7 +80,7 @@ public class Board {
 
     private int countPawn(final Color color) {
         return (int) board.values().stream()
-                .filter(piece -> piece.isPawn() && piece.isBlack() == color.isBlack())
+                .filter(piece -> piece.isSameClass(Pawn.class) && piece.isBlack() == color.isBlack())
                 .count();
     }
 
@@ -99,7 +99,7 @@ public class Board {
 
     private boolean isPawnInSameFile(File file, Rank rank, Color color) {
         Piece piece = getPiece(file, rank);
-        return piece.isPawn() && piece.isSameColor(color);
+        return piece.isSameClass(Pawn.class) && piece.isSameColor(color);
     }
 
     private Piece getPiece(File file, Rank rank) {
@@ -117,7 +117,7 @@ public class Board {
         ));
         for (Class pieceType : numberOfPieces.keySet()) {
             int countPieces = (int) board.values().stream()
-                    .filter(piece -> !piece.isPawn() && piece.isBlack() == color.isBlack() && piece.getClass().equals(pieceType))
+                    .filter(piece -> !piece.isSameClass(Pawn.class) && piece.isSameColor(color) && piece.isSameClass(pieceType))
                     .count();
             numberOfPieces.put(pieceType, countPieces);
         }
@@ -126,7 +126,7 @@ public class Board {
 
     public boolean hasBothKing() {
         long countKing = board.values().stream()
-                .filter(piece -> piece.isKing())
+                .filter(piece -> piece.isSameClass(King.class))
                 .count();
         return countKing == 2;
     }

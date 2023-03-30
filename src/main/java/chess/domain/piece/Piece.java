@@ -17,9 +17,9 @@ public abstract class Piece {
 
     public abstract List<Square> findRoute(final Square source, final Square destination);
 
-    public abstract boolean isPawn();
-
-    public abstract boolean isKing();
+    public boolean isSameClass(final Class instanceClass) {
+        return this.getClass() == instanceClass;
+    };
 
     public abstract String getType();
 
