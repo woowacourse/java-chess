@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.info.Team;
+import chess.domain.Team;
 import chess.domain.position.Position;
 
 public class Blank extends Piece {
@@ -8,7 +8,7 @@ public class Blank extends Piece {
     private static final Piece BLANK = new Blank();
 
     private Blank() {
-        super(Team.EMPTY);
+        super(Team.NONE, Role.BLANK);
     }
 
     public static Piece getInstance() {

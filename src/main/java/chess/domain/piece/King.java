@@ -1,16 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
-import chess.domain.piece.info.Team;
 
 public class King extends Piece {
 
     private static final int UPPER_BOUND_OF_MOVABLE_DISTANCE = 1;
 
-    public King(Team team) {
-        super(team);
+    public King(final Team team) {
+        super(team, Role.KING);
     }
-
 
     @Override
     public boolean canMove(final Position source, final Position destination) {

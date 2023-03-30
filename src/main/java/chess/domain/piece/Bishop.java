@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
-import chess.domain.piece.info.Team;
 
 public class Bishop extends Piece {
-    public Bishop(Team team) {
-        super(team);
+    public Bishop(final Team team) {
+        super(team, Role.BISHOP);
     }
 
     @Override

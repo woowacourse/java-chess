@@ -2,7 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.info.Team;
 import org.junit.jupiter.api.Test;
 
 class TurnTest {

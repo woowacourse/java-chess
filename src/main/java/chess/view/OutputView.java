@@ -1,23 +1,52 @@
 package chess.view;
 
 import chess.controller.ChessBoardDto;
-import chess.domain.Command;
+import chess.controller.command.CommandType;
+import chess.domain.Team;
+import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
-    public void printGameGuide() {
-        System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println(String.format("> 게임 시작 : %s", Command.START));
-        System.out.println(String.format("> 게임 종료 : %s", Command.END));
-        System.out.println(String.format("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3"
-                , Command.MOVE, Command.MOVE));
+    private OutputView() {
     }
 
-    public void printChessBoard(ChessBoardDto chessBoardDto) {
+    public static void printRoomList(final List<Integer> roomNumbers) {
+        System.out.println("게임이 진행중인 " + roomNumbers.size() + "개의 방이 존재합니다.");
+        System.out.println("방 번호 목록  ");
+        roomNumbers.forEach(System.out::println);
+    }
+
+    public static void printGameGuide() {
+        System.out.println("> 새로운 게임 방에 입장했습니다. 체스 게임을 시작합니다.");
+        System.out.println(String.format("> 게임 시작 : %s", CommandType.START));
+        System.out.println(String.format("> 게임 종료 : %s", CommandType.END));
+        System.out.println(String.format("> 게임 이동 : %s SOURCE위치 TARGET위치 - 예. %s b2 b3"
+                , CommandType.MOVE, CommandType.MOVE));
+        System.out.println(String.format("> 게임 상태 : %s", CommandType.STATUS));
+    }
+
+    public static void printChessBoard(ChessBoardDto chessBoardDto) {
         chessBoardDto.getBoard().forEach(System.out::println);
     }
 
-    public void printError(final String message) {
+    public static void printError(final String message) {
         System.out.println("[ERROR] " + message);
+    }
+
+    public static void printScore(final Map<Team, Double> scores) {
+        scores.forEach((key, value) -> System.out.println(key.name() + ":" + value));
+    }
+
+    public static void printWinningTeam(final Team winningTeam) {
+        if (winningTeam == Team.NONE) {
+            System.out.println("우승자가 없습니다.");
+            return;
+        }
+        System.out.println("우승자: " + winningTeam);
+    }
+
+    public static void printSaveMessage() {
+        System.out.println("진행중인 게임을 저장합니다.");
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.info.Team;
 import java.util.Objects;
 
 public class Turn {
@@ -13,7 +12,7 @@ public class Turn {
         this.turn = 0;
     }
 
-    private Turn(int turn) {
+    public Turn(int turn) {
         this.turn = turn;
     }
 
@@ -33,6 +32,14 @@ public class Turn {
             return Team.BLACK;
         }
         return Team.WHITE;
+    }
+
+    public boolean isFirst() {
+        return turn == 0;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     @Override

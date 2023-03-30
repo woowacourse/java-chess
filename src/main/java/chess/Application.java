@@ -1,15 +1,13 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.view.InputView;
-import chess.view.OutputView;
-import java.util.Scanner;
+import chess.dao.ChessDao;
+import chess.service.ChessService;
 
 public class Application {
     public static void main(String[] args) {
-        InputView inputView = new InputView(new Scanner(System.in));
-        OutputView outputView = new OutputView();
-        ChessController chessController = new ChessController(inputView, outputView);
+        ChessService chessService = new ChessService(new ChessDao());
+        ChessController chessController = new ChessController(chessService);
         chessController.run();
     }
 

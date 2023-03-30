@@ -1,49 +1,67 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
+import chess.controller.command.Command;
+import chess.controller.command.CommandFactory;
+import chess.service.ChessService;
+import chess.service.RoomNumber;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private static final int NEW_ROOM_NUMBER = 0;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    private final ChessService chessService;
+    private RoomNumber roomNumber;
+
+    public ChessController(final ChessService chessService) {
+        this.chessService = chessService;
     }
 
     public void run() {
-        outputView.printGameGuide();
-        ChessGame chessGame = createChessGame();
-        outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
-        while (chessGame.isRunning()) {
-            executeTurn(chessGame);
+        List<Integer> roomNumbers = chessService.fetchAllRoomNumbers();
+        OutputView.printRoomList(roomNumbers);
+        roomNumber = createRoomNumber(roomNumbers);
+
+        chessService.initialize(roomNumber);
+        playGame();
+        chessService.clearRoomIfKingDead(roomNumber);
+    }
+
+    private RoomNumber createRoomNumber(final List<Integer> roomNumbers) {
+        try {
+            int roomNumber = InputView.readRoomNumber();
+            validateExistRoomNumber(roomNumber, roomNumbers);
+            return new RoomNumber(roomNumber);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return createRoomNumber(roomNumbers);
         }
     }
 
-    private ChessGame createChessGame() {
-        try {
-            String command = inputView.readStart();
-            return ChessGame.startNewGame(command);
+    private void validateExistRoomNumber(final int roomNumber, final List<Integer> roomNumbers) {
+        if (roomNumber == NEW_ROOM_NUMBER || roomNumbers.contains(roomNumber)) {
+            return;
         }
-        catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return createChessGame();
-        }
+        throw new IllegalArgumentException("존재하지 않는 방 번호입니다.");
     }
 
-    private void executeTurn(final ChessGame chessGame) {
-        try {
-            List<String> commandAndParameters = inputView.readCommandAndParameters();
-            chessGame.executeCommand(commandAndParameters);
-            outputView.printChessBoard(new ChessBoardDto(chessGame.getChessBoard()));
+    public void playGame() {
+        OutputView.printGameGuide();
+        while (chessService.isGameRunning(roomNumber)) {
+            executeCommand();
         }
-        catch (IllegalArgumentException | UnsupportedOperationException e) {
-            outputView.printError(e.getMessage());
-            executeTurn(chessGame);
+        OutputView.printWinningTeam(chessService.findWinningTeam(roomNumber));
+    }
+
+    private void executeCommand() {
+        try {
+            Command command = CommandFactory.of(roomNumber, InputView.readCommandAndParameters());
+            command.execute(chessService);
+        } catch (IllegalArgumentException | UnsupportedOperationException | IllegalStateException e) {
+            OutputView.printError(e.getMessage());
+            executeCommand();
         }
     }
 
