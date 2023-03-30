@@ -58,20 +58,21 @@ public final class ChessController {
     }
 
     private String readGameIdCommand() {
-        try {
+        String gameIdCommand;
+
+        while (true) {
             final List<String> gameIds = chessService.readGameIds();
-            String gameIdCommand = InputView.readGameId(gameIds);
+            gameIdCommand = InputView.readGameId(gameIds);
 
             if (gameIdCommand.equalsIgnoreCase("new")) {
-                return null;
+                gameIdCommand = null;
+                break;
             }
-            if (!gameIds.contains(gameIdCommand)) {
-                throw new IllegalArgumentException("올바른 게임방을 입력해 주세요.");
+            if (gameIds.contains(gameIdCommand)) {
+                break;
             }
-            return gameIdCommand;
-        } catch (IllegalStateException exception) {
-            return readGameIdCommand();
         }
+        return gameIdCommand;
     }
 
     private String createGame() {
