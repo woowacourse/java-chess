@@ -107,9 +107,29 @@ public class ChessBoardDao {
         throw new UnsupportedOperationException();
     }
 
-    public void updateChessBoard(final ChessBoard chessBoard) {
-        deleteChessBoard();
-        saveChessBoard(chessBoard);
+    public void updateChessBoard(final Square from, final Square to, final Piece piece) {
+        final var query = "UPDATE chess_board SET" +
+                " side = CASE WHEN x = ? AND y = ? THEN ? ELSE ? END," +
+                " type = CASE WHEN x = ? AND y = ? THEN ? ELSE ? END" +
+                " WHERE (x = ? AND y = ?) OR (X = ? AND y = ?)";
+        try (final Connection connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, from.getRankSymbol());
+            preparedStatement.setString(2, from.getFileSymbol());
+            preparedStatement.setString(3, EmptyPiece.getInstance().getSide());
+            preparedStatement.setString(4, piece.getSide());
+            preparedStatement.setString(5, from.getRankSymbol());
+            preparedStatement.setString(6, from.getFileSymbol());
+            preparedStatement.setString(7, EmptyPiece.getInstance().getName());
+            preparedStatement.setString(8, piece.getName());
+            preparedStatement.setString(9, from.getRankSymbol());
+            preparedStatement.setString(10, from.getFileSymbol());
+            preparedStatement.setString(11, to.getRankSymbol());
+            preparedStatement.setString(12, to.getFileSymbol());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteChessBoard() {

@@ -56,7 +56,6 @@ public class ChessGameController {
     private void executeCommand(final ChessBoard chessBoard, final CommandDto commandDto, final Command command) {
         if (command.isMove()) {
             updateChessBoard(chessBoard, commandDto);
-            chessBoardDao.updateChessBoard(chessBoard);
         }
         if (command.isStatus()) {
             OutputView.printScore(Side.WHITE.name(), chessBoard.calculateScore(Side.WHITE));
@@ -70,8 +69,11 @@ public class ChessGameController {
         validateSameSquare(from, to);
         if (!chessBoard.canMove(from, to)) {
             OutputView.printInvalidMoveMessage();
+            OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
+            return;
         }
         OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
+        chessBoardDao.updateChessBoard(from, to, chessBoard.getPieces().get(to));
     }
 
     private void validateSameSquare(final Square from, final Square to) {
