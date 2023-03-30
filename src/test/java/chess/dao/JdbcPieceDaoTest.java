@@ -2,14 +2,10 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Board;
-import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.domain.GameStatus;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
-import chess.dto.GameInfoDto;
 import chess.dto.PieceInfoDto;
 import java.sql.SQLException;
 import java.util.List;

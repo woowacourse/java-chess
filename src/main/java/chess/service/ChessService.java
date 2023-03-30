@@ -2,13 +2,10 @@ package chess.service;
 
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
-import chess.domain.ScoreBoard;
-import chess.domain.board.Board;
 import chess.domain.ChessGame;
-import chess.domain.Color;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.BoardDto;
 import chess.dto.GameInfoDto;
 import chess.dto.PieceInfoDto;
 import java.util.ArrayList;
@@ -18,7 +15,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class ChessService {
-    private ChessGame chessGame;
     private final GameDao gameDao;
     private final PieceDao pieceDao;
 
@@ -35,46 +31,41 @@ public class ChessService {
         return gameDao.findAllImpossibleId();
     }
 
-    public void loadChessGame(int gameId) {
+    public ChessGame loadChessGame(int gameId) {
         GameInfoDto gameInfo = gameDao.findById(gameId);
         if (gameInfo == null) {
-            this.chessGame = ChessGame.create();
-            return;
+            return ChessGame.create();
         }
 
         List<PieceInfoDto> pieceInfos = pieceDao.findById(gameId);
         Map<Position, Piece> board = pieceInfos.stream()
                 .collect(Collectors.toMap(PieceInfoDto::getPosition, PieceInfoDto::getPiece));
         ChessGame existedChessGame = ChessGame.load(Board.load(board), gameInfo.getTurn(), gameInfo.getStatus());
-        this.chessGame = existedChessGame;
+        return existedChessGame;
     }
 
-    public void start(int gameId) {
+    public void start(int gameId, ChessGame chessGame) {
         chessGame.start();
 
         Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
-
-        gameDao.save(gameId, makeGameInfoDto());
+        gameDao.save(gameId, makeGameInfoDto(chessGame));
         pieceDao.save(gameId, makePieceInfoDtos(board));
     }
 
-    public void move(int gameId, List<String> arguments) {
-        Map<Position, Piece> update = chessGame.move(arguments);
+    public void move(int gameId, ChessGame chessGame, List<String> arguments) {
+        Map<Position, Piece> movement = chessGame.move(arguments);
 
-        gameDao.updateById(gameId, makeGameInfoDto());
-        pieceDao.updateById(gameId, makePieceInfoDtos(update));
+        gameDao.updateById(gameId, makeGameInfoDto(chessGame));
+        pieceDao.updateById(gameId, makePieceInfoDtos(movement));
     }
 
-    public ScoreBoard status() {
-        return chessGame.status();
-    }
-
-    public void end(int gameId) {
+    public void end(int gameId, ChessGame chessGame) {
         chessGame.end();
-        gameDao.updateById(gameId, makeGameInfoDto());
+
+        gameDao.updateById(gameId, makeGameInfoDto(chessGame));
     }
 
-    private GameInfoDto makeGameInfoDto() {
+    private GameInfoDto makeGameInfoDto(ChessGame chessGame) {
         return GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn());
     }
 
@@ -88,21 +79,5 @@ public class ChessService {
 
     private PieceInfoDto makePieceInfoDto(Position position, Piece piece) {
         return PieceInfoDto.create(position, piece);
-    }
-
-    public boolean canPlay() {
-        return !chessGame.isEnd() && !chessGame.isCatch();
-    }
-
-    public boolean isCatch() {
-        return chessGame.isCatch();
-    }
-
-    public Color getWinner() {
-        return chessGame.getTurn().reverse();
-    }
-
-    public BoardDto getBoard() {
-        return BoardDto.create(chessGame.getBoard());
     }
 }

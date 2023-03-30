@@ -2,7 +2,9 @@ package chess.controller;
 
 import chess.dao.JdbcGameDao;
 import chess.dao.JdbcPieceDao;
+import chess.domain.ChessGame;
 import chess.domain.Color;
+import chess.dto.BoardDto;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,10 +19,10 @@ public class ChessController {
 
     public ChessController() {
         chessService = new ChessService(new JdbcGameDao(), new JdbcPieceDao());
-        commandMapper.put("start", (gameId, ignore) -> start(gameId));
-        commandMapper.put("move", (gameId, arguments) -> move(gameId, arguments));
-        commandMapper.put("status", (ignore1, ignore2) -> status());
-        commandMapper.put("end", (gameId, ignore) -> end(gameId));
+        commandMapper.put("start", (gameId, ignore, chessGame) -> start(gameId, chessGame));
+        commandMapper.put("move", (gameId, arguments, chessGame) -> move(gameId, chessGame, arguments));
+        commandMapper.put("status", (ignore1, ignore2, chessGame) -> status(chessGame));
+        commandMapper.put("end", (gameId, ignore, chessGame) -> end(gameId, chessGame));
     }
 
     public void execute() {
@@ -29,52 +31,52 @@ public class ChessController {
         OutputView.printRoomState(possibleGameIds, impossibleGameIds);
 
         int gameId = InputView.readGameId();
-        chessService.loadChessGame(gameId);
+        ChessGame chessGame = chessService.loadChessGame(gameId);
 
         OutputView.printGameStartMessage(gameId);
-        OutputView.printBoard(chessService.getBoard());
+        OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
 
-        while (chessService.canPlay()) {
-            runGame(gameId);
+        while (!chessGame.isEnd() && !chessGame.isCatch()) {
+            runGame(gameId, chessGame);
         }
 
-        if (chessService.isCatch()) {
-            OutputView.printResultWhenKingCatch(chessService.getWinner());
+        if (chessGame.isCatch()) {
+            OutputView.printResultWhenKingCatch(chessGame.getTurn().reverse());
             return;
         }
-        showStatus();
+        showStatus(chessGame);
     }
 
-    private void runGame(int gameId) {
+    private void runGame(int gameId, ChessGame chessGame) {
         try {
             CommandLine commandLine = new CommandLine(InputView.readCommand());
             commandMapper.get(commandLine.getCommand())
-                    .execute(gameId, commandLine.getArguments());
+                    .execute(gameId, commandLine.getArguments(), chessGame);
         } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
             OutputView.printError(e.getMessage());
         }
     }
 
-    private void start(int gameId) {
-        chessService.start(gameId);
-        OutputView.printBoard(chessService.getBoard());
+    private void start(int gameId, ChessGame chessGame) {
+        chessService.start(gameId, chessGame);
+        OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
     }
 
-    private void move(int gameId, List<String> arguments) {
-        chessService.move(gameId, arguments);
-        OutputView.printBoard(chessService.getBoard());
+    private void move(int gameId, ChessGame chessGame, List<String> arguments) {
+        chessService.move(gameId, chessGame, arguments);
+        OutputView.printBoard(BoardDto.create(chessGame.getBoard()));
     }
 
-    private void status() {
-        showStatus();
+    private void status(ChessGame chessGame) {
+        showStatus(chessGame);
     }
 
-    private void end(int gameId) {
-        chessService.end(gameId);
+    private void end(int gameId, ChessGame chessGame) {
+        chessService.end(gameId, chessGame);
     }
 
-    private void showStatus() {
-        Map<Color, Double> score = chessService.status().getScore();
+    private void showStatus(ChessGame chessGame) {
+        Map<Color, Double> score = chessGame.status().getScore();
         OutputView.printStatus(score.get(Color.WHITE), score.get(Color.BLACK));
     }
 }
