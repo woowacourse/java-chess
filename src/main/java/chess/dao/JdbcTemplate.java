@@ -1,10 +1,15 @@
 package chess.dao;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 
 public class JdbcTemplate {
 
@@ -12,6 +17,26 @@ public class JdbcTemplate {
 
     public JdbcTemplate() {
         this.connection = ConnectionProvider.getConnection();
+        createTable();
+    }
+
+    private void createTable() {
+        try {
+            String contents = Files.readString(Paths.get("src/main/resources/chess-table.sql"));
+            executeDDL(Arrays.asList(contents.split(";")));
+        } catch (IOException e) {
+            System.err.println("SQL 파일 읽기 오류: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            System.err.println("DDL 오류: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void executeDDL(final List<String> ddlContents) throws SQLException {
+        for (String ddl : ddlContents) {
+            connection.prepareStatement(ddl).executeUpdate();
+        }
     }
 
     public long saveAndReturnGeneratedKey(final String sql, final Object... params) {
