@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.model;
 
 
 import java.util.Objects;

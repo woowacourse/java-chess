@@ -1,12 +1,13 @@
-package chess.domain;
+package chess.domain.model.piece.shape;
 
-import chess.domain.strategy.PieceStrategy;
-import chess.domain.strategy.bishop.BishopStrategy;
-import chess.domain.strategy.king.KingStrategy;
-import chess.domain.strategy.knight.KnightStrategy;
-import chess.domain.strategy.pawn.PawnStrategy;
-import chess.domain.strategy.queen.QueenStrategy;
-import chess.domain.strategy.rook.RookStrategy;
+import chess.domain.model.Score;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
+import chess.domain.model.piece.shape.strategy.bishop.BishopStrategy;
+import chess.domain.model.piece.shape.strategy.king.KingStrategy;
+import chess.domain.model.piece.shape.strategy.knight.KnightStrategy;
+import chess.domain.model.piece.shape.strategy.pawn.PawnStrategy;
+import chess.domain.model.piece.shape.strategy.queen.QueenStrategy;
+import chess.domain.model.piece.shape.strategy.rook.RookStrategy;
 
 public enum Shape {
 

@@ -1,11 +1,11 @@
 package chess.domain.dao;
 
-import static chess.domain.Color.WHITE;
+import static chess.domain.model.player.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Piece;
-import chess.domain.Position;
-import chess.domain.Shape;
+import chess.domain.model.piece.Piece;
+import chess.domain.model.position.Position;
+import chess.domain.model.piece.shape.Shape;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

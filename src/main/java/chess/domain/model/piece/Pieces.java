@@ -1,11 +1,14 @@
-package chess.domain;
+package chess.domain.model.piece;
 
-import static chess.domain.Shape.BISHOP;
-import static chess.domain.Shape.KNIGHT;
-import static chess.domain.Shape.ROOK;
+import static chess.domain.model.piece.shape.Shape.BISHOP;
+import static chess.domain.model.piece.shape.Shape.KNIGHT;
+import static chess.domain.model.piece.shape.Shape.ROOK;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
+import chess.domain.model.piece.shape.Shape;
+import chess.domain.model.position.Position;
+import chess.domain.model.Score;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;

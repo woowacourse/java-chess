@@ -1,6 +1,6 @@
 package chess.domain.dao;
 
-import chess.domain.Color;
+import chess.domain.model.player.Color;
 
 public interface TurnDao {
 

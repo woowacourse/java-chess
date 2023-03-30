@@ -1,11 +1,12 @@
-package chess.domain;
+package chess.domain.model.player;
 
 import static java.util.stream.Collectors.toList;
 
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
 import chess.domain.dao.TurnDao;
-import chess.domain.dao.TurnDaoImpl;
+import chess.domain.model.piece.Piece;
+import chess.domain.model.position.Position;
 import java.math.BigInteger;
 import java.util.List;
 

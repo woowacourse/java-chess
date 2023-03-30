@@ -1,7 +1,7 @@
 package chess.domain.dao;
 
 
-import chess.domain.Color;
+import chess.domain.model.player.Color;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

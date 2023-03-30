@@ -2,8 +2,8 @@ package chess.dto.response;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.Color;
-import chess.domain.Piece;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.Piece;
 import java.util.List;
 import java.util.stream.Stream;
 

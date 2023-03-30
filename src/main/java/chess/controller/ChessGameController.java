@@ -1,8 +1,10 @@
 package chess.controller;
 
-import chess.domain.Color;
-import chess.domain.CommandAction;
-import chess.domain.Players;
+import chess.controller.command.Command;
+import chess.controller.command.CommandAction;
+import chess.controller.command.Commands;
+import chess.domain.model.player.Color;
+import chess.domain.model.player.Players;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.TurnDao;
 import chess.domain.factory.InitPlayersFactory;

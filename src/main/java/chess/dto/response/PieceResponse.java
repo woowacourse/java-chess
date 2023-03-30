@@ -1,8 +1,8 @@
 package chess.dto.response;
 
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Shape;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.Piece;
+import chess.domain.model.piece.shape.Shape;
 
 public class PieceResponse {
 

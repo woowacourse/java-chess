@@ -1,7 +1,7 @@
-package chess.domain.strategy;
+package chess.domain.model.piece.shape.strategy;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.model.player.Color;
+import chess.domain.model.position.Position;
 
 public interface PieceStrategy {
 

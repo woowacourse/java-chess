@@ -3,8 +3,9 @@ package chess.domain.strategy.queen;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.strategy.queen.QueenStrategy;
+import chess.domain.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;

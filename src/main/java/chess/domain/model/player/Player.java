@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.domain.model.player;
 
+import chess.domain.model.Score;
+import chess.domain.model.piece.Piece;
+import chess.domain.model.piece.Pieces;
+import chess.domain.model.position.Position;
 import java.util.List;
 import java.util.Optional;
 

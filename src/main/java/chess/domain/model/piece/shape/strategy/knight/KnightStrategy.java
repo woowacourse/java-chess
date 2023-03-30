@@ -1,8 +1,8 @@
-package chess.domain.strategy.knight;
+package chess.domain.model.piece.shape.strategy.knight;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.domain.strategy.PieceStrategy;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
+import chess.domain.model.position.Position;
 
 public class KnightStrategy implements PieceStrategy {
 

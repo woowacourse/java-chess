@@ -1,13 +1,14 @@
 package chess.domain.strategy.pawn;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.model.player.Color.BLACK;
+import static chess.domain.model.player.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import chess.domain.Position;
-import chess.domain.strategy.PieceStrategy;
+import chess.domain.model.piece.shape.strategy.pawn.PawnStrategy;
+import chess.domain.model.position.Position;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

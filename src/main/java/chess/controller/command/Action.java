@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.controller.command;
 
 @FunctionalInterface
 public interface Action {

@@ -1,11 +1,11 @@
-package chess.domain.strategy.pawn;
+package chess.domain.model.piece.shape.strategy.pawn;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.model.player.Color.BLACK;
+import static chess.domain.model.player.Color.WHITE;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.domain.strategy.PieceStrategy;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
+import chess.domain.model.position.Position;
 
 public class PawnStrategy implements PieceStrategy {
 

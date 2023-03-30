@@ -1,6 +1,6 @@
-package chess.controller;
+package chess.controller.command;
 
-import static chess.controller.Command.MOVE;
+import static chess.controller.command.Command.MOVE;
 
 import java.util.List;
 

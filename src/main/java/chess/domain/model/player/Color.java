@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.model.player;
 
 import java.util.Arrays;
 

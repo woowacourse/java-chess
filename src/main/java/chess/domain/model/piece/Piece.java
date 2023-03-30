@@ -1,7 +1,9 @@
-package chess.domain;
+package chess.domain.model.piece;
 
-import chess.domain.strategy.PieceStrategy;
-import java.util.Objects;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.Shape;
+import chess.domain.model.position.Position;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
 
 public class Piece {
 

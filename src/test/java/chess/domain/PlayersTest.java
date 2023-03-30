@@ -2,6 +2,10 @@ package chess.domain;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.Pieces;
+import chess.domain.model.player.Player;
+import chess.domain.model.player.Players;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

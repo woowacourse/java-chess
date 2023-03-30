@@ -3,9 +3,10 @@ package chess.domain.strategy.rook;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.domain.strategy.PieceStrategy;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.strategy.rook.RookStrategy;
+import chess.domain.model.position.Position;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

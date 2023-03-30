@@ -1,10 +1,10 @@
-package chess.domain.strategy.queen;
+package chess.domain.model.piece.shape.strategy.queen;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.domain.strategy.PieceStrategy;
-import chess.domain.strategy.bishop.BishopStrategy;
-import chess.domain.strategy.rook.RookStrategy;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
+import chess.domain.model.piece.shape.strategy.rook.RookStrategy;
+import chess.domain.model.position.Position;
+import chess.domain.model.piece.shape.strategy.bishop.BishopStrategy;
 
 
 public class QueenStrategy implements PieceStrategy {

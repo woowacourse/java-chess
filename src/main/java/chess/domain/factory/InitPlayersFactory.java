@@ -1,14 +1,12 @@
 package chess.domain.factory;
 
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Pieces;
-import chess.domain.Player;
-import chess.domain.Players;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.Piece;
+import chess.domain.model.piece.Pieces;
+import chess.domain.model.player.Player;
+import chess.domain.model.player.Players;
 import chess.domain.dao.PieceDao;
-import chess.domain.dao.PieceDaoImpl;
 import chess.domain.dao.TurnDao;
-import chess.domain.dao.TurnDaoImpl;
 import java.util.List;
 
 public class InitPlayersFactory {

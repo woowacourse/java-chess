@@ -1,7 +1,8 @@
 package chess.domain.strategy.knight;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.model.player.Color;
+import chess.domain.model.piece.shape.strategy.knight.KnightStrategy;
+import chess.domain.model.position.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

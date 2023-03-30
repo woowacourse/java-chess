@@ -1,8 +1,8 @@
-package chess.domain.strategy.king;
+package chess.domain.model.piece.shape.strategy.king;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.domain.strategy.PieceStrategy;
+import chess.domain.model.player.Color;
+import chess.domain.model.position.Position;
+import chess.domain.model.piece.shape.strategy.PieceStrategy;
 
 public class KingStrategy implements PieceStrategy {
 
