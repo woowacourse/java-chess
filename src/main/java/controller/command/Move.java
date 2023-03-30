@@ -1,9 +1,9 @@
 package controller.command;
 
-import controller.mapper.FileMapper;
-import controller.mapper.RankMapper;
 import domain.game.File;
 import domain.game.Rank;
+import util.FileMapper;
+import util.RankMapper;
 
 public class Move implements Command {
     private final File sourceFile;
@@ -37,12 +37,27 @@ public class Move implements Command {
     }
 
     @Override
+    public boolean isSearch() {
+        return false;
+    }
+
+    @Override
     public boolean isMove() {
         return true;
     }
 
     @Override
+    public boolean isStatus() {
+        return false;
+    }
+
+    @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isContinue() {
         return false;
     }
 

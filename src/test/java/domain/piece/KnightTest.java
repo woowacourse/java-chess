@@ -7,9 +7,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.game.File;
 import domain.game.Position;
 import domain.game.Rank;
+import domain.game.Score;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -72,5 +74,12 @@ class KnightTest {
         Knight whiteKnight = Knight.createOfWhite();
         List<Position> path = whiteKnight.collectPath(Position.of(C, FOUR), Position.of(targetFile, targetRank));
         assertThat(path).isEmpty();
+    }
+
+    @DisplayName("점수를 요청하면 2.5점을 반환한다.")
+    @Test
+    void shouldReturnScore2AndHalfWhenRequestScore() {
+        Knight whiteKnight = Knight.createOfWhite();
+        assertThat(whiteKnight.getScore()).isEqualTo(new Score(2.5));
     }
 }

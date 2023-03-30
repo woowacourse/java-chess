@@ -27,7 +27,7 @@ public class RankTest {
     @Test
     void shouldThrowExceptionWhenLastRankRequestGetNext() {
         assertThatThrownBy(() -> Rank.EIGHT.getNext())
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - 다음 Rank는 존재하지 않습니다");
     }
 
@@ -41,7 +41,7 @@ public class RankTest {
     @Test
     void shouldThrowExceptionWhenFirstRankRequestGetPrevious() {
         assertThatThrownBy(() -> Rank.ONE.getPrevious())
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서버 내부 에러 - 이전 Rank는 존재하지 않습니다");
     }
 }

@@ -29,7 +29,7 @@ public final class Position {
                 .filter(position -> position.file.equals(file) && position.rank.equals(rank))
                 .findFirst()
                 .orElseThrow(
-                        () -> new UnsupportedOperationException("서버 내부 에러 - File, Rank에 해당하는 Position을 찾을 수 없습니다."));
+                        () -> new IllegalStateException("서버 내부 에러 - File, Rank에 해당하는 Position을 찾을 수 없습니다."));
     }
 
     public Position(File file, Rank rank) {
@@ -43,8 +43,12 @@ public final class Position {
         return new Movement(fileIncrement, rankIncrement);
     }
 
-    public boolean hasRankOf(Rank defaultRank) {
-        return rank == defaultRank;
+    public boolean hasRankOf(Rank rank) {
+        return this.rank == rank;
+    }
+
+    public boolean hasFileOf(File file) {
+        return this.file == file;
     }
 
     public List<Position> getPath(Position targetPosition) {
@@ -86,8 +90,12 @@ public final class Position {
         return this.rank;
     }
 
+    public File getFile() {
+        return this.file;
+    }
+
     public Rank getRank() {
-        return rank;
+        return this.rank;
     }
 
     @Override

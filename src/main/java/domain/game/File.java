@@ -22,14 +22,14 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.order == this.order + 1)
                 .findFirst()
-                .orElseThrow(() -> new UnsupportedOperationException("서버 내부 에러 - 다음 File은 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalStateException("서버 내부 에러 - 다음 File은 존재하지 않습니다."));
     }
 
     public File getPrevious() {
         return Arrays.stream(File.values())
                 .filter(file -> file.order == this.order - 1)
                 .findFirst()
-                .orElseThrow(() -> new UnsupportedOperationException("서버 내부 에러 - 이전 File은 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalStateException("서버 내부 에러 - 이전 File은 존재하지 않습니다."));
     }
 
     public int calculateIncrement(File targetFile) {

@@ -1,43 +1,89 @@
 package controller;
 
 import controller.command.Command;
+import controller.command.End;
 import controller.command.Move;
-import controller.mapper.PieceMapper;
+import dao.GameDto;
 import domain.game.Game;
 import domain.game.Position;
+import domain.game.Score;
 import domain.piece.Piece;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import service.ChessService;
+import util.GameStatusMapper;
+import util.PieceMapper;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final ChessService chessService;
+    private final String userName;
 
-    public void run() {
-        this.outputView.printGameGuideMessage();
-        Game game = repeat(this::startGame);
-        proceed(game);
+    public ChessController() {
+        this.inputView = new InputView();
+        this.outputView = new OutputView();
+        this.chessService = new ChessService();
+        this.userName = repeat(this.inputView::requestUserName);
     }
 
-    private Game startGame() {
+    public void run() {
+        Command command;
+        do {
+            play();
+            command = repeat(this.inputView::requestStartCommand);
+        } while (command.isContinue());
+    }
+
+    public void play() {
+        this.outputView.printGameGuideMessage();
+        Game game = repeat(this::getGame);
+        proceed(game);
+        this.chessService.saveChessBoard(game);
+    }
+
+    private Game getGame() {
         Command command = this.inputView.requestUserCommand();
         if (command.isStart()) {
-            Game game = Game.create();
-            printChessBoardOf(game);
-            return game;
+            return startGame();
+        }
+        if (command.isSearch()) {
+            return searchGame();
         }
         throw new IllegalArgumentException("게임 시작하려면 먼저 start를 입력하세요.");
     }
 
+    private Game startGame() {
+        String title = this.inputView.requestGameTitle();
+        Game game = Game.create(this.userName, title);
+        printChessBoardOf(game);
+        this.chessService.create(game);
+        return game;
+    }
+
+    private Game searchGame() {
+        List<GameDto> gameDtos = this.chessService.findGamesByUserName(this.userName);
+        this.outputView.printGamesOfUser(gameDtos);
+        Game game = this.chessService.findGameById(this.inputView.requestGameId());
+        printChessBoardOf(game);
+        return game;
+    }
+
     private void proceed(Game game) {
         Command command;
+        if (isEnd(game)) {
+            printGameResultOf(game);
+            return;
+        }
         do {
             this.outputView.printSideOfTurn(game.getSideOfTurn());
             command = repeat(() -> moveByUserCommand(game));
-        } while (command.isMove());
+        } while (!command.isEnd());
+        printGameResultOf(game);
     }
 
     private Command moveByUserCommand(Game game) {
@@ -45,12 +91,20 @@ public class ChessController {
         if (command.isEnd()) {
             return command;
         }
-        Move moveCommand = (Move) command;
-        Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
-        Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
-        game.move(sourcePosition, targetPosition);
+        if (command.isStatus()) {
+            printGameResultOf(game);
+            return command;
+        }
+        moveByPositionsOfMoveCommand(game, command);
+        if (isEnd(game)) {
+            return new End();
+        }
         printChessBoardOf(game);
         return command;
+    }
+
+    private boolean isEnd(Game game) {
+        return this.chessService.isEnd(game);
     }
 
     private void printChessBoardOf(Game game) {
@@ -59,15 +113,27 @@ public class ChessController {
         for (Map.Entry<Position, Piece> positionPieceEntry : chessBoard.entrySet()) {
             chessBoardOfForPrint.put(
                     positionPieceEntry.getKey(),
-                    PieceMapper.convertPieceCategoryToText(positionPieceEntry.getValue().getCategory()));
+                    PieceMapper.convertPieceCategoryToTextForView(positionPieceEntry.getValue().getCategory()));
         }
         this.outputView.printChessBoard(chessBoardOfForPrint);
+    }
+
+    private void moveByPositionsOfMoveCommand(Game game, Command command) {
+        Move moveCommand = (Move) command;
+        this.chessService.moveByCommand(game, moveCommand);
+    }
+
+    private void printGameResultOf(Game game) {
+        String gameStatusText = GameStatusMapper.convertGameStatusToText(game.checkStatus());
+        Score whiteScore = game.calculateWhiteScore();
+        Score blackScore = game.calculateBlackScore();
+        this.outputView.printGameResult(gameStatusText, whiteScore, blackScore);
     }
 
     private <T> T repeat(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (UnsupportedOperationException e) {
+        } catch (IllegalStateException e) {
             System.out.println("Log: " + e.getMessage()); // log 기록
             this.outputView.printServerErrorMessage();
             return repeat(supplier);

@@ -1,10 +1,16 @@
 package domain.game;
 
+import static domain.game.File.A;
 import static domain.game.File.B;
 import static domain.game.File.C;
 import static domain.game.File.D;
 import static domain.game.File.E;
 import static domain.game.File.F;
+import static domain.game.File.G;
+import static domain.game.File.H;
+import static domain.game.GameStatus.IN_PROGRESS;
+import static domain.game.GameStatus.WHITE_WIN;
+import static domain.game.Rank.EIGHT;
 import static domain.game.Rank.FIVE;
 import static domain.game.Rank.FOUR;
 import static domain.game.Rank.ONE;
@@ -22,6 +28,9 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("Game은")
 class GameTest {
@@ -31,7 +40,7 @@ class GameTest {
     @BeforeEach
     void generateGame() {
         this.chessBoard = new ChessBoardGenerator().generate();
-        this.game = new Game(this.chessBoard, WHITE);
+        this.game = new Game(this.chessBoard, "user", "title", WHITE);
     }
 
     @DisplayName("움직일 수 있는 source postion과 target position을 입력받은 경우," +
@@ -140,5 +149,90 @@ class GameTest {
         assertThatThrownBy(() -> game.move(Position.of(B, TWO), Position.of(B, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 움직임이 아닙니다.");
+    }
+
+    @DisplayName("게임 시작 직후 Black 진영의 점수를 요청하면 38점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf38WhenCalculateScoreOfWhiteRightAfterInitializeGame() {
+        Score score = game.calculateBlackScore();
+        assertThat(score.getNumber()).isEqualTo(38);
+    }
+
+    @DisplayName("Pawn 1개, Knight 1개를 잃고 Pawn 2개가 한 File에 존재하는 White 진영의 점수를 요청하면 33점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf33AndHalfWhenCalculateScoreOfWhiteSideWhichLosePawnAndKnightAndTwoPawnIsOnSameFile() {
+        game.move(Position.of(A, TWO), Position.of(A, THREE));
+        game.move(Position.of(E, SEVEN), Position.of(E, FIVE));
+        game.move(Position.of(A, THREE), Position.of(A, FOUR));
+        game.move(Position.of(D, EIGHT), Position.of(H, FOUR));
+        game.move(Position.of(A, FOUR), Position.of(A, FIVE));
+        game.move(Position.of(H, FOUR), Position.of(F, TWO));
+        game.move(Position.of(A, FIVE), Position.of(A, SIX));
+        game.move(Position.of(F, TWO), Position.of(G, ONE));
+        game.move(Position.of(A, SIX), Position.of(B, SEVEN));
+        /* 이동 후 체스판 상태
+        RNB.KBNR
+        PpPP.PPP
+        ........
+        ....P...
+        ........
+        ........
+        .pppp.pp
+        rnbqkbQr
+        */
+        Score score = game.calculateWhiteScore();
+        assertThat(score.getNumber()).isEqualTo(33.5);
+    }
+
+    @DisplayName("Black 진영의 King이 죽으면 White win을 반환한다.")
+    @Test
+    void shouldReturnTrueWhenKingDie() {
+        game.move(Position.of(E, TWO), Position.of(E, FOUR));
+        game.move(Position.of(A, SEVEN), Position.of(A, SIX));
+        game.move(Position.of(E, FOUR), Position.of(E, FIVE));
+        game.move(Position.of(A, SIX), Position.of(A, FIVE));
+        game.move(Position.of(E, FIVE), Position.of(E, SIX));
+        game.move(Position.of(A, FIVE), Position.of(A, FOUR));
+        game.move(Position.of(E, SIX), Position.of(D, SEVEN));
+        game.move(Position.of(A, FOUR), Position.of(A, THREE));
+        game.move(Position.of(D, SEVEN), Position.of(E, EIGHT));
+        /* 이동 후 체스판 상태
+        RNBQpBNR
+        .PP.PPPP
+        ........
+        ........
+        ........
+        P.......
+        pppp.ppp
+        rnbqkbnr
+        */
+        assertThat(game.checkStatus()).isEqualTo(WHITE_WIN);
+    }
+
+    @DisplayName("King이 죽지 않았으면 In progress를 반환한다.")
+    @Test
+    void shouldReturnFalseWhenAllKingIsAlive() {
+        // 체스판 초기화 직후 상태
+        assertThat(game.checkStatus()).isEqualTo(IN_PROGRESS);
+    }
+
+    @DisplayName("비어있는 사용자 이름으로 생성하면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {" "})
+    @NullAndEmptySource
+    void shouldThrowExceptionWhenInputEmptyValueToUserName(String userName) {
+        assertThatThrownBy(() -> Game.create(userName, "title"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("사용자 이름이 비어있습니다.");
+    }
+
+    @DisplayName("비어있는 게임 이름으로 생성하면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {" "})
+    @NullAndEmptySource
+    void shouldThrowExceptionWhenInputEmptyValueToTitle(String title) {
+        assertThatThrownBy(() -> Game.create("user", title))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 이름이 비어있습니다.");
     }
 }

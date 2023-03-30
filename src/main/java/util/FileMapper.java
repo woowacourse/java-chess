@@ -1,4 +1,4 @@
-package controller.mapper;
+package util;
 
 import domain.game.File;
 import java.util.Arrays;
@@ -30,7 +30,19 @@ public enum FileMapper {
                 .orElseThrow(() -> new IllegalArgumentException("체스판의 가로 좌표는 a~h의 범위를 가집니다. 범위 안의 문자를 입력해주세요."));
     }
 
+    public static String convertFileToText(File file) {
+        return Arrays.stream(FileMapper.values())
+                .filter(fileMapper -> fileMapper.file.equals(file))
+                .map(FileMapper::getText)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("서버 내부 에서 - 존재하지 않는 File을 텍스트로 변환 시도했습니다."));
+    }
+
     private File getFile() {
         return this.file;
+    }
+
+    public String getText() {
+        return this.text;
     }
 }

@@ -12,6 +12,7 @@ import static domain.game.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.game.Position;
+import domain.game.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,5 +82,12 @@ class RookTest {
         Rook whiteRook = Rook.createOfWhite();
         List<Position> path = whiteRook.collectPath(Position.of(C, THREE), Position.of(F, THREE));
         assertThat(path).containsExactlyInAnyOrder(Position.of(D, THREE), Position.of(E, THREE));
+    }
+
+    @DisplayName("점수를 요청하면 5점을 반환한다.")
+    @Test
+    void shouldReturnScoreOf5WhenRequestScore() {
+        Rook whiteRook = Rook.createOfWhite();
+        assertThat(whiteRook.getScore()).isEqualTo(new Score(5));
     }
 }
