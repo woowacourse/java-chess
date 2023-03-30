@@ -69,4 +69,8 @@ public final class OutputView {
     public static void printFinishMessage() {
         System.out.println("> 게임이 종료되었습니다.");
     }
+
+    public static void printKingDeadMessage() {
+        System.out.println("> 왕이 사망하여 게임이 끝났습니다.");
+    }
 }
