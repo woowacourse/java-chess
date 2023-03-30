@@ -17,8 +17,10 @@ public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printStart() {
-        String startMessage = "> 체스 게임을 시작합니다." + LINE_SEPARATOR + "> 게임 시작 : start" + LINE_SEPARATOR
-                + "> 게임 종료 : end" + LINE_SEPARATOR + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+        String startMessage = "> 체스 게임을 시작합니다." + LINE_SEPARATOR
+                + "> 게임 시작 : start" + LINE_SEPARATOR
+                + "> 게임 종료 : end" + LINE_SEPARATOR
+                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
 
         System.out.println(startMessage);
     }
@@ -49,5 +51,9 @@ public class OutputView {
             System.out.println(TeamMapper.from(team).getTeamView() + ": " + scores.get(team) + "점");
         }
         System.out.println("승리: " + TeamMapper.from(result.getWinner()).getTeamView());
+    }
+
+    public void printFinish() {
+        System.out.println("게임이 종료되었습니다.");
     }
 }

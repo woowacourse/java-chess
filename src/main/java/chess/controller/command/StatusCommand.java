@@ -16,6 +16,7 @@ public class StatusCommand extends Command {
     protected StatusCommand(BoardDao boardDao, OutputView outputView) {
         super(boardDao, CommandType.STATUS, outputView);
         result = boardDao.selectChessGame().calculateResult();
+        outputView.printFinish();
     }
 
     @Override
