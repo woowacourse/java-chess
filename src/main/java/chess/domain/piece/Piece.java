@@ -10,6 +10,8 @@ public abstract class Piece {
     public static final String PIECE_CANNOT_MOVE_ERROR_MESSAGE = "이(가) 움직일 수 없는 위치입니다.";
     public static final String OUT_OF_DISTANCE_ERROR_MESSAGE = "이(가) 움직일 수 없는 거리입니다.";
     
+    private static final String PIECE_ERROR_PREFIX = "[PIECE ERROR] ";
+    
     private final Color color;
     private final PieceType type;
     private final List<Direction> movableDirections;
@@ -24,19 +26,23 @@ public abstract class Piece {
     
     protected void checkDirection(Direction direction) {
         if (!this.movableDirections.contains(direction)) {
-            throw new IllegalArgumentException(this.type.name() + PIECE_CANNOT_MOVE_ERROR_MESSAGE);
+            throw new IllegalArgumentException(PIECE_ERROR_PREFIX + this.type.name() + PIECE_CANNOT_MOVE_ERROR_MESSAGE);
         }
     }
     
     protected void checkDistance(final Position start, final Position end, final List<Integer> movableDistances) {
         int distance = start.calculateDistance(end);
         if (!movableDistances.contains(distance)) {
-            throw new IllegalArgumentException(this.type.name() + OUT_OF_DISTANCE_ERROR_MESSAGE);
+            throw new IllegalArgumentException(PIECE_ERROR_PREFIX + this.type.name() + OUT_OF_DISTANCE_ERROR_MESSAGE);
         }
     }
     
     public boolean isSameColor(Color color) {
         return this.color == color;
+    }
+    
+    public boolean isNotSameColor(Color color) {
+        return this.color != color;
     }
     
     @Override
@@ -56,6 +62,10 @@ public abstract class Piece {
         return this.color == piece.color;
     }
     
+    public Color getColor() {
+        return this.color;
+    }
+    
     public PieceType getType() {
         return this.type;
     }
@@ -72,5 +82,8 @@ public abstract class Piece {
         return this.type == PieceType.EMPTY;
     }
     
+    public boolean isPawn() {
+        return this.type == PieceType.PAWN;
+    }
     
 }

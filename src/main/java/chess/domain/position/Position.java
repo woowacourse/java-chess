@@ -1,10 +1,7 @@
 package chess.domain.position;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public final class Position implements Comparable<Position> {
     
@@ -22,23 +19,11 @@ public final class Position implements Comparable<Position> {
     }
     
     public static Position from(String position) {
-        List<String> parsedPosition = parsing(position);
-        File file = File.findByLabel(parsedPosition.get(0));
-        Rank rank = Rank.findByLabel(parsedPosition.get(1));
-        return new Position(file, rank);
-    }
-    
-    private static List<String> parsing(final String position) {
-        return Arrays.stream(position.split("")).collect(Collectors.toList());
+        return PositionFactory.from(position);
     }
     
     public static Position from(File file, Rank rank) {
         return new Position(file, rank);
-    }
-    
-    public boolean isRank(final int index) {
-        Rank rank = Rank.findByIndex(index);
-        return this.rank == rank;
     }
     
     public Direction calculateDirection(Position destination) {
@@ -89,6 +74,7 @@ public final class Position implements Comparable<Position> {
         return fileGap * fileGap + rankGap * rankGap;
     }
     
+    
     @Override
     public int hashCode() {
         return Objects.hash(this.file, this.rank);
@@ -129,6 +115,10 @@ public final class Position implements Comparable<Position> {
         return Integer.compare(thisFile, otherFile);
     }
     
+    public File getFile() {
+        return this.file;
+    }
+    
     public int getFileIndex() {
         return this.file.getIndex();
     }
@@ -139,5 +129,9 @@ public final class Position implements Comparable<Position> {
     
     public Rank getRank() {
         return this.rank;
+    }
+    
+    public String getLabel() {
+        return this.file.getLabel() + this.rank.getLabel();
     }
 }

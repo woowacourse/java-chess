@@ -1,14 +1,17 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.domain.board.PieceProvider;
 import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class BoardMapper {
+public final class BoardMapper {
     
-    public static String map(Board board) {
+    private BoardMapper() {
+    }
+    
+    public static String map(PieceProvider board) {
         return Arrays.stream(Rank.values())
                 .sorted(Comparator.reverseOrder())
                 .map(rank -> RankMapper.map(board, rank))

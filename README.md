@@ -1,6 +1,207 @@
 # java-chess
 
-# 기능 목록
+## 추가 미션 구현 목록
+
+### DDL 정보
+
+```sql
+CREATE TABLE game
+(
+    id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE game_test
+(
+    id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+create table move
+(
+    id      TIMESTAMP(3) PRIMARY KEY,
+    `from`  VARCHAR(2) NOT NULL,
+    `to`    VARCHAR(2) NOT NULL,
+    game_id INT,
+    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE
+);
+
+create table move_test
+(
+    id      TIMESTAMP(3) PRIMARY KEY,
+    `from`  VARCHAR(2) NOT NULL,
+    `to`    VARCHAR(2) NOT NULL,
+    game_id INT,
+    FOREIGN KEY (game_id) REFERENCES game_test (id) ON DELETE CASCADE
+);
+```
+
+- 게임 번호 저장을 위한 game 테이블 생성
+- 게임 번호를 외래키로 가지는 move 테이블 생성
+- 각 테이블 별로 테스트용 테이블 생성
+
+### GameDAO
+
+- [x] 게임번호를 Database에 추가한다.
+- [x] 게임번호를 Database에서 삭제한다.
+- [x] 게임번호를 Database에서 불러온다.
+- [x] Database를 초기화한다.
+
+### MoveDAO
+
+- [x] 게임 번호를 통해 database에서 움직임을 불러온다.
+- [x] 게임 번호를 통해 database에 움직임을 저장한다.
+- [x] database를 초기화한다.
+
+### GameHistory
+
+- [x] 게임을 생성한다.
+- [x] 게임 번호들을 불러온다.
+- [x] 게임을 삭제한다.
+- [x] 전체 게임을 초기화한다.
+
+### MoveHistory
+
+- [x] 게임 번호를 통해 움직임을 불러온다.
+- [x] 게임 번호를 통해 움직임을 저장한다.
+- [x] 전체 움직임을 초기화한다.
+
+### ReadyGame
+
+- [x] 게임을 생성한다.
+- [x] 게임을 시작하면 RunGame으로 전환한다.
+
+### RunGame
+
+- [x] 게임을 종료하면 EndGame으로 전환한다.
+- [x] move 명령을 실행한다.
+- [x] status 명령을 실행한다.
+
+### EndGame
+
+- [x] 게임이 종료되었음을 알린다.
+
+## 미션 4 기능 목록
+
+### DDL 정보
+
+```sql
+CREATE TABLE moves
+(
+    id     TIMESTAMP(3) PRIMARY KEY,
+    `from` VARCHAR(2) NOT NULL,
+    `to`   VARCHAR(2) NOT NULL
+);
+
+CREATE TABLE moves_test
+(
+    id     TIMESTAMP(3) PRIMARY KEY,
+    `from` VARCHAR(2) NOT NULL,
+    `to`   VARCHAR(2) NOT NULL
+);
+```
+
+### MoveHistory
+
+- [x] DAO를 통해 Command를 저장한다.
+- [x] DAO를 통해 Command 리스트를 불러온다.
+- [x] DAO를 통해 DB를 초기화한다.
+
+### DAO
+
+- [x] DB에 접근해 move 명령의 from과 to를 저장한다.
+- [x] DB에 접근해 from과 to를 읽어드려 MoveCommand를 생성한다.
+- [x] DB에 접근해 움직임들을 초기화한다.
+
+### 시나리오
+
+- [x] 게임을 시작하기 전에 전에 진행했던 게임의 움직임들을 DB에서 불러온다.
+    - [x] DB의 움직임들을 MoveCommand로 변환한다.
+    - [x] MoveCommand를 실행한다.
+- [x] 게임을 진행하면서 움직임들을 DB에 저장한다.
+
+## 미션 3 구조 변경
+
+## 명령 인터페이스 구현 방식
+
+![command.png](command.png)
+
+### Command
+
+- getType: 명령의 타입을 반환
+
+- UpdateCommand와 QueryCommand를 분리하여 구현했다가 Command별로 Controller에서 분기를 나누는 것이 더 깔끔하다고 판단하여 Command를
+  하나로 통합했다.
+
+### UpdateCommand(Deprecated)
+
+- update: 명령을 실행
+
+### QueryCommand(Deprecated)
+
+- query: 명령을 실행
+
+## 게임 인터페이스 구현 방식
+
+![game.png](game.png)
+
+### Game
+
+- isNotEnd: 게임이 끝났는지 확인
+
+### ActionHandler
+
+- start: 게임을 시작
+- end: 게임을 종료
+- move: 피스를 이동
+- status: 게임 상태를 출력
+
+### BoardProvider
+
+- getBoard: 보드를 반환
+
+## 보드 인터페이스 구현 방식
+
+![board.png](board.png)
+
+### Board
+
+- isKingDead : 왕이 죽었는지 확인
+
+### MoveHandler
+
+- checkRoute : 피스들의 이동 경로를 검증
+- checkColor: 선택 위치의 피스가 현재턴 색깔인지, 이동하려는 위치에 같은 색깔의 피스가 있는지 검증
+- move : 피스 이동
+
+### PieceProvider
+
+- getRankPieces : 랭크에 해당하는 피스들을 반환
+- getFilePieces : 파일에 해당하는 피스들을 반환
+
+# 미션 3&4 기능 목록
+
+### 보드
+
+- [x] 왕이 죽었는지 확인
+
+### 게임
+
+- [x] 왕이 죽었다면 게임을 종료 상태로 변경
+- [x] 게임 점수 계산 -> Status로 만듬
+
+### Status
+
+- [x] 각 색깔별 점수를 가지고 있는다.
+- [x] 점수를 반환한다.
+
+### Score
+
+- [x] 점수를 더한다.
+
+### PieceScore
+
+- [x] 각 피스의 점수를 반환한다.
+
+# 미션 1&2 기능 목록
 
 ## 도메인
 
@@ -33,6 +234,7 @@
 - [x] 폰이 움직일 수 있는지 확인(checkRestrictionForPawn)
     - [x] 대각선으로 움직일때, 상대편 피스가 있는지 확인
     - [x] 위,아래 방향으로 움직일때, 칸이 비어있지 않은지 확인
+- [x] 폰을 움직이고 왕이 죽었는지 확인
 
 ### 피스 팩토리
 
@@ -50,6 +252,9 @@
 ### 명령
 
 - [x] 입력받은 명령를 검증(start,end,move)
+- [x] 입력받은 명령을 실행
+- [x] 게임을 종료
+- [x] 상태 받아오는 명령어 추가
 
 ## UI
 

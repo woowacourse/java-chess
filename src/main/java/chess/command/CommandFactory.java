@@ -13,6 +13,7 @@ public class CommandFactory {
         COMMANDS.put(CommandType.START, StartCommand::new);
         COMMANDS.put(CommandType.MOVE, MoveCommand::new);
         COMMANDS.put(CommandType.END, EndCommand::new);
+        COMMANDS.put(CommandType.STATUS, StatusCommand::new);
     }
     
     public static Command generateCommand(List<String> tokens) {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 public enum CommandType {
     START("start"),
     MOVE("move"),
+    STATUS("status"),
     END("end"),
     ;
     

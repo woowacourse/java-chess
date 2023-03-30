@@ -1,12 +1,16 @@
 package chess.command;
 
-import chess.action.Action;
+import chess.domain.game.ActionHandler;
+import chess.domain.game.Game;
+import chess.domain.game.Status;
+import chess.history.History;
 import java.util.List;
 
 public class StartCommand implements Command {
     
     public static final int START_ARGUMENTS_SIZE = 0;
-    private static final String INVALID_ARGUMENT_ERROR_MESSAGE = "start 명령어는 인자를 입력할 수 없습니다.";
+    
+    private final CommandType type = CommandType.START;
     
     public StartCommand(final List<String> arguments) {
         this.validate(arguments);
@@ -14,17 +18,31 @@ public class StartCommand implements Command {
     
     private void validate(final List<String> arguments) {
         if (arguments.size() != START_ARGUMENTS_SIZE) {
-            throw new IllegalArgumentException(COMMAND_ERROR_PREFIX + INVALID_ARGUMENT_ERROR_MESSAGE);
+            throw new IllegalArgumentException(
+                    COMMAND_ERROR_PREFIX + this.type + INVALID_ARGUMENT_ERROR_MESSAGE);
         }
     }
     
     @Override
-    public void execute(final Action action) {
-        action.start();
+    public Status query(final ActionHandler action) {
+        throw new UnsupportedOperationException(
+                COMMAND_ERROR_PREFIX + this.type + INVALID_QUERY_ERROR_MESSAGE);
     }
     
     @Override
-    public boolean isNotEnd() {
-        return true;
+    public Game update(final ActionHandler action) {
+        return action.start();
+    }
+    
+    @Override
+    public void addHistory(final History history) {
+        throw new UnsupportedOperationException(
+                COMMAND_ERROR_PREFIX + this.type + INVALID_EXECUTE_ERROR_MESSAGE);
+        
+    }
+    
+    @Override
+    public CommandType getType() {
+        return this.type;
     }
 }

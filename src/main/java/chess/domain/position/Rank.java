@@ -21,18 +21,16 @@ public enum Rank {
         this.index = index;
     }
     
-    static Rank findByLabel(String label) {
-        return Arrays.stream(values())
-                .filter(value -> value.label.equals(label))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_ERROR_MESSAGE));
-    }
     
     public static Rank findByIndex(int index) {
         return Arrays.stream(values())
                 .filter(value -> value.index == index)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_ERROR_MESSAGE));
+    }
+    
+    public String getLabel() {
+        return this.label;
     }
     
     
