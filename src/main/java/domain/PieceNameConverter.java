@@ -22,9 +22,8 @@ public class PieceNameConverter {
     public static String convert(Piece piece) {
         return piecesAndStrings.get(piece);
     }
-
     public static Piece convert(String name) {
-        for (Map.Entry<Piece, String> pieceAndNames : piecesAndStrings.entrySet()) {
+        for (Map.Entry<Piece, String> pieceAndNames : piecesAndStrings.entrySet()){
             if (pieceAndNames.getValue().equals(name)) {
                 return pieceAndNames.getKey();
             }

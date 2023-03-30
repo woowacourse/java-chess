@@ -9,6 +9,10 @@ import domain.board.Square;
 public abstract class Piece {
     protected static final int FILE_INDEX = 0;
     protected static final int RANK_INDEX = 1;
+    protected static final Integer MIN_FILE_INDEX = 0;
+    protected static final Integer MAX_FILE_INDEX = 7;
+    protected static final Integer MIN_RANK_INDEX = 0;
+    protected static final Integer MAX_RANK_INDEX = 7;
 
     protected final Camp camp;
 
@@ -20,20 +24,12 @@ public abstract class Piece {
 
     public abstract boolean canMove(Map<Square, Piece> squares, Square targetSquare);
 
-<<<<<<<HEAD
-
     protected boolean isValidRange(int fileIndex, int rankIndex) {
         return fileIndex >= MIN_FILE_INDEX
             && fileIndex <= MAX_FILE_INDEX
             && rankIndex >= MIN_RANK_INDEX
             && rankIndex <= MAX_RANK_INDEX;
     }
-
-=======
-    >>>>>>>
-    parent of 075
-
-    b4fd(refactor:중복 메서드 제거 및 이름 변경)
 
     protected boolean isOppositeCamp(Piece piece) {
         return (isWhite() == piece.isBlack() || isBlack() == piece.isWhite()) && !piece.isEmpty();

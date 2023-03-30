@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import domain.board.Square;
 import domain.piece.Camp;
 
 public class CampDao {

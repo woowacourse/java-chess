@@ -61,4 +61,3 @@ public class ChessController {
         OutputView.printScore(chessService.toScoreDto());
     }
 }
-

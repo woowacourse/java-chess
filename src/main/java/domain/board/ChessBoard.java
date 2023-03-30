@@ -25,11 +25,11 @@ public class ChessBoard {
     public ChessBoard() {
         board = new HashMap<>();
         for (File file : File.values()) {
-            setRank(file);
+            addRank(file);
         }
     }
 
-    private void setRank(File file) {
+    private void addRank(File file) {
         for (Rank rank : Rank.values()) {
             board.put(new Square(file, rank), Empty.getInstance());
         }
