@@ -16,9 +16,10 @@ public enum CommandMapper {
         this.command = command;
     }
 
-    public static CommandMapper findCommand(String input) {
+    public static Command findCommand(String input) {
         return Arrays.stream(values())
                 .filter(commandMapper -> commandMapper.input.equals(input))
+                .map(commandMapper -> commandMapper.command)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력한 명령어가 없습니다."));
     }
