@@ -113,7 +113,7 @@ class ChessBoardServiceTestHandler {
     private PieceDao createPieceDao(final Long chessGameId) {
         final PieceDao pieceDao = new MockPieceDao();
         final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
-        pieceEntities.forEach(pieceDao::save);
+        pieceEntities.forEach(pieceDao::insert);
         return pieceDao;
     }
 

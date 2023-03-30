@@ -18,7 +18,7 @@ public class PieceDaoImplTest {
         final PieceDao pieceDao = new MockPieceDao();
         final long chessGameId = 1L;
         final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
-        pieceEntities.forEach(pieceDao::save);
+        pieceEntities.forEach(pieceDao::insert);
 
         // when
         final List<PieceEntity> findChessEntities = pieceDao.findByChessGameId(chessGameId);
@@ -36,12 +36,12 @@ public class PieceDaoImplTest {
 
     @Test
     @DisplayName("체스 게임에 해당하는 체스말의 정보를 저장한다")
-    void save() {
+    void insert() {
         // given
         final PieceDao pieceDao = new MockPieceDao();
 
         // when
-        final Long savedPieceId = pieceDao.save(PieceEntity.createWithChessGameId(1L, 1, 2,
+        final Long savedPieceId = pieceDao.insert(PieceEntity.createWithChessGameId(1L, 1, 2,
                 "PAWN", "WHITE"));
 
         // then
@@ -57,8 +57,8 @@ public class PieceDaoImplTest {
         final long chessGameId = 1L;
         final PieceEntity entity1 = PieceEntity.createWithChessGameId(chessGameId, 1, 1, "PAWN", "WHITE");
         final PieceEntity entity2 = PieceEntity.createWithChessGameId(chessGameId, 1, 1, "PAWN", "WHITE");
-        pieceDao.save(entity1);
-        pieceDao.save(entity2);
+        pieceDao.insert(entity1);
+        pieceDao.insert(entity2);
 
         // when
         pieceDao.deleteByPositions(chessGameId, entity1, entity2);
@@ -76,8 +76,8 @@ public class PieceDaoImplTest {
         final long chessGameId = 1L;
         final PieceEntity entity1 = PieceEntity.createWithChessGameId(chessGameId, 1, 1, "PAWN", "WHITE");
         final PieceEntity entity2 = PieceEntity.createWithChessGameId(chessGameId, 1, 1, "PAWN", "WHITE");
-        pieceDao.save(entity1);
-        pieceDao.save(entity2);
+        pieceDao.insert(entity1);
+        pieceDao.insert(entity2);
 
         // when
         pieceDao.deleteByChessGameId(chessGameId);

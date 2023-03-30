@@ -26,7 +26,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public Long save(final PieceEntity pieceEntity) {
+    public Long insert(final PieceEntity pieceEntity) {
         final String query = "INSERT INTO piece(piece_rank, piece_file, piece_type, camp, chess_game_id) " +
                 "VALUES (?, ?, ?, ?, ?)";
         return jdbcTemplate.executeUpdate(query,

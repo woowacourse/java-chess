@@ -25,7 +25,7 @@ public final class ChessGameDaoImpl implements ChessGameDao {
     }
 
     @Override
-    public Long save(final ChessGameEntity chessGameEntity) {
+    public Long insert(final ChessGameEntity chessGameEntity) {
         final String query = "INSERT INTO chess_game(current_camp, user_id) VALUES (?, ?)";
 
         return jdbcTemplate.executeUpdate(query,

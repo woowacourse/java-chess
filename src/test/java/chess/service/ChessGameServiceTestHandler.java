@@ -108,7 +108,7 @@ class ChessGameServiceTestHandler {
         // given
         final long userId = 1L;
         final MockChessGameDao chessGameDao = new MockChessGameDao();
-        chessGameDao.save(new ChessGameEntity("WHITE", userId));
+        chessGameDao.insert(new ChessGameEntity("WHITE", userId));
         final ChessGameService chessGameService = new ChessGameService(chessGameDao, new ChessBoardService(new MockPieceDao()));
         final PieceEntity source = PieceEntity.createWithLocation(1L, 0, 0);
         final PieceEntity target = PieceEntity.createWithLocation(1L, 0, 1);
@@ -141,7 +141,7 @@ class ChessGameServiceTestHandler {
 
     private ChessGameService getChessGameService(final long userId) {
         final MockChessGameDao chessGameDao = new MockChessGameDao();
-        final long chessGameId = chessGameDao.save(new ChessGameEntity(1L, "WHITE", userId));
+        final long chessGameId = chessGameDao.insert(new ChessGameEntity(1L, "WHITE", userId));
         final MockPieceDao pieceDao = getMockPieceDao(chessGameId);
         return new ChessGameService(chessGameDao, new ChessBoardService(pieceDao));
     }
@@ -149,7 +149,7 @@ class ChessGameServiceTestHandler {
     private MockPieceDao getMockPieceDao(final long chessGameId) {
         final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
         final MockPieceDao pieceDao = new MockPieceDao();
-        pieceEntities.forEach(pieceDao::save);
+        pieceEntities.forEach(pieceDao::insert);
         return pieceDao;
     }
 }

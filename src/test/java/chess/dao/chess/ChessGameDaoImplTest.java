@@ -17,7 +17,7 @@ class ChessGameDaoImplTest {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
         final ChessGameEntity createdChessGameEntity = new ChessGameEntity(1L, "WHITE", 1L);
-        chessGameDao.save(createdChessGameEntity);
+        chessGameDao.insert(createdChessGameEntity);
         final long expected = createdChessGameEntity.getId();
         final long userId = 1L;
 
@@ -47,12 +47,12 @@ class ChessGameDaoImplTest {
 
     @Test
     @DisplayName("사용자가 현재 진행 중인 체스 게임을 저장한다")
-    void save() {
+    void insert() {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
 
         // when
-        final long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+        final long savedChessGameId = chessGameDao.insert(new ChessGameEntity("WHITE", 1L));
 
         // then
         assertThat(savedChessGameId)
@@ -64,7 +64,7 @@ class ChessGameDaoImplTest {
     void updateCurrentCampById() {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
-        final long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+        final long savedChessGameId = chessGameDao.insert(new ChessGameEntity("WHITE", 1L));
         final long expected = new ChessGameEntity(1L, "BLACK", 1L).getId();
 
         // when
@@ -81,7 +81,7 @@ class ChessGameDaoImplTest {
     void deleteByUserId() {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
-        chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+        chessGameDao.insert(new ChessGameEntity("WHITE", 1L));
 
         // when
         chessGameDao.deleteByUserId(1L);

@@ -16,7 +16,7 @@ class UserDaoImplTest {
         // given
         final UserDao userDao = new MockUserDao();
         final String name = "journey";
-        userDao.save(name);
+        userDao.insert(name);
         final long expected = new UserEntity(1L, name).getId();
 
         // when
@@ -48,7 +48,7 @@ class UserDaoImplTest {
         final UserDao userDao = new MockUserDao();
 
         // when
-        Long userId = userDao.save("journey");
+        Long userId = userDao.insert("journey");
 
         // then
         assertThat(userId)

@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ChessGameDao {
     Optional<ChessGameEntity> findByUserId(final long userId);
 
-    Long save(final ChessGameEntity chessGameEntity);
+    Long insert(final ChessGameEntity chessGameEntity);
 
     void updateCurrentCampById(long id, CampType currentCamp);
 

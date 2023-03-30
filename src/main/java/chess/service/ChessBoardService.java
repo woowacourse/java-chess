@@ -23,7 +23,7 @@ public class ChessBoardService {
     }
 
     void savePiece(final PieceEntity pieceEntity) {
-        pieceDao.save(pieceEntity);
+        pieceDao.insert(pieceEntity);
     }
 
     void deletePieces(final PieceEntity sourcePiece, final PieceEntity targetPiece) {
@@ -36,7 +36,7 @@ public class ChessBoardService {
             final Piece piece = chessBoard.get(position);
             PieceEntity pieceEntity = PieceEntity.createWithChessGameId(chessGameId, position.getRank(),
                     position.getFile(), piece.getPieceType().name(), piece.getCampType().name());
-            pieceDao.save(pieceEntity);
+            pieceDao.insert(pieceEntity);
         }
     }
 

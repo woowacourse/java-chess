@@ -20,7 +20,7 @@ public class MockUserDao implements UserDao {
     }
 
     @Override
-    public Long save(final String name) {
+    public Long insert(final String name) {
         STORAGE.put(pk.addAndGet(1L), new UserEntity(name));
         return pk.longValue();
     }

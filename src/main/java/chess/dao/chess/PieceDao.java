@@ -7,7 +7,7 @@ import java.util.List;
 public interface PieceDao {
     List<PieceEntity> findByChessGameId(final long chessGameId);
 
-    Long save(final PieceEntity pieceEntity);
+    Long insert(final PieceEntity pieceEntity);
 
     void deleteByPositions(final long chessGameId, final PieceEntity... pieceEntity);
 

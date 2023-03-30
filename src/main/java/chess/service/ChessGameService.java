@@ -55,7 +55,7 @@ public final class ChessGameService {
 
     private ChessGame getNewChessGame(final long userId) {
         final CampType currentCamp = CampType.WHITE;
-        final long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
+        final long chessGameId = chessGameDao.insert(new ChessGameEntity(currentCamp.name(), userId));
         final ChessGame chessGame = new ChessGame(currentCamp);
         chessBoardService.saveAll(chessGameId, chessGame.getChessBoard());
         return chessGame;

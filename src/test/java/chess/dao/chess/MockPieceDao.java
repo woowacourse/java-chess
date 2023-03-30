@@ -25,7 +25,7 @@ public class MockPieceDao implements PieceDao {
     }
 
     @Override
-    public Long save(final PieceEntity pieceEntity) {
+    public Long insert(final PieceEntity pieceEntity) {
         STORAGE.put(pk.addAndGet(1L), pieceEntity);
         return pk.longValue();
     }
