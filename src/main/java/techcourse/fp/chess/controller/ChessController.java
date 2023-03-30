@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
+import techcourse.fp.chess.domain.Position;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.dto.request.CommandRequest;
 import techcourse.fp.chess.dto.response.BoardResponse;
@@ -118,7 +119,7 @@ public final class ChessController {
     }
 
     private void move(final Board board, final CommandRequest commandRequest) {
-        board.move(commandRequest.getSource(), commandRequest.getTarget());
+        board.move(Position.from(commandRequest.getSource()), Position.from(commandRequest.getTarget()));
         final BoardResponse boardResponse = BoardResponse.create(board.getBoard());
         outputView.printBoard(boardResponse);
     }

@@ -1,76 +1,54 @@
 package techcourse.fp.chess.dto.request;
 
 import java.util.List;
-import techcourse.fp.chess.domain.File;
-import techcourse.fp.chess.domain.Position;
-import techcourse.fp.chess.domain.Rank;
 
 public class CommandRequest {
 
-    private static final int FILE_ASCII_OFFSET = 96;
-    private static final char RANK_ASCII_OFFSET = '0';
-    private static final int SOURCE_IDX = 1;
-    private static final int TARGET_IDX = 2;
-    private static final int MOVE_COMMAND_SIZE = 3;
-    private static final int OTHER_COMMAND_SIZE = 1;
-
     private final String message;
-    private final Position source;
-    private final Position target;
+    private String source;
+    private String target;
 
-    public CommandRequest(final String message, final Position source, final Position target) {
+    public CommandRequest(final String message) {
+        if (message.equalsIgnoreCase("move")) {
+            throw new IllegalArgumentException("올바른 형식의 커맨드를 입력하세요.");
+        }
         this.message = message;
+    }
+
+    public CommandRequest(final String message, final String source, final String target) {
+        this.message = message;
+        validateLength(source, target);
         this.source = source;
         this.target = target;
     }
 
+    private void validateLength(final String source, final String target) {
+        if (source.length() != 2 || target.length() != 2) {
+            throw new IllegalArgumentException("시작점과 도착점을 정확하게 입력해주세요.");
+        }
+    }
+
     public static CommandRequest create(List<String> commands) {
-
-        if (commands.size() == OTHER_COMMAND_SIZE && !isMoveCommand(getRawMessage(commands))) {
-            return new CommandRequest(getRawMessage(commands), getEmptyPosition(), getEmptyPosition());
+        if (commands.size() == 1) {
+            return new CommandRequest(commands.get(0));
         }
 
-        if (commands.size() == MOVE_COMMAND_SIZE && isMoveCommand(getRawMessage(commands))) {
-            return new CommandRequest(getRawMessage(commands),
-                    parseToPosition(commands.get(SOURCE_IDX)),
-                    parseToPosition(commands.get(TARGET_IDX)));
+        if (commands.size() == 3) {
+            return new CommandRequest(commands.get(0), commands.get(1), commands.get(2));
         }
 
-        throw new IllegalArgumentException("올바른 커맨드 값을 입력해주세요.");
-    }
-
-    private static String getRawMessage(final List<String> commands) {
-        return commands.get(0);
-    }
-
-    private static boolean isMoveCommand(final String command) {
-        return command.equalsIgnoreCase("move");
-    }
-
-    private static Position getEmptyPosition() {
-        return Position.of(null, null);
-    }
-
-    private static Position parseToPosition(final String command) {
-        if (command.length() != 2) {
-            throw new IllegalStateException("정확한 좌표를 입력해주세요.");
-        }
-
-        final int fileOrder = command.charAt(0) - FILE_ASCII_OFFSET;
-        final int rankOrder = command.charAt(1) - RANK_ASCII_OFFSET;
-
-        return Position.of(File.of(fileOrder), Rank.of(rankOrder));
+        throw new IllegalArgumentException("올바른 형식으로 커맨드를 입력해주세요.");
     }
 
     public String getMessage() {
         return message;
     }
 
-    public Position getSource() {
+    public String getSource() {
         return source;
     }
 
-    public Position getTarget() {
+    public String getTarget() {
         return target;
     }
 }

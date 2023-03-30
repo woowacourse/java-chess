@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class ChessGameInfo {
 
-
     private final long id;
     private final String name;
     private final String turn;
