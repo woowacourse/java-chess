@@ -1,10 +1,10 @@
 package chess.domain.dao;
 
 import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Pieces;
-import chess.domain.Position;
-import chess.domain.Shape;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.Position;
+import chess.domain.piece.Shape;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

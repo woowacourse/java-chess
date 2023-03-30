@@ -1,8 +1,8 @@
-package chess.domain;
+package chess.domain.piece;
 
-import static chess.domain.Shape.BISHOP;
-import static chess.domain.Shape.KNIGHT;
-import static chess.domain.Shape.ROOK;
+import static chess.domain.piece.Shape.BISHOP;
+import static chess.domain.piece.Shape.KNIGHT;
+import static chess.domain.piece.Shape.ROOK;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 

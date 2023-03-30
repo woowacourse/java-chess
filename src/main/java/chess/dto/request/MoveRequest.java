@@ -1,7 +1,7 @@
 package chess.dto.request;
 
 import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.piece.Position;
 import chess.dto.PositionDto;
 import java.util.List;
 

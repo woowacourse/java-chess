@@ -1,9 +1,9 @@
 package chess.ui;
 
-import static chess.domain.Pieces.FIRST_FILE_OF_BLACK;
-import static chess.domain.Pieces.FIRST_FILE_OF_WHITE;
-import static chess.domain.Pieces.FIRST_RANK;
-import static chess.domain.Pieces.LAST_RANK;
+import static chess.domain.piece.Pieces.FIRST_FILE_OF_BLACK;
+import static chess.domain.piece.Pieces.FIRST_FILE_OF_WHITE;
+import static chess.domain.piece.Pieces.FIRST_RANK;
+import static chess.domain.piece.Pieces.LAST_RANK;
 
 import chess.domain.Color;
 import chess.dto.response.PiecesResponse;

@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.dto.PositionDto;
 import chess.dto.request.MoveRequest;
 import java.util.List;

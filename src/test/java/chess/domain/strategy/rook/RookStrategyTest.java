@@ -1,18 +1,17 @@
 package chess.domain.strategy.rook;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.dto.PositionDto;
-import chess.dto.request.MoveRequest;
-import chess.domain.strategy.PieceStrategy;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.Collections;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import chess.domain.Color;
+import chess.domain.piece.Position;
+import chess.domain.strategy.PieceStrategy;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
+import java.util.Collections;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class RookStrategyTest {
 

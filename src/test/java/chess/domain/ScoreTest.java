@@ -1,9 +1,8 @@
 package chess.domain;
 
-import static chess.domain.Pieces.createWhitePieces;
+import static chess.domain.piece.Pieces.createWhitePieces;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public final class ScoreTest {
@@ -33,7 +32,7 @@ public final class ScoreTest {
 
     @Test
     void subtract() {
-        assertThat(Score.subtract(createWhitePieces())).isEqualTo(Score.from(38.0));
+        assertThat(Score.subtractTotalScoreFromPawnPerScore(createWhitePieces())).isEqualTo(Score.from(38.0));
     }
 
 }

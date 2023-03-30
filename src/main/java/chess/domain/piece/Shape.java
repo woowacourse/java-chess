@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.strategy.bishop.BishopStrategy;
 import chess.domain.strategy.king.KingStrategy;
 import chess.domain.strategy.knight.KnightStrategy;

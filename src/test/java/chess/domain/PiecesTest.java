@@ -1,18 +1,19 @@
 package chess.domain;
 
+import static chess.domain.piece.Shape.BISHOP;
+import static chess.domain.piece.Shape.KING;
+import static chess.domain.piece.Shape.PAWN;
+import static chess.domain.piece.Shape.QUEEN;
+import static chess.domain.piece.Shape.ROOK;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static chess.domain.Shape.BISHOP;
-import static chess.domain.Shape.KING;
-import static chess.domain.Shape.PAWN;
-import static chess.domain.Shape.QUEEN;
-import static chess.domain.Shape.ROOK;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 final class PiecesTest {
 

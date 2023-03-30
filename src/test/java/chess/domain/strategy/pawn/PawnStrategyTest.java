@@ -1,19 +1,18 @@
 package chess.domain.strategy.pawn;
 
-import chess.domain.Position;
-import chess.dto.PositionDto;
-import chess.dto.request.MoveRequest;
-import chess.domain.strategy.PieceStrategy;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import chess.domain.piece.Position;
+import chess.domain.strategy.PieceStrategy;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 final class PawnStrategyTest {
 

@@ -4,7 +4,7 @@ import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 
 import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.piece.Position;
 import chess.domain.strategy.PieceStrategy;
 import chess.dto.PositionDto;
 import chess.dto.request.MoveRequest;

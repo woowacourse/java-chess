@@ -1,11 +1,12 @@
 package chess.domain;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import chess.domain.piece.Pieces;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersTest {
 
@@ -14,11 +15,10 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        Pieces pieces = new Pieces();
-        whitePieces = pieces.createWhitePieces();
-        Pieces blackPieces = pieces.createBlackPieces();
-        Player whitePlayer = Player.fromWhitePlayer(whitePieces);
-        Player blackPlayer = Player.fromBlackPlayer(blackPieces);
+        whitePieces = Pieces.createWhitePieces();
+        Pieces blackPieces = Pieces.createBlackPieces();
+        Player whitePlayer = Player.fromPlayerWithColorAndPieces(Color.WHITE, whitePieces);
+        Player blackPlayer = Player.fromPlayerWithColorAndPieces(Color.BLACK, blackPieces);
         players = Players.of(whitePlayer, blackPlayer, Color.WHITE);
     }
 

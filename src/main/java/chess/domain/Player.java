@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.Position;
+import chess.domain.piece.Shape;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +52,7 @@ public class Player {
     }
 
     public Score getTotalScore() {
-        return Score.subtract(pieces);
+        return Score.subtractTotalScoreFromPawnPerScore(pieces);
     }
 
     public String getColorName() {

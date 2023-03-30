@@ -1,8 +1,8 @@
 package chess.domain.dao;
 
 import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 import java.util.List;
 
 public interface PieceDao {
