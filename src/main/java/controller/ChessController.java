@@ -86,7 +86,7 @@ public final class ChessController {
         }
     }
 
-    public void printScore() {
+    private void printScore() {
         outputView.printScores(chessGame.getBlackScore(), chessGame.getWhiteScore());
     }
 }

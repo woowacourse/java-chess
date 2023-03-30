@@ -6,6 +6,7 @@ public final class Column {
 
     private static final int MAX_RANGE = 7;
     private static final int MIN_RANGE = 0;
+    
     private final int value;
 
     private Column(final int value) {

@@ -14,6 +14,7 @@ public final class Move {
     private static final int LOCATION_INPUT_LENGTH = 2;
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
+    
     private final Location start;
     private final Location end;
 

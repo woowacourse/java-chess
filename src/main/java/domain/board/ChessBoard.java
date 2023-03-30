@@ -25,6 +25,7 @@ public final class ChessBoard {
     private static final int MAX_RANGE = 8;
     private static final double PAWN_IN_SAME_COLUMN_PENALTY = 0.5;
     private static final int ONE_KING_EXIST = 1;
+    
     private final Map<Location, Piece> board = new HashMap<>();
     private Turn turn = Turn.white();
 
