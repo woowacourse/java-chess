@@ -12,6 +12,9 @@ import chess.piece.Team;
 
 public class ChessBoard {
 
+    private static final int MINIMUM_NUMBER_OF_DUPLICATED_PAWN = 2;
+    private static final double DUPLICATED_PAWN_SCORE = 0.5;
+
     private final Map<Position, Piece> board;
 
     public ChessBoard() {
@@ -61,8 +64,8 @@ public class ChessBoard {
     private double calculateDuplicatedPawnScore(final Team team) {
         return countPawnInSameFile(team).values()
                 .stream()
-                .filter(numberOfPawn -> numberOfPawn >= 2)
-                .mapToDouble(pawnScore -> pawnScore * 0.5)
+                .filter(numberOfPawn -> numberOfPawn >= MINIMUM_NUMBER_OF_DUPLICATED_PAWN)
+                .mapToDouble(pawnScore -> pawnScore * DUPLICATED_PAWN_SCORE)
                 .sum();
     }
 
