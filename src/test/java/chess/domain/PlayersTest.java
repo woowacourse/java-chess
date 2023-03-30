@@ -23,14 +23,6 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("입력받은 색에 해당하는 pieces를 반환한다.")
-    void getPiecesByColor() {
-        // when, then
-        Assertions.assertThat(players.getPiecesByColor(Color.WHITE).size())
-                .isEqualTo(whitePieces.getPieces().size());
-    }
-
-    @Test
     @DisplayName("모든 킹이 살아 있지 않다면 false를 반환한다.")
     void everyKingAlive() {
         // when, then

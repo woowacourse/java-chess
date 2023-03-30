@@ -13,8 +13,8 @@ import java.util.List;
 
 public class InitPlayersFactory {
 
-    public static PieceDao pieceDao = PieceDaoImpl.getInstance();
-    public static TurnDao turnDao = TurnDaoImpl.getInstance();
+    private static final PieceDao pieceDao = PieceDaoImpl.getInstance();
+    private static final TurnDao turnDao = TurnDaoImpl.getInstance();
 
     public static Players initializePlayers() {
         Pieces whitePieces = getDbPiecesByColor(Color.WHITE);
