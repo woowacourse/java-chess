@@ -6,6 +6,8 @@ import chess.domain.Team;
 import java.util.Objects;
 
 public abstract class Piece {
+    protected static final String INVALID_TEAM_EXCEPTION_MESSAGE = "[ERROR] 올바르지 않는 팀 입니다.";
+
     protected final Role role;
     protected final Team team;
 
@@ -32,12 +34,20 @@ public abstract class Piece {
         return this.role == role;
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
     public Role getRole() {
         return role;
     }
 
     public Team getTeam() {
         return team;
+    }
+
+    public double getScore() {
+        return role.getScore();
     }
 
     public abstract boolean canMove(Position source, Position target);

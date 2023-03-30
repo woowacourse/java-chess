@@ -1,41 +1,149 @@
 package chess.controller;
 
-import chess.game.action.Action;
-import chess.game.GameCommand;
+import chess.dao.ChessGameDao;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.dto.PositionRequest;
 import chess.game.ChessGame;
+import chess.game.Command;
+import chess.game.GameCommand;
+import chess.game.GameId;
+import chess.game.GameResult;
+import chess.game.RandomTurnStrategy;
+import chess.game.action.Action;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionMapper;
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class ChessController {
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String END_COMMAND = "end";
-    private final Map<String, Action> actionMap = new HashMap<>();
+    private final Map<Command, Action> actionMap = new EnumMap<>(Command.class);
     private final ChessGame chessGame;
+    private final ChessGameDao chessGameDao;
 
-    public ChessController(ChessGame chessGame) {
+    public ChessController(ChessGame chessGame, ChessGameDao chessGameDao) {
         this.chessGame = chessGame;
-        actionMap.put(START_COMMAND, new Action(ignore -> startGame()));
-        actionMap.put(MOVE_COMMAND, new Action(this::movePiece));
-        actionMap.put(END_COMMAND, new Action(ignore -> endGame()));
+        this.chessGameDao = chessGameDao;
+        initializeActionMap();
     }
 
-    private void startGame() {
-        chessGame.start();
+    private void initializeActionMap() {
+        actionMap.put(Command.START, new Action(this::startGame));
+        actionMap.put(Command.MOVE, new Action(this::movePiece));
+        actionMap.put(Command.STATUS, new Action(ignore -> getGameStatus()));
+        actionMap.put(Command.LIST, new Action(ignore -> printAllGameIds()));
+        actionMap.put(Command.SAVE, new Action(ignore -> saveGame()));
+        actionMap.put(Command.LOAD, new Action(this::loadGame));
+        actionMap.put(Command.LEAVE, new Action(ignore -> leaveGame()));
+        actionMap.put(Command.END, new Action(ignore -> endGame()));
+    }
+
+    private void startGame(GameCommand gameCommand) {
+        GameId gameId = getGameId(gameCommand);
+        validateExistGame(gameId);
+        chessGame.start(gameId, new RandomTurnStrategy());
+        chessGameDao.transaction(() -> chessGame.save(chessGameDao::createChessGame));
+        OutputView.printTurn(chessGame.getTurn());
         OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private static GameId getGameId(GameCommand gameCommand) {
+        return new GameId(gameCommand.getParameter(0));
+    }
+
+    private void validateExistGame(GameId gameId) {
+        if (chessGameDao.isExistGame(gameId)) {
+            throw new IllegalArgumentException("[ERROR] 이미 존재하는 체스방 입니다.");
+        }
     }
 
     private void movePiece(GameCommand gameCommand) {
         PositionRequest source = PositionMapper.map(gameCommand.getParameter(0));
         PositionRequest target = PositionMapper.map(gameCommand.getParameter(1));
         chessGame.movePiece(Position.of(source.getX(), source.getY()), Position.of(target.getX(), target.getY()));
+        chessGame.checkCheckmate();
+        changeTurn();
         OutputView.printBoard(chessGame.getBoard());
+        if (chessGame.isEnd()) {
+            finishGame();
+        }
+    }
+
+    private void changeTurn() {
+        if (!chessGame.isEnd()) {
+            chessGame.changeTurn();
+            printCheckWarning();
+            OutputView.printTurn(chessGame.getTurn());
+        }
+    }
+
+    private void printCheckWarning() {
+        if (chessGame.isChecked()) {
+            OutputView.printCheckWarning(chessGame.getTurn());
+        }
+    }
+
+    private void finishGame() {
+        Team winner = chessGame.getWinner();
+        if (winner != Team.NONE) {
+            OutputView.printWinner(winner);
+            saveWinnerResult();
+            saveLoserResult();
+            chessGameDao.deleteGame(chessGame.getGameId());
+            leaveGame();
+        }
+    }
+
+    private void saveWinnerResult() {
+        String winnerName = InputView.readWinnerName();
+        double winnerScore = chessGame.getWinnerScore();
+        chessGameDao.saveGameResult(winnerName, winnerScore, GameResult.WIN);
+    }
+
+    private void saveLoserResult() {
+        String loserName = InputView.readLoserName();
+        double loserScore = chessGame.getLoserScore();
+        chessGameDao.saveGameResult(loserName, loserScore, GameResult.LOSE);
+    }
+
+    private void getGameStatus() {
+        double blackTeamScore = chessGame.getTeamScore(Team.BLACK);
+        double whiteTeamScore = chessGame.getTeamScore(Team.WHITE);
+        OutputView.printGameStatus(blackTeamScore, whiteTeamScore);
+    }
+
+    private void printAllGameIds() {
+        List<String> gameIds = chessGame.getAllGameIds(chessGameDao::findAllGameId);
+        OutputView.printGameIds(gameIds);
+    }
+
+    private void saveGame() {
+        chessGame.save(chessGameDao::saveChessGame);
+        OutputView.printSaveMessage();
+    }
+
+    private void loadGame(GameCommand gameCommand) {
+        GameId gameId = getGameId(gameCommand);
+        validateNotExistGame(gameId);
+        chessGame.load(gameId, chessGameDao::findBoard, chessGameDao::findGameState);
+        OutputView.printLoadMessage();
+        printCheckWarning();
+        OutputView.printTurn(chessGame.getTurn());
+        OutputView.printBoard(chessGame.getBoard());
+    }
+
+    private void validateNotExistGame(GameId gameId) {
+        if (!chessGameDao.isExistGame(gameId)) {
+            throw new IllegalArgumentException("[ERROR] 해당 체스방이 없습니다.");
+        }
+    }
+
+    private void leaveGame() {
+        chessGame.leave();
+        OutputView.printCommandMessage();
     }
 
     private void endGame() {
@@ -44,6 +152,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
+        OutputView.printCommandMessage();
         while (!chessGame.isEnd()) {
             printError(this::gameLoop);
         }

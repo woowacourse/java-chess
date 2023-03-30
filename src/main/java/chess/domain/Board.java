@@ -1,27 +1,26 @@
 package chess.domain;
 
+import static java.util.stream.Collectors.*;
+
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 public class Board {
     private static final String DUPLICATE_POSITION_EXCEPTION_MESSAGE = "[ERROR] 같은 위치로 움직일 수 없습니다.";
-    private static final String NO_EMPTY_ROUTE_EXCEPTION_MESSAGE = "[ERROR] 해당 경로에 말이 있습니다.";
-    private static final String EMPTY_PIECE_EXCEPTION_MESSAGE = "[ERROR] 빈 칸은 움직일 수 없습니다.";
     private static final String SAME_TEAM_EXCEPTION_MESSAGE = "[ERROR] 목적지에 아군 말이 존재합니다.";
     private static final String MOVE_FAIL_EXCEPTION_MESSAGE = "[ERROR] 해당 목적지로 이동할 수 없습니다.";
+    private static final String ATTACK_KING_EXCEPTION_MESSAGE = "[ERROR] 킹을 직접 공격할 수 없습니다.";
 
     private final Map<Position, Piece> squares;
 
     public Board(Map<Position, Piece> squares) {
         this.squares = squares;
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(squares);
     }
 
     public void move(Position source, Position target) {
@@ -34,21 +33,20 @@ public class Board {
         validateDuplicate(source, target);
         Piece sourcePiece = squares.get(source);
         Piece targetPiece = squares.get(target);
-        validateEmptySquare(sourcePiece);
         validateSameTeam(sourcePiece, targetPiece);
+        validateAttackKing(targetPiece);
         validateMovement(source, target);
-        validatePieceRole(source, target);
+    }
+
+    private void validateAttackKing(Piece piece) {
+        if (piece.isRoleOf(Role.KING)) {
+            throw new IllegalArgumentException(ATTACK_KING_EXCEPTION_MESSAGE);
+        }
     }
 
     private void validateDuplicate(Position source, Position target) {
         if (Objects.equals(source, target)) {
             throw new IllegalArgumentException(DUPLICATE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateEmptySquare(Piece sourcePiece) {
-        if (sourcePiece.isRoleOf(Role.EMPTY)) {
-            throw new IllegalArgumentException(EMPTY_PIECE_EXCEPTION_MESSAGE);
         }
     }
 
@@ -59,45 +57,74 @@ public class Board {
     }
 
     private void validateMovement(Position source, Position target) {
-        Piece sourcePiece = squares.get(source);
-        if (!sourcePiece.canMove(source, target)) {
+        if (!canMove(source, target)) {
             throw new IllegalArgumentException(MOVE_FAIL_EXCEPTION_MESSAGE);
         }
     }
 
-    private void validatePieceRole(Position source, Position target) {
+    private boolean canMove(Position source, Position target) {
         Piece sourcePiece = squares.get(source);
-        if (!sourcePiece.isRoleOf(Role.KNIGHT)) {
-            validateCollision(source, target);
+        if (sourcePiece.isRoleOf(Role.KNIGHT)) {
+            return sourcePiece.canMove(source, target);
         }
         if (sourcePiece.isRoleOf(Role.PAWN)) {
-            validatePawnMove(source, target);
+            return sourcePiece.canMove(source, target) && canPawnMove(source, target);
         }
+        return sourcePiece.canMove(source, target) && isEmptyRoute(source, target);
     }
 
-    private void validateCollision(Position source, Position target) {
+    private boolean canPawnMove(Position source, Position target) {
+        Piece targetPiece = squares.get(target);
+        if (targetPiece.isRoleOf(Role.EMPTY)) {
+            return source.isSameXAs(target);
+        }
+        return !source.isSameXAs(target);
+    }
+
+    private boolean isEmptyRoute(Position source, Position target) {
         List<Position> routes = source.getBetweenPositions(target);
-        boolean isEmptyRoute = routes.stream()
+        return routes.stream()
                 .map(squares::get)
                 .allMatch(piece -> piece.isRoleOf(Role.EMPTY));
-        if (!isEmptyRoute) {
-            throw new IllegalArgumentException(NO_EMPTY_ROUTE_EXCEPTION_MESSAGE);
-        }
     }
 
-    private void validatePawnMove(Position source, Position target) {
-        if (validatePawnAttack(source, target) || validatePawnForward(source, target)) {
-            throw new IllegalArgumentException(MOVE_FAIL_EXCEPTION_MESSAGE);
-        }
+    public Map<Position, Piece> getTeamSquares(Team team) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .collect(toMap(Entry::getKey, Entry::getValue));
     }
 
-    private boolean validatePawnAttack(Position source, Position target) {
-        Piece targetPiece = squares.get(target);
-        return !source.isSameXAs(target) && targetPiece.isRoleOf(Role.EMPTY);
+    public Map<Integer, Long> getPawnCountByX(Team team) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .filter(entry -> entry.getValue().isRoleOf(Role.PAWN))
+                .collect(groupingBy(entry -> entry.getKey().getX(), counting()));
     }
 
-    private boolean validatePawnForward(Position source, Position target) {
-        Piece targetPiece = squares.get(target);
-        return source.isSameXAs(target) && !targetPiece.isRoleOf(Role.EMPTY);
+    public boolean isChecked(Team team) {
+        Position kingPosition = getKingPosition(team);
+        return isAnyMovableTo(team.opposite(), kingPosition);
+    }
+
+    private Position getKingPosition(Team team) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue() == King.of(team))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 체스판에 킹이 존재하지 않습니다."))
+                .getKey();
+    }
+
+    private boolean isAnyMovableTo(Team team, Position target) {
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .anyMatch(entry -> canMove(entry.getKey(), target));
+    }
+
+    public Team getPieceTeam(Position target) {
+        return squares.get(target).getTeam();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(squares);
     }
 }

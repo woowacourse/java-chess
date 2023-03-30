@@ -8,85 +8,167 @@
 
 ```mermaid
 classDiagram
-  class Board {
-    -Map~Position|Piece~: Squares
-  }
+    class Board {
+        -Map~Position|Piece~: Squares
+    }
 
-  class Piece {
-    <<abstract>>
-    -Role: role
-    -Team: Team
-    +canMove(Position src, Position dst)
-  }
+    class Piece {
+        <<abstract>>
+        -Role: role
+        -Team: Team
+        +canMove(Position src, Position dst)
+    }
 
-  class Position {
-    - int: x
-    - int: y
-  }
+    class Position {
+        - int: x
+        - int: y
+    }
 
-  class Role {
-    <<enumeration>>
-    KING,
-    QUEEN,
-    ROOK,
-    BISHOP,
-    KNIGHT,
-    PAWN,
-    EMPTY
-  }
+    class Role {
+        <<enumeration>>
+        KING,
+        QUEEN,
+        ROOK,
+        BISHOP,
+        KNIGHT,
+        PAWN,
+        EMPTY
+    }
 
-  class Team {
-    <<enumeration>>
-    WHITE,
-    BLACK,
-    NONE
-  }
+    class Team {
+        <<enumeration>>
+        WHITE,
+        BLACK,
+        NONE
+    }
 ```
+
 ```mermaid
 flowchart BT
-  Pawn --> Piece
-  King --> Piece
-  Knight --> Piece
-  Bishop --> Piece
-  Queen --> Piece
-  Rook --> Piece
-  Empty --> Piece
+    Pawn --> Piece
+    King --> Piece
+    Knight --> Piece
+    Bishop --> Piece
+    Queen --> Piece
+    Rook --> Piece
+    Empty --> Piece
 ```
+
+```mermaid
+classDiagram
+    direction BT
+    class BlackCheckedState
+    class BlackTurnState
+    class BlackWinState
+    class EndState
+    class GameState {
+        <<Interface>>
+    }
+    class NoneWinState
+    class RunningState
+    class WaitingState
+    class WhiteCheckedState
+    class WhiteTurnState
+    class WhiteWinState
+
+    BlackCheckedState --> CheckedState
+    BlackTurnState --> RunningState
+    BlackWinState --> EndState
+    CheckedState --> RunningState
+    EndState ..> GameState
+    NoneWinState --> EndState
+    RunningState ..> GameState
+    WaitingState ..> GameState
+    WhiteCheckedState --> CheckedState
+    WhiteTurnState --> RunningState
+    WhiteWinState --> EndState 
+```
+
 ```mermaid
 stateDiagram
-  ChessGame --> WaitingState
-  state WaitingState {
-    [*] --> startGame
-    [*] --> movePiece
-    [*] --> getBoard
-    startGame --> [*]
-    movePiece --> Exception
-    getBoard --> Exception
-  }
+    ChessGame --> WaitingState
+    state WaitingState {
+        [*] --> startGame
+        [*] --> saveGame
+        [*] --> loadGame
+        [*] --> movePiece
+        [*] --> getBoard
+        startGame --> [*]
+        saveGame --> Exception
+        loadGame --> [*]
+        movePiece --> Exception
+        getBoard --> Exception
+    }
 ```
+
 ```mermaid
 stateDiagram
-  ChessGame --> RunningState
-  state RunningState {
-    [*] --> startGame
-    [*] --> movePiece
-    [*] --> getBoard
-    startGame --> Exception
-    movePiece --> [*]
-    getBoard --> [*]
-  }
+    ChessGame --> RunningState
+    state RunningState {
+        [*] --> startGame
+        [*] --> saveGame
+        [*] --> loadGame
+        [*] --> movePiece
+        [*] --> getBoard
+        startGame --> Exception
+        saveGame --> [*]
+        loadGame --> Exception
+        movePiece --> [*]
+        getBoard --> [*]
+    }
 ```
+
 ```mermaid
 stateDiagram
-  ChessGame --> EndState
-  state EndState {
-    [*] --> startGame
-    [*] --> movePiece
-    [*] --> getBoard
-    startGame --> Exception
-    movePiece --> Exception
-    getBoard --> Exception
+    ChessGame --> EndState
+    state EndState {
+        [*] --> startGame
+        [*] --> saveGame
+        [*] --> loadGame
+        [*] --> movePiece
+        [*] --> getBoard
+        startGame --> Exception
+        saveGame --> Exception
+        loadGame --> Exception
+        movePiece --> Exception
+        getBoard --> [*]
+    }
+```
+DB 설정 파일 (src/main/resources/db_config.txt)
+```
+예시)
+URL=jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC
+USERNAME=root
+PASSWORD=root
+```
+
+DB Schema
+```mermaid
+classDiagram
+  direction BT
+  class board {
+    int(11) game_id
+    int(11) x
+    int(11) y
+    varchar(10) role
+    varchar(10) team
   }
+  class game {
+    int(11) game_id
+  }
+  class game_result {
+    varchar(10) nickname
+    int(11) score
+    varchar(10) result
+    int(11) game_result_id
+  }
+  class state {
+    int(11) game_id
+    varchar(15) state
+  }
+
+  board  -->  game : game_id
+  state  -->  game : game_id
 ```
 
 ## 기능 요구 사항
@@ -96,22 +178,42 @@ stateDiagram
 - [X] 체스판의 가로 위치는 왼쪽부터 a ~ h 이다.
 - [X] 체스판의 세로 위치는 아래부터 1 ~ 8 이다.
 - [X] 각 진영은 검은색(대문자)와 흰색(소문자) 편으로 구분한다.
-- [x] 게임을 시작하고, start를 입력해야 체스판을 출력한다.
-- [x] 게임을 시작하고, end를 입력하면 게임을 종료한다.
+- [x] 게임을 시작하고, `start <방번호>`를 입력해야 게임을 진행한다.
+- [x] 게임을 시작하고, `end`를 입력하면 게임을 종료한다.
 - [X] 게임을 시작하면, 보드에 말이 세팅되어야 한다.
-- [X] 체스판이 초기화되고, `move source위치 target위치`를 입력하면 체스 말이 이동한다.
+- [X] 체스판이 초기화되고, `move <source> <target>`를 입력하면 체스 말이 이동한다.
 - [X] 체스판이 초기화되지 않고 `move`를 입력하면 예외가 발생한다.
 - [X] 체스말이 움직일 수 없는 위치로 이동하면 예외가 발생한다.
+- [X] 상대팀을 체크메이트 상태로 만들면 승리한다.
+- [X] 게임 도중 각 진영의 점수를 출력하고, 어느 진영이 이겼는지 알 수 있다.
+- [X] 시작 시 누가 먼저 말을 움직일지는 랜덤하게 선택한다.
+- [X] 나의 턴이 아닌데 말을 움직이면 예외가 발생한다.
+- [X] 각 말의 점수가 정확히 계산되어야 한다.
+  - [X] 같은 세로 줄에 있는 `Pawn`은 각 0.5점씩 계산해야 한다.
+- [X] 게임을 시작하고 `status`를 입력하면 게임의 각 진영에 대한 대한 점수를 출력한다.
+- [X] 게임을 시작하고 `save`를 입력하면 진행 상황을 저장할 수 있다.
+- [X] 게임을 시작하기 전 `load <방번호>`를 입력하면 저장했던 진행 상황을 불러올 수 있다.
+- [X] 게임을 시작하기 전 `list`를 입력하면 진행중인 게임방을 볼 수 있다.
+- [X] 게임을 시작하고 `leave`를 입력하면 진행중인 게임에서 나갈 수 있다.
+- [X] 게임의 승패가 정해지면 게임방을 삭제하고, 승패의 결과를 기록할 수 있다.
 
 ### 예외 상황
 
-- [X] 커맨드가 `start`, `end`, `move`가 아닌 경우 예외가 발생한다.
-- [X] 보드가 세팅되지 않았는데 `move`를 입력하는 경우 예외가 발생한다.
+- [X] 커맨드가 `start`, `end`, `move`, `status`, `save`, `load`, `list`, `leave` 가 아닌 경우 예외가 발생한다.
+- [X] `start`로 새로운 게임을 시작할 때 이미 같은 번호의 게임방이 있으면 예외가 발생한다.
+- [X] 게임을 시작하지 않았는데 `move`를 입력하는 경우 예외가 발생한다.
 - [X] `move`에 잘못된 위치를 입력하면 예외가 발생한다.
   - [X] source와 target의 위치가 동일하면 예외가 발생한다.
   - [X] source와 target의 위치가 체스판을 벗어나는 경우 예외가 발생한다.
   - [X] target에 같은 팀의 말이 있는 경우 예외가 발생한다.
   - [X] source에 말이 없는 경우 예외가 발생한다.
+- [X] 게임을 시작하지 않았는데 `status`를 입력하는 경우 예외가 발생한다.
+- [X] 게임을 시작하지 않았는데 `save`를 입력하는 경우 예외가 발생한다.
+- [X] 게임을 시작했는데 `load`를 입력하는 경우 예외가 발생한다.
+  - [X] 잘못된 `방번호`를 입력하면 예외가 발생한다.
+- [X] 나의 턴이 아닌데, 말을 움직이면 예외가 발생한다.
+- [X] 게임을 시작하지 않았는데 `leave`를 입력하는 경우 예외가 발생한다.
+- [X] 게임을 시작했는데 `list`를 입력하는 경우 예외가 발생한다.
 
 ### 움직임
 

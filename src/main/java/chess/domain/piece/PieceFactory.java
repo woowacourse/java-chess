@@ -12,12 +12,12 @@ public class PieceFactory {
     private PieceFactory() {}
 
     static {
-        FACTORY.put(Role.PAWN, Pawn::new);
-        FACTORY.put(Role.ROOK, Rook::new);
-        FACTORY.put(Role.KNIGHT, Knight::new);
-        FACTORY.put(Role.BISHOP, Bishop::new);
-        FACTORY.put(Role.QUEEN, Queen::new);
-        FACTORY.put(Role.KING, King::new);
+        FACTORY.put(Role.PAWN, Pawn::of);
+        FACTORY.put(Role.ROOK, Rook::of);
+        FACTORY.put(Role.KNIGHT, Knight::of);
+        FACTORY.put(Role.BISHOP, Bishop::of);
+        FACTORY.put(Role.QUEEN, Queen::of);
+        FACTORY.put(Role.KING, King::of);
         FACTORY.put(Role.EMPTY, ignore -> Empty.INSTANCE);
     }
 

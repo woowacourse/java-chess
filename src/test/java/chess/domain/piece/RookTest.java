@@ -16,7 +16,7 @@ class RookTest {
     @DisplayName("룩의 이동 조건과 일치하는 경우 true가 반환되어야 한다.")
     void canMove_Success(int x, int y) {
         // given
-        Piece piece = new Rook(Team.BLACK);
+        Piece piece = Rook.of(Team.BLACK);
         Position sourcePosition = Position.of(3, 3);
         Position targetPosition = Position.of(x, y);
 
@@ -30,7 +30,7 @@ class RookTest {
     @DisplayName("룩의 이동 조건과 다를경우 false가 반환되어야 한다.")
     void canMove_Fail(int x, int y) {
         // given
-        Piece piece = new Rook(Team.BLACK);
+        Piece piece = Rook.of(Team.BLACK);
         Position sourcePosition = Position.of(0, 0);
         Position targetPosition = Position.of(x, y);
 
