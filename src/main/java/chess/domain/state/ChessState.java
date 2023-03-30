@@ -12,6 +12,8 @@ import java.util.Set;
 
 public abstract class ChessState {
 
+    private static final int INITIAL_GAME_ID = 0;
+
     protected final ChessGame chessGame;
     protected final ChessGameDao chessGameDao;
     protected final PieceDao pieceDao;
@@ -27,7 +29,7 @@ public abstract class ChessState {
             final ChessGameDao chessGameDao,
             final PieceDao pieceDao) {
         return new ChessReady(
-                ChessGame.createWith(piecesGenerator),
+                ChessGame.createWith(piecesGenerator, INITIAL_GAME_ID),
                 chessGameDao,
                 pieceDao
         );

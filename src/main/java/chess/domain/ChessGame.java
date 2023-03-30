@@ -32,16 +32,18 @@ public class ChessGame {
         ));
     }
 
+    private final int gameRoomId;
     private final Board board;
     private Color currentTurnColor;
 
-    private ChessGame(final Board board, final Color currentTurnColor) {
+    private ChessGame(final Board board, final Color currentTurnColor, final int gameRoomId) {
         this.board = board;
         this.currentTurnColor = currentTurnColor;
+        this.gameRoomId = gameRoomId;
     }
 
-    public static ChessGame createWith(final PiecesGenerator piecesGenerator) {
-        return new ChessGame(Board.createWith(piecesGenerator), Color.WHITE);
+    public static ChessGame createWith(final PiecesGenerator piecesGenerator, final int gameRoomId) {
+        return new ChessGame(Board.createWith(piecesGenerator), Color.WHITE, gameRoomId);
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
@@ -131,5 +133,9 @@ public class ChessGame {
 
     public Set<Piece> getExistingPieces() {
         return board.getExistingPieces();
+    }
+
+    public int getGameRoomId() {
+        return gameRoomId;
     }
 }

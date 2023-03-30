@@ -9,14 +9,8 @@ import java.sql.SQLException;
 
 public class DbChessGameDao implements ChessGameDao {
 
-    private final int gameRoomId;
-
-    public DbChessGameDao(final int gameRoomId) {
-        this.gameRoomId = gameRoomId;
-    }
-
     @Override
-    public void makeGameRoom(final Color initialTurnColor) {
+    public void makeGameRoom(final int gameRoomId, final Color initialTurnColor) {
         final String query = "INSERT INTO gameRooms SET " +
                 "room_id = ?, " +
                 "turn_color = ?";
@@ -32,7 +26,7 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public Color findCurrentTurnColor() {
+    public Color findCurrentTurnColor(final int gameRoomId) {
         final String query = "SELECT turn_color FROM gameRooms WHERE room_id = ?";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -50,7 +44,7 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void updateCurrentTurnColor(final Color turnColor) {
+    public void updateCurrentTurnColor(final int gameRoomId, final Color turnColor) {
         final String query = "UPDATE gameRooms SET turn_color = ? WHERE room_id = ?";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -64,7 +58,7 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void removeGameDataFromDb() {
+    public void removeGameDataFromDb(final int gameRoomId) {
         final String query = "DELETE FROM gameRooms where room_id = ?";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -74,10 +68,5 @@ public class DbChessGameDao implements ChessGameDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public int getGameRoomId() {
-        return gameRoomId;
     }
 }

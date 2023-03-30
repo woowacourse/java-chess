@@ -6,11 +6,11 @@ import java.util.Set;
 
 public interface PieceDao {
 
-    void addPiece(final Piece piece);
+    void addPiece(final int gameRoomId, final Piece piece);
 
-    void deletePiece(final Piece piece);
+    void deletePiece(final int gameRoomId, final Piece piece);
 
-    Set<Piece> findAllPieceInGame();
+    Set<Piece> findAllPieceInGame(final int gameRoomId);
 
-    void deleteAllInGame();
+    void deleteAllInGame(final int gameRoomId);
 }

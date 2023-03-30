@@ -39,12 +39,15 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessGameTest {
 
+    private static final int TEST_GAME_ROOM_ID = 1;
+
     @Test
     @DisplayName("턴이 바뀌었는지 확인한다")
     void change_turn_test() {
-        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
-                        new Pawn(A2, WHITE)
-                )));
+        final ChessGame chessGame = ChessGame.createWith(
+                new TestPiecesGenerator(List.of(new Pawn(A2, WHITE))),
+                TEST_GAME_ROOM_ID
+                );
 
         chessGame.move(A2, A4);
 
@@ -55,10 +58,11 @@ class ChessGameTest {
     @Test
     @DisplayName("입력 받은 현재 위치 말 색상이 이동할 차례가 아니면, 예외를 던진다.")
     void invalid_turn_color_moving_throw_exception() {
-        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
+        final ChessGame chessGame = ChessGame.createWith(
+                new TestPiecesGenerator(List.of(
                         new Pawn(A2, WHITE),
-                        new Pawn(A7, BLACK)
-                )));
+                        new Pawn(A7, BLACK))),
+                TEST_GAME_ROOM_ID);
 
         assertThatThrownBy(() -> chessGame.move(A7, A6))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -68,11 +72,12 @@ class ChessGameTest {
     @Test
     @DisplayName("왕이 잡혔는지 확인한다")
     void king_caught_state_check_test() {
-        final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
+        final ChessGame chessGame = ChessGame.createWith(
+                new TestPiecesGenerator(List.of(
                         new King(E1, WHITE),
                         new King(E8, BLACK),
-                        new Queen(B5, WHITE)
-                )));
+                        new Queen(B5, WHITE))),
+                TEST_GAME_ROOM_ID);
 
         final boolean initialKingCaught = chessGame.isKingCaught();
         chessGame.move(B5, E8);
@@ -103,7 +108,8 @@ class ChessGameTest {
                             new Knight(B1, WHITE),  // 2.5
                             new Bishop(C1, WHITE),  // 3
                             new Rook(A1, WHITE)     // 5
-                    )));
+                    )),
+                    TEST_GAME_ROOM_ID);
             final Color expectedWinningTeamColor = BLANK;
             final double expectedBlackScore = 2.5;
             final double expectedWhiteScore = 19.5;
@@ -131,7 +137,8 @@ class ChessGameTest {
                             new Knight(B1, WHITE),
                             new Bishop(C1, WHITE),
                             new Rook(A1, WHITE)
-                    )));
+                    )),
+                    TEST_GAME_ROOM_ID);
             final Color expectedWinningTeamColor = BLACK;
             final double expectedBlackScore = 0;
             final double expectedWhiteScore = 0;
@@ -159,7 +166,8 @@ class ChessGameTest {
                             new Knight(B1, WHITE),
                             new Bishop(C1, WHITE),
                             new Rook(A1, WHITE)
-                    )));
+                    )),
+                    TEST_GAME_ROOM_ID);
             final Color expectedWinningTeamColor = WHITE;
             final double expectedBlackScore = 0;
             final double expectedWhiteScore = 0;

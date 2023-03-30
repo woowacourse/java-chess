@@ -4,13 +4,11 @@ import chess.domain.piece.property.Color;
 
 public interface ChessGameDao {
 
-    void makeGameRoom(Color initialTurnColor);
+    void makeGameRoom(final int gameRoomId, final Color initialTurnColor);
 
-    Color findCurrentTurnColor();
+    Color findCurrentTurnColor(final int gameRoomId);
 
-    void updateCurrentTurnColor(final Color turnColor);
+    void updateCurrentTurnColor(final int gameRoomId, final Color turnColor);
 
-    void removeGameDataFromDb();
-
-    int getGameRoomId();
+    void removeGameDataFromDb(final int gameRoomId);
 }

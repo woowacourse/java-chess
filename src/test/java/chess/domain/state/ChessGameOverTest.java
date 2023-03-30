@@ -28,13 +28,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessGameOverTest {
 
+    private static final int TEST_GAME_ROOM_ID = 1;
+
     @Test
     @DisplayName("게임 시작 명령시 새 게임을 생성한다")
     void start_new_game_test() {
         final ChessGameOver chessGameOver = new ChessGameOver(ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
-                new Rook(A3, WHITE)))
+                new Rook(A3, WHITE))),
+                TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final ChessState state = chessGameOver.start();
@@ -48,7 +51,8 @@ class ChessGameOverTest {
         final ChessGameOver chessGameOver = new ChessGameOver(ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
-                new Rook(A3, WHITE)))
+                new Rook(A3, WHITE))),
+                TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessGameOver.move(A3, A1))
@@ -62,7 +66,8 @@ class ChessGameOverTest {
         final ChessGameOver chessGameOver = new ChessGameOver(ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
-                new Rook(A3, WHITE)))
+                new Rook(A3, WHITE))),
+                TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final ChessState state = chessGameOver.end();
@@ -76,7 +81,8 @@ class ChessGameOverTest {
         final ChessGameOver chessGameOver = new ChessGameOver(ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
-                new Rook(A3, WHITE)))
+                new Rook(A3, WHITE))),
+                TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final GameStatus status = chessGameOver.status();
@@ -94,7 +100,8 @@ class ChessGameOverTest {
         final ChessGameOver chessGameOver = new ChessGameOver(ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
-                new Rook(A3, WHITE)))
+                new Rook(A3, WHITE))),
+                TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final Set<Piece> existingPieces = chessGameOver.getExistingPieces();
@@ -112,7 +119,8 @@ class ChessGameOverTest {
         final ChessGameOver chessGameOver = new ChessGameOver(ChessGame.createWith(new TestPiecesGenerator(List.of(
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
-                new Rook(A3, WHITE)))
+                new Rook(A3, WHITE))),
+                TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final boolean isEnd = chessGameOver.isEnd();

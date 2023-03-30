@@ -25,10 +25,10 @@ public final class ChessReady extends ChessState {
         final GameRoomDao gameRoomDao = new GameRoomDao();
         final Set<Integer> exisingRoomNumbers = gameRoomDao.findExisingRoomNumbers();
         if (exisingRoomNumbers.contains(1)) {
-            final ChessGame newChessGame = ChessGame.createWith(new DbPieceLoadingGenerator(new DbPieceDao(1)));
+            final ChessGame newChessGame = ChessGame.createWith(new DbPieceLoadingGenerator(new DbPieceDao(), 1), 1);
             return new ChessRunning(newChessGame, chessGameDao, pieceDao);
         }
-        final ChessGame newChessGame = ChessGame.createWith(new StartingPiecesGenerator());
+        final ChessGame newChessGame = ChessGame.createWith(new StartingPiecesGenerator(), 1);
         return new ChessRunning(newChessGame, chessGameDao, pieceDao);
     }
 

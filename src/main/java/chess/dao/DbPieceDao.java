@@ -16,14 +16,8 @@ import java.util.Set;
 
 public class DbPieceDao implements PieceDao {
 
-    private final int gameRoomId;
-
-    public DbPieceDao(final int gameRoomId) {
-        this.gameRoomId = gameRoomId;
-    }
-
     @Override
-    public void addPiece(final Piece piece) {
+    public void addPiece(final int gameRoomId, final Piece piece) {
         final String query = "INSERT INTO pieces SET " +
                 "position_file = ?, " +
                 "position_rank = ?, " +
@@ -45,7 +39,7 @@ public class DbPieceDao implements PieceDao {
     }
 
     @Override
-    public void deletePiece(final Piece piece) {
+    public void deletePiece(final int gameRoomId, final Piece piece) {
         final String query = "DELETE FROM pieces " +
                 "WHERE " +
                 "position_file = ? AND " +
@@ -65,7 +59,7 @@ public class DbPieceDao implements PieceDao {
     }
 
     @Override
-    public Set<Piece> findAllPieceInGame() {
+    public Set<Piece> findAllPieceInGame(final int gameRoomId) {
         final String query = "SELECT * FROM pieces WHERE room_id = ?";
         final Set<Piece> pieces = new HashSet<>();
 
@@ -90,7 +84,7 @@ public class DbPieceDao implements PieceDao {
     }
 
     @Override
-    public void deleteAllInGame() {
+    public void deleteAllInGame(final int gameRoomId) {
         final String query = "DELETE FROM pieces WHERE room_id = ?";
 
         try (final Connection connection = ConnectionGenerator.getConnection();

@@ -42,7 +42,7 @@ public class ChessController {
 
     public void run() {
         outputView.printGameStartGuideMessage();
-        ChessState chess = ChessState.start(new EmptyPieceGenerator(), new DbChessGameDao(1), new DbPieceDao(1));
+        ChessState chess = ChessState.start(new EmptyPieceGenerator(), new DbChessGameDao(), new DbPieceDao());
         do {
             chess = readAndProcessCommand(chess);
         } while (!chess.isEnd());

@@ -20,7 +20,10 @@ class ChessReadyTest {
     @Test
     @DisplayName("게임 시작 명령시 상태를 진행중으로 변경한다")
     void start_chess_test() {
-        final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessReady chessReady = new ChessReady(
+                ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList()), 1),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao());
 
         final ChessState state = chessReady.start();
 
@@ -30,7 +33,10 @@ class ChessReadyTest {
     @Test
     @DisplayName("이동 명령시 예외를 발생시킨다")
     void move_chess_command_throw_exception() {
-        final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessReady chessReady = new ChessReady(
+                ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList()), 1),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessReady.move(A2, A3))
                 .isInstanceOf(IllegalStateException.class)
@@ -40,7 +46,10 @@ class ChessReadyTest {
     @Test
     @DisplayName("게임 종료 명령시 상태를 종료 변경한다")
     void end_chess_test() {
-        final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessReady chessReady = new ChessReady(
+                ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList()), 1),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao());
 
         final ChessState state = chessReady.end();
 
@@ -50,7 +59,10 @@ class ChessReadyTest {
     @Test
     @DisplayName("상태 출력 명령시 예외를 발생시킨다")
     void status_command_throw_exception() {
-        final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessReady chessReady = new ChessReady(
+                ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList()), 1),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessReady.status())
                 .isInstanceOf(IllegalStateException.class)
@@ -60,7 +72,10 @@ class ChessReadyTest {
     @Test
     @DisplayName("체스말을 가져오려하면 예외를 발생시킨다")
     void getting_existing_piece_throw_exception_test() {
-        final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessReady chessReady = new ChessReady(
+                ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList()), 1),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessReady.getExistingPieces())
                 .isInstanceOf(IllegalStateException.class)
@@ -70,7 +85,10 @@ class ChessReadyTest {
     @Test
     @DisplayName("게임 종료 여부를 확인한다")
     void check_if_is_end_test() {
-        final ChessReady chessReady = new ChessReady(ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList())), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessReady chessReady = new ChessReady(
+                ChessGame.createWith(new TestPiecesGenerator(Collections.emptyList()), 1),
+                new InMemoryChessGameDao(),
+                new InMemoryPieceDao());
 
         final boolean isEnd = chessReady.isEnd();
 

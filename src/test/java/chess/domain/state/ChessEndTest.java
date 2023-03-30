@@ -23,6 +23,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ChessEndTest {
 
+    private static final int TEST_GAME_ROOM_ID = 1;
     private static final Pawn pawn = new Pawn(A2, Color.WHITE);
 
     @Nested
@@ -32,7 +33,7 @@ class ChessEndTest {
         @Test
         @DisplayName("게임 시작")
         void start_throws_exception() {
-            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))), new InMemoryChessGameDao(), new InMemoryPieceDao());
+            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn)), TEST_GAME_ROOM_ID), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.start())
                     .isInstanceOf(IllegalStateException.class)
@@ -42,7 +43,7 @@ class ChessEndTest {
         @Test
         @DisplayName("이동")
         void move_throws_exception() {
-            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))), new InMemoryChessGameDao(), new InMemoryPieceDao());
+            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn)), TEST_GAME_ROOM_ID), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.move(A2, A4))
                     .isInstanceOf(IllegalStateException.class)
@@ -52,7 +53,7 @@ class ChessEndTest {
         @Test
         @DisplayName("종료")
         void end_throws_exception() {
-            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))), new InMemoryChessGameDao(), new InMemoryPieceDao());
+            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn)), TEST_GAME_ROOM_ID), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.end())
                     .isInstanceOf(IllegalStateException.class)
@@ -62,7 +63,7 @@ class ChessEndTest {
         @Test
         @DisplayName("게임 상태")
         void status_throws_exception() {
-            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))), new InMemoryChessGameDao(), new InMemoryPieceDao());
+            final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn)), TEST_GAME_ROOM_ID), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.status())
                     .isInstanceOf(IllegalStateException.class)
@@ -74,7 +75,7 @@ class ChessEndTest {
     @Test
     @DisplayName("체스말을 가져온다")
     void getting_existing_piece_test() {
-        final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn)), TEST_GAME_ROOM_ID), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final Set<Piece> existingPieces = chessEnd.getExistingPieces();
 
@@ -88,7 +89,7 @@ class ChessEndTest {
     @Test
     @DisplayName("게임 종료 여부를 확인한다")
     void check_if_is_end_test() {
-        final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn))), new InMemoryChessGameDao(), new InMemoryPieceDao());
+        final ChessEnd chessEnd = new ChessEnd(ChessGame.createWith(new TestPiecesGenerator(List.of(pawn)), TEST_GAME_ROOM_ID), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         final boolean isEnd = chessEnd.isEnd();
 
