@@ -43,7 +43,7 @@ class BoardTest {
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("boardTestProvider")
     void Should_Create_When_Board(int index, PieceType pieceType) {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
 
         assertThat(board.getPieces().get(index).getPieceType()).isEqualTo(pieceType);
     }
@@ -51,7 +51,7 @@ class BoardTest {
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 없을 경우 이동할 수 있다.")
     @Test
     void Should_Move_When_NoPieceOnPath() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.A, Rank.TWO);
         Square target = new Square(File.A, Rank.THREE);
 
@@ -61,7 +61,7 @@ class BoardTest {
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 없을 경우 이동할 수 있다.")
     @Test
     void Should_Move_When_NoPieceOnPath2() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.B, Rank.ONE);
         Square target = new Square(File.A, Rank.THREE);
 
@@ -71,7 +71,7 @@ class BoardTest {
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 있을 경우 이동할 수 없다.")
     @Test
     void Should_DontMove_When_PieceOnPath() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.A, Rank.ONE);
         Square target = new Square(File.A, Rank.TWO);
 
@@ -83,7 +83,7 @@ class BoardTest {
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 있을 경우 이동할 수 없다.")
     @Test
     void Should_DontMove_When_PieceOnPath2() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.A, Rank.ONE);
         Square target = new Square(File.A, Rank.FIVE);
 
@@ -97,7 +97,7 @@ class BoardTest {
     @DisplayName("Target에 상대 피스가 있을 경우 이동할 수 있다.")
     @Test
     void Should_Move_When_OtherCampPieceOnTarget() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.B, Rank.SIX);
         Square target = new Square(File.A, Rank.SEVEN);
 
@@ -111,7 +111,7 @@ class BoardTest {
     @DisplayName("폰이 전진 방향 이동을 할 때 Target 위치에 말이 있을 경우 움직일 수 없다.")
     @Test
     void Should_ThrowException_When_PawnForwardWithTargetNotEmpty() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.B, Rank.SIX);
         Square target = new Square(File.B, Rank.SEVEN);
 
@@ -127,7 +127,7 @@ class BoardTest {
     @DisplayName("폰이 대각선 방향 이동을 할 때 Target 위치에 같은 팀의 말이면 움직일 수 없다.")
     @Test
     void Should_ThrowException_When_PawnDiagonalWithTargetSameTeam() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.C, Rank.TWO);
         Square target = new Square(File.B, Rank.THREE);
 
@@ -141,7 +141,7 @@ class BoardTest {
     @DisplayName("폰이 대각선 방향 이동을 할 때 Target 위치에 빈 말이 있으면 움직일 수 없다.")
     @Test
     void Should_ThrowException_When_PawnDiagonalWithTargetEmpty() {
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateBoard());
         Square source = new Square(File.B, Rank.TWO);
         Square target = new Square(File.C, Rank.THREE);
 

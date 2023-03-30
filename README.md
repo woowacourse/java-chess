@@ -131,18 +131,28 @@
 ### SQL 구조
 
 ```sql
-CREATE TABLE game (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE game
+(
+  id   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   turn VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE piece (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  game_id INT NOT NULL,
-  FOREIGN KEY(game_id) REFERENCES game(id) ON UPDATE CASCADE,
+CREATE TABLE piece
+(
+  id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  game_id    INT          NOT NULL,
+  FOREIGN KEY (game_id) REFERENCES game (id) ON UPDATE CASCADE,
   piece_type VARCHAR(255) NOT NULL,
   piece_file VARCHAR(255) NOT NULL,
   piece_rank VARCHAR(255) NOT NULL,
   piece_team VARCHAR(255) NOT NULL
 );
 ```
+
+## [3,4단계 미션 후 리팩토링 목록]
+
+- [ ]  null 체크 Optional 객체를 사용하도록 변경
+- [ ]  `getWhitePieces(), getBlackPieces()` 하나의 메서드로 리팩토링
+- [ ]  `calculateWhiteScore(),``calculateBlackScore()`  하나의 메서드로 리팩토링
+- [ ]  문자열을 먼저 두고 equals 비교 하도록 수정
+- [ ]  객체들의 책임 분리
