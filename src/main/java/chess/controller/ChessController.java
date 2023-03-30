@@ -8,7 +8,7 @@ import chess.dto.PositionRequest;
 import chess.dto.SquareResponse;
 import chess.game.ChessGame;
 import chess.game.Turn;
-import chess.service.ChessGameService;
+import chess.repository.ChessGameRepository;
 import chess.view.*;
 
 import java.util.List;
@@ -22,19 +22,19 @@ public class ChessController {
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
-    private final ChessGameService chessGameService;
+    private final ChessGameRepository chessGameRepository;
 
-    public ChessController(ChessGameService chessGameService) {
-        this.chessGameService = chessGameService;
+    public ChessController(ChessGameRepository chessGameRepository) {
+        this.chessGameRepository = chessGameRepository;
     }
 
     public void start() {
-        List<Integer> allGameIds = chessGameService.findAllGameIds();
+        List<Integer> allGameIds = chessGameRepository.findAllGameIds();
         if (allGameIds.isEmpty()) {
             startNewGame();
             return;
         }
-        OutputView.printGameNumberMessage(chessGameService.findAllGameIds());
+        OutputView.printGameNumberMessage(chessGameRepository.findAllGameIds());
         int gameNumber = repeat(() -> InputView.readGameNumber(allGameIds));
         if (gameNumber == NEW_GAME_NUMBER) {
             startNewGame();
@@ -46,12 +46,12 @@ public class ChessController {
     private void startNewGame() {
         Board board = new Board(BoardFactory.create());
         ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
-        chessGameService.save(chessGame, GameStatus.CONTINUING.name());
+        chessGameRepository.save(chessGame, GameStatus.CONTINUING.name());
         start(chessGame);
     }
 
     private void startExistGame(int gameNumber) {
-        ChessGame chessGame = chessGameService.findById(gameNumber);
+        ChessGame chessGame = chessGameRepository.findById(gameNumber);
         start(chessGame);
     }
 
@@ -88,7 +88,7 @@ public class ChessController {
             showTeamScores(chessGame);
             return GameStatus.CONTINUING;
         }
-        chessGameService.update(chessGame, GameStatus.CONTINUING.name());
+        chessGameRepository.update(chessGame, GameStatus.CONTINUING.name());
         return GameStatus.END;
     }
 
@@ -105,7 +105,7 @@ public class ChessController {
 
     private GameStatus canContinue(ChessGame chessGame) {
         if (chessGame.isEndCondition()) {
-            chessGameService.update(chessGame, GameStatus.END.name());
+            chessGameRepository.update(chessGame, GameStatus.END.name());
             Team losingTeam = chessGame.getCurrentTurn().getTeam();
             Team winningTeam = chessGame.getCurrentTurn().next().getTeam();
             OutputView.printEndMessage(winningTeam, losingTeam);

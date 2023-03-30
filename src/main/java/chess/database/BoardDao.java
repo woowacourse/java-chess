@@ -1,11 +1,11 @@
-package database;
+package chess.database;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Role;
 import chess.domain.piece.Team;
-import database.dto.SquareDto;
+import chess.database.dto.SquareDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

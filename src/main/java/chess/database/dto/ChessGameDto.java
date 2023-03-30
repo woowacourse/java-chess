@@ -1,4 +1,4 @@
-package database.dto;
+package chess.database.dto;
 
 public class ChessGameDto {
 

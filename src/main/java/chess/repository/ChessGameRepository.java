@@ -1,20 +1,20 @@
-package chess.service;
+package chess.repository;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.game.ChessGame;
 import chess.game.Turn;
-import database.dto.ChessGameDto;
-import database.BoardDao;
-import database.ChessGameDao;
-import database.dto.SquareDto;
+import chess.database.dto.ChessGameDto;
+import chess.database.BoardDao;
+import chess.database.ChessGameDao;
+import chess.database.dto.SquareDto;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ChessGameService {
+public class ChessGameRepository {
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final BoardDao boardDao = new BoardDao();

@@ -1,8 +1,8 @@
-package database;
+package chess.database;
 
+import chess.database.dto.ChessGameDto;
 import chess.domain.piece.Team;
 import chess.game.Turn;
-import database.dto.ChessGameDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
