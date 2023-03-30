@@ -1,6 +1,8 @@
 package chess.repository;
 
+import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.PAWN;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
@@ -112,6 +114,29 @@ public class GameDao {
             }
             return null;
         }, gameId, KING.name());
+    }
+
+    public List<Integer> countPawnInSameFileByTeam(int gameId, Team team) {
+        final var query = "SELECT COUNT(square_file) FROM board WHERE game_id = ? AND piece_team = ? AND piece_type IN (? , ?) GROUP BY square_file";
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            final List<Integer> count = new ArrayList<>();
+            while (resultSet.next()) {
+                count.add(resultSet.getInt(1));
+            }
+            return count;
+        }, gameId, team.name(), INITIAL_PAWN.name(), PAWN.name());
+    }
+
+    public List<Piece> findPiecesByTeamExceptPawn(int gameId, Team team) {
+        final var query = "SELECT piece_type FROM board WHERE game_id = ? AND piece_team = ? AND piece_type NOT IN (? , ?)";
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            final List<Piece> pieces = new ArrayList<>();
+            while (resultSet.next()) {
+                pieces.add(Pieces.of(team,
+                        PieceType.valueOf(resultSet.getString("piece_type"))));
+            }
+            return pieces;
+        }, gameId, team.name(), INITIAL_PAWN.name(), PAWN.name());
     }
 
     public void saveState(int gameId, GameState state) {

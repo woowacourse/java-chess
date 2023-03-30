@@ -32,13 +32,13 @@ public class GameService {
         return new GameRoom(roomNumber, chessGame, gameState);
     }
 
-    public void move(List<String> commands, GameRoom gameRoom) {
+    public void move(final List<String> commands, final GameRoom gameRoom) {
         final String source = commands.get(SOURCE_INDEX);
         final String target = commands.get(TARGET_INDEX);
         gameRoom.move(source, target);
     }
 
-    public boolean isCheckmate(GameRoom gameRoom) {
+    public boolean isCheckmate(final GameRoom gameRoom) {
         return gameDao.countKing(gameRoom.roomNumber()) < 2;
     }
 
@@ -46,7 +46,7 @@ public class GameService {
         return gameDao.findAllRooms();
     }
 
-    public void updateGame(GameRoom gameRoom) {
+    public void updateGame(final GameRoom gameRoom) {
         gameDao.deleteBoard(gameRoom.roomNumber());
         gameDao.saveBoard(gameRoom.roomNumber(), gameRoom.board());
         gameDao.deleteState(gameRoom.roomNumber());
@@ -54,17 +54,24 @@ public class GameService {
         gameDao.updateTeamById(gameRoom.roomNumber(), gameRoom.turn());
     }
 
-    public Map<String, Double> scores(GameRoom gameRoom) {
-        final double whiteTeamScore = gameRoom.chessGame().calculateScoreBy(WHITE);
-        final double blackTeamScore = gameRoom.chessGame().calculateScoreBy(BLACK);
-        return Map.of(WHITE.name(), whiteTeamScore, BLACK.name(), blackTeamScore);
+    public Map<Team, Double> scores(final GameRoom gameRoom) {
+        final double whiteTeamScore = calculateTeamScore(gameRoom, WHITE);
+        final double blackTeamScore = calculateTeamScore(gameRoom, BLACK);
+
+        return Map.of(WHITE, whiteTeamScore, BLACK, blackTeamScore);
     }
 
-    public List<Team> winningTeams(GameRoom gameRoom) {
-        return gameRoom.winningTeams();
+    private double calculateTeamScore(final GameRoom gameRoom, final Team team) {
+        return gameRoom.calculateScore(
+                gameDao.findPiecesByTeamExceptPawn(gameRoom.roomNumber(), team),
+                gameDao.countPawnInSameFileByTeam(gameRoom.roomNumber(), team));
     }
 
-    public void deleteAll(GameRoom gameRoom) {
+    public List<Team> winningTeams(final GameRoom gameRoom) {
+        return gameRoom.winningTeams(scores(gameRoom));
+    }
+
+    public void deleteAll(final GameRoom gameRoom) {
         gameDao.deleteGameById(gameRoom.roomNumber());
         gameDao.deleteBoard(gameRoom.roomNumber());
         gameDao.deleteState(gameRoom.roomNumber());

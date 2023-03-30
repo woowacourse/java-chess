@@ -4,7 +4,9 @@ import static chess.domain.GameState.DONE;
 import static chess.domain.GameState.PLAY;
 import static chess.domain.GameState.READY;
 
+import chess.domain.piece.Piece;
 import java.util.List;
+import java.util.Map;
 
 public class GameRoom {
 
@@ -22,15 +24,18 @@ public class GameRoom {
         chessGame.movePiece(source, target);
     }
 
-    public List<Team> winningTeams() {
-        return chessGame.determineWinningTeam();
+    public double calculateScore(final List<Piece> pieces, final List<Integer> counts) {
+        return chessGame.calculateScoreBy(pieces, counts);
+    }
+
+    public List<Team> winningTeams(final Map<Team, Double> scores) {
+        return chessGame.determineWinningTeam(scores);
     }
 
     public void updateState() {
         if (this.state == PLAY) {
             this.state = DONE;
         }
-
         if (this.state == READY) {
             this.state = PLAY;
         }
@@ -38,10 +43,6 @@ public class GameRoom {
 
     public int roomNumber() {
         return roomNumber;
-    }
-
-    public ChessGame chessGame() {
-        return chessGame;
     }
 
     public GameState state() {

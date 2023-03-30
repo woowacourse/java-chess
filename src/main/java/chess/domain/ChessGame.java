@@ -3,11 +3,13 @@ package chess.domain;
 import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
+import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
     private static final int POSITION_SIZE = 2;
@@ -52,15 +54,34 @@ public class ChessGame {
         }
     }
 
-    public double calculateScoreBy(Team team) {
-        return board.calculateTotalScoreBy(team);
+    public double calculateScoreBy(List<Piece> pieces, List<Integer> counts) {
+        return calculateScoreByPawn(counts) + calculateScoreByPieceExceptPawn(pieces);
     }
 
-    public List<Team> determineWinningTeam() {
-        if (calculateScoreBy(BLACK) > calculateScoreBy(WHITE)) {
+    private double calculateScoreByPieceExceptPawn(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::score)
+                .sum();
+    }
+
+    private double calculateScoreByPawn(List<Integer> counts) {
+        return counts.stream()
+                .mapToDouble(this::calculatePawnScoreByCount)
+                .sum();
+    }
+
+    private double calculatePawnScoreByCount(final Integer count) {
+        if (count > 1) {
+            return 0.5 * count;
+        }
+        return count;
+    }
+
+    public List<Team> determineWinningTeam(Map<Team, Double> scores) {
+        if (scores.get(BLACK) > scores.get(WHITE)) {
             return List.of(BLACK);
         }
-        if (calculateScoreBy(BLACK) < calculateScoreBy(WHITE)) {
+        if (scores.get(BLACK) < scores.get(WHITE)) {
             return List.of(WHITE);
         }
         return List.of(BLACK, WHITE);

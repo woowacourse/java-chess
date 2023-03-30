@@ -36,8 +36,8 @@ public class GameController {
         while (command != END) {
             command = readValidate(() -> play(gameRoom));
         }
-        GameResultDto gameResultDto = GameResultDto.from(gameService.winningTeams(gameRoom));
-        outputView.printStartWinningTeam(gameResultDto.getWinningTeams());
+        outputView.printResult(GameResultDto.from(
+                gameService.scores(gameRoom), gameService.winningTeams(gameRoom)));
         deleteGameIfEndGame(gameRoom);
     }
 
@@ -116,9 +116,8 @@ public class GameController {
     }
 
     private Command status(List<String> commands, GameRoom gameRoom) {
-        outputView.printScore(gameService.scores(gameRoom));
-        GameResultDto gameResultDto = GameResultDto.from(gameService.winningTeams(gameRoom));
-        outputView.printStartWinningTeam(gameResultDto.getWinningTeams());
+        outputView.printResult(GameResultDto.from(
+                gameService.scores(gameRoom), gameService.winningTeams(gameRoom)));
         return STATUS;
     }
 

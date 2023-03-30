@@ -1,11 +1,12 @@
 package chess.view;
 
+import chess.dto.GameResultDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
-    public static final String TEAN_IN_TURN_NOTICE = "%s팀 차례 입니다.\n";
+    public static final String TURN_NOTICE = "%s팀 차례 입니다.\n";
     public static final int DRAW = 2;
     private static final int CHESS_BOARD_AREA = 64;
     private static final int CHESS_BOARD_WIDTH = 8;
@@ -25,7 +26,6 @@ public class OutputView {
     public static final String GAME_ROOM_NUMBER_NOTICE = "현재 게임을 진행하고 있는 방은 %d번 입니다. "
             + "이후에 번호를 입력하면 게임을 이어서 할 수 있습니다.\n";
 
-
     public void printStartNotice() {
         System.out.println(START_GAME_NOTICE);
     }
@@ -42,18 +42,23 @@ public class OutputView {
         System.out.printf(GAME_ROOM_NUMBER_NOTICE, gameId);
     }
 
-    public void printScore(Map<String, Double> scores) {
+    public void printTeamInTurn(String team) {
+        System.out.printf(TURN_NOTICE, team);
+    }
+
+    public void printResult(GameResultDto gameResultDto) {
+        printScore(gameResultDto.getScores());
+        printWinningTeam(gameResultDto.getWinningTeams());
+    }
+
+    private void printScore(Map<String, Double> scores) {
         for (Entry<String, Double> entry : scores.entrySet()) {
             System.out.println(entry.getKey() + DELIMITER + entry.getValue());
         }
     }
 
-    public void printTeamInTurn(String team) {
-        System.out.printf(TEAN_IN_TURN_NOTICE, team);
-    }
-
-    public void printStartWinningTeam(List<String> teams) {
-            if (teams.size() == ONLY) {
+    private void printWinningTeam(List<String> teams) {
+        if (teams.size() == ONLY) {
             System.out.printf(RESULT_NOTICE, teams.get(FIRST_INDEX));
         }
         if (teams.size() == DRAW) {
