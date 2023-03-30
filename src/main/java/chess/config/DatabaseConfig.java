@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class DatabaseConfig {
     public Connection getConnection() throws IOException {
-        String propFile = "src/main/java/chess/config/config.properties";
+        String propFile = "src/main/resources/config.properties";
         Properties properties = new Properties();
         FileInputStream fis = new FileInputStream(propFile);
         properties.load(new java.io.BufferedInputStream(fis));

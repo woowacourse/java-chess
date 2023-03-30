@@ -9,9 +9,7 @@ import chess.domain.chessGame.ReadyChessGameState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,15 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGameDao {
-
-
     public Connection getConnection() throws IOException {
         DatabaseConfig databaseConfig = new DatabaseConfig();
         return databaseConfig.getConnection();
     }
 
     public void save(final ChessGame chessGame) {
-        final var query = "INSERT INTO chess_game(turn, status, piece_type, piece_file, piece_rank, piece_color) VALUES(?, ?, ?, ?, ?, ?)"; // turn, status, piece_type, piece_file, piece_rank, piece_color
+        final var query = "INSERT INTO chess_game(turn, status, piece_type, piece_position, piece_color) VALUES(?, ?, ?, ?, ?)";
         Map<Position, Piece> board = chessGame.getBoard();
         for (Position position : board.keySet()) {
             Piece piece = board.get(position);
@@ -37,9 +33,8 @@ public class ChessGameDao {
                 preparedStatement.setString(1, chessGame.getTurnName());
                 preparedStatement.setString(2, chessGame.getStatusName());
                 preparedStatement.setString(3, piece.getPieceTypeName());
-                preparedStatement.setString(4, position.getFileName());
-                preparedStatement.setString(5, position.getRankName());
-                preparedStatement.setString(6, piece.getColorName());
+                preparedStatement.setString(4, position.getSymbol());
+                preparedStatement.setString(5, piece.getColorName());
 
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
@@ -72,7 +67,7 @@ public class ChessGameDao {
         Color turn = Color.WHITE;
         ChessGameState chessGameState = new ReadyChessGameState();
 
-        final var query = "SELECT turn, status, piece_type, piece_file, piece_rank, piece_color FROM chess_game";
+        final var query = "SELECT turn, status, piece_type, piece_position, piece_color FROM chess_game";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
@@ -80,11 +75,8 @@ public class ChessGameDao {
                 turn = Color.valueOf(resultSet.getString("turn"));
                 chessGameState = ChessGameStateType.findByName(resultSet.getString("status"));
                 PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
-                File file = File.valueOf(resultSet.getString("piece_file"));
-                Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
+                Position position = Position.from(resultSet.getString("piece_position"));
                 Color pieceColor = Color.valueOf(resultSet.getString("piece_color"));
-
-                Position position = Position.of(file, rank);
                 Piece piece = pieceType.getPiece(pieceColor);
                 board.put(position, piece);
             }

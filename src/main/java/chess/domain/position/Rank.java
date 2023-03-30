@@ -88,10 +88,12 @@ public enum Rank {
         return Rank.of(this.index + ONE_SQUARE);
     }
 
+    public String getSymbol() {
+        return String.valueOf(symbol);
+    }
+
     @Override
     public String toString() {
-        return "Rank{" +
-                "number=" + index +
-                "}";
+        return String.valueOf(symbol);
     }
 }

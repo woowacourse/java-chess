@@ -108,6 +108,10 @@ public class Position {
         return file.name();
     }
 
+    public String getSymbol() {
+        return file.getSymbol() + rank.getSymbol();
+    }
+
     public boolean isSameRank(Rank other) {
         return rank.equals(other);
     }
@@ -139,9 +143,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
+        return file.toString() + rank.toString();
     }
 }
