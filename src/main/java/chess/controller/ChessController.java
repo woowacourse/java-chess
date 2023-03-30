@@ -5,6 +5,7 @@ import chess.controller.command.CommandAction;
 import chess.controller.command.Type;
 import chess.dao.DbChessGameDao;
 import chess.dao.DbPieceDao;
+import chess.dao.connection.MySqlConnectionGenerator;
 import chess.domain.piece.maker.EmptyPieceGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
@@ -44,7 +45,11 @@ public class ChessController {
 
     public void run() {
         outputView.printGameStartGuideMessage();
-        ChessState chess = ChessState.start(new EmptyPieceGenerator(), new DbChessGameDao(), new DbPieceDao());
+        ChessState chess = ChessState.start(
+                new EmptyPieceGenerator(),
+                new DbChessGameDao(new MySqlConnectionGenerator()),
+                new DbPieceDao(new MySqlConnectionGenerator())
+        );
         do {
             chess = readAndProcessCommand(chess);
         } while (!chess.isEnd());
@@ -58,7 +63,8 @@ public class ChessController {
         } catch (ChessException exception) {
             outputView.printErrorMessage(exception);
             return chess;
-        } catch (ChessDbException exception) {
+        }
+        catch (ChessDbException exception) {
             outputView.printDbExceptionMessage();
             return chess.end();
         }

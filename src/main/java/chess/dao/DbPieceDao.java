@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.connection.ConnectionGenerator;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.property.Color;
@@ -17,12 +18,18 @@ import java.util.Set;
 
 public class DbPieceDao implements PieceDao {
 
+    private final ConnectionGenerator connectionGenerator;
+
+    public DbPieceDao(final ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
+    }
+
     @Override
     public Set<Piece> findAllPieceInGame(final int gameRoomId) {
         final String query = "SELECT * FROM pieces WHERE room_id = ?";
         final Set<Piece> pieces = new HashSet<>();
 
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameRoomId);
 
@@ -46,7 +53,7 @@ public class DbPieceDao implements PieceDao {
     public void deleteAllInGame(final int gameRoomId) {
         final String query = "DELETE FROM pieces WHERE room_id = ?";
 
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameRoomId);
 
@@ -65,10 +72,10 @@ public class DbPieceDao implements PieceDao {
                 "type = ?, " +
                 "color = ?, " +
                 "room_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            for(Piece piece : pieces) {
+            for (Piece piece : pieces) {
                 preparedStatement.setString(1, piece.getPosition().getFile().name());
                 preparedStatement.setString(2, piece.getPosition().getRank().name());
                 preparedStatement.setString(3, PieceType.findByPiece(piece).name());

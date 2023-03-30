@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.connection.ConnectionGenerator;
 import chess.domain.piece.property.Color;
 import chess.exception.ChessDbException;
 
@@ -10,13 +11,19 @@ import java.sql.SQLException;
 
 public class DbChessGameDao implements ChessGameDao {
 
+    private final ConnectionGenerator connectionGenerator;
+
+    public DbChessGameDao(final ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
+    }
+
     @Override
     public void makeGameRoom(final int gameRoomId, final Color initialTurnColor) {
         final String query = "INSERT INTO gameRooms SET " +
                 "room_id = ?, " +
                 "turn_color = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (final Connection connection = connectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameRoomId);
             preparedStatement.setString(2, initialTurnColor.name());
 
@@ -29,7 +36,7 @@ public class DbChessGameDao implements ChessGameDao {
     @Override
     public Color findCurrentTurnColor(final int gameRoomId) {
         final String query = "SELECT turn_color FROM gameRooms WHERE room_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameRoomId);
 
@@ -47,7 +54,7 @@ public class DbChessGameDao implements ChessGameDao {
     @Override
     public void updateCurrentTurnColor(final int gameRoomId, final Color turnColor) {
         final String query = "UPDATE gameRooms SET turn_color = ? WHERE room_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, turnColor.name());
             preparedStatement.setInt(2, gameRoomId);
@@ -61,7 +68,7 @@ public class DbChessGameDao implements ChessGameDao {
     @Override
     public void removeGameDataFromDb(final int gameRoomId) {
         final String query = "DELETE FROM gameRooms where room_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameRoomId);
 
