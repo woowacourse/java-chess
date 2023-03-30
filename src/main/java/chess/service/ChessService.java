@@ -8,6 +8,7 @@ import chess.domain.InitialPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.ChessGameDto;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,18 +22,18 @@ public class ChessService {
         this.pieceDao = pieceDao;
     }
 
-    public ChessGame loadOrCreateGame() {
-        Optional<ChessGameDto> game = gameDao.findLastGame();
-        return game.map(this::loadSavedGame)
-            .orElseGet(this::createNewGame);
+    public List<Long> findAllGameIds() {
+        return gameDao.findAllGameId();
     }
 
-    private ChessGame loadSavedGame(final ChessGameDto chessGameDto) {
-        return ChessGame.of(chessGameDto.getGameId(), chessGameDto.getTeamColor(),
-            pieceDao.findAllByGameId(chessGameDto.getGameId()));
+    public ChessGame loadSavedGame(final long gameId) {
+        Optional<ChessGameDto> game = gameDao.findById(gameId);
+        return game.map(dto -> ChessGame.of(dto.getGameId(), dto.getTeamColor(),
+                pieceDao.findAllByGameId(dto.getGameId())))
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임 번호 입니다."));
     }
 
-    private ChessGame createNewGame() {
+    public ChessGame createNewGame() {
         ChessGame newGame = new ChessGame(new ChessBoard(InitialPiece.getPiecesWithPosition()));
         long gameId = gameDao.save(newGame);
         newGame.updateNewGameId(gameId);

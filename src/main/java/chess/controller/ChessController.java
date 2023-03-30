@@ -13,6 +13,7 @@ public class ChessController {
 
     private static final String WRONG_START_ERROR_MESSAGE = "게임이 진행 중 일 때는 시작할 수 없습니다.";
     private static final String START_NEED_ERROR_MESSAGE = "게임이 시작되어야 합니다.";
+    private static final long NEW_GAME_OPTION = 0;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -35,7 +36,8 @@ public class ChessController {
         while (isNotStarted) {
             isNotStarted = repeatStartRequest();
         }
-        ChessGame chessGame = chessService.loadOrCreateGame();
+        ChessGame chessGame = loadOrCreateGame(
+            inputView.readStartOption(NEW_GAME_OPTION, chessService.findAllGameIds()));
         printBoard(chessGame);
         return chessGame;
     }
@@ -54,6 +56,13 @@ public class ChessController {
         if (inputView.requestGameCommand().getCommand() != Command.START) {
             throw new IllegalArgumentException(START_NEED_ERROR_MESSAGE);
         }
+    }
+
+    private ChessGame loadOrCreateGame(final long startGameOption) {
+        if (startGameOption == NEW_GAME_OPTION) {
+            return chessService.createNewGame();
+        }
+        return chessService.loadSavedGame(startGameOption);
     }
 
     private void printBoard(final ChessGame chessGame) {
