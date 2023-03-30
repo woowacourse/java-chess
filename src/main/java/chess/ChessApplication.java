@@ -65,7 +65,9 @@ public class ChessApplication {
 			return;
 		}
 		if (command.isMove()) {
-			movePiece(board, command);
+			Position source = Position.from(command.source());
+			Position target = Position.from(command.target());
+			movePiece(board,source,target);
 		}
 		if (command.isStatus()) {
 			printStatus(board.blackStatus(), board.whiteStatus());
@@ -73,8 +75,8 @@ public class ChessApplication {
 		}
 	}
 
-	private static void movePiece(Board board, Command command) {
-		final Piece candidateKing = board.move(command.source(), command.target());
+	private static void movePiece(Board board, Position source, Position target) {
+		final Piece candidateKing = board.move(source, target);
 		if (board.isKing(candidateKing)) {
 			printKingDead();
 			chessDao.init();
