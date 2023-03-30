@@ -9,6 +9,11 @@
 docker-compose -p chess up -d 
 ```
 
+정지 시에는 아래 명령어를 입력해주세요
+```
+docker-compose -p chess down
+```
+
 ## 3, 4 단계 피드백 사항 및 추가 수정사항
 - [x] Readme 에 도커 환경 세팅 설명 추가
 - [x] DB connect 연결 에러 발생 시 처리
