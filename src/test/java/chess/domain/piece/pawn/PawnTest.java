@@ -25,7 +25,7 @@ class PawnTest {
     }
 
     @DisplayName("Pawn은 앞으로 1칸만 이동할 수 있다. pawn의 공격은 대각선으로만 가능하다.")
-    @ParameterizedTest(name="sqaure: ({0}, {1})")
+    @ParameterizedTest(name = "sqaure: ({0}, {1})")
     @CsvSource({"0,1,EMPTY", "1,1, BLACK"})
     void validMove_success(int fileInterval, int rankInterval, Team targetTeam) {
         Piece whitePawn = new Pawn(WHITE);
@@ -35,7 +35,7 @@ class PawnTest {
     }
 
     @DisplayName("Pawn은 앞으로 1칸만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
-    @ParameterizedTest(name="sqaure: ({0}, {1})")
+    @ParameterizedTest(name = "sqaure: ({0}, {1})")
     @CsvSource({"1, 2", "-3, 3", "1, 0", "0, 2"})
     void validMove_fail(int fileInterval, int rankInterval) {
         Piece whitePawn = new Pawn(WHITE);
@@ -46,7 +46,7 @@ class PawnTest {
     }
 
     @DisplayName("WhitePawn은 위로만, BlackPawn은 아래로만 이동할 수 있다.")
-    @ParameterizedTest(name="{0}: ({1}, {2})")
+    @ParameterizedTest(name = "{0}: ({1}, {2})")
     @CsvSource({"WHITE, 0, 1", "BLACK, 0, -1"})
     void validMoveOfWhitePawn_success(Team team, int fileInterval, int rankInterval) {
         Piece whitePawn = new Pawn(team);

@@ -24,7 +24,7 @@ class RookTest {
     }
 
     @DisplayName("Rook은 연속된 직선으로 이동할 수 있다.")
-    @ParameterizedTest(name="square: ({0}, {1})")
+    @ParameterizedTest(name = "square: ({0}, {1})")
     @CsvSource({"3,0", "0, -1"})
     void validMove_success(int fileInterval, int rankInterval) {
         Piece whiteRook = new Rook(WHITE);
@@ -32,8 +32,9 @@ class RookTest {
 
         assertThat(whiteRook.isValidMove(fileInterval, rankInterval, target)).isTrue();
     }
-@DisplayName("Rook은 연속된 직선으로만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
-    @ParameterizedTest(name="square: ({0}, {1})")
+
+    @DisplayName("Rook은 연속된 직선으로만 이동할 수 있다. 이 외의 움직임은 예외가 발생한다.")
+    @ParameterizedTest(name = "square: ({0}, {1})")
     @CsvSource({"1, 2", "-3, 3"})
     void validMove_fail(int fileInterval, int rankInterval) {
         Piece whiteRook = new Rook(WHITE);
@@ -43,8 +44,9 @@ class RookTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("말이 이동할 수 없는 규칙입니다.");
     }
-@DisplayName("Rook은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
-    @ParameterizedTest(name="{0}")
+
+    @DisplayName("Rook은 같은 팀 말이 있는 곳으로 이동할 수 없다.")
+    @ParameterizedTest(name = "{0}")
     @CsvSource({"WHITE", "BLACK"})
     void isValidTeam(Team team) {
         Piece rook = new Rook(team);
