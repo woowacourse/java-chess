@@ -17,10 +17,6 @@ public class OutputView {
         System.out.println(e.getMessage() + LINE_SEPARATOR);
     }
 
-    public static void printStartMessage() {
-        System.out.println("체스 게임을 시작합니다.");
-    }
-
     public static void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder(LINE_SEPARATOR);
         final Map<Position, Piece> boardMap = board.getBoard();
