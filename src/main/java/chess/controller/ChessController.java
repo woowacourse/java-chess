@@ -36,8 +36,13 @@ public class ChessController {
 
     private GameState getGameState(final GameCommand gameCommand, final MoveDao moveDao) {
         GameState state = ProgressState.of(gameCommand, moveDao);
+        printCreateGameMessage(state);
         printBoardStatus(state);
         return state;
+    }
+
+    private void printCreateGameMessage(final GameState state) {
+        outputView.printIfHasGame(state.hasGame());
     }
 
     private <T> T retry(final Supplier<T> supplier) {
@@ -84,6 +89,7 @@ public class ChessController {
 
     private void printBoardStatus(final GameState state) {
         if (state.isNotEnd()) {
+            outputView.printCurrentPlayer(state.findCurrentPlayer());
             outputView.printChessBoard(new BoardResponse(state.getBoard()));
         }
     }

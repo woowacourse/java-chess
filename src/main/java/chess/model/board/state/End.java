@@ -3,6 +3,7 @@ package chess.model.board.state;
 import chess.controller.GameCommand;
 import chess.model.Scores;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceColor;
 import chess.model.position.Position;
 import java.util.Map;
 
@@ -31,6 +32,16 @@ public class End implements GameState {
     @Override
     public boolean isStatus() {
         return false;
+    }
+
+    @Override
+    public boolean hasGame() {
+        throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
+    }
+
+    @Override
+    public PieceColor findCurrentPlayer() {
+        throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
     }
 
     @Override

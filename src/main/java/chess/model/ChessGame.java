@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import chess.model.board.Board;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceColor;
 import chess.model.position.Position;
 import java.util.List;
 import java.util.Map;
@@ -36,5 +37,9 @@ public class ChessGame {
 
     public Map<Position, Piece> getBoard() {
         return board.getSquares();
+    }
+
+    public PieceColor findCurrentPlayer() {
+        return turn.findCurrentPlayer();
     }
 }

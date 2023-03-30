@@ -44,4 +44,24 @@ public class MoveDaoImpl implements MoveDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean hasGame() {
+        final String existsQuery = "SELECT EXISTS(SELECT * FROM Move)";
+        try (
+                final Connection connection = ConnectionGenerator.getConnection();
+                final PreparedStatement preparedStatement = connection.prepareStatement(existsQuery);
+        ) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+
+            boolean hasGame = false;
+            while (resultSet.next()) {
+                hasGame = resultSet.getBoolean(1);
+            }
+
+            return hasGame;
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

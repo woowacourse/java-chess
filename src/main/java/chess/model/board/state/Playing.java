@@ -4,6 +4,7 @@ import chess.dao.MoveDao;
 import chess.dao.MoveSaveStrategy;
 import chess.model.ChessGame;
 import chess.model.Scores;
+import chess.model.piece.PieceColor;
 import chess.model.position.Position;
 
 public class Playing extends ProgressState {
@@ -21,6 +22,16 @@ public class Playing extends ProgressState {
     @Override
     public boolean isStatus() {
         return false;
+    }
+
+    @Override
+    public boolean hasGame() {
+        return moveDao.hasGame();
+    }
+
+    @Override
+    public PieceColor findCurrentPlayer() {
+        return chessGame.findCurrentPlayer();
     }
 
     @Override

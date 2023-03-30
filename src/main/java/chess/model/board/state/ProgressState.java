@@ -66,9 +66,6 @@ public abstract class ProgressState implements GameState {
     }
 
     @Override
-    public abstract boolean isStatus();
-
-    @Override
     public final GameState changeState(final GameCommand gameCommand) {
         if (gameCommand.isStart()) {
             throw new IllegalArgumentException("게임 도중에 start를 입력할 수 없습니다.");

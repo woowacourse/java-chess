@@ -7,4 +7,6 @@ public interface MoveDao {
     void save(final QueryStrategy saveStrategy);
 
     List<Move> findAll(final MoveFindAllStrategy moveFindAllStrategy);
+
+    boolean hasGame();
 }
