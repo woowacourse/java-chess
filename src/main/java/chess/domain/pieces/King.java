@@ -32,10 +32,6 @@ public class King extends Piece {
         checkStep(pieces.size());
     }
 
-    @Override
-    public void checkExistPiece(List<Piece> pieces) {
-    }
-
     private void checkStep(int size) {
         if (size > STEP) {
             throw new IllegalArgumentException("[ERROR] 킹은 한 칸만 움직일 수 있습니다.");

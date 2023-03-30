@@ -29,8 +29,4 @@ public final class EmptyPiece extends Piece {
     public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
         throw new IllegalArgumentException("[ERROR] 이동 할 기물이 없습니다.");
     }
-
-    @Override
-    public void checkExistPiece(List<Piece> pieces) {
-    }
 }

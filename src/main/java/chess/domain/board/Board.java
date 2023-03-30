@@ -29,18 +29,26 @@ public class Board {
     public void movePiece(Position currentPosition, Position targetPosition) {
         Piece currentPiece = board.get(currentPosition);
         Direction movableDirection = Direction.findDirection(currentPosition, targetPosition);
-        List<Piece> pieces = getLogicExistPiece(currentPosition, targetPosition, movableDirection);
+        List<Piece> pieces = fineLogicExistPiece(currentPosition, targetPosition, movableDirection);
 
         currentPiece.checkDirection(movableDirection);
         currentPiece.checkStep(currentPosition, movableDirection, pieces);
-        currentPiece.checkExistPiece(pieces);
+        checkExistPiece(pieces);
         currentPiece.checkSameTeam(currentPiece, board.get(targetPosition));
         move(currentPosition, targetPosition);
     }
 
-    private List<Piece> getLogicExistPiece(final Position current, final Position target, final Direction movableDirection) {
+    private void checkExistPiece(List<Piece> pieces) {
+        for (int i = 0; i < pieces.size() - 1; i++) {
+            if (pieces.get(i).getTeam() != Team.NEUTRALITY) {
+                throw new IllegalArgumentException("[ERROR] 경로에 기물이 존재합니다.");
+            }
+        }
+    }
+
+    private List<Piece> fineLogicExistPiece(final Position current, final Position target, final Direction movableDirection) {
         List<Piece> pieces = new ArrayList<>();
-        if (movableDirection == Direction.KNIGHT) {
+        if (board.get(current).getType() == Type.KNIGHT || board.get(current).getType() == Type.NO_PIECE) {
             return pieces;
         }
 
@@ -99,14 +107,6 @@ public class Board {
         return 0;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return this.board;
-    }
-
-    public Team getTeam(Position a) {
-        return board.get(a).getTeam();
-    }
-
     public List<Team> kingTeams() {
         return findKingPosition().stream()
                 .map(position -> board.get(position).getTeam())
@@ -118,5 +118,13 @@ public class Board {
                 .stream()
                 .filter(key -> board.get(key).getType() == Type.KING)
                 .collect(toList());
+    }
+
+    public Team getTeam(Position a) {
+        return board.get(a).getTeam();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return this.board;
     }
 }

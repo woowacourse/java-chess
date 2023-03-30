@@ -29,8 +29,4 @@ public class Knight extends Piece {
     public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
     }
 
-    @Override
-    public void checkExistPiece(List<Piece> pieces) {
-    }
-
 }

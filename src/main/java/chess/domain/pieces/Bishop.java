@@ -27,13 +27,4 @@ public class Bishop extends Piece {
     @Override
     public void checkStep(Position currentPiece, Direction direction, List<Piece> pieces) {
     }
-
-    @Override
-    public void checkExistPiece(List<Piece> pieces) {
-        for (int i = 0; i < pieces.size() - 1; i++) {
-            if (pieces.get(i).getTeam() != Team.NEUTRALITY) {
-                throw new IllegalArgumentException("[ERROR] 경로에 기물이 존재합니다.");
-            }
-        }
-    }
 }
