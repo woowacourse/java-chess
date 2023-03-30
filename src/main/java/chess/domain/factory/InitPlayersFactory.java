@@ -5,8 +5,6 @@ import chess.domain.Player;
 import chess.domain.Players;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
-import chess.domain.dao.TurnDao;
-import chess.domain.dao.TurnDaoImpl;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.List;
 public class InitPlayersFactory {
 
     private static final PieceDao pieceDao = PieceDaoImpl.getInstance();
-    private static final TurnDao turnDao = TurnDaoImpl.getInstance();
 
     public static Players initializePlayers() {
         Pieces whitePieces = getDbPiecesByColor(Color.WHITE);
@@ -23,7 +20,7 @@ public class InitPlayersFactory {
         Player whitePlayer = Player.fromPlayerWithColorAndPieces(Color.WHITE, whitePieces);
         Player blackPlayer = Player.fromPlayerWithColorAndPieces(Color.BLACK, blackPieces);
 
-        return Players.of(whitePlayer, blackPlayer, turnDao.getCurrentTurn());
+        return Players.of(whitePlayer, blackPlayer);
     }
 
     private static Pieces getDbPiecesByColor(final Color color) {

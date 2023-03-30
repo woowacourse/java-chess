@@ -9,15 +9,13 @@ import java.util.List;
 public class Players {
 
     private final List<Player> players;
-    private Color current;
 
-    private Players(final List<Player> players, final Color color) {
+    private Players(final List<Player> players) {
         this.players = players;
-        this.current = color;
     }
 
-    public static Players of(final Player whitePlayer, final Player blackPlayer, final Color currentTurn) {
-        return new Players(List.of(whitePlayer, blackPlayer), currentTurn);
+    public static Players of(final Player whitePlayer, final Player blackPlayer) {
+        return new Players(List.of(whitePlayer, blackPlayer));
     }
 
     public Player getAnotherPlayer(final Player findPlayer) {
@@ -44,8 +42,8 @@ public class Players {
         return getAnotherPlayer(loser).getColorName();
     }
 
-    public double calculateScore() {
-        return getPlayerByColor(current)
+    public double calculateScore(final Color color) {
+        return getPlayerByColor(color)
                 .getTotalScore()
                 .getValue();
     }
@@ -63,11 +61,10 @@ public class Players {
                 .collect(toList());
     }
 
-    public Color getCurrentColor() {
-        return current;
-    }
-
-    public void changeCurrent(final Color changeColor) {
-        this.current = changeColor;
+    public Position findPosition(final Position foundPosition) {
+        return getAllPosition().stream()
+                .filter(position -> position.equals(foundPosition))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
     }
 }

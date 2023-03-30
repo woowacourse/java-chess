@@ -19,7 +19,7 @@ class PlayersTest {
         Pieces blackPieces = Pieces.createBlackPieces();
         Player whitePlayer = Player.fromPlayerWithColorAndPieces(Color.WHITE, whitePieces);
         Player blackPlayer = Player.fromPlayerWithColorAndPieces(Color.BLACK, blackPieces);
-        players = Players.of(whitePlayer, blackPlayer, Color.WHITE);
+        players = Players.of(whitePlayer, blackPlayer);
     }
 
     @Test
@@ -42,7 +42,7 @@ class PlayersTest {
     @DisplayName("현재 플레이어의 점수를 계산한다.")
     void calculateScore() {
         // when, then
-        Assertions.assertThat(players.calculateScore())
+        Assertions.assertThat(players.calculateScore(Color.WHITE))
                 .isEqualTo(38);
     }
 }

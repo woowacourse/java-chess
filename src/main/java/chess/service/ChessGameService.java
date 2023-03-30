@@ -30,17 +30,21 @@ public class ChessGameService {
     public void movePiece(final String inputMovablePiece, final String inputTargetPosition) {
         Position findPosition = findPositionByInputPoint(inputMovablePiece);
         Position targetPosition = Position.from(inputTargetPosition);
-        validatePosition(inputMovablePiece);
+        validatePositionByCurrentColor(findPosition, getCurrentTurn());
         move(findPosition, targetPosition);
         changeTurn();
     }
 
+    private void validatePositionByCurrentColor(final Position findPosition, final Color currentTurn) {
+        Player findPlayer = findPlayerByPosition(findPosition);
+        if (!findPlayer.isSameColor(currentTurn)) {
+            throw new IllegalArgumentException("해당 플레이어의 차례가 아닙니다.");
+        }
+    }
+
     private Position findPositionByInputPoint(final String point) {
         Position foundPosition = Position.from(point);
-        return getAllPosition().stream()
-                .filter(position -> position.equals(foundPosition))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
+        return players.findPosition(foundPosition);
     }
 
     private List<Position> getAllPosition() {
@@ -90,11 +94,10 @@ public class ChessGameService {
     }
 
     private void changeTurn() {
-        Color currentColor = players.getCurrentColor();
+        Color currentColor = getCurrentTurn();
         Color changeColor = Color.changeColor(currentColor);
         TurnDao turnDao = TurnDaoImpl.getInstance();
         turnDao.update(changeColor);
-        players.changeCurrent(changeColor);
     }
 
     private void move(final Position sourcePosition, final Position targetPosition) {
@@ -117,14 +120,6 @@ public class ChessGameService {
         return players.getAnotherPlayer(findPlayer);
     }
 
-    private void validatePosition(final String inputMovablePiece) {
-        Position findPosition = findPositionByInputPoint(inputMovablePiece);
-        Player findPlayer = findPlayerByPosition(findPosition);
-        if (!findPlayer.isSameColor(players.getCurrentColor())) {
-            throw new IllegalArgumentException("해당 플레이어의 차례가 아닙니다.");
-        }
-    }
-
     public List<Piece> getPiecesByColor(final Color color) {
         return getPlayerByColor(color).getPieces();
     }
@@ -142,10 +137,11 @@ public class ChessGameService {
     }
 
     public double calculateScore() {
-        return players.calculateScore();
+        return players.calculateScore(getCurrentTurn());
     }
 
     public Color getCurrentTurn() {
-        return players.getCurrentColor();
+        TurnDao turnDao = TurnDaoImpl.getInstance();
+        return turnDao.getCurrentTurn();
     }
 }
