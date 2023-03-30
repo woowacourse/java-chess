@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import domain.PieceNameConverter;
@@ -35,6 +36,21 @@ public class ChessDao {
                 preparedStatement.setString(2, squareAndPiece.getValue());
                 preparedStatement.executeUpdate();
             }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Map<String, String> read() {
+        final var query = "SELECT * FROM chess_board";
+        try (final var connection = getConnection();
+        final var preparedStatement = connection.prepareStatement(query)) {
+            HashMap<String, String> board = new HashMap<>();
+            final var resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                board.put(resultSet.getString(1), resultSet.getString(2));
+            }
+            return board;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

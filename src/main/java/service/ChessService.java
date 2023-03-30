@@ -54,15 +54,23 @@ public class ChessService {
     }
 
     private boolean loadData() {
-        for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
-            chessBoard.getBoard()
-                .put(squareAndPiece.getKey(),
-                    PieceNameConverter.convert(chessDao.select(squareAndPiece.getKey().toString())));
-        }
+        arrangePieces();
         chessDao.update(convert(chessBoard));
         currentCamp = Camp.valueOf(chessDao.selectCamp());
         ongoing = true;
         return true;
+    }
+
+    private void arrangePieces() {
+        for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
+            arrange(squareAndPiece);
+        }
+    }
+
+    private void arrange(Map.Entry<Square, Piece> squareAndPiece) {
+        chessBoard.getBoard()
+            .put(squareAndPiece.getKey(),
+                PieceNameConverter.convert(chessDao.select(squareAndPiece.getKey().toString())));
     }
 
     private boolean hasNoData() {
@@ -132,6 +140,7 @@ public class ChessService {
     }
 
     public BoardResponseDto toBoardDto() {
+        arrangePieces();
         return new BoardResponseDto(chessBoard.getBoard());
     }
 
