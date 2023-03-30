@@ -4,6 +4,7 @@ import java.sql.*;
 
 import chess.dao.entity.ChessGameEntity;
 import chess.controller.command.Turn;
+import chess.domain.ChessGame;
 import chess.exception.NotFoundChessGameException;
 
 public class JdbcChessGameDao implements ChessGameDao {
@@ -110,14 +111,14 @@ public class JdbcChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void updateTurn(ChessGameEntity chessGameEntity) {
+    public void updateTurn(ChessGame chessGame) {
         final String query = "UPDATE chess_game SET turn = ? WHERE game_id = ?";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
-            preparedStatement.setString(1, chessGameEntity.getTurn());
-            preparedStatement.setLong(2, chessGameEntity.getId());
+            preparedStatement.setString(1, chessGame.getTurnDisplayName());
+            preparedStatement.setLong(2, chessGame.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -2,11 +2,25 @@ package chess.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import chess.dao.entity.PieceEntity;
+import chess.domain.piece.*;
 
 public class JdbcPieceDao implements PieceDao {
+
+    private static final Map<Class<? extends Piece>, String> typeByPiece = new HashMap<>();
+
+    static {
+        typeByPiece.put(King.class, "KING");
+        typeByPiece.put(Queen.class, "QUEEN");
+        typeByPiece.put(Bishop.class, "BISHOP");
+        typeByPiece.put(Knight.class, "KNIGHT");
+        typeByPiece.put(Rook.class, "ROOK");
+        typeByPiece.put(Pawn.class, "PAWN");
+    }
 
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
@@ -53,57 +67,57 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public void savePiece(PieceEntity pieceEntity) {
+    public void savePiece(Piece piece, long gameId) {
         final String query = "INSERT INTO piece(piece_rank, piece_file, piece_type, side, game_id) VALUES(?, ?, ?, ?, ?)";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
-            preparedStatement.setString(1, pieceEntity.getRank());
-            preparedStatement.setString(2, pieceEntity.getFile());
-            preparedStatement.setString(3, pieceEntity.getType());
-            preparedStatement.setString(4, pieceEntity.getSide());
-            preparedStatement.setLong(5, pieceEntity.getGameId());
+            preparedStatement.setString(1, String.valueOf(piece.getRank()));
+            preparedStatement.setString(2, String.valueOf(piece.getFile()));
+            preparedStatement.setString(3, typeByPiece.get(piece.getClass()));
+            preparedStatement.setString(4, piece.getSide().getDisplayName());
+            preparedStatement.setLong(5, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public void updatePiecePosition(PieceEntity pieceEntityToUpdate, PieceEntity pieceEntityToFind) {
-        final String query =
-                "UPDATE piece " +
-                "SET piece_rank = ?, piece_file = ? " +
-                "WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
+//    @Override
+//    public void updatePiecePosition(Piece pieceToUpdate, Piece PieceToFind, long gameId) {
+//        final String query =
+//                "UPDATE piece " +
+//                "SET piece_rank = ?, piece_file = ? " +
+//                "WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
+//
+//        try (final Connection connection = getConnection();
+//             final PreparedStatement preparedStatement = connection.prepareStatement(query);
+//        ) {
+//            preparedStatement.setString(1, String.valueOf(pieceToUpdate.getRank()));
+//            preparedStatement.setString(2, String.valueOf(pieceToUpdate.getFile()));
+//            preparedStatement.setLong(3, gameId);
+//            preparedStatement.setString(4, String.valueOf(PieceToFind.getRank()));
+//            preparedStatement.setString(5, String.valueOf(PieceToFind.getFile()));
+//            int updateCount = preparedStatement.executeUpdate();
+//            if (updateCount > 1) {
+//                throw new SQLException("[ERROR] 포지션 업데이트 되는 기물이 2개 이상입니다.");
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-        try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setString(1, pieceEntityToUpdate.getRank());
-            preparedStatement.setString(2, pieceEntityToUpdate.getFile());
-            preparedStatement.setLong(3, pieceEntityToFind.getGameId());
-            preparedStatement.setString(4, pieceEntityToFind.getRank());
-            preparedStatement.setString(5, pieceEntityToFind.getFile());
-            int updateCount = preparedStatement.executeUpdate();
-            if (updateCount > 1) {
-                throw new SQLException("[ERROR] 포지션 업데이트 되는 기물이 2개 이상입니다.");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
-    public void deletePieceByPosition(PieceEntity pieceEntityToDelete) {
+    public void deletePieceByGameId(Piece piece, long gameId) {
         final String query = "DELETE FROM piece WHERE game_id = ? AND piece_rank = ? AND piece_file = ?";
 
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
-            preparedStatement.setLong(1, pieceEntityToDelete.getGameId());
-            preparedStatement.setString(2, pieceEntityToDelete.getRank());
-            preparedStatement.setString(3, pieceEntityToDelete.getFile());
+            preparedStatement.setLong(1, gameId);
+            preparedStatement.setString(2, String.valueOf(piece.getRank()));
+            preparedStatement.setString(3, String.valueOf(piece.getFile()));
             int deleteCount = preparedStatement.executeUpdate();
             if (deleteCount > 1) {
                 throw new SQLException("[ERROR] 삭제되는 기물이 2개 이상입니다.");
@@ -114,7 +128,7 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public List<PieceEntity> findAllPieceByGameId(Long gameId) {
+    public List<PieceEntity> findAllPieceByGameId(long gameId) {
         final String query = "SELECT * FROM piece WHERE game_id = ?";
 
         try (final Connection connection = getConnection();
@@ -128,6 +142,7 @@ public class JdbcPieceDao implements PieceDao {
                 String pieceFile = resultSet.getString("piece_file");
                 String pieceType = resultSet.getString("piece_type");
                 String side = resultSet.getString("side");
+
                 pieceEntities.add(generatePieceEntity(pieceRank, pieceFile, pieceType, side));
             }
             return pieceEntities;

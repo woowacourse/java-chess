@@ -3,16 +3,15 @@ package chess.dao;
 import java.util.List;
 
 import chess.dao.entity.PieceEntity;
+import chess.domain.piece.Piece;
 
 public interface PieceDao {
 
     long findRecentPieceId();
 
-    void savePiece(PieceEntity pieceEntity);
+    void savePiece(Piece piece, long gameId);
 
-    void updatePiecePosition(PieceEntity pieceEntityToUpdate, PieceEntity pieceEntityToFind);
+    void deletePieceByGameId(Piece piece, long gameId);
 
-    void deletePieceByPosition(PieceEntity pieceEntityToDelete);
-
-    List<PieceEntity> findAllPieceByGameId(Long gameId);
+    List<PieceEntity> findAllPieceByGameId(long gameId);
 }

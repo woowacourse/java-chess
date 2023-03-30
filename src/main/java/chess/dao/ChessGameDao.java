@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.dao.entity.ChessGameEntity;
+import chess.domain.ChessGame;
 
 public interface ChessGameDao {
 
@@ -11,5 +12,5 @@ public interface ChessGameDao {
 
     ChessGameEntity findChessGameByGameId(long gameId);
 
-    void updateTurn(ChessGameEntity chessGameEntity);
+    void updateTurn(ChessGame chessGame);
 }
