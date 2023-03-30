@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class Board {
     public static final int KING_DIE_SCORE = -1;
+    public static final int DUPLICATE_EXIST = 2;
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -125,7 +126,7 @@ public class Board {
                     .filter(p -> p.isSameFile(file))
                     .count();
 
-            if (count >= 2) {
+            if (count >= DUPLICATE_EXIST) {
                 verticalPawnCount += count;
             }
         }
