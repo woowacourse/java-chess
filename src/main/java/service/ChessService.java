@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import dao.CampDao;
-import dao.ChessBoardDao;
+import dao.ChessDao;
 import domain.PieceNameConverter;
 import domain.PieceToScoreConverter;
 import domain.board.ChessBoard;
@@ -25,15 +24,13 @@ public class ChessService {
     private static final int RANK_INDEX = 1;
 
     private final ChessBoard chessBoard;
-    private final ChessBoardDao chessBoardDao;
-    private final CampDao campDao;
+    private final ChessDao chessDao;
     private Camp currentCamp;
     private boolean ongoing;
 
     public ChessService() {
         this.chessBoard = new ChessBoard();
-        this.chessBoardDao = new ChessBoardDao();
-        this.campDao = new CampDao();
+        this.chessDao = new ChessDao();
         this.currentCamp = Camp.WHITE;
         PieceNameConverter.init();
         PieceToScoreConverter.init();
@@ -50,7 +47,7 @@ public class ChessService {
     }
 
     private boolean hasData() {
-        if (!ongoing && chessBoardDao.hasData()) {
+        if (!ongoing && chessDao.hasData()) {
             return loadData();
         }
         return false;
@@ -58,10 +55,10 @@ public class ChessService {
 
     private boolean loadData() {
         for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
-            chessBoard.getBoard().put(squareAndPiece.getKey(), chessBoardDao.select(squareAndPiece.getKey()));
+            chessBoard.getBoard().put(squareAndPiece.getKey(), chessDao.select(squareAndPiece.getKey().toString()));
         }
-        chessBoardDao.update(chessBoard);
-        currentCamp = campDao.select();
+        chessDao.update(convert(chessBoard));
+        currentCamp = Camp.valueOf(chessDao.selectCamp());
         ongoing = true;
         return true;
     }
@@ -69,12 +66,19 @@ public class ChessService {
     private boolean hasNoData() {
         if (!ongoing) {
             chessBoard.initialize();
-            chessBoardDao.save(chessBoard);
-            campDao.save(currentCamp);
+            chessDao.save(convert(chessBoard));
+            chessDao.saveCamp(currentCamp.name());
             ongoing = true;
             return true;
         }
         return false;
+    }
+
+    private Map<String, String> convert(ChessBoard chessBoard) {
+        Map<Square, Piece> board = chessBoard.getBoard();
+        return board.keySet()
+            .stream()
+            .collect(Collectors.toMap(Square::toString, square -> PieceNameConverter.convert(board.get(square))));
     }
 
     public void end() {
@@ -91,8 +95,8 @@ public class ChessService {
             chessBoard.move(currentSquare, targetSquare);
             checkKingDead();
             currentCamp = currentCamp.fetchOppositeCamp();
-            chessBoardDao.update(chessBoard);
-            campDao.update(currentCamp);
+            chessDao.update(convert(chessBoard));
+            chessDao.updateCamp(currentCamp.name());
             return;
         }
         throw new IllegalStateException("게임을 먼저 실행해주세요.");
@@ -102,9 +106,10 @@ public class ChessService {
         if (chessBoard.getBoard()
             .values()
             .stream()
-            .filter(piece -> PieceToScoreConverter.convert(piece) == 0 && !piece.isEmpty()).count() != 2) {
+            .filter(piece -> PieceToScoreConverter.convert(piece) == 0 && !piece.isEmpty())
+            .count() != 2) {
             ongoing = false;
-            chessBoardDao.delete();
+            chessDao.delete();
         }
     }
 
@@ -135,12 +140,9 @@ public class ChessService {
     }
 
     private void calculateScore(HashMap<Camp, Double> campAndScores, Camp camp, Predicate<Piece> predicate) {
-        campAndScores.put(camp, chessBoard.getBoard()
-            .values()
-            .stream()
-            .filter(predicate)
-            .mapToDouble(PieceToScoreConverter::convert)
-            .sum() - calculatePawnDisadvantage(predicate));
+        campAndScores.put(camp,
+            chessBoard.getBoard().values().stream().filter(predicate).mapToDouble(PieceToScoreConverter::convert).sum()
+                - calculatePawnDisadvantage(predicate));
     }
 
     private double calculatePawnDisadvantage(Predicate<Piece> predicate) {
@@ -157,15 +159,12 @@ public class ChessService {
     }
 
     private Map<Integer, Long> countOverPawn(Map<Integer, List<Square>> collect) {
-        return collect.entrySet().stream().collect(
-            Collectors.toMap(
-                Map.Entry::getKey,
-                entry -> entry.getValue()
-                    .stream()
-                    .filter(square -> PieceToScoreConverter.convert(chessBoard.getBoard().get(square)) == 1)
-                    .count() - 1
-            )
-        );
+        return collect.entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue()
+                .stream()
+                .filter(square -> PieceToScoreConverter.convert(chessBoard.getBoard().get(square)) == 1)
+                .count() - 1));
     }
 
     private Map<Integer, List<Square>> groupByFile(Predicate<Piece> predicate) {

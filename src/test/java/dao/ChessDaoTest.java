@@ -13,13 +13,13 @@ import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.slider.Rook;
 
-class ChessBoardDaoTest {
+class ChessDaoTest {
 
-    private final ChessBoardDao chessBoardDao = new ChessBoardDao();
+    private final ChessDao chessDao = new ChessDao();
 
     @Test
     public void connection() {
-        try (final var connection = chessBoardDao.getConnection()) {
+        try (final var connection = chessDao.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -31,7 +31,7 @@ class ChessBoardDaoTest {
         PieceNameConverter.init();
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.initialize();
-        chessBoardDao.save(chessBoard);
-        assertThat(chessBoardDao.select(new Square(File.A, Rank.ONE))).isEqualTo(new Rook(Camp.WHITE));
+        chessDao.save(chessBoard);
+        assertThat(chessDao.select(new Square(File.A, Rank.ONE))).isEqualTo(new Rook(Camp.WHITE));
     }
 }

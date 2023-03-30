@@ -6,11 +6,9 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import domain.PieceNameConverter;
-import domain.board.ChessBoard;
-import domain.board.Square;
 import domain.piece.Piece;
 
-public class ChessBoardDao {
+public class ChessDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
     private static final String DATABASE = "chess"; // MySQL DATABASE 이름
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
@@ -28,13 +26,13 @@ public class ChessBoardDao {
         }
     }
 
-    public void save(ChessBoard chessBoard) {
+    public void save(Map<String, String> chessBoard) {
         final var query = "INSERT INTO chess_board VALUES(?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
-                preparedStatement.setString(1, squareAndPiece.getKey().toString());
-                preparedStatement.setString(2, PieceNameConverter.convert(squareAndPiece.getValue()));
+            for (Map.Entry<String, String> squareAndPiece : chessBoard.entrySet()) {
+                preparedStatement.setString(1, squareAndPiece.getKey());
+                preparedStatement.setString(2, squareAndPiece.getValue());
                 preparedStatement.executeUpdate();
             }
         } catch (final SQLException e) {
@@ -42,11 +40,11 @@ public class ChessBoardDao {
         }
     }
 
-    public Piece select(Square square) {
+    public Piece select(String square) {
         final var query = "SELECT piece FROM chess_board WHERE square = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, square.toString());
+            preparedStatement.setString(1, square);
 
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -58,13 +56,13 @@ public class ChessBoardDao {
         return null;
     }
 
-    public void update(ChessBoard chessBoard) {
+    public void update(Map<String, String> chessBoard) {
         final var query = "UPDATE chess_board SET piece = ? WHERE square = ?";
-        for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
+        for (Map.Entry<String, String> squareAndPiece : chessBoard.entrySet()) {
             try (final var connection = getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, PieceNameConverter.convert(squareAndPiece.getValue()));
-                preparedStatement.setString(2, squareAndPiece.getKey().toString());
+                preparedStatement.setString(1, squareAndPiece.getValue());
+                preparedStatement.setString(2, squareAndPiece.getKey());
                 preparedStatement.execute();
             } catch (final SQLException e) {
                 throw new RuntimeException(e);
@@ -87,6 +85,42 @@ public class ChessBoardDao {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             return preparedStatement.execute();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveCamp(String camp) {
+        final var query = "INSERT INTO camp VALUES(?)";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, camp);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String selectCamp() {
+        final var query = "SELECT * FROM camp";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("camp");
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public void updateCamp(String camp) {
+        final var query = "UPDATE camp SET camp = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, camp);
+            preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
