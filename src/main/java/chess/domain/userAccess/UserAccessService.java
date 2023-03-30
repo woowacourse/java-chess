@@ -19,7 +19,7 @@ public class UserAccessService {
         this.roomDao = roomDao;
     }
 
-    public User findUserById(String userId) {
+    public User findUserByIdOrElseCreateUser(String userId) {
         Optional<User> user = userDao.findUserById(userId);
         if (user.isPresent()) {
             return user.get();
@@ -29,7 +29,7 @@ public class UserAccessService {
         return newUser;
     }
 
-    public boolean havaSavedRoom(User user) {
+    public boolean hasSavedRoom(User user) {
         List<Room> rooms = findRoomsByUser(user);
         if (rooms.isEmpty()) {
             return false;
@@ -37,7 +37,7 @@ public class UserAccessService {
         return true;
     }
 
-    public Room findUserSelectionRoom(int roomId, User user) {
+    public Room findUserSelectedRoom(int roomId, User user) {
         return roomDao.findRoomByRoomIdAndUser(roomId, user);
     }
 

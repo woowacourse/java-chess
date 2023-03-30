@@ -27,14 +27,14 @@ public class GameConnectionController {
 
     public void run() {
         outputView.printInputIdMessage();
-        User user = userAccessService.findUserById(inputView.readUserId());
+        User user = userAccessService.findUserByIdOrElseCreateUser(inputView.readUserId());
         Room room = selectRoomToPlay(user);
         MoveCommand moveCommand = startChessGame(room);
         userAccessService.updateRoomById(room.roomId(), moveCommand.getCommands());
     }
 
     private Room selectRoomToPlay(User user) {
-        if (userAccessService.havaSavedRoom(user)) {
+        if (userAccessService.hasSavedRoom(user)) {
             return findRoom(user);
         }
         return makeNewRoomToPlay(user);
@@ -62,7 +62,7 @@ public class GameConnectionController {
         if (roomId == NEW_ROOM_COMMAND) {
             return makeNewRoomToPlay(user);
         }
-        Room room = userAccessService.findUserSelectionRoom(roomId, user);
+        Room room = userAccessService.findUserSelectedRoom(roomId, user);
         outputView.printPlaySavedRoomMessage();
         return room;
     }
