@@ -80,8 +80,17 @@ public class JdbcGameDao implements GameDao {
 
     @Override
     public void updateById(int gameId, GameInfoDto gameInfoDto) {
-        deleteById(gameId);
-        save(gameId, gameInfoDto);
+        final var sourceQuery = "UPDATE game SET game_status = ?, game_turn = ? WHERE game_id = ?";
+        try (final var connection = ConnectionProvider.getConnection();
+             final var preparedStatement = connection.prepareStatement(sourceQuery)) {
+            preparedStatement.setString(1, gameInfoDto.getStatus().name());
+            preparedStatement.setString(2, gameInfoDto.getTurn().name());
+            preparedStatement.setInt(3, gameId);
+
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
