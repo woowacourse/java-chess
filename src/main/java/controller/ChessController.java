@@ -1,9 +1,6 @@
 package controller;
 
-import domain.game.Board;
-import domain.game.ChessBoardGenerator;
-import domain.game.ChessGame;
-import domain.game.GameState;
+import domain.game.*;
 import domain.piece.Position;
 import domain.piece.Side;
 import dto.service.ChessGameCreateResponseDto;
@@ -130,9 +127,11 @@ public class ChessController {
     }
 
     private void statusCommandExecute(ChessGame chessGame) {
-        Map<Side, Double> scores = chessGame.calculateScores();
+        ScoreBoard scoreBoard = chessGame.makeScoreBoard();
+        Map<Side, Double> scores = scoreBoard.calculateScore();
         outputView.printGameScores(scores);
-        outputView.printWinner(chessGame.calculateWinner());
+
+        scoreBoard.calculateWinner(scores);
     }
 
     private void moveCommandExecute(ChessGame chessGame, List<String> commands) {
@@ -141,7 +140,9 @@ public class ChessController {
 
         GameState gameState = chessGame.move(convertPosition(sourceText), convertPosition(targetText));
         if (gameState == GameState.KING_DEAD) {
-            Side winner = chessGame.calculateWinner();
+            ScoreBoard scoreBoard = chessGame.makeScoreBoard();
+            Map<Side, Double> gameScore = scoreBoard.calculateScore();
+            Side winner = scoreBoard.calculateWinner(gameScore);
             outputView.printKingDeadMessage(winner.nextSide());
             outputView.printWinner(winner);
         }

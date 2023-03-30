@@ -36,15 +36,8 @@ public class ChessGame {
         state = GameState.END;
     }
 
-    public Map<Side, Double> calculateScores() {
-        return board.calculateScore();
-    }
-
-    public Side calculateWinner() {
-        if (this.state == GameState.KING_DEAD) {
-            return board.calculateKingExistSide(Side.WHITE);
-        }
-        return board.calculateWinner();
+    public ScoreBoard makeScoreBoard() {
+        return board.makeScoreBoard(state);
     }
 
     private GameState calculateNextGameState(Position targetPosition) {

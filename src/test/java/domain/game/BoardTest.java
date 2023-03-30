@@ -1,6 +1,9 @@
 package domain.game;
 
-import domain.piece.*;
+import domain.piece.Pawn;
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.piece.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -146,78 +149,6 @@ class BoardTest {
         assertThat(board.isKing(Position.of("e", rank))).isEqualTo(result);
     }
 
-    /**
-     * RNBQKBNR
-     * .PPPPPPP
-     * ........
-     * ........
-     * ........
-     * ........
-     * pppppppp
-     * rnbqkbnr
-     */
-    @DisplayName("체스 게임판의 말에 따라 white, black각각의 점수를 계산한다.")
-    @Test
-    void calculateSideScoresTest() {
-        //given
-        chessBoard.put(Position.of("a", "7"), new EmptyPiece());
-
-        //when
-        Map<Side, Double> scores = board.calculateScore();
-
-        //then
-        assertAll(
-                () -> assertThat(scores.get(Side.WHITE)).isEqualTo(38),
-                () -> assertThat(scores.get(Side.BLACK)).isEqualTo(37)
-        );
-    }
-
-    @DisplayName("white진영의 점수가 높을 경우 white진영이 승자가 된다.")
-    @Test
-    void whiteWinTest() {
-        //given
-        chessBoard.put(Position.of("a", "7"), new EmptyPiece());
-        //when
-        assertThat(board.calculateWinner()).isEqualTo(Side.WHITE);
-    }
-
-    /**
-     * RNBQKBNR
-     * PP.PPPPP
-     * ........
-     * ..p.....
-     * ........
-     * ........
-     * p.pppppp
-     * rnbqkbnr
-     */
-    @DisplayName("동일한 rank에 같은 진영의 폰이 존재하면 0.5점으로 계산한다.")
-    @Test
-    void calculateScoresWhenSameSidePawnOnSameRank() {
-        //given
-        chessBoard.put(Position.of("c", "5"), new Pawn(Side.WHITE));
-        chessBoard.put(Position.of("b", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("c", "7"), new EmptyPiece());
-
-        //when
-        Map<Side, Double> scores = board.calculateScore();
-
-        //then
-        assertThat(scores.get(Side.BLACK)).isEqualTo(37);
-        assertThat(scores.get(Side.WHITE)).isEqualTo(37);
-    }
-
-    @DisplayName("black, white진영의 점수가 같으면 중립(NEUTRAL)진영이 반환된다.")
-    @Test
-    void drawWinTest() {
-        //given
-        chessBoard.put(Position.of("c", "5"), new Pawn(Side.WHITE));
-        chessBoard.put(Position.of("b", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("c", "7"), new EmptyPiece());
-        //when
-        assertThat(board.calculateWinner()).isEqualTo(Side.NEUTRAL);
-    }
-
     @DisplayName("왕이 죽은 경우 왕이 살아있는 진영이 승리한다.")
     @Test
     void calculateWinnerWhenKingDeadTest() {
@@ -230,110 +161,5 @@ class BoardTest {
 
         //then
         assertThat(winSide).isEqualTo(Side.WHITE);
-    }
-
-
-    /**
-     * .KR.....
-     * P.PB....
-     * .P..Q...
-     * ........
-     * .....nq.
-     * .....p.p
-     * .....pp.
-     * ....rk..
-     * 흰색은 5(rook) + 2.5(knight) + 9(queen) + 3(pawn, 4개의 pawn이 있지만 세로로 있어 각 0.5이 된다.) + 0(king) = 19.5점
-     * 검은색은 5(rook) + 3(bishop) + 9(queen) + 3(pawn) + 0(king) = 20점
-     */
-    @DisplayName("체스보드에 맞는 게임 점수를 계산한다.")
-    @Test
-    void calculateScoresTest() {
-        //given
-        setRank1();
-        setRank2();
-        setRank3();
-        setRank4();
-        setRank6();
-        setRank7();
-        setRank8();
-
-        //when
-        Map<Side, Double> scores = board.calculateScore();
-        //then
-        assertThat(scores.get(Side.WHITE)).isEqualTo(19.5);
-        assertThat(scores.get(Side.BLACK)).isEqualTo(20);
-    }
-
-    @DisplayName("black진영의 점수가 높으면 black진영이 승자가 된다.")
-    @Test
-    void blackWinTest() {
-        //given
-        setRank1();
-        setRank2();
-        setRank3();
-        setRank4();
-        setRank6();
-        setRank7();
-        setRank8();
-
-        //when
-        assertThat(board.calculateWinner()).isEqualTo(Side.BLACK);
-        //then
-    }
-
-
-    private void setRank8() {
-        chessBoard.put(Position.of("a", "8"), new EmptyPiece());
-        chessBoard.put(Position.of("b", "8"), new King(Side.BLACK));
-        chessBoard.put(Position.of("c", "8"), new Rook(Side.BLACK));
-        chessBoard.put(Position.of("d", "8"), new EmptyPiece());
-        chessBoard.put(Position.of("e", "8"), new EmptyPiece());
-        chessBoard.put(Position.of("f", "8"), new EmptyPiece());
-        chessBoard.put(Position.of("g", "8"), new EmptyPiece());
-        chessBoard.put(Position.of("h", "8"), new EmptyPiece());
-    }
-
-    private void setRank7() {
-        chessBoard.put(Position.of("b", "7"), new EmptyPiece());
-        chessBoard.put(Position.of("d", "7"), new Bishop(Side.BLACK));
-        chessBoard.put(Position.of("e", "7"), new EmptyPiece());
-        chessBoard.put(Position.of("f", "7"), new EmptyPiece());
-        chessBoard.put(Position.of("g", "7"), new EmptyPiece());
-        chessBoard.put(Position.of("h", "7"), new EmptyPiece());
-    }
-
-    private void setRank6() {
-        chessBoard.put(Position.of("b", "6"), new Pawn(Side.BLACK));
-        chessBoard.put(Position.of("e", "6"), new Queen(Side.BLACK));
-    }
-
-    private void setRank4() {
-        chessBoard.put(Position.of("f", "4"), new Knight(Side.WHITE));
-        chessBoard.put(Position.of("g", "4"), new Queen(Side.WHITE));
-    }
-
-    private void setRank3() {
-        chessBoard.put(Position.of("f", "3"), new Pawn(Side.WHITE));
-        chessBoard.put(Position.of("h", "3"), new Pawn(Side.WHITE));
-    }
-
-    private void setRank2() {
-        chessBoard.put(Position.of("a", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("b", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("c", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("d", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("e", "2"), new EmptyPiece());
-        chessBoard.put(Position.of("h", "2"), new EmptyPiece());
-    }
-
-    private void setRank1() {
-        chessBoard.put(Position.of("a", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("b", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("c", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("d", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("g", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("h", "1"), new EmptyPiece());
-        chessBoard.put(Position.of("e", "1"), new Rook(Side.WHITE));
-        chessBoard.put(Position.of("f", "1"), new King(Side.WHITE));
     }
 }
