@@ -22,7 +22,7 @@ public enum File {
 	}
 
 	public static File from(final char value) {
-		return Arrays.stream(File.values())
+		return files().stream()
 			.filter((file) -> value == file.value)
 			.findFirst()
 			.orElseThrow(IllegalArgumentException::new);

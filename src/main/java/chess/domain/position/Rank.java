@@ -22,7 +22,7 @@ public enum Rank {
 	}
 
 	public static Rank from(final int value) {
-		return Arrays.stream(Rank.values())
+		return ranks().stream()
 			.filter((rank) -> value == rank.value)
 			.findFirst()
 			.orElseThrow(IllegalArgumentException::new);
