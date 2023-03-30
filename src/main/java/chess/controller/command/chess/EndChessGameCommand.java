@@ -13,7 +13,6 @@ public class EndChessGameCommand implements ChessGameCommand {
 
     @Override
     public ChessGame execute(final ChessGameService chessGameService, final OutputView outputView) {
-        outputView.printEndMessage();
         return new ChessGame(BoardFactory.create(), new GameState(WHITE, EndState.CACHE));
     }
 }

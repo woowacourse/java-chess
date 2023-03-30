@@ -7,6 +7,7 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.ExecuteState;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartState;
 import chess.domain.piece.Color;
@@ -35,8 +36,12 @@ public class ChessGameFactory {
     }
 
     private static GameState createGameState(final ChessGameDto chessGameDto) {
+        final ExecuteState executeState = ExecuteStateSerialization.deserialize(chessGameDto.getState());
         final Color turn = Color.valueOf(chessGameDto.getTurn());
-        return new GameState(turn, new StartState());
+        if (executeState.isEnd()) {
+            return new GameState(turn, StartState.CACHE);
+        }
+        return new GameState(turn, executeState);
     }
 
     private static Board createBoard(final List<PieceDto> pieceDtos) {
