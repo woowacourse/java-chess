@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+import chess.controller.dto.CommandDto;
+
 public class InputView {
 
 	private static final String BLANK_INPUT_INVALID_ERROR_MESSAGE = "공백을 입력할 수 없습니다.";
@@ -12,10 +14,10 @@ public class InputView {
 	private static StringTokenizer buffer;
 
 
-	public static String readCommand() {
+	public static CommandDto readCommand() {
 		try {
 			buffer = new StringTokenizer(br.readLine());
-			return buffer.nextToken();
+			return CommandDto.from(buffer.nextToken());
 		} catch (Exception e) {
 			throw new IllegalArgumentException(BLANK_INPUT_INVALID_ERROR_MESSAGE + "\n");
 		}

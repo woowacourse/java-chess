@@ -1,8 +1,8 @@
-package chess.dao;
+package chess.repository.dao;
 
 import java.util.List;
 
-import chess.dto.MoveDto;
+import chess.repository.entity.MoveDto;
 
 public interface ChessGameDao {
 

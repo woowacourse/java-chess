@@ -2,14 +2,14 @@ package chess.service;
 
 import java.util.List;
 
-import chess.dao.ChessGameDao;
-import chess.dao.ChessGameDaoImpl;
-import chess.dao.JdbcConnector;
+import chess.repository.dao.ChessGameDao;
+import chess.repository.dao.ChessGameDaoImpl;
+import chess.repository.dao.JdbcConnector;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.result.ScoreAndWinnerResult;
-import chess.dto.MoveDto;
+import chess.repository.entity.MoveDto;
 
 public class ChessService {
 

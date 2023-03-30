@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.dao.ChessGameDao;
-import chess.dto.MoveDto;
+import chess.repository.dao.ChessGameDao;
+import chess.repository.entity.MoveDto;
 
 class ChessServiceTest {
 
