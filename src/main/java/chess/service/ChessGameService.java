@@ -33,8 +33,8 @@ public class ChessGameService {
     public void start(int boardId) {
         GameStatusValidator.validateStart(gameStatus);
         gameStatus = RUNNING;
-        chessBoard = chessBoardService.findChessBoardById(boardId);
-        chessBoardService.updateChessBoard(chessBoard);
+        chessBoard = chessBoardService.loadChessBoard(boardId);
+        chessBoardService.saveChessBoard(chessBoard);
     }
 
     public void move(CommandRequest commandRequest) {
@@ -47,7 +47,8 @@ public class ChessGameService {
         if (boardStatus.isOver()) {
             gameStatus = GameStatus.OVER;
         }
-        chessBoardService.updateChessBoard(chessBoard);
+        chessBoardService.saveChessBoard(chessBoard);
+        chessBoard.switchCampTurn();
     }
 
     public void end(CommandRequest commandRequest) {

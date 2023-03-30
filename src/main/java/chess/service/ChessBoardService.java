@@ -21,7 +21,7 @@ public class ChessBoardService {
         this.boardStatusesDao = boardStatusesDao;
     }
 
-    public ChessBoard findChessBoardById(int boardId) {
+    public ChessBoard loadChessBoard(int boardId) {
         Map<Position, Piece> piecesByPosition = boardPiecesDao.find(boardId)
                 .orElseGet(PieceInitializer::createPiecesWithPosition);
         ChessBoardStatus status = boardStatusesDao.findByBoardId(boardId)
@@ -29,7 +29,7 @@ public class ChessBoardService {
         return new ChessBoard(boardId, piecesByPosition, status);
     }
 
-    public void updateChessBoard(ChessBoard chessBoard) {
+    public void saveChessBoard(ChessBoard chessBoard) {
         boardStatusesDao.insertOrUpdate(chessBoard.getId(), chessBoard.status());
         boardPiecesDao.insertOrUpdate(chessBoard.getId(), chessBoard.piecesByPosition());
     }
