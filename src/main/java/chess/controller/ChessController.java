@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.dto.CommandDto;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -27,7 +28,9 @@ public class ChessController {
 	}
 
 	private Command readCommand() {
-		return ExceptionHandler.RetryIfThrowsException(() ->
-			InputRenderer.toCommand(InputView.readCommand()));
+		return ExceptionHandler.RetryIfThrowsException(() -> {
+			CommandDto commandDto = InputView.readCommand();
+			return commandDto.getCommand();
+		});
 	}
 }

@@ -41,5 +41,13 @@ public enum Command {
 		}
 	};
 
+	public static Command from(String string) {
+		try {
+			return Command.valueOf(string.toUpperCase());
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("불가능한 명령입니다.");
+		}
+	}
+
 	public abstract Command run(final ChessService chessService);
 }
