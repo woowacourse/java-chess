@@ -19,8 +19,7 @@ public class ChessBoardService {
 
     ChessBoard getByChessGameId(final Long chessGameId) {
         final List<PieceEntity> pieceEntities = pieceDao.findByChessGameId(chessGameId);
-        final Map<Position, Piece> board = ChessBoardMapper.from(pieceEntities);
-        return ChessBoard.create(board);
+        return ChessBoardMapper.from(pieceEntities);
     }
 
     void savePiece(final PieceEntity pieceEntity) {

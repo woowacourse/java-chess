@@ -16,13 +16,14 @@ class ChessGameDaoImplTest {
     void findByUserId() {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
-        final ChessGameEntity expected = new ChessGameEntity(1L, "WHITE", 1L);
-        chessGameDao.save(expected);
+        final ChessGameEntity createdChessGameEntity = new ChessGameEntity(1L, "WHITE", 1L);
+        chessGameDao.save(createdChessGameEntity);
+        final Long expected = createdChessGameEntity.getId();
         final long userId = 1L;
 
         // when
         final Optional<ChessGameEntity> chessGameEntity = chessGameDao.findByUserId(userId);
-        final ChessGameEntity actual = chessGameEntity.get();
+        final Long actual = chessGameEntity.orElseThrow().getId();
 
         // then
         assertThat(actual)
@@ -64,13 +65,13 @@ class ChessGameDaoImplTest {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
         final Long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
-        final Optional<ChessGameEntity> expected = Optional.of(new ChessGameEntity("BLACK", 1L));
+        final Long expected = new ChessGameEntity("BLACK", 1L).getId();
 
         // when
         chessGameDao.updateCurrentCampById(savedChessGameId, CampType.BLACK);
 
         // then
-        final Optional<ChessGameEntity> actual = chessGameDao.findByUserId(1L);
+        final Long actual = chessGameDao.findByUserId(1L).orElseThrow().getId();
         assertThat(actual)
                 .isEqualTo(expected);
     }

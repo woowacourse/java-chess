@@ -16,8 +16,9 @@ public class PieceDaoImpl implements PieceDao {
     @Override
     public List<PieceEntity> findByChessGameId(final Long chessGameId) {
         final String query = "SELECT * FROM piece WHERE chess_game_id = ?";
-        return jdbcTemplate.findAll(query, (resultSet -> PieceEntity.createWithId(
+        return jdbcTemplate.findAll(query, (resultSet -> PieceEntity.create(
                 resultSet.getLong("piece_id"),
+                resultSet.getLong("chess_game_id"),
                 resultSet.getInt("piece_rank"),
                 resultSet.getInt("piece_file"),
                 resultSet.getString("piece_type"),

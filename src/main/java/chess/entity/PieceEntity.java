@@ -1,10 +1,8 @@
 package chess.entity;
 
-import java.util.Objects;
-
 public final class PieceEntity {
     private Long id;
-    private Long chessGameId;
+    private final Long chessGameId;
     private final Integer rank;
     private final Integer file;
     private String pieceType;
@@ -26,9 +24,9 @@ public final class PieceEntity {
         this.file = file;
     }
 
-    public static PieceEntity createWithId(final Long id, final Integer rank, final Integer file,
-                                           final String pieceType, final String campType) {
-        return new PieceEntity(id, null, rank, file, pieceType, campType);
+    public static PieceEntity create(final Long id, final Long chessGameId, final Integer rank,
+                                     final Integer file, final String pieceType, final String campType) {
+        return new PieceEntity(id, chessGameId, rank, file, pieceType, campType);
     }
 
     public static PieceEntity createWithChessGameId(final Long chessGameId, final Integer rank, final Integer file,
@@ -41,19 +39,6 @@ public final class PieceEntity {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final PieceEntity that = (PieceEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(rank, that.rank) && Objects.equals(file, that.file) && Objects.equals(pieceType, that.pieceType) && Objects.equals(campType, that.campType);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, rank, file, pieceType, campType);
-    }
-
-    @Override
     public String toString() {
         return "PieceEntity{" +
                 "id=" + id +
@@ -63,6 +48,10 @@ public final class PieceEntity {
                 ", pieceType='" + pieceType + '\'' +
                 ", campType='" + campType + '\'' +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Integer getRank() {

@@ -1,5 +1,6 @@
 package chess.service.mapper;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.chess.CampType;
 import chess.domain.piece.Movable;
 import chess.domain.piece.Piece;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public final class ChessBoardMapper {
 
-    public static Map<Position, Piece> from(final List<PieceEntity> pieceEntities) {
+    public static ChessBoard from(final List<PieceEntity> pieceEntities) {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (PieceEntity pieceEntity : pieceEntities) {
             final Position position = new Position(pieceEntity.getRank(), pieceEntity.getFile());
@@ -22,6 +23,6 @@ public final class ChessBoardMapper {
             final Movable movable = MovableMapper.from(pieceType);
             chessBoard.put(position, new Piece(pieceType, campType, movable));
         }
-        return chessBoard;
+        return ChessBoard.create(chessBoard);
     }
 }

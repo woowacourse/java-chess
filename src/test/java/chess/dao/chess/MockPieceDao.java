@@ -17,7 +17,9 @@ public class MockPieceDao implements PieceDao {
     public List<PieceEntity> findByChessGameId(final Long chessGameId) {
         return STORAGE.values().stream()
                 .filter(pieceEntity -> pieceEntity.getChessGameId().equals(chessGameId))
-                .map(pieceEntity -> PieceEntity.createWithChessGameId(pieceEntity.getChessGameId(), pieceEntity.getRank(),
+                .map(pieceEntity -> PieceEntity.create(
+                        pieceEntity.getId(),
+                        pieceEntity.getChessGameId(), pieceEntity.getRank(),
                         pieceEntity.getFile(), pieceEntity.getPieceType(), pieceEntity.getCampType()))
                 .collect(Collectors.toUnmodifiableList());
     }
