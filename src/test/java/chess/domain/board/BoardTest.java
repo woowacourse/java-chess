@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.TestPiecesGenerator;
-import chess.constant.ExceptionCode;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -9,6 +8,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
+import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

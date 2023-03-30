@@ -1,4 +1,4 @@
-package chess.constant;
+package chess.exception;
 
 public enum ExceptionCode {
     INVALID_COMMAND_PARAMETER,
@@ -13,5 +13,5 @@ public enum ExceptionCode {
     INVALID_COMMAND,
     GAME_ALREADY_RUNNING,
     INVALID_TURN,
-    GAME_OVER_STATE;
+    GAME_OVER_STATE,
 }

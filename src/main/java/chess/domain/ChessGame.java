@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.constant.ExceptionCode;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -9,6 +8,8 @@ import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class ChessGame {
 
     private void validateTurnColor(final Position currentPosition) {
         if (!board.isSameColor(currentPosition, currentTurnColor)) {
-            throw new IllegalArgumentException(ExceptionCode.INVALID_TURN.name());
+            throw new ChessException(ExceptionCode.INVALID_TURN);
         }
     }
 

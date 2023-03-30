@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.exception.ExceptionCode;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

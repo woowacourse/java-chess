@@ -1,10 +1,11 @@
 package chess.view;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.dto.controllertoview.PieceInfo;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.List;
 import java.util.Map;
@@ -136,13 +137,16 @@ public class OutputView {
         System.out.println(String.format("승리팀색 : %s", TEAM_COLOR_NAME.get(winningTeamColor)));
     }
 
-    public void printErrorMessage(final RuntimeException exception) {
+    public void printErrorMessage(final ChessException exception) {
         try {
-            final String exceptionCodeName = exception.getMessage();
-            final ExceptionCode code = ExceptionCode.valueOf(exceptionCodeName);
-            System.out.println(EXCEPTION_MESSAGE_SIGN + EXCEPTION_MESSAGES.getOrDefault(code, exceptionCodeName));
-        } catch (RuntimeException e) {
+            final ExceptionCode code = exception.getCode();
+            System.out.println(EXCEPTION_MESSAGE_SIGN + EXCEPTION_MESSAGES.getOrDefault(code, code.name()));
+        } catch (ChessException e) {
             System.out.println(EXCEPTION_MESSAGE_SIGN + exception.getMessage());
         }
+    }
+
+    public void printDbExceptionMessage() {
+        System.out.println("DB 연결 문제로 게임을 종료합니다.");
     }
 }

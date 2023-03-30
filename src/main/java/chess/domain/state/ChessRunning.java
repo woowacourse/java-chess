@@ -1,12 +1,13 @@
 package chess.domain.state;
 
-import chess.constant.ExceptionCode;
 import chess.dao.ChessGameDao;
 import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class ChessRunning extends ChessState {
 
     @Override
     public ChessState start() {
-        throw new IllegalStateException(ExceptionCode.GAME_ALREADY_RUNNING.name());
+        throw new ChessException(ExceptionCode.GAME_ALREADY_RUNNING);
     }
 
     @Override

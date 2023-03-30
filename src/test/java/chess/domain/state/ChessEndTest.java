@@ -1,13 +1,13 @@
 package chess.domain.state;
 
 import chess.TestPiecesGenerator;
-import chess.constant.ExceptionCode;
 import chess.dao.InMemoryChessGameDao;
 import chess.dao.InMemoryPieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
+import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

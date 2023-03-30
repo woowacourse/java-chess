@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.property.Color;
+import chess.exception.ChessDbException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +22,7 @@ public class DbChessGameDao implements ChessGameDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
     }
 
@@ -38,7 +39,7 @@ public class DbChessGameDao implements ChessGameDao {
                 return Color.valueOf(turnColorName);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
         return null;
     }
@@ -53,7 +54,7 @@ public class DbChessGameDao implements ChessGameDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
     }
 
@@ -66,7 +67,7 @@ public class DbChessGameDao implements ChessGameDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
     }
 }

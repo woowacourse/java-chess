@@ -6,6 +6,7 @@ import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.exception.ChessDbException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +38,7 @@ public class DbPieceDao implements PieceDao {
             }
             return pieces;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
     }
 
@@ -51,7 +52,7 @@ public class DbPieceDao implements PieceDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
     }
 
@@ -78,7 +79,7 @@ public class DbPieceDao implements PieceDao {
 
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ChessDbException();
         }
     }
 }

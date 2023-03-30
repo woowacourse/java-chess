@@ -13,6 +13,8 @@ import chess.domain.position.Rank;
 import chess.domain.state.ChessState;
 import chess.dto.controllertoview.PieceInfo;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessDbException;
+import chess.exception.ChessException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -53,9 +55,12 @@ public class ChessController {
             final Command command = Command.of(inputView.readGameCommand());
             return commandActionMap.getOrDefault(command.getType(), CommandAction.INVALID_ACTION)
                     .run(chess, command.getParameters());
-        } catch (RuntimeException exception) {
+        } catch (ChessException exception) {
             outputView.printErrorMessage(exception);
             return chess;
+        } catch (ChessDbException exception) {
+            outputView.printDbExceptionMessage();
+            return chess.end();
         }
     }
 

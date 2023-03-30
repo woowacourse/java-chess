@@ -1,6 +1,7 @@
 package chess.controller.command;
 
-import chess.constant.ExceptionCode;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public enum Type {
     public static Type findBy(String inputValue) {
         return TYPE_BY_INPUT.computeIfAbsent(inputValue,
                 s -> {
-                    throw new IllegalArgumentException(ExceptionCode.UNDEFINED_COMMAND_TYPE.name());
+                    throw new ChessException(ExceptionCode.UNDEFINED_COMMAND_TYPE);
                 }
         );
     }

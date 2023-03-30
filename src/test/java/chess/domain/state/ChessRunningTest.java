@@ -1,7 +1,6 @@
 package chess.domain.state;
 
 import chess.TestPiecesGenerator;
-import chess.constant.ExceptionCode;
 import chess.dao.InMemoryChessGameDao;
 import chess.dao.InMemoryPieceDao;
 import chess.domain.ChessGame;
@@ -10,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.maker.StartingPiecesGenerator;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ExceptionCode;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

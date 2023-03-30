@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -8,6 +7,8 @@ import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.Optional;
 import java.util.Set;
@@ -36,7 +37,7 @@ public class Board {
 
     private Piece findPieceOrElseThrowIn(final Position position) {
         return findPieceOptionalIn(position)
-                .orElseThrow(() -> new IllegalArgumentException(ExceptionCode.PIECE_CAN_NOT_FOUND.name()));
+                .orElseThrow(() -> new ChessException(ExceptionCode.PIECE_CAN_NOT_FOUND));
     }
 
     private Optional<Piece> findPieceOptionalIn(final Position position) {
@@ -49,7 +50,7 @@ public class Board {
         final boolean isBlocked = existingPieces.stream()
                 .anyMatch(piece -> passingPositions.contains(piece.getPosition()));
         if (isBlocked) {
-            throw new IllegalArgumentException(ExceptionCode.PIECE_MOVING_PATH_BLOCKED.name());
+            throw new ChessException(ExceptionCode.PIECE_MOVING_PATH_BLOCKED);
         }
     }
 

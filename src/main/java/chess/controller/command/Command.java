@@ -1,6 +1,7 @@
 package chess.controller.command;
 
-import chess.constant.ExceptionCode;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Command {
 
     private static void validateParameterSize(final List<String> inputValues, final Type commandType) {
         if (inputValues.size() - 1 != commandType.getRequiredParameterNumber()) {
-            throw new IllegalArgumentException(ExceptionCode.INVALID_COMMAND_PARAMETER.name());
+            throw new ChessException(ExceptionCode.INVALID_COMMAND_PARAMETER);
         }
     }
 

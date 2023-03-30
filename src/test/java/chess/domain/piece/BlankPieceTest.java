@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
+import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
