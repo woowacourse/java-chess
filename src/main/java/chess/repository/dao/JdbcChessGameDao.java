@@ -18,7 +18,7 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public List<ChessGameDto> findAll() {
-        final String sql = "SELECT * FROM chess_game";
+        final String sql = "SELECT id, turn FROM chess_game";
         final List<ChessGameDto> chessGameDtos = new ArrayList<>();
 
         try (final Connection connection = ConnectionManager.getConnection();
@@ -68,7 +68,7 @@ public class JdbcChessGameDao implements ChessGameDao {
 
     @Override
     public @Nullable ChessGameDto findById(final int id) {
-        final String sql = "SELECT * FROM chess_game WHERE id = ?";
+        final String sql = "SELECT id, turn FROM chess_game WHERE id = ?";
 
         try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

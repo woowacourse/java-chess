@@ -14,7 +14,7 @@ public class JdbcPieceDao implements PieceDao {
 
     @Override
     public List<PieceDto> findAllByChessGameId(final int chessGameId) {
-        final String sql = "SELECT * FROM piece WHERE chess_game_id = ?";
+        final String sql = "SELECT `file`, `rank`, side, type FROM piece WHERE chess_game_id = ?";
         final List<PieceDto> pieceDtos = new ArrayList<>();
 
         try (final Connection connection = ConnectionManager.getConnection();
