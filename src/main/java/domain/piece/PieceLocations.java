@@ -47,6 +47,10 @@ public class PieceLocations {
         }
     }
 
+    public PieceLocations(Map<Square, Piece> pieceLocations) {
+        this.pieceLocations = new HashMap<>(pieceLocations);
+    }
+
     public Piece find(Square square) {
         return pieceLocations.get(square);
     }
@@ -60,4 +64,9 @@ public class PieceLocations {
     public boolean hasPiece(Square square) {
         return pieceLocations.containsKey(square);
     }
+
+    public Map<Square, Piece> getPieceLocations() {
+        return pieceLocations;
+    }
+
 }

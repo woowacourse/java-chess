@@ -10,7 +10,6 @@ import domain.Square;
 
 public class OutputView {
 
-    public static final int CHESS_COLUMN_SIZE = 8;
     private final static List<Square> squares = makeSquares();
 
     private static List<Square> makeSquares() {
@@ -46,7 +45,7 @@ public class OutputView {
     }
 
     private void addNewLine(StringBuilder stringBuilder, int count) {
-        if (count % CHESS_COLUMN_SIZE == 0) {
+        if (count % ChessColumn.values().length == 0) {
             stringBuilder.append("\n");
         }
     }
@@ -55,4 +54,18 @@ public class OutputView {
         System.out.printf("[ERROR]: %s\n", message);
     }
 
+    public void printScore(ChessBoard chessBoard) {
+        System.out.printf("Black의 점수 : " + chessBoard.getBlackScore());
+        System.out.println();
+        System.out.printf("White의 점수 : " + chessBoard.getWhiteScore());
+        System.out.println();
+    }
+
+    public void printGameEndMessage() {
+        System.out.println("King이 죽었습니다. 게임종료!");
+    }
+
+    public void printEndMessage() {
+        System.out.println("게임을 종료합니다.");
+    }
 }

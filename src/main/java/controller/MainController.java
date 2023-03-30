@@ -6,35 +6,43 @@ import static controller.command.CommandConverter.MOVE_COMMAND_SOURCE_INDEX;
 import java.util.List;
 import java.util.function.Supplier;
 
-import domain.ChessBoard;
-import domain.Square;
-
-import view.InputView;
-import view.OutputView;
 import controller.command.CommandConverter;
 import controller.command.CommandType;
 import controller.command.EndCommand;
 import controller.command.GameCommand;
 import controller.command.MoveCommand;
 import controller.command.StartCommand;
+import controller.command.StatusCommand;
+import database.db.ChessBoardDao;
+import domain.ChessBoard;
+import domain.Square;
+import view.InputView;
+import view.OutputView;
 
 public class MainController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessBoardDao chessBoardDao;
 
-    public MainController() {
+    public MainController(ChessBoardDao chessBoardDao) {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.chessBoardDao = chessBoardDao;
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = chessBoardDao.read();
         inputView.printStartMessage();
         GameStatus gameStatus = GameStatus.INIT;
         do {
             gameStatus = executeCommand(chessBoard, gameStatus);
+            chessBoardDao.update(chessBoard);
         }
         while (gameStatus != GameStatus.END);
+        if(!chessBoard.isExistKing()){
+            chessBoardDao.delete();
+            outputView.printGameEndMessage();
+        }
     }
 
     private GameStatus executeCommand(ChessBoard chessBoard, GameStatus gameStatus) {
@@ -77,7 +85,10 @@ public class MainController {
         if (commandType == CommandType.START) {
             return new StartCommand(outputView, chessBoard);
         }
-        return new EndCommand();
+        if (commandType == CommandType.STATUS) {
+            return new StatusCommand(outputView, chessBoard);
+        }
+        return new EndCommand(outputView);
     }
 
 }

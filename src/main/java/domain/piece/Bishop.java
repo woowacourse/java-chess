@@ -8,7 +8,7 @@ import java.util.Optional;
 import domain.Square;
 
 public class Bishop extends Piece {
-
+    private static final PieceType BISHOP = PieceType.BISHOP;
     private static final List<DirectionVector> DIRECTIONS = List.of(
             DirectionVector.TOP_RIGHT, DirectionVector.BOTTOM_RIGHT,
             DirectionVector.BOTTOM_LEFT, DirectionVector.TOP_LEFT
@@ -44,5 +44,15 @@ public class Bishop extends Piece {
             result.add(next);
         }
         return Collections.unmodifiableList(result);
+    }
+
+    @Override
+    public double score() {
+        return BISHOP.getValue();
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return BISHOP;
     }
 }

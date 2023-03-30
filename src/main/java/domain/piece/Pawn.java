@@ -17,6 +17,7 @@ public class Pawn extends Piece {
     public static final Vector BOTTOM_RIGHT = Vector.of(1, -1);
     public static final Vector BOTTOM_LEFT = Vector.of(-1, -1);
 
+    private static final PieceType PAWN = PieceType.PAWN;
     private List<Vector> directions;
 
     private PawnState state;
@@ -76,5 +77,15 @@ public class Pawn extends Piece {
         Vector vector = src.calculateVector(dest);
         List<Vector> diagonalDirections = List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
         return diagonalDirections.contains(vector);
+    }
+
+    @Override
+    public double score() {
+        return PAWN.getValue();
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PAWN;
     }
 }

@@ -56,11 +56,23 @@ public class Square {
         return Vector.of(column, row);
     }
 
+    public boolean isSameColumn(ChessColumn chessColumn) {
+        return this.chessColumn == chessColumn;
+    }
+
     @Override
     public String toString() {
         return "Square{" +
                 "chessColumn=" + chessColumn +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public ChessColumn getChessColumn() {
+        return chessColumn;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

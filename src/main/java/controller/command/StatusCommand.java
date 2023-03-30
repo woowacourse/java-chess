@@ -1,24 +1,22 @@
 package controller.command;
 
-import domain.ChessBoard;
 import controller.GameStatus;
+import domain.ChessBoard;
 import view.OutputView;
 
-public class StartCommand implements GameCommand {
+public class StatusCommand implements GameCommand {
     private final OutputView outputView;
     private final ChessBoard chessBoard;
 
-    public StartCommand(OutputView outputView, ChessBoard chessBoard) {
+    public StatusCommand(OutputView outputView, ChessBoard chessBoard) {
         this.outputView = outputView;
         this.chessBoard = chessBoard;
     }
 
     @Override
     public GameStatus execute(GameStatus gameStatus) {
-        if (gameStatus == GameStatus.RUNNING) {
-            throw new IllegalArgumentException("게임이 이미 진행 중 입니다.");
-        }
         outputView.printChessBoard(chessBoard);
-        return GameStatus.RUNNING;
+        outputView.printScore(chessBoard);
+        return gameStatus;
     }
 }

@@ -15,9 +15,10 @@ public class CommandConverter {
     private final CommandType commandType;
 
     private final Map<CommandType, Consumer<List<String>>> commandValidater = Map.of(
-            CommandType.START, this::validateStartOrEndCommands,
+            CommandType.START, this::validateBasicCommands,
             CommandType.MOVE, this::validateMoveCommand,
-            CommandType.END, this::validateStartOrEndCommands
+            CommandType.END, this::validateBasicCommands,
+            CommandType.STATUS, this::validateBasicCommands
     );
 
     public CommandConverter(List<String> inputs) {
@@ -41,7 +42,7 @@ public class CommandConverter {
         validateCommandForm(inputs, s -> s.size() != COMMAND_FORM_MAX);
     }
 
-    private void validateStartOrEndCommands(List<String> inputs) {
+    private void validateBasicCommands(List<String> inputs) {
         validateCommandForm(inputs, s -> s.size() != COMMAND_FORM_MIN);
     }
 

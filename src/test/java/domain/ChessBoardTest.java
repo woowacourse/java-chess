@@ -3,14 +3,20 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Map;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import domain.piece.Rook;
+import domain.piece.King;
 import domain.piece.Pawn;
 import domain.piece.Piece;
+import domain.piece.PieceLocations;
+import domain.piece.Rook;
+import domain.piece.TeamColor;
 
 class ChessBoardTest {
 
@@ -65,5 +71,28 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(Square.of(src), Square.of(dest)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물에 막혀 있어 갈 수 없습니다!");
+    }
+
+    @Test
+    @DisplayName("king이 둘다 존재하는 경우 true")
+    void isExistBlackKing() {
+        PieceLocations pieceLocations = new PieceLocations(Map.of(
+                Square.of("a1"), new King(TeamColor.BLACK),
+                Square.of("a2"), new King(TeamColor.WHITE)));
+        ChessBoard chessBoard = new ChessBoard(pieceLocations);
+
+        boolean result = chessBoard.isExistKing();
+        Assertions.assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("한쪽 킹이 없는 경우 false")
+    void isExistWhiteKing() {
+        PieceLocations pieceLocations = new PieceLocations(Map.of(
+                Square.of("a1"), new King(TeamColor.BLACK)));
+        ChessBoard chessBoard = new ChessBoard(pieceLocations);
+
+        boolean result = chessBoard.isExistKing();
+        Assertions.assertThat(result).isFalse();
     }
 }
