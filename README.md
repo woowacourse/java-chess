@@ -99,12 +99,18 @@
   - [x] 말이 존재하는 위치는 이니셜로 출력한다.
   - [x] 말이 없는 위치는 `.`으로 출력한다.
 
+### DDL
+```sql
+CREATE TABLE game_turn (
+  turn VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE piece_state (
+  piece_name VARCHAR(255) NOT NULL,
+  piece_color VARCHAR(255) NOT NULL,
+  piece_row INT NOT NULL,
+  piece_column INT NOT NULL
+);
+```
+
 ## Todo
-- view에서 domain 의존하는 부분 수정하기
-- validateNoPieceAt 메서드에 position 좌표값을 예외처리 메세지에 넣어주기 (후순위)
-- 안쓰는 import문 삭제
-- PieceName에서 view 로직을 처리하는 부분 수정하기
-- path 생성로직 쉽게 바꿔보기 (정적 팩토리 메서드..?)
-- isMovableDirection 메서드 상위 클래스로 이관시켜보기
-- RowToNumber / ColumnToNumber 클래스 Position내부로 이관시키기
-  
