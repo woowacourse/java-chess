@@ -19,7 +19,7 @@ public enum CommandCase {
 		return Arrays.stream(CommandCase.values())
 			.filter(commandCase -> commandCase.value().equals(input))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("입력값은 start, end, move, status만 가능합니다."));
+			.orElseThrow(() -> new IllegalArgumentException("입력값은 start, end, move, status만 가능합니다"));
 	}
 
 	public String value() {

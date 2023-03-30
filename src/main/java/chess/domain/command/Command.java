@@ -76,7 +76,7 @@ public final class Command {
 
 	private static void validateInputSize(final List<String> values) {
 		if (!(values.size() == MOVE_COMMAND_SIZE)) {
-			throw new IllegalArgumentException("게임 이동은 move source target 형식으로 입력해야 합니다.");
+			throw new IllegalArgumentException("게임 이동은 move source target 형식으로 입력해야 합니다");
 		}
 	}
 
@@ -88,7 +88,7 @@ public final class Command {
 
 	private static void validateInputPositionSize(final String value) {
 		if (value.length() != POSITION_SIZE) {
-			throw new IllegalArgumentException("게임 이동은 move source target 형식으로 입력해야 합니다.");
+			throw new IllegalArgumentException("source target은 두글자씩 입력해주세요(예: b2 b3)");
 		}
 	}
 

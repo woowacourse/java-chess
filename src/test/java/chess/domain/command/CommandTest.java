@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.position.Position;
-
 class CommandTest {
 
 	@Test
@@ -30,22 +28,6 @@ class CommandTest {
 		assertThatThrownBy(() -> Command.ofStart(input))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("게임을 시작하려면 start만 입력해야합니다");
-	}
-
-	@Test
-	@DisplayName("ofMoveOrEnd 메서드 move 동작 테스트")
-	void ofMoveOrEnd_move() {
-		// given
-		final String input = "move a2 a3";
-
-		// when
-		final Command command = Command.ofCommand(input);
-
-		// then
-		assertAll(
-			() -> assertEquals(Position.from("a2"), command.source()),
-			() -> assertEquals(Position.from("a3"), command.target())
-		);
 	}
 
 	@Test
@@ -101,5 +83,38 @@ class CommandTest {
 
 		// then
 		assertTrue(command.isStatus());
+	}
+
+	@Test
+	@DisplayName("게임 진행 중 명령어가 move, end, status가 아니면 예외가 발생한다")
+	void onlyMoveEndStatusCommand() {
+		// given
+		final String input = "stop";
+
+		assertThatThrownBy(() -> Command.ofCommand(input))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("입력값은 start, end, move, status만 가능합니다");
+	}
+
+	@Test
+	@DisplayName("명령어가 move일 경우 'move 출발지와 도착지' 형식이 아니면 예외가 발생한다")
+	void sourceAndTargetEach() {
+		// given
+		final String input = "move a2 a3 a4";
+
+		assertThatThrownBy(() -> Command.ofCommand(input))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("게임 이동은 move source target 형식으로 입력해야 합니다");
+	}
+
+	@Test
+	@DisplayName("출발지와 도착지가 두글자씩이 아니면 예외가 발생한다")
+	void twoLettersEach() {
+		// given
+		final String input = "move a123 b";
+
+		assertThatThrownBy(() -> Command.ofCommand(input))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("source target은 두글자씩 입력해주세요(예: b2 b3)");
 	}
 }
