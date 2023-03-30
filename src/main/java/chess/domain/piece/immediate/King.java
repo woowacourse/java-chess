@@ -1,5 +1,6 @@
 package chess.domain.piece.immediate;
 
+import chess.domain.Price;
 import chess.domain.board.Board;
 import chess.domain.movepattern.KingMovePattern;
 import chess.domain.piece.Piece;
@@ -37,7 +38,7 @@ public class King implements Piece {
     }
 
     @Override
-    public double price() {
+    public Price price() {
         return immediatePiece.price();
     }
 

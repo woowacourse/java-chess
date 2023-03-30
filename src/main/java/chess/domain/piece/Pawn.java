@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Price;
 import chess.domain.board.Board;
 import chess.domain.movepattern.PawnMovePattern;
 import chess.domain.position.Position;
@@ -124,7 +125,7 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public double price() {
+    public Price price() {
         return type.price();
     }
 
