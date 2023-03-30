@@ -119,7 +119,10 @@ public final class ChessController {
     }
 
     private void move(final Board board, final CommandRequest commandRequest) {
-        board.move(Position.from(commandRequest.getSource()), Position.from(commandRequest.getTarget()));
+        final Position source = Position.from(commandRequest.getSource());
+        final Position target = Position.from(commandRequest.getTarget());
+        board.move(source, target);
+
         final BoardResponse boardResponse = BoardResponse.create(board.getBoard());
         outputView.printBoard(boardResponse);
     }

@@ -40,10 +40,11 @@ public class MysqlPieceDao implements PieceDao {
 
     @Override
     public Map<Position, Piece> findByGameId(final int chessGameId) {
+        final String query = "SELECT piece_file, piece_rank, color, type " +
+                "FROM piece " +
+                "where chess_game_id = ?";
+
         try (final Connection connection = ConnectionProvider.getConnection()) {
-            final String query = "SELECT piece_file, piece_rank, color, type " +
-                    "FROM piece " +
-                    "where chess_game_id = ?";
 
             final PreparedStatement ps = connection.prepareStatement(query);
             ps.setLong(1, chessGameId);

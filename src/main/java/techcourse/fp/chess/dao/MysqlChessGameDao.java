@@ -15,8 +15,9 @@ import techcourse.fp.chess.dto.response.ChessGameInfo;
 public class MysqlChessGameDao implements ChessGameDao {
 
     public int save(final String name, final Color turn) {
+        final String query = "INSERT INTO chess_game(name, turn) VALUES (?,?);";
+
         try (final Connection connection = ConnectionProvider.getConnection()) {
-            final String query = "INSERT INTO chess_game(name, turn) VALUES (?,?);";
             final PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             ps.setString(2, turn.name());
@@ -40,8 +41,9 @@ public class MysqlChessGameDao implements ChessGameDao {
 
     @Override
     public Turn findTurn(final long chessGameId) {
+        final String query = "SELECT turn FROM chess_game WHERE id = ?";
+
         try (final Connection connection = ConnectionProvider.getConnection()) {
-            final String query = "SELECT turn FROM chess_game WHERE id = ?";
 
             final PreparedStatement ps = connection.prepareStatement(query);
             ps.setLong(1, chessGameId);
