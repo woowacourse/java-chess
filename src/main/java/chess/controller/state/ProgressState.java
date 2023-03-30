@@ -31,7 +31,7 @@ public abstract class ProgressState implements GameState {
         chessService.loadGame();
 
         if (gameCommand.isStatus()) {
-            return new Status(chessService);
+            throw new IllegalArgumentException("start나 end만 입력해주세요");
         }
 
         return new Playing(chessService);

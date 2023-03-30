@@ -3,7 +3,6 @@ package chess.controller.state;
 import static chess.controller.GameCommand.END;
 import static chess.controller.GameCommand.MOVE;
 import static chess.controller.GameCommand.START;
-import static chess.controller.GameCommand.STATUS;
 import static chess.model.board.PositionFixture.A2;
 import static chess.model.board.PositionFixture.A4;
 import static chess.service.ChessServiceFixture.createService;
@@ -12,11 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.controller.GameCommand;
-import chess.controller.state.End;
-import chess.controller.state.GameState;
-import chess.controller.state.Playing;
-import chess.controller.state.ProgressState;
-import chess.controller.state.Status;
 import chess.dao.FakeMoveDao;
 import chess.dao.MoveDao;
 import chess.model.ChessGame;
@@ -50,8 +44,7 @@ class ProgressStateTest {
     private static Stream<Arguments> startParameters() {
         return Stream.of(
                 Arguments.of(START, Playing.class),
-                Arguments.of(END, End.class),
-                Arguments.of(STATUS, Status.class)
+                Arguments.of(END, End.class)
         );
     }
 

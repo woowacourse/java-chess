@@ -8,8 +8,6 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.controller.state.GameState;
-import chess.controller.state.ProgressState;
 import chess.model.Score;
 import chess.model.Scores;
 import chess.model.piece.PieceColor;
@@ -23,7 +21,7 @@ class StatusTest {
     @DisplayName("calculateScores() 호출하면 첨수가 반환된다.")
     void calculateScores_whenCall_thenReturnScores() {
         // given
-        final GameState status = ProgressState.of(STATUS, createService());
+        final GameState status = new Playing(createService()).changeState(STATUS);
 
         // when
         final Scores scores = status.calculateScores();
