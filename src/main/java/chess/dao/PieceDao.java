@@ -7,6 +7,7 @@ import chess.domain.piece.position.PiecePosition;
 import chess.dto.PieceDto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -15,20 +16,25 @@ public class PieceDao {
 
     private final ConnectionConfig connectionConfig = new ConnectionConfig();
 
-    public void create(final PieceDto pieceDto) {
+    public int create(final PieceDto pieceDto) {
         final String query = "INSERT INTO piece(game_id, piece_type, file_position, rank_position, color) "
                 + "VALUES (?, ?, ?, ?, ?)";
         try (final var connection = connectionConfig.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+             final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, pieceDto.getGameId());
             preparedStatement.setString(2, pieceDto.getType());
             preparedStatement.setString(3, pieceDto.getFile());
             preparedStatement.setInt(4, pieceDto.getRank());
             preparedStatement.setString(5, pieceDto.getColor());
             preparedStatement.executeUpdate();
+            final ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+        return -1;
     }
 
     public List<Integer> findAllIds() {
