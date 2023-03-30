@@ -18,43 +18,38 @@ public class GameResult {
 
     private static final long INITIAL_KING_COUNT = 2;
 
-    private final Map<Position, Piece> pieces;
+    private final Map<Position, Piece> positionToPiece;
 
-    public GameResult(Map<Position, Piece> pieces) {
-        this.pieces = pieces;
+    public GameResult(Map<Position, Piece> positionToPiece) {
+        this.positionToPiece = positionToPiece;
     }
 
     public Score getScore(Color color) {
-        Map<Position, Piece> colorPieces = filterPiecesByColor(pieces, color);
-        double score = calculateScore(colorPieces);
+        double pieceScore = calculatePieceScore(color);
+        double deductionScore = calculateDeductionScore(color);
+        double score = pieceScore - deductionScore;
         return Score.valueOf(score);
     }
 
-    private Map<Position, Piece> filterPiecesByColor(Map<Position, Piece> pieces, Color color) {
-        return pieces.entrySet().stream()
-                .filter(it -> it.getValue().getColor() == color)
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-    }
-
-    private double calculateScore(Map<Position, Piece> pieces) {
-        double pieceScore = pieces.values().stream()
+    private double calculatePieceScore(Color color) {
+        return positionToPiece.values().stream()
+                .filter(piece -> piece.getColor() == color)
                 .map(piece -> piece.getScore().getValue())
                 .mapToDouble(i -> i)
                 .sum();
-        double deductionScore = getDuplicatedPawnSize(pieces) * DUPLICATED_PAWN_DEDUCTION_SCORE;
-        return pieceScore - deductionScore;
     }
 
-    private int getDuplicatedPawnSize(Map<Position, Piece> pieces) {
-        Map<Integer, List<Piece>> fileToPawn = pieces.entrySet().stream()
-                .filter(positionToPiece -> positionToPiece.getValue().isSameType(PieceType.PAWN))
-                .collect(groupingBy(positionPieceEntry -> positionPieceEntry.getKey().getFileIndex(),
+    private double calculateDeductionScore(Color color) {
+        Map<Integer, List<Piece>> fileToPawn = positionToPiece.entrySet().stream()
+                .filter(it -> it.getValue().getColor() == color && it.getValue().isSameType(PieceType.PAWN))
+                .collect(groupingBy(it -> it.getKey().getFileIndex(),
                         mapping(Entry::getValue, Collectors.toList())));
 
-        return fileToPawn.values().stream()
+        int duplicatedPawnSize = fileToPawn.values().stream()
                 .filter(it -> it.size() > 1)
                 .mapToInt(List::size)
                 .sum();
+        return duplicatedPawnSize * DUPLICATED_PAWN_DEDUCTION_SCORE;
     }
 
     public Color getWinner() {
@@ -65,14 +60,14 @@ public class GameResult {
     }
 
     private boolean isGameOver() {
-        long kingCount = pieces.values().stream()
+        long kingCount = positionToPiece.values().stream()
                 .filter(piece -> piece.isSameType(PieceType.KING))
                 .count();
         return kingCount != INITIAL_KING_COUNT;
     }
 
     private Color getWinnerOfEnd() {
-        Piece king = pieces.values().stream()
+        Piece king = positionToPiece.values().stream()
                 .filter(piece -> piece.isSameType(PieceType.KING))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("살아있는 왕이 없습니다."));
