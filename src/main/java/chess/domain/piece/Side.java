@@ -17,4 +17,14 @@ public enum Side {
     public boolean isNeutrality() {
         return this == NEUTRALITY;
     }
+
+    public static Side calculateWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            return WHITE;
+        }
+        if (whiteScore < blackScore) {
+            return BLACK;
+        }
+        return NEUTRALITY;
+    }
 }

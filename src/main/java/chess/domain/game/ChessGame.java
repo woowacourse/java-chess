@@ -1,21 +1,28 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class ChessGame {
 
+    private final long id;
     private State state;
+    private Turn turn;
     private final Board board;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final long id, final Board board, Turn turn) {
+        this.id = id;
         this.state = State.RUN;
         this.board = board;
+        this.turn = turn;
     }
 
     public void start() {
+        if (state.isStart()) {
+            throw new IllegalArgumentException("이미 시작했습니다.");
+        }
         this.state = State.START;
     }
 
@@ -23,14 +30,30 @@ public class ChessGame {
         this.state = State.END;
     }
 
+    private void clear() {
+        this.state = State.CLEAR;
+    }
+
     public void moveOrNot(final Position source, final Position target) {
         checkPlayable();
-        final Piece sourcePiece = board.getPiece(source.getFile(), source.getRank());
-        final List<Position> movablePositions = sourcePiece.findMovablePositions(source, board);
-        checkMovable(movablePositions, target);
+        checkTurn(source);
+        boolean kingDeath = board.isKing(target);
+        final Path path = board.findMovablePositions(source);
+        path.checkMovable(target);
         board.move(source, target);
-        if (sourcePiece.isPawn()) {
-            sourcePiece.changePawnMoved();
+        endGameIfKingDeath(kingDeath);
+        changeTurn();
+    }
+
+    private void endGameIfKingDeath(final boolean kingDeath) {
+        if (kingDeath) {
+            clear();
+        }
+    }
+
+    private void checkTurn(final Position source) {
+        if (!board.isRightTurn(source, turn)) {
+            throw new IllegalArgumentException("잘못된 차례입니다.");
         }
     }
 
@@ -41,10 +64,32 @@ public class ChessGame {
         throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
     }
 
-    private void checkMovable(final List<Position> movablePositions, final Position target) {
-        if (!movablePositions.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
+    private void changeTurn() {
+        turn = turn.changeTurn();
+    }
+
+    public Double calculateScore(Side side) {
+        checkCalculable();
+        final Result result = board.getResult();
+        return result.calculateScore(side);
+    }
+
+    public Side calculateWinner() {
+        final Result result = board.getResult();
+        final Side winner = result.calculateWinner();
+
+        if (winner.isNeutrality()) {
+            return Side.calculateWinner(result.calculateScore(Side.WHITE),
+                    result.calculateScore(Side.BLACK));
         }
+        return winner;
+    }
+
+    private void checkCalculable() {
+        if (state.isCalculable()) {
+            return;
+        }
+        throw new IllegalArgumentException("게임을 시작해주세요.");
     }
 
     public boolean isRunnable() {
@@ -53,6 +98,18 @@ public class ChessGame {
 
     public boolean isStart() {
         return state.isStart();
+    }
+
+    public boolean isClear() {
+        return state.isClear();
+    }
+
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Board getBoard() {

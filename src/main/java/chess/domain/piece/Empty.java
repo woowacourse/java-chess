@@ -1,14 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.movepattern.MovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
+
 import java.util.List;
 
 public class Empty extends Piece {
 
     public Empty(final Type type, final Side side) {
-        super(type, side);
+        super(type, side, List.of());
     }
 
     @Override
@@ -18,12 +19,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected List<MovePattern> getMovePatterns() {
-        throw new UnsupportedOperationException("지원하지 않는 메서드입니다.");
-    }
-
-    @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
+    public Path findMovablePositions(final Position source, final Board board) {
         throw new UnsupportedOperationException("지원하지 않는 메서드입니다.");
     }
 

@@ -1,28 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.MovePattern;
-import chess.domain.movepattern.QueenMovePattern;
-import java.util.Arrays;
-import java.util.List;
+import chess.domain.movepattern.NormalMovePattern;
 
 public class Queen extends LinearPiece {
 
-    private final List<MovePattern> movePatterns;
-
     public Queen(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = Arrays.asList(QueenMovePattern.values());
+        super(type, side, NormalMovePattern.queenMovePattern());
     }
 
     @Override
     protected void validate(final Type type, final Side side) {
         validateType(type);
         validateSide(side);
-    }
-
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
     }
 
     private void validateType(final Type type) {

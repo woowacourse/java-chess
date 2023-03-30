@@ -1,13 +1,13 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.piece.Rook;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

@@ -2,24 +2,16 @@ package chess.domain.position;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Position {
 
+    private static final List<Integer> DOUBLE_POSITIONS = List.of(2, 7);
+
     private static final Map<Integer, Position> CACHE;
-
-    static {
-        final Map<Integer, Position> positions = new HashMap<>();
-
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                positions.put(getKey(rank, file), new Position(file, rank));
-            }
-        }
-
-        CACHE = positions;
-    }
 
     private static int getKey(final Rank rank, final File file) {
         return (rank.index() - Board.LOWER_BOUNDARY) * Board.UPPER_BOUNDARY + file.index();
@@ -31,6 +23,18 @@ public class Position {
     private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    static {
+        final Map<Integer, Position> positions = new HashMap<>();
+
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                positions.put(getKey(rank, file), new Position(file, rank));
+            }
+        }
+
+        CACHE = positions;
     }
 
     public static Position of(final File file, final Rank rank) {
@@ -47,12 +51,8 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
+    public boolean isDoubleMovePosition() {
+        return DOUBLE_POSITIONS.stream().anyMatch(position -> position == getRankIndex());
     }
 
     public int getFileIndex() {

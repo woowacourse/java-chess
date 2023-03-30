@@ -1,28 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.movepattern.BishopMovePattern;
-import chess.domain.movepattern.MovePattern;
-import java.util.Arrays;
-import java.util.List;
+import chess.domain.movepattern.NormalMovePattern;
 
 public class Bishop extends LinearPiece {
 
-    private final List<MovePattern> movePatterns;
-
     public Bishop(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = Arrays.asList(BishopMovePattern.values());
+        super(type, side, NormalMovePattern.bishopMovePattern());
     }
 
     @Override
     protected void validate(final Type type, final Side side) {
         validateType(type);
         validateSide(side);
-    }
-
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
     }
 
     private void validateType(final Type type) {

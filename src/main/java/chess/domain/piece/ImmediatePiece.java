@@ -2,27 +2,36 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ImmediatePiece extends Piece {
 
-
-    public ImmediatePiece(final Type type, final Side side) {
-        super(type, side);
+    public ImmediatePiece(final Type type, final Side side, List<MovePattern> movePatterns) {
+        super(type, side, movePatterns);
     }
 
     @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
+    public Path findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
-        final List<MovePattern> movePatterns = getMovePatterns();
+
         for (MovePattern movePattern : movePatterns) {
-            Position nextPosition = source;
-            if (isRangeValid(nextPosition, movePattern)) {
-                nextPosition = nextPosition.move(movePattern);
-                checkSide(movablePositions, nextPosition, board);
-            }
+            movablePositions.addAll(findMovablePositionsByMovePattern(source, board, movePattern));
+        }
+        return new Path(movablePositions);
+    }
+
+    private List<Position> findMovablePositionsByMovePattern(final Position source,
+                                                             final Board board, final MovePattern movePattern) {
+        List<Position> movablePositions = new ArrayList<>();
+        
+        Position nextPosition = source;
+        if (isRangeValid(nextPosition, movePattern)) {
+            nextPosition = nextPosition.move(movePattern);
+            checkSide(movablePositions, nextPosition, board);
         }
         return movablePositions;
     }

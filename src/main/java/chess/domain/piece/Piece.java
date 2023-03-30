@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -10,40 +12,26 @@ public abstract class Piece {
 
     protected final Type type;
     protected final Side side;
+    protected final List<MovePattern> movePatterns;
 
-    public Piece(final Type type, final Side side) {
+    public Piece(final Type type, final Side side, List<MovePattern> movePatterns) {
         validate(type, side);
         this.type = type;
         this.side = side;
+        this.movePatterns = movePatterns;
     }
 
     protected boolean isRangeValid(final Position position, final MovePattern movePattern) {
         final int nextRank = position.getRankIndex() + movePattern.rankVector();
         final int nextFile = position.getFileIndex() + movePattern.fileVector();
-        return nextRank >= 1 && nextRank <= 8 && nextFile >= 1 && nextFile <= 8;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public void changePawnMoved() {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
-    }
-
-    public String getName() {
-        return type.getSymbol(side);
-    }
-
-    public Side getSide() {
-        return side;
+        return nextRank >= Board.LOWER_BOUNDARY
+                && nextRank <= Board.UPPER_BOUNDARY
+                && nextFile >= Board.LOWER_BOUNDARY && nextFile <= Board.UPPER_BOUNDARY;
     }
 
     protected abstract void validate(final Type type, final Side side);
 
-    protected abstract List<MovePattern> getMovePatterns();
-
-    public abstract List<Position> findMovablePositions(final Position source, final Board board);
+    public abstract Path findMovablePositions(final Position source, final Board board);
 
     @Override
     public boolean equals(final Object o) {
@@ -56,5 +44,37 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(type, side);
+    }
+
+    public boolean isKing() {
+        return type.isKing();
+    }
+
+    public boolean isPawn() {
+        return type.isPawn();
+    }
+
+    public double getScore() {
+        return type.getValue();
+    }
+
+    public String getName() {
+        return type.getSymbol(side);
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public boolean isWhite() {
+        return side.isWhite();
+    }
+
+    public boolean isBlack() {
+        return side.isBlack();
     }
 }

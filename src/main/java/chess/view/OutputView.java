@@ -2,24 +2,22 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Side;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+
 import java.util.Map;
 
 public class OutputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public void printErrorMessage(final Exception e) {
+    public static void printErrorMessage(final Exception e) {
         System.out.println(e.getMessage() + LINE_SEPARATOR);
     }
 
-    public void printStartMessage() {
-        System.out.println("체스 게임을 시작합니다.");
-    }
-
-    public void printBoard(final Board board) {
+    public static void printBoard(final Board board) {
         final StringBuilder stringBuilder = new StringBuilder(LINE_SEPARATOR);
         final Map<Position, Piece> boardMap = board.getBoard();
 
@@ -32,5 +30,42 @@ public class OutputView {
         }
 
         System.out.println(stringBuilder);
+    }
+
+    public static void printScore(final Double whiteScore, final Double blackScore) {
+        System.out.println(String.format("White팀 점수: %.1f점", whiteScore));
+        System.out.println(String.format("Black팀 점수: %.1f점", blackScore));
+    }
+
+    public static void printWinner(Side side) {
+        if (side.isWhite()) {
+            System.out.println("White팀 승리!!");
+            return;
+        }
+        if (side.isBlack()) {
+            System.out.println("Black팀 승리!!");
+            return;
+        }
+        System.out.println("Draw!!");
+    }
+
+    public static void printNonContinueMessage() {
+        System.out.println("저장된 게임이 없습니다.");
+    }
+
+    public static void printContinueMessage() {
+        System.out.println("게임을 이어합니다.");
+    }
+
+    public static void printNewGameMessage() {
+        System.out.println("새로운 게임을 시작합니다.");
+    }
+
+    public static void printKingDie(final Side side) {
+        if (side.isWhite()) {
+            System.out.println("Black팀 King이 잡혔습니다.");
+            return;
+        }
+        System.out.println("White팀 King이 잡혔습니다.");
     }
 }

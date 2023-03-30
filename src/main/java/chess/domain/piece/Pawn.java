@@ -2,33 +2,27 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
-import chess.domain.movepattern.PawnMovePattern;
+import chess.domain.movepattern.NormalMovePattern;
+import chess.domain.position.Path;
 import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
 
-    private final List<MovePattern> movePatterns;
-    private boolean moved;
-
     public Pawn(final Type type, final Side side) {
-        super(type, side);
-        this.movePatterns = initMovePatterns(side);
-        this.moved = false;
+        super(type, side, initMovePatterns(side));
     }
 
-    private List<MovePattern> initMovePatterns(final Side side) {
+    private static List<MovePattern> initMovePatterns(final Side side) {
         List<MovePattern> movePatterns = new ArrayList<>();
+
         if (side.isWhite()) {
-            movePatterns.add(PawnMovePattern.UP);
-            movePatterns.add(PawnMovePattern.LEFT_TOP);
-            movePatterns.add(PawnMovePattern.RIGHT_TOP);
+            movePatterns.addAll(NormalMovePattern.whitePawnMovePattern());
         }
         if (side.isBlack()) {
-            movePatterns.add(PawnMovePattern.DOWN);
-            movePatterns.add(PawnMovePattern.LEFT_BOTTOM);
-            movePatterns.add(PawnMovePattern.RIGHT_BOTTOM);
+            movePatterns.addAll(NormalMovePattern.blackPawnMovePattern());
         }
         return movePatterns;
     }
@@ -40,29 +34,22 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public void changePawnMoved() {
-        moved = true;
-    }
-
-
-    @Override
-    public List<Position> findMovablePositions(final Position source, final Board board) {
+    public Path findMovablePositions(final Position source, final Board board) {
         final List<Position> movablePositions = new ArrayList<>();
-        final List<MovePattern> movePatterns = getMovePatterns();
+
         for (MovePattern movePattern : movePatterns) {
-            Position nextPosition = source;
-            if (isRangeValid(nextPosition, movePattern)) {
-                nextPosition = nextPosition.move(movePattern);
-                checkSide(movablePositions, source, nextPosition, board);
-            }
-            if (canDoubleMove(source, board, movePattern)) {
-                movablePositions.add(source.move(movePattern).move(movePattern));
-            }
+            movablePositions.addAll(findMovablePositionsByMovePattern(source, movePattern, board));
+            movablePositions.addAll(findMovablePositionsByDoubleMove(source, board, movePattern));
+        }
+        return new Path(movablePositions);
+    }
+
+    private List<Position> findMovablePositionsByDoubleMove(final Position source, final Board board,
+                                                            final MovePattern movePattern) {
+        List<Position> movablePositions = new ArrayList<>();
+
+        if (canDoubleMove(source, board, movePattern)) {
+            movablePositions.add(source.move(movePattern).move(movePattern));
         }
         return movablePositions;
     }
@@ -72,21 +59,33 @@ public class Pawn extends Piece {
                 && isNeutrality(source, board, movePattern)
                 && isRangeValid(source.move(movePattern), movePattern)
                 && isNeutrality(source.move(movePattern), board, movePattern)
-                && !moved;
+                && source.isDoubleMovePosition();
     }
 
     private static boolean isNeutrality(final Position source, final Board board, final MovePattern movePattern) {
         return board.findSideByPosition(source.move(movePattern)).isNeutrality();
     }
 
-    private void checkSide(final List<Position> movablePositions, final Position source, final Position nextPosition,
-                           final Board board) {
+    private List<Position> findMovablePositionsByMovePattern(final Position source, final MovePattern movePattern,
+                                                             final Board board) {
+        List<Position> movablePositions = new ArrayList<>();
+        Position nextPosition = getUpdatedPositionIfValidRange(source, movePattern);
         final Side nextSide = board.findSideByPosition(nextPosition);
+
         if (isDiagonal(source, nextPosition)) {
             checkDiagonalSide(movablePositions, nextPosition, nextSide);
-            return;
+            return movablePositions;
         }
         checkFrontSide(movablePositions, nextPosition, nextSide);
+        return movablePositions;
+    }
+
+    private Position getUpdatedPositionIfValidRange(final Position source, final MovePattern movePattern) {
+        Position nextPosition = source;
+        if (isRangeValid(source, movePattern)) {
+            nextPosition = nextPosition.move(movePattern);
+        }
+        return nextPosition;
     }
 
     private boolean isDiagonal(Position source, Position nextPosition) {
@@ -106,11 +105,6 @@ public class Pawn extends Piece {
         if (nextSide != this.side && nextSide != Side.NEUTRALITY) {
             movablePositions.add(nextPosition);
         }
-    }
-
-    @Override
-    protected List<MovePattern> getMovePatterns() {
-        return movePatterns;
     }
 
     private void validateType(final Type type) {
