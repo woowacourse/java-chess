@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.controller.state.Ready;
 import chess.controller.state.State;
-import chess.domain.game.Command;
+import chess.view.Command;
 import chess.domain.game.Game;
 import chess.view.InputView;
 import chess.view.OutputView;
