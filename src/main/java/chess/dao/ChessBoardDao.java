@@ -77,23 +77,23 @@ public class ChessBoardDao implements ChessDao {
 		return new Board(board, turn);
 	}
 
-	private Piece toPiece(final PieceType pieceType, final Color color, final Position position) {
-		if (pieceType == ROOK) {
+	private Piece toPiece(final PieceType type, final Color color, final Position position) {
+		if (type == ROOK) {
 			return new Rook(color, position);
 		}
-		if (pieceType == BISHOP) {
+		if (type == BISHOP) {
 			return new Bishop(color, position);
 		}
-		if (pieceType == KNIGHT) {
+		if (type == KNIGHT) {
 			return new Knight(color, position);
 		}
-		if (pieceType == QUEEN) {
+		if (type == QUEEN) {
 			return new Queen(color, position);
 		}
-		if (pieceType == KING) {
+		if (type == KING) {
 			return new King(color, position);
 		}
-		if (pieceType == PAWN) {
+		if (type == PAWN) {
 			return new Pawn(color, position);
 		}
 		return new Empty(Color.NONE, position);
