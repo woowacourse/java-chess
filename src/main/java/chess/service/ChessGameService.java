@@ -1,5 +1,7 @@
 package chess.service;
 
+import static chess.domain.piece.Color.*;
+
 import chess.dao.ConnectedMoveDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
@@ -28,10 +30,14 @@ public class ChessGameService {
     }
 
     private Board loadStoredBoard(final Board board, final List<MoveDto> moves) {
-        if (moves.size() % 2 == 0) {
-            return new Board(board.getBoard(), Color.WHITE);
+        if (isWhiteTurn(moves)) {
+            return new Board(board.getBoard(), WHITE);
         }
-        return new Board(board.getBoard(), Color.BLACK);
+        return new Board(board.getBoard(), BLACK);
+    }
+
+    private boolean isWhiteTurn(final List<MoveDto> moves) {
+        return moves.size() % 2 == 0;
     }
 
     public void move(final String source, final String target) {
