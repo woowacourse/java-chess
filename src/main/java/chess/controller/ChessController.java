@@ -15,10 +15,11 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.ChessGameFactory;
-import chess.domain.game.Status;
+import chess.domain.game.GameResult;
 import chess.domain.game.Turn;
 import chess.domain.position.Position;
 import chess.dto.ChessGameDto;
+import chess.dto.GameResultDto;
 import chess.dto.PieceDto;
 import chess.repository.dao.ChessGameDao;
 import chess.repository.dao.JdbcChessGameDao;
@@ -151,8 +152,8 @@ public class ChessController {
     }
 
     private void status(final ChessGame chessGame) {
-        final Status status = chessGame.getStatus();
+        final GameResult gameResult = chessGame.getGameResult();
         outputView.printBoard(chessGame.getBoard());
-        outputView.printStatus(status);
+        outputView.printStatus(GameResultDto.from(gameResult));
     }
 }

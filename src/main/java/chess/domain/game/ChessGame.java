@@ -61,8 +61,8 @@ public class ChessGame {
         }
     }
 
-    public Status getStatus() {
-        return Status.from(board);
+    public GameResult getGameResult() {
+        return GameResult.from(board);
     }
 
     public void start() {

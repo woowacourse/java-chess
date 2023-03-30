@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.game.Status;
 import chess.domain.game.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
@@ -9,6 +8,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.ChessGameDto;
+import chess.dto.GameResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -82,10 +82,10 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public void printStatus(final Status status) {
-        System.out.println("WHITE 진영의 기물 점수: " + status.getWhiteSidePrice());
-        System.out.println("BLACK 진영의 기물 점수: " + status.getBlackSidePrice());
-        System.out.println("현재 " + getAdvantageSideFormat(status.getAdvantageSide()));
+    public void printStatus(final GameResultDto gameResult) {
+        System.out.println("WHITE 진영의 기물 점수: " + gameResult.getWhiteSidePrice());
+        System.out.println("BLACK 진영의 기물 점수: " + gameResult.getBlackSidePrice());
+        System.out.println("현재 " + getAdvantageSideFormat(gameResult.getAdvantageSide()));
         System.out.println();
     }
 
