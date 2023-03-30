@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Players {
 
-    private final TurnDao turnDao = new TurnDaoImpl();
+    private final TurnDao turnDao = TurnDaoImpl.getInstance();
     private final List<Player> players;
     private Color current;
 
@@ -104,7 +104,7 @@ public class Players {
         Player findPlayer = findPlayerByPosition(sourcePosition);
         Piece changedPiece = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
 
-        PieceDao dao = new PieceDaoImpl();
+        PieceDao dao = PieceDaoImpl.getInstance();
         dao.updatePosition(changedPiece, sourcePosition);
         deleteWhenIfExistOtherPlayer(targetPosition, findPlayer, dao);
     }

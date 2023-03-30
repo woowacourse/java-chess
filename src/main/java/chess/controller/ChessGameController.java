@@ -43,7 +43,7 @@ public final class ChessGameController {
     private void finishGame() {
         if (players.notEveryKingAlive()) {
             OutputView.printWinner(players.getWinnerColorName());
-            PieceDao dao = new PieceDaoImpl();
+            PieceDao dao = PieceDaoImpl.getInstance();
             dao.deleteAll();
         }
     }

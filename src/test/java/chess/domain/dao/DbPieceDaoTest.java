@@ -8,17 +8,11 @@ import chess.domain.piece.Position;
 import chess.domain.piece.Shape;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DbPieceDaoTest {
-    PieceDao pieceDao;
-
-    @BeforeEach
-    void setUp() {
-        pieceDao = new PieceDaoImpl();
-    }
+    PieceDao pieceDao = PieceDaoImpl.getInstance();
 
     @AfterEach
     void remove() {

@@ -23,6 +23,13 @@ public class PieceDaoImpl implements PieceDao {
         return Piece.from(rank, file, Shape.valueOf(shape));
     };
 
+    private PieceDaoImpl() {
+    }
+
+    public static PieceDaoImpl getInstance() {
+        return Holder.pieceDaoImpl;
+    }
+
     @Override
     public void create(final Piece piece, final Color color) {
         processQuery("INSERT INTO piece(`rank`, `file`, shape, color) VALUES(?, ?, ?, ?)",
@@ -94,4 +101,7 @@ public class PieceDaoImpl implements PieceDao {
         return Pieces.from(results);
     }
 
+    private static class Holder {
+        public static PieceDaoImpl pieceDaoImpl = new PieceDaoImpl();
+    }
 }

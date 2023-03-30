@@ -12,6 +12,13 @@ public class TurnDaoImpl implements TurnDao {
 
     private final DBConnection dbConnection = DBConnection.getInstance();
 
+    private TurnDaoImpl() {
+    }
+
+    public static TurnDao getInstance() {
+        return Holder.turnDaoImpl;
+    }
+
     @Override
     public void create(final Color color) {
         processQuery("INSERT INTO turn(current_color) VALUES (?)",
@@ -51,4 +58,7 @@ public class TurnDaoImpl implements TurnDao {
         }
     }
 
+    private static class Holder {
+        public static TurnDao turnDaoImpl = new TurnDaoImpl();
+    }
 }

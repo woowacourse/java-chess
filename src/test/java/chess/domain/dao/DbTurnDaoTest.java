@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DbTurnDaoTest {
-    TurnDao turnDao = new TurnDaoImpl();
+    TurnDao turnDao = TurnDaoImpl.getInstance();
 
     @DisplayName("업데이트 하기")
     @Test
