@@ -28,7 +28,7 @@ public abstract class Piece {
 
 	public abstract PieceType type();
 
-	public boolean isSameTeam(final Color color) {
+	public boolean isSameColor(final Color color) {
 		return this.color.equals(color);
 	}
 

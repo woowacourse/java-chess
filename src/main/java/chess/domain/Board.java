@@ -26,17 +26,17 @@ public class Board {
 	private static final int NO_PAWN = 0;
 	private static final int ONE_PAWN = 1;
 	private static final int TARGET_POINT = 1;
-	private static Color thisTurn;
+	private static Color turn;
 	private final Map<Position, Piece> board;
 
 	private Board(final Map<Position, Piece> board) {
 		this.board = board;
-		thisTurn = WHITE;
+		turn = WHITE;
 	}
 
 	public Board(final Map<Position, Piece> board, Color turn) {
 		this.board = board;
-		thisTurn = turn;
+		Board.turn = turn;
 	}
 
 	public static Board create() {
@@ -68,7 +68,8 @@ public class Board {
 	}
 
 	private void isTurn(final Position source) {
-		if (board.get(source).color() != thisTurn) {
+		final Piece piece = board().get(source);
+		if (!piece.isSameColor(turn)) {
 			throw new IllegalArgumentException("상대팀의 순서입니다");
 		}
 	}
@@ -83,7 +84,7 @@ public class Board {
 		final Piece sourcePiece = board.get(source);
 		final Piece targetPiece = board.get(target);
 
-		if (sourcePiece.isSameTeam(targetPiece.color())) {
+		if (sourcePiece.isSameColor(targetPiece.color())) {
 			throw new IllegalArgumentException("같은 팀은 공격할 수 없습니다");
 		}
 	}
@@ -134,7 +135,7 @@ public class Board {
 		piece.move(target);
 		board.put(target, piece);
 		board.put(source, new Empty(NONE, source));
-		thisTurn = thisTurn.switchTurn();
+		turn = turn.switchTurn();
 
 		return candidateKing;
 	}
@@ -229,6 +230,6 @@ public class Board {
 	}
 
 	public Color turn(){
-		return thisTurn;
+		return turn;
 	}
 }
