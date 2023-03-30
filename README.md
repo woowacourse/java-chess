@@ -6,6 +6,11 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+## DB 초기 설정
+
+1. docker 디렉토리에서 `docker-compose -p chess up -d` 를 통해 서버를 실행한다.
+2. `/docker/init.sql` 에 있는 DDL 쿼리를 통해 테이블을 생성한다.
+
 ## 도메인 다이어그램
 
 ```mermaid
