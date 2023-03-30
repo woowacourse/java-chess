@@ -1,17 +1,10 @@
 package chess.controller;
 
-import chess.boardstrategy.BoardStrategy;
-import chess.dao.ChessGameDao;
-import chess.dao.MoveDao;
 import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-
-import static chess.controller.Command.*;
 
 public class Controller {
 
@@ -19,60 +12,54 @@ public class Controller {
     private final OutputView outputView;
     private final ChessGameService chessGameService;
 
-    public Controller(final InputView inputView, final OutputView outputView) {
+    public Controller(final InputView inputView, final OutputView outputView, ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGameService = new ChessGameService(new ChessGameDao(), new MoveDao());
+        this.chessGameService = chessGameService;
     }
 
-    private final Map<Command, BiConsumer<List<String>, BoardStrategy>> actions =
-            Map.of(START, this::start,
-                    MOVE, this::move,
-                    STATUS, this::status,
-                    END, this::end);
-
-    public void run(BoardStrategy boardStrategy) {
-        outputView.printStartGuideMessage();
-        do {
-            playByCommand(boardStrategy);
-        } while (chessGameService.isRunning());
-        finishGameByCommand(boardStrategy);
+    public void run() {
+        GameCommandInvoker gameCommandInvoker = new GameCommandInvoker(chessGameService, outputView);
+        GameCommand gameCommand = readStartCommand(gameCommandInvoker);
+        while(gameCommand != GameCommand.END){
+            gameCommand = runByCommand(gameCommandInvoker);
+            gameCommand = checkGameFinished(gameCommand);
+        }
     }
 
-    private void playByCommand(BoardStrategy boardStrategy) {
+    private GameCommand readStartCommand(GameCommandInvoker gameCommandInvoker) {
         try {
             List<String> commandLine = inputView.readCommandLine();
-            Command command = Command.findCommandByCommandLine(commandLine);
-            actions.get(command).accept(commandLine, boardStrategy);
-        } catch (IllegalArgumentException e) {
+            GameCommand gameCommand = GameCommand.of(commandLine);
+            if(gameCommand != GameCommand.START && gameCommand != GameCommand.CREATE) {
+                throw new IllegalArgumentException("게임이 시작되지 않았습니다");
+            }
+            gameCommandInvoker.generate(gameCommand, commandLine);
+            return gameCommand;
+        }catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
+            return readStartCommand(gameCommandInvoker);
         }
     }
 
-    public void start(List<String> commandLine, BoardStrategy boardStrategy) {
-        chessGameService.start();
-        outputView.printBoard(chessGameService.findChessBoard(boardStrategy));
-    }
-
-    public void move(List<String> commandLine, BoardStrategy boardStrategy) {
-        chessGameService.move(commandLine, boardStrategy);
-        outputView.printBoard(chessGameService.findChessBoard(boardStrategy));
-    }
-
-    private void status(final List<String> commandLine, final BoardStrategy boardStrategy) {
-        outputView.printStatus(chessGameService.findStatus(boardStrategy));
-    }
-
-    private void end(final List<String> commandLine, final BoardStrategy boardStrategy) {
-        chessGameService.end();
-    }
-
-    private void finishGameByCommand(BoardStrategy boardStrategy) {
-        if (chessGameService.isFinished()) {
-            outputView.printWinner(chessGameService.findWinner(boardStrategy));
+    private GameCommand runByCommand(GameCommandInvoker gameCommandInvoker) {
+        try {
+            List<String> commandLine = inputView.readCommandLine();
+            GameCommand gameCommand = GameCommand.of(commandLine);
+            gameCommandInvoker.generate(gameCommand, commandLine);
+            return gameCommand;
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            return runByCommand(gameCommandInvoker);
         }
     }
 
+    private GameCommand checkGameFinished(GameCommand gameCommand) {
+        if(chessGameService.isFinished()) {
+            return GameCommand.END;
+        }
+        return gameCommand;
+    }
 
 }
 
