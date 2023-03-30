@@ -101,18 +101,7 @@ public class ChessBoardDao implements ChessDao {
 
 	@Override
 	public void update(final Board board) {
-		delete();
 		save(board);
-	}
-
-	public void delete() {
-		final String query = "DELETE FROM chess_game";
-		try (final Connection connection = dbConnection.getConnection();
-			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-			preparedStatement.executeUpdate();
-		} catch (final SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Override
