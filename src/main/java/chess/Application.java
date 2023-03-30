@@ -7,7 +7,6 @@ import chess.domain.board.Rank;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.PieceFactory;
 import chess.service.ChessGame;
-import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
