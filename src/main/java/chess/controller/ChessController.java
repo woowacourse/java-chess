@@ -50,12 +50,13 @@ public final class ChessController {
     }
 
     private Command readCommand(final List<CommandType> possibleCommands) {
-        Command command;
-        do {
-            command = errorController.retryIfThrowsException(() ->
-                    InputRenderer.toCommand(InputView.readCommand()));
-        } while (!possibleCommands.contains(command.getCommandType()));
-        return command;
+        return errorController.retryIfThrowsException( () -> {
+            Command command = InputRenderer.toCommand(InputView.readCommand());
+            if (!possibleCommands.contains(command.getCommandType())) {
+                throw new IllegalArgumentException("명령어를 확인해주세요.");
+            }
+            return command;
+        });
     }
 
     public void start() {
