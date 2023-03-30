@@ -37,6 +37,7 @@ class ChessGameOverTest {
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
                 new Rook(A3, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
@@ -52,6 +53,7 @@ class ChessGameOverTest {
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
                 new Rook(A3, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
@@ -67,6 +69,7 @@ class ChessGameOverTest {
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
                 new Rook(A3, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
@@ -82,6 +85,7 @@ class ChessGameOverTest {
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
                 new Rook(A3, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
@@ -101,6 +105,7 @@ class ChessGameOverTest {
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
                 new Rook(A3, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
@@ -120,6 +125,7 @@ class ChessGameOverTest {
                 new King(E1, BLACK),
                 new Queen(E8, BLACK),
                 new Rook(A3, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 

@@ -10,16 +10,6 @@ public class InMemoryPieceDao implements PieceDao{
     private final Set<Piece> pieces = new HashSet<>();
 
     @Override
-    public void addPiece(final int gameRoomId, final Piece piece) {
-        pieces.add(piece);
-    }
-
-    @Override
-    public void deletePiece(final int gameRoomId, final Piece piece) {
-        pieces.remove(piece);
-    }
-
-    @Override
     public Set<Piece> findAllPieceInGame(final int gameRoomId) {
         return Set.copyOf(pieces);
     }
@@ -27,5 +17,16 @@ public class InMemoryPieceDao implements PieceDao{
     @Override
     public void deleteAllInGame(final int gameRoomId) {
         pieces.removeAll(pieces);
+    }
+
+    @Override
+    public void updatePieces(final int gameRoomId, final Set<Piece> pieces) {
+        deleteAllInGame(gameRoomId);
+        this.pieces.addAll(pieces);
+    }
+
+    @Override
+    public void addPiece(final int gameRoomId, final Piece piece) {
+        pieces.add(piece);
     }
 }

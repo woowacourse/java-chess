@@ -46,6 +46,7 @@ class ChessGameTest {
     void change_turn_test() {
         final ChessGame chessGame = ChessGame.createWith(
                 new TestPiecesGenerator(List.of(new Pawn(A2, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
                 );
 
@@ -62,6 +63,7 @@ class ChessGameTest {
                 new TestPiecesGenerator(List.of(
                         new Pawn(A2, WHITE),
                         new Pawn(A7, BLACK))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID);
 
         assertThatThrownBy(() -> chessGame.move(A7, A6))
@@ -77,6 +79,7 @@ class ChessGameTest {
                         new King(E1, WHITE),
                         new King(E8, BLACK),
                         new Queen(B5, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID);
 
         final boolean initialKingCaught = chessGame.isKingCaught();
@@ -109,6 +112,7 @@ class ChessGameTest {
                             new Bishop(C1, WHITE),  // 3
                             new Rook(A1, WHITE)     // 5
                     )),
+                    ChessGame.INITIAL_STARTING_COLOR,
                     TEST_GAME_ROOM_ID);
             final Color expectedWinningTeamColor = BLANK;
             final double expectedBlackScore = 2.5;
@@ -138,6 +142,7 @@ class ChessGameTest {
                             new Bishop(C1, WHITE),
                             new Rook(A1, WHITE)
                     )),
+                    ChessGame.INITIAL_STARTING_COLOR,
                     TEST_GAME_ROOM_ID);
             final Color expectedWinningTeamColor = BLACK;
             final double expectedBlackScore = 0;
@@ -167,6 +172,7 @@ class ChessGameTest {
                             new Bishop(C1, WHITE),
                             new Rook(A1, WHITE)
                     )),
+                    ChessGame.INITIAL_STARTING_COLOR,
                     TEST_GAME_ROOM_ID);
             final Color expectedWinningTeamColor = WHITE;
             final double expectedBlackScore = 0;

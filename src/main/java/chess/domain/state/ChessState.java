@@ -10,6 +10,8 @@ import chess.dto.domaintocontroller.GameStatus;
 
 import java.util.Set;
 
+import static chess.domain.ChessGame.INITIAL_STARTING_COLOR;
+
 public abstract class ChessState {
 
     private static final int INITIAL_GAME_ID = 0;
@@ -29,7 +31,7 @@ public abstract class ChessState {
             final ChessGameDao chessGameDao,
             final PieceDao pieceDao) {
         return new ChessReady(
-                ChessGame.createWith(piecesGenerator, INITIAL_GAME_ID),
+                ChessGame.createWith(piecesGenerator, INITIAL_STARTING_COLOR, INITIAL_GAME_ID),
                 chessGameDao,
                 pieceDao
         );

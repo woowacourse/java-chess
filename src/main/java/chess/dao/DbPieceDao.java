@@ -17,48 +17,6 @@ import java.util.Set;
 public class DbPieceDao implements PieceDao {
 
     @Override
-    public void addPiece(final int gameRoomId, final Piece piece) {
-        final String query = "INSERT INTO pieces SET " +
-                "position_file = ?, " +
-                "position_rank = ?, " +
-                "type = ?, " +
-                "color = ?, " +
-                "room_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, piece.getPosition().getFile().name());
-            preparedStatement.setString(2, piece.getPosition().getRank().name());
-            preparedStatement.setString(3, PieceType.findByPiece(piece).name());
-            preparedStatement.setString(4, piece.getColor().name());
-            preparedStatement.setInt(5, gameRoomId);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void deletePiece(final int gameRoomId, final Piece piece) {
-        final String query = "DELETE FROM pieces " +
-                "WHERE " +
-                "position_file = ? AND " +
-                "position_rank = ? AND " +
-                "room_id = ?";
-
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, piece.getPosition().getFile().name());
-            preparedStatement.setString(2, piece.getPosition().getRank().name());
-            preparedStatement.setInt(3, gameRoomId);
-
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public Set<Piece> findAllPieceInGame(final int gameRoomId) {
         final String query = "SELECT * FROM pieces WHERE room_id = ?";
         final Set<Piece> pieces = new HashSet<>();
@@ -92,6 +50,36 @@ public class DbPieceDao implements PieceDao {
             preparedStatement.setInt(1, gameRoomId);
 
             preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updatePieces(final int gameRoomId, final Set<Piece> pieces) {
+        deleteAllInGame(gameRoomId);
+        for (Piece piece : pieces) {
+            addPiece(gameRoomId, piece);
+        }
+    }
+
+    @Override
+    public void addPiece(final int gameRoomId, final Piece piece) {
+        final String query = "INSERT INTO pieces SET " +
+                "position_file = ?, " +
+                "position_rank = ?, " +
+                "type = ?, " +
+                "color = ?, " +
+                "room_id = ?";
+        try (final Connection connection = ConnectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, piece.getPosition().getFile().name());
+            preparedStatement.setString(2, piece.getPosition().getRank().name());
+            preparedStatement.setString(3, PieceType.findByPiece(piece).name());
+            preparedStatement.setString(4, piece.getColor().name());
+            preparedStatement.setInt(5, gameRoomId);
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

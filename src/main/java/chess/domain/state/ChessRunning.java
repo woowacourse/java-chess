@@ -24,7 +24,10 @@ public class ChessRunning extends ChessState {
     @Override
     public ChessState move(final Position sourcePosition, final Position targetPosition) {
         chessGame.move(sourcePosition, targetPosition);
+        pieceDao.updatePieces(chessGame.getGameRoomId(), chessGame.getExistingPieces());
+        chessGameDao.updateCurrentTurnColor(chessGame.getGameRoomId(), chessGame.getCurrentTurnColor());
         if(chessGame.isKingCaught()){
+            chessGameDao.removeGameDataFromDb(chessGame.getGameRoomId());
             return new ChessGameOver(chessGame, chessGameDao, pieceDao);
         }
         return this;

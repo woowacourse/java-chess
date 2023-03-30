@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 public class ChessGame {
 
+    public static final Color INITIAL_STARTING_COLOR = Color.WHITE;
     private static final Map<PieceType, Double> SCORE_BY_PIECE_TYPE;
 
     static {
@@ -42,8 +43,8 @@ public class ChessGame {
         this.gameRoomId = gameRoomId;
     }
 
-    public static ChessGame createWith(final PiecesGenerator piecesGenerator, final int gameRoomId) {
-        return new ChessGame(Board.createWith(piecesGenerator), Color.WHITE, gameRoomId);
+    public static ChessGame createWith(final PiecesGenerator piecesGenerator,final Color turnColor, final int gameRoomId) {
+        return new ChessGame(Board.createWith(piecesGenerator), turnColor, gameRoomId);
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
@@ -133,6 +134,10 @@ public class ChessGame {
 
     public Set<Piece> getExistingPieces() {
         return board.getExistingPieces();
+    }
+
+    public Color getCurrentTurnColor() {
+        return currentTurnColor;
     }
 
     public int getGameRoomId() {

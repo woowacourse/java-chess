@@ -40,7 +40,7 @@ class ChessRunningTest {
     @DisplayName("게임 시작 명령시 예외를 발생시킨다")
     void start_chess_command_throw_exception() {
         final ChessRunning chessRunning = new ChessRunning(
-                ChessGame.createWith(new TestPiecesGenerator(pieces), TEST_GAME_ROOM_ID),
+                ChessGame.createWith(new TestPiecesGenerator(pieces), ChessGame.INITIAL_STARTING_COLOR, TEST_GAME_ROOM_ID),
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
@@ -53,7 +53,7 @@ class ChessRunningTest {
     @DisplayName("이동 명령시 진행중인 상태의 체스를 반환한다")
     void move_chess_command_throw_exception() {
         final ChessRunning chessRunning = new ChessRunning(
-                ChessGame.createWith(new TestPiecesGenerator(pieces), TEST_GAME_ROOM_ID),
+                ChessGame.createWith(new TestPiecesGenerator(pieces), ChessGame.INITIAL_STARTING_COLOR, TEST_GAME_ROOM_ID),
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
@@ -66,7 +66,7 @@ class ChessRunningTest {
     @DisplayName("게임 종료 명령시 상태를 종료 변경한다")
     void end_chess_test() {
         final ChessRunning chessRunning = new ChessRunning(
-                ChessGame.createWith(new TestPiecesGenerator(pieces), TEST_GAME_ROOM_ID),
+                ChessGame.createWith(new TestPiecesGenerator(pieces), ChessGame.INITIAL_STARTING_COLOR, TEST_GAME_ROOM_ID),
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
@@ -79,7 +79,7 @@ class ChessRunningTest {
     @DisplayName("말들의 점수 상태를 반환한다")
     void get_score_from_status_test() {
         final ChessRunning chessRunning = new ChessRunning(
-                ChessGame.createWith(new StartingPiecesGenerator(), TEST_GAME_ROOM_ID), new InMemoryChessGameDao
+                ChessGame.createWith(new StartingPiecesGenerator(), ChessGame.INITIAL_STARTING_COLOR, TEST_GAME_ROOM_ID), new InMemoryChessGameDao
                 (), new InMemoryPieceDao
                 ());
 
@@ -96,7 +96,7 @@ class ChessRunningTest {
     @DisplayName("체스말을 가져온다")
     void getting_existing_piece_test() {
         final ChessRunning chessRunning = new ChessRunning(
-                ChessGame.createWith(new TestPiecesGenerator(pieces), TEST_GAME_ROOM_ID),
+                ChessGame.createWith(new TestPiecesGenerator(pieces), ChessGame.INITIAL_STARTING_COLOR, TEST_GAME_ROOM_ID),
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
@@ -109,7 +109,7 @@ class ChessRunningTest {
     @DisplayName("게임 종료 여부를 확인한다")
     void check_if_is_end_test() {
         final ChessRunning chessRunning = new ChessRunning(
-                ChessGame.createWith(new TestPiecesGenerator(pieces), TEST_GAME_ROOM_ID),
+                ChessGame.createWith(new TestPiecesGenerator(pieces), ChessGame.INITIAL_STARTING_COLOR, TEST_GAME_ROOM_ID),
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
@@ -125,6 +125,7 @@ class ChessRunningTest {
                         new King(E1, WHITE),
                         new King(E8, BLACK),
                         new Queen(B5, WHITE))),
+                ChessGame.INITIAL_STARTING_COLOR,
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
