@@ -1,4 +1,4 @@
-package chess.domain.entity;
+package chess.dao.entity;
 
 import java.util.Objects;
 
