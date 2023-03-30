@@ -3,6 +3,8 @@ package chess.controller;
 import chess.controller.converter.BoardConverter;
 import chess.controller.status.AppStatus;
 import chess.controller.util.InputExceptionHandler;
+import chess.dao.boardpieces.JdbcBoardPiecesDao;
+import chess.dao.boardstatuses.JdbcBoardStatusesDao;
 import chess.dto.CommandRequest;
 import chess.dto.GameResultResponse;
 import chess.service.ChessGameService;
@@ -16,7 +18,7 @@ public class ChessGameController {
     private final ChessGameService chessGameService;
 
     public ChessGameController() {
-        this.chessGameService = new ChessGameService();
+        this.chessGameService = new ChessGameService(new JdbcBoardPiecesDao(), new JdbcBoardStatusesDao());
     }
 
     public AppStatus start(CommandRequest commandRequest) {

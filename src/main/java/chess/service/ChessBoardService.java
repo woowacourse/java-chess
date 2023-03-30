@@ -1,9 +1,7 @@
 package chess.service;
 
 import chess.dao.boardpieces.BoardPiecesDao;
-import chess.dao.boardpieces.JdbcBoardPiecesDao;
 import chess.dao.boardstatuses.BoardStatusesDao;
-import chess.dao.boardstatuses.JdbcBoardStatusesDao;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.domain.PieceInitializer;
@@ -15,8 +13,13 @@ import java.util.Map;
 
 public class ChessBoardService {
 
-    private final BoardPiecesDao boardPiecesDao = new JdbcBoardPiecesDao();
-    private final BoardStatusesDao boardStatusesDao = new JdbcBoardStatusesDao();
+    private final BoardPiecesDao boardPiecesDao;
+    private final BoardStatusesDao boardStatusesDao;
+
+    public ChessBoardService(final BoardPiecesDao boardPiecesDao, final BoardStatusesDao boardStatusesDao) {
+        this.boardPiecesDao = boardPiecesDao;
+        this.boardStatusesDao = boardStatusesDao;
+    }
 
     public ChessBoard findChessBoardById(int boardId) {
         Map<Position, Piece> piecesByPosition = boardPiecesDao.find(boardId)

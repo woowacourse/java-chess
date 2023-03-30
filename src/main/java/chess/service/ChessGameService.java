@@ -2,6 +2,8 @@ package chess.service;
 
 import static chess.service.status.GameStatus.RUNNING;
 
+import chess.dao.boardpieces.BoardPiecesDao;
+import chess.dao.boardstatuses.BoardStatusesDao;
 import chess.domain.Camp;
 import chess.domain.ChessBoard;
 import chess.domain.Position;
@@ -16,9 +18,13 @@ import java.util.Map;
 
 public class ChessGameService {
 
-    private final ChessBoardService chessBoardService = new ChessBoardService();
+    private final ChessBoardService chessBoardService;
     private ChessBoard chessBoard;
     private GameStatus gameStatus = GameStatus.READY;
+
+    public ChessGameService(final BoardPiecesDao boardPiecesDao, final BoardStatusesDao boardStatusesDao) {
+        this.chessBoardService = new ChessBoardService(boardPiecesDao, boardStatusesDao);
+    }
 
     public List<Integer> availableBoards() {
         return chessBoardService.findAllBoardIds();
