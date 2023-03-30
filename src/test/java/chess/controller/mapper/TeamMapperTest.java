@@ -23,7 +23,7 @@ class TeamMapperTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"흰색팀:WHITE", "검은팀:BLACK", "없음:EMPTY"}, delimiter = ':')
+    @CsvSource(value = {"흰팀:WHITE", "검은팀:BLACK", "없음:EMPTY"}, delimiter = ':')
     void 팀에_대한_메세지를_입력하면_이에_해당하는_객체를_반환한다(String teamView, TeamMapper expected) {
         TeamMapper teamMapper = TeamMapper.from(teamView);
 

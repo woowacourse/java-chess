@@ -134,4 +134,14 @@ class MoveCommandTest {
 
         assertThat(result.isSameType(CommandType.END)).isTrue();
     }
+
+    @Test
+    void move_상태일_때_status를_입력하면_StatusCommand_객체가_반환된다() {
+        Command moveCommand = new MoveCommand(boardDao, new OutputView());
+        List<String> input = List.of("status");
+
+        Command result = moveCommand.execute(input);
+
+        assertThat(result.isSameType(CommandType.STATUS)).isTrue();
+    }
 }

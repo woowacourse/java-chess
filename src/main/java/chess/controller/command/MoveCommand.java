@@ -28,7 +28,14 @@ public class MoveCommand extends Command {
         if (inputCommandType == CommandType.END) {
             return executeEnd();
         }
+        if (inputCommandType == CommandType.STATUS) {
+            return executeStatus();
+        }
         throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
+    }
+
+    private Command executeStatus() {
+        return new StatusCommand(boardDao, outputView);
     }
 
     private Command executeMove(List<String> input) {
@@ -40,6 +47,7 @@ public class MoveCommand extends Command {
         moveChessPiece(input, chessGame);
         if (chessGame.isFinished()) {
             outputView.printBoard(getChessGameBoards());
+            outputView.printFinish();
             return new StatusCommand(boardDao, outputView);
         }
         return new MoveCommand(boardDao, outputView);
