@@ -20,7 +20,12 @@ public class WhiteTurn implements State {
     }
 
     @Override
-    public void startGame() {
+    public void checkStartState() {
         throw new IllegalStateException("게임이 이미 실행중입니다.");
+    }
+
+    @Override
+    public State changeState() {
+        return new BlackTurn();
     }
 }
