@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.Direction;
-import chess.domain.board.Position;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.component.Team;
@@ -106,5 +105,18 @@ public class Board {
 
     public Team getTeam(Position a) {
         return board.get(a).getTeam();
+    }
+
+    public List<Team> kingTeams() {
+        return findKingPosition().stream()
+                .map(position -> board.get(position).getTeam())
+                .collect(toList());
+    }
+
+    private List<Position> findKingPosition() {
+        return board.keySet()
+                .stream()
+                .filter(key -> board.get(key).getType() == Type.KING)
+                .collect(toList());
     }
 }

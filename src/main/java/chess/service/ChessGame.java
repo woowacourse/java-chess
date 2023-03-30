@@ -120,4 +120,13 @@ public class ChessGame {
         gameDao.deleteTable();
         pieceDao.deleteTable();
     }
+
+    public boolean isKingDie() {
+        board.kingTeams();
+        return board.kingTeams().size() != 2;
+    }
+
+    public Team winTeam() {
+        return board.kingTeams().get(0);
+    }
 }

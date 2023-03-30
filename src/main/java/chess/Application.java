@@ -22,8 +22,12 @@ public class Application {
 
         while (!chessGame.isEnd()) {
             changeState();
-            printBoard();
+            if (chessGame.isKingDie()) {
+                OutputView.printWinner(chessGame.winTeam().getValue());
+                break;
+            }
         }
+
     }
 
     private static void changeState() {
@@ -31,18 +35,21 @@ public class Application {
             Command command = new Command(InputView.readCommand());
             if (command.isStatus()) {
                 OutputView.printScore(chessGame.calculateScore());
+                printBoard();
                 return;
             }
             if (command.isMove()) {
-                chessGame.move(command.getCurrentPosition(),command.getTargetPosition());
+                chessGame.move(command.getCurrentPosition(), command.getTargetPosition());
                 chessGame.changeTurn();
+                printBoard();
                 return;
             }
-            if(command.isStart()){
+            if (command.isStart()) {
                 chessGame.start();
+                printBoard();
                 return;
             }
-            if(command.isEnd()){
+            if (command.isEnd()) {
                 chessGame.changeTurnEnd();
             }
         } catch (IllegalArgumentException | IllegalStateException e) {
