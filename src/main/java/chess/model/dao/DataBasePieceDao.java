@@ -77,7 +77,7 @@ public class DataBasePieceDao implements PieceDao {
 
     @Override
     public Board loadBoard(final Long gameId, final Turn turn) {
-        final Map<Position, Piece> positionPieceMap = jdbcTemplate.executeUpdate(LOAD_BOARD_QUERY,
+        final Map<Position, Piece> positionPieceMap = jdbcTemplate.executeQuery(LOAD_BOARD_QUERY,
                 resultSet -> {
                     final Map<Position, Piece> board = new HashMap<>();
                     while (resultSet.next()) {
