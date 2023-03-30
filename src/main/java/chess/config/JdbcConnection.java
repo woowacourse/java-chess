@@ -12,19 +12,12 @@ public class JdbcConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static Connection connection;
-
-    static {
+    public static Connection getConnection() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
                     PASSWORD);
         } catch (final SQLException exception) {
-            System.err.println("DB 연결 오류:" + exception.getMessage());
-            exception.printStackTrace();
+            throw new RuntimeException("DB 연결 오류: " + exception.getMessage());
         }
-    }
-
-    public static Connection getConnection() {
-        return connection;
     }
 }
