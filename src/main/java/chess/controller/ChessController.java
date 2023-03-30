@@ -21,15 +21,23 @@ public final class ChessController {
     }
 
     public void run() {
-        OutputView.printStartMessage();
+        String user = readUser();
+        OutputView.printStartMessage(user);
+
         CommandDto commandDto = InputView.readOnlyInitialCommand();
         if (commandDto.getGameCommand() == GameCommand.START) {
-            startGame();
+            startGame(user);
         }
     }
 
-    private void startGame() {
-        ChessBoard chessBoard = chessService.setUpChessBoard();
+    private String readUser() {
+        OutputView.printGameRooms(chessService.getUsers());
+        OutputView.printInsertUserMessage();
+        return InputView.readUser();
+    }
+
+    private void startGame(String user) {
+        ChessBoard chessBoard = chessService.setUpChessBoard(user);
         showChessBoardStatus(chessBoard);
         repeat(() -> playGame(chessBoard));
     }

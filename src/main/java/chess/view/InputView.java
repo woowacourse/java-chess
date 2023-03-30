@@ -17,6 +17,10 @@ public final class InputView {
     private InputView() {
     }
 
+    public static String readUser() {
+        return scanner.nextLine();
+    }
+
     public static CommandDto readOnlyInitialCommand() {
         try {
             return readInitialCommand();

@@ -9,6 +9,8 @@ import chess.dto.request.CommandDto;
 import chess.dto.response.StatusDto;
 import chess.repository.ChessGameDao;
 
+import java.util.List;
+
 public final class ChessService {
 
     private static final String BLACK_TEAM = "검은색";
@@ -16,18 +18,21 @@ public final class ChessService {
     private static final String DRAW = "무승부";
 
     private final ChessGameDao chessGameDao;
+    private String user;
 
     public ChessService(ChessGameDao chessGameDao) {
         this.chessGameDao = chessGameDao;
     }
 
-    public ChessBoard setUpChessBoard() {
-        ChessBoard chessBoard = chessGameDao.select();
+    public ChessBoard setUpChessBoard(String user) {
+        this.user = user;
+        ChessBoard chessBoard = chessGameDao.select(user);
         if (chessBoard != null) {
             return chessBoard;
         }
         ChessBoardGenerator generator = new ChessBoardGenerator();
         chessBoard = new ChessBoard(generator.generate(), Color.WHITE);
+        chessGameDao.insert(user, chessBoard);
         return chessBoard;
     }
 
@@ -36,7 +41,7 @@ public final class ChessService {
         String endInput = commandDto.getEndPosition();
 
         chessBoard.movePiece(Position.of(startInput), Position.of(endInput));
-        chessGameDao.update(chessBoard);
+        chessGameDao.update(user, chessBoard);
         return chessBoard;
     }
 
@@ -73,9 +78,13 @@ public final class ChessService {
 
     public boolean checkKingAlive(ChessBoard chessBoard) {
         if (chessBoard.isKingDead()) {
-            chessGameDao.delete(chessBoard);
+            chessGameDao.delete(user, chessBoard);
             return false;
         }
         return true;
+    }
+
+    public List<String> getUsers() {
+        return chessGameDao.getUsers();
     }
 }

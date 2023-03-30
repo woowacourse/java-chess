@@ -7,16 +7,34 @@ import java.util.List;
 
 public final class OutputView {
 
-    private static final String START_MESSAGE = "> 체스 게임을 시작합니다.\n" +
-            "> 게임 시작 : start\n" +
+    private static final String COMMAND_INFORMATION = "> 게임 시작 : start\n" +
             "> 게임 종료 : end \n" +
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    public static final String GAME_ROOM_DELEMITER = "\n";
 
     private OutputView() {
     }
 
-    public static void printStartMessage() {
-        System.out.println(START_MESSAGE);
+    public static void printGameRooms(List<String> users) {
+        System.out.println("<진행 중인 체스 게임 목록>");
+        System.out.println(convertToText(users));
+        System.out.println();
+    }
+
+    private static String convertToText(List<String> users) {
+        if (users.isEmpty()) {
+            return "진행 중인 게임이 없습니다.";
+        }
+        return String.join(GAME_ROOM_DELEMITER, users);
+    }
+
+    public static void printInsertUserMessage() {
+        System.out.println("사용자 이름을 입력하세요.");
+    }
+
+    public static void printStartMessage(String user) {
+        System.out.println("> " + user + "의 체스 게임을 시작합니다.");
+        System.out.println(COMMAND_INFORMATION);
     }
 
     public static void printNotStartedGameMessage() {
