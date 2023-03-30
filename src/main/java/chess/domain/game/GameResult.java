@@ -52,18 +52,18 @@ public class GameResult {
         return duplicatedPawnSize * DUPLICATED_PAWN_DEDUCTION_SCORE;
     }
 
+    public boolean isGameOver() {
+        long kingCount = positionToPiece.values().stream()
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .count();
+        return kingCount != INITIAL_KING_COUNT;
+    }
+
     public Color getWinner() {
         if (isGameOver()) {
             return getWinnerOfEnd();
         }
         return getCurrentWinner(getScore(Color.BLACK), getScore(Color.WHITE));
-    }
-
-    private boolean isGameOver() {
-        long kingCount = positionToPiece.values().stream()
-                .filter(piece -> piece.isSameType(PieceType.KING))
-                .count();
-        return kingCount != INITIAL_KING_COUNT;
     }
 
     private Color getWinnerOfEnd() {

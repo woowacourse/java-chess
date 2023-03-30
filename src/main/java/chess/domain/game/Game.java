@@ -49,10 +49,6 @@ public class Game {
         turn = turn.change();
     }
 
-    public boolean isGameOver() {
-        return board.isGameOver();
-    }
-
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }

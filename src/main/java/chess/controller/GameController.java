@@ -79,8 +79,8 @@ public class GameController {
         }
         if (commandType == GameCommandType.MOVE) {
             move(game, request);
-            if (game.isGameOver()) {
-                GameResult gameResult = game.getResult();
+            GameResult gameResult = game.getResult();
+            if (gameResult.isGameOver()) {
                 gameService.updateWinner(game.getRoomId(), gameResult.getWinner());
                 outputView.printFinalWinner(gameResult);
                 return GameCommandType.END;
