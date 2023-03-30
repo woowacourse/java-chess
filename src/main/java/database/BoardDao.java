@@ -7,35 +7,23 @@ import chess.domain.piece.Role;
 import chess.domain.piece.Team;
 import database.dto.SquareDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
 public class BoardDao {
 
+    private final JdbcReadOnlyConnector readOnlyConnector = new JdbcReadOnlyConnector();
+    private final JdbcTransactionConnector transactionConnector = new JdbcTransactionConnector();
+
     public void save(List<SquareDto> squareDtos, int gameId) {
         String query = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?) ";
-
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            executeSave(squareDtos, preparedStatement, gameId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void executeSave(List<SquareDto> squareDtos, PreparedStatement preparedStatement, int gameId) throws SQLException {
-        int boardId = generateId();
+        String id = String.valueOf(generateId());
         for (SquareDto squareDto : squareDtos) {
-            preparedStatement.setInt(1, boardId);
-            preparedStatement.setInt(2, gameId);
-            preparedStatement.setInt(3, squareDto.getX_pos());
-            preparedStatement.setInt(4, squareDto.getY_pos());
-            preparedStatement.setString(5, squareDto.getRole());
-            preparedStatement.setString(6, squareDto.getTeam());
-            preparedStatement.executeUpdate();
+            List<String> parameters = List.of(id, String.valueOf(gameId),
+                    String.valueOf(squareDto.getX_pos()), String.valueOf(squareDto.getY_pos()),
+                    squareDto.getRole(), squareDto.getTeam());
+            transactionConnector.executeUpdate(query, parameters);
         }
     }
 
@@ -43,47 +31,19 @@ public class BoardDao {
         String query = "UPDATE board SET role = ?, team = ? " +
                 "WHERE game_id = ? AND x_pos = ? AND y_pos = ?";
 
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            executeUpdate(squareDtos, preparedStatement, gameId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void executeUpdate(List<SquareDto> squareDtos, PreparedStatement preparedStatement, int gameId) throws SQLException {
         for (SquareDto squareDto : squareDtos) {
-            preparedStatement.setString(1, squareDto.getRole());
-            preparedStatement.setString(2, squareDto.getTeam());
-            preparedStatement.setInt(3, gameId);
-            preparedStatement.setInt(4, squareDto.getX_pos());
-            preparedStatement.setInt(5, squareDto.getY_pos());
-            preparedStatement.executeUpdate();
+            List<String> parameters = List.of(squareDto.getRole(), squareDto.getTeam(),
+                    String.valueOf(gameId), String.valueOf(squareDto.getX_pos()), String.valueOf(squareDto.getY_pos()));
+            transactionConnector.executeUpdate(query, parameters);
         }
     }
 
     public Map<Position, Piece> findByGameId(int gameId) {
         String query = "SELECT x_pos, y_pos, role, team FROM board WHERE game_id = ?";
 
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, gameId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return convertToBoard(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        List<String> parameters = List.of(String.valueOf(gameId));
 
-    public void delete(int id) {
-        String query = "DELETE FROM board WHERE game_id = ?";
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return (Map<Position, Piece>) readOnlyConnector.executeQuery(query, parameters, this::convertToBoard);
     }
 
     private Map<Position, Piece> convertToBoard(ResultSet resultSet) throws SQLException {
@@ -100,27 +60,35 @@ public class BoardDao {
         return squares;
     }
 
+    public void delete(int id) {
+        String query = "DELETE FROM board WHERE game_id = ?";
+        List<String> parameters = List.of(String.valueOf(id));
+        transactionConnector.executeUpdate(query, parameters);
+    }
+
     private int generateId() {
-        List<Integer> allIds = findAllIds();
+        List<Integer> allIds;
+        try {
+            allIds = findAllIds();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (allIds.isEmpty()) {
             return 1;
         }
         return Collections.max(allIds) + 1;
     }
 
-    private List<Integer> findAllIds() {
+    private List<Integer> findAllIds() throws SQLException {
         String query = "SELECT distinct(id) FROM board";
-        List<Integer> allBoardIds = new ArrayList<>();
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+        return (List<Integer>) readOnlyConnector.executeQuery(query, resultSet -> {
+            List<Integer> allBoardIds = new ArrayList<>();
+
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 allBoardIds.add(id);
             }
             return allBoardIds;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 }

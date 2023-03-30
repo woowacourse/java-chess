@@ -4,89 +4,63 @@ import chess.domain.piece.Team;
 import chess.game.Turn;
 import database.dto.ChessGameDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ChessGameDao {
 
+    private final JdbcReadOnlyConnector readOnlyConnector = new JdbcReadOnlyConnector();
+    private final JdbcTransactionConnector transactionConnector = new JdbcTransactionConnector();
+
     public int save(ChessGameDto chessGameDto) {
         String query = "INSERT INTO chess_game VALUES (?, ?, ?)";
         int id = generateId();
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, chessGameDto.getGameStatus());
-            preparedStatement.setString(3, chessGameDto.getTurn());
+        List<String> parameters = List.of(String.valueOf(id), chessGameDto.getGameStatus(), chessGameDto.getTurn());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        transactionConnector.executeUpdate(query, parameters);
         return id;
     }
 
     public void update(ChessGameDto chessGameDto) {
         String query = "UPDATE chess_game SET game_status = ?, turn = ? WHERE id = ?";
 
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, chessGameDto.getGameStatus());
-            preparedStatement.setString(2, chessGameDto.getTurn());
-            preparedStatement.setInt(3, chessGameDto.getGameId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<String> parameters = List.of(chessGameDto.getGameStatus(), chessGameDto.getTurn(), String.valueOf(chessGameDto.getGameId()));
+        transactionConnector.executeUpdate(query, parameters);
     }
 
     public void delete(int id) {
         String query = "DELETE FROM chess_game WHERE id = ?";
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<String> parameters = List.of(String.valueOf(id));
+
+        transactionConnector.executeUpdate(query, parameters);
     }
 
     public Turn findTurnById(int game_id) {
         String query = "SELECT turn FROM chess_game WHERE id = ?";
-        String turn = null;
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, game_id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        List<String> parameters = List.of(String.valueOf(game_id));
+
+        return (Turn) readOnlyConnector.executeQuery(query, parameters, resultSet -> {
+            String turn = null;
             while (resultSet.next()) {
                 turn = resultSet.getString("turn");
             }
             return new Turn(Team.valueOf(turn));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     public List<Integer> findContinuingGameIds() {
         String query = "SELECT id FROM chess_game WHERE game_status = ?";
+        List<String> parameters = List.of("CONTINUING");
 
-        List<Integer> continuingGameIds = new ArrayList<>();
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, "CONTINUING");
-            ResultSet resultSet = preparedStatement.executeQuery();
+        return (List<Integer>) readOnlyConnector.executeQuery(query, parameters, resultSet -> {
+            List<Integer> continuingGameIds = new ArrayList<>();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 continuingGameIds.add(id);
             }
             return continuingGameIds;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     private int generateId() {
@@ -100,17 +74,13 @@ public class ChessGameDao {
     private List<Integer> findAllGameId() {
         String query = "SELECT id FROM chess_game";
 
-        List<Integer> allGameIds = new ArrayList<>();
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+        return (List<Integer>) readOnlyConnector.executeQuery(query, resultSet -> {
+            List<Integer> allGameIds = new ArrayList<>();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 allGameIds.add(id);
             }
             return allGameIds;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 }
