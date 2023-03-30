@@ -12,21 +12,35 @@ import java.util.stream.Collectors;
 public final class ScoreCalculator {
 
     public static Score calculateWhiteScore(final Map<Square, Piece> board) {
-        final Score score = board.values().stream()
-                .filter(Piece::isWhite)
-                .map(ScoreCalculator::getPieceScore)
-                .reduce(Score.init(), Score::plus);
-        final Score minusScore = getPawnMinusScoreByPosition(getWhitePawnsPosition(board));
+        final Map<Square, Piece> whiteBoard = getWhitePieces(board);
+        final Score score = getDefaultScore(whiteBoard);
+        final Score minusScore = getPawnMinusScoreByPosition(getPawnsPosition(whiteBoard));
         return score.minus(minusScore);
     }
 
+    private static Map<Square, Piece> getWhitePieces(final Map<Square, Piece> board) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isWhite())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
     public static Score calculateBlackScore(final Map<Square, Piece> board) {
-        final Score score = board.values().stream()
-                .filter(Piece::isBlack)
+        final Map<Square, Piece> blackBoard = getBlackPieces(board);
+        final Score score = getDefaultScore(blackBoard);
+        final Score minusScore = getPawnMinusScoreByPosition(getPawnsPosition(blackBoard));
+        return score.minus(minusScore);
+    }
+
+    private static Map<Square, Piece> getBlackPieces(final Map<Square, Piece> board) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isBlack())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private static Score getDefaultScore(Map<Square, Piece> colorBoard) {
+        return colorBoard.values().stream()
                 .map(ScoreCalculator::getPieceScore)
                 .reduce(Score.init(), Score::plus);
-        final Score minusScore = getPawnMinusScoreByPosition(getBlackPawnsPosition(board));
-        return score.minus(minusScore);
     }
 
     private static Score getPieceScore(final Piece piece) {
@@ -34,17 +48,8 @@ public final class ScoreCalculator {
         return new Score(point);
     }
 
-    private static List<Square> getWhitePawnsPosition(final Map<Square, Piece> board) {
-        return board.entrySet().stream()
-                .filter(entry -> entry.getValue().isWhite())
-                .filter(entry -> entry.getValue().isPawn())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private static List<Square> getBlackPawnsPosition(final Map<Square, Piece> board) {
-        return board.entrySet().stream()
-                .filter(entry -> entry.getValue().isBlack())
+    private static List<Square> getPawnsPosition(final Map<Square, Piece> colorBoard) {
+        return colorBoard.entrySet().stream()
                 .filter(entry -> entry.getValue().isPawn())
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toUnmodifiableList());
