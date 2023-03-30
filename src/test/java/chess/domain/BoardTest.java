@@ -39,15 +39,15 @@ class BoardTest {
         pieces.put(A5, new Piece(KingMoveRule.getInstance(), Color.BLACK));
         pieces.put(B2, new Piece(BishopMoveRule.getInstance(), Color.BLACK));
         pieces.put(C1, new Piece(KnightMoveRule.getInstance(), Color.BLACK));
-        pieces.put(A1, new Piece(PawnMoveRule.getInstance(Color.BLACK), Color.BLACK));
-        pieces.put(D1, new Piece(PawnMoveRule.getInstance(Color.BLACK), Color.BLACK));
-        pieces.put(D4, new Piece(PawnMoveRule.getInstance(Color.BLACK), Color.BLACK));
+        pieces.put(A1, new Piece(PawnMoveRule.from(Color.BLACK), Color.BLACK));
+        pieces.put(D1, new Piece(PawnMoveRule.from(Color.BLACK), Color.BLACK));
+        pieces.put(D4, new Piece(PawnMoveRule.from(Color.BLACK), Color.BLACK));
         //3 + 2.5 + 0.5 + 0.5 + 1 = 7.5
 
         pieces.put(G1, new Piece(KingMoveRule.getInstance(), Color.WHITE));
         pieces.put(G3, new Piece(QueenMoveRule.getInstance(), Color.WHITE));
         pieces.put(H4, new Piece(KnightMoveRule.getInstance(), Color.WHITE));
-        pieces.put(B3, new Piece(PawnMoveRule.getInstance(Color.WHITE), Color.WHITE));
+        pieces.put(B3, new Piece(PawnMoveRule.from(Color.WHITE), Color.WHITE));
         //9 + 2.5 + 1 = 12.5
         Board board = new Board(pieces);
 

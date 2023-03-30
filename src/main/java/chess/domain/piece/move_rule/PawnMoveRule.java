@@ -1,17 +1,16 @@
 package chess.domain.piece.move_rule;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceType;
 
 public abstract class PawnMoveRule implements MoveRule {
-    private static final PawnMoveRule blackInstance = new BlackPawnMoveRule();
-    private static final PawnMoveRule whiteInstance = new WhitePawnMoveRule();
 
-    public static PawnMoveRule getInstance(Color color) {
+    protected PawnMoveRule() {}
+
+    public static PawnMoveRule from(Color color) {
         if (color == Color.BLACK) {
-            return blackInstance;
+            return new BlackPawnMoveRule();
         }
-        return whiteInstance;
+        return new WhitePawnMoveRule();
     }
 
     @Override

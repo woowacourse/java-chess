@@ -11,8 +11,8 @@ public enum PieceType {
     QUEEN(9, "queen", QueenMoveRule.getInstance()),
     KNIGHT(2.5, "knight", KnightMoveRule.getInstance()),
     KING(0, "king", KingMoveRule.getInstance()),
-    BLACK_PAWN(1, "black_pawn", PawnMoveRule.getInstance(Color.BLACK)),
-    WHITE_PAWN(1, "white_pawn", PawnMoveRule.getInstance(Color.WHITE)),
+    BLACK_PAWN(1, "black_pawn", PawnMoveRule.from(Color.BLACK)),
+    WHITE_PAWN(1, "white_pawn", PawnMoveRule.from(Color.WHITE)),
     BLANK(0, "blank", new BlankMoveRule());
 
     private final double score;

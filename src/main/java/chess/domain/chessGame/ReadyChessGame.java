@@ -77,7 +77,7 @@ public class ReadyChessGame implements ChessGame {
 
     private Map<Position, Piece> initializePawnLinePieces(Map<Position, Piece> board, Rank rank, Color color) {
         for (File file : File.values()) {
-            board.put(Position.of(file, rank), new Piece(PawnMoveRule.getInstance(color), color));
+            board.put(Position.of(file, rank), new Piece(PawnMoveRule.from(color), color));
         }
         return board;
     }
