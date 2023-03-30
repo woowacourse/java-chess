@@ -34,7 +34,7 @@ public class ChessBoardService {
         boardPiecesDao.insertOrUpdate(chessBoard.getId(), chessBoard.piecesByPosition());
     }
 
-    public List<Integer> findAllBoardIds() {
+    public List<Integer> findAllNotOverBoardIds() {
         return boardStatusesDao.findAllNotOverBoardIds();
     }
 }
