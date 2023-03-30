@@ -1,7 +1,9 @@
 package chess.controller.dto;
 
-import chess.controller.Command;
+import chess.controller.command.Command;
+import chess.controller.command.CommandType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,24 +34,29 @@ public final class InputRenderer {
         RANK_TO_ROW.put("8", 7);
     }
 
-    public static CommandDto toCommandDto(final String string) {
-        Command command = toCommand(string);
-        if (command != Command.MOVE) {
-            return new CommandDto(command);
+    public static Command toCommand(final String string) {
+        CommandType commandType = toCommandType(string);
+        if (commandType != CommandType.MOVE && commandType != CommandType.LOAD) {
+            return new Command(commandType);
         }
 
-        List<String> commandAndPositions = Arrays.asList(string.split(" "));
-        if (commandAndPositions.size() != 3) {
+        List<String> inputArguments = Arrays.asList(string.split(" "));
+        if (commandType == CommandType.LOAD) {
+            return new Command(commandType, Integer.parseInt(inputArguments.get(1)));
+        }
+
+        if (inputArguments.size() != 3) {
             throw new IllegalArgumentException("올바른 명령어를 입력해주세요. 예. move b2 b3");
         }
-        List<Integer> source = toColumnAndRow(commandAndPositions.get(1));
-        List<Integer> target = toColumnAndRow(commandAndPositions.get(2));
-        return new CommandDto(command, source, target);
+        List<Integer> arguments = new ArrayList<>();
+        arguments.addAll(toColumnAndRow(inputArguments.get(1)));
+        arguments.addAll(toColumnAndRow(inputArguments.get(2)));
+        return new Command(commandType, arguments);
     }
 
-    private static Command toCommand(final String string) {
+    private static CommandType toCommandType(final String string) {
         try {
-            return Command.valueOf(getUpperCasedFirstWord(string));
+            return CommandType.valueOf(getUpperCasedFirstWord(string));
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }

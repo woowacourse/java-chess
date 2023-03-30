@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.controller.dto.CommandDto;
+import chess.controller.command.Command;
+import chess.controller.command.CommandType;
 import chess.controller.dto.InputRenderer;
 import chess.controller.dto.OutputRenderer;
 import chess.domain.position.Position;
@@ -11,77 +12,77 @@ import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-import static chess.controller.Command.END;
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.START;
-import static chess.controller.Command.STATUS;
+import static chess.controller.command.CommandType.END;
+import static chess.controller.command.CommandType.MOVE;
+import static chess.controller.command.CommandType.START;
+import static chess.controller.command.CommandType.STATUS;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
 public final class ChessController {
 
     private final ErrorController errorController;
-    private final Map<Command, Action> commandMapper;
+    private final Map<CommandType, Action> commandMapper;
     private final ChessGameService chessGameService;
 
     public ChessController(final ErrorController errorController, final ChessGameService chessGameService) {
         this.errorController = errorController;
         this.commandMapper = Map.of(
-                START, this::start,
-                MOVE, this::move,
-                STATUS, this::status
+                START, (ignore) -> start(),
+                MOVE, (command) -> move(command),
+                STATUS, (ignore) -> status()
         );
         this.chessGameService = chessGameService;
     }
 
     public void run() {
         OutputView.printInitialMessage();
-        CommandDto commandDto = readCommand(List.of(START, END));
-        Command command = commandDto.getCommand();
+        Command command = readCommand(List.of(START, END));
+        CommandType commandType = command.getCommandType();
 
-        while (command.isEnd()) {
-            commandDto = commandMapper.get(command).act(commandDto);
-            command = commandDto.getCommand();
+        while (!commandType.isEnd()) {
+            commandMapper.get(commandType).act(command);
+
+            command = readCommand(List.of(MOVE, STATUS, END));
+            commandType = command.getCommandType();
         }
+        checkGameOver();
     }
 
-    private CommandDto readCommand(final List<Command> possibleCommands) {
-        CommandDto commandDto;
+    private Command readCommand(final List<CommandType> possibleCommands) {
+        Command command;
         do {
-            commandDto = errorController.RetryIfThrowsException(() ->
-                    InputRenderer.toCommandDto(InputView.readCommand()));
-        } while (!possibleCommands.contains(commandDto.getCommand()));
-        return commandDto;
+            command = errorController.retryIfThrowsException(() ->
+                    InputRenderer.toCommand(InputView.readCommand()));
+        } while (!possibleCommands.contains(command.getCommandType()));
+        return command;
     }
 
-    public CommandDto start(final CommandDto commandDto) {
+    public void start() {
         OutputView.printBoard(OutputRenderer.toBoardDto(chessGameService.getBoard()));
         OutputView.printTurn(OutputRenderer.toTeamDto(chessGameService.getTurn()));
-        return readCommand(List.of(MOVE, STATUS, END));
     }
 
-    public CommandDto move(final CommandDto commandDto) {
+    public void move(final Command command) {
+        if (chessGameService.isGameEnd()) {
+            return;
+        }
         errorController.tryCatchStrategy(() -> {
-            List<Integer> source = commandDto.getSource();
-            List<Integer> target = commandDto.getTarget();
-            Position sourcePosition = new Position(source.get(0), source.get(1));
-            Position targetPosition = new Position(target.get(0), target.get(1));
+            List<Integer> arguments = command.getArguments();
+            Position sourcePosition = new Position(arguments.get(0), arguments.get(1));
+            Position targetPosition = new Position(arguments.get(2), arguments.get(3));
             chessGameService.move(sourcePosition, targetPosition);
             OutputView.printBoard(OutputRenderer.toBoardDto(chessGameService.getBoard()));
             OutputView.printTurn(OutputRenderer.toTeamDto(chessGameService.getTurn()));
         });
-
-        return checkGameOver();
     }
 
-    private CommandDto checkGameOver() {
+    private void checkGameOver() {
         if (chessGameService.isGameEnd()) {
             OutputView.printFinishMessage();
             inquireStatus();
             chessGameService.delete();
-            return new CommandDto(END);
         }
-        return readCommand(List.of(MOVE, STATUS, END));
     }
 
     private void inquireStatus() {
@@ -90,8 +91,7 @@ public final class ChessController {
         OutputView.printWinTeam(OutputRenderer.toTeamDto(chessGameService.getWinTeam()));
     }
 
-    public CommandDto status(final CommandDto commandDto) {
+    public void status() {
         inquireStatus();
-        return readCommand(List.of(MOVE, STATUS, END));
     }
 }

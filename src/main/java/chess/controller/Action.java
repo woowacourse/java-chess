@@ -1,9 +1,10 @@
 package chess.controller;
 
-import chess.controller.dto.CommandDto;
+import chess.controller.command.Command;
 
 @FunctionalInterface
 public interface Action {
 
-    CommandDto act(final CommandDto commandDto);
+    void act(final Command command);
+
 }
