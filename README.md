@@ -97,7 +97,7 @@ pppppppp
 rnbqkbnr
 ```
 
-### 데이터 베이스 CRUD
+#### 데이터 베이스 CRUD
 
 - [x] 체스게임을 저장한다
     - [x] 체스게임은 `체스말의 종류`, `파일`, `랭크`, `색상`, `현재 말을 움직일 색상`으로 구성된다.
@@ -110,3 +110,24 @@ rnbqkbnr
     - [x] 본래의 체스게임을 지우고, 새롭게 저장한다.
 
 - [x] 체스게임을 삭제한다
+
+#### Mysql 정보
+
+- MySQL 서버 주소 : "localhost:13306"
+- MySQL DATABASE 이름 : "chess"
+- MySQL 서버 아이디 : "root"
+- MySQL 서버 비밀번호 : "root"
+- URL : "jdbc:mysql://localhost:13306/chess?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+
+```sql
+CREATE TABLE chess_game
+(
+    id          INT         NOT NULL AUTO_INCREMENT,
+    piece_type  VARCHAR(10) NOT NULL,
+    piece_file  VARCHAR(10) NOT NULL,
+    piece_rank  VARCHAR(10) NOT NULL,
+    piece_color VARCHAR(10) NOT NULL,
+    turn        VARCHAR(10) NOT NULL,
+    PRIMARY KEY (id)
+);
+```
