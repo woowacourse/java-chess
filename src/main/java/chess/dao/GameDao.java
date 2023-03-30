@@ -28,14 +28,12 @@ public class GameDao {
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
+            throw new SQLException(e.getMessage());
         }
     }
 
