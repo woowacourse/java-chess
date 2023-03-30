@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.Objects;
 
@@ -7,13 +7,13 @@ public final class Position {
     private final Rank rank;
     private final File file;
 
-     private Position(final int rank, final char file) {
-        this.rank = new Rank(rank);
-        this.file = new File(file);
+    private Position(final int rank, final char file) {
+        this.rank = Rank.from(rank);
+        this.file = File.from(file);
     }
 
     private Position(final int rank, final File file) {
-        this.rank = new Rank(rank);
+        this.rank = Rank.from(rank);
         this.file = file;
     }
 
@@ -25,7 +25,7 @@ public final class Position {
         return new Position(rank, file);
     }
 
-    public Position changePosition(int rank) {
+    public Position changePosition(final int rank) {
         return new Position(rank, this.file);
     }
 
@@ -37,12 +37,16 @@ public final class Position {
         return this.file.getFile();
     }
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "rank=" + rank +
-                ", file=" + file +
-                '}';
+    public int calculateFileDistance(final Position position) {
+        return this.file.calculateDistance(position.file.getFile());
+    }
+
+    public int calculateRankDistance(final Position position) {
+        return this.rank.calculateDistance(position.rank.getRank());
+    }
+
+    public Position move(final int fileDirection, final int rankDirection) {
+        return new Position(rank.move(rankDirection), file.move(fileDirection));
     }
 
     @Override
@@ -58,16 +62,12 @@ public final class Position {
         return Objects.hash(rank, file);
     }
 
-    public int calculateFileDistance(int file) {
-        return this.file.calculateDistance(file);
-    }
-
-    public int calculateRankDistance(int rank) {
-        return this.rank.calculateDistance(rank);
-    }
-
-    public Position move(int fileDirection, int rankDirection) {
-        return new Position(rank.move(rankDirection), file.move(fileDirection));
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
     }
 
 }

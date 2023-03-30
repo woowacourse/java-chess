@@ -1,8 +1,8 @@
 package chess.domain.strategy.rook;
 
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 
 public class RookStrategy implements PieceStrategy {
 

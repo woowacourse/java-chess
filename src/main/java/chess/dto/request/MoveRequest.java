@@ -1,9 +1,8 @@
-package chess.domain.dto.req;
+package chess.dto.request;
 
 import chess.domain.Color;
-import chess.domain.Position;
-import chess.domain.dto.PositionDto;
-
+import chess.domain.piece.Position;
+import chess.dto.PositionDto;
 import java.util.List;
 
 public class MoveRequest {
@@ -49,4 +48,5 @@ public class MoveRequest {
     public Color getMovablePieceColor() {
         return movablePieceColor;
     }
+
 }

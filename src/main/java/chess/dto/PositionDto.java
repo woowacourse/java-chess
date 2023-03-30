@@ -1,7 +1,6 @@
-package chess.domain.dto;
+package chess.dto;
 
-import chess.domain.Position;
-
+import chess.domain.piece.Position;
 import java.util.Objects;
 
 public class PositionDto {
@@ -9,7 +8,7 @@ public class PositionDto {
     private final int rank;
     private final char file;
 
-    public PositionDto(Position position) {
+    public PositionDto(final Position position) {
         this.rank = position.getRankValue();
         this.file = position.getFileValue();
     }
@@ -34,4 +33,5 @@ public class PositionDto {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
 }

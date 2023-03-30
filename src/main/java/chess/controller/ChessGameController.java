@@ -1,69 +1,88 @@
 package chess.controller;
 
 import chess.domain.Color;
-import chess.domain.dto.res.PiecesResponse;
-import chess.domain.Pieces;
-import chess.domain.Player;
-import chess.domain.Players;
+import chess.domain.CommandAction;
+import chess.domain.dao.PieceDao;
+import chess.domain.dao.PieceDaoImpl;
+import chess.dto.response.PiecesResponse;
+import chess.service.ChessGameService;
 import chess.ui.InputView;
 import chess.ui.OutputView;
-
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class ChessGameController {
 
-    private final Players players = initializeChessBoard();
+    private ChessGameService chessGameService;
 
-    private final Map<Command, Action> commands = Map.of(
+    private final CommandAction commandAction = new CommandAction(Map.of(
             Command.START, this::start,
             Command.MOVE, this::move,
-            Command.END, this::end
+            Command.END, this::end,
+            Command.STATUS, this::status)
     );
+
+    public ChessGameController() {
+        this.chessGameService = new ChessGameService();
+    }
 
     public void run() {
         OutputView.printStartGame();
-        List<String> commands = InputView.getCommands();
-        Command findCommand = Command.findCommand(commands);
-        this.commands.get(findCommand).execute(commands);
+        Commands commandWithArguments;
+        do {
+            commandWithArguments = readCommand(InputView::getCommands);
+            commandAction.execute(commandWithArguments);
+        } while (commandWithArguments.isNotEnd() && !chessGameService.notEveryKingAlive());
+        finishGame();
     }
 
-    private void start(final List<String> strings) {
-        Command findCommand = Command.START;
-
-        PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
-        OutputView.printInitializedChessBoard(piecesResponse);
-
-        while (findCommand.isNotEnd()) {
-            List<String> commands = InputView.getCommands();
-            findCommand = Command.findCommand(commands);
-            this.commands.get(findCommand).execute(commands);
+    private void finishGame() {
+        if (chessGameService.notEveryKingAlive()) {
+            OutputView.printWinner(chessGameService.getWinnerColorName());
+            PieceDao dao = PieceDaoImpl.getInstance();
+            dao.deleteAll();
         }
     }
 
-    private void move(List<String> command) {
-        String inputMovablePiece = command.get(1);
-        String inputTargetPosition = command.get(2);
+    private Commands readCommand(Supplier<List<String>> commandReader) {
+        try {
+            List<String> arguments = commandReader.get();
+            return new Commands(arguments);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readCommand(commandReader);
+        }
+    }
+
+    private void start(final Commands commands) {
+        chessGameService = new ChessGameService();
+        PiecesResponse piecesResponse = new PiecesResponse(
+                chessGameService.getPiecesByColor(Color.WHITE),
+                chessGameService.getPiecesByColor(Color.BLACK)
+        );
+        OutputView.printInitializedChessBoard(piecesResponse);
+    }
+
+    private void status(final Commands commands) {
+        OutputView.printStatus(chessGameService.calculateScore(), chessGameService.getCurrentTurn());
+    }
+
+    private void move(final Commands commands) {
+        String inputMovablePiece = commands.getMovablePiece();
+        String inputTargetPosition = commands.getTargetPosition();
 
         try {
-            players.movePiece(inputMovablePiece, inputTargetPosition);
+            chessGameService.movePiece(inputMovablePiece, inputTargetPosition);
             OutputView.printChessBoardStatus(
-                    new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK)));
+                    new PiecesResponse(chessGameService.getPiecesByColor(Color.WHITE),
+                            chessGameService.getPiecesByColor(Color.BLACK)));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void end(final List<String> strings) {
+    private void end(final Commands commands) {
     }
 
-    private Players initializeChessBoard() {
-        Pieces whitePieces = Pieces.createWhitePieces();
-        Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
-
-        Player whitePlayer = Player.fromWhitePlayer(whitePieces);
-        Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-
-        return Players.from(whitePlayer, blackPlayer);
-    }
 }

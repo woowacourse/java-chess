@@ -1,8 +1,8 @@
 package chess.domain.strategy.bishop;
 
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 
 public class BishopStrategy implements PieceStrategy {
 

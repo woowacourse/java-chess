@@ -1,8 +1,8 @@
 package chess.domain.strategy.knight;
 
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 
 public class KnightStrategy implements PieceStrategy {
 
@@ -13,13 +13,14 @@ public class KnightStrategy implements PieceStrategy {
         int rankDistance = Math.abs(movablePiecePosition.getRank() - targetPosition.getRank());
         int fileDistance = Math.abs(movablePiecePosition.getFile() - targetPosition.getFile());
 
-        if(!isValid(rankDistance, fileDistance)) {
+        if (!isValid(rankDistance, fileDistance)) {
             throw new IllegalArgumentException("나이트가 움직일 수 있는 곳이 아닙니다.");
         }
     }
 
-    boolean isValid(int rankDistance, int fileDistance) {
-        return rankDistance == 1 && fileDistance == 2 || rankDistance == 2 && fileDistance == 1;
+    boolean isValid(final int rankDistance, final int fileDistance) {
+        return rankDistance == 1 && fileDistance == 2
+                || rankDistance == 2 && fileDistance == 1;
     }
 
 }
