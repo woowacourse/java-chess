@@ -9,12 +9,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class UserAccessService {
+public class GameConnectionService {
 
     private final UserDao userDao;
     private final RoomDao roomDao;
 
-    public UserAccessService(UserDao userDao, RoomDao roomDao) {
+    public GameConnectionService(UserDao userDao, RoomDao roomDao) {
         this.userDao = userDao;
         this.roomDao = roomDao;
     }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static chess.domain.userAccess.DbConnection.getConnection;
+import static chess.DbConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 

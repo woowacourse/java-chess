@@ -3,9 +3,9 @@ package chess.controller;
 import chess.domain.game.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.MoveCommand;
-import chess.view.GameCommandView;
 import chess.view.ChessInputView;
 import chess.view.ChessOutputView;
+import chess.view.GameCommandView;
 import chess.view.PositionConverter;
 
 import java.util.List;
@@ -15,12 +15,21 @@ import static chess.view.PositionConverter.convertToTargetPosition;
 
 public class ChessController {
 
+    private static ChessController chessController;
+
     private final ChessInputView chessInputView;
     private final ChessOutputView chessOutputView;
 
-    public ChessController(ChessInputView chessInputView, ChessOutputView chessOutputView) {
+    private ChessController(ChessInputView chessInputView, ChessOutputView chessOutputView) {
         this.chessInputView = chessInputView;
         this.chessOutputView = chessOutputView;
+    }
+
+    public static ChessController getInstance() {
+        if (chessController == null) {
+            chessController = new ChessController(new ChessInputView(), new ChessOutputView());
+        }
+        return chessController;
     }
 
     public void run(MoveCommand moveCommand) {
