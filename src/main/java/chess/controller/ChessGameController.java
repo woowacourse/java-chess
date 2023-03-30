@@ -25,7 +25,7 @@ public final class ChessGameController {
     );
 
     public void run() {
-        players = InitPlayersFactory.initializeChessBoard();
+        players = InitPlayersFactory.initializePlayers();
         OutputView.printStartGame();
         boolean isNotEnd = true;
         while (isOnGoing(isNotEnd)) {
@@ -59,7 +59,7 @@ public final class ChessGameController {
     }
 
     private void start(final Commands commands) {
-        players = InitPlayersFactory.initializeChessBoard();
+        players = InitPlayersFactory.initializePlayers();
         PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
         OutputView.printInitializedChessBoard(piecesResponse);
     }

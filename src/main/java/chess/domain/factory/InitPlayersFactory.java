@@ -13,7 +13,7 @@ import java.util.List;
 
 public class InitPlayersFactory {
 
-    public static Players initializeChessBoard() {
+    public static Players initializePlayers() {
 
         PieceDao dao = new PieceDaoImpl();
         TurnDao turnDao = new TurnDaoImpl();
