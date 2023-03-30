@@ -40,7 +40,7 @@ public class ChessDao {
         }
     }
 
-    public Piece select(String square) {
+    public String select(String square) {
         final var query = "SELECT piece FROM chess_board WHERE square = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -48,7 +48,7 @@ public class ChessDao {
 
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return PieceNameConverter.convert(resultSet.getString(1));
+                return resultSet.getString(1);
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);

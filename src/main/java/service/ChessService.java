@@ -55,7 +55,9 @@ public class ChessService {
 
     private boolean loadData() {
         for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
-            chessBoard.getBoard().put(squareAndPiece.getKey(), chessDao.select(squareAndPiece.getKey().toString()));
+            chessBoard.getBoard()
+                .put(squareAndPiece.getKey(),
+                    PieceNameConverter.convert(chessDao.select(squareAndPiece.getKey().toString())));
         }
         chessDao.update(convert(chessBoard));
         currentCamp = Camp.valueOf(chessDao.selectCamp());
