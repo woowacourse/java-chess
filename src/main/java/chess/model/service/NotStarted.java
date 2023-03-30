@@ -1,6 +1,7 @@
 package chess.model.service;
 
 import chess.model.dao.ChessGameDao;
+import chess.model.dao.ConnectionGeneratorImpl;
 import chess.model.dao.DataBaseChessGameDao;
 import chess.model.dao.DataBasePieceDao;
 import chess.model.dao.PieceDao;
@@ -17,8 +18,8 @@ import java.util.Map;
 
 public class NotStarted implements State {
 
-    private static final ChessGameDao CHESS_GAME_DAO = DataBaseChessGameDao.getInstance();
-    private static final PieceDao BOARD_DAO = DataBasePieceDao.getInstance();
+    private static final ChessGameDao CHESS_GAME_DAO = new DataBaseChessGameDao(new ConnectionGeneratorImpl());
+    private static final PieceDao BOARD_DAO = new DataBasePieceDao(new ConnectionGeneratorImpl());
     private static final NotStarted INSTANCE = new NotStarted();
 
     private NotStarted() {

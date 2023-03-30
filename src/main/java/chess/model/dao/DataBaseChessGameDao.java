@@ -13,19 +13,16 @@ import java.util.List;
 
 public class DataBaseChessGameDao implements ChessGameDao {
 
-    private static final DataBaseChessGameDao INSTANCE = new DataBaseChessGameDao();
+    private final ConnectionGenerator connectionGenerator;
 
-    private DataBaseChessGameDao() {
-    }
-
-    public static DataBaseChessGameDao getInstance() {
-        return INSTANCE;
+    public DataBaseChessGameDao(final ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
     }
 
     @Override
     public List<Long> findAllId() {
         final String findAllGameId = "SELECT id FROM chess_game";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(findAllGameId)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             final List<Long> chessGameIds = new ArrayList<>();
@@ -42,7 +39,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
     @Override
     public long generateNewGame() {
         final String generateNewGameQuery = "INSERT INTO CHESS_GAME VALUES (null, ?)";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, Color.WHITE.name());
@@ -60,7 +57,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
     @Override
     public void updateTurn(final Turn turn, final long gameId) {
         final String generateNewGameQuery = "UPDATE CHESS_GAME SET TURN = ? WHERE id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, turn.getTurn().name());
@@ -74,7 +71,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
     @Override
     public Turn loadTurn(final long gameId) {
         final String generateNewGameQuery = "SELECT turn FROM chess_game WHERE id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, gameId);
@@ -93,7 +90,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
     public void deleteGame(final long gameId) {
         final String deleteBoardQuery =
                 "DELETE FROM chess_game WHERE id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(deleteBoardQuery)) {
             preparedStatement.setLong(1, gameId);

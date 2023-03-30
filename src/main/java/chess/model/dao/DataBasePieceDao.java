@@ -26,7 +26,6 @@ import java.util.function.Function;
 public class DataBasePieceDao implements PieceDao {
 
     private static final Map<PieceType, Function<Color, Piece>> PIECE_MAPPER = new EnumMap<>(PieceType.class);
-    private static final DataBasePieceDao INSTANCE = new DataBasePieceDao();
 
     static {
         PIECE_MAPPER.put(PieceType.PAWN, Pawn::new);
@@ -37,17 +36,16 @@ public class DataBasePieceDao implements PieceDao {
         PIECE_MAPPER.put(PieceType.KING, King::new);
     }
 
-    private DataBasePieceDao() {
-    }
+    private final ConnectionGenerator connectionGenerator;
 
-    public static DataBasePieceDao getInstance() {
-        return INSTANCE;
+    public DataBasePieceDao(final ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
     }
 
     @Override
     public void saveBoard(final Board board, final long gameId) {
         final String saveBoardQuery = "INSERT INTO Piece VALUES (?,?,?,?,?)";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(saveBoardQuery)) {
             preparedStatement.setLong(1, gameId);
@@ -71,7 +69,7 @@ public class DataBasePieceDao implements PieceDao {
         final String updatePiecePositionQuery =
                 "UPDATE Piece SET position_file = ?, position_rank = ? "
                         + "where chess_game_id = ? AND position_file = ? AND Position_rank = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(updatePiecePositionQuery)) {
             preparedStatement.setInt(1, to.file().value());
@@ -88,7 +86,7 @@ public class DataBasePieceDao implements PieceDao {
     private void removeDestinationPosition(final Position to, final long gameId) {
         final String removeDestinationPositionQuery = "DELETE FROM Piece WHERE chess_game_id = ? "
                 + "AND position_file = ? AND position_rank = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(removeDestinationPositionQuery)) {
             preparedStatement.setLong(1, gameId);
@@ -104,7 +102,7 @@ public class DataBasePieceDao implements PieceDao {
     public Board loadBoard(final Long gameId, final Turn turn) {
         final String findBoardInfoByChessGameId =
                 "SELECT position_file, position_rank, color, pieceType from piece WHERE chess_game_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(findBoardInfoByChessGameId)) {
             preparedStatement.setLong(1, gameId);
@@ -128,7 +126,7 @@ public class DataBasePieceDao implements PieceDao {
     public void deleteBoard(final long gameId) {
         final String deleteBoardQuery =
                 "DELETE FROM piece WHERE chess_game_id = ?";
-        try (final Connection connection = ConnectionGenerator.getConnection();
+        try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(deleteBoardQuery)) {
             preparedStatement.setLong(1, gameId);
