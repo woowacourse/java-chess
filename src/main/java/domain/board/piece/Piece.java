@@ -1,77 +1,51 @@
 package domain.board.piece;
 
 import domain.path.Path;
-import domain.path.pathValidtor.PathValidator;
-import domain.path.pathValidtor.PathValidatorFactory;
 
 public final class Piece {
 
     private final PieceState pieceState;
-    private final PathValidator pathValidator;
 
-    private Piece(final PieceState pieceState, final PathValidator pathValidator) {
+    public Piece(PieceState pieceState) {
         this.pieceState = pieceState;
-        this.pathValidator = pathValidator;
     }
 
     public static Piece of(final PieceType pieceType, final Camp camp) {
-        return new Piece(
-            new PieceState(pieceType, camp),
-            PathValidatorFactory.findByPieceType(pieceType)
-        );
+        return new Piece(new PieceState(pieceType, camp));
     }
 
     public static Piece pawnBelongs(final Camp camp) {
-        return new Piece(
-            new PieceState(PieceType.PAWN, camp),
-            PathValidatorFactory.pawnPathValidator()
-        );
+        return new Piece(new PieceState(PieceType.PAWN, camp));
     }
 
     public static Piece rookBelongs(final Camp camp) {
-        return new Piece(
-            new PieceState(PieceType.ROOK, camp),
-            PathValidatorFactory.rookPathValidator()
-        );
+        return new Piece(new PieceState(PieceType.ROOK, camp));
     }
 
     public static Piece bishopBelongs(final Camp camp) {
-        return new Piece(
-            new PieceState(PieceType.BISHOP, camp),
-            PathValidatorFactory.bishopPathValidator()
-        );
+        return new Piece(new PieceState(PieceType.BISHOP, camp));
     }
 
     public static Piece knightBelongs(final Camp camp) {
-        return new Piece(
-            new PieceState(PieceType.KNIGHT, camp),
-            PathValidatorFactory.knightPathValidator()
-        );
+        return new Piece(new PieceState(PieceType.KNIGHT, camp));
     }
 
     public static Piece queenBelongs(final Camp camp) {
-        return new Piece(
-            new PieceState(PieceType.QUEEN, camp),
-            PathValidatorFactory.queenPathValidator()
-        );
+        return new Piece(new PieceState(PieceType.QUEEN, camp));
     }
 
     public static Piece kingBelongs(final Camp camp) {
-        return new Piece(
-            new PieceState(PieceType.KING, camp),
-            PathValidatorFactory.kingPathValidator()
-        );
+        return new Piece(new PieceState(PieceType.KING, camp));
     }
 
     public static Piece empty() {
-        return new Piece((
-            new PieceState(PieceType.EMPTY, Camp.NONE)),
-            PathValidatorFactory.emptyPiecePathValidator()
-        );
+        return new Piece(new PieceState(PieceType.EMPTY, Camp.NONE));
     }
 
     public void validatePath(final Path path) {
-        pathValidator.validate(path);
+        pieceState.getType()
+            .getPathValidator()
+            .validate(path);
     }
 
     public boolean isEmpty() {
@@ -94,7 +68,6 @@ public final class Piece {
     public String toString() {
         return "Piece{" +
             "pieceState=" + pieceState +
-            ", pathValidator=" + pathValidator +
             '}';
     }
 }
