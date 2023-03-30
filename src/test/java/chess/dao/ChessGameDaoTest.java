@@ -31,7 +31,7 @@ class ChessGameDaoTest {
         RoomName testRoomName = new RoomName("test_room");
 
         assertDoesNotThrow(() ->
-                chessGameDao.addGame(testRoomName, Team.WHITE, chessBoardFormatter.getOneLineChessBoard()));
+                chessGameDao.saveGame(testRoomName, Team.WHITE, chessBoardFormatter.getOneLineChessBoard()));
 
         chessGameDao.deleteGame(testRoomName);
     }

@@ -32,7 +32,7 @@ public final class ChessGameDao {
         }
     }
 
-    public void addGame(RoomName roomName, Team turn, String chessBoard) {
+    public void saveGame(RoomName roomName, Team turn, String chessBoard) {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(QUERY_INSERT_CHESS_GAME)) {
             preparedStatement.setString(1, roomName.getRoomName());

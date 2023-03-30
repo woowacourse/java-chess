@@ -76,7 +76,7 @@ public class Running implements GameState {
         ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.from(chessBoard);
 
         ChessGameDao chessGameDao = new ChessGameDao();
-        chessGameDao.addGame(roomName, currentTeam, convertedChessBoard.getOneLineChessBoard());
+        chessGameDao.saveGame(roomName, currentTeam, convertedChessBoard.getOneLineChessBoard());
 
         return new Ready();
     }
