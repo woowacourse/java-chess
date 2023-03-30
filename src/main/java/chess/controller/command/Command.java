@@ -1,10 +1,13 @@
 package chess.controller.command;
 
+import chess.controller.command.parameter.CommandParameter;
+import chess.controller.command.parameter.PositionParameter;
 import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Command {
 
@@ -15,21 +18,28 @@ public class Command {
     public static final int MOVE_TARGET_POSITION_INDEX = 1;
 
     private final CommandType type;
-    private final List<String> parameters;
+    private final List<CommandParameter> parameters;
 
-    private Command(final CommandType type, final List<String> parameters) {
+    private Command(final CommandType type, final List<CommandParameter> parameters) {
         this.type = type;
         this.parameters = parameters;
     }
 
     public static Command of(List<String> inputValues) {
         final CommandType commandType = CommandType.findBy(inputValues.get(COMMAND_TYPE_INDEX));
-        final List<String> commandParameters = new ArrayList<>();
+        final List<CommandParameter> commandParameters = new ArrayList<>();
         validateParameterSize(inputValues, commandType);
         for (int index = COMMAND_PARAMETER_START_INDEX; index <= commandType.getRequiredParameterNumber(); index++) {
-            commandParameters.add(inputValues.get(index));
+            commandParameters.add(parseByType(commandType, inputValues.get(index)));
         }
         return new Command(commandType, commandParameters);
+    }
+
+    private static CommandParameter parseByType(final CommandType commandType, final String value) {
+        if (commandType == CommandType.MOVE) {
+            return PositionParameter.of(value);
+        }
+        return null;
     }
 
     private static void validateParameterSize(final List<String> inputValues, final CommandType commandType) {
@@ -43,6 +53,8 @@ public class Command {
     }
 
     public List<String> getParameters() {
-        return List.copyOf(parameters);
+        return parameters.stream()
+                .map(CommandParameter::getValue)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
