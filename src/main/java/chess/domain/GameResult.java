@@ -6,6 +6,8 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class GameResult {
 
@@ -20,7 +22,19 @@ public class GameResult {
     }
 
     private static Set<Pieces> collectPiecesByFile(final Map<Position, Piece> piecesByPosition) {
-        return File.collectPiecesByFile(piecesByPosition);
+        return IntStream.rangeClosed(File.min(), File.max())
+            .mapToObj(number -> Position.of(number, number))
+            .map(target -> findPiecesInSameFile(target, piecesByPosition))
+            .collect(Collectors.toSet());
+    }
+
+    private static Pieces findPiecesInSameFile(final Position target,
+        final Map<Position, Piece> piecesByPosition) {
+        return new Pieces(piecesByPosition.keySet()
+            .stream()
+            .filter(position -> position.isInSameFile(target))
+            .map(piecesByPosition::get)
+            .collect(Collectors.toList()));
     }
 
     public double calculateScoreOfTeam(final TeamColor color) {

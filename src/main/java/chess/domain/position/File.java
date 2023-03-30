@@ -1,11 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public enum File {
 
@@ -44,19 +39,12 @@ public enum File {
             .orElseThrow(() -> new IllegalArgumentException(WRONG_FILE_ERROR_MESSAGE));
     }
 
-    public static Set<Pieces> collectPiecesByFile(final Map<Position, Piece> piecesByPosition) {
-        return Arrays.stream(values())
-            .map(file -> findPiecesInSameFile(file.address, piecesByPosition))
-            .collect(Collectors.toSet());
+    public static int min() {
+        return A.address;
     }
 
-    private static Pieces findPiecesInSameFile(final int file,
-        final Map<Position, Piece> piecesByPosition) {
-        return new Pieces(piecesByPosition.keySet()
-            .stream()
-            .filter(position -> position.getFileAddress() == file)
-            .map(piecesByPosition::get)
-            .collect(Collectors.toList()));
+    public static int max() {
+        return H.address;
     }
 
 }
