@@ -1,13 +1,10 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Turn;
 import chess.domain.piece.Color;
 import chess.dto.GameDto;
-import java.util.Collections;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,54 +17,46 @@ class GameDaoTest {
 
     private final GameDao gameDao = new GameDao();
 
-    @BeforeEach
-    @Test
-    void 새로운_게임을_저장할_수_있다() {
-        // given
-        final GameDto gameDto = GameDto.create();
-
-        // when & then
-        assertDoesNotThrow(() -> gameDao.create(gameDto));
-    }
-
-    @Test
-    void 생성된_게임이_없으면_EMPTY_LIST를_반환한다() {
-        final GameDto gameDto = GameDto.from(true);
-        assertThat(gameDao.findAllIdsByIsRunning(gameDto)).isEqualTo(Collections.EMPTY_LIST);
-    }
-
     @Test
     void 생성된_게임_id를_조회할_수_있다() {
+        final int id = gameDao.create(GameDto.create());
         final GameDto gameDto = GameDto.from(true);
-        assertThat(gameDao.findAllIdsByIsRunning(gameDto).get(0)).isEqualTo(1);
+
+        assertThat(gameDao.findAllIdsByIsRunning(gameDto).size()).isGreaterThan(0);
+        gameDao.delete(id);
     }
 
     @Test
     void 생성된_게임_id로_turn을_조회할_수_있다() {
-        final GameDto gameDto = GameDto.from(1);
+        final int id = gameDao.create(GameDto.create());
+        final GameDto gameDto = GameDto.from(id);
+
         assertThat(gameDao.findTurnById(gameDto)).isEqualTo(new Turn(Color.WHITE));
+        gameDao.delete(id);
     }
 
     @Test
     void 새로운_turn으로_업데이트할_수_있다() {
-        // given
-        GameDto gameDto = GameDto.of(1, "Black");
+        final int id = gameDao.create(GameDto.create());
+        GameDto gameDto = GameDto.of(id, "Black");
 
-        // when
         gameDao.updateTurn(gameDto);
-        gameDto = GameDto.from(1);
+        gameDto = GameDto.from(id);
 
-        // then
         assertThat(gameDao.findTurnById(gameDto)).isEqualTo(new Turn(Color.BLACK));
+        gameDao.delete(id);
     }
 
     @Test
-    void 진행중인_게임을_삭제할_수_있다() {
-        // given & when
-        final GameDto gameDto = GameDto.from(true);
-        gameDao.delete(1);
+    void 종료_상태로_업데이트할_수_있다() {
+        final int id = gameDao.create(GameDto.create());
+        GameDto updateDto = GameDto.of(id, false);
 
-        // then
-        assertThat(gameDao.findAllIdsByIsRunning(gameDto)).isEqualTo(Collections.EMPTY_LIST);
+        GameDto retrieveDto = GameDto.from(id);
+        final int expected = gameDao.findAllIdsByIsRunning(retrieveDto).size() - 1;
+
+        gameDao.updateIsRunning(updateDto);
+        assertThat(gameDao.findAllIdsByIsRunning(retrieveDto).size()).isEqualTo(expected);
+        gameDao.delete(id);
     }
 }
