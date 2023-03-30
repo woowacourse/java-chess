@@ -222,6 +222,13 @@ classDiagram
 
 - [x] 사용자 입력에 대치되는 커맨드를 반환한다.
 
+## Service
+### ChessService
+- [x] 체스 판 정보를 저장한다.
+- [x] 게임을 생성한다.
+- [x] 사용자 이름으로 게임을 조회한다.
+- [x] 게임 ID로 게임을 조회한다.
+
 ## DAO
 ### GameDao
 - [x] chess_game을 생성한다.

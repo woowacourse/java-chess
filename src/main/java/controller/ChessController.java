@@ -3,7 +3,6 @@ package controller;
 import controller.command.Command;
 import controller.command.End;
 import controller.command.Move;
-import dao.GameDao;
 import dao.GameDto;
 import domain.game.Game;
 import domain.game.GameStatus;
@@ -14,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import service.ChessService;
 import util.GameStatusMapper;
 import util.PieceMapper;
 import view.InputView;
@@ -22,13 +22,13 @@ import view.OutputView;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final GameDao gameDao;
+    private final ChessService chessService;
     private final String userName;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.gameDao = new GameDao();
+        this.chessService = new ChessService();
         this.userName = repeat(this.inputView::requestUserName);
     }
 
@@ -44,7 +44,7 @@ public class ChessController {
         this.outputView.printGameGuideMessage();
         Game game = repeat(this::getGame);
         proceed(game);
-        gameDao.saveChessBoard(game);
+        this.chessService.saveChessBoard(game);
     }
 
     private Game getGame() {
@@ -62,14 +62,14 @@ public class ChessController {
         String title = this.inputView.requestGameTitle();
         Game game = Game.create(this.userName, title);
         printChessBoardOf(game);
-        gameDao.create(game);
+        this.chessService.create(game);
         return game;
     }
 
     private Game searchGame() {
-        List<GameDto> gameDtos = this.gameDao.findGamesByUserName(this.userName);
+        List<GameDto> gameDtos = this.chessService.findGamesByUserName(this.userName);
         this.outputView.printGamesOfUser(gameDtos);
-        Game game = this.gameDao.findGameById(this.inputView.requestGameId());
+        Game game = this.chessService.findGameById(this.inputView.requestGameId());
         printChessBoardOf(game);
         return game;
     }
