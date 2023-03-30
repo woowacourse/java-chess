@@ -10,17 +10,17 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class PlayingChessGameState implements ChessGameState {
+public class PlayingChessGame implements ChessGame {
     private final Board board;
     private boolean isEnd = false;
     private Color currentTurn;
 
-    public PlayingChessGameState(Board board) {
+    public PlayingChessGame(Board board) {
         this.board = board;
         this.currentTurn = Color.WHITE;
     }
 
-    public PlayingChessGameState(Map<Position, Piece> board, Color thisTurn) {
+    public PlayingChessGame(Map<Position, Piece> board, Color thisTurn) {
         this.board = new Board(board);
         this.currentTurn = thisTurn;
     }
@@ -43,7 +43,7 @@ public class PlayingChessGameState implements ChessGameState {
     }
 
     @Override
-    public ChessGameState start() {
+    public ChessGame start() {
         throw new IllegalStateException("이미 플레이중인 게임입니다.");
     }
 

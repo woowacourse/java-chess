@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.domain.chessGame.ChessGameState;
+import chess.domain.chessGame.ChessGame;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -12,9 +12,9 @@ public enum Command {
     STATUS("status", StatusCommandExecute::new);
 
     private final String command;
-    private final Function<ChessGameState, CommandExecute> executorGenerator;
+    private final Function<ChessGame, CommandExecute> executorGenerator;
 
-    Command(String command, Function<ChessGameState, CommandExecute> executorGenerator) {
+    Command(String command, Function<ChessGame, CommandExecute> executorGenerator) {
         this.command = command;
         this.executorGenerator = executorGenerator;
     }
@@ -26,7 +26,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("올바른 명령어가 아닙니다."));
     }
 
-    public CommandExecute generateExecutor(ChessGameState chessGameState) {
-        return this.executorGenerator.apply(chessGameState);
+    public CommandExecute generateExecutor(ChessGame chessGame) {
+        return this.executorGenerator.apply(chessGame);
     }
 }

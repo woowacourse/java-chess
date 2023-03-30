@@ -16,7 +16,7 @@ import static chess.domain.piece.move_rule.TestFixture.A1;
 import static chess.domain.piece.move_rule.TestFixture.B1;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PlayingChessGameStateTest {
+class PlayingChessGameTest {
     static Board board;
 
     @BeforeAll
@@ -29,7 +29,7 @@ class PlayingChessGameStateTest {
 
     @Test
     void 킹이_잡히면_게임이_종료된다() {
-        ChessGameState game = new PlayingChessGameState(board);
+        ChessGame game = new PlayingChessGame(board);
         game.move("a1", "b1");
 
         assertThat(game.isEnd()).isTrue();

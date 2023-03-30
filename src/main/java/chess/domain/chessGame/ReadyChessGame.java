@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReadyChessGameState implements ChessGameState {
+public class ReadyChessGame implements ChessGame {
 
     private static final String GAME_NOT_START_ERROR_MESSAGE = "아직 게임을 시작하지 않았습니다.";
 
-    public ReadyChessGameState() {
+    public ReadyChessGame() {
         OutputView.getInstance().printStartMessage();
     }
 
@@ -34,9 +34,9 @@ public class ReadyChessGameState implements ChessGameState {
     }
 
     @Override
-    public ChessGameState start() {
+    public ChessGame start() {
         Board board = new Board(initializedBoard());
-        return new PlayingChessGameState(board);
+        return new PlayingChessGame(board);
     }
 
     @Override

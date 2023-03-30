@@ -1,19 +1,19 @@
 package chess.controller.command;
 
-import chess.domain.chessGame.ChessGameState;
+import chess.domain.chessGame.ChessGame;
 import chess.view.OutputView;
 
 public class StartCommandExecute implements CommandExecute {
-    private ChessGameState chessGameState;
+    private ChessGame chessGame;
 
-    public StartCommandExecute(ChessGameState chessGameState) {
-        this.chessGameState = chessGameState;
+    public StartCommandExecute(ChessGame chessGame) {
+        this.chessGame = chessGame;
     }
 
     @Override
-    public ChessGameState execute(String ignored1, String ignored2) {
-        chessGameState = chessGameState.start();
-        OutputView.getInstance().printBoard(chessGameState.getPrintingBoard());
-        return chessGameState;
+    public ChessGame execute(String ignored1, String ignored2) {
+        chessGame = chessGame.start();
+        OutputView.getInstance().printBoard(chessGame.getPrintingBoard());
+        return chessGame;
     }
 }

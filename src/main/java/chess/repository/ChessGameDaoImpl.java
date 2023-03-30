@@ -1,9 +1,9 @@
 package chess.repository;
 
 import chess.domain.PieceDto;
-import chess.domain.chessGame.ChessGameState;
-import chess.domain.chessGame.PlayingChessGameState;
-import chess.domain.chessGame.ReadyChessGameState;
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.PlayingChessGame;
+import chess.domain.chessGame.ReadyChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -27,17 +27,17 @@ public class ChessGameDaoImpl implements ChessGameDao {
 
 
     @Override
-    public ChessGameState findChessGame() {
+    public ChessGame findChessGame() {
         Color currentTurn = findTurn();
         if (currentTurn == null) {
-            return new ReadyChessGameState();
+            return new ReadyChessGame();
         }
         Map<Position, Piece> board = loadBoard();
-        return new PlayingChessGameState(board, currentTurn);
+        return new PlayingChessGame(board, currentTurn);
     }
 
     @Override
-    public void updateChessGame(ChessGameState gameState) {
+    public void updateChessGame(ChessGame gameState) {
         updateTurn(gameState.getThisTurn());
         deletePieces();
         savePieces(gameState.getPrintingBoard());

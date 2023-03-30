@@ -1,17 +1,17 @@
 package chess.controller.command;
 
-import chess.domain.chessGame.ChessGameState;
+import chess.domain.chessGame.ChessGame;
 
 public class EndCommandExecute implements CommandExecute {
-    private final ChessGameState chessGameState;
+    private final ChessGame chessGame;
 
-    public EndCommandExecute(ChessGameState chessGameState) {
-        this.chessGameState = chessGameState;
+    public EndCommandExecute(ChessGame chessGame) {
+        this.chessGame = chessGame;
     }
 
     @Override
-    public ChessGameState execute(String current, String next) {
-        chessGameState.end();
-        return chessGameState;
+    public ChessGame execute(String current, String next) {
+        chessGame.end();
+        return chessGame;
     }
 }

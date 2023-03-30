@@ -1,11 +1,11 @@
 package chess.repository;
 
-import chess.domain.chessGame.ChessGameState;
+import chess.domain.chessGame.ChessGame;
 
 public interface ChessGameDao {
-    ChessGameState findChessGame();
+    ChessGame findChessGame();
 
-    void updateChessGame(ChessGameState gameState);
+    void updateChessGame(ChessGame gameState);
 
     void deleteAll();
 }
