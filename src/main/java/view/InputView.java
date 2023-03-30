@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class InputView {
     private static final String INPUT_COMMAND_DELIMITER = " ";
-    private final Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
-    public List<String> requestUserCommandInGame() {
+    public static List<String> requestUserCommandInGame() {
         String userCommand = SCANNER.nextLine();
 
         if (userCommand.isEmpty()) {
@@ -17,7 +17,7 @@ public class InputView {
         return Arrays.asList(userCommand.split(INPUT_COMMAND_DELIMITER));
     }
 
-    public void requestStartCommand() {
+    public static void requestStartCommand() {
         List<String> userInputs = Arrays.asList(SCANNER.nextLine());
         if (GameCommand.from(userInputs).equals(GameCommand.START)) {
             return;
@@ -25,7 +25,7 @@ public class InputView {
         throw new IllegalArgumentException("게임 시작 명령어를 입력해주세요.");
     }
 
-    public List<String> requestLoadGameOrNewGame() {
+    public static List<String> requestLoadGameOrNewGame() {
         List<String> userInputs = Arrays.asList(SCANNER.nextLine().split(INPUT_COMMAND_DELIMITER));
         GameCommand gameCommand = GameCommand.from(userInputs);
 

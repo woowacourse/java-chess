@@ -25,15 +25,11 @@ public class ChessController {
     private static final int RANK_INDEX = 1;
     private static final int POSITION_TEXT_SIZE = 2;
 
-    private final InputView inputView;
-    private final OutputView outputView;
     private final ChessGameService chessGameService;
     private final Map<GameCommand, TriConsumer<ChessGame, List<String>, Long>> commands;
     private final Map<GameCommand, Function<List<String>, ChessGameCreateResponseDto>> gameMakeCommands;
 
-    public ChessController(InputView inputView, OutputView outputView, ChessGameService chessGameService) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessController(ChessGameService chessGameService) {
         this.chessGameService = chessGameService;
         this.commands = new EnumMap<>(GameCommand.class);
         this.gameMakeCommands = new EnumMap<>(GameCommand.class);
@@ -48,18 +44,18 @@ public class ChessController {
     }
 
     public void run() {
-        this.outputView.printGameGuideMessage();
-        repeatByRunnableUntilStartGame(inputView::requestStartCommand);
+        OutputView.printGameGuideMessage();
+        repeatByRunnableUntilStartGame(InputView::requestStartCommand);
 
-        outputView.printGameCreateMessage();
-        outputView.printGameRooms(chessGameService.findAllRooms());
+        OutputView.printGameCreateMessage();
+        OutputView.printGameRooms(chessGameService.findAllRooms());
         ChessGameCreateResponseDto chessGameDto = repeatCreateGame();
         ChessGame chessGame = chessGameDto.getChessGame();
-        this.outputView.printChessBoard(chessGame.getBoard());
+        OutputView.printChessBoard(chessGame.getBoard());
 
         while (chessGame.isPlayable()) {
             play(chessGame, chessGameDto.getGameId());
-            outputView.printChessBoard(chessGame.getBoard());
+            OutputView.printChessBoard(chessGame.getBoard());
         }
     }
 
@@ -68,7 +64,7 @@ public class ChessController {
             runnable.run();
             return runnable;
         } catch (IllegalArgumentException e) {
-            this.outputView.printErrorMessage(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return repeatByRunnableUntilStartGame(runnable);
         }
     }
@@ -82,7 +78,7 @@ public class ChessController {
     }
 
     private ChessGameCreateResponseDto newCommandExecute() {
-        outputView.printNewGameMessage();
+        OutputView.printNewGameMessage();
         return chessGameService.createGameRoom(new ChessGame(new Board(new ChessBoardGenerator().generate()), Side.WHITE, GameState.RUN));
     }
 
@@ -93,12 +89,12 @@ public class ChessController {
 
     private void play(ChessGame chessGame, Long roomId) {
         try {
-            outputView.printSide(chessGame.getCurrentTurn());
-            List<String> userCommandInput = repeatBySupplier(inputView::requestUserCommandInGame);
+            OutputView.printSide(chessGame.getCurrentTurn());
+            List<String> userCommandInput = repeatBySupplier(InputView::requestUserCommandInGame);
             GameCommand command = GameCommand.from(userCommandInput);
             commands.get(command).accept(chessGame, userCommandInput, roomId);
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             play(chessGame, roomId);
         }
     }
@@ -107,17 +103,17 @@ public class ChessController {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
-            this.outputView.printErrorMessage(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return repeatBySupplier(supplier);
         }
     }
 
     private ChessGameCreateResponseDto repeatCreateGame() {
         try {
-            List<String> commands = inputView.requestLoadGameOrNewGame();
+            List<String> commands = InputView.requestLoadGameOrNewGame();
             return createChessGameByCommand(commands);
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return repeatCreateGame();
         }
     }
@@ -129,10 +125,10 @@ public class ChessController {
     private void statusCommandExecute(ChessGame chessGame) {
         ScoreBoard scoreBoard = chessGame.makeScoreBoard();
         Map<Side, Double> scores = scoreBoard.calculateScore();
-        outputView.printGameScores(scores);
+        OutputView.printGameScores(scores);
 
         Side winner = scoreBoard.calculateWinner(scores);
-        outputView.printWinner(winner);
+        OutputView.printWinner(winner);
     }
 
     private void moveCommandExecute(ChessGame chessGame, List<String> commands) {
@@ -144,8 +140,8 @@ public class ChessController {
             ScoreBoard scoreBoard = chessGame.makeScoreBoard();
             Map<Side, Double> gameScore = scoreBoard.calculateScore();
             Side winner = scoreBoard.calculateWinner(gameScore);
-            outputView.printKingDeadMessage(winner.nextSide());
-            outputView.printWinner(winner);
+            OutputView.printKingDeadMessage(winner.nextSide());
+            OutputView.printWinner(winner);
         }
     }
 
@@ -159,6 +155,6 @@ public class ChessController {
 
     private void saveCommandExecute(ChessGame chessGame, Long roomId) {
         chessGameService.updateChessGame(chessGame, roomId);
-        outputView.printGameSaveMessage();
+        OutputView.printGameSaveMessage();
     }
 }
