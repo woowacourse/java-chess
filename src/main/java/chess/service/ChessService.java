@@ -57,7 +57,7 @@ public class ChessService {
     public void clearRoomIfKingDead(final RoomNumber roomNumber) {
         ChessGame chessGame = findGame(roomNumber);
         if (chessGame.isKingDead() && !roomNumber.isNewRoomNumber()) {
-            chessDao.clear(roomNumber);
+            chessDao.clearAll(roomNumber);
         }
     }
 

@@ -52,7 +52,7 @@ public final class ChessDao {
     }
 
     public void save(final ChessBoard chessBoard, final RoomNumber roomNumber) {
-        clear(roomNumber);
+        clearBoard(roomNumber);
         final int turn = chessBoard.getTurn().getTurn();
         int insertedRoomNumber = saveTurn(turn, roomNumber.getRoomNumber());
         final List<Square> squares = chessBoard.getSquares();
@@ -61,7 +61,23 @@ public final class ChessDao {
         }
     }
 
-    public void clear(final RoomNumber roomNumber) {
+    public void clearAll(final RoomNumber roomNumber) {
+        clearBoard(roomNumber);
+        clearRoom(roomNumber);
+    }
+
+    private void clearRoom(final RoomNumber roomNumber) {
+        final String query = "DELETE FROM room where id = ?";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, roomNumber.getRoomNumber());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void clearBoard(final RoomNumber roomNumber) {
         final String query = "DELETE FROM board where room_number = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
