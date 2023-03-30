@@ -77,19 +77,11 @@ public class ChessGame {
         }
     }
 
-    public Board getBoard() {
-        return this.board;
-    }
-
     public Map<Team, Double> calculateScore() {
         Map<Team, Double> result = new HashMap<>();
         result.put(Team.WHITE, board.calculateTeamScore(Team.WHITE));
         result.put(Team.BLACK, board.calculateTeamScore(Team.BLACK));
         return result;
-    }
-
-    public boolean isEnd() {
-        return this.state.isEnd();
     }
 
     public void move(Position current, Position target) {
@@ -128,5 +120,13 @@ public class ChessGame {
 
     public Team winTeam() {
         return board.kingTeams().get(0);
+    }
+
+    public boolean isEnd() {
+        return this.state.isEnd();
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 }

@@ -21,13 +21,9 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public Type getType() {
-        return type;
-    }
+    abstract public void validateTeam(final Team team);
 
-    public Team getTeam() {
-        return this.team;
-    }
+    abstract public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces);
 
     public void checkDirection(Direction direction) {
         if (!this.directions.contains(direction)) {
@@ -45,11 +41,13 @@ public abstract class Piece {
         return this.type == Type.PAWN;
     }
 
-    abstract public void validateTeam(final Team team);
+    public Type getType() {
+        return type;
+    }
 
-    abstract public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces);
-
-    abstract public void checkExistPiece(List<Piece> pieces);
+    public Team getTeam() {
+        return this.team;
+    }
 
     @Override
     public boolean equals(Object o) {
