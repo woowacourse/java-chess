@@ -51,7 +51,7 @@ public class ChessBoardDao implements ChessDao {
 	}
 
 	@Override
-	public Board select() {
+	public Board find() {
 		Map<Position, Piece> board = new HashMap<>();
 		Color turn = null;
 		final String query = "SELECT piece_type, piece_rank, piece_file, color, turn from chess_game";

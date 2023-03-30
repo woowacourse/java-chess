@@ -19,7 +19,7 @@ public class ChessApplication {
 	private static final ChessDao chessDao = new ChessBoardDao();
 
 	public static void main(String[] args) {
-		Board board = chessDao.select();
+		Board board = chessDao.find();
 		if (board == null) {
 			board = Board.create();
 			chessDao.save(board);

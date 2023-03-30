@@ -5,7 +5,7 @@ import chess.domain.Board;
 public interface ChessDao {
 	void save(Board board);
 
-	Board select();
+	Board find();
 
 	void update(Board board);
 
