@@ -73,4 +73,11 @@ final class PiecesTest {
                 .isInstanceOf(Pieces.class);
     }
 
+    @DisplayName("왕 존재 여부를 반환할 수 있다.")
+    @Test
+    void testReturnIfKingExists() {
+        Pieces pieces = Pieces.from(Pieces.createWhitePieces().getPieces());
+        boolean containsKing = pieces.containsKing();
+        assertThat(containsKing).isTrue();
+    }
 }

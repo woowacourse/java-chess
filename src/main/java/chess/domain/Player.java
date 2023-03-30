@@ -47,8 +47,8 @@ public class Player {
         return findPiece;
     }
 
-    public boolean isKingDead() {
-        return pieces.getPieces().stream().noneMatch(piece -> piece.isSameShape(Shape.KING));
+    public boolean doesNotHaveKing() {
+        return !pieces.containsKing();
     }
 
     public Optional<Piece> removePiece(final Position removalPosition) {

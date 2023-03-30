@@ -136,11 +136,11 @@ public class Players {
     }
 
     public boolean notEveryKingAlive() {
-        return players.stream().anyMatch(Player::isKingDead);
+        return players.stream().anyMatch(Player::doesNotHaveKing);
     }
 
     public String getWinnerColorName() {
-        Player loser = players.stream().filter(Player::isKingDead)
+        Player loser = players.stream().filter(Player::doesNotHaveKing)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("아직 블랙, 화이트 킹이 모두 살아있습니다!"));
         return getAnotherPlayer(loser).getColorName();

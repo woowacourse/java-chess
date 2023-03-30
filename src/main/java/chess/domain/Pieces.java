@@ -135,6 +135,10 @@ public final class Pieces {
         return findPiece;
     }
 
+    public boolean containsKing() {
+        return pieces.stream().anyMatch(piece -> piece.isSameShape(Shape.KING));
+    }
+
     public List<Piece> getPieces() {
         return pieces;
     }
@@ -145,5 +149,4 @@ public final class Pieces {
                 "pieces=" + pieces +
                 '}';
     }
-
 }
