@@ -11,17 +11,7 @@ public class ChessBoardParser {
     private static final int RANK_SIZE = 8;
     private static final int FILE_SIZE = 8;
 
-    private final ChessBoard chessBoard;
-
-    private ChessBoardParser(final Map<SquareCoordinate, SquareState> squares) {
-        this.chessBoard = new ChessBoard(squares);
-    }
-
-    public static ChessBoardParser from(final String oneLineChessBoardMark) {
-        return new ChessBoardParser(parseChessBoard(oneLineChessBoardMark));
-    }
-
-    private static Map<SquareCoordinate, SquareState> parseChessBoard(final String oneLineChessBoardMark) {
+    public static ChessBoard parseChessBoard(final String oneLineChessBoardMark) {
         final Map<SquareCoordinate, SquareState> squares = new LinkedHashMap<>();
 
         final char rank = '1';
@@ -32,7 +22,7 @@ public class ChessBoardParser {
             parseChessBoardEachRank(squares, rankMark, (char) (rank + i));
         }
 
-        return squares;
+        return new ChessBoard(squares);
     }
 
     private static void parseChessBoardEachRank(final Map<SquareCoordinate, SquareState> squares, final String rankMark, final char rank) {
@@ -50,7 +40,4 @@ public class ChessBoardParser {
         return String.valueOf(file) + rank;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
 }

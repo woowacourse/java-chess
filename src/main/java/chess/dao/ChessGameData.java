@@ -3,6 +3,8 @@ package chess.dao;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.piece.Team;
 
+import static chess.dao.ChessBoardParser.parseChessBoard;
+
 public class ChessGameData {
     private static final String WHITE_MARK = "W";
     private static final String BLACK_MARK = "B";
@@ -23,11 +25,6 @@ public class ChessGameData {
             return Team.BLACK;
         }
         throw new IllegalArgumentException("잘못된 마크입니다.");
-    }
-
-    private ChessBoard parseChessBoard(String chessBoard) {
-        ChessBoardParser chessBoardParser = ChessBoardParser.from(chessBoard);
-        return chessBoardParser.getChessBoard();
     }
 
     public Team getTurn() {
