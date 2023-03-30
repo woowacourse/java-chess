@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -11,6 +12,7 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -161,8 +163,9 @@ class BoardTest {
             .ppppppp
             rnbqkbnr
              */
-            double point = board.calculatePoint(Color.BLACK);
-            assertThat(point).isEqualTo(25);
+            Map<Color, Double> score = board.getScoreBoard().getScore();
+            double blackScore = score.get(Color.BLACK);
+            assertThat(blackScore).isEqualTo(25);
         }
 
         @Test
@@ -181,8 +184,9 @@ class BoardTest {
             .ppppppp
             rnbqkbnr
             */
-            double point = board.calculatePoint(Color.WHITE);
-            assertThat(point).isEqualTo(37);
+            Map<Color, Double> score = board.getScoreBoard().getScore();
+            double whiteScore = score.get(Color.WHITE);
+            assertThat(whiteScore).isEqualTo(37);
         }
     }
 }

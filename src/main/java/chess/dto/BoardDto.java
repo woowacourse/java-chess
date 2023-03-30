@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Collections;

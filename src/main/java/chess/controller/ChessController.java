@@ -74,7 +74,7 @@ public class ChessController {
     }
 
     private void showStatus() {
-        Map<Color, Double> status = chessService.status();
-        OutputView.printStatus(status.get(Color.WHITE), status.get(Color.BLACK));
+        Map<Color, Double> score = chessService.status().getScore();
+        OutputView.printStatus(score.get(Color.WHITE), score.get(Color.BLACK));
     }
 }

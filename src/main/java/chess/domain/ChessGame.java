@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -30,7 +31,6 @@ public class ChessGame {
         if (status != GameStatus.START) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
-//        board.initialize();
         status = GameStatus.MOVE;
     }
     
@@ -81,14 +81,11 @@ public class ChessGame {
         }
     }
 
-    public Map<Color, Double> status() {
+    public ScoreBoard status() {
         if (status == GameStatus.START) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
-        Map<Color, Double> status = new HashMap<>();
-        status.put(Color.WHITE, board.calculatePoint(Color.WHITE));
-        status.put(Color.BLACK, board.calculatePoint(Color.BLACK));
-        return status;
+        return board.getScoreBoard();
     }
 
     public void end() {

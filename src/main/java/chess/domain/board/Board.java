@@ -1,24 +1,19 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Color;
+import chess.domain.ScoreBoard;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
-
-    private static final double MULTIPLE_PAWN_POINT = 0.5;
-    private static final double MULTIPLE_PAWN_COUNT = 2;
-
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -85,28 +80,8 @@ public class Board {
         board.put(source, Empty.create(Color.NONE));
     }
 
-    public double calculatePoint(Color color) {
-        return pieceScore(color) - multiplePawnScore(color);
-    }
-
-    private double pieceScore(final Color color) {
-        return board.values().stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(piece -> piece.getType().getPoint())
-                .sum();
-    }
-
-    private double multiplePawnScore(final Color color) {
-        final Map<File, Long> pawnCount = Arrays.stream(Rank.values())
-                .flatMap(file -> Arrays.stream(File.values()).map(rank -> Position.from(rank, file)))
-                .filter(position -> board.get(position).isSameColor(color))
-                .filter(position -> board.get(position).isSameType(PieceType.PAWN))
-                .collect(Collectors.groupingBy(Position::getFile, Collectors.counting()));
-
-        return pawnCount.values().stream()
-                .filter(value -> value >= MULTIPLE_PAWN_COUNT)
-                .mapToDouble(value -> value * MULTIPLE_PAWN_POINT)
-                .sum();
+    public ScoreBoard getScoreBoard() {
+        return ScoreBoard.make(Collections.unmodifiableMap(board));
     }
 
     private boolean isEmpty(final Position position) {

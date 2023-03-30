@@ -2,7 +2,8 @@ package chess.service;
 
 import chess.dao.GameDao;
 import chess.dao.PieceDao;
-import chess.domain.Board;
+import chess.domain.ScoreBoard;
+import chess.domain.board.Board;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.piece.Piece;
@@ -64,7 +65,7 @@ public class ChessService {
         pieceDao.updateById(gameId, makePieceInfoDtos(update));
     }
 
-    public Map<Color, Double> status() {
+    public ScoreBoard status() {
         return chessGame.status();
     }
 
