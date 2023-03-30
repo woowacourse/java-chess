@@ -21,7 +21,7 @@ public class JdbcMoveDao implements MoveDao {
 
     @Override
     public void save(long roomId, Move move) {
-        final String query = "INSERT INTO move (room_id, source, target) VALUES (?, ?, ?)";
+        final String query = "INSERT INTO Move (room_id, source, target) VALUES (?, ?, ?)";
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, roomId);
@@ -35,7 +35,7 @@ public class JdbcMoveDao implements MoveDao {
 
     @Override
     public List<Move> findAllByRoomId(long roomId) {
-        final String query = "SELECT source, target FROM move WHERE room_id = ? ORDER BY created_at ASC";
+        final String query = "SELECT source, target FROM Move WHERE room_id = ? ORDER BY created_at";
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();

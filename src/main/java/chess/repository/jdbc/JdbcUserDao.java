@@ -21,7 +21,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public long save(User user) {
-        final String query = "INSERT INTO user (name) VALUES (?)";
+        final String query = "INSERT INTO User (name) VALUES (?)";
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
@@ -40,7 +40,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public User findByName(String name) {
-        final String query = "SELECT id, name FROM user WHERE name = ?";
+        final String query = "SELECT id, name FROM User WHERE name = ?";
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
 
@@ -56,7 +56,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        final String query = "SELECT id, name FROM user";
+        final String query = "SELECT id, name FROM User";
         try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<User> users = new ArrayList<>();
