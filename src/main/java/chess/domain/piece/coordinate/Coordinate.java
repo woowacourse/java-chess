@@ -14,7 +14,7 @@ public class Coordinate {
     }
 
     public static Coordinate createCoordinate(String row, String column) {
-        return new Coordinate(Row.from(row), Column.fromName(column));
+        return new Coordinate(Row.from(row), Column.from(column));
     }
 
     public int compareByRowNum(Coordinate otherCoordinate) {
