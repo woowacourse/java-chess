@@ -16,19 +16,19 @@ public class PieceDto {
         return new PieceDto(piece.getType().getName(), piece.getColor().name());
     }
 
-    @Override
-    public String toString() {
-        return "PieceResponse{" +
-                "pieceType='" + pieceName + '\'' +
-                ", pieceColor='" + pieceColor + '\'' +
-                '}';
-    }
-
     public String getPieceName() {
         return pieceName;
     }
 
     public String getPieceColor() {
         return pieceColor;
+    }
+
+    @Override
+    public String toString() {
+        return "PieceResponse{" +
+                "pieceType='" + pieceName + '\'' +
+                ", pieceColor='" + pieceColor + '\'' +
+                '}';
     }
 }

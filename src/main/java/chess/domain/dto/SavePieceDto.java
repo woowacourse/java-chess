@@ -15,19 +15,19 @@ public class SavePieceDto {
         return new SavePieceDto(piece.getType().name(), piece.getColor().name());
     }
 
-    @Override
-    public String toString() {
-        return "PieceResponse{" +
-                "pieceType='" + pieceType + '\'' +
-                ", pieceColor='" + pieceColor + '\'' +
-                '}';
-    }
-
     public String getPieceType() {
         return pieceType;
     }
 
     public String getPieceColor() {
         return pieceColor;
+    }
+
+    @Override
+    public String toString() {
+        return "PieceResponse{" +
+                "pieceType='" + pieceType + '\'' +
+                ", pieceColor='" + pieceColor + '\'' +
+                '}';
     }
 }

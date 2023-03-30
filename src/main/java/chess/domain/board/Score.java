@@ -44,19 +44,19 @@ public class Score {
     }
 
     private double calculateScoreExceptPawn(List<Map.Entry<Position, Piece>> pieces) {
-        List<Map.Entry<Position, Piece>> piecesExceptPawn = getEntryOf(pieces,
+        List<Map.Entry<Position, Piece>> piecesExceptPawn = findEntryOf(pieces,
                 (entry) -> !entry.getValue().isTypeOf(PieceType.PAWN) && !entry.getValue().isTypeOf(PieceType.INIT_PAWN)
         );
-        return getScoreSumOf(piecesExceptPawn);
+        return calculateScoreSumOf(piecesExceptPawn);
     }
 
-    private double getScoreSumOf(List<Map.Entry<Position, Piece>> piecesExceptPawn) {
+    private double calculateScoreSumOf(List<Map.Entry<Position, Piece>> piecesExceptPawn) {
         return piecesExceptPawn.stream()
                 .mapToDouble(entry -> entry.getValue().getScore())
                 .sum();
     }
 
-    private List<Map.Entry<Position, Piece>> getEntryOf(List<Map.Entry<Position, Piece>> pieces, Predicate<Map.Entry<Position, Piece>> predicate) {
+    private List<Map.Entry<Position, Piece>> findEntryOf(List<Map.Entry<Position, Piece>> pieces, Predicate<Map.Entry<Position, Piece>> predicate) {
         return pieces.stream()
                 .filter((entry) -> predicate.test(entry))
                 .collect(Collectors.toList());
@@ -64,14 +64,14 @@ public class Score {
     }
 
     private double calculatePawnScore(List<Map.Entry<Position, Piece>> pieces) {
-        List<Map.Entry<Position, Piece>> pawnPieces = getEntryOf(pieces,
+        List<Map.Entry<Position, Piece>> pawnPieces = findEntryOf(pieces,
                 (entry) -> entry.getValue().isTypeOf(PieceType.PAWN) || entry.getValue().isTypeOf(PieceType.INIT_PAWN)
         );
-        double origin = getScoreSumOf(pawnPieces);
-        return origin + getDecreaseScoreOfPawn(pawnPieces);
+        double origin = calculateScoreSumOf(pawnPieces);
+        return origin + calculateDecreaseScoreOfPawn(pawnPieces);
     }
 
-    private double getDecreaseScoreOfPawn(List<Map.Entry<Position, Piece>> pieces) {
+    private double calculateDecreaseScoreOfPawn(List<Map.Entry<Position, Piece>> pieces) {
         long distinctFilePositionSize = pieces.stream().map(entry -> entry.getKey().getFile())
                 .distinct()
                 .count();

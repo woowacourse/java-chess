@@ -102,14 +102,6 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
-    }
-
     public int calculateRankDifference(Position other) {
         return rank.calculateDifference(other.rank);
     }
@@ -124,5 +116,13 @@ public class Position {
 
     public Rank getRank() {
         return rank;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }
