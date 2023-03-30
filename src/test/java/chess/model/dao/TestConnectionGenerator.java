@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class TestConnectionGenerator {
 
     private static final String SERVER = "localhost:13307";
-    private static final String DATABASE = "chess";
+    private static final String DATABASE = "chess-test";
     private static final String OPTION = "?useSSL=true&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";

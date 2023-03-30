@@ -29,8 +29,7 @@ public class TestJdbcTemplate implements JdbcTemplate {
 
     @Override
     public <T> T executeUpdate(final String query, final RowMapper<T> rowMapper, final Object... parameters) {
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement preparedStatement =
+        try (final PreparedStatement preparedStatement =
                      connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 1; i <= parameters.length; i++) {
                 preparedStatement.setObject(i, parameters[i - 1]);
@@ -45,8 +44,7 @@ public class TestJdbcTemplate implements JdbcTemplate {
 
     @Override
     public <T> T executeQuery(final String query, final RowMapper<T> rowMapper, final Object... parameters) {
-        try (final Connection connection = ConnectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 1; i <= parameters.length; i++) {
                 preparedStatement.setObject(i, parameters[i - 1]);
             }
