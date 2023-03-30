@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import static chess.view.InputValidator.*;
 
-public class InputView {
+public class ChessInputView {
 
     private static final String MOVE_COMMAND_DELIMITER = " ";
     private static final String NO = "n";
@@ -32,18 +32,6 @@ public class InputView {
         validateFile(commands.get(2).charAt(0));
         validateRank(commands.get(1).charAt(1));
         validateRank(commands.get(2).charAt(1));
-    }
-
-    public String readUserId() {
-        String input = scanner.nextLine();
-        validateUserIdLength(input);
-        return input;
-    }
-
-    public int readRoomId() {
-        String input = scanner.nextLine();
-        validateIsNumeric(input);
-        return Integer.parseInt(input);
     }
 
     public boolean doNotSave() {

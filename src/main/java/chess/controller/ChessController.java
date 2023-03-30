@@ -4,8 +4,8 @@ import chess.domain.game.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.MoveCommand;
 import chess.view.GameCommandView;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.ChessInputView;
+import chess.view.ChessOutputView;
 import chess.view.PositionConverter;
 
 import java.util.List;
@@ -15,31 +15,31 @@ import static chess.view.PositionConverter.convertToTargetPosition;
 
 public class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final ChessInputView chessInputView;
+    private final ChessOutputView chessOutputView;
 
-    public ChessController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessController(ChessInputView chessInputView, ChessOutputView chessOutputView) {
+        this.chessInputView = chessInputView;
+        this.chessOutputView = chessOutputView;
     }
 
     public void run(MoveCommand moveCommand) {
-        outputView.printStartMessage();
+        chessOutputView.printStartMessage();
         ChessGame chessGame = new ChessGame(new Board());
         while (chessGame.isNotTerminated()) {
             playChessGameWithExceptionHandling(chessGame, moveCommand);
         }
-        outputView.printInputStatusMessage();
+        chessOutputView.printInputStatusMessage();
         playChessGameWithExceptionHandling(chessGame, moveCommand);
         save(moveCommand);
     }
 
     private void playChessGameWithExceptionHandling(ChessGame chessGame, MoveCommand moveCommand) {
         try {
-            String command = inputView.readCommand();
+            String command = chessInputView.readCommand();
             playChessGame(chessGame, command, moveCommand);
         } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e);
+            chessOutputView.printExceptionMessage(e);
             playChessGameWithExceptionHandling(chessGame, moveCommand);
         }
     }
@@ -59,13 +59,13 @@ public class ChessController {
 
     private void startChessGame(ChessGame chessGame) {
         chessGame.start();
-        outputView.printBoard(chessGame.getBoard());
+        chessOutputView.printBoard(chessGame.getBoard());
     }
 
     private void stateChessGame(ChessGame chessGame) {
         double blackScore = chessGame.calculateBlackScore();
         double whiteScore = chessGame.calculateWhiteScore();
-        outputView.printStatus(blackScore, whiteScore);
+        chessOutputView.printStatus(blackScore, whiteScore);
     }
 
     private void endChessGame(ChessGame chessGame) {
@@ -78,21 +78,21 @@ public class ChessController {
         }
         chessGame.progress(convertToSourcePosition(command), convertToTargetPosition(command));
         moveCommand.addMoveCommand(command);
-        outputView.printBoard(chessGame.getBoard());
+        chessOutputView.printBoard(chessGame.getBoard());
     }
 
     private void save(MoveCommand moveCommand) {
         try {
-            outputView.printWantSaveGame();
+            chessOutputView.printWantSaveGame();
             readSaveAnswer(moveCommand);
         } catch (IllegalArgumentException e) {
-            outputView.printExceptionMessage(e);
+            chessOutputView.printExceptionMessage(e);
             save(moveCommand);
         }
     }
 
     private void readSaveAnswer(MoveCommand moveCommand) {
-        if (inputView.doNotSave()) {
+        if (chessInputView.doNotSave()) {
             moveCommand.clear();
         }
     }
@@ -102,11 +102,11 @@ public class ChessController {
         chessGame.start();
 
         interpretCommands(chessGame, moveCommand);
-        outputView.printBoard(chessGame.getBoard());
+        chessOutputView.printBoard(chessGame.getBoard());
         while (chessGame.isNotTerminated()) {
             playChessGameWithExceptionHandling(chessGame, moveCommand);
         }
-        outputView.printInputStatusMessage();
+        chessOutputView.printInputStatusMessage();
         playChessGameWithExceptionHandling(chessGame, moveCommand);
         save(moveCommand);
     }

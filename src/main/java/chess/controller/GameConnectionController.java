@@ -4,20 +4,22 @@ import chess.domain.game.MoveCommand;
 import chess.domain.userAccess.UserAccessService;
 import chess.domain.userAccess.room.Room;
 import chess.domain.userAccess.user.User;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.GameConnectionInputView;
+import chess.view.GameConnectionOutputView;
+import chess.view.ChessInputView;
+import chess.view.ChessOutputView;
 
 import java.util.List;
 
-public class UserAccessController {
+public class GameConnectionController {
 
     private static final int NEW_ROOM_COMMAND = 0;
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final GameConnectionInputView inputView;
+    private final GameConnectionOutputView outputView;
     private final UserAccessService userAccessService;
 
-    public UserAccessController(InputView inputView, OutputView outputView, UserAccessService userAccessService) {
+    public GameConnectionController(GameConnectionInputView inputView, GameConnectionOutputView outputView, UserAccessService userAccessService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.userAccessService = userAccessService;
@@ -68,11 +70,11 @@ public class UserAccessController {
     private MoveCommand startChessGame(Room room) {
         if (room.commands().isEmpty()) {
             MoveCommand moveCommand = new MoveCommand();
-            new ChessController(inputView, outputView).run(moveCommand);
+            new ChessController(new ChessInputView(), new ChessOutputView()).run(moveCommand);
             return moveCommand;
         }
         MoveCommand moveCommand = new MoveCommand(room.commands());
-        new ChessController(inputView, outputView).reStart(moveCommand);
+        new ChessController(new ChessInputView(), new ChessOutputView()).reStart(moveCommand);
         return moveCommand;
     }
 }
