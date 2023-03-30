@@ -1,6 +1,7 @@
 package chess.controller;
 
-import chess.controller.command.CommandExecutorMapper;
+import chess.controller.command.Command;
+import chess.controller.command.CommandExecute;
 import chess.domain.chessGame.ChessGameState;
 import chess.repository.ChessGameDao;
 import chess.view.InputView;
@@ -9,6 +10,10 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessGameController {
+    public static final int COMMAND_HEAD_INDEX = 0;
+    public static final int CURRENT_POSITION_INDEX = 1;
+    public static final int NEXT_POSITION_INDEX = 2;
+
     private final InputView inputView = new InputView();
     private final OutputView outputView = OutputView.getInstance();
 
@@ -45,8 +50,8 @@ public class ChessGameController {
     }
 
     private ChessGameState executeCommand(ChessGameState chessGameState, List<String> inputCommand) {
-        CommandExecutorMapper executorMapper = new CommandExecutorMapper(inputCommand);
-        chessGameState = executorMapper.executeMapped(chessGameState);
-        return chessGameState;
+        Command command = Command.findCommand(inputCommand.get(COMMAND_HEAD_INDEX));
+        CommandExecute commandExecute = command.generateExecutor(chessGameState);
+        return commandExecute.execute(inputCommand.get(CURRENT_POSITION_INDEX), inputCommand.get(NEXT_POSITION_INDEX));
     }
 }
