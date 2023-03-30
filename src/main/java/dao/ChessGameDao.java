@@ -33,6 +33,7 @@ public class ChessGameDao {
                     connection.commit();
                     return generatedKeys.getLong(1);
                 }
+                connection.commit();
             } catch (SQLException sqlException) {
                 connection.rollback();
                 throw new RuntimeException(sqlException);
@@ -93,7 +94,6 @@ public class ChessGameDao {
             }
             return new ChessGameDaoResponseDto(board, lastTurn, GameState.RUN);
         } catch (SQLException e) {
-            System.out.println();
             throw new RuntimeException(e);
         }
 
@@ -137,6 +137,7 @@ public class ChessGameDao {
 
                     preparedStatement.executeUpdate();
                 }
+                connection.commit();
             } catch (SQLException sqlException) {
                 connection.rollback();
                 throw new RuntimeException(sqlException);
@@ -157,6 +158,7 @@ public class ChessGameDao {
                 preparedStatement.setLong(3, roomId);
 
                 preparedStatement.executeUpdate();
+                connection.commit();
             } catch (SQLException sqlException) {
                 connection.rollback();
                 throw new RuntimeException(sqlException);
@@ -188,6 +190,7 @@ public class ChessGameDao {
             try {
                 preparedStatement.setLong(1, roomId);
                 preparedStatement.executeUpdate();
+                connection.commit();
             } catch (SQLException sqlException) {
                 connection.rollback();
                 throw new RuntimeException(sqlException);
