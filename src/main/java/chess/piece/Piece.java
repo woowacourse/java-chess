@@ -116,7 +116,7 @@ public abstract class Piece {
         checkBlockedVertical(from, to, board);
     }
 
-    private void checkBlockedVertical(final Position from, final Position to, final Map<Position, Piece> board) {
+    protected void checkBlockedVertical(final Position from, final Position to, final Map<Position, Piece> board) {
         final Rank fromRank = from.getRank();
         final Rank toRank = to.getRank();
         final int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;

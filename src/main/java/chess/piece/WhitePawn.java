@@ -15,26 +15,16 @@ public class WhitePawn extends Pawn {
     @Override
     protected void validatePathByType(final Position from, final Position to, final Map<Position, Piece> board) {
         final Piece toPiece = board.get(to);
-        if (!(isDiagonal(from, to) && toPiece.isBlack()) &&
-                !(isFirstPosition(from) && isFirstMoveCondition(from, to)) &&
-                !(isGeneral(from, to) && toPiece.isEmpty())) {
+        if (isImmovable(from, to, toPiece)) {
             throw new IllegalArgumentException("Pawn이 이동할 수 없는 경로입니다.");
         }
-        final Rank fromRank = from.getRank();
-        final Rank toRank = to.getRank();
-        final int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
-        final int max = Math.max(fromRank.getIndex(), toRank.getIndex()) - 1;
-
-        for (int i = min; i <= max; i++) {
-            final Piece validationPiece = board.get(new Position(from.getFile(), Rank.from(i)));
-            validateBlockedRoute(validationPiece);
-        }
+        checkBlockedVertical(from, to, board);
     }
 
-    private void validateBlockedRoute(final Piece validationPiece) {
-        if (!validationPiece.isEmpty()) {
-            throw new IllegalArgumentException("말이 이동경로에 존재하여 이동할 수 없습니다.");
-        }
+    private boolean isImmovable(final Position from, final Position to, final Piece toPiece) {
+        return !(isDiagonal(from, to) && toPiece.isBlack()) &&
+                !(isFirstPosition(from) && isFirstMoveCondition(from, to)) &&
+                !(isGeneral(from, to) && toPiece.isEmpty());
     }
 
     private boolean isDiagonal(final Position from, final Position to) {
