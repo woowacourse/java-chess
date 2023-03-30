@@ -42,4 +42,8 @@ public class PieceToScoreConverter {
     public static boolean isPawn(Piece piece) {
         return convert(piece) == 1;
     }
+
+    public static boolean isKingOrEmpty(Piece piece) {
+        return convert(piece) == 0;
+    }
 }

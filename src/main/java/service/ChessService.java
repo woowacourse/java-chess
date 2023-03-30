@@ -108,7 +108,7 @@ public class ChessService {
         if (chessBoard.getBoard()
             .values()
             .stream()
-            .filter(piece -> PieceToScoreConverter.convert(piece) == 0 && !piece.isEmpty())
+            .filter(piece -> PieceToScoreConverter.isKingOrEmpty(piece) && !piece.isEmpty())
             .count() != 2) {
             ongoing = false;
             chessDao.delete();
