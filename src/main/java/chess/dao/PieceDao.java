@@ -2,7 +2,7 @@ package chess.dao;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Type;
+import chess.domain.piece.Role;
 import chess.domain.piece.position.PiecePosition;
 import chess.dto.PieceDto;
 import java.sql.Connection;
@@ -73,9 +73,9 @@ public class PieceDao {
                 final String color = resultSet.getString("color");
                 final String file = resultSet.getString("file_position");
                 final int rank = resultSet.getInt("rank_position");
-                final Type type = Type.ofString(resultSet.getString("piece_type"));
+                final Role role = Role.ofString(resultSet.getString("piece_type"));
 
-                final BiFunction<Color, PiecePosition, Piece> pieceConstructor = type.getPieceConstructor();
+                final BiFunction<Color, PiecePosition, Piece> pieceConstructor = role.getPieceConstructor();
                 return pieceConstructor.apply(Color.ofString(color), PiecePosition.of(file.charAt(0), rank));
             }
         } catch (SQLException e) {

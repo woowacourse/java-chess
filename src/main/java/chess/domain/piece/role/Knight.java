@@ -2,7 +2,7 @@ package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Type;
+import chess.domain.piece.Role;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
@@ -13,7 +13,7 @@ public class Knight extends Piece {
 
     public Knight(final Color color, final PiecePosition piecePosition) {
         super(color, piecePosition);
-        this.type = Type.KNIGHT;
+        this.role = Role.KNIGHT;
     }
 
     @Override

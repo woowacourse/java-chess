@@ -186,3 +186,4 @@ classDiagram
 - [x] autoIncrementId 메서드 삭제
 - [x] save 출력 메시지 추가
 - [x] 진행 중인 게임 불러온 경우, 시작 메시지 추가
+- [x] 중복되는 클래스 명 변경(Type -> Role)

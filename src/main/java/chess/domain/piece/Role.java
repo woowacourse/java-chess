@@ -9,7 +9,7 @@ import chess.domain.piece.role.Queen;
 import chess.domain.piece.role.Rook;
 import java.util.function.BiFunction;
 
-public enum Type {
+public enum Role {
     KING("King", King::new),
     QUEEN("Queen", Queen::new),
     BISHOP("Bishop", Bishop::new),
@@ -20,7 +20,7 @@ public enum Type {
     private final String label;
     private final BiFunction<Color, PiecePosition, Piece> pieceConstructor;
 
-    Type(final String label, final BiFunction<Color, PiecePosition, Piece> pieceConstructor) {
+    Role(final String label, final BiFunction<Color, PiecePosition, Piece> pieceConstructor) {
         this.label = label;
         this.pieceConstructor = pieceConstructor;
     }
@@ -33,8 +33,8 @@ public enum Type {
         return pieceConstructor;
     }
 
-    public static Type ofString(String input) {
-        return Type.valueOf(input.toUpperCase());
+    public static Role ofString(String input) {
+        return Role.valueOf(input.toUpperCase());
     }
 
 }
