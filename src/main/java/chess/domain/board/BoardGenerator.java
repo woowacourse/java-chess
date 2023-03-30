@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
+import chess.domain.Color;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -15,7 +16,6 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +58,6 @@ public class BoardGenerator {
     }
 
     public static Board generate() {
-        return Board.load(CACHE);
+        return Board.load(new HashMap<>(CACHE));
     }
 }
