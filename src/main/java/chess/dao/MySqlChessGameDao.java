@@ -43,12 +43,16 @@ public class MySqlChessGameDao implements ChessGameDao {
         }
     }
 
-    private int saveChessGame(final ChessGameDto chessGameDto, final Connection connection) throws SQLException {
+    private int saveChessGame(final ChessGameDto chessGameDto, final Connection connection) {
         final String query = "INSERT INTO chess_game(turn) VALUES (?)";
-        final PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, chessGameDto.getTurn());
-        ps.executeUpdate();
-        return findChessGameId(ps);
+        try (final PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+            ps.setString(1, chessGameDto.getTurn());
+            ps.executeUpdate();
+            return findChessGameId(ps);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("정상 저장되지 않았습니다.");
+        }
     }
 
     private int findChessGameId(final PreparedStatement ps) throws SQLException {
@@ -76,6 +80,7 @@ public class MySqlChessGameDao implements ChessGameDao {
             ps.setString(5, piece.getColor().name());
 
             ps.executeUpdate();
+            ps.close();
         }
     }
 
@@ -114,7 +119,7 @@ public class MySqlChessGameDao implements ChessGameDao {
                             Rank.from(rank.charAt(STRING_FIRST_INDEX))),
                     piece);
         }
-
+        ps.close();
         return board;
     }
 
@@ -127,6 +132,7 @@ public class MySqlChessGameDao implements ChessGameDao {
             final String color = resultSet.getString(1);
             return new Turn(Color.valueOf(color));
         }
+        ps.close();
         throw new IllegalStateException();
     }
 }
