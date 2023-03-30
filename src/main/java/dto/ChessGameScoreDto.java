@@ -1,13 +1,15 @@
 package dto;
 
+import domain.chessGame.ScoreCalculator;
+
 public class ChessGameScoreDto {
 
     private final double blackScore;
     private final double whiteScore;
 
-    public ChessGameScoreDto(double blackScore, double whiteScore) {
-        this.blackScore = blackScore;
-        this.whiteScore = whiteScore;
+    public ChessGameScoreDto(ScoreCalculator scoreCalculator) {
+        this.blackScore = scoreCalculator.getBlackScore();
+        this.whiteScore = scoreCalculator.getWhiteScore();
     }
 
     public double getBlackScore() {
