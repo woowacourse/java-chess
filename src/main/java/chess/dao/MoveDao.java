@@ -10,4 +10,6 @@ public interface MoveDao {
     List<Move> findAll();
 
     boolean hasGame();
+
+    void truncateMove();
 }

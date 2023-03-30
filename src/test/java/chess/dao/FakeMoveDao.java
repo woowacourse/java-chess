@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.dao.Move;
-import chess.dao.MoveDao;
 import chess.model.position.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +25,11 @@ public class FakeMoveDao implements MoveDao {
     @Override
     public List<Move> findAll() {
         return new ArrayList<>(moves.values());
+    }
+
+    @Override
+    public void truncateMove() {
+        moves.clear();
     }
 
     @Override

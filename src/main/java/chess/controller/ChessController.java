@@ -65,6 +65,8 @@ public class ChessController {
             state = applyCommandAndExecute(state, moveRequest);
 
             printGameProgressMessage(state);
+
+            state = state.isKingDie();
         }
     }
 

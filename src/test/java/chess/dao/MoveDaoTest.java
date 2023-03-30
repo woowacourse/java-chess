@@ -2,6 +2,7 @@ package chess.dao;
 
 import static chess.model.board.PositionFixture.A2;
 import static chess.model.board.PositionFixture.A3;
+import static chess.model.board.PositionFixture.A4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -47,5 +48,18 @@ class MoveDaoTest extends MoveTruncator {
                     assertThat(moveDao.hasGame()).isTrue();
                 }
         );
+    }
+
+    @Test
+    @DisplayName("truncateMove()를 실행하면 해당 테이블이 초기화 된다.")
+    void truncateMove_whenCall_thenTruncateTable() {
+        // given
+        moveDao.save(A2, A4);
+
+        // when
+        moveDao.truncateMove();
+
+        // then
+        assertThat(moveDao.hasGame()).isFalse();
     }
 }

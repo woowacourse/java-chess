@@ -16,6 +16,8 @@ public interface GameState {
 
     boolean isNotEnd();
 
+    GameState isKingDie();
+
     Scores calculateScores();
 
     PieceColor findCurrentPlayer();

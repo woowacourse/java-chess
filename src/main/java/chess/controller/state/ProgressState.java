@@ -64,6 +64,16 @@ public abstract class ProgressState implements GameState {
     }
 
     @Override
+    public GameState isKingDie() {
+        if (chessService.isGameEnd()) {
+            chessService.truncateMove();
+            return new End();
+        }
+
+        return this;
+    }
+
+    @Override
     public final void printCreateGameMessage(final OutputView outputView) {
         outputView.printIfHasGame(hasGame());
     }

@@ -70,6 +70,10 @@ public class ChessService {
         return chessGame.calculateScoreAll(scoreCalculator);
     }
 
+    public void truncateMove() {
+        moveDao.truncateMove();
+    }
+
     public Map<Position, Piece> getBoard() {
         return chessGame.getBoard();
     }

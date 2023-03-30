@@ -5,6 +5,9 @@ import chess.model.ChessGame;
 
 public class NoWhiteKingChessGame extends MoveTruncator {
 
+    private NoWhiteKingChessGame() {
+    }
+
     /**
      * RNBQKB.R
      * PPPPPPPP

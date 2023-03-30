@@ -76,4 +76,18 @@ public class MoveDaoImpl implements MoveDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void truncateMove() {
+        final String truncateQuery = "TRUNCATE TABLE Move";
+
+        try (
+                final Connection connection = ConnectionGenerator.getConnection();
+                final PreparedStatement preparedStatement = connection.prepareStatement(truncateQuery);
+        ) {
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

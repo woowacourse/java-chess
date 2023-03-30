@@ -9,7 +9,6 @@ import chess.view.OutputView;
 import java.util.Map;
 
 public class End implements GameState {
-
     @Override
     public GameState changeState(final GameCommand gameCommand) {
         throw new UnsupportedOperationException();
@@ -23,6 +22,11 @@ public class End implements GameState {
     @Override
     public boolean isNotEnd() {
         return false;
+    }
+
+    @Override
+    public GameState isKingDie() {
+        return this;
     }
 
     @Override

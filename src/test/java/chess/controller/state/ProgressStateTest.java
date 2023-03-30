@@ -14,12 +14,14 @@ import chess.controller.GameCommand;
 import chess.dao.FakeMoveDao;
 import chess.dao.MoveDao;
 import chess.model.ChessGame;
+import chess.model.board.NoWhiteKingChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.PieceType;
 import chess.service.ChessService;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -74,4 +76,37 @@ class ProgressStateTest {
                 () -> assertThat(playing.getBoard().get(A4).getType()).isSameAs(PieceType.PAWN)
         );
     }
+
+    @Nested
+    @DisplayName("isKingDie()를 테스트한다.")
+    class isKingDieTest {
+        @Test
+        @DisplayName("King이 있으면 같은 상태가 반환된다.")
+        void isKingDie_whenHasKing_thenReturnThis() {
+            // given
+            final GameState playing = Playing.of(START, chessService);
+
+            // when
+            final GameState result = playing.isKingDie();
+
+            // then
+            assertThat(result.getClass()).isEqualTo(playing.getClass());
+        }
+
+        @Test
+        @DisplayName("King이 없으면 End 상태가 반환된다.")
+        void isKingDie_whenHasNotKing_thenReturnThis() {
+            // given
+            final ChessGame noWhiteKingChessGame = NoWhiteKingChessGame.create();
+            final ChessService noWhiteKingChessService = new ChessService(noWhiteKingChessGame, new FakeMoveDao());
+            final GameState playing = Playing.of(START, noWhiteKingChessService);
+
+            // when
+            final GameState result = playing.isKingDie();
+
+            // then
+            assertThat(result.getClass()).isEqualTo(End.class);
+        }
+    }
+
 }
