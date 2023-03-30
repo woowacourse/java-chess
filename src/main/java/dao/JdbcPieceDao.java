@@ -12,14 +12,13 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void save(List<PieceDto> pieceDtos) {
         for (PieceDto pieceDto : pieceDtos) {
-            final var query = "INSERT INTO piece_state(piece_name, piece_color, piece_row, piece_column, turn) VALUES (?, ?, ?, ?, ?)";
+            final var query = "INSERT INTO piece_state(piece_name, piece_color, piece_row, piece_column) VALUES (?, ?, ?, ?)";
             try (final var connection = DBUtil.getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, pieceDto.getName());
                 preparedStatement.setString(2, pieceDto.getPieceColor());
                 preparedStatement.setInt(3, pieceDto.getRow());
                 preparedStatement.setInt(4, pieceDto.getColumn());
-                preparedStatement.setString(5, pieceDto.getColorOfTurn());
 
                 preparedStatement.executeUpdate();
             } catch (final SQLException e) {
@@ -32,7 +31,7 @@ public class JdbcPieceDao implements PieceDao {
     public List<PieceDto> find() {
         List<PieceDto> pieceDtos = new ArrayList<>();
 
-        final var query = "SELECT piece_name, piece_color, piece_row, piece_column, turn FROM piece_state";
+        final var query = "SELECT piece_name, piece_color, piece_row, piece_column FROM piece_state";
         try (final var connection = DBUtil.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
@@ -42,9 +41,8 @@ public class JdbcPieceDao implements PieceDao {
                 String pieceColor = resultSet.getString("piece_color");
                 int pieceRow = resultSet.getInt("piece_row");
                 int pieceColumn = resultSet.getInt("piece_column");
-                String turnOfColor = resultSet.getString("turn");
 
-                pieceDtos.add(new PieceDto(pieceName, pieceColor, pieceRow, pieceColumn, turnOfColor));
+                pieceDtos.add(new PieceDto(pieceName, pieceColor, pieceRow, pieceColumn));
             }
             return pieceDtos;
         } catch (final SQLException e) {

@@ -1,5 +1,6 @@
 package service;
 
+import dao.GameTurnDao;
 import dao.PieceDao;
 import domain.chessGame.ChessBoard;
 import domain.chessGame.ChessBoardGenerator;
@@ -11,6 +12,7 @@ import domain.piece.PieceName;
 import domain.position.Position;
 import dto.ChessBoardStateDto;
 import dto.ChessGameScoreDto;
+import dto.GameTurnDto;
 import dto.PieceDto;
 
 import java.util.ArrayList;
@@ -24,9 +26,11 @@ public class ChessGameService {
     public static final String DOT = ".";
 
     private final PieceDao pieceDao;
+    private final GameTurnDao gameTurnDao;
 
-    public ChessGameService(PieceDao pieceDao) {
+    public ChessGameService(PieceDao pieceDao, GameTurnDao gameTurnDao) {
         this.pieceDao = pieceDao;
+        this.gameTurnDao = gameTurnDao;
     }
 
     public void move(List<String> commandInput) {
@@ -39,29 +43,32 @@ public class ChessGameService {
 
         // Todo: 움직인 말의 데이터만 수정하도록 리팩토링
         pieceDao.update(makePieceDtos(chessBoard));
+        gameTurnDao.update(makeGameTurnDto(chessBoard));
     }
 
     private ChessBoard findChessBoard() {
-        Map<Position, Piece> loadBoard = new HashMap<>();
-
         List<PieceDto> pieceDtos = pieceDao.find();
-        Color turnOfColor = null;
 
         if (pieceDtos.size() == 0) {
             ChessBoardGenerator generator = new ChessBoardGenerator();
             return new ChessBoard(generator.generate());
         }
 
+        Map<Position, Piece> loadBoard = new HashMap<>();
+        
         for (PieceDto pieceDto : pieceDtos) {
             PieceName pieceName = PieceName.of(pieceDto.getName());
             Color pieceColor = Color.valueOf(pieceDto.getPieceColor());
             Position position = Position.of(pieceDto.getRow(), pieceDto.getColumn());
-            turnOfColor = Color.valueOf(pieceDto.getColorOfTurn());
 
             Piece piece = makePiece(pieceName, pieceColor);
 
             loadBoard.put(position, piece);
         }
+
+        GameTurnDto gameTurnDto = gameTurnDao.find();
+        Color turnOfColor = Color.valueOf(gameTurnDto.getTurnOfColor());
+        
         return new ChessBoard(loadBoard, turnOfColor);
     }
 
@@ -79,11 +86,14 @@ public class ChessGameService {
             String pieceColor = entry.getValue().getColor().name();
             int pieceRow = entry.getKey().getRow();
             int pieceColumn = entry.getKey().getColumn();
-            String turnOfColor = chessBoard.getTurnOfColor().name();
 
-            pieceDtos.add(new PieceDto(pieceName, pieceColor, pieceRow, pieceColumn, turnOfColor));
+            pieceDtos.add(new PieceDto(pieceName, pieceColor, pieceRow, pieceColumn));
         }
         return pieceDtos;
+    }
+
+    private GameTurnDto makeGameTurnDto(ChessBoard chessBoard) {
+        return new GameTurnDto(chessBoard.getTurnOfColor().name());
     }
 
     public ChessGameScoreDto calculateScore() {
@@ -121,5 +131,6 @@ public class ChessGameService {
 
     public void deleteChessBoard() {
         pieceDao.delete();
+        gameTurnDao.delete();
     }
 }

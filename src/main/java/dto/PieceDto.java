@@ -5,14 +5,12 @@ public class PieceDto {
     private final String pieceColor;
     private final int row;
     private final int column;
-    private final String colorOfTurn;
 
-    public PieceDto(String name, String pieceColor, int row, int column, String colorOfTurn) {
+    public PieceDto(String name, String pieceColor, int row, int column) {
         this.name = name;
         this.pieceColor = pieceColor;
         this.row = row;
         this.column = column;
-        this.colorOfTurn = colorOfTurn;
     }
 
     public String getName() {
@@ -29,9 +27,5 @@ public class PieceDto {
 
     public int getColumn() {
         return column;
-    }
-
-    public String getColorOfTurn() {
-        return colorOfTurn;
     }
 }

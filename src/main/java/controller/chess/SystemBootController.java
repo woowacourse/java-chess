@@ -1,5 +1,6 @@
 package controller.chess;
 
+import dao.JdbcGameTurnDao;
 import dao.JdbcPieceDao;
 import service.ChessGameService;
 import view.InputView;
@@ -26,7 +27,7 @@ public final class SystemBootController extends ChessController {
     protected ChessController readNextController() {
         SystemCommandType command = receiveSystemCommand();
         if (command == SystemCommandType.START) {
-            return new InitializeController(new ChessGameService(new JdbcPieceDao()));
+            return new InitializeController(new ChessGameService(new JdbcPieceDao(), new JdbcGameTurnDao()));
         }
         return new SystemEndController();
     }
