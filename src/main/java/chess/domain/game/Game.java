@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -12,16 +13,17 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Game {
+
     private final Board board;
     private Team turn;
+
+    public Game() {
+        this(new Board(new BoardFactory().generateBoard()), Team.WHITE);
+    }
 
     public Game(Board board, Team turn) {
         this.board = board;
         this.turn = turn;
-    }
-
-    public Game() {
-        this(new Board(), Team.WHITE);
     }
 
     public void move(Square source, Square target) {

@@ -1,22 +1,15 @@
 package chess.domain.board;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.exception.PathBlockedException;
 import chess.exception.PawnMoveDiagonalException;
 import chess.exception.PawnMoveForwardException;
 import chess.exception.TargetSameTeamException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,85 +17,11 @@ import java.util.stream.Collectors;
 
 public class Board {
     private static final boolean IS_MOVED = true;
-    private static final int BOARD_LINE_SIZE = 8;
 
     private final Map<Square, Piece> board;
 
     public Board(Map<Square, Piece> board) {
         this.board = board;
-    }
-
-    public Board() {
-        this(generateBoard());
-    }
-
-    private static Map<Square, Piece> generateBoard() {
-        Map<Square, Piece> board = new LinkedHashMap<>();
-        List<Piece> pieces = generatePieces();
-        List<Square> squares = generateSquares();
-
-        for (int i = 0; i < squares.size(); i++) {
-            board.put(squares.get(i), pieces.get(i));
-        }
-
-        return board;
-    }
-
-    private static List<Piece> generatePieces() {
-        List<Piece> pieces = new ArrayList<>();
-
-        pieces.addAll(generateFirstLine(Team.BLACK));
-        pieces.addAll(generateSecondLine(Team.BLACK));
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateEmptyLine());
-        pieces.addAll(generateSecondLine(Team.WHITE));
-        pieces.addAll(generateFirstLine(Team.WHITE));
-
-        return pieces;
-    }
-
-    private static List<Piece> generateFirstLine(Team team) {
-        List<Piece> pieces = new ArrayList<>();
-
-        pieces.add(new Rook(team));
-        pieces.add(new Knight(team));
-        pieces.add(new Bishop(team));
-        pieces.add(new Queen(team));
-        pieces.add(new King(team));
-        pieces.add(new Bishop(team));
-        pieces.add(new Knight(team));
-        pieces.add(new Rook(team));
-
-        return pieces;
-    }
-
-    private static List<Piece> generateSecondLine(Team team) {
-        List<Piece> pieces = new ArrayList<>();
-
-        for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Pawn(team));
-        }
-
-        return pieces;
-    }
-
-    private static List<Piece> generateEmptyLine() {
-        List<Piece> pieces = new ArrayList<>();
-
-        for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(new Empty());
-        }
-
-        return pieces;
-    }
-
-    private static List<Square> generateSquares() {
-        return Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values())
-                        .map(file -> new Square(file, rank)))
-                .collect(Collectors.toList());
     }
 
     public void move(Square source, Square target) {
@@ -176,8 +95,8 @@ public class Board {
 
     public Map<Piece, Square> getWhitePieces() {
         return board.entrySet().stream()
-                .filter(entry -> entry.getValue().isSameTeam(Team.WHITE))
-                .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
+            .filter(entry -> entry.getValue().isSameTeam(Team.WHITE))
+            .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
     }
 
     public Map<Piece, Square> getBlackPieces() {
