@@ -88,7 +88,8 @@ public class ChessGame {
     }
 
     public double takeScore(Side side) {
-        return chessBoard.calculateScore(side);
+        ChessScore chessScore = new ChessScore(chessBoard);
+        return chessScore.calculateScore(side);
     }
 
     public int getGameIdx() {
