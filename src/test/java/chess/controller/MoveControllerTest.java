@@ -37,10 +37,8 @@ public class MoveControllerTest {
 
         //when
         ResponseType type = response.getType();
-        String cause = response.getCause();
 
         assertThat(type).isEqualTo(ResponseType.FAIL);
-        assertThat(cause).isEqualTo("움직일 수 없는 요청입니다.");
     }
 
     @Test

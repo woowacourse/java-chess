@@ -38,7 +38,7 @@ public class MoveController implements Controller {
                 return new Response(ResponseType.FINISH);
             }
             return new Response(ResponseType.MOVE, makeBoardDto(afterGame));
-        } catch (IllegalPieceMoveException e) {
+        } catch (IllegalPieceMoveException | IllegalStateException e) {
             return new Response(ResponseType.FAIL, e.getMessage());
 
         }
