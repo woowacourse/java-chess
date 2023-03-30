@@ -29,12 +29,11 @@ public enum SquareParser {
     }
 
     public static SquareState getSquareStateByMark(final String mark) {
-        Function<Team, ? extends SquareState> squareGenerator = getSquareGeneratorByMark(mark);
-
-        if (squareGenerator.equals(EMPTY.generator)) {
+        if (mark.equals(EMPTY.mark)){
             return new Empty();
         }
 
+        Function<Team, ? extends SquareState> squareGenerator = getSquareGeneratorByMark(mark);
         return squareGenerator.apply(decideTeam(mark));
     }
 
