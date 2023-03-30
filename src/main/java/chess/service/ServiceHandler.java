@@ -1,6 +1,6 @@
 package chess.service;
 
-public interface Service {
+public interface ServiceHandler {
     UserService userService();
 
     ChessGameService chessGameService();

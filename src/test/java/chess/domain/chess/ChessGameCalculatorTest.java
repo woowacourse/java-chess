@@ -1,6 +1,6 @@
 package chess.domain.chess;
 
-import chess.domain.chess.vo.ScoreVO;
+import chess.domain.chess.vo.ChessScore;
 import chess.domain.piece.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +14,10 @@ class ChessGameCalculatorTest {
     void calculate() {
         // given
         final ChessGame chessGame = new ChessGame(CampType.WHITE);
-        final ScoreVO expected = new ScoreVO(Score.create(38.0), Score.create(38.0));
+        final ChessScore expected = new ChessScore(Score.create(38.0), Score.create(38.0));
 
         // when
-        ScoreVO actual = ChessGameCalculator.calculate(chessGame);
+        ChessScore actual = ChessGameCalculator.calculate(chessGame);
 
         // then
         assertThat(actual)

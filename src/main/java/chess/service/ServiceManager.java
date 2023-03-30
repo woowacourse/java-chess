@@ -7,7 +7,7 @@ import chess.dao.chess.PieceDaoImpl;
 import chess.dao.user.UserDaoImpl;
 import chess.database.JdbcTemplate;
 
-public final class ServiceManager implements Service {
+public final class ServiceManager implements ServiceHandler {
     private final JdbcTemplate jdbcTemplate;
 
     public ServiceManager(final JdbcTemplate jdbcTemplate) {

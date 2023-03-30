@@ -1,6 +1,6 @@
 package chess.domain.chess;
 
-import chess.domain.chess.vo.ScoreVO;
+import chess.domain.chess.vo.ChessScore;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Score;
 import chess.domain.piece.move.Position;
@@ -15,14 +15,14 @@ public final class ChessGameCalculator {
     private static final int PAWN_SUBTRACT_COUNT_THRESHOLD = 1;
     private static final Score PAWN_SPECIAL_SCORE = Score.create(0.5);
 
-    public static ScoreVO calculate(final ChessGame chessGame) {
+    public static ChessScore calculate(final ChessGame chessGame) {
         final Map<Position, Piece> whiteBoard = chessGame.getWhiteBoard();
         Score whiteScore = calculateScore(whiteBoard);
 
         final Map<Position, Piece> blackBoard = chessGame.getBlackBoard();
         Score blackScore = calculateScore(blackBoard);
 
-        return new ScoreVO(whiteScore, blackScore);
+        return new ChessScore(whiteScore, blackScore);
     }
 
     private static Score calculateScore(Map<Position, Piece> board) {

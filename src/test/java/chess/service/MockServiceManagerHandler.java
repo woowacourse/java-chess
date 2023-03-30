@@ -4,7 +4,7 @@ import chess.dao.chess.MockChessGameDao;
 import chess.dao.chess.MockPieceDao;
 import chess.dao.user.MockUserDao;
 
-public class MockServiceManager implements Service {
+public class MockServiceManagerHandler implements ServiceHandler {
     @Override
     public UserService userService() {
         return new UserService(new MockUserDao());

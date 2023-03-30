@@ -1,10 +1,10 @@
 package chess.controller.mapper;
 
 import chess.controller.dto.ChessResultDto;
-import chess.domain.chess.vo.ScoreVO;
+import chess.domain.chess.vo.ChessScore;
 
 public class ChessResultDtoMapper {
-    public static ChessResultDto from(final ScoreVO scoreVO) {
-        return new ChessResultDto(scoreVO.getWhiteScore().getScore(), scoreVO.getBlackScore().getScore());
+    public static ChessResultDto from(final ChessScore chessScore) {
+        return new ChessResultDto(chessScore.getWhiteScore().getScore(), chessScore.getBlackScore().getScore());
     }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class UserServiceTest {
+class UserServiceTestHandler {
 
     @Test
     @DisplayName("사용자의 이름이 이미 저장되어 있다면, 존재하는 사용자의 아이디를 반환한다.")

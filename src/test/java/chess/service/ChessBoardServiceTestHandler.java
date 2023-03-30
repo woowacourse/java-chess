@@ -20,7 +20,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class ChessBoardServiceTest {
+class ChessBoardServiceTestHandler {
 
     @Test
     @DisplayName("체스 게임 아이디로 체스판 정보를 조회한다.")

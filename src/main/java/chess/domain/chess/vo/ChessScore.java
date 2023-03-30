@@ -4,11 +4,11 @@ import chess.domain.piece.Score;
 
 import java.util.Objects;
 
-public class ScoreVO {
+public class ChessScore {
     private final Score whiteScore;
     private final Score blackScore;
 
-    public ScoreVO(final Score whiteScore, final Score blackScore) {
+    public ChessScore(final Score whiteScore, final Score blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
@@ -17,8 +17,8 @@ public class ScoreVO {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final ScoreVO scoreVO = (ScoreVO) o;
-        return Objects.equals(whiteScore, scoreVO.whiteScore) && Objects.equals(blackScore, scoreVO.blackScore);
+        final ChessScore chessScore = (ChessScore) o;
+        return Objects.equals(whiteScore, chessScore.whiteScore) && Objects.equals(blackScore, chessScore.blackScore);
     }
 
     @Override

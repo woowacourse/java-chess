@@ -3,8 +3,8 @@ package chess.controller.status;
 import chess.controller.Command;
 import chess.controller.CommandType;
 import chess.service.ChessGameService;
-import chess.service.MockServiceManager;
-import chess.service.Service;
+import chess.service.MockServiceManagerHandler;
+import chess.service.ServiceHandler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +22,8 @@ class StartControllerTest {
 
     @BeforeAll
     void init() {
-        final Service mockServiceManager = new MockServiceManager();
-        chessGameService = mockServiceManager.chessGameService();
+        final ServiceHandler mockServiceManagerHandler = new MockServiceManagerHandler();
+        chessGameService = mockServiceManagerHandler.chessGameService();
     }
 
     @DisplayName(value = "게임이 시작 상태일 때 사용자가 입력한 명령어가 move면 예외가 발생한다.")

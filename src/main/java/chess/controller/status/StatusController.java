@@ -6,7 +6,7 @@ import chess.controller.mapper.ChessBoardDtoMapper;
 import chess.controller.mapper.ChessResultDtoMapper;
 import chess.domain.chess.ChessGame;
 import chess.domain.chess.ChessGameCalculator;
-import chess.domain.chess.vo.ScoreVO;
+import chess.domain.chess.vo.ChessScore;
 import chess.service.ChessGameService;
 import chess.view.OutputView;
 
@@ -58,7 +58,7 @@ public final class StatusController implements Controller {
 
     private Runnable runCalculator() {
         return () -> {
-            final ScoreVO chessResult = ChessGameCalculator.calculate(chessGame);
+            final ChessScore chessResult = ChessGameCalculator.calculate(chessGame);
             final ChessResultDto chessResultDto = ChessResultDtoMapper.from(chessResult);
             OutputView.printChessResult(chessResultDto);
         };
