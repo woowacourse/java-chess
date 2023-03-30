@@ -43,14 +43,14 @@ public class ChessController {
     }
 
     private ChessGame startChessGame(String gameCommand) {
-        if (GameCommand.isNew(gameCommand)) {
-            long chessGameId = chessGameDao.create();
-            ChessGame chessGame = ChessGame.createGame(chessGameId);
-            chessBoardDao.save(chessGameId, chessGame.getBoard());
-            outputView.printGameId(chessGameId);
-            return chessGame;
+        if (!GameCommand.isNew(gameCommand)) {
+            return chessGameDao.findById(Integer.parseInt(gameCommand));
         }
-        return chessGameDao.findById(Integer.parseInt(gameCommand));
+        long chessGameId = chessGameDao.create();
+        ChessGame chessGame = ChessGame.createGame(chessGameId);
+        chessBoardDao.save(chessGameId, chessGame.getBoard());
+        outputView.printGameId(chessGameId);
+        return chessGame;
     }
 
     private void inputStartCommand() {
