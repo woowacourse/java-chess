@@ -57,7 +57,7 @@ public class BoardGenerator {
                 .collect(toMap(Function.identity(), ignore -> Empty.create(Color.NONE)));
     }
 
-    public static Map<Position, Piece> generate() {
-        return Collections.unmodifiableMap(CACHE);
+    public static Board generate() {
+        return Board.load(CACHE);
     }
 }

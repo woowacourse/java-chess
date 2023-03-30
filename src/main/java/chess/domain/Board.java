@@ -10,7 +10,6 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,13 +21,15 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(final Map<Position, Piece> board) {
+    private Board(final Map<Position, Piece> board) {
         this.board = board;
     }
 
     public static Board create() {
-        Map<Position, Piece> board = new HashMap<>();
-        board.putAll(BoardGenerator.generate());
+        return BoardGenerator.generate();
+    }
+
+    public static Board load(Map<Position, Piece> board) {
         return new Board(board);
     }
 

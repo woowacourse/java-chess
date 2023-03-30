@@ -44,7 +44,7 @@ public class ChessService {
         List<PieceInfoDto> pieceInfos = pieceDao.findById(gameId);
         Map<Position, Piece> board = pieceInfos.stream()
                 .collect(Collectors.toMap(PieceInfoDto::getPosition, PieceInfoDto::getPiece));
-        ChessGame existedChessGame = new ChessGame(new Board(board), gameInfo.getTurn(), gameInfo.getStatus());
+        ChessGame existedChessGame = new ChessGame(Board.load(board), gameInfo.getTurn(), gameInfo.getStatus());
         this.chessGame = existedChessGame;
     }
 
