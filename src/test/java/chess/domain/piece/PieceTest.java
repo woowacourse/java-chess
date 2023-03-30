@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PieceTest {
 
@@ -25,11 +26,8 @@ class PieceTest {
         final boolean actualTrue = pawn.isSameCamp(queen);
 
         // then
-        assertThat(actualFalse)
-                .isFalse();
-
-        assertThat(actualTrue)
-                .isTrue();
+        assertAll(() -> assertThat(actualFalse).isFalse(),
+                () -> assertThat(actualTrue).isTrue());
     }
 
     @Test
@@ -43,11 +41,8 @@ class PieceTest {
         boolean actualFalse = pawn.isSameCamp(CampType.BLACK);
 
         // then
-        assertThat(actualTrue)
-                .isTrue();
-
-        assertThat(actualFalse)
-                .isFalse();
+        assertAll(() -> assertThat(actualTrue).isTrue(),
+                () -> assertThat(actualFalse).isFalse());
     }
 
     @ParameterizedTest(name = "폰은 처음에 기물이 없는 곳으로 최대 2칸 이동할 수 있다.")
@@ -148,11 +143,8 @@ class PieceTest {
         final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new Pawn());
 
         // when, then
-        assertThat(king.isKing())
-                .isTrue();
-
-        assertThat(pawn.isKing())
-                .isFalse();
+        assertAll(() -> assertThat(king.isKing()).isTrue(),
+                () -> assertThat(pawn.isKing()).isFalse());
     }
 
     @Test
@@ -163,10 +155,7 @@ class PieceTest {
         final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new Pawn());
 
         // when, then
-        assertThat(pawn.isPawn())
-                .isTrue();
-
-        assertThat(king.isPawn())
-                .isFalse();
+        assertAll(() -> assertThat(pawn.isPawn()).isTrue(),
+                () -> assertThat(king.isPawn()).isFalse());
     }
 }

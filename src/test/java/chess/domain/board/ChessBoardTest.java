@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessBoardTest {
 
@@ -118,11 +119,8 @@ class ChessBoardTest {
                 new Piece(PieceType.KING, CampType.BLACK, new King()));
 
         // then
-        assertThat(aliveKings)
-                .isEqualTo(expected);
-
-        assertThat(aliveKings.size())
-                .isSameAs(2);
+        assertAll(() -> assertThat(aliveKings).isEqualTo(expected),
+                () -> assertThat(aliveKings.size()).isSameAs(2));
     }
 
     @Test
@@ -136,9 +134,7 @@ class ChessBoardTest {
         final Map<Position, Piece> blackBoard = chessBoard.getBoardByCamp(CampType.BLACK);
 
         // then
-        assertThat(whiteBoard.size())
-                .isEqualTo(16);
-        assertThat(blackBoard.size())
-                .isEqualTo(16);
+        assertAll(() -> assertThat(whiteBoard.size()).isEqualTo(16),
+                () -> assertThat(blackBoard.size()).isEqualTo(16));
     }
 }
