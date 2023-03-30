@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandType;
+import chess.dao.ChessGameDao;
 import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.view.InputView;
@@ -9,25 +10,37 @@ import chess.view.OutputView;
 
 public class GameController {
 
-    public void run() {
-        ChessGame chessGame = startGame();
-        playGame(chessGame);
+    private final ChessGameDao chessGameDao;
+
+
+    public GameController(ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+
     }
 
-    private ChessGame startGame() {
+    public void run() {
+        ChessGame chessGame = chessGameDao.select();
+        if (chessGame == null) {
+            chessGame = new ChessGame(ChessBoard.GenerateChessBoard());
+            chessGameDao.save(chessGame);
+        }
+        startGame(chessGame);
+        playGame(chessGame, chessGameDao);
+    }
+
+    private ChessGame startGame(ChessGame chessGame) {
         try {
             OutputView.gameStartMessage();
-            ChessGame chessGame = new ChessGame(ChessBoard.GenerateChessBoard());
             Command command = CommandType.makeCommand(InputView.readCommand());
             command.execute(chessGame);
             return chessGame;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return startGame();
+        return startGame(chessGame);
     }
 
-    private void playGame(ChessGame chessGame) {
+    private void playGame(ChessGame chessGame, ChessGameDao chessGameDao) {
         while (chessGame.isPlaying()) {
             try {
                 Command command = CommandType.makeCommand(InputView.readCommand());
@@ -35,6 +48,8 @@ public class GameController {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+
+            chessGameDao.update(chessGame);
         }
     }
 }
