@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Role;
-import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.math.BigInteger;
 import java.util.List;
@@ -102,32 +100,11 @@ public class ChessBoard {
     }
 
     public double calculateScore(final Team team) {
-        double heavyPiecesScore = calculateHeavyPiecesScore(team);
-        double pawnScore = calculatePawnScore(team);
-        return heavyPiecesScore + pawnScore;
+        return ScoreCalculator.calculateScore(squares, team);
     }
 
-    private double calculateHeavyPiecesScore(final Team team) {
-        return squares.stream().filter(square -> square.isSameTeam(team))
-                .filter(square -> !square.hasSameRole(Role.PAWN)).mapToDouble(Square::getScore).sum();
-    }
-
-    private double calculatePawnScore(final Team team) {
-        double pawnScore = 0;
-        for (File file : File.values()) {
-            pawnScore += calculatePawnScoreOfFile(file, team);
-        }
-        return pawnScore;
-    }
-
-    private double calculatePawnScoreOfFile(final File file, final Team team) {
-        double pawnScore = squares.stream().filter(square -> square.isSameTeam(team))
-                .filter(square -> square.isSameFile(file)).filter(square -> square.hasSameRole(Role.PAWN))
-                .mapToDouble(Square::getScore).sum();
-        if (pawnScore > 1) {
-            return pawnScore / 2;
-        }
-        return pawnScore;
+    public boolean isFirstTurn() {
+        return turn.isFirst();
     }
 
     public Team previousTeam() {
@@ -140,9 +117,5 @@ public class ChessBoard {
 
     public List<Square> getSquares() {
         return squares;
-    }
-
-    public boolean isFirstTurn() {
-        return turn.isFirst();
     }
 }

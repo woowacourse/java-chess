@@ -169,21 +169,4 @@ class ChessBoardTest {
             assertThat(actual).isTrue();
         }
     }
-
-    @Nested
-    class 점수계산 {
-        @Test
-        void should_38점을반환한다_when_초기상태일때() {
-            //given
-            final double expected = 38.0;
-
-            //when
-            final double whiteScore = chessBoard.calculateScore(Team.WHITE);
-            final double blackScore = chessBoard.calculateScore(Team.BLACK);
-
-            //then
-            assertThat(whiteScore).isEqualTo(blackScore).isEqualTo(expected);
-        }
-
-    }
 }
