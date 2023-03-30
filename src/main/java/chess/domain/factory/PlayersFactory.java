@@ -9,12 +9,12 @@ import chess.domain.dao.PieceDao;
 import chess.domain.dao.TurnDao;
 import java.util.List;
 
-public class InitPlayersFactory {
+public class PlayersFactory {
 
-    public static Players initializeChessBoard(PieceDao pieceDao, TurnDao turnDao) {
+    public static Players initialize(PieceDao pieceDao, TurnDao turnDao) {
 
-        Pieces whitePieces = getDbWhitePieces(pieceDao);
-        Pieces blackPieces = getDbBlackPieces(pieceDao);
+        Pieces whitePieces = initializeWhitePieces(pieceDao);
+        Pieces blackPieces = initializeBlackPieces(pieceDao);
 
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
@@ -22,27 +22,27 @@ public class InitPlayersFactory {
         return Players.of(whitePlayer, blackPlayer, turnDao);
     }
 
-    private static Pieces getDbWhitePieces(PieceDao dao) {
+    private static Pieces initializeWhitePieces(PieceDao dao) {
         List<Piece> dbWhitePieces = dao.findPieceByColor(Color.WHITE);
         if (dbWhitePieces.isEmpty()) {
             Pieces whitePieces = Pieces.createWhitePieces();
-            insertAll(dao, whitePieces, Color.WHITE);
+            savePieces(dao, whitePieces, Color.WHITE);
             return whitePieces;
         }
         return Pieces.from(dbWhitePieces);
     }
 
-    private static Pieces getDbBlackPieces(PieceDao dao) {
+    private static Pieces initializeBlackPieces(PieceDao dao) {
         List<Piece> dbBlackPieces = dao.findPieceByColor(Color.BLACK);
         if (dbBlackPieces.isEmpty()) {
             Pieces blackPieces = Pieces.createBlackPieces();
-            insertAll(dao, blackPieces, Color.BLACK);
+            savePieces(dao, blackPieces, Color.BLACK);
             return blackPieces;
         }
         return Pieces.from(dbBlackPieces);
     }
 
-    private static void insertAll(PieceDao dao, Pieces pieces, Color color) {
+    private static void savePieces(PieceDao dao, Pieces pieces, Color color) {
         for (Piece piece : pieces.getPieces()) {
             dao.create(piece, color);
         }

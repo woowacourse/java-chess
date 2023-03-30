@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
 import chess.domain.dao.TurnDao;
+import chess.domain.model.Score;
 import chess.domain.model.piece.Piece;
 import chess.domain.model.position.Position;
 import java.math.BigInteger;
@@ -16,14 +17,14 @@ public class Players {
     private final List<Player> players;
     private Color current;
 
-    private Players(final List<Player> players, final TurnDao turnDao) {
+    private Players(final List<Player> players, final TurnDao turnDao, final Color current) {
         this.players = players;
+        this.current = current;
         this.turnDao = turnDao;
-        this.current = turnDao.getCurrentTurn();
     }
 
     public static Players of(Player whitePlayer, Player blackPlayer, TurnDao turnDao) {
-        return new Players(List.of(whitePlayer, blackPlayer), turnDao);
+        return new Players(List.of(whitePlayer, blackPlayer), turnDao, turnDao.getCurrentTurn());
     }
 
     private void validateMovingRoute(final Position fromPosition, final Position toPosition) {
@@ -70,8 +71,7 @@ public class Players {
                 .collect(toList());
     }
 
-    private Position findPositionByInputPoint(final String point) {
-        Position foundPosition = Position.from(point);
+    private Position findByPosition(final Position foundPosition) {
         return getAllPosition().stream()
                 .filter(position -> position.equals(foundPosition))
                 .findFirst()
@@ -85,9 +85,8 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
     }
 
-    public void movePiece(final String inputMovablePiece, final String inputTargetPosition) {
-        Position findPosition = findPositionByInputPoint(inputMovablePiece);
-        Position targetPosition = Position.from(inputTargetPosition);
+    public void movePiece(final Position source, final Position targetPosition) {
+        Position findPosition = findByPosition(source);
         validatePositions(findPosition, targetPosition);
         move(findPosition, targetPosition);
         changeTurn();
@@ -140,8 +139,8 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
     }
 
-    public boolean notEveryKingAlive() {
-        return players.stream().anyMatch(Player::doesNotHaveKing);
+    public boolean isEveryKingAlive() {
+        return players.stream().noneMatch(Player::doesNotHaveKing);
     }
 
     public String getWinnerColorName() {
@@ -151,10 +150,9 @@ public class Players {
         return getAnotherPlayer(loser).getColorName();
     }
 
-    public double calculateScore() {
+    public Score calculateScore() {
         return getPlayerByColor(current)
-                .getTotalScore()
-                .getValue();
+                .getTotalScore();
     }
 
     @Override

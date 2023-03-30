@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import static chess.controller.command.Command.MOVE;
 
+import chess.domain.model.position.Position;
 import java.util.List;
 
 public class Commands {
@@ -23,14 +24,16 @@ public class Commands {
         return command.isNotEnd();
     }
 
-    public String getMovablePiece() {
+    public Position getSourcePosition() {
         validateMove();
-        return args.get(0);
+        String sourceInput = args.get(0);
+        return Position.from(sourceInput);
     }
 
-    public String getTargetPosition() {
+    public Position getTargetPosition() {
         validateMove();
-        return args.get(1);
+        String targetInput = args.get(0);
+        return Position.from(targetInput);
     }
 
     private void validateMove() {

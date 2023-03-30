@@ -2,6 +2,7 @@ package chess.domain;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import chess.domain.dao.TurnDaoImpl;
 import chess.domain.model.player.Color;
 import chess.domain.model.piece.Pieces;
 import chess.domain.model.player.Player;
@@ -23,7 +24,7 @@ class PlayersTest {
         Pieces blackPieces = pieces.createBlackPieces();
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-        players = Players.of(whitePlayer, blackPlayer, Color.WHITE);
+        players = Players.of(whitePlayer, blackPlayer, new TurnDaoImpl());
     }
 
     @Test
@@ -38,7 +39,7 @@ class PlayersTest {
     @DisplayName("모든 킹이 살아 있지 않다면 false를 반환한다.")
     void everyKingAlive() {
         // when, then
-        Assertions.assertThat(players.notEveryKingAlive())
+        Assertions.assertThat(players.isEveryKingAlive())
                 .isFalse();
     }
 
@@ -54,7 +55,7 @@ class PlayersTest {
     @DisplayName("현재 플레이어의 점수를 계산한다.")
     void calculateScore() {
         // when, then
-        Assertions.assertThat(players.calculateScore())
+        Assertions.assertThat(players.calculateScore().getValue())
                 .isEqualTo(38);
     }
 }
