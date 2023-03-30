@@ -118,6 +118,11 @@ public final class ChessBoard {
                 .count() ;
     }
 
+    public boolean isSameWith(ChessBoard other) {
+        Map<Position, Piece> otherBoard = other.chessBoard;
+        return this.chessBoard.keySet().containsAll(otherBoard.keySet());
+    }
+
     public Map<Position, Piece> getBlackPieces() {
         Map<Position, Piece> blackPieces = new HashMap<>();
         for (Map.Entry<Position, Piece> entry : chessBoard.entrySet()) {
@@ -152,5 +157,12 @@ public final class ChessBoard {
 
     public Color getTurnOfColor() {
         return turnOfColor;
+    }
+
+    public Piece getPieceByPosition(Position position) {
+        if (chessBoard.containsKey(position)) {
+            return chessBoard.get(position);
+        }
+        throw new IllegalArgumentException("[ERROR] 해당 위치에는 말이 존재하지 않습니다.");
     }
 }

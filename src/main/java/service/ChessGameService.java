@@ -14,6 +14,7 @@ import dto.ChessBoardStateDto;
 import dto.ChessGameScoreDto;
 import dto.GameTurnDto;
 import dto.PieceDto;
+import dto.PositionDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +42,16 @@ public class ChessGameService {
 
         chessBoard.movePiece(start, end);
 
-        // Todo: 움직인 말의 데이터만 수정하도록 리팩토링
-        pieceDao.update(makePieceDtos(chessBoard));
-        gameTurnDao.update(makeGameTurnDto(chessBoard));
+        if (!findChessBoard().isSameWith(chessBoard)) {
+            pieceDao.updatePiece(new PositionDto(start), new PositionDto(end),
+                    new PieceDto(chessBoard.getPieceByPosition(end), end));
+
+            gameTurnDao.update(makeGameTurnDto(chessBoard));
+        }
     }
 
     private ChessBoard findChessBoard() {
-        List<PieceDto> pieceDtos = pieceDao.find();
+        List<PieceDto> pieceDtos = pieceDao.findAllPieces();
 
         if (pieceDtos.size() == 0) {
             ChessBoardGenerator generator = new ChessBoardGenerator();
@@ -75,21 +79,6 @@ public class ChessGameService {
     private Piece makePiece(PieceName pieceName, Color pieceColor) {
         PieceMaker pieceMaker = PieceMaker.from(pieceName);
         return pieceMaker.make(pieceColor);
-    }
-
-    private List<PieceDto> makePieceDtos(ChessBoard chessBoard) {
-        Map<Position, Piece> board = chessBoard.getChessBoard();
-        List<PieceDto> pieceDtos = new ArrayList<>();
-
-        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-            String pieceName = entry.getValue().getName();
-            String pieceColor = entry.getValue().getColor().name();
-            int pieceRow = entry.getKey().getRow();
-            int pieceColumn = entry.getKey().getColumn();
-
-            pieceDtos.add(new PieceDto(pieceName, pieceColor, pieceRow, pieceColumn));
-        }
-        return pieceDtos;
     }
 
     private GameTurnDto makeGameTurnDto(ChessBoard chessBoard) {
@@ -130,7 +119,7 @@ public class ChessGameService {
     }
 
     public void deleteChessBoard() {
-        pieceDao.delete();
+        pieceDao.deleteAllPieces();
         gameTurnDao.delete();
     }
 }
