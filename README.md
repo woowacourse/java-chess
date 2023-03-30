@@ -6,6 +6,14 @@
 ### DDL
 src/docker/data/init.sql 파일에 있는 sql을, docker를 통해 실행합니다.
 
+### 실행 방법 (Docker 사용)
+1. docker 데스크탑 앱 실행
+2. 터미널에서 /src/docker 디렉토리로 이동
+3. docker-compose -p chess up -d 명령어 실행
+4. docker ps 명령어로 컨테이너 실행 상태 확인
+5. (IntelliJ 사용 시) Database 탭에서 새로고침하기(아래 이미지)
+![database_refresh.png](image%2Fdatabase_refresh.png)
+
 ## 클래스 다이어그램
 
 ```mermaid
