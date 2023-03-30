@@ -9,15 +9,15 @@ import chessgame.domain.state.State;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FakeGameDao implements GameDao{
+public class FakeGameDao implements GameDao {
     State turn;
     Map<Point, Piece> repository = new HashMap<>();
 
     @Override
     public void save(Board board, String gameName, State turn) {
         this.turn = turn;
-        for(Point point : board.getBoard().keySet()){
-            repository.put(point,board.getBoard().get(point));
+        for (Point point : board.getBoard().keySet()) {
+            repository.put(point, board.getBoard().get(point));
         }
     }
 
@@ -27,7 +27,7 @@ public class FakeGameDao implements GameDao{
     }
 
     @Override
-    public void remove(String gameName){
+    public void remove(String gameName) {
         repository.clear();
     }
 

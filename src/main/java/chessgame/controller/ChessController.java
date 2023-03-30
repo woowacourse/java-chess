@@ -28,18 +28,18 @@ public class ChessController {
         try {
             outputView.printSetGameMessage();
             String gameName = inputView.readGameName();
-            return continueGame(gameName);
+            return makeGame(gameName);
         } catch (Exception e) {
             outputView.printErrorMsg(e.getMessage());
             return setGame();
         }
     }
 
-    private Game continueGame(String gameName){
-        if(chessService.hasGame(gameName)){
+    private Game makeGame(String gameName) {
+        if (chessService.hasGame(gameName)) {
             outputView.printContinueMessage();
-            String continueCommand = inputView.readContinueCommand();
-            return chessService.setGame(gameName,continueCommand);
+            String continuousCommand = inputView.readContinuousCommand();
+            return chessService.setGame(gameName, continuousCommand);
         }
         return new Game(new Board(ChessBoardFactory.create()), gameName);
     }

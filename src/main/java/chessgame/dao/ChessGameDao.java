@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessGameDao implements GameDao{
+public class ChessGameDao implements GameDao {
 
     @Override
     public void save(Board board, String gameName, State turn) {
@@ -27,7 +27,7 @@ public class ChessGameDao implements GameDao{
     private void insertGame(String gameName, State turn) {
         final String query = "insert into game (name, team_turn) values (?, ?)";
         try (final Connection connection = ConnectionGenerator.getConnection();
-        final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             preparedStatement.setString(2, turn.getClass().getSimpleName());
             preparedStatement.execute();

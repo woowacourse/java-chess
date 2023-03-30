@@ -13,23 +13,23 @@ public class FakeChessGameDaoTest {
     private final FakeGameDao fakeGameDao = new FakeGameDao();
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         fakeGameDao.remove(gameName);
     }
 
     @Test
     @DisplayName("FakeDao 저장 테스트")
-    void save(){
+    void save() {
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(()->fakeGameDao.save(board,gameName, new White()));
+        Assertions.assertThatNoException().isThrownBy(() -> fakeGameDao.save(board, gameName, new White()));
     }
 
     @Test
     @DisplayName("FakeDao 읽기 테스트")
-    void read(){
+    void read() {
         Board board = new Board(ChessBoardFactory.create());
-        fakeGameDao.save(board,gameName, new White());
+        fakeGameDao.save(board, gameName, new White());
 
         Assertions.assertThat(fakeGameDao.read(gameName).board()).usingRecursiveComparison().isEqualTo(board);
 
@@ -37,9 +37,9 @@ public class FakeChessGameDaoTest {
 
     @Test
     @DisplayName("FakeDao 삭제 테스트")
-    void remove(){
+    void remove() {
         Board board = new Board(ChessBoardFactory.create());
-        fakeGameDao.save(board,gameName, new White());
+        fakeGameDao.save(board, gameName, new White());
 
         fakeGameDao.remove(gameName);
 
@@ -48,9 +48,9 @@ public class FakeChessGameDaoTest {
 
     @Test
     @DisplayName("FakeDao Turn 조회 테스트")
-    void findTurn(){
+    void findTurn() {
         Board board = new Board(ChessBoardFactory.create());
-        fakeGameDao.save(board,gameName, new White());
+        fakeGameDao.save(board, gameName, new White());
         System.out.println(fakeGameDao.findTurnByGame("test"));
         Assertions.assertThat(fakeGameDao.findTurnByGame("test")).isEqualTo(new White().getClass().toString());
     }

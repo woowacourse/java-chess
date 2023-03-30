@@ -141,7 +141,7 @@ public class StateTest {
         @DisplayName("move 입력시 왕이 없다면 end상태로 전이된다.")
         void Should_ChangeEndState_When_NoKingBlackTeam() {
             Board board = new Board(ChessBoardFactory.create());
-            board.move(A2,A3, Team.WHITE);
+            board.move(A2, A3, Team.WHITE);
             board.move(B8, C6, Team.BLACK);
             board.move(A3, A4, Team.WHITE);
             board.move(C6, D4, Team.BLACK);

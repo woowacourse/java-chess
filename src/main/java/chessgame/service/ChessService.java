@@ -12,7 +12,7 @@ public class ChessService {
     public ChessService() {
     }
 
-    public boolean hasGame(String gameName){
+    public boolean hasGame(String gameName) {
         return chessGameDao.read(gameName) != null;
     }
 
