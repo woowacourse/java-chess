@@ -1,5 +1,6 @@
 package chess;
 
+import static chess.domain.ChessGame.*;
 import static chess.domain.command.Command.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
@@ -8,22 +9,15 @@ import static chess.view.OutputView.*;
 
 import java.util.Map;
 
-import chess.dao.ChessBoardDao;
-import chess.dao.ChessDao;
 import chess.domain.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class ChessApplication {
-	private static final ChessDao chessDao = new ChessBoardDao();
 
 	public static void main(String[] args) {
-		Board board = chessDao.find();
-		if (board == null) {
-			board = Board.create();
-			chessDao.save(board);
-		}
+		Board board = board();
 		start(board);
 		play(board);
 	}
@@ -67,7 +61,7 @@ public class ChessApplication {
 		if (command.isMove()) {
 			Position source = Position.from(command.source());
 			Position target = Position.from(command.target());
-			movePiece(board,source,target);
+			movePiece(board, source, target);
 		}
 		if (command.isStatus()) {
 			printStatus(board.blackStatus(), board.whiteStatus());
@@ -79,10 +73,10 @@ public class ChessApplication {
 		final Piece candidateKing = board.move(source, target);
 		if (board.isKing(candidateKing)) {
 			printKingDead();
-			chessDao.init();
+			initializeBoard();
 			return;
 		}
-		chessDao.update(board);
+		update();
 		printBoard(board.board(), ranks(), files());
 		play(board);
 	}
