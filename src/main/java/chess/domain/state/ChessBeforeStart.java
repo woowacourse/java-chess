@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.dao.ChessGameDao;
+import chess.dao.DbGameRoomDao;
 import chess.dao.GameRoomDao;
 import chess.dao.PieceDao;
 import chess.dao.connection.MySqlConnectionGenerator;
@@ -21,8 +22,8 @@ public abstract class ChessBeforeStart extends ChessState{
         int targetLoadingRoomId = 1;
         int targetNewRoomId = 1;
 
-        final GameRoomDao gameRoomDao = new GameRoomDao(new MySqlConnectionGenerator());
-        final Set<Integer> exisingRoomNumbers = gameRoomDao.findExisingRoomNumbers();
+        final GameRoomDao gameRoomDao = new DbGameRoomDao(new MySqlConnectionGenerator());
+        final Set<Integer> exisingRoomNumbers = gameRoomDao.findExistingRoomNumbers();
         if (exisingRoomNumbers.contains(targetLoadingRoomId)) {
             final ChessGame newChessGame = ChessGame.createWith(
                     new ManualPieceGenerator(pieceDao.findAllPieceInGame(targetLoadingRoomId)),
