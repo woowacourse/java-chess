@@ -27,10 +27,10 @@ class ChessDaoTest {
     @DisplayName("게임 정보 저장 시 64개의 기물이 저장된다.")
     @Test
     void saveExistGameTest() {
-        chessGameDao.createRoom();
+        Long room = chessGameDao.createRoom();
         Map<Position, Piece> board = new ChessBoardGenerator().generate();
 
-        assertThat(chessGameDao.saveChessBoard(board, Side.WHITE, 1L)).isTrue();
+        assertThat(chessGameDao.saveChessBoard(board, Side.WHITE, room)).isTrue();
     }
 
     @DisplayName("존재하지 않는 게임 방 번호의 기물을 저장하려 하면 예외가 발생한다.")
@@ -39,7 +39,7 @@ class ChessDaoTest {
         //given
         Map<Position, Piece> board = new ChessBoardGenerator().generate();
         //when
-        assertThatCode(() -> chessGameDao.saveChessBoard(board, Side.WHITE, 1L))
+        assertThatCode(() -> chessGameDao.saveChessBoard(board, Side.WHITE, 0L))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -48,10 +48,10 @@ class ChessDaoTest {
     void loadGameTest() {
         //given
         Map<Position, Piece> board = new ChessBoardGenerator().generate();
-        chessGameDao.createRoom();
-        chessGameDao.saveChessBoard(board, Side.WHITE, 1L);
+        Long room = chessGameDao.createRoom();
+        chessGameDao.saveChessBoard(board, Side.WHITE, room);
         //when
-        ChessGameDaoResponseDto chessGameDaoResponseDto = chessGameDao.loadGame(1L);
+        ChessGameDaoResponseDto chessGameDaoResponseDto = chessGameDao.loadGame(room);
         Map<Position, Piece> boardByLoad = chessGameDaoResponseDto.getBoard();
         //then
 

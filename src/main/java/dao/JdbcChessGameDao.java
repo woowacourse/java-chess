@@ -13,15 +13,15 @@ import java.util.Map;
 
 public class JdbcChessGameDao implements ChessGameDao {
 
-    private final ConnectionGenerator connectionGenerator;
+    private final DbConnection dbConnection;
 
-    public JdbcChessGameDao(ConnectionGenerator connectionGenerator) {
-        this.connectionGenerator = connectionGenerator;
+    public JdbcChessGameDao(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     @Override
     public Long createRoom() {
-        try (Connection connection = connectionGenerator.getConnection()) {
+        try (Connection connection = dbConnection.getConnection()) {
             final String createQuery = "INSERT INTO game_room(status, current_turn) VALUES(?,?)";
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
@@ -48,7 +48,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     @Override
     public boolean saveChessBoard(Map<Position, Piece> board, Side currentTurn, Long roomId) {
         final String saveQuery = "INSERT INTO pieces(piece_type, side, piece_rank, piece_file, game_room_id_fk) VALUES(?,?,?,?,?)";
-        try (Connection connection = connectionGenerator.getConnection();
+        try (Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(saveQuery);) {
             try {
                 for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
@@ -83,7 +83,7 @@ public class JdbcChessGameDao implements ChessGameDao {
                 " p.game_room_id_fk = gr.game_room_id where p.game_room_id_fk = ?";
         Side lastTurn = null;
 
-        try (Connection connection = connectionGenerator.getConnection()) {
+        try (Connection connection = dbConnection.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
             preparedStatement.setLong(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -104,7 +104,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     @Override
     public List<Long> findAllGameRooms() {
         String selectQuery = "SELECT game_room_id, status FROM game_room";
-        try (Connection connection = connectionGenerator.getConnection()) {
+        try (Connection connection = dbConnection.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -121,7 +121,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     @Override
     public void updateChessBoard(Long roomId, Map<Position, Piece> board) {
         final String saveQuery = "UPDATE pieces SET piece_type = ?,side = ?,piece_rank = ?,piece_file = ? where game_room_id_fk = ? and piece_file = ? and piece_rank = ?";
-        try (Connection connection = connectionGenerator.getConnection()) {
+        try (Connection connection = dbConnection.getConnection()) {
             try {
                 for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
                     File file = pieces.getKey().getFile();
@@ -154,7 +154,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     @Override
     public void updateGameRoom(Long roomId, Side currentTurn, GameState state) {
         final String saveQuery = "UPDATE game_room SET status = ?,current_turn = ? where game_room_id = ?";
-        try (Connection connection = connectionGenerator.getConnection()) {
+        try (Connection connection = dbConnection.getConnection()) {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(saveQuery);
 
@@ -177,7 +177,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     public boolean hasGame(Long roomId) {
         final String loadQuery = "SELECT piece_type FROM pieces WHERE game_room_id_fk = ?";
 
-        try (Connection connection = connectionGenerator.getConnection()) {
+        try (Connection connection = dbConnection.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(loadQuery);
             preparedStatement.setLong(1, roomId);
 
@@ -192,7 +192,7 @@ public class JdbcChessGameDao implements ChessGameDao {
     @Override
     public void deleteGameRoom(Long roomId) {
         final String deleteQuery = "DELETE FROM game_room WHERE game_room_id = ?";
-        try (Connection connection = connectionGenerator.getConnection();
+        try (Connection connection = dbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);) {
             try {
                 preparedStatement.setLong(1, roomId);

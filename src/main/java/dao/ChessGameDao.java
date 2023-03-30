@@ -18,7 +18,6 @@ public interface ChessGameDao {
 
     public List<Long> findAllGameRooms();
 
-
     public void updateChessBoard(Long roomId, Map<Position, Piece> board);
 
     public void updateGameRoom(Long roomId, Side currentTurn, GameState state);
