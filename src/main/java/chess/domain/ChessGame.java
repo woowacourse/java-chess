@@ -16,10 +16,12 @@ public class ChessGame {
 
     private final Board board;
     private Color movableTurn;
+    private boolean pause;
 
     public ChessGame(Board board, Color movableTurn) {
         this.board = board;
         this.movableTurn = movableTurn;
+        pause = false;
     }
 
     public void move(final Square source, final Square destination) {
@@ -74,5 +76,13 @@ public class ChessGame {
 
     public Color getTurn() {
         return movableTurn.oppositeTurn();
+    }
+
+    public void pauseGame() {
+        pause = true;
+    }
+
+    public boolean isPaused() {
+        return pause;
     }
 }

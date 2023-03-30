@@ -55,4 +55,5 @@ public class MoveCommand {
     public Square getDestination() {
         return destination;
     }
+
 }

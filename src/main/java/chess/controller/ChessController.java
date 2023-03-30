@@ -3,10 +3,9 @@ package chess.controller;
 import chess.controller.dao.ChessGameDao;
 import chess.controller.dto.ChessBoardDto;
 import chess.domain.ChessGame;
+import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.function.Supplier;
 
 import static chess.controller.ChessGameCommand.START;
 
@@ -23,12 +22,16 @@ public class ChessController {
             outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
             playChessGame(savedChessGame);
         }
+        inputView.closeScanner();
     }
 
     private ChessGameCommand readChessStartCommand() {
-        return repeatUntilGetValidInput(
-                () -> ChessGameCommand.generateExecuteCommand(inputView.readChessExecuteCommand())
-        );
+        try {
+            return ChessGameCommand.generateExecuteCommand(inputView.readChessExecuteCommand());
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            return readChessStartCommand();
+        }
     }
 
     private void playChessGame(ChessGame savedChessGame) {
@@ -41,31 +44,29 @@ public class ChessController {
     }
 
     private void repeatMove(ChessGame savedChessGame) {
-        String gameCommandInput = inputView.readChessGameCommand();
-        while (!ChessGameCommand.isEnd(gameCommandInput)) {
-            MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
-            savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
-            outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
-            gameCommandInput = getReadChessGameCommand(savedChessGame);
+        while (isRunnable(savedChessGame)) {
+            runCommand(savedChessGame, inputView.readChessGameCommand());
         }
     }
 
-    private String getReadChessGameCommand(ChessGame savedChessGame) {
+    private static boolean isRunnable(ChessGame savedChessGame) {
         if (savedChessGame.isFinished()) {
-            outputView.printResult(savedChessGame.getResult());
+            ChessGameDao chessGameDao = new ChessGameDao();
+            chessGameDao.save(new ChessGame(BoardFactory.generate(), ChessGame.FIRST_TURN));
+            return false;
+        }
+        return !savedChessGame.isPaused();
+    }
+
+    private void runCommand(ChessGame savedChessGame, String gameCommandInput) {
+        if (ChessGameCommand.isEnd(gameCommandInput)) {
             ChessGameDao chessGameDao = new ChessGameDao();
             chessGameDao.save(savedChessGame);
-            return "end";
+            savedChessGame.pauseGame();
+            return;
         }
-        return inputView.readChessGameCommand();
-    }
-
-    private <T> T repeatUntilGetValidInput(final Supplier<T> inputReader) {
-        try {
-            return inputReader.get();
-        } catch (IllegalArgumentException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            return repeatUntilGetValidInput(inputReader);
-        }
+        MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
+        savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
+        outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
     }
 }

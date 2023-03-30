@@ -13,4 +13,8 @@ public class InputView {
     public String readChessGameCommand() {
         return scanner.nextLine();
     }
+
+    public void closeScanner() {
+        scanner.close();
+    }
 }

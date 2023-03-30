@@ -28,7 +28,7 @@ public class ChessGameDao {
         try (
             final var connection = dbConnection.getConnection();
             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, chessGame.getTurn().toString());
+            preparedStatement.setString(1, chessGame.getTurn().oppositeTurn().toString());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
