@@ -39,13 +39,13 @@ public class ChessGameDao {
 
     public void saveChessBoard(Map<Position, Piece> board, Side currentTurn, Long roomId) {
         final String saveQuery = "INSERT INTO pieces(piece_type, side, piece_rank, piece_file, game_room_id_fk) VALUES(?,?,?,?,?)";
-        for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
-            File file = pieces.getKey().getFile();
-            Rank rank = pieces.getKey().getRank();
-            PieceType pieceType = pieces.getValue().getPieceType();
-            Side pieceSide = pieces.getValue().getSide();
+        try (Connection connection = connectionGenerator.getConnection()) {
+            for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
+                File file = pieces.getKey().getFile();
+                Rank rank = pieces.getKey().getRank();
+                PieceType pieceType = pieces.getValue().getPieceType();
+                Side pieceSide = pieces.getValue().getSide();
 
-            try (Connection connection = connectionGenerator.getConnection()) {
                 PreparedStatement preparedStatement = connection.prepareStatement(saveQuery);
 
                 preparedStatement.setString(1, pieceType.name());
@@ -55,9 +55,9 @@ public class ChessGameDao {
                 preparedStatement.setLong(5, roomId);
 
                 preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new IllegalArgumentException(e);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -104,13 +104,14 @@ public class ChessGameDao {
 
     public void updateChessBoard(Long roomId, Map<Position, Piece> board) {
         final String saveQuery = "UPDATE pieces SET piece_type = ?,side = ?,piece_rank = ?,piece_file = ? where game_room_id_fk = ? and piece_file = ? and piece_rank = ?";
-        for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
-            File file = pieces.getKey().getFile();
-            Rank rank = pieces.getKey().getRank();
-            PieceType pieceType = pieces.getValue().getPieceType();
-            Side pieceSide = pieces.getValue().getSide();
+        try (Connection connection = connectionGenerator.getConnection()) {
+            for (Map.Entry<Position, Piece> pieces : board.entrySet()) {
+                File file = pieces.getKey().getFile();
+                Rank rank = pieces.getKey().getRank();
+                PieceType pieceType = pieces.getValue().getPieceType();
+                Side pieceSide = pieces.getValue().getSide();
 
-            try (Connection connection = connectionGenerator.getConnection()) {
+
                 PreparedStatement preparedStatement = connection.prepareStatement(saveQuery);
 
                 preparedStatement.setString(1, pieceType.name());
@@ -122,9 +123,9 @@ public class ChessGameDao {
                 preparedStatement.setString(7, rank.getText());
 
                 preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new IllegalArgumentException(e);
             }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
