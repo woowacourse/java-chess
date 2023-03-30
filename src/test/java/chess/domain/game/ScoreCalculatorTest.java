@@ -14,7 +14,7 @@ class ScoreCalculatorTest {
     @BeforeEach
     void setUp() {
         chessGame = new ChessGame(new Board());
-        chessGame.inputGameCommand(GameCommand.START);
+        chessGame.start();
     }
 
     /*
@@ -31,7 +31,7 @@ class ScoreCalculatorTest {
     @DisplayName("처음 상태의 체스판에서는 기물 점수가 38점이어야 한다.")
     void calculateScore() {
         double expectedScore = 38d;
-        chessGame.inputGameCommand(GameCommand.END);
+        chessGame.terminateGame();
 
         assertThat(new ScoreCalculator(chessGame.getBoard(), Team.BLACK).calculateScore()).isEqualTo(expectedScore);
         assertThat(new ScoreCalculator(chessGame.getBoard(), Team.WHITE).calculateScore()).isEqualTo(expectedScore);

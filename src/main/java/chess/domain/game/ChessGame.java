@@ -1,7 +1,9 @@
 package chess.domain.game;
 
+import chess.domain.game.state.GameState;
+import chess.domain.game.state.Ready;
+import chess.domain.game.state.Terminated;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 
 import java.util.Map;
 
@@ -10,76 +12,38 @@ public class ChessGame {
     private static final long RUNNING_KING_NUMBER = 2;
 
     private final Board board;
-    private GameStatus gameStatus;
+    private GameState gameState;
 
     public ChessGame(Board board) {
         this.board = board;
-        this.gameStatus = GameStatus.READY;
+        this.gameState = Ready.getState();
     }
 
-    public void inputGameCommand(GameCommand gameCommand) {
-        if (gameStatus.isReady()) {
-            validateGameCommandWhenReady(gameCommand);
-            return;
-        }
-        if (gameStatus.isRunning()) {
-            validateGameCommandWhenRunning(gameCommand);
-            return;
-        }
-        validateGameCommandWhenTerminated(gameCommand);
-    }
-
-    private void validateGameCommandWhenReady(GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
-            gameStatus = GameStatus.RUNNING;
-            return;
-        }
-        throw new IllegalArgumentException("[ERROR] 게임을 먼저 시작해주세요.");
-    }
-
-    private void validateGameCommandWhenRunning(GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
-            throw new IllegalArgumentException("[ERROR] 게임이 이미 실행중입니다.");
-        }
-        if (gameCommand == GameCommand.STATUS) {
-            throw new IllegalArgumentException("[ERROR] 게임이 실행중 일 때는 결과를 알 수 없습니다.");
-        }
-        if (gameCommand == GameCommand.END) {
-            gameStatus = GameStatus.TERMINATED;
-        }
-    }
-
-    private void validateGameCommandWhenTerminated(GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
-            throw new IllegalArgumentException("[ERROR] 종료된 게임이므로 시작할 수 없습니다.");
-        }
-        if (gameCommand == GameCommand.MOVE) {
-            throw new IllegalArgumentException("[ERROR] 종료된 게임이므로 움직일 수 없습니다.");
-        }
+    public void start() {
+        gameState = gameState.start();
     }
 
     public boolean isNotTerminated() {
-        return !gameStatus.isTerminated();
+        return gameState.isNotTerminated();
     }
 
     public void progress(Position source, Position target) {
-        if (gameStatus.isNotRunning()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 진행중이 아닙니다.");
-        }
-        board.move(source, target);
+        gameState.progress(source, target, board);
         if (shouldTerminateGame(board.countKingNumber())) {
-            gameStatus = GameStatus.TERMINATED;
+            gameState = Terminated.getState();
         }
     }
 
     public double calculateBlackScore() {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getBoard(), Team.BLACK);
-        return scoreCalculator.calculateScore();
+        return gameState.calculateBlackScore(board);
     }
 
     public double calculateWhiteScore() {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getBoard(), Team.WHITE);
-        return scoreCalculator.calculateScore();
+        return gameState.calculateWhiteScore(board);
+    }
+
+    public void terminateGame() {
+        gameState = Terminated.getState();
     }
 
     private boolean shouldTerminateGame(long kingNumber) {

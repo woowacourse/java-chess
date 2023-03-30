@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.game.Board;
 import chess.domain.game.ChessGame;
-import chess.domain.game.GameCommand;
 import chess.domain.game.MoveCommand;
 import chess.view.GameCommandView;
 import chess.view.InputView;
@@ -59,26 +58,24 @@ public class ChessController {
     }
 
     private void startChessGame(ChessGame chessGame) {
-        chessGame.inputGameCommand(GameCommand.START);
+        chessGame.start();
         outputView.printBoard(chessGame.getBoard());
     }
 
     private void stateChessGame(ChessGame chessGame) {
-        chessGame.inputGameCommand(GameCommand.STATUS);
         double blackScore = chessGame.calculateBlackScore();
         double whiteScore = chessGame.calculateWhiteScore();
         outputView.printStatus(blackScore, whiteScore);
     }
 
     private void endChessGame(ChessGame chessGame) {
-        chessGame.inputGameCommand(GameCommand.END);
+        chessGame.terminateGame();
     }
 
     private void progressChessGame(ChessGame chessGame, String command, MoveCommand moveCommand) {
         if (GameCommandView.isValidCommandWithoutMove(command)) {
             return;
         }
-        chessGame.inputGameCommand(GameCommand.MOVE);
         chessGame.progress(convertToSourcePosition(command), convertToTargetPosition(command));
         moveCommand.addMoveCommand(command);
         outputView.printBoard(chessGame.getBoard());
@@ -102,7 +99,8 @@ public class ChessController {
 
     public void reStart(MoveCommand moveCommand) {
         ChessGame chessGame = new ChessGame(new Board());
-        chessGame.inputGameCommand(GameCommand.START);
+        chessGame.start();
+
         interpretCommands(chessGame, moveCommand);
         outputView.printBoard(chessGame.getBoard());
         while (chessGame.isNotTerminated()) {
