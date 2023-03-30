@@ -235,7 +235,7 @@ sequenceDiagram
 - DB 관련
     - [x] 게임오버 여부 컬럼 boolean(tinyint) 타입으로 변경
     - [x] init DDL 불필요한 KEY 명시 삭제
-    - [ ] 새로운 방 개설 시 바로 board_statuses 반영
+    - [x] 새로운 방 개설 시 바로 board_statuses 반영
     - [ ] insert + update 단일 책임 위배일까?
     - [ ] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기
     - [ ] DB 작동 테스트는 테스트용 테이블 만들어서 작성하기

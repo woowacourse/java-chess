@@ -20,10 +20,6 @@ public class ChessGameService {
     private ChessBoard chessBoard;
     private GameStatus gameStatus = GameStatus.READY;
 
-    public void validateCommand(CommandRequest commandRequest) {
-        gameStatus.validateCommand(commandRequest.getCommand());
-    }
-
     public List<Integer> availableBoards() {
         return chessBoardService.findAllBoardIds();
     }
@@ -31,7 +27,8 @@ public class ChessGameService {
     public void start(int boardId) {
         GameStatusValidator.validateStart(gameStatus);
         gameStatus = RUNNING;
-        this.chessBoard = chessBoardService.findChessBoardById(boardId);
+        chessBoard = chessBoardService.findChessBoardById(boardId);
+        chessBoardService.updateChessBoard(chessBoard);
     }
 
     public void move(CommandRequest commandRequest) {
