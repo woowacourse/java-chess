@@ -7,7 +7,7 @@ public interface GameDao {
     List<Integer> findAllPossibleId();
     List<Integer> findAllImpossibleId();
     GameInfoDto findById(int gameId);
-    void save(int gameId, GameInfoDto gameInfoDto);
+    void create(int gameId, GameInfoDto gameInfoDto);
     void updateById(int gameId, GameInfoDto gameInfoDto);
     void deleteById(int gameId);
     void deleteAll();

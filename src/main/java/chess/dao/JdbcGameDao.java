@@ -65,7 +65,7 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public void save(int gameId, GameInfoDto gameInfoDto) {
+    public void create(int gameId, GameInfoDto gameInfoDto) {
         final var gameQuery = "INSERT INTO game VALUES(?, ?, ?)";
         try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {

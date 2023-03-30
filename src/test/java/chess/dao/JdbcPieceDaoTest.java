@@ -37,7 +37,7 @@ class JdbcPieceDaoTest {
         PieceInfoDto a1_pawn = PieceInfoDto.create(a1, pawn);
 
         // when, then
-        pieceDao.save(1, a1_pawn);
+        pieceDao.create(1, a1_pawn);
     }
 
     @Test
@@ -51,8 +51,8 @@ class JdbcPieceDaoTest {
         Rook rook = Rook.create(Color.BLACK);
         PieceInfoDto b2_rook = PieceInfoDto.create(b2, rook);
 
-        pieceDao.save(1, a1_pawn);
-        pieceDao.save(1, b2_rook);
+        pieceDao.create(1, a1_pawn);
+        pieceDao.create(1, b2_rook);
 
         // when
         List<PieceInfoDto> game1_pieces = pieceDao.findAllById(1);
@@ -76,7 +76,7 @@ class JdbcPieceDaoTest {
         Rook rook = Rook.create(Color.BLACK);
         PieceInfoDto a1_rook = PieceInfoDto.create(a1, rook);
 
-        pieceDao.save(1, a1_pawn);
+        pieceDao.create(1, a1_pawn);
 
         // when
         pieceDao.updateById(1, a1_rook);
@@ -100,8 +100,8 @@ class JdbcPieceDaoTest {
         Rook rook = Rook.create(Color.BLACK);
         PieceInfoDto b2_rook = PieceInfoDto.create(b2, rook);
 
-        pieceDao.save(1, a1_pawn);
-        pieceDao.save(1, b2_rook);
+        pieceDao.create(1, a1_pawn);
+        pieceDao.create(1, b2_rook);
 
         // when
         pieceDao.deleteById(1);

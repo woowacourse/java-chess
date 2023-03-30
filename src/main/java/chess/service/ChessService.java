@@ -47,11 +47,11 @@ public class ChessService {
     public void start(int gameId, ChessGame chessGame) {
         chessGame.start();
 
-        gameDao.save(gameId, makeGameInfoDto(chessGame));
+        gameDao.create(gameId, makeGameInfoDto(chessGame));
 
         Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
         for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
-            pieceDao.save(gameId, makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+            pieceDao.create(gameId, makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
         }
     }
 

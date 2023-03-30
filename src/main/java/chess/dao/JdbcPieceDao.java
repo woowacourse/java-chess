@@ -12,7 +12,7 @@ import java.util.List;
 public class JdbcPieceDao implements PieceDao {
 
     @Override
-    public void save(int gameId, PieceInfoDto pieceInfoDto) {
+    public void create(int gameId, PieceInfoDto pieceInfoDto) {
         final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
         try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(pieceQuery)) {
