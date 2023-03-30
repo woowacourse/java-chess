@@ -6,11 +6,12 @@ import java.util.Arrays;
 
 public enum TeamMapper {
 
-    WHITE(Team.WHITE, "흰색팀"),
+    WHITE(Team.WHITE, "흰팀"),
     BLACK(Team.BLACK, "검은팀"),
     EMPTY(Team.EMPTY, "없음");
 
     private static final String INVALID_TEAM_MESSAGE = "잘못된 팀을 입력했습니다.";
+    
     private final Team team;
     private final String teamView;
 
