@@ -27,4 +27,14 @@ public class EndState implements ExecuteState {
     public boolean isRunning() {
         return false;
     }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
+    public boolean isDone() {
+        return false;
+    }
 }

@@ -39,6 +39,10 @@ public class GameState {
         return new GameState(turn, EndState.CACHE);
     }
 
+    public GameState done() {
+        return new GameState(turn, DoneState.CACHE);
+    }
+
     public boolean isTurn(final Piece piece) {
         return piece.isSameColor(turn);
     }
@@ -47,7 +51,19 @@ public class GameState {
         return executeState.isRunning();
     }
 
+    public boolean isEnd() {
+        return executeState.isEnd();
+    }
+
+    public boolean isDone() {
+        return executeState.isDone();
+    }
+
     public Color getTurnColor() {
         return turn;
+    }
+
+    public ExecuteState getExecuteState() {
+        return executeState;
     }
 }

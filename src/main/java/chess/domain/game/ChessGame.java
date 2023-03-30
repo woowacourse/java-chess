@@ -34,6 +34,10 @@ public class ChessGame {
         gameState = gameState.terminate();
     }
 
+    public void done() {
+        gameState = gameState.done();
+    }
+
     public void movePiece(final Square source, final Square destination) {
         final Piece piece = board.findPieceOf(source)
                 .orElseThrow(() -> new IllegalArgumentException("움직일 기물이 존재하지 않습니다."));
@@ -57,6 +61,14 @@ public class ChessGame {
 
     public boolean isRunning() {
         return gameState.isRunning();
+    }
+
+    public boolean isEnd() {
+        return gameState.isEnd();
+    }
+
+    public boolean isDone() {
+        return gameState.isDone();
     }
 
     public boolean isKingDied() {

@@ -4,27 +4,28 @@ import chess.domain.board.Square;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Color;
 
-public class StartState implements ExecuteState {
+public class DoneState implements ExecuteState {
 
-    public static final StartState CACHE = new StartState();
+    public static final DoneState CACHE = new DoneState();
 
     @Override
     public double calculateScoreOfColor(final Color color, final ChessGame chessGame) {
-        return chessGame.calculateScoreOfColor(color);
+        throw new IllegalStateException("왕이 잡힌 상태에서는 점수를 계산할 수 없습니다.");
     }
 
     @Override
     public void move(final Square source, final Square destination, final ChessGame chessGame) {
-        chessGame.movePiece(source, destination);
+        throw new IllegalStateException("왕이 잡힌 상태에서는 움직일 수 없습니다.");
     }
 
     @Override
     public void end() {
+        throw new IllegalStateException("왕이 잡힌 상태에서는 이미 종료된 상태입니다.");
     }
 
     @Override
     public boolean isRunning() {
-        return true;
+        return false;
     }
 
     @Override
@@ -34,6 +35,6 @@ public class StartState implements ExecuteState {
 
     @Override
     public boolean isDone() {
-        return false;
+        return true;
     }
 }

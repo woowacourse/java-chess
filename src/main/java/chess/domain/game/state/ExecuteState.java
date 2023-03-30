@@ -13,4 +13,8 @@ public interface ExecuteState {
     void end();
 
     boolean isRunning();
+
+    boolean isEnd();
+
+    boolean isDone();
 }
