@@ -100,8 +100,8 @@ public class ChessController {
     }
 
     private void printGameStatus() {
-        double whiteScore = game.calculateWhiteScore();
-        double blackScore = game.calculateBlackScore();
+        double whiteScore = game.calculateScoreOfTeam(Team.WHITE);
+        double blackScore = game.calculateScoreOfTeam(Team.BLACK);
         Team winner = game.calculateWinner(whiteScore, blackScore);
 
         outputView.printScoreMessage(whiteScore, blackScore);
