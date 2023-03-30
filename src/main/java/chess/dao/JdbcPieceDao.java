@@ -12,25 +12,23 @@ import java.util.List;
 public class JdbcPieceDao implements PieceDao {
 
     @Override
-    public void save(int gameId, List<PieceInfoDto> save) {
-        for (PieceInfoDto pieceInfo : save) {
-            final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
-            try (final var connection = ConnectionProvider.getConnection();
-                 final var preparedStatement = connection.prepareStatement(pieceQuery)) {
-                preparedStatement.setInt(1, gameId);
-                preparedStatement.setString(2, pieceInfo.getPosition().getFile().name());
-                preparedStatement.setString(3, pieceInfo.getPosition().getRank().name());
-                preparedStatement.setString(4, pieceInfo.getPiece().getType().name());
-                preparedStatement.setString(5, pieceInfo.getPiece().getColor().name());
-                preparedStatement.executeUpdate();
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
-            }
+    public void save(int gameId, PieceInfoDto pieceInfoDto) {
+        final var pieceQuery = "INSERT INTO piece VALUES(?, ?, ?, ?, ?)";
+        try (final var connection = ConnectionProvider.getConnection();
+             final var preparedStatement = connection.prepareStatement(pieceQuery)) {
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setString(2, pieceInfoDto.getPosition().getFile().name());
+            preparedStatement.setString(3, pieceInfoDto.getPosition().getRank().name());
+            preparedStatement.setString(4, pieceInfoDto.getPiece().getType().name());
+            preparedStatement.setString(5, pieceInfoDto.getPiece().getColor().name());
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<PieceInfoDto> findById(int gameId) {
+    public List<PieceInfoDto> findAllById(int gameId) {
         List<PieceInfoDto> pieces = new ArrayList<>();
 
         final var pieceQuery = "SELECT * FROM piece WHERE game_id = ?";
@@ -54,24 +52,21 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public void updateById(int gameId, List<PieceInfoDto> update) {
-        for (PieceInfoDto pieceInfo : update) {
-            final var sourceQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
-            try (final var connection = ConnectionProvider.getConnection();
-                 final var preparedStatement = connection.prepareStatement(sourceQuery)) {
-                preparedStatement.setString(1, pieceInfo.getPiece().getType().name());
-                preparedStatement.setString(2, pieceInfo.getPiece().getColor().name());
-                preparedStatement.setInt(3, gameId);
-                preparedStatement.setString(4, pieceInfo.getPosition().getFile().name());
-                preparedStatement.setString(5, pieceInfo.getPosition().getRank().name());
+    public void updateById(int gameId, PieceInfoDto pieceInfoDto) {
+        final var sourceQuery = "UPDATE piece SET piece_type = ?, piece_team = ? WHERE game_id = ? AND piece_file = ? AND piece_rank = ?";
+        try (final var connection = ConnectionProvider.getConnection();
+             final var preparedStatement = connection.prepareStatement(sourceQuery)) {
+            preparedStatement.setString(1, pieceInfoDto.getPiece().getType().name());
+            preparedStatement.setString(2, pieceInfoDto.getPiece().getColor().name());
+            preparedStatement.setInt(3, gameId);
+            preparedStatement.setString(4, pieceInfoDto.getPosition().getFile().name());
+            preparedStatement.setString(5, pieceInfoDto.getPosition().getRank().name());
 
-                preparedStatement.executeUpdate();
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
-            }
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public void deleteById(int gameId) {

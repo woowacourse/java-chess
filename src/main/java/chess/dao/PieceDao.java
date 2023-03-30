@@ -4,11 +4,11 @@ import chess.dto.PieceInfoDto;
 import java.util.List;
 
 public interface PieceDao {
-    List<PieceInfoDto> findById(int gameId);
+    List<PieceInfoDto> findAllById(int gameId);
 
-    void save(int gameId, List<PieceInfoDto> save);
+    void save(int gameId, PieceInfoDto pieceInfoDto);
 
-    void updateById(int gameId, List<PieceInfoDto> update);
+    void updateById(int gameId, PieceInfoDto pieceInfoDto);
 
     void deleteById(int gameId);
 

@@ -36,12 +36,8 @@ class JdbcPieceDaoTest {
         Pawn pawn = Pawn.create(Color.BLACK);
         PieceInfoDto a1_pawn = PieceInfoDto.create(a1, pawn);
 
-        Position b2 = Position.from("b2");
-        Rook rook = Rook.create(Color.BLACK);
-        PieceInfoDto b2_rook = PieceInfoDto.create(b2, rook);
-
         // when, then
-        pieceDao.save(1, List.of(a1_pawn, b2_rook));
+        pieceDao.save(1, a1_pawn);
     }
 
     @Test
@@ -55,10 +51,11 @@ class JdbcPieceDaoTest {
         Rook rook = Rook.create(Color.BLACK);
         PieceInfoDto b2_rook = PieceInfoDto.create(b2, rook);
 
-        pieceDao.save(1, List.of(a1_pawn, b2_rook));
+        pieceDao.save(1, a1_pawn);
+        pieceDao.save(1, b2_rook);
 
         // when
-        List<PieceInfoDto> game1_pieces = pieceDao.findById(1);
+        List<PieceInfoDto> game1_pieces = pieceDao.findAllById(1);
         PieceInfoDto firstPiece = game1_pieces.get(0);
         PieceInfoDto secondPiece = game1_pieces.get(1);
 
@@ -79,12 +76,12 @@ class JdbcPieceDaoTest {
         Rook rook = Rook.create(Color.BLACK);
         PieceInfoDto a1_rook = PieceInfoDto.create(a1, rook);
 
-        pieceDao.save(1, List.of(a1_pawn));
+        pieceDao.save(1, a1_pawn);
 
         // when
-        pieceDao.updateById(1, List.of(a1_rook));
+        pieceDao.updateById(1, a1_rook);
 
-        List<PieceInfoDto> game1_pieces = pieceDao.findById(1);
+        List<PieceInfoDto> game1_pieces = pieceDao.findAllById(1);
         PieceInfoDto piece = game1_pieces.get(0);
 
         // then
@@ -103,12 +100,13 @@ class JdbcPieceDaoTest {
         Rook rook = Rook.create(Color.BLACK);
         PieceInfoDto b2_rook = PieceInfoDto.create(b2, rook);
 
-        pieceDao.save(1, List.of(a1_pawn, b2_rook));
+        pieceDao.save(1, a1_pawn);
+        pieceDao.save(1, b2_rook);
 
         // when
         pieceDao.deleteById(1);
 
-        assertThat(pieceDao.findById(1)).isEmpty();
+        assertThat(pieceDao.findAllById(1)).isEmpty();
     }
 
 }

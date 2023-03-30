@@ -8,7 +8,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.GameInfoDto;
 import chess.dto.PieceInfoDto;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,7 +36,7 @@ public class ChessService {
             return ChessGame.create();
         }
 
-        List<PieceInfoDto> pieceInfos = pieceDao.findById(gameId);
+        List<PieceInfoDto> pieceInfos = pieceDao.findAllById(gameId);
         Map<Position, Piece> board = pieceInfos.stream()
                 .collect(Collectors.toMap(PieceInfoDto::getPosition, PieceInfoDto::getPiece));
         ChessGame existedChessGame = ChessGame.load(Board.load(board), gameInfo.getTurn(), gameInfo.getStatus());
@@ -47,16 +46,23 @@ public class ChessService {
     public void start(int gameId, ChessGame chessGame) {
         chessGame.start();
 
-        Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
         gameDao.save(gameId, makeGameInfoDto(chessGame));
-        pieceDao.save(gameId, makePieceInfoDtos(board));
+
+        Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
+        for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
+            pieceDao.save(gameId, makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+        }
     }
 
     public void move(int gameId, ChessGame chessGame, List<String> arguments) {
         Map<Position, Piece> movement = chessGame.move(arguments);
 
         gameDao.updateById(gameId, makeGameInfoDto(chessGame));
-        pieceDao.updateById(gameId, makePieceInfoDtos(movement));
+
+        Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
+        for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
+            pieceDao.updateById(gameId, makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
+        }
     }
 
     public void end(int gameId, ChessGame chessGame) {
@@ -67,14 +73,6 @@ public class ChessService {
 
     private GameInfoDto makeGameInfoDto(ChessGame chessGame) {
         return GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn());
-    }
-
-    private List<PieceInfoDto> makePieceInfoDtos(Map<Position, Piece> board) {
-        List<PieceInfoDto> pieces = new ArrayList<>();
-        for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
-            pieces.add(makePieceInfoDto(positionAndPiece.getKey(), positionAndPiece.getValue()));
-        }
-        return pieces;
     }
 
     private PieceInfoDto makePieceInfoDto(Position position, Piece piece) {
