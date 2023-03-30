@@ -1,7 +1,5 @@
 package chess;
 
-import chess.database.ChessGameDao;
-import chess.database.JdbcConnector;
 import chess.piece.ChessPiece;
 import chess.piece.Side;
 import chess.position.MovablePosition;
@@ -21,26 +19,14 @@ public class ChessController {
     private final ChessBoard chessBoard;
     private final ChessGame chessGame;
 
-    public ChessController() {
-        int newStartCommand = readStartCommand();
-        this.chessBoard = ChessBoard.generateChessBoard(newStartCommand);
-        OutputView.printChessBoard(chessBoard.getChessBoard());
-        this.chessGame = new ChessGame(chessBoard, newStartCommand);
+    public ChessController(int startCommand) {
+        this.chessBoard = ChessBoard.generateChessBoard(startCommand);
+        this.chessGame = new ChessGame(chessBoard, startCommand);
     }
 
     public ChessController(ChessBoard chessBoard, ChessGame chessGame) {
         this.chessBoard = chessBoard;
         this.chessGame = chessGame;
-    }
-
-    private int readStartCommand() {
-        try {
-            ChessGameDao chessGameDao = new ChessGameDao(new JdbcConnector());
-            return InputView.printGameStartMessage(chessGameDao.findRemainGames());
-        } catch (IllegalArgumentException e) {
-            OutputView.printMessage(e.getMessage());
-            return readStartCommand();
-        }
     }
 
     public void run() {
@@ -102,5 +88,9 @@ public class ChessController {
             return;
         }
         throw new IllegalArgumentException(CANNOT_MOVE_POSITION_ERROR);
+    }
+
+    public void printBoard() {
+        OutputView.printChessBoard(chessBoard.getChessBoard());
     }
 }
