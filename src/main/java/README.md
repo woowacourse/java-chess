@@ -67,9 +67,8 @@ CREATE TABLE `chess_game` (
   `turn` varchar(8) NOT NULL,
   `status` varchar(45) NOT NULL,
   `piece_type` varchar(45) DEFAULT NULL,
-  `piece_rank` varchar(45) DEFAULT NULL,
-  `piece_file` varchar(45) DEFAULT NULL,
+  `piece_position` varchar(45) DEFAULT NULL,
   `piece_color` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2754 DEFAULT CHARSET=utf8m
+) ENGINE=InnoDB AUTO_INCREMENT=3650 DEFAULT CHARSET=utf8mb3
 ```
