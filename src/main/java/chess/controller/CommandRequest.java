@@ -12,9 +12,6 @@ public class CommandRequest {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
     private static final String REQUEST_IS_NOT_VALIDATE_SIZE_MESSAGE = "올바른 명령을 입력해주십시오.";
-    private static final String REQUEST_NOT_CONTAIN_POSITION_MESSAGE = "이 커맨드는 Position을 포함하지 않습니다.";
-    private static final String REQUEST_NOT_CONTAIN_ID_MESSAGE = "이 커맨드는 ID를 포함하지 않습니다.";
-    private static final String GAME_ID_IS_LONG_TYPE_MESSAGE = "게임 ID는 숫자형태 입니다.";
     private static final int COMMAND_INDEX = 0;
     private static final int GAME_ID_INDEX = 1;
     private static final int FROM_POSITION_INDEX = 1;

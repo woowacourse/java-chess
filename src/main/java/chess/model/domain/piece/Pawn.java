@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    static final String CANT_MOVE_TO_MESSAGE = "움직일 수 없는 위치입니다.";
     private static final Map<Color, Movement> CAN_MOVE_EMPTY_DESTINATION = Map.of(
             Color.BLACK, Movement.D,
             Color.WHITE, Movement.U

@@ -11,9 +11,6 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private static final String CANT_MOVE_FROM_TO_MESSAGE = "해당 위치로 이동할 수 없습니다.";
-    private static final String CANT_MOVE_TO_IS_SAME_TEAM_MESSAGE = "같은 색 말의 위치로 이동할 수 없습니다.";
-
     protected final Color color;
     private final PieceType pieceType;
 

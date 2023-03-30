@@ -6,7 +6,6 @@ import chess.model.exception.IsNotPieceTurnException;
 
 public class Turn {
 
-    public static final String IS_NOT_PIECE_TURN_MESSAGE = "해당 말의 턴이 아닙니다.";
     public static final Color INITIAL_TURN = Color.WHITE;
 
     private Color turn;

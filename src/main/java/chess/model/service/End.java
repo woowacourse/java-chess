@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class End implements State {
 
-    private static final String END_CANT_EXECUTE_COMMAND_MESSAGE = "종료 상태에선 명령을 실행할 수 없습니다.";
     private static final End INSTANCE = new End();
 
     private End() {

@@ -9,7 +9,6 @@ public class King extends Piece {
 
     private static final List<Movement> CAN_MOVE_DESTINATION = List.of(Movement.U, Movement.D, Movement.R, Movement.L,
             Movement.UR, Movement.UL, Movement.DR, Movement.DL);
-    private static final String KING_MOVE_OVER_ONE_MESSAGE = "왕은 한 칸만 움직일 수 있습니다.";
 
     public King(final Color color) {
         super(color, PieceType.KING);

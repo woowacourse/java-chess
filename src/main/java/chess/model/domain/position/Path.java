@@ -8,8 +8,6 @@ import java.util.Set;
 
 public class Path {
 
-    public static final String OBSTACLE_EXIST_MESSAGE = "중간에 다른 기물이 존재합니다.";
-
     private final List<Position> positions;
 
     public Path(final Collection<Position> positions) {

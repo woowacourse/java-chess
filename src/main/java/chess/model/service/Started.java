@@ -18,7 +18,6 @@ public class Started implements State {
 
     private static final ChessGameDao CHESS_GAME_DAO = DataBaseChessGameDao.getInstance();
     private static final PieceDao BOARD_DAO = DataBasePieceDao.getInstance();
-    private static final String STARTED_CANT_EXECUTE_START_MESSAGE = "시작된 상태에선 해당 명령을 실행할 수 없습니다.";
 
     private final Board board;
     private final long gameId;

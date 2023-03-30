@@ -1,13 +1,13 @@
 package chess.model.service;
 
+import chess.model.dao.ChessGameDao;
+import chess.model.dao.DataBaseChessGameDao;
+import chess.model.dao.DataBasePieceDao;
+import chess.model.dao.PieceDao;
 import chess.model.domain.board.Board;
 import chess.model.domain.board.BoardFactory;
 import chess.model.domain.board.Score;
 import chess.model.domain.board.Turn;
-import chess.model.dao.PieceDao;
-import chess.model.dao.ChessGameDao;
-import chess.model.dao.DataBasePieceDao;
-import chess.model.dao.DataBaseChessGameDao;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Position;
@@ -19,8 +19,6 @@ public class NotStarted implements State {
 
     private static final ChessGameDao CHESS_GAME_DAO = DataBaseChessGameDao.getInstance();
     private static final PieceDao BOARD_DAO = DataBasePieceDao.getInstance();
-    private static final String NOT_STARTED_CANT_EXECUTE_START_MESSAGE =
-            "시작되지 않은 상태에선 해당 명령을 실행할 수 없습니다.";
     private static final NotStarted INSTANCE = new NotStarted();
 
     private NotStarted() {

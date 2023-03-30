@@ -14,8 +14,6 @@ import java.util.Map.Entry;
 
 public class Board {
 
-    private static final String FROM_IS_EMPTY_MESSAGE = "출발점에 말이 없습니다.";
-
     private final Map<Position, Piece> board;
     private final Turn turn;
 
