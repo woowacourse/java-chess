@@ -48,11 +48,10 @@ class BishopTest {
     @Test
     void 기물의_점수_계산() {
         //given
-        Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.BISHOP, 1L);
         Bishop bishop = new Bishop(Team.WHITE);
 
         //when
-        Score actual = bishop.calculateScore(pieceCountBoard);
+        Score actual = bishop.findScore();
 
         //then
         assertThat(actual).isEqualTo(new Score(3.0));

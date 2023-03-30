@@ -39,10 +39,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
-        if (pieceCountBoard.getOrDefault(PieceType.PAWN, 0L) > 1L) {
-            return new Score(0.5);
-        }
+    public Score findScore() {
         return new Score(1.0);
     }
 }

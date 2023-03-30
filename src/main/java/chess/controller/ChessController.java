@@ -3,6 +3,8 @@ package chess.controller;
 import chess.database.dao.ChessGameDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.info.Team;
+import chess.domain.strategy.ScoreCalculator;
+import chess.domain.strategy.ScoreCalculatorByPawnCount;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.sql.Connection;
@@ -94,7 +96,9 @@ public class ChessController {
 
     private void displayGameStatus(ChessGame game) {
         game.displayGameStatus(() -> {
-            outputView.printGameStatus(game.makeScoreBoard(), game.judgeWinner());
+            ScoreCalculator scoreCalculator = new ScoreCalculatorByPawnCount();
+            outputView.printGameStatus(game.makeScoreBoard(scoreCalculator),
+                game.judgeWinner(scoreCalculator));
         });
     }
 

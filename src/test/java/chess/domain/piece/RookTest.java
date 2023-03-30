@@ -48,11 +48,10 @@ class RookTest {
     @Test
     void 기물의_점수_계산() {
         //given
-        Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.ROOK, 1L);
         Rook rook = new Rook(Team.WHITE);
 
         //when
-        Score actual = rook.calculateScore(pieceCountBoard);
+        Score actual = rook.findScore();
 
         //then
         assertThat(actual).isEqualTo(new Score(5.0));

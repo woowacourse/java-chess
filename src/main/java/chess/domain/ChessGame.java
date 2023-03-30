@@ -7,6 +7,8 @@ import chess.domain.state.FinishedState;
 import chess.domain.state.GameState;
 import chess.domain.state.ReadyState;
 import chess.domain.state.RunningState;
+import chess.domain.strategy.ScoreCalculator;
+import chess.domain.strategy.ScoreCalculatorByPawnCount;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,16 +53,16 @@ public class ChessGame {
         state.displayGameStatus(runnable);
     }
 
-    public Map<Team, Score> makeScoreBoard() {
+    public Map<Team, Score> makeScoreBoard(ScoreCalculator scoreCalculator) {
         Map<Team, Score> scoreBoard = new HashMap<>();
         Team.RealTeams.forEach(
-            (team) -> scoreBoard.put(team, chessBoard.calculateScoreByTeam(team)));
+            (team) -> scoreBoard.put(team, chessBoard.calculateScoreByTeam(scoreCalculator, team)));
         return scoreBoard;
     }
 
-    public Team judgeWinner() {
-        Score white = chessBoard.calculateScoreByTeam(Team.WHITE);
-        Score black = chessBoard.calculateScoreByTeam(Team.BLACK);
+    public Team judgeWinner(ScoreCalculator scoreCalculator) {
+        Score white = chessBoard.calculateScoreByTeam(scoreCalculator, Team.WHITE);
+        Score black = chessBoard.calculateScoreByTeam(scoreCalculator, Team.BLACK);
         if (white.isMoreThan(black)) {
             return Team.WHITE;
         }

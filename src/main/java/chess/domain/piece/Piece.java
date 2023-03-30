@@ -35,7 +35,7 @@ public abstract class Piece {
 
     public abstract PieceType findType();
 
-    public abstract Score calculateScore(Map<PieceType, Long> pieceCountBoard);
+    public abstract Score findScore();
 
     public Team getTeam() {
         return team;

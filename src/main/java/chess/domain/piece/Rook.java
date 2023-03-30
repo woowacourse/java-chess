@@ -31,7 +31,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
+    public Score findScore() {
         return new Score(5.0);
     }
 }

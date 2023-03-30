@@ -47,11 +47,10 @@ class KnightTest {
     @Test
      void 기물의_점수_계산() {
         //given
-        Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.KNIGHT, 1L);
         Knight knight = new Knight(Team.WHITE);
 
         //when
-        Score actual = knight.calculateScore(pieceCountBoard);
+        Score actual = knight.findScore();
 
         //then
         assertThat(actual).isEqualTo(new Score(2.5));

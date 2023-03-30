@@ -47,11 +47,10 @@ class QueenTest {
     @Test
     void 기물의_점수_계산() {
         //given
-        Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.QUEEN, 1L);
         Queen queen = new Queen(Team.WHITE);
 
         //when
-        Score actual = queen.calculateScore(pieceCountBoard);
+        Score actual = queen.findScore();
 
         //then
         assertThat(actual).isEqualTo(new Score(9.0));

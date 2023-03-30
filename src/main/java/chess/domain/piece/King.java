@@ -32,7 +32,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
+    public Score findScore() {
         return Score.ZERO;
     }
 }

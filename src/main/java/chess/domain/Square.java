@@ -6,7 +6,6 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import java.util.Map;
 
 public class Square {
 
@@ -56,16 +55,16 @@ public class Square {
         this.piece = NoPiece.getInstance();
     }
 
-    boolean isSameFileAndTeam(File file, Team team) {
+    public boolean isSameFileAndTeam(File file, Team team) {
         return position.isSameFile(file) && piece.isSameTeam(team);
     }
 
-    PieceType findPieceType() {
+    public PieceType findPieceType() {
         return piece.findType();
     }
 
-    Score findPieceScore(Map<PieceType, Long> pieceCountBoard) {
-        return piece.calculateScore(pieceCountBoard);
+    public Score findPieceScore() {
+        return piece.findScore();
     }
 
     boolean isSoonMovedTwo(final Turn turn) {

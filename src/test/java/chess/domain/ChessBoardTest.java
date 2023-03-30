@@ -9,6 +9,8 @@ import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Position;
+import chess.domain.strategy.ScoreCalculator;
+import chess.domain.strategy.ScoreCalculatorByPawnCount;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -18,10 +20,12 @@ import org.junit.jupiter.api.function.Executable;
 class ChessBoardTest {
 
     ChessBoard chessBoard;
+    ScoreCalculator scoreCalculator;
 
     @BeforeEach
     void setup() {
         chessBoard = ChessBoardFactory.create();
+        scoreCalculator = new ScoreCalculatorByPawnCount();
     }
 
     @Test
@@ -187,7 +191,7 @@ class ChessBoardTest {
             //given
 
             //when
-            Score score = chessBoard.calculateScoreByTeam(Team.WHITE);
+            Score score = chessBoard.calculateScoreByTeam(scoreCalculator, Team.WHITE);
 
             //then
             assertThat(score).isEqualTo(new Score(38.0));
@@ -237,7 +241,7 @@ class ChessBoardTest {
             chessBoard.move(enemyQueenMiddle, knightmiddle); //나이트 먹힘
 
             //when
-            Score score = chessBoard.calculateScoreByTeam(Team.WHITE);
+            Score score = chessBoard.calculateScoreByTeam(scoreCalculator, Team.WHITE);
 
             //then
             assertThat(score).isEqualTo(new Score(33.5));
@@ -256,7 +260,7 @@ class ChessBoardTest {
             chessBoard.move(pawnMiddle, enemyPawnEnd);
 
             //when
-            Score score = chessBoard.calculateScoreByTeam(Team.WHITE);
+            Score score = chessBoard.calculateScoreByTeam(scoreCalculator, Team.WHITE);
 
             //then
             assertThat(score).isEqualTo(new Score(37.0));

@@ -31,7 +31,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Score calculateScore(Map<PieceType, Long> pieceCountBoard) {
+    public Score findScore() {
         return new Score(2.5);
     }
 }

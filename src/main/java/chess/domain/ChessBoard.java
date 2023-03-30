@@ -4,6 +4,7 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.strategy.ScoreCalculator;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -138,21 +139,8 @@ public class ChessBoard {
             .count() == NUMBER_OF_PLAYER;
     }
 
-    public Score calculateScoreByTeam(Team team) {
-        return Arrays.stream(File.values())
-            .map((file) -> calculateScoreByFileAndTeam(file, team))
-            .reduce(Score.ZERO, Score::add);
-    }
-
-    private Score calculateScoreByFileAndTeam(File file, Team team) {
-        Map<PieceType, Long> pieceCountBoard = squares.stream()
-            .filter((square) -> square.isSameFileAndTeam(file, team))
-            .collect(Collectors.groupingBy(Square::findPieceType, Collectors.counting()));
-
-        return squares.stream()
-            .filter((square) -> square.isSameFileAndTeam(file, team))
-            .map((square) -> square.findPieceScore(pieceCountBoard))
-            .reduce(Score.ZERO, Score::add);
+    public Score calculateScoreByTeam(ScoreCalculator scoreCalculator, Team team) {
+        return scoreCalculator.calculateByTeam(squares, team);
     }
 
     public Team findTeamByTurn(){

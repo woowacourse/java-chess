@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Nested;
 
 class PawnTest {
 
+
     @Nested
     class 이동 {
 
@@ -130,33 +131,16 @@ class PawnTest {
         }
     }
 
-    @Nested
-    class 기물의_점수_계산 {
+    @Test
+    void 기물의_점수_계산() {
+        //given
+        Pawn pawn = new Pawn(Team.WHITE);
 
-        @Test
-        void 한_세로줄에_2개_이상이_있을_때_0_5점을_갖는다() {
-            //given
-            Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.PAWN, 2L);
-            Pawn pawn = new Pawn(Team.WHITE);
+        //when
+        Score actual = pawn.findScore();
 
-            //when
-            Score actual = pawn.calculateScore(pieceCountBoard);
-
-            //then
-            assertThat(actual).isEqualTo(new Score(0.5));
-        }
-
-        @Test
-        void 한_세로줄에_1개만_있을_때_1점을_갖는다() {
-            //given
-            Map<PieceType, Long> pieceCountBoard = Map.of(PieceType.PAWN, 1L);
-            Pawn pawn = new Pawn(Team.WHITE);
-
-            //when
-            Score actual = pawn.calculateScore(pieceCountBoard);
-
-            //then
-            assertThat(actual).isEqualTo(new Score(1.0));
-        }
+        //then
+        assertThat(actual).isEqualTo(new Score(1.0));
     }
+
 }
