@@ -1,9 +1,10 @@
 package controller;
 
+import controller.command.ControlCommand;
 import domain.ChessGame;
 import java.util.Arrays;
 import java.util.List;
-import view.GameCommand;
+import view.CommandType;
 import view.InputView;
 import view.OutputView;
 
@@ -34,15 +35,9 @@ public final class ChessController {
     }
 
     private void getGameStartCommand() {
-        final GameCommand command = GameCommand.find(inputView.getStartCommand().strip());
-        if (command == GameCommand.MOVE || command == GameCommand.STATUS) {
-            throw new IllegalArgumentException("start, end 중에 입력해주세요.");
-        }
-        if (command == GameCommand.START) {
-            chessGame.ready();
-            chessGame.makeBoard();
-            printBoard();
-        }
+        final CommandType commandType = CommandType.find(inputView.getStartCommand().strip());
+        final ControlCommand command = ControlCommand.of(commandType, chessGame);
+        reactControlCommand(command);
     }
 
     public void play() {
@@ -54,41 +49,41 @@ public final class ChessController {
 
     private List<String> getPlayCommands() {
         final List<String> inputCommands = Arrays.asList(inputView.getGameCommand().split(COMMANDS_DELIMITER, -1));
-        if (GameCommand.notExist(inputCommands.get(MAIN_COMMAND_INDEX))) {
+        if (CommandType.notExist(inputCommands.get(MAIN_COMMAND_INDEX))) {
             throw new IllegalArgumentException("잘못된 커맨드 입력입니다.");
         }
         return inputCommands;
     }
 
-    private void reactCommand(final List<String> commandInput) {
-        final GameCommand gameCommand = GameCommand.find(commandInput.get(GAME_COMMAND_INDEX));
-        if (gameCommand == GameCommand.END || gameCommand == GameCommand.START) {
-            reactControlCommand(gameCommand);
+    private void reactCommand(final List<String> commandInputs) {
+        final String commandInput = commandInputs.get(GAME_COMMAND_INDEX);
+        final CommandType commandType = CommandType.find(commandInput);
+        if (commandType == CommandType.MOVE || commandType == CommandType.STATUS) {
+            reactPlayCommand(commandType, commandInputs);
             return;
         }
-        reactPlayCommand(commandInput, gameCommand);
+        final ControlCommand controlCommand = ControlCommand.of(commandType, chessGame);
+        reactControlCommand(controlCommand);
     }
 
-    private void reactControlCommand(final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.END) {
-            chessGame.end();
-            return;
-        }
-        chessGame.makeBoard();
+    private void reactControlCommand(final ControlCommand command) {
+        command.run();
         printBoard();
     }
 
-    private void reactPlayCommand(final List<String> commandInputs, final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.STATUS) {
+    private void reactPlayCommand(final CommandType commandType, final List<String> commandInputs) {
+        if (commandType == CommandType.STATUS) {
             printScore();
             return;
         }
-        chessGame.move(MoveCommand.of(commandInputs));
+        chessGame.move(Move.of(commandInputs));
         printBoard();
     }
 
-    public void printBoard() {
-        outputView.printBoard(chessGame.getBoard());
+    private void printBoard() {
+        if (chessGame.isReady()) {
+            outputView.printBoard(chessGame.getBoard());
+        }
     }
 
     public void printScore() {

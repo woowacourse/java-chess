@@ -2,7 +2,7 @@ package view;
 
 import java.util.Arrays;
 
-public enum GameCommand {
+public enum CommandType {
     START("start"),
     END("end"),
     MOVE("move"),
@@ -10,7 +10,7 @@ public enum GameCommand {
 
     private final String value;
 
-    GameCommand(String value) {
+    CommandType(final String value) {
         this.value = value;
     }
 
@@ -19,7 +19,7 @@ public enum GameCommand {
             .noneMatch(command -> command.value.equals(commandInput));
     }
 
-    public static GameCommand find(final String commandInput) {
+    public static CommandType find(final String commandInput) {
         return Arrays.stream(values())
             .filter(command -> command.value.equals(commandInput))
             .findFirst()

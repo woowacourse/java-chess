@@ -1,6 +1,6 @@
 package domain;
 
-import controller.MoveCommand;
+import controller.Move;
 import database.BoardDao;
 import database.DatabaseConnector;
 import domain.board.ChessBoard;
@@ -25,8 +25,8 @@ public final class ChessGame {
         chessBoard.initializeBoard();
     }
 
-    public void move(MoveCommand moveCommand) {
-        chessBoard.move(moveCommand.getStart(), moveCommand.getEnd());
+    public void move(final Move move) {
+        chessBoard.move(move.getStart(), move.getEnd());
         if (chessBoard.isOneKingExist()) {
             initializeBoard();
             end();

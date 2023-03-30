@@ -6,7 +6,7 @@ import domain.path.location.Row;
 import java.util.List;
 import view.ColumnConverter;
 
-public final class MoveCommand {
+public final class Move {
 
     private static final int START_INDEX = 1;
     private static final int END_INDEX = 2;
@@ -17,18 +17,18 @@ public final class MoveCommand {
     private final Location start;
     private final Location end;
 
-    private MoveCommand(final Location start, final Location end) {
+    private Move(final Location start, final Location end) {
         this.start = start;
         this.end = end;
     }
 
-    public static MoveCommand of(final List<String> commands) {
+    public static Move of(final List<String> commands) {
         if (commands.size() != MOVE_COMMAND_COUNT) {
             throw new IllegalArgumentException("잘못된 이동 입력입니다.");
         }
         final Location startLocation = convertToLocation(commands.get(START_INDEX));
         final Location endLocation = convertToLocation(commands.get(END_INDEX));
-        return new MoveCommand(startLocation, endLocation);
+        return new Move(startLocation, endLocation);
     }
 
     private static Location convertToLocation(final String locationInput) {
