@@ -11,17 +11,9 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 import chess.game.ChessGame;
-import chess.piece.Bishop;
-import chess.piece.BlackPawn;
-import chess.piece.EmptyPiece;
-import chess.piece.King;
-import chess.piece.Knight;
 import chess.piece.Piece;
 import chess.piece.PieceType;
-import chess.piece.Queen;
-import chess.piece.Rook;
 import chess.piece.Team;
-import chess.piece.WhitePawn;
 
 public class DBChessGameDao implements ChessGameDao {
 
@@ -96,29 +88,7 @@ public class DBChessGameDao implements ChessGameDao {
     }
 
     private Piece extractPiece(final PieceType pieceType, final Team team) {
-        switch (pieceType) {
-            case KING:
-                return new King(team);
-            case PAWN:
-                if (team == Team.BLACK) {
-                    return new BlackPawn();
-                }
-                if (team == Team.WHITE) {
-                    return new WhitePawn();
-                }
-            case ROOK:
-                return new Rook(team);
-            case EMPTY:
-                return new EmptyPiece();
-            case QUEEN:
-                return new Queen(team);
-            case BISHOP:
-                return new Bishop(team);
-            case KNIGHT:
-                return new Knight(team);
-            default:
-                throw new UnsupportedOperationException();
-        }
+        return pieceType.getInstance(team);
     }
 
     @Override
