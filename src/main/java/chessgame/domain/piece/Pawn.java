@@ -5,7 +5,7 @@ import chessgame.domain.point.Point;
 import chessgame.domain.point.Rank;
 
 public class Pawn implements Piece {
-    private static final String ORIGINAL_NAME = "p";
+    private final PieceType pieceType;
     private static final int BLACK_DISTANCE = 1;
     private static final Rank BLACK_INITIAL_RANK = Rank.SEVEN;
     private static final int WHITE_DISTANCE = -1;
@@ -14,6 +14,7 @@ public class Pawn implements Piece {
     private final Team team;
 
     private Pawn(Team team) {
+        this.pieceType = PieceType.PAWN;
         this.team = team;
     }
 
@@ -63,12 +64,17 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isKnight() {
-        return false;
+    public boolean isPiece(PieceType piece) {
+        return pieceType.equals(piece);
+    }
+
+    @Override
+    public double getScore() {
+        return pieceType.getScore();
     }
 
     @Override
     public String toString() {
-        return ORIGINAL_NAME;
+        return pieceType.getName();
     }
 }

@@ -1,22 +1,47 @@
 package chessgame.controller;
 
+import chessgame.domain.Board;
+import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Command;
 import chessgame.domain.Game;
+import chessgame.service.ChessService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessService chessService;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+    public ChessController(InputView inputView, OutputView outputView, ChessService chessService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessService = chessService;
     }
 
     public void run() {
-        Game game = new Game();
+        Game game = setGame();
         playGame(game);
+    }
+
+    public Game setGame() {
+        try {
+            outputView.printSetGameMessage();
+            String gameName = inputView.readGameName();
+            return makeGame(gameName);
+        } catch (Exception e) {
+            outputView.printErrorMsg(e.getMessage());
+            return setGame();
+        }
+    }
+
+    private Game makeGame(String gameName) {
+        if (chessService.hasGame(gameName)) {
+            outputView.printContinueMessage();
+            String continuousCommand = inputView.readContinuousCommand();
+            return chessService.setGame(gameName, continuousCommand);
+        }
+        return new Game(new Board(ChessBoardFactory.create()), gameName);
     }
 
     private void playGame(Game game) {
@@ -25,6 +50,17 @@ public class ChessController {
             eachTurn(game);
             printResult(game);
         } while (!game.isEnd());
+        if (game.isEndByKing()) {
+            outputView.printWinner(game.winTeam());
+            chessService.removeGame(game);
+            return;
+        }
+        saveGame(game);
+    }
+
+    private void saveGame(Game game) {
+        chessService.removeGame(game);
+        chessService.saveGame(game);
     }
 
     private void eachTurn(Game game) {
@@ -49,9 +85,17 @@ public class ChessController {
     private void setState(Game game, Command command) {
         try {
             game.setState(command);
-        } catch (IllegalArgumentException e) {
+            printStatusResult(game, command);
+        } catch (UnsupportedOperationException e) {
             outputView.printErrorMsg(e.getMessage());
             setState(game, readCommand());
+        }
+    }
+
+    private void printStatusResult(Game game, Command command) {
+        if (command.isStatus()) {
+            outputView.printScore(game.scoreBoard());
+            outputView.printScoreWinner(game.scoreBoard());
         }
     }
 

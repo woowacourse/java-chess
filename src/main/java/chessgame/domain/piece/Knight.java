@@ -4,13 +4,15 @@ import chessgame.domain.Team;
 import chessgame.domain.point.Point;
 
 public class Knight implements Piece {
-    private static final String ORIGINAL_NAME = "n";
+
+    private final PieceType pieceType;
     private static final int STRAIGHT = 2;
     private static final int DIAGONAL = 1;
 
     private final Team team;
 
     private Knight(Team team) {
+        this.pieceType = PieceType.KNIGHT;
         this.team = team;
     }
 
@@ -29,8 +31,13 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean isKnight() {
-        return true;
+    public boolean isPiece(PieceType piece) {
+        return pieceType.equals(piece);
+    }
+
+    @Override
+    public double getScore() {
+        return pieceType.getScore();
     }
 
     private boolean isKnightMove(Point source, Point target) {
@@ -45,6 +52,6 @@ public class Knight implements Piece {
 
     @Override
     public String toString() {
-        return ORIGINAL_NAME;
+        return pieceType.getName();
     }
 }

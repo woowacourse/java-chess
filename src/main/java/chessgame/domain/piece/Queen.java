@@ -4,11 +4,12 @@ import chessgame.domain.Team;
 import chessgame.domain.point.Point;
 
 public class Queen implements Piece {
-    private static final String ORIGINAL_NAME = "q";
+    private final PieceType pieceType;
 
     private final Team team;
 
     private Queen(Team team) {
+        this.pieceType = PieceType.QUEEN;
         this.team = team;
     }
 
@@ -26,14 +27,18 @@ public class Queen implements Piece {
         return team;
     }
 
+    @Override
+    public boolean isPiece(PieceType piece) {
+        return pieceType.equals(piece);
+    }
 
     @Override
-    public boolean isKnight() {
-        return false;
+    public double getScore() {
+        return pieceType.getScore();
     }
 
     @Override
     public String toString() {
-        return ORIGINAL_NAME;
+        return pieceType.getName();
     }
 }

@@ -8,14 +8,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static chessgame.point.PointFixture.*;
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BoardTest {
     @Test
     @DisplayName("모든 좌표값을 가진 보드를 생성한다")
-    void Should_NotThrowException_When_ConstructBord() {
+    void Should_NotThrowException_When_ConstructBoard() {
         assertDoesNotThrow(() -> new Board(ChessBoardFactory.create()));
     }
 
@@ -120,6 +119,90 @@ class BoardTest {
             assertThatThrownBy(() -> board.move(A4, A5, Team.WHITE))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
                     .hasMessage("움직일 수 없습니다.");
+        }
+    }
+
+    @Test
+    @DisplayName("king이 존재하는지 확인한다.")
+    void Should_ExistKing_When_Move() {
+        Board board = new Board(ChessBoardFactory.create());
+
+        assertThat(board.isExistKing(Team.BLACK)).isTrue();
+        assertThat(board.isExistKing(Team.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("king이 없을 경우")
+    void Should_NoExistKing_When_Move() {
+        Board board = new Board(ChessBoardFactory.create());
+
+        board.move(B1, A3, Team.WHITE);
+        board.move(H7, H6, Team.BLACK);
+        board.move(A3, B5, Team.WHITE);
+        board.move(H8, H7, Team.BLACK);
+        board.move(B5, D6, Team.WHITE);
+        board.move(A7, A5, Team.BLACK);
+        board.move(D6, E8, Team.WHITE);
+
+        assertThat(board.isExistKing(Team.BLACK)).isFalse();
+    }
+
+    @Nested
+    @DisplayName("score를 계산한다.")
+    class calculatePawnTest {
+
+        @Test
+        @DisplayName("처음score를 계산한다.")
+        void Should_CalculateScore_When_ConstructBoard() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(38.0);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(38.0);
+        }
+
+        @Test
+        @DisplayName("Black팀의 Pawn 하나가 제거된 후 계산한다.")
+        void Should_CalculateScore_When_RemoveBlackPawn() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            board.move(A2, A4, Team.WHITE);
+            board.move(B7, B5, Team.BLACK);
+            board.move(A4, B5, Team.WHITE);
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(37);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
+        }
+
+        @Test
+        @DisplayName("Black팀의 Pawn 두개, 룩이 제거된 후 계산한다.")
+        void Should_CalculateScore_When_RemoveBlack2Pawn1Rook() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            board.move(A2, A4, Team.WHITE);
+            board.move(B7, B5, Team.BLACK);
+            board.move(A4, B5, Team.WHITE);
+            board.move(A7, A5, Team.BLACK);
+            board.move(A1, A5, Team.WHITE);
+            board.move(H7, H6, Team.BLACK);
+            board.move(A5, A8, Team.WHITE);
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(31);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
+        }
+
+        @Test
+        @DisplayName("White팀의 Pawn 하나가 제거된 후 계산한다.")
+        void Should_CalculateScore_When_RemoveWhitePawn() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            board.move(A2, A4, Team.WHITE);
+            board.move(B7, B6, Team.BLACK);
+            board.move(A4, A5, Team.WHITE);
+            board.move(B6, A5, Team.BLACK);
+
+
+            assertThat(board.calculateScore(Team.BLACK)).isEqualTo(37);
+            assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
         }
     }
 }

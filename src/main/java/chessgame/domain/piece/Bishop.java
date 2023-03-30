@@ -4,11 +4,11 @@ import chessgame.domain.Team;
 import chessgame.domain.point.Point;
 
 public class Bishop implements Piece {
-    private static final String ORIGINAL_NAME = "b";
-
+    private final PieceType pieceType;
     private final Team team;
 
     private Bishop(Team team) {
+        this.pieceType = PieceType.BISHOP;
         this.team = team;
     }
 
@@ -27,12 +27,18 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public boolean isKnight() {
-        return false;
+    public boolean isPiece(PieceType piece) {
+        return pieceType.equals(piece);
+    }
+
+
+    @Override
+    public double getScore() {
+        return pieceType.getScore();
     }
 
     @Override
     public String toString() {
-        return ORIGINAL_NAME;
+        return pieceType.getName();
     }
 }

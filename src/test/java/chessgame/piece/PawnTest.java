@@ -4,6 +4,7 @@ import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Team;
 import chessgame.domain.piece.Pawn;
+import chessgame.domain.piece.PieceType;
 import chessgame.domain.piece.Rook;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -74,6 +75,30 @@ class PawnTest {
         void Should_MoveDiagonalOneDistance_When_WhitePawnAttack() {
             boolean result = pawn.isMovable(A2, B3, true);
             Assertions.assertThat(result).isTrue();
+        }
+    }
+
+    @Nested
+    @DisplayName("기물을 확인한다.")
+    class CheckPiece {
+        Pawn pawn = Pawn.from(Team.WHITE);
+
+        @Test
+        @DisplayName("Pawn인지 여부를 물어본다.")
+        void Should_False_When_IsPawn() {
+            Assertions.assertThat(pawn.isPiece(PieceType.PAWN)).isTrue();
+        }
+
+        @Test
+        @DisplayName("Knight인지 여부를 물어본다.")
+        void Should_False_When_IsKnight() {
+            Assertions.assertThat(pawn.isPiece(PieceType.KNIGHT)).isFalse();
+        }
+
+        @Test
+        @DisplayName("King인지 여부를 물어본다.")
+        void Should_False_When_IsKing() {
+            Assertions.assertThat(pawn.isPiece(PieceType.KING)).isFalse();
         }
     }
 }

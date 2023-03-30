@@ -8,5 +8,7 @@ public interface Piece {
 
     Team team();
 
-    boolean isKnight();
+    boolean isPiece(PieceType piece);
+
+    double getScore();
 }

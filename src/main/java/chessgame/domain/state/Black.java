@@ -12,16 +12,20 @@ public class Black implements State {
 
     @Override
     public State run(Command command, Board board) {
-        if (command.isStart()) {
-            throw new IllegalArgumentException("start를 입력할 수 없습니다.");
-        }
-        if (command.isMove()) {
-            board.move(command.getSourcePoint(), command.getTargetPoint(), Team.BLACK);
-            return new White();
-        }
         if (command.isEnd()) {
             return new End();
         }
+        if (command.isMove()) {
+            board.move(command.getSourcePoint(), command.getTargetPoint(), Team.BLACK);
+            return selectNextState(board);
+        }
         return this;
+    }
+
+    private State selectNextState(Board board) {
+        if (!board.isExistKing(Team.WHITE)) {
+            return new End();
+        }
+        return new White();
     }
 }
