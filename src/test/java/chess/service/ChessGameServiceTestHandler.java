@@ -6,6 +6,8 @@ import chess.dao.chess.PieceEntityHelper;
 import chess.domain.board.ChessBoard;
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.Piece;
+import chess.domain.piece.move.Position;
 import chess.entity.ChessGameEntity;
 import chess.entity.PieceEntity;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -25,10 +28,11 @@ class ChessGameServiceTestHandler {
         final MockChessGameDao chessGameDao = new MockChessGameDao();
         final ChessGameService chessGameService = new ChessGameService(
                 chessGameDao, new ChessBoardService(new MockPieceDao()));
-        final ChessGame expected = new ChessGame(CampType.WHITE);
+        final Map<Position, Piece> expected = new ChessGame(CampType.WHITE).getChessBoard();
 
         // when
-        final ChessGame actual = chessGameService.getOrCreateChessGame(2L);
+        final Map<Position, Piece> actual = chessGameService.getOrCreateChessGame(2L)
+                .getChessBoard();
 
         // then
         assertThat(actual)
@@ -42,10 +46,12 @@ class ChessGameServiceTestHandler {
         final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
         final ChessBoard mockProgressBoard = ChessBoardHelper.createMockProgressBoard();
-        final ChessGame expected = new ChessGame(mockProgressBoard, CampType.WHITE);
+        final Map<Position, Piece> expected = new ChessGame(mockProgressBoard, CampType.WHITE)
+                .getChessBoard();
 
         // when
-        final ChessGame actual = chessGameService.getOrCreateChessGame(userId);
+        final Map<Position, Piece> actual = chessGameService.getOrCreateChessGame(userId)
+                .getChessBoard();
 
         // then
         assertThat(actual)
@@ -112,14 +118,17 @@ class ChessGameServiceTestHandler {
         final ChessGameService chessGameService = new ChessGameService(chessGameDao, new ChessBoardService(new MockPieceDao()));
         final PieceEntity source = PieceEntity.createWithLocation(1L, 0, 0);
         final PieceEntity target = PieceEntity.createWithLocation(1L, 0, 1);
+        final Map<Position, Piece> expected = new ChessGame(ChessBoard.create(Collections.emptyMap()), CampType.WHITE)
+                .getChessBoard();
 
         // when
         chessGameService.deletePieces(source, target);
 
         // then
-        final ChessGame actual = chessGameService.getOrCreateChessGame(1L);
+        final Map<Position, Piece> actual = chessGameService.getOrCreateChessGame(1L).getChessBoard();
+
         assertThat(actual)
-                .isEqualTo(new ChessGame(ChessBoard.create(Collections.emptyMap()), CampType.WHITE));
+                .isEqualTo(expected);
     }
 
     @Test
@@ -133,9 +142,9 @@ class ChessGameServiceTestHandler {
         chessGameService.clear(userId);
 
         // then
-        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
-        final ChessGame expected = new ChessGame(CampType.WHITE);
-        assertThat(chessGame)
+        final Map<Position, Piece> actual = chessGameService.getOrCreateChessGame(userId).getChessBoard();
+        final Map<Position, Piece> expected = new ChessGame(CampType.WHITE).getChessBoard();
+        assertThat(actual)
                 .isEqualTo(expected);
     }
 

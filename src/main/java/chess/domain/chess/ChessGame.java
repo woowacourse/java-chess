@@ -6,7 +6,6 @@ import chess.domain.piece.move.Position;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class ChessGame {
     private static final int ALL_KING_ALIVE_COUNT = 2;
@@ -96,20 +95,7 @@ public final class ChessGame {
             throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
         }
     }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final ChessGame chessGame = (ChessGame) o;
-        return Objects.equals(chessBoard, chessGame.chessBoard) && currentCamp == chessGame.currentCamp;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(chessBoard, currentCamp);
-    }
-
+    
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getBoard();
     }

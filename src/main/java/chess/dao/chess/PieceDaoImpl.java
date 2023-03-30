@@ -38,8 +38,12 @@ public class PieceDaoImpl implements PieceDao {
 
     @Override
     public void deleteByPositions(final long chessGameId, final PieceEntity... pieceEntity) {
+        if (pieceEntity == null) {
+            return;
+        }
         if (pieceEntity.length == 1) {
             deleteOneByPosition(chessGameId, pieceEntity[0]);
+            return;
         }
         final PieceEntity source = pieceEntity[0];
         final PieceEntity destination = pieceEntity[1];
