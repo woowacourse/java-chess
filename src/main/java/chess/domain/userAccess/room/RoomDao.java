@@ -15,12 +15,11 @@ public class RoomDao {
 
     public void createRoom(User user) {
         try {
-            String query = "INSERT INTO room VALUES(?,?,?)";
+            String query = "INSERT INTO room (user_id, commands) VALUES(?,?)";
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, null);
-            preparedStatement.setString(2, user.userId());
-            preparedStatement.setString(3, "");
+            preparedStatement.setString(1, user.userId());
+            preparedStatement.setString(2, "");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException("[ERROR] 게임 방 추가 예외");
