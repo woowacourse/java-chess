@@ -51,40 +51,24 @@ public class ChessGameService {
     public void saveNewChessGame() {
         Long gameId = chessGameDao.saveNewChessGame();
         for (Piece piece : chessGame.getPieces()) {
-            Long recentPieceId = pieceDao.findRecentPieceId();
-            PieceEntity pieceEntity = generatePieceEntity(gameId, piece, recentPieceId);
-            pieceDao.savePiece(pieceEntity);
+            pieceDao.savePiece(piece, gameId);
         }
-    }
-
-    private PieceEntity generatePieceEntity(Long gameId, Piece piece, Long recentPieceId) {
-        return new PieceEntity.Builder()
-                .id(++recentPieceId)
-                .rank(String.valueOf(piece.getRank()))
-                .file(String.valueOf(piece.getFile()))
-                .type(typeByPiece.get(piece.getClass()))
-                .side(piece.getSide().getDisplayName())
-                .gameId(gameId)
-                .build();
     }
 
     public ChessGame movePiece(Position sourcePosition, Position targetPosition) {
         checkTurn(sourcePosition);
         chessGame.checkPieceMoveCondition(sourcePosition, targetPosition);
-
         piecePositionUpdateWhenOnlyMove(sourcePosition, targetPosition);
         piecePositionUpdateWhenTakePiece(sourcePosition, targetPosition);
         chessGame.movePiece(sourcePosition, targetPosition);
-        Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
-        chessGameDao.updateTurn(generateChessGameEntity());
-        return new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange());
+        return getMovedChessGame();
     }
 
-    private ChessGameEntity generateChessGameEntity() {
-        return new ChessGameEntity.Builder()
-                .id(chessGame.getId())
-                .turn(chessGame.turnChange().getDisplayName())
-                .build();
+    private ChessGame getMovedChessGame() {
+        Board currentBoard = new Board(new Pieces(chessGame.getPieces()));
+        ChessGame movedChessGame = new ChessGame(chessGame.getId(), currentBoard, chessGame.turnChange());
+        chessGameDao.updateTurn(movedChessGame);
+        return movedChessGame;
     }
 
     private void checkTurn(Position sorucePosition) {
@@ -100,43 +84,24 @@ public class ChessGameService {
 
     private void piecePositionUpdateWhenOnlyMove(Position sourcePosition, Position targetPosition) {
         if (chessGame.isOnlyMove(targetPosition)) {
-            PieceEntity pieceEntityToFind = generateSourcePieceEntity(sourcePosition);
-            PieceEntity pieceEntityToUpdate = generateUpdatePieceEntity(targetPosition);
-            pieceDao.updatePiecePosition(pieceEntityToUpdate, pieceEntityToFind);
+            Long gameId = chessGame.getId();
+            Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
+            Piece movedPiece = sourcePiece.move(targetPosition);
+            pieceDao.deletePieceByGameId(sourcePiece, gameId);
+            pieceDao.savePiece(movedPiece, gameId);
         }
     }
 
     private void piecePositionUpdateWhenTakePiece(Position sourcePosition, Position targetPosition) {
         if (chessGame.isTakePieceMove(targetPosition)) {
-            PieceEntity sourcePieceEntity = generateSourcePieceEntity(sourcePosition);
-            PieceEntity pieceEntityToUpdate = generateUpdatePieceEntity(sourcePosition);
-            PieceEntity pieceEntityDelete = generateDeletePieceEntity(targetPosition);
-            pieceDao.deletePieceByPosition(pieceEntityDelete);
-            pieceDao.updatePiecePosition(pieceEntityToUpdate, sourcePieceEntity);
+            Long gameId = chessGame.getId();
+            Piece sourcePiece = chessGame.findPieceByPosition(sourcePosition);
+            Piece targetPiece = chessGame.findPieceByPosition(targetPosition);
+            Piece movedPiece = sourcePiece.move(targetPosition);
+            pieceDao.deletePieceByGameId(sourcePiece, gameId);
+            pieceDao.deletePieceByGameId(targetPiece, gameId);
+            pieceDao.savePiece(movedPiece, gameId);
         }
-    }
-
-    private PieceEntity generateSourcePieceEntity(Position sourcePosition) {
-        return new PieceEntity.Builder()
-                .gameId(chessGame.getId())
-                .rank(String.valueOf(sourcePosition.getRank()))
-                .file(String.valueOf(sourcePosition.getFile()))
-                .build();
-    }
-
-    private PieceEntity generateUpdatePieceEntity(Position targetPosition) {
-        return new PieceEntity.Builder()
-                .rank(String.valueOf(targetPosition.getRank()))
-                .file(String.valueOf(targetPosition.getFile()))
-                .build();
-    }
-
-    private PieceEntity generateDeletePieceEntity(Position targetPosition) {
-        return new PieceEntity.Builder()
-                .gameId(chessGame.getId())
-                .rank(String.valueOf(targetPosition.getRank()))
-                .file(String.valueOf(targetPosition.getFile()))
-                .build();
     }
 
     public boolean isExistPreviousChessGame(Long previousChessGameId) {
