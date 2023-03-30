@@ -88,7 +88,7 @@ public class ChessGame {
         List<Color> orderedResult = new ArrayList<>(result.keySet());
         orderedResult.sort(Comparator.comparing(result::get));
         Collections.reverse(orderedResult);
-        if (orderedResult.get(0) == orderedResult.get(1)) {
+        if (result.get(orderedResult.get(0)) == result.get(orderedResult.get(1))) {
             return String.join(", ", Color.WHITE.name(), Color.BLACK.name());
         }
         return orderedResult.get(0).name();
