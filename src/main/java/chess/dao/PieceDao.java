@@ -50,17 +50,17 @@ public class PieceDao {
 
     public List<Integer> findAllIds() {
         String query = "SELECT id FROM piece";
-        List<Integer> pieceIds = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                pieceIds.add(resultSet.getInt("id"));
+                ids.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return pieceIds;
+        return ids;
     }
 
     public Piece findPieceById(final PieceDto pieceDto) {
