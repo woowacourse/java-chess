@@ -9,35 +9,61 @@
 
 
 ## 어플리케이션 실행 시, 데이터베이스 연동 방법
-- 데이터베이스 생성
-  - 해당 프로젝트의 docker 디렉터리에서 `docker-compose -p chess up -d` 명령어를 입력하여 도커를 실행시킨다.
-  - 생성된 docker 의 MySQL에 접속하여 chess 데이터베이스를 사용하도록 한다.
-  - chess 데이터베이스에 다음 DDL 을 사용하여 테이블을 생성한다.
-```sql
-CREATE TABLE `game` (
-`game_id` bigint NOT NULL AUTO_INCREMENT,
-`turn` varchar(45) NOT NULL,
-`is_end` tinyint NOT NULL,
-PRIMARY KEY (`game_id`)
-);
 
+### 1. 어플리케이션 실행 시 테이블 자동 생성
+- docker 폴더로 이동
+```
+cd docker
+```
+  - docker 실행
+```
+docker-compose -p chess up -d
+```
+  - 어플리케이션 실행 시, Connection 이 생성되면서 테이블이 자동 생성된다.
+- docker 종료
+```
+docker-compose -p chess down
 ```
 
 
-```sql
-CREATE TABLE `piece` (
-  `piece_id` bigint NOT NULL AUTO_INCREMENT,
-  `type` varchar(45) NOT NULL,
-  `position` varchar(45) NOT NULL,
-  `color` varchar(45) NOT NULL,
-  `game_id` bigint NOT NULL,
-  PRIMARY KEY (`piece_id`),
-  FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) ON UPDATE CASCADE
-);
+<br>
 
+### 2. 테이블을 직접 생성할 경우
+```
+cd docker
+docker-compose -p chess up -d
+docker exec -it chess-db-1 bash
+mysql -u user -p
+```
+- 비밀번호에 `password` 입력
+```sql
+use chess;
+```
+```sql
+CREATE TABLE IF NOT EXISTS `game` (
+    `game_id` bigint NOT NULL AUTO_INCREMENT,
+    `turn` varchar(45) NOT NULL,
+    `is_end` tinyint NOT NULL,
+    PRIMARY KEY (`game_id`)
+    );
 ```
 
-- 만약 docker 를 사용하지 않고 local MySQL을 사용한다면, dao 패키지 내의 ConnectionProvider 클래스에서 `SERVER` 값을 자신의 로컬 MySQL에 맞는 port 로 변경한다.
+```sql
+CREATE TABLE IF NOT EXISTS `piece` (
+    `piece_id` bigint NOT NULL AUTO_INCREMENT,
+    `type` varchar(45) NOT NULL,
+    `position` varchar(45) NOT NULL,
+    `color` varchar(45) NOT NULL,
+    `game_id` bigint NOT NULL,
+    PRIMARY KEY (`piece_id`),
+    FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) ON UPDATE CASCADE
+    );
+```
+
+```sql
+show tables;
+```
+
 
 ## 기능 목록
 
