@@ -17,6 +17,7 @@ import domain.piece.Pawn;
 import domain.piece.PieceType;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.SquareMapper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,17 +39,6 @@ public class ChessGameDao {
     private static final String PASSWORD = "root";
     private static final String INVALID_DATA_ERROR_MESSAGE = "올바르지 않은 데이터입니다.";
     private static final int CHESS_BOARD_SIZE = 8;
-
-    private static final Map<Type, Function<Color, SquareStatus>> squareStatusMapper = Map.of(
-            EmptyType.EMPTY, color -> new Empty(),
-            PieceType.KING, King::new,
-            PieceType.PAWN, Pawn::new,
-            PieceType.INIT_PAWN, InitPawn::new,
-            PieceType.BISHOP, Bishop::new,
-            PieceType.KNIGHT, Knight::new,
-            PieceType.QUEEN, Queen::new,
-            PieceType.ROOK, Rook::new
-    ); // 이건 클래스를 따로 만들어서 분리해야할까요? ex) SquareStatusMapper
 
     public Connection getConnection() {
         try {
@@ -171,24 +161,13 @@ public class ChessGameDao {
             int y = Integer.parseInt(selectChessBoardSet.getString("y"));
             String pieceType = selectChessBoardSet.getString("piece_type");
             String pieceColor = selectChessBoardSet.getString("piece_color");
-            Position position = Position.of(x, y);
-            chessBoard.findSquare(position).bePiece(getSquare(pieceType, pieceColor));
+            chessBoard.findSquare(Position.of(x, y))
+                    .bePiece(
+                            SquareMapper.toSquare(pieceType, pieceColor)
+                    );
         }
 
         return chessBoard;
-    }
-
-    private Square getSquare(String pieceType, String pieceColor) {
-        Color color = Color.fromName(pieceColor);
-
-        List<Type> types = new ArrayList<>(List.of(PieceType.values()));
-        types.addAll(List.of(EmptyType.values()));
-
-        Type resultType = types.stream()
-                .filter(type -> pieceType.equals(type.name()))
-                .findFirst()
-                .orElseThrow(IllegalAccessError::new);
-        return new Square(squareStatusMapper.get(resultType).apply(color));
     }
 
     
