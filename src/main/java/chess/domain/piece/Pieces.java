@@ -73,13 +73,13 @@ public final class Pieces {
 
     private static void addWhitePieces(final List<Piece> pieceList) {
         makeRookAndBishopAndKnight(pieceList);
-        makePawns(pieceList, LAST_FILE_OF_WHITE);
+        makeWhitePawns(pieceList);
         makeQueenAndKing(pieceList);
     }
 
-    private static void makePawns(final List<Piece> pieceList, final int rank) {
+    private static void makeWhitePawns(final List<Piece> pieceList) {
         for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
-            pieceList.add(Piece.from(rank, (char) file, Shape.PAWN));
+            pieceList.add(Piece.from(Pieces.LAST_FILE_OF_WHITE, (char) file, Shape.PAWN));
         }
     }
 
