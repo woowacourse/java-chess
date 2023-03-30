@@ -40,7 +40,7 @@ public class ChessGame {
         status = GameStatus.MOVE;
     }
     
-    public Map<Position, Piece> move(final List<String> arguments) {
+    public void move(final List<String> arguments) {
         if (status != GameStatus.MOVE) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
@@ -51,12 +51,6 @@ public class ChessGame {
         checkCatchKing(destination);
         board.replace(source, destination);
         turn = turn.reverse();
-
-        Map<Position, Piece> update = new HashMap<>();
-        update.put(source, Empty.create(Color.NONE));
-        update.put(destination, board.getPieceAtPosition(destination));
-
-        return update;
     }
 
     private void checkPieceCanMove(final Position source, final Position destination) {
