@@ -1,4 +1,4 @@
-package chess.model.board.state;
+package chess.controller.state;
 
 import static chess.controller.GameCommand.END;
 import static chess.controller.GameCommand.MOVE;

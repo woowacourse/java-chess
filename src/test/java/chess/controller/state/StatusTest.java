@@ -1,4 +1,4 @@
-package chess.model.board.state;
+package chess.controller.state;
 
 import static chess.controller.GameCommand.STATUS;
 import static chess.model.piece.PieceColor.BLACK;
