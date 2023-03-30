@@ -16,6 +16,9 @@ public class Board {
 
     public Board(Map<Position, Piece> pieces, Color color) {
         piecePosition = new HashMap<>(pieces);
+        if (color == Color.NONE) {
+            throw new IllegalArgumentException("None 칼라의 턴을 가진 Board는 생성할 수 없습니다");
+        }
         turn = color;
     }
 
@@ -25,7 +28,7 @@ public class Board {
         if (!targetPiece.canMove(origin, destination, piecePosition.get(destination))) {
             throw new IllegalPieceMoveException();
         }
-        return new Board(movedBoard(origin, destination), nextTune());
+        return new Board(movedBoard(origin, destination), nextTurn());
     }
 
     private Map<Position, Piece> movedBoard(Position origin, Position destination) {
@@ -35,7 +38,7 @@ public class Board {
         return movedBoard;
     }
 
-    private Color nextTune() {
+    private Color nextTurn() {
         if (turn == Color.BLACK) {
             return Color.WHITE;
         }
