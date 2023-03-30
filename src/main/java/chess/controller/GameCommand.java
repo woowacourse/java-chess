@@ -25,7 +25,7 @@ public enum GameCommand {
     }
 
     public static GameCommand from(final String commandString) {
-        if (COMMAND_MAPPER.containsKey(commandString)) {
+        if (!COMMAND_MAPPER.containsKey(commandString)) {
             throw new GameCommandNotFoundException();
         }
         return COMMAND_MAPPER.get(commandString);
