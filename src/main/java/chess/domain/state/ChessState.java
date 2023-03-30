@@ -9,7 +9,13 @@ public interface ChessState {
 
     boolean isRunnable();
 
+    boolean isCheckmate();
+
     ChessState changeTurn();
 
     boolean isInCorrectTurn(final Color color);
+
+    ChessState finish();
+
+    String findCurrentTurn();
 }

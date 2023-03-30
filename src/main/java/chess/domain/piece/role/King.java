@@ -1,7 +1,8 @@
-package chess.domain.piece.type;
+package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.piece.position.WayPoints;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
@@ -12,6 +13,7 @@ public class King extends Piece {
 
     public King(final Color color, final PiecePosition piecePosition) {
         super(color, piecePosition);
+        this.role = Role.KING;
     }
 
     @Override
@@ -24,5 +26,20 @@ public class King extends Piece {
     @Override
     protected WayPoints wayPointsWithCondition(final Path path) {
         return new WayPoints(Collections.emptyList());
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public double score() {
+        return 0;
     }
 }

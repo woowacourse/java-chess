@@ -5,12 +5,12 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.Rank;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Pawn;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
+import chess.domain.piece.role.Bishop;
+import chess.domain.piece.role.King;
+import chess.domain.piece.role.Knight;
+import chess.domain.piece.role.Pawn;
+import chess.domain.piece.role.Queen;
+import chess.domain.piece.role.Rook;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,5 +68,27 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+        System.out.println("> 게임 저장 : save");
+        System.out.println("> 점수 출력 : status");
+    }
+
+    public static void printCheckmateResult(final String winner) {
+        System.out.printf("%s이(가) 이겼습니다.%n", winner);
+    }
+
+    public static void printEndResult() {
+        System.out.println("게임이 종료되었습니다.");
+    }
+
+    public static void printTeamScore(final Color color, final Double score) {
+        System.out.printf("%s의 점수는 %.1f점입니다.%n", color, score);
+    }
+
+    public static void printInProgressMessage() {
+        System.out.println("이미 진행중인 게임이 있습니다.");
+    }
+
+    public static void printSaveMessage() {
+        System.out.println("게임을 저장했습니다.");
     }
 }

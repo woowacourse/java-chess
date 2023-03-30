@@ -59,15 +59,18 @@ classDiagram
   class ChessState
   <<Interface>> ChessState
   
-  class AbstractChessState
-  <<Abstract>> AbstractChessState
+  class Runnable
+  <<Abstract>> Runnable
+
+  class Finished
+  <<Abstract>> Finished
   
-  ChessState ..> Command
-  ChessState <|.. AbstractChessState
-  AbstractChessState <|-- Initialize
-  AbstractChessState <|-- Running
-  AbstractChessState <|-- End
-  Command --> Type
+  ChessState <|.. Runnable
+  ChessState <|.. Finished
+  Runnable <|-- Initialize
+  Runnable <|-- Run
+  Finished <|-- End
+  Finished <|-- Checkmate
 ```
 
 ---
@@ -136,3 +139,102 @@ classDiagram
 - [x] `incorrect` 메서드 명 변경 및 메서드 순서 변경
 - [x] 한 줄에 점 하나만 찍도록 수정
 - [x] getter 사용 지양하기
+
+---
+
+## 3단계 기능 요구 사항
+
+### King이 잡히면 게임 종료
+- [x] 이동한 위치의 상대가 King인지 확인
+- [x] Finished 상태로 변경
+- [x] 승패 계산
+- [x] 승패 출력
+
+### 점수 계산
+- [x] status 명령어 입력에 대한 처리
+- [x] 색깔 별로 점수 총합 계산
+- [x] queen : 9점, rook : 5점, bishop : 3점, knight : 2.5점
+- [x] pawn인지 확인
+- [x] pawn인 경우 같은 File(세로 줄)에 pawn이 있는지 확인
+  - 있으면 0.5점
+  - 없으면 1점
+- [x] 점수 출력
+
+---
+
+## 4단계 기능 요구 사항
+
+### Game
+- [x] 저장 기능 (처음 시작 시, 진행중인 게임이 없으면 저장)
+- [x] 조회 기능
+- [x] 업데이트 기능 (Turn 업데이트)
+- [x] 삭제 기능 (게임 종료 시, 삭제)
+
+### Piece
+- [x] 저장 기능 (처음 시작 시, Piece 저장)
+- [x] 조회 기능
+- [x] 업데이트 기능 (Piece 움직인 경우)
+- [x] 삭제 기능 (Piece 잡힌 경우)
+
+---
+
+## 3, 4단계 리팩토링 요구 사항
+
+- [x] running_game 테이블, finished_game 테이블 => game 테이블
+- [x] game 테이블 CRUD 미완성 부분 완성하기
+- [x] piece 테이블 CRUD 미완성 부분 완성하기
+- [x] game 테이블 create 할 때, 파라미터를 넘겨주지 않도록 수정
+- [x] 변수에 불필요한 prefix 제거
+- [x] DB 접속 정보 및 커넥션 별도로 관리
+- [x] autoIncrementId 메서드 삭제
+- [x] save 출력 메시지 추가
+- [x] 진행 중인 게임 불러온 경우, 시작 메시지 추가
+- [x] 중복되는 클래스 명 변경(Type -> Role)
+
+---
+
+## DB 설계
+
+### ERD
+
+```mermaid
+erDiagram
+  GAME ||--o{ PIECE : has
+  GAME {
+    int id
+    varchar turn
+    tinyint is_running
+  }
+  PIECE {
+    int id
+    int game_id
+    varchar piece_type
+    varchar file_position
+    int rank_position
+    varchar color
+  }
+```
+
+### DDL
+
+```sql
+CREATE TABLE game
+(
+    `id`          INT            NOT NULL    AUTO_INCREMENT, 
+    `turn`        VARCHAR(10)    NOT NULL, 
+    `is_running`  TINYINT(1)     NOT NULL, 
+     PRIMARY KEY (id)
+);
+
+CREATE TABLE piece
+(
+    `id`             INT            NOT NULL    AUTO_INCREMENT, 
+    `game_id`        INT            NOT NULL, 
+    `piece_type`     VARCHAR(10)    NOT NULL, 
+    `file_position`  VARCHAR(1)     NOT NULL, 
+    `rank_position`  INT            NOT NULL, 
+    `color`          VARCHAR(10)    NOT NULL, 
+     PRIMARY KEY (id),
+    FOREIGN KEY (game_id) REFERENCES game (id)
+);
+```

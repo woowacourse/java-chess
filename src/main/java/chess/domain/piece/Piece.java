@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.File;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
@@ -8,6 +9,7 @@ public abstract class Piece implements Cloneable {
 
     protected final Color color;
     protected PiecePosition piecePosition;
+    protected Role role;
 
     public Piece(final Color color, final PiecePosition piecePosition) {
         this.color = color;
@@ -61,5 +63,31 @@ public abstract class Piece implements Cloneable {
         if (isAlly(enemy)) {
             throw new IllegalArgumentException("아군이 있는 위치로는 이동할 수 없습니다.");
         }
+    }
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public abstract double score();
+
+    public File file() {
+        return piecePosition.file();
+    }
+
+    public String getFileToString() {
+        return String.valueOf(file().file());
+    }
+
+    public int rank() {
+        return piecePosition.rank();
+    }
+
+    public String type() {
+        return role.label();
+    }
+
+    public String getColorToString() {
+        return color.label();
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.piece.type;
+package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
@@ -6,6 +6,7 @@ import chess.domain.piece.position.WayPoints;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -114,5 +115,30 @@ class QueenTest {
         // when & then
         final WayPoints condition = queen.wayPointsWithCondition(destination);
         assertThat(condition.wayPoints()).isNotEmpty();
+    }
+
+    @Test
+    void King_인지_확인할_수_있다() {
+        // given
+        final Queen queen = new Queen(Color.WHITE, PiecePosition.of('d', 1));
+        // when & then
+        assertThat(queen.isKing()).isFalse();
+    }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Queen queen = new Queen(Color.WHITE, PiecePosition.of('d', 1));
+        // when & then
+        assertThat(queen.isPawn()).isFalse();
+    }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Queen queen = new Queen(Color.WHITE, PiecePosition.of('d', 1));
+
+        // when & then
+        assertThat(queen.score()).isEqualTo(9);
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.piece.type;
+package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
@@ -6,9 +6,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -182,5 +184,37 @@ class PawnTest {
             assertThatThrownBy(() -> pawn.wayPointsWithCondition(destination))
                     .isInstanceOf(IllegalArgumentException.class);
         }
+    }
+
+    @Test
+    void King_인지_확인할_수_있다() {
+        // given
+        final Pawn pawn = new Pawn(Color.WHITE, PiecePosition.of('a', 2));
+        // when & then
+        assertThat(pawn.isKing()).isFalse();
+    }
+
+    @Test
+    void Pawn_인지_확인할_수_있다() {
+        // given
+        final Pawn pawn = new Pawn(Color.WHITE, PiecePosition.of('a', 2));
+        // when & then
+        assertThat(pawn.isPawn()).isTrue();
+    }
+
+    @Test
+    void 기물에_해당하는_점수를_반환할_수_있다() {
+        // given
+        final Pawn pawn = new Pawn(Color.WHITE, PiecePosition.of('a', 2));
+
+        // when & then
+        assertThat(pawn.score()).isEqualTo(1);
+    }
+
+    @Test
+    void 같은_File인_폰의_개수에_따라_다른_점수를_반환한다() {
+        assertThat(Pawn.calculateScoreByCount(3)).isEqualTo(1.5);
+        assertThat(Pawn.calculateScoreByCount(2)).isEqualTo(1);
+        assertThat(Pawn.calculateScoreByCount(1)).isEqualTo(1);
     }
 }

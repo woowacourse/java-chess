@@ -56,4 +56,12 @@ public class Command {
     public boolean isMove() {
         return type == Type.MOVE;
     }
+
+    public boolean isStatus() {
+        return type == Type.STATUS;
+    }
+
+    public boolean isSave() {
+        return type == Type.SAVE;
+    }
 }

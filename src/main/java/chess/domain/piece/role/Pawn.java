@@ -1,7 +1,8 @@
-package chess.domain.piece.type;
+package chess.domain.piece.role;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Role;
 import chess.domain.piece.position.Path;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.piece.position.WayPoints;
@@ -11,10 +12,14 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final double SAME_FILE_SCORE = 0.5;
+    private static final int DEFAULT_SCORE = 1;
+
     private boolean isMoved;
 
     public Pawn(final Color color, final PiecePosition piecePosition) {
         super(color, piecePosition);
+        this.role = Role.PAWN;
         this.isMoved = false;
     }
 
@@ -61,6 +66,13 @@ public class Pawn extends Piece {
         return new WayPoints(path.destination());
     }
 
+    public static double calculateScoreByCount(long pawnCount) {
+        if (pawnCount > 1) {
+            return pawnCount * SAME_FILE_SCORE;
+        }
+        return DEFAULT_SCORE;
+    }
+
     @Override
     public void move(final PiecePosition piecePosition) {
         if (!new Path(this.piecePosition, piecePosition).isStraight()) {
@@ -77,5 +89,20 @@ public class Pawn extends Piece {
         }
         this.piecePosition = enemy.piecePosition();
         this.isMoved = true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public double score() {
+        return DEFAULT_SCORE;
     }
 }

@@ -2,15 +2,15 @@ package chess.domain.state;
 
 import chess.domain.board.Turn;
 
-public class End extends Finished {
+public class Checkmate extends Finished{
 
-    public End(final Turn turn) {
+    public Checkmate(final Turn turn) {
         this.turn = turn;
     }
 
     @Override
     public boolean isCheckmate() {
-        return false;
+        return true;
     }
 
     @Override

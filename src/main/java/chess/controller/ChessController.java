@@ -2,39 +2,106 @@ package chess.controller;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
+import chess.domain.piece.Color;
 import chess.domain.piece.position.PiecePosition;
 import chess.domain.state.ChessState;
 import chess.domain.state.Initialize;
+import chess.domain.state.Run;
 import chess.domain.state.command.Command;
+import chess.service.PieceService;
+import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ChessController {
 
+    private final GameService gameService;
+    private final PieceService pieceService;
+
+    public ChessController(final GameService gameService, final PieceService pieceService) {
+        this.gameService = gameService;
+        this.pieceService = pieceService;
+    }
+
     public void start() {
         OutputView.printStartMessage();
-        final ChessBoard chessBoard = ChessBoardFactory.create();
-        final ChessState state = new Initialize();
-        run(chessBoard, state);
+        final List<Integer> gameIds = gameService.findAllIdsByIsRunning(true);
+        initializeWithDB(gameIds);
     }
 
-    private void run(final ChessBoard chessBoard, ChessState state) {
-        while (state.isRunnable()) {
-            state = chessState(chessBoard, state);
+    private void initializeWithDB(List<Integer> gameIds) {
+        if (gameIds.isEmpty()) {
+            final ChessBoard chessBoard = ChessBoardFactory.create();
+            final int gameId = gameService.create();
+            final ChessState state = new Initialize();
+            pieceService.create(chessBoard, gameId);
+            run(chessBoard, state, gameId);
+            return;
         }
+        runInProgressGame(gameIds);
     }
 
-    private ChessState chessState(final ChessBoard chessBoard, ChessState state) {
+    private void runInProgressGame(final List<Integer> gameIds) {
+        final ChessBoard chessBoard = new ChessBoard(pieceService.findAllPieces());
+        final ChessState state = new Run(gameService.findTurnById(gameIds.get(0)));
+        OutputView.printInProgressMessage();
+        OutputView.showBoard(chessBoard.pieces());
+        run(chessBoard, state, gameIds.get(0));
+    }
+
+    private void run(final ChessBoard chessBoard, ChessState state, final int gameId) {
+        while (state.isRunnable()) {
+            state = chessState(chessBoard, state, gameId);
+        }
+        if (state.isCheckmate()) {
+            pieceService.deleteAll();
+            gameService.updateIsRunning(gameId, false);
+            OutputView.printCheckmateResult(state.findCurrentTurn());
+        }
+        OutputView.printEndResult();
+    }
+
+    private ChessState chessState(final ChessBoard chessBoard, ChessState state, final int gameId) {
         try {
             final Command command = Command.parse(new ArrayList<>(InputView.readCommand()));
-            state = changeState(chessBoard, command, state);
-            OutputView.showBoard(chessBoard.pieces());
+            state = executeByCommand(chessBoard, command, state, gameId);
         } catch (Exception e) {
             System.out.println("[ERROR] " + e.getMessage());
         }
         return state;
+    }
+
+    private ChessState executeByCommand(final ChessBoard chessBoard, final Command command, ChessState state,
+                                        final int gameId) {
+        if (command.isSave()) {
+            return executeSave(chessBoard, state, gameId);
+        }
+        if (command.isStatus()) {
+            calculateScore(chessBoard);
+            return state;
+        }
+        state = changeState(chessBoard, command, state);
+        gameService.updateTurn(gameId, state.findCurrentTurn());
+        OutputView.showBoard(chessBoard.pieces());
+        return state;
+    }
+
+    private ChessState executeSave(final ChessBoard chessBoard, final ChessState state, final int gameId) {
+        gameService.updateTurn(gameId, state.findCurrentTurn());
+        pieceService.deleteAll();
+        pieceService.create(chessBoard, gameId);
+        OutputView.printSaveMessage();
+        return state;
+    }
+
+    private void calculateScore(final ChessBoard chessBoard) {
+        final Map<Color, Double> scoreByColor = chessBoard.calculateScore();
+        OutputView.printTeamScore(Color.WHITE, scoreByColor.get(Color.WHITE));
+        OutputView.printTeamScore(Color.BLACK, scoreByColor.get(Color.BLACK));
     }
 
     private ChessState changeState(final ChessBoard chessBoard, final Command command, ChessState state) {
@@ -48,7 +115,10 @@ public class ChessController {
     private ChessState movePiece(final ChessBoard chessBoard, final Command command, ChessState state) {
         final PiecePosition from = PiecePosition.of(command.getFromParameter());
         final PiecePosition to = PiecePosition.of(command.getToParameter());
-        chessBoard.movePiece(state, from, to);
-        return state.changeTurn();
+        state = chessBoard.movePiece(state, from, to);
+        if (state.isRunnable()) {
+            return state.changeTurn();
+        }
+        return state;
     }
 }

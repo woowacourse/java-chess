@@ -6,7 +6,9 @@ public enum Type {
 
     START(0),
     MOVE(2),
+    STATUS(0),
     END(0),
+    SAVE(0),
     ;
 
     private final int parameterSize;

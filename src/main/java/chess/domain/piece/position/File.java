@@ -30,6 +30,10 @@ public class File {
         return new File((char) (file + amount));
     }
 
+    public char file() {
+        return file;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
