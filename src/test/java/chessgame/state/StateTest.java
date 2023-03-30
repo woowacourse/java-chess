@@ -3,11 +3,13 @@ package chessgame.state;
 import chessgame.domain.Board;
 import chessgame.domain.ChessBoardFactory;
 import chessgame.domain.Command;
+import chessgame.domain.Team;
 import chessgame.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static chessgame.point.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -78,6 +80,22 @@ public class StateTest {
         }
 
         @Test
+        @DisplayName("move 입력시 왕이 없다면 end상태로 전이된다.")
+        void Should_ChangeEndState_When_NoKingWhiteTeam() {
+            Board board = new Board(ChessBoardFactory.create());
+
+            board.move(B1, A3, Team.WHITE);
+            board.move(H7, H6, Team.BLACK);
+            board.move(A3, B5, Team.WHITE);
+            board.move(H8, H7, Team.BLACK);
+            board.move(B5, D6, Team.WHITE);
+            board.move(A7, A5, Team.BLACK);
+
+            State move = state.run(Command.of("move d6 e8"), board);
+            assertThat(move).isInstanceOf(End.class);
+        }
+
+        @Test
         @DisplayName("end 입력시 end상태로 전이된다.")
         void Should_ChangeEndState_When_WhiteState() {
             Board board = new Board(ChessBoardFactory.create());
@@ -117,6 +135,23 @@ public class StateTest {
             State move = state.run(Command.of("move a7 a5"), board);
 
             assertThat(move).isInstanceOf(White.class);
+        }
+
+        @Test
+        @DisplayName("move 입력시 왕이 없다면 end상태로 전이된다.")
+        void Should_ChangeEndState_When_NoKingBlackTeam() {
+            Board board = new Board(ChessBoardFactory.create());
+            board.move(A2,A3, Team.WHITE);
+            board.move(B8, C6, Team.BLACK);
+            board.move(A3, A4, Team.WHITE);
+            board.move(C6, D4, Team.BLACK);
+            board.move(A4, A5, Team.WHITE);
+            board.move(D4, F3, Team.BLACK);
+            board.move(A5, A6, Team.WHITE);
+
+            State move = state.run(Command.of("move f3 e1"), board);
+
+            assertThat(move).isInstanceOf(End.class);
         }
 
         @Test
