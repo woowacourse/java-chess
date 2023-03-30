@@ -57,4 +57,18 @@
 - [x] 팀별 기물의 총 점수를 출력한다.
 
 
-
+## 데이터베이스
+- [x] 체스 게임 명령어를 실행할 때 마다 체스 게임을 데이터베이스에 저장한다.
+- [x] 체스 게임이 중간에 비정상적으로 종료되었을 때, 종료된 시점에서 이어서 다시 플레이할 수 있다.
+```
+CREATE TABLE `chess_game` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `turn` varchar(8) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `piece_type` varchar(45) DEFAULT NULL,
+  `piece_rank` varchar(45) DEFAULT NULL,
+  `piece_file` varchar(45) DEFAULT NULL,
+  `piece_color` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2754 DEFAULT CHARSET=utf8m
+```
