@@ -4,8 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.entity.PieceNameConverter;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.PieceFactory;
 import chess.service.ChessGame;
 import chess.view.Command;
 import chess.view.InputView;
@@ -18,7 +18,6 @@ public class Application {
     private static final ChessGame chessGame = new ChessGame();
 
     public static void main(String[] args) {
-        PieceNameConverter.init();
         OutputView.printGameStart();
 
         while (!chessGame.isEnd()) {
@@ -37,9 +36,11 @@ public class Application {
             if (command.isMove()) {
                 chessGame.move(command.getCurrentPosition(),command.getTargetPosition());
                 chessGame.changeTurn();
+                return;
             }
             if(command.isStart()){
                 chessGame.start();
+                return;
             }
             if(command.isEnd()){
                 chessGame.changeTurnEnd();
@@ -62,12 +63,7 @@ public class Application {
         List<String> pieceNames = new ArrayList<>();
         for (int file = 0; file < 8; file++) {
             Piece piece = board.getBoard().get(new Position(Rank.of(rank), File.ofByFile(file)));
-
-            if (piece.isWhiteTeam()) {
-                pieceNames.add(piece.getType().getName().toLowerCase());
-                continue;
-            }
-            pieceNames.add(piece.getType().getName());
+            pieceNames.add(PieceFactory.from(piece));
         }
         return List.copyOf(pieceNames);
     }
