@@ -64,12 +64,6 @@ public class JdbcPieceDao implements PieceDao {
     }
 
     @Override
-    public void move(final int chessGameId, final Position source, final Position target) {
-        delete(chessGameId, target);
-        update(chessGameId, source, target);
-    }
-
-    @Override
     public void update(final int chessGameId, final Position source, final Position target) {
         final String sql = "UPDATE piece SET `file` = ?, `rank` = ? WHERE chess_game_id = ? AND `file` = ? AND `rank` = ?";
 
