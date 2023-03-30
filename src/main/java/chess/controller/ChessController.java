@@ -67,14 +67,14 @@ public class ChessController {
         try {
             renderChessBoard();
             final RunningCommand runningCommand = readMoveCommand();
-            if (runningCommand.getRunningCommandType() == RunningCommandType.STATUS) {
+            if (runningCommand.isMatched(RunningCommandType.STATUS)) {
                 OutputView.printScore(chessGame.calculateScore(Team.WHITE), chessGame.calculateScore(Team.BLACK));
                 OutputView.printWinner(chessGame.findWinner());
             }
-            if (runningCommand.getRunningCommandType() == RunningCommandType.MOVE) {
+            if (runningCommand.isMatched(RunningCommandType.MOVE)) {
                 move(chessGame, runningCommand.getParameters());
             }
-            if (runningCommand.getRunningCommandType() == RunningCommandType.END) {
+            if (runningCommand.isMatched(RunningCommandType.END)) {
                 chessGame.end();
             }
         } catch (Exception e) {

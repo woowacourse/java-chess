@@ -20,6 +20,10 @@ public class RunningCommand {
         return new RunningCommand(commands, type);
     }
 
+    public boolean isMatched(final RunningCommandType runningCommandType) {
+        return this.runningCommandType == runningCommandType;
+    }
+
     public List<String> getParameters() {
         return parameters;
     }
