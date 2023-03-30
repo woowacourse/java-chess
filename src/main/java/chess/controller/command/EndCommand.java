@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EndCommand implements Command {
     @Override
-    public void playWithCurrentTurn(List<String> inputCommand, ChessGameService chessGameService) {
+    public void execute(List<String> inputCommand, ChessGameService chessGameService) {
         OutputView.noticeFinalResult();
         
         ScoreDto scoreDto = new ScoreDto(chessGameService.chessBoard());

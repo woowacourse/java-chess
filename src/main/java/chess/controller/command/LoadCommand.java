@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LoadCommand implements Command {
     @Override
-    public void playWithCurrentTurn(List<String> inputCommand, ChessGameService chessGameService) {
+    public void execute(List<String> inputCommand, ChessGameService chessGameService) {
         chessGameService.newChessGame();
         chessGameService.load();
     
