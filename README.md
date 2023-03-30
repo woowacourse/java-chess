@@ -220,7 +220,11 @@ sequenceDiagram
     - [ ] Piece 인스턴스 캐싱
     - [x] Piece.canMove~() 에서 이동방향 검증까지 직접 할 수 있도록 개선
         - Piece 로 체스판의 이동 검증 로직 책임 위임 및 통합
-    - [ ] ActionMapper `Enum 요소 조회 비용` vs `Map 클래스로 변경 후, static 상수로 인한 메모리 사용` 비교
+    - [ ] CommandActionMapper `Enum 요소 조회 비용` vs `Map 클래스로 변경 후, static 상수로 인한 메모리 사용` 비교
+        - 두 가지의 비용만 비교했을 때에는 큰 차이가 없고, Map 클래스가 더 직관적일 수 있다.
+        - 하지만 CommandActionMapper 는 Command 의 목록에 대해 관리하는 클래스이기도 하다.
+            - OutputView 에서도 해당 클래스의 Command 를 참조해 안내 문구를 출력한다.
+            - 이를 비롯해 Command 의 목록만 조회하고 싶을 때는 Map 에서 key값을 순회하는 것보다 Enum 이 더 직관적이라고 생각하여 Enum 으로 유지하였다.
     - [x] GameStatus 패키지 이동, 검증 로직 의존관계 없애기
 - 코드 관련
     - [x] Jdbc 템플릿 적용하여 Dao 중복 코드 제거
@@ -228,7 +232,6 @@ sequenceDiagram
     - [x] 부적절한 Dao 클래스명 수정
     - [x] SQLException 커스텀 런타임예외로 전환, 예외메시지 구체화
         - [x] 적절한 예외 정의해서 던지도록 수정
-    - [ ] Connection 사용 최적화
     - [x] King 공격 확인 메서드 분리
     - [x] 모호한 메서드명 수정
     - [x] 필요 시 Optional orElse 대신 orElseGet 쓰기
@@ -237,6 +240,6 @@ sequenceDiagram
     - [x] init DDL 불필요한 KEY 명시 삭제
     - [x] 새로운 방 개설 시 바로 board_statuses 반영
     - [x] 서비스 계층 테스트는 InMemoryDao 주입하여 작성하기
-    - [ ] **리뷰 요청 전에 init.sql 수정**
     - [ ] insert + update 단일 책임 위배일까?
-    - [ ] DB 작동 테스트는 테스트용 테이블 만들어서 작성하기
+        - 자바 콜렉션 중 Map 에서 제공하는 put 메서드와 같은 논리라고 보면, 허용 가능하다고 판단했다.
+    - [ ] Connection 사용 최적화
