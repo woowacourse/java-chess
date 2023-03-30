@@ -54,16 +54,15 @@ class ChessBoardTest {
         assertThat(piece).isEqualTo(new Rook(Team.BLACK, Coordinate.createCoordinate("7", "b")));
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,true","WHITE,false"})
-    void 특정_팀의_왕이_살아있는지_확인(Team team, boolean expected){
+    @Test
+    void 왕이_살아있는지_확인(){
         ChessBoard testChessBoard = ChessBoard.create();
         testChessBoard.move(Coordinate.createCoordinate("2","d"),Coordinate.createCoordinate("4","d"));
         testChessBoard.move(Coordinate.createCoordinate("1","d"),Coordinate.createCoordinate("3","d"));
         testChessBoard.move(Coordinate.createCoordinate("3","d"),Coordinate.createCoordinate("3","e"));
         testChessBoard.move(Coordinate.createCoordinate("3","e"),Coordinate.createCoordinate("7","e"));
         testChessBoard.move(Coordinate.createCoordinate("7","e"),Coordinate.createCoordinate("8","e"));
-        assertThat(testChessBoard.isKingAlive(team)).isEqualTo(expected);
+        assertThat(testChessBoard.isKingAlive()).isEqualTo(false);
 
     }
 

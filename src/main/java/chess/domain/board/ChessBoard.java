@@ -1,8 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.PointCalculator;
 import chess.domain.piece.Team;
-import chess.domain.piece.coordinate.Column;
 import chess.domain.piece.coordinate.Coordinate;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +14,6 @@ public class ChessBoard {
 
     private static final int MIN_ROW_NUMBER = 1;
     private static final int MAX_ROW_NUMBER = 8;
-    private static final double EXCLUDING_POINT_OF_SINGLE_PAWN = 0.5;
     private static final boolean FIRST_TRY = false;
 
     private final List<RowPieces> chessBoard;
@@ -92,45 +93,17 @@ public class ChessBoard {
     }
 
     public double calculateFinalPointsByTeam(Team team) {
-        return sumPointsByTeam(team) - totalExcludingPointsOfPawn(team);
-    }
-
-    private double sumPointsByTeam(Team team) {
-        double sum = 0;
+        List<Double> points = new ArrayList<>();
         for (RowPieces rowPieces : chessBoard) {
-            sum += rowPieces.sumPiecePoints(team);
+            points.add(rowPieces.sumPiecePoints(team));
         }
-        return sum;
+        return PointCalculator.sumPoints(points) - PointCalculator.totalExcludingPointsOfPawn(chessBoard,team);
     }
 
-    private double totalExcludingPointsOfPawn(Team team) {
-        double sum = 0;
-        for (Column column : Column.values()) {
-            sum += numberOfPawnInColumnIfPawnNumbersOver2(team, column);
-        }
-        return sum * EXCLUDING_POINT_OF_SINGLE_PAWN;
-    }
-
-    private double numberOfPawnInColumnIfPawnNumbersOver2(Team team, Column column) {
-        double count = 0;
-        for (int i = 0; i < 8; i++) {
-            count = addCountIfPawnExists(team, column, count, i);
-        }
-        if (count < 2) {
-            return 0;
-        }
-        return count;
-    }
-
-    private double addCountIfPawnExists(Team team, Column column, double count, int i) {
-        if (chessBoard.get(i).checkPawnByColumn(column, team)) {
-            count++;
-        }
-        return count;
-    }
-
-    public boolean isKingAlive(Team team){
-        return chessBoard.stream().anyMatch(rowPieces -> rowPieces.isContainsKing(team));
+    public boolean isKingAlive(){
+        boolean blackKingAlive = chessBoard.stream().anyMatch(rowPieces -> rowPieces.isContainsKing(Team.BLACK));
+        boolean whiteKingAlive = chessBoard.stream().anyMatch(rowPieces -> rowPieces.isContainsKing(Team.WHITE));
+        return blackKingAlive && whiteKingAlive;
     }
 
     public List<RowPieces> chessBoard() {
