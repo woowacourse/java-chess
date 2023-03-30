@@ -5,7 +5,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -13,13 +13,17 @@ public class Board {
     private final Map<Position, Piece> board;
     private Color turn;
 
-    private Board(final Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board, final Color turn) {
         this.board = board;
-        this.turn = Color.WHITE;
+        this.turn = turn;
     }
 
     public static Board from(final Map<Position, Piece> board) {
-        return new Board(board);
+        return new Board(board, Color.WHITE);
+    }
+
+    public static Board from(final Map<Position, Piece> board, final Color turn) {
+        return new Board(board, turn);
     }
 
     public void move(final String source, final String target) {
@@ -29,6 +33,7 @@ public class Board {
 
         validate(sourcePosition, targetPosition, piece);
         movePiece(sourcePosition, targetPosition, piece);
+        turn = turn.nextTurn();
     }
 
     private void validate(final Position sourcePosition, final Position targetPosition, final Piece piece) {
@@ -56,10 +61,9 @@ public class Board {
         return board.get(position).equals(Empty.getInstance());
     }
 
-    private void movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        board.put(targetPosition, piece);
-        board.put(sourcePosition, Empty.getInstance());
-        turn = turn.nextTurn();
+    private void movePiece(final Position source, final Position target, final Piece piece) {
+        board.put(target, piece);
+        board.put(source, Empty.getInstance());
     }
 
     public double whiteScore() {
@@ -88,6 +92,6 @@ public class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
+        return new HashMap<>(board);
     }
 }
