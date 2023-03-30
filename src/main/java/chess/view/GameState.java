@@ -7,7 +7,6 @@ public enum GameState {
     END("end"),
     MOVE("move"),
     STATUS("status"),
-    LOAD("load"),
     LOAD_LIST("load_list");
 
     private final String command;
