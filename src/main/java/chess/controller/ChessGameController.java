@@ -29,17 +29,12 @@ public final class ChessGameController {
         DBInitFactory.initDB();
         players = InitPlayersFactory.initializePlayers();
         OutputView.printStartGame();
-        boolean isNotEnd = true;
-        while (isOnGoing(isNotEnd)) {
-            Commands commandWithArguments = readCommand(InputView::getCommands);
+        Commands commandWithArguments;
+        do {
+            commandWithArguments = readCommand(InputView::getCommands);
             commandAction.execute(commandWithArguments);
-            isNotEnd = commandWithArguments.isNotEnd();
-        }
+        } while (commandWithArguments.isNotEnd() && !players.notEveryKingAlive());
         finishGame();
-    }
-
-    private boolean isOnGoing(boolean isNotEnd) {
-        return isNotEnd && !players.notEveryKingAlive();
     }
 
     private void finishGame() {
