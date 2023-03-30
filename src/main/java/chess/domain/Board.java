@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
-    public static final int KING_COUNT = 1;
     public static final int KING_DIE_SCORE = -1;
     private final Map<Position, Piece> board;
 
