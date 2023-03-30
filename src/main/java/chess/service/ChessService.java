@@ -13,13 +13,16 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.dto.GameDto;
 import chess.dto.PieceDto;
+import chess.exception.GameIdNotFoundException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessService {
+
     private final GameDao gameDao;
     private final PieceDao pieceDao;
 
@@ -28,15 +31,15 @@ public class ChessService {
         this.pieceDao = pieceDao;
     }
 
-    public Game makeGame() {
-        GameDto gameDto = gameDao.select();
-        if (gameDto == null) {
-            return null;
+    public Optional<Game> makeGame() {
+        if (gameDao.select().isEmpty()) {
+            return Optional.empty();
         }
+        GameDto gameDto = gameDao.select().get();
         List<PieceDto> pieceDtos = pieceDao.select(gameDto.getGameId());
         Map<Square, Piece> squarePieceMap = generateBoard(pieceDtos);
         Board board = new Board(squarePieceMap);
-        return new Game(board, Team.valueOf(gameDto.getTurn()));
+        return Optional.of(new Game(board, Team.valueOf(gameDto.getTurn())));
     }
 
     private Map<Square, Piece> generateBoard(List<PieceDto> pieceDtos) {
@@ -77,8 +80,9 @@ public class ChessService {
 
     public void save(Game game) {
         gameDao.save(game);
-        GameDto gameDto = gameDao.select();
-        pieceDao.save(game, gameDto.getGameId());
+        Optional<GameDto> gameDto = gameDao.select();
+        Optional<Integer> gameId = gameDto.map(GameDto::getGameId);
+        pieceDao.save(game, gameId.orElseThrow(GameIdNotFoundException::new));
     }
 
     public void delete() {

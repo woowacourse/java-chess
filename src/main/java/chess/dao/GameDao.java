@@ -3,6 +3,7 @@ package chess.dao;
 import chess.domain.game.Game;
 import chess.dto.GameDto;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public final class GameDao{
     private final DBConnection dbConnection = new DBConnection();
@@ -10,7 +11,7 @@ public final class GameDao{
     public void save(Game game) {
         final var query = "INSERT INTO game(turn) VALUES(?)";
         try (var connection = dbConnection.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
+            var preparedStatement = connection.prepareStatement(query)) {
             String turn = game.getTurn().name();
             preparedStatement.setString(1, turn);
             preparedStatement.executeUpdate();
@@ -19,15 +20,16 @@ public final class GameDao{
         }
     }
 
-    public GameDto select() {
+    public Optional<GameDto> select() {
         final var query = "SELECT * FROM game";
         try (var connection = dbConnection.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
+            var preparedStatement = connection.prepareStatement(query)) {
             var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new GameDto(resultSet.getInt("id"), resultSet.getString("turn"));
+                return Optional.of(
+                    new GameDto(resultSet.getInt("id"), resultSet.getString("turn")));
             }
-            return null;
+            return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

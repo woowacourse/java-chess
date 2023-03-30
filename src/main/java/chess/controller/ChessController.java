@@ -8,6 +8,7 @@ import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
+import java.util.Optional;
 
 public class ChessController {
     private static final int SOURCE_INDEX = 0;
@@ -23,7 +24,6 @@ public class ChessController {
         this.outputView = outputView;
         this.chessService = chessService;
     }
-
 
     public void run() {
         outputView.printGameStartMessage();
@@ -44,11 +44,8 @@ public class ChessController {
     }
 
     private Game loadGame() {
-        Game game = chessService.makeGame();
-        if (chessService.makeGame() == null) {
-            return new Game();
-        }
-        return game;
+        Optional<Game> game = chessService.makeGame();
+        return game.orElseGet(Game::new);
     }
 
     private void play() {
