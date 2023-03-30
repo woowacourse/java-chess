@@ -20,8 +20,12 @@ public final class ChessBoard {
 
     private final Map<SquareCoordinate, SquareState> squares;
 
-    public ChessBoard(Map<SquareCoordinate, SquareState> squares) {
+    public ChessBoard(final Map<SquareCoordinate, SquareState> squares) {
         this.squares = squares;
+    }
+
+    public ChessBoard(final ChessBoard chessBoard) {
+        this.squares = Collections.unmodifiableMap(chessBoard.squares);
     }
 
     public boolean isDifferentTeam(final Team team, final SquareCoordinate from) {
@@ -101,10 +105,6 @@ public final class ChessBoard {
             return kingPiece.get(FIRST_INDEX).getTeam();
         }
         throw new IllegalArgumentException("게임이 진행 중이므로 종료할 수 없습니다.");
-    }
-
-    public ChessBoard copyChessBoard() {
-        return new ChessBoard(Collections.unmodifiableMap(this.squares));
     }
 
     public List<SquareState> getSquares() {

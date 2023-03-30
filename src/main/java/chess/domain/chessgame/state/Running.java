@@ -53,7 +53,7 @@ public class Running implements GameState {
     @Override
     public GameState close() {
         final Team winner = chessBoard.findTeamHavingKing();
-        return new Ready(new WinningStatusByKing(winner), chessBoard.copyChessBoard());
+        return new Ready(new WinningStatusByKing(winner), new ChessBoard(chessBoard));
     }
 
     @Override
@@ -72,10 +72,8 @@ public class Running implements GameState {
 
     @Override
     public GameState save(RoomName roomName) {
-        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.from(chessBoard);
-
         ChessGameDao chessGameDao = new ChessGameDao();
-        chessGameDao.saveGame(roomName, currentTeam, convertedChessBoard.getOneLineChessBoard());
+        chessGameDao.saveGame(roomName, currentTeam, new ChessBoard(chessBoard));
 
         return new Ready();
     }
