@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.view;
 
 import chess.domain.piece.Team;
 

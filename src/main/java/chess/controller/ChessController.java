@@ -90,13 +90,13 @@ public final class ChessController {
 
     private void showStatusAfterRunning(final WinningStatus winningStatus) {
         Team winner = winningStatus.getWinner();
-        OutputView.printWinnerAfterRunning(TeamName.getNameByTeam(winner));
+        OutputView.printWinnerAfterRunning(winner);
     }
 
     private void showStatusWhenRunning(final WinningStatus winningStatus) {
         final Map<Team, Score> scores = winningStatus.getScores();
         for (Team team : scores.keySet()) {
-            OutputView.printScore(TeamName.getNameByTeam(team), scores.get(team).getScore());
+            OutputView.printScore(team, scores.get(team).getScore());
         }
 
         Team winner = winningStatus.getWinner();
@@ -104,7 +104,7 @@ public final class ChessController {
             OutputView.printDrawWhenRunning();
             return;
         }
-        OutputView.printWinnerWhenRunning(TeamName.getNameByTeam(winner));
+        OutputView.printWinnerWhenRunning(winner);
     }
 
     private void saveGame(final ChessGame chessGame) {
