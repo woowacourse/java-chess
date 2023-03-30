@@ -66,7 +66,7 @@
 
 #### DB 연결
 
-table 생성 ddl sql
+[table 생성 ddl sql](ddl.sql)
 ```sql
 CREATE TABLE gameRooms (
     room_id INTEGER NOT NULL ,
