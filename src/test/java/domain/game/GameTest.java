@@ -28,6 +28,9 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("Game은")
 class GameTest {
@@ -37,7 +40,7 @@ class GameTest {
     @BeforeEach
     void generateGame() {
         this.chessBoard = new ChessBoardGenerator().generate();
-        this.game = new Game(this.chessBoard, WHITE);
+        this.game = new Game(this.chessBoard, "user", "title", WHITE);
     }
 
     @DisplayName("움직일 수 있는 source postion과 target position을 입력받은 경우," +
@@ -211,5 +214,25 @@ class GameTest {
     void shouldReturnFalseWhenAllKingIsAlive() {
         // 체스판 초기화 직후 상태
         assertThat(game.checkStatus()).isEqualTo(IN_PROGRESS);
+    }
+
+    @DisplayName("비어있는 사용자 이름으로 생성하면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {" "})
+    @NullAndEmptySource
+    void shouldThrowExceptionWhenInputEmptyValueToUserName(String userName) {
+        assertThatThrownBy(() -> Game.create(userName, "title"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("사용자 이름이 비어있습니다.");
+    }
+
+    @DisplayName("비어있는 게임 이름으로 생성하면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {" "})
+    @NullAndEmptySource
+    void shouldThrowExceptionWhenInputEmptyValueToTitle(String title) {
+        assertThatThrownBy(() -> Game.create("user", title))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 이름이 비어있습니다.");
     }
 }

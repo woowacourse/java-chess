@@ -23,10 +23,20 @@ public class Game {
     private Side sideOfTurn;
 
     public Game(Map<Position, Piece> chessBoard, String userName, String title, Side sideOfTurn) {
+        validate(userName, title);
         this.chessBoard = chessBoard;
         this.userName = userName;
         this.title = title;
         this.sideOfTurn = sideOfTurn;
+    }
+
+    private void validate(String userName, String title) {
+        if (userName == null || userName.isBlank()) {
+            throw new IllegalArgumentException("사용자 이름이 비어있습니다.");
+        }
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("게임 이름이 비어있습니다.");
+        }
     }
 
     public static Game create(String userName, String title) {
@@ -112,9 +122,8 @@ public class Game {
     }
 
     private boolean isWhiteKingDead() {
-        boolean isWhiteKingDead = this.chessBoard.values().stream()
+        return this.chessBoard.values().stream()
                 .noneMatch(piece -> piece.getCategory().equals(PieceCategory.WHITE_KING));
-        return isWhiteKingDead;
     }
 
     private boolean isBlackKingDead() {
