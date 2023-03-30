@@ -70,4 +70,8 @@ public class ChessGameService {
         return board.findPieceOf(destination)
                 .orElseThrow(() -> new IllegalStateException("데이터가 존재하지 않습니다."));
     }
+
+    public void updateChessGameStateAndTurn(final ChessGame chessGame) {
+        chessGameDao.update(chessGame);
+    }
 }

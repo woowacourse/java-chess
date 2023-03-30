@@ -25,6 +25,7 @@ public class ChessController {
             playChessGame(chessGame);
             checkKing(chessGame);
         }
+        printGameOver(chessGame);
     }
 
     private ChessGame readChessGame() {
@@ -49,7 +50,16 @@ public class ChessController {
 
     private void checkKing(final ChessGame chessGame) {
         if (chessGame.isKingDied()) {
-            chessGame.end();
+            chessGame.done();
+            chessGameService.updateChessGameStateAndTurn(chessGame);
+        }
+    }
+
+    private void printGameOver(final ChessGame chessGame) {
+        if (chessGame.isEnd()) {
+            outputView.printEndMessage();
+        }
+        if (chessGame.isDone()) {
             outputView.printDoneMessage();
         }
     }

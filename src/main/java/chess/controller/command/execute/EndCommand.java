@@ -13,6 +13,6 @@ public class EndCommand implements ExecuteCommand {
             final OutputView outputView
     ) {
         chessGame.end();
-        outputView.printEndMessage();
+        chessGameService.updateChessGameStateAndTurn(chessGame);
     }
 }
