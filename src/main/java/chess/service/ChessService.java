@@ -7,9 +7,7 @@ import chess.domain.ChessGame;
 import chess.domain.InitialPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.ChessBoardDto;
 import chess.dto.ChessGameDto;
-import chess.dto.GameScoreDto;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,15 +15,13 @@ public class ChessService {
 
     private final ChessGameDao gameDao;
     private final PieceDao pieceDao;
-    private final ChessGame chessGame;
 
     public ChessService(final ChessGameDao gameDao, final PieceDao pieceDao) {
         this.gameDao = gameDao;
         this.pieceDao = pieceDao;
-        this.chessGame = createGame();
     }
 
-    private ChessGame createGame() {
+    public ChessGame loadOrCreateGame() {
         Optional<ChessGameDto> game = gameDao.findLastGame();
         return game.map(this::loadSavedGame)
             .orElseGet(this::createNewGame);
@@ -48,10 +44,10 @@ public class ChessService {
         pieceDao.save(piecesByPosition, gameId);
     }
 
-    public void move(final Position source, final Position dest) {
+    public void move(final ChessGame chessGame, final Position source, final Position dest) {
         chessGame.move(source, dest);
         updateMovement(source, dest, chessGame.getGameId());
-        updateGameStatus(chessGame.getGameId());
+        updateGameStatus(chessGame);
     }
 
     private void updateMovement(final Position source, final Position dest, final long gameId) {
@@ -59,31 +55,15 @@ public class ChessService {
         pieceDao.updatePositionByPositionAndGameId(source, gameId, dest);
     }
 
-    private void updateGameStatus(final long gameId) {
-        gameDao.updateTurn(gameId, chessGame.getTeamColor());
+    private void updateGameStatus(final ChessGame chessGame) {
+        gameDao.updateTurn(chessGame.getGameId(), chessGame.getTeamColor());
         if (chessGame.isEnd()) {
-            updateGameStatusEnd(gameId);
+            updateGameStatusEnd(chessGame.getGameId());
         }
     }
 
     private void updateGameStatusEnd(final long gameId) {
         gameDao.updateStatus(gameId, true);
-    }
-
-    public ChessBoardDto getChessBoard() {
-        return ChessBoardDto.from(chessGame.getChessBoard());
-    }
-
-    public GameScoreDto getCurrentScore() {
-        return chessGame.getCurrentScore();
-    }
-
-    public String findWinningTeam() {
-        return chessGame.findWinningTeam().name();
-    }
-
-    public boolean isGameEnd() {
-        return chessGame.isEnd();
     }
 
 }
