@@ -27,7 +27,7 @@ public class ChessGameService {
     }
 
     public List<Integer> availableBoards() {
-        return chessBoardService.findAllBoardIds();
+        return chessBoardService.findAllNotOverBoardIds();
     }
 
     public void start(int boardId) {
@@ -48,7 +48,6 @@ public class ChessGameService {
             gameStatus = GameStatus.OVER;
         }
         chessBoardService.saveChessBoard(chessBoard);
-        chessBoard.switchCampTurn();
     }
 
     public void end(CommandRequest commandRequest) {
