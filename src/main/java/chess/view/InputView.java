@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.dto.Command;
-import chess.dto.LoadCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +12,7 @@ public class InputView {
     private static final int GAME_STATE_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
-    private static final int GAME_LOAD_ID_INDEX = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
 
     private InputView() {
     }
@@ -24,21 +23,15 @@ public class InputView {
         final List<String> commands = Arrays.asList(command.split(DELIMITER));
         final GameState gameState = GameState.from(commands.get(GAME_STATE_INDEX));
 
-        if (gameState.isNotMoveState()) {
+        if (commands.size() != MOVE_COMMAND_SIZE || gameState.isNotMoveState()) {
             return Command.from(gameState);
         }
 
         return Command.from(gameState, commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
     }
 
-    public static LoadCommand inputLoadCommand() {
-        System.out.println("불러올 게임 번호를 입력해주세요. (예. load 4)");
-        final String command = scanner.nextLine();
-
-        final List<String> commands = Arrays.asList(command.split(DELIMITER));
-        final GameState gameState = GameState.from(commands.get(GAME_STATE_INDEX));
-        final long gameId = Long.parseLong(commands.get(GAME_LOAD_ID_INDEX));
-
-        return LoadCommand.create(gameState, gameId);
+    public static long inputGameId() {
+        System.out.println("불러올 게임 번호를 입력해주세요. (예. 4)");
+        return Long.parseLong(scanner.nextLine());
     }
 }
