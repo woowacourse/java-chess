@@ -20,27 +20,27 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
-
     private static Board board;
+
     private static Stream<Arguments> boardTestProvider() {
         return Stream.of(
                 Arguments.of(
                         0,
                         PieceType.ROOK
                 ),
-            Arguments.of(
-                1,
-                PieceType.KNIGHT
-            ),
-            Arguments.of(
-                30,
-                PieceType.EMPTY
+                Arguments.of(
+                        1,
+                        PieceType.KNIGHT
+                ),
+                Arguments.of(
+                        30,
+                        PieceType.EMPTY
 
-            ),
-            Arguments.of(
-                63,
-                PieceType.ROOK
-            )
+                ),
+                Arguments.of(
+                        63,
+                        PieceType.ROOK
+                )
         );
     }
 

@@ -54,7 +54,7 @@ class QueenTest {
     @MethodSource("possibleQueenTestProvider")
     void Should_Success_When_QueenMove(Square source, Square target) {
         Queen queen = new Queen(Team.WHITE);
-        
+
         assertDoesNotThrow(() -> queen.validateMovableRange(source, target));
     }
 }

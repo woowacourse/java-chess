@@ -16,19 +16,19 @@ public enum PieceMessage {
 
     private static final Map<PieceType, String> MESSAGES;
 
+    static {
+        MESSAGES = new EnumMap<>(PieceType.class);
+        for (PieceType pieceType : PieceType.values()) {
+            MESSAGES.put(pieceType, findMessage(pieceType));
+        }
+    }
+
     private final PieceType pieceType;
     private final String message;
 
     PieceMessage(PieceType pieceType, String message) {
         this.pieceType = pieceType;
         this.message = message;
-    }
-
-    static {
-        MESSAGES = new EnumMap<>(PieceType.class);
-        for (PieceType pieceType : PieceType.values()) {
-            MESSAGES.put(pieceType, findMessage(pieceType));
-        }
     }
 
     private static String findMessage(PieceType pieceType) {

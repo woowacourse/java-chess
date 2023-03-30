@@ -64,21 +64,20 @@ public class Game {
         return score;
     }
 
-    private static Map<Piece, Integer> getPawnPieces(Map<Piece, Square> pieces) {
+    private Map<Piece, Integer> getPawnPieces(Map<Piece, Square> pieces) {
         return pieces.entrySet().stream()
-            .filter(entry -> entry.getKey().isSamePieceType(PieceType.PAWN))
-            .collect(Collectors.toMap(
-                Entry::getKey,
-                entry -> entry.getValue().getFileToInt()
-            ));
+                .filter(entry -> entry.getKey().isSamePieceType(PieceType.PAWN))
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> entry.getValue().getFileToInt()
+                ));
     }
 
-    private double pawnDuplicateMinusScore(Map<Piece, Integer> pawnPiece, Square square,
-        PieceType pieceType) {
+    private double pawnDuplicateMinusScore(Map<Piece, Integer> pawnPiece, Square square, PieceType pieceType) {
         if (pieceType == PieceType.PAWN) {
             int fileToInt = square.getFileToInt();
             long pawnCount = pawnPiece.values().stream()
-                .filter(file -> file.equals(fileToInt)).count();
+                    .filter(file -> file.equals(fileToInt)).count();
             return pawnMinusScore(pawnCount);
         }
         return 0;

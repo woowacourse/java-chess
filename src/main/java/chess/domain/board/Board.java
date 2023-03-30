@@ -95,8 +95,8 @@ public class Board {
 
     public Map<Piece, Square> getTeamPieces(Team team) {
         return board.entrySet().stream()
-            .filter(entry -> entry.getValue().isSameTeam(team))
-            .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
     }
 
     public List<Piece> getPieces() {

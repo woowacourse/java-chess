@@ -83,8 +83,8 @@ public class BoardFactory {
 
     private List<Square> generateSquares() {
         return Arrays.stream(Rank.values())
-            .flatMap(rank -> Arrays.stream(File.values())
-                .map(file -> new Square(file, rank)))
-            .collect(Collectors.toList());
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> new Square(file, rank)))
+                .collect(Collectors.toList());
     }
 }
