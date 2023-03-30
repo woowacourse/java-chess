@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import java.util.Map;
 
 public class Empty implements Piece {
     private static Empty instance;
@@ -61,7 +62,26 @@ public class Empty implements Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isSliding() {
         throw new IllegalArgumentException("기물이 존재하지 않는 위치입니다.");
+    }
+
+    @Override
+    public void addPieceType(Map<PieceType, Integer> pieceCounter) {
+    }
+
+    @Override
+    public String getPieceTypeName() {
+        return "EMPTY";
+    }
+
+    @Override
+    public String getColorName() {
+        return "EMPTY";
     }
 }

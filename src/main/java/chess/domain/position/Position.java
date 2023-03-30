@@ -100,16 +100,24 @@ public class Position {
         return Position.of(fileDirection.move(this.file), rankDirection.move(this.rank, 1));
     }
 
-    public List<Integer> getCoordinate() {
-        List<Integer> coordinate = new ArrayList<>();
+    public String getRankName() {
+        return rank.name();
+    }
 
-        coordinate.add(rank.getRankIndex());
-        coordinate.add(file.getFileIndex());
-        return coordinate;
+    public String getFileName() {
+        return file.name();
+    }
+
+    public String getSymbol() {
+        return file.getSymbol() + rank.getSymbol();
     }
 
     public boolean isSameRank(Rank other) {
         return rank.equals(other);
+    }
+
+    public boolean isSameFile(File other) {
+        return file.equals(other);
     }
 
     public boolean isInvalid() {
@@ -135,9 +143,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
+        return file.toString() + rank.toString();
     }
 }

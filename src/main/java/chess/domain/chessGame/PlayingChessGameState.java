@@ -1,36 +1,26 @@
 package chess.domain.chessGame;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.EnumMap;
 import java.util.Map;
 
-public class PlayingChessGame implements ChessGame {
-    private final Board board;
-    private Color turnColor = Color.WHITE;
-
-    public PlayingChessGame(Board board) {
-        this.board = board;
-    }
+public class PlayingChessGameState implements ChessGameState {
 
     @Override
-    public ChessGame start() {
+    public ChessGameState start() {
         throw new IllegalArgumentException("이미 플레이중인 게임입니다.");
     }
 
     @Override
-    public ChessGame move(String currentPositionSymbol, String nextPositionSymbol) {
+    public void validateMove(String currentPositionSymbol, String nextPositionSymbol, Piece movingPiece) {
         Position currentPosition = Position.from(currentPositionSymbol);
         Position nextPosition = Position.from(nextPositionSymbol);
         checkCurrentAndNextPosition(currentPosition, nextPosition);
-        checkTurn(currentPosition);
-        board.move(currentPosition, nextPosition);
-        turnColor = turnColor.getOppositeColor();
-        return this;
     }
 
-    //TODO 올바른 포지션 체크 예외를 포지션 객체에서 하게 리팩토링 필요
     private void checkCurrentAndNextPosition(Position currentPosition, Position nextPosition) {
         checkInvalidPosition(currentPosition);
         checkInvalidPosition(nextPosition);
@@ -42,16 +32,9 @@ public class PlayingChessGame implements ChessGame {
         }
     }
 
-    private void checkTurn(Position currentPosition) {
-        Piece movingPiece = board.findPieceByPosition(currentPosition);
-        if (movingPiece.isOpponent(turnColor)) {
-            throw new IllegalArgumentException("상대방 기물의 턴입니다.");
-        }
-    }
-
     @Override
-    public ChessGame end() {
-        return new EndChessGame();
+    public ChessGameState end() {
+        return new EndChessGameState();
     }
 
     @Override
@@ -60,7 +43,25 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Position, String> getPrintingBoard() {
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public Map<Position, String> getPrintingBoard(Board board) {
         return board.getPrintingBoard();
+    }
+
+    @Override
+    public Map<Color, Double> getScores(Board board) {
+        Map<Color, Double> scores = new EnumMap<>(Color.class);
+        scores.put(Color.WHITE, board.calculateScoreByColor(Color.WHITE));
+        scores.put(Color.BLACK, board.calculateScoreByColor(Color.BLACK));
+        return scores;
+    }
+
+    @Override
+    public String getName() {
+        return "playing";
     }
 }

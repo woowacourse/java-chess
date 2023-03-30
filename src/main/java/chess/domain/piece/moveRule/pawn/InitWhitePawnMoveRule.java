@@ -49,6 +49,6 @@ public class InitWhitePawnMoveRule implements MoveRule {
 
     @Override
     public PieceType pieceType() {
-        return PieceType.PAWN;
+        return PieceType.INIT_PAWN;
     }
 }

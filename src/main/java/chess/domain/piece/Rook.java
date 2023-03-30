@@ -5,8 +5,7 @@ import chess.domain.piece.moveRule.RookMoveRule;
 import chess.domain.position.Position;
 
 public class Rook extends AbstractPiece {
-    private Rook(
-            MoveRule moveRule, Color color) {
+    private Rook(MoveRule moveRule, Color color) {
         super(moveRule, color);
     }
 

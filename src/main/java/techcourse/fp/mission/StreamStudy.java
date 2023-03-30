@@ -38,7 +38,6 @@ public class StreamStudy {
 
         System.out.println(words);
         System.out.println(words.size());
-        // TODO 이 부분에 구현한다.
 
         List<String> result = words.stream().filter(word -> word.length() > 12)
                 .sorted(Comparator.comparing(String::length))

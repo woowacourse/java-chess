@@ -1,13 +1,11 @@
 package chess.domain.piece.moveRule;
 
 import static chess.domain.piece.moveRule.TestFixture.A1;
-import static chess.domain.piece.moveRule.TestFixture.B1;
 import static chess.domain.piece.moveRule.TestFixture.B3;
-import static chess.domain.piece.moveRule.TestFixture.D1;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;

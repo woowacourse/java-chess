@@ -4,11 +4,13 @@
 - [x] 이미 시작한 상태에서 start 하면 예외가 발생한다.
 - [x] 턴이 아닌 기물이 move하면 예외가 발생한다.
 - [x] 잘못된 명령어 입력시 명령어를 재입력받는다.
+- [x] 팀별 기물 점수 총합을 구한다.
 
 ## 보드(Board)
 
 - [x] 체스 기물이 놓여진 위치를 저장한다.
 - [x] 체스 기물을 이동시킨다.
+- [x] 같은 색인 기물들의 점수 총합을 구한다.
 
 ## 위치(Position)
 
@@ -23,6 +25,7 @@
 - [x] 기물의 진영은 검은색과 흰색편으로 구분한다.
 - [x] 기물의 이름 표기는 진영에 따라 대문자(검은색), 소문자(흰색)로 구분한다.
 - [x] 기물은 상대 팀의 기물을 잡을 수 있다.
+- [x] 기물은 점수를 가진다.
 
 ## 이동규칙(MoveRule)
 
@@ -45,11 +48,27 @@
 - [x] 게임을 시작하는 명령어 start를 입력받는다.
 - [x] 게임을 종료하는 명령어 end를 입력받는다.
 - [x] move source위치 target위치 로 체스말을 이동시키는 명령어를 입력받는다.
+- [x] 팀별 점수를 출력하는 명령어 status를 입력받는다.
 
 ## 출력
 
 - [x] 게임 명령어 안내 메시지를 출력한다.
 - [x] 보드의 현재 상태를 출력한다.
+- [x] 팀별 기물의 총 점수를 출력한다.
 
+## 데이터베이스
 
+- [x] 체스 게임 명령어를 실행할 때 마다 체스 게임을 데이터베이스에 저장한다.
+- [x] 체스 게임이 중간에 비정상적으로 종료되었을 때, 종료된 시점에서 이어서 다시 플레이할 수 있다.
 
+```
+CREATE TABLE `chess_game` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `turn` varchar(8) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `piece_type` varchar(45) DEFAULT NULL,
+  `piece_position` varchar(45) DEFAULT NULL,
+  `piece_color` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3650 DEFAULT CHARSET=utf8mb3
+```

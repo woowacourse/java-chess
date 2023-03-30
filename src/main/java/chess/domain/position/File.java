@@ -36,6 +36,10 @@ public enum File {
                 .orElse(null);
     }
 
+    public static File of(String symbol) {
+        return File.of(symbol.charAt(0));
+    }
+
     public File move(int distance) {
         return File.of(this.index + distance);
     }
@@ -76,10 +80,12 @@ public enum File {
         return File.of(this.index - ONE_SQUARE);
     }
 
+    public String getSymbol() {
+        return String.valueOf(symbol);
+    }
+
     @Override
     public String toString() {
-        return "File{" +
-                "number=" + index +
-                "}";
+        return String.valueOf(symbol);
     }
 }

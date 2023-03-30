@@ -31,8 +31,20 @@ public class PieceData {
         return color.isEqual(other);
     }
 
+    public String getPieceTypeName() {
+        return pieceType.toString();
+    }
+
+    public String getColorName() {
+        return color.toString();
+    }
+
     protected Color getColor() {
         return color;
+    }
+
+    protected PieceType getPieceType() {
+        return pieceType;
     }
 
     @Override

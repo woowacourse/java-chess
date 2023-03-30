@@ -24,4 +24,9 @@ public class King extends AbstractPiece {
     public boolean isSliding() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
