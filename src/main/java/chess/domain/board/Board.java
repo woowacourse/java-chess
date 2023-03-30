@@ -16,7 +16,7 @@ public class Board {
     private final Map<Position, Piece> board;
 
     public Board() {
-        board = new BoardGenerator().generate();
+        this(new BoardGenerator().generate());
     }
 
     public Board(Map<Position, Piece> board) {

@@ -21,7 +21,6 @@ public class PlayingChessGameState implements ChessGameState {
         checkCurrentAndNextPosition(currentPosition, nextPosition);
     }
 
-    //TODO 올바른 포지션 체크 예외를 포지션 객체에서 하게 리팩토링 필요
     private void checkCurrentAndNextPosition(Position currentPosition, Position nextPosition) {
         checkInvalidPosition(currentPosition);
         checkInvalidPosition(nextPosition);
