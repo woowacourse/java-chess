@@ -67,7 +67,7 @@ public class MovementDao {
     }
 
     public boolean deleteAll() {
-        final String sql = "DELETE FROM MOVEMENT WHERE 1=1";
+        final String sql = "DELETE FROM MOVEMENT";
         try (
                 final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);

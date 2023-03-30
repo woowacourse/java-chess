@@ -90,7 +90,7 @@ public class GameDao {
     }
 
     public boolean deleteAll() {
-        final String sql = "DELETE FROM GAME WHERE 1=1";
+        final String sql = "DELETE FROM GAME";
         try (
                 final Connection connection = ConnectionUtil.getConnection();
                 final PreparedStatement ps = connection.prepareStatement(sql);
