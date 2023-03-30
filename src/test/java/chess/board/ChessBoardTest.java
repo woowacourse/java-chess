@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.fixture.FixturePosition;
+import chess.fixture.EmptyBoardFixture;
+import chess.fixture.PositionFixture;
 import chess.piece.Bishop;
 import chess.piece.BlackPawn;
-import chess.piece.EmptyPiece;
 import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.Pawn;
@@ -32,12 +31,7 @@ class ChessBoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new HashMap<>();
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                board.put(new Position(file, rank), new EmptyPiece());
-            }
-        }
+        board = new EmptyBoardFixture().getBoard();
     }
 
     @Nested
@@ -46,10 +40,10 @@ class ChessBoardTest {
         @Test
         void 같은_팀의_말이면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.F1;
 
-            Position other = FixturePosition.D1;
+            Position other = PositionFixture.D1;
 
             board.put(from, new Rook(Team.WHITE));
             board.put(other, new Rook(Team.BLACK));
@@ -64,8 +58,8 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.F1;
 
             board.put(from, new Rook(Team.WHITE));
             board.put(to, new Rook(Team.BLACK));
@@ -82,10 +76,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.H8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.H8;
 
-            Position other = FixturePosition.D4;
+            Position other = PositionFixture.D4;
 
             board.put(from, new Bishop(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -100,10 +94,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외2() {
             //given
-            Position from = FixturePosition.H1;
-            Position to = FixturePosition.A8;
+            Position from = PositionFixture.H1;
+            Position to = PositionFixture.A8;
 
-            Position other = FixturePosition.E4;
+            Position other = PositionFixture.E4;
 
             board.put(from, new Bishop(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -118,10 +112,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외3() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.A2;
+            Position from = PositionFixture.D5;
+            Position to = PositionFixture.A2;
 
-            Position other = FixturePosition.B3;
+            Position other = PositionFixture.B3;
 
             board.put(from, new Bishop(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -136,10 +130,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외4() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.H1;
+            Position from = PositionFixture.D5;
+            Position to = PositionFixture.H1;
 
-            Position other = FixturePosition.F3;
+            Position other = PositionFixture.F3;
 
             board.put(from, new Bishop(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -154,8 +148,8 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F6;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.F6;
 
             board.put(from, new Bishop(Team.WHITE));
             board.put(to, new Rook(Team.BLACK));
@@ -172,10 +166,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.H8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.H8;
 
-            Position other = FixturePosition.D4;
+            Position other = PositionFixture.D4;
 
             board.put(from, new Queen(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -190,10 +184,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외2() {
             //given
-            Position from = FixturePosition.H1;
-            Position to = FixturePosition.A8;
+            Position from = PositionFixture.H1;
+            Position to = PositionFixture.A8;
 
-            Position other = FixturePosition.E4;
+            Position other = PositionFixture.E4;
 
             board.put(from, new Queen(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -208,10 +202,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외3() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.A2;
+            Position from = PositionFixture.D5;
+            Position to = PositionFixture.A2;
 
-            Position other = FixturePosition.B3;
+            Position other = PositionFixture.B3;
 
             board.put(from, new Queen(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -226,10 +220,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외4() {
             //given
-            Position from = FixturePosition.D5;
-            Position to = FixturePosition.H1;
+            Position from = PositionFixture.D5;
+            Position to = PositionFixture.H1;
 
-            Position other = FixturePosition.F3;
+            Position other = PositionFixture.F3;
 
             board.put(from, new Queen(Team.WHITE));
             board.put(other, new Rook(Team.WHITE));
@@ -244,10 +238,10 @@ class ChessBoardTest {
         @Test
         void 말이_있으면_예외5() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.F1;
 
-            Position other = FixturePosition.D1;
+            Position other = PositionFixture.D1;
 
             board.put(from, new Queen(Team.WHITE));
             board.put(other, new Rook(Team.BLACK));
@@ -262,8 +256,8 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.F1;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.F1;
 
             board.put(from, new Queen(Team.WHITE));
             board.put(to, new Rook(Team.BLACK));
@@ -280,8 +274,8 @@ class ChessBoardTest {
         @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.A2;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.A2;
 
             board.put(from, new King(Team.WHITE));
             board.put(to, new Rook(Team.WHITE));
@@ -296,8 +290,8 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.A2;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.A2;
 
             board.put(from, new King(Team.WHITE));
             board.put(to, new Rook(Team.BLACK));
@@ -314,8 +308,8 @@ class ChessBoardTest {
         @Test
         void 목적지에_같은_팀의_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.C2;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.C2;
 
             board.put(from, new Knight(Team.WHITE));
             board.put(to, new Rook(Team.WHITE));
@@ -330,8 +324,8 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.C2;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.C2;
 
             board.put(from, new Knight(Team.WHITE));
             board.put(to, new Rook(Team.BLACK));
@@ -348,10 +342,10 @@ class ChessBoardTest {
         @Test
         void 같은_팀의_말이_있으면_예외() {
             //given
-            Position from = FixturePosition.B2;
-            Position to = FixturePosition.B4;
+            Position from = PositionFixture.B2;
+            Position to = PositionFixture.B4;
 
-            Position other = FixturePosition.B3;
+            Position other = PositionFixture.B3;
 
             board.put(from, new WhitePawn());
             board.put(other, new Rook(Team.WHITE));
@@ -366,8 +360,8 @@ class ChessBoardTest {
         @Test
         void 끝_지점이_다른_팀의_말이면_갈_수_있다() {
             //given
-            Position from = FixturePosition.D4;
-            Position to = FixturePosition.E5;
+            Position from = PositionFixture.D4;
+            Position to = PositionFixture.E5;
 
             board.put(from, new WhitePawn());
             board.put(to, new Rook(Team.BLACK));
@@ -445,7 +439,7 @@ class ChessBoardTest {
         @Test
         void 퀸의_초기_위치는_D1_이다() {
             //given
-            Position position = FixturePosition.D1;
+            Position position = PositionFixture.D1;
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
@@ -457,7 +451,7 @@ class ChessBoardTest {
         @Test
         void 킹의_초기_위치는_E1_이다() {
             //given
-            Position position = FixturePosition.E1;
+            Position position = PositionFixture.E1;
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
@@ -526,7 +520,7 @@ class ChessBoardTest {
         @Test
         void 퀸의_초기_위치는_D1_이다() {
             //given
-            Position position = FixturePosition.D8;
+            Position position = PositionFixture.D8;
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then
@@ -538,7 +532,7 @@ class ChessBoardTest {
         @Test
         void 킹의_초기_위치는_E8_이다() {
             //given
-            Position position = FixturePosition.E8;
+            Position position = PositionFixture.E8;
             ChessBoard chessBoard = new ChessBoard();
 
             //when & then

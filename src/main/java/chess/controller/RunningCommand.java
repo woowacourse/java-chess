@@ -27,8 +27,4 @@ public class RunningCommand {
     public List<String> getParameters() {
         return parameters;
     }
-
-    public RunningCommandType getRunningCommandType() {
-        return runningCommandType;
-    }
 }

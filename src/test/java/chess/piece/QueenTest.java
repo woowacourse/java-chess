@@ -3,17 +3,15 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
-import chess.fixture.FixturePosition;
+import chess.fixture.EmptyBoardFixture;
+import chess.fixture.PositionFixture;
 
 class QueenTest {
 
@@ -21,12 +19,7 @@ class QueenTest {
 
     @BeforeEach
     void setUp() {
-        board = new HashMap<>();
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                board.put(new Position(file, rank), new EmptyPiece());
-            }
-        }
+        board = new EmptyBoardFixture().getBoard();
     }
 
     @Nested
@@ -36,8 +29,8 @@ class QueenTest {
             //given
             Queen queen = new Queen(Team.WHITE);
 
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.H8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.H8;
 
             //when & then
             assertDoesNotThrow(() -> queen.validateMove(from, to, board));
@@ -48,8 +41,8 @@ class QueenTest {
             //given
             Queen queen = new Queen(Team.WHITE);
 
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.A8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.A8;
 
             //when & then
             assertDoesNotThrow(() -> queen.validateMove(from, to, board));
@@ -60,8 +53,8 @@ class QueenTest {
             //given
             Queen queen = new Queen(Team.WHITE);
 
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.B8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.B8;
 
             //when & then
             assertThatThrownBy(() -> queen.validateMove(from, to, board))
@@ -74,8 +67,8 @@ class QueenTest {
             //given
             Queen queen = new Queen(Team.WHITE);
 
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.B8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.B8;
 
             //when & then
             assertThatThrownBy(() -> queen.validateMove(from, to, board))

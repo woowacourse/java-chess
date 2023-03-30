@@ -45,8 +45,8 @@ public class ChessBoard {
     public boolean isKingKilled(final Team team) {
         return board.values()
                 .stream()
-                .filter(piece -> piece.getType() == PieceType.KING)
-                .noneMatch(piece -> piece.getTeam() == team);
+                .filter(piece -> piece.isSameType(PieceType.KING))
+                .noneMatch(piece -> piece.isSameTeam(team));
     }
 
     public double calculateScore(final Team team) {

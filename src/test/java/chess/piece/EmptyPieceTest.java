@@ -1,16 +1,14 @@
 package chess.piece;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import chess.board.File;
 import chess.board.Position;
-import chess.board.Rank;
-import chess.fixture.FixturePosition;
+import chess.fixture.EmptyBoardFixture;
+import chess.fixture.PositionFixture;
 
 class EmptyPieceTest {
 
@@ -18,12 +16,7 @@ class EmptyPieceTest {
 
     @BeforeEach
     void setUp() {
-        board = new HashMap<>();
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                board.put(new Position(file, rank), new EmptyPiece());
-            }
-        }
+        board = new EmptyBoardFixture().getBoard();
     }
 
     @Test
@@ -31,8 +24,8 @@ class EmptyPieceTest {
         //given
         EmptyPiece emptyPiece = new EmptyPiece();
 
-        Position to = FixturePosition.B3;
-        Position from = FixturePosition.A1;
+        Position to = PositionFixture.B3;
+        Position from = PositionFixture.A1;
 
         //when & then
         Assertions.assertThatThrownBy(() -> emptyPiece.validateMove(from, to, board))

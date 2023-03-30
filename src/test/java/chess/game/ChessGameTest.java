@@ -2,7 +2,6 @@ package chess.game;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +11,9 @@ import chess.board.ChessBoard;
 import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
+import chess.fixture.EmptyBoardFixture;
 import chess.piece.Bishop;
 import chess.piece.BlackPawn;
-import chess.piece.EmptyPiece;
 import chess.piece.Knight;
 import chess.piece.Piece;
 import chess.piece.Queen;
@@ -27,12 +26,7 @@ class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        board = new HashMap<>();
-        for (final File file : File.values()) {
-            for (final Rank rank : Rank.values()) {
-                board.put(new Position(file, rank), new EmptyPiece());
-            }
-        }
+        board = new EmptyBoardFixture().getBoard();
     }
 
     @Test
