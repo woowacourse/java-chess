@@ -1,9 +1,7 @@
 package techcourse.fp.chess.controller;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
 import techcourse.fp.chess.domain.piece.Color;
@@ -18,116 +16,89 @@ public final class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final Map<Command, PlayingCommandRunner> playingCommandMapper = new EnumMap<>(Command.class);
-    private final Map<Command, StartCommandRunner> startCommandMapper = new EnumMap<>(Command.class);
     private final ChessGameService chessGameService;
 
-    public ChessController(final InputView inputView, final OutputView outputView, final ChessGameService chessGameService) {
+    public ChessController(final InputView inputView, final OutputView outputView,
+                           final ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.chessGameService = chessGameService;
-
-        initStartCommandMapper();
-        initPlayingCommandMapper();
-    }
-
-    private void initStartCommandMapper() {
-        startCommandMapper.put(Command.START, this::createNewGame);
-        startCommandMapper.put(Command.LOAD, this::loadGame);
-        startCommandMapper.put(Command.END, StartCommandRunner.end);
-    }
-
-    private void initPlayingCommandMapper() {
-        playingCommandMapper.put(Command.MOVE, this::move);
-        playingCommandMapper.put(Command.STATUS, this::checkStatus);
-        playingCommandMapper.put(Command.SAVE, this::save);
-        playingCommandMapper.put(Command.END, PlayingCommandRunner.end);
     }
 
     public void run() {
         outputView.printInitialMessage();
+        final Command command = getInitCommand();
 
-        Command command = getInitialCommand();
+        if (command == Command.START) {
+            final Board board = createNewBoard();
+            play(board);
+        }
 
-        final StartCommandRunner initCommandRunner = startCommandMapper.get(command);
-        final Board board = initCommandRunner.execute();
-
-        while (command != Command.END) {
-            command = play(board);
+        if (command == Command.LOAD) {
+            final Board board = getSavedBoard();
+            play(board);
         }
 
         outputView.printEndMessage();
     }
 
-    private Command getInitialCommand() {
+    private Command getInitCommand() {
         try {
-            return Command.createInitCommand(inputView.readInitCommand());
-        } catch (IllegalArgumentException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            return getInitialCommand();
+            final String input = inputView.readInitCommand();
+            return Command.createInitCommand(input);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return getInitCommand();
         }
     }
 
-    private Board createNewGame() {
+    private Board createNewBoard() {
         final Board board = BoardFactory.generate();
         outputView.printBoard(BoardResponse.create(board.getBoard()));
         return board;
     }
 
-    private Board loadGame() {
-        try {
-            outputView.printGameInfos(chessGameService.findInfos());
-
-            final String id = inputView.readInitCommand();
-            final Board board = chessGameService.findById(Integer.parseInt(id));
-            outputView.printBoard(BoardResponse.create(board.getBoard()));
-            return board;
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            return loadGame();
-        }
+    private Board getSavedBoard() {
+        outputView.printGameInfos(chessGameService.findInfos());
+        final Board board = chessGameService.findById(inputView.readChessGameId());
+        outputView.printBoard(BoardResponse.create(board.getBoard()));
+        return board;
     }
 
-
-    private Command play(final Board board) {
+    private void play(final Board board) {
         try {
-            Command command = excuteCommand(board);
+            Command command = Command.EMPTY;
 
-            if (board.isGameEnd()) {
-                outputView.printWinningMessage(board.findWinner());
-                return Command.END;
+            while (command != Command.END) {
+                final CommandRequest commandRequest = inputView.readInPlayCommand();
+                command = playByCommand(commandRequest, board);
             }
 
-            return command;
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            outputView.printErrorMessage(exception.getMessage());
-            return Command.EMPTY;
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            play(board);
         }
     }
 
-    private Command excuteCommand(final Board board) {
-        final CommandRequest commandRequest = inputView.readInPlayCommand();
+    private Command playByCommand(final CommandRequest commandRequest, final Board board) {
         Command command = Command.createInPlayCommand(commandRequest.getMessage());
 
-        final PlayingCommandRunner commandRunner = playingCommandMapper.get(command);
-        commandRunner.execute(commandRequest, board);
+        if (command == Command.STATUS) {
+            printStatus(board);
+        }
+
+        if (command == command.SAVE) {
+            save(board);
+        }
+
+        if (command == command.MOVE) {
+            move(board, commandRequest);
+        }
 
         return command;
     }
 
-    private void move(final CommandRequest commandRequest, final Board board) {
-        board.move(commandRequest.getSource(), commandRequest.getTarget());
-        outputView.printBoard(BoardResponse.create(board.getBoard()));
-    }
-
-    private void save(final CommandRequest commandRequest, final Board board) {
-        final String gameName = inputView.readSaveGameName();
-        chessGameService.save(board, gameName);
-        outputView.printSaveSuccessMessage();
-    }
-
-
-    private void checkStatus(final CommandRequest commandRequest, final Board board) {
+    private void printStatus(final Board board) {
         List<ScoreResponse> scores = new ArrayList<>();
         addScoreByColor(Color.WHITE, scores, board);
         addScoreByColor(Color.BLACK, scores, board);
@@ -138,5 +109,17 @@ public final class ChessController {
     private void addScoreByColor(final Color color, final List<ScoreResponse> result, Board board) {
         final double score = board.findScoreByColor(color);
         result.add(ScoreResponse.of(color, score));
+    }
+
+    private void save(final Board board) {
+        final String gameName = inputView.readSaveGameName();
+        chessGameService.save(board, gameName);
+        outputView.printSaveSuccessMessage();
+    }
+
+    private void move(final Board board, final CommandRequest commandRequest) {
+        board.move(commandRequest.getSource(), commandRequest.getTarget());
+        final BoardResponse boardResponse = BoardResponse.create(board.getBoard());
+        outputView.printBoard(boardResponse);
     }
 }

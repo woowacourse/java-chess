@@ -60,7 +60,5 @@ public final class OutputView {
             System.out.printf("%-5s %-20s %-10s %-15s\n", chessGameInfo.getId(), chessGameInfo.getName(),
                     chessGameInfo.getTurn(), chessGameInfo.getCreateTime());
         }
-
-        System.out.println("실행하길 원하는 게임의 id를 입력해주세요");
     }
 }

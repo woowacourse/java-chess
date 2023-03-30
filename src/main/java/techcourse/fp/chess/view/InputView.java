@@ -21,6 +21,12 @@ public final class InputView {
         return scanner.nextLine();
     }
 
+    //TODO: 숫자 아닐시 예외처리
+    public int readChessGameId() {
+        System.out.println("실행하길 원하는 게임의 id를 입력해주세요");
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public CommandRequest readInPlayCommand() {
         final String input = scanner.nextLine();
 
