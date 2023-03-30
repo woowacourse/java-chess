@@ -1,6 +1,7 @@
 package chess.domain.game;
 
-import chess.domain.board.Score;
+import chess.domain.board.BlackScore;
+import chess.domain.board.WhiteScore;
 
 public enum GameResult {
     BLACK_WIN("검정색 우승"),
@@ -13,7 +14,7 @@ public enum GameResult {
         this.message = message;
     }
 
-    public static GameResult getGameResultOf(Score white, Score black) {
+    public static GameResult getGameResultOf(WhiteScore white, BlackScore black) {
         if (black.getScore() > white.getScore()) {
             return BLACK_WIN;
         }

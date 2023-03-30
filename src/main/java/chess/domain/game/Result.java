@@ -1,13 +1,14 @@
 package chess.domain.game;
 
-import chess.domain.board.Score;
+import chess.domain.board.BlackScore;
+import chess.domain.board.WhiteScore;
 
 public class Result {
     private final GameResult gameResult;
-    private final Score whiteScore;
-    private final Score blackScore;
+    private final WhiteScore whiteScore;
+    private final BlackScore blackScore;
 
-    public Result(Score whiteScore, Score blackScore) {
+    public Result(WhiteScore whiteScore, BlackScore blackScore) {
         gameResult = GameResult.getGameResultOf(whiteScore, blackScore);
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
@@ -17,11 +18,11 @@ public class Result {
         return gameResult;
     }
 
-    public Score getWhiteScore() {
+    public WhiteScore getWhiteScore() {
         return whiteScore;
     }
 
-    public Score getBlackScore() {
+    public BlackScore getBlackScore() {
         return blackScore;
     }
 }

@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.Position;
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
+import chess.domain.board.Score;
 
 public class RunningGame extends Game {
 
@@ -13,10 +13,14 @@ public class RunningGame extends Game {
     @Override
     public Game move(Position from, Position to) {
         Board movedBoard = board.movePiece(from, to);
-        if (movedBoard.getScoreOf(Color.WHITE).getScore() == 0 || movedBoard.getScoreOf(Color.BLACK).getScore() == 0) {
+        if (isZeroValue(movedBoard.whiteScore()) || isZeroValue(movedBoard.blackScore())) {
             return new EndGame(movedBoard);
         }
         return new RunningGame(movedBoard);
+    }
+
+    private boolean isZeroValue(Score score) {
+        return score.getScore() == 0;
     }
 
     @Override

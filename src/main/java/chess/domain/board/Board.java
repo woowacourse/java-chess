@@ -66,8 +66,12 @@ public class Board {
         }
     }
 
-    public Score getScoreOf(Color color) {
-        return new Score(piecePosition, color);
+    public WhiteScore whiteScore() {
+        return new WhiteScore(piecePosition);
+    }
+
+    public BlackScore blackScore() {
+        return new BlackScore(piecePosition);
     }
 
     public Map<Position, Piece> getBoardData() {
