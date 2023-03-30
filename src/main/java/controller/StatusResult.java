@@ -1,4 +1,6 @@
-package domain.chessboard;
+package controller;
+
+import domain.chessboard.Score;
 
 public class StatusResult {
 
@@ -10,10 +12,8 @@ public class StatusResult {
         this.result = result;
     }
 
-    public static StatusResult of(ColorScore blackScore, ColorScore whiteScore) {
-        Score score = Score.of(blackScore, whiteScore);
+    public static StatusResult of(Score score) {
         Result result = Result.createByScore(score);
-
         return new StatusResult(score, result);
     }
 

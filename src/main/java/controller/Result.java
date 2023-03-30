@@ -1,5 +1,8 @@
-package domain.chessboard;
+package controller;
 
+import domain.chessboard.ColorExistKing;
+import domain.chessboard.GameResult;
+import domain.chessboard.Score;
 import domain.piece.Color;
 
 import java.util.LinkedHashMap;
@@ -13,10 +16,10 @@ public class Result {
         this.value = value;
     }
 
-    public static Result createByCheckMate(boolean blackHasKing, boolean whiteHasKing) {
+    public static Result createByKingDead(ColorExistKing blackHasKing, ColorExistKing whiteHasKing) {
         Map<Color, GameResult> value = new LinkedHashMap<>();
-        value.put(Color.BLACK, getGameResultByKing(blackHasKing));
-        value.put(Color.WHITE, getGameResultByKing(whiteHasKing));
+        value.put(blackHasKing.getColor(), getGameResultByKing(blackHasKing.getIsExistKing()));
+        value.put(whiteHasKing.getColor(), getGameResultByKing(whiteHasKing.getIsExistKing()));
 
         return new Result(value);
     }

@@ -1,11 +1,10 @@
 package domain;
 
 import domain.chessboard.ChessBoard;
+import domain.chessboard.ColorExistKing;
 import domain.chessboard.ColorScore;
 import domain.chessboard.EmptyType;
-import domain.chessboard.Result;
 import domain.chessboard.Square;
-import domain.chessboard.StatusResult;
 import domain.coordinate.MovePosition;
 import domain.coordinate.Route;
 import domain.piece.Color;
@@ -101,16 +100,12 @@ public class ChessGame {
         startPoint.liftPiece();
     }
 
-    public StatusResult getStatusResult() {
-        ColorScore blackScore = new ColorScore(Color.BLACK, chessBoard.calculateColorScore(Color.BLACK));
-        ColorScore whiteScore = new ColorScore(Color.WHITE, chessBoard.calculateColorScore(Color.WHITE));
-        return StatusResult.of(blackScore, whiteScore);
+    public ColorScore getScoreThisColor(Color color) {
+        return new ColorScore(color, chessBoard.calculateColorScore(color));
     }
 
-    public Result getCheckMateResult() {
-        boolean isExistKingOfBlack = chessBoard.isExistKingThisColor(Color.BLACK);
-        boolean isExistKingOfWhite = chessBoard.isExistKingThisColor(Color.WHITE);
-        return Result.createByCheckMate(isExistKingOfBlack, isExistKingOfWhite);
+    public ColorExistKing getExistKingThisColor(Color color) {
+        return new ColorExistKing(color, chessBoard.isExistKingThisColor(color));
     }
 
     public boolean isCheckMate() {

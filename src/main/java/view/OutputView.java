@@ -4,10 +4,10 @@ import domain.chessboard.ChessBoard;
 import domain.chessboard.EmptyType;
 import domain.chessboard.GameResult;
 import domain.chessboard.Rank;
-import domain.chessboard.Result;
+import controller.Result;
 import domain.chessboard.Score;
 import domain.chessboard.Square;
-import domain.chessboard.StatusResult;
+import controller.StatusResult;
 import domain.piece.Color;
 
 import java.util.List;

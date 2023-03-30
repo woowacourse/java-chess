@@ -2,9 +2,11 @@ package controller;
 
 import domain.ChessGame;
 import domain.chessboard.ChessBoard;
+import domain.chessboard.Score;
 import domain.coordinate.MovePosition;
 import domain.coordinate.Position;
 import domain.coordinate.PositionFactory;
+import domain.piece.Color;
 import jdbc.ChessGameDao;
 import view.Command;
 import view.InputView;
@@ -81,20 +83,30 @@ public class ChessGameController {
             ChessGame chessGame = chessGameDao.select(id);
             chessGame.move(MovePosition.of(source, target));
             chessGameDao.update(id, chessGame);
-            exitIfCheckmate(chessGame);
+            exitIfKingDead(chessGame);
         }
     }
 
-    private void exitIfCheckmate(ChessGame chessGame) {
+    private void exitIfKingDead(ChessGame chessGame) {
         if (chessGame.isCheckMate()) {
-            OutputView.printResult(chessGame.getCheckMateResult());
+            Result result = Result.createByKingDead(
+                    chessGame.getExistKingThisColor(Color.BLACK),
+                    chessGame.getExistKingThisColor(Color.WHITE)
+            );
+            OutputView.printResult(result);
             isKeepGaming = false;
         }
     }
 
     private void isStatus(final Command command) {
         if (command == Command.STATUS) {
-            OutputView.printStatusResult(chessGameDao.select(id).getStatusResult());
+            ChessGame chessGame = chessGameDao.select(id);
+            Score score = Score.of(
+                    chessGame.getScoreThisColor(Color.BLACK),
+                    chessGame.getScoreThisColor(Color.WHITE)
+            );
+            StatusResult statusResult = StatusResult.of(score);
+            OutputView.printStatusResult(statusResult);
             isKeepGaming = false;
         }
     }

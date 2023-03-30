@@ -1,9 +1,11 @@
 package domain;
 
+import controller.Result;
+import controller.StatusResult;
 import domain.chessboard.ChessBoard;
 import domain.chessboard.GameResult;
+import domain.chessboard.Score;
 import domain.chessboard.Square;
-import domain.chessboard.StatusResult;
 import domain.chessboard.Type;
 import domain.coordinate.MovePosition;
 import domain.coordinate.PositionFactory;
@@ -127,15 +129,17 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
-        StatusResult statusResult = chessGame.getStatusResult();
-        Map<Color, Double> score = statusResult.getScore().getValue();
-        Map<Color, GameResult> result = statusResult.getResult().getValue();
+        Score score = Score.of(chessGame.getScoreThisColor(BLACK),
+                chessGame.getScoreThisColor(WHITE));
+        StatusResult statusResult = StatusResult.of(score);
+        Map<Color, Double> scoreValue = score.getValue();
+        Map<Color, GameResult> resultValue = statusResult.getResult().getValue();
 
         // Then
-        assertThat(score.get(BLACK)).isEqualTo(38);
-        assertThat(score.get(WHITE)).isEqualTo(38);
-        assertThat(result.get(BLACK)).isEqualTo(GameResult.DRAW);
-        assertThat(result.get(WHITE)).isEqualTo(GameResult.DRAW);
+        assertThat(scoreValue.get(BLACK)).isEqualTo(38);
+        assertThat(scoreValue.get(WHITE)).isEqualTo(38);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.DRAW);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.DRAW);
     }
 
     /*
@@ -157,15 +161,17 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
-        StatusResult statusResult = chessGame.getStatusResult();
-        Map<Color, Double> score = statusResult.getScore().getValue();
-        Map<Color, GameResult> result = statusResult.getResult().getValue();
+        Score score = Score.of(chessGame.getScoreThisColor(BLACK),
+                chessGame.getScoreThisColor(WHITE));
+        StatusResult statusResult = StatusResult.of(score);
+        Map<Color, Double> scoreValue = score.getValue();
+        Map<Color, GameResult> resultValue = statusResult.getResult().getValue();
 
         // Then
-        assertThat(score.get(BLACK)).isEqualTo(38);
-        assertThat(score.get(WHITE)).isEqualTo(37);
-        assertThat(result.get(BLACK)).isEqualTo(GameResult.WIN);
-        assertThat(result.get(WHITE)).isEqualTo(GameResult.LOSE);
+        assertThat(scoreValue.get(BLACK)).isEqualTo(38);
+        assertThat(scoreValue.get(WHITE)).isEqualTo(37);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.WIN);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.LOSE);
     }
 
     /*
@@ -188,15 +194,17 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
-        StatusResult statusResult = chessGame.getStatusResult();
-        Map<Color, Double> score = statusResult.getScore().getValue();
-        Map<Color, GameResult> result = statusResult.getResult().getValue();
+        Score score = Score.of(chessGame.getScoreThisColor(BLACK),
+                chessGame.getScoreThisColor(WHITE));
+        StatusResult statusResult = StatusResult.of(score);
+        Map<Color, Double> scoreValue = score.getValue();
+        Map<Color, GameResult> resultValue = statusResult.getResult().getValue();
 
         // Then
-        assertThat(score.get(BLACK)).isEqualTo(38);
-        assertThat(score.get(WHITE)).isEqualTo(38.5);
-        assertThat(result.get(BLACK)).isEqualTo(GameResult.LOSE);
-        assertThat(result.get(WHITE)).isEqualTo(GameResult.WIN);
+        assertThat(scoreValue.get(BLACK)).isEqualTo(38);
+        assertThat(scoreValue.get(WHITE)).isEqualTo(38.5);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.LOSE);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.WIN);
     }
 
     /*
@@ -218,11 +226,15 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
-        Map<Color, GameResult> result = chessGame.getCheckMateResult().getValue();
+        Result result = Result.createByKingDead(
+                chessGame.getExistKingThisColor(BLACK),
+                chessGame.getExistKingThisColor(WHITE)
+        );
+        Map<Color, GameResult> resultValue = result.getValue();
 
         // Then
-        assertThat(result.get(BLACK)).isEqualTo(GameResult.WIN);
-        assertThat(result.get(WHITE)).isEqualTo(GameResult.LOSE);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.WIN);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.LOSE);
     }
 
     /*
@@ -244,11 +256,15 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(chessBoard);
 
         // When
-        Map<Color, GameResult> result = chessGame.getCheckMateResult().getValue();
+        Result result = Result.createByKingDead(
+                chessGame.getExistKingThisColor(BLACK),
+                chessGame.getExistKingThisColor(WHITE)
+        );
+        Map<Color, GameResult> resultValue = result.getValue();
 
         // Then
-        assertThat(result.get(BLACK)).isEqualTo(GameResult.LOSE);
-        assertThat(result.get(WHITE)).isEqualTo(GameResult.WIN);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.LOSE);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.WIN);
     }
 
 }

@@ -1,5 +1,9 @@
-package domain.chessboard;
+package controller;
 
+import controller.StatusResult;
+import domain.chessboard.ColorScore;
+import domain.chessboard.GameResult;
+import domain.chessboard.Score;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +22,7 @@ public class StatusResultTest {
         // Given
         ColorScore blackScore = new ColorScore(Color.BLACK, 30);
         ColorScore whiteScore = new ColorScore(WHITE, 31);
-        StatusResult statusResult = StatusResult.of(blackScore, whiteScore);
+        StatusResult statusResult = StatusResult.of(Score.of(blackScore, whiteScore));
 
         // When
         Map<Color, Double> score = statusResult.getScore().getValue();
