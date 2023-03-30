@@ -28,9 +28,16 @@ public enum RankCoordinate {
         this.rowNumber = rowNumber;
     }
 
-    public static RankCoordinate findBy(int rowNumber) {
+    public static RankCoordinate of(int rowNumber) {
         return Arrays.stream(values())
                 .filter(it -> it.rowNumber == rowNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
+    }
+
+    public static RankCoordinate of(String rowName) {
+        return Arrays.stream(values())
+                .filter(it -> it.rowNumber == Integer.parseInt(rowName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 행 번호를 입력해주세요."));
     }
@@ -38,7 +45,7 @@ public enum RankCoordinate {
     public List<RankCoordinate> betweenRanks(RankCoordinate other) {
         List<RankCoordinate> result = IntStream.range(min(rowNumber, other.rowNumber), max(rowNumber, other.rowNumber))
                 .skip(SKIP_MY_COORDINATE)
-                .mapToObj(RankCoordinate::findBy)
+                .mapToObj(RankCoordinate::of)
                 .collect(Collectors.toList());
         if (rowNumber > other.rowNumber) {
             Collections.reverse(result);
@@ -48,5 +55,9 @@ public enum RankCoordinate {
 
     public int calculateGap(RankCoordinate other) {
         return rowNumber - other.rowNumber;
+    }
+
+    public int getRowNumber() {
+        return rowNumber;
     }
 }

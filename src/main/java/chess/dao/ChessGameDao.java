@@ -1,13 +1,13 @@
 package chess.dao;
 
-import chess.dto.MoveDto;
+import chess.service.Move;
 import java.util.List;
 
 public interface ChessGameDao {
 
-    void saveMove(MoveDto moveDto, int gameId);
+    void saveMove(Move move, int gameId);
 
-    List<MoveDto> findByGameId(int gameId);
+    List<Move> findByGameId(int gameId);
 
     int findGameIdByNotFinished();
 

@@ -3,8 +3,6 @@ package chess.service;
 import chess.dao.ChessGameJdbcDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.GameResult;
-import chess.domain.position.Position;
-import chess.dto.MoveDto;
 import java.util.List;
 
 public class ChessGameService {
@@ -16,22 +14,19 @@ public class ChessGameService {
         this.chessGameJdbcDao = chessGameJdbcDao;
     }
 
-    public void move(MoveDto moveDto) {
+    public void move(Move move) {
         int gameId = chessGameJdbcDao.findGameIdByNotFinished();
-        Position sourcePosition = Position.of(moveDto.getSource());
-        Position targetPosition = Position.of(moveDto.getTarget());
-        chessGame.move(sourcePosition, targetPosition);
-        chessGameJdbcDao.saveMove(moveDto, gameId);
+        chessGame.move(move.getSource(), move.getTarget());
+        chessGameJdbcDao.saveMove(move, gameId);
     }
 
     public GameResult loadBoard() {
         int gameId = chessGameJdbcDao.findGameIdByNotFinished();
-        List<MoveDto> histories = chessGameJdbcDao.findByGameId(gameId);
-        MoveHistory moveHistory = new MoveHistory(histories);
-        for (MoveDto moveDto : moveHistory.getSortHistory()) {
-            Position sourcePosition = Position.of(moveDto.getSource());
-            Position targetPosition = Position.of(moveDto.getTarget());
-            chessGame.move(sourcePosition, targetPosition);
+        List<Move> moves = chessGameJdbcDao.findByGameId(gameId);
+
+        MoveHistory moveHistory = new MoveHistory(moves);
+        for (Move move : moveHistory.getSortHistory()) {
+            chessGame.move(move.getSource(), move.getTarget());
         }
         return chessGame.getResult();
     }

@@ -1,21 +1,20 @@
 package chess.service;
 
-import chess.dto.MoveDto;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MoveHistory {
 
-    private final List<MoveDto> moveDtos;
+    private final List<Move> moves;
 
-    public MoveHistory(List<MoveDto> moveDtos) {
-        this.moveDtos = moveDtos;
+    public MoveHistory(List<Move> moves) {
+        this.moves = moves;
     }
 
-    public List<MoveDto> getSortHistory() {
-        return moveDtos.stream()
-                .sorted(Comparator.comparing(MoveDto::getMoveTime))
+    public List<Move> getSortHistory() {
+        return moves.stream()
+                .sorted(Comparator.comparing(Move::getMoveTime))
                 .collect(Collectors.toList());
     }
 }

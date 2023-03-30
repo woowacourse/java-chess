@@ -1,10 +1,10 @@
 package chess.dao;
 
-import chess.dto.MoveDto;
+import chess.domain.position.Position;
+import chess.service.Move;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +13,13 @@ public class ChessGameJdbcDao implements ChessGameDao {
     private static final int NOT_EXIST_GAME = -1;
 
     @Override
-    public void saveMove(MoveDto moveDto, int gameId) {
-        LocalDateTime now = LocalDateTime.now();
+    public void saveMove(Move move, int gameId) {
         var query = "INSERT INTO move_history(source, target, move_time, game_id) VALUES(?, ?, ?, ?)";
         try (var connection = ConnectionGenerator.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, moveDto.getSource());
-            preparedStatement.setString(2, moveDto.getTarget());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(now));
+            preparedStatement.setString(1, parsePosition(move.getSource()));
+            preparedStatement.setString(2, parsePosition(move.getTarget()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(move.getMoveTime()));
             preparedStatement.setInt(4, gameId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -28,10 +27,14 @@ public class ChessGameJdbcDao implements ChessGameDao {
         }
     }
 
+    private String parsePosition(Position position) {
+        return position.getFileCoordinate().name() + position.getRankCoordinate().getRowNumber();
+    }
+
     @Override
-    public List<MoveDto> findByGameId(int gameId) {
+    public List<Move> findByGameId(int gameId) {
         var query = "SELECT * FROM move_history WHERE game_id = (?)";
-        List<MoveDto> moveHistories = new ArrayList<>();
+        List<Move> moveHistories = new ArrayList<>();
 
         try (var connection = ConnectionGenerator.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -39,8 +42,7 @@ public class ChessGameJdbcDao implements ChessGameDao {
             var resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                moveHistories.add(MoveDto.of(
-                        resultSet.getInt("id"),
+                moveHistories.add(Move.of(
                         resultSet.getString("source"),
                         resultSet.getString("target"),
                         resultSet.getTimestamp("move_time").toLocalDateTime()

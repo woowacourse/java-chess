@@ -28,9 +28,16 @@ public enum FileCoordinate {
         this.columnNumber = columnNumber;
     }
 
-    public static FileCoordinate findBy(int columnNumber) {
+    public static FileCoordinate of(int columnNumber) {
         return Arrays.stream(values())
                 .filter(it -> it.columnNumber == columnNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
+    }
+
+    public static FileCoordinate of(String fileName) {
+        return Arrays.stream(values())
+                .filter(it -> it.name().equalsIgnoreCase(fileName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 열 번호를 입력해주세요."));
     }
@@ -40,7 +47,7 @@ public enum FileCoordinate {
                         min(columnNumber, other.columnNumber),
                         max(columnNumber, other.columnNumber))
                 .skip(SKIP_MY_COORDINATE)
-                .mapToObj(FileCoordinate::findBy)
+                .mapToObj(FileCoordinate::of)
                 .collect(Collectors.toList());
         if (columnNumber > other.columnNumber) {
             Collections.reverse(result);

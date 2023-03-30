@@ -87,6 +87,10 @@ public class Position {
         return fileCoordinate;
     }
 
+    public RankCoordinate getRankCoordinate() {
+        return rankCoordinate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

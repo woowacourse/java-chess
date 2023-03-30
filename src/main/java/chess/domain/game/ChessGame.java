@@ -19,9 +19,9 @@ public class ChessGame {
         this(new Board(), Color.WHITE);
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
-        validateTurn(sourcePosition);
-        board.movePiece(sourcePosition, targetPosition);
+    public void move(Position source, Position target) {
+        validateTurn(source);
+        board.movePiece(source, target);
         turn = turn.next();
     }
 

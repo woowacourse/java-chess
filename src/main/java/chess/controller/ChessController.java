@@ -7,8 +7,8 @@ import static chess.controller.GameCommand.START;
 import static chess.controller.GameCommand.STATUS;
 
 import chess.dto.ChessRequest;
-import chess.dto.MoveDto;
 import chess.service.ChessGameService;
+import chess.service.Move;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
@@ -64,8 +64,8 @@ public class ChessController {
 
     private GameCommand move(ChessGameService chessGameService, ChessRequest chessRequest) {
         validateStart(chessGameService);
-        MoveDto moveDto = MoveDto.of(chessRequest.getSource(), chessRequest.getTarget());
-        chessGameService.move(moveDto);
+        Move move = Move.of(chessRequest.getSource(), chessRequest.getTarget());
+        chessGameService.move(move);
         outputView.printBoard(chessGameService.getGameResult());
         return checkGameEnd(chessGameService, outputView);
     }
