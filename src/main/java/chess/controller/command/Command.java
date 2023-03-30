@@ -8,7 +8,6 @@ public final class Command {
     private final CommandType commandType;
     private final List<Integer> arguments;
 
-
     public Command(final CommandType commandType, final List<Integer> arguments) {
         this.commandType = commandType;
         this.arguments = arguments;

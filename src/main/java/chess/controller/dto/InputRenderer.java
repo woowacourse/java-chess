@@ -39,22 +39,31 @@ public final class InputRenderer {
     public static Command toCommand(final List<String> strings) {
         CommandType commandType = toCommandType(strings.get(COMMAND_TYPE_INDEX));
         if (hasOnlyCommandTypeCase(commandType)) {
-            validateNoOtherArgument(strings);
+            validateArgumentCount(strings, 1);
             return new Command(commandType);
         }
-
         if (commandType == CommandType.LOAD) {
+            validateArgumentCount(strings, 2);
             String argument = strings.get(1);
             validateNumber(argument);
             validateNotBigNumber(argument);
             return new Command(commandType, Integer.parseInt(argument));
         }
-
-        validateTwoMoreArguments(strings);
+        validateArgumentCount(strings, 3);
         List<Integer> arguments = new ArrayList<>();
         arguments.addAll(toColumnAndRow(strings.get(1)));
         arguments.addAll(toColumnAndRow(strings.get(2)));
         return new Command(commandType, arguments);
+    }
+
+    private static void validateArgumentCount(List<String> arguments, int count) {
+        if (arguments.size() != count) {
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
+        }
+    }
+
+    private static boolean hasOnlyCommandTypeCase(CommandType commandType) {
+        return commandType != CommandType.MOVE && commandType != CommandType.LOAD;
     }
 
     private static CommandType toCommandType(final String string) {
@@ -63,36 +72,6 @@ public final class InputRenderer {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
-    }
-
-    private static void validateNoOtherArgument(List<String> strings) {
-        if (strings.size() > 1) {
-            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
-        }
-    }
-
-    private static void validateNumber(String input) {
-        if (!NUMBER_REGEX.matcher(input).matches()) {
-            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
-        }
-    }
-
-    private static void validateNotBigNumber(String input) {
-        try {
-            Integer.parseInt(input);
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("서비스 규모가 작아서 큰 단위의 숫자는 지원하지 않습니다.");
-        }
-    }
-
-    private static void validateTwoMoreArguments(List<String> strings) {
-        if (strings.size() != 3) {
-            throw new IllegalArgumentException("올바른 명령어를 입력해주세요. 예. move b2 b3");
-        }
-    }
-
-    private static boolean hasOnlyCommandTypeCase(CommandType commandType) {
-        return commandType != CommandType.MOVE && commandType != CommandType.LOAD;
     }
 
     private static List<Integer> toColumnAndRow(final String rawPosition) {
@@ -109,5 +88,19 @@ public final class InputRenderer {
             throw new IllegalArgumentException("유효하지 않은 Rank 입니다.");
         }
         return List.of(FILE_TO_COLUMN.get(file), RANK_TO_ROW.get(rank));
+    }
+
+    private static void validateNumber(String input) {
+        if (!NUMBER_REGEX.matcher(input).matches()) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
+
+    private static void validateNotBigNumber(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("서비스 규모가 작아서 큰 단위의 게임방은 지원하지 않습니다.");
+        }
     }
 }
