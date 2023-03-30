@@ -8,9 +8,15 @@ import java.util.Set;
 public class Bishop extends SlidingPiece {
 
     private static final Set<Direction> directions = Direction.diagonal();
+    private static final double SCORE = 3;
 
     public Bishop(final Color color) {
         super(color, PieceType.BISHOP);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

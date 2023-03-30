@@ -10,7 +10,9 @@ import java.util.Set;
 public abstract class Pawn extends Piece {
 
     private static final int MINIMUM_DISTANCE = 1;
-    public static final Set<Direction> DIRECTIONS = Direction.diagonal();
+    private static final double SCORE = 1;
+
+    private static final Set<Direction> DIRECTIONS = Direction.diagonal();
 
     public Pawn(final Color color) {
         super(color, PieceType.PAWN);
@@ -45,6 +47,11 @@ public abstract class Pawn extends Piece {
     @Override
     public final boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     protected final boolean isSatisfySpecialCondition(final Distance distance, final Color targetColor) {

@@ -10,6 +10,7 @@ public class King extends NonSlidingPiece {
 
     private static final Set<Direction> directions = Direction.allDirections();
     private static final int MAXIMUM_DISTANCE = 1;
+    private static final double SCORE = 0;
 
     public King(final Color color) {
         super(color, PieceType.KING);
@@ -31,5 +32,10 @@ public class King extends NonSlidingPiece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

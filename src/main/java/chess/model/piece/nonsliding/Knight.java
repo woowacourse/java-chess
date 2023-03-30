@@ -21,6 +21,7 @@ public class Knight extends NonSlidingPiece {
             NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
             NORTH_WEST_WEST, NORTH_EAST_EAST, SOUTH_WEST_WEST, SOUTH_EAST_EAST
     );
+    private static final double SCORE = 2.5;
 
     public Knight(final Color color) {
         super(color, PieceType.KNIGHT);
@@ -39,5 +40,10 @@ public class Knight extends NonSlidingPiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

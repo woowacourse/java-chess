@@ -8,6 +8,7 @@ import java.util.Set;
 public class Rook extends SlidingPiece {
 
     private static final Set<Direction> directions = Direction.orthogonal();
+    private static final double SCORE = 5;
 
     public Rook(final Color color) {
         super(color, PieceType.ROOK);
@@ -17,5 +18,10 @@ public class Rook extends SlidingPiece {
     protected boolean isRightDirection(final Direction direction) {
         return directions.stream()
                 .anyMatch(it -> it.match(direction.rank(), direction.file()));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

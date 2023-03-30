@@ -6,7 +6,6 @@ import chess.model.Score;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
-import chess.model.piece.PieceType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import chess.model.position.File;
@@ -18,8 +17,7 @@ import java.util.Map;
 public class Board {
 
     private static final int DEFAULT_FILE_PAWN_COUNT = 1;
-    private static final double SAME_FILE_PAWN_SCORE = 0.5;
-    private static final double CORRECT_SAME_FILE_PAWN_SCORE = PieceType.PAWN.getScore() - SAME_FILE_PAWN_SCORE;
+    private static final double CORRECT_SAME_FILE_PAWN_SCORE = 0.5;
     private final Map<Position, Piece> squares;
 
     private Board(final Map<Position, Piece> squares) {

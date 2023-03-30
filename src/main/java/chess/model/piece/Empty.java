@@ -6,6 +6,7 @@ import chess.model.position.Distance;
 public class Empty extends Piece {
 
     private static final Empty EMPTY = new Empty();
+    private static final double SCORE = 0;
 
     private Empty() {
         super(DefaultColor.EMPTY, DefaultType.EMPTY);
@@ -38,5 +39,10 @@ public class Empty extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

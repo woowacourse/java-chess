@@ -8,6 +8,7 @@ import java.util.Set;
 public class Queen extends SlidingPiece {
 
     private static final Set<Direction> directions = Direction.allDirections();
+    private static final double SCORE = 9;
 
     public Queen(final Color color) {
         super(color, PieceType.QUEEN);
@@ -17,5 +18,10 @@ public class Queen extends SlidingPiece {
     protected boolean isRightDirection(final Direction direction) {
         return directions.stream()
                 .anyMatch(it -> it.match(direction.rank(), direction.file()));
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

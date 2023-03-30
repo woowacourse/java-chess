@@ -24,6 +24,8 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
+    public abstract double getScore();
+
     public final boolean isDifferentColor(final PieceColor color) {
         return this.color.isDifferent(color);
     }
@@ -38,9 +40,5 @@ public abstract class Piece {
 
     public final Type getType() {
         return type;
-    }
-
-    public final double getScore() {
-        return type.getScore();
     }
 }
