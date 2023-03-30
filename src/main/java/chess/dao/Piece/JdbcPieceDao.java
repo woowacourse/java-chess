@@ -1,6 +1,7 @@
 package chess.dao.Piece;
 
 import chess.dao.JdbcConnection;
+import chess.dao.JdbcTemplate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Side;
@@ -10,42 +11,33 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JdbcPieceDao implements PieceDao {
 
-    private final Connection connection = JdbcConnection.getConnection();
+    private final Connection connection;
+    private final JdbcTemplate jdbcTemplate;
+
+    public JdbcPieceDao() {
+        this.connection = JdbcConnection.getConnection();
+        this.jdbcTemplate = new JdbcTemplate(connection);
+    }
+
 
     @Override
     public void insert(final long chessGameId, final Position position, final Piece piece) {
         final String query = "INSERT INTO piece (chess_game_id, piece_file, piece_rank, side, type) " +
                 "VALUES (?, ?, ?, ?, ?)";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, chessGameId);
-            preparedStatement.setLong(2, position.getFileIndex());
-            preparedStatement.setLong(3, position.getRankIndex());
-            preparedStatement.setString(4, piece.getSide().name());
-            preparedStatement.setString(5, piece.getType().name());
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query, chessGameId, position.getFileIndex(),
+                position.getRankIndex(), piece.getSide().name(), piece.getType().name());
     }
 
     @Override
     public void delete(final long chessGameId, final Position position) {
         final String query = "DELETE FROM piece WHERE piece_file = ? AND piece_rank = ?";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, position.getFileIndex());
-            preparedStatement.setLong(2, position.getRankIndex());
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query, position.getFileIndex(), position.getRankIndex());
     }
 
     @Override
@@ -53,20 +45,16 @@ public class JdbcPieceDao implements PieceDao {
         Map<Position, Piece> board = new HashMap<>();
 
         final String query = "SELECT * FROM piece WHERE chess_game_id = ?";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, chessGameId);
+        final List<String> resultParameters = List.of("type", "side", "piece_file", "piece_rank");
+        final List<Object> result = jdbcTemplate.executeQuery(query, resultParameters, chessGameId);
 
-            final ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                final String type = resultSet.getString("type");
-                final String side = resultSet.getString("side");
-                final int file = resultSet.getInt("piece_file");
-                final int rank = resultSet.getInt("piece_rank");
-                board.put(Position.of(File.getFile(file), Rank.getRank(rank)), getPieceByType(type, side));
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
+        int index = 0;
+        while (index < result.size()) {
+            final String type = (String) result.get(index++);
+            final String side = (String) result.get(index++);
+            final int file = (int) result.get(index++);
+            final int rank = (int) result.get(index++);
+            board.put(Position.of(File.getFile(file), Rank.getRank(rank)), getPieceByType(type, side));
         }
         return board;
     }
@@ -74,11 +62,7 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void deleteAll() {
         final String query = "DELETE FROM piece";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query);
     }
 
     private Piece getPieceByType(final String type, final String side) {

@@ -14,6 +14,7 @@ import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import chess.domain.position.Position;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 public class ChessGameService {
@@ -28,7 +29,7 @@ public class ChessGameService {
         this.pieceDao = pieceDao;
     }
 
-    public ChessGame findChessGame() {
+    public ChessGame findChessGame() throws SQLException {
         final FindResponseDto findResponseDto = chessGameDao.findById(TEMPORAL_ID);
         if (findResponseDto == null) {
             return null;

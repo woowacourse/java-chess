@@ -9,6 +9,7 @@ import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.sql.SQLException;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -76,7 +77,7 @@ public class ChessController {
         return splitCommand[index].split("");
     }
 
-    public void run() {
+    public void run() throws SQLException {
         ChessGame chessGame = initChessGame(inputInitCommand());
 
         while (chessGame.isRunnable()) {
@@ -96,7 +97,7 @@ public class ChessController {
         }
     }
 
-    private ChessGame initChessGame(InitCommand command) {
+    private ChessGame initChessGame(InitCommand command) throws SQLException {
         ChessGame chessGame = findChessGameIfContinue(command);
 
         if (chessGame == null) {
@@ -107,7 +108,7 @@ public class ChessController {
         return chessGame;
     }
 
-    private ChessGame findChessGameIfContinue(final InitCommand command) {
+    private ChessGame findChessGameIfContinue(final InitCommand command) throws SQLException {
         ChessGame chessGame = null;
         if (command.isContinue()) {
             chessGame = chessGameService.findChessGame();
