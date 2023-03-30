@@ -1,7 +1,10 @@
-package chess.domain.entity;
+package chess.dao;
 
+import chess.dao.entity.PieceEntity;
 import chess.domain.board.Position;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.PieceFactory;
+import chess.domain.pieces.component.Team;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -56,7 +59,7 @@ public class PieceDao {
             final var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return PieceNameConverter.convert(resultSet.getString("piece_type"));
+                return PieceFactory.of(resultSet.getString("piece_type"));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -66,7 +69,10 @@ public class PieceDao {
     }
 
     public void updateByPiecePosition(final Position position, final Piece piece) {
-        String pieceType = piece.getType().getName();
+        String pieceType = PieceFactory.from(piece);
+        if (piece.getTeam() == Team.WHITE) {
+            pieceType.toLowerCase();
+        }
         int file = position.getFile();
         int rank = position.getRank();
 
@@ -76,6 +82,16 @@ public class PieceDao {
             preparedStatement.setString(1, pieceType);
             preparedStatement.setInt(2, file);
             preparedStatement.setInt(3, rank);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteTable() {
+        final var query = "DELETE FROM piece";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
