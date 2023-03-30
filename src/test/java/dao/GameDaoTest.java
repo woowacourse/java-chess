@@ -23,13 +23,13 @@ class GameDaoTest {
 
     @Test
     public void create() {
-        Game game = new Game(new ChessBoardGenerator().generate(), Side.WHITE);
+        Game game = new Game(new ChessBoardGenerator().generate(), "user", "title", Side.WHITE);
         gameDao.create(game);
     }
 
     @Test
     public void saveChessBoard() {
-        Game game = new Game(new ChessBoardGenerator().generate(), Side.WHITE);
+        Game game = new Game(new ChessBoardGenerator().generate(), "user", "title", Side.WHITE);
         game.move(Position.of(File.E, Rank.TWO), Position.of(File.E, Rank.FOUR));
         gameDao.saveChessBoard(game, 15);
     }
