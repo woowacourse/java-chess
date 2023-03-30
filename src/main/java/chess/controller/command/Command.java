@@ -14,16 +14,16 @@ public class Command {
     public static final int MOVE_CURRENT_POSITION_INDEX = 0;
     public static final int MOVE_TARGET_POSITION_INDEX = 1;
 
-    private final Type type;
+    private final CommandType type;
     private final List<String> parameters;
 
-    private Command(final Type type, final List<String> parameters) {
+    private Command(final CommandType type, final List<String> parameters) {
         this.type = type;
         this.parameters = parameters;
     }
 
     public static Command of(List<String> inputValues) {
-        final Type commandType = Type.findBy(inputValues.get(COMMAND_TYPE_INDEX));
+        final CommandType commandType = CommandType.findBy(inputValues.get(COMMAND_TYPE_INDEX));
         final List<String> commandParameters = new ArrayList<>();
         validateParameterSize(inputValues, commandType);
         for (int index = COMMAND_PARAMETER_START_INDEX; index <= commandType.getRequiredParameterNumber(); index++) {
@@ -32,13 +32,13 @@ public class Command {
         return new Command(commandType, commandParameters);
     }
 
-    private static void validateParameterSize(final List<String> inputValues, final Type commandType) {
+    private static void validateParameterSize(final List<String> inputValues, final CommandType commandType) {
         if (inputValues.size() - 1 != commandType.getRequiredParameterNumber()) {
             throw new ChessException(ExceptionCode.INVALID_COMMAND_PARAMETER);
         }
     }
 
-    public Type getType() {
+    public CommandType getType() {
         return type;
     }
 

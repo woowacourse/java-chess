@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandAction;
-import chess.controller.command.Type;
+import chess.controller.command.CommandType;
 import chess.dao.DbChessGameDao;
 import chess.dao.DbPieceDao;
 import chess.dao.connection.MySqlConnectionGenerator;
@@ -27,7 +27,7 @@ import static java.util.Map.entry;
 
 public class ChessController {
 
-    private final Map<Type, CommandAction> commandActionMap;
+    private final Map<CommandType, CommandAction> commandActionMap;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -36,10 +36,10 @@ public class ChessController {
         this.outputView = outputView;
 
         commandActionMap = Map.ofEntries(
-                entry(Type.START, new CommandAction(this::start)),
-                entry(Type.MOVE, new CommandAction(this::move)),
-                entry(Type.END, new CommandAction(this::end)),
-                entry(Type.STATUS, new CommandAction(this::status))
+                entry(CommandType.START, new CommandAction(this::start)),
+                entry(CommandType.MOVE, new CommandAction(this::move)),
+                entry(CommandType.END, new CommandAction(this::end)),
+                entry(CommandType.STATUS, new CommandAction(this::status))
         );
     }
 
