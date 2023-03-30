@@ -57,9 +57,19 @@ public class ChessGameDao {
         }
     }
 
-    public void update(final ChessGame chessGame) {
-        delete();
-        save(chessGame);
+    public void update(final ChessGame chessGame, Position position, Piece piece) {
+        final var query = "UPDATE chess_game SET piece_type = ?, piece_color = ? WHERE piece_position = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, piece.getPieceTypeName());
+            preparedStatement.setString(2, piece.getColorName());
+            preparedStatement.setString(3, position.getSymbol());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ChessGame select() {

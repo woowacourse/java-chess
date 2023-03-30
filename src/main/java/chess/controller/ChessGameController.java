@@ -6,6 +6,8 @@ import chess.domain.command.Command;
 import chess.domain.command.CommandType;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 public class ChessGameController {
     private final Map<CommandType, CommandAction> commandMapper;
+    private final ChessGameDao chessGameDao = new ChessGameDao();
 
     public ChessGameController() {
         this.commandMapper = new EnumMap<>(CommandType.class);
@@ -24,7 +27,6 @@ public class ChessGameController {
     }
 
     public void play() {
-        ChessGameDao chessGameDao = new ChessGameDao();
         ChessGame chessGame = chessGameDao.select();
 
         if (chessGame.isEmpty()) {
@@ -35,7 +37,6 @@ public class ChessGameController {
         OutputView.printStartMessage();
         do {
             executeCorrectCommand(chessGame);
-            chessGameDao.update(chessGame);
         } while (chessGame.isPlaying());
     }
 
@@ -71,6 +72,19 @@ public class ChessGameController {
             return;
         }
         printBoard(chessGame);
+        updateChessGameByMoveCommand(chessGame, moveCommand);
+    }
+
+    private void updateChessGameByMoveCommand(ChessGame chessGame, MoveCommand moveCommand) {
+        Position currentPosition = Position.from(moveCommand.getCurrentPosition());
+        Position nextPosition = Position.from(moveCommand.getNextPosition());
+        updateChessGame(chessGame, currentPosition);
+        updateChessGame(chessGame, nextPosition);
+    }
+
+    private void updateChessGame(ChessGame chessGame, Position position) {
+        Piece piece = chessGame.findPieceByPosition(position);
+        chessGameDao.update(chessGame, position, piece);
     }
 
     private void end(ChessGame chessGame, Command command) {

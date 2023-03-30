@@ -60,6 +60,10 @@ public class ChessGame {
         }
     }
 
+    public Piece findPieceByPosition(Position position) {
+        return board.findPieceByPosition(position);
+    }
+
     public boolean isEmpty() {
         return board.size() == 0;
     }
