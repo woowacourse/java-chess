@@ -53,4 +53,9 @@ public class Pawn extends Piece {
         }
         return from.hasBiggerRankThan(to);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

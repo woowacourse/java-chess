@@ -15,6 +15,8 @@ public abstract class Piece {
 
     public abstract boolean isMovable(final Square from, final Square to, final Piece piece);
 
+    public abstract boolean isPawn();
+
     public boolean isNotSameSide(final Piece piece) {
         return this.side != piece.side;
     }

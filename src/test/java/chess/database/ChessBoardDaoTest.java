@@ -9,7 +9,7 @@ import java.sql.Connection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChessBoardDaoTest {
+class ChessBoardDaoTest {
 
     private ChessBoardDao chessBoardDao;
 

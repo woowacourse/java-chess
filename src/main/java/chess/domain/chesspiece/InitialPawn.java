@@ -54,4 +54,9 @@ public class InitialPawn extends Piece {
         }
         return from.hasBiggerRankThan(to);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

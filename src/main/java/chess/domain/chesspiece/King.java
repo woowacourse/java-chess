@@ -30,4 +30,9 @@ public class King extends Piece {
         return (rankDistance == 1 || rankDistance == 0) &&
                 (fileDistance == 1 || fileDistance == 0);
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

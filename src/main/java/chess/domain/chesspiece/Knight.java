@@ -31,4 +31,9 @@ public class Knight extends Piece {
         }
         return rankDistance + fileDistance == 3;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
