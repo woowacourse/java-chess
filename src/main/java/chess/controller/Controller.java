@@ -5,138 +5,118 @@ import chess.dao.MovementDao;
 import chess.domain.Board;
 import chess.domain.Chess;
 import chess.domain.Color;
+import chess.domain.command.*;
 import chess.domain.point.Point;
 import chess.domain.point.Points;
-import chess.domain.state.Start;
-import chess.domain.state.State;
 import chess.dto.Command;
 import chess.dto.GameDto;
-import chess.dto.LoadCommand;
 import chess.dto.MovementDto;
+import chess.view.GameState;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.EnumMap;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static chess.view.GameState.*;
 
-public final class Controller {
-    private long gameId;
+public class Controller {
     private final GameDao gameDao;
     private final MovementDao movementDao;
+    private final Map<GameState, BiFunction<Active, Command, Active>> actives = new EnumMap<>(GameState.class);
 
     public Controller(final GameDao gameDao, final MovementDao movementDao) {
         this.gameDao = gameDao;
         this.movementDao = movementDao;
+        saveCommands();
+    }
+
+    private void saveCommands() {
+        actives.put(START, this::start);
+        actives.put(MOVE, this::move);
+        actives.put(END, this::end);
+        actives.put(STATUS, this::status);
+        actives.put(LOAD_LIST, this::loadList);
     }
 
     public void run() {
         OutputView.printStartMessage();
-        gameId = gameDao.save(false, WHITE);
-        State state = new Start(gameId, Chess.create(Board.create(), Points.create()));
-
-        while (state.isNotEnd()) {
-            state = nextState(state);
-            OutputView.printChessBoard(state.getChess());
-        }
-        deleteGameIfEmptyMovements();
+        Active active = Ready.create();
+        do {
+            active = process(active);
+        } while (active.isNotEnd());
+        deleteGameHistoryIfNotPlayed(active);
     }
 
-    private void deleteGameIfEmptyMovements() {
-        final List<MovementDto> findMovements = movementDao.findAllBy(gameId);
-        if (findMovements.isEmpty()) {
-            gameDao.deleteBy(gameId);
-        }
-    }
-
-    private State nextState(final State state) {
+    private Active process(final Active active) {
+        Active newActive;
         try {
-            return processChess(state);
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+            final Command command = InputView.inputGameState();
+            newActive = actives.get(command.getGameState()).apply(active, command);
+            OutputView.printChessBoard(newActive.getChess().getBoardValue());
+        } catch (IllegalArgumentException | InputMismatchException | UnsupportedOperationException e) {
             System.out.println(e.getMessage());
-            nextState(state);
+            newActive = process(active);
         }
-        return state;
+        return newActive;
     }
 
-    private State processChess(State state) {
-        final Command command = InputView.inputGameState();
-        state = start(state, command);
-        state = move(state, command);
-        state = end(state, command);
-        state = status(state, command);
-        state = loadList(state, command);
-        state = load(state, command);
-        return state;
-    }
-
-    private State start(final State state, final Command command) {
-        if (command.getGameState() == START) {
-            deleteGameIfEmptyMovements();
-            gameId = gameDao.save(false, WHITE);
-            return state.start(gameId);
+    private void deleteGameHistoryIfNotPlayed(final Active active) {
+        final List<MovementDto> findMovements = movementDao.findAllBy(active.getGameId());
+        if (findMovements.isEmpty()) {
+            gameDao.deleteBy(active.getGameId());
         }
-        return state;
     }
 
-    private State move(final State state, final Command command) {
-        if (command.getGameState() == MOVE) {
-            movementDao.save(command, state.getCurrentPlayer(), gameId);
-            return state.move(command);
-        }
-        return state;
+    private Active start(final Active active, final Command command) {
+        final Chess newChess = Chess.create(Board.create(), Points.create());
+        final long newGameId = gameDao.save(false, WHITE);
+        return new Start(newGameId, newChess).execute(command);
     }
 
-    private State end(final State state, final Command command) {
-        if (command.getGameState() == END) {
-            announceCurrentChessState(state);
-            deleteGameIfEmptyMovements();
-            return state.end();
-        }
-        return state;
+    private Active move(final Active active, final Command command) {
+        Active afterActive = active.execute(command);
+        movementDao.save(command, active.getCurrentPlayer(), active.getGameId());
+        return afterActive;
     }
 
-    private void announceCurrentChessState(final State state) {
-        final Point blackPoint = state.getPointBy(BLACK);
-        final Point whitePoint = state.getPointBy(WHITE);
-        final Color winner = state.getWinner();
+    private Active end(final Active active, final Command command) {
+        deleteGameHistoryIfNotPlayed(active);
+        return End.create(active.getGameId());
+    }
+
+    private Active status(final Active active, final Command command) {
+        final Point blackPoint = active.getPointBy(BLACK);
+        final Point whitePoint = active.getPointBy(WHITE);
+        final Color winner = active.getWinner();
         OutputView.printChessStatus(blackPoint, whitePoint, winner);
+        return new Status(active.getGameId(), active.getChess(), active.getCurrentPlayer());
     }
 
-    private State status(final State state, final Command command) {
-        if (command.getGameState() == STATUS) {
-            announceCurrentChessState(state);
-            return state.status();
-        }
-        return state;
+    private Active loadList(final Active active, final Command command) {
+        final List<GameDto> findGames = gameDao.findLatestGamesWithoutBy(active.getGameId());
+        OutputView.printFindAllGames(findGames);
+
+        final long gameId = InputView.inputGameId();
+        final GameDto gameDto = gameDao.findBy(gameId)
+                .orElseThrow(() -> new IllegalArgumentException("불러올 수 없는 게임 번호입니다."));
+        final Chess loadChessBy = loadChessBy(gameDto);
+
+        deleteGameHistoryIfNotPlayed(active);
+        return new Load(gameDto.getGameId(), loadChessBy, gameDto.getLastPlayer());
     }
 
-    private State loadList(final State state, final Command command) {
-        if (command.getGameState() == LOAD_LIST) {
-            final List<GameDto> findGames = gameDao.findLatestGamesWithoutBy(gameId);
-            OutputView.printFindAllGames(findGames);
-            return state.loadList();
-        }
-        return state;
-    }
-
-    private State load(final State state, final Command command) {
-        if (command.getGameState() == LOAD_LIST) {
-            final LoadCommand loadCommand = InputView.inputLoadCommand();
-            return loadGameIfExists(state, loadCommand);
-        }
-        return state;
-    }
-
-    private State loadGameIfExists(final State state, final LoadCommand loadCommand) {
-        if (loadCommand.getGameState() == LOAD) {
-            deleteGameIfEmptyMovements();
-            gameId = loadCommand.getGameId();
-            final List<MovementDto> findMovements = movementDao.findAllBy(gameId);
-            return state.load(findMovements);
-        }
-        return state;
+    private Chess loadChessBy(final GameDto gameDto) {
+        final Chess newChess = Chess.create(Board.create(), Points.create());
+        movementDao.findAllBy(gameDto.getGameId())
+                .stream()
+                .filter(movement -> movement.getPlayer().isNotEmpty())
+                .forEach(movement -> newChess.move(movement.getSource(), movement.getTarget(), movement.getPlayer()));
+        return newChess;
     }
 }
