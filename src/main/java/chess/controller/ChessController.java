@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.action.TryCount;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.dao.ChessGameDao;
 import chess.domain.piecesfactory.StartingPiecesFactory;
@@ -14,11 +15,11 @@ public class ChessController {
         this.chessGameDao = chessGameDao;
     }
 
-    public void run() {
+    public void run(final TryCount inputTryCount) {
         OutputView.printGameStartGuideMessage();
         ChessGame chessGame = loadChessGame();
-        while (!chessGame.isGameOver()) {
-            chessGame = play(chessGame);
+        while (!chessGame.isGameOver() && inputTryCount.canRetry()) {
+            chessGame = play(chessGame, inputTryCount);
         }
     }
 
@@ -31,9 +32,9 @@ public class ChessController {
         return chessGame;
     }
 
-    private ChessGame play(ChessGame chessGame) {
+    private ChessGame play(ChessGame chessGame, final TryCount inputTryCount) {
         try {
-            final Command command = readCommand();
+            final Command command = readCommand(inputTryCount);
             chessGame = command.execute(chessGame);
             chessGameDao.update(chessGame);
             return chessGame;
@@ -43,13 +44,15 @@ public class ChessController {
         }
     }
 
-    private Command readCommand() {
-        while (true) {
+    private Command readCommand(final TryCount inputTryCount) {
+        while (inputTryCount.canRetry()) {
             try {
                 return new Command(InputView.readGameCommand());
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
+                inputTryCount.count();
             }
         }
+        throw inputTryCount.getException();
     }
 }
