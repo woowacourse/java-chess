@@ -17,6 +17,8 @@ import java.util.Map;
 
 public class ChessBoard {
 
+    private static final int KING_ALIVE_COUNT = 2;
+
     private final Map<Position, ChessPiece> chessBoard;
 
     private ChessBoard(Map<Position, ChessPiece> chessBoard) {
@@ -121,9 +123,9 @@ public class ChessBoard {
 
     public boolean checkKingIsDead() {
         long kingCount = chessBoard.values().stream()
-                .filter(chessPiece -> chessPiece.getShape().equals(Shape.KING))
+                .filter(ChessPiece::isKing)
                 .count();
-        return kingCount != 2;
+        return kingCount != KING_ALIVE_COUNT;
     }
 
     public double calculateScore(Side side) {

@@ -20,6 +20,10 @@ public abstract class ChessPiece {
         return side.equals(chessPiece.getSide());
     }
 
+    public boolean isKing() {
+        return getShape().equals(Shape.KING);
+    }
+
     public String getName() {
         Shape pieceShape = this.getShape();
         if (side.equals(Side.BLACK)) {
