@@ -2,6 +2,7 @@ package chess.dao;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ class MysqlChessGameDaoTest {
     @BeforeEach
     void setUp() {
         chessGameId = chessGameDao.create();
+        ChessBoardDao chessBoardDao = new MysqlChessBoardDao();
+        chessBoardDao.save(chessGameId, Board.init());
     }
 
     @Test
