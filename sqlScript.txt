@@ -1,10 +1,10 @@
 create table chess_game (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    turn varchar NOT NULL,
+    turn varchar(20) NOT NULL,
     PRIMARY KEY (id)
 );
 
-create table board (
+create table piece (
     chess_game_id BIGINT NOT NULL,
     position_file BIGINT NOT NULL,
     position_rank BIGINT NOT NULL,
