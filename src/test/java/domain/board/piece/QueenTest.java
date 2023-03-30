@@ -20,7 +20,7 @@ class QueenTest {
     @DisplayName("퀸이 이동 가능한 경로인지를 검증한다.")
     @TestFactory
     Stream<DynamicTest> testIsMovable() {
-        final Piece queen = Piece.queenBelongs(Camp.BLACK);
+        final Piece queen = Piece.blackQueen();
         return Stream.of(
             DynamicTest.dynamicTest("오른쪽 위 대각선 방향 검증.", () -> {
                 final Location start = Location.of(Row.valueOf(1), Column.valueOf(1));
@@ -76,10 +76,10 @@ class QueenTest {
     @DisplayName("퀸이 이동할 곳에 같은 진영의 기물이 존재할 경우 오류를 던진다.")
     @Test
     void sameCampPieceExistInDestination() {
-        final Piece queen = Piece.queenBelongs(Camp.BLACK);
+        final Piece queen = Piece.blackQueen();
         final Location start = Location.of(Row.valueOf(1), Column.valueOf(1));
         final Location end = Location.of(Row.valueOf(1), Column.valueOf(2));
-        Path path = new Path(new PieceMove(start, end), List.of(queen, Piece.pawnBelongs(Camp.BLACK)));
+        Path path = new Path(new PieceMove(start, end), List.of(queen, Piece.blackPawn()));
         assertThatThrownBy(() -> queen.validatePath(path))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -87,10 +87,10 @@ class QueenTest {
     @DisplayName("퀸이 이동하는 경로에 기물이 존재할 경우 오류를 던진다.")
     @Test
     void pathIsBlocked() {
-        final Piece queen = Piece.queenBelongs(Camp.BLACK);
+        final Piece queen = Piece.blackQueen();
         final Location start = Location.of(Row.valueOf(1), Column.valueOf(1));
         final Location end = Location.of(Row.valueOf(1), Column.valueOf(3));
-        Path path = new Path(new PieceMove(start, end), List.of(queen, Piece.pawnBelongs(Camp.BLACK), Piece.empty()));
+        Path path = new Path(new PieceMove(start, end), List.of(queen, Piece.blackPawn(), Piece.empty()));
         assertThatThrownBy(() -> queen.validatePath(path))
             .isInstanceOf(IllegalArgumentException.class);
     }

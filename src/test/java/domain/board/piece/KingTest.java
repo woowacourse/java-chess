@@ -20,7 +20,7 @@ class KingTest {
     @DisplayName("킹이 이동 가능한 경로인지를 검증한다.")
     @TestFactory
     Stream<DynamicTest> testIsMovable() {
-        final Piece king = Piece.kingBelongs(Camp.BLACK);
+        final Piece king = Piece.blackKing();
         return Stream.of(
             DynamicTest.dynamicTest("오른쪽 위 대각선 방향 검증.", () -> {
                 final Location start = Location.of(Row.valueOf(1), Column.valueOf(1));
@@ -76,10 +76,10 @@ class KingTest {
     @DisplayName("킹이 이동할 곳에 같은 진영의 기물이 존재할 경우 오류를 던진다.")
     @Test
     void sameCampPieceExistInDestination() {
-        final Piece king = Piece.kingBelongs(Camp.BLACK);
+        final Piece king = Piece.blackKing();
         final Location start = Location.of(Row.valueOf(1), Column.valueOf(1));
         final Location end = Location.of(Row.valueOf(1), Column.valueOf(2));
-        Path path = new Path(new PieceMove(start, end), List.of(king, Piece.pawnBelongs(Camp.BLACK)));
+        Path path = new Path(new PieceMove(start, end), List.of(king, Piece.blackPawn()));
         assertThatThrownBy(() -> king.validatePath(path))
             .isInstanceOf(IllegalArgumentException.class);
     }

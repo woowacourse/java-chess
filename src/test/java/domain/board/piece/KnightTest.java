@@ -19,7 +19,7 @@ class KnightTest {
     @DisplayName("나이트가 이동 가능한 경로인지 검증한다.")
     @TestFactory
     Stream<DynamicTest> testIsMovable() {
-        final Piece knight = Piece.knightBelongs(Camp.BLACK);
+        final Piece knight = Piece.blackKnight();
         return Stream.of(
             DynamicTest.dynamicTest("위로 2칸 오른쪽 1칸으로 움직일 수 있다.", () -> {
                 final Location start = Location.of(Row.valueOf(1), Column.valueOf(3));
@@ -75,7 +75,7 @@ class KnightTest {
     @DisplayName("나이트가 이동 불가능한 경로일 때 오류를 던진다.")
     @TestFactory
     Stream<DynamicTest> testIsNotMovable() {
-        final Piece knight = Piece.knightBelongs(Camp.BLACK);
+        final Piece knight = Piece.blackKnight();
         return Stream.of(
             DynamicTest.dynamicTest("오른쪽 위 대각선 방향 검증.", () -> {
                 final Location start = Location.of(Row.valueOf(1), Column.valueOf(1));

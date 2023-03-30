@@ -1,6 +1,6 @@
 package domain.path.pathValidtor;
 
-import domain.board.piece.PieceType;
+import domain.path.direction.Direction;
 import domain.path.pathValidtor.validateTarget.BlockedValidation;
 import domain.path.pathValidtor.validateTarget.DetinationValidation;
 import domain.path.pathValidtor.validateTarget.DirectionValidation;
@@ -14,9 +14,7 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator rookPathValidator() {
-        final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.ROOK.getPossibleDirections()
-        );
+        final DirectionValidation directionValidation = DirectionValidation.of(Direction.rookDirections());
         return new PathValidator(
             List.of(
                 directionValidation,
@@ -27,10 +25,7 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator bishopPathValidator() {
-        final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.BISHOP.getPossibleDirections()
-        );
-
+        final DirectionValidation directionValidation = DirectionValidation.of(Direction.bishopDirections());
         return new PathValidator(
             List.of(
                 directionValidation,
@@ -41,9 +36,7 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator queenPathValidator() {
-        final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.QUEEN.getPossibleDirections()
-        );
+        final DirectionValidation directionValidation = DirectionValidation.of(Direction.queenDirections());
 
         return new PathValidator(
             List.of(
@@ -55,10 +48,7 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator kingPathValidator() {
-        final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.KING.getPossibleDirections()
-        );
-
+        final DirectionValidation directionValidation = DirectionValidation.of(Direction.kingDirections());
         return new PathValidator(
             List.of(
                 directionValidation,
@@ -69,10 +59,7 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator knightPathValidator() {
-        final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.KNIGHT.getPossibleDirections()
-        );
-
+        final DirectionValidation directionValidation = DirectionValidation.of(Direction.knightDirections());
         return new PathValidator(
             List.of(
                 directionValidation,
@@ -83,9 +70,7 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator pawnPathValidator() {
-        final DirectionValidation directionValidation = DirectionValidation.of(
-            PieceType.PAWN.getPossibleDirections()
-        );
+        final DirectionValidation directionValidation = DirectionValidation.of(Direction.pawnDirections());
         return new PathValidator(
             List.of(
                 directionValidation,
@@ -95,10 +80,6 @@ public final class PathValidatorFactory {
     }
 
     public static PathValidator emptyPiecePathValidator() {
-        return new PathValidator(
-            List.of(
-                DirectionValidation.of(PieceType.EMPTY.getPossibleDirections())
-            )
-        );
+        return new PathValidator(List.of(DirectionValidation.of(Direction.emptyDirections())));
     }
 }
