@@ -9,5 +9,7 @@ public interface State {
 
     Team getTurn();
 
-    void startGame();
+    void checkStartState();
+
+    State changeState();
 }

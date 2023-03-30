@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.pieces.component.Team;
 
-public class Ready implements State{
+public class Ready implements State {
     @Override
     public boolean isEnd() {
         return false;
@@ -15,10 +15,15 @@ public class Ready implements State{
 
     @Override
     public Team getTurn() {
-        throw new IllegalStateException("start 상태에서는 차례가 없습니다.");
+        throw new IllegalStateException("준 상태에는 턴이 존재하지 않습니다.");
     }
 
     @Override
-    public void startGame() {
+    public void checkStartState() {
+    }
+
+    @Override
+    public State changeState() {
+        return new WhiteTurn();
     }
 }
