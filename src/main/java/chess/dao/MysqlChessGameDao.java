@@ -68,7 +68,7 @@ public class MysqlChessGameDao implements ChessGameDao {
                 int file = resultSet.getInt("piece_file");
                 board.put(new Position(rank, file), piece);
             }
-            return ChessGame.setting(id, Board.setting(board), Team.valueOf(turn));
+            return new ChessGame(id, new Board(board), Team.valueOf(turn));
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

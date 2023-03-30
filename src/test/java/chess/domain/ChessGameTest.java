@@ -16,7 +16,7 @@ class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = ChessGame.createGame(1);
+        chessGame = ChessGame.from(1);
     }
 
     @Test

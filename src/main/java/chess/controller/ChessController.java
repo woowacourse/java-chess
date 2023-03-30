@@ -47,7 +47,7 @@ public class ChessController {
             return chessGameDao.findById(Integer.parseInt(gameCommand));
         }
         long chessGameId = chessGameDao.create();
-        ChessGame chessGame = ChessGame.createGame(chessGameId);
+        ChessGame chessGame = ChessGame.from(chessGameId);
         chessBoardDao.save(chessGameId, chessGame.getBoard());
         outputView.printGameId(chessGameId);
         return chessGame;

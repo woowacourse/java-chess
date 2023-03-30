@@ -16,17 +16,13 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    private Board(Map<Position, Piece> board) {
-        this.board = board;
+    public Board(Map<Position, Piece> board) {
+        this.board = new HashMap<>(board);
     }
 
     public static Board init() {
         Map<Position, Piece> setting = PieceFactory.createPieces();
         return new Board(setting);
-    }
-
-    public static Board setting(Map<Position, Piece> board) {
-        return new Board(board);
     }
 
     public boolean isNotTurn(Position source, Team turn) {

@@ -12,19 +12,15 @@ public class ChessGame {
     private final Board board;
     private Team turn;
 
-    private ChessGame(long id, Board board, Team turn) {
+    public ChessGame(long id, Board board, Team turn) {
         this.id = id;
         this.board = board;
         this.turn = turn;
     }
 
-    public static ChessGame createGame(long id) {
+    public static ChessGame from(long id) {
         Board initBoard = Board.init();
         return new ChessGame(id, initBoard, Team.getStartTeam());
-    }
-
-    public static ChessGame setting(long id, Board board, Team turn) {
-        return new ChessGame(id, board, turn);
     }
 
     public void movePiece(Position source, Position target) throws IllegalArgumentException {
