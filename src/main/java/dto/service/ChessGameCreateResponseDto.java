@@ -4,11 +4,11 @@ import domain.game.ChessGame;
 
 public class ChessGameCreateResponseDto {
     private final ChessGame chessGame;
-    private final Long gameId;
+    private final Long roomId;
 
     public ChessGameCreateResponseDto(ChessGame chessGame, Long gameId) {
         this.chessGame = chessGame;
-        this.gameId = gameId;
+        this.roomId = gameId;
     }
 
 
@@ -16,7 +16,7 @@ public class ChessGameCreateResponseDto {
         return chessGame;
     }
 
-    public Long getGameId() {
-        return gameId;
+    public Long getRoomId() {
+        return roomId;
     }
 }

@@ -54,7 +54,7 @@ public class ChessController {
         OutputView.printChessBoard(chessGame.getBoard());
 
         while (chessGame.isPlayable()) {
-            play(chessGame, chessGameDto.getGameId());
+            play(chessGame, chessGameDto.getRoomId());
             OutputView.printChessBoard(chessGame.getBoard());
         }
     }
