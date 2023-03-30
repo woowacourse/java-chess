@@ -34,10 +34,10 @@ public class ChessGameDao {
     public List<MoveDto> selectAllMovement() {
         final var query = "SELECT * FROM movement";
         try (final var connection = dbConnection.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+             final var preparedStatement = connection.prepareStatement(query);
+             final var resultSet = preparedStatement.executeQuery()) {
     
             List<MoveDto> moveDtos = new ArrayList<>();
-            final var resultSet = preparedStatement.executeQuery();
     
             while (resultSet.next()) {
                 moveDtos.add(new MoveDto(List.of(
@@ -45,6 +45,7 @@ public class ChessGameDao {
                         resultSet.getString("destination")
                 )));
             }
+            
             return moveDtos;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
