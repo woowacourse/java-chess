@@ -2,11 +2,11 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandFactory;
+import chess.controller.command.StartCommand;
 import chess.service.ChessGameService;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public final class ChessGameState {
     private static final int COMMAND_INDEX = 0;
@@ -17,6 +17,7 @@ public final class ChessGameState {
     
     public ChessGameState(ChessGameService chessGameService) {
         this.chessGameService = chessGameService;
+        command = new StartCommand();
     }
     
     public void playWithCurrentTurn(List<String> inputCommand) {
@@ -25,10 +26,6 @@ public final class ChessGameState {
     }
     
     public boolean isRunning() {
-        if (Objects.isNull(command)) {
-            return true;
-        }
-        
         return command.isRunning();
     }
     
