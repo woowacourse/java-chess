@@ -24,7 +24,7 @@ public class PieceToScoreConverter {
     }
 
     public static void init() {
-        piecesAndScores.put(new Empty(), 0.0);
+        piecesAndScores.put(Empty.getInstance(), 0.0);
         piecesAndScores.put(new King(Camp.WHITE), 0.0);
         piecesAndScores.put(new King(Camp.BLACK), 0.0);
         piecesAndScores.put(new Queen(Camp.WHITE), 9.0);
