@@ -25,7 +25,7 @@ public class GameCommand {
 
     private void validateGameCommand(List<String> gameCommand) {
         String command = gameCommand.get(GameCommandIndex.COMMAND.index);
-        boolean isCommandMove = command.equals(MOVE_COMMAND) && gameCommand.size() == MOVE_COMMAND_SIZE;
+        boolean isCommandMove = MOVE_COMMAND.equals(command) && gameCommand.size() == MOVE_COMMAND_SIZE;
 
         if (isCommandMove) {
             validateMoveCommand(
@@ -35,34 +35,35 @@ public class GameCommand {
             return;
         }
 
-        if (!(command.equals(START_COMMAND) || command.equals(END_COMMAND)
-                || command.equals(STATUS_COMMAND) || command.equals(SAVE_COMMAND))) {
+        if (!(START_COMMAND.equals(command) || END_COMMAND.equals(command)
+                || STATUS_COMMAND.equals(command) || SAVE_COMMAND.equals(command))) {
             throw new IllegalCommandException();
         }
     }
 
     private void validateMoveCommand(String source, String target) {
-        if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(SQUARE_BOUND_REGULAR_EXPRESSION)) {
+        if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(
+                SQUARE_BOUND_REGULAR_EXPRESSION)) {
             throw new IllegalCommandException();
         }
     }
 
     public void isStart() {
-        if (!gameCommand.get(GameCommandIndex.COMMAND.index).equals(START_COMMAND)) {
+        if (!START_COMMAND.equals(gameCommand.get(GameCommandIndex.COMMAND.index))) {
             throw new IllegalStartCommandException();
         }
     }
 
     public boolean isMove() {
-        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(MOVE_COMMAND);
+        return MOVE_COMMAND.equals(gameCommand.get(GameCommandIndex.COMMAND.index));
     }
 
     public boolean isStatus() {
-        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(STATUS_COMMAND);
+        return STATUS_COMMAND.equals(gameCommand.get(GameCommandIndex.COMMAND.index));
     }
 
     public boolean isSave() {
-        return gameCommand.get(GameCommandIndex.COMMAND.index).equals(SAVE_COMMAND);
+        return SAVE_COMMAND.equals(gameCommand.get(GameCommandIndex.COMMAND.index));
     }
 
     public List<Square> convertToSquare() {

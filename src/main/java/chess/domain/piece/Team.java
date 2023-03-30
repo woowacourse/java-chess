@@ -19,10 +19,10 @@ public enum Team {
     }
 
     public Team nextTurn(Team turn) {
-        if (turn.equals(WHITE)) {
+        if (WHITE.equals(turn)) {
             return BLACK;
         }
-        if (turn.equals(BLACK)) {
+        if (BLACK.equals(turn)) {
             return WHITE;
         }
         return EMPTY;

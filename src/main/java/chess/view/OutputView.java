@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     private String checkPieceCamp(List<Piece> pieces, int i, String pieceType) {
-        if (pieces.get(i - 1).getTeam().equals(Team.WHITE)) {
+        if (Team.WHITE.equals(pieces.get(i - 1).getTeam())) {
             pieceType = pieceType.toLowerCase();
         }
         return pieceType;

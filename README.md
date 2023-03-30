@@ -155,5 +155,5 @@ CREATE TABLE piece
 - [x]  `getWhitePieces(), getBlackPieces()` 하나의 메서드로 리팩토링
 - [x]  `calculateWhiteScore(),``calculateBlackScore()`  하나의 메서드로 리팩토링
 - [x]  BoardFactory로 책임 분리
-- [ ]  문자열을 먼저 두고 equals 비교 하도록 수정
+- [x]  문자열을 먼저 두고 equals 비교 하도록 수정
 - [ ]  객체들의 책임 분리

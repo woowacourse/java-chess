@@ -22,7 +22,7 @@ public class Pawn extends Piece {
     }
 
     private List<Direction> makePossibleMove() {
-        if (team.equals(Team.WHITE)) {
+        if (Team.WHITE.equals(team)) {
             return List.of(Direction.UP, Direction.RIGHT_UP, Direction.LEFT_UP);
         }
         return List.of(Direction.DOWN, Direction.RIGHT_DOWN, Direction.LEFT_DOWN);

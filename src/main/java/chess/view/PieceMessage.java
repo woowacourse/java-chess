@@ -32,7 +32,8 @@ public enum PieceMessage {
     }
 
     private static String findMessage(PieceType pieceType) {
-        return Arrays.stream(PieceMessage.values()).filter(pieceMessage -> pieceMessage.pieceType == pieceType)
+        return Arrays.stream(PieceMessage.values())
+                .filter(pieceMessage -> pieceMessage.pieceType == pieceType)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new)
                 .message;
