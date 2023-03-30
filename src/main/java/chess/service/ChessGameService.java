@@ -18,7 +18,7 @@ public final class ChessGameService {
         this.chessBoardService = chessBoardService;
     }
 
-    public ChessGame getChessGame(final Long userId) {
+    public ChessGame getOrCreateChessGame(final Long userId) {
         final Optional<ChessGameEntity> findChessGameEntity = chessGameDao.findByUserId(userId);
         if (findChessGameEntity.isEmpty()) {
             return getNewChessGame(userId);

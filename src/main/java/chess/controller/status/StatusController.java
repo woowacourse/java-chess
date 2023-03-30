@@ -41,7 +41,7 @@ public final class StatusController implements Controller {
 
     @Override
     public Optional<ChessGame> findGame() {
-        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
         return Optional.of(chessGame);
     }
 
@@ -58,7 +58,7 @@ public final class StatusController implements Controller {
 
     private Runnable runCalculator() {
         return () -> {
-            final ChessGame chessGame = chessGameService.getChessGame(userId);
+            final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
             final ChessScore chessResult = ChessGameCalculator.calculate(chessGame);
             final ChessResultDto chessResultDto = ChessResultDtoMapper.from(chessResult);
             OutputView.printChessResult(chessResultDto);

@@ -56,7 +56,7 @@ public final class ChessHandler {
     private Long getUserIdWithRetry(final Supplier<String> supplier) {
         try {
             final String name = supplier.get();
-            return userService.getUserId(name);
+            return userService.getOrCreateUserId(name);
         } catch (IllegalArgumentException e) {
             OutputView.print(e.getMessage());
             return getUserIdWithRetry(supplier);

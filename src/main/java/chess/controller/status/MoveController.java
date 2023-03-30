@@ -43,14 +43,14 @@ public final class MoveController implements Controller {
 
     @Override
     public Optional<ChessGame> findGame() {
-        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
         return Optional.of(chessGame);
     }
 
     Controller move(final Command command) {
         validateCommand(command);
         final List<String> commands = command.getCommands();
-        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
         play(commands, chessGame);
         if (!chessGame.isKingAlive()) {
             return new StatusController(userId, chessGameService).getStatus(false);

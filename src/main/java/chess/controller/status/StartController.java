@@ -33,7 +33,7 @@ public final class StartController implements Controller {
 
     @Override
     public Optional<ChessGame> findGame() {
-        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
         return Optional.of(chessGame);
     }
 }

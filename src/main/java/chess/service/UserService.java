@@ -13,7 +13,7 @@ public final class UserService {
         this.userDao = userDao;
     }
 
-    public Long getUserId(final String name) {
+    public Long getOrCreateUserId(final String name) {
         final User user = User.create(name);
         final String userName = user.getName();
         final Optional<UserEntity> userEntity = userDao.findByName(userName);

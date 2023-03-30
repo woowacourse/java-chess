@@ -20,7 +20,7 @@ class ChessGameServiceTestHandler {
 
     @Test
     @DisplayName("사용자의 아이디에 해당하는 체스 게임이 존재하지 않으면 새 게임을 반환한다.")
-    void getChessGame_empty() {
+    void getOrCreateChessGame_empty() {
         // given
         final MockChessGameDao chessGameDao = new MockChessGameDao();
         final ChessGameService chessGameService = new ChessGameService(
@@ -28,7 +28,7 @@ class ChessGameServiceTestHandler {
         final ChessGame expected = new ChessGame(CampType.WHITE);
 
         // when
-        final ChessGame actual = chessGameService.getChessGame(2L);
+        final ChessGame actual = chessGameService.getOrCreateChessGame(2L);
 
         // then
         assertThat(actual)
@@ -37,7 +37,7 @@ class ChessGameServiceTestHandler {
 
     @Test
     @DisplayName("사용자의 아이디에 해당하는 체스 게임이 존재하면 해당 게임을 반환한다.")
-    void getChessGame() {
+    void getOrCreateChessGame() {
         // given
         final Long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
@@ -45,7 +45,7 @@ class ChessGameServiceTestHandler {
         final ChessGame expected = new ChessGame(mockProgressBoard, CampType.WHITE);
 
         // when
-        final ChessGame actual = chessGameService.getChessGame(userId);
+        final ChessGame actual = chessGameService.getOrCreateChessGame(userId);
 
         // then
         assertThat(actual)
@@ -96,7 +96,7 @@ class ChessGameServiceTestHandler {
         chessGameService.updateCurrentCamp(1L, changedCamp);
 
         // then
-        final ChessGame chessGame = chessGameService.getChessGame(1L);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(1L);
         final CampType campType = chessGame.getCurrentCamp();
         assertThat(campType)
                 .isEqualTo(changedCamp);
@@ -117,7 +117,7 @@ class ChessGameServiceTestHandler {
         chessGameService.deletePieces(source, target);
 
         // then
-        final ChessGame actual = chessGameService.getChessGame(1L);
+        final ChessGame actual = chessGameService.getOrCreateChessGame(1L);
         assertThat(actual)
                 .isEqualTo(new ChessGame(ChessBoard.create(Collections.emptyMap()), CampType.WHITE));
     }
@@ -133,7 +133,7 @@ class ChessGameServiceTestHandler {
         chessGameService.clear(userId);
 
         // then
-        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
         final ChessGame expected = new ChessGame(CampType.WHITE);
         assertThat(chessGame)
                 .isEqualTo(expected);
