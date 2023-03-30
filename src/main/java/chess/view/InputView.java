@@ -17,10 +17,20 @@ public class InputView {
         validateStartCommand(input);
     }
 
+    public String readGame() {
+        System.out.println("게임을 이어서 하려면 게임 아이디를, 게임을 새로 시작하려면 'new' 를 입력해주세요.");
+        String input = scanner.nextLine();
+        if (GameCommand.isNew(input)) {
+            return input;
+        }
+        validateDigit(input);
+        return input;
+    }
+
     public String readCommand() {
         String input = scanner.nextLine();
 
-        if (GameCommand.isEnd(input)) {
+        if (GameCommand.isEnd(input) || GameCommand.isStatus(input)) {
             return input;
         }
 
@@ -30,7 +40,7 @@ public class InputView {
         return commands.get(1) + commands.get(2);
     }
 
-    private static void validateCommands(List<String> commands) {
+    private void validateCommands(List<String> commands) {
         validateBlank(commands);
         validateMoveCommand(commands.get(0));
         validateCommandSize(commands);

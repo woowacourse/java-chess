@@ -20,4 +20,9 @@ public class King extends Piece {
     protected int calculateCount(int fileDiff, int rankDiff) {
         return Math.abs(fileDiff);
     }
+
+    @Override
+    public PieceType type() {
+        return PieceType.King;
+    }
 }

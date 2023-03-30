@@ -1,9 +1,17 @@
 package chess.view;
 
-import static chess.view.PieceView.*;
+import static chess.view.PieceView.BISHOP;
+import static chess.view.PieceView.EMPTY;
+import static chess.view.PieceView.KING;
+import static chess.view.PieceView.KNIGHT;
+import static chess.view.PieceView.PAWN;
+import static chess.view.PieceView.QUEEN;
+import static chess.view.PieceView.ROOK;
 
-import chess.domain.board.Board;
 import chess.domain.Position;
+import chess.domain.score.Score;
+import chess.domain.Team;
+import chess.domain.board.Board;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -12,7 +20,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class OutputView {
 
@@ -22,10 +32,33 @@ public class OutputView {
     private static final int MAX_FILE = 8;
 
     public void printStartMessage() {
-        System.out.println("> 체스 게임을 시작합니다.\n"
+        System.out.println(
+                "> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
                 + "> 게임 종료 : end\n"
-                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3"
+        );
+    }
+
+    public void printGameList(List<Integer> allGameId) {
+        StringBuilder sb = new StringBuilder();
+        System.out.print("게임 목록(아이디) : ");
+        if (allGameId.isEmpty()) {
+            System.out.println("진행중인 게임이 없습니다!");
+            return;
+        }
+        for (Integer gameId : allGameId) {
+            sb.append(gameId).append(", ");
+        }
+        System.out.println(sb);
+    }
+
+    public void printGameId(long id) {
+        System.out.println("새로운 게임이 생성되었습니다. 아이디는 " + id + "입니다.");
+    }
+
+    public void printCurrentTurn(Team turn) {
+        System.out.println(turn + " 차례입니다.");
     }
 
     public void printBoard(Board board) {
@@ -99,6 +132,21 @@ public class OutputView {
         if (piece.getClass() == Empty.class) {
             System.out.print(EMPTY.getPieceView(piece.getTeam()));
         }
+    }
+
+    public void printStatus(Map<Team, Score> scores, Optional<Team> winner) {
+        System.out.println("[현재 점수]");
+        System.out.println(Team.WHITE + "팀 : " + scores.get(Team.WHITE).getScore());
+        System.out.println(Team.BLACK + "팀 : " + scores.get(Team.BLACK).getScore());
+        printWinner(winner);
+    }
+
+    public void printWinner(Optional<Team> winner) {
+        if (winner.isEmpty()) {
+            System.out.println("무승부입니다.\n");
+            return;
+        }
+        System.out.println("우승자는 " + winner.get() + "팀 입니다🎉\n");
     }
 
     public void printExceptionMessage(Exception exception) {

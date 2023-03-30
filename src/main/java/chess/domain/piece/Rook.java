@@ -20,4 +20,9 @@ public class Rook extends Piece {
     protected int calculateCount(int fileDiff, int rankDiff) {
         return Math.abs(fileDiff + rankDiff);
     }
+
+    @Override
+    public PieceType type() {
+        return PieceType.Rook;
+    }
 }

@@ -18,4 +18,9 @@ public class Empty extends Piece {
     protected int calculateCount(int fileDiff, int rankDiff) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public PieceType type() {
+        return PieceType.Empty;
+    }
 }

@@ -28,6 +28,15 @@ class InputValidatorTest {
     }
 
     @Test
+    @DisplayName("게임 아이디가 정수가 아니면 예외가 발생한다.")
+    void validateDigit() {
+        String input = "1번";
+        assertThatThrownBy(() -> InputValidator.validateDigit(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 게임 아이디는 정수로 입력해주세요.");
+    }
+
+    @Test
     @DisplayName("입력이 move가 아니면 예외가 발생한다.")
     void validateMoveCommand() {
         String input = "moove";

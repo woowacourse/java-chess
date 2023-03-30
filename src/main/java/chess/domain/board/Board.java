@@ -1,9 +1,13 @@
 package chess.domain.board;
 
 import chess.domain.Position;
+import chess.domain.score.Score;
+import chess.domain.score.ScoreCalculator;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,19 +16,12 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    private Board(Map<Position, Piece> board) {
-        this.board = board;
+    public Board(Map<Position, Piece> board) {
+        this.board = new HashMap<>(board);
     }
 
     public static Board init() {
-        Map<Position, Piece> setting = new HashMap<>();
-
-        for (PieceSettings pieceSetting : PieceSettings.values()) {
-            setting.put(pieceSetting.getPosition(), pieceSetting.getPiece());
-        }
-        for (EmptySettings emptySetting : EmptySettings.values()) {
-            setting.put(emptySetting.getPosition(), emptySetting.getPiece());
-        }
+        Map<Position, Piece> setting = PieceFactory.createPieces();
         return new Board(setting);
     }
 
@@ -76,6 +73,16 @@ public class Board {
 
     public boolean isEmptyPiece(Position source) {
         return board.get(source).getClass() == Empty.class;
+    }
+
+    public Score calculateScore(Team team) {
+        return ScoreCalculator.calculateScore(board, team);
+    }
+
+    public boolean hasKing(Team team) {
+        return board.keySet().stream()
+                .filter(key -> board.get(key).isSameTeam(team))
+                .anyMatch(key -> board.get(key).getClass() == King.class);
     }
 
     public Map<Position, Piece> getBoard() {
