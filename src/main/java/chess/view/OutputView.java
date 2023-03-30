@@ -48,8 +48,15 @@ public class OutputView {
         for (PieceResponse piece : pieces) {
             int y = piece.getRankIndex() - 1;
             int x = piece.getFileIndex() - 1;
-            board[y][x] = piece.getLetter();
+            board[y][x] = getLetterOf(piece);
         }
+    }
+
+    private Character getLetterOf(PieceResponse piece) {
+        if (piece.isWhite()) {
+            return Character.toLowerCase(piece.getLetter());
+        }
+        return piece.getLetter();
     }
 
     private void printBoard(char[][] board) {

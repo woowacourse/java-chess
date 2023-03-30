@@ -5,11 +5,13 @@ public class PieceResponse {
     private final int fileIndex;
     private final int rankIndex;
     private final Character letter;
+    private final boolean isWhite;
 
-    public PieceResponse(int fileIndex, int rankIndex, Character letter) {
+    public PieceResponse(int fileIndex, int rankIndex, Character letter, boolean isWhite) {
         this.fileIndex = fileIndex;
         this.rankIndex = rankIndex;
         this.letter = letter;
+        this.isWhite = isWhite;
     }
 
     public int getFileIndex() {
@@ -22,5 +24,9 @@ public class PieceResponse {
 
     public Character getLetter() {
         return letter;
+    }
+
+    public boolean isWhite() {
+        return isWhite;
     }
 }

@@ -21,18 +21,15 @@ public class PieceResponseMapper {
     );
 
     public static PieceResponse map(Position position, Piece piece) {
-        int fileIndex = position.getFileIndex();
-        int rankIndex = position.getRankIndex();
-        return new PieceResponse(fileIndex, rankIndex, mapLetter(piece));
+        int fileIndex = position.getFile().getIndex();
+        int rankIndex = position.getFile().getIndex();
+        return new PieceResponse(fileIndex, rankIndex, mapLetter(piece), piece.hasTeam(Team.WHITE));
     }
 
     private static Character mapLetter(Piece piece) {
         Character letter = PIECE_TYPE_MAP.get(piece.getType());
         if (Objects.isNull(letter)) {
             throw new IllegalArgumentException("알 수 없는 기물이 있습니다");
-        }
-        if (piece.hasTeam(Team.WHITE)) {
-            return Character.toLowerCase(letter);
         }
         return letter;
     }

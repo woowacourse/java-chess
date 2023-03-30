@@ -52,14 +52,6 @@ public class Position {
         return this.file.equals(file);
     }
 
-    public int getFileIndex() {
-        return file.getIndex();
-    }
-
-    public int getRankIndex() {
-        return rank.getIndex();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
