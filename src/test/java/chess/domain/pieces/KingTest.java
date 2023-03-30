@@ -5,6 +5,7 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ class KingTest {
     void validateTeamTest_exception() {
         Team team = Team.NEUTRALITY;
 
-        assertThatThrownBy(() -> new King(team));
+        assertThatThrownBy(() -> new King(team, Type.KING));
     }
 
     @Test
@@ -27,8 +28,8 @@ class KingTest {
     void canMoveStep_test_true() {
         Position position = new Position(Rank.FIVE, File.F);
         Direction direction = Direction.DOWN;
-        List<Piece> pieces = List.of(new King(Team.WHITE));
-        King king = new King(Team.BLACK);
+        List<Piece> pieces = List.of(new King(Team.WHITE, Type.KING));
+        King king = new King(Team.BLACK, Type.KING);
 
         king.checkStep(position, direction, pieces);
     }
@@ -38,8 +39,8 @@ class KingTest {
     void canMoveStep_test_false() {
         Position position = new Position(Rank.FIVE, File.F);
         Direction direction = Direction.DOWN;
-        List<Piece> pieces = List.of(new King(Team.WHITE),new King(Team.WHITE));
-        King king = new King(Team.BLACK);
+        List<Piece> pieces = List.of(new King(Team.WHITE, Type.KING), new King(Team.WHITE, Type.KING));
+        King king = new King(Team.BLACK, Type.KING);
 
         assertThatThrownBy(() -> king.checkStep(position, direction, pieces));
     }

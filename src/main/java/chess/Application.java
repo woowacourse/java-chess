@@ -23,6 +23,7 @@ public class Application {
             changeState();
             if (chessGame.isKingDie()) {
                 OutputView.printWinner(chessGame.winTeam().getValue());
+                chessGame.changeTurnEnd();
                 break;
             }
         }

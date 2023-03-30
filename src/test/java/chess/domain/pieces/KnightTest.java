@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,6 @@ class KnightTest {
     void validateTeamTest_exception() {
         Team team = Team.NEUTRALITY;
 
-        assertThatThrownBy(() -> new Knight(team));
+        assertThatThrownBy(() -> new Knight(team, Type.KNIGHT));
     }
 }

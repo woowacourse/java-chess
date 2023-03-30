@@ -39,3 +39,5 @@ graph TD
 # 미션을 진행하며 노력한 점
 
 # 미션을 진행하며 궁금한 점
+입력 명령:start, end, move
+state => start -> 화이트
