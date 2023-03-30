@@ -16,8 +16,7 @@ public class ChessGameService {
     }
 
     public ChessGameCreateResponseDto createGameRoom(ChessGame chessGame) {
-        Long roomId = 0L;
-        roomId = createRoom();
+        Long roomId = createRoom();
         return insertPieces(chessGame, roomId);
     }
 
@@ -27,13 +26,13 @@ public class ChessGameService {
     }
 
     public ChessGameCreateResponseDto loadChessGame(Long roomId) {
-        if (hasGame(roomId)) {
-            ChessGameDaoResponseDto chessGameResponseDto = boardDao.loadGame(roomId);
-            Board board = new Board(chessGameResponseDto.getBoard());
-            ChessGame chessGame = new ChessGame(board, chessGameResponseDto.getLastTurn(), chessGameResponseDto.getState());
-            return new ChessGameCreateResponseDto(chessGame, roomId);
+        if (!hasGame(roomId)) {
+            throw new IllegalArgumentException("저장된 게임이 없습니다.");
         }
-        throw new IllegalArgumentException("저장된 게임이 없습니다.");
+        ChessGameDaoResponseDto chessGameResponseDto = boardDao.loadGame(roomId);
+        Board board = new Board(chessGameResponseDto.getBoard());
+        ChessGame chessGame = new ChessGame(board, chessGameResponseDto.getLastTurn(), chessGameResponseDto.getState());
+        return new ChessGameCreateResponseDto(chessGame, roomId);
     }
 
     public List<Long> findAllRooms() {

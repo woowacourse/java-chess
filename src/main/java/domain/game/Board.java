@@ -25,13 +25,8 @@ public class Board {
         return nextSide;
     }
 
-    public boolean isMovable(Position sourcePosition, Position targetPosition, Side side) {
-        Piece sourcePiece = chessBoard.get(sourcePosition);
-        validateSourcePositionIsEmpty(sourcePosition, sourcePiece);
-        validateTurn(side, sourcePiece);
-        validateIsMovable(sourcePosition, targetPosition);
-        validatePathIncludeAnyPiece(sourcePosition, targetPosition, sourcePiece);
-        return true;
+    public boolean isImpossibleMoving(Position sourcePosition, Position targetPosition, Side side) {
+        return !validateMoving(sourcePosition, targetPosition, side);
     }
 
     public boolean isKing(Position targetPosition) {
@@ -68,23 +63,38 @@ public class Board {
                 .orElse(side.nextSide());
     }
 
-    private void validateTurn(Side side, Piece sourcePiece) {
+    private boolean validateMoving(Position sourcePosition, Position targetPosition, Side side) {
+        Piece sourcePiece = chessBoard.get(sourcePosition);
+        if (validateSourcePositionIsEmpty(sourcePosition, sourcePiece) &&
+                validateTurn(side, sourcePiece) &&
+                validateIsMovable(sourcePosition, targetPosition) &&
+                validatePathIncludeAnyPiece(sourcePosition, targetPosition, sourcePiece)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    private boolean validateTurn(Side side, Piece sourcePiece) {
         if (sourcePiece.isIncorrectTurn(side)) {
             throw new IllegalArgumentException("다른 진영의 말은 움직일 수 없습니다.");
         }
+        return true;
     }
 
-    private void validateSourcePositionIsEmpty(Position sourcePosition, Piece sourcePiece) {
+    private boolean validateSourcePositionIsEmpty(Position sourcePosition, Piece sourcePiece) {
         if (sourcePiece.isEmptyPiece()) {
             throw new IllegalArgumentException(sourcePosition + "에 움직일 수 있는 말이 없습니다.");
         }
+        return true;
     }
 
-    private void validatePathIncludeAnyPiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+    private boolean validatePathIncludeAnyPiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
         List<Position> path = sourcePiece.collectPath(sourcePosition, targetPosition);
         for (Position position : path) {
             checkIsExistAnyPieceOn(position);
         }
+        return true;
     }
 
     private void checkIsExistAnyPieceOn(Position position) {
@@ -93,12 +103,13 @@ public class Board {
         }
     }
 
-    private void validateIsMovable(Position sourcePosition, Position targetPosition) {
+    private boolean validateIsMovable(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = this.chessBoard.get(sourcePosition);
         Piece targetPiece = this.chessBoard.get(targetPosition);
         if (!sourcePiece.isMovable(targetPiece, sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("올바른 움직임이 아닙니다.");
         }
+        return true;
     }
 
     private void movePiece(Position sourcePosition, Position targetPosition, Piece sourcePiece) {

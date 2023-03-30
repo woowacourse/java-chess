@@ -19,12 +19,12 @@ public class ChessGame {
     }
 
     public GameState move(Position sourcePosition, Position targetPosition) {
-        if (board.isMovable(sourcePosition, targetPosition, currentTurn)) {
-            this.state = calculateNextGameState(targetPosition);
-            Side nextTurn = board.move(sourcePosition, targetPosition);
-            currentTurn = nextTurn;
+        if (board.isImpossibleMoving(sourcePosition, targetPosition, currentTurn)) {
             return this.state;
         }
+        this.state = calculateNextGameState(targetPosition);
+        Side nextTurn = board.move(sourcePosition, targetPosition);
+        currentTurn = nextTurn;
         return this.state;
     }
 

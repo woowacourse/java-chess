@@ -77,10 +77,10 @@ class BoardTest {
     @DisplayName("잘못된 움직임을 입력 받으면 예외가 발생한다.")
     @Test
     void shouldThrowExceptionWhenInvalidMovement() {
-        board.isMovable(Position.of("e", "2"), Position.of("e", "4"), Side.WHITE);    // 1. White pawn이 위로 2칸 이동한다.
+        board.isImpossibleMoving(Position.of("e", "2"), Position.of("e", "4"), Side.WHITE);    // 1. White pawn이 위로 2칸 이동한다.
 
         assertThatThrownBy(() ->
-                board.isMovable(Position.of("e", "1"), Position.of("e", "3"), Side.WHITE)) // 2. King의 2칸 이동 시도로 인해 예외가 발생한다.
+                board.isImpossibleMoving(Position.of("e", "1"), Position.of("e", "3"), Side.WHITE)) // 2. King의 2칸 이동 시도로 인해 예외가 발생한다.
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바른 움직임이 아닙니다.");
     }
@@ -89,7 +89,7 @@ class BoardTest {
     @Test
     void shouldThrowExceptionWhenPathIncludeSameSidePiece() {
         assertThatThrownBy(() ->
-                board.isMovable(Position.of("c", "1"), Position.of("e", "3"), Side.WHITE)) // 1. Bishop의 이동 경로에 pawn이 존재하므로 예외가 발생한다.
+                board.isImpossibleMoving(Position.of("c", "1"), Position.of("e", "3"), Side.WHITE)) // 1. Bishop의 이동 경로에 pawn이 존재하므로 예외가 발생한다.
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 다른 말이 있습니다.");
     }
@@ -107,7 +107,7 @@ class BoardTest {
 
         assertThatThrownBy(() ->
                 // 3. White bishop이 f,4로 가는 경로인 e,3에 black pawn이 존재하기 때문에 예외가 발생한다.
-                board.isMovable(Position.of("c", "1"), Position.of("f", "4"), Side.WHITE))
+                board.isImpossibleMoving(Position.of("c", "1"), Position.of("f", "4"), Side.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 다른 말이 있습니다.");
     }
@@ -132,7 +132,7 @@ class BoardTest {
     @Test
     void throwExceptionWhenMoveEmptyPiece() {
         Position sourcePosition = Position.of("c", "3");
-        assertThatThrownBy(() -> board.isMovable(sourcePosition, Position.of("d", "5"), Side.WHITE))
+        assertThatThrownBy(() -> board.isImpossibleMoving(sourcePosition, Position.of("d", "5"), Side.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(sourcePosition + "에 움직일 수 있는 말이 없습니다.");
     }
