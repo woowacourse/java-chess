@@ -2,8 +2,10 @@ package chess.dao;
 
 import chess.dao.dto.ChessGameDto;
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.ExecuteState;
 import chess.domain.game.state.GameState;
 import chess.domain.piece.Color;
+import chess.service.ExecuteStateSerialization;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,9 +19,10 @@ public class ChessGameDaoImpl implements ChessGameDao {
     public void save(final ChessGame chessGame) {
         final GameState gameState = chessGame.getGameState();
         final Color turn = gameState.getTurnColor();
+        final ExecuteState executeState = gameState.getExecuteState();
 
-        final String query = "insert into chess_game(turn) values(?)";
-        final List<String> parameters = List.of(turn.name());
+        final String query = "insert into chess_game(state, turn) values(?, ?)";
+        final List<String> parameters = List.of(ExecuteStateSerialization.serialize(executeState), turn.name());
 
         jdbcTemplate.executeUpdate(query, parameters);
     }
@@ -33,7 +36,8 @@ public class ChessGameDaoImpl implements ChessGameDao {
             if (resultSet.next()) {
                 final ChessGameDto chessGameDto = ChessGameDto.of(
                         resultSet.getLong(1),
-                        resultSet.getString(2)
+                        resultSet.getString(2),
+                        resultSet.getString(3)
                 );
                 return Optional.of(chessGameDto);
             }
@@ -49,7 +53,8 @@ public class ChessGameDaoImpl implements ChessGameDao {
             if (resultSet.next()) {
                 final ChessGameDto chessGameDto = ChessGameDto.of(
                         resultSet.getLong(1),
-                        resultSet.getString(2)
+                        resultSet.getString(2),
+                        resultSet.getString(3)
                 );
                 return Optional.of(chessGameDto);
             }
@@ -66,7 +71,8 @@ public class ChessGameDaoImpl implements ChessGameDao {
             while (resultSet.next()) {
                 result.add(ChessGameDto.of(
                         resultSet.getLong(1),
-                        resultSet.getString(2)
+                        resultSet.getString(2),
+                        resultSet.getString(3)
                 ));
             }
             return result;
@@ -76,9 +82,15 @@ public class ChessGameDaoImpl implements ChessGameDao {
     @Override
     public void update(final ChessGame chessGame) {
         final GameState gameState = chessGame.getGameState();
+        final Color turnColor = gameState.getTurnColor();
+        final ExecuteState executeState = gameState.getExecuteState();
 
-        final String query = "update chess_game set turn = ? where id = ?";
-        final List<String> parameters = List.of(gameState.getTurnColor().name(), String.valueOf(chessGame.getId()));
+        final String query = "update chess_game set state = ?, turn = ? where id = ?";
+        final List<String> parameters = List.of(
+                ExecuteStateSerialization.serialize(executeState),
+                turnColor.name(),
+                String.valueOf(chessGame.getId())
+        );
 
         jdbcTemplate.executeUpdate(query, parameters);
     }

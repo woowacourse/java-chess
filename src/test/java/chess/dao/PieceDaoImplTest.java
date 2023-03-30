@@ -31,8 +31,8 @@ class PieceDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        final String query = "insert into chess_game(turn) values(?)";
-        final List<String> parameters = List.of("WHITE");
+        final String query = "insert into chess_game(state, turn) values(?, ?)";
+        final List<String> parameters = List.of("START", "WHITE");
         jdbcTemplate.executeUpdate(query, parameters);
 
         final ChessGameDaoImpl chessGameDao = new ChessGameDaoImpl();
