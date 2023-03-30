@@ -1,6 +1,8 @@
 package chess.service;
 
 import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
 import chess.game.ChessGame;
 import chess.game.Turn;
 import database.dto.ChessGameDto;
@@ -9,6 +11,7 @@ import database.ChessGameDao;
 import database.dto.SquareDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessGameService {
@@ -35,7 +38,9 @@ public class ChessGameService {
 
     public ChessGame findById(int gameId) {
         Turn turn = chessGameDao.findTurnById(gameId);
-        Board board = boardDao.findByGameId(gameId);
+        Map<Position, Piece> squares = boardDao.findByGameId(gameId);
+
+        Board board = new Board(squares);
         ChessGame chessGame = new ChessGame(board, turn);
         chessGame.setId(gameId);
         return chessGame;

@@ -1,6 +1,5 @@
 package database;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -63,7 +62,7 @@ public class BoardDao {
         }
     }
 
-    public Board findByGameId(int gameId) {
+    public Map<Position, Piece> findByGameId(int gameId) {
         String query = "SELECT x_pos, y_pos, role, team FROM board WHERE game_id = ?";
 
         try (Connection connection = ConnectionFactory.getConnection();
@@ -87,7 +86,7 @@ public class BoardDao {
         }
     }
 
-    private Board convertToBoard(ResultSet resultSet) throws SQLException {
+    private Map<Position, Piece> convertToBoard(ResultSet resultSet) throws SQLException {
         Map<Position, Piece> squares = new HashMap<>(64);
         while (resultSet.next()) {
             int x_pos = resultSet.getInt("x_pos");
@@ -98,7 +97,7 @@ public class BoardDao {
             Piece piece = PieceFactory.of(Role.valueOf(role), Team.valueOf(team));
             squares.put(position, piece);
         }
-        return new Board(squares);
+        return squares;
     }
 
     private int generateId() {
