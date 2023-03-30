@@ -6,6 +6,10 @@ public enum Color {
     EMPTY,
     ;
 
+    public boolean is(final Color color) {
+        return this == color;
+    }
+
     public boolean isOpponent(final Color color) {
         if (color == EMPTY) {
             return false;

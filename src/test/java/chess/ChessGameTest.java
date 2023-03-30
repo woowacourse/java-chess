@@ -10,7 +10,7 @@ import static chess.domain.piece.PieceType.ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.BoardInitializer;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -26,6 +26,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 public class ChessGameTest {
 
     private static List<PieceType> generateResult(final Board board) {
@@ -43,7 +44,7 @@ public class ChessGameTest {
     @Test
     void 루이로페즈_모던_슈타이니츠_바리에이션_으로_게임을_진행한다() {
         // given
-        final Board board = BoardFactory.create();
+        final Board board = BoardInitializer.initialize();
 
         // when
         board.move("e2", "e4");

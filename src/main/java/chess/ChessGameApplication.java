@@ -4,7 +4,6 @@ import chess.controller.ChessGameController;
 import chess.view.OutputView;
 
 public class ChessGameApplication {
-
     public static void main(String[] args) {
         final ChessGameController chessGameController = new ChessGameController();
         try {

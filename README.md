@@ -16,6 +16,9 @@
 
 - [x] 화이트, 블랙으로 나뉘며 한 턴씩 번갈아 가며 기물을 움직인다.
 - [x] 화이트가 기물을 먼저 움직인다.
+- [x] 킹이 잡히면 게임이 종료된다.
+- [x] 남아있는 말에 대한 점수를 계산할 수 있다.
+- [x] 데이터베이스에 행마를 저장하는 기능
 
 **보드**
 
@@ -39,6 +42,16 @@
 - [x] 움직이려는 칸에 같은 편 기물이 존재하는 경우 움직일 수 없다.
 - [x] 움직이려는 칸에 상대 편 기물이 존재하는 경우 해당 기물을 잡는다.
 
+**점수**
+- [x] 킹을 제외한 기물들은 점수를 가진다. 
+  - [x] 퀸: 9점
+  - [x] 룩: 5점
+  - [x] 비숍: 3점
+  - [x] 나이트: 2.5점
+  - [x] 폰: 1점
+- [x] 폰은 File(세로줄)에 같은 색의 폰이 있는 경우 0.5점이다.
+
+
 ### 다이어그램
 
 ```mermaid
@@ -46,18 +59,22 @@ graph TD
     ChessController --> InputView
     ChessController --> OutputView
 
-    ChessController --> Board
+    ChessController --> ChessGameService
     
-    Board --> BoardFactory
-
-    Position --> Rank
-    Position --> File
+    ChessGameService --> Board
+    ChessGameService --> BoardResult
+    
+    Board --> BoardResult
+    Board --> BoardInitializer
 
     Board --> Position
     Board --> PIECE
     PIECE --> Color
     PIECE --> PieceType
-
+    
+    Position --> Rank
+    Position --> File
+    
     subgraph PIECE
         direction BT
         Pawn -.-> Piece
@@ -70,6 +87,13 @@ graph TD
     end
 ```
 
-## 고민거리
-- Commands에서 필드를 가지고 있는 것?
-  - names()로 처리할 수 있는데 너무 길어지고, 소문자 글 자체가 명령어라고 생각할 수 있어서 나쁘지 않은 듯 
+### ERD
+```sql
+CREATE TABLE move (
+    id     BIGINT        NOT NULL AUTO_INCREMENT,
+    source VARCHAR(300) NOT NULL,
+    target VARCHAR(300) NOT NULL,
+    primary key (id)
+);
+
+```

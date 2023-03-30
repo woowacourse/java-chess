@@ -31,4 +31,8 @@ public abstract class Piece {
     public Color color() {
         return color;
     }
+
+    public double point() {
+        return type.point();
+    }
 }
