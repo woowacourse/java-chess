@@ -70,14 +70,17 @@ public class ChessGame {
 
     public Double calculateScore(Side side) {
         checkCalculable();
-        return board.calculateScore(side);
+        final Result result = board.getResult();
+        return result.calculateScore(side);
     }
 
     public Side calculateWinner() {
-        final Side winner = board.calculateWinner();
+        final Result result = board.getResult();
+        final Side winner = result.calculateWinner();
 
         if (winner.isNeutrality()) {
-            return Side.calculateWinner(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
+            return Side.calculateWinner(result.calculateScore(Side.WHITE),
+                    result.calculateScore(Side.BLACK));
         }
         return winner;
     }
