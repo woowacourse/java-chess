@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ChessGameDao {
-    private static final String URL = "jdbc:mysql://localhost:13306/"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
+    private static final String URL = "jdbc:mysql://localhost:13306/";
+    private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "user"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "password"; // MySQL 서버 비밀번호
+    private static final String USERNAME = "user";
+    private static final String PASSWORD = "password";
     private static final String QUERY_INSERT_CHESS_GAME = "INSERT INTO chess_game VALUES(?, ?, ?, default)";
     private static final String WHITE_MARK = "W";
     private static final String BLACK_MARK = "B";
