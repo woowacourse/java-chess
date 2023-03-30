@@ -79,7 +79,7 @@ public class LoadGameDao {
                 String pieceType = resultSet.getString("piece_type");
                 int teamValue = resultSet.getInt("piece_team");
                 try {
-                    Piece piece = PieceName.toPiece(pieceType, Team.from(teamValue));
+                    Piece piece = Converter.getPiece(pieceType, Team.from(teamValue));
                     board.put(square, piece);
                 } catch (ReflectiveOperationException e) {
                     throw new IllegalStateException("기물을 불러오지 못했습니다.");

@@ -27,13 +27,13 @@ public final class ChessGameDao {
                 char fileValue = square.getFileValue();
                 char rankValue = square.getRankValue();
                 Piece piece = board.get(square);
-                String pieceType = PieceName.from(piece);
+                String pieceName = Converter.getPieceName(piece);
                 int pieceTeam = piece.getColor().getValue();
                 preparedStatement.setLong(1, Integer.parseInt(gameId));
                 preparedStatement.setInt(2, chessGame.getTurn());
                 preparedStatement.setString(3, String.valueOf(fileValue));
                 preparedStatement.setString(4, String.valueOf(rankValue));
-                preparedStatement.setString(5, pieceType);
+                preparedStatement.setString(5, pieceName);
                 preparedStatement.setInt(6, pieceTeam);
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
