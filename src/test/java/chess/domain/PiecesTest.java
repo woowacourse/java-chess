@@ -76,8 +76,39 @@ final class PiecesTest {
     @DisplayName("왕 존재 여부를 반환할 수 있다.")
     @Test
     void testReturnIfKingExists() {
+        //given
         Pieces pieces = Pieces.from(Pieces.createWhitePieces().getPieces());
+        //when
         boolean containsKing = pieces.containsKing();
+        //then
         assertThat(containsKing).isTrue();
+    }
+
+    @DisplayName("점수를 계산해서 반환할 수 있다.")
+    @Test
+    void testCalculateScoreProperly() {
+        //given
+        Pieces pieces = Pieces.from(Pieces.createBlackPieces().getPieces());
+        //when
+        Score initialScore = pieces.calculateScore();
+        //then
+        assertThat(initialScore).isEqualTo(Score.from(38));
+    }
+
+    @DisplayName("중복되는 폰의 점수는 0.5점으로 계산한다.")
+    @Test
+    void testCalculateScoreWhenPawnsOnSameFile() {
+        //given
+        List<Piece> pawnsOnSameFile = List.of(
+                Piece.from(2, 'a', PAWN),
+                Piece.from(3, 'a', PAWN),
+                Piece.from(4, 'a', PAWN)
+        );
+        Pieces pieces = Pieces.from(pawnsOnSameFile);
+        //when
+        Score score = pieces.calculateScore();
+        //then
+        System.out.println(score.getValue());
+        assertThat(score).isEqualTo(Score.from(1.5));
     }
 }
