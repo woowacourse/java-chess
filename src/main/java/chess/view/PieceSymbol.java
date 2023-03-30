@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.PlayingCamp;
 
 import java.util.Arrays;
 

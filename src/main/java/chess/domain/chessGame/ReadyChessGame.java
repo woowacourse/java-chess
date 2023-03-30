@@ -1,14 +1,13 @@
 package chess.domain.chessGame;
 
 import chess.domain.Board;
-import chess.dto.PieceDto;
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.move_rule.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.view.OutputView;
+import chess.dto.PieceDto;
 
 import java.util.Collections;
 import java.util.HashMap;

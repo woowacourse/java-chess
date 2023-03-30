@@ -4,7 +4,8 @@ import chess.domain.piece.PlayingCamp;
 
 public abstract class PawnMoveRule implements MoveRule {
 
-    protected PawnMoveRule() {}
+    protected PawnMoveRule() {
+    }
 
     public static PawnMoveRule from(PlayingCamp playingCamp) {
         if (playingCamp == PlayingCamp.BLACK) {

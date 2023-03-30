@@ -1,8 +1,8 @@
 package chess.dto;
 
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.PlayingCamp;
 
 public class PieceDto {
     private final PlayingCamp playingCamp;

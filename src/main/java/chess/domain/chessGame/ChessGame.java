@@ -1,8 +1,8 @@
 package chess.domain.chessGame;
 
-import chess.dto.PieceDto;
 import chess.domain.piece.PlayingCamp;
 import chess.domain.position.Position;
+import chess.dto.PieceDto;
 
 import java.util.List;
 import java.util.Map;

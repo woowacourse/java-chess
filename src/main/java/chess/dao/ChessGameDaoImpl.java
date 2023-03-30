@@ -1,15 +1,15 @@
 package chess.dao;
 
-import chess.dto.PieceDto;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.chessGame.PlayingChessGame;
 import chess.domain.chessGame.ReadyChessGame;
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.dto.PieceDto;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -16,7 +16,6 @@ public class ConnectGenerator {
     }
 
     public Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
@@ -25,5 +24,4 @@ public class ConnectGenerator {
             return null;
         }
     }
-
 }

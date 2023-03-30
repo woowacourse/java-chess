@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.dto.PieceDto;
 import chess.domain.piece.PlayingCamp;
 import chess.domain.position.Position;
+import chess.dto.PieceDto;
 
 import java.util.ArrayList;
 import java.util.List;
