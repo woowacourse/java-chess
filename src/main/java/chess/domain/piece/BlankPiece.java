@@ -31,7 +31,7 @@ public class BlankPiece extends Piece {
 
     @Override
     public boolean isSameColor(Color color) {
-        return super.isSameColor(color);
+        return color == null;
     }
 
     @Override
