@@ -15,25 +15,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Score;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ScoreCalculateTest {
+public class ScoreCalculatorTest {
 
-    private static final int DEFAULT_MAX_SCORE = 38;
+    private static final double DEFAULT_MAX_SCORE = 38;
+
+    private ScoreCalculator calculator;
+
+    @BeforeEach
+    void init() {
+        calculator = new ScoreCalculator();
+    }
 
     @Test
     @DisplayName("기본 체스 보드의 점수를 계산한다.")
     void calculateScore_whenCall_thenReturnScore() {
         // given
-        final Board board = Board.create();
+        final ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         // when
-        final Score score = board.calculateScore(WHITE);
+        final Score score = scoreCalculator.calculateScore(WHITE, Board.create().getSquares());
 
         // then
         assertAll(
-                () -> assertThat(score.getColor()).isEqualTo(WHITE),
+                () -> assertThat(score.getColor()).isSameAs(WHITE),
                 () -> assertThat(score.getScore()).isEqualTo(DEFAULT_MAX_SCORE)
         );
     }
@@ -56,8 +64,8 @@ public class ScoreCalculateTest {
         setBoard(board);
 
         // when
-        final Score whiteScore = board.calculateScore(WHITE);
-        final Score blackScore = board.calculateScore(BLACK);
+        final Score whiteScore = calculator.calculateScore(WHITE, board.getSquares());
+        final Score blackScore = calculator.calculateScore(BLACK, board.getSquares());
 
         // then
         assertAll(

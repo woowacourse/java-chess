@@ -3,6 +3,7 @@ package chess.model;
 import static java.util.stream.Collectors.toList;
 
 import chess.model.board.Board;
+import chess.model.board.ScoreCalculator;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.position.Position;
@@ -28,18 +29,19 @@ public class ChessGame {
         return !board.findKing(turn.findCurrentPlayer());
     }
 
-    public Scores calculateScoreAll() {
+    public Scores calculateScoreAll(final ScoreCalculator calculator) {
         final List<Score> scores = turn.allPlayers().stream()
-                .map(board::calculateScore)
+                .map(turn -> calculator.calculateScore(turn, board.getSquares()))
                 .collect(toList());
-        return new Scores(scores);
-    }
 
-    public Map<Position, Piece> getBoard() {
-        return board.getSquares();
+        return new Scores(scores);
     }
 
     public PieceColor findCurrentPlayer() {
         return turn.findCurrentPlayer();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getSquares();
     }
 }

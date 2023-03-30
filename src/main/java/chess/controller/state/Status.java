@@ -1,6 +1,7 @@
 package chess.controller.state;
 
 import chess.model.Scores;
+import chess.model.board.ScoreCalculator;
 import chess.model.piece.PieceColor;
 import chess.model.position.Position;
 import chess.service.ChessService;
@@ -13,7 +14,7 @@ public class Status extends ProgressState {
 
     @Override
     public Scores calculateScores() {
-        return chessService.calculateScoreAll();
+        return chessService.calculateScoreAll(new ScoreCalculator());
     }
 
     @Override

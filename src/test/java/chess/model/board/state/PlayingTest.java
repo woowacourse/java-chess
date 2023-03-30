@@ -122,7 +122,7 @@ class PlayingTest {
     @DisplayName("calculateScores()를 요청하면 예외를 발생시킨다")
     void calculateScores_whenCall_thenFail() {
         // when, then
-        assertThatThrownBy(() -> playing.calculateScores())
+        assertThatThrownBy(playing::calculateScores)
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

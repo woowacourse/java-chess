@@ -1,26 +1,18 @@
 package chess.model.board;
 
-import static java.util.stream.Collectors.toList;
-
-import chess.model.Score;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
-import chess.model.position.File;
 import chess.model.position.Position;
-import chess.model.position.Positions;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
 
-    private static final int DEFAULT_FILE_PAWN_COUNT = 1;
-    private static final double CORRECT_SAME_FILE_PAWN_SCORE = 0.5;
     private final Map<Position, Piece> squares;
 
-    private Board(final Map<Position, Piece> squares) {
+    public Board(final Map<Position, Piece> squares) {
         this.squares = squares;
     }
 
@@ -111,60 +103,6 @@ public class Board {
         final Piece movePiece = squares.get(source);
         squares.put(target, movePiece.update());
         squares.put(source, Empty.getInstance());
-    }
-
-    public Score calculateScore(final PieceColor targetColor) {
-        final double sum = calculateTotalSum(targetColor);
-        double sameFilePawn = calculateSameFilePawn(targetColor);
-
-        final double totalSum = sum - sameFilePawn * CORRECT_SAME_FILE_PAWN_SCORE;
-
-        return new Score(targetColor, totalSum);
-    }
-
-    private double calculateTotalSum(final PieceColor targetColor) {
-        return squares.values().stream()
-                .filter(piece -> piece.getColor().isSameColor(targetColor))
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private double calculateSameFilePawn(final PieceColor targetColor) {
-        double sameFilePawn = 0;
-        for (File file : File.values()) {
-            sameFilePawn += countSameFilePawn(targetColor, file);
-        }
-
-        return sameFilePawn;
-    }
-
-    private double countSameFilePawn(final PieceColor targetColor, final File file) {
-        final List<Position> sameFilePositions = Positions.getPositionsBy(file);
-        final List<Piece> sameFilePieces = findSameFilePieces(sameFilePositions);
-        return countPawn(sameFilePieces, targetColor);
-    }
-
-    private List<Piece> findSameFilePieces(final List<Position> sameFilePositions) {
-        return sameFilePositions.stream()
-                .map(squares::get)
-                .collect(toList());
-    }
-
-    private static long countPawn(final List<Piece> sameFilePieces, final PieceColor targetColor) {
-        final long count = sameFilePieces.stream()
-                .filter(Piece::isPawn)
-                .filter(piece -> piece.getColor().isSameColor(targetColor))
-                .count();
-
-        return removeDifferentFilePawn(count);
-    }
-
-    private static long removeDifferentFilePawn(final long count) {
-        if (count <= DEFAULT_FILE_PAWN_COUNT) {
-            return 0;
-        }
-
-        return count;
     }
 
     public boolean findKing(final PieceColor targetColor) {

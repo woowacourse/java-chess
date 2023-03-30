@@ -4,6 +4,7 @@ import chess.dao.Move;
 import chess.dao.MoveDao;
 import chess.model.ChessGame;
 import chess.model.Scores;
+import chess.model.board.ScoreCalculator;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.position.Position;
@@ -65,8 +66,8 @@ public class ChessService {
         return chessGame.findCurrentPlayer();
     }
 
-    public Scores calculateScoreAll() {
-        return chessGame.calculateScoreAll();
+    public Scores calculateScoreAll(final ScoreCalculator scoreCalculator) {
+        return chessGame.calculateScoreAll(scoreCalculator);
     }
 
     public Map<Position, Piece> getBoard() {
