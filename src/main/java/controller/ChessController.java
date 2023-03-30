@@ -5,7 +5,6 @@ import controller.command.End;
 import controller.command.Move;
 import dao.GameDto;
 import domain.game.Game;
-import domain.game.GameStatus;
 import domain.game.Position;
 import domain.game.Score;
 import domain.piece.Piece;
@@ -104,8 +103,8 @@ public class ChessController {
         return command;
     }
 
-    private static boolean isEnd(Game game) {
-        return !game.checkStatus().equals(GameStatus.IN_PROGRESS);
+    private boolean isEnd(Game game) {
+        return this.chessService.isEnd(game);
     }
 
     private void printChessBoardOf(Game game) {
@@ -119,11 +118,9 @@ public class ChessController {
         this.outputView.printChessBoard(chessBoardOfForPrint);
     }
 
-    private static void moveByPositionsOfMoveCommand(Game game, Command command) {
+    private void moveByPositionsOfMoveCommand(Game game, Command command) {
         Move moveCommand = (Move) command;
-        Position sourcePosition = Position.of(moveCommand.getSourceFile(), moveCommand.getSourceRank());
-        Position targetPosition = Position.of(moveCommand.getTargetFile(), moveCommand.getTargetRank());
-        game.move(sourcePosition, targetPosition);
+        this.chessService.moveByCommand(game, moveCommand);
     }
 
     private void printGameResultOf(Game game) {
