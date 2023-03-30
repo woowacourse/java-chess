@@ -8,5 +8,5 @@ import java.util.List;
 @FunctionalInterface
 public interface RoomAction {
 
-    ChessGame execute(final ChessGameDao chessGameDao, final PieceDao pieceDao, final List<String> roomCommand);
+    ChessGame execute(final List<String> roomCommand);
 }

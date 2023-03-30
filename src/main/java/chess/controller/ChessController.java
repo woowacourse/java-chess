@@ -11,20 +11,13 @@ import chess.controller.action.GameAction;
 import chess.controller.action.RoomAction;
 import chess.controller.command.GameCommand;
 import chess.controller.command.RoomCommand;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
-import chess.domain.game.ChessGameFactory;
 import chess.domain.game.GameResult;
-import chess.domain.game.Turn;
 import chess.domain.position.Position;
-import chess.dto.ChessGameDto;
 import chess.dto.GameResultDto;
-import chess.dto.PieceDto;
-import chess.repository.dao.ChessGameDao;
 import chess.repository.dao.JdbcChessGameDao;
 import chess.repository.dao.JdbcPieceDao;
-import chess.repository.dao.PieceDao;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.HashMap;
@@ -39,12 +32,14 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessService chessService;
     private final Map<RoomCommand, RoomAction> roomCommandAction;
     private final Map<GameCommand, GameAction> gameCommandAction;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessService = new ChessService(new JdbcChessGameDao(), new JdbcPieceDao());
         this.roomCommandAction = initRoomCommandAction();
         this.gameCommandAction = initGameCommandAction();
     }
@@ -52,7 +47,7 @@ public class ChessController {
     private Map<RoomCommand, RoomAction> initRoomCommandAction() {
         Map<RoomCommand, RoomAction> commandMapper = new HashMap<>();
 
-        commandMapper.put(NEW, (chessGameDao, pieceDao, ignored) -> newGame(chessGameDao, pieceDao));
+        commandMapper.put(NEW, ignored -> newGame());
         commandMapper.put(ENTER, this::enterGame);
 
         return commandMapper;
@@ -70,54 +65,40 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessGameDao chessGameDao = new JdbcChessGameDao();
-        final PieceDao pieceDao = new JdbcPieceDao();
+        outputView.printExistChessGameId(chessService.findAllChessGame());
 
-        outputView.printExistChessGameId(chessGameDao.findAll());
-
-        final ChessGame chessGame = startChessGame(chessGameDao, pieceDao);
+        final ChessGame chessGame = startChessGame();
 
         outputView.printStartMessage();
 
-        while (chessGame.isRunnable()) {
+        while (chessService.isRunnable(chessGame)) {
             play(chessGame);
         }
     }
 
-    private ChessGame startChessGame(final ChessGameDao chessGameDao, final PieceDao pieceDao) {
+    private ChessGame startChessGame() {
         try {
             final List<String> roomCommand = inputView.readRoomCommand();
             final RoomCommand mainRoomCommand = RoomCommand.from(roomCommand.get(MAIN_COMMAND_INDEX));
             final RoomAction roomAction = roomCommandAction.get(mainRoomCommand);
-            return roomAction.execute(chessGameDao, pieceDao, roomCommand);
+            return roomAction.execute(roomCommand);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
-            return startChessGame(chessGameDao, pieceDao);
+            return startChessGame();
         }
     }
 
-    private ChessGame newGame(final ChessGameDao chessGameDao, final PieceDao pieceDao) {
-        final Board board = BoardFactory.generateBoard();
-        ChessGame chessGame = new ChessGame(board, Turn.WHITE, chessGameDao, pieceDao);
-        chessGameDao.save(chessGame);
-
-        final int chessGameId = chessGameDao.findLastInsertId();
-        chessGame.setId(chessGameId);
-        pieceDao.saveAll(chessGameId, PieceDto.from(board));
-
-        return chessGame;
+    private ChessGame newGame() {
+        return chessService.newGame();
     }
 
-    private ChessGame enterGame(final ChessGameDao chessGameDao, final PieceDao pieceDao,
-                                final List<String> roomCommand) {
+    private ChessGame enterGame(final List<String> roomCommand) {
         if (roomCommand.size() != 2) {
             throw new IllegalArgumentException("잘못된 명령어입니다.");
         }
-        final int chessGameId = Integer.parseInt(roomCommand.get(1));
-        final ChessGameDto chessGameDto = chessGameDao.findById(chessGameId);
-        final List<PieceDto> pieceDtos = pieceDao.findAllByChessGameId(chessGameId);
 
-        return ChessGameFactory.generateChessGame(chessGameDto, pieceDtos, chessGameDao, pieceDao);
+        final int chessGameId = Integer.parseInt(roomCommand.get(1));
+        return chessService.enterGame(chessGameId);
     }
 
     private void play(final ChessGame chessGame) {
@@ -133,27 +114,30 @@ public class ChessController {
     }
 
     private void start(final ChessGame chessGame) {
-        chessGame.start();
-        outputView.printBoard(chessGame.getBoard());
+        chessService.startGame(chessGame);
+        outputView.printBoard(chessService.getBoard(chessGame));
     }
 
     private void end(final ChessGame chessGame) {
-        chessGame.end();
+        chessService.endGame(chessGame);
     }
 
     private void move(final ChessGame chessGame, final List<String> command) {
         if (command.size() != 3) {
             throw new IllegalArgumentException("잘못된 명령어입니다.");
         }
+
         final Position source = Position.from(command.get(SOURCE_INDEX));
         final Position target = Position.from(command.get(TARGET_INDEX));
-        chessGame.movePiece(source, target);
-        outputView.printBoard(chessGame.getBoard());
+
+        chessService.move(chessGame, source, target);
+        outputView.printBoard(chessService.getBoard(chessGame));
     }
 
     private void status(final ChessGame chessGame) {
-        final GameResult gameResult = chessGame.getGameResult();
-        outputView.printBoard(chessGame.getBoard());
+        final GameResult gameResult = chessService.getGameResult(chessGame);
+
+        outputView.printBoard(chessService.getBoard(chessGame));
         outputView.printStatus(GameResultDto.from(gameResult));
     }
 }
