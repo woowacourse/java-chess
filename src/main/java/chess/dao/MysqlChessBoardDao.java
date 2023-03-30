@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 
-public class DbChessBoardDao implements ChessBoardDao {
+public class MysqlChessBoardDao implements ChessBoardDao {
 
     private final Database database = new Database();
 

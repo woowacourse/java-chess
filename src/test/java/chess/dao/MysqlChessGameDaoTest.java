@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DbChessGameDaoTest {
+class MysqlChessGameDaoTest {
 
-    private final ChessGameDao chessGameDao = new DbChessGameDao();
+    private final ChessGameDao chessGameDao = new MysqlChessGameDao();
     private long chessGameId;
 
     @BeforeEach

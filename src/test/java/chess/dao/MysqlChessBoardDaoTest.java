@@ -10,14 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DbChessBoardDaoTest {
+class MysqlChessBoardDaoTest {
 
-    private final ChessBoardDao chessBoardDao = new DbChessBoardDao();
+    private final ChessBoardDao chessBoardDao = new MysqlChessBoardDao();
     private long chessGameId;
 
     @BeforeEach
     void setUp() {
-        ChessGameDao chessGameDao = new DbChessGameDao();
+        ChessGameDao chessGameDao = new MysqlChessGameDao();
         chessGameId = chessGameDao.create();
     }
     @Test

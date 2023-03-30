@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DbChessGameDao implements ChessGameDao {
+public class MysqlChessGameDao implements ChessGameDao {
 
     private final Database database = new Database();
 
