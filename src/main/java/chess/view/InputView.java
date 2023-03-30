@@ -15,6 +15,8 @@ public class InputView {
     private static final int DESTINATION_POSITION_INDEX = 2;
     private static final String START_OPTION_REQUEST = "새 게임을 시작하려면 %d, 이어서 진행하려면 [%s] 중 하나를 선택해주세요.";
     private static final String WRONG_MOVE_COMMAND_REQUEST_ERROR_MESSAGE = "이동 요청 정보가 잘못 되었습니다.";
+    private static final String WRONG_START_GAME_ID_REQUEST_ERROR_MESSAGE = "제공된 번호만 입력 가능합니다.";
+    private static final String ONLY_NUMBER_ERROR_MESSAGE = "숫자만 입력할 수 있습니다.";
 
     private final Scanner scanner;
 
@@ -74,7 +76,7 @@ public class InputView {
         if (gameIds.contains(option) || option == newStartId) {
             return option;
         }
-        throw new IllegalArgumentException("제공된 번호만 입력 가능합니다.");
+        throw new IllegalArgumentException(WRONG_START_GAME_ID_REQUEST_ERROR_MESSAGE);
     }
 
     private int readOnlyNumber() {
@@ -82,7 +84,7 @@ public class InputView {
         try {
             return Integer.parseInt(line);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+            throw new IllegalArgumentException(ONLY_NUMBER_ERROR_MESSAGE);
         }
     }
 
