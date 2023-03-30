@@ -3,7 +3,6 @@ package chess.domain;
 import chess.controller.Action;
 import chess.controller.Command;
 import chess.controller.Commands;
-
 import java.util.Map;
 
 public class CommandAction {

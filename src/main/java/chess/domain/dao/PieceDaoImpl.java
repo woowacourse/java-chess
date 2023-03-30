@@ -5,7 +5,6 @@ import chess.domain.Piece;
 import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.Shape;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

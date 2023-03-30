@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.dto.PositionDto;
-import chess.dto.request.MoveRequest;
-
-import java.util.List;
+import chess.domain.strategy.PieceStrategy;
 import java.util.Objects;
 
 public class Piece {
@@ -25,27 +22,17 @@ public class Piece {
     }
 
     public Position move(
-            final List<Position> positions,
-            final Position inputTargetPosition,
-            final Color movablePieceColor
+            final Position targetPosition,
+            final Color sourcePieceColor,
+            final boolean doesTargetPositionHavePiece
     ) {
-        shape.validateDirectionByShape(MoveRequest.from(
-                positions,
-                movablePieceColor,
-                new PositionDto(position),
-                new PositionDto(inputTargetPosition)
-        ));
-
-        this.position = inputTargetPosition;
+        PieceStrategy pieceStrategy = shape.getPieceStrategy();
+        pieceStrategy.validateDirection(position, targetPosition, sourcePieceColor, doesTargetPositionHavePiece);
+        this.position = targetPosition;
         return position;
     }
-
     public boolean isSamePosition(final Position findPosition) {
         return position.equals(findPosition);
-    }
-
-    public boolean isSamePiece(Piece changedPiece) {
-        return this.equals(changedPiece);
     }
 
     public Piece getNewPiece(final int file) {

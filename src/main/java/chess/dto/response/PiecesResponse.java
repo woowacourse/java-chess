@@ -1,12 +1,11 @@
 package chess.dto.response;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.Color;
 import chess.domain.Piece;
-
 import java.util.List;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 public class PiecesResponse {
 

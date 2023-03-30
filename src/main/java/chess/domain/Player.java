@@ -1,11 +1,7 @@
 package chess.domain;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class Player {
 
@@ -37,13 +33,10 @@ public class Player {
         return pieces.hasPosition(findPosition);
     }
 
-    public Piece movePiece(final List<Position> allPosition, final Position findPosition, final Position targetPosition) {
-        if (pieces.hasPosition(targetPosition)) {
-            throw new IllegalArgumentException("상대 기물 위치로만 이동할 수 있습니다.");
-        }
-
+    public Piece movePiece(final Position findPosition, final Position targetPosition,
+                           final boolean doesTargetPositionHavePiece) {
         Piece findPiece = pieces.findPiece(findPosition);
-        findPiece.move(allPosition, targetPosition, color);
+        findPiece.move(targetPosition, color, doesTargetPositionHavePiece);
         return findPiece;
     }
 

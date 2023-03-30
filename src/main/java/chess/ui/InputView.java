@@ -1,10 +1,10 @@
 package chess.ui;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import static java.util.stream.Collectors.toList;
 
 public final class InputView {
 

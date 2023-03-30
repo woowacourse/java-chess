@@ -1,17 +1,16 @@
 package chess.domain.dao;
 
+import static chess.domain.Color.WHITE;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.Piece;
 import chess.domain.Position;
 import chess.domain.Shape;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static chess.domain.Color.WHITE;
-import static org.assertj.core.api.Assertions.*;
 
 class DbPieceDaoTest {
     PieceDao pieceDao;
@@ -69,7 +68,7 @@ class DbPieceDaoTest {
 
         //when
         Position targetPosition = Position.from("a4");
-        piece.move(List.of(), targetPosition, WHITE);
+        piece.move(targetPosition, WHITE, false);
         pieceDao.updatePosition(piece, fromPosition);
 
         //then

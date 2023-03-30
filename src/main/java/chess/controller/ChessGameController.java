@@ -3,13 +3,12 @@ package chess.controller;
 import chess.domain.Color;
 import chess.domain.CommandAction;
 import chess.domain.Players;
-import chess.domain.factory.InitPlayersFactory;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
+import chess.domain.factory.InitPlayersFactory;
 import chess.dto.response.PiecesResponse;
 import chess.ui.InputView;
 import chess.ui.OutputView;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;

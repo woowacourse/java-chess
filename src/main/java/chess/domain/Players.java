@@ -1,14 +1,13 @@
 package chess.domain;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
 import chess.domain.dao.TurnDao;
 import chess.domain.dao.TurnDaoImpl;
-
 import java.math.BigInteger;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class Players {
 
@@ -40,7 +39,8 @@ public class Players {
         return List.of(fileDirection, rankDirection);
     }
 
-    private void validateEachPositions(final Position fromPosition, final Position toPosition, final List<Integer> directionVector) {
+    private void validateEachPositions(final Position fromPosition, final Position toPosition,
+                                       final List<Integer> directionVector) {
         Integer fileDirection = directionVector.get(0);
         Integer rankDirection = directionVector.get(1);
         Position tempPosition = fromPosition.move(fileDirection, rankDirection);
@@ -86,7 +86,7 @@ public class Players {
     public void movePiece(final String inputMovablePiece, final String inputTargetPosition) {
         Position findPosition = findPositionByInputPoint(inputMovablePiece);
         Position targetPosition = Position.from(inputTargetPosition);
-        validatePosition(inputMovablePiece);
+        validatePositions(findPosition, targetPosition);
         move(findPosition, targetPosition);
         changeTurn();
     }
@@ -100,12 +100,13 @@ public class Players {
         validateMovingRoute(sourcePosition, targetPosition);
 
         Player findPlayer = findPlayerByPosition(sourcePosition);
-        Piece changedPiece = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
+        Player anotherPlayer = getAnotherPlayer(findPlayer);
+        Piece changedPiece = findPlayer.movePiece(sourcePosition, targetPosition,
+                anotherPlayer.hasPositionPiece(targetPosition));
 
         PieceDao dao = new PieceDaoImpl();
         dao.updatePosition(changedPiece, sourcePosition);
 
-        Player anotherPlayer = getAnotherPlayer(findPlayer);
         anotherPlayer.removePiece(targetPosition)
                 .ifPresent(piece -> dao.deletePieceByColor(piece, anotherPlayer.getColor()));
     }
@@ -117,11 +118,13 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("상대 플레이어를 찾을 수 없습니다."));
     }
 
-    private void validatePosition(final String inputMovablePiece) {
-        Position findPosition = findPositionByInputPoint(inputMovablePiece);
+    private void validatePositions(final Position findPosition, final Position targetPosition) {
         Player findPlayer = findPlayerByPosition(findPosition);
         if (!current.equals(findPlayer.getColor())) {
-            throw new IllegalArgumentException("해당 플레이어의 차례가 아닙니다.");
+            throw new IllegalArgumentException("본인의 차례가 아닙니다.");
+        }
+        if (findPlayer.hasPositionPiece(targetPosition)) {
+            throw new IllegalArgumentException("이동 위치에 이미 본인 기물이 있습니다.");
         }
     }
 

@@ -1,15 +1,11 @@
 package chess.domain.strategy.pawn;
 
-import chess.domain.Color;
-import chess.domain.Position;
-import chess.dto.PositionDto;
-import chess.dto.request.MoveRequest;
-import chess.domain.strategy.PieceStrategy;
-
-import java.util.List;
-
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
+
+import chess.domain.Color;
+import chess.domain.Position;
+import chess.domain.strategy.PieceStrategy;
 
 public class PawnStrategy implements PieceStrategy {
 
@@ -17,20 +13,18 @@ public class PawnStrategy implements PieceStrategy {
     private static final int BLACK_PAWN_FIRST_RANK = 6;
 
     @Override
-    public void validateDirection(final MoveRequest request) {
-        PositionDto movablePiecePosition = request.getMovablePieceDto();
-        PositionDto targetPosition = request.getTargetPositionDto();
-        List<Position> positions = request.getPositions();
-
-        if (isNotMoveFront(movablePiecePosition, targetPosition)) {
-            validateMoveDiagonal(positions, movablePiecePosition, targetPosition);
+    public void validateDirection(final Position source, final Position target, final Color sourceColor,
+                                  final boolean doesTargetPositionHavePiece) {
+        if (isNotMoveFront(source, target)) {
+            validateMoveDiagonal(doesTargetPositionHavePiece, source, target);
             return;
         }
-        validateAlreadyExistFront(positions, targetPosition);
-        judgeColor(request.getMovablePieceColor(), movablePiecePosition, targetPosition);
+        validateAlreadyExistFront(doesTargetPositionHavePiece);
+        judgeColor(sourceColor, source, target);
     }
 
-    private void judgeColor(final Color movablePieceColor, final PositionDto movablePiecePosition, final PositionDto targetPosition) {
+    private void judgeColor(final Color movablePieceColor, final Position movablePiecePosition,
+                            final Position targetPosition) {
         if (isWhitePiece(movablePieceColor)) {
             validateWhiteMoveFront(movablePiecePosition, targetPosition);
         }
@@ -40,54 +34,54 @@ public class PawnStrategy implements PieceStrategy {
         }
     }
 
-    private void validateWhiteMoveFront(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
+    private void validateWhiteMoveFront(final Position movablePiecePosition, final Position targetPosition) {
         if (!canMoveWhitePosition(movablePiecePosition, targetPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 블랙 폰입니다.");
         }
     }
 
-    private void validateBlackMoveFront(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
+    private void validateBlackMoveFront(final Position movablePiecePosition, final Position targetPosition) {
         if (!canMoveBlackPosition(movablePiecePosition, targetPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 블랙 폰입니다.");
         }
     }
 
-    private boolean isNotMoveFront(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
+    private boolean isNotMoveFront(final Position movablePiecePosition, final Position targetPosition) {
         return isNotSameFile(movablePiecePosition, targetPosition);
     }
 
-    private void validateMoveDiagonal(final List<Position> positions, final PositionDto movablePiecePosition, final PositionDto targetPosition) {
-        boolean isNotExistPosition = !positions.contains(Position.from(targetPosition.getRank(), targetPosition.getFile()));
-        if (isNotExistPosition || isNotDiagonal(movablePiecePosition, targetPosition)) {
+    private void validateMoveDiagonal(final boolean doesTargetPositionHavePiece, final Position movablePiecePosition,
+                                      final Position targetPosition) {
+        if (!doesTargetPositionHavePiece || isNotDiagonal(movablePiecePosition, targetPosition)) {
             throw new IllegalArgumentException("대각선으로 이동할 수 없습니다.");
         }
     }
 
-    private boolean isNotDiagonal(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
-        int rankDistance = targetPosition.getRank() - movablePiecePosition.getRank();
-        int fileDistance = targetPosition.getFile() - movablePiecePosition.getFile();
+    private boolean isNotDiagonal(final Position movablePiecePosition, final Position targetPosition) {
+        int rankDistance = targetPosition.getRankValue() - movablePiecePosition.getRankValue();
+        int fileDistance = targetPosition.getFileValue() - movablePiecePosition.getFileValue();
         return Math.abs(rankDistance) != 1 || Math.abs(fileDistance) != 1;
     }
 
-    private void validateAlreadyExistFront(final List<Position> positions, final PositionDto targetPosition) {
-        boolean isAlreadyExistTargetPosition = positions.contains(Position.from(targetPosition.getRank(), targetPosition.getFile()));
-        if (isAlreadyExistTargetPosition) {
+    private void validateAlreadyExistFront(final boolean doesTargetPositionHavePiece) {
+        if (doesTargetPositionHavePiece) {
             throw new IllegalArgumentException("전진하려는 칸에 기물이 존재합니다.");
         }
     }
 
-    private boolean canMoveWhitePosition(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
+    private boolean canMoveWhitePosition(final Position movablePiecePosition, final Position targetPosition) {
         validateWhiteMoveBackWard(movablePiecePosition, targetPosition);
         return moveDistanceIsTwoStep(WHITE, movablePiecePosition, targetPosition);
     }
 
-    private boolean canMoveBlackPosition(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
+    private boolean canMoveBlackPosition(final Position movablePiecePosition, final Position targetPosition) {
         validateBlackMoveBackWard(movablePiecePosition, targetPosition);
         return moveDistanceIsTwoStep(BLACK, movablePiecePosition, targetPosition);
     }
 
-    private boolean moveDistanceIsTwoStep(final Color color, final PositionDto movablePiecePosition, final PositionDto targetPosition) {
-        int rankDistance = getRankDistance(targetPosition.getRank(), movablePiecePosition.getRank());
+    private boolean moveDistanceIsTwoStep(final Color color, final Position movablePiecePosition,
+                                          final Position targetPosition) {
+        int rankDistance = getRankDistance(targetPosition.getRankValue(), movablePiecePosition.getRankValue());
         if (rankDistance == 2) {
             return canMoveTwoStep(color, movablePiecePosition);
         }
@@ -97,24 +91,26 @@ public class PawnStrategy implements PieceStrategy {
         return true;
     }
 
-    private boolean canMoveTwoStep(final Color color, final PositionDto movablePiecePosition) {
+    private boolean canMoveTwoStep(final Color color, final Position movablePiecePosition) {
         if (isWhitePiece(color)) {
-            return validateWhiteFirstStep(movablePiecePosition.getRank());
+            return validateWhiteFirstStep(movablePiecePosition.getRankValue());
         }
         if (isBlackPiece(color)) {
-            return validateBlackFirstStep(movablePiecePosition.getRank());
+            return validateBlackFirstStep(movablePiecePosition.getRankValue());
         }
         throw new IllegalArgumentException("폰은 첫번째 칸 일 때만 2칸 이동할 수 있습니다.");
     }
 
-    private static void validateWhiteMoveBackWard(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
-        if (targetPosition.getRank() - movablePiecePosition.getRank() < 0) {
+    private static void validateWhiteMoveBackWard(final Position movablePiecePosition,
+                                                  final Position targetPosition) {
+        if (targetPosition.getRankValue() - movablePiecePosition.getRankValue() < 0) {
             throw new IllegalArgumentException("폰은 뒤로 이동할 수 없습니다.");
         }
     }
 
-    private static void validateBlackMoveBackWard(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
-        if (targetPosition.getRank() - movablePiecePosition.getRank() > 0) {
+    private static void validateBlackMoveBackWard(final Position movablePiecePosition,
+                                                  final Position targetPosition) {
+        if (targetPosition.getRankValue() - movablePiecePosition.getRankValue() > 0) {
             throw new IllegalArgumentException("폰은 뒤로 이동할 수 없습니다.");
         }
     }
@@ -137,8 +133,8 @@ public class PawnStrategy implements PieceStrategy {
         return Math.abs(targetRank - movableRank);
     }
 
-    private boolean isNotSameFile(final PositionDto movablePiecePosition, final PositionDto targetPosition) {
-        return movablePiecePosition.getFile() != targetPosition.getFile();
+    private boolean isNotSameFile(final Position movablePiecePosition, final Position targetPosition) {
+        return movablePiecePosition.getFileValue() != targetPosition.getFileValue();
     }
 
     private boolean isWhitePiece(final Color color) {

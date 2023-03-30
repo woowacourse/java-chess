@@ -1,9 +1,11 @@
 package chess.domain.strategy;
 
-import chess.dto.request.MoveRequest;
+import chess.domain.Color;
+import chess.domain.Position;
 
 public interface PieceStrategy {
 
-    void validateDirection(final MoveRequest request);
+    void validateDirection(final Position source, final Position target, final Color sourceColor,
+                           final boolean doesTargetPositionHavePiece);
 
 }

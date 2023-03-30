@@ -1,7 +1,6 @@
 package chess.domain.dao;
 
 import chess.domain.Piece;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
