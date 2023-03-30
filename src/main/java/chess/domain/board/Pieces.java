@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
-import chess.domain.piece.BlankPiece;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 
 import java.util.Arrays;
@@ -32,9 +32,9 @@ public class Pieces {
                 .findAny();
     }
 
-    public Piece findPieceOrBlank(final Position position) {
+    public Piece findPieceOrEmpty(final Position position) {
         return findPiece(position)
-                .orElseGet(() -> new BlankPiece(position.getFile(), position.getRank()));
+                .orElseGet(() -> new EmptyPiece(position.getFile(), position.getRank()));
     }
 
     public boolean hasPiece(List<Position> pathPositions) {

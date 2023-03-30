@@ -62,11 +62,11 @@ class PiecesTest {
         ));
 
         //when
-        final Piece piece = pieces.findPieceOrBlank(new Position(B, SEVEN));
+        final Piece piece = pieces.findPieceOrEmpty(new Position(B, SEVEN));
 
         //then
         assertThat(piece).extracting(Piece::getPosition, Piece::getColor, Object::getClass)
-                .contains(new Position(B, SEVEN), NOTHING, BlankPiece.class);
+                .contains(new Position(B, SEVEN), EMPTY, EmptyPiece.class);
     }
 
     @ParameterizedTest

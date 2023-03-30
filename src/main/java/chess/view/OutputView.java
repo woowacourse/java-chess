@@ -111,7 +111,7 @@ public class OutputView {
     }
 
     private static String printWinnerMessage(final Color color) {
-        if (color == Color.NOTHING) {
+        if (color == Color.EMPTY) {
             return "현재 동점입니다." + NEW_LINE;
         }
         return String.format("현재 %s 진영이 이기고 있습니다.%n", MESSAGE_BY_COLOR.get(color));

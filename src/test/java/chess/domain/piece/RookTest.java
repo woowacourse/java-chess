@@ -67,7 +67,7 @@ class RookTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(A, FIVE)),
+                Arguments.of(new EmptyPiece(A, FIVE)),
                 Arguments.of(new Pawn(A, FIVE, WHITE))
         );
     }

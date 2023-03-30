@@ -149,7 +149,7 @@ class PlayingChessGameTest {
         Color actualColor = chessGame.findScoreWinner();
 
         //then
-        assertThat(actualColor).isEqualTo(NOTHING);
+        assertThat(actualColor).isEqualTo(EMPTY);
     }
 
     private static Stream<Arguments> provideDrawPieces() {

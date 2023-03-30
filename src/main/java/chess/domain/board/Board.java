@@ -45,7 +45,7 @@ public class Board {
     }
 
     private void processMoving(final Piece piece, final Position targetPosition) {
-        final Piece targetPiece = pieces.findPieceOrBlank(targetPosition);
+        final Piece targetPiece = pieces.findPieceOrEmpty(targetPosition);
         final Piece movedPiece = piece.move(targetPiece);
 
         pieces.remove(piece);

@@ -174,7 +174,7 @@ class PawnTest {
 
     private static Stream<Arguments> providePieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(A, FIVE)),
+                Arguments.of(new EmptyPiece(A, FIVE)),
                 Arguments.of(new Pawn(B, FIVE, WHITE))
         );
     }
@@ -208,7 +208,7 @@ class PawnTest {
 
     private static Stream<Arguments> provideDiagonalPieceInTargetPosition() {
         return Stream.of(
-                Arguments.of(new BlankPiece(B, FIVE)),
+                Arguments.of(new EmptyPiece(B, FIVE)),
                 Arguments.of(new Pawn(B, FIVE, BLACK))
         );
     }

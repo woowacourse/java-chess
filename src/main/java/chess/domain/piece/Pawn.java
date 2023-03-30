@@ -45,7 +45,7 @@ public class Pawn extends Piece {
     }
 
     private void validateVerticalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
-        if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.NOTHING)) {
+        if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.EMPTY)) {
             throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
         }
     }

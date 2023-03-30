@@ -52,7 +52,7 @@ public class PlayingChessGame extends ChessGame {
 
     private Color getWinnerColor(final Map<Color, Double> scoreByColor) {
         if (isDraw(scoreByColor)) {
-            return Color.NOTHING;
+            return Color.EMPTY;
         }
         return findWinnerColor(scoreByColor);
     }
