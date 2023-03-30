@@ -60,18 +60,30 @@ public class ChessController {
 
     private void runCommand(ChessGame savedChessGame, String gameCommandInput) {
         if (ChessGameCommand.isEnd(gameCommandInput)) {
-            ChessGameDao chessGameDao = new ChessGameDao();
-            chessGameDao.save(savedChessGame);
-            savedChessGame.pauseGame();
+            saveDatabase(savedChessGame);
             return;
         }
         if (ChessGameCommand.isStatus(gameCommandInput)) {
-            outputView.printResult(savedChessGame.getResult());
-            outputView.printWinner(savedChessGame.getWinner());
+            printStatus(savedChessGame);
             return;
         }
+        movePiece(savedChessGame, gameCommandInput);
+    }
+
+    private static void movePiece(ChessGame savedChessGame, String gameCommandInput) {
         MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
         savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
         outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
+    }
+
+    private static void saveDatabase(ChessGame savedChessGame) {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        chessGameDao.save(savedChessGame);
+        savedChessGame.pauseGame();
+    }
+
+    private static void printStatus(ChessGame savedChessGame) {
+        outputView.printResult(savedChessGame.getResult());
+        outputView.printWinner(savedChessGame.getWinner());
     }
 }
