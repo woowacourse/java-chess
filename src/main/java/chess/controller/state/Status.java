@@ -1,20 +1,19 @@
-package chess.model.board.state;
+package chess.controller.state;
 
-import chess.dao.MoveDao;
-import chess.model.ChessGame;
 import chess.model.Scores;
 import chess.model.piece.PieceColor;
 import chess.model.position.Position;
+import chess.service.ChessService;
 
 public class Status extends ProgressState {
 
-    public Status(final ChessGame chessGame, final MoveDao moveDao) {
-        super(chessGame, moveDao);
+    public Status(final ChessService chessService) {
+        super(chessService);
     }
 
     @Override
     public Scores calculateScores() {
-        return chessGame.calculateScoreAll();
+        return chessService.calculateScoreAll();
     }
 
     @Override

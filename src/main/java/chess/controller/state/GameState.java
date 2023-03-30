@@ -1,4 +1,4 @@
-package chess.model.board.state;
+package chess.controller.state;
 
 import chess.controller.GameCommand;
 import chess.model.Scores;

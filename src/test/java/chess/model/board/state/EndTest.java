@@ -3,9 +3,11 @@ package chess.model.board.state;
 import static chess.controller.GameCommand.END;
 import static chess.controller.GameCommand.MOVE;
 import static chess.controller.GameCommand.START;
+import static chess.service.ChessServiceFixture.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.dao.MoveDaoImpl;
+import chess.controller.state.GameState;
+import chess.controller.state.ProgressState;
 import chess.dao.MoveTruncator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +19,7 @@ class EndTest extends MoveTruncator {
 
     @BeforeEach
     void init() {
-        final GameState playing = ProgressState.of(START, new MoveDaoImpl());
+        final GameState playing = ProgressState.of(START, createService());
         end = playing.changeState(END);
     }
 

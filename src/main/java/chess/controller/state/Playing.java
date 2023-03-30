@@ -1,22 +1,20 @@
-package chess.model.board.state;
+package chess.controller.state;
 
-import chess.dao.MoveDao;
-import chess.dao.MoveSaveStrategy;
-import chess.model.ChessGame;
 import chess.model.Scores;
 import chess.model.piece.PieceColor;
 import chess.model.position.Position;
+import chess.service.ChessService;
 
 public class Playing extends ProgressState {
 
-    public Playing(final ChessGame chessGame, final MoveDao moveDao) {
-        super(chessGame, moveDao);
+    public Playing(final ChessService chessService) {
+        super(chessService);
     }
 
     @Override
     public void executeAndSave(final Position source, final Position target) {
-        chessGame.move(source, target);
-        moveDao.save(new MoveSaveStrategy(source, target));
+        chessService.move(source, target);
+        chessService.save(source, target);
     }
 
     @Override
@@ -26,12 +24,12 @@ public class Playing extends ProgressState {
 
     @Override
     public boolean hasGame() {
-        return moveDao.hasGame();
+        return chessService.hasGame();
     }
 
     @Override
     public PieceColor findCurrentPlayer() {
-        return chessGame.findCurrentPlayer();
+        return chessService.findCurrentPlayer();
     }
 
     @Override

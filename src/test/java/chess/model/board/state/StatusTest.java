@@ -3,11 +3,13 @@ package chess.model.board.state;
 import static chess.controller.GameCommand.STATUS;
 import static chess.model.piece.PieceColor.BLACK;
 import static chess.model.piece.PieceColor.WHITE;
+import static chess.service.ChessServiceFixture.createService;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.dao.MoveDaoImpl;
+import chess.controller.state.GameState;
+import chess.controller.state.ProgressState;
 import chess.dao.MoveTruncator;
 import chess.model.Score;
 import chess.model.Scores;
@@ -22,7 +24,7 @@ class StatusTest extends MoveTruncator {
     @DisplayName("calculateScores() 호출하면 첨수가 반환된다.")
     void calculateScores_whenCall_thenReturnScores() {
         // given
-        final GameState status = ProgressState.of(STATUS, new MoveDaoImpl());
+        final GameState status = ProgressState.of(STATUS, createService());
 
         // when
         final Scores scores = status.calculateScores();

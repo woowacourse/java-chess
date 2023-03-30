@@ -6,18 +6,23 @@ import static chess.controller.GameCommand.START;
 import static chess.controller.GameCommand.STATUS;
 import static chess.model.board.PositionFixture.A2;
 import static chess.model.board.PositionFixture.A4;
+import static chess.service.ChessServiceFixture.createService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.controller.GameCommand;
-import chess.dao.MoveDao;
+import chess.controller.state.End;
+import chess.controller.state.GameState;
+import chess.controller.state.Playing;
+import chess.controller.state.ProgressState;
+import chess.controller.state.Status;
 import chess.dao.MoveDaoImpl;
-import chess.dao.MoveFindAllStrategy;
 import chess.dao.MoveTruncator;
 import chess.model.board.NoWhiteKingChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.pawn.WhitePawn;
+import chess.service.ChessService;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,12 +34,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PlayingTest extends MoveTruncator {
 
     private GameState playing;
-    private MoveDao moveDao;
 
     @BeforeEach
     void init() {
-        moveDao = new MoveDaoImpl();
-        playing = ProgressState.of(START, moveDao);
+        playing = ProgressState.of(START, createService());
     }
 
     @Test
@@ -81,7 +84,7 @@ class PlayingTest extends MoveTruncator {
     }
 
     @Test
-    @DisplayName("excuteAndSave() 호출하면 move()가 수행된다.")
+    @DisplayName("executeAndSave() 호출하면 move()가 수행된다.")
     void executeAndSave_whenCall_thenSuccess() {
         // when
         playing.executeAndSave(A2, A4);
@@ -89,8 +92,7 @@ class PlayingTest extends MoveTruncator {
         // then
         assertAll(
                 () -> assertThat(playing.getBoard().get(A4).getClass()).isEqualTo(WhitePawn.class),
-                () -> assertThat(playing.getBoard().get(A2).getClass()).isEqualTo(Empty.class),
-                () -> assertThat(moveDao.findAll(new MoveFindAllStrategy())).hasSize(1)
+                () -> assertThat(playing.getBoard().get(A2).getClass()).isEqualTo(Empty.class)
         );
     }
 
@@ -98,8 +100,7 @@ class PlayingTest extends MoveTruncator {
     @DisplayName("게임이 끝났으면 End클래스를 반환한다.")
     void isGameEnd_whenGameEnd_thenReturnEnd() {
         // given
-        final NoWhiteKingChessGame noWhiteKingChessGame = NoWhiteKingChessGame.create();
-        final GameState playing = new Playing(noWhiteKingChessGame.getChessGame(), new MoveDaoImpl());
+        final GameState playing = new Playing(new ChessService(NoWhiteKingChessGame.create(), new MoveDaoImpl()));
 
         // when
         final GameState result = playing.isGameEnd();

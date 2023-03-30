@@ -2,6 +2,8 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.dao.MoveDaoImpl;
+import chess.model.ChessGame;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Scanner;
@@ -14,6 +16,7 @@ public class ChessApplication {
         final OutputView outputView = new OutputView();
 
         final ChessController chessController = new ChessController(inputView, outputView);
-        chessController.start(new MoveDaoImpl());
+        final ChessService chessService = new ChessService(new ChessGame(), new MoveDaoImpl());
+        chessController.start(chessService);
     }
 }

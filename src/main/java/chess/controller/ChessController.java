@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.dao.MoveDao;
+import chess.controller.state.GameState;
+import chess.controller.state.ProgressState;
 import chess.model.Scores;
-import chess.model.board.state.GameState;
-import chess.model.board.state.ProgressState;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.function.Consumer;
@@ -19,23 +19,23 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-    public void start(final MoveDao moveDao) {
+    public void start(final ChessService chessService) {
         inputView.printGameStartMessage();
-        doGame(moveDao);
+        doGame(chessService);
     }
 
-    private void doGame(final MoveDao moveDao) {
-        GameState state = retry(()  -> getGameState(moveDao));
+    private void doGame(final ChessService chessService) {
+        GameState state = retry(()  -> getGameState(chessService));
         retry(this::progressGame, state);
     }
 
-    private GameState getGameState(final MoveDao moveDao) {
+    private GameState getGameState(final ChessService chessService) {
         final GameCommand gameCommand = retry(inputView::readGameCommand);
-        return getGameState(gameCommand, moveDao);
+        return getGameState(gameCommand, chessService);
     }
 
-    private GameState getGameState(final GameCommand gameCommand, final MoveDao moveDao) {
-        GameState state = ProgressState.of(gameCommand, moveDao);
+    private GameState getGameState(final GameCommand gameCommand, final ChessService chessService) {
+        GameState state = ProgressState.of(gameCommand, chessService);
         printCreateGameMessage(state);
         printBoardStatus(state);
         return state;

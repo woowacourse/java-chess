@@ -5,8 +5,6 @@ import chess.model.ChessGame;
 
 public class NoWhiteKingChessGame extends MoveTruncator {
 
-    private ChessGame chessGame;
-
     /**
      * RNBQKB.R
      * PPPPPPPP
@@ -17,14 +15,10 @@ public class NoWhiteKingChessGame extends MoveTruncator {
      * ..pppp.p
      * rnbqNbnr
      */
-    public NoWhiteKingChessGame(final ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
-
-    public static NoWhiteKingChessGame create() {
+    public static ChessGame create() {
         final ChessGame chessGame = new ChessGame();
         killWhiteKing(chessGame);
-        return new NoWhiteKingChessGame(chessGame);
+        return chessGame;
     }
 
     private static void killWhiteKing(final ChessGame chessGame) {
@@ -38,9 +32,5 @@ public class NoWhiteKingChessGame extends MoveTruncator {
         chessGame.move(PositionFixture.E3, PositionFixture.G2);
         chessGame.move(PositionFixture.B2, PositionFixture.B3);
         chessGame.move(PositionFixture.G2, PositionFixture.E1);
-    }
-
-    public ChessGame getChessGame() {
-        return chessGame;
     }
 }
