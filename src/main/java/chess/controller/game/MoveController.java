@@ -1,7 +1,6 @@
 package chess.controller.game;
 
 import chess.controller.Controller;
-import chess.controller.GameCommand;
 import chess.controller.Request;
 import chess.controller.Response;
 import chess.controller.ResponseType;
@@ -31,17 +30,17 @@ public class MoveController implements Controller {
     @Override
     public Response execute(Request request) {
         try {
-            validate(request);
-            Game game = getGame();
+            Game game = GameSession.getGame();
             Game afterGame = game.move(makeStartingPosition(request), makeDestinationPosition(request));
+            GameSession.replaceSession(afterGame);
             if (afterGame.isEnd()) {
                 handleFinishGame();
                 return new Response(ResponseType.FINISH);
             }
-            GameSession.replaceSession(afterGame);
             return new Response(ResponseType.MOVE, makeBoardDto(afterGame));
-        } catch (IllegalStateException | IllegalPieceMoveException e) {
+        } catch (IllegalPieceMoveException e) {
             return new Response(ResponseType.FAIL, e.getMessage());
+
         }
     }
 
@@ -49,22 +48,6 @@ public class MoveController implements Controller {
         String gameId = GameDao.getGameIdOf(LoginSession.getCurrentPlayingRoomName());
         GameDao.deleteGameOf(LoginSession.getCurrentPlayingRoomName());
         PieceDao.delete(gameId);
-    }
-
-    private void validate(Request request) {
-        if (request.getGameCommand() != GameCommand.MOVE) {
-            throw new IllegalArgumentException("잘못된 커맨드 요청입니다.");
-        }
-        if (!GameSession.existGame()) {
-            throw new IllegalStateException("게임이 시작하지 않았습니다");
-        }
-    }
-
-    private Game getGame() {
-        if (!GameSession.existGame()) {
-            throw new IllegalStateException("게임이 초기화 되지 않았습니다.");
-        }
-        return GameSession.getGame();
     }
 
     private Position makeStartingPosition(Request request) {

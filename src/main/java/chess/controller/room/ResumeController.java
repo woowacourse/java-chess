@@ -28,7 +28,7 @@ public class ResumeController implements Controller {
         try {
             validate();
             String roomName = getRoomName(request);
-            if (!GameDao.haveRoomOf(roomName, LoginSession.getCurrentLoginId())) {
+            if (!GameDao.matchRoomNameAndOwner(roomName, LoginSession.getCurrentLoginId())) {
                 return new Response(ResponseType.FAIL, "해당 이름의 게임은 존재하지 않습니다.");
             }
             String gameId = GameDao.getGameIdOf(roomName);
@@ -59,7 +59,7 @@ public class ResumeController implements Controller {
     }
 
     private void validateBoard() {
-        if (LoginSession.getCurrentPlayingRoomName() != null) {
+        if (LoginSession.havePlayingGame()) {
             throw new IllegalStateException("이미 게임을 진행중입니다.");
         }
     }

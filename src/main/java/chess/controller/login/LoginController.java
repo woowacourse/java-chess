@@ -6,6 +6,8 @@ import chess.controller.Response;
 import chess.controller.ResponseType;
 import chess.dao.UserDao;
 
+import java.util.Optional;
+
 public class LoginController implements Controller {
     private final static LoginController INSTANCE = new LoginController();
     private static final int ID_INDEX = 1;
@@ -21,8 +23,8 @@ public class LoginController implements Controller {
 
     @Override
     public Response execute(Request request) {
-        String userName = UserDao.getUserNameOf(getId(request), getPassword(request));
-        if (userName == null) {
+        Optional<String> userName = UserDao.getUserNameOf(getId(request), getPassword(request));
+        if (!userName.isPresent()) {
             return new Response(ResponseType.FAIL, "해당 아이디 비밀번호의 유저는 존재하지 않습니다.");
         }
         LoginSession.login(getId(request));

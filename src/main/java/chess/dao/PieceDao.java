@@ -85,8 +85,7 @@ public class PieceDao {
                     preparedStatement.executeUpdate();
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException ignored) {
         }
     }
 

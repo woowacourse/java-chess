@@ -1,6 +1,7 @@
 package chess.dao;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class UserDao {
     private UserDao() {
@@ -39,7 +40,7 @@ public class UserDao {
         }
     }
 
-    public static String getUserNameOf(String userId, String userPassword) {
+    public static Optional<String> getUserNameOf(String userId, String userPassword) {
         final var query = "SELECT user_name FROM user WHERE user_id = ? or user_password = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
@@ -47,9 +48,9 @@ public class UserDao {
             preparedStatement.setString(2, userPassword);
             var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getString("user_name");
+                return Optional.of(resultSet.getString("user_name"));
             }
-            return null;
+            return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

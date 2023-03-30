@@ -12,8 +12,7 @@ public class GameDao {
     private GameDao() {
     }
 
-    public static boolean
-    enrollGameOf(String userId, String gameId, String turn, String gameName) {
+    public static boolean enrollGameOf(String userId, String gameId, String turn, String gameName) {
         if (alreadyExistGame(gameName)) {
             return false;
         }
@@ -128,7 +127,7 @@ public class GameDao {
         }
     }
 
-    public static boolean haveRoomOf(String roomName, String userId) {
+    public static boolean matchRoomNameAndOwner(String roomName, String userId) {
         final var query = "SELECT game_id FROM game WHERE game_name = ? and user_id = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
@@ -139,6 +138,21 @@ public class GameDao {
                 return true;
             }
             return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean nonExistRoomName(String gameName) {
+        final var query = "SELECT game_id FROM game WHERE game_name = ?";
+        try (var connection = ConnectionHandler.getConnection();
+             var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, gameName);
+            var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return false;
+            }
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

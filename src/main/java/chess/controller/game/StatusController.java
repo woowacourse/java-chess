@@ -1,7 +1,6 @@
 package chess.controller.game;
 
 import chess.controller.Controller;
-import chess.controller.GameCommand;
 import chess.controller.Request;
 import chess.controller.Response;
 import chess.controller.ResponseType;
@@ -22,13 +21,11 @@ public class StatusController implements Controller {
 
     @Override
     public Response execute(Request request) {
-        try {
-            validate(request);
-            Game game = GameSession.getGame();
-            return new Response(ResponseType.STATUS, makeGameResultDto(game));
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return new Response(ResponseType.FAIL, e.getMessage());
+        if (!GameSession.existGame()) {
+            return new Response(ResponseType.FAIL, "게임이 없는 경우 상태를 출력할 수 없습니다.");
         }
+        Game game = GameSession.getGame();
+        return new Response(ResponseType.STATUS, makeGameResultDto(game));
     }
 
     private ResultDto makeGameResultDto(Game game) {
@@ -36,13 +33,4 @@ public class StatusController implements Controller {
         return new ResultDto(result.getGameResult().getMessage(), result.getWhiteScore().getScore(), result.getBlackScore().getScore());
     }
 
-    private void validate(Request request) {
-        if (request.getGameCommand() != GameCommand.STATUS) {
-            throw new IllegalArgumentException("잘못된 커맨드 요청입니다.");
-        }
-
-        if (!GameSession.existGame()) {
-            throw new IllegalStateException("현재 실행 중인 체스 게임이 없습니다.");
-        }
-    }
 }
