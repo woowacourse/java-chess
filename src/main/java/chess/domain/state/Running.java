@@ -2,7 +2,9 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.square.Color;
 import chess.domain.square.Square;
+import chess.domain.square.Team;
 
 public class Running implements State {
     private final Board board;
@@ -17,22 +19,41 @@ public class Running implements State {
     }
 
     @Override
-    public void move(final Square source, final Square target) {
+    public State move(final Square source, final Square target) {
         board.makeMove(source, target);
+        if (isEnd()) {
+            return new KingDeadEnd(board.findWinner());
+        }
+        return this;
     }
 
     @Override
     public State end() {
-        return new End();
+        return new End(Team.from(Color.EMPTY));
+    }
+
+    @Override
+    public double calculateScore(final Team team) {
+        return board.calculateScore(team);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return board.isEnd();
+    }
+
+    @Override
+    public boolean isKingDead() {
+        return false;
+    }
+
+    @Override
+    public Team getWinner() {
+        throw new IllegalStateException("게임이 끝나지 않아 우승자가 없습니다.");
     }
 
     @Override
     public Board getBoard() {
         return board;
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 }

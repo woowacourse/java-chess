@@ -1,30 +1,39 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Role.BLANK;
+import static chess.domain.piece.Role.INITIAL_PAWN;
+import static chess.domain.piece.Role.KING;
+import static chess.domain.piece.Role.PAWN;
+
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Role;
-import chess.domain.square.*;
-
+import chess.domain.square.Color;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import chess.domain.square.Team;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
+    private static final int DEFAULT_KING_COUNT = 2;
 
     private final Map<Square, Piece> board;
-    private Side turn;
+    private Team turn;
 
     Board(final Map<Square, Piece> board) {
         this.board = board;
-        this.turn = Side.from(FIRST_TURN_COLOR);
+        this.turn = Team.from(FIRST_TURN_COLOR);
     }
 
     public Piece findPiece(final File file, final Rank rank) {
         Square piece = Square.of(file, rank);
         if (!board.containsKey(piece)) {
-            Side blankSide = Side.from(Color.EMPTY);
-            return Role.BLANK.create(blankSide);
+            Team blankTeam = Team.from(Color.EMPTY);
+            return BLANK.create(blankTeam);
         }
         return board.get(piece);
     }
@@ -67,7 +76,8 @@ public class Board {
         }
     }
 
-    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
+    private void validateCanNotMove(final Square targetSquare, final Direction direction, final Piece sourcePiece,
+                                    final int distance) {
         boolean possible = isPossibleMove(targetSquare, direction, sourcePiece, distance);
 
         if (!possible) {
@@ -75,7 +85,8 @@ public class Board {
         }
     }
 
-    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final Piece sourcePiece, final int distance) {
+    private boolean isPossibleMove(final Square targetSquare, final Direction direction, final Piece sourcePiece,
+                                   final int distance) {
         if (board.containsKey(targetSquare)) {
             return sourcePiece.canAttack(direction, distance, board.get(targetSquare));
         }
@@ -90,7 +101,7 @@ public class Board {
     }
 
     private void move(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
-        board.put(targetSquare, sourcePiece.currentState());
+        board.put(targetSquare, sourcePiece.nextState());
         board.remove(sourceSquare);
         turn = turn.findOpponent();
     }
@@ -109,5 +120,53 @@ public class Board {
             squares.add(nextSquare);
         }
         return squares;
+    }
+
+    public double calculateScore(final Team team) {
+        double pawnScore = calculatePawnScore(team);
+        double majorScore = calculateMajorScore(team);
+
+        return majorScore + pawnScore;
+    }
+
+    private double calculatePawnScore(final Team team) {
+        return Arrays.stream(File.values())
+                .mapToDouble(file -> calculatePawnScoreOfFile(team, file))
+                .sum();
+    }
+
+    private long calculatePawnScoreOfFile(final Team team, final File file) {
+        long score = board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameSide(team))
+                .filter(entry -> entry.getValue().hasSameRole(PAWN) || entry.getValue().hasSameRole(INITIAL_PAWN))
+                .map(Map.Entry::getKey)
+                .filter(square -> square.hasSameFile(file))
+                .count();
+        if (score >= 2) {
+            return score / 2;
+        }
+        return score;
+    }
+
+    private double calculateMajorScore(final Team team) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameSide(team))
+                .filter(piece -> !piece.hasSameRole(PAWN) && !piece.hasSameRole(INITIAL_PAWN))
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    public boolean isEnd() {
+        return board.values().stream()
+                .filter(piece -> piece.hasSameRole(KING))
+                .count() < DEFAULT_KING_COUNT;
+    }
+
+    public Team findWinner() {
+        return board.values().stream()
+                .filter(piece -> piece.hasSameRole(KING))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("킹이 존재하지 않습니다."))
+                .getTeam();
     }
 }

@@ -2,15 +2,22 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.square.Square;
+import chess.domain.square.Team;
 
 public interface State {
     State start();
 
-    void move(final Square source, final Square target);
+    State move(final Square source, final Square target);
 
     State end();
 
-    Board getBoard();
+    double calculateScore(final Team team);
 
-    boolean isRunning();
+    boolean isEnd();
+
+    boolean isKingDead();
+
+    Team getWinner();
+
+    Board getBoard();
 }

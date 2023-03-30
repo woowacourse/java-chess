@@ -4,10 +4,10 @@ import chess.domain.ChessGame;
 import chess.dto.BoardDto;
 import chess.view.OutputView;
 
-public class StartCommand implements Command {
+public class ClearCommand implements Command {
     @Override
-    public void execute(ChessGame chessGame, OutputView outputView) {
-        chessGame.start();
+    public void execute(final ChessGame chessGame, final OutputView outputView) {
+        chessGame.clear();
         BoardDto boardDto = BoardDto.from(chessGame.getBoard());
         outputView.printBoard(boardDto);
     }
