@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.controller.action.TryCount;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.dao.ChessGameDao;
 import chess.domain.piecesfactory.StartingPiecesFactory;
@@ -47,7 +46,9 @@ public class ChessController {
     private Command readCommand(final TryCount inputTryCount) {
         while (inputTryCount.canRetry()) {
             try {
-                return new Command(InputView.readGameCommand());
+                final Command command = new Command(InputView.readGameCommand());
+                inputTryCount.resetCount();
+                return command;
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
                 inputTryCount.count();
