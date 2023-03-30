@@ -30,7 +30,6 @@ public class ChessController {
             }
         });
         if (chessGame.isEnd()) {
-            // king 이 잡혀서 게임이 종료되면 DB 초기화
             chessGameDao.init(chessGame);
         }
     }
@@ -39,7 +38,6 @@ public class ChessController {
         State gameStatus = new Start(chessGame);
         while (gameStatus.isRun()) {
             gameStatus = getStatus(gameStatus);
-            // 명령 실행 시 마다 업데이트
             chessGameDao.update(chessGame);
             consumer.accept(gameStatus);
         }
