@@ -59,15 +59,18 @@ classDiagram
   class ChessState
   <<Interface>> ChessState
   
-  class AbstractChessState
-  <<Abstract>> AbstractChessState
+  class Runnable
+  <<Abstract>> Runnable
+
+  class Finished
+  <<Abstract>> Finished
   
-  ChessState ..> Command
-  ChessState <|.. AbstractChessState
-  AbstractChessState <|-- Initialize
-  AbstractChessState <|-- Running
-  AbstractChessState <|-- End
-  Command --> Type
+  ChessState <|.. Runnable
+  ChessState <|.. Finished
+  Runnable <|-- Initialize
+  Runnable <|-- Run
+  Finished <|-- End
+  Finished <|-- Checkmate
 ```
 
 ---
@@ -187,3 +190,51 @@ classDiagram
 - [x] save 출력 메시지 추가
 - [x] 진행 중인 게임 불러온 경우, 시작 메시지 추가
 - [x] 중복되는 클래스 명 변경(Type -> Role)
+
+---
+
+## DB 설계
+
+### ERD
+
+```mermaid
+erDiagram
+  GAME ||--o{ PIECE : has
+  GAME {
+    int id
+    varchar turn
+    tinyint is_running
+  }
+  PIECE {
+    int id
+    int game_id
+    varchar piece_type
+    varchar file_position
+    int rank_position
+    varchar color
+  }
+```
+
+### DDL
+
+```sql
+CREATE TABLE game
+(
+    `id`          INT            NOT NULL    AUTO_INCREMENT, 
+    `turn`        VARCHAR(10)    NOT NULL, 
+    `is_running`  TINYINT(1)     NOT NULL, 
+     PRIMARY KEY (id)
+);
+
+CREATE TABLE piece
+(
+    `id`             INT            NOT NULL    AUTO_INCREMENT, 
+    `game_id`        INT            NOT NULL, 
+    `piece_type`     VARCHAR(10)    NOT NULL, 
+    `file_position`  VARCHAR(1)     NOT NULL, 
+    `rank_position`  INT            NOT NULL, 
+    `color`          VARCHAR(10)    NOT NULL, 
+     PRIMARY KEY (id),
+    FOREIGN KEY (game_id) REFERENCES game (id)
+);
+```
