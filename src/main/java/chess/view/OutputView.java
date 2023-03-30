@@ -41,7 +41,7 @@ public class OutputView {
         final StringBuilder gamesBuilder = new StringBuilder();
         final String form = "%10s%15s%15s";
         gamesBuilder.append(System.lineSeparator())
-                .append(String.format(form, "게임 번호", "게임 종료 여부", "현재 턴 소유자"))
+                .append(String.format(form, "게임 번호", "게임 종료 여부", "마지막 턴 소유자"))
                 .append(System.lineSeparator());
 
         games.forEach(game -> gamesBuilder.append(String.format(form, game.getGameId(), game.isEnd(), game.getLastPlayer().getPlayer()))
