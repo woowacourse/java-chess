@@ -16,7 +16,7 @@ public final class Board {
         this.board = board;
     }
 
-    public static Board create(){
+    public static Board create() {
         final Map<Position, Piece> board = new HashMap<>();
         board.putAll(BoardCache.create());
         board.putAll(PieceCache.create());
@@ -30,18 +30,15 @@ public final class Board {
         return new Board(board);
     }
 
-    public Board move(final Position source, final Position target, final Color color) {
+    public void move(final Position source, final Position target, final Color color) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
         validateInvalidColor(color, sourcePiece);
         validateInvalidMove(source, target, sourcePiece, targetPiece);
 
-        Map<Position, Piece> newBoard = new HashMap<>(board);
-
-        newBoard.put(source, Empty.create());
-        newBoard.put(target, sourcePiece);
-        return new Board(newBoard);
+        board.put(source, Empty.create());
+        board.put(target, sourcePiece);
     }
 
     private void validateInvalidColor(final Color currentColor, final Piece sourcePiece) {

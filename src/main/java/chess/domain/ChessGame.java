@@ -19,38 +19,41 @@ public final class ChessGame {
     private final BoardDao boardDao;
     private final Transaction jdbcTemplate;
     private final int gameId;
+    private final Board board;
     private State state;
 
-    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final Transaction jdbcTemplate, final int gameId) {
+    private ChessGame(final State state, final GameDao gameDao, final BoardDao boardDao, final Transaction jdbcTemplate, final Board board, final int gameId) {
         this.state = state;
         this.gameDao = gameDao;
         this.boardDao = boardDao;
         this.jdbcTemplate = jdbcTemplate;
         this.gameId = gameId;
+        this.board = board;
     }
 
     public static ChessGame from(final GameDao gameDao, final BoardDao boardDao, final Transaction jdbcTemplate) throws SQLException {
         GameDto gameDto = gameDao.findByLastGame();
 
         if (gameDto.isEnd()) {
-            final State state = new Ready(Board.create(), Color.EMPTY);
+            final State state = new Ready(Color.EMPTY);
+            final Board board = Board.create();
+            final int nextId = gameDto.getId() + 1;
 
             jdbcTemplate.batchTransaction(() -> {
                 int gameId = gameDao.create().getId();
-                boardDao.create(Board.create().getBoard(), gameId);
+                boardDao.create(board.getBoard(), gameId);
             });
 
-            int nextId = gameDto.getId() + 1;
-            return new ChessGame(state, gameDao, boardDao, jdbcTemplate, nextId);
+            return new ChessGame(state, gameDao, boardDao, jdbcTemplate, board, nextId);
         }
 
-        Board board = Board.from(boardDao.findByLastGameBoard(gameDto.getId()));
-        final State state = new Ready(board, Color.valueOf(gameDto.getColor()));
-        return new ChessGame(state, gameDao, boardDao, jdbcTemplate, gameDto.getId());
+        final Board board = Board.from(boardDao.findByLastGameBoard(gameDto.getId()));
+        final State state = new Ready(Color.valueOf(gameDto.getColor()));
+        return new ChessGame(state, gameDao, boardDao, jdbcTemplate, board, gameDto.getId());
     }
 
     public void move(final CommandDto commandDto) {
-        State newState = state.move(commandDto.getSource(), commandDto.getTarget());
+        State newState = state.move(commandDto.getSource(), commandDto.getTarget(), board);
 
         if (newState.getClass() == GameEnd.class) {
             gameDao.update(true, gameId);
@@ -59,7 +62,7 @@ public final class ChessGame {
         jdbcTemplate.batchTransaction(() -> {
             boardDao.deleteAll(gameId);
             gameDao.update(state.getColor().reverse(), gameId);
-            boardDao.create(newState.getBoard(), gameId);
+            boardDao.create(board.getBoard(), gameId);
         });
 
         state = newState;
@@ -82,7 +85,7 @@ public final class ChessGame {
 
     private Stream<Map.Entry<PieceType, Double>> calculateColumnScore(final Color color, final Row row) {
         Map<PieceType, Double> columnScore = Arrays.stream(Column.values())
-                .map(column -> state.getBoard().get(Position.of(row, column)))
+                .map(column -> board.getBoard().get(Position.of(row, column)))
                 .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.groupingBy(Piece::getPieceType, Collectors.summingDouble(Piece::getScore)));
 
@@ -122,7 +125,7 @@ public final class ChessGame {
     }
 
     public Map<Position, Piece> getBoard() {
-        return state.getBoard();
+        return board.getBoard();
     }
 
     public Color getColor() {

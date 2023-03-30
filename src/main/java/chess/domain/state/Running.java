@@ -7,18 +7,18 @@ import chess.domain.Position;
 import chess.domain.piece.Piece;
 
 public final class Running extends State {
-    Running(final Board board, final Color color) {
-        super(board, color);
+    Running(final Color color) {
+        super(color);
     }
 
     @Override
-    public State move(final Position source, final Position target) {
-        Piece capturePiece = board().getPiece(target);
-        Board newBoard = board().move(source, target, color());
+    public State move(final Position source, final Position target, final Board board) {
+        Piece capturePiece = board.getPiece(target);
+        board.move(source, target, color());
         if (capturePiece.isSamePieceType(PieceType.KING)) {
-            return new GameEnd(newBoard, color());
+            return new GameEnd(color());
         }
-        return new Running(newBoard, color().reverse());
+        return new Running(color().reverse());
     }
 
     @Override
@@ -28,6 +28,6 @@ public final class Running extends State {
 
     @Override
     public State end() {
-        return new End(board(), color());
+        return new End(color());
     }
 }

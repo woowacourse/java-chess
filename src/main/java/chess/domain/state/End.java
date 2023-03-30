@@ -7,12 +7,12 @@ import chess.domain.Position;
 public final class End extends State {
     public static final String COMMAND_NOT_USABLE_AFTER_END = "종료 후에 사용할 수 없는 명령어 입니다.";
 
-    End(final Board board, final Color color) {
-        super(board, color);
+    End(final Color color) {
+        super(color);
     }
 
     @Override
-    public State move(final Position source, final Position target) {
+    public State move(final Position source, final Position target, final Board board) {
         throw new UnsupportedOperationException(COMMAND_NOT_USABLE_AFTER_END);
     }
 
