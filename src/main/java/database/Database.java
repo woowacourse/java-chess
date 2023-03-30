@@ -11,12 +11,12 @@ public class Database {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    private static final String URL = "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION;
 
     public Connection getConnection() {
-        // 드라이버 연결
         try {
             return DriverManager.getConnection(
-                    "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD
+                    URL, USERNAME, PASSWORD
             );
         } catch (final SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
