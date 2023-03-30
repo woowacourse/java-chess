@@ -5,59 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum PieceType {
-    PAWN(1, List.of(
-        Direction.UP,
-        Direction.DOWN,
-        Direction.LEFT,
-        Direction.RIGHT,
-        Direction.LEFT_UP,
-        Direction.LEFT_DOWN,
-        Direction.RIGHT_UP,
-        Direction.RIGHT_DOWN
-    )),
-    KING(0, List.of(
-        Direction.UP,
-        Direction.DOWN,
-        Direction.LEFT,
-        Direction.RIGHT,
-        Direction.LEFT_UP,
-        Direction.LEFT_DOWN,
-        Direction.RIGHT_UP,
-        Direction.RIGHT_DOWN
-    )),
-    QUEEN(9, List.of(
-        Direction.UP,
-        Direction.DOWN,
-        Direction.LEFT,
-        Direction.RIGHT,
-        Direction.LEFT_UP,
-        Direction.LEFT_DOWN,
-        Direction.RIGHT_UP,
-        Direction.RIGHT_DOWN
-    )),
-    ROOK(5, List.of(
-        Direction.UP,
-        Direction.DOWN,
-        Direction.LEFT,
-        Direction.RIGHT
-    )),
-    BISHOP(3, List.of(
-        Direction.LEFT_UP,
-        Direction.LEFT_DOWN,
-        Direction.RIGHT_UP,
-        Direction.RIGHT_DOWN
-    )),
-    KNIGHT(2.5, List.of(
-        Direction.UP_UP_LEFT,
-        Direction.UP_UP_RIGHT,
-        Direction.DOWN_DOWN_LEFT,
-        Direction.DOWN_DOWN_RIGHT,
-        Direction.RIGHT_RIGHT_UP,
-        Direction.RIGHT_RIGHT_DOWN,
-        Direction.LEFT_LEFT_UP,
-        Direction.LEFT_LEFT_DOWN
-    )),
-    EMPTY(0, List.of());
+    PAWN(1, Direction.pawnDirections()),
+    KING(0, Direction.kingDirections()),
+    QUEEN(9, Direction.queenDirections()),
+    ROOK(5, Direction.rookDirections()),
+    BISHOP(3, Direction.bishopDirections()),
+    KNIGHT(2.5, Direction.knightDirections()),
+    EMPTY(0, Direction.emptyDirections());
 
     private final double score;
     private final List<Direction> possibleDirections;
