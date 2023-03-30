@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static chess.domain.userAccess.DbConnection.getConnection;
+import static chess.DbConnection.getConnection;
 
 public final class UserDao {
 
