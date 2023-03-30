@@ -1,9 +1,9 @@
 package chess.model.service;
 
 import chess.model.dao.ChessGameDao;
-import chess.model.dao.ConnectionGeneratorImpl;
 import chess.model.dao.DataBaseChessGameDao;
 import chess.model.dao.DataBasePieceDao;
+import chess.model.dao.JdbcTemplateImpl;
 import chess.model.dao.PieceDao;
 import chess.model.domain.board.Board;
 import chess.model.domain.board.Score;
@@ -17,8 +17,8 @@ import java.util.Map;
 
 public class Started implements State {
 
-    private static final ChessGameDao CHESS_GAME_DAO = new DataBaseChessGameDao(new ConnectionGeneratorImpl());
-    private static final PieceDao BOARD_DAO = new DataBasePieceDao(new ConnectionGeneratorImpl());
+    private static final ChessGameDao CHESS_GAME_DAO = new DataBaseChessGameDao(new JdbcTemplateImpl());
+    private static final PieceDao BOARD_DAO = new DataBasePieceDao(new JdbcTemplateImpl());
 
     private final Board board;
     private final long gameId;

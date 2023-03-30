@@ -2,101 +2,66 @@ package chess.model.dao;
 
 import chess.model.domain.board.Turn;
 import chess.model.domain.piece.Color;
-import chess.model.exception.QueryFailException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseChessGameDao implements ChessGameDao {
 
-    private final ConnectionGenerator connectionGenerator;
+    private static final String FIND_ALL_GAME_ID_QUERY = "SELECT id FROM chess_game";
+    private static final String GENERATE_NEW_GAME_QUERY = "INSERT INTO CHESS_GAME VALUES (null, ?)";
+    private static final String UPDATE_TURN_QUERY = "UPDATE CHESS_GAME SET TURN = ? WHERE id = ?";
+    private static final String DELETE_BOARD_QUERY = "DELETE FROM chess_game WHERE id = ?";
+    private static final String LOAD_TURN_QUERY = "SELECT turn FROM chess_game WHERE id = ?";
 
-    public DataBaseChessGameDao(final ConnectionGenerator connectionGenerator) {
-        this.connectionGenerator = connectionGenerator;
+    private final JdbcTemplate jdbcTemplate;
+
+    public DataBaseChessGameDao(final JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public List<Long> findAllId() {
-        final String findAllGameId = "SELECT id FROM chess_game";
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(findAllGameId)) {
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            final List<Long> chessGameIds = new ArrayList<>();
-            while (resultSet.next()) {
-                final long chessGameId = resultSet.getLong(1);
-                chessGameIds.add(chessGameId);
-            }
-            return chessGameIds;
-        } catch (final SQLException e) {
-            throw new QueryFailException();
-        }
+        return jdbcTemplate.executeQuery(FIND_ALL_GAME_ID_QUERY,
+                resultSet -> {
+                    List<Long> chessGameId = new ArrayList<>();
+                    while (resultSet.next()) {
+                        chessGameId.add(resultSet.getLong(1));
+                    }
+                    return chessGameId;
+                });
     }
 
     @Override
     public long generateNewGame() {
-        final String generateNewGameQuery = "INSERT INTO CHESS_GAME VALUES (null, ?)";
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement =
-                     connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, Color.WHITE.name());
-            preparedStatement.executeUpdate();
-            final ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
-            }
-            throw new SQLException();
-        } catch (final SQLException e) {
-            throw new QueryFailException();
-        }
+        return jdbcTemplate.executeUpdate(GENERATE_NEW_GAME_QUERY,
+                resultSet -> {
+                    if (resultSet.next()) {
+                        return resultSet.getLong(1);
+                    }
+                    throw new SQLException();
+                }, Color.WHITE.name());
     }
 
     @Override
     public void updateTurn(final Turn turn, final long gameId) {
-        final String generateNewGameQuery = "UPDATE CHESS_GAME SET TURN = ? WHERE id = ?";
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement =
-                     connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, turn.getTurn().name());
-            preparedStatement.setLong(2, gameId);
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new QueryFailException();
-        }
+        jdbcTemplate.executeUpdate(UPDATE_TURN_QUERY, turn.getTurn().name(), gameId);
     }
 
     @Override
     public Turn loadTurn(final long gameId) {
-        final String generateNewGameQuery = "SELECT turn FROM chess_game WHERE id = ?";
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement =
-                     connection.prepareStatement(generateNewGameQuery, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setLong(1, gameId);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                final Color turn = Color.valueOf(resultSet.getString(1));
-                return new Turn(turn);
-            }
-            throw new SQLException();
-        } catch (final SQLException e) {
-            throw new QueryFailException();
-        }
+        return jdbcTemplate.executeQuery(LOAD_TURN_QUERY,
+                resultSet -> {
+                    if (resultSet.next()) {
+                        final String colorString = resultSet.getString(1);
+                        return new Turn(Color.valueOf(colorString));
+                    }
+                    throw new SQLException();
+                }, gameId);
     }
 
     @Override
     public void deleteGame(final long gameId) {
-        final String deleteBoardQuery =
-                "DELETE FROM chess_game WHERE id = ?";
-        try (final Connection connection = connectionGenerator.getConnection();
-             final PreparedStatement preparedStatement =
-                     connection.prepareStatement(deleteBoardQuery)) {
-            preparedStatement.setLong(1, gameId);
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new QueryFailException();
-        }
+        jdbcTemplate.executeUpdate(DELETE_BOARD_QUERY, gameId);
     }
 }
