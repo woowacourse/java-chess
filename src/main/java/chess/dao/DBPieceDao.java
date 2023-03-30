@@ -4,6 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
+import chess.exception.ChessDBException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public final class DBPieceDao implements PieceDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new IllegalStateException("체스 게임 결과를 저장하는데 실패했습니다.");
+            throw new ChessDBException("체스 게임 결과를 저장하는데 실패했습니다.");
         }
     }
 
@@ -55,7 +56,7 @@ public final class DBPieceDao implements PieceDao {
                 board.put(position, piece);
             }
         } catch (final SQLException e) {
-            throw new IllegalStateException("체스 게임 결과를 불러오는데 실패했습니다.");
+            throw new ChessDBException("체스 게임 결과를 불러오는데 실패했습니다.");
         }
         return board;
     }
@@ -85,7 +86,7 @@ public final class DBPieceDao implements PieceDao {
                 return pieceType.generate(pieceColor);
             }
         } catch (final SQLException e) {
-            throw new IllegalStateException("특정 위치의 체스말을 찾는데 실패했습니다.");
+            throw new ChessDBException("특정 위치의 체스말을 찾는데 실패했습니다.");
         }
         return null;
     }
@@ -99,7 +100,7 @@ public final class DBPieceDao implements PieceDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new IllegalStateException("해당 위치의 체스말을 삭제하는데 실패했습니다.");
+            throw new ChessDBException("해당 위치의 체스말을 삭제하는데 실패했습니다.");
         }
     }
 
@@ -112,7 +113,7 @@ public final class DBPieceDao implements PieceDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new IllegalStateException("게임을 초기화하는데 실패했습니다.");
+            throw new ChessDBException("게임을 초기화하는데 실패했습니다.");
         }
     }
 

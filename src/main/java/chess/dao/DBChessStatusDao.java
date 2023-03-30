@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.exception.ChessDBException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public final class DBChessStatusDao implements ChessStatusDao {
 
             return gameIds;
         } catch (final SQLException e) {
-            throw new IllegalStateException("체스 게임 상태를 저장하는데 실패했습니다.");
+            throw new ChessDBException("체스 게임 상태를 저장하는데 실패했습니다.");
         }
     }
 
@@ -42,9 +43,9 @@ public final class DBChessStatusDao implements ChessStatusDao {
                 return resultSet.getString("turn");
             }
 
-            throw new IllegalStateException("체스 게임의 순서에 대한 정보를 불러올 수 없습니다.");
+            throw new ChessDBException("체스 게임의 순서에 대한 정보를 불러올 수 없습니다.");
         } catch (final SQLException e) {
-            throw new IllegalStateException("체스 게임의 상태를 불러오는데 실패했습니다.");
+            throw new ChessDBException("체스 게임의 상태를 불러오는데 실패했습니다.");
         }
     }
 
@@ -63,7 +64,7 @@ public final class DBChessStatusDao implements ChessStatusDao {
 
             throw new IllegalArgumentException("체스 게임의 상태를 생성할 수 없습니다.");
         } catch (final SQLException e) {
-            throw new IllegalStateException("체스 게임 상태를 생성하는데 실패했습니다.");
+            throw new ChessDBException("체스 게임 상태를 생성하는데 실패했습니다.");
         }
     }
 
@@ -77,7 +78,7 @@ public final class DBChessStatusDao implements ChessStatusDao {
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new IllegalStateException("게임을 업데이트하는데 실패했습니다.");
+            throw new ChessDBException("게임을 업데이트하는데 실패했습니다.");
         }
     }
 }

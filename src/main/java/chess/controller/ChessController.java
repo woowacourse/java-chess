@@ -14,6 +14,7 @@ import static chess.controller.ChessGameCommand.TO_INDEX;
 import chess.ChessGame;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import chess.exception.ChessDBException;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -91,6 +92,9 @@ public final class ChessController {
         } catch (IllegalArgumentException | IllegalStateException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return EMPTY;
+        } catch (ChessDBException exception) {
+            OutputView.printExceptionMessage(exception.getMessage());
+            return END;
         } catch (Exception exception) {
             OutputView.printExceptionMessage("예기치 못한 예외가 발생했습니다.");
             return EMPTY;
