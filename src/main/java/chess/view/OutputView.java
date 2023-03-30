@@ -81,4 +81,8 @@ public class OutputView {
     public static void printTeamScore(final Color color, final Double score) {
         System.out.printf("%s의 점수는 %.1f점입니다.%n", color, score);
     }
+
+    public static void printInProgressMessage() {
+        System.out.println("이미 진행중인 게임이 있습니다.");
+    }
 }

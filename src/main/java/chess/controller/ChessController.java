@@ -42,8 +42,13 @@ public class ChessController {
             run(chessBoard, state, gameId);
             return;
         }
+        runInProgressGame(gameIds);
+    }
+
+    private void runInProgressGame(final List<Integer> gameIds) {
         final ChessBoard chessBoard = new ChessBoard(pieceService.findAllPieces());
         final ChessState state = new Run(gameService.findTurnById(gameIds.get(0)));
+        OutputView.printInProgressMessage();
         OutputView.showBoard(chessBoard.pieces());
         run(chessBoard, state, gameIds.get(0));
     }

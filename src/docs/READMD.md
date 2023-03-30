@@ -185,3 +185,4 @@ classDiagram
 - [ ] DB 접속 정보 및 커넥션 별도로 관리
 - [x] autoIncrementId 메서드 삭제
 - [ ] save 출력 메시지 추가
+- [x] 진행 중인 게임 불러온 경우, 시작 메시지 추가
