@@ -41,7 +41,7 @@ public class ChessService {
         for (Move move : moves) {
             final Position source = move.toSourcePosition();
             final Position target = move.toTargetPosition();
-            move(source, target);
+            chessGame.move(source, target);
         }
     }
 
