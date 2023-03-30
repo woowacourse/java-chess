@@ -29,29 +29,9 @@ public abstract class Piece {
                 && nextFile >= Board.LOWER_BOUNDARY && nextFile <= Board.UPPER_BOUNDARY;
     }
 
-    public String getName() {
-        return type.getSymbol(side);
-    }
-
-    public Side getSide() {
-        return side;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
     protected abstract void validate(final Type type, final Side side);
 
     public abstract Path findMovablePositions(final Position source, final Board board);
-
-    public boolean isWhite() {
-        return side.isWhite();
-    }
-
-    public boolean isBlack() {
-        return side.isBlack();
-    }
 
     @Override
     public boolean equals(final Object o) {
@@ -76,5 +56,25 @@ public abstract class Piece {
 
     public double getScore() {
         return type.getValue();
+    }
+
+    public String getName() {
+        return type.getSymbol(side);
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public boolean isWhite() {
+        return side.isWhite();
+    }
+
+    public boolean isBlack() {
+        return side.isBlack();
     }
 }

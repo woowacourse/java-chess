@@ -38,14 +38,6 @@ public class Board {
         return getPiece(position).getSide();
     }
 
-    public Piece getPiece(Position position) {
-        return board.get(position);
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
     public Path findMovablePositions(final Position source) {
         return getPiece(source).findMovablePositions(source, this);
     }
@@ -138,5 +130,13 @@ public class Board {
         if (piece.isKing()) {
             pieces.add(piece);
         }
+    }
+
+    public Piece getPiece(Position position) {
+        return board.get(position);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }

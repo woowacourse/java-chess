@@ -68,6 +68,27 @@ public class ChessGame {
         turn = turn.changeTurn();
     }
 
+    public Double calculateScore(Side side) {
+        checkCalculable();
+        return board.calculateScore(side);
+    }
+
+    public Side calculateWinner() {
+        final Side winner = board.calculateWinner();
+
+        if (winner.isNeutrality()) {
+            return Side.calculateWinner(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
+        }
+        return winner;
+    }
+
+    private void checkCalculable() {
+        if (state.isCalculable()) {
+            return;
+        }
+        throw new IllegalArgumentException("게임을 시작해주세요.");
+    }
+
     public boolean isRunnable() {
         return state.isRunnable();
     }
@@ -90,26 +111,5 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
-    }
-
-    public Double calculateScore(Side side) {
-        checkCalculable();
-        return board.calculateScore(side);
-    }
-
-    public Side calculateWinner() {
-        final Side winner = board.calculateWinner();
-
-        if (winner.isNeutrality()) {
-            return Side.calculateWinner(board.calculateScore(Side.WHITE), board.calculateScore(Side.BLACK));
-        }
-        return winner;
-    }
-
-    private void checkCalculable() {
-        if (state.isCalculable()) {
-            return;
-        }
-        throw new IllegalArgumentException("게임을 시작해주세요.");
     }
 }
