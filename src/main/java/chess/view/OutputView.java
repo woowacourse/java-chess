@@ -4,7 +4,6 @@ import chess.domain.board.RowPieces;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
-import chess.view.result.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,16 +55,15 @@ public class OutputView {
         return ".";
     }
 
-    public static void printPresentStatus(double whiteTeamPoint, double blackTeamPoint, Team team) {
+    public static void printPresentStatus(double whiteTeamPoint, double blackTeamPoint, String team) {
         System.out.println("> 현재 점수 상태입니다");
         System.out.println("> 화이트 팀 : " + whiteTeamPoint);
         System.out.println("> 블랙 팀 : " + blackTeamPoint);
-        System.out.println(Result.lose(team));
+        System.out.println(team);
     }
 
-    public static void printKingIsDead(Team team) {
+    public static void printKingIsDead() {
         System.out.println("> 킹이 죽어 경기가 종료되었습니다");
-        System.out.println(Result.lose(team));
     }
 
     public static void noticeFormerChessBoard(){

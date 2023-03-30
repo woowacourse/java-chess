@@ -105,9 +105,9 @@ public class InputView {
         }
     }
 
-    private static void validateRestartCommand(String inputCommand) throws IOException {
+    private static void validateRestartCommand(String inputCommand) {
         if (!List.of("start", "restart").contains(inputCommand)){
-            throw new IOException("start, restart만 입력 가능합니다");
+            throw new IllegalArgumentException("start, restart만 입력 가능합니다");
         }
     }
 }
