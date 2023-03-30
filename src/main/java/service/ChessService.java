@@ -105,14 +105,18 @@ public class ChessService {
     }
 
     private void checkKingDead() {
-        if (chessBoard.getBoard()
-            .values()
-            .stream()
-            .filter(piece -> PieceToScoreConverter.isKingOrEmpty(piece) && !piece.isEmpty())
-            .count() != 2) {
+        if (KingIsDead()) {
             ongoing = false;
             chessDao.delete();
         }
+    }
+
+    private boolean KingIsDead() {
+        return chessBoard.getBoard()
+            .values()
+            .stream()
+            .filter(piece -> PieceToScoreConverter.isKingOrEmpty(piece) && !piece.isEmpty())
+            .count() != 2;
     }
 
     private Square convertToSquare(String squareName) {
