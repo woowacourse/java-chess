@@ -18,7 +18,7 @@ public enum RunningCommandType {
 
     public static RunningCommandType from(final String command) {
         return Arrays.stream(values())
-                .filter(startCommandType -> startCommandType.name().equalsIgnoreCase(command))
+                .filter(runningCommandType -> runningCommandType.name().equalsIgnoreCase(command))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("게임 진행 중에 입력할 수 없는 명령어입니다."));
     }

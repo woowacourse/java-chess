@@ -42,7 +42,7 @@ public abstract class Piece {
 
     public void validateMove(final Position from, final Position to, final Map<Position, Piece> board) {
         validateStay(from, to);
-        validateDestination(board.get(to)); // TODO Null 처리
+        validateDestination(board.get(to));
         validatePathByType(from, to, board);
     }
 
@@ -80,23 +80,25 @@ public abstract class Piece {
     }
 
     private List<File> sliceFile(final Position from, final Position to, final List<File> files) {
-        final List<File> slicedFiles = IntStream.range(1, files.size() - 1)
-                .mapToObj(files::get)
-                .collect(Collectors.toList());
-        if (from.getFile().getIndex() > to.getFile().getIndex()) {
+        final List<File> slicedFiles = sliceEdge(files);
+        if (File.isLargerIndexAtFrom(from.getFile(), to.getFile())) {
             Collections.reverse(slicedFiles);
         }
         return slicedFiles;
     }
 
     private List<Rank> sliceRank(final Position from, final Position to, final List<Rank> ranks) {
-        final List<Rank> slicedRanks = IntStream.range(1, ranks.size() - 1)
-                .mapToObj(ranks::get)
-                .collect(Collectors.toList());
-        if (from.getRank().getIndex() > to.getRank().getIndex()) {
+        final List<Rank> slicedRanks = sliceEdge(ranks);
+        if (Rank.isLargerIndexAtFrom(from.getRank(), to.getRank())) {
             Collections.reverse(slicedRanks);
         }
         return slicedRanks;
+    }
+
+    private <T> List<T> sliceEdge(final List<T> lines) {
+        return IntStream.range(1, lines.size() - 1)
+                .mapToObj(lines::get)
+                .collect(Collectors.toList());
     }
 
     protected void validateStraight(final Position from, final Position to, final Map<Position, Piece> board) {
@@ -111,6 +113,10 @@ public abstract class Piece {
         if ((from.getFile() != to.getFile())) {
             throw new IllegalArgumentException("같은 File이 아니면 움직일 수 없습니다.");
         }
+        checkBlockedVertical(from, to, board);
+    }
+
+    private void checkBlockedVertical(final Position from, final Position to, final Map<Position, Piece> board) {
         final Rank fromRank = from.getRank();
         final Rank toRank = to.getRank();
         final int min = Math.min(fromRank.getIndex(), toRank.getIndex()) + 1;
@@ -126,6 +132,10 @@ public abstract class Piece {
         if (from.getRank() != to.getRank()) {
             throw new IllegalArgumentException("같은 Rank가 아니면 움직일 수 없습니다.");
         }
+        checkedBlockedHorizontal(from, to, board);
+    }
+
+    private void checkedBlockedHorizontal(final Position from, final Position to, final Map<Position, Piece> board) {
         final File fromFile = from.getFile();
         final File toFile = to.getFile();
         final int min = Math.min(fromFile.getIndex(), toFile.getIndex()) + 1;
