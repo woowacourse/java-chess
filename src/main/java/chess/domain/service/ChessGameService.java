@@ -35,11 +35,11 @@ public class ChessGameService {
     private final ChessGameDao chessGameDao;
     private final PieceDao pieceDao;
 
-    public ChessGameService() {
-        this.chessGameDao = JdbcChessGameDao.getInstance();
-        this.pieceDao = JdbcPieceDao.getInstance();
-        Long recentGameId = chessGameDao.findRecentGameId();
-        this.chessGame = new ChessGame(++recentGameId, new Board(new Pieces()), Turn.WHITE);
+    public static ChessGameService createInitChessGameService() {
+        ChessGameDao chessGameDao = JdbcChessGameDao.getInstance();
+        long recentGameId = chessGameDao.findRecentGameId();
+        ChessGame chessGame = new ChessGame(++recentGameId, new Board(new Pieces()), Turn.WHITE);
+        return new ChessGameService(chessGame);
     }
 
     public ChessGameService(final ChessGame chessGame) {

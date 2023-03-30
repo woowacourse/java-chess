@@ -23,7 +23,7 @@ public class CommandManager {
     private CommandStatus commandStatus;
 
     public CommandManager() {
-        ChessGameService initChessGameService = new ChessGameService();
+        ChessGameService initChessGameService = ChessGameService.createInitChessGameService();
         this.commandStatus = new Init(initChessGameService);
     }
 
