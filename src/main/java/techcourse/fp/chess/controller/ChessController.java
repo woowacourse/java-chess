@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import techcourse.fp.chess.dao.ChessGameDao;
+import techcourse.fp.chess.ChessGameService;
+import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
-import techcourse.fp.chess.domain.ChessGame;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.dto.request.ChessGameRequest;
 import techcourse.fp.chess.dto.request.CommandRequest;
 import techcourse.fp.chess.dto.response.BoardResponse;
 import techcourse.fp.chess.dto.response.ScoreResponse;
@@ -21,12 +20,12 @@ public final class ChessController {
     private final OutputView outputView;
     private final Map<Command, PlayingCommandRunner> playingCommandMapper = new EnumMap<>(Command.class);
     private final Map<Command, StartCommandRunner> startCommandMapper = new EnumMap<>(Command.class);
-    private final ChessGameDao chessGameDao;
+    private final ChessGameService chessGameService;
 
-    public ChessController(final InputView inputView, final OutputView outputView, final ChessGameDao chessGameDao) {
+    public ChessController(final InputView inputView, final OutputView outputView, final ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGameDao = chessGameDao;
+        this.chessGameService = chessGameService;
 
         initStartCommandMapper();
         initPlayingCommandMapper();
@@ -51,10 +50,10 @@ public final class ChessController {
         Command command = getInitialCommand();
 
         final StartCommandRunner initCommandRunner = startCommandMapper.get(command);
-        final ChessGame chessGame = initCommandRunner.execute();
+        final Board board = initCommandRunner.execute();
 
         while (command != Command.END) {
-            command = play(chessGame);
+            command = play(board);
         }
 
         outputView.printEndMessage();
@@ -69,20 +68,20 @@ public final class ChessController {
         }
     }
 
-    private ChessGame createNewGame() {
-        final ChessGame chessGame = new ChessGame(BoardFactory.generate());
-        outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
-        return chessGame;
+    private Board createNewGame() {
+        final Board board = BoardFactory.generate();
+        outputView.printBoard(BoardResponse.create(board.getBoard()));
+        return board;
     }
 
-    private ChessGame loadGame() {
+    private Board loadGame() {
         try {
-            outputView.printGameInfos(chessGameDao.findInfos());
+            outputView.printGameInfos(chessGameService.findInfos());
 
             final String id = inputView.readInitCommand();
-            final ChessGame chessGame = chessGameDao.findById(Integer.parseInt(id));
-            outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
-            return chessGame;
+            final Board board = chessGameService.findById(Integer.parseInt(id));
+            outputView.printBoard(BoardResponse.create(board.getBoard()));
+            return board;
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return loadGame();
@@ -90,12 +89,12 @@ public final class ChessController {
     }
 
 
-    private Command play(final ChessGame chessGame) {
+    private Command play(final Board board) {
         try {
-            Command command = excuteCommand(chessGame);
+            Command command = excuteCommand(board);
 
-            if (chessGame.isGameEnd()) {
-                outputView.printWinningMessage(chessGame.findWinner());
+            if (board.isGameEnd()) {
+                outputView.printWinningMessage(board.findWinner());
                 return Command.END;
             }
 
@@ -106,38 +105,38 @@ public final class ChessController {
         }
     }
 
-    private Command excuteCommand(final ChessGame chessGame) {
+    private Command excuteCommand(final Board board) {
         final CommandRequest commandRequest = inputView.readInPlayCommand();
         Command command = Command.createInPlayCommand(commandRequest.getMessage());
 
         final PlayingCommandRunner commandRunner = playingCommandMapper.get(command);
-        commandRunner.execute(commandRequest, chessGame);
+        commandRunner.execute(commandRequest, board);
 
         return command;
     }
 
-    private void move(final CommandRequest commandRequest, ChessGame chessGame) {
-        chessGame.move(commandRequest.getSource(), commandRequest.getTarget());
-        outputView.printBoard(BoardResponse.create(chessGame.getBoard()));
+    private void move(final CommandRequest commandRequest, final Board board) {
+        board.move(commandRequest.getSource(), commandRequest.getTarget());
+        outputView.printBoard(BoardResponse.create(board.getBoard()));
     }
 
-    private void save(final CommandRequest commandRequest, final ChessGame chessGame) {
+    private void save(final CommandRequest commandRequest, final Board board) {
         final String gameName = inputView.readSaveGameName();
-        chessGameDao.save(ChessGameRequest.create(chessGame, gameName));
+        chessGameService.save(board, gameName);
         outputView.printSaveSuccessMessage();
     }
 
 
-    private void checkStatus(final CommandRequest commandRequest, final ChessGame chessGame) {
+    private void checkStatus(final CommandRequest commandRequest, final Board board) {
         List<ScoreResponse> scores = new ArrayList<>();
-        addScoreByColor(Color.WHITE, scores, chessGame);
-        addScoreByColor(Color.BLACK, scores, chessGame);
+        addScoreByColor(Color.WHITE, scores, board);
+        addScoreByColor(Color.BLACK, scores, board);
 
         outputView.printStatus(scores);
     }
 
-    private void addScoreByColor(final Color color, final List<ScoreResponse> result, ChessGame chessGame) {
-        final double score = chessGame.findScoreByColor(color);
+    private void addScoreByColor(final Color color, final List<ScoreResponse> result, Board board) {
+        final double score = board.findScoreByColor(color);
         result.add(ScoreResponse.of(color, score));
     }
 }

@@ -1,15 +1,15 @@
 package techcourse.fp.chess.dao;
 
 import java.util.List;
-import techcourse.fp.chess.domain.ChessGame;
-import techcourse.fp.chess.dto.request.ChessGameRequest;
+import techcourse.fp.chess.domain.piece.Color;
+import techcourse.fp.chess.domain.piece.Turn;
 import techcourse.fp.chess.dto.response.ChessGameInfo;
 
 public interface ChessGameDao {
 
-    void save(ChessGameRequest chessGameRequest);
+    int save(final String name, final Color turn);
 
-    ChessGame findById(long id);
+    Turn findTurn(final long id);
 
     List<ChessGameInfo> findInfos();
 }

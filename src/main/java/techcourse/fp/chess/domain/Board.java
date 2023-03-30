@@ -61,6 +61,10 @@ public final class Board {
                 .getColor();
     }
 
+    public double findScoreByColor(Color color) {
+        return ScoreCalculator.calculate(board, color);
+    }
+
     private void validateTurn(final Piece sourcePiece) {
         if (turn.isOtherSide(sourcePiece.getColor())) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
