@@ -33,7 +33,7 @@ public class BishopTest {
     class isMovable {
         Bishop whiteBishop = Bishop.getBishopsOf(Side.WHITE)
                                    .get(0);
-        Position sourcePosition = Position.of(Rank.FOUR, File.D);
+        Position fromPosition = Position.of(Rank.FOUR, File.D);
         Position movablePosition1 = Position.of(Rank.ONE, File.G);
         Position movablePosition2 = Position.of(Rank.SIX, File.B);
         Position unMovablePosition = Position.of(Rank.THREE, File.B);
@@ -51,9 +51,9 @@ public class BishopTest {
                 @DisplayName("true를 반환한다")
                 void it_returns_true() {
                     assertAll(
-                            () -> assertThat(whiteBishop.isMovable(sourcePosition, movablePosition1, blackQueen)).isTrue(),
-                            () -> assertThat(whiteBishop.isMovable(sourcePosition, movablePosition2, blackQueen)).isTrue(),
-                            () -> assertThat(whiteBishop.isMovable(sourcePosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
+                            () -> assertThat(whiteBishop.isValidMove(fromPosition, movablePosition1, blackQueen)).isTrue(),
+                            () -> assertThat(whiteBishop.isValidMove(fromPosition, movablePosition2, blackQueen)).isTrue(),
+                            () -> assertThat(whiteBishop.isValidMove(fromPosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
                     );
                 }
             }
@@ -64,7 +64,7 @@ public class BishopTest {
                 @Test
                 @DisplayName("false를 반환한다")
                 void it_returns_false() {
-                    assertThat(whiteBishop.isMovable(sourcePosition, movablePosition1, whiteBishop2)).isFalse();
+                    assertThat(whiteBishop.isValidMove(fromPosition, movablePosition1, whiteBishop2)).isFalse();
                 }
             }
         }
@@ -75,7 +75,7 @@ public class BishopTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteBishop.isMovable(sourcePosition, unMovablePosition, blackQueen)).isFalse();
+                assertThat(whiteBishop.isValidMove(fromPosition, unMovablePosition, blackQueen)).isFalse();
             }
         }
     }

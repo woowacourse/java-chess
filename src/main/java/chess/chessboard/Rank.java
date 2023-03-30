@@ -29,13 +29,13 @@ public enum Rank {
                      .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다"));
     }
 
-    public static List<Rank> ranksBetween(final Rank source, final Rank destination) {
-        final int smaller = Math.min(source.position, destination.position);
-        final int bigger = Math.max(source.position, destination.position);
+    public static List<Rank> ranksBetween(final Rank from, final Rank to) {
+        final int smaller = Math.min(from.position, to.position);
+        final int bigger = Math.max(from.position, to.position);
 
         List<Rank> ranks = ranksBetween(smaller, bigger);
 
-        return sortByPosition(source, destination, ranks);
+        return sortByPosition(from, to, ranks);
     }
 
     private static List<Rank> ranksBetween(final int smaller, final int bigger) {
@@ -44,11 +44,11 @@ public enum Rank {
                      .collect(Collectors.toList());
     }
 
-    private static List<Rank> sortByPosition(final Rank source, final Rank destination, final List<Rank> ranks) {
+    private static List<Rank> sortByPosition(final Rank from, final Rank to, final List<Rank> ranks) {
         final Comparator<Rank> comparatorByPosition = Comparator.comparing(Rank::getPosition);
 
         ranks.sort(comparatorByPosition);
-        if (source.position > destination.position) {
+        if (from.position > to.position) {
             Collections.reverse(ranks);
         }
 

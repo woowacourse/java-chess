@@ -30,12 +30,12 @@ public class Position {
         return this.rank.isBiggerThan(other.rank);
     }
 
-    public List<Position> positionsOfPath(Position destination) {
-        if (isLine(destination)) {
-            return positionsOfLine(destination);
+    public List<Position> positionsOfPath(Position to) {
+        if (isLine(to)) {
+            return positionsOfLine(to);
         }
-        if (isDiagonal(destination)) {
-            return positionsOfDiagonal(destination);
+        if (isDiagonal(to)) {
+            return positionsOfDiagonal(to);
         }
         return Collections.emptyList();
     }

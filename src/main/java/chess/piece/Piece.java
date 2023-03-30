@@ -21,15 +21,15 @@ public abstract class Piece {
         return this.side != piece.side;
     }
 
+    public boolean isSideOf(final Side side) {
+        return this.side == side;
+    }
+
     protected boolean isEmpty() {
         return this.side == Side.EMPTY;
     }
 
-    abstract public boolean isMovable(Position source, Position to, Piece piece);
-
-    public boolean hasSideOf(final Side side) {
-        return this.side == side;
-    }
+    abstract public boolean isValidMove(Position from, Position to, Piece piece);
 
     public Side getSide() {
         return side;

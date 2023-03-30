@@ -34,15 +34,15 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
-        return isNotSameSide(piece) && isLine(source, destination);
+    public boolean isValidMove(final Position from, final Position to, final Piece piece) {
+        return isNotSameSide(piece) && isLine(from, to);
     }
 
-    private boolean isLine(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isLine(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
         return isLine(verticalDistance, horizontalDistance);
     }
 

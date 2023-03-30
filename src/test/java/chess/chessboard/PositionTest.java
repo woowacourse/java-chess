@@ -36,15 +36,15 @@ public class PositionTest {
         @Nested
         @DisplayName("직선 경로가 주어지면")
         class given_linepath {
-            Position source = Position.of(Rank.FOUR, File.F);
-            Position destination1 = Position.of(Rank.FOUR, File.B);
-            Position destination2 = Position.of(Rank.ONE, File.F);
+            Position from = Position.of(Rank.FOUR, File.F);
+            Position to1 = Position.of(Rank.FOUR, File.B);
+            Position to2 = Position.of(Rank.ONE, File.F);
 
             @Test
             @DisplayName("사이에 있는 Square들을 반환한다")
             void it_returns_positions() {
-                List<Position> positions1 = source.positionsOfPath(destination1);
-                List<Position> positions2 = source.positionsOfPath(destination2);
+                List<Position> positions1 = from.positionsOfPath(to1);
+                List<Position> positions2 = from.positionsOfPath(to2);
                 assertThat(positions1).containsSequence(Position.of(Rank.FOUR, File.E),
                         Position.of(Rank.FOUR, File.D),
                         Position.of(Rank.FOUR, File.C));
@@ -56,15 +56,15 @@ public class PositionTest {
         @Nested
         @DisplayName("사선 경로가 주어지면")
         class given_diagonalpath {
-            Position source = Position.of(Rank.FOUR, File.F);
-            Position destination1 = Position.of(Rank.ONE, File.C);
-            Position destination2 = Position.of(Rank.EIGHT, File.B);
+            Position from = Position.of(Rank.FOUR, File.F);
+            Position to1 = Position.of(Rank.ONE, File.C);
+            Position to2 = Position.of(Rank.EIGHT, File.B);
 
             @Test
             @DisplayName("사이에 있는 Square들을 반환한다")
             void it_returns_positions() {
-                List<Position> positions1 = source.positionsOfPath(destination1);
-                List<Position> positions2 = source.positionsOfPath(destination2);
+                List<Position> positions1 = from.positionsOfPath(to1);
+                List<Position> positions2 = from.positionsOfPath(to2);
                 assertThat(positions1).containsOnly(Position.of(Rank.THREE, File.E),
                         Position.of(Rank.TWO, File.D));
                 assertThat(positions2).containsOnly(Position.of(Rank.FIVE, File.E),
@@ -76,17 +76,17 @@ public class PositionTest {
         @Nested
         @DisplayName("직선 경로도 사선 경로도 아니면")
         class given_non_line_non_diagonalpath {
-            Position source = Position.of(Rank.FOUR, File.F);
-            Position destination1 = Position.of(Rank.FIVE, File.A);
-            Position destination2 = Position.of(Rank.ONE, File.E);
-            Position destination3 = Position.of(Rank.TWO, File.E);
+            Position from = Position.of(Rank.FOUR, File.F);
+            Position to1 = Position.of(Rank.FIVE, File.A);
+            Position to2 = Position.of(Rank.ONE, File.E);
+            Position to3 = Position.of(Rank.TWO, File.E);
 
             @Test
             @DisplayName("아무 Square도 반환하지 않는다")
             void it_returns_empty_position() {
-                List<Position> positions1 = source.positionsOfPath(destination1);
-                List<Position> positions2 = source.positionsOfPath(destination2);
-                List<Position> positions3 = source.positionsOfPath(destination3);
+                List<Position> positions1 = from.positionsOfPath(to1);
+                List<Position> positions2 = from.positionsOfPath(to2);
+                List<Position> positions3 = from.positionsOfPath(to3);
                 assertThat(positions1).isEmpty();
                 assertThat(positions2).isEmpty();
                 assertThat(positions3).isEmpty();

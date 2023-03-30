@@ -38,50 +38,50 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece pieceAtDestination) {
-        return canMoveForward(source, destination, pieceAtDestination) ||
-                isCatchable(source, destination, pieceAtDestination);
+    public boolean isValidMove(final Position from, final Position to, final Piece pieceAtDestination) {
+        return canMoveForward(from, to, pieceAtDestination) ||
+                isCatchable(from, to, pieceAtDestination);
     }
 
-    private boolean canMoveForward(final Position source, final Position destination, final Piece pieceAtDestination) {
-        return pieceAtDestination.isEmpty() && isForwardMovableRange(source, destination);
+    private boolean canMoveForward(final Position from, final Position to, final Piece pieceAtDestination) {
+        return pieceAtDestination.isEmpty() && isForwardMovableRange(from, to);
     }
 
-    private boolean isForwardMovableRange(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isForwardMovableRange(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
-        return source.isBackOf(destination, getSide()) &&
-                isForwardMovableDistance(verticalDistance, horizontalDistance, source);
+        return from.isBackOf(to, getSide()) &&
+                isForwardMovableDistance(verticalDistance, horizontalDistance, from);
     }
 
-    private boolean isForwardMovableDistance(final int verticalDistance, final int horizontalDistance, final Position sourcePosition) {
-        if (isAtInitialPosition(sourcePosition)) {
+    private boolean isForwardMovableDistance(final int verticalDistance, final int horizontalDistance, final Position fromPosition) {
+        if (isAtInitialPosition(fromPosition)) {
             return horizontalDistance == 0 && (verticalDistance == 1 || verticalDistance == 2);
         }
         return horizontalDistance == 0 && verticalDistance == 1;
     }
 
     private boolean isAtInitialPosition(final Position position) {
-        if (hasSideOf(Side.WHITE)) {
+        if (isSideOf(Side.WHITE)) {
             return position.isAtRank(WHITE_PAWN_INITIAL_RANK);
         }
         return position.isAtRank(BLACK_PAWN_INITIAL_RANK);
     }
 
-    private boolean isCatchable(final Position source, final Position destination, final Piece piece) {
-        return isOppositeSide(piece) && isCatchableRange(source, destination);
+    private boolean isCatchable(final Position from, final Position to, final Piece piece) {
+        return isOppositeSide(piece) && isCatchableRange(from, to);
     }
 
-    private boolean isCatchableRange(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isCatchableRange(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
-        return source.isBackOf(destination, getSide()) &&
+        return from.isBackOf(to, getSide()) &&
                 isCatchableDistance(verticalDistance, horizontalDistance);
     }
 

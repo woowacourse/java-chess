@@ -36,15 +36,15 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
-        return isNotSameSide(piece) && isLShape(source, destination);
+    public boolean isValidMove(final Position from, final Position to, final Piece piece) {
+        return isNotSameSide(piece) && isLShape(from, to);
     }
 
-    private boolean isLShape(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isLShape(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
         return isLShape(verticalDistance, horizontalDistance);
     }

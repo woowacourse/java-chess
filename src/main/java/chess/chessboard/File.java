@@ -28,13 +28,13 @@ public enum File {
                      .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다"));
     }
 
-    public static List<File> filesBetween(final File source, final File destination) {
-        final int smaller = Math.min(source.position, destination.position);
-        final int bigger = Math.max(source.position, destination.position);
+    public static List<File> filesBetween(final File from, final File to) {
+        final int smaller = Math.min(from.position, to.position);
+        final int bigger = Math.max(from.position, to.position);
 
         List<File> files = filesBetween(smaller, bigger);
 
-        return sortByPosition(source, destination, files);
+        return sortByPosition(from, to, files);
     }
 
     private static List<File> filesBetween(final int smaller, final int bigger) {
@@ -43,11 +43,11 @@ public enum File {
                      .collect(Collectors.toList());
     }
 
-    private static List<File> sortByPosition(final File source, final File destination, final List<File> files) {
+    private static List<File> sortByPosition(final File from, final File to, final List<File> files) {
         final Comparator<File> comparatorByPosition = Comparator.comparing(File::getPosition);
 
         files.sort(comparatorByPosition);
-        if (source.position > destination.position) {
+        if (from.position > to.position) {
             Collections.reverse(files);
         }
 

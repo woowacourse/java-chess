@@ -33,7 +33,7 @@ public class QueenTest {
     @DisplayName("isMovable 메서드는")
     class isMovable {
         Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
-        Position sourcePosition = Position.of(Rank.FOUR, File.D);
+        Position fromPosition = Position.of(Rank.FOUR, File.D);
         Position movablePosition1 = Position.of(Rank.ONE, File.G);
         Position movablePosition2 = Position.of(Rank.FOUR, File.H);
         Position unMovablePosition = Position.of(Rank.THREE, File.B);
@@ -48,9 +48,9 @@ public class QueenTest {
             @DisplayName("true를 반환한다")
             void it_returns_true() {
                 assertAll(
-                        () -> assertThat(whiteQueen.isMovable(sourcePosition, movablePosition1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(sourcePosition, movablePosition2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteQueen.isMovable(sourcePosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
+                        () -> assertThat(whiteQueen.isValidMove(fromPosition, movablePosition1, blackQueen)).isTrue(),
+                        () -> assertThat(whiteQueen.isValidMove(fromPosition, movablePosition2, blackQueen)).isTrue(),
+                        () -> assertThat(whiteQueen.isValidMove(fromPosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
                 );
             }
         }
@@ -61,7 +61,7 @@ public class QueenTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteQueen.isMovable(sourcePosition, movablePosition1, whiteBishop)).isFalse();
+                assertThat(whiteQueen.isValidMove(fromPosition, movablePosition1, whiteBishop)).isFalse();
             }
         }
 
@@ -71,7 +71,7 @@ public class QueenTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteQueen.isMovable(sourcePosition, unMovablePosition, blackQueen)).isFalse();
+                assertThat(whiteQueen.isValidMove(fromPosition, unMovablePosition, blackQueen)).isFalse();
             }
         }
     }

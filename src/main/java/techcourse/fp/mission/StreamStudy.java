@@ -12,7 +12,7 @@ public class StreamStudy {
 
     public static long countWords() throws IOException {
         String contents = Files.readString(Paths
-                .get("/Users/dhkim/Library/CloudStorage/OneDrive-pusan.ac.kr/wooteco/level1/java-chess/src/main/resources/techcourse/fp/war-and-peace.txt"));
+                .get("/Users/dhkim/Library/CloudStorage/OneDrive-pusan.ac.kr/wooteco/level1/java-chess/src/main/refroms/techcourse/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         return words.stream()
@@ -41,7 +41,7 @@ public class StreamStudy {
 
     public static void printLongestWordTop100() throws IOException {
         String contents = Files.readString(Paths
-                .get("/Users/dhkim/Library/CloudStorage/OneDrive-pusan.ac.kr/wooteco/level1/java-chess/src/main/resources/techcourse/fp/war-and-peace.txt"));
+                .get("/Users/dhkim/Library/CloudStorage/OneDrive-pusan.ac.kr/wooteco/level1/java-chess/src/main/refroms/techcourse/fp/war-and-peace.txt"));
         List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
         words.stream()

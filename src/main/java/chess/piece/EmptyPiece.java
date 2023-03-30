@@ -18,7 +18,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
+    public boolean isValidMove(final Position from, final Position to, final Piece piece) {
         throw new UnsupportedOperationException();
     }
 }

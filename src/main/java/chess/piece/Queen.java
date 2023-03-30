@@ -25,16 +25,16 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
+    public boolean isValidMove(final Position from, final Position to, final Piece piece) {
         return isNotSameSide(piece) &&
-                (isLine(source, destination) || isDiagonal(source, destination));
+                (isLine(from, to) || isDiagonal(from, to));
     }
 
-    private boolean isDiagonal(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isDiagonal(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
         return isDiagonal(verticalDistance, horizontalDistance);
     }
@@ -43,11 +43,11 @@ public class Queen extends Piece {
         return verticalDistance == horizontalDistance;
     }
 
-    private boolean isLine(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isLine(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
         return isLine(verticalDistance, horizontalDistance);
     }

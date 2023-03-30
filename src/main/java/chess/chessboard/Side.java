@@ -1,5 +1,7 @@
 package chess.chessboard;
 
+import chess.piece.Piece;
+
 public enum Side {
     WHITE {
         @Override
@@ -26,7 +28,7 @@ public enum Side {
 
     public abstract Side nextTurn();
 
-    public boolean isTurnOf(final Side side) {
-        return this == side;
+    public boolean isTurnOf(final Piece piece) {
+        return piece;
     }
 }

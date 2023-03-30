@@ -16,53 +16,52 @@ public class ChessBoard {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public Piece moveAndCapture(final Position source, final Position destination) {
-        final Piece pieceOfSource = pieces.get(source);
-        final Piece pieceOfDestination = pieces.get(destination);
+    public Piece moveWithCapture(final Position from, final Position to) {
+        validateMove(from, to);
 
-        validateNotEmptyPiece(pieceOfSource);
-        validateIsValidPath(source, destination);
+        final Piece capturedPiece = pieces.get(to);
+        move(from, to);
 
-        move(source, destination);
-
-        return pieceOfDestination;
+        return capturedPiece;
     }
 
-    private void move(final Position source, final Position destination) {
-        final Piece pieceOfSource = pieces.get(source);
-        final Piece pieceOfDestination = pieces.get(destination);
-
-        pieces.put(destination, pieceOfSource);
-        pieces.put(source, EmptyPiece.getInstance());
+    public void validateMove(final Position from, final Position to) {
+        validateNotEmpty(from);
+        validatePath(from, to);
     }
 
-    private void validateNotEmptyPiece(final Piece target) {
-        if (target == EmptyPiece.getInstance()) {
+    private void validateNotEmpty(final Position from) {
+        if (pieces.get(from) == EmptyPiece.getInstance()) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다");
         }
     }
 
-    private void validateIsValidPath(final Position source, final Position destination) {
-        if (isValidMove(source, destination)) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다");
-        }
-        if (hasObstacleAlongPath(source, destination)) {
-            throw new IllegalArgumentException("경로에 다른 기물이 존재합니다");
+    private void validatePath(final Position from, final Position to) {
+        if (!isValidPath(from, to)) {
+            throw new IllegalArgumentException("이동 불가능한 경로입니다");
         }
     }
 
-    private boolean isValidMove(final Position source, final Position destination) {
-        final Piece pieceOfSource = pieces.get(source);
-        final Piece pieceOfDestination = pieces.get(destination);
+    private void move(final Position from, final Position to) {
+        final Piece movingPiece = pieces.get(from);
 
-        return !pieceOfSource.isMovable(source, destination, pieceOfDestination);
+        pieces.put(to, movingPiece);
+        pieces.put(from, EmptyPiece.getInstance());
     }
 
-    private boolean hasObstacleAlongPath(final Position source, final Position destination) {
-        return source.positionsOfPath(destination)
-                     .stream()
-                     .map(pieces::get)
-                     .anyMatch(piece -> piece != EmptyPiece.getInstance());
+    private boolean isValidPath(final Position from, final Position to) {
+        final Piece movingPiece = pieces.get(from);
+        final Piece targetPiece = pieces.get(to);
+
+        return movingPiece.isValidMove(from, to, targetPiece)
+                && hasNoObstacleAlongPath(from, to);
+    }
+
+    private boolean hasNoObstacleAlongPath(final Position from, final Position to) {
+        return from.positionsOfPath(to)
+                   .stream()
+                   .map(pieces::get)
+                   .noneMatch(piece -> piece != EmptyPiece.getInstance());
     }
 
     public boolean isKingDead() {
@@ -82,8 +81,12 @@ public class ChessBoard {
         return pieces.entrySet()
                      .stream()
                      .filter(positionPieceEntry -> positionPieceEntry.getValue()
-                                                                     .hasSideOf(side))
+                                                                     .isSideOf(side))
                      .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public Piece getPiece(final Position position) {
+        return pieces.get(position);
     }
 
     public Map<Position, Piece> getPieces() {

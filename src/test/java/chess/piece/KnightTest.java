@@ -33,7 +33,7 @@ public class KnightTest {
     class isMovable {
         Knight whiteKnight = Knight.getKnightsOf(Side.WHITE)
                                    .get(0);
-        Position sourcePosition = Position.of(Rank.FOUR, File.D);
+        Position fromPosition = Position.of(Rank.FOUR, File.D);
         Position movablePosition1 = Position.of(Rank.TWO, File.C);
         Position movablePosition2 = Position.of(Rank.FIVE, File.F);
         Position unMovablePosition = Position.of(Rank.TWO, File.B);
@@ -50,7 +50,7 @@ public class KnightTest {
                 @Test
                 @DisplayName("false를 반환한다")
                 void it_returns_false() {
-                    assertThat(whiteKnight.isMovable(sourcePosition, movablePosition1, whiteKnight2)).isFalse();
+                    assertThat(whiteKnight.isValidMove(fromPosition, movablePosition1, whiteKnight2)).isFalse();
                 }
             }
 
@@ -61,9 +61,9 @@ public class KnightTest {
                 @DisplayName("true를 반환한다")
                 void it_returns_true() {
                     assertAll(
-                            () -> assertThat(whiteKnight.isMovable(sourcePosition, movablePosition1, blackQueen)).isTrue(),
-                            () -> assertThat(whiteKnight.isMovable(sourcePosition, movablePosition2, blackQueen)).isTrue(),
-                            () -> assertThat(whiteKnight.isMovable(sourcePosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
+                            () -> assertThat(whiteKnight.isValidMove(fromPosition, movablePosition1, blackQueen)).isTrue(),
+                            () -> assertThat(whiteKnight.isValidMove(fromPosition, movablePosition2, blackQueen)).isTrue(),
+                            () -> assertThat(whiteKnight.isValidMove(fromPosition, movablePosition1, EmptyPiece.getInstance())).isTrue()
                     );
                 }
             }
@@ -75,7 +75,7 @@ public class KnightTest {
             @Test
             @DisplayName("false를 반환한다")
             void it_returns_false() {
-                assertThat(whiteKnight.isMovable(sourcePosition, unMovablePosition, blackQueen)).isFalse();
+                assertThat(whiteKnight.isValidMove(fromPosition, unMovablePosition, blackQueen)).isFalse();
             }
         }
     }

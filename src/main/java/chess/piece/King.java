@@ -25,16 +25,16 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
+    public boolean isValidMove(final Position from, final Position to, final Piece piece) {
         return this.isNotSameSide(piece)
-                && isKingsRange(source, destination);
+                && isKingsRange(from, to);
     }
 
-    public boolean isKingsRange(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    public boolean isKingsRange(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
         return isKingsDistance(verticalDistance, horizontalDistance);
     }

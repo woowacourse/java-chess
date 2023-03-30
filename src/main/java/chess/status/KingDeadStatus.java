@@ -13,7 +13,7 @@ public class KingDeadStatus implements GameStatus {
     }
 
     @Override
-    public boolean isMoveValid(final ChessBoard chessBoard, final Position from, final Position to) {
+    public void validateMove(final ChessBoard chessBoard, final Position from, final Position to) {
         throw new UnsupportedOperationException("게임이 진행 상태가 아닙니다");
     }
 

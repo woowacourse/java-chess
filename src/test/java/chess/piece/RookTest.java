@@ -36,7 +36,7 @@ class RookTest {
         class given_another_piece {
             Rook whiteRook = Rook.getRooksOf(Side.WHITE)
                                  .get(0);
-            Position source = Position.of(Rank.ONE, File.A);
+            Position from = Position.of(Rank.ONE, File.A);
             Position movablePosition1 = Position.of(Rank.ONE, File.C);
             Position movablePosition2 = Position.of(Rank.THREE, File.A);
             Position unable = Position.of(Rank.TWO, File.B);
@@ -48,22 +48,22 @@ class RookTest {
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")
             void it_returns_movable() {
                 assertAll(
-                        () -> assertThat(whiteRook.isMovable(source, movablePosition1, blackQueen)).isTrue(),
-                        () -> assertThat(whiteRook.isMovable(source, movablePosition2, blackQueen)).isTrue(),
-                        () -> assertThat(whiteRook.isMovable(source, movablePosition1, EmptyPiece.getInstance())).isTrue()
+                        () -> assertThat(whiteRook.isValidMove(from, movablePosition1, blackQueen)).isTrue(),
+                        () -> assertThat(whiteRook.isValidMove(from, movablePosition2, blackQueen)).isTrue(),
+                        () -> assertThat(whiteRook.isValidMove(from, movablePosition1, EmptyPiece.getInstance())).isTrue()
                 );
             }
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 같은 진영인 경우 false를 반환한다")
             void it_returns_not_movable1() {
-                assertThat(whiteRook.isMovable(source, movablePosition1, whiteRook2)).isFalse();
+                assertThat(whiteRook.isValidMove(from, movablePosition1, whiteRook2)).isFalse();
             }
 
             @Test
             @DisplayName("갈 수 없고 해당 위치의 기물이 상대 진영인 경우 false를 반환한다")
             void it_returns_not_movable2() {
-                assertThat(whiteRook.isMovable(source, unable, blackQueen)).isFalse();
+                assertThat(whiteRook.isValidMove(from, unable, blackQueen)).isFalse();
             }
         }
     }

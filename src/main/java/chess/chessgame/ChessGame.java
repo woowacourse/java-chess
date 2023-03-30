@@ -26,11 +26,11 @@ public class ChessGame {
         this(Side.initialTurn(), chessBoard);
     }
 
-    public void move(final Position source, final Position destination) {
-        validatePlayerTurn(source);
+    public void move(final Position from, final Position to) {
+        validatePlayerTurn(from);
         validateGameContinuing();
 
-        final Piece capturedPiece = chessBoard.moveAndCapture(source, destination);
+        final Piece capturedPiece = chessBoard.moveWithCapture(from, to);
 
         checkWinnerDecided(capturedPiece);
 
@@ -57,8 +57,8 @@ public class ChessGame {
         winner = Side.WHITE;
     }
 
-    private void validatePlayerTurn(final Position source) {
-        final Side side = chessBoard.getPieceSideAt(source);
+    private void validatePlayerTurn(final Position from) {
+        final Side side = chessBoard.getPieceSideAt(from);
         if (!turn.isTurnOf(side)) {
             throw new IllegalArgumentException("공격 순서가 잘못되었습니다");
         }

@@ -38,13 +38,13 @@ public class MoveCommand implements Command {
     }
 
     private File getSourceFile() {
-        final String sourceFile = getFirstOption().substring(0, 1);
-        return File.from(sourceFile);
+        final String fromFile = getFirstOption().substring(0, 1);
+        return File.from(fromFile);
     }
 
     private Rank getSourceRank() {
-        final String sourceRank = getFirstOption().substring(1);
-        return Rank.from(sourceRank);
+        final String fromRank = getFirstOption().substring(1);
+        return Rank.from(fromRank);
     }
 
     private String getFirstOption() {
@@ -56,13 +56,13 @@ public class MoveCommand implements Command {
     }
 
     private File getDestinationFile() {
-        final String destinationFile = getSecondOption().substring(0, 1);
-        return File.from(destinationFile);
+        final String toFile = getSecondOption().substring(0, 1);
+        return File.from(toFile);
     }
 
     private Rank getDestinationRank() {
-        final String destinationRank = getSecondOption().substring(1);
-        return Rank.from(destinationRank);
+        final String toRank = getSecondOption().substring(1);
+        return Rank.from(toRank);
     }
 
     private String getSecondOption() {

@@ -6,7 +6,7 @@ import chess.chessboard.Side;
 
 public interface GameStatus {
 
-    boolean isMoveValid(ChessBoard chessBoard, Position from, Position to);
+    void validateMove(ChessBoard chessBoard, Position from, Position to);
 
     GameStatus nextStatus(ChessBoard chessBoard);
 

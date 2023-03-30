@@ -36,15 +36,15 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Piece piece) {
-        return isDiagonal(source, destination) && isNotSameSide(piece);
+    public boolean isValidMove(final Position from, final Position to, final Piece piece) {
+        return isDiagonal(from, to) && isNotSameSide(piece);
     }
 
-    private boolean isDiagonal(final Position source, final Position destination) {
-        source.validateNotSameSquare(destination);
+    private boolean isDiagonal(final Position from, final Position to) {
+        from.validateNotSameSquare(to);
 
-        final int verticalDistance = source.calculateVerticalDistance(destination);
-        final int horizontalDistance = source.calculateHorizontalDistance(destination);
+        final int verticalDistance = from.calculateVerticalDistance(to);
+        final int horizontalDistance = from.calculateHorizontalDistance(to);
 
         return isDiagonal(verticalDistance, horizontalDistance);
     }

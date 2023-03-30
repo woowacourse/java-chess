@@ -3,6 +3,7 @@ package chess.status;
 import chess.chessboard.ChessBoard;
 import chess.chessboard.Position;
 import chess.chessboard.Side;
+import chess.piece.Piece;
 
 public class KingAliveStatus implements GameStatus {
 
@@ -13,8 +14,16 @@ public class KingAliveStatus implements GameStatus {
     }
 
     @Override
-    public boolean isMoveValid(final ChessBoard chessBoard, final Position from, final Position to) {
-        return false;
+    public void validateMove(final ChessBoard chessBoard, final Position from, final Position to) {
+        final Piece movingPiece = chessBoard.getPiece(from);
+        validatePlayerTurn(movingPiece);
+        chessBoard.validateMove(from, to);
+    }
+
+    private void validatePlayerTurn(final Piece movingPiece) {
+        if (!turn.isTurnOf(movingPiece)) {
+            throw new IllegalArgumentException("해당 기물의 턴이 아닙니다");
+        }
     }
 
     @Override

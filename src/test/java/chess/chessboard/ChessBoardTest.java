@@ -147,61 +147,61 @@ class ChessBoardTest {
             @DisplayName("앞의 두 칸에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true1() {
-                Position source = Position.of(Rank.SEVEN, File.A);
-                Position destination = Position.of(Rank.FIVE, File.A);
-                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
-                                       .get(0));
+                Position from = Position.of(Rank.SEVEN, File.A);
+                Position to = Position.of(Rank.FIVE, File.A);
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                                     .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("앞의 칸에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Position source = Position.of(Rank.SEVEN, File.A);
+                Position from = Position.of(Rank.SEVEN, File.A);
                 Position middle = Position.of(Rank.SIX, File.A);
-                Position destination = Position.of(Rank.FIVE, File.A);
-                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
-                                       .get(0));
+                Position to = Position.of(Rank.FIVE, File.A);
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                                     .get(0));
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("경로에 다른 기물이 존재합니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재한다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.SIX, File.A);
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.SIX, File.A);
                 final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
-                                       .get(0));
-                pieces.put(destination, expected);
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                                     .get(0));
+                pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(expected);
             }
 
             @DisplayName("대각선 앞 칸에 적의 기물이 존재하지 않는다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.SIX, File.A);
-                pieces.put(source, Pawn.getPawnsOf(Side.BLACK)
-                                       .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.SIX, File.A);
+                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                                     .get(0));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, Position.of(Rank.SIX, File.C)))
+                        .hasMessage("이동 불가능한 경로입니다");
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, Position.of(Rank.SIX, File.C)))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
         }
 
@@ -212,60 +212,60 @@ class ChessBoardTest {
             @DisplayName("대각선 내에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Position source = Position.of(Rank.THREE, File.E);
-                Position destination = Position.of(Rank.SEVEN, File.A);
-                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
-                                         .get(0));
+                Position from = Position.of(Rank.THREE, File.E);
+                Position to = Position.of(Rank.SEVEN, File.A);
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                                       .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("대각선 내에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Position source = Position.of(Rank.THREE, File.E);
+                Position from = Position.of(Rank.THREE, File.E);
                 Position middle = Position.of(Rank.FIVE, File.C);
-                Position destination = Position.of(Rank.SEVEN, File.A);
-                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
-                                         .get(0));
+                Position to = Position.of(Rank.SEVEN, File.A);
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                                       .get(0));
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("경로에 다른 기물이 존재합니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어있다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.SIX, File.A);
-                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
-                                         .get(0));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.SIX, File.A);
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                                       .get(0));
                 final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(destination, expected);
+                pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
-                chessBoard.moveAndCapture(destination, source);
-                assertThat(chessBoard.moveAndCapture(source, Position.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(expected);
+                chessBoard.moveWithCapture(to, from);
+                assertThat(chessBoard.moveWithCapture(from, Position.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.SIX, File.A);
-                pieces.put(source, Bishop.getBishopsOf(Side.BLACK)
-                                         .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.SIX, File.A);
+                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
         }
 
@@ -276,60 +276,60 @@ class ChessBoardTest {
             @DisplayName("직선 내에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Position source = Position.of(Rank.THREE, File.E);
-                Position destination = Position.of(Rank.THREE, File.A);
-                pieces.put(source, Rook.getRooksOf(Side.BLACK)
-                                       .get(0));
+                Position from = Position.of(Rank.THREE, File.E);
+                Position to = Position.of(Rank.THREE, File.A);
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                                     .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("작선 내에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Position source = Position.of(Rank.THREE, File.E);
+                Position from = Position.of(Rank.THREE, File.E);
                 Position middle = Position.of(Rank.THREE, File.B);
-                Position destination = Position.of(Rank.THREE, File.A);
-                pieces.put(source, Rook.getRooksOf(Side.BLACK)
-                                       .get(0));
+                Position to = Position.of(Rank.THREE, File.A);
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                                     .get(0));
                 pieces.put(middle, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("경로에 다른 기물이 존재합니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.SIX, File.B);
-                pieces.put(source, Rook.getRooksOf(Side.BLACK)
-                                       .get(0));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.SIX, File.B);
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                                     .get(0));
                 final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(destination, expected);
+                pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
-                chessBoard.moveAndCapture(destination, source);
-                assertThat(chessBoard.moveAndCapture(source, Position.of(Rank.SEVEN, File.D))).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(expected);
+                chessBoard.moveWithCapture(to, from);
+                assertThat(chessBoard.moveWithCapture(from, Position.of(Rank.SEVEN, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.FIVE, File.B);
-                pieces.put(source, Rook.getRooksOf(Side.BLACK)
-                                       .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.FIVE, File.B);
+                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                                     .get(0));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
         }
 
@@ -340,32 +340,32 @@ class ChessBoardTest {
             @DisplayName("도착 위치에 적의 기물이 존재하거나 비어있다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Position source = Position.of(Rank.THREE, File.E);
-                Position destination = Position.of(Rank.TWO, File.G);
+                Position from = Position.of(Rank.THREE, File.E);
+                Position to = Position.of(Rank.TWO, File.G);
                 final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(source, Knight.getKnightsOf(Side.BLACK)
-                                         .get(0));
-                pieces.put(destination, expected);
+                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination)).isEqualTo(expected);
-                chessBoard.moveAndCapture(destination, source);
-                assertThat(chessBoard.moveAndCapture(source, Position.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to)).isEqualTo(expected);
+                chessBoard.moveWithCapture(to, from);
+                assertThat(chessBoard.moveWithCapture(from, Position.of(Rank.FIVE, File.D))).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.FIVE, File.C);
-                pieces.put(source, Knight.getKnightsOf(Side.BLACK)
-                                         .get(0));
-                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.FIVE, File.C);
+                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
+                                       .get(0));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
         }
 
@@ -376,73 +376,73 @@ class ChessBoardTest {
             @DisplayName("이동 경로상에 기물이 존재하지 않는다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Position source = Position.of(Rank.THREE, File.E);
-                Position destination1 = Position.of(Rank.THREE, File.A);
-                Position destination2 = Position.of(Rank.SEVEN, File.A);
+                Position from = Position.of(Rank.THREE, File.E);
+                Position to1 = Position.of(Rank.THREE, File.A);
+                Position to2 = Position.of(Rank.SEVEN, File.A);
 
-                pieces.put(source, Queen.getQueenOf(Side.BLACK));
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination1)).isEqualTo(EmptyPiece.getInstance());
-                chessBoard.moveAndCapture(destination1, source);
-                assertThat(chessBoard.moveAndCapture(source, destination2)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to1)).isEqualTo(EmptyPiece.getInstance());
+                chessBoard.moveWithCapture(to1, from);
+                assertThat(chessBoard.moveWithCapture(from, to2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("이동 경로 상에 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false1() {
-                Position source = Position.of(Rank.THREE, File.E);
+                Position from = Position.of(Rank.THREE, File.E);
                 Position middle1 = Position.of(Rank.THREE, File.B);
                 Position middle2 = Position.of(Rank.FIVE, File.C);
-                Position destination1 = Position.of(Rank.THREE, File.A);
-                Position destination2 = Position.of(Rank.SEVEN, File.A);
-                pieces.put(source, Queen.getQueenOf(Side.BLACK));
+                Position to1 = Position.of(Rank.THREE, File.A);
+                Position to2 = Position.of(Rank.SEVEN, File.A);
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
                 pieces.put(middle1, Queen.getQueenOf(Side.WHITE));
                 pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination1))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to1))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("경로에 다른 기물이 존재합니다");
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination2))
+                        .hasMessage("이동 불가능한 경로입니다");
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to2))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("경로에 다른 기물이 존재합니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
 
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
             @Test
             void it_returns_true2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination1 = Position.of(Rank.THREE, File.F);
-                Position destination2 = Position.of(Rank.SEVEN, File.A);
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to1 = Position.of(Rank.THREE, File.F);
+                Position to2 = Position.of(Rank.SEVEN, File.A);
                 final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(source, Queen.getQueenOf(Side.BLACK));
-                pieces.put(destination1, expected);
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination1)).isEqualTo(expected);
-                chessBoard.moveAndCapture(destination1, source);
-                assertThat(chessBoard.moveAndCapture(source, destination2)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to1)).isEqualTo(expected);
+                chessBoard.moveWithCapture(to1, from);
+                assertThat(chessBoard.moveWithCapture(from, to2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false2() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination1 = Position.of(Rank.THREE, File.A);
-                Position destination2 = Position.of(Rank.SEVEN, File.A);
-                pieces.put(source, Queen.getQueenOf(Side.BLACK));
-                pieces.put(destination1, King.getKingOf(Side.BLACK));
-                pieces.put(destination2, King.getKingOf(Side.BLACK));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to1 = Position.of(Rank.THREE, File.A);
+                Position to2 = Position.of(Rank.SEVEN, File.A);
+                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to1, King.getKingOf(Side.BLACK));
+                pieces.put(to2, King.getKingOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination1))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to1))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination2))
+                        .hasMessage("이동 불가능한 경로입니다");
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to2))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
         }
 
@@ -453,31 +453,31 @@ class ChessBoardTest {
             @DisplayName("도착 위치에 적의 기물이 존재한거나 비어 있다면 true를 반환한다")
             @Test
             void it_returns_true() {
-                Position source = Position.of(Rank.THREE, File.E);
-                Position destination1 = Position.of(Rank.THREE, File.F);
-                Position destination2 = Position.of(Rank.FOUR, File.D);
+                Position from = Position.of(Rank.THREE, File.E);
+                Position to1 = Position.of(Rank.THREE, File.F);
+                Position to2 = Position.of(Rank.FOUR, File.D);
                 final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(source, King.getKingOf(Side.BLACK));
-                pieces.put(destination1, expected);
+                pieces.put(from, King.getKingOf(Side.BLACK));
+                pieces.put(to1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThat(chessBoard.moveAndCapture(source, destination1)).isEqualTo(expected);
-                chessBoard.moveAndCapture(destination1, source);
-                assertThat(chessBoard.moveAndCapture(source, destination2)).isEqualTo(EmptyPiece.getInstance());
+                assertThat(chessBoard.moveWithCapture(from, to1)).isEqualTo(expected);
+                chessBoard.moveWithCapture(to1, from);
+                assertThat(chessBoard.moveWithCapture(from, to2)).isEqualTo(EmptyPiece.getInstance());
             }
 
             @DisplayName("도착 위치에 아군의 기물이 존재한다면 false를 반환한다")
             @Test
             void it_returns_false() {
-                Position source = Position.of(Rank.SEVEN, File.B);
-                Position destination = Position.of(Rank.SIX, File.A);
-                pieces.put(source, King.getKingOf(Side.BLACK));
-                pieces.put(destination, Queen.getQueenOf(Side.BLACK));
+                Position from = Position.of(Rank.SEVEN, File.B);
+                Position to = Position.of(Rank.SIX, File.A);
+                pieces.put(from, King.getKingOf(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Side.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
-                assertThatThrownBy(() -> chessBoard.moveAndCapture(source, destination))
+                assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 기물이 갈 수 없는 경로입니다");
+                        .hasMessage("이동 불가능한 경로입니다");
             }
         }
     }
@@ -497,7 +497,7 @@ class ChessBoardTest {
         void it_returns_black_pieces() {
             assertThat(chessBoard.getPieces(Side.BLACK)
                                  .values())
-                    .allMatch(piece -> piece.hasSideOf(Side.BLACK))
+                    .allMatch(piece -> piece.isSideOf(Side.BLACK))
                     .hasSize(16);
         }
 
@@ -506,7 +506,7 @@ class ChessBoardTest {
         void it_returns_white_pieces() {
             assertThat(chessBoard.getPieces(Side.WHITE)
                                  .values())
-                    .allMatch(piece -> piece.hasSideOf(Side.WHITE))
+                    .allMatch(piece -> piece.isSideOf(Side.WHITE))
                     .hasSize(16);
         }
     }
