@@ -22,7 +22,7 @@ class EndTest {
         assertThatThrownBy(end::isKingDead).isInstanceOf(IllegalStateException.class);
         assertThatThrownBy(end::close).isInstanceOf(IllegalStateException.class);
         assertThatThrownBy(end::status).isInstanceOf(IllegalStateException.class);
-        assertThatThrownBy(() -> end.save(new RoomName(""))).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> end.save(new RoomName("newRoom"))).isInstanceOf(IllegalStateException.class);
         assertThatThrownBy(end::getChessBoard).isInstanceOf(IllegalStateException.class);
     }
 

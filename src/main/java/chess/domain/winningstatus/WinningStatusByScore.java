@@ -24,16 +24,16 @@ public final class WinningStatusByScore implements WinningStatus {
     }
 
     @Override
-    public Team getWinner() {
+    public GameResult getWinner() {
         final double white_score = scores.get(Team.WHITE).getScore();
         final double black_score = scores.get(Team.BLACK).getScore();
 
         if (white_score > black_score) {
-            return Team.WHITE;
+            return GameResult.WHITE_WIN;
         }
         if (black_score > white_score) {
-            return Team.BLACK;
+            return GameResult.BLACK_WIN;
         }
-        return null;
+        return GameResult.DRAW;
     }
 }

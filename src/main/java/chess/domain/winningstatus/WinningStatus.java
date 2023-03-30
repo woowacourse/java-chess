@@ -10,6 +10,6 @@ public interface WinningStatus {
 
     Map<Team, Score> getScores();
 
-    Team getWinner();
+    GameResult getWinner();
 
 }

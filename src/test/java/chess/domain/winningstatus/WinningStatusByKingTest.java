@@ -27,6 +27,6 @@ class WinningStatusByKingTest {
 
     @Test
     void 승자를_반환한다() {
-        assertThat(winningStatusByKing.getWinner()).isEqualTo(Team.BLACK);
+        assertThat(winningStatusByKing.getWinner()).isEqualTo(GameResult.BLACK_WIN);
     }
 }

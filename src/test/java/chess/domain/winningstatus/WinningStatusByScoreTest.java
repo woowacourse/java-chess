@@ -46,16 +46,16 @@ class WinningStatusByScoreTest {
 
     @Test
     void 점수가_더_높은_팀을_승자로_반환한다() {
-        assertThat(winningStatusByScore.getWinner()).isEqualTo(Team.BLACK);
+        assertThat(winningStatusByScore.getWinner()).isEqualTo(GameResult.BLACK_WIN);
     }
 
     @Test
-    void 점수가_동점이면_null을_반환한다() {
+    void 점수가_동점이면_DRAW를_반환한다() {
         Map<Team, Score> scores1 = new EnumMap<>(Team.class);
         scores1.put(Team.WHITE, Score.of(List.of(KING_WHITE, PAWN_WHITE), 0));
         scores1.put(Team.BLACK, Score.of(List.of(KING_BLACK, PAWN_BLACK), 0));
 
         WinningStatusByScore winningStatusByScore1 = new WinningStatusByScore(scores1);
-        assertThat(winningStatusByScore1.getWinner()).isEqualTo(null);
+        assertThat(winningStatusByScore1.getWinner()).isEqualTo(GameResult.DRAW);
     }
 }

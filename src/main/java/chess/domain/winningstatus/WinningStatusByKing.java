@@ -23,7 +23,7 @@ public final class WinningStatusByKing implements WinningStatus {
     }
 
     @Override
-    public Team getWinner() {
-        return winner;
+    public GameResult getWinner() {
+        return GameResult.getResultByWinner(winner);
     }
 }

@@ -7,6 +7,7 @@ import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.piece.Team;
+import chess.domain.winningstatus.GameResult;
 import chess.domain.winningstatus.Score;
 import chess.domain.winningstatus.WinningStatus;
 import chess.view.Command;
@@ -90,8 +91,8 @@ public final class ChessController {
     }
 
     private void showStatusAfterRunning(final WinningStatus winningStatus) {
-        Team winner = winningStatus.getWinner();
-        OutputView.printWinnerAfterRunning(winner);
+        GameResult gameResult = winningStatus.getWinner();
+        OutputView.printWinnerAfterRunning(gameResult);
     }
 
     private void showStatusWhenRunning(final WinningStatus winningStatus) {
@@ -100,12 +101,8 @@ public final class ChessController {
             OutputView.printScore(team, scores.get(team).getScore());
         }
 
-        Team winner = winningStatus.getWinner();
-        if (winner == null) {
-            OutputView.printDrawWhenRunning();
-            return;
-        }
-        OutputView.printWinnerWhenRunning(winner);
+        GameResult gameResult = winningStatus.getWinner();
+        OutputView.printWinnerWhenRunning(gameResult);
     }
 
     private void saveGame(final ChessGame chessGame) {
