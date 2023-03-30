@@ -81,6 +81,8 @@ public class ChessController {
             gameService.updateTurn(gameId, state.findCurrentTurn());
             pieceService.deleteAll();
             pieceService.create(chessBoard, gameId);
+            OutputView.printSaveMessage();
+            return state;
         }
         if (command.isStatus()) {
             calculateScore(chessBoard);

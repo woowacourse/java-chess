@@ -68,6 +68,8 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+        System.out.println("> 게임 저장 : save");
+        System.out.println("> 점수 출력 : status");
     }
 
     public static void printCheckmateResult(final String winner) {
@@ -84,5 +86,9 @@ public class OutputView {
 
     public static void printInProgressMessage() {
         System.out.println("이미 진행중인 게임이 있습니다.");
+    }
+
+    public static void printSaveMessage() {
+        System.out.println("게임을 저장했습니다.");
     }
 }
