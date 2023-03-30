@@ -12,7 +12,7 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void save(List<PieceDto> pieceDtos) {
         for (PieceDto pieceDto : pieceDtos) {
-            final var query = "INSERT INTO chess_board(piece_name, piece_color, piece_row, piece_column, turn) VALUES (?, ?, ?, ?, ?)";
+            final var query = "INSERT INTO piece_state(piece_name, piece_color, piece_row, piece_column, turn) VALUES (?, ?, ?, ?, ?)";
             try (final var connection = DBUtil.getConnection();
                  final var preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, pieceDto.getName());
@@ -32,7 +32,7 @@ public class JdbcPieceDao implements PieceDao {
     public List<PieceDto> find() {
         List<PieceDto> pieceDtos = new ArrayList<>();
 
-        final var query = "SELECT piece_name, piece_color, piece_row, piece_column, turn FROM chess_board";
+        final var query = "SELECT piece_name, piece_color, piece_row, piece_column, turn FROM piece_state";
         try (final var connection = DBUtil.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
 
@@ -60,7 +60,7 @@ public class JdbcPieceDao implements PieceDao {
 
     @Override
     public void delete() {
-        final var query = "DELETE FROM chess_board";
+        final var query = "DELETE FROM piece_state";
         try (final var connection = DBUtil.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
