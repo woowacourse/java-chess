@@ -20,17 +20,10 @@ public enum Type {
     }
 
     public static Type of(final String inputName) {
-        if (inputName != ".") {
-            inputName.toUpperCase();
-        }
         return Arrays.stream(Type.values())
                 .filter(type -> type.name.equals(inputName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("[ERROR] 갈 수 없는 방향입니다."));
-    }
-
-    public String getName() {
-        return name;
     }
 
     public double getScore() {
