@@ -28,11 +28,6 @@ public class PieceService {
         return allPieces;
     }
 
-    public void update(final Piece piece, final int id) {
-        final PieceDto pieceDto = PieceDto.of(id, piece.getFileToString(), piece.rank());
-        pieceDao.update(pieceDto);
-    }
-
     public void deleteAll() {
         final List<Integer> allIds = pieceDao.findAllIds();
         for (int id : allIds) {

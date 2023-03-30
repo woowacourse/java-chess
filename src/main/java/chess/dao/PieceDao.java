@@ -67,19 +67,6 @@ public class PieceDao {
         return null;
     }
 
-    public void update(final PieceDto pieceDto) {
-        final String query = "UPDATE piece SET file_position = ?, rank_position = ? WHERE id = ?";
-        try (final var connection = connectionConfig.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, pieceDto.getFile());
-            preparedStatement.setInt(2, pieceDto.getRank());
-            preparedStatement.setInt(3, pieceDto.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void delete(final PieceDto pieceDto) {
         final String query = "DELETE FROM piece WHERE id = ?";
         try (final var connection = connectionConfig.getConnection();
