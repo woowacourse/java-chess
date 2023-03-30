@@ -14,52 +14,53 @@ import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.BLACK_PAWN;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
+import static chess.domain.piece.PieceType.WHITE_PAWN;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
 
     private static final Map<Square, Piece> initPiece = Map.ofEntries(
-            Map.entry(new Square(A, ONE), new Rook(WHITE)),
-            Map.entry(new Square(B, ONE), new Knight(WHITE)),
-            Map.entry(new Square(C, ONE), new Bishop(WHITE)),
-            Map.entry(new Square(D, ONE), new Queen(WHITE)),
-            Map.entry(new Square(E, ONE), new King(WHITE)),
-            Map.entry(new Square(F, ONE), new Bishop(WHITE)),
-            Map.entry(new Square(G, ONE), new Knight(WHITE)),
-            Map.entry(new Square(H, ONE), new Rook(WHITE)),
-            Map.entry(new Square(A, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(B, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(C, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(D, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(E, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(F, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(G, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(H, TWO), new Pawn(WHITE)),
-            Map.entry(new Square(A, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(B, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(C, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(D, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(E, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(F, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(G, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(H, SEVEN), new Pawn(BLACK)),
-            Map.entry(new Square(A, EIGHT), new Rook(BLACK)),
-            Map.entry(new Square(B, EIGHT), new Knight(BLACK)),
-            Map.entry(new Square(C, EIGHT), new Bishop(BLACK)),
-            Map.entry(new Square(D, EIGHT), new Queen(BLACK)),
-            Map.entry(new Square(E, EIGHT), new King(BLACK)),
-            Map.entry(new Square(F, EIGHT), new Bishop(BLACK)),
-            Map.entry(new Square(G, EIGHT), new Knight(BLACK)),
-            Map.entry(new Square(H, EIGHT), new Rook(BLACK))
+            Map.entry(new Square(A, ONE), new Piece(WHITE, ROOK)),
+            Map.entry(new Square(B, ONE), new Piece(WHITE, KNIGHT)),
+            Map.entry(new Square(C, ONE), new Piece(WHITE, BISHOP)),
+            Map.entry(new Square(D, ONE), new Piece(WHITE, QUEEN)),
+            Map.entry(new Square(E, ONE), new Piece(WHITE, KING)),
+            Map.entry(new Square(F, ONE), new Piece(WHITE, BISHOP)),
+            Map.entry(new Square(G, ONE), new Piece(WHITE, KNIGHT)),
+            Map.entry(new Square(H, ONE), new Piece(WHITE, ROOK)),
+            Map.entry(new Square(A, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(B, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(C, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(D, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(E, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(F, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(G, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(H, TWO), new Piece(WHITE, WHITE_PAWN)),
+            Map.entry(new Square(A, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(B, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(C, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(D, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(E, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(F, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(G, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(H, SEVEN), new Piece(BLACK, BLACK_PAWN)),
+            Map.entry(new Square(A, EIGHT), new Piece(BLACK, ROOK)),
+            Map.entry(new Square(B, EIGHT), new Piece(BLACK, KNIGHT)),
+            Map.entry(new Square(C, EIGHT), new Piece(BLACK, BISHOP)),
+            Map.entry(new Square(D, EIGHT), new Piece(BLACK, QUEEN)),
+            Map.entry(new Square(E, EIGHT), new Piece(BLACK, KING)),
+            Map.entry(new Square(F, EIGHT), new Piece(BLACK, BISHOP)),
+            Map.entry(new Square(G, EIGHT), new Piece(BLACK, KNIGHT)),
+            Map.entry(new Square(H, EIGHT), new Piece(BLACK, ROOK))
     );
 
     public static Board create() {

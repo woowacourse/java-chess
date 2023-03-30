@@ -45,6 +45,14 @@ public class Square {
         return this.rank.calculateDistance(square.rank);
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

@@ -1,9 +1,9 @@
 package chess.domain.board;
 
+import static chess.domain.piece.PieceType.WHITE_PAWN;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.Pawn;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -150,7 +150,7 @@ class BoardSnapShotTest {
 
         assertAll(
                 () -> assertThat(board.findPieceOf(source)).isEmpty(),
-                () -> assertThat(board.findPieceOf(destination)).containsInstanceOf(Pawn.class)
+                () -> assertThat(board.findPieceOf(destination).get().getPieceType()).isEqualTo(WHITE_PAWN)
         );
     }
 }

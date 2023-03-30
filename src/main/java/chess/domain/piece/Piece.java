@@ -2,21 +2,32 @@ package chess.domain.piece;
 
 import chess.domain.board.BoardSnapShot;
 import chess.domain.board.Square;
-import chess.domain.piece.strategy.Strategy;
 import java.util.List;
 
-public abstract class Piece {
+public class Piece {
 
-    protected final Color color;
-    protected final Strategy strategy;
+    private final Color color;
+    private final PieceType pieceType;
 
-    protected Piece(final Color color, final Strategy strategy) {
+    public Piece(final Color color, final PieceType pieceType) {
         this.color = color;
-        this.strategy = strategy;
+        this.pieceType = pieceType;
     }
 
-    public List<Square> findRoute(final Square source, final Square destination) {
-        return strategy.findRoute(source, destination);
+    public boolean isMovable(final Square source, final Square destination, final BoardSnapShot boardSnapShot) {
+        final List<Square> route = pieceType.findRoute(source, destination);
+        if (isPawn()) {
+            return boardSnapShot.canMovePawn(source, route);
+        }
+        return boardSnapShot.canMove(source, route);
+    }
+
+    public boolean isKing() {
+        return pieceType == PieceType.KING;
+    }
+
+    public boolean isPawn() {
+        return pieceType == PieceType.BLACK_PAWN || pieceType == PieceType.WHITE_PAWN;
     }
 
     public boolean isBlack() {
@@ -35,5 +46,11 @@ public abstract class Piece {
         return color;
     }
 
-    public abstract boolean isMovable(final Square source, final List<Square> route, final BoardSnapShot boardSnapShot);
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
+    }
 }

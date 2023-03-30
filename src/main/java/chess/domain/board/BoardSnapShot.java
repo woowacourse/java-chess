@@ -65,7 +65,7 @@ public class BoardSnapShot {
         final Color sourceColor = board.get(source);
         final Square destination = routes.get(0);
         final int distanceRank = Math.abs(destination.calculateDistanceRank(source));
-        return (distanceRank == 2 && source.isInitPawnPosition(sourceColor.isBlack()))
-                || (distanceRank == 1 && !board.containsKey(destination));
+        return !board.containsKey(destination)
+                && (distanceRank == 1 || (distanceRank == 2 && source.isInitPawnPosition(sourceColor.isBlack())));
     }
 }
