@@ -2,6 +2,7 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.dao.ChessGameJdbcDao;
+import chess.dao.JdbcTemplate;
 import chess.domain.game.ChessGame;
 import chess.service.ChessGameService;
 import chess.view.InputView;
@@ -11,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
         ChessController chessController = new ChessController(new OutputView(), new InputView(),
-                new ChessGameService(new ChessGame(), new ChessGameJdbcDao()));
+                new ChessGameService(new ChessGame(), new ChessGameJdbcDao(new JdbcTemplate())));
         chessController.run();
     }
 }

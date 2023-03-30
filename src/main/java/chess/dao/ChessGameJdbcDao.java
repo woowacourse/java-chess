@@ -2,45 +2,34 @@ package chess.dao;
 
 import chess.domain.position.Position;
 import chess.service.Move;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGameJdbcDao implements ChessGameDao {
 
     private static final int NOT_EXIST_GAME = -1;
+    private final JdbcTemplate jdbcTemplate;
+
+    public ChessGameJdbcDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void saveMove(Move move, int gameId) {
         var query = "INSERT INTO move_history(source, target, move_time, game_id) VALUES(?, ?, ?, ?)";
-        try (var connection = ConnectionGenerator.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, parsePosition(move.getSource()));
-            preparedStatement.setString(2, parsePosition(move.getTarget()));
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(move.getMoveTime()));
-            preparedStatement.setInt(4, gameId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query, parsePosition(move.getSource()), parsePosition(move.getTarget()),
+                move.getMoveTime(), gameId);
     }
 
     private String parsePosition(Position position) {
-        return position.getFileCoordinate().name() + position.getRankCoordinate().getRowNumber();
+        return position.getFileCoordinate().name().toLowerCase() + position.getRankCoordinate().getRowNumber();
     }
 
     @Override
     public List<Move> findByGameId(int gameId) {
         var query = "SELECT * FROM move_history WHERE game_id = (?)";
-        List<Move> moveHistories = new ArrayList<>();
-
-        try (var connection = ConnectionGenerator.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, gameId);
-            var resultSet = preparedStatement.executeQuery();
-
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            List<Move> moveHistories = new ArrayList<>();
             while (resultSet.next()) {
                 moveHistories.add(Move.of(
                         resultSet.getString("source"),
@@ -49,61 +38,41 @@ public class ChessGameJdbcDao implements ChessGameDao {
                 ));
             }
             return moveHistories;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        }, gameId);
     }
 
     @Override
     public int findGameIdByNotFinished() {
         var query = "SELECT id FROM game WHERE finished = false";
-        try (var connection = ConnectionGenerator.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
-            var resultSet = preparedStatement.executeQuery();
+        return jdbcTemplate.executeQuery(query, resultSet -> {
             if (resultSet.next()) {
                 return resultSet.getInt("id");
             }
             return NOT_EXIST_GAME;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     @Override
     public void saveGame() {
         var query = "INSERT INTO game(finished) VALUES (false)";
-        try (var connection = ConnectionGenerator.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query);
     }
 
     @Override
     public void finishedGame() {
         var query = "UPDATE game SET finished = true WHERE finished = false";
-        try (var connection = ConnectionGenerator.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.executeUpdate(query);
     }
 
     @Override
     public boolean isExistNotFinishedGame() {
         var query = "SELECT EXISTS(SELECT * FROM game WHERE finished = false)";
-        try (var connection = ConnectionGenerator.getConnection();
-             var preparedStatement = connection.prepareStatement(query)) {
-            var resultSet = preparedStatement.executeQuery();
+        return jdbcTemplate.executeQuery(query, resultSet -> {
             if (resultSet.next()) {
                 return resultSet.getBoolean(1);
             }
             return false;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 }
 
