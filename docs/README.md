@@ -21,6 +21,7 @@
 | 게임 상태 | GameState | 체스 게임의 상태                        | interface             |
 | 체스 게임 | ChessGame | 체스 게임 진행을 관리                     | class            |
 | 점수 | Score | 팀의 점수                                      | class            |
+| 점수 계산기 | ScoreCalculator | 팀의 점수를 계산해서 반환한다.            | interface            |
 
 # 🔖DB 테이블 설계
 
@@ -39,7 +40,7 @@ DB 이름 : chess
 
 > 게임의 내에서 말의 이동 기록을 저장한다.
 
-| gameDataId | gameId | source | destination |
+| move_history_id | gameId | source | destination |
 | --- | --- | --- | --- |
 | 444 | 234 | a1 | a1 |
 | 445 | 234 | a2 | a2 |
@@ -112,15 +113,13 @@ flowchart
 
 subgraph ReadyState
   D(체스판 초기화)-->A[명령어 소개 출력]
-  A--> B[유저의 명령 입력]
+  A-->AA(끝나지 않은 게임이 DB에 존재하는지 여부를 가져온다)
+  AA--> B[유저의 명령 입력]
   B-->C{명령어 유효성 검사}
-  C-->|그 외 잘못된 명령|EX[예외 처리]-->B
-end
-
-subgraph LoadingState
-  DB(데이터베이스 조회)-->|미완료 상태의 게임이 존재할 경우|BB[유저의 명령 입력]
-  BB-->CC{명령어 유효성 검사}
-  CC-->|continue 명령|LOAD(체스판 로드)
+  C-->|그 외 잘못된 명령|EX[예외 처리]
+  EX-->B
+  C-->|start 명령|NEW(DB에 새로운 게임 추가)
+  C-->|끝나지 않은 게임이 DB에 존재할 때 load 명령|LOAD(체스판 로드)
 end
 
 subgraph RunningState
@@ -131,6 +130,7 @@ subgraph RunningState
   HH-->I{King 사망여부 확인}
   I-->|King이 죽지 않은 경우|E
   I-->|King이 죽은 경우|RESULT[최종 결과 출력]
+  RESULT-->END(DB에 게임 정보 업데이트)
   G--> |status 명령| J(팀별 점수 환산 로직)-->K[점수 출력]-->F
   G-->|잘못된 명령|EXX[예외 처리]-->F
   
@@ -140,12 +140,10 @@ subgraph FinishedState
   ZZ[게임종료]
 end
 
-C-->|load 명령|DB
-CC-->|cancel 명령|B
-DB-->|미완료 상태의 게임이 존재하지 않을 경우|B
+NEW-->E
 LOAD-->E
-C-->|start 명령|E
-RESULT-->ZZ
+
+END-->ZZ
 G--> |end 명령|ZZ
 ```
 
@@ -257,18 +255,13 @@ class Team{
 class GameState{
   <<interface>>>
   startGame(Runnable runnable)
-  enterLoad(Runnable runnable)
   loadGame(Runnable runnable)
-  cancelLoad(Runnable runnable)
   movePiece(Runnable runnable)
   finishGame(Runnable runnable)
   isRunning()
   isFinished()
 }
 class ReadyState{
-   +GameState STATE
-}
-class LoadingState{
    +GameState STATE
 }
 class RunningState{
@@ -316,7 +309,6 @@ Piece o--> Trace
 Trace"1"o-->"1..*"Log
 
 GameState<|--ReadyState
-GameState<|--LoadingState
 GameState<|--RunningState
 GameState<|--FinishedState
 
@@ -441,18 +433,13 @@ classDiagram
 class GameState{
   <<interface>>>
   startGame(Runnable runnable)
-  enterLoad(Runnable runnable)
   loadGame(Runnable runnable)
-  cancelLoad(Runnable runnable)
   movePiece(Runnable runnable)
   finishGame(Runnable runnable)
   isRunning()
   isFinished()
 }
 class ReadyState{
-   +GameState STATE
-}
-class LoadingState{
    +GameState STATE
 }
 class RunningState{
@@ -464,7 +451,6 @@ class FinishedState{
 
 
 GameState<|--ReadyState
-GameState<|--LoadingState
 GameState<|--RunningState
 GameState<|--FinishedState
 
@@ -503,6 +489,10 @@ GameState<|--FinishedState
 - [x] equals 구현
 - [x] 더하기 구현
 
+#### 점수 계산기(ScoreCalculator)
+
+- [x] 점수 상으로 이긴 팀을 구한다.
+
 #### 게임의 상태(GameState)
 
 - [x] ReadyState 준비 상태
@@ -527,7 +517,6 @@ GameState<|--FinishedState
 - [x] 팀을 입력으로 받아 해당 팀의 점수를 계산한다.
     - [x] 특정 팀의 열 별 점수를 구한다.
     - [x] 폰의 경우, 같은 열에 같은 팀의 폰이 존재하면 0.5점으로 계산한다.
-- [x] 점수 상으로 이긴 팀을 구한다.
 - [x] 폰 기물의 앙 파상 동작을 구현한다.(공격 로직)
 
 #### 기물(Piece)
