@@ -13,12 +13,8 @@ public class Player {
         this.pieces = pieces;
     }
 
-    public static Player fromWhitePlayer(final Pieces pieces) {
-        return new Player(Color.WHITE, pieces);
-    }
-
-    public static Player fromBlackPlayer(final Pieces pieces) {
-        return new Player(Color.BLACK, pieces);
+    public static Player fromPlayerWithColorAndPieces(final Color color, final Pieces pieces) {
+        return new Player(color, pieces);
     }
 
     public List<Piece> getPieces() {
@@ -67,4 +63,11 @@ public class Player {
                 '}';
     }
 
+    public boolean isSameColor(final Player other) {
+        return isSameColor(other.color);
+    }
+
+    public boolean isSameColor(final Color other) {
+        return this.color.isSame(other);
+    }
 }

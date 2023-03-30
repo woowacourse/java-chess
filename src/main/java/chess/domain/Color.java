@@ -14,4 +14,7 @@ public enum Color {
                 .orElseThrow(() -> new IllegalArgumentException("색상을 확인해 주세요."));
     }
 
+    public boolean isSame(final Color other) {
+        return this == other;
+    }
 }

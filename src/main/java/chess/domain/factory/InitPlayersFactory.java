@@ -18,33 +18,23 @@ public class InitPlayersFactory {
         PieceDao dao = new PieceDaoImpl();
         TurnDao turnDao = new TurnDaoImpl();
 
-        Pieces whitePieces = getDbWhitePieces(dao);
-        Pieces blackPieces = getDbBlackPieces(dao);
+        Pieces whitePieces = getDbPiecesByColor(dao, Color.WHITE);
+        Pieces blackPieces = getDbPiecesByColor(dao, Color.BLACK);
 
-        Player whitePlayer = Player.fromWhitePlayer(whitePieces);
-        Player blackPlayer = Player.fromBlackPlayer(blackPieces);
+        Player whitePlayer = Player.fromPlayerWithColorAndPieces(Color.WHITE, whitePieces);
+        Player blackPlayer = Player.fromPlayerWithColorAndPieces(Color.BLACK, blackPieces);
 
         return Players.of(whitePlayer, blackPlayer, turnDao.getCurrentTurn());
     }
 
-    private static Pieces getDbWhitePieces(PieceDao dao) {
-        List<Piece> dbWhitePieces = dao.findPieceByColor(Color.WHITE);
-        if (dbWhitePieces.isEmpty()) {
-            Pieces whitePieces = Pieces.createWhitePieces();
-            insertAll(dao, whitePieces, Color.WHITE);
-            return whitePieces;
+    private static Pieces getDbPiecesByColor(final PieceDao dao, final Color color) {
+        List<Piece> dbPiecesByColor = dao.findPieceByColor(color);
+        if (dbPiecesByColor.isEmpty()) {
+            Pieces pieces = Pieces.createWhitePieces();
+            insertAll(dao, pieces, color);
+            return pieces;
         }
-        return Pieces.from(dbWhitePieces);
-    }
-
-    private static Pieces getDbBlackPieces(PieceDao dao) {
-        List<Piece> dbBlackPieces = dao.findPieceByColor(Color.BLACK);
-        if (dbBlackPieces.isEmpty()) {
-            Pieces blackPieces = Pieces.createBlackPieces();
-            insertAll(dao, blackPieces, Color.BLACK);
-            return blackPieces;
-        }
-        return Pieces.from(dbBlackPieces);
+        return Pieces.from(dbPiecesByColor);
     }
 
     private static void insertAll(PieceDao dao, Pieces pieces, Color color) {

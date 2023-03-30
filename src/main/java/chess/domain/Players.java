@@ -20,7 +20,7 @@ public class Players {
         this.current = color;
     }
 
-    public static Players of(Player whitePlayer, Player blackPlayer, Color currentTurn) {
+    public static Players of(final Player whitePlayer, final Player blackPlayer, final Color currentTurn) {
         return new Players(List.of(whitePlayer, blackPlayer), currentTurn);
     }
 
@@ -116,7 +116,7 @@ public class Players {
 
     private Player getAnotherPlayer(final Player findPlayer) {
         return players.stream()
-                .filter(player -> !player.getColor().equals(findPlayer.getColor()))
+                .filter(player -> !player.isSameColor(findPlayer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("상대 플레이어를 찾을 수 없습니다."));
     }
@@ -124,7 +124,7 @@ public class Players {
     private void validatePosition(final String inputMovablePiece) {
         Position findPosition = findPositionByInputPoint(inputMovablePiece);
         Player findPlayer = findPlayerByPosition(findPosition);
-        if (!current.equals(findPlayer.getColor())) {
+        if (!findPlayer.isSameColor(current)) {
             throw new IllegalArgumentException("해당 플레이어의 차례가 아닙니다.");
         }
     }
@@ -134,7 +134,7 @@ public class Players {
     }
 
     private Player getPlayerByColor(final Color color) {
-        return players.stream().filter(player -> player.getColor().equals(color))
+        return players.stream().filter(player -> player.isSameColor(color))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 색의 플레이어가 없습니다."));
     }
