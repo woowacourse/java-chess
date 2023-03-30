@@ -2,8 +2,6 @@ package chess.domain.piece.moveRule;
 
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
-import java.util.LinkedList;
-import java.util.List;
 
 public class BishopMoveRule implements MoveRule {
 

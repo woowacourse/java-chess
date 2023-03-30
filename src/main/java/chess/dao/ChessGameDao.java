@@ -3,8 +3,7 @@ package chess.dao;
 import chess.domain.board.Board;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.chessGame.ChessGameState;
-import chess.domain.chessGame.EndChessGameState;
-import chess.domain.chessGame.PlayingChessGameState;
+import chess.domain.chessGame.ChessGameStateType;
 import chess.domain.chessGame.ReadyChessGameState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -24,13 +23,6 @@ public class ChessGameDao {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    private static final Map<String, ChessGameState> chessGameStatusMapper = new HashMap<>();
-
-    static {
-        chessGameStatusMapper.put("ready", new ReadyChessGameState());
-        chessGameStatusMapper.put("playing", new PlayingChessGameState());
-        chessGameStatusMapper.put("end", new EndChessGameState());
-    }
 
     public Connection getConnection() {
         // 드라이버 연결
@@ -91,7 +83,7 @@ public class ChessGameDao {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 turn = Color.valueOf(resultSet.getString("turn"));
-                chessGameState = chessGameStatusMapper.get(resultSet.getString("status"));
+                chessGameState = ChessGameStateType.findByName(resultSet.getString("status"));
                 PieceType pieceType = PieceType.valueOf(resultSet.getString("piece_type"));
                 File file = File.valueOf(resultSet.getString("piece_file"));
                 Rank rank = Rank.valueOf(resultSet.getString("piece_rank"));
