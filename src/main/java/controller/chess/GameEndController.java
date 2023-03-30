@@ -1,16 +1,16 @@
-package controller.command;
+package controller.chess;
 
 import service.ChessGameService;
 import view.OutputView;
 
-public class GameEnd extends GameCommand {
+public class GameEndController extends GameController {
 
-    protected GameEnd(ChessGameService chessGameService) {
+    protected GameEndController(ChessGameService chessGameService) {
         super(chessGameService);
     }
 
     @Override
-    public Command execute() {
+    public ChessController run() {
         if (chessGameService.isGameEnded()) {
             showGameEndResult();
             chessGameService.deleteChessBoard();
@@ -24,12 +24,12 @@ public class GameEnd extends GameCommand {
     }
 
     @Override
-    public Command readNextCommand() {
+    public ChessController readNextController() {
         throw new UnsupportedOperationException("[ERROR] 게임이 종료되어 명령어를 입력할 수 없습니다.");
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isEndController() {
         return true;
     }
 }

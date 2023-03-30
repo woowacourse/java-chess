@@ -1,27 +1,27 @@
-package controller.command;
+package controller.chess;
 
 import service.ChessGameService;
 import view.OutputView;
 
 import java.util.List;
 
-public class Move extends GameCommand {
+public class MoveController extends GameController {
 
     private final List<String> commandInput;
 
-    protected Move(ChessGameService chessGameService, List<String> commandInput) {
+    protected MoveController(ChessGameService chessGameService, List<String> commandInput) {
         super(chessGameService);
         this.commandInput = commandInput;
     }
 
     @Override
-    public Command execute() {
+    public ChessController run() {
         executeMove();
 
         if (chessGameService.isGameEnded()) {
-            return new GameEnd(chessGameService);
+            return new GameEndController(chessGameService);
         }
-        return readNextCommand();
+        return readNextController();
     }
 
     private void executeMove() {
@@ -45,7 +45,7 @@ public class Move extends GameCommand {
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isEndController() {
         return false;
     }
 }

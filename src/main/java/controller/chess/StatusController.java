@@ -1,24 +1,23 @@
-package controller.command;
+package controller.chess;
 
-import dto.ChessGameScoreDto;
 import service.ChessGameService;
 import view.OutputView;
 
-public class Status extends GameCommand {
+public class StatusController extends GameController {
 
-    protected Status(ChessGameService chessGameService) {
+    protected StatusController(ChessGameService chessGameService) {
         super(chessGameService);
     }
 
     @Override
-    public Command execute() {
+    public ChessController run() {
         OutputView.printStatusResult(chessGameService.calculateScore());
         OutputView.printChessBoardState(chessGameService.makeChessBoardState());
-        return readNextCommand();
+        return readNextController();
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isEndController() {
         return false;
     }
 }

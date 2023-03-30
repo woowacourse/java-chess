@@ -1,4 +1,4 @@
-package controller.command;
+package controller.chess;
 
 import service.ChessGameService;
 import view.InputView;
@@ -6,7 +6,7 @@ import view.OutputView;
 
 import java.util.List;
 
-public abstract class GameCommand extends Command {
+public abstract class GameController extends ChessController {
 
     protected enum GameCommandType {
         MOVE,
@@ -16,22 +16,22 @@ public abstract class GameCommand extends Command {
 
     protected final ChessGameService chessGameService;
 
-    protected GameCommand(ChessGameService chessGameService) {
+    protected GameController(ChessGameService chessGameService) {
         this.chessGameService = chessGameService;
     }
 
     @Override
-    protected Command readNextCommand() {
+    protected ChessController readNextController() {
         List<String> commandInput = receiveGameCommandInput();
         GameCommandType commandType = GameCommandType.valueOf(commandInput.get(0).toUpperCase());
 
         if (commandType == GameCommandType.MOVE) {
-            return new Move(chessGameService, commandInput);
+            return new MoveController(chessGameService, commandInput);
         }
         if (commandType == GameCommandType.STATUS) {
-            return new Status(chessGameService);
+            return new StatusController(chessGameService);
         }
-        return new GameEnd(chessGameService);
+        return new GameEndController(chessGameService);
     }
 
     private List<String> receiveGameCommandInput() {

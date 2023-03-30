@@ -1,4 +1,4 @@
-package controller.command;
+package controller.chess;
 
 import dao.JdbcPieceDao;
 import service.ChessGameService;
@@ -7,28 +7,28 @@ import view.OutputView;
 
 import java.util.List;
 
-public final class SystemBoot extends Command {
+public final class SystemBootController extends ChessController {
 
     protected enum SystemCommandType {
         START,
         END
     }
 
-    public SystemBoot() {
+    public SystemBootController() {
     }
 
     @Override
-    public Command execute() {
-        return readNextCommand();
+    public ChessController run() {
+        return readNextController();
     }
 
     @Override
-    protected Command readNextCommand() {
+    protected ChessController readNextController() {
         SystemCommandType command = receiveSystemCommand();
         if (command == SystemCommandType.START) {
-            return new Initialize(new ChessGameService(new JdbcPieceDao()));
+            return new InitializeController(new ChessGameService(new JdbcPieceDao()));
         }
-        return new SystemEnd();
+        return new SystemEndController();
     }
 
     private SystemCommandType receiveSystemCommand() {
@@ -50,7 +50,7 @@ public final class SystemBoot extends Command {
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isEndController() {
         return false;
     }
 }
