@@ -13,12 +13,10 @@ import java.util.Optional;
 
 public final class StatusController implements Controller {
     private final Long userId;
-    private final ChessGame chessGame;
     private final ChessGameService chessGameService;
 
     StatusController(final Long userId, final ChessGameService chessGameService) {
         this.userId = userId;
-        this.chessGame = chessGameService.getChessGame(userId);
         this.chessGameService = chessGameService;
     }
 
@@ -43,6 +41,7 @@ public final class StatusController implements Controller {
 
     @Override
     public Optional<ChessGame> findGame() {
+        final ChessGame chessGame = chessGameService.getChessGame(userId);
         return Optional.of(chessGame);
     }
 
@@ -59,6 +58,7 @@ public final class StatusController implements Controller {
 
     private Runnable runCalculator() {
         return () -> {
+            final ChessGame chessGame = chessGameService.getChessGame(userId);
             final ChessScore chessResult = ChessGameCalculator.calculate(chessGame);
             final ChessResultDto chessResultDto = ChessResultDtoMapper.from(chessResult);
             OutputView.printChessResult(chessResultDto);

@@ -15,12 +15,10 @@ import java.util.Optional;
 public final class MoveController implements Controller {
 
     private final Long userId;
-    private final ChessGame chessGame;
     private final ChessGameService chessGameService;
 
     MoveController(final Long userId, final ChessGameService chessGameService) {
         this.userId = userId;
-        this.chessGame = chessGameService.getChessGame(userId);
         this.chessGameService = chessGameService;
     }
 
@@ -45,14 +43,15 @@ public final class MoveController implements Controller {
 
     @Override
     public Optional<ChessGame> findGame() {
+        final ChessGame chessGame = chessGameService.getChessGame(userId);
         return Optional.of(chessGame);
     }
 
     Controller move(final Command command) {
         validateCommand(command);
         final List<String> commands = command.getCommands();
-
-        play(commands);
+        final ChessGame chessGame = chessGameService.getChessGame(userId);
+        play(commands, chessGame);
         if (!chessGame.isKingAlive()) {
             return new StatusController(userId, chessGameService).getStatus(false);
         }
@@ -65,17 +64,17 @@ public final class MoveController implements Controller {
         }
     }
 
-    private void play(final List<String> commands) {
+    private void play(final List<String> commands, final ChessGame chessGame) {
         final Position source = PositionConverter.convert(commands.get(1));
         final Position target = PositionConverter.convert(commands.get(2));
         chessGame.play(source, target);
-        savePlayInfo(source, target);
+        savePlayInfo(source, target, chessGame);
     }
 
-    private void savePlayInfo(final Position source, final Position target) {
+    private void savePlayInfo(final Position source, final Position target, final ChessGame chessGame) {
         final Long chessGameId = chessGameService.getChessGameId(userId);
         deletePieces(source, target, chessGameId);
-        savePieces(target, chessGameId);
+        savePieces(target, chessGameId, chessGame);
         chessGameService.updateCurrentCamp(chessGameId, chessGame.getCurrentCamp());
     }
 
@@ -85,7 +84,7 @@ public final class MoveController implements Controller {
         chessGameService.deletePieces(sourcePiece, targetPiece);
     }
 
-    private void savePieces(final Position target, final Long chessGameId) {
+    private void savePieces(final Position target, final Long chessGameId, final ChessGame chessGame) {
         final Map<Position, Piece> chessBoard = chessGame.getChessBoard();
         final Piece piece = chessBoard.get(target);
         final PieceEntity savedPiece = PieceEntity.createWithChessGameId(chessGameId, target.getRank(),
