@@ -88,8 +88,7 @@ public final class ChessGameDao {
         } catch (final SQLException e) {
             throw new RuntimeException("문제가 발생했습니다. 다시 load를 시도해 주세요.");
         }
-
-        return null;
+        throw new RuntimeException("해당 게임이 존재하지 않습니다. 다시 load를 시도해 주세요.");
     }
 
     public void deleteGame(final RoomName roomName) {
