@@ -1,9 +1,8 @@
 package chess.domain;
 
-import chess.KingDiedException;
 import chess.domain.piece.BlankPiece;
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
@@ -16,10 +15,13 @@ import java.util.stream.Collectors;
 public class Board {
     public static final int KING_DIE_SCORE = -1;
     public static final int DUPLICATE_EXIST = 2;
+
     private final Map<Position, Piece> board;
+    private boolean isFinished;
 
     public Board(Map<Position, Piece> board) {
         this.board = board;
+        this.isFinished = false;
     }
 
     public Map<Position, PieceDto> move(Position currentPosition, Position nextPosition, PlayingCamp thisTurn) {
@@ -46,6 +48,10 @@ public class Board {
             pieceDtos.put(entry.getKey(), new PieceDto(piece));
         }
         return pieceDtos;
+    }
+
+    public boolean isFinished() {
+        return this.isFinished;
     }
 
     private void validateThisTurnColor(PlayingCamp thisTurn, Piece piece) {
@@ -102,7 +108,7 @@ public class Board {
         Piece attacked = board.getOrDefault(nextPosition, BlankPiece.getInstance());
         board.put(nextPosition, movingPiece);
         if (attacked.isKing()) {
-            throw new KingDiedException(getPrintingBoard());
+            this.isFinished = true;
         }
     }
 

@@ -1,11 +1,10 @@
 package chess.domain.chessGame;
 
-import chess.KingDiedException;
 import chess.domain.Board;
-import chess.dto.PieceDto;
-import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.position.Position;
+import chess.dto.PieceDto;
 
 import java.util.List;
 import java.util.Map;
@@ -27,14 +26,12 @@ public class PlayingChessGame implements ChessGame {
 
     @Override
     public Map<Position, PieceDto> move(String currentPositionSymbol, String nextPositionSymbol) {
-        PlayingCamp thisTurn = currentTurn;
-        currentTurn = currentTurn.next();
-        try {
-            return board.move(Position.of(currentPositionSymbol), Position.of(nextPositionSymbol), thisTurn);
-        } catch (KingDiedException e) {
+        Map<Position, PieceDto> piecePositions = board.move(Position.of(currentPositionSymbol), Position.of(nextPositionSymbol), currentTurn);
+        if (board.isFinished()) {
             this.isEnd = true;
-            return e.getBoard();
         }
+        currentTurn = currentTurn.next();
+        return piecePositions;
     }
 
     @Override
