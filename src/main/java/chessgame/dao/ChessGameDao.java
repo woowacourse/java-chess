@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameDao {
+public class ChessGameDao {
 
     public void save(Board board, String gameName, State turn) {
         Map<Point, Piece> boardMap = board.getBoard();

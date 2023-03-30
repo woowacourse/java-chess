@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class GameDaoTest {
-    private final GameDao gameDao = new GameDao();
+class ChessGameDaoTest {
+    private final ChessGameDao chessGameDao = new ChessGameDao();
     private static final String gameName = "test";
 
     @BeforeEach
     void before() {
-        gameDao.remove(gameName);
+        chessGameDao.remove(gameName);
     }
 
     @Test
@@ -26,13 +26,13 @@ class GameDaoTest {
     void save() {
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(() -> gameDao.save(board, gameName, new White()));
+        Assertions.assertThatNoException().isThrownBy(() -> chessGameDao.save(board, gameName, new White()));
     }
 
     @Test
     @DisplayName("DB에 읽어오는 값이 존재하지 않을 경우를 확인한다.")
     void readNull() {
-        Assertions.assertThatNoException().isThrownBy(() -> assertThat(gameDao.read(gameName)).isNull());
+        Assertions.assertThatNoException().isThrownBy(() -> assertThat(chessGameDao.read(gameName)).isNull());
     }
 
     @Test
@@ -40,8 +40,8 @@ class GameDaoTest {
     void read() {
         Board board = new Board(ChessBoardFactory.create());
 
-        Assertions.assertThatNoException().isThrownBy(() -> gameDao.save(board, gameName, new White()));
-        Assertions.assertThatNoException().isThrownBy(() -> assertThat(gameDao.read(gameName)).isNotNull());
+        Assertions.assertThatNoException().isThrownBy(() -> chessGameDao.save(board, gameName, new White()));
+        Assertions.assertThatNoException().isThrownBy(() -> assertThat(chessGameDao.read(gameName)).isNotNull());
     }
 
     @Test
@@ -49,9 +49,9 @@ class GameDaoTest {
     void remove() {
         Board board = new Board(ChessBoardFactory.create());
 
-        gameDao.save(board, gameName, new White());
+        chessGameDao.save(board, gameName, new White());
 
-        Assertions.assertThatNoException().isThrownBy(() -> gameDao.remove(gameName));
+        Assertions.assertThatNoException().isThrownBy(() -> chessGameDao.remove(gameName));
     }
 
     @Nested
@@ -62,17 +62,17 @@ class GameDaoTest {
         @Test
         @DisplayName("White팀 턴일 경우 turn이 잘 저장되었는지 확인한다.")
         void Should_FindWhite_WhenWhiteTurn() {
-            gameDao.save(board, gameName, new White());
+            chessGameDao.save(board, gameName, new White());
 
-            Assertions.assertThat(gameDao.findTurnByGame(gameName)).isEqualTo("White");
+            Assertions.assertThat(chessGameDao.findTurnByGame(gameName)).isEqualTo("White");
         }
 
         @Test
         @DisplayName("Black팀 턴일 경우 turn이 잘 저장되었는지 확인한다.")
         void Should_FindBlack_WhenBlackTurn() {
-            gameDao.save(board, gameName, new Black());
+            chessGameDao.save(board, gameName, new Black());
 
-            Assertions.assertThat(gameDao.findTurnByGame(gameName)).isEqualTo("Black");
+            Assertions.assertThat(chessGameDao.findTurnByGame(gameName)).isEqualTo("Black");
         }
     }
 }
