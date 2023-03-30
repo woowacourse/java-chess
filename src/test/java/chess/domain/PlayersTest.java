@@ -15,8 +15,8 @@ class PlayersTest {
     @BeforeEach
     void setUp() {
         Pieces pieces = new Pieces();
-        whitePieces = pieces.createWhitePieces();
-        Pieces blackPieces = pieces.createBlackPieces();
+        whitePieces = Pieces.createWhitePieces();
+        Pieces blackPieces = Pieces.createBlackPieces();
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
         players = Players.of(whitePlayer, blackPlayer, Color.WHITE);
@@ -31,11 +31,11 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("모든 킹이 살아 있지 않다면 false를 반환한다.")
+    @DisplayName("모든 킹이 살아 있다면 true를 반환한다.")
     void everyKingAlive() {
         // when, then
-        Assertions.assertThat(players.notEveryKingAlive())
-                .isFalse();
+        Assertions.assertThat(players.everyKingAlive())
+                .isTrue();
     }
 
     @Test
