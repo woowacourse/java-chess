@@ -108,7 +108,7 @@ public class ChessBoardDao {
         final var query = "UPDATE chess_board SET" +
                 " side = CASE WHEN x = ? AND y = ? THEN ? ELSE ? END," +
                 " type = CASE WHEN x = ? AND y = ? THEN ? ELSE ? END" +
-                " WHERE (x = ? AND y = ?) OR (X = ? AND y = ?)";
+                " WHERE (x = ? AND y = ?) OR (x = ? AND y = ?)";
         try (final Connection connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, from.getRankSymbol());

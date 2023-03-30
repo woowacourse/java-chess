@@ -11,6 +11,8 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ChessBoard {
+    private static final int SAME_FILE_PAWN_STANDARD = 2;
+    private static final double HALF_SCORE = 0.5;
     private final Map<Square, Piece> pieces;
     private Turn turn;
 
@@ -82,8 +84,8 @@ public class ChessBoard {
 
         return sameFilePawnCounts.values()
                 .stream()
-                .filter(it -> it >= 2)
-                .mapToDouble(it -> it.intValue() * 0.5)
+                .filter(it -> it >= SAME_FILE_PAWN_STANDARD)
+                .mapToDouble(it -> it.intValue() * HALF_SCORE)
                 .sum();
     }
 

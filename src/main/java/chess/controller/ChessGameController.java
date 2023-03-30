@@ -4,10 +4,10 @@ import chess.database.ChessBoardDao;
 import chess.database.ChessGameDao;
 import chess.domain.*;
 import chess.domain.chesspiece.Piece;
-import chess.view.InputView;
-import chess.view.OutputView;
 import chess.dto.ChessBoardDto;
 import chess.dto.CommandDto;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 import java.util.List;
 import java.util.Map;

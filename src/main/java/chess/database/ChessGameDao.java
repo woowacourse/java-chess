@@ -1,6 +1,6 @@
 package chess.database;
 
-import chess.domain.*;
+import chess.domain.Turn;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
