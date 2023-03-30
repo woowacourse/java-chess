@@ -58,10 +58,9 @@ public class PlayingChessGame extends ChessGame {
     }
 
     private boolean isDraw(final Map<Color, Double> scoreByColor) {
-        return 1 == scoreByColor.values()
-                .stream()
-                .distinct()
-                .count();
+        final Double whiteScore = scoreByColor.get(Color.WHITE);
+        final Double blackScore = scoreByColor.get(Color.BLACK);
+        return Objects.equals(whiteScore, blackScore);
     }
 
     private Color findWinnerColor(final Map<Color, Double> scoreByColor) {
