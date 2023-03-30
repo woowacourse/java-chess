@@ -38,4 +38,8 @@ public class PieceToScoreConverter {
         piecesAndScores.put(new Pawn(Camp.WHITE), 1.0);
         piecesAndScores.put(new Pawn(Camp.BLACK), 1.0);
     }
+
+    public static boolean isPawn(Piece piece) {
+        return convert(piece) == 1;
+    }
 }

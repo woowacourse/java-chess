@@ -143,14 +143,17 @@ public class ChessService {
 
     private void calculateScore(HashMap<Camp, Double> campAndScores, Camp camp, Predicate<Piece> predicate) {
         campAndScores.put(camp,
-            chessBoard.getBoard().values().stream().filter(predicate).mapToDouble(PieceToScoreConverter::convert).sum()
-                - calculatePawnDisadvantage(predicate));
+            chessBoard.getBoard()
+                .values()
+                .stream()
+                .filter(predicate)
+                .mapToDouble(PieceToScoreConverter::convert)
+                .sum() - calculatePawnDisadvantage(predicate));
     }
 
     private double calculatePawnDisadvantage(Predicate<Piece> predicate) {
         double disadvantage = 0;
         Map<Integer, List<Square>> fileAndPieces = groupByFile(predicate);
-
         Map<Integer, Long> fileAndPawnCounts = countOverPawn(fileAndPieces);
 
         for (Long count : fileAndPawnCounts.values()) {
@@ -165,7 +168,7 @@ public class ChessService {
             .stream()
             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue()
                 .stream()
-                .filter(square -> PieceToScoreConverter.convert(chessBoard.getBoard().get(square)) == 1)
+                .filter(square -> PieceToScoreConverter.isPawn(chessBoard.getBoard().get(square)))
                 .count() - 1));
     }
 
