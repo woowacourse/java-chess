@@ -14,7 +14,7 @@ public class MockChessGameDao implements ChessGameDao {
     private final AtomicLong pk = new AtomicLong(0L);
 
     @Override
-    public Optional<ChessGameEntity> findByUserId(final Long userId) {
+    public Optional<ChessGameEntity> findByUserId(final long userId) {
         return STORAGE.values().stream()
                 .filter(chessGameEntity -> chessGameEntity.getUserId().equals(userId))
                 .map(chessGameEntity -> new ChessGameEntity(chessGameEntity.getId(), chessGameEntity.getCurrentCamp(),
@@ -25,20 +25,20 @@ public class MockChessGameDao implements ChessGameDao {
     @Override
     public Long save(final ChessGameEntity chessGameEntity) {
         final long key = pk.addAndGet(1L);
-        ChessGameEntity savedChessGameEntity = new ChessGameEntity(key,
+        final ChessGameEntity savedChessGameEntity = new ChessGameEntity(key,
                 chessGameEntity.getCurrentCamp(), chessGameEntity.getUserId());
         STORAGE.put(key, savedChessGameEntity);
         return pk.longValue();
     }
 
     @Override
-    public void updateCurrentCampById(final Long id, final CampType currentCamp) {
+    public void updateCurrentCampById(final long id, final CampType currentCamp) {
         final ChessGameEntity chessGameEntity = STORAGE.get(id);
-        STORAGE.put(id, new ChessGameEntity(currentCamp.name(), chessGameEntity.getUserId()));
+        STORAGE.put(id, new ChessGameEntity(chessGameEntity.getId(), currentCamp.name(), chessGameEntity.getUserId()));
     }
 
     @Override
-    public void deleteByUserId(final Long userId) {
+    public void deleteByUserId(final long userId) {
         STORAGE.keySet().stream()
                 .filter(key -> Objects.equals(STORAGE.get(key).getUserId(), userId))
                 .forEach(STORAGE::remove);

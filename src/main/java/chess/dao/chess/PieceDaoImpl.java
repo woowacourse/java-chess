@@ -14,7 +14,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public List<PieceEntity> findByChessGameId(final Long chessGameId) {
+    public List<PieceEntity> findByChessGameId(final long chessGameId) {
         final String query = "SELECT * FROM piece WHERE chess_game_id = ?";
         return jdbcTemplate.findAll(query, (resultSet -> PieceEntity.create(
                 resultSet.getLong("piece_id"),
@@ -37,7 +37,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void deleteByPositions(final Long chessGameId, final PieceEntity... pieceEntity) {
+    public void deleteByPositions(final long chessGameId, final PieceEntity... pieceEntity) {
         if (pieceEntity.length == 1) {
             deleteOneByPosition(chessGameId, pieceEntity[0]);
         }
@@ -47,14 +47,14 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void deleteByChessGameId(final Long chessGameId) {
+    public void deleteByChessGameId(final long chessGameId) {
         final String query = "DELETE FROM piece where chess_game_id = ?";
 
         jdbcTemplate.executeUpdate(query,
                 String.valueOf(chessGameId));
     }
 
-    private void deleteOneByPosition(final Long chessGameId, final PieceEntity pieceEntity) {
+    private void deleteOneByPosition(final long chessGameId, final PieceEntity pieceEntity) {
         final String query = "DELETE FROM piece WHERE chess_game_id = ? " +
                 "and piece_rank = ? and piece_file = ?";
 
@@ -64,7 +64,7 @@ public class PieceDaoImpl implements PieceDao {
                 String.valueOf(pieceEntity.getFile()));
     }
 
-    private void deleteTwoByPosition(final Long chessGameId, final PieceEntity source, final PieceEntity destination) {
+    private void deleteTwoByPosition(final long chessGameId, final PieceEntity source, final PieceEntity destination) {
         final String query = "DELETE FROM piece WHERE chess_game_id = ? " +
                 "and (" +
                 " (piece_rank = ? and piece_file = ?) or (piece_rank = ? and piece_file = ?)" +

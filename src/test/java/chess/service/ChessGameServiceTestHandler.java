@@ -39,7 +39,7 @@ class ChessGameServiceTestHandler {
     @DisplayName("사용자의 아이디에 해당하는 체스 게임이 존재하면 해당 게임을 반환한다.")
     void getOrCreateChessGame() {
         // given
-        final Long userId = 1L;
+        final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
         final ChessBoard mockProgressBoard = ChessBoardHelper.createMockProgressBoard();
         final ChessGame expected = new ChessGame(mockProgressBoard, CampType.WHITE);
@@ -56,11 +56,11 @@ class ChessGameServiceTestHandler {
     @DisplayName("사용자의 아이디를 기준으로 체스 게임을 조회한다")
     void getChessGameId() {
         // given
-        final Long userId = 1L;
+        final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
 
         // when
-        Long chessGameId = chessGameService.getChessGameId(userId);
+        long chessGameId = chessGameService.getChessGameId(userId);
 
         // then
         assertThat(chessGameId)
@@ -71,7 +71,7 @@ class ChessGameServiceTestHandler {
     @DisplayName("체스말 정보를 바탕으로 체스말을 저장한다")
     void savePiece() {
         // given
-        final Long userId = 1L;
+        final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
 
         // when
@@ -79,7 +79,7 @@ class ChessGameServiceTestHandler {
                 "PAWN", "WHITE"));
 
         // then
-        final Long chessGameId = chessGameService.getChessGameId(1L);
+        final long chessGameId = chessGameService.getChessGameId(1L);
         assertThat(chessGameId)
                 .isEqualTo(1L);
     }
@@ -88,7 +88,7 @@ class ChessGameServiceTestHandler {
     @DisplayName("체스 게임 아이디에 해당하는 진영 정보를 업데이트한다.")
     void updateCurrentCamp() {
         // given
-        final Long userId = 1L;
+        final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
         final CampType changedCamp = CampType.BLACK;
 
@@ -106,7 +106,7 @@ class ChessGameServiceTestHandler {
     @DisplayName("입력받은 위치에 해당하는 체스말을 제거한다")
     void deletePieces() {
         // given
-        final Long userId = 1L;
+        final long userId = 1L;
         final MockChessGameDao chessGameDao = new MockChessGameDao();
         chessGameDao.save(new ChessGameEntity("WHITE", userId));
         final ChessGameService chessGameService = new ChessGameService(chessGameDao, new ChessBoardService(new MockPieceDao()));
@@ -126,7 +126,7 @@ class ChessGameServiceTestHandler {
     @DisplayName("사용자의 아이디에 해당하는 체스 기물과 체스판 정보를 제거한다")
     void clear() {
         // given
-        final Long userId = 1L;
+        final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
 
         // when
@@ -139,14 +139,14 @@ class ChessGameServiceTestHandler {
                 .isEqualTo(expected);
     }
 
-    private ChessGameService getChessGameService(final Long userId) {
+    private ChessGameService getChessGameService(final long userId) {
         final MockChessGameDao chessGameDao = new MockChessGameDao();
-        Long chessGameId = chessGameDao.save(new ChessGameEntity("WHITE", userId));
+        final long chessGameId = chessGameDao.save(new ChessGameEntity(1L, "WHITE", userId));
         final MockPieceDao pieceDao = getMockPieceDao(chessGameId);
         return new ChessGameService(chessGameDao, new ChessBoardService(pieceDao));
     }
 
-    private MockPieceDao getMockPieceDao(final Long chessGameId) {
+    private MockPieceDao getMockPieceDao(final long chessGameId) {
         final List<PieceEntity> pieceEntities = PieceEntityHelper.createPieceEntities(chessGameId);
         final MockPieceDao pieceDao = new MockPieceDao();
         pieceEntities.forEach(pieceDao::save);

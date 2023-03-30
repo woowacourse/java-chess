@@ -7,10 +7,10 @@ import chess.service.ChessGameService;
 import java.util.Optional;
 
 public final class StartController implements Controller {
-    private final Long userId;
+    private final long userId;
     private final ChessGameService chessGameService;
 
-    public StartController(final Long userId, final ChessGameService chessGameService) {
+    public StartController(final long userId, final ChessGameService chessGameService) {
         this.userId = userId;
         this.chessGameService = chessGameService;
     }

@@ -6,11 +6,11 @@ import chess.entity.ChessGameEntity;
 import java.util.Optional;
 
 public interface ChessGameDao {
-    Optional<ChessGameEntity> findByUserId(final Long userId);
+    Optional<ChessGameEntity> findByUserId(final long userId);
 
     Long save(final ChessGameEntity chessGameEntity);
 
-    void updateCurrentCampById(Long id, CampType currentCamp);
+    void updateCurrentCampById(long id, CampType currentCamp);
 
-    void deleteByUserId(Long userId);
+    void deleteByUserId(long userId);
 }

@@ -14,7 +14,7 @@ public class MockPieceDao implements PieceDao {
     private final AtomicLong pk = new AtomicLong(0L);
 
     @Override
-    public List<PieceEntity> findByChessGameId(final Long chessGameId) {
+    public List<PieceEntity> findByChessGameId(final long chessGameId) {
         return STORAGE.values().stream()
                 .filter(pieceEntity -> pieceEntity.getChessGameId().equals(chessGameId))
                 .map(pieceEntity -> PieceEntity.create(
@@ -31,7 +31,7 @@ public class MockPieceDao implements PieceDao {
     }
 
     @Override
-    public void deleteByPositions(final Long chessGameId, final PieceEntity... pieceEntity) {
+    public void deleteByPositions(final long chessGameId, final PieceEntity... pieceEntity) {
         delete(pieceEntity[0]);
         if (pieceEntity.length == 2) {
             delete(pieceEntity[1]);
@@ -39,7 +39,7 @@ public class MockPieceDao implements PieceDao {
     }
 
     @Override
-    public void deleteByChessGameId(final Long chessGameId) {
+    public void deleteByChessGameId(final long chessGameId) {
         STORAGE.keySet().stream()
                 .filter(key -> Objects.equals(STORAGE.get(key).getChessGameId(), chessGameId))
                 .forEach(STORAGE::remove);

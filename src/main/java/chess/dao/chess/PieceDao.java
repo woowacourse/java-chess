@@ -5,11 +5,11 @@ import chess.entity.PieceEntity;
 import java.util.List;
 
 public interface PieceDao {
-    List<PieceEntity> findByChessGameId(final Long chessGameId);
+    List<PieceEntity> findByChessGameId(final long chessGameId);
 
     Long save(final PieceEntity pieceEntity);
 
-    void deleteByPositions(final Long chessGameId, final PieceEntity... pieceEntity);
+    void deleteByPositions(final long chessGameId, final PieceEntity... pieceEntity);
 
-    void deleteByChessGameId(Long chessGameId);
+    void deleteByChessGameId(long chessGameId);
 }

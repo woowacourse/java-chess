@@ -14,10 +14,10 @@ import java.util.Optional;
 
 public final class MoveController implements Controller {
 
-    private final Long userId;
+    private final long userId;
     private final ChessGameService chessGameService;
 
-    MoveController(final Long userId, final ChessGameService chessGameService) {
+    MoveController(final long userId, final ChessGameService chessGameService) {
         this.userId = userId;
         this.chessGameService = chessGameService;
     }
@@ -72,19 +72,19 @@ public final class MoveController implements Controller {
     }
 
     private void savePlayInfo(final Position source, final Position target, final ChessGame chessGame) {
-        final Long chessGameId = chessGameService.getChessGameId(userId);
+        final long chessGameId = chessGameService.getChessGameId(userId);
         deletePieces(source, target, chessGameId);
         savePieces(target, chessGameId, chessGame);
         chessGameService.updateCurrentCamp(chessGameId, chessGame.getCurrentCamp());
     }
 
-    private void deletePieces(final Position source, final Position target, final Long chessGameId) {
+    private void deletePieces(final Position source, final Position target, final long chessGameId) {
         final PieceEntity sourcePiece = PieceEntity.createWithLocation(chessGameId, source.getRank(), source.getFile());
         final PieceEntity targetPiece = PieceEntity.createWithLocation(chessGameId, target.getRank(), target.getFile());
         chessGameService.deletePieces(sourcePiece, targetPiece);
     }
 
-    private void savePieces(final Position target, final Long chessGameId, final ChessGame chessGame) {
+    private void savePieces(final Position target, final long chessGameId, final ChessGame chessGame) {
         final Map<Position, Piece> chessBoard = chessGame.getChessBoard();
         final Piece piece = chessBoard.get(target);
         final PieceEntity savedPiece = PieceEntity.createWithChessGameId(chessGameId, target.getRank(),

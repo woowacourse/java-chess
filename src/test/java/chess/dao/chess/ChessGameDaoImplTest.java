@@ -18,12 +18,12 @@ class ChessGameDaoImplTest {
         final ChessGameDao chessGameDao = new MockChessGameDao();
         final ChessGameEntity createdChessGameEntity = new ChessGameEntity(1L, "WHITE", 1L);
         chessGameDao.save(createdChessGameEntity);
-        final Long expected = createdChessGameEntity.getId();
+        final long expected = createdChessGameEntity.getId();
         final long userId = 1L;
 
         // when
         final Optional<ChessGameEntity> chessGameEntity = chessGameDao.findByUserId(userId);
-        final Long actual = chessGameEntity.orElseThrow().getId();
+        final long actual = chessGameEntity.orElseThrow().getId();
 
         // then
         assertThat(actual)
@@ -52,7 +52,7 @@ class ChessGameDaoImplTest {
         final ChessGameDao chessGameDao = new MockChessGameDao();
 
         // when
-        final Long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+        final long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
 
         // then
         assertThat(savedChessGameId)
@@ -64,14 +64,14 @@ class ChessGameDaoImplTest {
     void updateCurrentCampById() {
         // given
         final ChessGameDao chessGameDao = new MockChessGameDao();
-        final Long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
-        final Long expected = new ChessGameEntity("BLACK", 1L).getId();
+        final long savedChessGameId = chessGameDao.save(new ChessGameEntity("WHITE", 1L));
+        final long expected = new ChessGameEntity(1L, "BLACK", 1L).getId();
 
         // when
         chessGameDao.updateCurrentCampById(savedChessGameId, CampType.BLACK);
 
         // then
-        final Long actual = chessGameDao.findByUserId(1L).orElseThrow().getId();
+        final long actual = chessGameDao.findByUserId(1L).orElseThrow().getId();
         assertThat(actual)
                 .isEqualTo(expected);
     }

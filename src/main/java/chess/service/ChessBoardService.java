@@ -17,7 +17,7 @@ public class ChessBoardService {
         this.pieceDao = pieceDao;
     }
 
-    ChessBoard getByChessGameId(final Long chessGameId) {
+    ChessBoard getByChessGameId(final long chessGameId) {
         final List<PieceEntity> pieceEntities = pieceDao.findByChessGameId(chessGameId);
         return ChessBoardMapper.from(pieceEntities);
     }

@@ -18,7 +18,7 @@ public final class ChessGameService {
         this.chessBoardService = chessBoardService;
     }
 
-    public ChessGame getOrCreateChessGame(final Long userId) {
+    public ChessGame getOrCreateChessGame(final long userId) {
         final Optional<ChessGameEntity> findChessGameEntity = chessGameDao.findByUserId(userId);
         if (findChessGameEntity.isEmpty()) {
             return getNewChessGame(userId);
@@ -27,7 +27,7 @@ public final class ChessGameService {
         return getExistChessGame(chessGameEntity);
     }
 
-    public Long getChessGameId(final Long userId) {
+    public long getChessGameId(final long userId) {
         final Optional<ChessGameEntity> findChessGameEntity = chessGameDao.findByUserId(userId);
         if (findChessGameEntity.isEmpty()) {
             throw new IllegalArgumentException("저장된 데이터가 존재하지 않습니다.");
@@ -39,7 +39,7 @@ public final class ChessGameService {
         chessBoardService.savePiece(pieceEntity);
     }
 
-    public void updateCurrentCamp(final Long chessGameId, final CampType currentCamp) {
+    public void updateCurrentCamp(final long chessGameId, final CampType currentCamp) {
         chessGameDao.updateCurrentCampById(chessGameId, currentCamp);
     }
 
@@ -47,15 +47,15 @@ public final class ChessGameService {
         chessBoardService.deletePieces(sourcePiece, targetPiece);
     }
 
-    public void clear(final Long userId) {
-        final Long chessGameId = getChessGameId(userId);
+    public void clear(final long userId) {
+        final long chessGameId = getChessGameId(userId);
         chessBoardService.deleteByChessGameId(chessGameId);
         chessGameDao.deleteByUserId(userId);
     }
 
-    private ChessGame getNewChessGame(final Long userId) {
+    private ChessGame getNewChessGame(final long userId) {
         final CampType currentCamp = CampType.WHITE;
-        final Long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
+        final long chessGameId = chessGameDao.save(new ChessGameEntity(currentCamp.name(), userId));
         final ChessGame chessGame = new ChessGame(currentCamp);
         chessBoardService.saveAll(chessGameId, chessGame.getChessBoard());
         return chessGame;
@@ -68,7 +68,7 @@ public final class ChessGameService {
     }
 
     private ChessBoard getChessBoard(final ChessGameEntity chessGameEntity) {
-        final Long chessGameId = chessGameEntity.getId();
+        final long chessGameId = chessGameEntity.getId();
         return chessBoardService.getByChessGameId(chessGameId);
     }
 }

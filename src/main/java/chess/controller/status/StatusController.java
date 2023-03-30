@@ -12,10 +12,10 @@ import chess.view.OutputView;
 import java.util.Optional;
 
 public final class StatusController implements Controller {
-    private final Long userId;
+    private final long userId;
     private final ChessGameService chessGameService;
 
-    StatusController(final Long userId, final ChessGameService chessGameService) {
+    StatusController(final long userId, final ChessGameService chessGameService) {
         this.userId = userId;
         this.chessGameService = chessGameService;
     }

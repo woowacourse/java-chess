@@ -25,7 +25,7 @@ public final class ChessHandler {
     }
 
     public void run() {
-        final Long userId = getUserId();
+        final long userId = getUserId();
         OutputView.printStartMessage();
         Controller controller = new StartController(userId, chessGameService);
         while (controller.isRun()) {
@@ -48,12 +48,12 @@ public final class ChessHandler {
         }
     }
 
-    private Long getUserId() {
+    private long getUserId() {
         OutputView.printUserNameInputMessage();
         return getUserIdWithRetry(InputView::getCommand);
     }
 
-    private Long getUserIdWithRetry(final Supplier<String> supplier) {
+    private long getUserIdWithRetry(final Supplier<String> supplier) {
         try {
             final String name = supplier.get();
             return userService.getOrCreateUserId(name);

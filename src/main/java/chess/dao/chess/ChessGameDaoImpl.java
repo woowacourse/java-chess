@@ -14,7 +14,7 @@ public final class ChessGameDaoImpl implements ChessGameDao {
     }
 
     @Override
-    public Optional<ChessGameEntity> findByUserId(final Long userId) {
+    public Optional<ChessGameEntity> findByUserId(final long userId) {
         final String query = "SELECT * FROM chess_game WHERE user_id = ?";
 
         return jdbcTemplate.findOne(query, (resultSet -> new ChessGameEntity(
@@ -34,7 +34,7 @@ public final class ChessGameDaoImpl implements ChessGameDao {
     }
 
     @Override
-    public void updateCurrentCampById(final Long id, final CampType currentCamp) {
+    public void updateCurrentCampById(final long id, final CampType currentCamp) {
         final String query = "UPDATE chess_game SET current_camp = ? WHERE chess_game_id = ?";
 
         jdbcTemplate.executeUpdate(query,
@@ -43,7 +43,7 @@ public final class ChessGameDaoImpl implements ChessGameDao {
     }
 
     @Override
-    public void deleteByUserId(final Long userId) {
+    public void deleteByUserId(final long userId) {
         final String query = "DELETE FROM chess_game where user_id = ?";
 
         jdbcTemplate.executeUpdate(query,

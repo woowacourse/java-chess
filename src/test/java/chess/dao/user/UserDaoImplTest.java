@@ -17,11 +17,11 @@ class UserDaoImplTest {
         final UserDao userDao = new MockUserDao();
         final String name = "journey";
         userDao.save(name);
-        final Long expected = new UserEntity(1L, name).getId();
+        final long expected = new UserEntity(1L, name).getId();
 
         // when
         final Optional<UserEntity> userEntity = userDao.findByName(name);
-        final Long actual = userEntity.orElseThrow().getId();
+        final long actual = userEntity.orElseThrow().getId();
 
         // then
         assertThat(actual)
