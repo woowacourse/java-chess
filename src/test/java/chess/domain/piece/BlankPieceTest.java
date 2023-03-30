@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.property.Color;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class BlankPieceTest {
     @DisplayName("이동 명령시 예외를 발생한다")
     void move_throws_exception() {
         assertThatThrownBy(() -> blankPiece.move(BlankPiece.of(A2)))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.ACCESS_BLANK_PIECE.name());
     }
 
@@ -34,7 +35,7 @@ class BlankPieceTest {
     @DisplayName("이동 경로 반환 명령시 예외를 발생한다")
     void get_passing_positions_throws_exception() {
         assertThatThrownBy(() -> blankPiece.getPassingPositions(A2))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.ACCESS_BLANK_PIECE.name());
     }
 }

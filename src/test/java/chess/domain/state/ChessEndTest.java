@@ -7,6 +7,7 @@ import chess.domain.ChessGame;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -39,7 +40,7 @@ class ChessEndTest {
                     new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.start())
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.GAME_END.name());
         }
 
@@ -52,7 +53,7 @@ class ChessEndTest {
                     new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.move(A2, A4))
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.GAME_END.name());
         }
 
@@ -65,7 +66,7 @@ class ChessEndTest {
                     new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.end())
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.GAME_END.name());
         }
 
@@ -78,7 +79,7 @@ class ChessEndTest {
                     new InMemoryPieceDao());
 
             assertThatThrownBy(() -> chessEnd.status())
-                    .isInstanceOf(IllegalStateException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.GAME_END.name());
         }
 

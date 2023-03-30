@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -58,7 +59,7 @@ class ChessGameOverTest {
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessGameOver.move(A3, A1))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.GAME_OVER_STATE.name());
     }
 

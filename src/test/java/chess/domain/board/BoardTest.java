@@ -8,6 +8,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -102,7 +103,7 @@ class BoardTest {
         final Board board = Board.createWith(piecesGenerator);
 
         assertThatThrownBy(() -> board.move(D8, D5))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.PIECE_CAN_NOT_FOUND.name());
     }
 
@@ -115,7 +116,7 @@ class BoardTest {
         final Board board = Board.createWith(piecesGenerator);
 
         assertThatThrownBy(() -> board.move(D8, E6))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
@@ -129,7 +130,7 @@ class BoardTest {
         final Board board = Board.createWith(piecesGenerator);
 
         assertThatThrownBy(() -> board.move(D8, D5))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.PIECE_MOVING_PATH_BLOCKED.name());
     }
 
@@ -143,7 +144,7 @@ class BoardTest {
         final Board board = Board.createWith(piecesGenerator);
 
         assertThatThrownBy(() -> board.move(D8, D7))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.TARGET_IS_SAME_COLOR.name());
     }
 

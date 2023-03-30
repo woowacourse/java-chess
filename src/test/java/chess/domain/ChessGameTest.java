@@ -9,6 +9,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.property.Color;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -67,7 +68,7 @@ class ChessGameTest {
                 TEST_GAME_ROOM_ID);
 
         assertThatThrownBy(() -> chessGame.move(A7, A6))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.INVALID_TURN.name());
     }
 

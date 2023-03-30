@@ -4,6 +4,7 @@ import chess.TestPiecesGenerator;
 import chess.dao.InMemoryChessGameDao;
 import chess.dao.InMemoryPieceDao;
 import chess.domain.ChessGame;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class ChessReadyTest {
                 new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessReady.move(A2, A3))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.GAME_NOT_INITIALIZED.name());
     }
 
@@ -65,7 +66,7 @@ class ChessReadyTest {
                 new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessReady.status())
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.GAME_NOT_INITIALIZED.name());
     }
 
@@ -78,7 +79,7 @@ class ChessReadyTest {
                 new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessReady.getExistingPieces())
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.GAME_NOT_INITIALIZED.name());
     }
 

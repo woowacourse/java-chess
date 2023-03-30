@@ -5,6 +5,7 @@ import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +47,7 @@ class KnightTest {
         final Piece knight = new Knight(C8, Color.BLACK);
 
         assertThatThrownBy(() -> knight.getPassingPositions(Position.of(file, rank)))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
@@ -75,7 +76,7 @@ class KnightTest {
         final Piece sameColorPiece = new Pawn(C6, BLACK);
 
         assertThatThrownBy(() -> originalKnight.move(sameColorPiece))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.TARGET_IS_SAME_COLOR.name());
     }
 }

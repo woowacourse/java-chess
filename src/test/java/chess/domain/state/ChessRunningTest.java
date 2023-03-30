@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.maker.StartingPiecesGenerator;
 import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +46,7 @@ class ChessRunningTest {
                 new InMemoryPieceDao());
 
         assertThatThrownBy(() -> chessRunning.start())
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.GAME_ALREADY_RUNNING.name());
     }
 
