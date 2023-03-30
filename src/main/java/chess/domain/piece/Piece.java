@@ -6,25 +6,25 @@ import chess.domain.Team;
 
 public abstract class Piece {
     private final Team team;
-    private final PieceType pieceType;
+    private final PieceType type;
 
-    protected Piece(final Team team, final PieceType pieceType) {
+    protected Piece(final Team team, final PieceType type) {
         this.team = team;
-        this.pieceType = pieceType;
+        this.type = type;
     }
 
     public abstract void canMove(final int fileInterval, final int rankInterval, final boolean canAttack);
 
     public final boolean isSameType(PieceType pieceType) {
-        return this.pieceType == pieceType;
+        return this.type == pieceType;
     }
 
-    public final Team getTeam() {
+    public final Team team() {
         return team;
     }
 
     public final String getName() {
-        String name = pieceType.getName();
+        String name = type.getName();
         if (team == BLACK) {
             return name.toUpperCase();
         }
@@ -32,11 +32,15 @@ public abstract class Piece {
     }
 
     public final double score() {
-        return pieceType.getScore();
+        return type.getScore();
+    }
+
+    public PieceType type() {
+        return type;
     }
 
     @Override
     public String toString() {
-        return String.join(" ", team.toString(), pieceType.toString());
+        return String.join(" ", team.toString(), type.toString());
     }
 }

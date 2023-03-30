@@ -81,7 +81,7 @@ class BoardTest {
     @ParameterizedTest(name = "source 위치에 있는 말의 색이 현재 차례의 팀의 색과 같은지 확인한다.")
     @CsvSource({"a2,WHITE,true", "b7,BLACK,true", "c8,WHITE,false"})
     void isSameColor(String source, Team team, boolean expected) {
-        assertThat(board.isSameColor(of(source), team)).isEqualTo(expected);
+        assertThat(board.isSameTeam(of(source), team)).isEqualTo(expected);
     }
 
     @DisplayName("팀의 남아있는 말들로 점수를 계산한다.")

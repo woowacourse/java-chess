@@ -27,9 +27,9 @@ public class Board {
         this.board = board;
     }
 
-    public boolean isSameColor(final Square source, final Team team) {
+    public boolean isSameTeam(final Square source, final Team team) {
         Piece piece = findPieceBy(source);
-        return piece.getTeam() == team;
+        return piece.team() == team;
     }
 
     public void move(final Square source, final Square target) {
@@ -46,7 +46,7 @@ public class Board {
     private void updateSquare(final Square source, final Square target) {
         Piece piece = findPieceBy(source);
         if (piece.isSameType(INITIAL_PAWN)) {
-            piece = new Pawn(piece.getTeam());
+            piece = new Pawn(piece.team());
         }
         board.put(target, piece);
         board.remove(source);
@@ -54,8 +54,8 @@ public class Board {
 
     private boolean canMove(final Square source, final Square target) {
         final Piece piece = findPieceBy(source);
-        final int fileInterval = File.calculate(source.getFile(), target.getFile());
-        final int rankInterval = Rank.calculate(source.getRank(), target.getRank());
+        final int fileInterval = File.calculate(source.file(), target.file());
+        final int rankInterval = Rank.calculate(source.rank(), target.rank());
         piece.canMove(fileInterval, rankInterval, isEnemy(target, piece));
         if (piece.isSameType(KNIGHT)) {
             return !board.containsKey(target);
@@ -100,7 +100,7 @@ public class Board {
     }
 
     private boolean isSameTeam(final Piece piece, final Piece nextPiece) {
-        return nextPiece.getTeam() == piece.getTeam();
+        return nextPiece.team() == piece.team();
     }
 
     private int getMoveDirection(final int interval) {
@@ -117,7 +117,7 @@ public class Board {
 
     public double calculateTotalScoreBy(Team team) {
         return board.entrySet().stream()
-                .filter(entry -> entry.getValue().getTeam() == team)
+                .filter(entry -> entry.getValue().team() == team)
                 .mapToDouble(entry -> calculateScore(entry.getKey(), entry.getValue()))
                 .sum();
     }
@@ -134,9 +134,9 @@ public class Board {
 
     private long countPawnByFileAndTeam(Square square, Piece piece) {
         return board.entrySet().stream()
-                .filter(entry -> entry.getKey().getFile() == square.getFile())
+                .filter(entry -> entry.getKey().file() == square.file())
                 .filter(entry -> entry.getValue().isSameType(PAWN) || entry.getValue().isSameType(INITIAL_PAWN))
-                .filter(entry -> entry.getValue().getTeam() == piece.getTeam())
+                .filter(entry -> entry.getValue().team() == piece.team())
                 .count();
     }
 

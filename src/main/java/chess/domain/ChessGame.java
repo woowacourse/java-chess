@@ -47,7 +47,7 @@ public class ChessGame {
     }
 
     private void validateSameTeam(final Square source) {
-        if (!board.isSameColor(source, team)) {
+        if (!board.isSameTeam(source, team)) {
             throw new IllegalArgumentException("다른 색 말을 움직여 주세요.");
         }
     }
@@ -78,7 +78,7 @@ public class ChessGame {
         return board;
     }
 
-    public Team getTeam() {
+    public Team team() {
         return team;
     }
 

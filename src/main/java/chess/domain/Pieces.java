@@ -78,7 +78,7 @@ public class Pieces {
 
     public static Piece of(Team team, PieceType pieceType) {
         return cache.stream()
-                .filter(piece -> piece.isSameType(pieceType) && piece.getTeam() == team)
+                .filter(piece -> piece.isSameType(pieceType) && piece.team() == team)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력한 조건의 Piece가 없습니다."));
     }

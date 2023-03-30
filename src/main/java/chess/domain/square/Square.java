@@ -38,11 +38,11 @@ public class Square {
         return Objects.hash(file, rank);
     }
 
-    public File getFile() {
+    public File file() {
         return file;
     }
 
-    public Rank getRank() {
+    public Rank rank() {
         return rank;
     }
 
