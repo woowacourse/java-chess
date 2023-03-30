@@ -7,6 +7,7 @@ import chess.domain.piece.Team;
 import chess.domain.piece.coordinate.Column;
 import chess.domain.piece.coordinate.Coordinate;
 import chess.view.SymbolMatcher;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,8 +39,8 @@ public class RowPieces implements Comparable<RowPieces> {
 
     private List<Piece> makePiecesByTeam(Team team) {
         return pieces.stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .collect(Collectors.toList());
+                .filter(piece -> piece.isSameTeam(team))
+                .collect(Collectors.toList());
     }
 
     public boolean checkPawnByColumn(Column column, Team team) {
@@ -62,9 +63,9 @@ public class RowPieces implements Comparable<RowPieces> {
 
     private Piece findPieceByCoordinate(RowPieces rowPieces, Coordinate coordinate) {
         return rowPieces.pieces.stream()
-            .filter(piece -> piece.hasCoordinate(coordinate))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 컬럼입니다"));
+                .filter(piece -> piece.hasCoordinate(coordinate))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 컬럼입니다"));
     }
 
     public boolean isPieceByColumnNotEmpty(Coordinate coordinate) {
@@ -72,9 +73,9 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     public void move(
-        RowPieces destinationRowPieces,
-        Coordinate sourceCoordinate,
-        Coordinate destinationCoordinate
+            RowPieces destinationRowPieces,
+            Coordinate sourceCoordinate,
+            Coordinate destinationCoordinate
     ) {
         Piece sourcePiece = findPieceByCoordinate(this, sourceCoordinate);
         Piece newPiece = sourcePiece.newSourcePiece(destinationCoordinate);
@@ -97,15 +98,12 @@ public class RowPieces implements Comparable<RowPieces> {
 
     public boolean hasCoordinate(Coordinate coordinate) {
         return this.pieces.stream().anyMatch(
-            piece -> piece.hasCoordinate(coordinate)
+                piece -> piece.hasCoordinate(coordinate)
         );
     }
 
     public boolean isContainsKing(Team team) {
-        List<Piece> extractPieceByTeam = pieces.stream().filter(piece -> piece.isSameTeam(team))
-            .collect(Collectors.toList());
-        return extractPieceByTeam.stream()
-            .anyMatch(Piece::isKing);
+        return pieces.stream().filter(piece -> piece.isSameTeam(team)).anyMatch(Piece::isKing);
     }
 
     public List<Piece> pieces() {
