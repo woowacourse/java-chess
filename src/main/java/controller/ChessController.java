@@ -29,14 +29,14 @@ public class ChessController {
         this.inputView = new InputView();
         this.outputView = new OutputView();
         this.gameDao = new GameDao();
-        this.userName = this.inputView.requestUserName();
+        this.userName = repeat(this.inputView::requestUserName);
     }
 
     public void run() {
         Command command;
         do {
             play();
-            command = this.inputView.requestStartCommand();
+            command = repeat(this.inputView::requestStartCommand);
         } while (command.isContinue());
     }
 

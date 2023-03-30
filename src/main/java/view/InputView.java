@@ -17,6 +17,7 @@ public class InputView {
 
     public Command requestUserCommand() {
         String userInput = SCANNER.nextLine();
+        validateEmptyInput(userInput);
         if (userInput.equals("start")) {
             return new Start();
         }
@@ -50,22 +51,29 @@ public class InputView {
 
     public String requestUserName() {
         System.out.println("사용자 이름을 입력하세요.");
-        return SCANNER.nextLine();
+        String userNameInput = SCANNER.nextLine();
+        validateEmptyInput(userNameInput);
+        return userNameInput;
     }
 
     public String requestGameTitle() {
         System.out.println("게임 제목을 입력하세요.");
-        return SCANNER.nextLine();
+        String titleInput = SCANNER.nextLine();
+        validateEmptyInput(titleInput);
+        return titleInput;
     }
 
     public String requestGameId() {
         System.out.println("입장을 원하는 게임의 ID를 입력하세요.");
-        return SCANNER.nextLine();
+        String gameIdInput = SCANNER.nextLine();
+        validateEmptyInput(gameIdInput);
+        return gameIdInput;
     }
 
     public Command requestStartCommand() {
         System.out.println("다시 시작을 원하면 continue, 아니라면 end를 입력해주세요.");
         String startCommandInput = SCANNER.nextLine();
+        validateEmptyInput(startCommandInput);
         if (startCommandInput.equals("continue")) {
             return new Continue();
         }
@@ -75,5 +83,11 @@ public class InputView {
         System.out.println("잘못된 입력입니다.");
         System.out.println();
         return requestStartCommand();
+    }
+
+    private void validateEmptyInput(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("비어 있는 입력입니다. 다시 입력해주세요.");
+        }
     }
 }
