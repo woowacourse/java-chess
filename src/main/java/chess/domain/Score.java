@@ -16,10 +16,7 @@ public class Score {
     }
 
     public static Score subtractTotalScoreFromPawnPerScore(final Pieces pieces) {
-        long pawnSameFileCount = pieces.countPawnPerFile().values().stream()
-                .filter(value -> value > 1)
-                .mapToLong(l -> l)
-                .sum();
+        long pawnSameFileCount = pieces.countPawnPerFile();
 
         double value = pawnSameFileCount * 0.5;
         double totalScore = pieces.getTotalScore();

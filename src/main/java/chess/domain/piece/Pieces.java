@@ -149,7 +149,14 @@ public final class Pieces {
                 '}';
     }
 
-    public Map<Character, Long> countPawnPerFile() {
+    public long countPawnPerFile() {
+        return countPawnPerFileToMap().values().stream()
+                .filter(value -> value > 1)
+                .mapToLong(l -> l)
+                .sum();
+    }
+
+    private Map<Character, Long> countPawnPerFileToMap() {
         return pieces.stream()
                 .filter(piece -> piece.isSameShape(Shape.PAWN))
                 .collect(groupingBy(piece -> piece.getPosition().getFileValue(), counting()));
