@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import static chess.controller.ChessBoardFormatter.getChessBoardMark;
+
 public final class ChessController {
 
     public void run() {
@@ -68,8 +70,7 @@ public final class ChessController {
     }
 
     private void showChessBoard(final ChessBoard chessBoard) {
-        ChessBoardFormatter convertedChessBoard = ChessBoardFormatter.from(chessBoard);
-        OutputView.printChessBoard(convertedChessBoard);
+        OutputView.printChessBoard(getChessBoardMark(chessBoard));
     }
 
     private void movePiece(final ChessGame chessGame) {

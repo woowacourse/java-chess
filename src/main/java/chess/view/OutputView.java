@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.controller.ChessBoardFormatter;
 import chess.domain.piece.Team;
 
 import java.util.List;
@@ -19,8 +18,7 @@ public final class OutputView {
         System.out.println("게임 불러 오기: " + Command.LOAD.value());
     }
 
-    public static void printChessBoard(final ChessBoardFormatter chessBoardMarkConverter) {
-        List<String> chessBoard = chessBoardMarkConverter.getChessBoardMark();
+    public static void printChessBoard(final List<String> chessBoard) {
 
         for (int i = 0; i < chessBoard.size(); i++) {
             int rankCount = chessBoard.size() - i;

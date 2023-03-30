@@ -10,17 +10,7 @@ import java.util.List;
 public final class ChessBoardFormatter {
     public static final int RANK_SIZE = 8;
 
-    private final List<String> chessBoardMark;
-
-    private ChessBoardFormatter(final List<String> chessBoardMark) {
-        this.chessBoardMark = chessBoardMark;
-    }
-
-    public static ChessBoardFormatter from(final ChessBoard chessBoard) {
-        return new ChessBoardFormatter(getChessBoardMark(chessBoard));
-    }
-
-    private static List<String> getChessBoardMark(final ChessBoard chessBoard) {
+    public static List<String> getChessBoardMark(final ChessBoard chessBoard) {
         final List<String> currentChessBoardMark = new ArrayList<>();
         final List<SquareState> squares = chessBoard.getSquares();
 
@@ -38,17 +28,5 @@ public final class ChessBoardFormatter {
             currentRank.append(SquareMark.getMarkBySquare(square));
         }
         return currentRank.toString();
-    }
-
-    public List<String> getChessBoardMark() {
-        return Collections.unmodifiableList(chessBoardMark);
-    }
-
-    public String getOneLineChessBoard() {
-        StringBuilder oneLineChessBoard = new StringBuilder();
-        for (String rankMark : chessBoardMark) {
-            oneLineChessBoard.append(rankMark);
-        }
-        return oneLineChessBoard.toString();
     }
 }

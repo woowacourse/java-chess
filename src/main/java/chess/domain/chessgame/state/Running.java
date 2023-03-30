@@ -1,6 +1,5 @@
 package chess.domain.chessgame.state;
 
-import chess.controller.ChessBoardFormatter;
 import chess.dao.ChessGameDao;
 import chess.dao.ChessGameData;
 import chess.dao.RoomName;
