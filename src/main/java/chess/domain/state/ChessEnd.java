@@ -18,7 +18,7 @@ public final class ChessEnd extends ChessState {
     }
 
     @Override
-    public ChessState start() {
+    public ChessState start(final int roomId) {
         throw new ChessException(ExceptionCode.GAME_END);
     }
 

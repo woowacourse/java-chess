@@ -42,7 +42,7 @@ class ChessGameOverTest {
                 TEST_GAME_ROOM_ID
         ), new InMemoryChessGameDao(), new InMemoryPieceDao());
 
-        final ChessState state = chessGameOver.start();
+        final ChessState state = chessGameOver.start(1);
 
         assertThat(state).isInstanceOf(ChessRunning.class);
     }

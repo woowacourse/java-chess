@@ -1,7 +1,7 @@
 package chess.dao;
 
-import java.util.Set;
+import java.util.List;
 
 public interface GameRoomDao {
-    Set<Integer> findExistingRoomNumbers();
+    List<Integer> findExistingRoomNumbers();
 }

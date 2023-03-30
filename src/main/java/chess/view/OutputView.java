@@ -9,6 +9,7 @@ import chess.exception.ExceptionCode;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
 
@@ -70,13 +71,14 @@ public class OutputView {
                 entry(ExceptionCode.INVALID_COMMAND, "유효하지 않은 커멘드가 입력되었습니다."),
                 entry(ExceptionCode.GAME_ALREADY_RUNNING, "게임이 이미 진행중입니다."),
                 entry(ExceptionCode.INVALID_TURN, "해당 색의 말을 이동시킬 순서가 아닙니다."),
-                entry(ExceptionCode.GAME_OVER_STATE, "승자가 나와 더이상 플레이할 수 없습니다. 게임 재시작 또는 종료를 해주세요.")
+                entry(ExceptionCode.GAME_OVER_STATE, "승자가 나와 더이상 플레이할 수 없습니다. 게임 재시작 또는 종료를 해주세요."),
+                entry(ExceptionCode.NOT_VALID_ROOM_ID, "존제하지 않는 방 번호 입니다.")
         );
     }
 
     public void printGameStartGuideMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 시작 : start new 또는 start n (n은 입장할 게임 방 번호)");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
         System.out.println("> 상태 확인 : status (게임 진행 중 점수 확인, 게임 오버시 승자 확인)");
@@ -148,5 +150,21 @@ public class OutputView {
 
     public void printDbExceptionMessage() {
         System.out.println("DB 연결 문제로 게임을 종료합니다.");
+    }
+
+    public void printExistingRoomNumbers(final List<Integer> exisingRoomNumbers) {
+        System.out.println("진행중인 체스 방 번호");
+        final String roomNumbers = makeExistingRoomNubersMessage(exisingRoomNumbers);
+        System.out.println(roomNumbers);
+    }
+
+    private static String makeExistingRoomNubersMessage(final List<Integer> exisingRoomNumbers) {
+        if (exisingRoomNumbers.size() == 0) {
+            return "없음";
+        }
+        final String roomNumbers = exisingRoomNumbers.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", "));
+        return roomNumbers;
     }
 }

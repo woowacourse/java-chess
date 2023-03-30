@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import chess.controller.command.parameter.CommandParameter;
 import chess.controller.command.parameter.PositionParameter;
+import chess.controller.command.parameter.StartOptionParameter;
 import chess.exception.ChessException;
 import chess.exception.ExceptionCode;
 
@@ -16,6 +17,7 @@ public class Command {
 
     public static final int MOVE_CURRENT_POSITION_INDEX = 0;
     public static final int MOVE_TARGET_POSITION_INDEX = 1;
+    public static final int START_OPTION_INDEX = 0;
 
     private final CommandType type;
     private final List<CommandParameter> parameters;
@@ -38,6 +40,9 @@ public class Command {
     private static CommandParameter parseByType(final CommandType commandType, final String value) {
         if (commandType == CommandType.MOVE) {
             return PositionParameter.of(value);
+        }
+        if (commandType == CommandType.START) {
+            return StartOptionParameter.of(value);
         }
         return null;
     }

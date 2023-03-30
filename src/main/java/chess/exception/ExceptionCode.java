@@ -14,4 +14,5 @@ public enum ExceptionCode {
     GAME_ALREADY_RUNNING,
     INVALID_TURN,
     GAME_OVER_STATE,
+    NOT_VALID_ROOM_ID,
 }

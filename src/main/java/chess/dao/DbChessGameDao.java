@@ -18,16 +18,29 @@ public class DbChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void makeGameRoom(final int gameRoomId, final Color initialTurnColor) {
+    public int makeGameRoom(final Color initialTurnColor) {
         final String query = "INSERT INTO gameRooms SET " +
-                "room_id = ?, " +
                 "turn_color = ?";
         try (final Connection connection = connectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, gameRoomId);
-            preparedStatement.setString(2, initialTurnColor.name());
+            preparedStatement.setString(1, initialTurnColor.name());
 
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ChessDbException();
+        }
+        return findLastCreatedRoomId();
+    }
+
+    private int findLastCreatedRoomId() {
+        final String query = "SELECT MAX(room_id) AS last_room_id FROM gameRooms";
+        try (final Connection connection = connectionGenerator.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("last_room_id");
+
         } catch (SQLException e) {
             throw new ChessDbException();
         }

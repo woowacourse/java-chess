@@ -4,7 +4,7 @@ import chess.domain.piece.property.Color;
 
 public interface ChessGameDao {
 
-    void makeGameRoom(final int gameRoomId, final Color initialTurnColor);
+    int makeGameRoom(final Color initialTurnColor);
 
     Color findCurrentTurnColor(final int gameRoomId);
 

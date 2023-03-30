@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum CommandType {
-    START("start", 0),
+    START("start", 1),
     END("end", 0),
     MOVE("move", 2),
     STATUS("status", 0);

@@ -39,7 +39,7 @@ class ChessEndTest {
                     new InMemoryChessGameDao(),
                     new InMemoryPieceDao());
 
-            assertThatThrownBy(() -> chessEnd.start())
+            assertThatThrownBy(() -> chessEnd.start(1))
                     .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.GAME_END.name());
         }

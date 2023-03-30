@@ -3,19 +3,24 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandAction;
 import chess.controller.command.CommandType;
+import chess.controller.command.parameter.StartOptionParameter;
 import chess.dao.DbChessGameDao;
+import chess.dao.DbGameRoomDao;
 import chess.dao.DbPieceDao;
+import chess.dao.GameRoomDao;
 import chess.dao.connection.MySqlConnectionGenerator;
 import chess.domain.piece.maker.EmptyPieceGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.state.ChessBeforeStart;
 import chess.domain.state.ChessState;
 import chess.dto.controllertoview.PieceInfo;
 import chess.dto.domaintocontroller.GameStatus;
 import chess.exception.ChessDbException;
 import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -28,12 +33,14 @@ import static java.util.Map.entry;
 public class ChessController {
 
     private final Map<CommandType, CommandAction> commandActionMap;
+    private final GameRoomDao gameRoomDao;
     private final InputView inputView;
     private final OutputView outputView;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.gameRoomDao = new DbGameRoomDao(new MySqlConnectionGenerator());
 
         commandActionMap = Map.ofEntries(
                 entry(CommandType.START, new CommandAction(this::start)),
@@ -45,6 +52,7 @@ public class ChessController {
 
     public void run() {
         outputView.printGameStartGuideMessage();
+        printExisingRooms();
         ChessState chess = ChessState.start(
                 new EmptyPieceGenerator(),
                 new DbChessGameDao(new MySqlConnectionGenerator()),
@@ -55,6 +63,11 @@ public class ChessController {
         } while (!chess.isEnd());
     }
 
+    private void printExisingRooms() {
+        final List<Integer> exisingRoomNumbers = gameRoomDao.findExistingRoomNumbers();
+        outputView.printExistingRoomNumbers(exisingRoomNumbers);
+    }
+
     private ChessState readAndProcessCommand(final ChessState chess) {
         try {
             final Command command = Command.of(inputView.readGameCommand());
@@ -63,8 +76,7 @@ public class ChessController {
         } catch (ChessException exception) {
             outputView.printErrorMessage(exception);
             return chess;
-        }
-        catch (ChessDbException exception) {
+        } catch (ChessDbException exception) {
             outputView.printDbExceptionMessage();
             return chess.end();
         }
@@ -72,9 +84,21 @@ public class ChessController {
 
 
     private ChessState start(final ChessState chess, final List<String> commandParameters) {
-        final ChessState newChessState = chess.start();
+        final String option = commandParameters.get(Command.START_OPTION_INDEX);
+        final ChessState newChessState = startWith(chess, option);
         printExistingPieces(newChessState);
         return newChessState;
+    }
+
+    private ChessState startWith(final ChessState chess, final String option) {
+        if (option.equals(StartOptionParameter.NEW_GAME_OPTION)) {
+            return chess.start(ChessBeforeStart.NEW_ROOM_ID_OPTION);
+        }
+        final List<Integer> existingRoomNumbers = gameRoomDao.findExistingRoomNumbers();
+        if (existingRoomNumbers.contains(Integer.valueOf(option))) {
+            return chess.start(Integer.parseInt(option));
+        }
+        throw new ChessException(ExceptionCode.NOT_VALID_ROOM_ID);
     }
 
     private void printExistingPieces(final ChessState chess) {

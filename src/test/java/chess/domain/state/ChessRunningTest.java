@@ -45,7 +45,7 @@ class ChessRunningTest {
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
-        assertThatThrownBy(() -> chessRunning.start())
+        assertThatThrownBy(() -> chessRunning.start(1))
                 .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.GAME_ALREADY_RUNNING.name());
     }

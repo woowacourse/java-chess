@@ -37,7 +37,7 @@ public abstract class ChessState {
         );
     }
 
-    public abstract ChessState start();
+    public abstract ChessState start(final int roomId);
 
     public abstract ChessState move(final Position sourcePosition, final Position targetPosition);
 

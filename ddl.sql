@@ -9,7 +9,6 @@ CREATE TABLE pieces (
 );
 
 CREATE TABLE gameRooms (
-                           room_id INTEGER NOT NULL ,
-                           turn_color VARCHAR(5) NOT NULL ,
-                           PRIMARY KEY (room_id)
+                           room_id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+                           turn_color VARCHAR(5) NOT NULL
 );

@@ -58,6 +58,8 @@
 
 - 게임 명령어 (GameCommand)
     - [x] start: 게임 시작
+      - start new를 통해서 새로운 방을 생성할 수 있다
+      - start 3 과 같이 방 번호를 입력하여 이미 있는 방에 들어갈 수 있다
     - [x] end: 게임 종료
     - [x] move: 말 이동
     - [x] status: 게임의 상태를 출력한다
@@ -69,9 +71,8 @@
 [table 생성 ddl sql](ddl.sql)
 ```sql
 CREATE TABLE gameRooms (
-    room_id INTEGER NOT NULL ,
-    turn_color VARCHAR(5) NOT NULL ,
-    PRIMARY KEY (room_id)
+    room_id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+    turn_color VARCHAR(5) NOT NULL
 );
 
 CREATE TABLE pieces (
@@ -86,8 +87,8 @@ CREATE TABLE pieces (
 
 - [x] 게임 방에 대한 정보를 저장한다
   - 현제 턴의 색상 정보를 저장한다
-- [ ] 진행중인 게임의 정보를 불러오거나 새게임을 실행한다
-  - [ ] 새 게임을 시작할지 이미 있는 방에 들어갈지 고를 수 있다
+- [x] 진행중인 게임의 정보를 불러오거나 새게임을 실행한다
+  - [x] 새 게임을 시작할지 이미 있는 방에 들어갈지 고를 수 있다
   - [x] 진행중인 게임을 불러올 때 해당 게임의 기물들 정보를 모두 불러온다
   - [x] 새 게임을 실행 시 게임 방 정보를 생성한다
 - [x] 게임의 기물 정보를 저장한다
@@ -112,13 +113,14 @@ CREATE TABLE pieces (
 - [x] 체스판을 출력한다
 - [x] 게임의 점수 상태를 출력한다
 - [x] 게임의 승패 결과를 출력한다
+- [x] 존제하는 방의 정보에 대해서 출력한다
 
 ```
 > 체스 게임을 시작합니다.
-> 게임 시작 : start
+> 게임 시작 : start new 또는 start n (n은 입장할 게임 방 번호)
 > 게임 종료 : end
 > 게임 이동 : move source위치 target위치 - 예. move b2 b3
-> 게임 상태 : status
+> 상태 확인 : status (게임 진행 중 점수 확인, 게임 오버시 승자 확인)
 ```
 
 - 게임이 시작된 경우 체스보드와 체스말을 출력한다.

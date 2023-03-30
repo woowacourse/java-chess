@@ -7,8 +7,9 @@ public class InMemoryChessGameDao implements ChessGameDao{
     private Color currentTurnColor;
 
     @Override
-    public void makeGameRoom(final int gameRoomId, final Color initialTurnColor) {
+    public int makeGameRoom(final Color initialTurnColor) {
         this.currentTurnColor = initialTurnColor;
+        return 0;
     }
 
     @Override

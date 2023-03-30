@@ -26,7 +26,7 @@ class ChessReadyTest {
                 new InMemoryChessGameDao(),
                 new InMemoryPieceDao());
 
-        final ChessState state = chessReady.start();
+        final ChessState state = chessReady.start(1);
 
         assertThat(state).isInstanceOf(ChessRunning.class);
     }
