@@ -8,10 +8,12 @@ import java.util.Map;
 
 public class ChessGame {
     private final Board board;
+    private final Color firstTurnColor;
     private Turn turn;
 
     public ChessGame(Board board, Color firstTurnColor) {
         this.board = board;
+        this.firstTurnColor = firstTurnColor;
         this.turn = new Turn(firstTurnColor);
     }
 
@@ -34,6 +36,7 @@ public class ChessGame {
 
     public void start() {
         board.initialize();
+        turn = new Turn(firstTurnColor);
     }
 
     public boolean isEnd() {
