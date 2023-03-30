@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.repository;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DbChessGameDaoTest {
+class DatabaseConnectionTest {
 
-    private final DbChessGameDao dbChessGameDao = new DbChessGameDao();
+    private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
     @Test
     void connection() {
-        try (final var connection = dbChessGameDao.getConnection()) {
+        try (final var connection = databaseConnection.getConnection()) {
             assertThat(connection).isNotNull();
         } catch (SQLException e) {
             throw new RuntimeException(e);
