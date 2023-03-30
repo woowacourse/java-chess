@@ -2,6 +2,9 @@ package chess.dao;
 
 import static chess.domain.piece.PieceType.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +36,9 @@ public class ChessBoardDao implements ChessDao {
 	}
 
 	private void insert(final Board chessBoard, final Map.Entry<Position, Piece> boardEntry) {
-		final var query = "INSERT INTO chess_game(piece_type, piece_rank, piece_file, color, turn) VALUES (?, ?, ?, ?, ?)";
-		try (final var connection = dbConnection.getConnection();
-			 final var preparedStatement = connection.prepareStatement(query)) {
+		final String query = "INSERT INTO chess_game(piece_type, piece_rank, piece_file, color, turn) VALUES (?, ?, ?, ?, ?)";
+		try (final Connection connection = dbConnection.getConnection();
+			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setString(1, boardEntry.getValue().type().name());
 			preparedStatement.setInt(2, boardEntry.getValue().position().rankValue());
 			preparedStatement.setString(3, boardEntry.getValue().position().file().name().toLowerCase());
@@ -51,10 +54,10 @@ public class ChessBoardDao implements ChessDao {
 	public Board select() {
 		Map<Position, Piece> board = new HashMap<>();
 		Color turn = null;
-		final var query = "SELECT piece_type, piece_rank, piece_file, color, turn from chess_game";
-		try (final var connection = dbConnection.getConnection();
-			 final var preparedStatement = connection.prepareStatement(query)) {
-			final var resultSet = preparedStatement.executeQuery();
+		final String query = "SELECT piece_type, piece_rank, piece_file, color, turn from chess_game";
+		try (final Connection connection = dbConnection.getConnection();
+			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			final ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				PieceType pieceType = valueOf(resultSet.getString("piece_type"));
 				Rank rank = Rank.from(resultSet.getInt("piece_rank"));
@@ -103,9 +106,9 @@ public class ChessBoardDao implements ChessDao {
 	}
 
 	public void delete() {
-		final var query = "DELETE FROM chess_game";
-		try (final var connection = dbConnection.getConnection();
-			 final var preparedStatement = connection.prepareStatement(query)) {
+		final String query = "DELETE FROM chess_game";
+		try (final Connection connection = dbConnection.getConnection();
+			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.executeUpdate();
 		} catch (final SQLException e) {
 			throw new RuntimeException(e);
