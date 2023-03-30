@@ -1,6 +1,8 @@
 package chess.domain.state;
 
 import chess.constant.ExceptionCode;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -10,8 +12,8 @@ import java.util.Set;
 
 public class ChessRunning extends ChessState {
 
-    ChessRunning(final ChessGame chessGame) {
-        super(chessGame);
+    ChessRunning(final ChessGame chessGame, final ChessGameDao chessGameDao, final PieceDao pieceDao) {
+        super(chessGame, chessGameDao, pieceDao);
     }
 
     @Override
@@ -23,7 +25,7 @@ public class ChessRunning extends ChessState {
     public ChessState move(final Position sourcePosition, final Position targetPosition) {
         chessGame.move(sourcePosition, targetPosition);
         if(chessGame.isKingCaught()){
-            return new ChessGameOver(chessGame);
+            return new ChessGameOver(chessGame, chessGameDao, pieceDao);
         }
         return this;
     }
@@ -35,7 +37,7 @@ public class ChessRunning extends ChessState {
 
     @Override
     public ChessState end() {
-        return new ChessEnd(chessGame);
+        return new ChessEnd(chessGame, chessGameDao, pieceDao);
     }
 
     @Override

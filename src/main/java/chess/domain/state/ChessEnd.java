@@ -1,6 +1,8 @@
 package chess.domain.state;
 
 import chess.constant.ExceptionCode;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -10,8 +12,8 @@ import java.util.Set;
 
 public final class ChessEnd extends ChessState {
 
-    ChessEnd(final ChessGame chessGame) {
-        super(chessGame);
+    ChessEnd(final ChessGame chessGame, final ChessGameDao chessGameDao, final PieceDao pieceDao) {
+        super(chessGame, chessGameDao, pieceDao);
     }
 
     @Override

@@ -3,6 +3,8 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandAction;
 import chess.controller.command.Type;
+import chess.dao.DbChessGameDao;
+import chess.dao.DbPieceDao;
 import chess.domain.piece.maker.EmptyPieceGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
@@ -40,7 +42,7 @@ public class ChessController {
 
     public void run() {
         outputView.printGameStartGuideMessage();
-        ChessState chess = ChessState.start(new EmptyPieceGenerator());
+        ChessState chess = ChessState.start(new EmptyPieceGenerator(), new DbChessGameDao(1), new DbPieceDao(1));
         do {
             chess = readAndProcessCommand(chess);
         } while (!chess.isEnd());

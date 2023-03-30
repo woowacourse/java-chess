@@ -1,7 +1,7 @@
 package chess.domain.state;
 
-import chess.dao.InMemoryChessGameDao;
-import chess.dao.InMemoryPieceDao;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.maker.PiecesGenerator;
@@ -13,13 +13,24 @@ import java.util.Set;
 public abstract class ChessState {
 
     protected final ChessGame chessGame;
+    protected final ChessGameDao chessGameDao;
+    protected final PieceDao pieceDao;
 
-    protected ChessState(final ChessGame chessGame) {
+    protected ChessState(final ChessGame chessGame, final ChessGameDao chessGameDao, final PieceDao pieceDao) {
         this.chessGame = chessGame;
+        this.chessGameDao = chessGameDao;
+        this.pieceDao = pieceDao;
     }
 
-    public static ChessState start(final PiecesGenerator piecesGenerator) {
-        return new ChessReady(ChessGame.createWith(piecesGenerator, new InMemoryChessGameDao(), new InMemoryPieceDao()));
+    public static ChessState start(
+            final PiecesGenerator piecesGenerator,
+            final ChessGameDao chessGameDao,
+            final PieceDao pieceDao) {
+        return new ChessReady(
+                ChessGame.createWith(piecesGenerator),
+                chessGameDao,
+                pieceDao
+        );
     }
 
     public abstract ChessState start();

@@ -2,8 +2,6 @@ package chess.domain;
 
 import chess.TestPiecesGenerator;
 import chess.constant.ExceptionCode;
-import chess.dao.InMemoryChessGameDao;
-import chess.dao.InMemoryPieceDao;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -46,8 +44,7 @@ class ChessGameTest {
     void change_turn_test() {
         final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
                         new Pawn(A2, WHITE)
-                )), new InMemoryChessGameDao(),
-                new InMemoryPieceDao());
+                )));
 
         chessGame.move(A2, A4);
 
@@ -61,8 +58,7 @@ class ChessGameTest {
         final ChessGame chessGame = ChessGame.createWith(new TestPiecesGenerator(List.of(
                         new Pawn(A2, WHITE),
                         new Pawn(A7, BLACK)
-                )), new InMemoryChessGameDao(),
-                new InMemoryPieceDao());
+                )));
 
         assertThatThrownBy(() -> chessGame.move(A7, A6))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -76,8 +72,7 @@ class ChessGameTest {
                         new King(E1, WHITE),
                         new King(E8, BLACK),
                         new Queen(B5, WHITE)
-                )), new InMemoryChessGameDao(),
-                new InMemoryPieceDao());
+                )));
 
         final boolean initialKingCaught = chessGame.isKingCaught();
         chessGame.move(B5, E8);
@@ -108,8 +103,7 @@ class ChessGameTest {
                             new Knight(B1, WHITE),  // 2.5
                             new Bishop(C1, WHITE),  // 3
                             new Rook(A1, WHITE)     // 5
-                    )), new InMemoryChessGameDao(),
-                    new InMemoryPieceDao());
+                    )));
             final Color expectedWinningTeamColor = BLANK;
             final double expectedBlackScore = 2.5;
             final double expectedWhiteScore = 19.5;
@@ -137,8 +131,7 @@ class ChessGameTest {
                             new Knight(B1, WHITE),
                             new Bishop(C1, WHITE),
                             new Rook(A1, WHITE)
-                    )), new InMemoryChessGameDao(),
-                    new InMemoryPieceDao());
+                    )));
             final Color expectedWinningTeamColor = BLACK;
             final double expectedBlackScore = 0;
             final double expectedWhiteScore = 0;
@@ -166,8 +159,7 @@ class ChessGameTest {
                             new Knight(B1, WHITE),
                             new Bishop(C1, WHITE),
                             new Rook(A1, WHITE)
-                    )), new InMemoryChessGameDao(),
-                    new InMemoryPieceDao());
+                    )));
             final Color expectedWinningTeamColor = WHITE;
             final double expectedBlackScore = 0;
             final double expectedWhiteScore = 0;
