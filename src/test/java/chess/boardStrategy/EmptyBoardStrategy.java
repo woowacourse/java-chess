@@ -14,20 +14,8 @@ import java.util.stream.Collectors;
 
 public class EmptyBoardStrategy implements BoardStrategy {
 
-    private final Map<Position, Piece> board = new HashMap<>();
+    final Map<Position, Piece> board = new HashMap<>();
 
-    /**
-     * ........ 8
-     * ........ 7
-     * .....p.. 6
-     * ..B..... 5
-     * ...b.... 4
-     * ........ 3
-     * ........ 2
-     * ........ 1
-
-     * abcdefgh
-     */
     @Override
     public Map<Position, Piece> generate() {
         initEmptyPieces();

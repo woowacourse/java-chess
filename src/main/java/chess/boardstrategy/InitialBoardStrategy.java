@@ -13,17 +13,18 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class InitialBoardStrategy implements BoardStrategy {
-    private final Map<Position, Piece> board = new HashMap<>();
+
+    private final Map<Position, Piece>  board = new HashMap<>();
 
     @Override
-    public Map<Position, Piece> generate() {
+    public final Map<Position, Piece> generate() {
         initEmptyPieces();
         initFirstRow(Rank.EIGHT, Color.BLACK);
         initSecondRow(Rank.SEVEN, Color.BLACK);
         initFirstRow(Rank.ONE, Color.WHITE);
         initSecondRow(Rank.TWO, Color.WHITE);
 
-        return new HashMap<>(board);
+        return board;
     }
 
     private void initEmptyPieces() {

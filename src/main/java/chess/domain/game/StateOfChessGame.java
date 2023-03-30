@@ -1,9 +1,10 @@
 package chess.domain.game;
 
+import java.util.Arrays;
+
 public enum StateOfChessGame {
 
     STARTED(true, false),
-    MOVING(true, false),
     PAUSED(true, false),
     FINISHED(true, true);
 
@@ -15,8 +16,11 @@ public enum StateOfChessGame {
         this.isFinished = isFinished;
     }
 
-    public boolean isSameStateWith(String state) {
-        return this.name().equals(state);
+    public static final StateOfChessGame of(final String name) {
+        return Arrays.stream(values())
+                .filter(stateOfChessGame -> stateOfChessGame.name().equals(name))
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("일치하는 상태가 존재하지 않습니다"));
     }
 
     public boolean isStarted() {

@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 
-public class King extends NonPawnPiece {
+public class King extends JumperPiece {
 
     public King(Color color) {
         super(PieceType.KING, color);

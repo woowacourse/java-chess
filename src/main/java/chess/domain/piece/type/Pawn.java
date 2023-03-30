@@ -5,6 +5,7 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,25 +19,27 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position start, final Position end, final Color colorOfDestination) {
-        return isStraightMove(start, end) && isMovableStraightDestination(colorOfDestination)
-                || isDiagonalMovable(start,end) && isMovableDiagonalDestination(colorOfDestination);
+    public boolean isMovable(final Position start, final Position end, final Piece destinationPiece) {
+        return isStraightMove(start, end) && isMovableStraightDestination(destinationPiece)
+                || isDiagonalMovable(start,end) && isMovableDiagonalDestination(destinationPiece);
     }
 
     @Override
-    public double getScore(final List<Piece> piecesInSameColumn) {
-        long pawnCountInSameColumn = piecesInSameColumn.stream()
-                .filter(piece -> piece.pieceType == this.pieceType)
-                .count();
+    public List<Position> createRoute(final Position start, final Position end) {
+        int vectorX = Integer.compare(start.findGapOfColumn(end), 0);
+        int vectorY = Integer.compare(start.findGapOfRank(end), 0);
 
-        if(pawnCountInSameColumn > 1) {
-            return pieceType.getScore();
-        }
-        return pieceType.getScore()*2;
+        List<Position> route = new ArrayList<>();
+        Position currentPosition = start;
+        do {
+            currentPosition = currentPosition.moveByUnitVectorING(vectorX, vectorY);
+            route.add(currentPosition);
+        } while (!currentPosition.equals(end));
+        return route;
     }
 
-    private boolean isMovableDiagonalDestination(final Color colorOfDestination) {
-        return colorOfDestination.isSameColor(color.getOpponent());
+    private boolean isMovableDiagonalDestination(final Piece destinationPiece) {
+        return destinationPiece.isSameColor(color.getOpponent());
     }
 
     private boolean isStraightMove(final Position start, final Position end) {
@@ -53,8 +56,8 @@ public class Pawn extends Piece {
         return FIRST_RANK_BY_COLOR.get(color).equals(start.getRank());
     }
 
-    private static boolean isMovableStraightDestination(final Color colorOfDestination) {
-        return colorOfDestination.isSameColor(Color.NONE);
+    private static boolean isMovableStraightDestination(final Piece destinationPiece) {
+        return destinationPiece.isSameColor(Color.NONE);
     }
 
     public boolean isDiagonalMovable(final Position start, final Position end) {

@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 public enum PieceType {
     EMPTY_PIECE(0),
-    PAWN(0.5),
+    PAWN(1),
     ROOK(5),
     KNIGHT(2.5),
     BISHOP(3),

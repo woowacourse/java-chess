@@ -19,13 +19,13 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position start, final Position end, final Color destinationColor) {
-        return false;
+    public boolean isMovable(final Position start, final Position end, final Piece destinationPiece) {
+        throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다");
     }
 
     @Override
-    public double getScore(final List<Piece> piecesInSameColumn) {
-        return pieceType.getScore();
+    public List<Position> createRoute(final Position start, final Position end) {
+        throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다");
     }
 
 }

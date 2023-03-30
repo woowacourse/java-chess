@@ -1,19 +1,14 @@
 package chess.domain.game;
 
-import chess.boardstrategy.BoardStrategy;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.type.Piece;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static chess.controller.Command.START_SOURCE_INDEX_IN_COMMANDLINE;
-import static chess.controller.Command.TARGET_SOURCE_INDEX_IN_COMMANDLINE;
 
 public class ChessGame {
 
@@ -24,29 +19,16 @@ public class ChessGame {
     private Color turn;
     private StateOfChessGame stateOfChessGame;
 
-    public ChessGame() {
-        this.chessBoard = new ChessBoard();
+    public ChessGame(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
         this.turn = Color.WHITE;
         this.stateOfChessGame = StateOfChessGame.STARTED;
     }
 
-    public void start(BoardStrategy boardStrategy) {
-        this.chessBoard.initialize(boardStrategy.generate());
-        stateOfChessGame = StateOfChessGame.MOVING;
-    }
-
-    /**
-     * todo : (String start, String end)로 변경하기!
-     * 질문: Position생성을 chessGame에서 하는 게 맞나요 아니면,
-     * Gameservice에서 뷰에서 넘어온 command(명령어)에 따른 Postion 객체 생성까지 책임지는 게 맞을까요?
-     * chessGame에서 command 클래스가 가지고 있는 상수를 가져와 쓰는게 이상하게 느껴집니다.
-     */
-    public void move(List<String> commandLine) {
+    public void move(Position start, Position end) {
         if(!stateOfChessGame.isStarted()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다");
         }
-        Position start = createPositionByCommand(commandLine.get(START_SOURCE_INDEX_IN_COMMANDLINE));
-        Position end = createPositionByCommand(commandLine.get(TARGET_SOURCE_INDEX_IN_COMMANDLINE));
         checkCorrectTurnByColor(start);
         Piece pieceToBeCaught = chessBoard.findPieceInBoardByPosition(end);
         chessBoard.move(start, end);
@@ -57,38 +39,33 @@ public class ChessGame {
         turn = turn.getOpponent();
     }
 
-    private Position createPositionByCommand(String sourceCommand) {
-        List<String> columnAndRank = List.of(sourceCommand.split(""));
-        Column column = Column.findColumnByValue(columnAndRank.get(0));
-        Rank rank = Rank.findRankByValue(columnAndRank.get(1));
-
-        return Position.of(column, rank);
-    }
     private void checkCorrectTurnByColor(Position start) {
-        Color colorOfStartPiece = chessBoard.findPieceInBoardByPosition(start).getColor();
-        if(colorOfStartPiece.isOpponent(turn)) {
+        Piece startPiece = chessBoard.findPieceInBoardByPosition(start);
+        if(!startPiece.isSameColor(turn)) {
             throw new IllegalArgumentException("상대편의 기물을 움직일 수 없습니다");
         }
     }
 
     public  Map<Color, Double> status() {
-        return Map.of(teamBlack, chessBoard.findScoreOfPiecesByColor(teamBlack),
-                teamWhite, chessBoard.findScoreOfPiecesByColor(teamWhite));
+        Map<Color, Double> status = new LinkedHashMap<>();
+        status.put(teamBlack, findScoreByColor(teamBlack));
+        status.put(teamWhite, findScoreByColor(teamWhite));
+        return status;
     }
 
-    public Color findWinner() {
-        if(!stateOfChessGame.isFinished()) {
-            throw new UnsupportedOperationException("아직 게임이 종료되지 않았습니다");
-        }
-        return turn;
+    private double findScoreByColor(Color color) {
+        return chessBoard.findScoreOfPiecesByColor(teamBlack) - findOverloadPawnScore(teamBlack);
+    }
+    private double findOverloadPawnScore(Color color) {
+        Map<Column, Long> pawnCountByColumn = chessBoard.findPieceCountOfColumn(color, PieceType.PAWN);
+        return pawnCountByColumn.values().stream()
+                .filter(pawnCountOfColumn -> pawnCountOfColumn > 1)
+                .mapToDouble(pawnCountOfColumn -> pawnCountOfColumn *0.5)
+                .sum();
     }
 
     public void finishGame() {
         stateOfChessGame = StateOfChessGame.FINISHED;
-    }
-
-    public boolean isFinished() {
-        return this.stateOfChessGame.isFinished();
     }
 
     public void end() {
@@ -97,10 +74,6 @@ public class ChessGame {
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getChessBoard();
-    }
-
-    public Color getTurn() {
-        return turn;
     }
 
     public StateOfChessGame getStatus() {

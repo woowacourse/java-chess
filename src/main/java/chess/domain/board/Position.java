@@ -42,6 +42,13 @@ public class Position {
     }
 
 
+    public Position moveByUnitVectorING(int vectorX, int VectorY) {
+        Column newColumn = Column.findColumnByIndex(column.getIndex() + vectorX);
+        Rank newRank = Rank.findRankByIndex(rank.getIndex() + VectorY);
+
+        return new Position(newColumn, newRank);
+    }
+
     public List<Position> findRouteTo(Position end) {
         int gapOfColumn = this.findGapOfColumn(end);
         int gapOfRank = this.findGapOfRank(end);

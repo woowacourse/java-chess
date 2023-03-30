@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 
-public class Rook extends NonPawnPiece {
+public class Rook extends SlidingPiece {
 
     public Rook(Color color) {
         super(PieceType.ROOK, color);
