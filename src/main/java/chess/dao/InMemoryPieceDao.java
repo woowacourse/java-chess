@@ -24,9 +24,4 @@ public class InMemoryPieceDao implements PieceDao{
         deleteAllInGame(gameRoomId);
         this.pieces.addAll(pieces);
     }
-
-    @Override
-    public void addPiece(final int gameRoomId, final Piece piece) {
-        pieces.add(piece);
-    }
 }

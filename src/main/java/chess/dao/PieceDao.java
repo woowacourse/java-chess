@@ -11,6 +11,4 @@ public interface PieceDao {
     void deleteAllInGame(final int gameRoomId);
 
     void updatePieces(final int gameRoomId, final Set<Piece> pieces);
-
-    void addPiece(final int gameRoomId, final Piece piece);
 }

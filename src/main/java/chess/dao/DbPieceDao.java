@@ -58,13 +58,6 @@ public class DbPieceDao implements PieceDao {
     @Override
     public void updatePieces(final int gameRoomId, final Set<Piece> pieces) {
         deleteAllInGame(gameRoomId);
-        for (Piece piece : pieces) {
-            addPiece(gameRoomId, piece);
-        }
-    }
-
-    @Override
-    public void addPiece(final int gameRoomId, final Piece piece) {
         final String query = "INSERT INTO pieces SET " +
                 "position_file = ?, " +
                 "position_rank = ?, " +
@@ -73,13 +66,17 @@ public class DbPieceDao implements PieceDao {
                 "room_id = ?";
         try (final Connection connection = ConnectionGenerator.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, piece.getPosition().getFile().name());
-            preparedStatement.setString(2, piece.getPosition().getRank().name());
-            preparedStatement.setString(3, PieceType.findByPiece(piece).name());
-            preparedStatement.setString(4, piece.getColor().name());
-            preparedStatement.setInt(5, gameRoomId);
 
-            preparedStatement.executeUpdate();
+            for(Piece piece : pieces) {
+                preparedStatement.setString(1, piece.getPosition().getFile().name());
+                preparedStatement.setString(2, piece.getPosition().getRank().name());
+                preparedStatement.setString(3, PieceType.findByPiece(piece).name());
+                preparedStatement.setString(4, piece.getColor().name());
+                preparedStatement.setInt(5, gameRoomId);
+                preparedStatement.addBatch();
+            }
+
+            preparedStatement.executeBatch();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
