@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.exception.DatabaseQueryException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +9,6 @@ import java.util.List;
 
 public class JdbcTemplate {
 
-    private static final String WRONG_QUERY_ERROR_MESSAGE_FORMAT = "DB 쿼리 오류: %s \nSQL: %s";
     private final ConnectionManager connectionManager = new ConnectionManager();
 
     public <T> void executeUpdate(String query, List<Object> parameters) {
@@ -17,7 +17,7 @@ public class JdbcTemplate {
             setParameters(preparedStatement, parameters);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new RuntimeException(String.format(WRONG_QUERY_ERROR_MESSAGE_FORMAT, exception.getMessage(), query));
+            throw new DatabaseQueryException(exception.getMessage(), query);
         }
     }
 
@@ -28,7 +28,7 @@ public class JdbcTemplate {
             ResultSet resultSet = preparedStatement.executeQuery();
             return rowMapper.mapRow(resultSet);
         } catch (SQLException exception) {
-            throw new RuntimeException(String.format(WRONG_QUERY_ERROR_MESSAGE_FORMAT, exception.getMessage(), query));
+            throw new DatabaseQueryException(exception.getMessage(), query);
         }
     }
 
