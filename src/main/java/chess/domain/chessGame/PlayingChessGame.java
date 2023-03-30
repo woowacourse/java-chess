@@ -3,7 +3,7 @@ package chess.domain.chessGame;
 import chess.KingDiedException;
 import chess.domain.Board;
 import chess.domain.PieceDto;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -13,21 +13,21 @@ import java.util.Map;
 public class PlayingChessGame implements ChessGame {
     private final Board board;
     private boolean isEnd = false;
-    private Color currentTurn;
+    private PlayingCamp currentTurn;
 
     public PlayingChessGame(Board board) {
         this.board = board;
-        this.currentTurn = Color.WHITE;
+        this.currentTurn = PlayingCamp.WHITE;
     }
 
-    public PlayingChessGame(Map<Position, Piece> board, Color thisTurn) {
+    public PlayingChessGame(Map<Position, Piece> board, PlayingCamp thisTurn) {
         this.board = new Board(board);
         this.currentTurn = thisTurn;
     }
 
     @Override
     public Map<Position, PieceDto> move(String currentPositionSymbol, String nextPositionSymbol) {
-        Color thisTurn = currentTurn;
+        PlayingCamp thisTurn = currentTurn;
         currentTurn = currentTurn.next();
         try {
             return board.move(Position.of(currentPositionSymbol), Position.of(nextPositionSymbol), thisTurn);
@@ -68,7 +68,7 @@ public class PlayingChessGame implements ChessGame {
     }
 
     @Override
-    public Color getThisTurn() {
+    public PlayingCamp getThisTurn() {
         return this.currentTurn;
     }
 }

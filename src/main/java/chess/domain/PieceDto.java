@@ -1,20 +1,20 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
 public class PieceDto {
-    private final Color color;
+    private final PlayingCamp playingCamp;
     private final PieceType pieceType;
 
     public PieceDto(Piece piece) {
-        this.color = piece.getColor();
+        this.playingCamp = piece.getColor();
         this.pieceType = piece.getPieceType();
     }
 
-    public Color getColor() {
-        return color;
+    public PlayingCamp getColor() {
+        return playingCamp;
     }
 
     public PieceType getPieceType() {

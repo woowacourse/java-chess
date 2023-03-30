@@ -2,7 +2,7 @@ package chess.domain.chessGame;
 
 import chess.domain.Board;
 import chess.domain.PieceDto;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move_rule.*;
 import chess.domain.position.File;
@@ -61,36 +61,36 @@ public class ReadyChessGame implements ChessGame {
 
 
     @Override
-    public Color getThisTurn() {
+    public PlayingCamp getThisTurn() {
         return null;
     }
 
     private Map<Position, Piece> initializedBoard() {
         Map<Position, Piece> board = new HashMap<>();
-        board = initializePawnLinePieces(board, Rank.RANK2, Color.WHITE);
-        board = initializePawnLinePieces(board, Rank.RANK7, Color.BLACK);
+        board = initializePawnLinePieces(board, Rank.RANK2, PlayingCamp.WHITE);
+        board = initializePawnLinePieces(board, Rank.RANK7, PlayingCamp.BLACK);
 
-        board = initializeEndLinePieces(board, Rank.RANK1, Color.WHITE);
-        board = initializeEndLinePieces(board, Rank.RANK8, Color.BLACK);
+        board = initializeEndLinePieces(board, Rank.RANK1, PlayingCamp.WHITE);
+        board = initializeEndLinePieces(board, Rank.RANK8, PlayingCamp.BLACK);
         return board;
     }
 
-    private Map<Position, Piece> initializePawnLinePieces(Map<Position, Piece> board, Rank rank, Color color) {
+    private Map<Position, Piece> initializePawnLinePieces(Map<Position, Piece> board, Rank rank, PlayingCamp playingCamp) {
         for (File file : File.values()) {
-            board.put(Position.of(file, rank), new Piece(PawnMoveRule.from(color), color));
+            board.put(Position.of(file, rank), new Piece(PawnMoveRule.from(playingCamp), playingCamp));
         }
         return board;
     }
 
-    private Map<Position, Piece> initializeEndLinePieces(Map<Position, Piece> board, Rank rank, Color color) {
-        board.put(Position.of(File.FILE_A, rank), new Piece(RookMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_B, rank), new Piece(KnightMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_C, rank), new Piece(BishopMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_D, rank), new Piece(QueenMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_E, rank), new Piece(KingMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_F, rank), new Piece(BishopMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_G, rank), new Piece(KnightMoveRule.getInstance(), color));
-        board.put(Position.of(File.FILE_H, rank), new Piece(RookMoveRule.getInstance(), color));
+    private Map<Position, Piece> initializeEndLinePieces(Map<Position, Piece> board, Rank rank, PlayingCamp playingCamp) {
+        board.put(Position.of(File.FILE_A, rank), new Piece(RookMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_B, rank), new Piece(KnightMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_C, rank), new Piece(BishopMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_D, rank), new Piece(QueenMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_E, rank), new Piece(KingMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_F, rank), new Piece(BishopMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_G, rank), new Piece(KnightMoveRule.getInstance(), playingCamp));
+        board.put(Position.of(File.FILE_H, rank), new Piece(RookMoveRule.getInstance(), playingCamp));
         return board;
     }
 }

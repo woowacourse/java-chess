@@ -1,13 +1,13 @@
 package chess.domain.piece.move_rule;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 
 public abstract class PawnMoveRule implements MoveRule {
 
     protected PawnMoveRule() {}
 
-    public static PawnMoveRule from(Color color) {
-        if (color == Color.BLACK) {
+    public static PawnMoveRule from(PlayingCamp playingCamp) {
+        if (playingCamp == PlayingCamp.BLACK) {
             return new BlackPawnMoveRule();
         }
         return new WhitePawnMoveRule();

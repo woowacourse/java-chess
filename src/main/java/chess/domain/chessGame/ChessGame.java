@@ -1,7 +1,7 @@
 package chess.domain.chessGame;
 
 import chess.domain.PieceDto;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.position.Position;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public interface ChessGame {
 
     boolean isReady();
 
-    Color getThisTurn();
+    PlayingCamp getThisTurn();
 
     Map<Position, PieceDto> getPrintingBoard();
 }

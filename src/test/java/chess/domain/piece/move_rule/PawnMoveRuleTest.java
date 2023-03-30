@@ -1,6 +1,6 @@
 package chess.domain.piece.move_rule;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,14 +19,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PawnMoveRuleTest {
     private Piece blackPiece;
     private Piece whitePiece;
-    private PawnMoveRule blackMoveRule = PawnMoveRule.from(Color.BLACK);
-    private PawnMoveRule whiteMoveRule = PawnMoveRule.from(Color.WHITE);
+    private final PawnMoveRule blackMoveRule = PawnMoveRule.from(PlayingCamp.BLACK);
+    private final PawnMoveRule whiteMoveRule = PawnMoveRule.from(PlayingCamp.WHITE);
     private Map<Position, Piece> board;
 
     @BeforeAll
     void setUp() {
-        blackPiece = new Piece(PawnMoveRule.from(Color.BLACK), Color.BLACK);
-        whitePiece = new Piece(PawnMoveRule.from(Color.WHITE), Color.WHITE);
+        blackPiece = new Piece(PawnMoveRule.from(PlayingCamp.BLACK), PlayingCamp.BLACK);
+        whitePiece = new Piece(PawnMoveRule.from(PlayingCamp.WHITE), PlayingCamp.WHITE);
     }
 
     @BeforeEach

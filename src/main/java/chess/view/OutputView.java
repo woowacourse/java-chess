@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.PieceDto;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printTurnMessage(Color thisTurn) {
+    public void printTurnMessage(PlayingCamp thisTurn) {
         System.out.println(thisTurn.getName() + "진영의 차례 입니다.");
     }
 }

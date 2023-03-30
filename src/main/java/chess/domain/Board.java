@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.KingDiedException;
 import chess.domain.piece.BlankPiece;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -20,7 +20,7 @@ public class Board {
         this.board = board;
     }
 
-    public Map<Position, PieceDto> move(Position currentPosition, Position nextPosition, Color thisTurn) {
+    public Map<Position, PieceDto> move(Position currentPosition, Position nextPosition, PlayingCamp thisTurn) {
         Piece currentPiece = board.getOrDefault(currentPosition, BlankPiece.getInstance());
         List<Position> routePositions = currentPiece.move(currentPosition, nextPosition);
         validateThisTurnColor(thisTurn, currentPiece);
@@ -32,8 +32,8 @@ public class Board {
     }
 
     public List<Double> calculateScore() {
-        double blackScore = getTeamScoreByColor(Color.BLACK) - (0.5D * getVerticalSamePawnCount(Color.BLACK));
-        double whiteScore = getTeamScoreByColor(Color.WHITE) - (0.5D * getVerticalSamePawnCount(Color.WHITE));
+        double blackScore = getTeamScoreByColor(PlayingCamp.BLACK) - (0.5D * getVerticalSamePawnCount(PlayingCamp.BLACK));
+        double whiteScore = getTeamScoreByColor(PlayingCamp.WHITE) - (0.5D * getVerticalSamePawnCount(PlayingCamp.WHITE));
         return List.of(blackScore, whiteScore);
     }
 
@@ -46,8 +46,8 @@ public class Board {
         return pieceDtos;
     }
 
-    private void validateThisTurnColor(Color thisTurn, Piece piece) {
-        if (!piece.isSameColor(thisTurn)) {
+    private void validateThisTurnColor(PlayingCamp thisTurn, Piece piece) {
+        if (!piece.isSameCamp(thisTurn)) {
             throw new IllegalArgumentException("이번 차례에 움직일 수 있는 색의 기물이 아닙니다.");
         }
     }
@@ -104,9 +104,9 @@ public class Board {
         }
     }
 
-    private double getTeamScoreByColor(Color color) {
+    private double getTeamScoreByColor(PlayingCamp playingCamp) {
         List<Piece> pieces = board.values().stream()
-                .filter(p -> p.isSameColor(color))
+                .filter(p -> p.isSameCamp(playingCamp))
                 .collect(Collectors.toList());
         if (pieces.stream().noneMatch(Piece::isKing)) {
             return KING_DIE_SCORE;
@@ -116,9 +116,9 @@ public class Board {
                 .reduce(0D, Double::sum);
     }
 
-    private Long getVerticalSamePawnCount(Color color) {
+    private Long getVerticalSamePawnCount(PlayingCamp playingCamp) {
         long verticalPawnCount = 0;
-        List<Position> pawnPositions = getPawnPositionsByColor(color);
+        List<Position> pawnPositions = getPawnPositionsByColor(playingCamp);
 
         for (File file : File.values()) {
             long count = pawnPositions.stream()
@@ -132,11 +132,11 @@ public class Board {
         return verticalPawnCount;
     }
 
-    private List<Position> getPawnPositionsByColor(Color color) {
+    private List<Position> getPawnPositionsByColor(PlayingCamp playingCamp) {
         return board.entrySet().stream()
                 .filter(entry -> {
                     Piece piece = entry.getValue();
-                    return piece.isPawn() && piece.isSameColor(color);
+                    return piece.isPawn() && piece.isSameCamp(playingCamp);
                 })
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());

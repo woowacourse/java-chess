@@ -4,7 +4,7 @@ import chess.domain.PieceDto;
 import chess.domain.chessGame.ChessGame;
 import chess.domain.chessGame.PlayingChessGame;
 import chess.domain.chessGame.ReadyChessGame;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.File;
@@ -28,7 +28,7 @@ public class ChessGameDaoImpl implements ChessGameDao {
 
     @Override
     public ChessGame findChessGame() {
-        Color currentTurn = findTurn();
+        PlayingCamp currentTurn = findTurn();
         if (currentTurn == null) {
             return new ReadyChessGame();
         }
@@ -49,13 +49,13 @@ public class ChessGameDaoImpl implements ChessGameDao {
         deletePieces();
     }
 
-    private Color findTurn() {
+    private PlayingCamp findTurn() {
         final var query = "SELECT * FROM chess_game";
 
         try (final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Color.from(resultSet.getString("turn"));
+                return PlayingCamp.from(resultSet.getString("turn"));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -63,12 +63,12 @@ public class ChessGameDaoImpl implements ChessGameDao {
         return null;
     }
 
-    private void updateTurn(Color color) {
+    private void updateTurn(PlayingCamp playingCamp) {
         deleteTurn();
         final var query = "insert into chess_game (turn) values (?)";
 
         try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, color.getName());
+            preparedStatement.setString(1, playingCamp.getName());
 
             preparedStatement.executeUpdate();
         } catch (final Exception e) {
@@ -90,7 +90,7 @@ public class ChessGameDaoImpl implements ChessGameDao {
 
                 String color = resultSet.getString("color");
                 String type = resultSet.getString("type");
-                Piece piece = new Piece(PieceType.from(type), Color.from(color));
+                Piece piece = new Piece(PieceType.from(type), PlayingCamp.from(color));
 
                 board.put(position, piece);
             }

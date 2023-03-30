@@ -1,7 +1,7 @@
 package chess.domain.chessGame;
 
 import chess.domain.Board;
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move_rule.KingMoveRule;
 import chess.domain.piece.move_rule.QueenMoveRule;
@@ -22,8 +22,8 @@ class PlayingChessGameTest {
     @BeforeAll
     static void beforeAll_setup() {
         Map<Position, Piece> piecePositions = new HashMap<>();
-        piecePositions.put(B1, new Piece(KingMoveRule.getInstance(), Color.BLACK));
-        piecePositions.put(A1, new Piece(QueenMoveRule.getInstance(), Color.WHITE));
+        piecePositions.put(B1, new Piece(KingMoveRule.getInstance(), PlayingCamp.BLACK));
+        piecePositions.put(A1, new Piece(QueenMoveRule.getInstance(), PlayingCamp.WHITE));
         board = new Board(piecePositions);
     }
 

@@ -30,8 +30,8 @@ public class BlankPiece extends Piece {
     }
 
     @Override
-    public boolean isSameColor(Color color) {
-        return color == null;
+    public boolean isSameCamp(PlayingCamp playingCamp) {
+        return playingCamp == null;
     }
 
     @Override

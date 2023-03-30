@@ -1,6 +1,6 @@
 package chess.domain.piece.move_rule;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.PlayingCamp;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,13 +20,13 @@ public class QueenMoveRuleTest {
 
     private Piece blackPiece;
     private Piece whitePiece;
-    private MoveRule moveRule = QueenMoveRule.getInstance();
+    private final MoveRule moveRule = QueenMoveRule.getInstance();
     private Map<Position, Piece> board;
 
     @BeforeAll
     void setUp() {
-        blackPiece = new Piece(moveRule, Color.BLACK);
-        whitePiece = new Piece(moveRule, Color.WHITE);
+        blackPiece = new Piece(moveRule, PlayingCamp.BLACK);
+        whitePiece = new Piece(moveRule, PlayingCamp.WHITE);
     }
 
     @BeforeEach
