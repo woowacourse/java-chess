@@ -6,6 +6,8 @@ import java.util.*;
 
 public class Board {
 
+    private static final int NONE = 0;
+    public static final int INITIAL_KING_COUNTS = 2;
     private final Map<Square, Piece> board;
 
     public Board(final Map<Square, Piece> board) {
@@ -27,7 +29,7 @@ public class Board {
 
     private boolean isExistHurdle(final List<Square> squares) {
         return squares.stream()
-                .anyMatch(square -> board.containsKey(square));
+                .anyMatch(board::containsKey);
     }
 
     private boolean isAttackable(final Square source, final Square destination) {
@@ -87,14 +89,19 @@ public class Board {
     private int countPawnInSameFile(final Color color) {
         int countSamePawn = 0;
         for (File file : File.values()) {
-            long countSamePawns = Arrays.stream(Rank.values())
-                    .filter(rank -> isPawnInSameFile(file, rank, color))
-                    .count();
-            if (countSamePawns > 1) {
-                countSamePawn += countSamePawns;
-            }
+            countSamePawn += countSamePawn(color, file);
         }
         return countSamePawn;
+    }
+
+    private int countSamePawn(Color color, File file) {
+        int countSamePawns = (int) Arrays.stream(Rank.values())
+                .filter(rank -> isPawnInSameFile(file, rank, color))
+                .count();
+        if (countSamePawns > 1) {
+            return countSamePawns;
+        }
+        return NONE;
     }
 
     private boolean isPawnInSameFile(File file, Rank rank, Color color) {
@@ -128,6 +135,6 @@ public class Board {
         long countKing = board.values().stream()
                 .filter(piece -> piece.isSameClass(King.class))
                 .count();
-        return countKing == 2;
+        return countKing == INITIAL_KING_COUNTS;
     }
 }

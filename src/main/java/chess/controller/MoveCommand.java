@@ -8,13 +8,12 @@ import java.util.stream.Collectors;
 
 public class MoveCommand {
 
+    public static final int SOURCE_SQUARE_INDEX = 1;
+    public static final int DESTINATION_SQUARE_INDEX = 2;
     private final Square source;
     private final Square destination;
 
-    private MoveCommand(
-            final Square source,
-            final Square destination
-    ) {
+    private MoveCommand(final Square source, final Square destination) {
         this.source = source;
         this.destination = destination;
     }
@@ -35,7 +34,6 @@ public class MoveCommand {
         if (inputs.isEmpty()) {
             throw new IllegalArgumentException("move를 입력하세요.");
         }
-
     }
 
     private static void validateMove(final List<String> inputs) {
@@ -45,7 +43,7 @@ public class MoveCommand {
     }
 
     private static MoveCommand getMoveCommand(final List<String> inputs) {
-        return new MoveCommand(Square.from(inputs.get(1)), Square.from(inputs.get(2)));
+        return new MoveCommand(Square.from(inputs.get(SOURCE_SQUARE_INDEX)), Square.from(inputs.get(DESTINATION_SQUARE_INDEX)));
     }
 
     public Square getSource() {
@@ -55,5 +53,4 @@ public class MoveCommand {
     public Square getDestination() {
         return destination;
     }
-
 }

@@ -24,13 +24,13 @@ public class Pawn extends Piece {
         return new ArrayList<>(List.of(destination));
     }
 
-    private boolean isExistMovableVector(final int distanceFile, final int distanceRank) {
-        return vectors.stream()
-                .anyMatch(vector -> vector.isMovable(distanceFile, distanceRank));
-    }
-
     @Override
     public String getType() {
         return "Pawn";
+    }
+
+    private boolean isExistMovableVector(final int distanceFile, final int distanceRank) {
+        return vectors.stream()
+                .anyMatch(vector -> vector.isMovable(distanceFile, distanceRank));
     }
 }

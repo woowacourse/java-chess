@@ -70,16 +70,16 @@ public class ChessController {
         movePiece(savedChessGame, gameCommandInput);
     }
 
-    private static void movePiece(ChessGame savedChessGame, String gameCommandInput) {
-        MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
-        savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
-        outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
-    }
-
     private static void saveDatabase(ChessGame savedChessGame) {
         ChessGameDao chessGameDao = new ChessGameDao();
         chessGameDao.save(savedChessGame);
         savedChessGame.pauseGame();
+    }
+
+    private static void movePiece(ChessGame savedChessGame, String gameCommandInput) {
+        MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
+        savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
+        outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
     }
 
     private static void printStatus(ChessGame savedChessGame) {

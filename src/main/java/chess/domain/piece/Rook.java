@@ -21,6 +21,11 @@ public class Rook extends Piece {
         return generateRoute(directionVector, source, destination);
     }
 
+    @Override
+    public String getType() {
+        return "Rook";
+    }
+
     private DirectionVector findDirectionVector(final Square source, final Square destination) {
         final int distanceFile = destination.calculateDistanceFile(source);
         final int distanceRank = destination.calculateDistanceRank(source);
@@ -38,10 +43,5 @@ public class Rook extends Piece {
             route.add(currentSquare);
         }
         return route;
-    }
-
-    @Override
-    public String getType() {
-        return "Rook";
     }
 }

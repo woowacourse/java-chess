@@ -23,6 +23,11 @@ public class Queen extends Piece {
         return generateRoute(directionVector, source, destination);
     }
 
+    @Override
+    public String getType() {
+        return "Queen";
+    }
+
     private DirectionVector findDirectionVector(final Square source, final Square destination) {
         final int distanceFile = destination.calculateDistanceFile(source);
         final int distanceRank = destination.calculateDistanceRank(source);
@@ -40,10 +45,5 @@ public class Queen extends Piece {
             route.add(currentSquare);
         }
         return route;
-    }
-
-    @Override
-    public String getType() {
-        return "Queen";
     }
 }

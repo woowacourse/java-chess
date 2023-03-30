@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Square;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Empty extends Piece {
@@ -12,7 +13,7 @@ public class Empty extends Piece {
 
     @Override
     public List<Square> findRoute(Square source, Square destination) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

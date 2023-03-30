@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public enum PieceScore {
