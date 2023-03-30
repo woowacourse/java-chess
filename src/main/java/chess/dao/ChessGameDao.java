@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.piece.Team;
 
 import java.sql.Connection;
@@ -7,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static chess.dao.ChessBoardStringifier.stringifyChessBoard;
 
 public final class ChessGameDao {
     private static final String URL = "jdbc:mysql://localhost:13306/";
@@ -32,12 +35,12 @@ public final class ChessGameDao {
         }
     }
 
-    public void saveGame(RoomName roomName, Team turn, String chessBoard) {
+    public void saveGame(RoomName roomName, Team turn, ChessBoard chessBoard) {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(QUERY_INSERT_CHESS_GAME)) {
             preparedStatement.setString(1, roomName.getRoomName());
             preparedStatement.setString(2, convertTurnToMark(turn));
-            preparedStatement.setString(3, chessBoard);
+            preparedStatement.setString(3, stringifyChessBoard(chessBoard));
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException("문제가 발생했습니다. 다시 save를 시도해 주세요.");

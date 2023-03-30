@@ -1,6 +1,5 @@
 package chess.dao;
 
-import chess.controller.ChessBoardFormatter;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessFactory;
 import chess.domain.piece.Team;
@@ -27,11 +26,11 @@ class ChessGameDaoTest {
 
     @Test
     void 게임을_DB에_저장한다() {
-        ChessBoardFormatter chessBoardFormatter = ChessBoardFormatter.from(new ChessBoard(ChessFactory.create()));
+        ChessBoard chessBoard = new ChessBoard(ChessFactory.create());
         RoomName testRoomName = new RoomName("test_room");
 
         assertDoesNotThrow(() ->
-                chessGameDao.saveGame(testRoomName, Team.WHITE, chessBoardFormatter.getOneLineChessBoard()));
+                chessGameDao.saveGame(testRoomName, Team.WHITE, chessBoard));
 
         chessGameDao.deleteGame(testRoomName);
     }
