@@ -16,8 +16,9 @@ public class MysqlChessGameDao implements ChessGameDao {
 
     public Connection getConnection() {
         // 드라이버 연결
+        String connectionUrl = "jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION;
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            return DriverManager.getConnection(connectionUrl, USERNAME, PASSWORD);
         } catch (final SQLException e) {
             System.err.println("DBChessGameDao 연결 오류:" + e.getMessage());
             e.printStackTrace();
