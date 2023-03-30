@@ -14,7 +14,7 @@ docker-compose -p chess up -d
 - [x] DB connect 연결 에러 발생 시 처리
 - [x] 매직 넘버 상수화 및 메소드 이름 구체화
 - [ ] Command 처리 로직 수정
-- [ ] 하나의 요청에 대해 하나의 Connection 으로 처리하도록 수정
+- [x] 하나의 요청에 대해 하나의 Connection 으로 처리하도록 수정
 - [ ] update 쿼리 수정
 
 

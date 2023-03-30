@@ -16,20 +16,20 @@ public class ChessBoardDao implements ChessGameDao {
 
     @Override
     public void save(ChessGame chessGame) {
+        final var query = "INSERT INTO chess_game(piece_type, piece_rank, piece_file, team, turn) VALUES (?, ?, ?, ?, ?)";
         Map<Position, Piece> board = chessGame.getChessBoard();
-        for (Map.Entry<Position, Piece> boardEntry : board.entrySet()) {
-            final var query = "INSERT INTO chess_game(piece_type, piece_rank, piece_file, team, turn) VALUES (?, ?, ?, ?, ?)";
-            try (final var connection = dbConnection.getConnection();
-                 final var preparedStatement = connection.prepareStatement(query)) {
+        try (final var connection = dbConnection.getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            for (Map.Entry<Position, Piece> boardEntry : board.entrySet()) {
                 preparedStatement.setString(1, boardEntry.getValue().getPieceType().name());
                 preparedStatement.setInt(2, boardEntry.getKey().getRank());
                 preparedStatement.setInt(3, boardEntry.getKey().getFile());
                 preparedStatement.setString(4, boardEntry.getValue().getTeamColor().name());
                 preparedStatement.setString(5, chessGame.getCurrentTeamColor().name());
                 preparedStatement.executeUpdate();
-            } catch (final SQLException e) {
-                throw new RuntimeException(e);
             }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
