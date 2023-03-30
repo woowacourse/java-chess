@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class ChessGameDao implements JdbcChessGameDao {
+public class ChessGameDao {
 
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
@@ -78,7 +78,7 @@ public class ChessGameDao implements JdbcChessGameDao {
         return allId;
     }
 
-    @Override
+    
     public String save(ChessGame chessGame) {
         try (final Connection connection = getConnection()) {
             String saveId = saveChessGame(connection, chessGame.getColorTurn());
@@ -131,7 +131,7 @@ public class ChessGameDao implements JdbcChessGameDao {
         }
     }
 
-    @Override
+    
     public ChessGame select(String id) {
         try (Connection connection = getConnection()){
             Color turn = getTurn(id, connection);
@@ -191,7 +191,7 @@ public class ChessGameDao implements JdbcChessGameDao {
         return new Square(squareStatusMapper.get(resultType).apply(color));
     }
 
-    @Override
+    
     public void update(String id, ChessGame chessGameAfterProcess) {
         ChessGame chessGameBySelect = select(id);
 
@@ -259,7 +259,7 @@ public class ChessGameDao implements JdbcChessGameDao {
         return insertionSquareStatus.isNotSameColor(squareStatus.getColor());
     }
 
-    @Override
+    
     public void delete(String id) {
         try (Connection connection = getConnection()) {
             PreparedStatement deleteChessGame = connection.prepareStatement("DELETE FROM chess_game WHERE id = ?");
