@@ -21,15 +21,15 @@ public final class ChessController {
     }
 
     public void ready() {
-        executeUntilDoesNotThrowException(this::getGameStartCommand);
+        execute(this::getGameStartCommand);
     }
 
-    private void executeUntilDoesNotThrowException(final Runnable runningFunction) {
+    private void execute(final Runnable runningFunction) {
         try {
             runningFunction.run();
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            executeUntilDoesNotThrowException(runningFunction);
+            execute(runningFunction);
         }
     }
 
@@ -47,7 +47,7 @@ public final class ChessController {
 
     public void play() {
         while (chessGame.isReady()) {
-            executeUntilDoesNotThrowException(() -> reactCommand(getPlayCommands()));
+            execute(() -> reactCommand(getPlayCommands()));
         }
         outputView.printEndMessage();
     }
