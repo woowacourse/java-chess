@@ -15,7 +15,7 @@ public class RoomName {
         if (roomName.length() > MAX_ROOM_NAME_LENGTH) {
             throw new IllegalArgumentException("방 이름은 12자를 넘을 수 없습니다.");
         }
-        if (roomName.trim().length() == BLANK_LENGTH){
+        if (roomName.trim().length() == BLANK_LENGTH) {
             throw new IllegalArgumentException("방 이름을 입력해 주세요.");
         }
     }

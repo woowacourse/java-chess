@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.dao.ChessGameDao;
 import chess.dao.ChessGameData;
+import chess.dao.ChessGameSaveRecord;
 import chess.dao.RoomName;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.SquareCoordinate;
@@ -121,16 +122,24 @@ public final class ChessController {
         }
 
         ChessGameDao chessGameDao = new ChessGameDao();
-        List<String> savedRoomNames = chessGameDao.findRoomNames();
-        OutputView.printSavedRoomNames(savedRoomNames);
-        String loadRoomName = InputView.readLoadRoomName();
+        List<ChessGameSaveRecord> chessGameSaveRecords = chessGameDao.findChessGameSaveRecords();
+        OutputView.printSavedRoomNames(chessGameSaveRecords);
+        int loadId = InputView.readLoadId();
 
-        if (!savedRoomNames.contains(loadRoomName)) {
-            throw new IllegalArgumentException("저장 목록에 존재하지 않는 방 이름입니다.");
+        if (!isExistRoom(chessGameSaveRecords, loadId)) {
+            throw new IllegalArgumentException("저장 목록에 존재하지 않는 방의 id 입니다.");
         }
 
-        ChessGameData chessGameData = chessGameDao.findChessGame(loadRoomName);
+        ChessGameData chessGameData = chessGameDao.findChessGame(loadId);
         chessGame.load(chessGameData);
         showChessBoard(chessGame.getChessBoard());
+    }
+
+    private boolean isExistRoom(final List<ChessGameSaveRecord> chessGameSaveRecords, final int loadId) {
+        boolean isExist = false;
+        for (ChessGameSaveRecord record : chessGameSaveRecords) {
+            isExist = isExist || (record.id == loadId);
+        }
+        return isExist;
     }
 }

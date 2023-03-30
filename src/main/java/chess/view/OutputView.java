@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.dao.ChessGameSaveRecord;
 import chess.domain.piece.Team;
 import chess.domain.winningstatus.GameResult;
 
@@ -50,10 +51,10 @@ public final class OutputView {
         printWelcomeMessage();
     }
 
-    public static void printSavedRoomNames(final List<String> roomNames) {
+    public static void printSavedRoomNames(final List<ChessGameSaveRecord> chessGameSaveRecords) {
         System.out.println("< 저장된 방 목록 >");
-        for (String roomName : roomNames) {
-            System.out.println(roomName);
+        for (ChessGameSaveRecord record : chessGameSaveRecords) {
+            System.out.println(record.id + "\t| " + record.roomName + "\t| " + record.time);
         }
         System.out.println();
     }

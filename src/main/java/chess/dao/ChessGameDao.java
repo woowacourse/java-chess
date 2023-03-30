@@ -17,11 +17,11 @@ public final class ChessGameDao {
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
-    private static final String QUERY_INSERT_CHESS_GAME = "INSERT INTO chess_game VALUES(?, ?, ?, default)";
+    private static final String QUERY_INSERT_CHESS_GAME = "INSERT INTO chess_game(room_name, turn, chess_board) VALUES(?, ?, ?)";
     private static final String WHITE_MARK = "W";
     private static final String BLACK_MARK = "B";
-    private static final String QUERY_SELECT_ROOM_NAMES = "SELECT room_name FROM chess_game";
-    private static final String QUERY_SELECT_CHESS_GAME = "SELECT turn, chess_board FROM chess_game WHERE room_name = ?";
+    private static final String QUERY_SELECT_ROOM_NAMES = "SELECT id, room_name, time FROM chess_game ORDER BY id DESC";
+    private static final String QUERY_SELECT_CHESS_GAME = "SELECT turn, chess_board FROM chess_game WHERE id = ?";
     private static final String QUERY_DELETE_CHESS_GAME = "DELETE FROM chess_game WHERE room_name = ?";
 
     public Connection getConnection() {
@@ -57,27 +57,34 @@ public final class ChessGameDao {
         throw new IllegalArgumentException("잘못된 팀입니다.");
     }
 
-    public List<String> findRoomNames() {
-        final List<String> roomNames = new ArrayList<>();
+    public List<ChessGameSaveRecord> findChessGameSaveRecords() {
+        final List<ChessGameSaveRecord> chessGameSaveRecords = new ArrayList<>();
+
+        int id;
+        String roomName;
+        String time;
 
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(QUERY_SELECT_ROOM_NAMES)) {
 
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                roomNames.add(0, resultSet.getString("room_name"));
+                id = resultSet.getInt("id");
+                roomName = resultSet.getString("room_name");
+                time = resultSet.getString("time");
+                chessGameSaveRecords.add(0, new ChessGameSaveRecord(id, roomName, time));
             }
         } catch (final SQLException e) {
             throw new RuntimeException("문제가 발생했습니다. 다시 load를 시도해 주세요.");
         }
 
-        return roomNames;
+        return chessGameSaveRecords;
     }
 
-    public ChessGameData findChessGame(final String roomName) {
+    public ChessGameData findChessGame(final int id) {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(QUERY_SELECT_CHESS_GAME)) {
-            preparedStatement.setString(1, roomName);
+            preparedStatement.setString(1, Integer.toString(id));
 
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
