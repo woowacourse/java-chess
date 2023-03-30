@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.chessgame.ChessGame;
+import chess.model.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;

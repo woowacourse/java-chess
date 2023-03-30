@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.domain.board.Score;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
+import chess.model.domain.board.Score;
+import chess.model.domain.piece.Color;
+import chess.model.domain.piece.Piece;
+import chess.model.domain.piece.PieceType;
+import chess.model.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;

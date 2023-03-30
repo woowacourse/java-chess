@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.position.Position;
+import chess.model.domain.position.Position;
 import java.util.List;
 import java.util.Optional;
 

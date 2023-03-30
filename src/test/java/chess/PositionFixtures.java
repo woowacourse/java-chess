@@ -1,24 +1,24 @@
 package chess;
 
 
-import static chess.domain.position.File.A;
-import static chess.domain.position.File.B;
-import static chess.domain.position.File.C;
-import static chess.domain.position.File.D;
-import static chess.domain.position.File.E;
-import static chess.domain.position.File.F;
-import static chess.domain.position.File.G;
-import static chess.domain.position.File.H;
-import static chess.domain.position.Rank.EIGHT;
-import static chess.domain.position.Rank.FIVE;
-import static chess.domain.position.Rank.FOUR;
-import static chess.domain.position.Rank.ONE;
-import static chess.domain.position.Rank.SEVEN;
-import static chess.domain.position.Rank.SIX;
-import static chess.domain.position.Rank.THREE;
-import static chess.domain.position.Rank.TWO;
+import static chess.model.domain.position.File.A;
+import static chess.model.domain.position.File.B;
+import static chess.model.domain.position.File.C;
+import static chess.model.domain.position.File.D;
+import static chess.model.domain.position.File.E;
+import static chess.model.domain.position.File.F;
+import static chess.model.domain.position.File.G;
+import static chess.model.domain.position.File.H;
+import static chess.model.domain.position.Rank.EIGHT;
+import static chess.model.domain.position.Rank.FIVE;
+import static chess.model.domain.position.Rank.FOUR;
+import static chess.model.domain.position.Rank.ONE;
+import static chess.model.domain.position.Rank.SEVEN;
+import static chess.model.domain.position.Rank.SIX;
+import static chess.model.domain.position.Rank.THREE;
+import static chess.model.domain.position.Rank.TWO;
 
-import chess.domain.position.Position;
+import chess.model.domain.position.Position;
 
 public final class PositionFixtures {
 
