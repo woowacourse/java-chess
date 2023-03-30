@@ -3,7 +3,7 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandExecute;
 import chess.domain.chessGame.ChessGame;
-import chess.repository.ChessGameDao;
+import chess.dao.ChessGameDao;
 import chess.view.InputView;
 import chess.view.OutputView;
 

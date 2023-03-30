@@ -1,5 +1,6 @@
-package chess.repository;
+package chess.dao;
 
+import chess.db.ConnectGenerator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

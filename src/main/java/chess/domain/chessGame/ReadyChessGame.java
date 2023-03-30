@@ -20,7 +20,6 @@ public class ReadyChessGame implements ChessGame {
     private static final String GAME_NOT_START_ERROR_MESSAGE = "아직 게임을 시작하지 않았습니다.";
 
     public ReadyChessGame() {
-        OutputView.getInstance().printStartMessage();
     }
 
     @Override

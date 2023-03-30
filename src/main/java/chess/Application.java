@@ -1,9 +1,9 @@
 package chess;
 
 import chess.controller.ChessGameController;
-import chess.repository.ChessGameDao;
-import chess.repository.ChessGameDaoImpl;
-import chess.repository.ConnectGenerator;
+import chess.dao.ChessGameDao;
+import chess.dao.ChessGameDaoImpl;
+import chess.db.ConnectGenerator;
 
 public class Application {
     public static void main(String[] args) {
