@@ -336,5 +336,4 @@ class BoardTest {
         chessBoard.put(Position.of("e", "1"), new Rook(Side.WHITE));
         chessBoard.put(Position.of("f", "1"), new King(Side.WHITE));
     }
-
 }

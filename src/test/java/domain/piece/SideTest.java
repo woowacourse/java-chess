@@ -31,5 +31,4 @@ class SideTest {
         double blackScore = 17;
         assertThat(Side.calculateWinner(whiteScore, blackScore)).isEqualTo(Side.NEUTRAL);
     }
-
 }
