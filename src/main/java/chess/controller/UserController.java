@@ -3,7 +3,6 @@ package chess.controller;
 import static chess.controller.IllegalArgumentExceptionHandler.repeat;
 
 import chess.domain.user.User;
-import chess.repository.jdbc.JdbcUserDao;
 import chess.service.UserService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,20 +10,24 @@ import chess.view.dto.ready.ReadyCommandType;
 import chess.view.dto.ready.ReadyRequest;
 import java.util.List;
 
-public class UserController extends Controller {
+public class UserController {
 
+    private final InputView inputView;
+    private final OutputView outputView;
     private final UserService userService;
+    private final RoomController roomController;
 
-    public UserController(InputView inputView, OutputView outputView) {
-        super(inputView, outputView);
-        this.userService = new UserService(new JdbcUserDao());
+    public UserController(InputView inputView, OutputView outputView, UserService userService,
+            RoomController roomController) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.userService = userService;
+        this.roomController = roomController;
     }
 
-    @Override
-    public void run() {
+    public void login() {
         long userId = repeat(this::selectUser);
-        Controller controller = new RoomController(inputView, outputView, userId);
-        controller.run();
+        roomController.joinRoom(userId);
     }
 
     private long selectUser() {

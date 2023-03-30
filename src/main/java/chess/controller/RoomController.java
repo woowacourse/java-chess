@@ -2,7 +2,6 @@ package chess.controller;
 
 import static chess.controller.IllegalArgumentExceptionHandler.repeat;
 
-import chess.repository.jdbc.JdbcRoomDao;
 import chess.service.RoomService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,26 +10,28 @@ import chess.view.dto.ready.ReadyCommandType;
 import chess.view.dto.ready.ReadyRequest;
 import java.util.List;
 
-public class RoomController extends Controller {
+public class RoomController {
 
+    private final InputView inputView;
+    private final OutputView outputView;
     private final RoomService roomService;
-    private final long userId;
+    private final GameController gameController;
 
-    public RoomController(InputView inputView, OutputView outputView, long userId) {
-        super(inputView, outputView);
-        this.roomService = new RoomService(new JdbcRoomDao());
-        this.userId = userId;
+    public RoomController(InputView inputView, OutputView outputView, RoomService roomService,
+            GameController gameController) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.roomService = roomService;
+        this.gameController = gameController;
     }
 
-    @Override
-    public void run() {
-        repeat(this::selectCategory);
-        long roomId = repeat(this::selectRoom);
-        Controller controller = new GameController(inputView, outputView, roomId);
-        controller.run();
+    public void joinRoom(long userId) {
+        repeat(() -> selectCategory(userId));
+        long roomId = repeat(() -> selectRoom(userId));
+        gameController.play(roomId);
     }
 
-    private void selectCategory() {
+    private void selectCategory(long userId) {
         outputView.printSelectCategoryMessage();
         CategoryCommandType commandType = inputView.askCategory();
         while (commandType == CategoryCommandType.RECORD) {
@@ -40,8 +41,8 @@ public class RoomController extends Controller {
         }
     }
 
-    private long selectRoom() {
-        printAskRoomNameMessages();
+    private long selectRoom(long userId) {
+        printAskRoomNameMessages(userId);
         ReadyRequest request = inputView.askReadyCommand();
         if (request.getCommandType() == ReadyCommandType.USE) {
             return roomService.selectRoom(userId, request.getName());
@@ -49,7 +50,7 @@ public class RoomController extends Controller {
         return roomService.create(userId, request.getName());
     }
 
-    private void printAskRoomNameMessages() {
+    private void printAskRoomNameMessages(long userId) {
         List<String> roomNames = roomService.findOngoingRoomNames(userId);
         if (roomNames.size() > 0) {
             outputView.printSelectRoomMessage(roomNames);

@@ -8,8 +8,6 @@ import chess.domain.game.GameResult;
 import chess.domain.piece.Piece;
 import chess.domain.position.Move;
 import chess.domain.position.Position;
-import chess.repository.jdbc.JdbcMoveDao;
-import chess.repository.jdbc.JdbcRoomDao;
 import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -22,40 +20,40 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class GameController extends Controller {
+public class GameController {
 
+    private final InputView inputView;
+    private final OutputView outputView;
     private final GameService gameService;
-    private final long roomId;
 
-    public GameController(InputView inputView, OutputView outputView, long roomId) {
-        super(inputView, outputView);
-        this.gameService = new GameService(new JdbcRoomDao(), new JdbcMoveDao());
-        this.roomId = roomId;
+    public GameController(InputView inputView, OutputView outputView, GameService gameService) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.gameService = gameService;
     }
 
-    @Override
-    public void run() {
-        repeat(this::askToStart);
+    public void play(long roomId) {
+        repeat(() -> askToStart(roomId));
     }
 
-    private void askToStart() {
+    private void askToStart(long roomId) {
         outputView.printStartMessage();
         GameRequest request = inputView.askGameCommand();
         GameCommandType commandType = request.getCommandType();
         if (commandType == GameCommandType.START) {
-            play(setUpGame());
+            process(setUpGame(roomId));
         }
         if (Set.of(GameCommandType.MOVE, GameCommandType.STATUS).contains(commandType)) {
             throw new IllegalArgumentException("아직 게임이 시작되지 않은 상태입니다.");
         }
     }
 
-    private Game setUpGame() {
+    private Game setUpGame(long roomId) {
         List<Move> moves = gameService.findMoves(roomId);
-        return Game.from(moves);
+        return Game.from(roomId, moves);
     }
 
-    private void play(Game game) {
+    private void process(Game game) {
         outputView.printPieces(createResponses(game.getPieces()));
         while (repeat(() -> playOnce(game)) != GameCommandType.END) {
             outputView.printPieces(createResponses(game.getPieces()));
@@ -83,7 +81,7 @@ public class GameController extends Controller {
             move(game, request);
             if (game.isGameOver()) {
                 GameResult gameResult = game.getResult();
-                gameService.updateWinner(roomId, gameResult.getWinner());
+                gameService.updateWinner(game.getRoomId(), gameResult.getWinner());
                 outputView.printFinalWinner(gameResult);
                 return GameCommandType.END;
             }
@@ -94,6 +92,6 @@ public class GameController extends Controller {
     private void move(Game game, GameRequest request) {
         MoveRequest moveRequest = request.getMoveRequest();
         game.movePiece(moveRequest.getSource(), moveRequest.getTarget());
-        gameService.createMove(roomId, moveRequest.getSource(), moveRequest.getTarget());
+        gameService.createMove(game.getRoomId(), moveRequest.getSource(), moveRequest.getTarget());
     }
 }

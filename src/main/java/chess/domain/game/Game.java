@@ -11,16 +11,18 @@ import java.util.Map;
 
 public class Game {
 
+    private final long roomId;
     private Color turn;
     private final Board board;
 
-    public Game() {
+    public Game(long roomId) {
+        this.roomId = roomId;
         this.turn = Color.WHITE;
         this.board = BoardFactory.createBoard();
     }
 
-    public static Game from(List<Move> moves) {
-        Game game = new Game();
+    public static Game from(long roomId, List<Move> moves) {
+        Game game = new Game(roomId);
         Board board = game.board;
         for (Move move : moves) {
             board.move(move.getSource(), move.getTarget());
@@ -61,5 +63,9 @@ public class Game {
 
     public GameResult getResult() {
         return board.getResult();
+    }
+
+    public long getRoomId() {
+        return roomId;
     }
 }
