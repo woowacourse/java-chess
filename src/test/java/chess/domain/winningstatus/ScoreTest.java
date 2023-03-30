@@ -27,7 +27,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(38);
     }
@@ -39,7 +39,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 2);
+        Score score = Score.of(pices, 2);
 
         assertThat(score.getScore()).isEqualTo(37);
     }
@@ -51,7 +51,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(37);
     }
@@ -63,7 +63,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(33);
     }
@@ -75,7 +75,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, BISHOP_BLACK, QUEEN_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(35.5);
     }
@@ -87,7 +87,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, KNIGHT_BLACK, QUEEN_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(35);
     }
@@ -99,7 +99,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK,
                 KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(29);
     }
@@ -111,7 +111,7 @@ class ScoreTest {
                 PAWN_BLACK, PAWN_BLACK, PAWN_BLACK, PAWN_BLACK,
                 ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK,
                 BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK);
-        Score score = new Score(pices, 0);
+        Score score = Score.of(pices, 0);
 
         assertThat(score.getScore()).isEqualTo(38);
     }

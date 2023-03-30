@@ -59,8 +59,8 @@ public class Running implements GameState {
     @Override
     public WinningStatus status() {
         Map<Team, Score> scores = new EnumMap<>(Team.class);
-        scores.put(Team.WHITE, new Score(chessBoard.getPiecesOf(Team.WHITE), chessBoard.countDoublePawnOf(Team.WHITE)));
-        scores.put(Team.BLACK, new Score(chessBoard.getPiecesOf(Team.BLACK), chessBoard.countDoublePawnOf(Team.BLACK)));
+        scores.put(Team.WHITE, Score.of(chessBoard.getPiecesOf(Team.WHITE), chessBoard.countDoublePawnOf(Team.WHITE)));
+        scores.put(Team.BLACK, Score.of(chessBoard.getPiecesOf(Team.BLACK), chessBoard.countDoublePawnOf(Team.BLACK)));
 
         return new WinningStatusByScore(scores);
     }

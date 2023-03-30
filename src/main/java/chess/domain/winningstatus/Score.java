@@ -8,15 +8,18 @@ public class Score {
 
     private final double score;
 
-    public Score(final List<SquareState> pieces, final int doublePawnCount) {
+    private Score(final double score) {
+        this.score = score;
+    }
+
+    public static Score of(final List<SquareState> pieces, final int doublePawnCount) {
         double score = 0.0;
 
         for (SquareState piece : pieces) {
             score += PieceScore.getScoreByPiece(piece);
         }
         score -= doublePawnCount * 0.5;
-
-        this.score = score;
+        return new Score(score);
     }
 
     public double getScore() {
