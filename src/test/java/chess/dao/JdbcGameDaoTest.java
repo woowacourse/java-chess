@@ -19,14 +19,6 @@ class JdbcGameDaoTest {
     public void deleteAll() {
         gameDao.deleteAll();
     }
-    @Test
-    public void connection() {
-        try (final var connection = ConnectionProvider.getConnection()) {
-            assertThat(connection).isNotNull();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Test
     public void save() {

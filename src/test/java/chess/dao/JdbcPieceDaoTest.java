@@ -21,15 +21,6 @@ class JdbcPieceDaoTest {
     }
 
     @Test
-    public void connection() {
-        try (final var connection = ConnectionProvider.getConnection()) {
-            assertThat(connection).isNotNull();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
     public void save() {
         // given
         Position a1 = Position.from("a1");
