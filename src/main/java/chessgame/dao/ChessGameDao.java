@@ -15,8 +15,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessGameDao {
+public class ChessGameDao implements GameDao{
 
+    @Override
     public void save(Board board, String gameName, State turn) {
         Map<Point, Piece> boardMap = board.getBoard();
         insertGame(gameName, turn);
@@ -56,6 +57,7 @@ public class ChessGameDao {
         }
     }
 
+    @Override
     public Game read(String gameName) {
         final String query = "SELECT * FROM Board where board_name = ?";
         try (final Connection connection = ConnectionGenerator.getConnection();
@@ -89,6 +91,7 @@ public class ChessGameDao {
         return new Game(new Board(board), gameName);
     }
 
+    @Override
     public void remove(String gameName) {
         final String query = "delete from game where name = ?";
 
@@ -101,6 +104,7 @@ public class ChessGameDao {
         }
     }
 
+    @Override
     public String findTurnByGame(String gameName) {
         final String query = "select team_turn from game where name = ?";
 
