@@ -65,7 +65,7 @@ public final class ChessGameDao {
                 roomNames.add(0, resultSet.getString("room_name"));
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("문제가 발생했습니다. 다시 load를 시도해 주세요.");
         }
 
         return roomNames;
@@ -83,7 +83,7 @@ public final class ChessGameDao {
                 return new ChessGameData(turn, oneLineChessBoard);
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("문제가 발생했습니다. 다시 load를 시도해 주세요.");
         }
 
         return null;
@@ -96,7 +96,7 @@ public final class ChessGameDao {
             preparedStatement.execute();
 
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("문제가 발생했습니다. 다시 삭제를 시도해 주세요.");
         }
     }
 }
