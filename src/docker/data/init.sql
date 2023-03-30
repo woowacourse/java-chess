@@ -1,6 +1,7 @@
 CREATE TABLE chess_game
 (
     `id`    INT         NOT NULL AUTO_INCREMENT,
+    `state` VARCHAR(20) NOT NULL,
     `turn`  VARCHAR(20) NOT NULL,
     PRIMARY KEY (`id`)
 );
