@@ -1,6 +1,8 @@
 package chess.domain.dao;
 
 
+import chess.dao.TurnDao;
+import chess.dao.TurnDaoImpl;
 import chess.domain.Color;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

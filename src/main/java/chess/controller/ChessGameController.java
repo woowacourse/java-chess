@@ -3,9 +3,10 @@ package chess.controller;
 import chess.domain.Color;
 import chess.domain.CommandAction;
 import chess.domain.Players;
-import chess.domain.factory.InitPlayersFactory;
-import chess.domain.dao.PieceDao;
-import chess.domain.dao.PieceDaoImpl;
+import chess.dao.TurnDaoImpl;
+import chess.domain.factory.PlayersFactory;
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoImpl;
 import chess.dto.response.PiecesResponse;
 import chess.ui.InputView;
 import chess.ui.OutputView;
@@ -17,6 +18,7 @@ import java.util.function.Supplier;
 public final class ChessGameController {
 
     private Players players;
+    private final TurnDaoImpl turnDao = new TurnDaoImpl();
 
     private final CommandAction commandAction = new CommandAction(Map.of(
             Command.START, this::start,
@@ -26,55 +28,51 @@ public final class ChessGameController {
     );
 
     public void run() {
-        players = InitPlayersFactory.initializeChessBoard();
+        players = PlayersFactory.createChessBoard();
         OutputView.printStartGame();
-        boolean isNotEnd = true;
-        while (isOnGoing(isNotEnd)) {
-            Commands commandWithArguments = readCommand(InputView::getCommands);
+        CommandManagement commandWithArguments;
+        do {
+            commandWithArguments = readCommand(InputView::getCommands);
             commandAction.execute(commandWithArguments);
-            isNotEnd = commandWithArguments.isNotEnd();
-        }
+        } while (commandWithArguments.isNotEnd() && !players.notEveryKingAlive());
         finishGame();
-    }
-
-    private boolean isOnGoing(boolean isNotEnd) {
-        return isNotEnd && !players.notEveryKingAlive();
     }
 
     private void finishGame() {
         if (players.notEveryKingAlive()) {
             OutputView.printWinner(players.getWinnerColorName());
-            PieceDao dao = new PieceDaoImpl();
-            dao.deleteAll();
+            PieceDao pieceDao = new PieceDaoImpl();
+            pieceDao.deleteAll();
+            turnDao.update(Color.WHITE);
         }
     }
 
-    private Commands readCommand(Supplier<List<String>> commandReader) {
+    private CommandManagement readCommand(Supplier<List<String>> commandReader) {
         try {
             List<String> arguments = commandReader.get();
-            return new Commands(arguments);
+            return new CommandManagement(arguments);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return readCommand(commandReader);
         }
     }
 
-    private void start(final Commands commands) {
-        players = InitPlayersFactory.initializeChessBoard();
+    private void start(final CommandManagement commandManagement) {
+        players = PlayersFactory.createChessBoard();
         PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
         OutputView.printInitializedChessBoard(piecesResponse);
     }
 
-    private void status(final Commands commands) {
+    private void status(final CommandManagement commandManagement) {
         OutputView.printStatus(players.calculateScore());
     }
 
-    private void move(final Commands commands) {
-        String inputMovablePiece = commands.getMovablePiece();
-        String inputTargetPosition = commands.getTargetPosition();
+    private void move(final CommandManagement commandManagement) {
+        String inputMovablePiece = commandManagement.getMovablePiece();
+        String inputTargetPosition = commandManagement.getTargetPosition();
 
         try {
-            players.movePiece(inputMovablePiece, inputTargetPosition);
+            players.movePiece(turnDao, inputMovablePiece, inputTargetPosition);
             OutputView.printChessBoardStatus(
                     new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK)));
         } catch (IllegalArgumentException e) {
@@ -82,7 +80,7 @@ public final class ChessGameController {
         }
     }
 
-    private void end(final Commands commands) {
+    private void end(final CommandManagement commandManagement) {
     }
 
 }

@@ -69,24 +69,22 @@ public final class Pieces {
     }
 
     private static void addWhitePieces(final List<Piece> pieceList) {
-        makeRookAndBishopAndKnight(pieceList);
-        makePawns(pieceList, LAST_FILE_OF_WHITE);
-        makeQueenAndKing(pieceList);
+        addRookAndBishopAndKnight(pieceList);
+        addPawns(pieceList, LAST_FILE_OF_WHITE);
+        addQueenAndKing(pieceList);
     }
 
-    private static void makePawns(final List<Piece> pieceList, final int rank) {
+    private static void addPawns(final List<Piece> pieceList, final int rank) {
         for (int file = FIRST_RANK; file <= LAST_RANK; file++) {
             pieceList.add(Piece.from(rank, (char) file, Shape.PAWN));
         }
     }
 
-    private static void makeRookAndBishopAndKnight(final List<Piece> pieceList) {
-        final Deque<Shape> whitePieceNames = new ArrayDeque<>(
-                List.of(ROOK,KNIGHT,BISHOP)
-        );
+    private static void addRookAndBishopAndKnight(final List<Piece> pieceList) {
+        final Deque<Shape> whitePiecesName = new ArrayDeque<>(List.of(ROOK, KNIGHT, BISHOP));
 
         for (int frontPosition = FIRST_RANK; frontPosition < MIDDLE_RANK; frontPosition++) {
-            Shape shape = whitePieceNames.pollFirst();
+            Shape shape = whitePiecesName.pollFirst();
             addPiecePairs(pieceList, frontPosition, shape);
         }
     }
@@ -98,7 +96,7 @@ public final class Pieces {
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, (char) backPosition, shape));
     }
 
-    private static void makeQueenAndKing(final List<Piece> pieceList) {
+    private static void addQueenAndKing(final List<Piece> pieceList) {
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, QUEEN_DEFAULT_RANK_POSITION, Shape.QUEEN));
         pieceList.add(Piece.from(FIRST_FILE_OF_WHITE, KING_DEFAULT_RANK_POSITION, Shape.KING));
     }
@@ -133,6 +131,12 @@ public final class Pieces {
         findPiece.ifPresent(pieces::remove);
 
         return findPiece;
+    }
+
+    public boolean isKingDead() {
+        return pieces
+                .stream()
+                .noneMatch(piece -> piece.isSameShape(Shape.KING));
     }
 
     public List<Piece> getPieces() {

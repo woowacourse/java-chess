@@ -4,15 +4,15 @@ import java.util.List;
 
 import static chess.controller.Command.MOVE;
 
-public class Commands {
+public class CommandManagement {
 
     private final Command command;
-    private final List<String> args;
+    private final List<String> subCommands;
 
-    public Commands(List<String> inputs){
+    public CommandManagement(List<String> inputs){
         this.command = Command.getCommand(inputs);
         inputs.remove(0);
-        this.args = inputs;
+        this.subCommands = inputs;
     }
 
     public Command getCommand() {
@@ -25,12 +25,12 @@ public class Commands {
 
     public String getMovablePiece() {
         validateMove();
-        return args.get(0);
+        return subCommands.get(0);
     }
 
     public String getTargetPosition() {
         validateMove();
-        return args.get(1);
+        return subCommands.get(1);
     }
 
     private void validateMove() {

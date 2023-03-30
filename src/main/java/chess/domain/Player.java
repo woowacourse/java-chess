@@ -8,6 +8,8 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class Player {
+    private static final Integer MINIMUM_SAME_FILE_COUNT = 1;
+    private static final Integer MINIMUM_SAME_FILE_WEIGHT = 1;
 
     private final Color color;
     private final Pieces pieces;
@@ -25,8 +27,8 @@ public class Player {
         return new Player(Color.BLACK, pieces);
     }
 
-    public List<Piece> getPieces() {
-        return pieces.getPieces();
+    public Pieces getPieces() {
+        return pieces;
     }
 
     public Color getColor() {
@@ -47,20 +49,16 @@ public class Player {
         return findPiece;
     }
 
-    public boolean isKingDead() {
-        return pieces.getPieces().stream().noneMatch(piece -> piece.isSameShape(Shape.KING));
-    }
-
     public Optional<Piece> removePiece(final Position removalPosition) {
         return pieces.remove(removalPosition);
     }
 
     public Score getTotalScore() {
         long pawnSameFileCount = countPawnPerFile().values().stream()
-                .filter(value -> value > 1)
+                .filter(value -> value > MINIMUM_SAME_FILE_COUNT)
                 .count();
 
-        Score subtrahend = Score.from(pawnSameFileCount * 0.5);
+        Score subtrahend = Score.from(pawnSameFileCount * MINIMUM_SAME_FILE_WEIGHT);
         Score total = Score.from(pieces.getPieces().stream().mapToDouble(Piece::getScore).sum());
         return total.subtract(subtrahend);
     }

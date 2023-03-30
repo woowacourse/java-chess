@@ -5,16 +5,16 @@ import chess.domain.Piece;
 import chess.domain.Pieces;
 import chess.domain.Player;
 import chess.domain.Players;
-import chess.domain.dao.PieceDao;
-import chess.domain.dao.PieceDaoImpl;
-import chess.domain.dao.TurnDao;
-import chess.domain.dao.TurnDaoImpl;
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoImpl;
+import chess.dao.TurnDao;
+import chess.dao.TurnDaoImpl;
 
 import java.util.List;
 
-public class InitPlayersFactory {
+public class PlayersFactory {
 
-    public static Players initializeChessBoard() {
+    public static Players createChessBoard() {
 
         PieceDao dao = new PieceDaoImpl();
         TurnDao turnDao = new TurnDaoImpl();

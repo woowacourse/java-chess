@@ -1,5 +1,7 @@
 package chess.domain.dao;
 
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoImpl;
 import chess.domain.Piece;
 import chess.domain.Position;
 import chess.domain.Shape;

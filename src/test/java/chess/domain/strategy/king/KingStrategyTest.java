@@ -32,7 +32,6 @@ class KingStrategyTest {
                 new PositionDto(Position.from(rank, filter))
         );
 
-
         // when, then
         assertDoesNotThrow(() -> new KingStrategy().validateDirection(moveRequest));
     }
@@ -52,7 +51,6 @@ class KingStrategyTest {
                     Color.WHITE,
                     new PositionDto(Position.from(4, 'd')),
                     new PositionDto(Position.from(6, 'd')));
-
 
             // when, then
             assertThatThrownBy(() -> new KingStrategy().validateDirection(moveRequest));

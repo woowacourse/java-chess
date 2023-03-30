@@ -1,9 +1,8 @@
 package chess.domain;
 
-import chess.domain.dao.PieceDao;
-import chess.domain.dao.PieceDaoImpl;
-import chess.domain.dao.TurnDao;
-import chess.domain.dao.TurnDaoImpl;
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoImpl;
+import chess.dao.TurnDaoImpl;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,7 +11,8 @@ import static java.util.stream.Collectors.toList;
 
 public class Players {
 
-    private final TurnDao turnDao = new TurnDaoImpl();
+    private static final Integer MINIMUM_ALIVE_PLAYER_COUNT = 1;
+
     private final List<Player> players;
     private Color current;
 
@@ -64,7 +64,7 @@ public class Players {
 
     private List<Position> getAllPosition() {
         return players.stream()
-                .flatMap(player -> player.getPieces().stream().map(Piece::getPosition))
+                .flatMap(player -> player.getPieces().getPieces().stream().map(Piece::getPosition))
                 .collect(toList());
     }
 
@@ -83,16 +83,17 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
     }
 
-    public void movePiece(final String inputMovablePiece, final String inputTargetPosition) {
+    public void movePiece(final TurnDaoImpl turnDao, final String inputMovablePiece, final String inputTargetPosition) {
         Position findPosition = findPositionByInputPoint(inputMovablePiece);
         Position targetPosition = Position.from(inputTargetPosition);
         validatePosition(inputMovablePiece);
         move(findPosition, targetPosition);
-        changeTurn();
+        changeTurn(turnDao);
     }
 
-    private void changeTurn() {
+    private void changeTurn(final TurnDaoImpl turnDao) {
         Color changeColor = Color.changeColor(current);
+        this.current = changeColor;
         turnDao.update(changeColor);
     }
 
@@ -102,12 +103,12 @@ public class Players {
         Player findPlayer = findPlayerByPosition(sourcePosition);
         Piece changedPiece = findPlayer.movePiece(getAllPosition(), sourcePosition, targetPosition);
 
-        PieceDao dao = new PieceDaoImpl();
-        dao.updatePosition(changedPiece, sourcePosition);
+        PieceDao pieceDaoImpl = new PieceDaoImpl();
+        pieceDaoImpl.updatePosition(changedPiece, sourcePosition);
 
         Player anotherPlayer = getAnotherPlayer(findPlayer);
         anotherPlayer.removePiece(targetPosition)
-                .ifPresent(piece -> dao.deletePieceByColor(piece, anotherPlayer.getColor()));
+                .ifPresent(piece -> pieceDaoImpl.deletePieceByColor(piece, anotherPlayer.getColor()));
     }
 
     private Player getAnotherPlayer(final Player findPlayer) {
@@ -126,7 +127,7 @@ public class Players {
     }
 
     public List<Piece> getPiecesByColor(final Color color) {
-        return getPlayerByColor(color).getPieces();
+        return getPlayerByColor(color).getPieces().getPieces();
     }
 
     private Player getPlayerByColor(final Color color) {
@@ -136,14 +137,24 @@ public class Players {
     }
 
     public boolean notEveryKingAlive() {
-        return players.stream().anyMatch(Player::isKingDead);
+        return players.stream().anyMatch(player -> player.getPieces().isKingDead());
     }
 
     public String getWinnerColorName() {
-        Player loser = players.stream().filter(Player::isKingDead)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("아직 블랙, 화이트 킹이 모두 살아있습니다!"));
-        return getAnotherPlayer(loser).getColorName();
+        if (isEndGame()) {
+            return players.stream()
+                    .filter(player -> !player.getPieces().isKingDead())
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("블랙, 화이트 킹이 둘 다 죽었습니다!"))
+                    .getColorName();
+        }
+
+        throw new IllegalArgumentException("아직 블랙, 화이트 킹이 모두 살아있습니다!");
+    }
+
+    private boolean isEndGame() {
+        return players.stream()
+                .filter(player -> !player.getPieces().isKingDead()).count() == MINIMUM_ALIVE_PLAYER_COUNT;
     }
 
     public double calculateScore() {

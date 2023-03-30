@@ -9,15 +9,15 @@ public class File {
     private final char file;
 
     private File(final char file) {
-        validate(file);
         this.file = file;
     }
 
     public static File from(final char file) {
+        validate(file);
         return new File(file);
     }
 
-    private void validate(final char file) {
+    private static void validate(final char file) {
         if (file < ASCII_LOWER_CASE_A || ASCII_LOWER_CASE_H < file) {
             throw new IllegalArgumentException("기물의 세로 위치는 a부터 h까지 놓을 수 있습니다.");
         }
@@ -27,8 +27,8 @@ public class File {
         return this.file - file;
     }
 
-    public char move(final int fileDirection) {
-        return (char) (this.file + fileDirection);
+    public char move(final int distance) {
+        return (char) (this.file + distance);
     }
 
     public char getFile() {

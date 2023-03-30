@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.controller.Action;
 import chess.controller.Command;
-import chess.controller.Commands;
+import chess.controller.CommandManagement;
 
 import java.util.Map;
 
@@ -14,8 +14,8 @@ public class CommandAction {
         this.commandActions = commandActions;
     }
 
-    public void execute(final Commands commands) {
-        commandActions.get(commands.getCommand()).execute(commands);
+    public void execute(final CommandManagement commandManagement) {
+        commandActions.get(commandManagement.getCommand()).execute(commandManagement);
     }
 
 }
