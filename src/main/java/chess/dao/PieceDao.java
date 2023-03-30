@@ -33,7 +33,7 @@ public class PieceDao {
     }
 
     public void create(final PieceDto pieceDto) {
-        final String query = "INSERT INTO piece(running_game_id, piece_type, file_position, rank_position, color) "
+        final String query = "INSERT INTO piece(game_id, piece_type, file_position, rank_position, color) "
                 + "VALUES (?, ?, ?, ?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
