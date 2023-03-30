@@ -3,7 +3,6 @@ package chess.controller;
 import chess.controller.dao.ChessGameDao;
 import chess.controller.dto.ChessBoardDto;
 import chess.domain.ChessGame;
-import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -53,7 +52,7 @@ public class ChessController {
         if (savedChessGame.isFinished()) {
             outputView.printWinner(savedChessGame.getWinner());
             ChessGameDao chessGameDao = new ChessGameDao();
-            chessGameDao.save(new ChessGame(BoardFactory.generate(), ChessGame.FIRST_TURN));
+            chessGameDao.deleteChessGame();
             return false;
         }
         return !savedChessGame.isPaused();

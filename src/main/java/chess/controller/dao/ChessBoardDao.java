@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class ChessBoardDao {
 
@@ -19,20 +20,17 @@ public class ChessBoardDao {
             final var preparedStatement = connection.prepareStatement(queryGetPieces)
         ) {
             ResultSet resultSetForBoard = preparedStatement.executeQuery();
-            if (resultSetForBoard.next()) {
-                Map<Square, Piece> board = new HashMap<>();
-                while (resultSetForBoard.next()) {
-                    String file = resultSetForBoard.getString(3);
-                    String rank = resultSetForBoard.getString(4);
-                    Color color = Color.valueOf(resultSetForBoard.getString(5));
-                    String type = resultSetForBoard.getString(6);
-                    Square square = new Square(File.valueOf(file), Rank.valueOf(rank));
-                    Piece piece = createPiece(type, color);
-                    board.put(square, piece);
-                }
-                return new Board(board);
+            Map<Square, Piece> board = new HashMap<>();
+            while (resultSetForBoard.next()) {
+                String file = resultSetForBoard.getString(3);
+                String rank = resultSetForBoard.getString(4);
+                Color color = Color.valueOf(resultSetForBoard.getString(5));
+                String type = resultSetForBoard.getString(6);
+                Square square = new Square(File.valueOf(file), Rank.valueOf(rank));
+                Piece piece = createPiece(type, color);
+                board.put(square, piece);
             }
-            throw new IllegalArgumentException("현재 저장된 체스 보드가 없습니다.");
+            return new Board(board);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +51,7 @@ public class ChessBoardDao {
             case "Queen":
                 return new Queen(color);
         }
-        return new Empty(color);
+        throw new NoSuchElementException("잘못된 기물입니다.");
     }
 
 }
