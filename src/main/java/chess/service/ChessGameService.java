@@ -4,9 +4,12 @@ import chess.dao.chess.ChessGameDao;
 import chess.domain.board.ChessBoard;
 import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
+import chess.domain.piece.Piece;
+import chess.domain.piece.move.Position;
 import chess.entity.ChessGameEntity;
 import chess.entity.PieceEntity;
 
+import java.util.Map;
 import java.util.Optional;
 
 public final class ChessGameService {
@@ -35,16 +38,27 @@ public final class ChessGameService {
         return findChessGameEntity.get().getId();
     }
 
-    public void savePiece(final PieceEntity pieceEntity) {
-        chessBoardService.savePiece(pieceEntity);
+    public void play(final long userId, final Position source, final Position target) {
+        final ChessGame chessGame = getOrCreateChessGame(userId);
+        chessGame.play(source, target);
+        final long chessGameId = getChessGameId(userId);
+        deletePieces(source, target, chessGameId);
+        savePieces(target, chessGameId, chessGame);
+        chessGameDao.updateCurrentCampById(chessGameId, chessGame.getCurrentCamp());
     }
 
-    public void updateCurrentCamp(final long chessGameId, final CampType currentCamp) {
-        chessGameDao.updateCurrentCampById(chessGameId, currentCamp);
-    }
-
-    public void deletePieces(final PieceEntity sourcePiece, final PieceEntity targetPiece) {
+    private void deletePieces(final Position source, final Position target, final long chessGameId) {
+        final PieceEntity sourcePiece = PieceEntity.createWithLocation(chessGameId, source.getRank(), source.getFile());
+        final PieceEntity targetPiece = PieceEntity.createWithLocation(chessGameId, target.getRank(), target.getFile());
         chessBoardService.deletePieces(sourcePiece, targetPiece);
+    }
+
+    private void savePieces(final Position target, final long chessGameId, final ChessGame chessGame) {
+        final Map<Position, Piece> chessBoard = chessGame.getChessBoard();
+        final Piece piece = chessBoard.get(target);
+        final PieceEntity savedPiece = PieceEntity.createWithChessGameId(chessGameId, target.getRank(),
+                target.getFile(), piece.getPieceType().name(), piece.getCampType().name());
+        chessBoardService.savePiece(savedPiece);
     }
 
     public void clear(final long userId) {

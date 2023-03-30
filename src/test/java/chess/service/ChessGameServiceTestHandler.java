@@ -13,7 +13,7 @@ import chess.entity.PieceEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,15 +74,33 @@ class ChessGameServiceTestHandler {
     }
 
     @Test
-    @DisplayName("체스말 정보를 바탕으로 체스말을 저장한다")
-    void savePiece() {
+    @DisplayName("게임을 플레이하면, 시작 위치에 존재하는 체스말을 제거한다")
+    void play_deletePieces() {
         // given
         final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
 
         // when
-        chessGameService.savePiece(PieceEntity.createWithChessGameId(1L, 1, 1,
-                "PAWN", "WHITE"));
+        chessGameService.play(1L, new Position(1, 0), new Position(2, 0));
+
+        // then
+        final Map<Position, Piece> expected = new HashMap<>(chessGameService.getOrCreateChessGame(userId).getChessBoard());
+        expected.remove(new Position(1, 0));
+        final Map<Position, Piece> actual = chessGameService.getOrCreateChessGame(1L).getChessBoard();
+
+        assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("게임을 플레이하면, 체스말 정보를 바탕으로 체스말을 저장한다")
+    void play_savePieces() {
+        // given
+        final long userId = 1L;
+        final ChessGameService chessGameService = getChessGameService(userId);
+
+        // when
+        chessGameService.play(1L, new Position(1, 1), new Position(2, 1));
 
         // then
         final long chessGameId = chessGameService.getChessGameId(1L);
@@ -91,44 +109,21 @@ class ChessGameServiceTestHandler {
     }
 
     @Test
-    @DisplayName("체스 게임 아이디에 해당하는 진영 정보를 업데이트한다.")
-    void updateCurrentCamp() {
+    @DisplayName("게임을 플레이하면, 체스 게임 아이디에 해당하는 진영 정보를 업데이트한다.")
+    void play_updateCurrentCamp() {
         // given
         final long userId = 1L;
         final ChessGameService chessGameService = getChessGameService(userId);
         final CampType changedCamp = CampType.BLACK;
 
         // when
-        chessGameService.updateCurrentCamp(1L, changedCamp);
+        chessGameService.play(1L, new Position(1, 1), new Position(2, 1));
 
         // then
         final ChessGame chessGame = chessGameService.getOrCreateChessGame(1L);
         final CampType campType = chessGame.getCurrentCamp();
         assertThat(campType)
                 .isEqualTo(changedCamp);
-    }
-
-    @Test
-    @DisplayName("입력받은 위치에 해당하는 체스말을 제거한다")
-    void deletePieces() {
-        // given
-        final long userId = 1L;
-        final MockChessGameDao chessGameDao = new MockChessGameDao();
-        chessGameDao.insert(new ChessGameEntity("WHITE", userId));
-        final ChessGameService chessGameService = new ChessGameService(chessGameDao, new ChessBoardService(new MockPieceDao()));
-        final PieceEntity source = PieceEntity.createWithLocation(1L, 0, 0);
-        final PieceEntity target = PieceEntity.createWithLocation(1L, 0, 1);
-        final Map<Position, Piece> expected = new ChessGame(ChessBoard.create(Collections.emptyMap()), CampType.WHITE)
-                .getChessBoard();
-
-        // when
-        chessGameService.deletePieces(source, target);
-
-        // then
-        final Map<Position, Piece> actual = chessGameService.getOrCreateChessGame(1L).getChessBoard();
-
-        assertThat(actual)
-                .isEqualTo(expected);
     }
 
     @Test

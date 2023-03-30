@@ -2,14 +2,11 @@ package chess.controller.status;
 
 import chess.controller.Command;
 import chess.domain.chess.ChessGame;
-import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
 import chess.domain.piece.move.PositionConverter;
-import chess.entity.PieceEntity;
 import chess.service.ChessGameService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public final class MoveController implements Controller {
@@ -49,9 +46,8 @@ public final class MoveController implements Controller {
 
     Controller move(final Command command) {
         validateCommand(command);
-        final List<String> commands = command.getCommands();
+        playChessGame(command);
         final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
-        play(commands, chessGame);
         if (!chessGame.isKingAlive()) {
             return new StatusController(userId, chessGameService).getStatus(false);
         }
@@ -64,31 +60,11 @@ public final class MoveController implements Controller {
         }
     }
 
-    private void play(final List<String> commands, final ChessGame chessGame) {
+    private void playChessGame(final Command command) {
+        final List<String> commands = command.getCommands();
         final Position source = PositionConverter.convert(commands.get(1));
         final Position target = PositionConverter.convert(commands.get(2));
-        chessGame.play(source, target);
-        savePlayInfo(source, target, chessGame);
+        chessGameService.play(userId, source, target);
     }
 
-    private void savePlayInfo(final Position source, final Position target, final ChessGame chessGame) {
-        final long chessGameId = chessGameService.getChessGameId(userId);
-        deletePieces(source, target, chessGameId);
-        savePieces(target, chessGameId, chessGame);
-        chessGameService.updateCurrentCamp(chessGameId, chessGame.getCurrentCamp());
-    }
-
-    private void deletePieces(final Position source, final Position target, final long chessGameId) {
-        final PieceEntity sourcePiece = PieceEntity.createWithLocation(chessGameId, source.getRank(), source.getFile());
-        final PieceEntity targetPiece = PieceEntity.createWithLocation(chessGameId, target.getRank(), target.getFile());
-        chessGameService.deletePieces(sourcePiece, targetPiece);
-    }
-
-    private void savePieces(final Position target, final long chessGameId, final ChessGame chessGame) {
-        final Map<Position, Piece> chessBoard = chessGame.getChessBoard();
-        final Piece piece = chessBoard.get(target);
-        final PieceEntity savedPiece = PieceEntity.createWithChessGameId(chessGameId, target.getRank(),
-                target.getFile(), piece.getPieceType().name(), piece.getCampType().name());
-        chessGameService.savePiece(savedPiece);
-    }
 }
