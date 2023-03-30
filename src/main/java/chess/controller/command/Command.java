@@ -19,14 +19,14 @@ public enum Command {
         this.executorGenerator = executorGenerator;
     }
 
-    public static Command parseCommand(String commandHead) {
+    public static Command findCommand(String commandType) {
         return Arrays.stream(Command.values())
-                .filter(c -> c.command.equals(commandHead))
+                .filter(c -> c.command.equals(commandType))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 명령어가 아닙니다."));
     }
 
-    public CommandExecute generate(ChessGameState chessGameState) {
+    public CommandExecute generateExecutor(ChessGameState chessGameState) {
         return this.executorGenerator.apply(chessGameState);
     }
 }
