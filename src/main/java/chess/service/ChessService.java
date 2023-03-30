@@ -38,14 +38,14 @@ public class ChessService {
     public void loadChessGame(int gameId) {
         GameInfoDto gameInfo = gameDao.findById(gameId);
         if (gameInfo == null) {
-            this.chessGame = new ChessGame();
+            this.chessGame = ChessGame.create();
             return;
         }
 
         List<PieceInfoDto> pieceInfos = pieceDao.findById(gameId);
         Map<Position, Piece> board = pieceInfos.stream()
                 .collect(Collectors.toMap(PieceInfoDto::getPosition, PieceInfoDto::getPiece));
-        ChessGame existedChessGame = new ChessGame(Board.load(board), gameInfo.getTurn(), gameInfo.getStatus());
+        ChessGame existedChessGame = ChessGame.load(Board.load(board), gameInfo.getTurn(), gameInfo.getStatus());
         this.chessGame = existedChessGame;
     }
 

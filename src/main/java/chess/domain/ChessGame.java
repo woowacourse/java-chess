@@ -14,17 +14,23 @@ public class ChessGame {
     private final Board board;
     private Color turn;
     private GameStatus status;
-    
-    public ChessGame() {
-        status = GameStatus.START;
-        board = Board.create();
-        turn = Color.WHITE;
-    }
 
-    public ChessGame(Board board, Color turn, GameStatus status) {
+    private ChessGame(Board board, Color turn, GameStatus status) {
         this.board = board;
         this.turn = turn;
         this.status = status;
+    }
+
+    public static ChessGame create() {
+        Board newBoard = Board.create();
+        Color startTurn = Color.WHITE;
+        GameStatus startStatus = GameStatus.START;
+
+        return new ChessGame(newBoard, startTurn, startStatus);
+    }
+
+    public static ChessGame load(Board board, Color turn, GameStatus status) {
+        return new ChessGame(board, turn, status);
     }
 
     public void start() {
