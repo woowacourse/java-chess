@@ -1,6 +1,7 @@
 package techcourse.fp.chess.domain.piece.ordinary;
 
 import techcourse.fp.chess.domain.Direction;
+import techcourse.fp.chess.domain.Directions;
 import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.domain.movingStrategy.SlidingStrategy;
 import techcourse.fp.chess.domain.piece.Color;
@@ -14,7 +15,7 @@ public final class Rook extends OrdinaryPiece {
     }
 
     public static Rook create(final Color color) {
-        return new Rook(color, PieceType.ROOK,new SlidingStrategy(Direction.ofRook()));
+        return new Rook(color, PieceType.ROOK, new SlidingStrategy(new Directions(Direction.ofRook())));
     }
 
     @Override

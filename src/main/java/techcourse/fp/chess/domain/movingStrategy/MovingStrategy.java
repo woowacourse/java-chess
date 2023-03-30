@@ -1,13 +1,13 @@
 package techcourse.fp.chess.domain.movingStrategy;
 
 import java.util.List;
-import techcourse.fp.chess.domain.Direction;
+import techcourse.fp.chess.domain.Directions;
 import techcourse.fp.chess.domain.Position;
 
 public abstract class MovingStrategy {
-    protected final List<Direction> directions;
+    protected final Directions directions;
 
-    public MovingStrategy(final List<Direction> directions) {
+    public MovingStrategy(final Directions directions) {
         this.directions = directions;
     }
 

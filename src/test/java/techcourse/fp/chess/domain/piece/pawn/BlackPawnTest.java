@@ -11,6 +11,9 @@ import static techcourse.fp.chess.domain.PositionFixtures.A4;
 import static techcourse.fp.chess.domain.PositionFixtures.A5;
 import static techcourse.fp.chess.domain.PositionFixtures.A6;
 import static techcourse.fp.chess.domain.PositionFixtures.A7;
+import static techcourse.fp.chess.domain.PositionFixtures.A8;
+import static techcourse.fp.chess.domain.PositionFixtures.B7;
+import static techcourse.fp.chess.domain.PositionFixtures.C6;
 import static techcourse.fp.chess.domain.PositionFixtures.H2;
 
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +27,7 @@ public class BlackPawnTest {
     @DisplayName("file이 다르면 예외가 발생한다.")
     @Test
     void fail_test() {
-        assertThatThrownBy(() -> blackPawn.findPath(H2, A2, BLACK_PAWN))
+        assertThatThrownBy(() -> blackPawn.findPath(H2, A2, EMPTY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
     }
@@ -32,7 +35,7 @@ public class BlackPawnTest {
     @DisplayName("같은 좌표는 예외가 발생한다.")
     @Test
     void fail_test2() {
-        assertThatThrownBy(() -> blackPawn.findPath(A2, A2, BLACK_PAWN))
+        assertThatThrownBy(() -> blackPawn.findPath(A2, A2, EMPTY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
     }
@@ -40,7 +43,15 @@ public class BlackPawnTest {
     @DisplayName("rank의 차이가 3 이상이면 예외가 발생한다.")
     @Test
     void fail_test3() {
-        assertThatThrownBy(() -> blackPawn.findPath(A5, A1, BLACK_PAWN))
+        assertThatThrownBy(() -> blackPawn.findPath(A5, A1, EMPTY))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
+    }
+
+    @DisplayName("흑폰은 위로 이동할 수 없다.")
+    @Test
+    void fail_test4() {
+        assertThatThrownBy(() -> blackPawn.findPath(A7, A8, EMPTY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
     }
@@ -102,6 +113,39 @@ public class BlackPawnTest {
         @Test
         void fail_by_start_position() {
             assertThatThrownBy(() -> blackPawn.findPath(A6, A4, EMPTY))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
+        }
+    }
+
+    @DisplayName("흑 폰의 공격이")
+    @Nested
+    class Attack {
+
+        @DisplayName("성공한다. - 좌측 하단을 공격하는 경우")
+        @Test
+        void success_left() {
+            assertThat(blackPawn.findPath(B7, A6, WHITE_PAWN)).isEmpty();
+        }
+
+        @DisplayName("성공한다. - 우측 하단을 공격하는 경우")
+        @Test
+        void success_right() {
+            assertThat(blackPawn.findPath(B7, C6, WHITE_PAWN)).isEmpty();
+        }
+
+        @DisplayName("실패한다. - 공격 지점에 아군이 있는 경우")
+        @Test
+        void fail_by_ally() {
+            assertThatThrownBy(() -> blackPawn.findPath(B7, A6, BLACK_PAWN))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
+        }
+
+        @DisplayName("실패한다. - 공격 지점이 비어 있는 경우")
+        @Test
+        void fail_by_empty() {
+            assertThatThrownBy(() -> blackPawn.findPath(B7, A6, EMPTY))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }

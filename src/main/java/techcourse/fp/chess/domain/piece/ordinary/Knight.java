@@ -1,6 +1,7 @@
 package techcourse.fp.chess.domain.piece.ordinary;
 
 import techcourse.fp.chess.domain.Direction;
+import techcourse.fp.chess.domain.Directions;
 import techcourse.fp.chess.domain.movingStrategy.MovingStrategy;
 import techcourse.fp.chess.domain.movingStrategy.NoneSlidingStrategy;
 import techcourse.fp.chess.domain.piece.Color;
@@ -14,7 +15,7 @@ public final class Knight extends OrdinaryPiece {
     }
 
     public static Knight create(final Color color) {
-        return new Knight(color, PieceType.KNIGHT,new NoneSlidingStrategy(Direction.ofKnight()));
+        return new Knight(color, PieceType.KNIGHT, new NoneSlidingStrategy(new Directions(Direction.ofKnight())));
     }
 
     @Override
