@@ -5,22 +5,20 @@ import chess.controller.CommandType;
 import chess.service.ChessGameService;
 import chess.service.MockServiceManagerHandler;
 import chess.service.ServiceHandler;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StartControllerTest {
 
     private ChessGameService chessGameService;
 
-    @BeforeAll
+    @BeforeEach
     void init() {
         final ServiceHandler mockServiceManagerHandler = new MockServiceManagerHandler();
         chessGameService = mockServiceManagerHandler.chessGameService();
