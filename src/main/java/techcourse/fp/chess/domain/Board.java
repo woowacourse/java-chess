@@ -42,6 +42,23 @@ public final class Board {
         turn.nextTurn();
     }
 
+    private void validateTurn(final Piece sourcePiece) {
+        if (turn.isOtherSide(sourcePiece.getColor())) {
+            throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateObstacle(final List<Position> path) {
+        if (hasObstacle(path)) {
+            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
+        }
+    }
+
+    private boolean hasObstacle(final List<Position> path) {
+        return path.stream()
+                .anyMatch(position -> board.get(position).isNotEmpty());
+    }
+
     public boolean isGameEnd() {
         return board.values()
                 .stream()
@@ -63,23 +80,6 @@ public final class Board {
 
     public double findScoreByColor(Color color) {
         return ScoreCalculator.calculate(board, color);
-    }
-
-    private void validateTurn(final Piece sourcePiece) {
-        if (turn.isOtherSide(sourcePiece.getColor())) {
-            throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
-        }
-    }
-
-    private void validateObstacle(final List<Position> path) {
-        if (hasObstacle(path)) {
-            throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
-        }
-    }
-
-    private boolean hasObstacle(final List<Position> path) {
-        return path.stream()
-                .anyMatch(position -> board.get(position).isNotEmpty());
     }
 
     public Map<Position, Piece> getBoard() {
