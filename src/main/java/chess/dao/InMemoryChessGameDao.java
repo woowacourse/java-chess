@@ -12,7 +12,7 @@ public class InMemoryChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public ChessGame select() {
+    public ChessGame findChessGame() {
         return chessGame;
     }
 

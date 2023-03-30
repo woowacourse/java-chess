@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Score {
+    private static final int START_INDEX = 0;
+    private static final int END_INDEX = 8;
+
     private final Map<TeamColor, Double> score;
 
     private Score(Map<TeamColor, Double> score) {
@@ -31,19 +34,19 @@ public class Score {
                 .stream()
                 .filter(piece -> piece.isSameTeam(color))
                 .filter(piece -> !piece.isPawn())
-                .mapToDouble(Piece::getValue)
+                .mapToDouble(Piece::getScoreValue)
                 .sum();
     }
 
     private static Double sumScorePawn(TeamColor color, Map<Position, Piece> board) {
-        return IntStream.range(0, 8)
+        return IntStream.range(START_INDEX, END_INDEX)
                 .map(file -> countPawnByEachFile(file, color, board))
                 .mapToDouble(Pawn::calculateScore)
                 .sum();
     }
 
     private static int countPawnByEachFile(int file, TeamColor color, Map<Position, Piece> board) {
-        return (int) IntStream.range(0, 8)
+        return (int) IntStream.range(START_INDEX, END_INDEX)
                 .mapToObj(rank -> board.get(Position.of(rank, file)))
                 .filter(piece -> !Objects.isNull(piece))
                 .filter(Piece::isPawn)

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
-    private static final Double VALUE = 2.5;
+    private static final Double SCORE_VALUE = 2.5;
 
     public Knight(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
@@ -17,7 +17,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Double getValue() {
-        return VALUE;
+    public Double getScoreValue() {
+        return SCORE_VALUE;
     }
 }

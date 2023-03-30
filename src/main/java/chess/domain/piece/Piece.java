@@ -27,7 +27,7 @@ public abstract class Piece implements Movable {
         return false;
     }
 
-    public abstract Double getValue();
+    public abstract Double getScoreValue();
 
     public TeamColor getTeamColor() {
         return teamColor;

@@ -5,7 +5,7 @@ import chess.domain.position.PossibleDestinations;
 
 public class Queen extends Piece {
     private static final int QUEEN_MAX_MOVE_COUNT = 8;
-    private static final Double VALUE = 9.0;
+    private static final Double SCORE_VALUE = 9.0;
 
     public Queen(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
@@ -19,7 +19,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Double getValue() {
-        return VALUE;
+    public Double getScoreValue() {
+        return SCORE_VALUE;
     }
 }

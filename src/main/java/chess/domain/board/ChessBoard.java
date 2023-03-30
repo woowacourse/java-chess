@@ -71,8 +71,9 @@ public final class ChessBoard {
     }
 
     public boolean checkKingDie() {
-        return board.values().stream()
-                .filter(piece -> piece.isKing())
-                .count() != INITIAL_KING_COUNT;
+        final double kingCount = board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+        return kingCount != INITIAL_KING_COUNT;
     }
 }

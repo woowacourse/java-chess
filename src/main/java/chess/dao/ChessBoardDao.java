@@ -34,7 +34,7 @@ public class ChessBoardDao implements ChessGameDao {
     }
 
     @Override
-    public ChessGame select() {
+    public ChessGame findChessGame() {
         Map<Position, Piece> board = new HashMap<>();
         TeamColor turn = null;
         final var query = "SELECT piece_type, piece_rank, piece_file, team, turn FROM chess_game";
