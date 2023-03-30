@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Result {
 
-    Map<Color, GameResult> value;
+    private final Map<Color, GameResult> value;
 
     private Result(Map<Color, GameResult> value) {
         this.value = value;
