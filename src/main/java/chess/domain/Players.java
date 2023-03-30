@@ -104,7 +104,11 @@ public class Players {
 
         PieceDao dao = new PieceDaoImpl();
         dao.updatePosition(changedPiece, sourcePosition);
+        deleteWhenIfExistOtherPlayer(targetPosition, findPlayer, dao);
+    }
 
+    private void deleteWhenIfExistOtherPlayer(final Position targetPosition, final Player findPlayer,
+                                              final PieceDao dao) {
         Player anotherPlayer = getAnotherPlayer(findPlayer);
         anotherPlayer.removePiece(targetPosition)
                 .ifPresent(piece -> dao.deletePieceByColor(piece, anotherPlayer.getColor()));
