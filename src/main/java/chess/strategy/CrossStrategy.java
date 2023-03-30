@@ -1,6 +1,6 @@
 package chess.strategy;
 
-import chess.domain.Position;
+import chess.domain.board.Position;
 
 public class CrossStrategy implements MoveStrategy{
     @Override

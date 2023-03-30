@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.domain.Position;
+import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.view.SquareMapper;
 

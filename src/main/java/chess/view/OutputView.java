@@ -1,21 +1,36 @@
 package chess.view;
 
+import chess.domain.piece.Team;
 import chess.dto.SquareResponse;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
     private static final int CRITERIA_Y_POS = 7;
     private static final int BOARD_SIZE = 8;
     private static final String ROW_DELIMITER = "";
-    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
+    private static final String JOINING_DELIMITER = ", ";
     private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String GAME_NUMBER_INPUT_MESSAGE = "입장하고 싶은 게임 번호를 입력하세요." + LINE_SEPARATOR +
+            "새로운 게임을 시작하려면 0번을 누르세요.";
+    private static final String GAME_ROOM_INFO_MESSAGE = "현재 입장 가능한 방 > ";
+    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String COMMAND_INPUT_MESSAGE = "> 게임 시작 : start" + LINE_SEPARATOR +
             "> 게임 종료 : end" + LINE_SEPARATOR +
-            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + LINE_SEPARATOR +
+            "> 점수 확인 : status";
 
     private OutputView() {
+    }
+
+    public static void printGameNumberMessage(List<Integer> numbers) {
+        System.out.println(GAME_NUMBER_INPUT_MESSAGE);
+        String allGameNumbers = numbers.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(JOINING_DELIMITER));
+        System.out.println(GAME_ROOM_INFO_MESSAGE + allGameNumbers);
     }
 
     public static void printStartMessage() {
@@ -28,6 +43,16 @@ public class OutputView {
         for (String[] row : board) {
             System.out.println(String.join(ROW_DELIMITER, row));
         }
+    }
+
+    public static void printScore(double whiteTeamScore, double blackTeamScore) {
+        System.out.println("WHITE: " + whiteTeamScore);
+        System.out.println("BLACK: " + blackTeamScore);
+    }
+
+    public static void printEndMessage(Team winningTeam, Team losingTeam) {
+        System.out.println(losingTeam.name() + "팀의 왕이 죽었습니다.");
+        System.out.println(winningTeam.name() + "팀이 게임에서 승리했습니다.");
     }
 
     private static String[][] convertResponseToBoard(List<SquareResponse> responses) {

@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Position;
 import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -152,4 +155,67 @@ class BoardTest {
         // expect
         assertThat(board.canMove(source, target)).isFalse();
     }
+
+    @Test
+    @DisplayName("체스 시작 점수는 38점이다.")
+    void calculate_Initial_Board_Score() {
+        // given
+        Board board = new Board(BoardFactory.create());
+        double expectedScore = 38.0;
+
+        // when
+        Double score = board.calculateScore(Team.WHITE);
+
+        // then
+        assertThat(score).isEqualTo(expectedScore);
+    }
+
+    @Test
+    @DisplayName("폰이 세로 줄에 2개 이상 있는 경우 각각 0.5점으로 계산한다.")
+    void calculate_Score_If_Pawn_Exist_Same_Column() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        squares.put(Position.of(1, 1), new Pawn(Team.WHITE));
+        squares.put(Position.of(1, 2), new Pawn(Team.WHITE));
+        squares.put(Position.of(1, 3), new Pawn(Team.WHITE));
+        squares.put(Position.of(1, 4), new Pawn(Team.WHITE));
+        Board board = new Board(squares);
+
+        // expect
+        assertThat(board.calculateScore(Team.WHITE)).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("해당 팀의 왕이 죽으면 true가 반환된다.")
+    void isKingAlive_If_king_Alive() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Position kingPosition = Position.of(1, 1);
+        Position enemyPosition = Position.of(2, 2);
+        squares.put(kingPosition, new King(Team.WHITE));
+        squares.put(enemyPosition, new Pawn(Team.BLACK));
+        Board board = new Board(squares);
+
+        // when
+        board.move(enemyPosition, kingPosition);
+
+        // then
+        assertThat(board.isKingAlive(Team.WHITE)).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 팀의 왕이 살아 있으면 true가 반환된다.")
+    void isAlive_If_king_Dead() {
+        // given
+        Map<Position, Piece> squares = getEmptySquares();
+        Position kingPosition = Position.of(1, 1);
+        Position enemyPosition = Position.of(2, 2);
+        squares.put(kingPosition, new King(Team.WHITE));
+        squares.put(enemyPosition, new Pawn(Team.BLACK));
+        Board board = new Board(squares);
+
+        // then
+        assertThat(board.isKingAlive(Team.WHITE)).isTrue();
+    }
+
 }

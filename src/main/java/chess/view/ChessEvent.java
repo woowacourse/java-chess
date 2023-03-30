@@ -2,18 +2,18 @@ package chess.view;
 
 import java.util.Arrays;
 
-public enum GameCommand {
+public enum ChessEvent {
 
     START("start"),
     END("end");
 
     private final String value;
 
-    GameCommand(String value) {
+    ChessEvent(String value) {
         this.value = value;
     }
 
-    public static GameCommand of(String command) {
+    public static ChessEvent of(String command) {
         return Arrays.stream(values())
                 .filter(gameStartCommand -> gameStartCommand.value.equals(command))
                 .findAny()

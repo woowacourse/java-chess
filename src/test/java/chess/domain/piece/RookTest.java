@@ -2,15 +2,10 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Position;
-import chess.domain.Team;
-import chess.dto.BoardSnapshot;
+import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.HashMap;
-import java.util.Map;
 
 class RookTest {
 
@@ -25,7 +20,7 @@ class RookTest {
         Position targetPosition = Position.of(x, y);
 
         // expect
-        assertThat(piece.canMove(sourcePosition, targetPosition, getBoardSnapShot()))
+        assertThat(piece.canMove(sourcePosition, targetPosition))
                 .isTrue();
     }
 
@@ -39,21 +34,7 @@ class RookTest {
         Position targetPosition = Position.of(x, y);
 
         // expect
-        assertThat(piece.canMove(sourcePosition, targetPosition, getBoardSnapShot()))
+        assertThat(piece.canMove(sourcePosition, targetPosition))
                 .isFalse();
-    }
-
-    private BoardSnapshot getBoardSnapShot() {
-        return new BoardSnapshot(getEmptySquares());
-    }
-
-    private Map<Position, Piece> getEmptySquares() {
-        Map<Position, Piece> squares = new HashMap<>();
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                squares.put(Position.of(x, y), Empty.INSTANCE);
-            }
-        }
-        return squares;
     }
 }

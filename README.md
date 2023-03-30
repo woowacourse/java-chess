@@ -43,20 +43,73 @@ classDiagram
 
 ```
 
+### Query Statement
+```sql
+CREATE TABLE chess_game
+(
+  id              int             NOT NULL AUTO_INCREMENT,
+  game_status     varchar(30)     NOT NULL,
+  turn            varchar(30)     NOT NULL,
+  primary key (`id`)
+);
+
+CREATE TABLE board
+(
+  id      int         NOT NULL,
+  game_id int         NOT NULL,
+  x_pos   int         NOT NULL,
+  y_pos   int         NOT NULL,
+  role    varchar(30) NOT NULL,
+  team    varchar(30) NOT NULL,
+
+  primary key (id, x_pos, y_pos),
+  foreign key (game_id) references chess_game (id)
+);
+
+
+```
+
 ## 기능 요구 사항
+
+### 체스 게임 실행
+
+- [x] 현재 게임에 입장 할 수 있는 체스 게임 목록을 보여준다.
+  - [x] 진행중인 게임만 보여준다.
+  - [x] `0`를 입력하는 경우, 새로운 게임을 시작한다.
+  - [x] `입장 할 수 있는 체스 게임을 선택`하는 경우, 해당 게임에 입장한다.
+- [x] `START`를 입력하면 해당 게임을 시작한다.
+- [x] `end`를 입력해 게임을 종료하는 경우, 현재 상태를 저장한다.
+  - [x] 기존에 존재하던 게임인 경우, board 상태를 업데이트 한다.
+  - [x] 새로운 게임인 경우, chessGame과 board를 DB에 생성한다.
+
 
 ### 게임 진행
 
 - [X] 체스판의 가로 위치는 왼쪽부터 a ~ h 이다.
 - [X] 체스판의 세로 위치는 아래부터 1 ~ 8 이다.
 - [X] 각 진영은 검은색(대문자)와 흰색(소문자) 편으로 구분한다.
-- [x] 게임을 시작하고, start를 입력해야 체스판을 출력한다.
-- [x] 게임을 시작하고, end를 입력하면 게임을 종료한다.
+- [x] 게임을 시작하고, `start`를 입력해야 체스판을 출력한다.
+- [x] 게임을 시작하고, `status`를 입력하면, 현재 차례인 팀의 점수를 출력한다.
+- [x] 게임을 시작하고, `end`를 입력하면 게임을 종료한다.
 - [X] 게임을 시작하면, 보드에 말이 세팅되어야 한다.
 - [X] 체스판이 초기화되고, `move source위치 target위치`를 입력하면 체스 말이 이동한다.
 - [X] 체스판이 초기화되지 않고 `move`를 입력하면 예외가 발생한다.
 - [X] 체스말이 움직일 수 없는 위치로 이동하면 예외가 발생한다.
 - [X] 해당 차례인 팀 말이 아닌 다른 팀의 말을 움직이는 경우 예외가 발생한다.
+
+### 점수
+- [x] 팀별로 현재까지 남아 있는 말에 따라 점수를 계산한다.
+  - [x] queen: 9점
+  - [x] rook: 5점
+  - [x] bishop: 3점
+  - [x] knight: 2.5점
+  - [x] pawn: 1점
+    - [x] 같은 세로줄에 같은 색의 폰이 있는 경우 0.5점으로 계산한다.
+
+
+### 승패
+- [x] `king`이 잡히면 게임이 종료된다.
+
 
 ### 예외 상황
 

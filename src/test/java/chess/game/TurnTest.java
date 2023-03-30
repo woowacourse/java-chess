@@ -1,6 +1,6 @@
 package chess.game;
 
-import chess.domain.Team;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

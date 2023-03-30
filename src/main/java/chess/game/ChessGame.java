@@ -1,25 +1,21 @@
 package chess.game;
 
-import static java.util.stream.Collectors.toList;
-
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.dto.SquareResponse;
+import chess.domain.piece.Team;
 
-import java.util.List;
 import java.util.Objects;
 
 public class ChessGame {
 
+    private int id = 0;
     private final Board board;
     private Turn turn;
 
-    public ChessGame() {
-        this.board = new Board(BoardFactory.create());
-        this.turn = new Turn(Team.WHITE);
+    public ChessGame(Board board, Turn turn) {
+        this.board = board;
+        this.turn = turn;
     }
 
     public void move(Position source, Position target) {
@@ -30,6 +26,14 @@ public class ChessGame {
         }
         board.move(source, target);
         changeTurn();
+    }
+
+    public boolean isEndCondition() {
+        return !board.isKingAlive(turn.getTeam());
+    }
+
+    public double calculateScore(Team team) {
+        return board.calculateScore(team);
     }
 
     private void validatePosition(Position source, Position target) {
@@ -53,9 +57,23 @@ public class ChessGame {
         return !turn.isCorrectWith(sourcePiece);
     }
 
-    public List<SquareResponse> getBoard() {
-        return board.getBoard().entrySet().stream()
-                .map(entry -> SquareResponse.of(entry.getKey(), entry.getValue()))
-                .collect(toList());
+    public Board getChessBoard() {
+        return new Board(board.getBoard());
+    }
+
+    public Team getCurrentTeam() {
+        return turn.getTeam();
+    }
+
+    public Turn getCurrentTurn() {
+        return new Turn(turn.getTeam());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

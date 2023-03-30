@@ -1,23 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.Role;
-import chess.domain.Team;
-import chess.dto.BoardSnapshot;
-import chess.strategy.KingStrategy;
+import chess.domain.board.Position;
+import chess.strategy.MoveStrategy;
 
 public class King extends Piece {
 
     public King(Team team) {
-        super(Role.KING, team, new KingStrategy());
+        super(Role.KING, team);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, BoardSnapshot boardSnapshot) {
-        return moveStrategy.isMovable(source, target) && canAttack(source, target, boardSnapshot);
-    }
-
-    private boolean canAttack(Position source, Position target, BoardSnapshot boardSnapshot) {
-        return isValidPieces(boardSnapshot.findByPosition(target)) && hasNotCollision(source, target, boardSnapshot);
+    public boolean canMove(Position source, Position target) {
+        MoveStrategy moveStrategy = role.getMoveStrategy();
+        return moveStrategy.isMovable(source, target);
     }
 }
