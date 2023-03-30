@@ -4,6 +4,7 @@ import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
 import chess.dto.PieceDto;
+import chess.dto.PiecesDto;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public final class PieceDao {
         }
     }
 
-    public List<PieceDto> select(int gameID) {
+    public PiecesDto select(int gameID) {
         final var query = "SELECT * FROM piece WHERE game_id = ?";
         try (var connection = dbConnection.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
@@ -56,7 +57,7 @@ public final class PieceDao {
                 );
                 pieceDtos.add(pieceDto);
             }
-            return pieceDtos;
+            return new PiecesDto(pieceDtos);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
