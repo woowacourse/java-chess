@@ -44,10 +44,6 @@ public class ChessGame {
         return board.isKingCaught();
     }
 
-    public void resume() {
-
-    }
-
     public ScoreDto getScore() {
         final Score whiteScore = board.calculateWhiteScore();
         final Score blackScore = board.calculateBlackScore();

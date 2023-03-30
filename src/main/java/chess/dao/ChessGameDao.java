@@ -5,7 +5,7 @@ import chess.dto.ChessGameDto;
 
 public interface ChessGameDao {
 
-    void save(final ChessGameDto chessGameDto);
+    int save(final ChessGameDto chessGameDto);
 
     ChessGame findById(final int id);
 }

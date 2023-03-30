@@ -112,7 +112,8 @@ public class ChessController {
     }
 
     private void save(final Command command) {
-        chessGameDao.save(ChessGameDto.of(chessGame));
+        final int chessGameId = chessGameDao.save(ChessGameDto.of(chessGame));
         OutputView.printGameStatus(chessGame.getGameStatus());
+        OutputView.printSavedId(chessGameId);
     }
 }

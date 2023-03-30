@@ -16,8 +16,6 @@ public enum CommandType {
     LOAD("load", 2),
     SAVE("save", 1);
 
-    public static final int MOVE_SOURCE_INDEX = 1;
-    public static final int MOVE_DESTINATION_INDEX = 2;
     private static final int COMMAND_KEYWORD_INDEX = 0;
 
     private final String keyword;

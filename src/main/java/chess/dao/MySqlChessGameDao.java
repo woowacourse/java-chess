@@ -32,12 +32,14 @@ public class MySqlChessGameDao implements ChessGameDao {
     }
 
     @Override
-    public void save(final ChessGameDto chessGameDto) {
+    public int save(final ChessGameDto chessGameDto) {
         try (final Connection connection = databaseConnector.getConnection()) {
             int chessGameId = saveChessGame(chessGameDto, connection);
             savePiece(chessGameDto.getBoard(), connection, chessGameId);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return chessGameId;
+        } catch (SQLException | IllegalStateException e) {
+            e.printStackTrace();
+            throw new RuntimeException("정상 저장되지 않았습니다.");
         }
     }
 
@@ -83,8 +85,9 @@ public class MySqlChessGameDao implements ChessGameDao {
             Map<Square, Piece> board = createBoard(id, connection);
             final Turn turn = getTurn(id, connection);
             return new ChessGame(new Board(board), turn);
-        } catch (SQLException e) {
-            return null;
+        } catch (SQLException | IllegalStateException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("찾을 수 없는 id입니다.");
         }
     }
 

@@ -34,13 +34,17 @@ public class OutputView {
         System.out.println();
     }
 
+    private static void printGameStatusRow(final String row) {
+        System.out.println(row);
+    }
+
     public static void printScore(final ScoreDto scoreDto) {
         System.out.println("백팀 점수: " + scoreDto.getWhiteScore());
         System.out.println("흑팀 점수: " + scoreDto.getBlackScore());
         System.out.println();
     }
 
-    private static void printGameStatusRow(final String row) {
-        System.out.println(row);
+    public static void printSavedId(final int chessGameId) {
+        System.out.println("저장된 게임 id: " + chessGameId);
     }
 }
