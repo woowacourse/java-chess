@@ -21,7 +21,7 @@ public enum Column {
         this.columnIndex = columnIndex;
     }
 
-    public static Column fromName(String otherColumn) {
+    public static Column from(String otherColumn) {
         return Arrays.stream(values())
             .filter(value -> value.column.equals(otherColumn))
             .findFirst()
