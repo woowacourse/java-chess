@@ -51,7 +51,7 @@ public class Piece {
         return moveRule.pieceType();
     }
 
-    public PlayingCamp getColor() {
+    public PlayingCamp getPlayingCamp() {
         return playingCamp;
     }
 

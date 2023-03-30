@@ -9,7 +9,7 @@ public class PieceDto {
     private final PieceType pieceType;
 
     public PieceDto(Piece piece) {
-        this.playingCamp = piece.getColor();
+        this.playingCamp = piece.getPlayingCamp();
         this.pieceType = piece.getPieceType();
     }
 
