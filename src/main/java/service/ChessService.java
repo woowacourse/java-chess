@@ -95,10 +95,12 @@ public class ChessService {
             validateTurn(currentSquare);
 
             chessBoard.move(currentSquare, targetSquare);
-            checkKingDead();
-            currentCamp = currentCamp.fetchOppositeCamp();
             chessDao.update(convert(chessBoard));
             chessDao.updateCamp(currentCamp.name());
+            currentCamp = currentCamp.fetchOppositeCamp();
+            checkKingDead();
+
+
             return;
         }
         throw new IllegalStateException("게임을 먼저 실행해주세요.");
