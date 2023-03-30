@@ -13,7 +13,8 @@ public class PieceService {
 
     public void create(final ChessBoard board, final int gameId) {
         for (Piece piece : board.pieces()) {
-            final PieceDto pieceDto = new PieceDto(gameId, piece.type(), piece.getFileToString(), piece.rank(), piece.getColorToString());
+            final PieceDto pieceDto = PieceDto.of(gameId, piece.type(), piece.getFileToString(), piece.rank(),
+                    piece.getColorToString());
             pieceDao.create(pieceDto);
         }
     }
@@ -22,15 +23,20 @@ public class PieceService {
         final List<Integer> allIds = pieceDao.findAllIds();
         final List<Piece> allPieces = new ArrayList<>();
         for (int id : allIds) {
-            allPieces.add(pieceDao.findPieceById(id));
+            allPieces.add(pieceDao.findPieceById(PieceDto.from(id)));
         }
         return allPieces;
+    }
+
+    public void update(final Piece piece, final int id) {
+        final PieceDto pieceDto = PieceDto.of(id, piece.getFileToString(), piece.rank());
+        pieceDao.update(pieceDto);
     }
 
     public void deleteAll() {
         final List<Integer> allIds = pieceDao.findAllIds();
         for (int id : allIds) {
-            pieceDao.delete(id);
+            pieceDao.delete(PieceDto.from(id));
         }
     }
 }

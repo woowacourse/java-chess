@@ -80,7 +80,7 @@ public class ChessController {
         if (command.isSave()) {
             gameService.updateTurn(gameId, state.findCurrentTurn());
             pieceService.deleteAll();
-            pieceService.create(chessBoard, 1);
+            pieceService.create(chessBoard, gameId);
         }
         if (command.isStatus()) {
             calculateScore(chessBoard);

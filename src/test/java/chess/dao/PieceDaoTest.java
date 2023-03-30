@@ -20,7 +20,7 @@ class PieceDaoTest {
     void 기물을_저장할_수_있다() {
         // given
         new GameDao().create(GameDto.create());
-        final PieceDto pieceDto = new PieceDto(1, "Pawn", "a", 2, "White");
+        final PieceDto pieceDto = PieceDto.of( 1, "Pawn", "a", 2, "White");
 
         // when & then
         assertDoesNotThrow(() -> pieceDao.create(pieceDto));
