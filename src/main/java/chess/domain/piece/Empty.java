@@ -1,25 +1,26 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.movingStrategy.MovingStrategies;
-import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.game.Position;
+import chess.domain.movingstrategy.MovingStrategies;
+import chess.domain.movingstrategy.MovingStrategy;
 
 import java.util.Collections;
 import java.util.List;
 
 public final class Empty extends Piece {
 
-    private Empty(final Color color, final PieceType pieceType, final MovingStrategies strategies) {
-        super(color, pieceType, strategies);
+    private static final Empty INSTANCE = new Empty(new MovingStrategies(Collections.emptyList()));
+
+    private Empty(final MovingStrategies strategies) {
+        super(Team.EMPTY, PieceType.EMPTY, strategies);
     }
 
-    public static Empty create() {
-        final MovingStrategies emptyStrategies = new MovingStrategies(Collections.emptyList());
-        return new Empty(Color.EMPTY, PieceType.EMPTY, emptyStrategies);
+    public static Empty instance() {
+        return INSTANCE;
     }
 
     @Override
-    public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Color targetColor) {
-        throw new IllegalArgumentException("기물이 없는 곳을 선택하셨습니다.");
+    public List<Position> calculatePath(final MovingStrategy strategy, final Position source, final Position target, final Team targetTeam) {
+        throw new UnsupportedOperationException();
     }
 }

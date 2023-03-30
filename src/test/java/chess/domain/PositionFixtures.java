@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.game.File;
+import chess.domain.game.Position;
+import chess.domain.game.Rank;
+
 public class PositionFixtures {
 
     public static final Position A1 = Position.of(File.A, Rank.ONE);

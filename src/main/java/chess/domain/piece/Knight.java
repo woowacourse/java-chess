@@ -1,30 +1,37 @@
 package chess.domain.piece;
 
-import chess.domain.movingStrategy.MoveDownTwoLeft;
-import chess.domain.movingStrategy.MoveDownTwoRight;
-import chess.domain.movingStrategy.MoveLeftTwoDown;
-import chess.domain.movingStrategy.MoveLeftTwoUp;
-import chess.domain.movingStrategy.MoveRightTwoDown;
-import chess.domain.movingStrategy.MoveRightTwoUp;
-import chess.domain.movingStrategy.MoveUpTwoLeft;
-import chess.domain.movingStrategy.MoveUpTwoRight;
-import chess.domain.movingStrategy.MovingStrategies;
-import chess.domain.movingStrategy.MovingStrategy;
+import chess.domain.movingstrategy.MoveDownTwoLeft;
+import chess.domain.movingstrategy.MoveDownTwoRight;
+import chess.domain.movingstrategy.MoveLeftTwoDown;
+import chess.domain.movingstrategy.MoveLeftTwoUp;
+import chess.domain.movingstrategy.MoveRightTwoDown;
+import chess.domain.movingstrategy.MoveRightTwoUp;
+import chess.domain.movingstrategy.MoveUpTwoLeft;
+import chess.domain.movingstrategy.MoveUpTwoRight;
+import chess.domain.movingstrategy.MovingStrategies;
+import chess.domain.movingstrategy.MovingStrategy;
 
 import java.util.List;
 
 public final class Knight extends NonSlidingPiece {
 
-    private Knight(final Color color, final MovingStrategies strategies) {
-        super(color, PieceType.KNIGHT, strategies);
+    private static final List<MovingStrategy> strategies = List.of(
+            MoveUpTwoRight.instance(), MoveUpTwoLeft.instance(), MoveRightTwoUp.instance(), MoveRightTwoDown.instance(),
+            MoveDownTwoRight.instance(), MoveDownTwoLeft.instance(), MoveLeftTwoDown.instance(), MoveLeftTwoUp.instance());
+    private static final Knight BLACK = new Knight(Team.BLACK, new MovingStrategies(strategies));
+    private static final Knight WHITE = new Knight(Team.WHITE, new MovingStrategies(strategies));
+
+    private Knight(final Team team, final MovingStrategies strategies) {
+        super(team, PieceType.KNIGHT, strategies);
     }
 
-    public static Knight create(final Color color) {
-        final List<MovingStrategy> rawStrategies = List.of(
-                MoveUpTwoRight.instance(), MoveUpTwoLeft.instance(), MoveRightTwoUp.instance(), MoveRightTwoDown.instance(),
-                MoveDownTwoRight.instance(), MoveDownTwoLeft.instance(), MoveLeftTwoDown.instance(), MoveLeftTwoUp.instance());
-        MovingStrategies strategies = new MovingStrategies(rawStrategies);
-
-        return new Knight(color, strategies);
+    public static Knight instance(final Team team) {
+        if (team.isBlack()) {
+            return BLACK;
+        }
+        if (team.isWhite()) {
+            return WHITE;
+        }
+        throw new AssertionError();
     }
 }

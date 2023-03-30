@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.game.File;
+import chess.domain.game.Position;
+import chess.domain.game.Rank;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,9 @@ import java.util.List;
 public enum GameCommand {
     INIT,
     START,
+    FIRST_MOVE,
     MOVE,
+    STATUS,
     END;
 
     public static final String INVALID_COMMAND_MESSAGE = "잘못된 커맨드를 입력하였습니다.";
@@ -60,5 +62,9 @@ public enum GameCommand {
 
     public boolean isEnd() {
         return this == END;
+    }
+
+    public boolean isFirstMove() {
+        return this == FIRST_MOVE;
     }
 }
