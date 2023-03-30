@@ -93,16 +93,10 @@ public class Board {
         return kingCount == 1;
     }
 
-    public Map<Piece, Square> getWhitePieces() {
+    public Map<Piece, Square> getTeamPieces(Team team) {
         return board.entrySet().stream()
-            .filter(entry -> entry.getValue().isSameTeam(Team.WHITE))
+            .filter(entry -> entry.getValue().isSameTeam(team))
             .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
-    }
-
-    public Map<Piece, Square> getBlackPieces() {
-        return board.entrySet().stream()
-                .filter(entry -> entry.getValue().isSameTeam(Team.BLACK))
-                .collect(Collectors.toMap(Entry::getValue, Entry::getKey));
     }
 
     public List<Piece> getPieces() {

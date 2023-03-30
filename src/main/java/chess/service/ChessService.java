@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessService {
-
     private final GameDao gameDao;
     private final PieceDao pieceDao;
 

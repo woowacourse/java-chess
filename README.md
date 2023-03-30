@@ -152,7 +152,7 @@ CREATE TABLE piece
 ## [3,4단계 미션 후 리팩토링 목록]
 
 - [x]  null 체크 Optional 객체를 사용하도록 변경
-- [ ]  `getWhitePieces(), getBlackPieces()` 하나의 메서드로 리팩토링
+- [x]  `getWhitePieces(), getBlackPieces()` 하나의 메서드로 리팩토링
 - [ ]  `calculateWhiteScore(),``calculateBlackScore()`  하나의 메서드로 리팩토링
 - [x]  BoardFactory로 책임 분리
 - [ ]  문자열을 먼저 두고 equals 비교 하도록 수정

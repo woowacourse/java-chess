@@ -53,12 +53,12 @@ public class Game {
     }
 
     public double calculateWhiteScore() {
-        Map<Piece, Square> whitePieces = board.getWhitePieces();
+        Map<Piece, Square> whitePieces = board.getTeamPieces(Team.WHITE);
         return calculateScore(whitePieces);
     }
 
     public double calculateBlackScore() {
-        Map<Piece, Square> blackPieces = board.getBlackPieces();
+        Map<Piece, Square> blackPieces = board.getTeamPieces(Team.BLACK);
         return calculateScore(blackPieces);
     }
 
