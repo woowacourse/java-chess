@@ -11,6 +11,7 @@ import chess.model.dao.DataBaseChessGameDao;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Position;
+import chess.model.exception.NotStartedCantExecuteException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +40,12 @@ public class NotStarted implements State {
 
     @Override
     public State move(final Position from, final Position to) {
-        throw new UnsupportedOperationException(NOT_STARTED_CANT_EXECUTE_START_MESSAGE);
+        throw new NotStartedCantExecuteException();
     }
 
     @Override
     public Map<Color, Score> status() {
-        throw new UnsupportedOperationException(NOT_STARTED_CANT_EXECUTE_START_MESSAGE);
+        throw new NotStartedCantExecuteException();
     }
 
     @Override
@@ -54,7 +55,7 @@ public class NotStarted implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new UnsupportedOperationException(NOT_STARTED_CANT_EXECUTE_START_MESSAGE);
+        throw new NotStartedCantExecuteException();
     }
 
     @Override

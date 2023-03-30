@@ -12,6 +12,7 @@ import chess.model.domain.piece.PieceType;
 import chess.model.domain.piece.Queen;
 import chess.model.domain.piece.Rook;
 import chess.model.domain.position.Position;
+import chess.model.exception.QueryFailException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,7 +61,7 @@ public class DataBasePieceDao implements PieceDao {
                 preparedStatement.executeUpdate();
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 
@@ -80,7 +81,7 @@ public class DataBasePieceDao implements PieceDao {
             preparedStatement.setInt(5, from.rank().value());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 
@@ -95,7 +96,7 @@ public class DataBasePieceDao implements PieceDao {
             preparedStatement.setInt(3, to.rank().value());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 
@@ -119,7 +120,7 @@ public class DataBasePieceDao implements PieceDao {
             }
             return new Board(board, turn);
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 
@@ -133,7 +134,7 @@ public class DataBasePieceDao implements PieceDao {
             preparedStatement.setLong(1, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 }

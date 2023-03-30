@@ -1,5 +1,6 @@
 package chess.model.dao;
 
+import chess.model.exception.DataBaseCanNotConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class ConnectionGenerator {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
-            throw new IllegalStateException("디비에 접속할 수 없습니다.");
+            throw new DataBaseCanNotConnectException();
         }
     }
 }

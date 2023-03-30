@@ -1,5 +1,6 @@
 package chess.model.domain.position;
 
+import chess.model.exception.MovementNotFoundException;
 import java.util.Arrays;
 
 public enum Movement {
@@ -37,7 +38,7 @@ public enum Movement {
         return Arrays.stream(Movement.values())
                 .filter(movement -> movement.file == file && movement.rank == rank)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(MOVEMENT_NOT_FOUND_MESSAGE));
+                .orElseThrow(MovementNotFoundException::new);
     }
 
     public Position move(final Position position) {

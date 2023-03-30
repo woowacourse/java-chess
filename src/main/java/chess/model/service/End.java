@@ -4,6 +4,7 @@ import chess.model.domain.board.Score;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Position;
+import chess.model.exception.EndCantExecuteException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,36 +22,36 @@ public class End implements State {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 
     @Override
     public State move(final Position from, final Position to) {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 
     @Override
     public Map<Color, Score> status() {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 
     @Override
     public State end() {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 
     @Override
     public State load(final long id) {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 
     @Override
     public List<Long> findAllId() {
-        throw new UnsupportedOperationException(END_CANT_EXECUTE_COMMAND_MESSAGE);
+        throw new EndCantExecuteException();
     }
 }

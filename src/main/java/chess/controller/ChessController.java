@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.model.exception.ChessException;
 import chess.model.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -40,7 +41,7 @@ public class ChessController {
         try {
             commandMapper.get(commandRequest.getGameCommand())
                     .accept(chessGame, commandRequest);
-        } catch (Exception e) {
+        } catch (final ChessException e) {
             outputView.printExceptionMessage(e);
             playChess(chessGame);
         }
@@ -69,7 +70,7 @@ public class ChessController {
     private CommandRequest readRequest() {
         try {
             return inputView.readRequest();
-        } catch (IllegalArgumentException e) {
+        } catch (final ChessException e) {
             outputView.printExceptionMessage(e);
             return readRequest();
         }

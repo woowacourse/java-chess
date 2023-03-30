@@ -3,6 +3,7 @@ package chess.model.domain.piece;
 import chess.model.domain.position.Movement;
 import chess.model.domain.position.Position;
 import chess.model.domain.position.Rank;
+import chess.model.exception.CantMoveFromToException;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class Pawn extends Piece {
         if (canMoveDiagonal(destination, movement)) {
             return movement;
         }
-        throw new IllegalArgumentException(CANT_MOVE_TO_MESSAGE);
+        throw new CantMoveFromToException();
     }
 
     private boolean canMoveFront(final Piece destination, final Movement movement) {
@@ -51,7 +52,7 @@ public class Pawn extends Piece {
         if (checkMove1Square(from, to) || checkMove2Square(from, to)) {
             return movement;
         }
-        throw new IllegalArgumentException(CANT_MOVE_TO_MESSAGE);
+        throw new CantMoveFromToException();
     }
 
     private boolean checkMove1Square(final Position from, final Position to) {

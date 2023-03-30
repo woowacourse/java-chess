@@ -1,5 +1,6 @@
 package chess.model.domain.position;
 
+import chess.model.exception.ObstacleExistException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Path {
         final List<Position> positions = new ArrayList<>(this.positions);
         positions.retainAll(keySet);
         if (positions.size() != 0) {
-            throw new IllegalArgumentException(OBSTACLE_EXIST_MESSAGE);
+            throw new ObstacleExistException();
         }
     }
 }

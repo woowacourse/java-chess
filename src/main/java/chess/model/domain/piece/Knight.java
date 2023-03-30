@@ -2,6 +2,7 @@ package chess.model.domain.piece;
 
 import chess.model.domain.position.Movement;
 import chess.model.domain.position.Position;
+import chess.model.exception.CantMoveFromToException;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -31,7 +32,7 @@ public class Knight extends Piece {
 
     private void validateManhattanDistance(final Position from, final Position to) {
         if (from.rankDifference(to) + from.fileDifference(to) != 3) {
-            throw new IllegalArgumentException();
+            throw new CantMoveFromToException();
         }
     }
 }

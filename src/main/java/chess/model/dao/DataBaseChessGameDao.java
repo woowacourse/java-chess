@@ -2,6 +2,7 @@ package chess.model.dao;
 
 import chess.model.domain.board.Turn;
 import chess.model.domain.piece.Color;
+import chess.model.exception.QueryFailException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +35,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
             }
             return chessGameIds;
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 
@@ -52,7 +53,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
             }
             throw new SQLException();
         } catch (final SQLException e) {
-            throw new IllegalArgumentException("게임이 생성되지 않습니다.");
+            throw new QueryFailException();
         }
     }
 
@@ -66,7 +67,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
             preparedStatement.setLong(2, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new IllegalArgumentException("게임이 생성되지 않습니다.");
+            throw new QueryFailException();
         }
     }
 
@@ -84,7 +85,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
             }
             throw new SQLException();
         } catch (final SQLException e) {
-            throw new IllegalArgumentException("게임이 로딩되지 않습니다.");
+            throw new QueryFailException();
         }
     }
 
@@ -98,7 +99,7 @@ public class DataBaseChessGameDao implements ChessGameDao {
             preparedStatement.setLong(1, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new QueryFailException();
         }
     }
 }

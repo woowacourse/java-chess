@@ -3,6 +3,8 @@ package chess.model.domain.piece;
 import chess.model.domain.position.Movement;
 import chess.model.domain.position.Path;
 import chess.model.domain.position.Position;
+import chess.model.exception.CantMoveFromToException;
+import chess.model.exception.CantMoveToSameColor;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +24,7 @@ public abstract class Piece {
 
     protected final void validateMovable(final Movement movement, final List<Movement> canMovements) {
         if (!canMovements.contains(movement)) {
-            throw new IllegalArgumentException(CANT_MOVE_FROM_TO_MESSAGE);
+            throw new CantMoveFromToException();
         }
     }
 
@@ -44,7 +46,7 @@ public abstract class Piece {
 
     private void validateSameColor(final Piece other) {
         if (color.isSameColor(other.color)) {
-            throw new IllegalArgumentException(CANT_MOVE_TO_IS_SAME_TEAM_MESSAGE);
+            throw new CantMoveToSameColor();
         }
     }
 

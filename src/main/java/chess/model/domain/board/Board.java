@@ -8,6 +8,7 @@ import chess.model.domain.piece.Piece;
 import chess.model.domain.piece.PieceType;
 import chess.model.domain.position.Path;
 import chess.model.domain.position.Position;
+import chess.model.exception.FromIsEmptyException;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -41,7 +42,7 @@ public class Board {
 
     private void validateIsFromEmpty(final Position from) {
         if (!board.containsKey(from)) {
-            throw new IllegalArgumentException(FROM_IS_EMPTY_MESSAGE);
+            throw new FromIsEmptyException();
         }
     }
 

@@ -2,6 +2,7 @@ package chess.model.domain.board;
 
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
+import chess.model.exception.IsNotPieceTurnException;
 
 public class Turn {
 
@@ -28,7 +29,7 @@ public class Turn {
 
     public void validateStartPieceColor(final Piece piece) {
         if (!piece.isSameColor(turn)) {
-            throw new IllegalArgumentException(IS_NOT_PIECE_TURN_MESSAGE);
+            throw new IsNotPieceTurnException();
         }
     }
 

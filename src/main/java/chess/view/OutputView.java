@@ -5,6 +5,7 @@ import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.piece.PieceType;
 import chess.model.domain.position.Position;
+import chess.model.exception.ChessException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -92,7 +93,7 @@ public class OutputView {
         }
     }
 
-    public void printExceptionMessage(final Exception e) {
+    public void printExceptionMessage(final ChessException e) {
         System.out.println(e.getMessage());
     }
 }

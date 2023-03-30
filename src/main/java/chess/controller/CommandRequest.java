@@ -1,6 +1,9 @@
 package chess.controller;
 
 import chess.model.domain.position.Position;
+import chess.model.exception.GameIdTypeException;
+import chess.model.exception.RequestNotContainIdException;
+import chess.model.exception.RequestNotContainPositionException;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +70,7 @@ public class CommandRequest {
         try {
             return Long.valueOf(id);
         } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException(GAME_ID_IS_LONG_TYPE_MESSAGE);
+            throw new GameIdTypeException();
         }
     }
 
@@ -76,14 +79,14 @@ public class CommandRequest {
     }
 
     public Position getFrom() {
-        return from.orElseThrow(() -> new UnsupportedOperationException(REQUEST_NOT_CONTAIN_POSITION_MESSAGE));
+        return from.orElseThrow(RequestNotContainPositionException::new);
     }
 
     public Position getTo() {
-        return to.orElseThrow(() -> new UnsupportedOperationException(REQUEST_NOT_CONTAIN_POSITION_MESSAGE));
+        return to.orElseThrow(RequestNotContainPositionException::new);
     }
 
     public Long getId() {
-        return id.orElseThrow(() -> new UnsupportedOperationException(REQUEST_NOT_CONTAIN_ID_MESSAGE));
+        return id.orElseThrow(RequestNotContainIdException::new);
     }
 }

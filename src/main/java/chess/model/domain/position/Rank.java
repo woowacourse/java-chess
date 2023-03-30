@@ -1,5 +1,6 @@
 package chess.model.domain.position;
 
+import chess.model.exception.RankNotFoundException;
 import java.util.Map;
 
 public enum Rank {
@@ -28,7 +29,7 @@ public enum Rank {
 
     static Rank from(int value) {
         if (!RANK_MAPPER.containsKey(value)) {
-            throw new IllegalArgumentException(RANK_NOT_FOUND_MESSAGE);
+            throw new RankNotFoundException();
         }
         return RANK_MAPPER.get(value);
     }

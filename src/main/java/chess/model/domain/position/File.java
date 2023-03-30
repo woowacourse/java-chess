@@ -1,5 +1,6 @@
 package chess.model.domain.position;
 
+import chess.model.exception.FileNotFoundException;
 import java.util.Map;
 
 public enum File {
@@ -27,7 +28,7 @@ public enum File {
 
     static File from(int value) {
         if (!FILE_MAPPER.containsKey(value)) {
-            throw new IllegalArgumentException(FILE_NOT_FOUND_MESSAGE);
+            throw new FileNotFoundException();
         }
         return FILE_MAPPER.get(value);
     }

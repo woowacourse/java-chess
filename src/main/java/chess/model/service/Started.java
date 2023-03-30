@@ -1,14 +1,16 @@
 package chess.model.service;
 
+import chess.model.dao.ChessGameDao;
+import chess.model.dao.DataBaseChessGameDao;
+import chess.model.dao.DataBasePieceDao;
+import chess.model.dao.PieceDao;
 import chess.model.domain.board.Board;
 import chess.model.domain.board.Score;
-import chess.model.dao.PieceDao;
-import chess.model.dao.ChessGameDao;
-import chess.model.dao.DataBasePieceDao;
-import chess.model.dao.DataBaseChessGameDao;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Position;
+import chess.model.exception.NotStartedCantExecuteException;
+import chess.model.exception.StartedCantExecuteException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +30,7 @@ public class Started implements State {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException(STARTED_CANT_EXECUTE_START_MESSAGE);
+        throw new StartedCantExecuteException();
     }
 
     @Override
@@ -61,7 +63,7 @@ public class Started implements State {
 
     @Override
     public State load(final long id) {
-        throw new UnsupportedOperationException(STARTED_CANT_EXECUTE_START_MESSAGE);
+        throw new NotStartedCantExecuteException();
     }
 
     @Override
