@@ -6,10 +6,8 @@ import chess.domain.direction.BasicDirection;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static chess.domain.PieceType.EMPTY;
 import static chess.domain.PieceType.PAWN;
@@ -86,32 +84,20 @@ public final class Board {
     }
 
     public int countPawnDuplicatedColumn(final Color color) {
-        final Map<Row, Integer> pawnCount = new EnumMap<>(Row.class);
-
-        board.entrySet()
-                .forEach(entry -> countIfPawnDuplicatedColumn(pawnCount, entry, color));
+        final Map<Row, Long> pawnCount = board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameColor(color))
+                .filter(entry -> entry.getValue().isSamePieceType(PAWN))
+                .collect(Collectors.groupingBy(entry -> entry.getKey().getRow(), Collectors.counting()));
 
         return calculatePawnDuplicatedCounts(pawnCount);
     }
 
-    private void countIfPawnDuplicatedColumn(
-            final Map<Row, Integer> pawnCount,
-            final Map.Entry<Position, Piece> entry,
-            final Color color
-    ) {
-        final Piece piece = entry.getValue();
-        final Row currentRow = entry.getKey().getRow();
-
-        if (piece.isSameColor(color) && piece.isSamePieceType(PAWN)) {
-            pawnCount.put(currentRow, pawnCount.getOrDefault(currentRow, 0) + 1);
-        }
-    }
-
-    private int calculatePawnDuplicatedCounts(final Map<Row, Integer> pawnCount) {
-        return pawnCount.values()
+    private int calculatePawnDuplicatedCounts(final Map<Row, Long> pawnCount) {
+        return Math.toIntExact(pawnCount.values()
                 .stream()
                 .filter(count -> count >= PAWN_MIN_DUPLICATED_COUNT)
-                .reduce(0, Integer::sum);
+                .reduce(0L, Long::sum));
     }
 
     public Map<Position, Piece> getBoard() {
