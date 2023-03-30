@@ -4,6 +4,7 @@ import chess.controller.GameCommand;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.service.ChessService;
+import chess.view.OutputView;
 import java.util.Map;
 
 public abstract class ProgressState implements GameState {
@@ -70,6 +71,8 @@ public abstract class ProgressState implements GameState {
 
         return this;
     }
+
+    public abstract void printScores(OutputView outputView);
 
     @Override
     public final Map<Position, Piece> getBoard() {

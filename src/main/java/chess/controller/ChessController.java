@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.controller.state.GameState;
 import chess.controller.state.ProgressState;
-import chess.model.Scores;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -25,7 +24,7 @@ public class ChessController {
     }
 
     private void doGame(final ChessService chessService) {
-        GameState state = retry(()  -> getGameState(chessService));
+        GameState state = retry(() -> getGameState(chessService));
         retry(this::progressGame, state);
     }
 
@@ -43,6 +42,10 @@ public class ChessController {
 
     private void printCreateGameMessage(final GameState state) {
         outputView.printIfHasGame(state.hasGame());
+    }
+
+    private void printBoardStatus(final GameState state) {
+        state.printBoardStatus(outputView);
     }
 
     private <T> T retry(final Supplier<T> supplier) {
@@ -76,22 +79,8 @@ public class ChessController {
     }
 
     private void printGameProgressMessage(final GameState state) {
-        printScores(state);
-        printBoardStatus(state);
-    }
-
-    private void printScores(final GameState state) {
-        if (state.isStatus()) {
-            final Scores scores = state.calculateScores();
-            outputView.printScores(ScoreResponses.from(scores));
-        }
-    }
-
-    private void printBoardStatus(final GameState state) {
-        if (state.isNotEnd()) {
-            outputView.printCurrentPlayer(state.findCurrentPlayer());
-            outputView.printChessBoard(new BoardResponse(state.getBoard()));
-        }
+        state.printScores(outputView);
+        state.printBoardStatus(outputView);
     }
 
     private <T> void retry(final Consumer<T> consumer, T input) {

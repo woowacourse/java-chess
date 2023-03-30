@@ -5,6 +5,7 @@ import chess.model.Scores;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceColor;
 import chess.model.position.Position;
+import chess.view.OutputView;
 import java.util.Map;
 
 public class End implements GameState {
@@ -47,6 +48,16 @@ public class End implements GameState {
     @Override
     public Scores calculateScores() {
         throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
+    }
+
+    @Override
+    public void printScores(final OutputView outputView) {
+        return;
+    }
+
+    @Override
+    public void printBoardStatus(final OutputView outputView) {
+        return;
     }
 
     @Override
