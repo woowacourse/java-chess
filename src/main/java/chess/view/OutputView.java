@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 public class OutputView {
     public static final String TEAN_IN_TURN_NOTICE = "%s팀 차례 입니다.\n";
     public static final int DRAW = 2;
-    public static final String ENTER_GAME_NUMBER_NOTICE = "> 이어서 진행할 게임의 방 번호를 입력하세요. ex) 1";
     private static final int CHESS_BOARD_AREA = 64;
     private static final int CHESS_BOARD_WIDTH = 8;
     private static final String EMPTY_SQUARE_DISPLAY = ".";
@@ -37,10 +36,6 @@ public class OutputView {
 
     public void printCheckNewGameNotice() {
         System.out.println(START_NEW_GAME_NOTICE);
-    }
-
-    public void printEnterSavedGameRoomNumberNotice() {
-        System.out.println(ENTER_GAME_NUMBER_NOTICE);
     }
 
     public void printGameNumberRoomNotice(int gameId) {
@@ -88,5 +83,10 @@ public class OutputView {
             return pieces.get(index);
         }
         return EMPTY_SQUARE_DISPLAY;
+    }
+
+    public void printEnterGameRoomNotice(List<Integer> gameRooms) {
+        System.out.println("게임방 목록: " + gameRooms);
+        System.out.println("참여할 게임방 번호를 입력해주세요.");
     }
 }

@@ -26,7 +26,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판을 생성한다.")
     void createBoard() {
-        assertDoesNotThrow(Board::new);
+        assertDoesNotThrow(() -> new Board());
     }
 
     @Test

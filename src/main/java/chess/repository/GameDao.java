@@ -1,7 +1,10 @@
 package chess.repository;
 
+import static chess.domain.piece.PieceType.KING;
+
 import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.GameState;
 import chess.domain.Pieces;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
@@ -9,8 +12,12 @@ import chess.domain.piece.PieceType;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class GameDao {
 
@@ -21,8 +28,44 @@ public class GameDao {
     }
 
     public int saveGame(final ChessGame game) {
-        final String query = "INSERT INTO game (team, board) VALUES (?, ?)";
-        return jdbcTemplate.save(query, game.getTeam().name(), game.getBoard().toString());
+        final String query = "INSERT INTO game (team) VALUES (?)";
+        final int gameId = jdbcTemplate.save(query, game.team().name());
+        saveBoard(gameId, game.getBoard());
+        return gameId;
+    }
+
+    public void saveBoard(int gameId, Board board) {
+        for (Entry<Square, Piece> entry : board.getBoard().entrySet()) {
+            final Square square = entry.getKey();
+            final Piece piece = entry.getValue();
+            saveOneSquare(gameId, square, piece);
+        }
+    }
+
+    private void saveOneSquare(int gameId, Square square, Piece piece) {
+        final String query = "INSERT INTO board (game_id, square_file, square_rank, piece_team, piece_type) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.executeUpdate(query,
+                gameId,
+                square.file().name(),
+                square.rank().name(),
+                piece.team().name(),
+                piece.type().name());
+    }
+
+    public ChessGame findGameById(int gameId) {
+        final Team team = findTeamById(gameId);
+        final Board board = findBoardById(gameId);
+        return new ChessGame(board, team);
+    }
+
+    public Team findTeamById(int gameId) {
+        final var query = "SELECT team FROM game WHERE game_id = ?";
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            if (resultSet.next()) {
+                return Team.valueOf(resultSet.getString("team"));
+            }
+            throw new IllegalArgumentException("차례를 확인할 수 없습니다.");
+        }, gameId);
     }
 
     public void deleteGameById(final int gameId) {
@@ -30,41 +73,69 @@ public class GameDao {
         jdbcTemplate.executeUpdate(query, gameId);
     }
 
-    public void updateGameById(ChessGame chessGame, final int gameId) {
-        final var query = "UPDATE game SET team = ?, board = ? WHERE game_id = ?";
-        jdbcTemplate.executeUpdate(query, chessGame.getTeam().toString(), chessGame.getBoard().toString(), gameId);
+    public void deleteBoard(int gameId) {
+        final var query = "DELETE FROM board WHERE game_id = ?";
+        jdbcTemplate.executeUpdate(query, gameId);
     }
 
-    public ChessGame findGameById(final int gameId) {
-        final var query = "SELECT team, board FROM game WHERE game_id = ?";
+    public Board findBoardById(int gameId) {
+        final var query = "SELECT square_file, square_rank, piece_team, piece_type FROM board WHERE game_id = ?";
         return jdbcTemplate.executeQuery(query, resultSet -> {
-            if (resultSet.next()) {
-                return new ChessGame(
-                        createBoard(resultSet.getString("board")),
-                        Team.valueOf(resultSet.getString("team"))
-                );
+            final Map<Square, Piece> board = new HashMap<>();
+            while (resultSet.next()) {
+                final Square square = Squares.getSquare(File.valueOf(resultSet.getString("square_file")),
+                        Rank.valueOf(resultSet.getString("square_rank")));
+                final Piece piece = Pieces.of(Team.valueOf(resultSet.getString("piece_team")),
+                        PieceType.valueOf(resultSet.getString("piece_type")));
+                board.put(square, piece);
             }
-            return null;
+            return new Board(board);
         }, gameId);
     }
 
-    private Board createBoard(String input) {
-        Map<Square, Piece> result = new HashMap<>();
-        for (String pieces : input.split(",")) {
-            Square square = createSquare(pieces.split(":")[0]);
-            Piece piece = createPiece(pieces.split(":")[1]);
-            result.put(square, piece);
-        }
-        return new Board(result);
+    public List<Integer> findAllRooms() {
+        final var query = "SELECT game_id FROM game";
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            List<Integer> rooms = new ArrayList<>();
+            while (resultSet.next()) {
+                rooms.add(resultSet.getInt("game_id"));
+            }
+            return rooms;
+        });
     }
 
-    private Piece createPiece(final String input) {
-        return Pieces.of(Team.valueOf(input.split(" ")[0]),
-                PieceType.valueOf(input.split(" ")[1]));
+    public int countKing(int gameId) {
+        final var query = "SELECT COUNT(*) FROM board WHERE game_id =? AND piece_type = ?";
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+            return null;
+        }, gameId, KING.name());
     }
 
-    private Square createSquare(final String input) {
-        return Square.of(File.valueOf(input.split(" ")[0]),
-                Rank.valueOf(input.split(" ")[1]));
+    public void saveState(int gameId, GameState state) {
+        final String query = "INSERT INTO state (game_id, state) VALUES (?, ?)";
+        jdbcTemplate.executeUpdate(query, gameId, state.name());
+    }
+
+    public void deleteState(int gameId) {
+        final String query = "DELETE FROM state WHERE game_id = ?";
+        jdbcTemplate.executeUpdate(query, gameId);
+    }
+
+    public GameState findState(int gameId) {
+        final var query = "SELECT state FROM state WHERE game_id = ?";
+        return jdbcTemplate.executeQuery(query, resultSet -> {
+            if (resultSet.next()) {
+                return GameState.valueOf(resultSet.getString("state"));
+            }
+            throw new IllegalArgumentException("방을 찾을 수 없습니다.");
+        }, gameId);
+    }
+
+    public void updateTeamById(final int gameId, Team team) {
+        final var query = "UPDATE game SET team = ? WHERE game_id = ?";
+        jdbcTemplate.executeUpdate(query, team.name(), gameId);
     }
 }

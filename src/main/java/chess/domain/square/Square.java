@@ -45,9 +45,4 @@ public class Square {
     public Rank rank() {
         return rank;
     }
-
-    @Override
-    public String toString() {
-        return String.join(" ", file.name(), rank.name());
-    }
 }

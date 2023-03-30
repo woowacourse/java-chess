@@ -56,18 +56,14 @@ public class ChessGame {
         return board.calculateTotalScoreBy(team);
     }
 
-    public List<String> determineWinningTeam() {
+    public List<Team> determineWinningTeam() {
         if (calculateScoreBy(BLACK) > calculateScoreBy(WHITE)) {
-            return List.of(BLACK.name());
+            return List.of(BLACK);
         }
         if (calculateScoreBy(BLACK) < calculateScoreBy(WHITE)) {
-            return List.of(WHITE.name());
+            return List.of(WHITE);
         }
-        return List.of(BLACK.name(), WHITE.name());
-    }
-
-    public boolean isCheckmate() {
-        return board.countKing() < 2;
+        return List.of(BLACK, WHITE);
     }
 
     private void changeTeam() {
@@ -80,9 +76,5 @@ public class ChessGame {
 
     public Team team() {
         return team;
-    }
-
-    public String teamName() {
-        return team.name();
     }
 }

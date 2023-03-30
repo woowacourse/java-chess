@@ -23,6 +23,10 @@ public class InputView {
         return gameCommand.strip();
     }
 
+    public int readRoomNumber() {
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     private void validateNull(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("공백이 아니여야 합니다.");

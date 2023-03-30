@@ -4,8 +4,13 @@ import static chess.controller.Command.END;
 import static chess.controller.Command.MOVE;
 import static chess.controller.Command.START;
 import static chess.controller.Command.STATUS;
+import static chess.domain.GameState.DONE;
+import static chess.domain.GameState.READY;
 
+import chess.command.ResponseCommand;
+import chess.domain.GameRoom;
 import chess.dto.BoardDto;
+import chess.dto.GameResultDto;
 import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -14,10 +19,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class GameController {
-    public static final String YES = "y";
-    public static final String NO = "n";
-
-    private final Map<Command, CommandAction> commands = Map.of(START, this::start, STATUS, this::status, MOVE, this::move, END, this::end);
+    private final Map<Command, CommandAction> commands = Map.of(STATUS, this::status, MOVE, this::move, END, this::end);
     private final GameService gameService = new GameService();
     private final InputView inputView;
     private final OutputView outputView;
@@ -28,75 +30,73 @@ public class GameController {
     }
 
     public void run() {
-        int gameId = selectGame();
-        outputView.printGameNumberRoomNotice(gameId);
-        Command command = START;
+        GameRoom gameRoom = readValidate(this::selectGame);
+        outputView.printGameNumberRoomNotice(gameRoom.roomNumber());
+        Command command = progress(gameRoom);
         while (command != END) {
-            command = readUntilValidate(this::play);
-            gameService.updateGame(gameId);
+            command = readValidate(() -> play(gameRoom));
         }
-        outputView.printStartWinningTeam(gameService.winningTeams());
+        GameResultDto gameResultDto = GameResultDto.from(gameService.winningTeams(gameRoom));
+        outputView.printStartWinningTeam(gameResultDto.getWinningTeams());
+        deleteGameIfEndGame(gameRoom);
     }
 
-    private int selectGame() {
-        boolean isNewGame = readUntilValidate(this::checkNewGame);
-        if (isNewGame) {
-            readUntilValidate(this::startNewGame);
-            return gameService.saveGame();
+    private void deleteGameIfEndGame(final GameRoom gameRoom) {
+        if (gameRoom.state() == DONE) {
+            gameService.deleteAll(gameRoom);
         }
-        return readUntilValidate(this::startSavedGame);
+    }
+
+    private GameRoom selectGame() {
+        outputView.printCheckNewGameNotice();
+        if (checkNewGame()) {
+            return gameService.createGameRoom();
+        }
+        final List<Integer> gameRooms = gameService.findAllGameRooms();
+        outputView.printEnterGameRoomNotice(gameRooms);
+        final int roomNumber = inputView.readRoomNumber();
+        validateRoomNumber(gameRooms, roomNumber);
+        return gameService.loadGameRoom(roomNumber);
+    }
+
+    private void validateRoomNumber(final List<Integer> gameRooms, final int roomNumber) {
+        if (!gameRooms.contains(roomNumber)) {
+            throw new IllegalArgumentException("개설된 게임방 중에 참여할 게임방 번호를 입력하세요.");
+        }
     }
 
     public boolean checkNewGame() {
-        outputView.printCheckNewGameNotice();
-        String input = inputView.readUserInput();
-        validateResponse(input);
-        return input.equals(YES);
+        final String response = inputView.readUserInput();
+        return ResponseCommand.isYes(response);
     }
 
-    private void validateResponse(final String input) {
-        if (!input.equals(YES) && !input.equals(NO)) {
-            throw new IllegalArgumentException("y와 n로 입력해주세요.");
-        }
-    }
-
-    public int startSavedGame() {
-        outputView.printEnterSavedGameRoomNumberNotice();
-        String input = inputView.readUserInput();
-        validateNumeric(input);
-        int gameId = Integer.parseInt(input);
-        gameService.findGame(gameId);
-        return gameId;
-    }
-
-    private void validateNumeric(final String input) {
-        try {
-            Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("방번호는 숫자로 입력해주세요");
-        }
-    }
-
-    public Command startNewGame() {
+    private Command progress(GameRoom gameRoom) {
         outputView.printStartNotice();
-        return readUntilValidate(this::ready);
+        if (gameRoom.state() == READY) {
+            gameRoom.updateState();
+            return readValidate(this::ready);
+        }
+        return readValidate(() -> play(gameRoom));
     }
 
     private Command ready() {
         List<String> inputs = inputView.readGameCommand();
-        CommandAction commandAction = commands.get(START);
-        return commandAction.get(inputs);
+        Command command = Command.from(inputs);
+        if (command != START) {
+            throw new IllegalArgumentException("start를 입력하여 게임을 실행하세요");
+        }
+        return command;
     }
 
-    private Command play() {
-        outputView.printTeamInTurn(gameService.teamName());
-        BoardDto boardDto = BoardDto.of(gameService.board());
+    private Command play(GameRoom gameRoom) {
+        outputView.printTeamInTurn(gameRoom.turn().name());
+        BoardDto boardDto = BoardDto.of(gameRoom.board());
         outputView.printChessBoard(boardDto.getPieces());
         List<String> inputs = inputView.readGameCommand();
         Command command = Command.from(inputs);
         validateStart(command);
         CommandAction commandAction = commands.get(command);
-        return commandAction.get(inputs);
+        return commandAction.get(inputs, gameRoom);
     }
 
     private void validateStart(final Command command) {
@@ -105,39 +105,36 @@ public class GameController {
         }
     }
 
-    private Command start(List<String> commands) {
-        return gameService.start(commands);
+    private Command move(List<String> commands, GameRoom gameRoom) {
+        gameService.move(commands, gameRoom);
+        gameService.updateGame(gameRoom);
+        if (gameService.isCheckmate(gameRoom)) {
+            gameRoom.updateState();
+            return END;
+        }
+        return MOVE;
     }
 
-    private Command move(List<String> commands) {
-        return gameService.move(commands);
-    }
-
-    private Command status(List<String> commands) {
-        outputView.printScore(gameService.scores());
-        outputView.printStartWinningTeam(gameService.winningTeams());
+    private Command status(List<String> commands, GameRoom gameRoom) {
+        outputView.printScore(gameService.scores(gameRoom));
+        GameResultDto gameResultDto = GameResultDto.from(gameService.winningTeams(gameRoom));
+        outputView.printStartWinningTeam(gameResultDto.getWinningTeams());
         return STATUS;
     }
 
-    private Command end(List<String> commands) {
+    private Command end(List<String> commands, GameRoom gameRoom) {
         outputView.printEndNotice();
+        gameService.updateGame(gameRoom);
         return END;
     }
 
-    private <T> T readUntilValidate(Supplier<T> supplier) {
-        T input;
-        do {
-            input = readUserInput(supplier);
-        } while (input == null);
-        return input;
-    }
-
-    private <T> T readUserInput(final Supplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+    private <T> T readValidate(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
