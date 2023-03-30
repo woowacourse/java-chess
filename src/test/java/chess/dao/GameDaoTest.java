@@ -1,7 +1,6 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import chess.domain.position.Rank;
 
 class GameDaoTest {
 
-    private final GameDao gameDao = new GameDao();
+    private final GameDao gameDao = new GameDao(new JDBCConnection());
     private Integer gameId;
 
     @AfterEach
@@ -25,12 +24,6 @@ class GameDaoTest {
         if (gameId != null) {
             gameDao.end(gameId);
         }
-    }
-
-    @DisplayName("연결")
-    @Test
-    void connect() {
-        assertThatNoException().isThrownBy(gameDao::connect);
     }
 
     @DisplayName("게임 저장하기")
@@ -67,7 +60,7 @@ class GameDaoTest {
 
     @DisplayName("안끝난 게임이 있는지 알 수 있다")
     @Test
-    void test_() {
+    void hasUnfinished() {
         Game game = new Game();
         gameId = gameDao.save(game);
 

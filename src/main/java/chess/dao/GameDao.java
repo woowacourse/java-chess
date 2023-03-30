@@ -1,7 +1,6 @@
 package chess.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,28 +19,20 @@ import chess.domain.position.Rank;
 
 public class GameDao {
 
-    private static final String SERVER = "localhost:3306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private final Connection connection;
 
-    public Connection connect() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            throw new RuntimeException("DB 연결 오류:" + e.getMessage()); // TODO: 2023/03/26 예외 변경
-        }
+    public GameDao(JDBCConnection jdbcConnection) {
+        this.connection = jdbcConnection.getConnection();
     }
 
     public Integer save(Game game) {
         String sql = "INSERT INTO game (is_finished, turn) VALUES (?, ?)";
-        try (final var connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setBoolean(1, game.isFinished());
             preparedStatement.setString(2, game.getTurn().name());
 
             preparedStatement.execute();
+
             Integer id = findIdFrom(preparedStatement.getGeneratedKeys());
             save(id, game.getPieces());
             return id;
@@ -58,8 +49,7 @@ public class GameDao {
 
     private void save(Integer gameId, Position position, Piece piece) {
         String sql = "INSERT INTO piece (game_id, file, `rank`, `type`, team) VALUES (?, ?, ?, ?, ?)";
-        try (final var connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, gameId);
             preparedStatement.setString(2, position.getFile().name());
             preparedStatement.setString(3, position.getRank().name());
@@ -85,8 +75,7 @@ public class GameDao {
 
     public void put(Integer gameId, Game game) {
         String sql = "UPDATE game SET is_finished = ?, turn = ? WHERE id = ?";
-        try (final var connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setBoolean(1, game.isFinished());
             preparedStatement.setString(2, game.getTurn().name());
             preparedStatement.setInt(3, gameId);
@@ -107,8 +96,7 @@ public class GameDao {
 
     private void deletePiecesBy(Integer gameId) {
         String sql = "DELETE FROM piece WHERE game_id = ?";
-        try (final var connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, gameId);
 
             preparedStatement.executeUpdate();
@@ -119,8 +107,7 @@ public class GameDao {
 
     public Game findBy(Integer gameId) {
         String sql = "SELECT turn FROM game WHERE id = ?";
-        try (final var connection = connect()) {
-            final var preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, gameId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -137,8 +124,7 @@ public class GameDao {
 
     private Map<Position, Piece> findAllPiecesBy(Integer gameId) {
         String sql = "SELECT file, `rank`, `type`, team FROM piece WHERE game_id = ?";
-        try (final var connection = connect()) {
-            final var preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, gameId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -158,8 +144,7 @@ public class GameDao {
 
     public void end(Integer gameId) {
         String sql = "UPDATE game SET is_finished = true WHERE id = ?";
-        try (final var connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, gameId);
 
             preparedStatement.executeUpdate();
@@ -170,10 +155,9 @@ public class GameDao {
 
     public boolean hasUnfinished() {
         String sql = "SELECT id from game WHERE is_finished = false ORDER BY id";
-        try (final var connection = connect()) {
-            final var preparedStatement = connection.prepareStatement(sql);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
+
             return resultSet.next();
         } catch (SQLException exception) {
             throw new RuntimeException("DB 연결 오류:" + exception.getMessage());
@@ -182,9 +166,7 @@ public class GameDao {
 
     public Integer findIdOfLastUnfinished() {
         String sql = "SELECT id from game WHERE is_finished = false ORDER BY id";
-        try (final var connection = connect()) {
-            final var preparedStatement = connection.prepareStatement(sql);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt(1);

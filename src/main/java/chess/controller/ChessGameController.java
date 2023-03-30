@@ -12,6 +12,7 @@ import chess.controller.mapper.PieceResponseMapper;
 import chess.controller.mapper.RankMapper;
 import chess.controller.mapper.TeamMapper;
 import chess.dao.GameDao;
+import chess.dao.JDBCConnection;
 import chess.domain.game.Game;
 import chess.domain.game.Team;
 import chess.domain.piece.Piece;
@@ -33,11 +34,15 @@ public class ChessGameController {
     private final GameDao gameDao;
     private Integer gameId;
 
-    public ChessGameController(InputView inputView, OutputView outputView) {
+    public ChessGameController(
+            InputView inputView,
+            OutputView outputView,
+            JDBCConnection jdbcConnection
+    ) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = new GameExceptionHandler(outputView);
-        this.gameDao = new GameDao();
+        this.gameDao = new GameDao(jdbcConnection);
     }
 
     public void start() {
