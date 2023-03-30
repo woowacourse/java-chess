@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.Color;
 import chess.domain.CommandAction;
 import chess.domain.Players;
+import chess.domain.dao.DBInitFactory;
 import chess.domain.dao.PieceDao;
 import chess.domain.dao.PieceDaoImpl;
 import chess.domain.factory.InitPlayersFactory;
@@ -25,6 +26,7 @@ public final class ChessGameController {
     );
 
     public void run() {
+        DBInitFactory.initDB();
         players = InitPlayersFactory.initializePlayers();
         OutputView.printStartGame();
         boolean isNotEnd = true;
