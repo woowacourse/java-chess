@@ -7,11 +7,19 @@ public class Turn {
     private final int turn;
 
     public Turn() {
-        this.turn = 0;
+        this(0);
     }
 
     public Turn(int turn) {
+        validate(turn);
         this.turn = turn;
+    }
+
+    private void validate(int turn) {
+        if (turn >= 0) {
+            return;
+        }
+        throw new IllegalArgumentException("턴은 0보다 작을 수 없습니다.");
     }
 
     public Turn next() {
