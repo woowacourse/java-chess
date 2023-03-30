@@ -31,18 +31,21 @@ public class ChessGameService {
     }
 
     public void move(List<String> commandInput) {
-        ChessBoard chessBoard = findChessBoard();
-
         Position start = Position.of(commandInput.get(1));
         Position end = Position.of(commandInput.get(2));
 
+        ChessBoard chessBoard = findChessBoard();
         chessBoard.movePiece(start, end);
 
-        if (!findChessBoard().isSameWith(chessBoard)) {
-            pieceDao.updatePiece(new PositionDto(start), new PositionDto(end),
-                    new PieceDto(chessBoard.getPieceByPosition(end), end));
+        updateMoveResult(start, end, chessBoard);
+    }
 
-            gameTurnDao.update(makeGameTurnDto(chessBoard));
+    private void updateMoveResult(Position start, Position end, ChessBoard ChangedChessBoard) {
+        if (!findChessBoard().isSameWith(ChangedChessBoard)) {
+            pieceDao.updatePiece(new PositionDto(start), new PositionDto(end),
+                    new PieceDto(ChangedChessBoard.getPieceByPosition(end), end));
+
+            gameTurnDao.update(makeGameTurnDto(ChangedChessBoard));
         }
     }
 
@@ -77,26 +80,30 @@ public class ChessGameService {
             return new ChessBoard(generator.generate());
         }
 
+        return new ChessBoard(makeLoadBoard(pieceDtos), findColorOfTurn());
+    }
+
+    private Map<Position, Piece> makeLoadBoard(List<PieceDto> pieceDtos) {
         Map<Position, Piece> loadBoard = new HashMap<>();
 
         for (PieceDto pieceDto : pieceDtos) {
             PieceName pieceName = PieceName.of(pieceDto.getName());
             Color pieceColor = Color.valueOf(pieceDto.getPieceColor());
             Position position = Position.of(pieceDto.getRow(), pieceDto.getColumn());
-
             Piece piece = makePiece(pieceName, pieceColor);
 
             loadBoard.put(position, piece);
         }
-
-        GameTurnDto gameTurnDto = gameTurnDao.find();
-        Color turnOfColor = Color.valueOf(gameTurnDto.getTurnOfColor());
-
-        return new ChessBoard(loadBoard, turnOfColor);
+        return loadBoard;
     }
 
     private Piece makePiece(PieceName pieceName, Color pieceColor) {
         PieceMaker pieceMaker = PieceMaker.from(pieceName);
         return pieceMaker.make(pieceColor);
+    }
+
+    private Color findColorOfTurn() {
+        GameTurnDto gameTurnDto = gameTurnDao.find();
+        return Color.valueOf(gameTurnDto.getTurnOfColor());
     }
 }
