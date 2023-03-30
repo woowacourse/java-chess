@@ -31,7 +31,7 @@ public class MysqlChessGameDao implements ChessGameDao {
     @Override
     public long create() {
         String query = "INSERT INTO chess_game (turn) VALUES(?)";
-        long chessGameId = 0L;
+        Long chessGameId = null;
         try (Connection connection = database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, Team.getStartTeam().name());
@@ -39,6 +39,9 @@ public class MysqlChessGameDao implements ChessGameDao {
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 chessGameId = generatedKeys.getLong(1);
+            }
+            if (chessGameId == null) {
+                throw new SQLException();
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -49,7 +52,7 @@ public class MysqlChessGameDao implements ChessGameDao {
     @Override
     public ChessGame findById(long id) {
         Map<Position, Piece> board = new HashMap<>();
-        String turn = Team.WHITE.name();
+        String turn = null;
         String query = "SELECT cg.turn, cb.piece_type, cb.piece_rank, cb.piece_file, cb.team FROM chess_game cg "
                 + "JOIN chess_board cb ON cg.chess_game_id = cb.chess_game_id and cg.chess_game_id = ?";
         try (Connection connection = database.getConnection();
