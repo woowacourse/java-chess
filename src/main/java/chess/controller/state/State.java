@@ -45,7 +45,7 @@ public abstract class State {
     }
 
     protected void saveGameHistory() {
-        gameDao.addMove(game);
+        gameDao.addMove(game.getPieces(), game.turn());
     }
 
     protected Game lastGame() {

@@ -39,7 +39,7 @@ public class GameDao {
         }
     }
 
-    public void addMove(final Game game) {
+    public void addMove(final List<Piece> pieces, final Camp turn) {
         final var query = "INSERT INTO game (turn,"
                 + "a8, b8, c8, d8, e8, f8, g8, h8,"
                 + "a7, b7, c7, d7, e7, f7, g7, h7,"
@@ -59,11 +59,9 @@ public class GameDao {
                 + "?, ?, ?, ?, ?, ?, ?, ?,"
                 + "?, ?, ?, ?, ?, ?, ?, ?)";
 
-        final List<Piece> pieces = game.getPieces();
-
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, game.turn().getName());
+            preparedStatement.setString(1, turn.getName());
             for (int i = 0; i < pieces.size(); i++) {
                 preparedStatement.setString(i + 2, getPiece(pieces.get(i)));
             }

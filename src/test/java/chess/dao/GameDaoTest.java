@@ -19,6 +19,6 @@ class GameDaoTest {
     @Test
     void addMove() {
         final var game = new Game();
-        gameDao.addMove(game);
+        gameDao.addMove(game.getPieces(), game.turn());
     }
 }
