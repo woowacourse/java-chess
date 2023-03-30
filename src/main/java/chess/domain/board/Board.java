@@ -8,6 +8,7 @@ public class Board {
 
     private static final int NONE = 0;
     public static final int INITIAL_KING_COUNTS = 2;
+
     private final Map<Square, Piece> board;
 
     public Board(final Map<Square, Piece> board) {
