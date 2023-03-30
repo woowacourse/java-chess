@@ -64,15 +64,13 @@ public abstract class ProgressState implements GameState {
     }
 
     @Override
-    public final GameState isGameEnd() {
-        if ((chessService.isGameEnd())) {
-            return new End();
-        }
-
-        return this;
+    public final void printCreateGameMessage(final OutputView outputView) {
+        outputView.printIfHasGame(hasGame());
     }
 
-    public abstract void printScores(OutputView outputView);
+    private boolean hasGame() {
+        return chessService.hasGame();
+    }
 
     @Override
     public final Map<Position, Piece> getBoard() {

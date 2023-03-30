@@ -26,21 +26,6 @@ public class End implements GameState {
     }
 
     @Override
-    public GameState isGameEnd() {
-        return this;
-    }
-
-    @Override
-    public boolean isStatus() {
-        return false;
-    }
-
-    @Override
-    public boolean hasGame() {
-        throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
-    }
-
-    @Override
     public PieceColor findCurrentPlayer() {
         throw new UnsupportedOperationException("지원하지 않는 기능 입니다.");
     }
@@ -57,6 +42,11 @@ public class End implements GameState {
 
     @Override
     public void printBoardStatus(final OutputView outputView) {
+        return;
+    }
+
+    @Override
+    public void printCreateGameMessage(final OutputView outputView) {
         return;
     }
 

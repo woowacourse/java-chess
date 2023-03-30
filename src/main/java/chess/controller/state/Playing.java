@@ -19,16 +19,6 @@ public class Playing extends ProgressState {
     }
 
     @Override
-    public boolean isStatus() {
-        return false;
-    }
-
-    @Override
-    public boolean hasGame() {
-        return chessService.hasGame();
-    }
-
-    @Override
     public PieceColor findCurrentPlayer() {
         return chessService.findCurrentPlayer();
     }

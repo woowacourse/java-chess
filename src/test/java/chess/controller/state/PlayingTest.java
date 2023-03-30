@@ -12,16 +12,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.controller.GameCommand;
-import chess.controller.state.End;
-import chess.controller.state.GameState;
-import chess.controller.state.Playing;
-import chess.controller.state.ProgressState;
-import chess.controller.state.Status;
-import chess.dao.MoveDaoImpl;
-import chess.model.board.NoWhiteKingChessGame;
 import chess.model.piece.Empty;
 import chess.model.piece.pawn.WhitePawn;
-import chess.service.ChessService;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -93,29 +85,6 @@ class PlayingTest {
                 () -> assertThat(playing.getBoard().get(A4).getClass()).isEqualTo(WhitePawn.class),
                 () -> assertThat(playing.getBoard().get(A2).getClass()).isEqualTo(Empty.class)
         );
-    }
-
-    @Test
-    @DisplayName("게임이 끝났으면 End클래스를 반환한다.")
-    void isGameEnd_whenGameEnd_thenReturnEnd() {
-        // given
-        final GameState playing = new Playing(new ChessService(NoWhiteKingChessGame.create(), new MoveDaoImpl()));
-
-        // when
-        final GameState result = playing.isGameEnd();
-
-        // then
-        assertThat(result.getClass()).isEqualTo(End.class);
-    }
-
-    @Test
-    @DisplayName("게임이 끝나지 않았으면 자기자신을 반환한다.")
-    void isGameEnd_whenNotEndGame_thenReturnEnd() {
-        // when
-        final GameState result = playing.isGameEnd();
-
-        // then
-        assertThat(result).isSameAs(playing);
     }
 
     @Test

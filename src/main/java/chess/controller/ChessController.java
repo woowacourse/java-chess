@@ -41,7 +41,7 @@ public class ChessController {
     }
 
     private void printCreateGameMessage(final GameState state) {
-        outputView.printIfHasGame(state.hasGame());
+        state.printCreateGameMessage(outputView);
     }
 
     private void printBoardStatus(final GameState state) {
@@ -64,7 +64,7 @@ public class ChessController {
 
             state = applyCommandAndExecute(state, moveRequest);
 
-            printGameProgressMessage(state.isGameEnd());
+            printGameProgressMessage(state);
         }
     }
 

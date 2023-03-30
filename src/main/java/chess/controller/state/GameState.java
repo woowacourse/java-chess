@@ -16,19 +16,15 @@ public interface GameState {
 
     boolean isNotEnd();
 
-    GameState isGameEnd();
-
-    boolean isStatus();
-
     Scores calculateScores();
-
-    boolean hasGame();
 
     PieceColor findCurrentPlayer();
 
     void printScores(final OutputView outputView);
 
     void printBoardStatus(final OutputView outputView);
+
+    void printCreateGameMessage(final OutputView outputView);
 
     Map<Position, Piece> getBoard();
 }
