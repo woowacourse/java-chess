@@ -45,11 +45,11 @@ public class GameDao {
         }
     }
 
-    public static String getGameIdOf(String roomName) {
+    public static String getGameIdOf(String gameName) {
         final var query = "SELECT game_id FROM game WHERE game_name = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, roomName);
+            preparedStatement.setString(1, gameName);
             var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getString("game_id");
@@ -112,7 +112,7 @@ public class GameDao {
     }
 
     public static boolean updateTurn(String gameId, String turn) {
-        final var query = "UPDATE game set turn = ? WHERE user_id = ?";
+        final var query = "UPDATE game set turn = ? WHERE game_id = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, turn);
@@ -127,11 +127,11 @@ public class GameDao {
         }
     }
 
-    public static boolean matchRoomNameAndOwner(String roomName, String userId) {
+    public static boolean matchRoomNameAndOwner(String gameName, String userId) {
         final var query = "SELECT game_id FROM game WHERE game_name = ? and user_id = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, roomName);
+            preparedStatement.setString(1, gameName);
             preparedStatement.setString(2, userId);
             var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -143,16 +143,16 @@ public class GameDao {
         }
     }
 
-    public static boolean nonExistRoomName(String gameName) {
+    public static boolean existRoomName(String gameName) {
         final var query = "SELECT game_id FROM game WHERE game_name = ?";
         try (var connection = ConnectionHandler.getConnection();
              var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, gameName);
             var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
