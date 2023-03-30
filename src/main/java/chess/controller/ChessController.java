@@ -66,6 +66,11 @@ public class ChessController {
             savedChessGame.pauseGame();
             return;
         }
+        if (ChessGameCommand.isStatus(gameCommandInput)) {
+            outputView.printResult(savedChessGame.getResult());
+            outputView.printWinner(savedChessGame.getWinner());
+            return;
+        }
         MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
         savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
         outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));

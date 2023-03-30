@@ -8,7 +8,8 @@ public enum ChessGameCommand {
 
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String input;
 
@@ -28,7 +29,7 @@ public enum ChessGameCommand {
     }
 
     public static ChessGameCommand generateMoveCommand(final String input) {
-        List<ChessGameCommand> gameMoveCommands = List.of(MOVE, END);
+        List<ChessGameCommand> gameMoveCommands = List.of(MOVE, END, STATUS);
         return gameMoveCommands.stream()
                 .filter(chessGameCommand -> input.contains(chessGameCommand.input))
                 .findFirst()
@@ -41,6 +42,10 @@ public enum ChessGameCommand {
     public static boolean isEnd(String gameCommandInput) {
         ChessGameCommand chessGameCommand = generateMoveCommand(gameCommandInput);
         return END == chessGameCommand;
+    }
+
+    public static boolean isStatus(String gameCommandInput) {
+        return STATUS.input.equals(gameCommandInput);
     }
 
     @Override
