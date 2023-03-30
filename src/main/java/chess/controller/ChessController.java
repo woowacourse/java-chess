@@ -16,8 +16,6 @@ public class ChessController {
     }
 
     public void run() {
-        OutputView.printGameStartMessage();
-
         while (state.isRunning()) {
             executeState();
         }

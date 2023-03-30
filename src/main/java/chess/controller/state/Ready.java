@@ -6,6 +6,7 @@ import chess.view.OutputView;
 public class Ready extends State {
     public Ready(final Game game) {
         super(game);
+        OutputView.printGameStartMessage();
     }
 
     @Override
