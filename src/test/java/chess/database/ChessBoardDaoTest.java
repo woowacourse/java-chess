@@ -13,13 +13,8 @@ import org.junit.jupiter.api.Test;
 class ChessBoardDaoTest {
 
     @Test
-    void getConnection() {
-        assertDoesNotThrow(()-> new ChessGameDao().getConnection());
-    }
-
-    @Test
     void addPieceInBoardTable() {
-        ChessBoardDao chessBoardDao = new ChessBoardDao();
+        ChessBoardDao chessBoardDao = new ChessBoardDao(new JdbcConnector());
         assertDoesNotThrow(() -> chessBoardDao.addBoard(1, 2, 2, Shape.PAWN.name(), Side.WHITE.name()));
     }
 
@@ -27,7 +22,7 @@ class ChessBoardDaoTest {
     void findPieceInBoardTable() {
         ChessBoard chessBoard = ChessBoard.generateChessBoard(0);
         ChessGame chessGame = new ChessGame(chessBoard, 0);
-        ChessBoardDao chessBoardDao = new ChessBoardDao();
+        ChessBoardDao chessBoardDao = new ChessBoardDao(new JdbcConnector());
         assertAll(
                 () -> assertThat(chessBoardDao.findPieceType(chessGame.getGameIdx(), 1, 1)).isEqualTo("ROOK"),
                 () -> assertThat(chessBoardDao.findPieceType(chessGame.getGameIdx(), 2, 1)).isEqualTo("KNIGHT"),
@@ -55,7 +50,7 @@ class ChessBoardDaoTest {
     void movePieceInBoardTable() {
         ChessBoard chessBoard = ChessBoard.generateChessBoard(0);
         ChessGame chessGame = new ChessGame(chessBoard, 0);
-        ChessBoardDao chessBoardDao = new ChessBoardDao();
+        ChessBoardDao chessBoardDao = new ChessBoardDao(new JdbcConnector());
         assertDoesNotThrow(() -> chessBoardDao.movePiece(chessGame.getGameIdx(), 2, 4, Shape.PAWN.name(), Side.WHITE.name()));
         assertThat(chessBoardDao.findPieceType(chessGame.getGameIdx(), 2, 4)).isEqualTo(Shape.PAWN.name());
         assertDoesNotThrow(() -> chessBoardDao.movePiece(chessGame.getGameIdx(), 2, 4, Shape.EMPTY.name(), Side.EMPTY.name()));

@@ -1,29 +1,17 @@
 package chess.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ChessBoardDao {
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
+    private final JdbcConnector jdbcConnector;
 
-    public Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    public ChessBoardDao(JdbcConnector jdbcConnector) {
+        this.jdbcConnector = jdbcConnector;
     }
 
     public void addBoard(int gameIdx, int file, int rank, String pieceType, String side) {
         final var query = "INSERT INTO ChessBoardDB VALUES(?, ?, ?, ?, ?)";
-        try (final var connection = getConnection();
+        try (final var connection = jdbcConnector.getConnection();
              final var preparedStatement = connection.prepareStatement(query)
         ) {
             preparedStatement.setInt(1, gameIdx);
@@ -41,7 +29,7 @@ public class ChessBoardDao {
         final var query = "select pieceType\n"
                 + "from ChessBoardDB\n"
                 + "where gameIdx = ? and bFile = ? and bRank = ?";
-        try (final var connection = getConnection();
+        try (final var connection = jdbcConnector.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameIdx);
             preparedStatement.setInt(2, file);
@@ -59,7 +47,7 @@ public class ChessBoardDao {
         final var query = "select side\n"
                 + "from ChessBoardDB\n"
                 + "where gameIdx = ? and bFile = ? and bRank = ?";
-        try (final var connection = getConnection();
+        try (final var connection = jdbcConnector.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameIdx);
             preparedStatement.setInt(2, file);
@@ -78,7 +66,7 @@ public class ChessBoardDao {
                 + "set pieceType = ?\n"
                 + ", side = ?\n"
                 + "where gameIdx = ? and bFile = ? and bRank = ?;";
-        try (final var connection = getConnection();
+        try (final var connection = jdbcConnector.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, pieceType);
             preparedStatement.setString(2, pieceSide);

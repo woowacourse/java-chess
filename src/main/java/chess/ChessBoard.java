@@ -1,6 +1,7 @@
 package chess;
 
 import chess.database.ChessBoardDao;
+import chess.database.JdbcConnector;
 import chess.piece.Bishop;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
@@ -58,7 +59,7 @@ public class ChessBoard {
 
     private static void circuitRank(int gameIdx, Map<Position, ChessPiece> chessBoard, int file) {
         for (int rank = 1; rank <= 8; rank++) {
-            ChessBoardDao chessBoardDao = new ChessBoardDao();
+            ChessBoardDao chessBoardDao = new ChessBoardDao(new JdbcConnector());
             Shape pieceShape = Shape.findShape(chessBoardDao.findPieceType(gameIdx, file, rank));
             Side pieceSide = Side.findSide(chessBoardDao.findPieceSide(gameIdx, file, rank));
             chessBoard.put(Position.initPosition(file, rank), Shape.makePieceByShape(pieceShape, pieceSide));

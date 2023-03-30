@@ -1,6 +1,7 @@
 package chess;
 
 import chess.database.ChessGameDao;
+import chess.database.JdbcConnector;
 import chess.piece.ChessPiece;
 import chess.piece.Side;
 import chess.position.MovablePosition;
@@ -34,7 +35,7 @@ public class ChessController {
 
     private int readStartCommand() {
         try {
-            ChessGameDao chessGameDao = new ChessGameDao();
+            ChessGameDao chessGameDao = new ChessGameDao(new JdbcConnector());
             return InputView.printGameStartMessage(chessGameDao.findRemainGames());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());

@@ -17,19 +17,14 @@ class ChessGameDaoTest {
     }
 
     @Test
-    void getConnection() {
-        assertDoesNotThrow(()-> new ChessGameDao().getConnection());
-    }
-
-    @Test
     void findLastInsertGame() {
-        ChessGameDao chessGameDao = new ChessGameDao();
+        ChessGameDao chessGameDao = new ChessGameDao(new JdbcConnector());
         assertDoesNotThrow(chessGameDao::findLastInsertGame);
     }
 
     @Test
     void findRemainGames() {
-        ChessGameDao chessGameDao = new ChessGameDao();
+        ChessGameDao chessGameDao = new ChessGameDao(new JdbcConnector());
         assertDoesNotThrow(chessGameDao::findRemainGames);
     }
 }

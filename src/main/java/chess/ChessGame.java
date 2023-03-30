@@ -2,6 +2,7 @@ package chess;
 
 import chess.database.ChessBoardDao;
 import chess.database.ChessGameDao;
+import chess.database.JdbcConnector;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
 import chess.piece.Shape;
@@ -18,12 +19,12 @@ public class ChessGame {
     private final ChessGameDao chessGameDao;
 
     public ChessGame(ChessBoard chessBoard, int gameIdx) {
-        this.chessGameDao = new ChessGameDao();
+        this.chessGameDao = new ChessGameDao(new JdbcConnector());
         this.chessBoard = chessBoard;
         if (gameIdx == 0) {
             chessGameDao.addGame();
             this.gameIdx = chessGameDao.findLastInsertGame();
-            addChessBoard(new ChessBoardDao(), this.gameIdx);
+            addChessBoard(new ChessBoardDao(new JdbcConnector()), this.gameIdx);
             return;
         }
         this.gameIdx = gameIdx;
@@ -32,7 +33,7 @@ public class ChessGame {
     public ChessGame(ChessBoard chessBoard) {
         this.gameIdx = 0;
         this.chessBoard = chessBoard;
-        this.chessGameDao = new ChessGameDao();
+        this.chessGameDao = new ChessGameDao(new JdbcConnector());
     }
 
     public void addChessBoard(ChessBoardDao chessBoardDao, int gameIdx) {
@@ -50,7 +51,7 @@ public class ChessGame {
     }
 
     public void moveChessPiece(Position sourcePosition, Position targetPosition) {
-        ChessBoardDao chessBoardDao = new ChessBoardDao();
+        ChessBoardDao chessBoardDao = new ChessBoardDao(new JdbcConnector());
         ChessPiece chessPiece = findChessPiece(sourcePosition);
         copyChessPiece(chessPiece, targetPosition);
         chessBoardDao.movePiece(gameIdx, targetPosition.getXPosition(), targetPosition.getYPosition(),
