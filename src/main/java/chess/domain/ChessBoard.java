@@ -67,16 +67,14 @@ public class ChessBoard {
     private void updateBoardStatus() {
         if (isKingAttacked()) {
             isOver = true;
-            return;
         }
-        switchCampTurn();
     }
 
     private boolean isKingAttacked() {
         return !(piecesByPosition.containsValue(new King(currentTurnCamp.transfer())));
     }
 
-    private void switchCampTurn() {
+    public void switchCampTurn() {
         currentTurnCamp = currentTurnCamp.transfer();
     }
 
