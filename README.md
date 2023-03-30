@@ -2,8 +2,15 @@
 
 ## Pair: 져니 [⛄️](http://github.com/cl8d), 제나 [❤️](https://github.com/yenawee)
 
+### 프로그램 실행방법
+./java-chess/src/main/java/chess/docker 경로에서 아래 명령어를 입력해주세요
+
+```
+docker-compose -p chess up -d 
+```
+
 ## 3, 4 단계 피드백 사항 및 추가 수정사항
-- [ ] Readme 에 도커 환경 세팅 설명 추가
+- [x] Readme 에 도커 환경 세팅 설명 추가
 - [ ] DB connect 연결 에러 발생 시 처리
 - [ ] 매직 넘버 상수화 및 메소드 이름 구체화
 - [ ] Command 처리 로직 수정
