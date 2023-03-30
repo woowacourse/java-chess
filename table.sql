@@ -13,7 +13,7 @@ create table piece
         primary key,
     chess_game_id bigint     not null,
     piece_file    varchar(8) not null,
-    piece_rank    varchar(8) not null,
+    piece_rank    int not null,
     color         varchar(8) not null,
     type          varchar(8) not null,
     constraint piece_ibfk_1

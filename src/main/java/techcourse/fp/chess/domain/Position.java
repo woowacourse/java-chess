@@ -19,8 +19,8 @@ public final class Position {
         return new Position(file, rank);
     }
 
-    public static Position createByName(final String fileName, final String rankName) {
-        return new Position(File.createByName(fileName), Rank.createByName(rankName));
+    public static Position createByName(final String fileName, final int rank) {
+        return new Position(File.createByName(fileName), Rank.of(rank));
     }
 
     public boolean isOnDiagonal(final Position target) {

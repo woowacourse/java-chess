@@ -27,8 +27,7 @@ public class MysqlPieceDao implements PieceDao {
 
                 ps.setInt(1, chessGameId);
                 ps.setString(2, position.getFile().name());
-                //TODO: rankName 대신 order로 변경
-                ps.setString(3, position.getRank().name());
+                ps.setInt(3, position.getRank().getOrder());
                 ps.setString(4, piece.getColor().name());
                 ps.setString(5, piece.getPieceType().name());
 
@@ -54,7 +53,7 @@ public class MysqlPieceDao implements PieceDao {
 
             while (resultSet.next()) {
                 final String file = resultSet.getString("piece_file");
-                final String rank = resultSet.getString("piece_rank");
+                final int rank = resultSet.getInt("piece_rank");
                 final String color = resultSet.getString("color");
                 final String type = resultSet.getString("type");
 
