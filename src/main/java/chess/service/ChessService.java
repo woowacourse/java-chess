@@ -61,8 +61,8 @@ public class ChessService {
         }
     }
 
-    private ChessGame findGame(final RoomNumber roomNumber) {
-        return gameRooms.get(roomNumber);
+    public void save(final RoomNumber roomNumber) {
+        chessDao.save(findGame(roomNumber).getChessBoard(), roomNumber);
     }
 
     public double calculateScore(final RoomNumber roomNumber, final Team team) {
@@ -71,6 +71,10 @@ public class ChessService {
 
     public Team findWinningTeam(final RoomNumber roomNumber) {
         return findGame(roomNumber).findWinningTeam();
+    }
+
+    private ChessGame findGame(final RoomNumber roomNumber) {
+        return gameRooms.get(roomNumber);
     }
 
     public ChessGame getGame(final RoomNumber roomNumber) {

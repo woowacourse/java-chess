@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public final class ChessDao {
 
@@ -29,17 +28,6 @@ public final class ChessDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    private static ChessDao instance;
-
-    private ChessDao() {
-    }
-
-    public static ChessDao getInstance() {
-        if (Objects.isNull(instance)) {
-            instance = new ChessDao();
-        }
-        return instance;
-    }
 
     private Connection getConnection() {
         try {
