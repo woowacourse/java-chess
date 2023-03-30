@@ -20,23 +20,37 @@ public class BoardResponseDto {
     }
 
     public List<String> getBoard() {
-        Map<Square, String> chessBoard = board
+        Map<Square, String> chessBoard = convertPieceToName();
+
+        List<String> messages = arrangePieces(chessBoard);
+        Collections.reverse(messages);
+
+        return messages;
+    }
+
+    private Map<Square, String> convertPieceToName() {
+        return board
             .entrySet()
             .stream()
             .collect(
                 Collectors.toMap(Map.Entry::getKey, entry -> PieceNameConverter.convert(entry.getValue())));
+    }
 
+    private List<String> arrangePieces(Map<Square, String> chessBoard) {
         List<String> messages = new ArrayList<>();
         for (Rank value : Rank.values()) {
             StringBuilder stringBuilder = new StringBuilder();
-            for (File file : File.values()) {
-                stringBuilder.append(chessBoard.get(new Square(file, value)));
-            }
-            messages.add(stringBuilder.toString());
+            addPiecesToRank(chessBoard, messages, value, stringBuilder);
         }
-        Collections.reverse(messages);
-
         return messages;
+    }
+
+    private void addPiecesToRank(Map<Square, String> chessBoard, List<String> messages, Rank value,
+        StringBuilder stringBuilder) {
+        for (File file : File.values()) {
+            stringBuilder.append(chessBoard.get(new Square(file, value)));
+        }
+        messages.add(stringBuilder.toString());
     }
 
 }

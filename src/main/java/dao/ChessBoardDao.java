@@ -83,12 +83,10 @@ public class ChessBoardDao {
     }
 
     public boolean hasData() {
-        final var query = "SELECT COUNT(*) AS COUNT FROM chess_board";
+        final var query = "SELECT * FROM chess_board WHERE EXISTS (SELECT * FROM chess_board)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            final var resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt("COUNT") != 0;
+            return preparedStatement.execute();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

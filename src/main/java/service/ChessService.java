@@ -40,24 +40,41 @@ public class ChessService {
     }
 
     public void start() {
-        if (!ongoing && chessBoardDao.hasData()) {
-            for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
-                chessBoard.getBoard().put(squareAndPiece.getKey(), chessBoardDao.select(squareAndPiece.getKey()));
-            }
-            chessBoardDao.update(chessBoard);
-            currentCamp = campDao.select();
-            ongoing = true;
+        if (hasData())
             return;
-        }
 
+        if (hasNoData())
+            return;
+
+        throw new IllegalStateException("이미 게임이 실행중입니다.");
+    }
+
+    private boolean hasData() {
+        if (!ongoing && chessBoardDao.hasData()) {
+            return loadData();
+        }
+        return false;
+    }
+
+    private boolean loadData() {
+        for (Map.Entry<Square, Piece> squareAndPiece : chessBoard.getBoard().entrySet()) {
+            chessBoard.getBoard().put(squareAndPiece.getKey(), chessBoardDao.select(squareAndPiece.getKey()));
+        }
+        chessBoardDao.update(chessBoard);
+        currentCamp = campDao.select();
+        ongoing = true;
+        return true;
+    }
+
+    private boolean hasNoData() {
         if (!ongoing) {
             chessBoard.initialize();
-            ongoing = true;
             chessBoardDao.save(chessBoard);
             campDao.save(currentCamp);
-            return;
+            ongoing = true;
+            return true;
         }
-        throw new IllegalStateException("이미 게임이 실행중입니다.");
+        return false;
     }
 
     public void end() {
