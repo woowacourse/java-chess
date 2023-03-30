@@ -52,7 +52,7 @@ public final class ChessDao {
     }
 
     public void save(final ChessBoard chessBoard, final RoomNumber roomNumber) {
-        clearByRoomNumber(roomNumber);
+        clear(roomNumber);
         final int turn = chessBoard.getTurn().getTurn();
         int insertedRoomNumber = saveTurn(turn, roomNumber.getRoomNumber());
         final List<Square> squares = chessBoard.getSquares();
@@ -61,7 +61,7 @@ public final class ChessDao {
         }
     }
 
-    public void clearByRoomNumber(final RoomNumber roomNumber) {
+    public void clear(final RoomNumber roomNumber) {
         final String query = "DELETE FROM board where room_number = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {

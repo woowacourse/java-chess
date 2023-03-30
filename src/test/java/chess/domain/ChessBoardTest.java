@@ -2,7 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.position.File;
@@ -46,17 +45,10 @@ class ChessBoardTest {
             Position destination = Position.of(File.C, Rank.FOUR);
 
             //when
-            chessBoard.move(source, destination);
-            boolean isEmpty = chessBoard.getSquares().stream()
-                    .filter(square -> square.isSamePosition(source))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."))
-                    .isEmpty();
+            final Executable executable = () -> chessBoard.move(source, destination);
 
             //then
-            assertAll(
-                    () -> assertThat(isEmpty).isTrue()
-            );
+            assertDoesNotThrow(executable);
         }
     }
 

@@ -50,20 +50,20 @@ public class Square {
         this.piece = piece;
     }
 
-    public Piece getPiece() {
-        return piece;
-    }
-
     public boolean hasSameRole(Role role) {
         return piece.isSameRole(role);
+    }
+
+    public boolean isSameFile(final File file) {
+        return position.isSameFile(file);
     }
 
     public double getScore() {
         return piece.getScore();
     }
 
-    public boolean isSameFile(final File file) {
-        return position.isSameFile(file);
+    public Piece getPiece() {
+        return piece;
     }
 
     public Position getPosition() {
