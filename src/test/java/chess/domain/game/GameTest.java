@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-    private static Game game;
+    private Game game;
 
     @BeforeEach
     void setUp() {

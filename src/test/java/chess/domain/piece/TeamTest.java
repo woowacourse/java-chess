@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TeamTest {
-
     @DisplayName("점수를 통해 승자를 가릴 수 있다.")
     @Test
     void Should_WhiteWin_When_WhiteScoreOverThanBlackScore() {

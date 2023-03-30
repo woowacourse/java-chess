@@ -21,7 +21,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
-    private static Board board;
+    private Board board;
 
     private static Stream<Arguments> boardTestProvider() {
         return Stream.of(
