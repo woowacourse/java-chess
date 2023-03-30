@@ -56,7 +56,6 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveToEmpty(final Position source, final Position dest) {
-        // TODO 0:6 같은 값도 허용하는 문제 해결 (이동 패턴까지 확인)
         return !isAttack(source, dest);
     }
 

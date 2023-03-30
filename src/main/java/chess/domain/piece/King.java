@@ -24,7 +24,6 @@ public class King extends Piece {
         super(camp, PieceType.KING);
     }
 
-
     @Override
     public CheckablePaths findCheckablePaths(final Position current) {
         List<Path> paths = new ArrayList<>();
