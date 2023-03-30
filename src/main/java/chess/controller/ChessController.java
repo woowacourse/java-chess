@@ -8,7 +8,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     private State state;
 
@@ -29,7 +28,7 @@ public class ChessController {
             final Command command = InputView.readCommand();
             state = executeCommand(command);
         } catch (final Exception e) {
-            System.err.println(ERROR_MESSAGE_PREFIX + e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
         }
     }
 

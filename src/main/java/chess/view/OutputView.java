@@ -6,6 +6,7 @@ import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class OutputView {
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
     private static final int BOARD_LINE_SIZE = 8;
 
     private OutputView() {
@@ -57,5 +58,9 @@ public class OutputView {
         System.out.println("White 진영 점수: " + whiteScore);
         System.out.println("Black 진영 점수: " + blackScore);
         System.out.println("게임 결과: " + winner.getName());
+    }
+
+    public static void printErrorMessage(final String message) {
+        System.err.println(ERROR_MESSAGE_PREFIX + message);
     }
 }
