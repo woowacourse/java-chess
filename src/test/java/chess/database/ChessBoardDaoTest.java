@@ -1,11 +1,13 @@
 package chess.database;
 
-import chess.domain.ChessBoard;
 import chess.domain.ChessBoardFactory;
+import chess.domain.Square;
+import chess.domain.chesspiece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,8 +42,8 @@ class ChessBoardDaoTest {
     @Test
     void delete() {
         chessBoardDao.deleteChessBoard();
-        final ChessBoard chessBoard = chessBoardDao.findChessBoard();
+        final Map<Square, Piece> pieces = chessBoardDao.findChessBoard();
 
-        assertThat(chessBoard).isNull();
+        assertThat(pieces).isNull();
     }
 }

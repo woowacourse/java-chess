@@ -31,35 +31,32 @@ public class ChessBoardDao {
     public void saveChessBoard(final ChessBoard chessBoard) {
         Map<Square, Piece> pieces = chessBoard.getPieces();
         for (Square square : pieces.keySet()) {
-            savePiece(chessBoard.getTurn(), square, pieces.get(square));
+            savePiece(square, pieces.get(square));
         }
     }
 
-    private void savePiece(final Turn turn, final Square square, final Piece piece) {
-        final var query = "INSERT INTO chess_board VALUES(?, ?, ?, ?, ?)";
+    private void savePiece(final Square square, final Piece piece) {
+        final var query = "INSERT INTO chess_board VALUES(?, ?, ?, ?)";
         try (final Connection connection = new ChessBoardDao().getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, turn.name());
-            preparedStatement.setString(2, square.getRankSymbol());
-            preparedStatement.setString(3, square.getFileSymbol());
-            preparedStatement.setString(4, piece.getSide());
-            preparedStatement.setString(5, piece.getName());
+            preparedStatement.setString(1, square.getRankSymbol());
+            preparedStatement.setString(2, square.getFileSymbol());
+            preparedStatement.setString(3, piece.getSide());
+            preparedStatement.setString(4, piece.getName());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ChessBoard findChessBoard() {
+    public Map<Square, Piece> findChessBoard() {
         final var query = "SELECT * FROM chess_board";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             Map<Square, Piece> pieces = makeEmptyChessBoard();
-            Turn turn;
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 do {
-                    turn = Turn.valueOf(resultSet.getString("turn"));
                     Square square = Square.of(Rank.from(resultSet.getString("x"))
                             , File.from(resultSet.getString("y")));
                     Piece piece = generatePiece(resultSet.getString("type"), resultSet.getString("side"));
@@ -68,7 +65,7 @@ public class ChessBoardDao {
             } else {
                 return null;
             }
-            return new ChessBoard(pieces, turn);
+            return pieces;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

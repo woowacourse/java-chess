@@ -1,21 +1,26 @@
 package chess.controller;
 
 import chess.database.ChessBoardDao;
+import chess.database.ChessGameDao;
 import chess.domain.*;
+import chess.domain.chesspiece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.dto.ChessBoardDto;
 import chess.dto.CommandDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ChessGameController {
     private final ChessBoardDao chessBoardDao;
+    private final ChessGameDao chessGameDao;
 
-    public ChessGameController(final ChessBoardDao chessBoardDao) {
+    public ChessGameController(final ChessBoardDao chessBoardDao, final ChessGameDao chessGameDao) {
         this.chessBoardDao = chessBoardDao;
+        this.chessGameDao = chessGameDao;
     }
 
     public void run() {
@@ -29,13 +34,15 @@ public class ChessGameController {
     }
 
     private ChessBoard loadChessBoardOrSaveNewChessBoard() {
-        ChessBoard chessBoard = chessBoardDao.findChessBoard();
-        if (chessBoard == null) {
-            chessBoard = ChessBoardFactory.generate();
+        Map<Square, Piece> pieces = chessBoardDao.findChessBoard();
+        if (pieces == null) {
+            ChessBoard chessBoard = ChessBoardFactory.generate();
             chessBoardDao.saveChessBoard(chessBoard);
+            chessGameDao.saveChessGame(chessBoard.getTurn());
             return chessBoard;
         }
-        return chessBoard;
+        Turn turn = chessGameDao.findChessGame();
+        return new ChessBoard(pieces, turn);
     }
 
     private Command startGame() {
@@ -74,6 +81,7 @@ public class ChessGameController {
         }
         OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
         chessBoardDao.updateChessBoard(from, to, chessBoard.getPieces().get(to));
+        chessGameDao.updateChessGame(chessBoard.getTurn());
     }
 
     private void validateSameSquare(final Square from, final Square to) {
@@ -87,6 +95,7 @@ public class ChessGameController {
         if (aliveKings.size() == 1) {
             OutputView.printWinner(aliveKings.get(0));
             chessBoardDao.deleteChessBoard();
+            chessGameDao.deleteChessGame();
             return Command.END;
         }
         return command;
