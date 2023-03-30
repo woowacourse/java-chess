@@ -41,6 +41,21 @@ public class King implements Piece {
     }
 
     @Override
+    public double score(Team team, boolean hasPawn) {
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public Team team() {
         return team;
     }
@@ -48,5 +63,10 @@ public class King implements Piece {
     @Override
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
+    }
+
+    @Override
+    public String name() {
+        return "king";
     }
 }

@@ -7,6 +7,7 @@ public class Rook implements Piece {
     private static final String ORIGINAL_NAME = "r";
 
     private final Team team;
+    private final double score = 5;
 
     private Rook(Team team) {
         this.team = team;
@@ -30,11 +31,34 @@ public class Rook implements Piece {
     }
 
     @Override
+    public double score(Team team, boolean hasPawn) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public Team team() {
         return team;
     }
 
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
+    }
+
+    @Override
+    public String name() {
+        return "rook";
     }
 }

@@ -5,6 +5,8 @@ import chessgame.domain.Game;
 import chessgame.domain.Team;
 
 public class Ready implements State {
+    public static final String STATE_NAME = "ready";
+
     @Override
     public void changeState(Game game, Command command) {
         if (command.isNotStart()) {
@@ -26,5 +28,10 @@ public class Ready implements State {
     @Override
     public Team team() {
         throw new IllegalStateException("팀이 존재하지 않는 상태입니다.");
+    }
+
+    @Override
+    public String name() {
+        return STATE_NAME;
     }
 }

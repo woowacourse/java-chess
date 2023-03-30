@@ -9,6 +9,7 @@ public class Knight implements Piece {
     private static final int DIAGONAL_DISTANCE = 1;
 
     private final Team team;
+    private final double score = 2.5;
 
     private Knight(Team team) {
         this.team = team;
@@ -35,6 +36,24 @@ public class Knight implements Piece {
     }
 
     @Override
+    public double score(Team team, boolean hasPawn) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String failMoveMsg() {
         return "나이트는 상하좌우 1칸 이동 후 진행방향으로 대각선 1칸이동만 가능합니다.";
     }
@@ -42,5 +61,10 @@ public class Knight implements Piece {
     @Override
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
+    }
+
+    @Override
+    public String name() {
+        return "knight";
     }
 }

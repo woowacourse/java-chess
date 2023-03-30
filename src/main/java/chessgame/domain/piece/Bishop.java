@@ -7,6 +7,7 @@ public class Bishop implements Piece {
     private static final String ORIGINAL_NAME = "b";
 
     private final Team team;
+    private final double score = 3;
 
     private Bishop(Team team) {
         this.team = team;
@@ -32,6 +33,29 @@ public class Bishop implements Piece {
     @Override
     public String failMoveMsg() {
         return "비숍은 대각선으로만 이동할 수 있습니다.";
+    }
+
+    @Override
+    public double score(Team team, boolean hasPawn) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public String name() {
+        return "bishop";
     }
 
     @Override

@@ -9,14 +9,18 @@ public class WhiteTurn implements Running {
 
     @Override
     public void changeState(Game game, Command command) {
-        if (!(command.isMove() || command.isEnd())) {
-            throw new IllegalArgumentException("move와 end명령만 가능 합니다.");
+        if (command.isNotRunningCommand()) {
+            throw new IllegalArgumentException("move와 status, end명령만 가능 합니다.");
+        }
+        if (command.isStatus()) {
+            game.calculateScore();
         }
         if (command.isMove()) {
             game.setState(command, new BlackTurn());
         }
         if (command.isEnd()) {
-            game.setState(new End());
+            game.calculateScore();
+            game.setState(new End(game.score().winner()));
         }
     }
 
@@ -28,6 +32,11 @@ public class WhiteTurn implements Running {
     @Override
     public boolean isNotEnd() {
         return true;
+    }
+
+    @Override
+    public String name() {
+        return team.getName();
     }
 
     @Override

@@ -7,8 +7,9 @@ public class Queen implements Piece {
     private static final String ORIGINAL_NAME = "q";
 
     private final Team team;
+    private final double score = 9;
 
-    private Queen(Team team) {
+    Queen(Team team) {
         this.team = team;
     }
 
@@ -30,6 +31,24 @@ public class Queen implements Piece {
     }
 
     @Override
+    public double score(Team team, boolean hasPawn) {
+        if (this.team == team) {
+            return score;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public String failMoveMsg() {
         return "퀸은 상하좌우, 대각선으로만 이동 가능합니다.";
     }
@@ -37,5 +56,10 @@ public class Queen implements Piece {
     @Override
     public String toString() {
         return team.convertName(ORIGINAL_NAME);
+    }
+
+    @Override
+    public String name() {
+        return "queen";
     }
 }

@@ -10,10 +10,20 @@ import chessgame.domain.point.Point;
 import chessgame.domain.point.Points;
 
 public class Board {
+    private final int boardNo;
     private final Map<Point, Piece> board;
 
     public Board() {
-        this.board = GameBoardFactory.create();
+        this(0, GameBoardFactory.create());
+    }
+
+    public Board(int lastBoardNo) {
+        this(lastBoardNo, GameBoardFactory.create());
+    }
+
+    public Board(int boardNo, Map<Point, Piece> board) {
+        this.boardNo = boardNo;
+        this.board = board;
     }
 
     public void move(Points points, Team turn) {
@@ -75,8 +85,38 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
+    public double calculateScore(Team team) {
+        double sum = 0;
+        for (Point point : board.keySet()) {
+            boolean hasPawn = hasPawnExistInSameFile(point, team);
+            sum += board.get(point).score(team, hasPawn);
+        }
+        return sum;
+    }
+
+    private boolean hasPawnExistInSameFile(Point point, Team team) {
+        return point.getSameFilePoints()
+            .stream()
+            .anyMatch(sameFilePoint -> isSameTeamPawn(sameFilePoint, team));
+    }
+
+    private boolean isSameTeamPawn(Point point, Team team) {
+        return board.containsKey(point) && board.get(point).isPawn() && board.get(point).team() == team;
+    }
+
     @Override
     public String toString() {
         return "Board{" + "board=" + board + '}';
+    }
+
+    public boolean isOver() {
+        return board.values()
+            .stream()
+            .filter(Piece::isKing)
+            .count() < 2;
+    }
+
+    public int number() {
+        return boardNo;
     }
 }
