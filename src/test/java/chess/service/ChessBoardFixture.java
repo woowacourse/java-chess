@@ -10,6 +10,10 @@ public class ChessBoardFixture {
 
     public static final int FIXTURE_BOARD_ID = 1;
 
+    public static ChessBoardService createServiceOfEmpty() {
+        return new ChessBoardService(new InMemoryBoardPiecesDao(), new InMemoryBoardStatusesDao());
+    }
+
     public static ChessBoardService createServiceOfBoard(Camp existingBoardTurn) {
         InMemoryBoardPiecesDao boardPiecesDao = new InMemoryBoardPiecesDao();
         boardPiecesDao.insertOrUpdate(FIXTURE_BOARD_ID, PieceInitializer.createPiecesWithPosition());
