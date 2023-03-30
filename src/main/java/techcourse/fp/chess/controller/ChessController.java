@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import techcourse.fp.chess.ChessGameService;
 import techcourse.fp.chess.domain.Board;
 import techcourse.fp.chess.domain.BoardFactory;
 import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.dto.request.CommandRequest;
 import techcourse.fp.chess.dto.response.BoardResponse;
 import techcourse.fp.chess.dto.response.ScoreResponse;
+import techcourse.fp.chess.service.ChessGameService;
 import techcourse.fp.chess.view.InputView;
 import techcourse.fp.chess.view.OutputView;
 

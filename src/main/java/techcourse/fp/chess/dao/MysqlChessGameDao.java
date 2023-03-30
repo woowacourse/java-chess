@@ -12,7 +12,7 @@ import techcourse.fp.chess.domain.piece.Color;
 import techcourse.fp.chess.domain.piece.Turn;
 import techcourse.fp.chess.dto.response.ChessGameInfo;
 
-public class LocalMysqlChessGameDao implements ChessGameDao {
+public class MysqlChessGameDao implements ChessGameDao {
 
     public int save(final String name, final Color turn) {
         try (final Connection connection = ConnectionProvider.getConnection()) {

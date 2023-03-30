@@ -3,7 +3,7 @@ package techcourse.fp.chess.dao;
 
 class LocalMysqlChessGameDaoTest {
 
-    private LocalMysqlChessGameDao dao = new LocalMysqlChessGameDao();
+    private MysqlChessGameDao dao = new MysqlChessGameDao();
 //
 //    @Test
 //    void test1() {
