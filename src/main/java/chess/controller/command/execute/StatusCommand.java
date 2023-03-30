@@ -5,7 +5,6 @@ import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.game.ChessGame;
 import chess.service.ChessGameService;
-import chess.service.PieceService;
 import chess.view.OutputView;
 import chess.view.dto.ChessStatusDto;
 
@@ -15,7 +14,6 @@ public class StatusCommand implements ExecuteCommand {
     public void execute(
             final ChessGame chessGame,
             final ChessGameService chessGameService,
-            final PieceService pieceService,
             final OutputView outputView
     ) {
         outputView.printChessStatus(
