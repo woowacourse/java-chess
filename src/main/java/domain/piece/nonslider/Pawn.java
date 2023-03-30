@@ -92,7 +92,8 @@ public class Pawn extends Piece {
         int directionUnit = fetchDirectionUnit();
         int currentFileCoordinate = currentSquare.toCoordinate().get(FILE_INDEX);
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK_INDEX);
-        return new Square(currentFileCoordinate, currentRankCoordinate + (directionUnit * INITIAL_FORWARD_MOVE_DISTANCE));
+        return new Square(currentFileCoordinate,
+            currentRankCoordinate + (directionUnit * INITIAL_FORWARD_MOVE_DISTANCE));
     }
 
     @Override
