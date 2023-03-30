@@ -2,6 +2,10 @@
 
 체스 미션 저장소
 
+## Database
+### DDL
+src/docker/data/init.sql 파일에 있는 sql을, docker를 통해 실행합니다.
+
 ## 클래스 다이어그램
 
 ```mermaid
