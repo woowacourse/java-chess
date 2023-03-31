@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.color.Color.*;
 import static chess.domain.move.Direction.*;
+import static chess.domain.piece.PieceType.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 
@@ -37,7 +38,7 @@ public final class Rook extends Piece {
 
 	@Override
 	public String name() {
-		if (super.color().equals(WHITE)) {
+		if (color() == WHITE) {
 			return name;
 		}
 		return name.toUpperCase();
@@ -45,7 +46,12 @@ public final class Rook extends Piece {
 
 	@Override
 	public Set<Direction> direction() {
-		return Direction.ofLinear();
+		return directions;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
 	}
 
 	@Override
@@ -56,5 +62,10 @@ public final class Rook extends Piece {
 	@Override
 	public boolean movableByCount(final int count) {
 		return true;
+	}
+
+	@Override
+	public PieceType type() {
+		return ROOK;
 	}
 }

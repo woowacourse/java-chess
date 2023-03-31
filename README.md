@@ -16,8 +16,10 @@
 4. 게임을 진행한다
    4-1. 사용자는 move 명령으로 체스말을 이동시킬 수 있다
    4-2. 변화된 체스판을 출력한다
-5. 사용자는 end 명령을 입력한다
-6. 게임을 종료한 
+5. King이 잡히면 게임을 종료한다
+6. 사용자는 명령어을 입력한다
+    5-1. status를 입력하면 현재 점수를 출력한다
+    5-2. end를 입력하면 게임을 종료한다.
 
 ### 기능 목록 구현
 - [x] 위치
@@ -43,24 +45,64 @@
       - [x] 모든 방향으로 이동할 수 있다
     - [x] 룩
       - [x] 상하좌우로 이동할 수 있다
+- [x] 체스 타입
+  - [x] 각 체스말의 점수가 있다
 - [x] 체스판
     - [x] 위치와 체스말을 갖는다
+    - [x] 팀의 차례를 갖는다
     - [x] 체스말을 이동시킬 수 있다
       - [x] 출발지에 체스말이 존재하는지 확인한다
       - [x] 체스말의 이동 방향을 구한다
       - [x] 경로에 체스말이 있는지 확인한다
       - [x] 체스말이 이동할 수 있는지 확인한다
       - [x] 체스말의 위치를 변경한다
+      - [x] 차례를 바꾼다
+    - [x] 각 팀의 점수를 구한다
+      - [x] 남아있는 체스말에 대한 점수를 구한다 
+        - [x] Pawn이 한 File에 여러개 있으면 점수는 절반으로 계산한다
 - [x] 체스판 청사진
-    - [x] 체스판을 빈 공간으로 채운다
     - [x] 체스판에 검은말을 채운다
     - [x] 체스판에 흰말을 채운다
+    - [x] 체스판이 비어있다면 빈 객체로 채운다
 - [x] 커맨드
-  - [x] 커맨드 목록은 start, end, move가 있다 
-  - [x] 커맨드가 start, end, move인지 확인한다
+  - [x] 커맨드 목록은 start, end, move, status가 있다 
+  - [x] 커맨드가 start, end, move, status인지 확인한다
     - [x] move일 경우 `move 출발지 도착지` 형식인지 확인한다
+    - [x] status일 경우 각 진영의 점수를 출력한다
 - [x] 뷰
   - [x] 입력
-    - [x] 사용자는 명령어를 입력한다(start, end, move)
+    - [x] 사용자는 명령어를 입력한다(start, end, move, status)
   - [x] 출력
     - [x] 초기화된 체스판을 출력한다
+
+
+### 4단계 기능 요구사항
+- [x] Piece 정보 : piece_type, piece_rank, piece_file, color, turn
+- [x] CRUD
+  - [x] Create
+    - [x] DB에서 불러 올 보드가 없으면 만든다
+  - [x] Read
+    - [x] DB에 보드 정보가 저장되어 있다면 DB에서 읽어온다
+  - [x] Update
+    - [x] 기물 움직일 때마다 DB 업데이트
+    - [x] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
+  - [x] Delete
+    - [x] King 죽으면 DB 초기화
+
+```sql 
+CREATE TABLE chess_game (
+piece_type VARCHAR(255) NOT NULL,
+piece_rank TINYINT(10) NOT NULL,
+piece_file VARCHAR(255) NOT NULL,
+color VARCHAR(255) NOT NULL,
+turn VARCHAR(255) NOT NULL
+)
+
+SELECT piece_type, piece_rank, piece_file, color, turn from chess_game;
+
+INSERT INTO chess_game(piece_type, piece_rank, piece_file, color, turn) VALUES (?, ?, ?, ?, ?);
+
+DELETE FROM chess_game;
+
+TRUNCATE TABLE chess_game;
+```

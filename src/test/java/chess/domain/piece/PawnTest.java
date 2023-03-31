@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static chess.domain.color.Color.*;
+import static chess.domain.move.Direction.*;
 import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.move.Direction;
+import chess.domain.Board;
 import chess.domain.position.Position;
 
 class PawnTest {
@@ -21,7 +22,7 @@ class PawnTest {
 		final Pawn pawn = new Pawn(BLACK, position);
 
 		// then
-		assertTrue(pawn.movable(Direction.DOWN));
+		assertTrue(pawn.movable(DOWN));
 	}
 
 	@Test
@@ -31,7 +32,7 @@ class PawnTest {
 		final Position position = Position.of(C, TWO);
 		final Pawn pawn = new Pawn(WHITE, position);
 		// then
-		assertTrue(pawn.movable(Direction.UP));
+		assertTrue(pawn.movable(UP));
 	}
 
 	@Test
@@ -49,13 +50,18 @@ class PawnTest {
 	@DisplayName("폰은 두 번째 이동부터 두 칸 이상을 이동할 수 없다.")
 	void notMovableByCount_secondMove() {
 		// given
-		final Position position = Position.of(C, TWO);
-		final Pawn pawn = new Pawn(BLACK, position);
+		final Board board = Board.create();
+		final Position pawnSource = Position.of(C, TWO);
+		final Pawn pawn = new Pawn(WHITE, pawnSource);
+		final Position pawnTarget = Position.of(C, THREE);
+
+		final Position blackSource = Position.of(B, EIGHT);
+		final Position blackTarget = Position.of(C, SIX);
 
 		// when
-		pawn.movableByCount(2);
+		board.move(pawnSource, pawnTarget);
+		board.move(blackSource, blackTarget);
 
-		// then
 		assertFalse(pawn.movableByCount(2));
 	}
 
@@ -64,7 +70,7 @@ class PawnTest {
 	void movableByCount_secondMove() {
 		// given
 		final Position position = Position.of(C, TWO);
-		final Pawn pawn = new Pawn(BLACK, position);
+		final Pawn pawn = new Pawn(WHITE, position);
 
 		// when
 		pawn.movableByCount(1);

@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 public abstract class Piece {
 
 	private final Color color;
-	private final Position position;
+	private Position position;
 
 	protected Piece(final Color color, final Position position) {
 		this.color = color;
@@ -17,13 +17,18 @@ public abstract class Piece {
 	}
 
 	public abstract String name();
+
 	public abstract Set<Direction> direction();
+
+	public abstract boolean isEmpty();
 
 	public abstract boolean movable(final Direction direction);
 
 	public abstract boolean movableByCount(final int count);
 
-	public boolean isSameTeam(final Color color) {
+	public abstract PieceType type();
+
+	public boolean isSameColor(final Color color) {
 		return this.color.equals(color);
 	}
 
@@ -33,5 +38,9 @@ public abstract class Piece {
 
 	public Position position() {
 		return position;
+	}
+
+	public void move(final Position target) {
+		position = target;
 	}
 }

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.*;
+
 import java.util.Set;
 
 import chess.domain.color.Color;
@@ -24,6 +26,11 @@ public final class Empty extends Piece {
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return true;
+	}
+
+	@Override
 	public boolean movable(final Direction direction) {
 		return false;
 	}
@@ -31,5 +38,10 @@ public final class Empty extends Piece {
 	@Override
 	public boolean movableByCount(final int count) {
 		return false;
+	}
+
+	@Override
+	public PieceType type() {
+		return EMPTY;
 	}
 }

@@ -45,7 +45,12 @@ class PieceTest {
 
 		@Override
 		public Set<Direction> direction() {
-			return ofLinear();
+			return Set.of(UP, DOWN, LEFT, RIGHT);
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return false;
 		}
 
 		@Override
@@ -56,6 +61,11 @@ class PieceTest {
 		@Override
 		public boolean movableByCount(final int count) {
 			return false;
+		}
+
+		@Override
+		public PieceType type() {
+			return PieceType.ROOK;
 		}
 	}
 }

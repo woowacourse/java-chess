@@ -4,24 +4,25 @@ import java.util.Arrays;
 
 public enum CommandCase {
 
-    START("start"),
-    END("end"),
-    MOVE("move");
+	START("start"),
+	END("end"),
+	MOVE("move"),
+	STATUS("status");
 
-    private final String value;
+	private final String value;
 
-    CommandCase(String value) {
-        this.value = value;
-    }
+	CommandCase(String value) {
+		this.value = value;
+	}
 
-    public static CommandCase from(final String input) {
-        return Arrays.stream(CommandCase.values())
-                .filter(commandCase -> commandCase.getValue().equals(input))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("입력값은 start, end, move만 가능합니다."));
-    }
+	public static CommandCase from(final String input) {
+		return Arrays.stream(CommandCase.values())
+			.filter(commandCase -> commandCase.value().equals(input))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("입력값은 start, end, move, status만 가능합니다"));
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 }

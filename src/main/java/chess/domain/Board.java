@@ -1,10 +1,11 @@
 package chess.domain;
 
 import static chess.domain.color.Color.*;
+import static chess.domain.piece.PieceType.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import chess.domain.color.Color;
 import chess.domain.move.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -19,42 +21,40 @@ import chess.initial.BoardFactory;
 
 public class Board {
 
-	private static Color thisTurn;
+	private static final String PAWN_NAME = "P";
+	private static final String KING_NAME = "K";
+	private static final int NO_PAWN = 0;
+	private static final int ONE_PAWN = 1;
+	private static final int TARGET_POINT = 1;
+	private static Color turn;
 	private final Map<Position, Piece> board;
 
 	private Board(final Map<Position, Piece> board) {
 		this.board = board;
-		thisTurn = WHITE;
+		turn = WHITE;
+	}
+
+	public Board(final Map<Position, Piece> board, Color turn) {
+		this.board = board;
+		Board.turn = turn;
 	}
 
 	public static Board create() {
 		return new Board(BoardFactory.create());
 	}
 
-	public void move(final Position source, final Position target) {
+	public Piece move(final Position source, final Position target) {
 		validateSourceNotEmpty(source);
-		validateTurn(source);
+		isTurn(source);
 		validateDifferentPosition(source, target);
 		validateTargetNotSameColor(source, target);
 
 		Piece piece = board.get(source);
-		Direction unit = Direction.calculateDirection(source, target, piece);
+		Direction unit = Direction.calculateDirection(piece, target);
 		validateMovable(piece, unit);
 		validatePath(source, target, unit, piece);
 
-		movePiece(source, target, piece);
-	}
-
-	private void validateTurn(final Position source) {
-		if (board.get(source).color() != thisTurn) {
-			throw new IllegalArgumentException("상대팀의 순서입니다");
-		}
-	}
-
-	private void validateDifferentPosition(final Position source, final Position target) {
-		if (source.file() == target.file() && source.rank() == target.rank()) {
-			throw new IllegalArgumentException("출발지와 도착지는 같을 수 없습니다");
-		}
+		return movePiece(source, target, piece);
 	}
 
 	private void validateSourceNotEmpty(final Position source) {
@@ -64,14 +64,27 @@ public class Board {
 	}
 
 	private boolean isEmptyPosition(final Position source) {
-		return board.get(source).getClass().equals(Empty.class);
+		return board.get(source).isEmpty();
+	}
+
+	private void isTurn(final Position source) {
+		final Piece piece = board().get(source);
+		if (!piece.isSameColor(turn)) {
+			throw new IllegalArgumentException("상대팀의 순서입니다");
+		}
+	}
+
+	private void validateDifferentPosition(final Position source, final Position target) {
+		if (source.equals(target)) {
+			throw new IllegalArgumentException("출발지와 도착지는 같을 수 없습니다");
+		}
 	}
 
 	private void validateTargetNotSameColor(final Position source, final Position target) {
 		final Piece sourcePiece = board.get(source);
 		final Piece targetPiece = board.get(target);
 
-		if (sourcePiece.isSameTeam(targetPiece.color())) {
+		if (sourcePiece.isSameColor(targetPiece.color())) {
 			throw new IllegalArgumentException("같은 팀은 공격할 수 없습니다");
 		}
 	}
@@ -92,11 +105,11 @@ public class Board {
 		List<Position> path = new ArrayList<>();
 		Position pathPosition = source;
 		while (!pathPosition.isSame(target)) {
-			pathPosition = pathPosition.setNextPosition(unit);
+			pathPosition = pathPosition.nextPosition(unit);
 			path.add(pathPosition);
 		}
 
-		return path.subList(0, path.size() - 1);
+		return path.subList(0, path.size() - TARGET_POINT);
 	}
 
 	private void validatePathIsEmpty(final List<Position> path) {
@@ -113,29 +126,110 @@ public class Board {
 
 	private void validateMovableByCount(final Piece piece, final int pathSize) {
 		if (!piece.movableByCount(pathSize)) {
-			throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다.");
+			throw new IllegalArgumentException("한 칸만 움직일 수 있는 체스말입니다");
 		}
 	}
 
-	private void movePiece(final Position source, final Position target, final Piece piece) {
+	private Piece movePiece(final Position source, final Position target, final Piece piece) {
+		final Piece candidateKing = board.get(target);
+		piece.move(target);
 		board.put(target, piece);
 		board.put(source, new Empty(NONE, source));
-		thisTurn = thisTurn.switchTurn();
+		turn = turn.switchTurn();
+
+		return candidateKing;
+	}
+
+	public boolean isKing(final Piece king) {
+		return king.name().equalsIgnoreCase(KING_NAME);
+	}
+
+	public double blackStatus() {
+		double score = 0.0;
+		for (File file : files()) {
+			score += blackScores(file);
+		}
+		return score;
+	}
+
+	private double blackScores(final File file) {
+		double newScore = 0;
+		int count = 0;
+		for (Rank rank : ranks()) {
+			Piece piece = board.get(Position.of(file, rank));
+			newScore += updateScore(piece, BLACK);
+			count += pawnCount(piece.name(), BLACK);
+		}
+		return newScore + addPawnScore(count);
+	}
+
+	private double updateScore(final Piece piece, final Color color) {
+		if (piece.color() == color) {
+			return pieceScore(piece.type());
+		}
+		return 0;
+	}
+
+	private double pieceScore(final PieceType type) {
+		if (type == ROOK) {
+			return ROOK.score();
+		}
+		if (type == KNIGHT) {
+			return KNIGHT.score();
+		}
+		if (type == BISHOP) {
+			return BISHOP.score();
+		}
+		if (type == QUEEN) {
+			return QUEEN.score();
+		}
+		return 0;
+	}
+
+	private int pawnCount(final String name, final Color color) {
+		if (color == BLACK && name.equals(PAWN_NAME)) {
+			return 1;
+		}
+		if (color == WHITE && name.equals(PAWN_NAME.toLowerCase())) {
+			return 1;
+		}
+		return 0;
+	}
+
+	private double addPawnScore(final int count) {
+		if (count == NO_PAWN) {
+			return 0;
+		}
+		if (count == ONE_PAWN) {
+			return PAWN.score();
+		}
+		return PAWNS.score() * count;
+	}
+
+	public double whiteStatus() {
+		double score = 0.0;
+		for (File file : files()) {
+			score += whiteScores(file);
+		}
+		return score;
+	}
+
+	private double whiteScores(final File file) {
+		double newScore = 0;
+		int count = 0;
+		for (Rank rank : ranks()) {
+			Piece piece = board.get(Position.of(file, rank));
+			newScore += updateScore(piece, WHITE);
+			count += pawnCount(piece.name(), WHITE);
+		}
+		return newScore + addPawnScore(count);
 	}
 
 	public Map<Position, Piece> board() {
 		return board;
 	}
 
-	public List<File> files() {
-		final List<File> files = Arrays.asList(File.values());
-		files.sort(Comparator.naturalOrder());
-		return files;
-	}
-
-	public List<Rank> ranks() {
-		final List<Rank> ranks = Arrays.asList(Rank.values());
-		ranks.sort(Comparator.naturalOrder());
-		return ranks;
+	public Color turn(){
+		return turn;
 	}
 }
