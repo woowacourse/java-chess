@@ -5,10 +5,8 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Chessboard {
     private final Map<Square, Piece> board;
@@ -67,5 +65,30 @@ public class Chessboard {
         }
 
         return source.getDiagonalSquares(target);
+    }
+
+    public Map<PieceType, Integer> getAlivePieceAndCountMap(Camp camp) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameCamp(camp))
+                .distinct()
+                .collect(Collectors.toMap(Piece::getPieceType, this::countSamePieceOnBoard));
+    }
+
+    public int countSamePieceOnBoard(Piece targetPiece) {
+        return (int) board.values().stream()
+                .filter(piece -> piece.equals(targetPiece))
+                .count();
+    }
+
+    public int countSameCampPawnInFile(Camp camp, File file) {
+        Piece targetPawn = PieceType.PAWN.createPiece(camp);
+
+        return (int) Square.getSquaresAt(file).stream()
+                .filter(square -> board.get(square).equals(targetPawn))
+                .count();
+    }
+
+    public Map<Square, Piece> getBoardMap() {
+        return Collections.unmodifiableMap(board);
     }
 }

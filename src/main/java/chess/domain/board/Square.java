@@ -3,7 +3,6 @@ package chess.domain.board;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Square {
@@ -31,6 +30,12 @@ public class Square {
         int index = (MAX_RANK_VALUE - rankValue) * MAX_RANK_VALUE + fileValue;
 
         return CASHED_SQUARES.get(index - 1);
+    }
+
+    public static List<Square> getSquaresAt(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> getInstanceOf(file, rank))
+                .collect(Collectors.toList());
     }
 
     public boolean isSameRank(Square targetSquare) {
@@ -91,16 +96,11 @@ public class Square {
         return rank == Rank.ONE || rank == Rank.EIGHT;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Square square = (Square) o;
-        return Objects.equals(file, square.file) && Objects.equals(rank, square.rank);
+    public File getFile() {
+        return file;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
+    public Rank getRank() {
+        return rank;
     }
 }

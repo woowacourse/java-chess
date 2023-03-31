@@ -1,14 +1,20 @@
 package chess.view;
 
+import chess.domain.piece.PieceType;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class InputView {
     private static final String DELIMITER = " ";
 
     private static final Scanner scanner = new Scanner(System.in);
+
+    public String requestRoomName() {
+        System.out.println("입장하실 방을 입력해주세요.");
+        return scanner.nextLine();
+    }
 
     public List<String> requestCommand() {
         String input = scanner.nextLine();
@@ -31,7 +37,7 @@ public class InputView {
             return;
         }
 
-        validateStartAndEndCommand(commands);
+        validateNormalCommand(commands);
     }
 
     private void validateMoveCommand(List<String> commands) {
@@ -55,61 +61,40 @@ public class InputView {
         }
     }
 
-    private void validateStartAndEndCommand(List<String> commands) {
+    private void validateNormalCommand(List<String> commands) {
         if (commands.size() != CommandRule.NORMAL_COMMAND_SIZE.value) {
             throw new IllegalArgumentException("존재하지 않는 명령어 입니다.");
         }
     }
 
-    public String requestPiece() {
+    public PieceType requestPiece() {
         System.out.println("Pawn이 Promotion 가능합니다.");
         System.out.println("[Quuen : q, Bishop : b, Knight : n, Rook : r]을 입력해주세요");
         String input = scanner.nextLine();
 
-        PromotionPiece.validate(input);
-
-        return input;
-    }
-
-    private enum Command {
-        START("start"),
-        END("end"),
-        MOVE("move");
-
-        private final String command;
-
-        Command(String command) {
-            this.command = command;
-        }
-
-        private static Command renderToCommand(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
-        }
+        return PromotionPiece.renderToPieceType(input);
     }
 
     private enum PromotionPiece {
-        QUEEN("q"),
-        BISHOP("b"),
-        KNIGHT("n"),
-        ROOK("r");
+        QUEEN("q", PieceType.QUEEN),
+        BISHOP("b", PieceType.BISHOP),
+        KNIGHT("n", PieceType.KNIGHT),
+        ROOK("r", PieceType.ROOK);
 
         private final String command;
+        private final PieceType pieceType;
 
-        PromotionPiece(String command) {
+        PromotionPiece(String command, PieceType pieceType) {
             this.command = command;
+            this.pieceType = pieceType;
         }
 
-        private static void validate(String input) {
-            Optional<PromotionPiece> optionalPromotionPiece = Arrays.stream(values())
+        private static PieceType renderToPieceType(String input) {
+            return Arrays.stream(values())
                     .filter(value -> value.command.equals(input))
-                    .findAny();
-
-            if (optionalPromotionPiece.isEmpty()) {
-                throw new IllegalArgumentException("존재하지 않는 기물입니다.");
-            }
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."))
+                    .pieceType;
         }
     }
 

@@ -1,10 +1,12 @@
 package chess;
 
 import chess.domain.ChessGame;
+import chess.domain.RoomName;
 import chess.domain.board.Chessboard;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +27,7 @@ class ChessGameTest {
 
     @BeforeEach
     void setup() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(new RoomName("test"));
         chessboard = chessGame.getChessboard();
     }
 
@@ -36,6 +38,17 @@ class ChessGameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    static Stream<Arguments> invalidSquareProvider() {
+        return Stream.of(
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.ONE), Square.getInstanceOf(File.A, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FIVE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.THREE), Square.getInstanceOf(File.A, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.FOUR)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.TWO))
+        );
+    }
+
     @ParameterizedTest(name = "이동 가능한 위치 입력시 기물이 이동한다")
     @MethodSource("validSquareProvider")
     void moveToValidSquare(Square source, Square target) {
@@ -44,6 +57,13 @@ class ChessGameTest {
 
         assertThat(chessboard.getPieceAt(target))
                 .isEqualTo(expectedPiece);
+    }
+
+    static Stream<Arguments> validSquareProvider() {
+        return Stream.of(
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.THREE)),
+                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FOUR))
+        );
     }
 
     @DisplayName("대각선에 상대 폰이 있을 경우, 이동할 수 있다.")
@@ -123,23 +143,42 @@ class ChessGameTest {
                 .isEqualTo(PieceType.BISHOP);
     }
 
-    static Stream<Arguments> invalidSquareProvider() {
-        return Stream.of(
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.ONE), Square.getInstanceOf(File.A, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FIVE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.THREE), Square.getInstanceOf(File.A, Rank.FOUR)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.FOUR)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.B, Rank.TWO))
-        );
-    }
+    @DisplayName("King이 죽었는지 확인할 수 있다.")
+    @Test
+    void isKingAliveSuccessTest() {
+        Square source = Square.getInstanceOf(File.A, Rank.TWO);
+        Square BlackKingSquare = Square.getInstanceOf(File.E, Rank.EIGHT);
 
-    static Stream<Arguments> validSquareProvider() {
-        return Stream.of(
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.THREE)),
-                Arguments.arguments(Square.getInstanceOf(File.A, Rank.TWO), Square.getInstanceOf(File.A, Rank.FOUR))
-        );
+        assertThat(chessGame.isBothKingAlive())
+                .isTrue();
+
+        chessboard.swapPiece(source, BlackKingSquare);
+
+        assertThat(chessGame.isBothKingAlive())
+                .isFalse();
     }
 
 
+    @ParameterizedTest(name = "특정 진영의 점수를 계산할 수 있다.")
+    @MethodSource("sourceAndTargetSquareAndScoreProvider")
+    void calculateScoreSuccessTest(Square source, Square target, double score) {
+        chessboard.swapPiece(source, target);
+
+        assertThat(chessGame.calculateScoreOf(Camp.WHITE))
+                .isEqualTo(score);
+    }
+
+    static Stream<Arguments> sourceAndTargetSquareAndScoreProvider() {
+        return Stream.of(
+                Arguments.arguments(    // 모든 기물이 살아있는 경우
+                        Square.getInstanceOf(File.C, Rank.THREE), Square.getInstanceOf(File.C, Rank.THREE), 38.0
+                ),
+                Arguments.arguments(    // Pawn이 동일한 File에 존재
+                        Square.getInstanceOf(File.B, Rank.TWO), Square.getInstanceOf(File.C, Rank.THREE), 37.0
+                ),
+                Arguments.arguments(    // 퀸이 죽은 경우
+                        Square.getInstanceOf(File.C, Rank.THREE), Square.getInstanceOf(File.D, Rank.ONE), 29.0
+                )
+        );
+    }
 }

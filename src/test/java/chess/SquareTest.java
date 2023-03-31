@@ -3,12 +3,15 @@ package chess;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class SquareTest {
@@ -31,4 +34,19 @@ class SquareTest {
         );
     }
 
+    @DisplayName("특정 file에 대한 모든 Square를 가져올 수 있다.")
+    @Test
+    void canGetSquaresAtFile() {
+        assertThat(Square.getSquaresAt(File.A))
+                .containsExactly(
+                        Square.getInstanceOf(File.A, Rank.EIGHT),
+                        Square.getInstanceOf(File.A, Rank.SEVEN),
+                        Square.getInstanceOf(File.A, Rank.SIX),
+                        Square.getInstanceOf(File.A, Rank.FIVE),
+                        Square.getInstanceOf(File.A, Rank.FOUR),
+                        Square.getInstanceOf(File.A, Rank.THREE),
+                        Square.getInstanceOf(File.A, Rank.TWO),
+                        Square.getInstanceOf(File.A, Rank.ONE)
+                );
+    }
 }

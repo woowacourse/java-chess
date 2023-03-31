@@ -13,6 +13,10 @@ public abstract class Piece {
         return this.camp == Camp.WHITE;
     }
 
+    public boolean isSameCamp(Camp camp) {
+        return this.camp == camp;
+    }
+
     public boolean isNotSameCamp(Piece otherPiece) {
         return camp != otherPiece.camp;
     }

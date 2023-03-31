@@ -1,14 +1,21 @@
 package chess.controller;
 
+import chess.dao.JdbcDao;
 import chess.domain.ChessGame;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
+import chess.domain.RoomName;
+import chess.domain.board.Chessboard;
 import chess.domain.board.Square;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.dto.BoardDto;
+import chess.dto.GameRoomDto;
+import chess.util.PieceRenderer;
+import chess.util.SquareRenderer;
+import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -16,24 +23,69 @@ import java.util.function.Supplier;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final JdbcDao jdbcDao;
 
     public ChessController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.jdbcDao = new JdbcDao();
     }
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        RoomName roomName = new RoomName(retryOnInvalidUserInput(inputView::requestRoomName));
+        ChessGame chessGame = new ChessGame(roomName);
 
         outputView.printStartMessage();
-
-        if (isStartCommand()) {
+        initializeGameState(chessGame);
+        if (retryOnInvalidUserInput(this::isStartCommand)) {
             play(chessGame);
+        }
+        outputView.printChessBoard(chessGame.getChessboard());
+        outputView.printScoreMessage(chessGame);
+
+        updateGameState(chessGame);
+    }
+
+    private void initializeGameState(ChessGame chessGame) {
+        setCorrectTurn(chessGame);
+        setRecordedBoard(chessGame);
+    }
+
+    private void setRecordedBoard(ChessGame chessGame) {
+        List<BoardDto> recordedBoard = jdbcDao.findBoardByRoomName(chessGame.getRoomName());
+
+        Chessboard chessboard = chessGame.getChessboard();
+        for (BoardDto boardDto : recordedBoard) {
+            Square source = SquareRenderer.render(boardDto.getSource());
+            Piece piece = PieceRenderer.render(boardDto.getPiece());
+
+            chessboard.putPiece(source, piece);
         }
     }
 
+    private void setCorrectTurn(ChessGame chessGame) {
+        jdbcDao.findGameRoomByName(chessGame.getRoomName())
+                .ifPresent(gameRoom -> {
+                    if (!gameRoom.isWhiteTurn()) {
+                        chessGame.passTurn();
+                    }
+                });
+    }
+
     private boolean isStartCommand() {
-        return Command.isStartCommand(requestCommand().get(Index.MAIN_COMMAND.value));
+        Command command = getMainCommand(requestCommand());
+
+        if (command.isStartCommand()) {
+            return true;
+        }
+
+        throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
+    }
+
+    private Command getMainCommand(List<String> command) {
+        String mainCommand = command.get(Index.MAIN_COMMAND.value);
+
+        return Command.renderToCommand(mainCommand);
     }
 
     private List<String> requestCommand() {
@@ -46,56 +98,89 @@ public class ChessController {
             outputView.printChessBoard(chessGame.getChessboard());
             commands = retryOnInvalidUserInput(this::handleCommand);
 
-            commands.ifPresent(command -> movePiece(chessGame, command));
-            commands.ifPresent(command -> checkPromotion(chessGame, command));
-
-        } while (commands.isPresent());
+            commands.ifPresent(command -> actionForCommand(chessGame, command));
+        } while (commands.isPresent() && chessGame.isBothKingAlive());
     }
 
     private Optional<List<String>> handleCommand() {
         List<String> commands = requestCommand();
-        String mainCommand = commands.get(Index.MAIN_COMMAND.value);
+        Command command = getMainCommand(commands);
 
-        if (Command.isStartCommand(mainCommand)) {
+        if (command.isStartCommand()) {
             throw new IllegalArgumentException("이미 게임이 실행중입니다.");
         }
 
-        if (Command.isEndCommand(mainCommand)) {
+        if (command.isEndCommand()) {
             return Optional.empty();
         }
 
         return Optional.of(commands);
     }
 
+    private void actionForCommand(ChessGame chessGame, List<String> command) {
+        Command mainCommand = getMainCommand(command);
+
+        if (mainCommand.isStatusCommand()) {
+            outputView.printScoreMessage(chessGame);
+            return;
+        }
+
+        movePiece(chessGame, command);
+        checkPromotion(chessGame, command);
+    }
+
     private void movePiece(ChessGame chessGame, List<String> command) {
-        Square source = getSquare(command.get(Index.SOURCE_SQUARE.value));
-        Square target = getSquare(command.get(Index.TARGET_SQUARE.value));
+        String sourceCommand = command.get(Index.SOURCE_SQUARE.value);
+        String targetCommand = command.get(Index.TARGET_SQUARE.value);
+        Square source = SquareRenderer.render(sourceCommand);
+        Square target = SquareRenderer.render(targetCommand);
 
         retryOnInvalidAction(() -> chessGame.move(source, target));
     }
 
-    private Square getSquare(String command) {
-        File file = FileRenderer.renderToFile(String.valueOf(command.charAt(Index.FILE.value)));
-        Rank rank = RankRenderer.renderToRank(String.valueOf(command.charAt(Index.RANK.value)));
-
-        return Square.getInstanceOf(file, rank);
-    }
-
     private void checkPromotion(ChessGame chessGame, List<String> command) {
-        Square movedSquare = getSquare(command.get(Index.TARGET_SQUARE.value));
+        Square movedSquare = SquareRenderer.render(command.get(Index.TARGET_SQUARE.value));
 
         if (chessGame.canPromotion(movedSquare)) {
             PieceType pieceType = requestPieceType();
-
             chessGame.promotePawn(movedSquare, pieceType);
         }
     }
 
     private PieceType requestPieceType() {
-        String input = retryOnInvalidUserInput(inputView::requestPiece);
-
-        return PromotionPiece.renderToPieceType(input);
+        return retryOnInvalidUserInput(inputView::requestPiece);
     }
+
+    private void updateGameState(ChessGame chessGame) {
+        if (!chessGame.isBothKingAlive()) {
+            jdbcDao.deleteAllByName(chessGame.getRoomName());
+            return;
+        }
+
+        if (jdbcDao.findGameRoomByName(chessGame.getRoomName()).isEmpty()) {
+            GameRoomDto gameRoomDto = new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn());
+            jdbcDao.save(createBoardDto(chessGame), gameRoomDto);
+            return;
+        }
+
+        GameRoomDto gameRoomDto = new GameRoomDto(chessGame.getRoomName(), chessGame.isWhiteTurn());
+        jdbcDao.update(createBoardDto(chessGame), gameRoomDto);
+    }
+
+    private List<BoardDto> createBoardDto(ChessGame chessGame) {
+        Chessboard board = chessGame.getChessboard();
+
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (Square square : board.getBoardMap().keySet()) {
+            String source = SquareRenderer.render(square);
+            String piece = PieceRenderer.render(board.getPieceAt(square));
+
+            boardDtoList.add(new BoardDto(source, piece));
+        }
+
+        return boardDtoList;
+    }
+
 
     private <T> T retryOnInvalidUserInput(Supplier<T> request) {
         try {
@@ -111,103 +196,6 @@ public class ChessController {
             request.run();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-        }
-    }
-
-    private enum PromotionPiece {
-        QUEEN("q", PieceType.QUEEN),
-        BISHOP("b", PieceType.BISHOP),
-        KNIGHT("n", PieceType.KNIGHT),
-        ROOK("r", PieceType.ROOK);
-
-        private final String command;
-        private final PieceType pieceType;
-
-        PromotionPiece(String command, PieceType pieceType) {
-            this.command = command;
-            this.pieceType = pieceType;
-        }
-
-        private static PieceType renderToPieceType(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."))
-                    .pieceType;
-        }
-    }
-
-    private enum Command {
-        START("start"),
-        END("end"),
-        MOVE("move");
-
-        private final String command;
-
-        Command(String command) {
-            this.command = command;
-        }
-
-        private static boolean isStartCommand(String input) {
-            return START.command.equals(input);
-        }
-
-        private static boolean isEndCommand(String input) {
-            return END.command.equals(input);
-        }
-    }
-
-    private enum FileRenderer {
-        A("a", File.A),
-        B("b", File.B),
-        C("c", File.C),
-        D("d", File.D),
-        E("e", File.E),
-        F("f", File.F),
-        G("g", File.G),
-        H("h", File.H);
-
-        private final String command;
-        private final File file;
-
-        FileRenderer(String command, File rank) {
-            this.command = command;
-            this.file = rank;
-        }
-
-        static private File renderToFile(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."))
-                    .file;
-        }
-    }
-
-    private enum RankRenderer {
-        EIGHT("8", Rank.EIGHT),
-        SEVEN("7", Rank.SEVEN),
-        SIX("6", Rank.SIX),
-        FIVE("5", Rank.FIVE),
-        FOUR("4", Rank.FOUR),
-        THREE("3", Rank.THREE),
-        TWO("2", Rank.TWO),
-        ONE("1", Rank.ONE);
-
-        private final String command;
-        private final Rank rank;
-
-        RankRenderer(String command, Rank rank) {
-            this.command = command;
-            this.rank = rank;
-        }
-
-        static private Rank renderToRank(String input) {
-            return Arrays.stream(values())
-                    .filter(value -> value.command.equals(input))
-                    .findAny()
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."))
-                    .rank;
         }
     }
 
