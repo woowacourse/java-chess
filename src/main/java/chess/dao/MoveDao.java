@@ -16,7 +16,6 @@ public class MoveDao {
         this.connectionDriver = new ConnectionDriver();
     }
 
-
     public List<List<String>> findMoves() {
         String query = "SELECT start_position, end_position FROM move";
 
@@ -25,25 +24,6 @@ public class MoveDao {
             List<List<String>> moves = new ArrayList<>();
             while (resultSet.next()) {
                 moves.add(List.of(
-                        resultSet.getString("start_position"),
-                        resultSet.getString("end_position")));
-            }
-            return moves;
-        } catch (final SQLException e) {
-            throw new IllegalArgumentException("게임이 존재하지 않습니다."+e.getMessage());
-        }
-    }
-
-    public List<List<String>> findMovesByGameId(final int gameId) {
-        String query = "SELECT start_position, end_position FROM move WHERE game_id = ?";
-
-        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query)) {
-            preparedStatement.setObject(1, gameId);
-
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            List<List<String>> moves = new ArrayList<>();
-            while (resultSet.next()) {
-                moves.add(List.of("move",
                         resultSet.getString("start_position"),
                         resultSet.getString("end_position")));
             }
