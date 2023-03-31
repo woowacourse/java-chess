@@ -1,4 +1,4 @@
-package chess.infra.connection;
+package chess.mysql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
