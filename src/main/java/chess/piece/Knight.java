@@ -18,8 +18,8 @@ public class Knight extends Piece {
         addKnights(whiteKnights, Side.WHITE);
     }
 
-    private Knight(final Side side) {
-        super(side);
+    public Knight(final Side side) {
+        super(side, PieceType.KNIGHT);
     }
 
     private static void addKnights(final List<Knight> Knights, final Side side) {

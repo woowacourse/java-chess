@@ -20,8 +20,8 @@ public final class Pawn extends Piece {
         addPawns(whitePawns, Side.WHITE);
     }
 
-    private Pawn(Side side) {
-        super(side);
+    public Pawn(Side side) {
+        super(side, PieceType.PAWN);
     }
 
     private static void addPawns(final List<Pawn> pawns, final Side side) {
@@ -65,7 +65,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isAtInitialPosition(final Square square) {
-        if (isWhite()) {
+        if (isSameSide(Side.WHITE)) {
             return square.isAtRank(WHITE_PAWN_INITIAL_RANK);
         }
         return square.isAtRank(BLACK_PAWN_INITIAL_RANK);

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.controller.CommandDto;
+import chess.controller.Command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,13 +25,13 @@ public class InputView {
         }
     }
 
-    public CommandDto readCommand() {
+    public Command readCommand() {
         final String rawCommandInput = scanner.nextLine();
 
         List<String> parsedCommandInput = Arrays.asList(rawCommandInput.split(" "));
         validate(parsedCommandInput);
 
-        return CommandDto.from(parsedCommandInput);
+        return Command.from(parsedCommandInput);
     }
 
     private void validate(List<String> parsedCommandInput) {

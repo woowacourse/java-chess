@@ -6,8 +6,8 @@ import chess.chessboard.Square;
 public class EmptyPiece extends Piece {
     private static EmptyPiece emptyPiece;
 
-    private EmptyPiece() {
-        super(Side.EMPTY);
+    public EmptyPiece() {
+        super(Side.EMPTY, PieceType.EMPTY);
     }
 
     public static EmptyPiece getInstance() {

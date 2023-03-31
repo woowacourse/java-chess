@@ -3,13 +3,13 @@ package chess.controller;
 import java.util.List;
 import java.util.Objects;
 
-public class OptionLessCommandDto implements CommandDto {
-    private static final int COMMAND_INDEX = 0;
-    private final String command;
+public class OptionLessCommand implements Command {
 
-    public OptionLessCommandDto(final String command) {
+    private final CommandType commandType;
+
+    public OptionLessCommand(final String command) {
         validateNotOptionCommand(command);
-        this.command = command;
+        this.commandType = CommandType.from(command);
     }
 
     private void validateNotOptionCommand(final String command) {
@@ -18,12 +18,12 @@ public class OptionLessCommandDto implements CommandDto {
         }
     }
 
-    public OptionLessCommandDto(final List<String> commandWithOptions) {
+    public OptionLessCommand(final List<String> commandWithOptions) {
         this(commandWithOptions.get(COMMAND_INDEX));
     }
 
     @Override
-    public String getCommand() {
-        return command;
+    public CommandType getCommandType() {
+        return commandType;
     }
 }
