@@ -1,29 +1,27 @@
 package chess.view;
 
-import chess.view.request.Request;
+import chess.controller.main.Input;
+import chess.controller.main.Request;
+import chess.view.request.RequestImpl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
+public class InputView implements Input {
 
-    private static final int INITIAL_BOARD_ID = -1;
-    private static final String INITIAL_USER_ID = null;
     private static final Scanner scanner = new Scanner(System.in);
 
-    private int boardId = INITIAL_BOARD_ID;
-    private String userId = INITIAL_USER_ID;
+    private final LoginImpl loginImpl;
+    private final JoinBoardImpl joinBoard;
 
+    public InputView(LoginImpl loginImpl, JoinBoardImpl joinBoard) {
+        this.loginImpl = loginImpl;
+        this.joinBoard = joinBoard;
+    }
+
+    @Override
     public Request inputGameCommand() {
-        List<String> commands = Arrays.asList(scanner.nextLine().split(" ", -1));
-        return new Request(commands, boardId, userId);
-    }
-
-    public void setBoardId(int boardId) {
-        this.boardId = boardId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+        List<String> commands = Arrays.asList(scanner.nextLine().split(" "));
+        return new RequestImpl(commands, loginImpl.getUserId(), joinBoard.getBoardId());
     }
 }
