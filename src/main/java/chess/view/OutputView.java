@@ -61,9 +61,9 @@ public class OutputView {
         System.out.printf("게임 번호 : %s, 게임 생성 일시 : %s%n", gameDto.getGameId(), gameDto.getCreatedAt());
     }
 
-    public static void printStartMessage() {
+    public static void printStartMessage(String nickname) {
         System.out.println();
-        System.out.println("체스 게임을 시작합니다.");
+        System.out.println(nickname + "님 반갑습니다.");
     }
 
     public static void printInitialCommandMessage() {

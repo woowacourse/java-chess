@@ -13,12 +13,12 @@ public class ChessController {
     public void run() {
         LoginController loginController = new LoginController();
         User user = loginController.getUser();
-        Command initialCommand = readInitialCommand();
+        Command initialCommand = readInitialCommand(user.getNickname());
         initializeByCommand(initialCommand, user);
     }
 
-    private Command readInitialCommand() {
-        OutputView.printStartMessage();
+    private Command readInitialCommand(String nickname) {
+        OutputView.printStartMessage(nickname);
         OutputView.printInitialCommandMessage();
         Command command = InputView.readCommand();
         while (isNotInitialCommand(command)) {
