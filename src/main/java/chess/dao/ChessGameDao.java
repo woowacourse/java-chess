@@ -1,6 +1,8 @@
 package chess.dao;
 
-import chess.domain.board.*;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Square;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.GameState;
 import chess.domain.piece.Piece;
@@ -104,7 +106,7 @@ public class ChessGameDao {
                 "VALUES (?, ?, ?, ?, ?); ";
         try (
                 final var connection = getConnection();
-                final var preparedStatement = connection.prepareStatement(queryBoard,  Statement.RETURN_GENERATED_KEYS);
+                final var preparedStatement = connection.prepareStatement(queryBoard, Statement.RETURN_GENERATED_KEYS);
                 final var preparedStatementPiece = connection.prepareStatement(queryPiece)
         ) {
             preparedStatement.setString(1, board.getTurn().name());

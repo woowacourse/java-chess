@@ -6,7 +6,7 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-public class LoadCommand implements Command{
+public class LoadCommand implements Command {
     public static final int COMMAND_GAME_ID_INDEX = 1;
 
     @Override
