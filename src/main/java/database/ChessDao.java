@@ -11,7 +11,9 @@ import java.util.Map;
 public interface ChessDao {
     List<Room> findAllRooms();
 
-    long saveRoom(final Room room);
+    Room saveRoom(final Room room);
+
+    Room findRoomById(final long roomId);
 
     void deleteRoom(final long roomId);
 

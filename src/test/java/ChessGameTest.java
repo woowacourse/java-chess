@@ -72,9 +72,14 @@ class ChessGameTest {
         }
 
         @Override
-        public long saveRoom(final Room room) {
+        public Room saveRoom(final Room room) {
             rooms.put(autoIncrementKey, room);
-            return autoIncrementKey++;
+            return new Room(autoIncrementKey++, room.getName());
+        }
+
+        @Override
+        public Room findRoomById(final long roomId) {
+            return null;
         }
 
         @Override

@@ -63,7 +63,7 @@ public final class DbChessDao implements ChessDao {
     }
 
     @Override
-    public long saveRoom(final Room room) {
+    public Room saveRoom(final Room room) {
         final String query = "INSERT INTO room(name) VALUES(?)";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement =
@@ -73,7 +73,24 @@ public final class DbChessDao implements ChessDao {
 
             final ResultSet resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-            return resultSet.getLong(1);
+            final long roomId = resultSet.getLong(1);
+
+            return new Room(roomId, room.getName());
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Room findRoomById(final long roomId) {
+        final String query = "SELECT * FROM room";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return new Room(resultSet.getLong("room_id"),
+                    resultSet.getString("name"));
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

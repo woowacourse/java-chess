@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public final class Room {
     private static final int MIN_ROOM_NAME = 1;
     private static final int MAX_ROOM_NAME = 20;
@@ -30,5 +32,18 @@ public final class Room {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+        final Room room = (Room) o;
+        return Objects.equals(id, room.id) && Objects.equals(name, room.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

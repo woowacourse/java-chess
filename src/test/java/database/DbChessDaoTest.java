@@ -40,15 +40,28 @@ class DbChessDaoTest {
                 () -> assertThat(chessDao.findAllRooms()).allMatch(room -> room.getName().equals("abc")));
     }
 
+    @DisplayName("방을 id 값으로 찾을 수 있다")
+    @Test
+    void findRoom() {
+        //given
+        final DbChessDao chessDao = new DbChessDao();
+
+        //when
+        final Room room = chessDao.saveRoom(new Room("abc"));
+
+        //then
+        assertThat(chessDao.findRoomById(room.getId())).isEqualTo(room);
+    }
+
     @DisplayName("방을 삭제할 수 있다")
     @Test
     void deleteRoom() {
         //given
         final DbChessDao chessDao = new DbChessDao();
-        final long roomId = chessDao.saveRoom(new Room("abc"));
+        final Room room = chessDao.saveRoom(new Room("abc"));
 
         //when
-        chessDao.deleteRoom(roomId);
+        chessDao.deleteRoom(room.getId());
 
         //then
         assertThat(chessDao.findAllRooms()).isEmpty();
@@ -59,16 +72,16 @@ class DbChessDaoTest {
     void saveBoard() {
         //given
         final DbChessDao chessDao = new DbChessDao();
-        final long roomId = chessDao.saveRoom(new Room("abc"));
+        final Room room = chessDao.saveRoom(new Room("abc"));
 
         //when
-        chessDao.saveBoard(Map.of(A1, new Rook(Team.BLACK)), roomId);
+        chessDao.saveBoard(Map.of(A1, new Rook(Team.BLACK)), room.getId());
 
         //then
         assertAll(
-                () -> assertThat(chessDao.findBoardByRoomId(roomId).getPieces())
+                () -> assertThat(chessDao.findBoardByRoomId(room.getId()).getPieces())
                         .containsKey(A1),
-                () -> assertThat(chessDao.findBoardByRoomId(roomId).getPieces())
+                () -> assertThat(chessDao.findBoardByRoomId(room.getId()).getPieces())
                         .containsValue(new Rook(Team.BLACK)));
     }
 
@@ -77,16 +90,16 @@ class DbChessDaoTest {
     void deleteBoard() {
         //given
         final DbChessDao chessDao = new DbChessDao();
-        final long roomId = chessDao.saveRoom(new Room("abc"));
-        chessDao.saveBoard(Map.of(A1, new Rook(Team.BLACK)), roomId);
+        final Room room = chessDao.saveRoom(new Room("abc"));
+        chessDao.saveBoard(Map.of(A1, new Rook(Team.BLACK)), room.getId());
 
         //when
-        final Board previousBoard = chessDao.findBoardByRoomId(roomId);
-        chessDao.deleteBoard(roomId);
+        final Board previousBoard = chessDao.findBoardByRoomId(room.getId());
+        chessDao.deleteBoard(room.getId());
 
         //then
         assertAll(
                 () -> assertThat(previousBoard).isNotNull(),
-                () -> assertThat(chessDao.findBoardByRoomId(roomId).getPieces()).isEmpty());
+                () -> assertThat(chessDao.findBoardByRoomId(room.getId()).getPieces()).isEmpty());
     }
 }
