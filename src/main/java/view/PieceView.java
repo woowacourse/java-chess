@@ -1,10 +1,11 @@
 package view;
 
-import domain.piece.Piece;
-import domain.type.PieceType;
+import domain.board.piece.Camp;
+import domain.board.piece.Piece;
+import domain.board.piece.PieceType;
 import java.util.Arrays;
 
-public enum PieceView {
+enum PieceView {
 
     ROOK("R", "r", PieceType.ROOK),
     KNIGHT("N", "n", PieceType.KNIGHT),
@@ -25,9 +26,11 @@ public enum PieceView {
     }
 
     public static String findSign(final Piece piece) {
-        final PieceView pieceView = Arrays.stream(PieceView.values()).filter(view -> piece.isSameType(view.pieceType))
-            .findAny().orElseThrow(IllegalArgumentException::new);
-        if (piece.isBlack()) {
+        final PieceView pieceView = Arrays.stream(PieceView.values())
+            .filter(view -> piece.getType() == view.pieceType)
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
+        if (piece.getCamp() == Camp.BLACK) {
             return pieceView.blackSign;
         }
         return pieceView.whiteSign;

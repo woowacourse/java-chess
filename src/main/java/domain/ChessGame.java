@@ -1,30 +1,61 @@
 package domain;
 
-import domain.board.Board;
-import domain.path.PathValidator;
+import controller.Move;
+import database.BoardDao;
+import database.DatabaseConnector;
+import domain.board.ChessBoard;
+import domain.board.piece.Piece;
+import domain.path.location.Location;
+import java.util.Map;
 
 public final class ChessGame {
 
-    private Board board;
-    private boolean isWhite = true;
+    private boolean isReady = false;
+    private final ChessBoard chessBoard;
 
-    public void initialize() {
-        this.board = new Board(new PathValidator());
-        board.initialize();
-        isWhite = true;
+    public ChessGame(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    public void move(final Location start, final Location end) {
-        if (isWhite) {
-            board.moveWhite(start, end);
-            isWhite = false;
-            return;
+    public void makeBoard() {
+        chessBoard.makeBoard();
+    }
+
+    public void initializeBoard() {
+        chessBoard.initializeBoard();
+    }
+
+    public void move(final Move move) {
+        chessBoard.move(move.getStart(), move.getEnd());
+        if (chessBoard.isOneKingExist()) {
+            initializeBoard();
+            end();
         }
-        board.moveBlack(start, end);
-        isWhite = true;
     }
 
-    public Board getBoard() {
-        return board;
+    public void ready() {
+        isReady = true;
+    }
+
+    public void end() {
+        isReady = false;
+        BoardDao boardDao = new BoardDao(new DatabaseConnector());
+        boardDao.updateBoard(chessBoard.getBoard(), chessBoard.getTurn());
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return chessBoard.getBoard();
+    }
+
+    public double getBlackScore() {
+        return chessBoard.getBlackScore();
+    }
+
+    public double getWhiteScore() {
+        return chessBoard.getWhiteScore();
     }
 }
