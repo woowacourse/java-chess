@@ -47,7 +47,6 @@ public class MoveCommand extends Command {
         moveChessPiece(input, chessGame);
         if (chessGame.isFinished()) {
             outputView.printBoard(getChessGameBoards());
-            outputView.printFinish();
             return new StatusCommand(boardDao, outputView);
         }
         return new MoveCommand(boardDao, outputView);

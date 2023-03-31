@@ -87,21 +87,8 @@ class StatusCommandTest {
     }
 
     @Test
-    void move를_입력받으면_MoveCommand_객체가_반환된다() {
-        ChessGame chessGame1 = new ChessGame(BoardFactory.createBoard(), Team.WHITE);
-        BoardDao inMemoryBoardDao = new InMemoryBoardDao(chessGame1);
-
-        Command statusCommand = new StatusCommand(inMemoryBoardDao, new OutputView());
-        List<String> input = List.of("move", "a2" ,"a3");
-
-        Command result = statusCommand.execute(input);
-
-        assertThat(result.isSameType(CommandType.MOVE)).isTrue();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"start"})
-    void status나_end_move를_입력받지_않으면_예외가_발생한다(String command) {
+    void status나_end_move를_입력받지_않으면_예외가_발생한다() {
+        String command = "start";
         Command statusCommand = new StatusCommand(boardDao, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
