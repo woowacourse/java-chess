@@ -12,6 +12,9 @@ import java.util.Map;
 
 public abstract class Command {
 
+    protected static final String INVALID_EXECUTE_MESSAGE = "상태를 확인하시려면 status를, 말을 움직이려면 move를, 게임을 종료하려면 end를 입력해주세요.";
+
+
     protected final BoardDao boardDao;
     protected final CommandType commandType;
     protected final OutputView outputView;

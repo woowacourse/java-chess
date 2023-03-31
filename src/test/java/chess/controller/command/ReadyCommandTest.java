@@ -19,10 +19,11 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class StartCommandTest {
+class ReadyCommandTest {
 
     private ChessGame chessGame;
     private BoardDao boardDao;
@@ -34,47 +35,36 @@ class StartCommandTest {
     }
 
     @Test
-    void StartCommand의_타입을_확인할_수_있다() {
-        Command startCommand = new StartCommand(boardDao);
+    void ReadyCommand의_타입을_확인할_수_있다() {
 
-        assertThat(startCommand.isSameType(CommandType.START)).isTrue();
+        Command readyCommand = new ReadyCommand(boardDao, new OutputView());
+
+        assertThat(readyCommand.isSameType(CommandType.READY)).isTrue();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"start", "emd", "sta rt"})
-    void move나_status를_입력받지_않으면_예외가_발생한다(String command) {
-        Command startCommand = new StartCommand(boardDao);
+    @ValueSource(strings = {"start", "start ", " start", "Start", " start  "})
+    void start를_입력받으면_StartCommand_객체가_반환된다(String command) {
+        Command startCommand = new ReadyCommand(boardDao, new OutputView());
+        List<String> input = Arrays.stream(command.split(" "))
+                .map(String::trim)
+                .filter(x -> !x.isEmpty())
+                .collect(Collectors.toList());
+
+        Command result = startCommand.execute(input);
+
+        assertThat(result.isSameType(CommandType.START)).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"start  2"})
+    void start명령어는_명령어만_입력_가능하다(String command) {
+        Command readyCommand = new ReadyCommand(boardDao, new OutputView());
         List<String> input = Arrays.stream(command.split(" "))
                 .map(String::trim)
                 .collect(Collectors.toList());
 
-        assertThatThrownBy(() -> startCommand.execute(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 명령어를 입력했습니다.");
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"status  a2"})
-    void status명령어는_명령어만_입력_가능하다(String command) {
-        Command startCommand = new StartCommand(boardDao);
-        List<String> input = Arrays.stream(command.split(" "))
-                .map(String::trim)
-                .collect(Collectors.toList());
-
-        assertThatThrownBy(() -> startCommand.execute(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("status 명령어는 값을 하나만 입력해야합니다.");
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"move a2"})
-    void move명령어는_도착지와_출발지의_정보를_입력해야한다(String command) {
-        Command startCommand = new StartCommand(boardDao);
-        List<String> input = Arrays.stream(command.split(" "))
-                .map(String::trim)
-                .collect(Collectors.toList());
-
-        assertThatThrownBy(() -> startCommand.execute(input))
+        assertThatThrownBy(() -> readyCommand.execute(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("start 명령어는 값을 하나만 입력해야합니다.");
     }
