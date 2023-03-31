@@ -1,31 +1,46 @@
 package chess.service;
 
-import chess.controller.dto.ChessBoardDto;
-import chess.controller.dto.PieceDto;
-import chess.controller.dto.PositionDto;
+import chess.dao.chess.PieceDao;
+import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
+import chess.entity.PieceEntity;
+import chess.service.mapper.ChessBoardMapper;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public final class ChessBoardService {
+public class ChessBoardService {
+    private final PieceDao pieceDao;
 
-    private final PieceService pieceService;
-    private final PositionService positionService;
-
-    public ChessBoardService(final PieceService pieceService, final PositionService positionService) {
-        this.pieceService = pieceService;
-        this.positionService = positionService;
+    ChessBoardService(final PieceDao pieceDao) {
+        this.pieceDao = pieceDao;
     }
 
-    public ChessBoardDto createChessBoardDto(final Map<Position, Piece> chessBoard) {
-        final Map<PositionDto, PieceDto> boardDto = new HashMap<>();
+    ChessBoard getByChessGameId(final long chessGameId) {
+        final List<PieceEntity> pieceEntities = pieceDao.findByChessGameId(chessGameId);
+        return ChessBoardMapper.from(pieceEntities);
+    }
+
+    void savePiece(final PieceEntity pieceEntity) {
+        pieceDao.insert(pieceEntity);
+    }
+
+    void deletePieces(final PieceEntity sourcePiece, final PieceEntity targetPiece) {
+        final Long chessGameId = sourcePiece.getChessGameId();
+        pieceDao.deleteByPositions(chessGameId, sourcePiece, targetPiece);
+    }
+
+    void saveAll(final Long chessGameId, final Map<Position, Piece> chessBoard) {
         for (Position position : chessBoard.keySet()) {
-            boardDto.put(
-                    positionService.createPositionDto(position.getRank(), position.getFile()),
-                    pieceService.createPieceDto(chessBoard.get(position)));
+            final Piece piece = chessBoard.get(position);
+            PieceEntity pieceEntity = PieceEntity.createWithChessGameId(chessGameId, position.getRank(),
+                    position.getFile(), piece.getPieceType().name(), piece.getCampType().name());
+            pieceDao.insert(pieceEntity);
         }
-        return new ChessBoardDto(boardDto);
+    }
+
+    void deleteByChessGameId(final Long chessGameId) {
+        pieceDao.deleteByChessGameId(chessGameId);
     }
 }

@@ -1,16 +1,15 @@
 package chess;
 
 import chess.controller.ChessHandler;
-import chess.service.ChessBoardService;
-import chess.service.PieceService;
-import chess.service.PositionService;
+import chess.database.JdbcTemplate;
+import chess.database.properties.ChessProperties;
+import chess.service.ServiceManager;
 
 public final class ChessApplication {
     public static void main(String[] args) {
-        final PieceService pieceService = new PieceService();
-        final PositionService positionService = new PositionService();
-        final ChessBoardService chessBoardService = new ChessBoardService(pieceService, positionService);
-        final ChessHandler chessHandler = new ChessHandler(chessBoardService);
+        final ChessProperties chessProperties = new ChessProperties();
+        final ServiceManager serviceManager = new ServiceManager(new JdbcTemplate(chessProperties));
+        final ChessHandler chessHandler = new ChessHandler(serviceManager);
         chessHandler.run();
     }
 }

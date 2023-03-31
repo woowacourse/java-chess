@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CampTypeTest {
 
@@ -32,10 +33,7 @@ class CampTypeTest {
         CampType blackActual = black.changeTurn();
 
         // then
-        assertThat(whiteActual)
-                .isEqualTo(black);
-
-        assertThat(blackActual)
-                .isEqualTo(white);
+        assertAll(() -> assertThat(whiteActual).isEqualTo(black),
+                () -> assertThat(blackActual).isEqualTo(white));
     }
 }

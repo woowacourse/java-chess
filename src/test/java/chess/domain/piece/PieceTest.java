@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PieceTest {
 
@@ -25,11 +26,8 @@ class PieceTest {
         final boolean actualTrue = pawn.isSameCamp(queen);
 
         // then
-        assertThat(actualFalse)
-                .isFalse();
-
-        assertThat(actualTrue)
-                .isTrue();
+        assertAll(() -> assertThat(actualFalse).isFalse(),
+                () -> assertThat(actualTrue).isTrue());
     }
 
     @Test
@@ -43,11 +41,8 @@ class PieceTest {
         boolean actualFalse = pawn.isSameCamp(CampType.BLACK);
 
         // then
-        assertThat(actualTrue)
-                .isTrue();
-
-        assertThat(actualFalse)
-                .isFalse();
+        assertAll(() -> assertThat(actualTrue).isTrue(),
+                () -> assertThat(actualFalse).isFalse());
     }
 
     @ParameterizedTest(name = "폰은 처음에 기물이 없는 곳으로 최대 2칸 이동할 수 있다.")
@@ -81,6 +76,20 @@ class PieceTest {
                 .hasMessage("폰은 처음 이후 1칸만 전진할 수 있습니다.");
     }
 
+    @ParameterizedTest(name = "폰은 앞으로만 이동할 수 있다.")
+    @CsvSource(value = {"1:WHITE", "3:BLACK"}, delimiter = ':')
+    void pawn_canMoveFail(final int rank, final CampType currentCamp) {
+        // given
+        final Piece pawn = new Piece(PieceType.PAWN, currentCamp, new Pawn());
+        final Position source = new Position(2, 1);
+        final Position target = new Position(rank, 1);
+
+        // when, then
+        assertThatThrownBy(() -> pawn.canMove(source, target, false))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 앞으로만 이동할 수 있습니다.");
+    }
+
     @Test
     @DisplayName("폰은 공격 가능한 위치에 상대 기물이 존재하지 않는 경우 예외가 발생한다.")
     void pawn_canAttackFail() {
@@ -94,6 +103,7 @@ class PieceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 공격할 수 있는 위치가 아닙니다.");
     }
+
 
     @Test
     @DisplayName("폰은 공격 가능한 위치에 상대 기물이 존재하는 경우 공격할 수 있다.")
@@ -109,5 +119,43 @@ class PieceTest {
         // then
         assertThat(actual)
                 .isTrue();
+    }
+
+    @ParameterizedTest(name = "폰은 앞에 있는 기물만 공격할 수 있다.")
+    @CsvSource(value = {"1:0:WHITE", "3:2:BLACK"}, delimiter = ':')
+    void pawn_canAttackFail(final int rank, final int file, final CampType currentCamp) {
+        // given
+        final Piece pawn = new Piece(PieceType.PAWN, currentCamp, new Pawn());
+        final Position source = new Position(2, 1);
+        final Position target = new Position(rank, file);
+
+        // when, then
+        assertThatThrownBy(() -> pawn.canMove(source, target, false))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 앞으로만 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("체스말이 킹인지 판단한다.")
+    void isKing() {
+        // given
+        final Piece king = new Piece(PieceType.KING, CampType.WHITE, new King());
+        final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new Pawn());
+
+        // when, then
+        assertAll(() -> assertThat(king.isKing()).isTrue(),
+                () -> assertThat(pawn.isKing()).isFalse());
+    }
+
+    @Test
+    @DisplayName("체스말이 폰인지 판단한다.")
+    void isPawn() {
+        // given
+        final Piece king = new Piece(PieceType.KING, CampType.WHITE, new King());
+        final Piece pawn = new Piece(PieceType.PAWN, CampType.WHITE, new Pawn());
+
+        // when, then
+        assertAll(() -> assertThat(pawn.isPawn()).isTrue(),
+                () -> assertThat(king.isPawn()).isFalse());
     }
 }

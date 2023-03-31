@@ -1,11 +1,11 @@
-package chess.service;
+package chess.controller.mapper;
 
 import chess.controller.dto.PieceDto;
 import chess.domain.piece.Piece;
 
-public final class PieceService {
+public final class PieceDtoMapper {
 
-    public PieceDto createPieceDto(final Piece piece) {
+    public static PieceDto createPieceDto(final Piece piece) {
         return new PieceDto(piece.getPieceType().name(), piece.getCampType().name());
     }
 }

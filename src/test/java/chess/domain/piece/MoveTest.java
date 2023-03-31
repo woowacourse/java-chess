@@ -18,6 +18,7 @@ import static chess.domain.piece.move.Direction.UP;
 import static chess.domain.piece.move.Direction.UP_LEFT;
 import static chess.domain.piece.move.Direction.UP_RIGHT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class MoveTest {
 
@@ -105,10 +106,7 @@ public class MoveTest {
         final Location blackActual = Move.getLocation(source, blackDirections, moveCount);
 
         // then
-        assertThat(whiteExpected)
-                .isEqualTo(whiteActual);
-
-        assertThat(blackExpected)
-                .isEqualTo(blackActual);
+        assertAll(() -> assertThat(whiteExpected).isEqualTo(whiteActual),
+                () -> assertThat(blackExpected).isEqualTo(blackActual));
     }
 }

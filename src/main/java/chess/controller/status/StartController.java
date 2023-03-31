@@ -1,31 +1,39 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
+import chess.service.ChessGameService;
+
+import java.util.Optional;
 
 public final class StartController implements Controller {
+    private final long userId;
+    private final ChessGameService chessGameService;
 
-    private final ChessGame chessGame;
-
-    public StartController(final ChessGame chessGame) {
-        this.chessGame = chessGame;
+    public StartController(final long userId, final ChessGameService chessGameService) {
+        this.userId = userId;
+        this.chessGameService = chessGameService;
     }
 
     @Override
-    public Controller checkCommand(final Command command, final Runnable runnable) {
+    public Controller checkCommand(final Command command) {
         if (command.isEnd()) {
             return new EndController();
         }
-        if (command.isMove()) {
+        if (!command.isStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
-        runnable.run();
-        return new MoveController(chessGame, CampType.WHITE);
+        return new MoveController(userId, chessGameService);
     }
 
     @Override
     public boolean isRun() {
         return true;
+    }
+
+    @Override
+    public Optional<ChessGame> findGame() {
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
+        return Optional.of(chessGame);
     }
 }

@@ -4,22 +4,34 @@ import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.piece.move.Position;
 
+import java.util.List;
 import java.util.Map;
 
 public final class ChessGame {
+    private static final int ALL_KING_ALIVE_COUNT = 2;
+
     private final ChessBoard chessBoard;
     private CampType currentCamp;
 
-    public ChessGame() {
+    public ChessGame(final CampType currentCamp) {
+        this.currentCamp = currentCamp;
         this.chessBoard = ChessBoard.getInstance(this);
     }
 
-    public void setUp(final Position source, final Position target, final CampType currentCamp) {
+    public ChessGame(final ChessBoard chessBoard, final CampType currentCamp) {
+        this.chessBoard = chessBoard;
         this.currentCamp = currentCamp;
-        play(source, target);
     }
 
-    private void play(final Position source, final Position target) {
+    public Map<Position, Piece> getWhiteBoard() {
+        return chessBoard.getBoardByCamp(CampType.WHITE);
+    }
+
+    public Map<Position, Piece> getBlackBoard() {
+        return chessBoard.getBoardByCamp(CampType.BLACK);
+    }
+
+    public void play(final Position source, final Position target) {
         validateCamp(source);
         validateTargetSameCamp(target);
         validateObstacle(source, target);
@@ -27,6 +39,12 @@ public final class ChessGame {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
         movePiece(source, target);
+        currentCamp = currentCamp.changeTurn();
+    }
+
+    public boolean isKingAlive() {
+        List<Piece> aliveKings = chessBoard.getAliveKings();
+        return aliveKings.size() == ALL_KING_ALIVE_COUNT;
     }
 
     private void validateObstacle(final Position source, final Position target) {
@@ -48,7 +66,6 @@ public final class ChessGame {
         if (!chessBoard.contains(target)) {
             return;
         }
-        validatePieceExistence(target);
         final Piece piece = chessBoard.getPiece(target);
         if (piece.isSameCamp(currentCamp)) {
             throw new IllegalArgumentException("아군 기물이 있는 곳으로 이동할 수 없습니다.");
@@ -78,8 +95,12 @@ public final class ChessGame {
             throw new IllegalArgumentException("체스말이 존재하는 위치를 입력해 주세요.");
         }
     }
-
+    
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getBoard();
+    }
+
+    public CampType getCurrentCamp() {
+        return currentCamp;
     }
 }

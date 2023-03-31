@@ -1,30 +1,57 @@
 package chess.controller.status;
 
 import chess.controller.Command;
-import chess.domain.chess.CampType;
 import chess.domain.chess.ChessGame;
 import chess.domain.piece.move.Position;
 import chess.domain.piece.move.PositionConverter;
+import chess.service.ChessGameService;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class MoveController implements Controller {
-    private final ChessGame chessGame;
-    private final CampType campType;
 
-    public MoveController(final ChessGame chessGame, final CampType campType) {
-        this.chessGame = chessGame;
-        this.campType = campType;
+    private final long userId;
+    private final ChessGameService chessGameService;
+
+    MoveController(final long userId, final ChessGameService chessGameService) {
+        this.userId = userId;
+        this.chessGameService = chessGameService;
     }
 
-    private Controller move(final Command command, final Runnable runnable) {
+    @Override
+    public Controller checkCommand(final Command command) {
+        if (command.isStart()) {
+            throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
+        }
+        if (command.isEnd()) {
+            return new EndController();
+        }
+        if (command.isStatus()) {
+            return new StatusController(userId, chessGameService).getStatus(true);
+        }
+        return move(command);
+    }
+
+    @Override
+    public boolean isRun() {
+        return true;
+    }
+
+    @Override
+    public Optional<ChessGame> findGame() {
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
+        return Optional.of(chessGame);
+    }
+
+    Controller move(final Command command) {
         validateCommand(command);
-        final List<String> commands = command.getCommands();
-        final Position source = PositionConverter.convert(commands.get(1));
-        final Position target = PositionConverter.convert(commands.get(2));
-        chessGame.setUp(source, target, campType);
-        runnable.run();
-        return new MoveController(chessGame, campType.changeTurn());
+        playChessGame(command);
+        final ChessGame chessGame = chessGameService.getOrCreateChessGame(userId);
+        if (!chessGame.isKingAlive()) {
+            return new StatusController(userId, chessGameService).getStatus(false);
+        }
+        return new MoveController(userId, chessGameService);
     }
 
     private void validateCommand(final Command command) {
@@ -33,19 +60,11 @@ public final class MoveController implements Controller {
         }
     }
 
-    @Override
-    public Controller checkCommand(final Command command, final Runnable runnable) {
-        if (command.isStart()) {
-            throw new IllegalArgumentException("이미 시작이 완료되었습니다.");
-        }
-        if (command.isEnd()) {
-            return new EndController();
-        }
-        return move(command, runnable);
+    private void playChessGame(final Command command) {
+        final List<String> commands = command.getCommands();
+        final Position source = PositionConverter.convert(commands.get(1));
+        final Position target = PositionConverter.convert(commands.get(2));
+        chessGameService.play(userId, source, target);
     }
 
-    @Override
-    public boolean isRun() {
-        return true;
-    }
 }
