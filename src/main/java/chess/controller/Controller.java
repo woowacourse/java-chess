@@ -19,6 +19,7 @@ public class Controller {
     }
 
     public void run() {
+        outputView.printStartGuideMessage();
         GameCommandInvoker gameCommandInvoker = new GameCommandInvoker(chessGameService, outputView);
         GameCommand gameCommand = readStartCommand(gameCommandInvoker);
         while(gameCommand != GameCommand.END){
@@ -31,12 +32,12 @@ public class Controller {
         try {
             List<String> commandLine = inputView.readCommandLine();
             GameCommand gameCommand = GameCommand.of(commandLine);
-            if(gameCommand != GameCommand.START && gameCommand != GameCommand.CREATE) {
+            if(gameCommand == GameCommand.MOVE || gameCommand == GameCommand.STATUS) {
                 throw new IllegalArgumentException("게임이 시작되지 않았습니다");
             }
             gameCommandInvoker.generate(gameCommand, commandLine);
             return gameCommand;
-        }catch (IllegalArgumentException e) {
+        }catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printExceptionMessage(e.getMessage());
             return readStartCommand(gameCommandInvoker);
         }

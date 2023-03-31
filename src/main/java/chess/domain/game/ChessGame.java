@@ -79,4 +79,8 @@ public class ChessGame {
     public StateOfChessGame getStatus() {
         return stateOfChessGame;
     }
+
+    public Color getTurn() {
+        return turn;
+    }
 }

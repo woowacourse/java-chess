@@ -1,6 +1,6 @@
 create table game
 (
-    game_id int primary key auto_increment,
+    game_id int primary key,
     status varchar(10)  not null,
     turn varchar(10) not null
 );

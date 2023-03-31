@@ -72,7 +72,7 @@ public class ChessGameService {
         ChessGame chessGame = loadChessGame();
         chessGame.move(convertPosition(startPosition), convertPosition(endPosition));
         moveDao.save(startPosition, endPosition);
-        chessGameDao.updateStatus(chessGame.getStatus());
+        chessGameDao.update(chessGame.getStatus(), chessGame.getTurn());
     }
 
     private void checkGameStarted() {

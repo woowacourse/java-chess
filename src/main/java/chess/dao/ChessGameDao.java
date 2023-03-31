@@ -119,19 +119,14 @@ public class ChessGameDao {
         }
     }
 
-    public int save(StateOfChessGame status, Color turn) {
-        String query = "INSERT INTO game (status, turn) VALUES (?, ?)";
+    public void save(StateOfChessGame status, Color turn) {
+        String query = "INSERT INTO game (game_id, status, turn) VALUES (1, ?, ?)";
         try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setObject(1, status.name());
             preparedStatement.setObject(2, turn.name());
             preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-            throw new IllegalArgumentException("INSERT 오류: 입력이 올바르지 않습니다");
         } catch (final SQLException e) {
             throw new RuntimeException("INSERT 오류:" + e.getMessage());
         }
@@ -183,4 +178,16 @@ public class ChessGameDao {
         }
     }
 
+    public void update(final StateOfChessGame status, final Color turn) {
+        String query = "UPDATE game SET status = ?, turn = ?";
+        try (final PreparedStatement preparedStatement = connectionDriver.getConnection().prepareStatement(query)) {
+            preparedStatement.setObject(1, status.name());
+            preparedStatement.setObject(2, turn.name());
+
+            preparedStatement.executeUpdate();
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("UPDATE 오류:" + e.getMessage());
+        }
+    }
 }
