@@ -24,13 +24,17 @@ import static chess.domain.Team.WHITE;
 public class GameController {
 
     private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int MOVE_COMMAND = 0;
+    private static final int FILE_COMMAND = 1;
+    private static final int RANK_COMMAND = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
     private final Map<Command, Action> commandAction = new EnumMap<>(Command.class);
-    private Command status = READY;
-    BoardDao boardDao = new BoardDao();
-    TurnDao turnDao = new TurnDao();
+    private final BoardDao boardDao = new BoardDao();
+    private final TurnDao turnDao = new TurnDao();
+
+    private Command currentStatus = READY;
 
     public GameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
@@ -47,7 +51,7 @@ public class GameController {
         Command command;
         do {
             List<String> gameCommand = repeatUntilValidate(() -> play(chessGame));
-            command = Command.from(gameCommand.get(0));
+            command = Command.from(gameCommand.get(MOVE_COMMAND));
         } while (command != END && !chessGame.isGameEnd());
         if (chessGame.isGameEnd()) {
             status(chessGame);
@@ -71,24 +75,24 @@ public class GameController {
 
     public List<String> play(final ChessGame chessGame) {
         List<String> gameCommand = repeatUntilValidate(this::inputCommand);
-        Command command = Command.from(gameCommand.get(0));
+        Command command = Command.from(gameCommand.get(MOVE_COMMAND));
         validateStatus(command);
         commandAction.get(command).execute(chessGame, gameCommand);
-        status = command;
+        currentStatus = command;
         return gameCommand;
     }
 
     private List<String> inputCommand() {
         List<String> gameCommand = inputView.readGameCommand();
-        Command.from(gameCommand.get(0));
+        Command.from(gameCommand.get(MOVE_COMMAND));
         return gameCommand;
     }
 
     private void validateStatus(final Command command) {
-        if (command == START && status != READY) {
+        if (command == START && currentStatus != READY) {
             throw new IllegalArgumentException("이미 체스 게임이 시작되었습니다. move, status, end 중에 입력해주세요.");
         }
-        if (command != START && status == READY) {
+        if (command != START && currentStatus == READY) {
             throw new IllegalArgumentException("체스 게임이 아직 시작되지 않았습니다. start 먼저 입력해주세요.");
         }
     }
@@ -105,7 +109,7 @@ public class GameController {
 
     private void move(final ChessGame chessGame, final List<String> gameCommand) {
         validateMoveCommandFormat(gameCommand);
-        chessGame.movePiece(boardDao, gameCommand.get(1), gameCommand.get(2));
+        chessGame.movePiece(boardDao, gameCommand.get(FILE_COMMAND), gameCommand.get(RANK_COMMAND));
         outputView.printChessBoard(chessGame.getBoard());
         turnDao.insert(chessGame.getTeam());
     }

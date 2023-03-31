@@ -27,8 +27,9 @@ class ChessGameTest {
     void movePiece_success(String source, String destination, Team team) {
         Board board = new Board(BoardGenerator.init());
         ChessGame chessGame = new ChessGame(board, team);
+        BoardDao boardDao = new BoardDao();
 
-        assertDoesNotThrow(() -> chessGame.movePiece(source, destination));
+        assertDoesNotThrow(() -> chessGame.movePiece(boardDao, source, destination));
     }
 
     @DisplayName("다른 팀 말을 움직일 경우 예외가 발생한다.")
@@ -40,7 +41,7 @@ class ChessGameTest {
         BoardDao boardDao = new BoardDao();
         boardDao.insert(BoardGenerator.init());
 
-        assertThatThrownBy(() -> chessGame.movePiece(source, destination))
+        assertThatThrownBy(() -> chessGame.movePiece(boardDao, source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 팀 말을 움직여 주세요.");
     }
