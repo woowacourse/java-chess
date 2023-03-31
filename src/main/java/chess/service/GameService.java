@@ -90,7 +90,7 @@ public class GameService {
     }
 
     public List<Piece> getPiecesByColor(Color color) {
-        return players.getPiecesByColor(color);
+        return pieceDao.findPieceByColor(color);
     }
 
     public double getScore() {
