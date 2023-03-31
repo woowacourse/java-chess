@@ -76,4 +76,12 @@ public class PawnTest extends AbstractTestFixture {
         assertThat(piece.hasAttackMove(createMove(RIGHT, DOWN))).isTrue();
         assertThat(piece.hasAttackMove(createMove(LEFT, DOWN))).isTrue();
     }
+
+    @DisplayName("기본점수가 1점이다")
+    @Test
+    void scoreIsOne() {
+        Piece piece = new Pawn(Team.BLACK);
+
+        assertThat(piece.score()).isEqualTo(1);
+    }
 }

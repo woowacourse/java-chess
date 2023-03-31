@@ -24,6 +24,18 @@ public class OutputView {
         System.out.println("[ERROR] " + message);
     }
 
+    public void printScore(String team, double score) {
+        System.out.println(team + ": " + score + "점");
+    }
+
+    public void printWin(String team) {
+        System.out.println(team + " 승!");
+    }
+
+    public void printDraw() {
+        System.out.println("무승부");
+    }
+
     private char[][] setUpBoard() {
         char[][] board = new char[8][8];
         for (char[] line : board) {
@@ -36,8 +48,15 @@ public class OutputView {
         for (PieceResponse piece : pieces) {
             int y = piece.getRankIndex() - 1;
             int x = piece.getFileIndex() - 1;
-            board[y][x] = piece.getLetter();
+            board[y][x] = getLetterOf(piece);
         }
+    }
+
+    private Character getLetterOf(PieceResponse piece) {
+        if (piece.isWhite()) {
+            return Character.toLowerCase(piece.getLetter());
+        }
+        return piece.getLetter();
     }
 
     private void printBoard(char[][] board) {

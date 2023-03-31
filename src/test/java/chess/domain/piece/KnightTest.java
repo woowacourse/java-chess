@@ -51,4 +51,12 @@ public class KnightTest extends AbstractTestFixture {
 
         assertThat(knight.hasMove(createMove(LEFT, LEFT, LEFT, LEFT, UP, UP))).isFalse();
     }
+
+    @DisplayName("기본점수가 2.5점이다")
+    @Test
+    void scoreIsTwoAndHalf() {
+        Knight knight = new Knight(Team.WHITE);
+
+        assertThat(knight.score()).isEqualTo(2.5);
+    }
 }

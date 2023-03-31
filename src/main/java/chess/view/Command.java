@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Command {
 
-    START(1), END(1), MOVE(3);
+    START(1), END(1), MOVE(3), STATUS(1);
 
     private final int parameterCount;
 

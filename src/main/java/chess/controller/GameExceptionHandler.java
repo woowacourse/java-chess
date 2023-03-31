@@ -2,17 +2,18 @@ package chess.controller;
 
 import java.util.function.Supplier;
 
+import chess.controller.exception.IllegalCommandException;
 import chess.controller.mapper.ExceptionMapper;
 import chess.domain.exception.ChessGameException;
 import chess.view.OutputView;
 
-public class ChessGameExceptionHandler {
+public class GameExceptionHandler {
 
     private static final int LOOP_MAX = 10000;
 
     private final OutputView outputView;
 
-    public ChessGameExceptionHandler(OutputView outputView) {
+    public GameExceptionHandler(OutputView outputView) {
         this.outputView = outputView;
     }
 
@@ -33,6 +34,9 @@ public class ChessGameExceptionHandler {
         } catch (ChessGameException exception) {
             outputView.printException(ExceptionMapper.map(exception));
             return handleExceptionByRepeating(supplier, loopCount + 1);
+        } catch (IllegalCommandException exception) {
+            outputView.printException(exception.getMessage());
+            return handleExceptionByRepeating(supplier, loopCount + 1);
         }
     }
 
@@ -44,6 +48,9 @@ public class ChessGameExceptionHandler {
             runnable.run();
         } catch (ChessGameException exception) {
             outputView.printException(ExceptionMapper.map(exception));
+            handleExceptionByRepeating(runnable, loopCount + 1);
+        } catch (IllegalCommandException exception) {
+            outputView.printException(exception.getMessage());
             handleExceptionByRepeating(runnable, loopCount + 1);
         }
     }

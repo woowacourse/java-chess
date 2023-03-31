@@ -48,12 +48,8 @@ public class Position {
         return new Directions(DOWN.repeat(Math.abs(difference)));
     }
 
-    public int getFileIndex() {
-        return file.getIndex();
-    }
-
-    public int getRankIndex() {
-        return rank.getIndex();
+    public boolean hasFile(File file) {
+        return this.file.equals(file);
     }
 
     @Override
@@ -71,5 +67,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

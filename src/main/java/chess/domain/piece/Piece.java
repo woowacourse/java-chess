@@ -44,5 +44,11 @@ public abstract class Piece {
         return false;
     }
 
+    public abstract double score();
+
     public abstract PieceType getType();
+
+    public Team getTeam() {
+        return team;
+    }
 }

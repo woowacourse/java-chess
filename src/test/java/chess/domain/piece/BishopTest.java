@@ -36,4 +36,12 @@ public class BishopTest extends AbstractTestFixture {
         assertThat(bishop.hasMove(createMove(DOWN))).isFalse();
         assertThat(bishop.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
     }
+
+    @DisplayName("기본점수가 3점이다")
+    @Test
+    void scoreIsThree() {
+        Bishop bishop = new Bishop(Team.WHITE);
+
+        assertThat(bishop.score()).isEqualTo(3);
+    }
 }

@@ -24,7 +24,7 @@ public class InputView {
 
     private Request createRequest(String[] parameters, Command command) {
         validateParameterCount(command, parameters);
-        if (command == Command.START || command == Command.END) {
+        if (command == Command.START || command == Command.END || command == Command.STATUS) {
             return Request.createSingleCommand(command);
         }
         if (command == Command.MOVE) {

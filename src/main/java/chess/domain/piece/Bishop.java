@@ -25,4 +25,9 @@ public class Bishop extends InfinitePiece {
     public PieceType getType() {
         return PieceType.BISHOP;
     }
+
+    @Override
+    public double score() {
+        return 3;
+    }
 }

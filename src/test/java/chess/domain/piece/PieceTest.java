@@ -23,6 +23,11 @@ public class PieceTest extends AbstractTestFixture {
         }
 
         @Override
+        public double score() {
+            return 0;
+        }
+
+        @Override
         public PieceType getType() {
             return null;
         }

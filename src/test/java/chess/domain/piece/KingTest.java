@@ -45,4 +45,12 @@ public class KingTest extends AbstractTestFixture {
 
         assertThat(king.hasMove(createMove(LEFT, LEFT, UP))).isFalse();
     }
+
+    @DisplayName("기본점수가 0점이다")
+    @Test
+    void scoreIsZero() {
+        King king = new King(Team.WHITE);
+
+        assertThat(king.score()).isEqualTo(0);
+    }
 }
