@@ -13,12 +13,12 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
+@SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class ScoreCalculatorTest {
 
     private final Piece WHITE_PAWN = PieceFactory.getInstance(PieceType.PAWN, Color.WHITE);
-    private final Piece BLACK_PAWN = PieceFactory.getInstance(PieceType.PAWN, Color.BLACK);
+
     private Map<Position, Piece> initialPiecePositions;
 
     @BeforeEach

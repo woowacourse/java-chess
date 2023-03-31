@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
+@SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class FileTest {
 

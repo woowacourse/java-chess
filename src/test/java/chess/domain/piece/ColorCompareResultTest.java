@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@SuppressWarnings({"NonAsciiCharacters", "SpellCheckingInspection"})
+@SuppressWarnings({"NonAsciiCharacters"})
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class ColorCompareResultTest {
 

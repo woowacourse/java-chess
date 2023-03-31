@@ -9,8 +9,6 @@ public enum PieceType {
     PAWN(1),
     EMPTY(0);
 
-    private static final int INITIAL_STATE = 0;
-
     private final double score;
 
     PieceType(double score) {
