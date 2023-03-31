@@ -1,89 +1,49 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.domain.board.BoardFactory;
+import chess.controller.command.Command;
+import chess.controller.command.CommandType;
+import chess.controller.command.StartCommand;
+import chess.repository.BoardDao;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.PositionMapper;
 
 import java.util.List;
 
 public class ChessController {
 
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
-    
     private final OutputView outputView;
     private final InputView inputView;
-    private final ChessGame chessGame;
+    private Command command;
 
-    public ChessController(OutputView outputView, InputView inputView) {
+    public ChessController(OutputView outputView, InputView inputView, BoardDao boardDao) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.chessGame = new ChessGame(BoardFactory.createBoard());
+        this.command = new StartCommand(boardDao, outputView);
     }
 
     public void run() {
         outputView.printStart();
-        if (isReadStartCommand()) {
-            play();
+        while (command.isDifferentType(CommandType.END)) {
+            playChessGame();
         }
     }
 
-    private boolean isReadStartCommand() {
-        try {
-            return inputView.readStartCommand();
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return isReadStartCommand();
-        }
-    }
-
-    private void play() {
-        do {
-            outputView.printBoard(chessGame.getBoard());
-        } while (isPlaying(readCommand()));
-    }
-
-    private boolean isPlaying(GameCommand gameCommand) {
-        return gameCommand == GameCommand.MOVE;
-    }
-
-    /**
-     * return: 사용자에게 입력된 GameCommand에 해당하는 기능을 동작하고 반환
-     */
-    private GameCommand readCommand() {
+    private void playChessGame() {
         try {
             List<String> input = readInput();
-            return executeCommand(input);
-        } catch (IllegalArgumentException e) {
+            command = command.execute(input);
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
             outputView.printError(e.getMessage());
-            return readCommand();
+            playChessGame();
         }
     }
 
     private List<String> readInput() {
         try {
-            List<String> input = inputView.readGameCommand();
-            validateCommand(input);
-            return input;
+            return inputView.readGameCommand();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return readInput();
         }
-    }
-
-    private GameCommand executeCommand(List<String> input) {
-        if (GameCommand.of(input.get(COMMAND_INDEX)) == GameCommand.MOVE) {
-            chessGame.movePiece(PositionMapper.from(input.get(SOURCE_POSITION_INDEX)),
-                    PositionMapper.from(input.get(TARGET_POSITION_INDEX)));
-        }
-        return GameCommand.of(input.get(COMMAND_INDEX));
-    }
-
-    private void validateCommand(List<String> input) {
-        GameCommand.validate(input);
-        PositionMapper.validate(input);
     }
 }

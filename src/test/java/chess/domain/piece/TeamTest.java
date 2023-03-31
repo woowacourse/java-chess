@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static chess.domain.piece.Team.of;
+import static chess.domain.piece.Team.from;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -17,7 +17,7 @@ class TeamTest {
     @CsvSource(value = {"ONE:WHITE", "EIGHT:BLACK", "TWO:WHITE", "SEVEN:BLACK",
             "THREE:EMPTY"}, delimiter = ':')
     void 행의_위치에_따라_Color를_생성한다(RankCoordinate rankCoordinate, Team expect) {
-        assertThat(of(rankCoordinate)).isEqualTo(expect);
+        assertThat(from(rankCoordinate)).isEqualTo(expect);
     }
 
     @ParameterizedTest

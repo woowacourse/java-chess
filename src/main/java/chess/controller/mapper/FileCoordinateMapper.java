@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.mapper;
 
 import chess.domain.board.FileCoordinate;
 
@@ -27,20 +27,17 @@ public enum FileCoordinateMapper {
 
     public static FileCoordinate findBy(String columnView) {
         return Arrays.stream(values())
-                .filter(it -> it.columnView.equals(columnView))
+                .filter(it -> it.columnView.equalsIgnoreCase(columnView))
                 .map(it -> it.fileCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
     }
 
-    static void validate(String columnView) {
-        if (isNotContain(columnView)) {
-            throw new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE);
-        }
-    }
-
-    private static boolean isNotContain(String columnView) {
+    public static FileCoordinate findBy(int columnNumber) {
         return Arrays.stream(values())
-                .noneMatch(x -> x.columnView.equals(columnView));
+                .map(it -> it.fileCoordinate)
+                .filter(it -> it.getColumnNumber() == columnNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
     }
 }

@@ -4,16 +4,16 @@ import chess.domain.board.Position;
 
 public class Queen extends Piece {
 
-    public Queen(Team team) {
-        super(team);
+    public Queen(Team team, Position position) {
+        super(team, position, PieceType.QUEEN);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        return (isStraight(sourcePosition, targetPosition)
-                || isDiagonal(sourcePosition, targetPosition))
-                && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameTeam(team);
+    public boolean canMove(Position targetPosition, Team team) {
+        return (position.isStraight(targetPosition)
+                || position.isDiagonal(targetPosition))
+                && isNotMyPosition(targetPosition)
+                && isDifferentTeam(team);
     }
 
     @Override
@@ -22,7 +22,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Piece move() {
-        return new Queen(getTeam());
+    public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(targetPosition, nowPlayingTeam, targetTeam);
+        return new Queen(team, targetPosition);
     }
 }

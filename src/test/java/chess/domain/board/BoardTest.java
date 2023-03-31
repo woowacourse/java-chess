@@ -4,11 +4,13 @@ import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 import java.util.Map;
 
-import static chess.domain.PositionFixture.*;
+import static chess.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -27,11 +29,11 @@ class BoardTest {
 
     @Test
     void 잘못된_위치를_입력하면_예외가_발생한다() {
-        Board board = new Board(Map.of(B_1, new Bishop(Team.WHITE)));
+        Board board = new Board(Map.of(B_1, new Bishop(Team.WHITE, B_1)));
 
         assertThatThrownBy(() -> board.findPiece(C_4))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 위치를 입력했습니다");
+                .hasMessage("잘못된 위치를 입력했습니다.");
     }
 
     @Test
@@ -57,5 +59,29 @@ class BoardTest {
 
         assertThat(board.findPiece(C_2)).isInstanceOf(Empty.class);
         assertThat(board.findPiece(C_4)).isInstanceOf(Pawn.class);
+    }
+
+    @Test
+    void 경로에_말이_포함되어있을_때_말을_움직일_수_없다() {
+        Board board = BoardFactory.createBoard();
+        assertThatThrownBy(() -> board.movePiece(B_1, B_3, Team.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 위치를 입력했습니다.");
+    }
+
+    @Test
+    void 경로에_아무것도_없다면_말을_움직일_수_있다() {
+        Board board = BoardFactory.createBoard();
+        board.movePiece(B_2, B_3, Team.WHITE);
+
+        assertThat(board.findPiece(B_2)).isInstanceOf(Empty.class);
+        assertThat(board.findPiece(B_3)).isInstanceOf(Pawn.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"BISHOP:4", "KING:2", "PAWN:16"}, delimiter = ':')
+    void board에_체스말이_몇_개_있는지_알_수_있다(PieceType pieceType, int pieceCount) {
+        Board board = BoardFactory.createBoard();
+        assertThat(board.getLeftPieceCount(pieceType)).isEqualTo(pieceCount);
     }
 }

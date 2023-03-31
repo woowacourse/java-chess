@@ -7,54 +7,56 @@ public abstract class Piece {
     private static final String INVALID_POSITION_MESSAGE = "잘못된 위치를 입력했습니다.";
     private static final String INVALID_PIECE_MOVE_MESSAGE = "본인의 말만 옮길 수 있습니다.";
 
-    private final Team team;
+    protected final Team team;
+    protected final Position position;
+    protected final PieceType pieceType;
 
-    protected Piece(Team team) {
+    protected Piece(Team team, Position position, PieceType pieceType) {
         this.team = team;
+        this.position = position;
+        this.pieceType = pieceType;
     }
 
-    public abstract boolean canMove(Position sourcePosition, Position targetPosition, Team team);
+    public abstract boolean canMove(Position targetPosition, Team team);
 
     public abstract boolean isEmpty();
 
-    public abstract Piece move();
+    public abstract Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam);
 
-    public boolean isSameTeam(Team team) {
-        return this.team == team;
+    protected void validate(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validateCanMove(targetPosition, targetTeam);
+        validateTeam(nowPlayingTeam);
     }
 
-    public void validateCanMove(Position sourcePosition, Position targetPosition, Team team) {
-        if (!canMove(sourcePosition, targetPosition, team)) {
+    private void validateCanMove(Position targetPosition, Team targetTeam) {
+        if (!canMove(targetPosition, targetTeam)) {
             throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
     }
 
-    public void validateTeam(Team team) {
-        if (!isSameTeam(team)) {
+    private void validateTeam(Team nowPlayingTeam) {
+        if (isDifferentTeam(nowPlayingTeam)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVE_MESSAGE);
         }
     }
 
-    protected boolean isNotMyPosition(Position sourcePosition, Position targetPosition) {
-        return !sourcePosition.equals(targetPosition);
+    protected boolean isNotMyPosition(Position targetPosition) {
+        return !position.equals(targetPosition);
     }
 
-    protected boolean isDiagonal(Position sourcePosition, Position targetPosition) {
-        int columnDifference = Math.abs(sourcePosition.getColumn() - targetPosition.getColumn());
-        int rowDifference = Math.abs(sourcePosition.getRow() - targetPosition.getRow());
-        return columnDifference == rowDifference;
-    }
-
-    protected boolean isStraight(Position sourcePosition, Position targetPosition) {
-        return (sourcePosition.getFileCoordinate() == targetPosition.getFileCoordinate()
-                || sourcePosition.getRankCoordinate() == targetPosition.getRankCoordinate());
-    }
-
-    protected boolean isNotSameTeam(Team team) {
-        return this.team != team;
+    protected boolean isDifferentTeam(Team targetTeam) {
+        return team != targetTeam;
     }
 
     public Team getTeam() {
         return team;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

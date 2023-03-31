@@ -6,20 +6,20 @@ public class King extends Piece {
 
     private static final int BOUND = 1;
 
-    public King(Team team) {
-        super(team);
+    public King(Team team, Position position) {
+        super(team, position, PieceType.KING);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition, Team team) {
-        return isDifferenceUnderBound(sourcePosition, targetPosition)
-                && isNotMyPosition(sourcePosition, targetPosition)
-                && isNotSameTeam(team);
+    public boolean canMove(Position targetPosition, Team team) {
+        return isDifferenceUnderBound(targetPosition)
+                && isNotMyPosition(targetPosition)
+                && isDifferentTeam(team);
     }
 
-    public boolean isDifferenceUnderBound(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.calculateColumnDifferenceWith(targetPosition) <= BOUND
-                && sourcePosition.calculateRowDifferenceWith(targetPosition) <= BOUND;
+    public boolean isDifferenceUnderBound(Position targetPosition) {
+        return position.calculateColumnDistance(targetPosition) <= BOUND
+                && position.calculateRowDistance(targetPosition) <= BOUND;
     }
 
     @Override
@@ -28,7 +28,8 @@ public class King extends Piece {
     }
 
     @Override
-    public Piece move() {
-        return new King(getTeam());
+    public Piece move(Position targetPosition, Team nowPlayingTeam, Team targetTeam) {
+        validate(targetPosition, nowPlayingTeam, targetTeam);
+        return new King(team, targetPosition);
     }
 }

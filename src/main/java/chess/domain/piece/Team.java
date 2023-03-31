@@ -20,7 +20,7 @@ public enum Team {
         this.direction = direction;
     }
 
-    public static Team of(RankCoordinate rankCoordinate) {
+    public static Team from(RankCoordinate rankCoordinate) {
         return Arrays.stream(values())
                 .filter(team -> team.rankCoordinates.contains(rankCoordinate))
                 .findFirst()

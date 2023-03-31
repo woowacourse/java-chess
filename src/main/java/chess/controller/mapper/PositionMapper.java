@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.mapper;
 
 import chess.domain.board.Position;
 
@@ -33,8 +33,6 @@ public class PositionMapper {
         if (position.size() != POSITION_SIZE) {
             throw new IllegalArgumentException(INVALID_POSITION_MESSAGE);
         }
-        FileCoordinateMapper.validate(position.get(FILE_COORDINATE_INDEX));
-        RankCoordinateMapper.validate(position.get(RANK_COORDINATE_INDEX));
     }
 
     public static void validate(List<String> input) {

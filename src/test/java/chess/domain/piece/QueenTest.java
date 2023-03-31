@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static chess.domain.PositionFixture.C_4;
+import static chess.PositionFixture.C_4;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -20,13 +20,20 @@ class QueenTest {
     @CsvSource(value = {"A:TWO:true", "E:SIX:true", "B:TWO:false", "C:FOUR:false", "B:SIX:false", "A:FOUR:true",
             "C:SIX:true"}, delimiter = ':')
     void 퀸이_움직일_수_있는지_알_수_있다(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate, boolean expect) {
-        Queen queen = new Queen(Team.WHITE);
-        assertThat(queen.canMove(C_4, new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
+        Queen queen = new Queen(Team.WHITE, C_4);
+        assertThat(queen.canMove(new Position(fileCoordinate, rankCoordinate), Team.EMPTY)).isEqualTo(expect);
     }
 
     @Test
     void Empty인지_알_수_있다() {
-        final var piece = new Queen(Team.WHITE);
+        final var piece = new Queen(Team.WHITE, C_4);
         assertThat(piece.isEmpty()).isFalse();
+    }
+
+    @Test
+    void 퀸을_움직일_수_있다() {
+        final var piece = new Queen(Team.WHITE, C_4);
+        assertThat(piece.move(new Position(FileCoordinate.A, RankCoordinate.TWO), Team.WHITE, Team.EMPTY))
+                .isInstanceOf(Queen.class);
     }
 }

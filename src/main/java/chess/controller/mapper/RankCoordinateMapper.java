@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.mapper;
 
 import chess.domain.board.RankCoordinate;
 
@@ -33,14 +33,11 @@ public enum RankCoordinateMapper {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
 
-    static void validate(String rowView) {
-        if (isNotContain(rowView)) {
-            throw new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE);
-        }
-    }
-
-    private static boolean isNotContain(String rowView) {
+    public static RankCoordinate findBy(int rowNumber) {
         return Arrays.stream(values())
-                .noneMatch(x -> x.rowView.equals(rowView));
+                .map(it -> it.rankCoordinate)
+                .filter(it -> it.getRowNumber() == rowNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_COORDINATE_MESSAGE));
     }
 }

@@ -1,6 +1,9 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum FileCoordinate {
     A(1),
@@ -26,6 +29,20 @@ public enum FileCoordinate {
                 .filter(it -> it.columnNumber == columnNumber)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_COORDINATE_MESSAGE));
+    }
+
+    public static List<FileCoordinate> getSortedFileCoordinates() {
+        return Arrays.stream(values())
+                .sorted(Comparator.comparing(FileCoordinate::getColumnNumber))
+                .collect(Collectors.toList());
+    }
+
+    public int compare(FileCoordinate other) {
+        return Integer.compare(other.columnNumber, this.columnNumber);
+    }
+
+    public int calculateDistance(FileCoordinate other) {
+        return Math.abs(this.columnNumber - other.columnNumber);
     }
 
     public int getColumnNumber() {
