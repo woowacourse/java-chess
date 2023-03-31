@@ -1,6 +1,6 @@
-package chess.view.output;
+package chess.view.output.result;
 
-import chess.controller.mapper.response.result.MatchResultMapper;
+import chess.view.output.result.MatchResultMapper;
 import chess.domain.game.result.GameResult;
 import chess.domain.game.result.MatchResult;
 import chess.domain.piece.Camp;

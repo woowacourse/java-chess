@@ -12,8 +12,8 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.output.ChessBoardStateFormatter;
-import chess.view.output.GameResultFormatter;
+import chess.view.output.board.ChessBoardStateFormatter;
+import chess.view.output.result.GameResultFormatter;
 import java.util.List;
 import java.util.Map;
 

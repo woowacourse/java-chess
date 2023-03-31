@@ -1,7 +1,7 @@
-package chess.view.output;
+package chess.view.output.board;
 
-import chess.controller.mapper.response.board.BlackPieceSymbolMapper;
-import chess.controller.mapper.response.board.WhitePieceSymbolMapper;
+import chess.view.output.board.BlackPieceSymbolMapper;
+import chess.view.output.board.WhitePieceSymbolMapper;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
