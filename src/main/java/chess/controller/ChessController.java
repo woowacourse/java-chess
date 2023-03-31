@@ -7,23 +7,20 @@ import chess.view.OutputView;
 
 public class ChessController {
 
-	public void run() {
-		final ChessService chessService = new ChessService();
-		OutputView.printInitialMessage();
-		Command latestCommand;
-		do {
-			latestCommand = runInputCommand(chessService);
-			if (chessService.isGameDone()) {
-				OutputView.printWinner(chessService.getFinalWinner().toString());
-				return;
-			}
-		} while (latestCommand != Command.END);
+	public void run(final ChessService chessService) {
+		if (!chessService.isGameStarted()) {
+			OutputView.printInitialMessage();
+		}
+		runInputCommand(chessService);
+		if (chessService.isGameDone()) {
+			OutputView.printWinner(chessService.getFinalWinner().toString());
+		}
 	}
 
-	private Command runInputCommand(final ChessService chessService) {
-		return ExceptionHandler.RetryIfThrowsException(() -> {
+	private void runInputCommand(final ChessService service) {
+		ExceptionHandler.RetryIfThrowsException(() -> {
 			Command command = readCommand();
-			return command.run(chessService);
+			return command.run(service);
 		});
 	}
 

@@ -1,6 +1,6 @@
 package chess.repository.entity;
 
-public class MoveEntity {
+public class MoveEntity implements Entity {
 
 	private final long id;
 	private final long game_id;

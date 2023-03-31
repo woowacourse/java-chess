@@ -1,5 +1,7 @@
 package chess.controller;
 
+import java.util.List;
+
 import chess.service.ChessService;
 import chess.domain.Position;
 import chess.view.OutputView;
@@ -9,13 +11,14 @@ public enum Command {
 
 	START {
 		public Command run(final ChessService chessService) {
-			if (chessService.checkLastGameExists()) {
+			List<String> names = ExceptionHandler.RetryIfThrowsException(InputView::readNames);
+			if (chessService.checkLastGameExists(names)) {
 				OutputView.printLoadMessage();
 				chessService.loadLastGame();
 				OutputView.printBoard(OutputRenderer.toViewBoardDto(chessService.getBoardAndTurn()));
 				return this;
 			}
-			chessService.initGame();
+			chessService.startGame(names);
 			OutputView.printBoard(OutputRenderer.toViewBoardDto(chessService.getBoardAndTurn()));
 			return this;
 		}
@@ -31,12 +34,13 @@ public enum Command {
 	},
 	STATUS {
 		public Command run(final ChessService chessService) {
-			OutputView.printTempResult(OutputRenderer.toTempResultDto(chessService.getTempResult()));
+			OutputView.printTempResult(OutputRenderer.toTempResultDto(chessService.getScoreAndWinnerResult()));
 			return this;
 		}
 	},
 	END {
 		public Command run(final ChessService chessService) {
+			chessService.terminate();
 			return this;
 		}
 	};

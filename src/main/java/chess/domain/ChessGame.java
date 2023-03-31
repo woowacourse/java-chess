@@ -1,9 +1,11 @@
 package chess.domain;
 
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
 import chess.domain.result.ScoreAndWinnerResult;
+import chess.repository.entity.MoveDto;
 
 public class ChessGame {
 
@@ -24,6 +26,15 @@ public class ChessGame {
 		changeState(GameState.GAME_RUNNING);
 	}
 
+	public void movePiece(final List<MoveDto> moves) {
+		changeState(GameState.GAME_RUNNING);
+		moves.forEach(move -> {
+			Position source = new Position(move.getSourceColumn(), move.getSourceRow());
+			Position target = new Position(move.getTargetColumn(), move.getTargetRow());
+			movePiece(source, target);
+		});
+	}
+
 	public void movePiece(final Position source, final Position target) {
 		assertState(GameState.GAME_RUNNING);
 		board.checkIsMovable(team, source, target);
@@ -42,18 +53,34 @@ public class ChessGame {
 		this.state = state;
 	}
 
-	public ScoreAndWinnerResult getTempResult() {
+	public ScoreAndWinnerResult getScoreAndWinnerResult() {
 		assertState(GameState.GAME_RUNNING);
 		return ScoreAndWinnerResult.from(board.getBoard());
 	}
 
 	public Team getFinalWinner() {
-		assertState(GameState.GAME_END);
+		assertState(GameState.GAME_END, GameState.TERMINATED);
 		return team;
+	}
+
+	public void terminate() {
+		state = GameState.TERMINATED;
+	}
+
+	public boolean isUninitialized() {
+		return state == GameState.UNINITIALIZED;
+	}
+
+	public boolean isGameRunning() {
+		return state == GameState.GAME_RUNNING;
 	}
 
 	public boolean isGameDone() {
 		return state == GameState.GAME_END;
+	}
+
+	public boolean isTerminated() {
+		return state == GameState.TERMINATED;
 	}
 
 	public Map<Position, Piece> getBoard() {

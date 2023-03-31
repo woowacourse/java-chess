@@ -1,9 +1,9 @@
 package chess.repository.entity;
 
-public class UserEntity {
+public class UserEntity implements Entity {
 
-	private long id;
-	private String name;
+	private final long id;
+	private final String name;
 
 	public UserEntity(final long id, final String name) {
 		this.id = id;

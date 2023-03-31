@@ -115,15 +115,15 @@ class ChessGameTest {
 
 			assertDoesNotThrow(() -> {
 				chessGame.movePiece(F2, F4);
-				chessGame.getTempResult();
+				chessGame.getScoreAndWinnerResult();
 				chessGame.movePiece(E7, E5);
-				chessGame.getTempResult();
+				chessGame.getScoreAndWinnerResult();
 				chessGame.movePiece(F4, F5);
-				chessGame.getTempResult();
+				chessGame.getScoreAndWinnerResult();
 				chessGame.movePiece(D8, H4);
-				chessGame.getTempResult();
+				chessGame.getScoreAndWinnerResult();
 				chessGame.movePiece(F5, F6);
-				chessGame.getTempResult();
+				chessGame.getScoreAndWinnerResult();
 				chessGame.movePiece(H4, E1);
 				chessGame.getFinalWinner();
 			});

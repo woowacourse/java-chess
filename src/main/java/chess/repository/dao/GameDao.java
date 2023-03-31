@@ -3,6 +3,8 @@ package chess.repository.dao;
 import java.util.Collections;
 import java.util.List;
 
+import chess.repository.entity.GameEntity;
+
 public class GameDao {
 
 	private final JdbcTemplate jdbcTemplate;
@@ -11,10 +13,11 @@ public class GameDao {
 		this.jdbcTemplate = new JdbcTemplate();
 	}
 
-	public long save() {
+	public GameEntity save() {
 		final String query = "INSERT INTO game(id) VALUES(DEFAULT)";
 		final List<Object> parameters = Collections.emptyList();
-		return jdbcTemplate.executeUpdate(query, parameters);
+		long gameId = jdbcTemplate.executeUpdate(query, parameters);
+		return new GameEntity(gameId);
 	}
 
 	public void deleteById(long gameId) {
