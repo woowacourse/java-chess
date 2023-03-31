@@ -45,9 +45,9 @@ public class UserGameDao {
 			});
 	}
 
-	public void deleteById(Long userGameId) {
-		final String query = "DELETE FROM user_game WHERE id = (?)";
-		final List<Object> parameters = List.of(userGameId);
+	public void deleteByGameId(final Long gameId) {
+		final String query = "DELETE FROM user_game WHERE game_id = (?)";
+		final List<Object> parameters = List.of(gameId);
 		jdbcTemplate.executeUpdateForDelete(query, parameters);
 	}
 }

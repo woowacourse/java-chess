@@ -7,7 +7,8 @@ import chess.repository.entity.Entity;
 
 public class EntityCache {
 
-	public static final String USER_GAME_KEY_NAME = "userGame";
+	public static final String USER_GAME_KEY_NAME1 = "userGame1";
+	public static final String USER_GAME_KEY_NAME2 = "userGame2";
 	public static final String GAME_KEY_NAME = "game";
 
 	private final Map<String, Entity> entityCache;

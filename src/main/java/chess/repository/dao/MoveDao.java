@@ -55,8 +55,8 @@ public class MoveDao {
 			});
 	}
 
-	public void deleteByGameId(Long gameId) {
-		final String query = "DELETE FROM move WHERE id = (?)";
+	public void deleteByGameId(final Long gameId) {
+		final String query = "DELETE FROM move WHERE game_id = (?)";
 		final List<Object> parameters = List.of(gameId);
 		jdbcTemplate.executeUpdateForDelete(query, parameters);
 	}

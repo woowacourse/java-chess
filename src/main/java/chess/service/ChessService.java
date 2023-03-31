@@ -42,7 +42,6 @@ public class ChessService {
 		return !game.isUninitialized();
 	}
 
-	// TODO: List<String> 으로 넘어오지 않게 dto 필요
 	public boolean checkLastGameExists(final List<String> names) {
 		if (isDbNotConnected) {
 			return false;
@@ -70,7 +69,8 @@ public class ChessService {
 		List<UserGameEntity> userGameEntities = userGameDao.findByUserId1OrUserId2(user1.getId(), user2.getId());
 		boolean lastGameExists = (userGameEntities.size() != 0);
 		if (lastGameExists) {
-			cacheEntities(Map.of(USER_GAME_KEY_NAME, userGameEntities.get(userGameEntities.size() - 1)));
+			UserGameEntity lastUserGame = userGameEntities.get(userGameEntities.size() - 1);
+			cacheEntities(Map.of(USER_GAME_KEY_NAME1, lastUserGame));
 		}
 		return lastGameExists;
 	}
@@ -80,7 +80,8 @@ public class ChessService {
 	}
 
 	public void loadLastGame() {
-		UserGameEntity userGame = (UserGameEntity)entityCache.get(USER_GAME_KEY_NAME);
+		UserGameEntity userGame = (UserGameEntity)entityCache.get(USER_GAME_KEY_NAME1);
+		cacheEntities(Map.of(GAME_KEY_NAME, new GameEntity(userGame.getGameId())));
 		long gameId = userGame.getGameId();
 		MoveDao moveDao = new MoveDao();
 		List<MoveEntity> moveEntities = moveDao.findByGameId(gameId);
@@ -99,17 +100,13 @@ public class ChessService {
 	}
 
 	public void startGame(final List<String> names) {
-		startGame();
+		game.initialize();
 		if (isDbNotConnected) {
 			return;
 		}
 		List<UserEntity> userEntities = addIfNotRegistered(names);
 		GameEntity gameEntity = getNewGameEntity();
 		saveUserGame(gameEntity.getId(), userEntities);
-	}
-
-	public void startGame() {
-		game.initialize();
 	}
 
 	private List<UserEntity> addIfNotRegistered(final List<String> names) {
@@ -131,7 +128,8 @@ public class ChessService {
 		if (userDao.findByName(name).getName() == null) {
 			UserEntityBuilder userEntityBuilder = new UserEntityBuilder();
 			userEntity = userEntityBuilder.name(name).build();
-			userDao.save(userEntity);
+			long userId = userDao.save(userEntity);
+			userEntity = userEntityBuilder.id(userId).build();
 		}
 		cacheEntities(Map.of(name, userEntity));
 	}
@@ -147,19 +145,29 @@ public class ChessService {
 		List<Long> userIds = userEntities.stream()
 			.map(UserEntity::getId)
 			.collect(Collectors.toList());
-		for (Long userId : userIds) {
-			saveUserGame(gameId, userId);
-		}
+		saveTwoUserGames(gameId, userIds);
 	}
 
-	private void saveUserGame(final long gameId, final long userId) {
+	private void saveTwoUserGames(final long gameId, final List<Long> userIds) {
 		UserGameDao userGameDao = new UserGameDao();
 		UserGameEntityBuilder userGameEntityBuilder = new UserGameEntityBuilder();
-		UserGameEntity userGameEntity = userGameEntityBuilder.userId(userId)
-			.userId(userId)
+		long userId1 = userIds.get(0);
+		UserGameEntity userGameEntity1 = userGameEntityBuilder.userId(userId1)
+			.userId(userId1)
 			.gameId(gameId)
 			.build();
-		userGameDao.save(userGameEntity);
+		userGameDao.save(userGameEntity1);
+
+		long userId2 = userIds.get(1);
+		UserGameEntity userGameEntity2 = userGameEntityBuilder.userId(userId2)
+			.userId(userId2)
+			.gameId(gameId)
+			.build();
+		userGameDao.save(userGameEntity2);
+		cacheEntities(Map.of(
+			USER_GAME_KEY_NAME1, userGameEntity1,
+			USER_GAME_KEY_NAME2, userGameEntity2
+		));
 	}
 
 	public void movePiece(final Position source, final Position target) {
@@ -194,7 +202,7 @@ public class ChessService {
 	}
 
 	public boolean isGameDone() {
-		if (game != null && game.isGameDone()) {
+		if (game.isGameDone()) {
 			deleteMovesIfDbConnected();
 			return true;
 		}
@@ -202,20 +210,20 @@ public class ChessService {
 	}
 
 	public boolean isGameTerminated() {
-		return game != null && game.isTerminated();
+		return game.isTerminated();
 	}
 
 	private void deleteMovesIfDbConnected() {
 		if (isDbNotConnected) {
 			return;
 		}
-		UserGameEntity userGameEntity = (UserGameEntity)entityCache.get(USER_GAME_KEY_NAME);
+		UserGameEntity userGameEntity1 = (UserGameEntity)entityCache.get(USER_GAME_KEY_NAME1);
 		UserGameDao userGameDao = new UserGameDao();
 		GameDao gameDao = new GameDao();
 		MoveDao moveDao = new MoveDao();
-		userGameDao.deleteById(userGameEntity.getId());
-		gameDao.deleteById(userGameEntity.getGameId());
-		moveDao.deleteByGameId(userGameEntity.getGameId());
+		userGameDao.deleteByGameId(userGameEntity1.getGameId());
+		gameDao.deleteById(userGameEntity1.getGameId());
+		moveDao.deleteByGameId(userGameEntity1.getGameId());
 	}
 
 	public void terminate() {
