@@ -4,13 +4,14 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Set;
 
 public final class Queen extends Piece {
 
-    private static final List<Direction> QUEEN_MOVABLE_DIRECTIONS = List.of(Direction.CROSS, Direction.DIAGONAL);
+    private static final Set<Direction> QUEEN_MOVABLE_DIRECTIONS = Set.of(Direction.CROSS, Direction.DIAGONAL);
 
     public Queen(Color color) {
-        super(PieceName.QUEEN, color);
+        super(PieceType.QUEEN, color);
     }
 
     @Override

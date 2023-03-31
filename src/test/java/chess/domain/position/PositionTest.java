@@ -11,19 +11,40 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("Position은 ")
 class PositionTest {
 
     @Test
     @DisplayName("캐싱된다.")
-    void getCachedPositionTest() {
+    void getCachedPositionByRowColumnTest() {
         // given
         Position position1 = Position.of(2, 2);
         Position position2 = Position.of(2, 2);
 
         // expect
         assertThat(position1).isSameAs(position2);
+    }
+
+    @Test
+    @DisplayName("문자열에 해당하는 Position을 반환할 수 있다.")
+    void getCachedPositionByStringTest_Success() {
+        // given
+        Position position1 = Position.of(2, 2);
+        Position position2 = Position.of("b2");
+
+        // expect
+        assertThat(position1).isSameAs(position2);
+    }
+
+    @Test
+    @DisplayName("문자열의 길이가 2가 아닐 때에는 Position을 예외가 발생한다.")
+    void getCachedPositionByStringTest_Fail() {
+        // expect
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Position.of("c11"))
+                .withMessage("[ERROR] 존재하지 않는 좌표값입니다.");
     }
 
     @Test
@@ -71,32 +92,6 @@ class PositionTest {
 
         // then
         assertThat(newPosition).isSameAs(Position.of(3, 4));
-    }
-
-    @Test
-    @DisplayName("왼쪽에 있는 Position을 반환할 수 있다.")
-    void moveLeftTest() {
-        // given
-        Position position = Position.of(4, 4);
-
-        // when
-        Position newPosition = position.moveLeft();
-
-        // then
-        assertThat(newPosition).isSameAs(Position.of(4, 3));
-    }
-
-    @Test
-    @DisplayName("오른쪽에 있는 Position을 반환할 수 있다.")
-    void moveRightTest() {
-        // given
-        Position position = Position.of(4, 4);
-
-        // when
-        Position newPosition = position.moveRight();
-
-        // then
-        assertThat(newPosition).isSameAs(Position.of(4, 5));
     }
 
     @Test

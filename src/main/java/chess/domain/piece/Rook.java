@@ -4,13 +4,14 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Set;
 
 public final class Rook extends Piece {
 
-    private static final List<Direction> ROOK_MOVABLE_DIRECTIONS = List.of(Direction.CROSS);
+    private static final Set<Direction> ROOK_MOVABLE_DIRECTIONS = Set.of(Direction.CROSS);
 
     public Rook(Color color) {
-        super(PieceName.ROOK, color);
+        super(PieceType.ROOK, color);
     }
 
     @Override

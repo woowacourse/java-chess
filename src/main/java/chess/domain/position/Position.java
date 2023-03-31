@@ -1,13 +1,11 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class Position {
+
+    private static final int POSITION_STRING_LENGTH = 2;
 
     private static final Map<Integer, Position> cache = new HashMap<>();
 
@@ -33,6 +31,15 @@ public final class Position {
         return cache.get(Objects.hash(row, column));
     }
 
+    public static Position of(String input) {
+        if (input.length() != POSITION_STRING_LENGTH) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 좌표값입니다.");
+        }
+        int row = RowToNumber.of(input.charAt(1));
+        int column = ColumnToNumber.of(input.charAt(0));
+        return cache.get(Objects.hash(row, column));
+    }
+
     public static List<Position> getAllPosition() {
         List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
         List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
@@ -40,7 +47,7 @@ public final class Position {
         return rows.stream()
                 .flatMap(row -> columns.stream()
                         .map(column -> Position.of(row, column)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public static List<Position> getRouteOf(Position start, Position end) {
@@ -89,14 +96,6 @@ public final class Position {
 
     public Position moveDown() {
         return Position.of(row - 1, column);
-    }
-
-    public Position moveLeft() {
-        return Position.of(row, column - 1);
-    }
-
-    public Position moveRight() {
-        return Position.of(row, column + 1);
     }
 
     public Position moveUpLeft() {
