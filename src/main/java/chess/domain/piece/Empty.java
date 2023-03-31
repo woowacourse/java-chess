@@ -4,7 +4,7 @@ import chess.domain.chessboard.SquareCoordinate;
 
 import java.util.List;
 
-public final class Empty implements PieceState {
+public final class Empty implements SquareState {
 
     private static final String EMPTY_EXCEPTION = "빈칸은 해당 동작을 수행할 수 없습니다.";
 
@@ -20,21 +20,21 @@ public final class Empty implements PieceState {
 
     @Override
     public boolean isSameTeam(final Team team) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+        return false;
     }
 
     @Override
     public Team getTeam() {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+        throw new IllegalStateException(EMPTY_EXCEPTION);
     }
 
     @Override
     public List<SquareCoordinate> findRoute(final SquareCoordinate from, final SquareCoordinate to) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+        throw new IllegalStateException(EMPTY_EXCEPTION);
     }
 
     @Override
-    public void validateRoute(final List<PieceState> routeSquares) {
-        throw new UnsupportedOperationException(EMPTY_EXCEPTION);
+    public void validateRoute(final List<SquareState> routeSquares) {
+        throw new IllegalStateException(EMPTY_EXCEPTION);
     }
 }

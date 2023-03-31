@@ -1,6 +1,7 @@
 package chess.domain.chessboard;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -44,6 +45,12 @@ public final class SquareCoordinate {
 
     public boolean isSameFile(final SquareCoordinate other) {
         return this.fileIndex == other.fileIndex;
+    }
+
+    public int countSameFiles(final List<SquareCoordinate> others) {
+        return (int) others.stream()
+                .filter(o -> this.fileIndex == o.fileIndex)
+                .count();
     }
 
     public boolean isPositiveDiagonal(final SquareCoordinate other) {

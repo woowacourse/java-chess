@@ -2,16 +2,13 @@ package chess.domain.piece;
 
 public enum Team {
 
-    BLACK(-1),
-    WHITE(1);
+    BLACK,
+    WHITE;
 
-    private final int pawnDirection;
-
-    Team(final int pawnDirection) {
-        this.pawnDirection = pawnDirection;
-    }
-
-    public int getPawnDirection() {
-        return pawnDirection;
+    public Team getNextTurn() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
     }
 }

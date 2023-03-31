@@ -6,6 +6,10 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static chess.domain.SquareCoordinates.A1;
+import static chess.domain.SquareCoordinates.A2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -23,8 +27,17 @@ class EmptyTest {
         final Empty empty = new Empty();
 
         //when & then
-        assertThatThrownBy(empty::getTeam)
-                .isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(empty::getTeam).isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void 빈칸의_경로에_관해_물으면_예외가_발생한다() {
+        //given
+        final Empty empty = new Empty();
+
+        //when & then
+        assertThatThrownBy(() -> empty.findRoute(A1, A2)).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> empty.validateRoute(List.of(new Empty()))).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
