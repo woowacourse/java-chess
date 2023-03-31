@@ -22,7 +22,7 @@ public class PieceResponseMapper {
 
     public static PieceResponse map(Position position, Piece piece) {
         int fileIndex = position.getFile().getIndex();
-        int rankIndex = position.getFile().getIndex();
+        int rankIndex = position.getRank().getIndex();
         return new PieceResponse(fileIndex, rankIndex, mapLetter(piece), piece.hasTeam(Team.WHITE));
     }
 
