@@ -37,7 +37,7 @@ public final class PieceCache {
     }
 
     private static void addKing(final Column column, final Color color) {
-        board.put(Position.of(ROW_4, column), Knight.from(color));
+        board.put(Position.of(ROW_4, column), King.from(color));
 
     }
 

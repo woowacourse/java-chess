@@ -55,4 +55,8 @@ public enum Column {
     public int diff(final Column column) {
         return index - column.index;
     }
+
+    public String getType() {
+        return type;
+    }
 }

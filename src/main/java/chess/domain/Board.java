@@ -6,14 +6,15 @@ import chess.domain.direction.BasicDirection;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static chess.domain.PieceType.EMPTY;
 import static chess.domain.PieceType.PAWN;
 
 public final class Board {
+    private static final int PAWN_MIN_DUPLICATED_COUNT = 2;
+
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -27,7 +28,7 @@ public final class Board {
         return new Board(board);
     }
 
-    public void move(final Position source, final Position target, final Color currentPlayer) {
+    public Piece move(final Position source, final Position target, final Color currentPlayer) {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
@@ -37,6 +38,7 @@ public final class Board {
 
         board.put(target, sourcePiece);
         board.put(source, Empty.create());
+        return targetPiece;
     }
 
     private void validateInvalidColor(final Color currentPlayer, final Piece sourcePiece, final Piece targetPiece) {
@@ -79,6 +81,23 @@ public final class Board {
             return targetPiece.isSamePieceType(EMPTY);
         }
         return targetPiece.isNotSamePieceType(EMPTY);
+    }
+
+    public int countPawnDuplicatedColumn(final Color color) {
+        final Map<Row, Long> pawnCount = board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameColor(color))
+                .filter(entry -> entry.getValue().isSamePieceType(PAWN))
+                .collect(Collectors.groupingBy(entry -> entry.getKey().getRow(), Collectors.counting()));
+
+        return calculatePawnDuplicatedCounts(pawnCount);
+    }
+
+    private int calculatePawnDuplicatedCounts(final Map<Row, Long> pawnCount) {
+        return Math.toIntExact(pawnCount.values()
+                .stream()
+                .filter(count -> count >= PAWN_MIN_DUPLICATED_COUNT)
+                .reduce(0L, Long::sum));
     }
 
     public Map<Position, Piece> getBoard() {

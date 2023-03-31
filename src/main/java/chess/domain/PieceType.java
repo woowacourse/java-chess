@@ -1,11 +1,32 @@
 package chess.domain;
 
+import chess.domain.piece.*;
+import chess.domain.point.Point;
+
+import java.util.function.Function;
+
 public enum PieceType {
-    PAWN,
-    ROOK,
-    KNIGHT,
-    BISHOP,
-    QUEEN,
-    KING,
-    EMPTY
+    PAWN(Point.create(1), Pawn::from),
+    ROOK(Point.create(5), Rook::from),
+    KNIGHT(Point.create(2.5), Knight::from),
+    BISHOP(Point.create(3), Bishop::from),
+    QUEEN(Point.create(9), Queen::from),
+    KING(Point.create(0), King::from),
+    EMPTY(Point.create(0), color -> Empty.create());
+
+    private final Point point;
+    private final Function<Color, Piece> createPiece;
+
+    PieceType(final Point point, final Function<Color, Piece> createPiece) {
+        this.point = point;
+        this.createPiece = createPiece;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public Piece newInstance(final Color color) {
+        return createPiece.apply(color);
+    }
 }

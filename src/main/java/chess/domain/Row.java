@@ -61,4 +61,8 @@ public enum Row {
     public int diff(final Row row) {
         return index - row.index;
     }
+
+    public String getType() {
+        return type;
+    }
 }

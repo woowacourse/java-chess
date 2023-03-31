@@ -22,14 +22,10 @@ public final class Knight extends Piece {
     protected List<Position> createMovablePositions(final Position source, final Position target) {
         final Direction direction = KnightDirection.from(source, target);
 
-        if (isMovable(source, target, direction)) {
+        if (source.isRangeOk(direction)) {
             return List.of(source.move(direction));
         }
 
         return Collections.emptyList();
-    }
-
-    private boolean isMovable(final Position source, final Position target, final Direction direction) {
-        return source.isRangeOk(direction) && target.equals(source.move(direction));
     }
 }

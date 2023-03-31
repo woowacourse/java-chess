@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql-server
+    ports:
+      - "3306:13306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chess
+      MYSQL_USER: hyena
+      MYSQL_PASSWORD: root
+      TZ: Asia/Seoul
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/config:/etc/mysql/conf.d
+      - ./mysql/init:/docker-entrypoint-initdb.d

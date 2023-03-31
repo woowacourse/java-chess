@@ -3,7 +3,6 @@ package chess.domain.direction;
 import chess.domain.Position;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum BasicDirection implements Direction {
     NORTH(0, -1),
@@ -15,42 +14,48 @@ public enum BasicDirection implements Direction {
     SOUTH_WEST(-1, 1),
     SOUTH_EAST(1, 1);
 
-    private static final List<Direction> diagonals = List.of(NORTH_WEST, NORTH_EAST, SOUTH_WEST, SOUTH_EAST);
+    private final int rowDirection;
+    private final int columnDirection;
 
-    private final int rowIndex;
-    private final int columnIndex;
-
-    BasicDirection(final int rowIndex, final int columnIndex) {
-        this.rowIndex = rowIndex;
-        this.columnIndex = columnIndex;
+    BasicDirection(final int rowDirection, final int columnDirection) {
+        this.rowDirection = rowDirection;
+        this.columnDirection = columnDirection;
     }
 
     public static Direction from(final Position source, final Position target) {
-        final int rowDirection = source.findDirection(target.getRow());
-        final int columnDirection = source.findDirection(target.getColumn());
+        final int rowDiff = target.diff(source.getRow());
+        final int columnDiff = target.diff(source.getColumn());
+        final int greaterDiff = Math.max(Math.abs(rowDiff), Math.abs(columnDiff));
+        final int rowDirection = calculateDirection(rowDiff, greaterDiff);
+        final int columnDirection = calculateDirection(columnDiff, greaterDiff);
 
         return Arrays.stream(BasicDirection.values())
-                .filter(direction -> direction.isSame(rowDirection, columnDirection))
+                .filter(current -> current.rowDirection == rowDirection && current.columnDirection == columnDirection)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재할 수 없는 방향입니다."));
     }
 
-    public static boolean isDiagonal(final Position source, final Position target) {
-        final Direction direction = from(source, target);
-        return diagonals.contains(direction);
+    private static int calculateDirection(final int value, final int greaterValue) {
+        if (greaterValue == Math.abs(value)) {
+            return value / greaterValue;
+        }
+        return value;
     }
 
-    private boolean isSame(final int otherRowIndex, final int otherColumnIndex) {
-        return this.rowIndex == otherRowIndex && this.columnIndex == otherColumnIndex;
+    public static boolean isDiagonal(final Position source, final Position target) {
+        final int rowDiff = source.diff(target.getRow());
+        final int columnDiff = source.diff(target.getColumn());
+
+        return Math.abs(rowDiff) == Math.abs(columnDiff);
     }
 
     @Override
     public int getRowIndex() {
-        return rowIndex;
+        return rowDirection;
     }
 
     @Override
     public int getColumnIndex() {
-        return columnIndex;
+        return columnDirection;
     }
 }

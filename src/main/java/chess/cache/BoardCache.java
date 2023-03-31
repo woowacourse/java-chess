@@ -6,25 +6,30 @@ import chess.domain.Row;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class BoardCache {
-    private static final Map<Position, Piece> board = new HashMap<>();
+    private static final Map<Position, Piece> board;
 
     private BoardCache() {
     }
 
     static {
-        for (final Column column : Column.values()) {
-            addRow(column);
-        }
+        board = Arrays.stream(Column.values())
+                .flatMap(BoardCache::createPositionWithRow)
+                .collect(Collectors.toMap(Function.identity(), BoardCache::createEmpty));
     }
 
-    private static void addRow(final Column column) {
-        for (Row row : Row.values()) {
-            board.put(Position.of(row, column), Empty.create());
-        }
+    private static Stream<Position> createPositionWithRow(final Column column) {
+        return Arrays.stream(Row.values()).map(row -> Position.of(row, column));
+    }
+
+    private static Piece createEmpty(Position ignore) {
+        return Empty.create();
     }
 
     public static Map<Position, Piece> create() {
