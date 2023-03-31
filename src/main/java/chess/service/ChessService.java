@@ -1,12 +1,11 @@
 package chess.service;
 
-import static chess.EntityCache.*;
+import static chess.service.EntityCache.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.EntityCache;
 import chess.repository.dao.GameDao;
 import chess.repository.dao.JdbcConnector;
 import chess.domain.ChessGame;

@@ -2,6 +2,7 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.service.ChessService;
+import chess.service.EntityCache;
 
 public class Application {
 
