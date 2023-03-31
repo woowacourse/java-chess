@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.cache.BoardCache;
+import chess.cache.PieceCache;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
@@ -13,6 +14,13 @@ public final class Board {
 
     private Board(final Map<Position, Piece> board) {
         this.board = board;
+    }
+
+    public static Board create() {
+        final Map<Position, Piece> board = new HashMap<>();
+        board.putAll(BoardCache.create());
+        board.putAll(PieceCache.create());
+        return new Board(board);
     }
 
     public static Board from(Map<Position, Piece> piece) {
@@ -29,8 +37,8 @@ public final class Board {
         validateInvalidColor(color, sourcePiece);
         validateInvalidMove(source, target, sourcePiece, targetPiece);
 
-        board.put(target, sourcePiece);
         board.put(source, Empty.create());
+        board.put(target, sourcePiece);
     }
 
     private void validateInvalidColor(final Color currentColor, final Piece sourcePiece) {
@@ -42,11 +50,11 @@ public final class Board {
     private void validateInvalidMove(final Position source, final Position target, final Piece sourcePiece, final Piece targetPiece) {
         final List<Position> positions = sourcePiece.findMoveAblePositions(source, target, targetPiece);
 
-        final boolean isMoveAble = positions.subList(0, positions.indexOf(target))
+        final boolean isNotMoveAble = positions.subList(0, positions.indexOf(target))
                 .stream()
                 .anyMatch(this::isBlocked);
 
-        if (isMoveAble) {
+        if (isNotMoveAble) {
             throw new IllegalArgumentException("이동 위치가 다른 기물에 의해 막혀 있습니다.");
         }
     }
@@ -57,5 +65,9 @@ public final class Board {
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public Piece getPiece(Position position) {
+        return board.get(position);
     }
 }

@@ -1,36 +1,68 @@
 package chess.controller;
 
-import chess.domain.state.CommandProcessor;
-import chess.domain.state.StateProcessor;
+import chess.domain.ChessGame;
+import chess.domain.Color;
+import chess.dto.CommandDto;
+import chess.dto.ScoreDto;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public final class Controller {
-    private final CommandProcessor commandProcessor;
-    private final StateProcessor stateProcessor;
+    private final CommandController commandController;
+    private final ChessGame chessGame;
 
-    public Controller(final CommandProcessor commandProcessor, final StateProcessor stateProcessor) {
-        this.commandProcessor = commandProcessor;
-        this.stateProcessor = stateProcessor;
+    public Controller(final CommandController commandController, final ChessGame chessGame) {
+        this.commandController = commandController;
+        this.chessGame = chessGame;
     }
-
 
     public void run() {
         OutputView.printStartMessage();
 
         setup();
 
-        while (stateProcessor.isNotEnd()) {
-            retryOnError(() -> commandProcessor.execute(stateProcessor, InputView.inputGameState()));
-            OutputView.printChessBoard(stateProcessor.getBoard());
+        while (chessGame.isNotEnd()) {
+            retryOnError(() -> {
+                printStateInformation();
+                CommandDto command = InputView.inputGameState();
+                commandController.execute(command);
+            });
         }
     }
 
     private void setup() {
-        commandProcessor.register(Command.START, command -> stateProcessor.start());
-        commandProcessor.register(Command.END, command -> stateProcessor.end());
-        commandProcessor.register(Command.MOVE, stateProcessor::move);
+        commandController.register(Command.START, command -> {
+            chessGame.start();
+            OutputView.printChessBoard(chessGame.getBoard());
+        });
+        commandController.register(Command.END, command -> {
+            chessGame.end();
+            OutputView.printEnd();
+        });
+        commandController.register(Command.STATUS, command -> printStatus());
+        commandController.register(Command.MOVE, command -> {
+            chessGame.move(command);
+            OutputView.printChessBoard(chessGame.getBoard());
+        });
+    }
+
+    private void printStatus() {
+        if (chessGame.isGameEnd()) {
+            OutputView.printScore(ScoreDto.of(chessGame.calculateScore(Color.BLACK), chessGame.calculateScore(Color.WHITE), chessGame.getColor()));
+        }
+        if (chessGame.isNotGameEnd()) {
+            OutputView.printScore(ScoreDto.of(chessGame.calculateScore(Color.BLACK), chessGame.calculateScore(Color.WHITE)));
+        }
+    }
+
+    private void printStateInformation() {
+        if (chessGame.isRunning()) {
+            OutputView.printColor(chessGame.getColor());
+        }
+        if (chessGame.isGameEnd()) {
+            OutputView.printGameEnd();
+        }
     }
 
     private void retryOnError(Runnable runnable) {
@@ -38,7 +70,6 @@ public final class Controller {
             runnable.run();
         } catch (Exception e) {
             OutputView.printExceptionMessage(e.getMessage());
-            retryOnError(runnable);
         }
     }
 }
