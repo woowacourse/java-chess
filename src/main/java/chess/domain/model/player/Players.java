@@ -2,65 +2,27 @@ package chess.domain.model.player;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.dao.PieceDao;
-import chess.domain.dao.PieceDaoImpl;
-import chess.domain.dao.TurnDao;
 import chess.domain.model.Score;
 import chess.domain.model.piece.Piece;
 import chess.domain.model.position.Position;
-import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 public class Players {
 
-    private final TurnDao turnDao;
     private final List<Player> players;
     private Color current;
 
-    private Players(final List<Player> players, final TurnDao turnDao, final Color current) {
+    private Players(final List<Player> players, final Color current) {
         this.players = players;
         this.current = current;
-        this.turnDao = turnDao;
     }
 
-    public static Players of(Player whitePlayer, Player blackPlayer, TurnDao turnDao) {
-        return new Players(List.of(whitePlayer, blackPlayer), turnDao, turnDao.getCurrentTurn());
+    public static Players of(Player whitePlayer, Player blackPlayer, Color current) {
+        return new Players(List.of(whitePlayer, blackPlayer), current);
     }
 
-    private void validateMovingRoute(final Position fromPosition, final Position toPosition) {
-        List<Integer> directionVector = calculateDirectionVector(fromPosition, toPosition);
-        validateEachPositions(fromPosition, toPosition, directionVector);
-    }
-
-    private List<Integer> calculateDirectionVector(final Position fromPosition, final Position toPosition) {
-        int diffFile = toPosition.calculateFileDistance(fromPosition);
-        int diffRank = toPosition.calculateRankDistance(fromPosition);
-
-        BigInteger rankAndFileGcd = BigInteger.valueOf(Math.abs(diffFile)).gcd(BigInteger.valueOf(Math.abs(diffRank)));
-        int fileDirection = diffFile / rankAndFileGcd.intValue();
-        int rankDirection = diffRank / rankAndFileGcd.intValue();
-        return List.of(fileDirection, rankDirection);
-    }
-
-    private void validateEachPositions(final Position fromPosition, final Position toPosition,
-                                       final List<Integer> directionVector) {
-        Integer fileDirection = directionVector.get(0);
-        Integer rankDirection = directionVector.get(1);
-        Position tempPosition = fromPosition.move(fileDirection, rankDirection);
-
-        while (!tempPosition.equals(toPosition)) {
-            validateIsEmpty(tempPosition);
-            tempPosition = tempPosition.move(fileDirection, rankDirection);
-        }
-    }
-
-    private void validateIsEmpty(final Position tempPosition) {
-        if (isAlreadyExistPiece(tempPosition)) {
-            throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
-        }
-    }
-
-    private boolean isAlreadyExistPiece(final Position tempPosition) {
+    public boolean isAlreadyExistPiece(final Position tempPosition) {
         return getAllPosition().stream()
                 .anyMatch(position -> position.equals(tempPosition));
     }
@@ -71,45 +33,22 @@ public class Players {
                 .collect(toList());
     }
 
-    private Position findByPosition(final Position foundPosition) {
-        return getAllPosition().stream()
-                .filter(position -> position.equals(foundPosition))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
-    }
-
-    private Player findPlayerByPosition(final Position findPosition) {
+    public Optional<Player> findPlayerByPosition(final Position findPosition) {
         return players.stream()
                 .filter(player -> player.hasPositionPiece(findPosition))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("위치를 다시 확인해주세요."));
+                .findFirst();
     }
 
-    public void movePiece(final Position source, final Position targetPosition) {
-        Position findPosition = findByPosition(source);
-        validatePositions(findPosition, targetPosition);
-        move(findPosition, targetPosition);
-        changeTurn();
+    public Color changeTurn() {
+        current = Color.changeColor(current);
+        return current;
     }
 
-    private void changeTurn() {
-        Color changeColor = Color.changeColor(current);
-        turnDao.update(changeColor);
-    }
-
-    private void move(final Position sourcePosition, final Position targetPosition) {
-        validateMovingRoute(sourcePosition, targetPosition);
-
-        Player findPlayer = findPlayerByPosition(sourcePosition);
-        Player anotherPlayer = getAnotherPlayer(findPlayer);
-        Piece changedPiece = findPlayer.movePiece(sourcePosition, targetPosition,
-                anotherPlayer.hasPositionPiece(targetPosition));
-
-        PieceDao dao = new PieceDaoImpl();
-        dao.updatePosition(changedPiece, sourcePosition);
-
-        anotherPlayer.removePiece(targetPosition)
-                .ifPresent(piece -> dao.deletePieceByColor(piece, anotherPlayer.getColor()));
+    public Piece movePiece(final Position sourcePosition, final Position targetPosition, final boolean isPresent) {
+        Player findPlayer = findPlayerByPosition(sourcePosition).orElseThrow();
+        Piece pieceOnSourcePosition = findPlayer.getPieceByPosition(sourcePosition);
+        pieceOnSourcePosition.move(targetPosition, current, isPresent);
+        return pieceOnSourcePosition;
     }
 
     private Player getAnotherPlayer(final Player findPlayer) {
@@ -119,11 +58,13 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("상대 플레이어를 찾을 수 없습니다."));
     }
 
-    private void validatePositions(final Position findPosition, final Position targetPosition) {
-        Player findPlayer = findPlayerByPosition(findPosition);
+    public void validateTurn(Player findPlayer) {
         if (!current.equals(findPlayer.getColor())) {
             throw new IllegalArgumentException("본인의 차례가 아닙니다.");
         }
+    }
+
+    public void validateTargetIsNotSameColor(Position targetPosition, Player findPlayer) {
         if (findPlayer.hasPositionPiece(targetPosition)) {
             throw new IllegalArgumentException("이동 위치에 이미 본인 기물이 있습니다.");
         }

@@ -19,7 +19,7 @@ public class PlayersFactory {
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
 
-        return Players.of(whitePlayer, blackPlayer, turnDao);
+        return Players.of(whitePlayer, blackPlayer, turnDao.getCurrentTurn());
     }
 
     private static Pieces initializeWhitePieces(PieceDao dao) {

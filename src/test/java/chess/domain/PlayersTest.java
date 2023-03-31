@@ -24,7 +24,7 @@ class PlayersTest {
         Pieces blackPieces = pieces.createBlackPieces();
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-        players = Players.of(whitePlayer, blackPlayer, new TurnDaoImpl());
+        players = Players.of(whitePlayer, blackPlayer, new TurnDaoImpl().getCurrentTurn());
     }
 
     @Test

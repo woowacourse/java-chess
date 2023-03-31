@@ -37,19 +37,13 @@ public class Player {
         return pieces.hasPosition(findPosition);
     }
 
-    public Piece movePiece(final Position findPosition, final Position targetPosition,
-                           final boolean doesTargetPositionHavePiece) {
-        Piece findPiece = pieces.findPiece(findPosition);
-        findPiece.move(targetPosition, color, doesTargetPositionHavePiece);
-        return findPiece;
-    }
-
     public boolean doesNotHaveKing() {
         return !pieces.containsKing();
     }
 
-    public Optional<Piece> removePiece(final Position removalPosition) {
-        return pieces.remove(removalPosition);
+    public Piece removePiece(final Position removalPosition) {
+        return pieces.remove(removalPosition)
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 플레이어의 기물이 없습니다."));
     }
 
     public Score getTotalScore() {
@@ -58,6 +52,10 @@ public class Player {
 
     public String getColorName() {
         return color.name();
+    }
+
+    public Piece getPieceByPosition(Position position) {
+        return pieces.findPiece(position);
     }
 
     @Override
