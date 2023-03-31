@@ -9,9 +9,9 @@ public enum PieceType {
     PAWN("p"),
     NOPIECE(".");
 
-    private String symbol;
+    private final String symbol;
 
-    PieceType(String symbol) {
+    PieceType(final String symbol) {
         this.symbol = symbol;
     }
 

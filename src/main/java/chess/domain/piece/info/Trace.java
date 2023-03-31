@@ -17,6 +17,13 @@ public class Trace {
         logs.add(new Log(turn, position));
     }
 
+    public boolean isSoonMovedTwo(final Turn turn, final Position position) {
+        if (logs.size() == 0) {
+            return false;
+        }
+        return logs.get(logs.size() - 1).isSoonMovedTwo(turn, position);
+    }
+
     public boolean hasLog() {
         return !logs.isEmpty();
     }

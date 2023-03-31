@@ -1,10 +1,10 @@
 package chess.domain;
 
-import chess.domain.piece.King;
 import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
 public class Square {
@@ -12,36 +12,36 @@ public class Square {
     private final Position position;
     private Piece piece;
 
-    public Square(final Position position, final Piece piece) {
+    Square(final Position position, final Piece piece) {
         this.position = position;
         this.piece = piece;
     }
 
-    public boolean isSamePosition(final Position position) {
+    boolean isSamePosition(final Position position) {
         return this.position.equals(position);
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return piece.findType() == PieceType.NOPIECE;
     }
 
-    public boolean isSameTeam(final Team team) {
+    boolean isSameTeam(final Team team) {
         return piece.isSameTeam(team);
     }
 
-    public boolean isKing() {
+    boolean isKing() {
         return piece.findType() == PieceType.KING;
     }
 
-    public boolean canAttack(final Position endPosition) {
-        return piece.canAttack(position, endPosition);
+    boolean canAttack(final Position destination) {
+        return piece.canAttack(position, destination);
     }
 
-    public boolean canMove(final Position startPosition, final Position endPosition) {
-        return piece.canMove(startPosition, endPosition);
+    boolean canMove(final Position source, final Position destination) {
+        return piece.canMove(source, destination);
     }
 
-    public void moveTo(Turn turn, final Square destination) {
+    void moveTo(Turn turn, final Square destination) {
         piece.addTrace(turn, position);
         destination.changePiece(piece);
         changePiece(NoPiece.getInstance());
@@ -49,6 +49,26 @@ public class Square {
 
     private void changePiece(Piece piece) {
         this.piece = piece;
+    }
+
+    void removePiece() {
+        this.piece = NoPiece.getInstance();
+    }
+
+    public boolean isSameFileAndTeam(File file, Team team) {
+        return position.isSameFile(file) && piece.isSameTeam(team);
+    }
+
+    public PieceType findPieceType() {
+        return piece.findType();
+    }
+
+    public Score findPieceScore() {
+        return piece.findScore();
+    }
+
+    boolean isSoonMovedTwo(final Turn turn) {
+        return piece.isSoonMovedTwo(turn, position);
     }
 
     public Piece getPiece() {

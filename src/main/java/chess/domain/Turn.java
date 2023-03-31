@@ -49,4 +49,8 @@ public class Turn {
     public int hashCode() {
         return Objects.hash(turn);
     }
+
+    public int getValue() {
+        return turn;
+    }
 }

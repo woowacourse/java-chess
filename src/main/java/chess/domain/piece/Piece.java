@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.Turn;
 import chess.domain.piece.info.Team;
 import chess.domain.piece.info.Trace;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public abstract class Piece {
 
@@ -23,13 +25,19 @@ public abstract class Piece {
         trace.add(turn, last);
     }
 
-    public Team getTeam() {
-        return team;
+    public boolean isSameTeam(final Team team) {
+        return this.team.equals(team);
     }
 
-    public boolean isSameTeam(final Team team) {
-        return this.team == team;
+    public boolean isSoonMovedTwo(final Turn turn, final Position position) {
+        return trace.isSoonMovedTwo(turn, position);
     }
 
     public abstract PieceType findType();
+
+    public abstract Score findScore();
+
+    public Team getTeam() {
+        return team;
+    }
 }

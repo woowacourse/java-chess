@@ -1,9 +1,15 @@
 package chess.domain;
 
+import chess.domain.piece.PieceType;
 import chess.domain.piece.info.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.strategy.ScoreCalculator;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -17,49 +23,72 @@ public class ChessBoard {
         this.turn = new Turn();
     }
 
-    public void move(final Position startPosition, final Position endPosition) {
-        validateAllyPiece(startPosition);
-        validateNotExistAllyAt(endPosition);
-        validateNotBlocked(startPosition, endPosition);
-        if (canAttack(startPosition, endPosition) || canMove(startPosition, endPosition)) {
-            executeMove(startPosition, endPosition);
+    public void move(final Position source, final Position destination) {
+        validateAllyPiece(source);
+        if (canEnPassant(source, destination)) {
+            Square target = findEnPassantTarget(source, destination);
+            target.removePiece();
+            executeMove(source, destination);
+            return;
         }
+        validateNotExistAllyAt(destination);
+        validateNotBlocked(source, destination);
+        validateCanMove(source, destination);
+        executeMove(source, destination);
     }
 
-    private void validateAllyPiece(final Position startPosition) {
-        if (findSquareByPosition(startPosition).isSameTeam(turn.findCurrentEnemyTeam())) {
+    private boolean canEnPassant(final Position source, final Position destination) {
+        if (!findSquareByPosition(source).canAttack(destination)) {
+            return false;
+        }
+        Square target = findEnPassantTarget(source, destination);
+        return (target.findPieceType().equals(PieceType.PAWN)
+            && target.isSoonMovedTwo(turn));
+    }
+
+
+    private void validateAllyPiece(final Position source) {
+        if (findSquareByPosition(source).isSameTeam(turn.findCurrentEnemyTeam())) {
             throw new IllegalArgumentException("상대방의 기물은 이동시킬 수 없습니다.");
         }
     }
 
     private Square findSquareByPosition(final Position position) {
         return squares.stream()
-                .filter(square -> square.isSamePosition(position))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."));
+            .filter(square -> square.isSamePosition(position))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."));
     }
 
-    private void validateNotExistAllyAt(final Position endPosition) {
+    private Square findEnPassantTarget(final Position source, final Position destination) {
+        Position target = Position.enPassantTargetPosition(source, destination);
+        return squares.stream()
+            .filter(square -> square.isSamePosition(target))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("칸이 초기화되지 않았습니다."));
+    }
+
+    private void validateNotExistAllyAt(final Position destination) {
         final Team team = turn.findCurrentTeam();
-        if (isMyPiece(team, endPosition)) {
+        if (isMyPiece(team, destination)) {
             throw new IllegalArgumentException("도착지에 아군 기물이 있습니다.");
         }
     }
 
-    private boolean isMyPiece(final Team team, final Position endPosition) {
-        return findSquareByPosition(endPosition).isSameTeam(team);
+    private boolean isMyPiece(final Team team, final Position destination) {
+        return findSquareByPosition(destination).isSameTeam(team);
     }
 
-    private void validateNotBlocked(final Position startPosition, final Position endPosition) {
-        int diffFile = endPosition.calculateFileDistance(startPosition);
-        int diffRank = endPosition.calculateRankDistance(startPosition);
-        BigInteger gcd = BigInteger.valueOf(diffFile).gcd(BigInteger.valueOf(diffRank));
+    private void validateNotBlocked(final Position source, final Position destination) {
+        int diffFile = destination.calculateFileDistance(source);
+        int diffRank = destination.calculateRankDistance(source);
+        BigInteger gcd = BigInteger.valueOf(diffRank).gcd(BigInteger.valueOf(diffFile));
         int fileDirection = diffFile / gcd.intValue();
         int rankDirection = diffRank / gcd.intValue();
-        Position tempPosition = startPosition.move(rankDirection, fileDirection);
-        while (!tempPosition.equals(endPosition)) {
+        Position tempPosition = source.move(fileDirection, rankDirection);
+        while (!tempPosition.equals(destination)) {
             validateIsEmpty(tempPosition);
-            tempPosition = tempPosition.move(rankDirection, fileDirection);
+            tempPosition = tempPosition.move(fileDirection, rankDirection);
         }
     }
 
@@ -71,30 +100,51 @@ public class ChessBoard {
 
     private boolean isEmptyAt(final Position position) {
         return findSquareByPosition(position)
-                .isEmpty();
+            .isEmpty();
     }
 
-    private boolean canAttack(final Position startPosition, final Position endPosition) {
-        final Square userSquare = findSquareByPosition(startPosition);
-        final Square targetSquare = findSquareByPosition(endPosition);
+    private void validateCanMove(Position source, Position destination) {
+        if (!(canAttack(source, destination) || canMove(source, destination))) {
+            throw new IllegalArgumentException("이동할 수 없는 좌표입니다.");
+        }
+    }
+
+    private boolean canAttack(final Position source, final Position destination) {
+        final Square userSquare = findSquareByPosition(source);
+        final Square targetSquare = findSquareByPosition(destination);
         return targetSquare.isSameTeam(turn.findCurrentEnemyTeam())
-                && userSquare.canAttack(endPosition);
+            && userSquare.canAttack(destination);
     }
 
-    private boolean canMove(final Position startPosition, final Position endPosition) {
-        return isEmptyAt(endPosition) &&
-                findSquareByPosition(startPosition).canMove(startPosition, endPosition);
+    private boolean canMove(final Position source, final Position destination) {
+        return isEmptyAt(destination) &&
+            findSquareByPosition(source).canMove(source, destination);
     }
 
-    private void executeMove(final Position startPosition, final Position endPosition) {
-        findSquareByPosition(startPosition).moveTo(turn, findSquareByPosition(endPosition));
+    private void executeMove(final Position source, final Position destination) {
+        findSquareByPosition(source).moveTo(turn, findSquareByPosition(destination));
         turn = turn.next();
     }
 
-    public boolean isKingDead() {
+    public Team findWinner() {
+        if (isAllKingAlive()) {
+            return Team.EMPTY;
+        }
+        return turn.findCurrentEnemyTeam();
+    }
+
+    private boolean isAllKingAlive() {
         return squares.stream()
-                .filter(Square::isKing)
-                .count() < NUMBER_OF_PLAYER;
+            .filter(Square::isKing)
+            .count() == NUMBER_OF_PLAYER;
+    }
+
+    public Score calculateScoreByTeam(ScoreCalculator scoreCalculator, Team team) {
+        return scoreCalculator.calculateByTeam(squares, team);
+    }
+
+    public Team findTeamByTurn(){
+        return turn.findCurrentTeam();
     }
 
     public List<Square> getSquares() {

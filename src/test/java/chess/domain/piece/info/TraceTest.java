@@ -3,9 +3,9 @@ package chess.domain.piece.info;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Turn;
+import chess.domain.position.Rank;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class TraceTest {
             Trace trace = new Trace();
 
             //when
-            trace.add(new Turn(), Position.of(Rank.A, File.TWO));
+            trace.add(new Turn(), Position.of(File.A, Rank.TWO));
 
             //then
             assertThat(trace).extracting("logs",
@@ -38,7 +38,7 @@ public class TraceTest {
         void 기물을_움직인_Log가_있다면_true반환() {
             //given
             Trace trace = new Trace();
-            trace.add(new Turn(), Position.of(Rank.A, File.TWO));
+            trace.add(new Turn(), Position.of(File.A, Rank.TWO));
 
             //when
             boolean actual = trace.hasLog();

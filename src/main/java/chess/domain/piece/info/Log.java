@@ -12,4 +12,16 @@ public class Log {
         this.turn = turn;
         this.position = position;
     }
+
+    public boolean isSoonMovedTwo(final Turn turn, final Position position) {
+        return isSoonMoved(turn) && isMovedTwo(position);
+    }
+
+    private boolean isSoonMoved(final Turn turn) {
+        return this.turn.next().equals(turn);
+    }
+
+    private boolean isMovedTwo(final Position position) {
+        return Math.abs(position.calculateRankDistance(this.position)) == 2;
+    }
 }

@@ -12,14 +12,43 @@
 | 기물    | Piece     | 체스판의 말                           | (abstract) class |
 | 행     | File      | 체스판의 세로 위치 정보 (1 ~ 8)            | enum             |
 | 열     | Rank      | 체스판의 가로 위치 정보 (a ~ h)            | enum             |
+| 이동 범위 | MoveRange | 말이 이동할 수 있는 유형            | enum             |
 | 좌표    | Position  | 행과 열로 이루어진 체스판의 위치정보             | class            |
 | 칸     | Square    | 좌표와 기물 정보를 가지고 있는 체스판의 구성요소      | class            |
-| 체스 판  | ChessBoard | 칸을 가지고 있는 일급컬렉션                  | class            |
 | 턴     | Turn      | 체스 게임의 턴                         | class            |
-| 게임 상태 | GameState | 체스 게임의 상태                        | enum             |
+| 체스 판  | ChessBoard | 칸을 가지고 있는 보드            | class            |
+| 체스 판 생성기  | ChessBoardFactory | 체스 판을 초기화한다.                  | class            |
+| 게임 상태 | GameState | 체스 게임의 상태                        | interface             |
 | 체스 게임 | ChessGame | 체스 게임 진행을 관리                     | class            |
+| 점수 | Score | 팀의 점수                                      | class            |
+| 점수 계산기 | ScoreCalculator | 팀의 점수를 계산해서 반환한다.            | interface            |
 
-# 게임 용어 사전
+# 🔖DB 테이블 설계
+
+DB 이름 : chess
+
+- game 테이블
+
+> 각 게임에 대한 정보를 저장한다.
+
+| gameId | winner | state    |
+| ------ | ------ | -------- |
+| 233    | Black  | finished |
+| 234    | Empty  | running  |
+
+- moveHistory 테이블
+
+> 게임의 내에서 말의 이동 기록을 저장한다.
+
+| move_history_id | gameId | source | destination |
+| --- | --- | --- | --- |
+| 444 | 234 | a1 | a1 |
+| 445 | 234 | a2 | a2 |
+| … | … | … | … |
+| 462 | 234 | c8 | c8 |
+| 463 | 234 | d1 | d1 |
+
+# 📔게임 용어 사전
 
 - 체크(Check) : 킹이 다른 기물에게 공격을 받는 것
 - 승진(Promotion) : 폰은 체스판 반대편에 도달하면 다른 기물로 변할 수 있다.(모든 기물로 승진 가능)
@@ -31,18 +60,18 @@
 
 
 - 기물의 종류
-    - 킹(King)
+    - 킹(King) - 0점
     - 퀸(Queen) - 9점
     - 룩(Rook) - 5점
     - 비숍(Bishop) - 3점
     - 나이트(Knight) - 2.5점
-    - 폰(Pawn)
+    - 폰(Pawn) - 같은 세로줄에 같은 팀의 폰이 존재할 경우 0.5점, 그 외 1점
 
 <br>
 
-# 프로그램 흐름도
+# 🖌️프로그램 흐름도
 
-- 1단계 흐름도
+- 1,2단계 흐름도
 
 ```mermaid
 flowchart
@@ -51,26 +80,98 @@ E--> D
 D--> |end 입력 or 킹 사망| J[게임종료]
 ```
 
-# 클래스 다이어그램
+- 3단계 흐름도
+
+```mermaid
+flowchart
+
+subgraph ReadyState
+  A[명령어 소개 출력] --> B[유저의 명령 입력]-->C{명령어 유효성 검사}
+  C-->|잘못된 명령| EX[예외 처리]-->B
+end
+
+subgraph RunningState
+  E[체스판 출력]-->F[유저의 명령 입력]-->G{명령어 유효성 검사}-->|Move 명령|H(말 이동 로직 수행)-->I{King 사망여부 확인}-->|King이 죽지 않은 경우|E
+  G--> |status 명령| J(팀별 점수 환산 로직)-->K[점수 출력]-->F
+  G-->|잘못된 명령|EXX[예외 처리]-->F
+  
+end
+
+subgraph FinishedState
+  Z[게임종료]
+end
+D(체스판 초기화)-->A
+C-->|Start 명령|E
+I--> |킹 사망| Z
+G--> |end 명령|Z
+```
+
+- 4단계 흐름도
+
+```mermaid
+flowchart
+
+subgraph ReadyState
+  D(체스판 초기화)-->A[명령어 소개 출력]
+  A-->AA(끝나지 않은 게임이 DB에 존재하는지 여부를 가져온다)
+  AA--> B[유저의 명령 입력]
+  B-->C{명령어 유효성 검사}
+  C-->|그 외 잘못된 명령|EX[예외 처리]
+  EX-->B
+  C-->|start 명령|NEW(DB에 새로운 게임 추가)
+  C-->|끝나지 않은 게임이 DB에 존재할 때 load 명령|LOAD(체스판 로드)
+end
+
+subgraph RunningState
+  E[체스판 출력]-->F[유저의 명령 입력]
+  F-->G{명령어 유효성 검사}
+  G-->|Move 명령|H(말 이동 로직 수행)
+  H-->HH[DB에 데이터 추가]
+  HH-->I{King 사망여부 확인}
+  I-->|King이 죽지 않은 경우|E
+  I-->|King이 죽은 경우|RESULT[최종 결과 출력]
+  RESULT-->END(DB에 게임 정보 업데이트)
+  G--> |status 명령| J(팀별 점수 환산 로직)-->K[점수 출력]-->F
+  G-->|잘못된 명령|EXX[예외 처리]-->F
+  
+end
+
+subgraph FinishedState
+  ZZ[게임종료]
+end
+
+NEW-->E
+LOAD-->E
+
+END-->ZZ
+G--> |end 명령|ZZ
+```
+
+# 💠클래스 다이어그램(미완성)
 
 ```mermaid
 classDiagram
 
 class ChessGame {
--ChessBoard chessBoard
--GameState state
+  -ChessBoard chessBoard
+  -GameState state
 }
 class ChessBoard{
--List<Sqaure> sqaures
--Turn turn
+  -List<Sqaure> sqaures
+  -Turn turn
+}
+class ChessBoardFactory{
+  +ChessBoard create()
+  -Piece createPiece(File file, Rank rank)
+  -Piece createHeavyPiece(File file, Team team)
 }
 class Square{
--Piece piece
--Position position
+  -Piece piece
+  -Position position
 }
 
 class Turn {
--int turn
+  -int turn
 }
 class Piece{
   <<abstract>>
@@ -86,31 +187,44 @@ Knight
 Pawn
 NoPiece
 
-Position
-
-class Rank{
-<<enumeration>>
-A
-B
-C
-D
-E
-F
-G
-H
+class PieceType{
+  <<enumeration>>
+  KING
+  QUEEN
+  KNIGHT
+  BISHOP
+  ROOK
+  PAWN
+  NOPIECE
 }
+
+
+Position
 
 class File{
 <<enumeration>>
-ONE
-TWO
-THREE
-FOUR
-FIVE
-SIX
-SEVEN
-EIGHT
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
 }
+
+class Rank{
+  <<enumeration>>
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+  SIX
+  SEVEN
+  EIGHT
+}
+
 class MoveRange{
     <<enumeration>>
     CROSS
@@ -125,29 +239,44 @@ class MoveRange{
     TWO_DOWN
 }
 class Command{
-<<enumeration>>
-START
-MOVE
-END
+  <<enumeration>>
+  START
+  MOVE
+  STATUS
+  END
 }
 class Team{
-<<enumeration>>
-BLACK
-WHITE
-EMPTY
+  <<enumeration>>
+  BLACK
+  WHITE
+  EMPTY
 }
 
 class GameState{
-<<enumeration>>
-RUNNING
-FINISHED
+  <<interface>>>
+  startGame(Runnable runnable)
+  loadGame(Runnable runnable)
+  movePiece(Runnable runnable)
+  finishGame(Runnable runnable)
+  isRunning()
+  isFinished()
 }
+class ReadyState{
+   +GameState STATE
+}
+class RunningState{
+   +GameState STATE
+}
+class FinishedState{
+   +GameState STATE
+}
+
 class Trace{
--List<Log> logs
+  -List<Log> logs
 }
 class Log {
--Turn turn
--Position position
+  -Turn turn
+  -Position position
 }
 
 Piece<|--King
@@ -158,18 +287,31 @@ Piece<|--Knight
 Piece<|--Pawn
 Piece<|--NoPiece
 
-ChessGame --> ChessBoard
-ChessGame --> GameState
+ChessGame o--> ChessBoard
+ChessGame o--> GameState
 ChessGame ..> Command
+ChessGame-->ChessBoardFactory
+
+ChessBoardFactory-->ChessBoard
 ChessBoard "1"-->"1..*" Square
 ChessBoard --> Turn
-Square --> Piece
-Square --> Position
-Position --> Rank
-Position --> File
-Piece --> Team
-Piece --> Trace
-Trace"1"-->"1..*"Log
+
+Square o--> Piece
+Square o--> Position
+
+Position o--> Rank
+Position o--> File
+
+Piece-->PieceType
+Piece-->MoveRange
+Piece o--> Team
+Piece o--> Trace
+Trace"1"o-->"1..*"Log
+
+GameState<|--ReadyState
+GameState<|--RunningState
+GameState<|--FinishedState
+
 
 ```
 
@@ -190,6 +332,17 @@ Bishop
 Knight
 Pawn
 NoPiece
+
+class PieceType{
+  <<enumeration>>
+  KING
+  QUEEN
+  KNIGHT
+  BISHOP
+  ROOK
+  PAWN
+  NOPIECE
+}
 
 class Team{
     <<enumeration>>
@@ -214,9 +367,10 @@ Piece<|--Knight
 Piece<|--Pawn
 Piece<|--NoPiece
 
-Piece --> Team
-Piece --> Trace
-Trace"1"-->"1..*"Log
+Piece-->PieceType
+Piece o--> Team
+Piece o--> Trace
+Trace"1"o-->"1..*"Log
 
 ```
 
@@ -227,7 +381,7 @@ classDiagram
 
 Position
 
-class Rank{
+class File{
     <<enumeration>>
     A
     B
@@ -239,7 +393,7 @@ class Rank{
     H
 }
 
-class File{
+class Rank{
     <<enumeration>>
     ONE
     TWO
@@ -265,8 +419,40 @@ class MoveRange{
 }
 
 
-Position --> Rank
-Position --> File
+Position o--> Rank
+Position o--> File
+
+
+```
+
+- state 패키지
+
+```mermaid
+classDiagram
+
+class GameState{
+  <<interface>>>
+  startGame(Runnable runnable)
+  loadGame(Runnable runnable)
+  movePiece(Runnable runnable)
+  finishGame(Runnable runnable)
+  isRunning()
+  isFinished()
+}
+class ReadyState{
+   +GameState STATE
+}
+class RunningState{
+   +GameState STATE
+}
+class FinishedState{
+   +GameState STATE
+}
+
+
+GameState<|--ReadyState
+GameState<|--RunningState
+GameState<|--FinishedState
 
 
 ```
@@ -275,11 +461,16 @@ Position --> File
 
 ## 입력(InputView)
 
-- [x] 시작 명령을 입력 받는다.
+- [x] 게임 시작 전 명령을 입력 받는다.
+    - [x] 새 게임 명령 : start로 새 게임을 실행한다.
+    - [x] 불러오기 명령 : load로 로딩 상태로 넘어간다.
+- [x] 로딩 상태에서 명령을 입력받는다.
+    - [x] 이어하기 명령 : continue 이전에 중단된 게임을 이어한다.
+    - [x] 취소 명령 : cancel로 이전 상태로 돌아간다.
 - [x] 게임 중 명령을 입력 받는다.
     - [x] 이동 명령 : move source위치 target위치을 실행해 이동한다.
     - [x] 종료 명령 : end로 프로그램을 종료한다.
-    - [ ] 상태확인 명령 : status 명령을 받으면 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야 한다.
+    - [x] 상태 확인 명령 : status 명령을 받으면 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야 한다.
 
 ## 도메인(domain)
 
@@ -292,8 +483,26 @@ Position --> File
 - [x] 이동 명령을 받으면 체스판에 명령을 전달한다.
 - [x] 종료 명령을 받으면 게임을 종료한다.
 - [x] 킹이 잡히면 게임을 종료한다.
-- [ ] 현재 남아있는 말에 대한 점수를 구한다.
-- [ ] 애플리케이션 재시작 시
+
+#### 점수(Score)(값객체)
+
+- [x] equals 구현
+- [x] 더하기 구현
+
+#### 점수 계산기(ScoreCalculator)
+
+- [x] 점수 상으로 이긴 팀을 구한다.
+
+#### 게임의 상태(GameState)
+
+- [x] ReadyState 준비 상태
+- [x] LoadingState DB로부터 데이터를 불러오는 상태
+- [x] RunningState 게임이 진행되고 있는 상태
+- [x] FinishedState 게임이 중단/종료된 상태
+
+#### 체스판공장(ChessBoardFactory)
+
+- [x] 새 게임 시작 시 체스판의 초기 상태를 초기화한다.
 
 #### 체스판(ChessBoard)
 
@@ -305,8 +514,10 @@ Position --> File
         - [x] 체스판은 이동 또는 공격이 가능한지 확인한다.
         - [x] 입력받은 두 칸의 기물을 변경한다.
         - [x] 이동 기록(Log)을 기물에 추가한다.
-- [ ] 현재 남아있는 말에 대한 점수를 구한다.
-    - [ ] 한번에 한 세로줄의 점수를 구한 뒤 합산한다.
+- [x] 팀을 입력으로 받아 해당 팀의 점수를 계산한다.
+    - [x] 특정 팀의 열 별 점수를 구한다.
+    - [x] 폰의 경우, 같은 열에 같은 팀의 폰이 존재하면 0.5점으로 계산한다.
+- [x] 폰 기물의 앙 파상 동작을 구현한다.(공격 로직)
 
 #### 기물(Piece)
 
@@ -329,19 +540,25 @@ Position --> File
 - [x] 게임의 명령어 가이드를 출력한다.
 - [x] 현재 체스 판의 정보를 출력한다.
     - [x] 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자)편으로 구분한다.
-- [ ] 각 팀의 점수와 어느 팀이 승리하였는지에 대한 정보를 출력한다.
+- [x] 각 팀의 점수를 출력한다.
+- [x] 게임 종료 후 어느 팀이 승리하였는지에 대한 정보를 출력한다.
 
-## DB
+## DB(DAO)
 
-- [ ] 체스게임 정보를 DB에 저장하는 기능
-- [ ] 체스 게임 정보를 불러와 DTO에 매핑하는 기능
-- [ ] 체스 게임 정보를 업데이트하는 기능
-    - DB에 게임이 끝난 여부도 함께 저장하도록 해야 할 듯
+- [x] 새 게임을 game에 저장하는 기능
+- [x] 미완료 상태의 game 엔티티를 (하나만)불러오는 기능
+- [x] 경로 하나를 moveHistory에 저장하는 기능
+- [x] game 하나의 moveHistory 엔티티들을 불러와 List로 반환하는 기능
+- [x] 체스 게임 정보를 업데이트하는 기능
+    - [x] game 엔티티의 상태 및 승자 정보 변경
 
 # 프로그래밍 요구사항
 
-도메인의 의존성을 최소한으로 구현한다. 한 줄에 점을 하나만 찍는다. 게터/세터/프로퍼티를 쓰지 않는다. 모든 객체지향 생활 체조 원칙을 잘 지키며 구현한다. 프로그래밍
-체크리스트의 원칙을 지키면서 프로그래밍 한다.
+- 도메인의 의존성을 최소한으로 구현한다.
+- 한 줄에 점을 하나만 찍는다.
+- 게터/세터/프로퍼티를 쓰지 않는다.
+- 모든 객체지향 생활 체조 원칙을 잘 지키며 구현한다.
+- 프로그래밍 체크리스트의 원칙을 지키면서 프로그래밍 한다.
 
 # 📌 Commit Convention
 
