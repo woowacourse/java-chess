@@ -11,8 +11,8 @@ import chess.controller.mapper.FileMapper;
 import chess.controller.mapper.PieceResponseMapper;
 import chess.controller.mapper.RankMapper;
 import chess.controller.mapper.TeamMapper;
-import chess.dao.GameDao;
-import chess.dao.JDBCConnection;
+import chess.dao.DBConnection;
+import chess.dao.DBGameDao;
 import chess.domain.game.Game;
 import chess.domain.game.Team;
 import chess.domain.piece.Piece;
@@ -31,29 +31,21 @@ public class ChessGameController {
     private final InputView inputView;
     private final OutputView outputView;
     private final GameExceptionHandler exceptionHandler;
-    private final GameDao gameDao;
-    private Integer gameId;
+    private final Game game;
 
     public ChessGameController(
             InputView inputView,
             OutputView outputView,
-            JDBCConnection jdbcConnection
+            DBConnection DBConnection
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = new GameExceptionHandler(outputView);
-        this.gameDao = new GameDao(jdbcConnection);
+        this.game = new Game(new DBGameDao(DBConnection));
     }
 
     public void start() {
         outputView.printStartMessage();
-        if (gameDao.hasUnfinished()) {
-            Integer lastUnfinishedId = gameDao.findIdOfLastUnfinished();
-            this.gameId = lastUnfinishedId;
-            Game unfinished = gameDao.findBy(lastUnfinishedId);
-            play(unfinished);
-            return;
-        }
         ready();
     }
 
@@ -62,8 +54,7 @@ public class ChessGameController {
             Request request = inputView.askCommand();
             Command command = request.getCommand();
             if (command == Command.START) {
-                play(createGame());
-                endGame();
+                play(game);
             }
             if (command == Command.MOVE || command == Command.STATUS) {
                 throw new IllegalCommandException("아직 게임이 시작되지 않은 상태입니다.");
@@ -74,20 +65,11 @@ public class ChessGameController {
         });
     }
 
-    private Game createGame() {
-        Game game = new Game();
-        this.gameId = gameDao.save(game);
-        return game;
-    }
-
-    private void endGame() {
-        gameDao.end(gameId);
-    }
-
     private void play(Game game) {
         do {
             outputView.printPieces(createResponses(game.getPieces()));
         } while (isContinued(playOnce(game), game));
+        game.finish();
     }
 
     private boolean isContinued(Command command, Game game) {
@@ -119,7 +101,6 @@ public class ChessGameController {
         Position source = createPosition(moveRequest.getSource());
         Position target = createPosition(moveRequest.getTarget());
         game.movePiece(source, target);
-        gameDao.put(gameId, game);
     }
 
     private void showWinnerOf(Game game) {

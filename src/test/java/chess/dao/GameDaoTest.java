@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,81 +18,74 @@ import chess.domain.position.Rank;
 
 class GameDaoTest {
 
-    private final GameDao gameDao = new GameDao(new JDBCConnection());
-    private Integer gameId;
+    private static final String SERVER = "jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+
+    private static GameDao gameDao;
+    private Game game;
+
+    @BeforeAll
+    static void beforeAll() {
+        gameDao = new DBGameDao(new JDBCConnection(SERVER, USERNAME, PASSWORD));
+    }
+
+    @BeforeEach
+    void setUp() {
+        this.game = new Game(gameDao);
+    }
 
     @AfterEach
     void tearDown() {
-        if (gameId != null) {
-            gameDao.end(gameId);
-        }
+        game.finish();
     }
 
     @DisplayName("게임 저장하기")
     @Test
     void saveGame() {
-        Game game = new Game();
-
-        gameId = gameDao.save(game);
-
-        assertThat(isSame(gameDao.findBy(gameId), game)).isTrue();
+        assertThat(isSame(gameDao.findPiecesBy(game.getId()), game.getPieces())).isTrue();
+        assertThat(gameDao.findTurnBy(game.getId())).isEqualTo(game.getTurn());
     }
 
     @DisplayName("게임을 업데이트한다")
     @Test
     void updateGame() {
-        Game game = new Game();
-        gameId = gameDao.save(game);
         game.movePiece(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
-        gameDao.put(gameId, game);
 
-        assertThat(isSame(gameDao.findBy(gameId), game)).isTrue();
+        assertThat(isSame(gameDao.findPiecesBy(game.getId()), game.getPieces())).isTrue();
+        assertThat(gameDao.findTurnBy(game.getId())).isEqualTo(game.getTurn());
     }
 
     @DisplayName("게임을 불러온다")
     @Test
     void findGame() {
-        Game game = new Game();
-        gameId = gameDao.save(game);
         game.movePiece(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
-        gameDao.put(gameId, game);
 
-        assertThat(isSame(gameDao.findBy(gameId), game)).isTrue();
+        assertThat(isSame(new Game(gameDao).getPieces(), game.getPieces())).isTrue();
+        assertThat(gameDao.findTurnBy(game.getId())).isEqualTo(game.getTurn());
     }
 
     @DisplayName("안끝난 게임이 있는지 알 수 있다")
     @Test
     void hasUnfinished() {
-        Game game = new Game();
-        gameId = gameDao.save(game);
-
         assertThat(gameDao.hasUnfinished()).isTrue();
     }
 
     @DisplayName("게임을 끝낸다")
     @Test
     void endGame() {
-        Game game = new Game();
-        gameId = gameDao.save(game);
+        Game game = new Game(gameDao);
 
-        gameDao.end(gameId);
+        game.finish();
         assertThat(gameDao.hasUnfinished()).isFalse();
     }
 
     @DisplayName("가장 최근에 안끝난 게임 id를 찾는다")
     @Test
     void findIdOfLastUnfinished() {
-        Game game = new Game();
-        gameId = gameDao.save(game);
+        Game game = new Game(gameDao);
 
-        assertThat(gameDao.findIdOfLastUnfinished()).isEqualTo(gameId);
-    }
-
-    private boolean isSame(Game game, Game other) {
-        if (game.isFinished() != other.isFinished()) {
-            return false;
-        }
-        return isSame(game.getPieces(), other.getPieces());
+        assertThat(gameDao.findIdOfLastUnfinished()).isEqualTo(game.getId());
     }
 
     private boolean isSame(Map<Position, Piece> pieces, Map<Position, Piece> other) {

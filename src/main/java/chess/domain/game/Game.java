@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import java.util.Map;
 
+import chess.dao.GameDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.exception.DifferentTeamException;
@@ -11,17 +12,27 @@ import chess.domain.position.Position;
 
 public class Game {
 
+    private final int id;
+    private final GameDao gameDao;
     private Team turn;
     private final Board board;
 
-    public Game() {
-        this.turn = Team.WHITE;
-        this.board = BoardFactory.createBoard();
+    public Game(GameDao gameDao) {
+        this(gameDao, Team.WHITE, BoardFactory.createBoard());
     }
 
-    public Game(Team turn, Board board) {
+    public Game(GameDao gameDao, Team turn, Board board) {
+        this.gameDao = gameDao;
+        if (gameDao.hasUnfinished()) {
+            Integer lastUnfinishedId = gameDao.findIdOfLastUnfinished();
+            this.id = lastUnfinishedId;
+            this.turn = gameDao.findTurnBy(lastUnfinishedId);
+            this.board = new Board(gameDao.findPiecesBy(lastUnfinishedId));
+            return;
+        }
         this.turn = turn;
         this.board = board;
+        this.id = gameDao.save(this);
     }
 
     public void movePiece(Position source, Position target) {
@@ -29,6 +40,7 @@ public class Game {
         validateTurn(turn, source);
         board.move(source, target);
         changeTurn();
+        gameDao.put(id, this);
     }
 
     private void validateNotFinished(Board board) {
@@ -78,20 +90,24 @@ public class Game {
     }
 
     private Team getWinnerByScore() {
-        if (score(Team.WHITE) > score(Team.BLACK)) {
+        if (getScoreOf(Team.WHITE) > getScoreOf(Team.BLACK)) {
             return Team.WHITE;
         }
-        if (score(Team.WHITE) < score(Team.BLACK)) {
+        if (getScoreOf(Team.WHITE) < getScoreOf(Team.BLACK)) {
             return Team.BLACK;
         }
         return Team.NEUTRAL;
     }
 
-    private double score(Team team) {
-        return board.score(team);
-    }
-
     public Team getTurn() {
         return turn;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void finish() {
+        gameDao.end(id);
     }
 }
