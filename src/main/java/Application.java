@@ -1,12 +1,10 @@
 import chess.controller.ChessController;
-import chess.game.ChessGame;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.dao.DBChessGameDao;
 
 public class Application {
 
     public static void main(final String[] args) {
-        final ChessController chessController = new ChessController(new InputView(), new OutputView(), new ChessGame());
+        final ChessController chessController = new ChessController(new DBChessGameDao());
         chessController.run();
     }
 }

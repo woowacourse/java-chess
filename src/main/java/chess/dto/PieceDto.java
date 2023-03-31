@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.piece.Piece;
+import chess.piece.PieceType;
 
 public class PieceDto {
 
@@ -19,22 +20,22 @@ public class PieceDto {
     }
 
     private String parseToPiece(final Piece piece) {
-        if (piece.isKing()) {
+        if (piece.getType() == PieceType.KING) {
             return "k";
         }
-        if (piece.isQueen()) {
+        if (piece.getType() == PieceType.QUEEN) {
             return "q";
         }
-        if (piece.isKnight()) {
+        if (piece.getType() == PieceType.KNIGHT) {
             return "n";
         }
-        if (piece.isPawn()) {
+        if (piece.getType() == PieceType.PAWN) {
             return "p";
         }
-        if (piece.isRook()) {
+        if (piece.getType() == PieceType.ROOK) {
             return "r";
         }
-        if (piece.isBishop()) {
+        if (piece.getType() == PieceType.BISHOP) {
             return "b";
         }
         return ".";

@@ -43,6 +43,10 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
+    public static boolean isLargerIndexAtFrom(final File from, final File to) {
+        return from.index > to.index;
+    }
+
     public int getIndex() {
         return index;
     }

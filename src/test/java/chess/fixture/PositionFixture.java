@@ -4,7 +4,7 @@ import chess.board.File;
 import chess.board.Position;
 import chess.board.Rank;
 
-public class FixturePosition {
+public class PositionFixture {
 
     public static final Position A1 = new Position(File.A, Rank.ONE);
     public static final Position A2 = new Position(File.A, Rank.TWO);

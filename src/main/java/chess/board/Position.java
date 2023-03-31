@@ -2,7 +2,6 @@ package chess.board;
 
 import java.util.Objects;
 
-// TODO : 캐싱을 적용한다.
 public class Position {
 
     private final File file;
@@ -11,10 +10,6 @@ public class Position {
     public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public boolean isSamePosition(final Position to) {
-        return this.equals(to);
     }
 
     @Override

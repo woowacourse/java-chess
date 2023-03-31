@@ -1,15 +1,26 @@
 package chess.piece;
 
-import chess.board.Position;
-import chess.fixture.FixturePosition;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import chess.board.Position;
+import chess.fixture.EmptyBoardFixture;
+import chess.fixture.PositionFixture;
 
 class KnightTest {
 
+    private Map<Position, Piece> board;
+
+    @BeforeEach
+    void setUp() {
+        board = new EmptyBoardFixture().getBoard();
+    }
 
     @Nested
     class 나이트가_움직일_때_이동방향은_ {
@@ -18,11 +29,11 @@ class KnightTest {
             //given
             Knight knight = new Knight(Team.WHITE);
 
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.C2;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.C2;
 
             //when & then
-            assertThat(knight.isMovable(from, to, PieceFixture.EMPTY_PIECE)).isTrue();
+            assertDoesNotThrow(() -> knight.validateMove(from, to, board));
         }
 
         @Test
@@ -30,11 +41,11 @@ class KnightTest {
             //given
             Knight knight = new Knight(Team.WHITE);
 
-            Position from = FixturePosition.A1;
-            Position to = FixturePosition.B8;
+            Position from = PositionFixture.A1;
+            Position to = PositionFixture.B8;
 
             //when & then
-            assertThatThrownBy(() -> knight.isMovable(from, to, PieceFixture.EMPTY_PIECE))
+            assertThatThrownBy(() -> knight.validateMove(from, to, board))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("Knight가 이동할 수 없는 경로입니다.");
         }
