@@ -9,9 +9,17 @@
 ### 기능 요구 사항
 
 ```mermaid
-graph TD
+flowchart TD
 D[pieces] --> A;
 A[piece] --> B[shape];
+
+B --> J
+J[PieceStrategy] --> K[PawnStrategy]
+J[PieceStrategy] -->L[BishopStrategy]
+J[PieceStrategy] -->M[KingStrategy]
+J[PieceStrategy] -->N[QueenStrategy]
+J[PieceStrategy] -->O[RookStrategy]
+
 A[piece] --> C[position];
 C --> E[file];
 C --> F[rank];
@@ -19,12 +27,6 @@ C --> F[rank];
 H[player] --> D;
 I[players] --> H;
 
-B --> J[PieceStrategy]
-K[PawnStrategy] --> J
-L[BishopStrategy] --> J
-M[KingStrategy] --> J
-N[QueenStrategy] --> J
-O[RookStrategy] --> J
 ```
 
 ## View
@@ -34,6 +36,7 @@ O[RookStrategy] --> J
 - [x] start 또는 end 입력
   - [x] start 입력시 시작
   - [x] end 입력시 끝
+- [x] status 입력 
 
 ### Out
 
@@ -114,3 +117,40 @@ O[RookStrategy] --> J
 ### QueenStrategy
 - [x] 올바른 위치일 경우 타겟 포지션이 반환된다.
 - [x] 올바르지 않은 위치일 경우 예외가 발생한다.
+
+### KnightStrategy
+- [x] rank가 1, file이 2가 아닐 때 움직일 수 없다.
+- [x] rank가 1, file이 2이면 움직일 수 있다.
+- [x] rank가 2, file이 1이 아닐 때 움직일 수 없다.
+- [x] rank가 2, file이 1일 때 움직일 수 있다.
+
+## Database
+- 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+  - [x] 애플리케이션이 중간에 종료되더라도 그 전까지의 기록을 불러올 수 있다.
+  - [x] 킹을 잡아 게임이 종료되면 기록은 사라진다.
+  - [x] 재시작하면 마지막 주자의 다음 사람이 시작한다.  
+- [x] DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+
+### DDL
+```sql
+create table piece(
+    id     bigint auto_increment primary key,
+    `rank` bigint   null,
+    file   char(2)  null,
+    color  char(16) null,
+    shape  char(16) null
+)
+
+create table turn(
+   id             bigint not null auto_increment,
+   current_color  char(16) default 'white',
+   primary key (id)
+);
+```
+### DML
+> turn 테이블 생성 후 turn의 기본 값을 추가하는 쿼리입니다.
+> 
+> 처음에 한번만 실행해주세요.
+```sql
+insert into turn values ('WHITE');
+```

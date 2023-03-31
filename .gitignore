@@ -5,6 +5,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+docker/
 ### STS ###
 .apt_generated
 .classpath
@@ -30,3 +31,4 @@ out/
 
 ### VS Code ###
 .vscode/
+docker/db/
