@@ -1,7 +1,9 @@
 package chess.domain.board.position;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public enum Column {
 
@@ -37,6 +39,13 @@ public enum Column {
                      .filter(it -> it.value == value - STARTING_CHARACTER_OF_COLUMN + START.value)
                      .findAny()
                      .orElseThrow(() -> new NoSuchElementException("이동할 수 없는 column 방향입니다."));
+    }
+
+    public static List<String> findPossibleColumnCandidates() {
+        return Arrays.stream(values())
+                     .filter(it -> it.name().length() == 1)
+                     .map(it -> it.name().toLowerCase())
+                     .collect(Collectors.toList());
     }
 
     public int differenceBetween(Column other) {

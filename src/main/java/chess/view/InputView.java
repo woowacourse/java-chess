@@ -1,5 +1,8 @@
 package chess.view;
 
+import chess.common.IndexCommand;
+import chess.domain.board.position.PositionCache;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,25 +17,65 @@ public class InputView {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 점수 확인 : status");
+        System.out.println("end, status 를 입력하게 되면 게임이 저장됩니다.");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
 
         final String command = scanner.nextLine();
 
+        validateAppropriate(command);
+
+        return command;
+    }
+
+    private static void validateAppropriate(final String command) {
         if (Command.isNotAppropriate(command)) {
             throw new IllegalArgumentException("start 나 end 둘 중에 하나 입력해주세요.");
         }
-
-        return command;
     }
 
     public static List<String> readMoveCommand() {
         final List<String> commands = Arrays.stream(scanner.nextLine().split(INPUT_COMMAND_DELIM))
                                             .collect(Collectors.toList());
 
-        if (commands.size() > 3) {
-            throw new IllegalArgumentException("잘못된 명령어입니다.");
+        if (isCommandStatusOrEnd(commands)) {
+            return commands;
         }
 
+        validateCommandSize(commands);
+
+        final String sourcePosition = commands.get(IndexCommand.SOURCE_POSITION.value());
+        final String targetPosition = commands.get(IndexCommand.TARGET_POSITION.value());
+
+        validateCanNotAccessPosition(sourcePosition, targetPosition);
+
         return commands;
+    }
+
+    private static boolean isCommandStatusOrEnd(final List<String> commands) {
+        return Command.isStatus(commands.get(IndexCommand.START_COMMAND_INDEX.value())) ||
+                Command.isEnd(commands.get(IndexCommand.START_COMMAND_INDEX.value()));
+    }
+
+    private static void validateCommandSize(final List<String> commands) {
+        if (commands.size() > 3) {
+            throw new IllegalArgumentException("[명령어] [시작 위치] [도착 위치] 로 입력해주세요.");
+        }
+    }
+
+    private static void validateCanNotAccessPosition(final String sourcePosition, final String targetPosition) {
+        if (PositionCache.isNotCaching(sourcePosition) || PositionCache.isNotCaching(targetPosition)) {
+            throw new IllegalArgumentException("접근할 수 없는 위치입니다.");
+        }
+    }
+
+    public static String readNewGameCommand() {
+        return scanner.nextLine();
+    }
+
+    public static long readLoadGameCommand() {
+        final String command = scanner.nextLine();
+
+        return Long.parseLong(command);
     }
 }

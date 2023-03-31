@@ -1,12 +1,13 @@
 package chess.view;
 
-import java.util.Arrays;
-
 public enum Command {
 
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    STATUS("status"),
+    NEW_GAME("1"),
+    LOAD_GAME("2");
 
     private final String value;
 
@@ -15,23 +16,30 @@ public enum Command {
     }
 
     public static boolean isEnd(String command) {
-        return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && command.equals(END.value));
+        return END.value.equals(command);
     }
 
     public static boolean isMove(String command) {
-        return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && command.equals(MOVE.value));
+        return MOVE.value.equals(command);
     }
 
     public static boolean isNotStart(String command) {
-        return Arrays.stream(values())
-                     .anyMatch(it -> it.value.equals(command) && !command.equals(START.value));
+        return !START.value.equals(command);
     }
 
     public static boolean isNotAppropriate(String command) {
-        return Arrays.stream(values())
-                     .filter(it -> it != MOVE)
-                     .noneMatch(it -> it.value.equals(command));
+        return isNotStart(command) && !isEnd(command);
+    }
+
+    public static boolean isStatus(final String command) {
+        return STATUS.value.equals(command);
+    }
+
+    public static boolean isNewGame(final String command) {
+        return NEW_GAME.value.equals(command);
+    }
+
+    public static boolean isExistedGame(final String command) {
+        return LOAD_GAME.value.equals(command);
     }
 }

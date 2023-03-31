@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,5 +58,15 @@ class RowTest {
 
         //then
         assertEquals(convertedRow, row);
+    }
+
+    @Test
+    @DisplayName("findPossibleRowCandidates() : Row 가 될 수 있는 value 를 소문자로 구할 수 있다.")
+    void test_findPossibleRowCandidates() throws Exception {
+        //when
+        final List<Integer> possibleRowCandidates = Row.findPossibleRowCandidates();
+
+        //then
+        assertThat(possibleRowCandidates).contains(1,2,3,4,5,6,7,8);
     }
 }
