@@ -46,7 +46,7 @@ public class LoadChessGameService {
         Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
 
         for (PieceEntity pieceEntity : allPieces) {
-            Position position = Position.from(pieceEntity);
+            Position position = Position.valueOf(pieceEntity.getPosition());
             String pieceType = pieceEntity.getPieceType();
             String camp = pieceEntity.getCamp();
             Piece piece = PieceDtoMapper.convertToPiece(pieceType, Camp.valueOf(camp));

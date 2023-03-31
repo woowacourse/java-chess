@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.repository.entity.PieceEntity;
 import chess.domain.repository.mapper.FileDtoMapper;
 import chess.domain.repository.mapper.RankDtoMapper;
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ public final class Position {
         return file.name() + rank.name();
     }
 
-    public static Position from(PieceEntity pieceEntity) {
-        String[] split = pieceEntity.getPosition().split("");
+    public static Position valueOf(String value) {
+        String[] split = value.split("");
         File file = FileDtoMapper.convertToFile(split[0]);
         Rank rank = RankDtoMapper.convertToRank(split[1]);
 
