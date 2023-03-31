@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 
 import java.util.HashMap;
@@ -10,9 +11,11 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private Team turn;
 
     public Board() {
         board = new HashMap<>();
+        turn = Team.getStartTeam();
         init();
     }
 
@@ -24,16 +27,25 @@ public class Board {
 
     public void move(Position source, Position target) {
         validateSource(source);
+        validateTurn(source);
         validateMovable(source, target);
         Piece sourcePiece = board.get(source);
         validatePathBeforeTarget(sourcePiece.findPath(source, target));
         movePiece(source, target);
+        reverseTurn();
     }
 
     private void validateSource(Position source) {
         if (haveNoPieceInPosition(source)) {
             throw new IllegalArgumentException("[ERROR] source 위치에 기물이 없습니다.");
         }
+    }
+
+    private void validateTurn(Position source) {
+        if (board.get(source).isSameTeam(turn)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 지금은 " + turn + "차례입니다.");
     }
 
     private void validateMovable(Position source, Position target) {
@@ -83,9 +95,14 @@ public class Board {
         return !board.containsKey(position);
     }
 
-    public boolean isCorrectTeam(Position source, Team team) {
-        validateSource(source);
-        return board.get(source).isSameTeam(team);
+    public long countKingNumber() {
+        return board.values().stream()
+                .filter(piece -> piece.type() == PieceType.KING)
+                .count();
+    }
+
+    private void reverseTurn() {
+        turn = turn.reverse();
     }
 
     public Map<Position, Piece> getBoard() {

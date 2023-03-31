@@ -1,23 +1,56 @@
 package chess.domain.game;
 
-import chess.domain.piece.Team;
+import chess.domain.game.state.GameState;
+import chess.domain.game.state.Ready;
+import chess.domain.game.state.Terminated;
+import chess.domain.piece.Piece;
+
+import java.util.Map;
 
 public class ChessGame {
 
+    private static final long RUNNING_KING_NUMBER = 2;
+
     private final Board board;
-    private Team turn;
+    private GameState gameState;
 
     public ChessGame(Board board) {
         this.board = board;
-        this.turn = Team.getStartTeam();
+        this.gameState = Ready.getState();
+    }
+
+    public void start() {
+        gameState = gameState.start();
+    }
+
+    public boolean isNotTerminated() {
+        return gameState.isNotTerminated();
     }
 
     public void progress(Position source, Position target) {
-        if (board.isCorrectTeam(source, turn)) {
-            board.move(source, target);
-            turn = turn.reverse();
-            return;
+        gameState.progress(source, target, board);
+        if (shouldTerminateGame(board.countKingNumber())) {
+            gameState = Terminated.getState();
         }
-        throw new IllegalArgumentException("[ERROR] 지금은 " + turn + "차례입니다.");
+    }
+
+    public double calculateBlackScore() {
+        return gameState.calculateBlackScore(board);
+    }
+
+    public double calculateWhiteScore() {
+        return gameState.calculateWhiteScore(board);
+    }
+
+    public void terminateGame() {
+        gameState = Terminated.getState();
+    }
+
+    private boolean shouldTerminateGame(long kingNumber) {
+        return RUNNING_KING_NUMBER != kingNumber;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
     }
 }

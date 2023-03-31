@@ -1,13 +1,11 @@
 package chess;
 
-import chess.controller.ChessController;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.controller.GameConnectionController;
 
 public class Application {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new InputView(), new OutputView());
-        chessController.run();
+        GameConnectionController gameConnectionController = GameConnectionController.getInstance();
+        gameConnectionController.run();
     }
 }

@@ -17,6 +17,8 @@ public abstract class Piece {
 
     protected abstract int calculateCount(int fileDiff, int rankDiff);
 
+    public abstract PieceType type();
+
     public boolean isSameTeam(Team team) {
         return this.team.isSameTeam(team);
     }

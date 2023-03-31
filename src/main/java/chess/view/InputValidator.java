@@ -2,12 +2,13 @@ package chess.view;
 
 import java.util.List;
 
-import static chess.view.GameCommand.*;
-
 public class InputValidator {
 
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int POSITION_COMMAND_LENGTH = 2;
+    private static final int MAX_USER_ID_LENGTH = 12;
+    private static final String YES = "y";
+    private static final String NO = "n";
     private static final char START_FILE = 'a';
     private static final char END_FILE = 'h';
     private static final char START_RANK = '1';
@@ -19,12 +20,11 @@ public class InputValidator {
         }
     }
 
-    public static void validateStartCommand(String input) {
-        START.validateCommand(input);
-    }
-
-    public static void validateMoveCommand(String input) {
-        MOVE.validateCommand(input);
+    public static void validateCommandIsMove(String input) {
+        if (GameCommandView.isValidMoveCommand(input)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 잘못된 입력 형식입니다.");
     }
 
     public static void validateCommandSize(List<String> commands) {
@@ -49,5 +49,26 @@ public class InputValidator {
         if (rank < START_RANK || rank > END_RANK) {
             throw new IllegalArgumentException("[ERROR] rank를 " + START_RANK + "~" + END_RANK + "로 입력해주세요.");
         }
+    }
+
+    public static void validateUserIdLength(String input) {
+        if (input.length() > MAX_USER_ID_LENGTH) {
+            throw new IllegalArgumentException("[ERROR] 아이디는 12자 이하여야 합니다.");
+        }
+    }
+
+    public static void validateIsNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 게임 방 ID는 숫자로 입력해주세요.");
+        }
+    }
+
+    public static void validateAnswer(String input) {
+        if (YES.equals(input) || NO.equals(input)) {
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 저장할 건지 y/n 로만 입력해주세요.");
     }
 }

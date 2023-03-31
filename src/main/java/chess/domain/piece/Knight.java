@@ -29,4 +29,9 @@ public class Knight extends Piece {
     protected int calculateCount(int fileDiff, int rankDiff) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public PieceType type() {
+        return PieceType.KNIGHT;
+    }
 }

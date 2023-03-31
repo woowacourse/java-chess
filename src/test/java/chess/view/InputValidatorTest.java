@@ -20,21 +20,12 @@ class InputValidatorTest {
     }
 
     @Test
-    @DisplayName("입력이 start가 아니면 예외가 발생한다.")
-    void validateStartCommand() {
-        String input = "stort";
-        assertThatThrownBy(() -> InputValidator.validateStartCommand(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 게임을 진행하기 위해서는 start를 입력해주세요.");
-    }
-
-    @Test
     @DisplayName("입력이 move가 아니면 예외가 발생한다.")
     void validateMoveCommand() {
         String input = "moove";
-        assertThatThrownBy(() -> InputValidator.validateMoveCommand(input))
+        assertThatThrownBy(() -> InputValidator.validateCommandIsMove(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 게임을 진행하기 위해서는 move를 입력해주세요.");
+                .hasMessage("[ERROR] 잘못된 입력 형식입니다.");
     }
 
     @Test
@@ -72,5 +63,23 @@ class InputValidatorTest {
         assertThatThrownBy(() -> InputValidator.validateRank(rank))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] rank를 1~8로 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("user 아이디의 길이가 12자를 넘으면 예외가 발생한다.")
+    void validateUserIdLength() {
+        String userId = "1234567890abc";
+        assertThatThrownBy(() -> InputValidator.validateUserIdLength(userId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 아이디는 12자 이하여야 합니다.");
+    }
+
+    @Test
+    @DisplayName("대답이 y or n이 아니면 예외가 발생한다.")
+    void validateAnswer() {
+        String yes = "yee";
+        assertThatThrownBy(() -> InputValidator.validateAnswer(yes))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 저장할 건지 y/n 로만 입력해주세요.");
     }
 }

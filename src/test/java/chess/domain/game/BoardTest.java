@@ -1,12 +1,11 @@
 package chess.domain.game;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import chess.domain.game.Board;
-import chess.domain.game.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -48,5 +47,11 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이동 경로에 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("처음 게임이 시작되면 King의 수는 2이다.")
+    void countKingNumber() {
+        assertThat(board.countKingNumber()).isEqualTo(2);
     }
 }
