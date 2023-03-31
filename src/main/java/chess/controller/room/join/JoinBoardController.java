@@ -1,5 +1,6 @@
 package chess.controller.room.join;
 
+import chess.controller.Controller;
 import chess.controller.exception.BoardNotFoundException;
 import chess.controller.game.BoardOutput;
 import chess.controller.main.Request;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class JoinBoardController {
+public class JoinBoardController implements Controller {
 
     private final JoinBoard joinBoard;
     private final JoinBoardOutput joinBoardOutput;
@@ -26,6 +27,7 @@ public class JoinBoardController {
         this.boardOutput = boardOutput;
     }
 
+    @Override
     public void run(Request request) {
         JoinBoardRequest joinBoardRequest = JoinBoardRequest.from(request);
         joinBoard.join(joinBoardRequest.getRoomId());

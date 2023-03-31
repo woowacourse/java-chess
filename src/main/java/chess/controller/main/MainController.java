@@ -1,5 +1,6 @@
 package chess.controller.main;
 
+import chess.controller.Controller;
 import chess.controller.ErrorOutput;
 import chess.view.InputView;
 
@@ -23,8 +24,8 @@ public class MainController {
         while (true) {
             try {
                 Request request = inputView.inputGameCommand();
-                Action action = commandMapper.getAction(request.getActionType());
-                action.execute(request);
+                Controller controller = commandMapper.getController(request.getActionType());
+                controller.run(request);
             } catch (Exception e) {
                 errorOutput.printError(e.getMessage());
             }

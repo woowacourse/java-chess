@@ -1,9 +1,10 @@
 package chess.controller.game.status;
 
+import chess.controller.Controller;
 import chess.controller.main.Request;
 import chess.service.game.StatusChessGameService;
 
-public class StatusController {
+public class StatusController implements Controller {
 
     private final StatusOutput statusOutput;
     private final StatusChessGameService statusChessGameService;
@@ -13,6 +14,7 @@ public class StatusController {
         this.statusChessGameService = statusChessGameService;
     }
 
+    @Override
     public void run(Request request) {
         StatusRequest statusRequest = StatusRequest.from(request);
         StatusResponse statusResponse = statusChessGameService.status(statusRequest.getBoardId());

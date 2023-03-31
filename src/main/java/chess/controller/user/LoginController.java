@@ -1,9 +1,10 @@
 package chess.controller.user;
 
+import chess.controller.Controller;
 import chess.controller.main.Request;
 import chess.service.user.LoginService;
 
-public class LoginController {
+public class LoginController implements Controller {
 
     private final Login login;
     private final LoginOutput loginOutput;
@@ -15,6 +16,7 @@ public class LoginController {
         this.loginService = loginService;
     }
 
+    @Override
     public void run(Request request) {
         LoginRequest loginRequest = LoginRequest.from(request);
         int userId = loginService.login(loginRequest.getUserName());

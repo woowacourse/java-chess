@@ -5,7 +5,6 @@ import chess.controller.game.games.GamesController;
 import chess.controller.game.move.MoveController;
 import chess.controller.game.start.StartController;
 import chess.controller.game.status.StatusController;
-import chess.controller.main.Action;
 import chess.controller.main.ActionType;
 import chess.controller.main.CommandMapper;
 import chess.controller.main.MainController;
@@ -56,14 +55,14 @@ public class ControllerFactory {
 
     private CommandMapper createCommandMapper() {
         return new CommandMapper(Map.of(
-                ActionType.START, new Action(startController::run),
-                ActionType.END, new Action(endController::run),
-                ActionType.MOVE, new Action(moveController::run),
-                ActionType.STATUS, new Action(statusController::run),
-                ActionType.GAMES, new Action(gamesController::run),
-                ActionType.CREATE, new Action(createRoomController::run),
-                ActionType.JOIN, new Action(joinBoardController::run),
-                ActionType.LOGIN, new Action(loginController::run)
+                ActionType.START, startController,
+                ActionType.END, endController,
+                ActionType.MOVE, moveController,
+                ActionType.STATUS, statusController,
+                ActionType.GAMES, gamesController,
+                ActionType.CREATE, createRoomController,
+                ActionType.JOIN, joinBoardController,
+                ActionType.LOGIN, loginController
         ));
     }
 

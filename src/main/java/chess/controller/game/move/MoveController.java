@@ -1,5 +1,6 @@
 package chess.controller.game.move;
 
+import chess.controller.Controller;
 import chess.controller.exception.BoardNotFoundException;
 import chess.controller.game.BoardOutput;
 import chess.controller.main.Request;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MoveController {
+public class MoveController implements Controller {
 
     private final MoveChessGameService moveChessGameService;
     private final LoadChessGameService loadChessGameService;
@@ -25,6 +26,7 @@ public class MoveController {
         this.boardOutput = boardOutput;
     }
 
+    @Override
     public void run(Request request) {
         MoveRequest moveRequest = MoveRequest.from(request);
         moveChessGameService.move(moveRequest.getBoardId(), moveRequest.getOrigin(), moveRequest.getDestination());
