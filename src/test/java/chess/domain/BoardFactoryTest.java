@@ -23,8 +23,7 @@ class BoardFactoryTest {
     @Test
     @DisplayName("생성 테스트")
     void create() {
-        BoardFactory boardFactory = new BoardFactory();
-        Map<Square, Piece> board = boardFactory.make();
+        Map<Square, Piece> board = BoardFactory.make();
         assertThat(board.get(Square.of(File.A, Rank.ONE))).isInstanceOf(Rook.class);
         assertThat(board.get(Square.of(File.B, Rank.ONE))).isInstanceOf(Knight.class);
         assertThat(board.get(Square.of(File.C, Rank.ONE))).isInstanceOf(Bishop.class);

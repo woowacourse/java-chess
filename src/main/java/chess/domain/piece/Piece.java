@@ -23,6 +23,9 @@ public abstract class Piece {
         return getClass().equals(WhitePawn.class) || getClass().equals(BlackPawn.class);
     }
 
+    public boolean isKing() {
+        return getClass().equals(King.class);
+    }
     public boolean isWhite() {
         return color.equals(Color.WHITE);
     }

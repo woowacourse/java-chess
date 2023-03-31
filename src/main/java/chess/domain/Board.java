@@ -14,21 +14,21 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int KING_NUMBER = 2;
+
     private final Map<Square, Piece> board;
 
-    private Board(final Map<Square, Piece> board) {
+    public Board(final Map<Square, Piece> board) {
         this.board = board;
     }
 
     public static Board create() {
-        final BoardFactory boardFactory = new BoardFactory();
-        return new Board(boardFactory.make());
+        return new Board(BoardFactory.make());
     }
 
     public void reset() {
         board.clear();
-        final BoardFactory boardFactory = new BoardFactory();
-        board.putAll(boardFactory.make());
+        board.putAll(BoardFactory.make());
     }
 
     public void validateTurn(final Turn turn, final Square current) {
@@ -118,6 +118,20 @@ public class Board {
     private void movePiece(final Square current, final Square destination) {
         board.put(destination, getPiece(current));
         board.remove(current);
+    }
+
+    public boolean isKingCaught() {
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .count() < KING_NUMBER;
+    }
+
+    public Score calculateWhiteScore() {
+        return ScoreCalculator.calculateWhiteScore(new HashMap<>(board));
+    }
+
+    public Score calculateBlackScore() {
+        return ScoreCalculator.calculateBlackScore(new HashMap<>(board));
     }
 
     public Map<Square, Piece> getBoard() {

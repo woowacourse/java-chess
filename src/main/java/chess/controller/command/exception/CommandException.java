@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.command.exception;
 
 public class CommandException extends IllegalArgumentException {
 

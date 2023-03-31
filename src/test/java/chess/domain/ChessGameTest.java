@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.exception.InvalidTurnException;
 import chess.domain.exception.StartCommandException;
 import chess.dto.SquareMoveDto;
-import chess.view.Command;
+import chess.controller.command.CommandType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,21 +23,21 @@ class ChessGameTest {
     @Test
     @DisplayName("게임 시작 시 start를 입력하면 게임을 실행한다.")
     void start_command_success_when_input_start() {
-        assertThatCode(() -> chessGame.start(Command.START))
+        assertThatCode(() -> chessGame.start(CommandType.START))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("게임 시작 시 end를 입력하면 예외를 발생한다.")
     void start_command_fail_when_input_end() {
-        assertThatThrownBy(() -> chessGame.start(Command.END))
+        assertThatThrownBy(() -> chessGame.start(CommandType.END))
                 .isInstanceOf(StartCommandException.class);
     }
 
     @Test
     @DisplayName("게임 시작 시 move를 입력하면 예외를 발생한다.")
     void start_command_fail_when_input_move() {
-        assertThatThrownBy(() -> chessGame.start(Command.MOVE))
+        assertThatThrownBy(() -> chessGame.start(CommandType.MOVE))
                 .isInstanceOf(StartCommandException.class);
     }
 

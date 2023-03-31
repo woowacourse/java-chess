@@ -2,8 +2,9 @@ package chess.domain;
 
 import chess.domain.exception.StartCommandException;
 import chess.dto.GameStatusDto;
+import chess.dto.ScoreDto;
 import chess.dto.SquareMoveDto;
-import chess.view.Command;
+import chess.controller.command.CommandType;
 
 public class ChessGame {
 
@@ -15,8 +16,13 @@ public class ChessGame {
         this.turn = Turn.getFirstTurn();
     }
 
-    public void start(final Command command) {
-        if (command.equals(Command.START)) {
+    public ChessGame(final Board board, final Turn turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
+    public void start(final CommandType commandType) {
+        if (commandType.equals(CommandType.START)) {
             return;
         }
         throw new StartCommandException();
@@ -34,7 +40,25 @@ public class ChessGame {
         turn = Turn.getFirstTurn();
     }
 
+    public boolean isEnd() {
+        return board.isKingCaught();
+    }
+
+    public ScoreDto getScore() {
+        final Score whiteScore = board.calculateWhiteScore();
+        final Score blackScore = board.calculateBlackScore();
+        return new ScoreDto(whiteScore, blackScore);
+    }
+
     public GameStatusDto getGameStatus() {
         return GameStatusDto.from(board);
+    }
+
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

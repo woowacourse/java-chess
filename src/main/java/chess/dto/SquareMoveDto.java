@@ -6,6 +6,9 @@ import chess.domain.square.Square;
 
 public class SquareMoveDto {
 
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final Square current;
     private final Square destination;
 
@@ -14,7 +17,6 @@ public class SquareMoveDto {
         this.destination = destination;
     }
 
-    // TODO: 검증 필요
     public static SquareMoveDto from(final String currentInput, final String destinationInput) {
         final Square current = getSquare(currentInput);
         final Square destination = getSquare(destinationInput);
@@ -22,8 +24,8 @@ public class SquareMoveDto {
     }
 
     private static Square getSquare(final String input) {
-        final File file = File.from(input.charAt(0));
-        final Rank rank = Rank.from(input.charAt(1));
+        final File file = File.from(input.charAt(FILE_INDEX));
+        final Rank rank = Rank.from(input.charAt(RANK_INDEX));
         return Square.of(file, rank);
     }
 

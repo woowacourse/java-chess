@@ -13,8 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PieceDirectionTest {
-
-    // TODO: Nested 하면 static 못 씀. 알아보기.
+    
     @Nested
     @DisplayName("폰의 이동 가능 방향 테스트")
     class Pawn {

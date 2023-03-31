@@ -18,21 +18,21 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    public Map<Square, Piece> make() {
+    public static Map<Square, Piece> make() {
         Map<Square, Piece> board = new HashMap<>();
         board.putAll(makePawns());
         board.putAll(makeMajorPieces());
         return new HashMap<>(board);
     }
 
-    private Map<Square, Piece> makePawns() {
+    private static Map<Square, Piece> makePawns() {
         Map<Square, Piece> pawns = new HashMap<>();
         pawns.putAll(makeWhitePawn());
         pawns.putAll(makeBlackPawn());
         return new HashMap<>(pawns);
     }
 
-    private Map<Square, Piece> makeWhitePawn() {
+    private static Map<Square, Piece> makeWhitePawn() {
         Map<Square, Piece> pawns = new HashMap<>();
         for (File file : File.values()) {
             pawns.put(Square.of(file, Rank.TWO), new WhitePawn());
@@ -40,7 +40,7 @@ public class BoardFactory {
         return new HashMap<>(pawns);
     }
 
-    private Map<Square, Piece> makeBlackPawn() {
+    private static Map<Square, Piece> makeBlackPawn() {
         Map<Square, Piece> pawns = new HashMap<>();
         for (File file : File.values()) {
             pawns.put(Square.of(file, Rank.SEVEN), new BlackPawn());
@@ -48,7 +48,7 @@ public class BoardFactory {
         return new HashMap<>(pawns);
     }
 
-    private Map<Square, Piece> makeMajorPieces() {
+    private static Map<Square, Piece> makeMajorPieces() {
         Map<Square, Piece> majors = new HashMap<>();
         majors.putAll(makeRooks());
         majors.putAll(makeKnights());
@@ -58,7 +58,7 @@ public class BoardFactory {
         return new HashMap<>(majors);
     }
 
-    private Map<Square, Piece> makeRooks() {
+    private static Map<Square, Piece> makeRooks() {
         Map<Square, Piece> rooks = new HashMap<>();
         rooks.put(Square.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         rooks.put(Square.of(File.H, Rank.ONE), new Rook(Color.WHITE));
@@ -67,7 +67,7 @@ public class BoardFactory {
         return new HashMap<>(rooks);
     }
 
-    private Map<Square, Piece> makeKnights() {
+    private static Map<Square, Piece> makeKnights() {
         Map<Square, Piece> knights = new HashMap<>();
         knights.put(Square.of(File.B, Rank.ONE), new Knight(Color.WHITE));
         knights.put(Square.of(File.G, Rank.ONE), new Knight(Color.WHITE));
@@ -76,7 +76,7 @@ public class BoardFactory {
         return new HashMap<>(knights);
     }
 
-    private Map<Square, Piece> makeBishops() {
+    private static Map<Square, Piece> makeBishops() {
         Map<Square, Piece> bishops = new HashMap<>();
         bishops.put(Square.of(File.C, Rank.ONE), new Bishop(Color.WHITE));
         bishops.put(Square.of(File.F, Rank.ONE), new Bishop(Color.WHITE));
@@ -85,14 +85,14 @@ public class BoardFactory {
         return new HashMap<>(bishops);
     }
 
-    private Map<Square, Piece> makeQueens() {
+    private static Map<Square, Piece> makeQueens() {
         Map<Square, Piece> queens = new HashMap<>();
         queens.put(Square.of(File.D, Rank.ONE), new Queen(Color.WHITE));
         queens.put(Square.of(File.D, Rank.EIGHT), new Queen(Color.BLACK));
         return new HashMap<>(queens);
     }
 
-    private Map<Square, Piece> makeKings() {
+    private static Map<Square, Piece> makeKings() {
         Map<Square, Piece> kings = new HashMap<>();
         kings.put(Square.of(File.E, Rank.ONE), new King(Color.WHITE));
         kings.put(Square.of(File.E, Rank.EIGHT), new King(Color.BLACK));

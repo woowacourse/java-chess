@@ -1,32 +1,56 @@
 package chess.controller;
 
+import chess.controller.command.Command;
+import chess.controller.command.CommandActions;
+import chess.controller.command.CommandType;
+import chess.dao.ChessGameDao;
 import chess.domain.ChessGame;
-import chess.domain.exception.InvalidTurnException;
+import chess.domain.exception.StartCommandException;
+import chess.dto.ChessGameDto;
 import chess.dto.SquareMoveDto;
-import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
-
-import static chess.view.Command.MOVE_DESTINATION_INDEX;
-import static chess.view.Command.MOVE_SOURCE_INDEX;
+import java.util.Map;
 
 public class ChessController {
 
-    private final ChessGame chessGame = new ChessGame();
+    private final CommandActions commandActions;
+    private final ChessGameDao chessGameDao;
+    private ChessGame chessGame;
+
+    public ChessController(final ChessGameDao chessGameDao) {
+        this.commandActions = initCommandActions();
+        this.chessGameDao = chessGameDao;
+        this.chessGame = new ChessGame();
+    }
+
+    private CommandActions initCommandActions() {
+        return new CommandActions(Map.of(
+                CommandType.START, this::restart,
+                CommandType.END, this::end,
+                CommandType.MOVE, this::move,
+                CommandType.STATUS, this::status,
+                CommandType.LOAD, this::load,
+                CommandType.SAVE, this::save
+        ));
+    }
 
     public void run() {
         OutputView.printStartMessage();
         start();
-        play();
-        InputView.terminate();
+        Command command = Command.start();
+        while (isRunning(command)) {
+            command = readCommand();
+            commandActions.execute(command);
+        }
     }
 
     private void start() {
         try {
-            List<String> command = InputView.readCommand();
-            chessGame.start(Command.from(command));
+            final Command startCommand = readCommand();
+            checkStartCommand(startCommand);
             OutputView.printGameStatus(chessGame.getGameStatus());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -34,47 +58,62 @@ public class ChessController {
         }
     }
 
-    private void play() {
+    private Command readCommand() {
         try {
-            playUntilEnd();
+            final List<String> input = InputView.readCommand();
+            return Command.from(input);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            play();
+            return readCommand();
         }
     }
 
-    private void playUntilEnd() {
-        List<String> command = InputView.readCommand();
-        while (Command.from(command).isMoveCommand()) {
-            move(command.get(MOVE_SOURCE_INDEX), command.get(MOVE_DESTINATION_INDEX));
-            OutputView.printGameStatus(chessGame.getGameStatus());
-            command = InputView.readCommand();
+    private void checkStartCommand(final Command command) {
+        if (!command.isStartCommand()) {
+            throw new StartCommandException();
         }
-        checkStart(command);
-        checkEnd(command);
     }
 
-    private void move(String current, String destination) {
+    private boolean isRunning(final Command command) {
+        return !command.isEndCommand() && !chessGame.isEnd();
+    }
+
+    private void restart(final Command command) {
+        chessGame.restart();
+        OutputView.printGameStatus(chessGame.getGameStatus());
+    }
+
+    private void end(final Command command) {
+    }
+
+    private void move(final Command command) {
         try {
-            SquareMoveDto moveDto = SquareMoveDto.from(current, destination);
+            SquareMoveDto moveDto = SquareMoveDto.from(command.getMoveSource(), command.getMoveDestination());
             chessGame.move(moveDto);
-        } catch (InvalidTurnException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            playUntilEnd();
-        }
-    }
-
-    private void checkStart(final List<String> command) {
-        if (Command.from(command).isStartCommand()) {
-            chessGame.restart();
             OutputView.printGameStatus(chessGame.getGameStatus());
-            playUntilEnd();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void checkEnd(final List<String> command) {
-        if (!Command.from(command).isEndCommand()) {
-            playUntilEnd();
+    private void status(final Command command) {
+        OutputView.printScore(chessGame.getScore());
+        OutputView.printGameStatus(chessGame.getGameStatus());
+    }
+
+    private void load(final Command command) {
+        try {
+            final int chessGameId = command.getLoadId();
+            chessGame = chessGameDao.findById(chessGameId);
+            OutputView.printGameStatus(chessGame.getGameStatus());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private void save(final Command command) {
+        final int chessGameId = chessGameDao.save(ChessGameDto.of(chessGame));
+        OutputView.printGameStatus(chessGame.getGameStatus());
+        OutputView.printSavedId(chessGameId);
     }
 }
