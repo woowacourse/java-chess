@@ -12,14 +12,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.model.domain.board.Board;
-import chess.model.domain.board.BoardFactory;
-import chess.model.domain.board.Score;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.King;
 import chess.model.domain.piece.Pawn;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Position;
+import chess.model.exception.FromIsEmptyException;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,8 +37,7 @@ class BoardTest {
         Position emptyPosition = new Position(4, 4);
 
         assertThatThrownBy(() -> board.move(emptyPosition, new Position(1, 1)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("출발점에 말이 없습니다.");
+                .isInstanceOf(FromIsEmptyException.class);
     }
 
     @Test

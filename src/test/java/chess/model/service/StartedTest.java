@@ -10,9 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.model.domain.board.BoardFactory;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Position;
-import chess.model.service.End;
-import chess.model.service.Started;
-import chess.model.service.State;
+import chess.model.exception.StartedCantExecuteException;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +29,7 @@ class StartedTest {
     @DisplayName("시작된 상태면 start 명령을 실행할 수 없습니다.")
     void test_start() {
         assertThatThrownBy(started::start)
-                .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(StartedCantExecuteException.class);
     }
 
     @Test

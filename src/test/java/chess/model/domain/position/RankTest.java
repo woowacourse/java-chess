@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import chess.model.domain.position.Rank;
+import chess.model.exception.RankNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +24,7 @@ class RankTest {
         final int unvalidatedValue = 9;
 
         assertThatThrownBy(() -> Rank.from(unvalidatedValue))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Rank.RANK_NOT_FOUND_MESSAGE);
+                .isInstanceOf(RankNotFoundException.class);
     }
 
     @Test

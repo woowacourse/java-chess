@@ -3,13 +3,9 @@ package chess.model.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.domain.piece.Bishop;
-import chess.model.domain.piece.Color;
-import chess.model.domain.piece.Empty;
-import chess.model.domain.piece.King;
-import chess.model.domain.piece.Piece;
 import chess.model.domain.position.Path;
 import chess.model.domain.position.Position;
+import chess.model.exception.CantMoveToSameColor;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
@@ -54,6 +50,6 @@ class BishopTest {
                 () -> bishop.searchPathTo(initialPosition,
                         new Position(5, 1),
                         new King(Color.WHITE)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(CantMoveToSameColor.class);
     }
 }

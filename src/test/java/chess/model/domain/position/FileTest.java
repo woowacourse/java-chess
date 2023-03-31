@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import chess.model.domain.position.File;
+import chess.model.exception.FileNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +24,7 @@ class FileTest {
         final int unvalidatedValue = 9;
 
         assertThatThrownBy(() -> File.from(unvalidatedValue))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(File.FILE_NOT_FOUND_MESSAGE);
+                .isInstanceOf(FileNotFoundException.class);
     }
 
     @Test

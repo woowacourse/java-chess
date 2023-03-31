@@ -4,9 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import chess.model.domain.piece.Color;
-import chess.model.domain.piece.Piece;
-import chess.model.domain.piece.PieceType;
 import chess.model.domain.position.Movement;
 import chess.model.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;

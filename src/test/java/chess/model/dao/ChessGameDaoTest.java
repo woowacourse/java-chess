@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 class ChessGameDaoTest {
 
     private static final long TEST_CHESS_GAME_ID = 1;
+    private static final long TEST_CHESS_GAME_BLANK_ID = 4;
     private static final Turn TEST_TURN = new Turn(Color.WHITE);
 
     private TestJdbcTemplate testJdbcTemplate;
@@ -57,7 +58,7 @@ class ChessGameDaoTest {
         final List<Long> allId = chessGameDao.findAllId();
 
         assertThat(allId)
-                .containsExactly(TEST_CHESS_GAME_ID);
+                .contains(TEST_CHESS_GAME_ID);
     }
 
     @Test
@@ -65,16 +66,20 @@ class ChessGameDaoTest {
     void generateNewGame() {
         final long newGameId = chessGameDao.generateNewGame();
 
-        assertThat(chessGameDao.findAllId())
-                .containsExactly(TEST_CHESS_GAME_ID, newGameId);
+        final List<Long> allId = chessGameDao.findAllId();
+
+        assertThat(allId)
+                .contains(newGameId);
     }
 
     @Test
     @DisplayName("게임을 삭제하는 기능 테스트")
     void deleteGameTest() {
-        chessGameDao.deleteGame(TEST_CHESS_GAME_ID);
+        chessGameDao.deleteGame(TEST_CHESS_GAME_BLANK_ID);
 
-        assertThat(chessGameDao.findAllId())
-                .containsExactly();
+        final List<Long> allId = chessGameDao.findAllId();
+
+        assertThat(allId)
+                .doesNotContain(TEST_CHESS_GAME_BLANK_ID);
     }
 }

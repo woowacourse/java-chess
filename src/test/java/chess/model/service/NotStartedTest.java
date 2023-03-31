@@ -5,10 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import chess.model.domain.position.Position;
-import chess.model.service.End;
-import chess.model.service.NotStarted;
-import chess.model.service.Started;
-import chess.model.service.State;
+import chess.model.exception.NotStartedCantExecuteException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +28,7 @@ class NotStartedTest {
         final Position from = new Position(2, 2);
         final Position to = new Position(2, 4);
         assertThatThrownBy(() -> notStarted.move(from, to))
-                .isInstanceOf(UnsupportedOperationException.class);
+                .isInstanceOf(NotStartedCantExecuteException.class);
     }
 
     @Test

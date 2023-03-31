@@ -2,8 +2,7 @@ package chess.model.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.domain.position.Path;
-import chess.model.domain.position.Position;
+import chess.model.exception.ObstacleExistException;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,6 @@ class PathTest {
         Path path = new Path(position);
 
         assertThatThrownBy(() -> path.validateObstacle(Set.of(position)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중간에 다른 기물이 존재합니다.");
+                .isInstanceOf(ObstacleExistException.class);
     }
 }

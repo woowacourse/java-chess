@@ -3,11 +3,9 @@ package chess.model.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.domain.piece.Color;
-import chess.model.domain.piece.Empty;
-import chess.model.domain.piece.Pawn;
 import chess.model.domain.position.Path;
 import chess.model.domain.position.Position;
+import chess.model.exception.CantMoveToSameColor;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +56,6 @@ class PawnTest {
 
         assertThatThrownBy(() ->
                 pawn.searchPathTo(INITIAL_POSITION, to, new Pawn(Color.WHITE)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(CantMoveToSameColor.class);
     }
 }

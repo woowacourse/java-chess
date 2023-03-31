@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.groupingBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chess.model.domain.board.BoardFactory;
 import chess.model.domain.piece.Bishop;
 import chess.model.domain.piece.King;
 import chess.model.domain.piece.Knight;
