@@ -5,30 +5,24 @@ import chess.domain.piece.Color;
 public class Turn {
 
     private final int value;
-    private final Color currentTurn;
 
     public Turn() {
-        this(Color.WHITE);
+        this(1);
     }
 
-    public Turn(Color currentTurn) {
-        this(currentTurn, 1);
-    }
-
-    public Turn(Color currentTurn, int value) {
-        this.currentTurn = currentTurn;
+    public Turn(int value) {
         this.value = value;
     }
 
     public Color getCurrentTurn() {
-        return currentTurn;
+        if (value % 2 == 0) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
     }
 
     public Turn changeTurn() {
-        if (currentTurn == Color.WHITE) {
-            return new Turn(Color.BLACK, value + 1);
-        }
-        return new Turn(Color.WHITE, value + 1);
+        return new Turn(value + 1);
     }
 
     public int getValue() {
