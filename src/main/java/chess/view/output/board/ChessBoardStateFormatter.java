@@ -1,5 +1,7 @@
-package chess.controller.mapper.response;
+package chess.view.output.board;
 
+import chess.view.output.board.BlackPieceSymbolMapper;
+import chess.view.output.board.WhitePieceSymbolMapper;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -13,6 +15,9 @@ import java.util.stream.Collectors;
 public class ChessBoardStateFormatter {
 
     private static final String EMPTY_PIECE_SYMBOL = ".";
+
+    private ChessBoardStateFormatter() {
+    }
 
     public static List<List<String>> convertToConsoleViewBoard(Map<Position, Piece> piecesPosition) {
         List<List<String>> consoleViewBoard = new ArrayList<>();

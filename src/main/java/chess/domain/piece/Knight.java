@@ -7,6 +7,8 @@ import chess.domain.piece.move.PieceMove;
 
 public final class Knight extends Piece {
 
+    private static final PieceScore KNIGHT_SCORE = PieceScore.from("2.5");
+
     public Knight(Camp camp) {
         super(camp);
     }
@@ -27,5 +29,10 @@ public final class Knight extends Piece {
 
         return (rankGap == 1 && fileGap == 2)
                 || (rankGap == 2 && fileGap == 1);
+    }
+
+    @Override
+    public PieceScore appendPieceScore(PieceScore source, boolean ignore) {
+        return source.append(KNIGHT_SCORE);
     }
 }

@@ -7,6 +7,8 @@ import chess.domain.piece.move.PieceMove;
 
 public final class King extends Piece {
 
+    private static final PieceScore KING_SCORE = PieceScore.from("0");
+
     public King(Camp camp) {
         super(camp);
     }
@@ -28,5 +30,15 @@ public final class King extends Piece {
         return (rankGap == 0 && fileGap == 1)
                 || (rankGap == 1 && fileGap == 0)
                 || (rankGap == 1 && fileGap == 1);
+    }
+
+    @Override
+    public PieceScore appendPieceScore(PieceScore source, boolean ignore) {
+        return source.append(KING_SCORE);
+    }
+
+    @Override
+    public boolean isEndCondition() {
+        return true;
     }
 }

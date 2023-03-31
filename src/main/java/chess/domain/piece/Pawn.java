@@ -1,12 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.piece.move.InvalidMove;
 import chess.domain.piece.move.PawnCatchMove;
 import chess.domain.piece.move.PawnForwardMove;
 import chess.domain.piece.move.PieceMove;
+import chess.domain.position.Position;
+import java.util.Objects;
 
 public final class Pawn extends Piece {
+
+    private static final PieceScore PAWN_DEFAULT_SCORE = PieceScore.from("1");
+    private static final PieceScore PAWN_REDUCED_SCORE = PieceScore.from("0.5");
 
     private boolean isMoved = false;
 
@@ -52,6 +56,15 @@ public final class Pawn extends Piece {
                 || (!isBlack() && rankGap == 1 && Math.abs(fileGap) == 1);
     }
 
+    @Override
+    public PieceScore appendPieceScore(PieceScore source, boolean isSamePieceInSameFile) {
+        if (isSamePieceInSameFile) {
+            return source.append(PAWN_REDUCED_SCORE);
+        }
+
+        return source.append(PAWN_DEFAULT_SCORE);
+    }
+
     private boolean isForwardMove(int rankGap) {
         if ((isBlack() && rankGap == -1)
                 || (!isBlack() && rankGap == 1)) {
@@ -60,5 +73,25 @@ public final class Pawn extends Piece {
 
         return (isBlack() && rankGap == -2 && !this.isMoved)
                 || (!isBlack() && rankGap == 2 && !this.isMoved);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Pawn pawn = (Pawn) o;
+        return isMoved == pawn.isMoved;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isMoved);
     }
 }

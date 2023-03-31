@@ -11,10 +11,13 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.ChessBoardFactory;
 import chess.domain.position.File;
-import chess.domain.position.PiecesPosition;
+import chess.domain.position.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,14 +30,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PiecesPositionTest {
+class ChessBoardTest {
 
     @Test
     @DisplayName("32개의 기물만 생성된다.")
     void initialChessBoardTest() {
-        PiecesPosition piecesPosition = new PiecesPosition();
+        ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
 
-        assertThat(piecesPosition.getPiecesPosition()).hasSize(32);
+        assertThat(chessBoard.getPiecesPosition()).hasSize(32);
     }
 
     @Nested
@@ -44,9 +47,9 @@ class PiecesPositionTest {
         @ParameterizedTest(name = "화이트 진영의 기물이 기본 위치에 배치된다.")
         @MethodSource("initialBoardStateWhite")
         void judgePiecesTest2(Position position, Piece piece) {
-            PiecesPosition piecesPosition = new PiecesPosition();
-            assertThat(piecesPosition.getPiecesPosition().get(position))
-                    .isEqualTo(piece);
+            ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
+            assertThat(chessBoard.getPiecesPosition())
+                    .containsEntry(position, piece);
         }
 
         Stream<Arguments> initialBoardStateWhite() {
@@ -66,10 +69,10 @@ class PiecesPositionTest {
         @ParameterizedTest(name = "블랙 진영의 기물이 기본 위치에 배치된다.")
         @MethodSource("initialBoardStateBlack")
         void judgePiecesTest3(Position position, Piece piece) {
-            PiecesPosition piecesPosition = new PiecesPosition();
+            ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
 
-            assertThat(piecesPosition.getPiecesPosition().get(position))
-                    .isEqualTo(piece);
+            assertThat(chessBoard.getPiecesPosition())
+                    .containsEntry(position, piece);
         }
 
         Stream<Arguments> initialBoardStateBlack() {
@@ -90,23 +93,23 @@ class PiecesPositionTest {
     @ParameterizedTest(name = "폰 기물이 기본 위치에 배치된다.")
     @CsvSource(value = {"TWO, WHITE", "SEVEN, BLACK"})
     void judgePiecesTest4(Rank rank, Camp camp) {
-        PiecesPosition piecesPosition = new PiecesPosition();
+        ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
 
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(piecesPosition.getPiecesPosition().get(position))
-                    .isEqualTo(new Pawn(camp));
+            assertThat(chessBoard.getPiecesPosition())
+                    .containsEntry(position, new Pawn(camp));
         }
     }
 
     @ParameterizedTest(name = "빈공간이 존재한다.")
     @EnumSource(names = {"THREE", "FOUR", "FIVE", "SIX"})
     void judgePiecesTest5(Rank rank) {
-        PiecesPosition piecesPosition = new PiecesPosition();
+        ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
 
         for (File file : File.values()) {
             Position position = Position.of(file, rank);
-            assertThat(piecesPosition.isPieceExist(position)).isFalse();
+            assertThat(chessBoard.isPieceExist(position)).isFalse();
         }
     }
 
@@ -116,22 +119,61 @@ class PiecesPositionTest {
         Position whitePawnPosition = Position.of(File.A, Rank.TWO);
         Position emptyPosition = Position.of(File.A, Rank.FOUR);
 
-        PiecesPosition piecesPosition = new PiecesPosition();
+        ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
 
-        piecesPosition.movePiece(whitePawnPosition, emptyPosition);
+        chessBoard.movePiece(whitePawnPosition, emptyPosition);
 
-        assertThat(piecesPosition.peekPiece(emptyPosition)).isInstanceOf(Pawn.class);
+        assertThat(chessBoard.peekPiece(emptyPosition)).isInstanceOf(Pawn.class);
     }
 
     @Test
     @DisplayName("기물이 이동한 뒤, 이전 위치에는 빈 값이 된다.")
     void cleanUpPositionTest() {
         Position whitePawnPosition = Position.of(File.A, Rank.TWO);
-        PiecesPosition piecesPosition = new PiecesPosition();
-        assertThat(piecesPosition.peekPiece(whitePawnPosition)).isInstanceOf(Pawn.class);
+        ChessBoard chessBoard = ChessBoardFactory.getInitialChessBoard();
+        assertThat(chessBoard.peekPiece(whitePawnPosition)).isInstanceOf(Pawn.class);
 
-        piecesPosition.movePiece(whitePawnPosition, Position.of(File.A, Rank.FOUR));
+        chessBoard.movePiece(whitePawnPosition, Position.of(File.A, Rank.FOUR));
 
-        assertThat(piecesPosition.isPieceExist(whitePawnPosition)).isFalse();
+        assertThat(chessBoard.isPieceExist(whitePawnPosition)).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 캠프의 기물만 조회할 수 있다.")
+    void getPiecesOfCampTest() {
+        Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
+        pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.B, Rank.TWO), new Pawn(Camp.WHITE));
+
+        pieceByPosition.put(Position.of(File.C, Rank.TWO), new Pawn(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.D, Rank.TWO), new Pawn(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.A, Rank.ONE), new Rook(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.B, Rank.ONE), new Knight(Camp.BLACK));
+        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        assertThat(chessBoard.getPiecesOfCamp(Camp.WHITE))
+                .hasSize(2);
+        assertThat(chessBoard.getPiecesOfCamp(Camp.BLACK))
+                .hasSize(4);
+    }
+
+    @Test
+    @DisplayName("해당 파일내의 기물만 조회할 수 있다.")
+    void getPiecesInFileTest() {
+        Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
+        pieceByPosition.put(Position.of(File.A, Rank.TWO), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.A, Rank.THREE), new Pawn(Camp.WHITE));
+        pieceByPosition.put(Position.of(File.A, Rank.FOUR), new Knight(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.A, Rank.FIVE), new Pawn(Camp.BLACK));
+        pieceByPosition.put(Position.of(File.A, Rank.SIX), new Rook(Camp.BLACK));
+
+        pieceByPosition.put(Position.of(File.C, Rank.TWO), new Pawn(Camp.BLACK));
+
+        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        assertThat(chessBoard.getPiecesInFile(File.A))
+                .hasSize(5);
+        assertThat(chessBoard.getPiecesInFile(File.C))
+                .hasSize(1);
     }
 }

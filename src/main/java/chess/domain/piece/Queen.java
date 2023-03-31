@@ -7,6 +7,8 @@ import chess.domain.piece.move.PieceMove;
 
 public final class Queen extends Piece {
 
+    private static final PieceScore QUEEN_SCORE = PieceScore.from("9");
+
     public Queen(Camp camp) {
         super(camp);
     }
@@ -27,5 +29,10 @@ public final class Queen extends Piece {
 
         return (rankGap == fileGap)
                 || rankGap == 0 || fileGap == 0;
+    }
+
+    @Override
+    public PieceScore appendPieceScore(PieceScore source, boolean isSamePieceInSameFile) {
+        return source.append(QUEEN_SCORE);
     }
 }

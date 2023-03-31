@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.repository.mapper.FileDtoMapper;
+import chess.domain.repository.mapper.RankDtoMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.Objects;
 
 public final class Position {
 
-    private final static Map<String, Position> positions = new HashMap<>();
+    private static final Map<String, Position> positions = new HashMap<>();
 
     private final File file;
     private final Rank rank;
@@ -25,6 +27,14 @@ public final class Position {
 
     private static String toKey(File file, Rank rank) {
         return file.name() + rank.name();
+    }
+
+    public static Position valueOf(String value) {
+        String[] split = value.split("");
+        File file = FileDtoMapper.convertToFile(split[0]);
+        Rank rank = RankDtoMapper.convertToRank(split[1]);
+
+        return Position.of(file, rank);
     }
 
     public int calculateRankGap(Position other) {
@@ -77,5 +87,13 @@ public final class Position {
         Rank newRank = rank.move(rankStep);
 
         return Position.of(newFile, newRank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

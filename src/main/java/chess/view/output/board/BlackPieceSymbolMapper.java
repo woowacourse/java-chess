@@ -1,4 +1,4 @@
-package chess.controller.mapper.response;
+package chess.view.output.board;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

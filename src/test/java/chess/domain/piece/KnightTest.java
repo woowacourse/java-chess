@@ -24,4 +24,14 @@ class KnightTest {
 
         assertThat(result).isInstanceOf(PassingMove.class);
     }
+
+    @Test
+    @DisplayName("나이트는 기물 위치와 관계없이 2.5점을 추가한다.")
+    void knightScoreTest() {
+        Piece knight = new Knight(Camp.WHITE);
+
+        PieceScore appendScore = knight.appendPieceScore(PieceScore.getZero(), true);
+
+        assertThat(appendScore.getValue()).isEqualTo(2.5d);
+    }
 }
