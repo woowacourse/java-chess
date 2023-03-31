@@ -53,8 +53,21 @@ public class DbChessGameDao implements ChessGameDao {
     public ChessGame select() {
         Map<Position, ChessPiece> pieces = new HashMap<>(64);
         Color gameTurn = null;
-
         final var query = "SELECT * FROM chess_game";
+        gameTurn = createChessBoard(pieces, gameTurn, query);
+
+        if (pieces.isEmpty()) {
+            return null;
+        }
+        ChessBoard chessBoard = ChessBoard.makeOnGameChessBoard(pieces);
+        ChessGame chessGame = new ChessGame(chessBoard);
+        chessGame.setColor(gameTurn);
+        chessGame.startGame();
+
+        return chessGame;
+    }
+
+    private Color createChessBoard(Map<Position, ChessPiece> pieces, Color gameTurn, String query) {
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
@@ -74,17 +87,7 @@ public class DbChessGameDao implements ChessGameDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-
-        if (pieces.isEmpty()) {
-            return null;
-        }
-
-        ChessBoard chessBoard = ChessBoard.makeOnGameChessBoard(pieces);
-        ChessGame chessGame = new ChessGame(chessBoard);
-        chessGame.setColor(gameTurn);
-        chessGame.startGame();
-
-        return chessGame;
+        return gameTurn;
     }
 
     private ChessPiece extractPiece(Shape pieceType, Color color) {

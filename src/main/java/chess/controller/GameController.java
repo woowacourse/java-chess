@@ -12,10 +12,8 @@ public class GameController {
 
     private final ChessGameDao chessGameDao;
 
-
     public GameController(ChessGameDao chessGameDao) {
         this.chessGameDao = chessGameDao;
-
     }
 
     public void run() {
