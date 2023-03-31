@@ -32,11 +32,11 @@ public class PositionTest {
     }
 
     @Test
-    void 위치를_더_움직일_수_없다면_원래_위치를_반환한다() {
+    void 위치를_더_움직일_수_없다면_null_을_반환한다() {
         final Position position = Position.of(A, ONE);
 
         final Position movedPosition = position.move(PawnMovePattern.DOWN);
 
-        assertThat(movedPosition).isEqualTo(position);
+        assertThat(movedPosition).isEqualTo(null);
     }
 }

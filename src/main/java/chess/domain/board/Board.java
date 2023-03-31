@@ -3,13 +3,15 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
+import chess.domain.piece.Type;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
 
-    public static final int LOWER_BOUNDARY = 1;
     public static final int UPPER_BOUNDARY = 8;
 
     private final Map<Position, Piece> board;
@@ -44,12 +46,26 @@ public class Board {
         }
     }
 
-    public static boolean isInRange(final int fileIndex, final int rankIndex) {
-        return isIndexInRange(fileIndex) && isIndexInRange(rankIndex);
+    public boolean isKingCaptured() {
+        return isKingCaptured(Side.WHITE) || isKingCaptured(Side.BLACK);
     }
 
-    private static boolean isIndexInRange(final int index) {
-        return index >= LOWER_BOUNDARY && index <= UPPER_BOUNDARY;
+    public boolean isKingCaptured(final Side side) {
+        return board.values().stream()
+                .filter(piece -> piece.side() == side)
+                .noneMatch(piece -> piece.type() == Type.KING);
+    }
+
+    public boolean isAllyPosition(final Position position, final Position otherPosition) {
+        final Side side = findSideByPosition(position);
+        final Side otherSide = findSideByPosition(otherPosition);
+        return side.isAlly(otherSide);
+    }
+
+    public boolean isEnemyPosition(final Position position, final Position otherPosition) {
+        final Side side = findSideByPosition(position);
+        final Side otherSide = findSideByPosition(otherPosition);
+        return side.isEnemy(otherSide);
     }
 
     public Side findSideByPosition(final Position position) {
@@ -57,8 +73,8 @@ public class Board {
         return piece.side();
     }
 
-    public Piece findPieceByPosition(final Position position) {
-        return board.get(position);
+    public static boolean isInRange(final int fileIndex, final int rankIndex) {
+        return File.isIndexValid(fileIndex) && Rank.isIndexValid(rankIndex);
     }
 
     public Map<Position, Piece> getBoard() {

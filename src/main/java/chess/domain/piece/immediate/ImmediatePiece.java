@@ -1,5 +1,6 @@
 package chess.domain.piece.immediate;
 
+import chess.domain.Price;
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.piece.Piece;
@@ -34,33 +35,23 @@ public final class ImmediatePiece implements Piece {
         return movablePositions;
     }
 
-    private List<Position> findMovablePositionByMovePattern(
-            final Position source,
-            final MovePattern movePattern,
-            final Board board) {
-
+    private List<Position> findMovablePositionByMovePattern(final Position source, final MovePattern movePattern, final Board board) {
         List<Position> movablePosition = new ArrayList<>();
-        if (canMoveMore(source, movePattern, board)) {
-            Position nextPosition = source.move(movePattern);
+        final Position nextPosition = source.move(movePattern);
+
+        if (nextPosition == null) {
+            return movablePosition;
+        }
+
+        if (isNextPositionValid(source, nextPosition, board)) {
             movablePosition.add(nextPosition);
         }
+
         return movablePosition;
     }
 
-    private boolean canMoveMore(final Position currentPosition, final MovePattern movePattern, final Board board) {
-        final Position nextPosition = currentPosition.move(movePattern);
-        final Side currentSide = board.findSideByPosition(currentPosition);
-        final Side nextSide = board.findSideByPosition(nextPosition);
-
-        return isInRange(currentPosition, nextPosition) && isDifferentSide(currentSide, nextSide);
-    }
-
-    private boolean isInRange(final Position currentPosition, final Position nextPosition) {
-        return currentPosition != nextPosition;
-    }
-
-    private boolean isDifferentSide(final Side currentSide, final Side nextSide) {
-        return currentSide != nextSide;
+    private boolean isNextPositionValid(final Position source, final Position nextPosition, final Board board) {
+        return !board.isAllyPosition(source, nextPosition);
     }
 
     @Override
@@ -69,8 +60,18 @@ public final class ImmediatePiece implements Piece {
     }
 
     @Override
+    public Type type() {
+        return type;
+    }
+
+    @Override
     public Side side() {
         return side;
+    }
+
+    @Override
+    public Price price() {
+        return type.price();
     }
 
     @Override

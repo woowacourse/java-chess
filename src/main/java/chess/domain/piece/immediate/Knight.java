@@ -1,5 +1,6 @@
 package chess.domain.piece.immediate;
 
+import chess.domain.Price;
 import chess.domain.board.Board;
 import chess.domain.movepattern.KnightMovePattern;
 import chess.domain.piece.Piece;
@@ -27,8 +28,18 @@ public class Knight implements Piece {
     }
 
     @Override
+    public Type type() {
+        return immediatePiece.type();
+    }
+
+    @Override
     public Side side() {
         return immediatePiece.side();
+    }
+
+    @Override
+    public Price price() {
+        return immediatePiece.price();
     }
 
     @Override

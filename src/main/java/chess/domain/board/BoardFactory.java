@@ -3,7 +3,9 @@ package chess.domain.board;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Side;
+import chess.domain.piece.Type;
 import chess.domain.piece.immediate.King;
 import chess.domain.piece.immediate.Knight;
 import chess.domain.piece.linear.Bishop;
@@ -12,13 +14,30 @@ import chess.domain.piece.linear.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.dto.PieceDto;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardFactory {
 
     public static Board generateBoard() {
         Map<Position, Piece> board = initBoard();
+        return new Board(board);
+    }
+
+    public static Board generateBoard(List<PieceDto> pieces) {
+        Map<Position, Piece> board = new HashMap<>();
+        initEmpty(board);
+
+        for (final PieceDto piece : pieces) {
+            final File file = piece.getFile();
+            final Rank rank = piece.getRank();
+            final Type type = piece.getType();
+            final Side side = piece.getSide();
+            board.put(Position.of(file, rank), PieceFactory.generatePiece(type, side));
+        }
+
         return new Board(board);
     }
 

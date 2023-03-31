@@ -1,5 +1,6 @@
 package chess.domain.piece.linear;
 
+import chess.domain.Price;
 import chess.domain.board.Board;
 import chess.domain.movepattern.MovePattern;
 import chess.domain.piece.Piece;
@@ -8,6 +9,7 @@ import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public final class LinearPiece implements Piece {
 
@@ -34,52 +36,31 @@ public final class LinearPiece implements Piece {
         return movablePositions;
     }
 
-    private List<Position> findMovablePositionByMovePattern(
-            final Position source,
-            final MovePattern movePattern,
-            final Board board) {
-
+    private List<Position> findMovablePositionByMovePattern(final Position source, final MovePattern movePattern, final Board board) {
         List<Position> movablePosition = new ArrayList<>();
         Position currentPosition = source;
-        boolean hasCaptured = false;
-        while (canMoveMore(source, currentPosition, movePattern, board, hasCaptured)) {
+        boolean canMoveMore = true;
+
+        while (canMoveMore) {
             Position nextPosition = currentPosition.move(movePattern);
+            canMoveMore = canMoveMore(nextPosition, board);
             movablePosition.add(nextPosition);
-            hasCaptured = updateCaptured(
-                    board.findSideByPosition(source),
-                    board.findSideByPosition(nextPosition)
-            );
             currentPosition = nextPosition;
         }
+
+        if (isLastPositionInvalid(source, currentPosition, board)) {
+            movablePosition.remove(currentPosition);
+        }
+
         return movablePosition;
     }
 
-    private boolean canMoveMore(
-            final Position source,
-            final Position currentPosition,
-            final MovePattern movePattern,
-            final Board board,
-            final boolean hasCaptured
-    ) {
-        final Position nextPosition = currentPosition.move(movePattern);
-        final Side sourceSide = board.findSideByPosition(source);
-        final Side nextSide = board.findSideByPosition(nextPosition);
-
-        return isInRange(currentPosition, nextPosition) &&
-                isDifferentSide(sourceSide, nextSide) &&
-                !hasCaptured;
+    private boolean canMoveMore(@Nullable final Position position, final Board board) {
+        return (position != null) && (board.findSideByPosition(position).isNeutrality());
     }
 
-    private boolean isInRange(final Position currentPosition, final Position nextPosition) {
-        return currentPosition != nextPosition;
-    }
-
-    private boolean isDifferentSide(final Side sourceSide, final Side nextSide) {
-        return sourceSide != nextSide;
-    }
-
-    private boolean updateCaptured(final Side sourceSide, final Side nextSide) {
-        return isDifferentSide(sourceSide, nextSide) && nextSide != Side.NEUTRALITY;
+    private boolean isLastPositionInvalid(final Position source, @Nullable final Position lastPosition, final Board board) {
+        return lastPosition == null || board.isAllyPosition(source, lastPosition);
     }
 
     @Override
@@ -88,8 +69,18 @@ public final class LinearPiece implements Piece {
     }
 
     @Override
+    public Type type() {
+        return type;
+    }
+
+    @Override
     public Side side() {
         return side;
+    }
+
+    @Override
+    public Price price() {
+        return type.price();
     }
 
     @Override

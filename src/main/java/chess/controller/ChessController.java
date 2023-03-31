@@ -1,48 +1,60 @@
 package chess.controller;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.controller.command.GameCommand;
+import chess.controller.command.RoomCommand;
 import chess.domain.game.ChessGame;
+import chess.repository.dao.JdbcChessGameDao;
+import chess.repository.dao.JdbcPieceDao;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 
 public class ChessController {
 
-    public static final int COMMAND_INDEX = 0;
+    private static final int MAIN_COMMAND_INDEX = 0;
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessService chessService;
 
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessService = new ChessService(new JdbcChessGameDao(), new JdbcPieceDao());
     }
 
     public void run() {
-        final Board board = BoardFactory.generateBoard();
-        final ChessGame chessGame = new ChessGame(board);
+        outputView.printExistChessGameId(chessService.findAllChessGame());
+
+        final ChessGame chessGame = startChessGame();
 
         outputView.printStartMessage();
-        while (chessGame.isRunnable()) {
-            printChessBoard(chessGame);
-            executeCommand(chessGame);
+
+        while (chessService.isRunnable(chessGame)) {
+            play(chessGame);
         }
     }
 
-    private void printChessBoard(final ChessGame chessGame) {
-        if (chessGame.isStart()) {
-            outputView.printBoard(chessGame.getBoard());
-        }
-    }
-
-    private void executeCommand(final ChessGame chessGame) {
+    private ChessGame startChessGame() {
         try {
-            final String[] splitCommand = inputView.readCommand().split(" ");
-            final Command command = Command.findByString(splitCommand[COMMAND_INDEX]);
-            command.execute(chessGame, splitCommand);
+            final List<String> roomCommand = inputView.readRoomCommand();
+            final RoomCommand mainRoomCommand = RoomCommand.from(roomCommand.get(MAIN_COMMAND_INDEX));
+            return mainRoomCommand.execute(chessService, roomCommand);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e);
-            executeCommand(chessGame);
+            return startChessGame();
+        }
+    }
+
+    private void play(final ChessGame chessGame) {
+        try {
+            final List<String> gameCommand = inputView.readGameCommand();
+            final GameCommand mainGameCommand = GameCommand.from(gameCommand.get(MAIN_COMMAND_INDEX));
+            mainGameCommand.execute(chessService, chessGame, gameCommand, outputView);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            play(chessGame);
         }
     }
 }

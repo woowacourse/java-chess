@@ -1,5 +1,6 @@
 package chess.domain.piece.linear;
 
+import chess.domain.Price;
 import chess.domain.board.Board;
 import chess.domain.movepattern.BishopMovePattern;
 import chess.domain.piece.Piece;
@@ -27,8 +28,18 @@ public class Bishop implements Piece {
     }
 
     @Override
+    public Type type() {
+        return linearPiece.type();
+    }
+
+    @Override
     public Side side() {
         return linearPiece.side();
+    }
+
+    @Override
+    public Price price() {
+        return linearPiece.price();
     }
 
     @Override

@@ -1,17 +1,21 @@
 package chess.domain.board;
 
 import static chess.domain.piece.Side.BLACK;
+import static chess.domain.piece.Side.NEUTRALITY;
 import static chess.domain.piece.Side.WHITE;
 import static chess.domain.position.File.A;
 import static chess.domain.position.File.B;
 import static chess.domain.position.File.C;
 import static chess.domain.position.File.D;
+import static chess.domain.position.File.E;
+import static chess.domain.position.File.F;
 import static chess.domain.position.File.G;
 import static chess.domain.position.File.H;
 import static chess.domain.position.Rank.EIGHT;
 import static chess.domain.position.Rank.FOUR;
 import static chess.domain.position.Rank.ONE;
 import static chess.domain.position.Rank.SEVEN;
+import static chess.domain.position.Rank.SIX;
 import static chess.domain.position.Rank.THREE;
 import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -386,5 +390,53 @@ public class BoardTest {
 
         final Side side = board.findSideByPosition(Position.of(A, ONE));
         assertThat(side.isWhite()).isTrue();
+    }
+
+    @Test
+    void 두_위치를_통해_서로_아군_관계인지_판단할_수_있다() {
+        boardMap.put(Position.of(A, ONE), new Pawn(WHITE));
+        boardMap.put(Position.of(A, TWO), new Pawn(WHITE));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.isAllyPosition(Position.of(A, ONE), Position.of(A, TWO))).isTrue();
+    }
+
+    @Test
+    void 두_위치를_통해_서로_적군_관계인지_판단할_수_있다() {
+        boardMap.put(Position.of(A, ONE), new Pawn(WHITE));
+        boardMap.put(Position.of(A, TWO), new Pawn(BLACK));
+        final Board board = new Board(boardMap);
+
+        assertThat(board.isEnemyPosition(Position.of(A, ONE), Position.of(A, TWO))).isTrue();
+    }
+
+    @Test
+    void 킹이_잡혔는지_판단할_수_있다() {
+        /*
+
+        ........        ........
+        ........        ........
+        ........        ........
+        ........        ........
+        ........  -->   ........
+        K.......        q.......
+        ........        ........
+        q..k....        ...k....
+
+         */
+
+        boardMap.put(Position.of(A, ONE), new Queen(WHITE));
+        boardMap.put(Position.of(D, ONE), new King(WHITE));
+        boardMap.put(Position.of(A, THREE), new King(BLACK));
+        final Board board = new Board(boardMap);
+
+        board.move(Position.of(A, ONE), Position.of(A, THREE));
+
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(board.isKingCaptured(WHITE)).isFalse();
+        softAssertions.assertThat(board.isKingCaptured(BLACK)).isTrue();
+        softAssertions.assertThat(board.isKingCaptured()).isTrue();
+
+        softAssertions.assertAll();
     }
 }
