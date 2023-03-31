@@ -1,7 +1,7 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
-import chess.domain.chess.ChessGame;
+import chess.domain.game.ChessGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,10 +33,10 @@ class StartTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = start.checkCommand(command);
+        State state = start.checkCommand(command);
 
         // then
-        assertThat(status)
+        assertThat(state)
                 .isInstanceOf(End.class);
     }
 

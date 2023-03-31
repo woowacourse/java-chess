@@ -1,8 +1,10 @@
 package chess.controller;
 
-import chess.controller.status.Start;
-import chess.controller.status.Status;
-import chess.domain.chess.ChessGame;
+import chess.controller.state.Start;
+import chess.controller.state.State;
+import chess.dao.ChessGameDao;
+import chess.dao.ChessGameLoader;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -10,29 +12,33 @@ import chess.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessController {
+    private final ChessGameDao chessGameDao;
+
+    public ChessController(final ChessGameDao chessGameDao) {
+        this.chessGameDao = chessGameDao;
+    }
 
     public void run() {
         OutputView.printStartMessage();
-        final ChessGame chessGame = new ChessGame();
-        play(chessGame, gameStatus -> {
-            if (gameStatus.isRun()) {
-                printChessBoard(chessGame.getChessBoard());
-            }
-        });
+        ChessGame chessGame = ChessGameLoader.load(chessGameDao);
+        State gameStatus = new Start(chessGame);
+        play(chessGame, gameStatus);
     }
 
-    private void play(final ChessGame chessGame, Consumer<Status> consumer) {
-        Status gameStatus = new Start(chessGame);
-        while (gameStatus.isRun()) {
+    private void play(ChessGame chessGame, State gameStatus) {
+        while (!chessGame.isEnd() && gameStatus.isRun()) {
             gameStatus = getStatus(gameStatus);
-            consumer.accept(gameStatus);
+            chessGameDao.update(chessGame);
+            printChessBoard(gameStatus, chessGame.getChessBoard());
+        }
+        if (chessGame.isEnd()) {
+            chessGameDao.init(chessGame);
         }
     }
 
-    private Status getStatus(Status gameStatus) {
+    private State getStatus(State gameStatus) {
         try {
             List<String> commands = InputView.getCommand();
             final Command command = Command.findCommand(commands);
@@ -43,8 +49,10 @@ public class ChessController {
         }
     }
 
-    private void printChessBoard(Map<Position, Piece> board) {
-        ChessBoardDto chessBoardDTO = new ChessBoardDto(board);
-        OutputView.print(chessBoardDTO.getBoardMessage().toString());
+    private void printChessBoard(State gameStatus, Map<Position, Piece> board) {
+        if (gameStatus.isRun()) {
+            ChessBoardDto chessBoardDTO = new ChessBoardDto(board);
+            OutputView.print(chessBoardDTO.getBoardMessage().toString());
+        }
     }
 }

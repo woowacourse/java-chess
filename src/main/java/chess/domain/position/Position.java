@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,16 +60,11 @@ public final class Position {
     }
 
     public boolean isUpsideDiagonalPosition(Position target) {
-        int fileGap = target.file - this.file;
-        int rankGap = target.rank - this.rank;
-        return Math.abs(fileGap) == 1 && rankGap == 1;
+        return Direction.isUpsideDiagonal(target.file - this.file, target.rank - this.rank);
     }
 
     public boolean isDownSideDiagonalPosition(Position target) {
-        int fileGap = target.file - this.file;
-        int rankGap = target.rank - this.rank;
-        return Math.abs(fileGap) == 1 && rankGap == -1;
-
+        return Direction.isDownsideDiagonal(target.file - this.file, target.rank - this.rank);
     }
 
     @Override

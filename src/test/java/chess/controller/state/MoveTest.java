@@ -1,7 +1,7 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
-import chess.domain.chess.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,10 +37,10 @@ class MoveTest {
         final Command command = new Command(CommandType.END, List.of("end"));
 
         // when
-        Status status = move.checkCommand(command);
+        State state = move.checkCommand(command);
 
         // then
-        assertThat(status)
+        assertThat(state)
                 .isInstanceOf(End.class);
     }
 

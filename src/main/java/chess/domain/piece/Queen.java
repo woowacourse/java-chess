@@ -5,6 +5,7 @@ import chess.domain.position.PossibleDestinations;
 
 public class Queen extends Piece {
     private static final int QUEEN_MAX_MOVE_COUNT = 8;
+    private static final Double SCORE_VALUE = 9.0;
 
     public Queen(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
@@ -15,5 +16,10 @@ public class Queen extends Piece {
         final PossibleDestinations allPositions =
                 PossibleDestinations.of(source, Direction.getAllDirections(), QUEEN_MAX_MOVE_COUNT);
         return allPositions.contains(target);
+    }
+
+    @Override
+    public Double getScoreValue() {
+        return SCORE_VALUE;
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.chess;
+package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
@@ -13,6 +13,12 @@ public final class ChessGame {
 
     public ChessGame() {
         this.chessBoard = ChessBoard.getInstance(this);
+        this.currentTeamColor = TeamColor.WHITE;
+    }
+
+    public ChessGame(final ChessBoard chessBoard, final TeamColor turn) {
+        this.chessBoard = chessBoard;
+        this.currentTeamColor = turn;
     }
 
     public void setUp(final Position source, final Position target, final TeamColor teamColor) {
@@ -25,7 +31,7 @@ public final class ChessGame {
         if (piece == null) {
             throw new IllegalArgumentException("기물이 존재하는 위치를 입력해주세요.");
         }
-        validateCamp(piece);
+        validateTurn(piece);
         if (!piece.canMove(source, target, chessBoard.getPiece(target))
                 || !chessBoard.isPossibleRoute(source, target, currentTeamColor)) {
             throw new IllegalArgumentException("기물 규칙 상 움직일 수 없는 위치입니다.");
@@ -33,7 +39,7 @@ public final class ChessGame {
         movePiece(source, target, piece);
     }
 
-    private void validateCamp(final Piece piece) {
+    private void validateTurn(final Piece piece) {
         if (!piece.isSameTeam(currentTeamColor)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
@@ -46,5 +52,13 @@ public final class ChessGame {
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard.getBoard();
+    }
+
+    public boolean isEnd() {
+        return chessBoard.checkKingDie();
+    }
+
+    public TeamColor getCurrentTeamColor() {
+        return currentTeamColor;
     }
 }

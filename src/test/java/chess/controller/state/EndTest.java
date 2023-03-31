@@ -1,4 +1,4 @@
-package chess.controller.status;
+package chess.controller.state;
 
 import chess.controller.Command;
 import org.junit.jupiter.api.DisplayName;

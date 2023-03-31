@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### docker ###
+./src/main/java/chess/docker/db.mysql

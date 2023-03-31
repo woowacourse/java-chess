@@ -5,6 +5,7 @@ import chess.domain.position.PossibleDestinations;
 
 public class King extends Piece {
     private static final int KING_MAX_MOVE_COUNT = 1;
+    private static final Double SCORE_VALUE = 0.0;
 
     public King(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
@@ -15,5 +16,15 @@ public class King extends Piece {
         final PossibleDestinations allPositions =
                 PossibleDestinations.of(source, Direction.getAllDirections(), KING_MAX_MOVE_COUNT);
         return allPositions.contains(target);
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public Double getScoreValue() {
+        return SCORE_VALUE;
     }
 }

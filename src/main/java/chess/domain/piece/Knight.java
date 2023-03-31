@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
+    private static final Double SCORE_VALUE = 2.5;
+
     public Knight(final PieceType pieceType, final TeamColor teamColor) {
         super(pieceType, teamColor);
     }
@@ -12,5 +14,10 @@ public class Knight extends Piece {
         final int rankGap = target.getRank() - source.getRank();
         final int fileGap = target.getFile() - source.getFile();
         return Math.abs(rankGap * fileGap) == 2;
+    }
+
+    @Override
+    public Double getScoreValue() {
+        return SCORE_VALUE;
     }
 }

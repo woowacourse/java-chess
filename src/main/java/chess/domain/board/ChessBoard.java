@@ -1,22 +1,30 @@
 package chess.domain.board;
 
-import chess.domain.chess.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamColor;
 import chess.domain.position.Position;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class ChessBoard {
+    public static final int INITIAL_KING_COUNT = 2;
+    private static final Map<ChessGame, ChessBoard> CACHE = new ConcurrentHashMap<>();
+
     private final Map<Position, Piece> board;
 
-    private ChessBoard(final Map<Position, Piece> board) {
+    public ChessBoard(final Map<Position, Piece> board) {
         this.board = board;
     }
 
     public static ChessBoard getInstance(final ChessGame chessGame) {
-        final Map<Position, Piece> board = ChessBoardFactory.getInstance(chessGame).createBoard();
-        return new ChessBoard(board);
+        if (CACHE.containsKey(chessGame)) {
+            return CACHE.get(chessGame);
+        }
+        final ChessBoard chessBoard = new ChessBoard(new ChessBoardFactory().createBoard());
+        CACHE.put(chessGame, chessBoard);
+        return chessBoard;
     }
 
     public boolean contains(final Position position) {
@@ -58,8 +66,14 @@ public final class ChessBoard {
         return isObstructed(target, unitPosition, currentPosition);
     }
 
-
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public boolean checkKingDie() {
+        final double kingCount = board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+        return kingCount != INITIAL_KING_COUNT;
     }
 }

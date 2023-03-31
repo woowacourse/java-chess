@@ -1,6 +1,8 @@
 package chess.view;
 
-import static chess.controller.status.CommandType.*;
+import chess.controller.ScoreDto;
+
+import static chess.controller.state.CommandType.*;
 
 public final class OutputView {
 
@@ -16,5 +18,11 @@ public final class OutputView {
     public static void printStartMessage() {
         print(String.format(START_MESSAGE, START.name().toLowerCase(),
                 END.name().toLowerCase(), MOVE.name().toLowerCase()));
+    }
+
+    public static void printStatus(ScoreDto scoreDto) {
+        print(String.format("Black : %f, White : %f",
+                scoreDto.getBlackScore(), scoreDto.getWhiteScore()));
+        System.out.println(System.lineSeparator());
     }
 }

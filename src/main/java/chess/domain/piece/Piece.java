@@ -11,16 +11,26 @@ public abstract class Piece implements Movable {
         this.teamColor = teamColor;
     }
 
-    public boolean compareCamp(final Piece other) {
-        return teamColor == other.teamColor;
-    }
-
     public boolean isSameTeam(final TeamColor diffType) {
         return teamColor == diffType;
     }
 
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public abstract Double getScoreValue();
+
+    public TeamColor getTeamColor() {
+        return teamColor;
     }
 
     @Override

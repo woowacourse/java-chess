@@ -34,6 +34,14 @@ public enum Direction {
         return List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
     }
 
+    public static boolean isUpsideDiagonal(final int file, final int rank) {
+        return (file == UP_LEFT.fileMove || file == UP_RIGHT.fileMove) && rank == UP.rankMove;
+    }
+
+    public static boolean isDownsideDiagonal(final int file, final int rank) {
+        return (file == DOWN_LEFT.fileMove || file == DOWN_RIGHT.fileMove) && rank == DOWN.rankMove;
+    }
+
     public Position calculate(final Position before) {
         return before.calculate(this.rankMove, this.fileMove);
     }

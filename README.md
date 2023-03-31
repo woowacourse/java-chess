@@ -2,7 +2,55 @@
 
 ## Pair: 져니 [⛄️](http://github.com/cl8d), 제나 [❤️](https://github.com/yenawee)
 
-## 1단계 피드백 사항 및 추가 수정 사항
+### 프로그램 실행방법
+./java-chess/src/main/java/chess/docker 경로에서 아래 명령어를 입력해주세요
+
+```
+docker-compose -p chess up -d 
+```
+
+정지 시에는 아래 명령어를 입력해주세요
+```
+docker-compose -p chess down
+```
+
+## 3, 4 단계 피드백 사항 및 추가 수정사항
+- [x] Readme 에 도커 환경 세팅 설명 추가
+- [x] DB connect 연결 에러 발생 시 처리
+- [x] 매직 넘버 상수화 및 메소드 이름 구체화
+- [ ] Command 처리 로직 수정
+- [x] 하나의 요청에 대해 하나의 Connection 으로 처리하도록 수정
+- [ ] update 쿼리 수정
+
+
+## ✔ 4단계 기능 요구사항
+
+- [x] 애플리케이션 재시작 시 이전에 하던 체스 게임을 재시작할 수 있어야 한다
+- [x] table
+    - [x] Piece 정보 : piece_type, team_color, rank, file
+    - [x] Chessgame 정보 : turn (chessGame id 는 추후 적용 필요)
+        - [x] CRUD
+            - [x] Create
+                - [x] DB에서 불러 올 체스 게임이 없으면 만든다
+            - [x] Read
+                - [x] DB에 체스 게임 정보가 저장되어 있다면 DB에서 읽어온다
+            - [x] Update
+                - [x] 기물을 움직일 때마다 DB 업데이트 해준다
+                - [x] 우선 delete 후 save 로 구현 (UPDATE 쿼리 사용으로 변경 필요)
+            - [x] Delete
+              - [x] King 이 죽으면 DB 초기화 해준다
+
+## ✔ 3단계 기능 요구사항
+
+- [x] King 이 잡혔을 때 게임 종료
+- [x] status 명령 입력 시 점수 출력, 어느 진영이 이겼는지 출력
+    - [x] commandType 에 status 추가
+- [x] 점수 계산
+    - [x] Queen : 9, Rook : 5, Bishop : 3, Knight : 2.5
+    - [x] Pawn : 기본 1. 같은 세로 줄에 같은 색의 폰이 있으면 0.5
+
+## 1, 2단계 피드백 사항 및 추가 수정 사항
+
 - [x] 출력 시 View 와 Domain 의존성 제거 - DTO 도입
 - [x] 매직 넘버 상수화
 - [x] 클래스 및 메소드 네이밍 의미있는 표현으로 변경
@@ -13,8 +61,7 @@
 - [ ] Readme 에 네이밍 사전, 클래스 다이어그램, 프로그래밍 흐름도 정리하기
 - [x] 예외 발생 시 재입력
 
-
-## ✔ 기능 요구사항
+## ✔ 1, 2단계 기능 요구사항
 
 ### ChessBoard
 
@@ -30,7 +77,7 @@
 
 - [x] 체스 게임을 진행한다.
 
-### CampType
+### TeamColor
 
 - [x] 사용자의 진영을 관리한다.
     - [x] 입력받은 위치의 열이 소문자면 WHITE, 대문자면 BLACK 진영으로 나눈다.
