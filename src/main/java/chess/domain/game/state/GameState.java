@@ -2,13 +2,18 @@ package chess.domain.game.state;
 
 public interface GameState {
 
+
     GameState start();
 
     GameState end();
 
     GameState run();
 
-    String getStateName();
+    StatusType getStatusType();
+
+    default String getStateName() {
+        return getStatusType().getStatusName();
+    }
 
     boolean isStarted();
 

@@ -4,7 +4,7 @@ import chess.domain.game.exception.ChessGameException;
 
 public class StartState implements GameState {
 
-    private static final String START_STATE_NAME = "start";
+    private static final StatusType STATUS_TYPE = StatusType.START;
     private static final StartState INSTANCE = new StartState();
 
     private StartState() {
@@ -30,8 +30,8 @@ public class StartState implements GameState {
     }
 
     @Override
-    public String getStateName() {
-        return START_STATE_NAME;
+    public StatusType getStatusType() {
+        return STATUS_TYPE;
     }
 
     @Override

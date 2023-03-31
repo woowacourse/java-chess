@@ -4,6 +4,7 @@ import chess.domain.game.exception.ChessGameException;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.MovingState;
 import chess.domain.game.state.StartState;
+import chess.domain.game.state.StatusType;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.exception.IllegalPieceMoveException;
@@ -68,5 +69,13 @@ public class ChessGame {
     public Turn getTurn() {
         gameState = gameState.run();
         return board.getTurn();
+    }
+
+    public StatusType getStatusType() {
+        return gameState.getStatusType();
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }
