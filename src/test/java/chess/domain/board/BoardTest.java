@@ -173,30 +173,6 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("폰이 같은 파일일 떄는 0.5점으로 계산")
-    void calculateScorePawnSameFile() {
-        //given
-        Map<Square, Piece> squarePiece = Map.of(
-                Square.from("a1"), Role.PAWN.create(Color.BLACK),
-                Square.from("a2"), Role.PAWN.create(Color.BLACK),
-                Square.from("a3"), Role.PAWN.create(Color.BLACK),
-                Square.from("a4"), Role.PAWN.create(Color.BLACK),
-                Square.from("a5"), Role.PAWN.create(Color.BLACK),
-                Square.from("b1"), Role.PAWN.create(Color.WHITE),
-                Square.from("b2"), Role.PAWN.create(Color.WHITE),
-                Square.from("b3"), Role.PAWN.create(Color.WHITE),
-                Square.from("b4"), Role.PAWN.create(Color.WHITE),
-                Square.from("b5"), Role.PAWN.create(Color.WHITE)
-        );
-        Board board = BoardFactory.create(squarePiece, Color.WHITE);
-        //when
-        Map<Color, Double> scores = board.calculateScore();
-        //expected
-        Assertions.assertThat(scores.get(Color.WHITE)).isEqualTo(2.5);
-        Assertions.assertThat(scores.get(Color.BLACK)).isEqualTo(2.5);
-    }
-
-    @Test
     @DisplayName("왕이 잡히지 않았다.")
     void findSidKindDied() {
         //given

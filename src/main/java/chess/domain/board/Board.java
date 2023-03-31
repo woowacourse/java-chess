@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.InitialPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
@@ -47,9 +48,9 @@ public class Board {
         Map<Color, Double> scoreOfColor = new HashMap<>();
         for (File file : File.values()) {
             List<Piece> pieces = findPiecesByFile(file);
-            double whiteScore = scoreOfColor.get(Color.WHITE) + calculateScore(Color.WHITE, pieces);
+            double whiteScore = scoreOfColor.getOrDefault(Color.WHITE, 0.0) + calculateScore(Color.WHITE, pieces);
             scoreOfColor.put(Color.WHITE, whiteScore);
-            double blackScore = scoreOfColor.get(Color.BLACK) + calculateScore(Color.BLACK, pieces);
+            double blackScore = scoreOfColor.getOrDefault(Color.BLACK, 0.0) + calculateScore(Color.BLACK, pieces);
             scoreOfColor.put(Color.BLACK, blackScore);
         }
         return scoreOfColor;
@@ -108,7 +109,11 @@ public class Board {
     private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
         Piece vacantPiece = Role.VACANT_PIECE.create(Color.NOTHING);
         board.put(sourceSquare, vacantPiece);
-        board.put(targetSquare, sourcePiece.update());
+        if (sourcePiece.isRole(Role.INITIAL_PAWN)) {
+            board.put(targetSquare, ((InitialPawn) sourcePiece).update());
+            return;
+        }
+        board.put(targetSquare, sourcePiece);
     }
 
     private void validateSourceAndTarget(final Square sourceSquare, final Square targetSquare) {

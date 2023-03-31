@@ -19,7 +19,7 @@ public abstract class Piece {
     }
 
     public boolean isRole(Role role) {
-        return this.role.equals(role);
+        return this.role == role;
     }
 
     public boolean isNotVacant() {
@@ -38,5 +38,11 @@ public abstract class Piece {
 
     public abstract boolean canAttack(final Direction direction, final int distance, final Piece target);
 
-    public abstract Piece update();
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", role=" + role +
+                '}';
+    }
 }

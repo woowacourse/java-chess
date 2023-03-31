@@ -38,9 +38,4 @@ public class Pawn extends Piece {
         }
         return BLACK_ATTACK_DIRECTION.contains(direction) && distance == MAX_MOVE_DISTANCE;
     }
-
-    @Override
-    public Piece update() {
-        return this;
-    }
 }
