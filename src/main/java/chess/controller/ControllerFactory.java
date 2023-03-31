@@ -19,6 +19,7 @@ import java.util.Map;
 public class ControllerFactory {
 
     private static final ControllerFactory instance = new ControllerFactory();
+
     private final StartController startController;
     private final EndController endController;
     private final MainController mainController;

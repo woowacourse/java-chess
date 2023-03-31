@@ -12,6 +12,7 @@ public class ScoreCalculator {
 
     private static final double SAME_FILE_PAWN_MINUS_SCORE = 0.5;
     private static final int MINIMUM_SCORE_MINUS_COUNT = 1;
+
     private final Map<Position, Piece> pieces;
 
     public ScoreCalculator(Map<Position, Piece> pieces) {

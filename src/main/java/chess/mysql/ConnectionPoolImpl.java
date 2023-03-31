@@ -10,6 +10,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private static final int DEFAULT_CONNECTION_COUNT = 5;
     private static final ConnectionPoolImpl instance = new ConnectionPoolImpl();
+
     private final AtomicInteger index;
     private final List<Connection> connections;
 

@@ -7,6 +7,7 @@ public class LoginRequest {
 
     private static final int USER_NAME_INDEX = 1;
     private static final int LOGIN_SIZE = 2;
+
     private final String userName;
 
     private LoginRequest(String userName) {

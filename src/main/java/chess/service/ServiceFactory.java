@@ -20,6 +20,7 @@ import chess.service.user.LoginService;
 public class ServiceFactory {
 
     private static final ServiceFactory instance = new ServiceFactory();
+
     private final JdbcTemplate jdbcTemplate;
     private final StartChessGameService startChessGameService;
     private final EndChessGameService endChessGameService;

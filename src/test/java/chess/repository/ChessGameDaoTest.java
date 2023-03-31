@@ -25,6 +25,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 class ChessGameDaoTest {
 
     private static final UserDao userDao = new UserDao(new JdbcTemplate(new TestConnectionPool()));
+
     private static int userId;
     private final ChessGameDao chessGameDao = new ChessGameDao(new JdbcTemplate(new TestConnectionPool()));
 

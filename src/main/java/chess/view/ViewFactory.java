@@ -22,6 +22,7 @@ import chess.view.resposne.StatusOutputView;
 public class ViewFactory {
 
     private static final ViewFactory instance = new ViewFactory();
+    
     private final LoginImpl login;
     private final JoinBoardImpl joinBoard;
     private final InputView inputView;
