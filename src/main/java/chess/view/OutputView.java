@@ -1,18 +1,18 @@
 package chess.view;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.position.Position;
+import chess.model.domain.board.Score;
+import chess.model.domain.piece.Color;
+import chess.model.domain.piece.Piece;
+import chess.model.domain.piece.PieceType;
+import chess.model.domain.position.Position;
+import chess.model.exception.ChessException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -21,21 +21,31 @@ public class OutputView {
     private static final String GAME_START_INFO_MESSAGE = "> 체스 게임을 시작합니다." + System.lineSeparator()
             + "> 게임 시작 : start" + System.lineSeparator()
             + "> 게임 종료 : end" + System.lineSeparator()
-            + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final Map<Class<? extends Piece>, String> PIECE_VALUE_MAP = new HashMap<>();
+            + "> 게임 로드 : load id - 예. load 1" + System.lineSeparator()
+            + "> 저장되어 있는 게임 ID들 : %s" + System.lineSeparator()
+            + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + System.lineSeparator();
+    private static final String SCORE_STATUS_MESSAGE_FORMAT = "%s팀은 %.1f점 입니다." + System.lineSeparator();
+    private static final Map<PieceType, String> PIECE_VALUE_MAP = new EnumMap<>(PieceType.class);
+    private static final Map<Color, String> COLOR_STRING_MAP = new EnumMap<>(Color.class);
     private static final String EMPTY_POSITION = ".";
 
     static {
-        PIECE_VALUE_MAP.put(King.class, "k");
-        PIECE_VALUE_MAP.put(Queen.class, "q");
-        PIECE_VALUE_MAP.put(Bishop.class, "b");
-        PIECE_VALUE_MAP.put(Rook.class, "r");
-        PIECE_VALUE_MAP.put(Knight.class, "n");
-        PIECE_VALUE_MAP.put(Pawn.class, "p");
+        PIECE_VALUE_MAP.put(PieceType.KING, "k");
+        PIECE_VALUE_MAP.put(PieceType.QUEEN, "q");
+        PIECE_VALUE_MAP.put(PieceType.BISHOP, "b");
+        PIECE_VALUE_MAP.put(PieceType.ROOK, "r");
+        PIECE_VALUE_MAP.put(PieceType.KNIGHT, "n");
+        PIECE_VALUE_MAP.put(PieceType.PAWN, "p");
+        COLOR_STRING_MAP.put(Color.BLACK, "검은색");
+        COLOR_STRING_MAP.put(Color.WHITE, "흰색");
     }
 
-    public void printGameStartInfo() {
-        System.out.println(GAME_START_INFO_MESSAGE);
+    public void printGameStartInfo(final List<Long> chessGameIds) {
+        final String ids = chessGameIds
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
+        System.out.printf(GAME_START_INFO_MESSAGE, ids);
     }
 
     public void printBoard(final Map<Position, Piece> boardMap) {
@@ -68,14 +78,22 @@ public class OutputView {
     }
 
     private String formatPieceDisplay(final Piece piece) {
-        String pieceDisplay = PIECE_VALUE_MAP.get(piece.getClass());
+        String pieceDisplay = PIECE_VALUE_MAP.get(piece.getPieceType());
         if (piece.isBlack()) {
             return pieceDisplay.toUpperCase();
         }
         return pieceDisplay;
     }
 
-    public void printExceptionMessage(final Exception e) {
-        System.out.println(e.getMessage());
+    public void printStatus(final Map<Color, Score> colorScore) {
+        for (final Entry<Color, Score> entry : colorScore.entrySet()) {
+            System.out.printf(SCORE_STATUS_MESSAGE_FORMAT,
+                    COLOR_STRING_MAP.get(entry.getKey()),
+                    entry.getValue().getValue());
+        }
+    }
+
+    public void printExceptionMessage(final ChessException e) {
+        System.out.println(ExceptionViewMapper.convertErrorMessage(e));
     }
 }
