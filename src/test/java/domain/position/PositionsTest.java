@@ -2,6 +2,7 @@ package domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ class PositionsTest {
         assertDoesNotThrow(() -> Positions.from(position));
     }
 
-    @DisplayName("체스판 범위를 벗어난 문자열을 받으면 빈 위치가 생성된다.")
+    @DisplayName("체스판 범위를 벗어난 문자열을 받으면 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"Z1", "AB5", ""})
     void createFail(String position) {
@@ -33,7 +34,9 @@ class PositionsTest {
         //when
 
         //then
-        assertThat(Positions.from(position)).isEqualTo(new Position(File.NOTHING, Rank.NOTHING));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Positions.from(position);
+        });
     }
 
     @DisplayName("위치를 여러 개를 받아서 만들 수 있다.")

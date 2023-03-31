@@ -23,8 +23,8 @@ class PawnTest {
         //when
 
         //then
-        assertThat(black.isMovable(source, blackDestination)).isTrue();
-        assertThat(white.isMovable(source, whiteDestination)).isTrue();
+        assertThat(black.move(source, blackDestination).get()).isEqualTo(blackDestination);
+        assertThat(white.move(source, whiteDestination).get()).isEqualTo(whiteDestination);
     }
 
     @DisplayName("폰은 두 칸 초과해서 갈 수 없다.")
@@ -38,7 +38,7 @@ class PawnTest {
         //when
 
         //then
-        assertThat(cannotGo).allMatch(destination -> !pawn.isMovable(source, destination));
+        assertThat(cannotGo).allMatch(destination -> pawn.move(source, destination).isEmpty());
     }
 
     @DisplayName("폰은 후진할 수 없다.")
@@ -47,12 +47,12 @@ class PawnTest {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final Position source = Positions.from("D4");
-        final List<Position> cannotGo = Positions.of("D5", "C5", "E6");
+        final List<Position> cannotGo = Positions.of("D5", "D6", "D7");
 
         //when
 
         //then
-        assertThat(cannotGo).allMatch(destination -> !pawn.isMovable(source, destination));
+        assertThat(cannotGo).allMatch(destination -> pawn.move(source, destination).isEmpty());
     }
 
     @DisplayName("폰은 처음에 두 칸 또는 한 칸 갈 수 있다")
@@ -69,8 +69,8 @@ class PawnTest {
         //when
 
         //then
-        assertThat(black.isMovable(blackSource, blackDestination)).isTrue();
-        assertThat(white.isMovable(whiteSource, whiteDestination)).isTrue();
+        assertThat(black.move(blackSource, blackDestination).get()).isEqualTo(blackDestination);
+        assertThat(white.move(whiteSource, whiteDestination).get()).isEqualTo(whiteDestination);
     }
 
     @DisplayName("폰은 처음이 아니면 두 칸 갈 수 없다")
@@ -84,6 +84,6 @@ class PawnTest {
         //when
 
         //then
-        assertThat(pawn.isMovable(source, destination)).isFalse();
+        assertThat(pawn.move(source, destination)).isEmpty();
     }
 }

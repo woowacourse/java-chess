@@ -22,7 +22,7 @@ class RookTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(destination -> rook.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> rook.move(source, destination).isPresent());
     }
 
     @DisplayName("룩은 직선이 아니면 이동할 수 없다.")
@@ -37,6 +37,6 @@ class RookTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(destination -> rook.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> rook.move(source, destination).isEmpty());
     }
 }

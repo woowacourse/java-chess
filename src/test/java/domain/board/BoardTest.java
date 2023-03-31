@@ -12,8 +12,10 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
+import gameinitializer.InitialChessAlignment;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +26,7 @@ class BoardTest {
     @Test
     void createTest() {
         //given
-        Board board = Board.create(new InitialChessAlignment());
+        Board board = Board.create(new InitialChessAlignment().initPiecePosition());
         final List<Position> rooksPosition = Positions.of("A1", "A8", "H1", "H8");
         final List<Position> knightsPosition = Positions.of("B1", "B8", "G1", "G8");
         final List<Position> bishopsPosition = Positions.of("C1", "C8", "F1", "F8");
@@ -50,10 +52,10 @@ class BoardTest {
     void kingMove() {
         //given
         final King king = TestFixture.BLACK_KING;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D3"));
+        board.move(Positions.from("D4"), Positions.from("D3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -67,10 +69,10 @@ class BoardTest {
         final King king = TestFixture.BLACK_KING;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king,
-                Positions.from("E5"), feed)));
+                Positions.from("E5"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("E5"));
+        board.move(Positions.from("D4"), Positions.from("E5"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -82,12 +84,12 @@ class BoardTest {
     void kingNotMove() {
         //given
         final King king = TestFixture.BLACK_KING;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A3")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A3"), Team.BLACK));
     }
 
     @DisplayName("퀸은 움직일 수 있다.")
@@ -95,10 +97,10 @@ class BoardTest {
     void queenMove() {
         //given
         final Queen queen = TestFixture.BLACK_QUEEN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D8"));
+        board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -112,10 +114,10 @@ class BoardTest {
         final Queen queen = TestFixture.BLACK_QUEEN;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen,
-                Positions.from("H8"), feed)));
+                Positions.from("H8"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("H8"));
+        board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -127,12 +129,12 @@ class BoardTest {
     void queenNotMove() {
         //given
         final Queen queen = TestFixture.BLACK_QUEEN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E2")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E2"), Team.BLACK));
     }
 
     @DisplayName("퀸은 이동 경로 사이에 다른 기물이 있으면 움직일 수 없다.")
@@ -142,12 +144,12 @@ class BoardTest {
         final Queen queen = TestFixture.BLACK_QUEEN;
         final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen,
-                Positions.from("D6"), another)));
+                Positions.from("D6"), another)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK));
     }
 
     @DisplayName("나이트는 움직일 수 있다.")
@@ -155,10 +157,10 @@ class BoardTest {
     void knightMove() {
         //given
         final Knight knight = TestFixture.BLACK_KNIGHT;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("F3"));
+        board.move(Positions.from("D4"), Positions.from("F3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -172,10 +174,10 @@ class BoardTest {
         final Knight knight = TestFixture.BLACK_KNIGHT;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight,
-                Positions.from("B3"), feed)));
+                Positions.from("B3"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("B3"));
+        board.move(Positions.from("D4"), Positions.from("B3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -191,10 +193,10 @@ class BoardTest {
         final King another2 = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight,
                 Positions.from("D3"), another1,
-                Positions.from("E3"), another2)));
+                Positions.from("E3"), another2)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("F3"));
+        board.move(Positions.from("D4"), Positions.from("F3"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -206,12 +208,12 @@ class BoardTest {
     void knightNotMove() {
         //given
         final Knight knight = TestFixture.BLACK_KNIGHT;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), knight)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D2")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D2"), Team.BLACK));
     }
 
     @DisplayName("폰은 처음에 두 칸 움직일 수 있다.")
@@ -219,10 +221,10 @@ class BoardTest {
     void pawnTwoStepMove() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D7"), Positions.from("D5"));
+        board.move(Positions.from("D7"), Positions.from("D5"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D7"))).isFalse();
@@ -234,10 +236,10 @@ class BoardTest {
     void pawnOneStepMove() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D7"), Positions.from("D6"));
+        board.move(Positions.from("D7"), Positions.from("D6"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D7"))).isFalse();
@@ -249,12 +251,12 @@ class BoardTest {
     void pawnNotMove() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A2")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("A2"), Team.BLACK));
     }
 
     @DisplayName("폰은 앞에 적이 있으면 앞으로 갈 수 없다.")
@@ -264,12 +266,12 @@ class BoardTest {
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), pawn,
-                Positions.from("D3"), king)));
+                Positions.from("D3"), king)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D3")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D3"), Team.BLACK));
     }
 
     @DisplayName("폰은 앞에 적이 있으면 처음에 앞으로 두 칸 갈 수 없다.")
@@ -279,12 +281,12 @@ class BoardTest {
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn,
-                Positions.from("D6"), king)));
+                Positions.from("D6"), king)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("D5")));
+        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("D5"), Team.BLACK));
     }
 
     @DisplayName("폰은 대각선에 적이 없으면 대각선으로 전진할 수 없다.")
@@ -292,12 +294,12 @@ class BoardTest {
     void pawnNotMove4() {
         //given
         final Pawn pawn = TestFixture.BLACK_PAWN;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("E8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D7"), Positions.from("E8"), Team.BLACK));
     }
 
     @DisplayName("폰은 대각선에 적이 있으면 대각선으로 적을 먹을 수 있다.")
@@ -307,10 +309,10 @@ class BoardTest {
         final Pawn pawn = TestFixture.BLACK_PAWN;
         final King king = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D7"), pawn,
-                Positions.from("E6"), king)));
+                Positions.from("E6"), king)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D7"), Positions.from("E6"));
+        board.move(Positions.from("D7"), Positions.from("E6"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D7"))).isFalse();
@@ -322,10 +324,10 @@ class BoardTest {
     void bishopMove() {
         //given
         final Bishop bishop = TestFixture.BLACK_BISHOP;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("H8"));
+        board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -337,12 +339,12 @@ class BoardTest {
     void bishopNotMove() {
         //given
         final Bishop bishop = TestFixture.BLACK_BISHOP;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H7")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H7"), Team.BLACK));
     }
 
     @DisplayName("비숍은 이동 경로 사이에 다른 기물이 있으면 움직일 수 없다.")
@@ -352,12 +354,12 @@ class BoardTest {
         final Bishop bishop = TestFixture.BLACK_BISHOP;
         final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop,
-                Positions.from("D6"), another)));
+                Positions.from("D6"), another)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK));
     }
 
     @DisplayName("비숍은 적이 있을 때 먹을 수 있다.")
@@ -367,10 +369,10 @@ class BoardTest {
         final Bishop bishop = TestFixture.BLACK_BISHOP;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), bishop,
-                Positions.from("H8"), feed)));
+                Positions.from("H8"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("H8"));
+        board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -382,10 +384,10 @@ class BoardTest {
     void rookMove() {
         //given
         final Rook rook = TestFixture.BLACK_ROOK;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D8"));
+        board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -397,12 +399,12 @@ class BoardTest {
     void rookNotMove() {
         //given
         final Rook rook = TestFixture.BLACK_ROOK;
-        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)));
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("H8"), Team.BLACK));
     }
 
     @DisplayName("룩은 이동 경로 사이에 다른 기물이 있으면 움직일 수 없다.")
@@ -412,12 +414,12 @@ class BoardTest {
         final Rook rook = TestFixture.BLACK_ROOK;
         final King another = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook,
-                Positions.from("D6"), another)));
+                Positions.from("D6"), another)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK));
     }
 
     @DisplayName("룩은 적이 있을 때 먹을 수 있다.")
@@ -427,10 +429,10 @@ class BoardTest {
         final Rook rook = TestFixture.BLACK_ROOK;
         final King feed = TestFixture.WHITE_KING;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), rook,
-                Positions.from("D8"), feed)));
+                Positions.from("D8"), feed)).initPiecePosition());
 
         //when
-        board.move(Positions.from("D4"), Positions.from("D8"));
+        board.move(Positions.from("D4"), Positions.from("D8"), Team.BLACK);
 
         //then
         assertThat(board.getPieces().containsKey(Positions.from("D4"))).isFalse();
@@ -444,11 +446,36 @@ class BoardTest {
         final King king = TestFixture.BLACK_KING;
         final Bishop team = TestFixture.BLACK_BISHOP;
         final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), king,
-                Positions.from("E5"), team)));
+                Positions.from("E5"), team)).initPiecePosition());
 
         //when
 
         //then
-        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E5")));
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("E5"), Team.BLACK));
+    }
+
+    @DisplayName("존재하지 않는 장소에 말을 두려는 경우 예외가 발생한다.")
+    @Test
+    void notExistToExistMove() {
+        //given
+        final Queen queen = TestFixture.BLACK_QUEEN;
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> Board.create(testStrategy(Map.of(Positions.from("D0"), queen)).initPiecePosition()));
+    }
+
+    @DisplayName("존재하는 장소에서 존재하지 않는 장소로 가는 경우 예외가 발생한다.")
+    @Test
+    void existToNotExistMove() {
+        //given
+        final Queen queen = TestFixture.BLACK_QUEEN;
+        final Board board = Board.create(testStrategy(Map.of(Positions.from("D4"), queen)).initPiecePosition());
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> board.move(Positions.from("D4"), Positions.from("Z4"), Team.BLACK));
     }
 }

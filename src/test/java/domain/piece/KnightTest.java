@@ -22,7 +22,7 @@ class KnightTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(destination -> knight.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> knight.move(source, destination).isPresent());
     }
 
     @DisplayName("나이트는 대각선, 행, 열을 제외한 가장 가까운 칸이 아니면 이동할 수 없다.")
@@ -37,6 +37,6 @@ class KnightTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(destination -> knight.isMovable(source, destination));
+        assertThat(destinations).noneMatch(destination -> knight.move(source, destination).isPresent());
     }
 }

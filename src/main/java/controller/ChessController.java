@@ -1,87 +1,69 @@
 package controller;
 
-import static controller.ProgressCommand.END;
-import static controller.ProgressCommand.MOVE;
-
-import domain.board.Board;
-import domain.position.Position;
-import domain.position.Positions;
+import controller.command.play.PlayAction;
+import controller.command.play.PlayCommandType;
+import controller.command.start.StartAction;
+import controller.command.start.StartCommandType;
+import database.connection.ConnectionGenerator;
+import domain.ChessGame;
 import java.util.List;
+import java.util.Objects;
+import util.ParameterParser;
 import view.InputView;
 import view.OutputView;
 
 public final class ChessController {
 
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_PIECE = 1;
-    private static final int DESTINATION = 2;
+    private static final int COMMAND_HEAD_INDEX = 0;
 
-    public void run(final Board board) {
-        if (isGameStart()) {
-            OutputView.printBoard(board.getPieces());
-            play(board);
-        }
+    public final ConnectionGenerator connectionGenerator;
+
+    public ChessController(final ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
     }
 
-    private boolean isGameStart() {
+    public void run() {
+        ChessGame chessGame = readStartCommandAndInitGame();
+        if (Objects.nonNull(chessGame)) {
+            OutputView.printBoard(chessGame.getPieces());
+            play(chessGame);
+        }
+        OutputView.printEndedGameMessage();
+    }
+
+    private ChessGame readStartCommandAndInitGame() {
+        ChessGame chessGame = null;
+        do {
+            chessGame = initChessGame(InputView.readStartGameCommand());
+        } while (Objects.isNull(chessGame));
+        return chessGame;
+    }
+
+    private ChessGame initChessGame(List<String> command) {
         try {
-            final StartCommand command = StartCommand.from(InputView.readStartGameOption());
-            return StartCommand.START.equals(command);
-        } catch (IllegalArgumentException e) {
+            StartAction startAction = StartCommandType.from(command.get(COMMAND_HEAD_INDEX));
+            return startAction.init(ParameterParser.parsingParameterFromCommand(command), connectionGenerator);
+        } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
-            return isGameStart();
+            return null;
         }
     }
 
-    private void play(final Board board) {
-        List<String> commands;
-        while (MOVE.equals(ProgressCommand.from((commands = readProgressCommand()).get(COMMAND_INDEX)))) {
-            movePieceWithHandling(board, commands);
-            OutputView.printBoard(board.getPieces());
-        }
+    private void play(final ChessGame chessGame) {
+        boolean stillPlaying;
+        do {
+            stillPlaying = readPlayCommandAndExecute(InputView.readPlayGameOption(), chessGame);
+        } while (stillPlaying);
     }
 
-    private void movePieceWithHandling(final Board board, final List<String> commands) {
+    private boolean readPlayCommandAndExecute(final List<String> command, final ChessGame chessGame) {
         try {
-            board.move(getSourcePiece(commands), getDestination(commands));
-        } catch (IllegalArgumentException e) {
+            PlayAction playAction = PlayCommandType.from(command.get(COMMAND_HEAD_INDEX));
+            return playAction.execute(chessGame, ParameterParser.parsingParameterFromCommand(command),
+                    connectionGenerator);
+        } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
+            return true;
         }
-    }
-
-    private List<String> readProgressCommand() {
-        try {
-            List<String> commands = inputMoveEndCommand();
-            validateCommands(commands);
-            return commands;
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return readProgressCommand();
-        }
-    }
-
-    private List<String> inputMoveEndCommand() {
-        final List<String> gameOption = InputView.readPlayGameOption();
-        ProgressCommand.from(gameOption.get(COMMAND_INDEX));
-        return gameOption;
-    }
-
-    private void validateCommands(final List<String> commands) {
-        if (END.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 1) {
-            return;
-        }
-        if (MOVE.equals(ProgressCommand.from(commands.get(COMMAND_INDEX))) && commands.size() == 3) {
-            return;
-        }
-
-        throw new IllegalArgumentException("move source위치 target위치 또는 end로 입력해야 합니다.");
-    }
-
-    private Position getDestination(final List<String> gameOption) {
-        return Positions.from(gameOption.get(DESTINATION));
-    }
-
-    private Position getSourcePiece(final List<String> gameOption) {
-        return Positions.from(gameOption.get(SOURCE_PIECE));
     }
 }

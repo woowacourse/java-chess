@@ -22,7 +22,7 @@ class BishopTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(destination -> bishop.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> bishop.move(source, destination).isPresent());
     }
 
     @DisplayName("비숍은 대각선이 아니면 이동할 수 없다.")
@@ -37,6 +37,6 @@ class BishopTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(destination -> bishop.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> bishop.move(source, destination).isEmpty());
     }
 }

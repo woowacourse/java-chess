@@ -23,7 +23,7 @@ class QueenTest {
         //when
 
         //then
-        assertThat(destinations).allMatch(destination -> queen.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> queen.move(source, destination).isPresent());
     }
 
     @DisplayName("퀸은 여덟 방향이 아니면 이동할 수 없다.")
@@ -38,6 +38,6 @@ class QueenTest {
         //when
 
         //then
-        assertThat(destinations).noneMatch(destination -> queen.isMovable(source, destination));
+        assertThat(destinations).allMatch(destination -> queen.move(source, destination).isEmpty());
     }
 }

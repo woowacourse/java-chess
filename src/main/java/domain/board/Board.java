@@ -1,9 +1,11 @@
 package domain.board;
 
 import domain.piece.Piece;
+import domain.piece.Team;
 import domain.position.Position;
 import domain.position.Positions;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class Board {
@@ -17,20 +19,20 @@ public final class Board {
         this.board = board;
     }
 
-    public static Board create(ChessAlignment chessStrategy) {
-        return new Board(chessStrategy.init());
+    public static Board create(final Map<Position, Piece> board) {
+        return new Board(board);
     }
 
-    public void move(Position source, Position destination) {
+    public boolean move(Position source, Position destination, Team thisTurn) {
         Piece piece = getPiece(source);
+        validateTeam(piece, thisTurn);
         validateRoute(source, destination, piece);
 
         if (board.containsKey(destination)) {
-            killDestination(source, destination, piece);
+            return killDestination(source, destination, piece);
         }
-        if (!board.containsKey(destination)) {
-            moveDestination(source, destination, piece);
-        }
+        moveDestination(source, destination, piece);
+        return false;
     }
 
     private Piece getPiece(final Position source) {
@@ -51,6 +53,14 @@ public final class Board {
         }
     }
 
+    private void validateTeam(final Piece piece, final Team team) {
+        if (team.equals(piece.getTeam())) {
+            return;
+        }
+
+        throw new IllegalArgumentException("이번 순서가 아닙니다.");
+    }
+
     private boolean pieceInRoute(final Position source, final Position destination) {
         return Positions.between(source, destination).stream()
                 .anyMatch(board::containsKey);
@@ -61,25 +71,27 @@ public final class Board {
                 piece.isBlack() == board.get(destination).isBlack();
     }
 
-    private void killDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isEatable(source, destination)) {
-            board.put(destination, board.remove(source));
-            return;
-        }
-
-        throw new IllegalArgumentException(INVALID_MOVEMENT);
+    private boolean killDestination(final Position source, final Position destination, final Piece piece) {
+        Piece deadPiece = board.get(destination);
+        boolean endedGame = deadPiece.isEndGameIfDead();
+        board.put(piece.eat(source, destination).orElseThrow(() -> new IllegalArgumentException(INVALID_MOVEMENT)),
+                board.remove(source));
+        return endedGame;
     }
 
     private void moveDestination(final Position source, final Position destination, final Piece piece) {
-        if (piece.isMovable(source, destination)) {
-            board.put(destination, board.remove(source));
-            return;
-        }
-
-        throw new IllegalArgumentException(INVALID_MOVEMENT);
+        board.put(piece.move(source, destination).orElseThrow(() -> new IllegalArgumentException(INVALID_MOVEMENT)),
+                board.remove(source));
     }
 
     public Map<Position, Piece> getPieces() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Map<Position, Piece> getPiecesByTeam(Team team) {
+        Map<Position, Piece> query = new HashMap<>();
+        board.entrySet().stream().filter(piece -> team.equals(piece.getValue().getTeam()))
+                .forEach(piece -> query.put(piece.getKey(), piece.getValue()));
+        return query;
     }
 }

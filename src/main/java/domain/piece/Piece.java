@@ -1,7 +1,9 @@
 package domain.piece;
 
 import domain.position.Position;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Piece {
     private final String name;
@@ -12,23 +14,31 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(Position source, Position destination);
+    public abstract Optional<Position> move(Position source, Position destination);
 
-    public boolean isEatable(Position source, Position destination) {
-        return isMovable(source, destination);
-    }
+    public abstract Optional<Position> eat(Position source, Position destination);
 
     public boolean isBlack() {
         return team.equals(Team.BLACK);
+    }
+
+    public boolean isEndGameIfDead() {
+        return false;
     }
 
     public boolean isWhite() {
         return !isBlack();
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     public String getName() {
         return name;
     }
+
+    public abstract Score getScore(final Position source, final Map<Position, Piece> influentialPieceForScore);
 
     @Override
     public boolean equals(final Object o) {
