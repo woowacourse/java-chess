@@ -27,7 +27,7 @@ class UserDaoTest {
 
     @Test
     @Order(2)
-    void deleteByUserId() {
+    void deleteByUserName() {
         assertDoesNotThrow(() -> userDao.deleteByUserName("testUser"));
     }
 }
