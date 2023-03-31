@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum CommandType {
-    READY("start", 1, "start 명령어는 값을 하나만 입력해야합니다."),
     START("start", 1, "start 명령어는 값을 하나만 입력해야합니다."),
     MOVE("move", 3, "move 명령어는 '도착지'와 '출발지'에 대한 정보를 입력해야합니다."),
     END("end", 1, "end 명령어는 값을 하나만 입력해야합니다."),

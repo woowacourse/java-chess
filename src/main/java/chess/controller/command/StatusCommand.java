@@ -13,6 +13,7 @@ import static chess.controller.command.CommandType.INVALID_COMMAND_MESSAGE;
 
 public class StatusCommand extends Command {
 
+    private static final String INVALID_EXECUTE_MESSAGE = "게임이 종료되어 상태를 확인하시려면 status를, 게임을 종료하려면 end를 입력해주세요.";
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
