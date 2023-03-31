@@ -69,7 +69,7 @@ public class ChessApplication {
 		}
 	}
 
-	private static void movePiece(Board board, Position source, Position target) {
+	private static void movePiece(final Board board, final Position source, final Position target) {
 		final Piece candidateKing = board.move(source, target);
 		if (board.isKing(candidateKing)) {
 			printKingDead();
