@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.empty.Empty;
-import domain.piece.jumper.Knight;
-import domain.piece.pawn.Pawn;
+import domain.piece.nonslider.Empty;
+import domain.piece.nonslider.Knight;
+import domain.piece.nonslider.Pawn;
 import domain.piece.slider.Bishop;
 import domain.piece.slider.King;
 import domain.piece.slider.Queen;
@@ -25,11 +25,11 @@ public class ChessBoard {
     public ChessBoard() {
         board = new HashMap<>();
         for (File file : File.values()) {
-            setRank(file);
+            addRank(file);
         }
     }
 
-    private void setRank(File file) {
+    private void addRank(File file) {
         for (Rank rank : Rank.values()) {
             board.put(new Square(file, rank), Empty.getInstance());
         }
@@ -50,8 +50,6 @@ public class ChessBoard {
 
         for (File value : File.values()) {
             initialWhitePawnSquares.add(new Square(value, Rank.TWO));
-        }
-        for (File value : File.values()) {
             initialBlackPawnSquares.add(new Square(value, Rank.SEVEN));
         }
         for (Square initialWhitePawnSquare : initialWhitePawnSquares) {
@@ -75,40 +73,24 @@ public class ChessBoard {
     private void initializeBishops() {
         List<File> initialBishopFiles = List.of(File.C, File.F);
         for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, Rank.ONE);
-            board.put(square, new Bishop(WHITE));
-        }
-        for (File initialBishopFile : initialBishopFiles) {
-            Square square = new Square(initialBishopFile, Rank.EIGHT);
-            board.put(square, new Bishop(BLACK));
+            board.put(new Square(initialBishopFile, Rank.ONE), new Bishop(WHITE));
+            board.put(new Square(initialBishopFile, Rank.EIGHT), new Bishop(BLACK));
         }
     }
 
     private void initializeKnights() {
         List<File> initialKnightFiles = List.of(File.B, File.G);
-
         for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, Rank.ONE);
-            board.put(square, new Knight(WHITE));
-        }
-
-        for (File initialKnightFile : initialKnightFiles) {
-            Square square = new Square(initialKnightFile, Rank.EIGHT);
-            board.put(square, new Knight(BLACK));
+            board.put(new Square(initialKnightFile, Rank.ONE), new Knight(WHITE));
+            board.put(new Square(initialKnightFile, Rank.EIGHT), new Knight(BLACK));
         }
     }
 
     private void initializeRooks() {
         List<File> initialRookFiles = List.of(File.A, File.H);
-
         for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, Rank.ONE);
-            board.put(square, new Rook(WHITE));
-        }
-
-        for (File initialRookFile : initialRookFiles) {
-            Square square = new Square(initialRookFile, Rank.EIGHT);
-            board.put(square, new Rook(BLACK));
+            board.put(new Square(initialRookFile, Rank.ONE), new Rook(WHITE));
+            board.put(new Square(initialRookFile, Rank.EIGHT), new Rook(BLACK));
         }
     }
 
@@ -120,7 +102,9 @@ public class ChessBoard {
         if (currentPiece.canMove(pathInfo, targetSquare)) {
             board.put(targetSquare, currentPiece);
             board.put(currentSquare, Empty.getInstance());
+            return;
         }
+        throw new IllegalArgumentException("이동할 수 없습니다.");
     }
 
     public Map<Square, Piece> getBoard() {

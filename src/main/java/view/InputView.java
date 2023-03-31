@@ -1,8 +1,9 @@
 package view;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
+
+import dto.CommandRequestDto;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -11,10 +12,10 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> requestCommand() {
+    public static CommandRequestDto requestCommand() {
         String input = scanner.nextLine();
         validate(input);
-        return Arrays.asList(input.split(DELIMITER));
+        return new CommandRequestDto(Arrays.asList(input.split(DELIMITER)));
     }
 
     private static void validate(String input) {

@@ -5,24 +5,35 @@ import java.util.Map;
 
 import domain.piece.Camp;
 import domain.piece.Piece;
-import domain.piece.empty.Empty;
-import domain.piece.jumper.Knight;
-import domain.piece.pawn.Pawn;
+import domain.piece.nonslider.Empty;
+import domain.piece.nonslider.Knight;
+import domain.piece.nonslider.Pawn;
 import domain.piece.slider.Bishop;
 import domain.piece.slider.King;
 import domain.piece.slider.Queen;
 import domain.piece.slider.Rook;
 
-public class PieceToStringConverter {
+public class PieceNameConverter {
     private static final Map<Piece, String> piecesAndStrings = new HashMap<>();
 
+    private PieceNameConverter() {
+    }
+
     public static String convert(Piece piece) {
-        init();
         return piecesAndStrings.get(piece);
     }
 
-    private static void init() {
-        piecesAndStrings.put(new Empty(), ".");
+    public static Piece convert(String name) {
+        for (Map.Entry<Piece, String> pieceAndNames : piecesAndStrings.entrySet()) {
+            if (pieceAndNames.getValue().equals(name)) {
+                return pieceAndNames.getKey();
+            }
+        }
+        throw new IllegalArgumentException("해당 이름을 가진 기물이 없습니다.");
+    }
+
+    public static void init() {
+        piecesAndStrings.put(Empty.getInstance(), ".");
         piecesAndStrings.put(new King(Camp.WHITE), "k");
         piecesAndStrings.put(new King(Camp.BLACK), "K");
         piecesAndStrings.put(new Queen(Camp.WHITE), "q");

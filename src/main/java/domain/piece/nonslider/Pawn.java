@@ -1,4 +1,4 @@
-package domain.piece.pawn;
+package domain.piece.nonslider;
 
 import java.util.List;
 import java.util.Map;
@@ -8,9 +8,8 @@ import domain.board.Square;
 import domain.piece.Camp;
 import domain.piece.Direction;
 import domain.piece.Piece;
-import domain.piece.jumper.Jumper;
 
-public class Pawn extends Jumper {
+public class Pawn extends Piece {
     private static final List<Direction> MOVABLE_DIRECTION_FORWARD = List.of(
         Direction.NORTH
     );
@@ -19,10 +18,7 @@ public class Pawn extends Jumper {
         Direction.NORTH_EAST
     );
 
-    private static final Integer MIN_FILE_INDEX = 0;
-    private static final Integer MAX_FILE_INDEX = 7;
-    private static final Integer MIN_RANK_INDEX = 0;
-    private static final Integer MAX_RANK_INDEX = 7;
+    private static final int INITIAL_FORWARD_MOVE_DISTANCE = 2;
 
     private boolean isGoingForward;
     private boolean isFirstMove = true;
@@ -78,17 +74,12 @@ public class Pawn extends Jumper {
         int currentFileCoordinate = currentSquare.toCoordinate().get(FILE_INDEX);
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK_INDEX);
 
-        List<Square> movableSquares = targetDirection.stream()
+        return targetDirection.stream()
+            .filter(direction -> isValidRange(currentFileCoordinate + directionUnit * direction.getFile(),
+                currentRankCoordinate + directionUnit * direction.getRank())
+            )
             .map(direction -> new Square(currentFileCoordinate + directionUnit * direction.getFile(),
                 currentRankCoordinate + directionUnit * direction.getRank())).collect(Collectors.toList());
-        return removeSquareOutOfBoard(movableSquares);
-    }
-
-    private List<Square> removeSquareOutOfBoard(List<Square> movableSquares) {
-        return movableSquares.stream()
-            .filter(square -> square.toCoordinate().get(FILE_INDEX) >= MIN_FILE_INDEX && square.toCoordinate().get(FILE_INDEX) <= MAX_FILE_INDEX
-                && square.toCoordinate().get(RANK_INDEX) >= MIN_RANK_INDEX && square.toCoordinate().get(RANK_INDEX) <= MAX_RANK_INDEX)
-            .collect(Collectors.toList());
     }
 
     private void addSquareIfMoveTwoSquareForward(Square currentSquare, List<Square> movableCoordinate) {
@@ -101,7 +92,8 @@ public class Pawn extends Jumper {
         int directionUnit = fetchDirectionUnit();
         int currentFileCoordinate = currentSquare.toCoordinate().get(FILE_INDEX);
         int currentRankCoordinate = currentSquare.toCoordinate().get(RANK_INDEX);
-        return new Square(currentFileCoordinate, currentRankCoordinate + (directionUnit * 2));
+        return new Square(currentFileCoordinate,
+            currentRankCoordinate + (directionUnit * INITIAL_FORWARD_MOVE_DISTANCE));
     }
 
     @Override
