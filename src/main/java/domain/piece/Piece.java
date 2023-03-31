@@ -8,10 +8,12 @@ import java.util.Objects;
 public abstract class Piece {
     private final String name;
     private final Team team;
+    private final double score;
 
-    Piece(final String name, final Team team) {
+    Piece(final String name, final Team team, final double score) {
         this.name = name;
         this.team = team;
+        this.score = score;
     }
 
     public abstract List<Position> getInitialBlackPositions();
@@ -19,6 +21,10 @@ public abstract class Piece {
     public abstract List<Position> getInitialWhitePositions();
 
     public abstract boolean isMovable(final Position source, final Position destination);
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     public boolean isCapturable(final Position source, final Position destination) {
         return isMovable(source, destination);
@@ -28,8 +34,24 @@ public abstract class Piece {
         return team.equals(Team.BLACK);
     }
 
+    public boolean isWhite() {
+        return team.equals(Team.WHITE);
+    }
+
+    public boolean isTeam(Team team) {
+        return this.team.equals(team);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     @Override

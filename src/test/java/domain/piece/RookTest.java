@@ -9,8 +9,9 @@ import java.util.List;
 import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("룩은 ")
 class RookTest {
-    @DisplayName("룩은 직선으로 이동할 수 있다.")
+    @DisplayName("직선으로 이동할 수 있다.")
     @Test
     void rookMovable() {
         //given
@@ -24,7 +25,7 @@ class RookTest {
         assertThat(destinations).allMatch(destination -> rook.isMovable(source, destination));
     }
 
-    @DisplayName("룩은 직선이 아니면 이동할 수 없다.")
+    @DisplayName("직선이 아니면 이동할 수 없다.")
     @Test
     void rookUnMovable() {
         //given
@@ -36,5 +37,17 @@ class RookTest {
 
         //then
         assertThat(destinations).noneMatch(destination -> rook.isMovable(source, destination));
+    }
+
+    @DisplayName("기본 점수는 5점이다.")
+    @Test
+    void score() {
+        //given
+        final Rook rook = new Rook(Team.BLACK);
+
+        //when
+
+        //then
+        assertThat(rook.getScore()).isEqualTo(5);
     }
 }

@@ -9,9 +9,10 @@ import java.util.List;
 import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("퀸은 ")
 class QueenTest {
 
-    @DisplayName("퀸은 여덟 방향으로 이동할 수 있다.")
+    @DisplayName("여덟 방향으로 이동할 수 있다.")
     @Test
     void queenMovable() {
         //given
@@ -25,7 +26,7 @@ class QueenTest {
         assertThat(destinations).allMatch(destination -> queen.isMovable(source, destination));
     }
 
-    @DisplayName("퀸은 여덟 방향이 아니면 이동할 수 없다.")
+    @DisplayName("여덟 방향이 아니면 이동할 수 없다.")
     @Test
     void queenUnMovable() {
         //given
@@ -37,5 +38,17 @@ class QueenTest {
 
         //then
         assertThat(destinations).noneMatch(destination -> queen.isMovable(source, destination));
+    }
+
+    @DisplayName("기본 점수는 9점이다.")
+    @Test
+    void score() {
+        //given
+        final Queen queen = new Queen(Team.BLACK);
+
+        //when
+
+        //then
+        assertThat(queen.getScore()).isEqualTo(9);
     }
 }

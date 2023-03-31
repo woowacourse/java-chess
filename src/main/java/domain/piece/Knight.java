@@ -9,11 +9,12 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
-    private static final String NAME = "N";
+    private static final String NAME = "Knight";
+    private static final double SCORE = 2.5;
     private static final int ONE_STEP_OF_KNIGHT = 3;
 
     public Knight(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override
@@ -33,5 +34,15 @@ public final class Knight extends Piece {
         return source.getDistance(destination) == ONE_STEP_OF_KNIGHT &&
                 !Direction.isStraight(source, destination) &&
                 !Direction.isDiagonal(source, destination);
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

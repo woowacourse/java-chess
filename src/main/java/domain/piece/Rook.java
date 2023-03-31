@@ -9,10 +9,11 @@ import java.util.List;
 
 public final class Rook extends Piece {
 
-    private static final String NAME = "R";
+    private static final String NAME = "Rook";
+    private static final double SCORE = 5;
 
     public Rook(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override
@@ -30,5 +31,15 @@ public final class Rook extends Piece {
     @Override
     public boolean isMovable(final Position source, final Position destination) {
         return Direction.isStraight(source, destination);
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

@@ -9,8 +9,9 @@ import java.util.List;
 import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("비숍은 ")
 class BishopTest {
-    @DisplayName("비숍은 대각선 네 방향으로 이동할 수 있다.")
+    @DisplayName("대각선 네 방향으로 이동할 수 있다.")
     @Test
     void bishopMovable() {
         //given
@@ -24,7 +25,7 @@ class BishopTest {
         assertThat(destinations).allMatch(destination -> bishop.isMovable(source, destination));
     }
 
-    @DisplayName("비숍은 대각선이 아니면 이동할 수 없다.")
+    @DisplayName("대각선이 아니면 이동할 수 없다.")
     @Test
     void bishopUnMovable() {
         //given
@@ -36,5 +37,17 @@ class BishopTest {
 
         //then
         assertThat(destinations).noneMatch(destination -> bishop.isMovable(source, destination));
+    }
+
+    @DisplayName("기본 점수는 3점이다.")
+    @Test
+    void score() {
+        //given
+        final Bishop bishop = new Bishop(Team.BLACK);
+
+        //when
+
+        //then
+        assertThat(bishop.getScore()).isEqualTo(3);
     }
 }

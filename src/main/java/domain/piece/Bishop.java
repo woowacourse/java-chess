@@ -9,10 +9,11 @@ import java.util.List;
 
 public final class Bishop extends Piece {
 
-    private static final String NAME = "B";
+    private static final String NAME = "Bishop";
+    private static final double SCORE = 3;
 
     public Bishop(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override
@@ -30,5 +31,15 @@ public final class Bishop extends Piece {
     @Override
     public boolean isMovable(final Position source, final Position destination) {
         return Direction.isDiagonal(source, destination);
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

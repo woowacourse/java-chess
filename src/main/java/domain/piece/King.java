@@ -1,7 +1,5 @@
 package domain.piece;
 
-import domain.board.Board;
-import domain.board.InitialChessAlignment;
 import domain.position.Direction;
 import domain.position.File;
 import domain.position.Position;
@@ -10,12 +8,13 @@ import domain.position.Rank;
 import java.util.List;
 
 public final class King extends Piece {
-    private static final String NAME = "K";
+    private static final String NAME = "King";
+    private static final double NO_SCORE = 0;
     private static final int DIAGONAL_ONE_STEP = 2;
     private static final int ONE_STEP = 1;
 
     public King(final Team team) {
-        super(NAME, team);
+        super(NAME, team, NO_SCORE);
     }
 
     @Override
@@ -35,5 +34,15 @@ public final class King extends Piece {
         }
 
         return Direction.isStraight(source, destination) && source.getDistance(destination) == ONE_STEP;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

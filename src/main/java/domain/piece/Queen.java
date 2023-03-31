@@ -9,10 +9,11 @@ import java.util.List;
 
 public final class Queen extends Piece {
 
-    private static final String NAME = "Q";
+    private static final String NAME = "Queen";
+    private static final double SCORE = 9;
 
     public Queen(final Team team) {
-        super(NAME, team);
+        super(NAME, team, SCORE);
     }
 
     @Override
@@ -28,5 +29,15 @@ public final class Queen extends Piece {
     @Override
     public boolean isMovable(final Position source, final Position destination) {
         return Direction.isStraight(source, destination) || Direction.isDiagonal(source, destination);
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

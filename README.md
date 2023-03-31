@@ -1,13 +1,4 @@
-# 기능 명세
-
-### InputView
-
-- [x] 게임 시작은 start, 종료는 end를 입력한다.
-
-### OutputView
-
-- [x] 체스 기물 표시
-    - [x] 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자) 편으로 구분한다.
+# 도메인 명세
 
 ### Board
 
@@ -21,13 +12,16 @@
         ........
         ........
         pppppppp
-        rnbqkbnr성
+        rnbqkbnr
         ```
 - [x] 체스판에서 말의 위치 값은 가로 위치는 왼쪽부터 a ~ h이고, 세로는 아래부터 위로 1 ~ 8로 구현한다.
 - [x] Piece를 움직일 수 있다.
     - [x] Knight를 제외한 Piece 이동 경로에 아무것도 없어야 한다.
     - [x] 목적지에 적이 있으면 먹을 수 있다.
     - [x] Pawn의 경우, 적 기물을 대각선으로 전진하면서 잡을 수 있다.
+- [x] King이 잡혔는 지 확인할 수 있다.
+- [x] 남아 있는 말에 대한 점수를 구할 수 있다.
+    - [x] 같은 File에 같은 팀의 폰이 있으면 폰의 점수는 절반이 된다.
 
 ### Piece
 
@@ -38,13 +32,58 @@
     - [x] 대각선, 직선으로 1칸씩만 이동할 수 있다.
 - [x] Queen
     - [x] 대각선, 직선으로 무제한 이동할 수 있다.
+    - [x] 기본 점수 9점
 - [x] Bishop
     - [x] 대각선으로 무제한 이동할 수 있다.
+    - [x] 기본 점수 3점
 - [x] Rook
     - [x] 직선으로 무제한 이동할 수 있다.
+    - [x] 기본 점수 5점
 - [x] Knight
     - [x] 직선으로 한 칸 이동 후 대각선으로 한 칸 이동할 수 있다.
     - [x] 기물을 넘어갈 수 있다.
+    - [x] 기본 점수 2.5점
 - [x] Pawn
     - [x] 처음에 한 칸 또는 두 칸 이동할 수 있다.
     - [x] 처음 이동 후 한 칸 씩만 전진 가능하다.
+    - [x] 기본 점수 1점
+
+### Room
+
+- [x] 체스 게임 방이다.
+- [x] 방의 이름을 가진다.
+- [x] 방의 번호를 가진다.
+
+## DB
+
+```sql
+USE
+chess;
+
+CREATE TABLE room
+(
+    room_id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE piece
+(
+    piece_id      BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    room          BIGINT(20) NOT NULL,
+    name          VARCHAR(10) NOT NULL,
+    team          VARCHAR(10) NOT NULL,
+    position_file VARCHAR(10) NOT NULL,
+    position_rank VARCHAR(10) NOT NULL,
+    FOREIGN KEY (room) REFERENCES room (room_id) ON DELETE CASCADE
+);
+
+```
+
+## ChessDao
+
+- [x] 모든 방을 불러올 수 있다.
+- [x] Room을 저장할 수 있다.
+- [x] Room을 제거할 수 있다.
+- [x] Board를 저장할 수 있다.
+- [x] Board를 제거할 수 있다.
+- [x] 방 번호로 Board를 불러올 수 있다.

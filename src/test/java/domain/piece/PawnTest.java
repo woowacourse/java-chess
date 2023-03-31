@@ -9,8 +9,9 @@ import java.util.List;
 import static domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("폰은 ")
 class PawnTest {
-    @DisplayName("폰은 직진 한 칸 갈 수 있다")
+    @DisplayName("직진 한 칸 갈 수 있다")
     @Test
     void goStraight() {
         //given
@@ -27,7 +28,7 @@ class PawnTest {
         assertThat(white.isMovable(source, whiteDestination)).isTrue();
     }
 
-    @DisplayName("폰은 두 칸 초과해서 갈 수 없다.")
+    @DisplayName("두 칸 초과해서 갈 수 없다.")
     @Test
     void cannotGo() {
         //given
@@ -41,7 +42,7 @@ class PawnTest {
         assertThat(cannotGo).allMatch(destination -> !pawn.isMovable(source, destination));
     }
 
-    @DisplayName("폰은 후진할 수 없다.")
+    @DisplayName("후진할 수 없다.")
     @Test
     void cannotGo2() {
         //given
@@ -55,7 +56,7 @@ class PawnTest {
         assertThat(cannotGo).allMatch(destination -> !pawn.isMovable(source, destination));
     }
 
-    @DisplayName("폰은 처음에 두 칸 또는 한 칸 갈 수 있다")
+    @DisplayName("처음에 두 칸 또는 한 칸 갈 수 있다")
     @Test
     void canGoTwoAtFirst() {
         //given
@@ -73,7 +74,7 @@ class PawnTest {
         assertThat(white.isMovable(whiteSource, whiteDestination)).isTrue();
     }
 
-    @DisplayName("폰은 처음이 아니면 두 칸 갈 수 없다")
+    @DisplayName("처음이 아니면 두 칸 갈 수 없다")
     @Test
     void cannotGoTwoAtNotFirst() {
         //given
@@ -85,5 +86,17 @@ class PawnTest {
 
         //then
         assertThat(pawn.isMovable(source, destination)).isFalse();
+    }
+
+    @DisplayName("기본 점수는 1점이다.")
+    @Test
+    void score() {
+        //given
+        final Pawn pawn = new Pawn(Team.BLACK);
+
+        //when
+
+        //then
+        assertThat(pawn.getScore()).isEqualTo(1);
     }
 }

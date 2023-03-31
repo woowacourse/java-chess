@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+docker/db/mysql/config
+docker/db/mysql/data
