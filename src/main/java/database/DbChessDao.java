@@ -20,11 +20,18 @@ public final class DbChessDao implements ChessDao {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
-    private static final String KING_NAME = "King";
-    private static final String KNIGHT_NAME = "Knight";
-    private static final String QUEEN_NAME = "Queen";
-    private static final String PAWN_NAME = "Pawn";
-    private static final String BISHOP_NAME = "Bishop";
+    private static final List<Piece> pieces = List.of(new King(Team.BLACK),
+            new Bishop(Team.BLACK),
+            new Queen(Team.BLACK),
+            new Pawn(Team.BLACK),
+            new Rook(Team.BLACK),
+            new Knight(Team.BLACK),
+            new King(Team.WHITE),
+            new Bishop(Team.WHITE),
+            new Queen(Team.WHITE),
+            new Pawn(Team.WHITE),
+            new Rook(Team.WHITE),
+            new Knight(Team.WHITE));
 
     private Connection getConnection() {
         try {
@@ -40,11 +47,10 @@ public final class DbChessDao implements ChessDao {
     public List<Room> findAllRooms() {
         final List<Room> result = new ArrayList<>();
 
-        final var query = "SELECT * FROM room";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-
-            final var resultSet = preparedStatement.executeQuery();
+        final String query = "SELECT * FROM room";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(new Room(
                         resultSet.getLong("room_id"),
@@ -58,9 +64,10 @@ public final class DbChessDao implements ChessDao {
 
     @Override
     public long saveRoom(final Room room) {
-        final var query = "INSERT INTO room(name) VALUES(?)";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        final String query = "INSERT INTO room(name) VALUES(?)";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement =
+                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, room.getName());
             preparedStatement.executeUpdate();
 
@@ -74,9 +81,9 @@ public final class DbChessDao implements ChessDao {
 
     @Override
     public void deleteRoom(final long roomId) {
-        final var query = "DELETE FROM room WHERE room_id = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "DELETE FROM room WHERE room_id = ?";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
             preparedStatement.execute();
         } catch (final SQLException e) {
@@ -86,11 +93,11 @@ public final class DbChessDao implements ChessDao {
 
     @Override
     public void saveBoard(final Map<Position, Piece> board, final long roomId) {
-        final var query = "INSERT INTO piece(room, name, team, " +
+        final String query = "INSERT INTO piece(room, name, team, " +
                 "position_file, position_rank) VALUES(?,?,?,?,?)";
 
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (final Map.Entry<Position, Piece> pieceEntry : board.entrySet()) {
                 final Position position = pieceEntry.getKey();
                 final Piece piece = pieceEntry.getValue();
@@ -100,8 +107,10 @@ public final class DbChessDao implements ChessDao {
                 preparedStatement.setString(3, piece.getTeam().name());
                 preparedStatement.setString(4, position.getFile().name());
                 preparedStatement.setString(5, position.getRank().name());
-                preparedStatement.executeUpdate();
+                preparedStatement.addBatch();
             }
+
+            preparedStatement.executeBatch();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
@@ -109,9 +118,9 @@ public final class DbChessDao implements ChessDao {
 
     @Override
     public void deleteBoard(final long roomId) {
-        final var query = "DELETE FROM piece WHERE room = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "DELETE FROM piece WHERE room = ?";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
             preparedStatement.execute();
         } catch (final SQLException e) {
@@ -121,11 +130,11 @@ public final class DbChessDao implements ChessDao {
 
     @Override
     public Board findBoardByRoomId(final long roomId) {
-        Map<Position, Piece> pieces = new HashMap<>();
+        final Map<Position, Piece> pieces = new HashMap<>();
 
-        final var query = "SELECT * FROM piece WHERE room = ?";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "SELECT * FROM piece WHERE room = ?";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
 
             final var resultSet = preparedStatement.executeQuery();
@@ -148,9 +157,9 @@ public final class DbChessDao implements ChessDao {
 
     @Override
     public void clear() {
-        final var query = "DELETE FROM room";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "DELETE FROM room";
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.execute();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -158,21 +167,10 @@ public final class DbChessDao implements ChessDao {
     }
 
     private Piece makePiece(final Team team, final String pieceName) {
-        if (pieceName.equals(KING_NAME)) {
-            return new King(team);
-        }
-        if (pieceName.equals(KNIGHT_NAME)) {
-            return new Knight(team);
-        }
-        if (pieceName.equals(QUEEN_NAME)) {
-            return new Queen(team);
-        }
-        if (pieceName.equals(PAWN_NAME)) {
-            return new Pawn(team);
-        }
-        if (pieceName.equals(BISHOP_NAME)) {
-            return new Bishop(team);
-        }
-        return new Rook(team);
+        return pieces.stream()
+                .filter(piece -> piece.isTeam(team))
+                .filter(piece -> piece.getName().equals(pieceName))
+                .findAny()
+                .orElseThrow();
     }
 }

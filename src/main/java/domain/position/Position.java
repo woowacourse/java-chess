@@ -52,7 +52,7 @@ public final class Position {
     private List<Position> getBetweenPositions(final Position destination, final Direction direction) {
         final int countBetweenPositions = getMaxDifference(destination) - 1;
 
-        return Stream.iterate(this.move(direction), position -> position.move(direction))
+        return Stream.iterate(move(direction), position -> position.move(direction))
                 .limit(countBetweenPositions)
                 .collect(Collectors.toUnmodifiableList());
     }
