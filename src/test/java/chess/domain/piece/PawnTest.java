@@ -20,7 +20,7 @@ public class PawnTest {
         Piece pawn = new Pawn(WHITE);
         Move move = new Move(new Position("c2"), new Position(position));
 
-        assertThat(pawn.isValidMove(move, null)).isTrue();
+        assertThat(pawn.canMove(move, null)).isTrue();
     }
 
     @DisplayName("흑은 처음에 1칸 혹은 2칸 아래로 움직일 수 있다.")
@@ -30,7 +30,7 @@ public class PawnTest {
         Piece pawn = new Pawn(BLACK);
         Move move = new Move(new Position("c7"), new Position(position));
 
-        assertThat(pawn.isValidMove(move, null)).isTrue();
+        assertThat(pawn.canMove(move, null)).isTrue();
     }
 
     @DisplayName("처음에 3칸 이상 움직일 수 없다")
@@ -39,7 +39,7 @@ public class PawnTest {
         Piece pawn = new Pawn(WHITE);
         Move move = new Move(new Position("c2"), new Position("c5"));
 
-        assertThat(pawn.isValidMove(move, null)).isFalse();
+        assertThat(pawn.canMove(move, null)).isFalse();
     }
 
     @DisplayName("백은 아래로 움직일 수 없다")
@@ -48,7 +48,7 @@ public class PawnTest {
         Piece pawn = new Pawn(WHITE);
         Move move = new Move(new Position("c2"), new Position("c1"));
 
-        assertThat(pawn.isValidMove(move, null)).isFalse();
+        assertThat(pawn.canMove(move, null)).isFalse();
     }
 
     @DisplayName("흑은 위로 움직일 수 없다")
@@ -57,7 +57,7 @@ public class PawnTest {
         Piece pawn = new Pawn(BLACK);
         Move move = new Move(new Position("c7"), new Position("c8"));
 
-        assertThat(pawn.isValidMove(move, null)).isFalse();
+        assertThat(pawn.canMove(move, null)).isFalse();
     }
 
     @DisplayName("첫 수 이후 1칸 앞으로 움직일 수 있다")
@@ -66,7 +66,7 @@ public class PawnTest {
         Piece touchedPawn = new Pawn(WHITE);
         Move move = new Move(new Position("c3"), new Position("c4"));
 
-        assertThat(touchedPawn.isValidMove(move, null)).isTrue();
+        assertThat(touchedPawn.canMove(move, null)).isTrue();
     }
 
     @DisplayName("첫 수 이후 앞으로 2칸 움직일 수 없다")
@@ -75,7 +75,7 @@ public class PawnTest {
         Piece touchedPawn = new Pawn(WHITE);
         Move move = new Move(new Position("c3"), new Position("c5"));
 
-        assertThat(touchedPawn.isValidMove(move, null)).isFalse();
+        assertThat(touchedPawn.canMove(move, null)).isFalse();
     }
 
     @DisplayName("백은 윗 대각선으로 공격할 수 있다")
@@ -86,7 +86,7 @@ public class PawnTest {
         Piece targetPiece = new Pawn(BLACK);
         Move move = new Move(new Position("c2"), new Position(position));
 
-        assertThat(pawn.isValidMove(move, targetPiece)).isTrue();
+        assertThat(pawn.canMove(move, targetPiece)).isTrue();
     }
 
     @DisplayName("흑은 아래 대각선으로 공격할 수 있다")
@@ -97,7 +97,7 @@ public class PawnTest {
         Piece targetPiece = new Pawn(WHITE);
         Move move = new Move(new Position("c2"), new Position(position));
 
-        assertThat(pawn.isValidMove(move, targetPiece)).isTrue();
+        assertThat(pawn.canMove(move, targetPiece)).isTrue();
     }
 
     @DisplayName("백은 아래 대각선으로 공격할 수 없다")
@@ -108,7 +108,7 @@ public class PawnTest {
         Piece targetPiece = new Pawn(BLACK);
         Move move = new Move(new Position("c2"), new Position(position));
 
-        assertThat(pawn.isValidMove(move, targetPiece)).isFalse();
+        assertThat(pawn.canMove(move, targetPiece)).isFalse();
     }
 
     @DisplayName("흑은 윗 대각선으로 공격할 수 없다")
@@ -119,7 +119,7 @@ public class PawnTest {
         Piece targetPiece = new Pawn(WHITE);
         Move move = new Move(new Position("c2"), new Position(position));
 
-        assertThat(pawn.isValidMove(move, targetPiece)).isFalse();
+        assertThat(pawn.canMove(move, targetPiece)).isFalse();
     }
 
     @DisplayName("공격시 수직으로 이동할 수 없다")
@@ -129,7 +129,7 @@ public class PawnTest {
         Piece targetPiece = new Pawn(BLACK);
         Move move = new Move(new Position("c2"), new Position("c3"));
 
-        assertThat(pawn.isValidMove(move, targetPiece)).isFalse();
+        assertThat(pawn.canMove(move, targetPiece)).isFalse();
     }
 
     @DisplayName("이동시 대각선으로 이동할 수 없다")
@@ -138,6 +138,6 @@ public class PawnTest {
         Piece pawn = new Pawn(WHITE);
         Move move = new Move(new Position("c2"), new Position("b1"));
 
-        assertThat(pawn.isValidMove(move, null)).isFalse();
+        assertThat(pawn.canMove(move, null)).isFalse();
     }
 }

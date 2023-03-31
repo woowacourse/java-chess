@@ -1,9 +1,12 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.NONE;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.game.Score;
 import chess.domain.position.Move;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,11 +16,11 @@ public class PieceTest {
     private static class PieceImplement extends Piece {
 
         public PieceImplement(Color color) {
-            super(color);
+            super(color, PieceType.BISHOP);
         }
 
         @Override
-        public boolean isValidMove(Move move, Piece targetPiece) {
+        public boolean canMove(Move move, Piece targetPiece) {
             return false;
         }
 
@@ -52,5 +55,21 @@ public class PieceTest {
 
         assertThat(piece.isRightTurn(WHITE)).isTrue();
         assertThat(piece.isRightTurn(BLACK)).isFalse();
+    }
+
+    @DisplayName("점수를 확인할 수 있다")
+    @Test
+    void getValue() {
+        Piece piece = new PieceImplement(WHITE);
+
+        assertThat(piece.getScore()).isEqualTo(Score.valueOf(3));
+    }
+
+    @DisplayName("없는 색깔로 기물 생성시 예외가 발생한다")
+    @Test
+    void colorNone_throws() {
+        assertThatThrownBy(() -> new PieceImplement(NONE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("없는 색깔입니다.");
     }
 }

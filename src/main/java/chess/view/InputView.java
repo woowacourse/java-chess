@@ -1,7 +1,9 @@
 package chess.view;
 
-import chess.view.dto.CommandType;
-import chess.view.dto.Request;
+import chess.view.dto.category.CategoryCommandType;
+import chess.view.dto.game.GameCommandType;
+import chess.view.dto.game.GameRequest;
+import chess.view.dto.ready.ReadyRequest;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,41 +15,58 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public Request askCommand() {
-        return askCommand("");
+    public ReadyRequest askReadyCommand() {
+        String[] inputs = inputGameCommand();
+        validateReadyCommandSize(inputs);
+        return ReadyRequest.from(inputs);
     }
 
-    public Request askCommand(String turn) {
-        printTurn(turn);
-        String[] inputs = inputCommand();
+    private void validateReadyCommandSize(String[] inputs) {
+        if (inputs.length != 2) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+        }
+    }
+
+    public CategoryCommandType askCategory() {
+        String input = scanner.nextLine().strip().toUpperCase();
+        return CategoryCommandType.from(input);
+    }
+
+    public GameRequest askGameCommand() {
+        String[] inputs = inputGameCommand();
         validateHasLength(inputs);
-        CommandType commandType = CommandType.from(inputs[0]);
+        GameCommandType commandType = GameCommandType.from(inputs[0]);
         if (commandType.isSingleCommandType()) {
             validateSingleCommand(inputs);
-            return Request.createSingleCommand(commandType);
+            return GameRequest.createSingleCommand(commandType);
         }
-        validateParameters(inputs);
-        return Request.createMoveCommand(inputs[1], inputs[2]);
+        validateGameParameters(inputs);
+        return GameRequest.createMoveCommand(inputs[1], inputs[2]);
+    }
+
+    public GameRequest askGameCommand(String turn) {
+        printTurn(turn);
+        return askGameCommand();
     }
 
     private void printTurn(String turn) {
         System.out.print(turn + "> ");
     }
 
-    private String[] inputCommand() {
+    private String[] inputGameCommand() {
         String input = scanner.nextLine().strip().toUpperCase();
         return input.split(" ");
     }
 
-    private void validateParameters(String[] inputs) {
+    private void validateGameParameters(String[] inputs) {
         if (inputs.length != 3) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }
-        validateParameter(inputs[1]);
-        validateParameter(inputs[2]);
+        validateGameParameter(inputs[1]);
+        validateGameParameter(inputs[2]);
     }
 
-    private void validateParameter(String parameter) {
+    private void validateGameParameter(String parameter) {
         if (!parameter.matches("[A-Z]\\d")) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }

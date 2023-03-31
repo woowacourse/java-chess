@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.game.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Move;
@@ -53,7 +54,7 @@ public class Board {
     }
 
     private void validatePieceMove(Piece sourcePiece, Piece targetPiece, Move move) {
-        if (!sourcePiece.isValidMove(move, targetPiece)) {
+        if (!sourcePiece.canMove(move, targetPiece)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 수입니다");
         }
     }
@@ -69,6 +70,10 @@ public class Board {
         if (pieces.get(position) != null) {
             throw new IllegalArgumentException("다른 기물을 지나칠 수 없습니다");
         }
+    }
+
+    public GameResult getResult() {
+        return new GameResult(new HashMap<>(pieces));
     }
 
     public Map<Position, Piece> getPieces() {

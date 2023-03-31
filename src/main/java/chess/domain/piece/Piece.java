@@ -1,16 +1,26 @@
 package chess.domain.piece;
 
+import chess.domain.game.Score;
 import chess.domain.position.Move;
 
 public abstract class Piece {
 
     protected final Color color;
+    protected final PieceType type;
 
-    public Piece(Color color) {
+    public Piece(Color color, PieceType type) {
+        validateColor(color);
         this.color = color;
+        this.type = type;
     }
 
-    public abstract boolean isValidMove(Move move, Piece targetPiece);
+    private void validateColor(Color color) {
+        if (color == Color.NONE) {
+            throw new IllegalArgumentException("없는 색깔입니다.");
+        }
+    }
+
+    public abstract boolean canMove(Move move, Piece targetPiece);
 
     public boolean isSameColor(Piece target) {
         if (target == null) {
@@ -23,9 +33,19 @@ public abstract class Piece {
         return this.color == turn;
     }
 
-    public abstract PieceType getType();
+    public boolean isSameType(PieceType type) {
+        return this.type == type;
+    }
+
+    public PieceType getType() {
+        return type;
+    }
 
     public Color getColor() {
         return color;
+    }
+
+    public Score getScore() {
+        return type.getScore();
     }
 }

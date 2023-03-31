@@ -1,4 +1,4 @@
-package chess.view.dto;
+package chess.view.dto.game;
 
 public class MoveRequest {
 

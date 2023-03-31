@@ -4,12 +4,26 @@
 
 # 기능 목록
 
+- 사용자
+    - 이름으로 구분한다
+        - 사용자의 이름은 중복될 수 없다.
+    - 기존에 있는 사용자를 선택하거나 새로운 사용자를 입력받는다
+    - 사용자의 이름은 중복될 수 없다
+    - 사용자의 이름은 5자 이하이다
+    - 자신의 게임 기록을 볼 수 있다
+- 게임방
+    - 한 사용자의 게임방은 이름으로 구분한다
+        - 한 사용자의 게임방 이름은 중복될 수 없다.
+    - 진행중인 게임방을 보여준다.
+    - 진행중인 게임방을 선택해서 게임을 이어가거나 새로운 게임방을 생성한다.
+    - 게임방 생성시 이름을 입력받는다.
 - 게임
     - 턴을 가진다
         - 턴에 맞는 기물인지 확인한다
         - 한 움직임 이후 턴을 바꾼다
         - 백부터 시작한다.
     - 기물을 움직이게 한다.
+    - 킹이 죽으면 게임이 종료된다.
 - 체스판
     - 체스판 시작 배열로 초기화한다
     - 위치 별 기물을 가진다
@@ -73,6 +87,14 @@
     - 1~8
     - 위 아래로 이동 할 수 있다
         - 범위를 벗어난 이동은 예외를 던진다
+- 점수
+    - 한 진영의 점수를 계산한다.
+    - 기물별 점수
+        - queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+        - pawn의 기본 점수는 1점이다.
+            - 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
+        - king은 점수가 없다.
+    - 두 진영의 점수 비교 후 승리진영을 반환한다
 - 입력
     - 입력시 현재 턴을 알려준다
 
@@ -81,13 +103,54 @@
 ```mermaid
 classDiagram
     Piece <-- Pawn
-    Piece <-- Knight
-    Piece <-- King
-    Piece <-- Queen
-    Piece <-- Bishop
-    Piece <-- Rook
-
+    Piece <-- StrategyPiece
+    Piece: +Color color
+    Piece: +PieceType type
+    Piece: +canMove() {abstract} boolean 
+    Pawn: +canMove() boolean
+    StrategyPiece: +canMove() boolean
+    
+    class PieceType
+    PieceType: -double score
+    PieceType: -MoveStrategy moveStrategy
+    
+    class MoveStrategy
+    MoveStrategy: +canMove() boolean
+    
     <<abstract>> Piece
+    <<enum>> PieceType
+    <<interface>> MoveStrategy
+```
+
+### 테이블 DDL
+
+```sql
+CREATE TABLE User
+(
+    id   INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE Room
+(
+    id      INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT         NOT NULL,
+    name    VARCHAR(10) NOT NULL,
+    winner  VARCHAR(10) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user (id)
+);
+
+CREATE TABLE Move
+(
+    id         INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    room_id    INT         NOT NULL,
+    source     VARCHAR(10) NOT NULL,
+    target     VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES room (id),
+    INDEX (created_at)
+)
+
 ```
 
 ## 우아한테크코스 코드리뷰

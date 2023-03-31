@@ -4,17 +4,31 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Move;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
 
+    private final long roomId;
     private Color turn;
     private final Board board;
 
-    public Game() {
+    public Game(long roomId) {
+        this.roomId = roomId;
         this.turn = Color.WHITE;
         this.board = BoardFactory.createBoard();
+    }
+
+    public static Game from(long roomId, List<Move> moves) {
+        Game game = new Game(roomId);
+        Board board = game.board;
+        for (Move move : moves) {
+            board.move(move.getSource(), move.getTarget());
+        }
+        game.turn = Color.calculateTurn(moves.size());
+        return game;
     }
 
     public void movePiece(String sourceRequest, String targetRequest) {
@@ -40,6 +54,14 @@ public class Game {
     }
 
     public String getTurn() {
-        return this.turn.name();
+        return turn.name();
+    }
+
+    public GameResult getResult() {
+        return board.getResult();
+    }
+
+    public long getRoomId() {
+        return roomId;
     }
 }
