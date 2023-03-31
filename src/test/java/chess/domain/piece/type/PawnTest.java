@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @SuppressWarnings({"NonAsciiCharacters","SpellCheckingInspection"})
@@ -36,35 +35,30 @@ class PawnTest {
         void Black폰이_갈수없는_방향으로_이동하려고_하면_예외 (Column endColumn, Rank endRank) {
             Position start = Position.of(Column.C, Rank.THREE);
             Position end = Position.of(endColumn, endRank);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThatThrownBy(() -> blackPawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn이 이동할 수 있는 방향이 아닙니다");
+            assertThat(blackPawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @Test
         void 첫번째_이동이고_Black폰이_한번에_이동가능한_거리가_아니면_예외() {
             Position start = Position.of(Column.C, Rank.SEVEN);
             Position end = Position.of(Column.C, Rank.TWO);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThatThrownBy(() -> blackPawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+            assertThat(blackPawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @Test
         void 첫번째_이동_이후_Black폰이_한번에_이동가능한_거리가_아니면_예외() {
-            Position start = Position.of(Column.B, Rank.SEVEN);
-            Position firstEnd = Position.of(Column.B, Rank.FIVE);
-            Position secondEnd = Position.of(Column.B,Rank.THREE);
-            Color colorOfDestination = Color.NONE;
-            blackPawn.checkMovable(start, firstEnd, colorOfDestination);
+            Position start = Position.of(Column.B, Rank.FIVE);
+            Position end = Position.of(Column.B,Rank.THREE);
+            Piece toMove = EmptyPiece.of();
 
-            assertThatThrownBy(() -> blackPawn.checkMovable(firstEnd, secondEnd, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+            assertThat(blackPawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @ParameterizedTest
@@ -72,10 +66,10 @@ class PawnTest {
         void 이동하려는_방향이_직선인경우_도착점_기물의_색깔이_NONE이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.B, Rank.SEVEN);
             Position end = Position.of(Column.B, Rank.FIVE);
+            Piece toMove = new Pawn(colorOfDestination);
 
-            assertThatThrownBy(() -> blackPawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다");
+            assertThat(blackPawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @ParameterizedTest
@@ -83,19 +77,20 @@ class PawnTest {
         void 이동하려는_방향이_대각선인경우_도착점_기물의_색깔이_WHITE이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.B, Rank.SEVEN);
             Position end = Position.of(Column.C, Rank.SIX);
+            Piece toMove = new Pawn(colorOfDestination);
 
-            assertThatThrownBy(() -> blackPawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다");
+            assertThat(blackPawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @Test
         void 이동에_모든조건을_충족하면_true를_반환한다() {
             Position start = Position.of(Column.C, Rank.SEVEN);
             Position end = Position.of(Column.C, Rank.FIVE);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertDoesNotThrow(() -> blackPawn.checkMovable(start, end, colorOfDestination));
+            assertThat(blackPawn.isMovable(start, end, toMove))
+                    .isTrue();
         }
     }
 
@@ -115,35 +110,30 @@ class PawnTest {
         void White폰이_갈수없는_방향으로_이동하려고_하면_예외 (Column endColumn, Rank endRank) {
             Position start = Position.of(Column.C, Rank.THREE);
             Position end = Position.of(endColumn, endRank);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThatThrownBy(() -> whitePawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn이 이동할 수 있는 방향이 아닙니다");
+            assertThat(whitePawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @Test
         void 첫번째_이동이고_White폰이_한번에_이동가능한_거리가_아니면_예외() {
             Position start = Position.of(Column.C, Rank.TWO);
             Position end = Position.of(Column.C, Rank.FIVE);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThatThrownBy(() -> whitePawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+            assertThat(whitePawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @Test
         void 첫번째_이동_이후_White폰이_한번에_이동가능한_거리가_아니면_예외() {
-            Position start = Position.of(Column.B, Rank.TWO);
-            Position firstEnd = Position.of(Column.B, Rank.FOUR);
-            Position secondEnd = Position.of(Column.B,Rank.SIX);
-            Color colorOfDestination = Color.NONE;
-            whitePawn.checkMovable(start, firstEnd, colorOfDestination);
+            Position start = Position.of(Column.B, Rank.FOUR);
+            Position end = Position.of(Column.B,Rank.SIX);
+            Piece toMove = EmptyPiece.of();
 
-            assertThatThrownBy(() -> whitePawn.checkMovable(firstEnd, secondEnd, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn이 한 번에 이동할 수 있는 거리가 아닙니다");
+            assertThat(whitePawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @ParameterizedTest
@@ -151,10 +141,10 @@ class PawnTest {
         void 이동하려는_방향이_직선인경우_도착점_기물의_색깔이_NONE이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.H, Rank.TWO);
             Position end = Position.of(Column.H, Rank.THREE);
+            Piece toMove = new Rook(colorOfDestination);
 
-            assertThatThrownBy(() -> whitePawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn은 도착점에 기물이 있으면 앞으로 이동할 수 없습니다");
+            assertThat(whitePawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @ParameterizedTest
@@ -162,18 +152,20 @@ class PawnTest {
         void 이동하려는_방향이_대각선인경우_도착점_기물의_색깔이_Black이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.B, Rank.SIX);
             Position end = Position.of(Column.C, Rank.SEVEN);
+            Piece toMove = new Rook(colorOfDestination);
 
-            assertThatThrownBy(() -> whitePawn.checkMovable(start, end, colorOfDestination))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Pawn은 대각선에 상대방이 있을 때만 이동할 수 있습니다");
+            assertThat(whitePawn.isMovable(start, end, toMove))
+                    .isFalse();
         }
 
         @Test
         void 이동에_모든조건을_충족하면_true를_반환한다() {
             Position start = Position.of(Column.C, Rank.SIX);
             Position end = Position.of(Column.C, Rank.SEVEN);
-            Color colorOfDestination = Color.NONE;
-            assertDoesNotThrow(()-> whitePawn.checkMovable(start, end, colorOfDestination));
+            Piece toMove = EmptyPiece.of();
+
+            assertThat(whitePawn.isMovable(start, end, toMove))
+                    .isTrue();
         }
     }
 

@@ -1,50 +1,39 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.type.EmptyPiece;
 import chess.domain.piece.type.Piece;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private static final String OTHER_PIECE_IN_ROUTE_ERROR_GUIDE_MESSAGE = "이동 경로에 기물이 있으므로 이동할 수 없습니다";
 
     private final Map<Position, Piece> chessBoard;
 
-    public ChessBoard() {
-        this.chessBoard = new LinkedHashMap<>();
+    public ChessBoard(Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    public void initialize(Map<Position, Piece> chessBoard) {
-        this.chessBoard.putAll(chessBoard);
-    }
 
-    public Color findColorOfPieceInPosition(final Position position) {
-        Piece pieceInPosition = findPieceInBoardByPosition(position);
-        return pieceInPosition.getColor();
-    }
-
-    public void move(Position start, Position end) {
-        Piece pieceToMove = findPieceInBoardByPosition(start);
-        validateMove(start, end, pieceToMove);
-
-        movePieceToDestination(start, end, pieceToMove);
-    }
-
-    private Piece findPieceInBoardByPosition(final Position position) {
+    public Piece findPieceInBoardByPosition(final Position position) {
         if (!chessBoard.containsKey(position)) {
             throw new IllegalArgumentException("해당하는 위치가 체스 보드에 존재하지 않습니다");
         }
         return chessBoard.get(position);
     }
 
-    private void validateMove(final Position start, final Position end, final Piece pieceToMove) {
+    public void move(Position start, Position end) {
         checkIfMoveToSamePosition(start, end);
-        Color colorOfDestination = findPieceInBoardByPosition(end).getColor();
-        pieceToMove.checkMovable(start, end, colorOfDestination);
-        checkIfPiecesInRoute(start, end);
+        Piece pieceToMove = findPieceInBoardByPosition(start);
+        Piece pieceAtDestination = findPieceInBoardByPosition(end);
+        checkIfOtherPiecesOnPath(pieceToMove.findRoute(start, end, pieceAtDestination), end);
+
+        movePiece(start, end, pieceToMove);
     }
 
     private static void checkIfMoveToSamePosition(Position start, Position end) {
@@ -53,20 +42,32 @@ public class ChessBoard {
         }
     }
 
-    private void checkIfPiecesInRoute(final Position start, final Position end) {
-        if(start.findRouteTo(end).stream()
-                .anyMatch(position -> !position.equals(end) && chessBoard.get(position).getColor() != Color.NONE)) {
-            throw new IllegalArgumentException("이동경로에 기물이 있어 이동할 수 없습니다");
+    private void checkIfOtherPiecesOnPath(List<Position> route, Position end) {
+        if (route.stream()
+                .anyMatch(position -> !position.equals(end) && !chessBoard.get(position).isSameColor(Color.NONE))) {
+            throw new IllegalArgumentException("이동 경로에 기물이 있으므로 이동할 수 없습니다");
         }
     }
 
-    private void movePieceToDestination(Position start, Position end, Piece piece) {
+    private void movePiece(final Position start, final Position end, final Piece pieceToMove) {
         chessBoard.replace(start, EmptyPiece.of());
-        chessBoard.replace(end, piece);
+        chessBoard.replace(end, pieceToMove);
     }
 
-    public boolean isInitialized() {
-        return chessBoard.size() != 0;
+    public double findScoreOfPiecesByColor(Color color) {
+        return chessBoard.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    public Map<Column, Long> findPieceCountOfColumn(Color color, PieceType pieceType) {
+        return Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Column.values()).map(column -> Position.of(column, rank)))
+                .filter(position -> chessBoard.get(position).isSameColor(color))
+                .filter(position ->chessBoard.get(position).getPieceType() == pieceType)
+                .collect(Collectors.groupingBy(Position::getColumn,
+                        Collectors.counting()));
     }
 
     public Map<Position, Piece> getChessBoard() {

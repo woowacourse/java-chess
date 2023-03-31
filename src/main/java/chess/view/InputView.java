@@ -10,7 +10,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     public static final String DELIMITER = " ";
 
-    public List<String> readCommand() {
+    public List<String> readCommandLine() {
         String input = scanner.nextLine();
         return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::strip)
