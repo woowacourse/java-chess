@@ -1,4 +1,4 @@
-package dto;
+package chess.dto;
 
 import chess.domain.Square;
 import chess.domain.chesspiece.Piece;
@@ -19,8 +19,8 @@ public class PieceDto {
     public static PieceDto from(final Piece piece, final Square square) {
         return new PieceDto(piece.getSide(),
                 piece.getName(),
-                square.getRank().getPosition(),
-                square.getFile().getPosition());
+                square.getRankPosition(),
+                square.getFilePosition());
     }
 
     public String getSide() {

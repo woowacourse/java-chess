@@ -84,11 +84,19 @@ public class Square {
         return squares;
     }
 
-    public Rank getRank() {
-        return rank;
+    public int getRankPosition() {
+        return rank.getPosition();
     }
 
-    public File getFile() {
-        return file;
+    public String getRankSymbol() {
+        return rank.getSymbol();
+    }
+
+    public int getFilePosition() {
+        return file.getPosition();
+    }
+
+    public String getFileSymbol() {
+        return file.getSymbol();
     }
 }

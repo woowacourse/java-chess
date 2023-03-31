@@ -25,8 +25,8 @@ public class SquareTest {
             @DisplayName("해당 위치의 Square를 반환한다")
             void it_returns_square() {
                 Square square = Square.of(rank, file);
-                assertThat(square.getRank()).isEqualTo(rank);
-                assertThat(square.getFile()).isEqualTo(file);
+                assertThat(square.getRankSymbol()).isEqualTo(rank.getSymbol());
+                assertThat(square.getFileSymbol()).isEqualTo(file.getSymbol());
             }
         }
     }
@@ -35,6 +35,7 @@ public class SquareTest {
     @DisplayName("hasSameRank 메서드는")
     class hasSameRank {
         Square from = Square.of(Rank.FOUR, File.E);
+
         @Nested
         @DisplayName("같은 랭크를 가지는 Square가 주어지면")
         class given_same_rank_square {
@@ -64,6 +65,7 @@ public class SquareTest {
     @DisplayName("hasSameFile 메서드는")
     class hasSameFile {
         Square from = Square.of(Rank.FOUR, File.E);
+
         @Nested
         @DisplayName("같은 파일을 가지는 Square가 주어지면")
         class given_same_file_square {

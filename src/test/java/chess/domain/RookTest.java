@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class RookTest {
 
     @Nested
-    @DisplayName("of 메서드는")
-    class of {
+    @DisplayName("from 메서드는")
+    class from {
         @Nested
         @DisplayName("진영이 주어지면")
         class given_team {
             @Test
             @DisplayName("해당 진영의 Rook을 생성한다")
             void it_returns_rooks() {
-                Rook blackRook = Rook.of(Side.BLACK);
+                Rook blackRook = Rook.from(Side.BLACK);
                 assertThat(blackRook).isInstanceOf(Rook.class);
                 assertThat(blackRook.isBlack()).isTrue();
             }
@@ -35,13 +35,13 @@ class RookTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            Rook whiteRook = Rook.of(Side.WHITE);
+            Rook whiteRook = Rook.from(Side.WHITE);
             Square from = Square.of(Rank.ONE, File.A);
             Square movableSquare1 = Square.of(Rank.ONE, File.C);
             Square movableSquare2 = Square.of(Rank.THREE, File.A);
             Square unable = Square.of(Rank.TWO, File.B);
-            Rook whiteRook2 = Rook.of(Side.WHITE);
-            Queen blackQueen = Queen.of(Side.BLACK);
+            Rook whiteRook2 = Rook.from(Side.WHITE);
+            Queen blackQueen = Queen.from(Side.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")

@@ -12,7 +12,7 @@ public class King extends Piece {
         super(side, PieceInfo.KING);
     }
 
-    public static King of(final Side side) {
+    public static King from(final Side side) {
         if (side == Side.BLACK) {
             return BLACK_KING;
         }
@@ -29,5 +29,10 @@ public class King extends Piece {
         final int fileDistance = from.fileDistanceTo(to);
         return (rankDistance == 1 || rankDistance == 0) &&
                 (fileDistance == 1 || fileDistance == 0);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

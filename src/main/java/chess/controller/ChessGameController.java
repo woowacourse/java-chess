@@ -1,49 +1,73 @@
 package chess.controller;
 
+import chess.database.ChessBoardDao;
+import chess.database.ChessGameDao;
 import chess.domain.*;
+import chess.domain.chesspiece.Piece;
+import chess.dto.ChessBoardDto;
+import chess.dto.CommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
-import dto.ChessBoardDto;
-import dto.CommandDto;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ChessGameController {
+    private final ChessBoardDao chessBoardDao;
+    private final ChessGameDao chessGameDao;
 
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public ChessGameController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public ChessGameController(final ChessBoardDao chessBoardDao, final ChessGameDao chessGameDao) {
+        this.chessBoardDao = chessBoardDao;
+        this.chessGameDao = chessGameDao;
     }
 
     public void run() {
-        outputView.printInitialMessage();
+        OutputView.printInitialMessage();
         Command command = repeatUntilNoException(this::startGame);
-        ChessBoard chessBoard = ChessBoardFactory.generate();
+        ChessBoard chessBoard = loadChessBoardOrSaveNewChessBoard();
+        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
         while (command.isPlaying()) {
-            outputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
             command = repeatUntilNoException(this::playTurn, chessBoard);
         }
     }
 
+    private ChessBoard loadChessBoardOrSaveNewChessBoard() {
+        Map<Square, Piece> pieces = chessBoardDao.findChessBoard();
+        if (pieces == null) {
+            ChessBoard chessBoard = ChessBoardFactory.generate();
+            chessBoardDao.saveChessBoard(chessBoard);
+            chessGameDao.saveChessGame(chessBoard.getTurn());
+            return chessBoard;
+        }
+        Turn turn = chessGameDao.findChessGame();
+        return new ChessBoard(pieces, turn);
+    }
+
     private Command startGame() {
-        CommandDto commandDto = inputView.readCommand();
+        CommandDto commandDto = InputView.readCommand();
         Command command = Command.from(commandDto.getCommand());
         command.validateCommandInStart();
         return command;
     }
 
     private Command playTurn(final ChessBoard chessBoard) {
-        CommandDto commandDto = inputView.readCommand();
+        CommandDto commandDto = InputView.readCommand();
         Command command = Command.from(commandDto.getCommand());
         command.validateCommandInPlaying();
-        if (command.isPlaying()) {
+        executeCommand(chessBoard, commandDto, command);
+        return confirmGameEnd(chessBoard, command);
+    }
+
+    private void executeCommand(final ChessBoard chessBoard, final CommandDto commandDto, final Command command) {
+        if (command.isMove()) {
             updateChessBoard(chessBoard, commandDto);
         }
-        return command;
+        if (command.isStatus()) {
+            OutputView.printScore(Side.WHITE.name(), chessBoard.calculateScore(Side.WHITE));
+            OutputView.printScore(Side.BLACK.name(), chessBoard.calculateScore(Side.BLACK));
+        }
     }
 
     private void updateChessBoard(final ChessBoard chessBoard, final CommandDto commandDto) {
@@ -51,14 +75,30 @@ public class ChessGameController {
         final Square to = Square.of(Rank.from(commandDto.getDestinationRank()), File.from(commandDto.getDestinationFile()));
         validateSameSquare(from, to);
         if (!chessBoard.canMove(from, to)) {
-            outputView.printInvalidMoveMessage();
+            OutputView.printInvalidMoveMessage();
+            OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
+            return;
         }
+        OutputView.printChessBoard(ChessBoardDto.of(chessBoard.getPieces()));
+        chessBoardDao.updateChessBoard(from, to, chessBoard.getPieces().get(to));
+        chessGameDao.updateChessGame(chessBoard.getTurn());
     }
 
     private void validateSameSquare(final Square from, final Square to) {
         if (from == to) {
             throw new IllegalArgumentException("같은 지점이 들어왔습니다.");
         }
+    }
+
+    private Command confirmGameEnd(final ChessBoard chessBoard, final Command command) {
+        List<String> aliveKings = chessBoard.findAliveKing();
+        if (aliveKings.size() == 1) {
+            OutputView.printWinner(aliveKings.get(0));
+            chessBoardDao.deleteChessBoard();
+            chessGameDao.deleteChessGame();
+            return Command.END;
+        }
+        return command;
     }
 
     private <T> T repeatUntilNoException(Supplier<T> supplier) {

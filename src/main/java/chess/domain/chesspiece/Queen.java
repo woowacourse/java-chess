@@ -12,7 +12,7 @@ public class Queen extends Piece {
         super(side, PieceInfo.QUEEN);
     }
 
-    public static Queen of(final Side side) {
+    public static Queen from(final Side side) {
         if (side == Side.BLACK) {
             return BLACK_QUEEN;
         }
@@ -22,5 +22,10 @@ public class Queen extends Piece {
     @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return isNotSameSide(piece) && (from.isStraight(to) || from.isDiagonal(to));
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

@@ -13,7 +13,9 @@ public abstract class Piece {
         this.pieceInfo = pieceInfo;
     }
 
-    public abstract boolean isMovable(Square from, Square to, Piece piece);
+    public abstract boolean isMovable(final Square from, final Square to, final Piece piece);
+
+    public abstract boolean isPawn();
 
     public boolean isNotSameSide(final Piece piece) {
         return this.side != piece.side;
@@ -36,10 +38,14 @@ public abstract class Piece {
     }
 
     public String getSide() {
-        return side.toString();
+        return side.name();
     }
 
     public String getName() {
         return pieceInfo.name();
+    }
+
+    public double addPieceScore(final double score) {
+        return score + pieceInfo.addScore(score);
     }
 }

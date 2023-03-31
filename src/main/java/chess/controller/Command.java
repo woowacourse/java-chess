@@ -1,10 +1,11 @@
 package chess.controller;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public enum Command {
     START("start"),
     MOVE("move"),
+    STATUS("status"),
     END("end");
 
     private final String code;
@@ -13,17 +14,11 @@ public enum Command {
         this.code = code;
     }
 
-    public static Command from(String code) {
-        if (Objects.equals(code, START.code)) {
-            return START;
-        }
-        if (Objects.equals(code, MOVE.code)) {
-            return MOVE;
-        }
-        if (Objects.equals(code, END.code)) {
-            return END;
-        }
-        throw new IllegalArgumentException("잘못된 명령어입니다.");
+    public static Command from(final String code) {
+        return Arrays.stream(Command.values())
+                .filter(command -> command.code.equals(code))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
 
     public void validateCommandInStart() {
@@ -34,7 +29,7 @@ public enum Command {
     }
 
     public void validateCommandInPlaying() {
-        if (this == MOVE || this == END) {
+        if (this == MOVE || this == STATUS || this == END) {
             return;
         }
         if (this == START) {
@@ -44,5 +39,13 @@ public enum Command {
 
     public boolean isPlaying() {
         return this != Command.END;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
+
+    public boolean isStatus() {
+        return this == STATUS;
     }
 }

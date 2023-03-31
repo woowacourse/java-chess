@@ -11,7 +11,7 @@ public class Rook extends Piece {
         super(side, PieceInfo.ROOK);
     }
 
-    public static Rook of(final Side side) {
+    public static Rook from(final Side side) {
         if (side == Side.BLACK) {
             return BLACK_ROOK;
         }
@@ -21,5 +21,10 @@ public class Rook extends Piece {
     @Override
     public boolean isMovable(final Square from, final Square to, final Piece piece) {
         return isNotSameSide(piece) && from.isStraight(to);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }
