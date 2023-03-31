@@ -1,15 +1,23 @@
 package chess.domain;
 
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
+
+import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
     private static final int POSITION_SIZE = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    public static final int PAWN_SCORE = 1;
+    public static final double PAWN_SCORE_BY_SAME_FILE = 0.5;
 
     private final Board board;
     private Team team;
@@ -34,7 +42,7 @@ public class ChessGame {
 
         File file = File.findFileBy(position.get(FILE_INDEX));
         Rank rank = Rank.findRankBy(position.get(RANK_INDEX));
-        return Square.of(file, rank);
+        return Squares.of(file, rank);
     }
 
     private void validatePosition(final List<String> position) {
@@ -44,9 +52,42 @@ public class ChessGame {
     }
 
     private void validateSameTeam(final Square source) {
-        if (!board.isSameColor(source, team)) {
+        if (!board.isSameTeam(source, team)) {
             throw new IllegalArgumentException("다른 색 말을 움직여 주세요.");
         }
+    }
+
+    public double calculateScoreBy(List<Piece> pieces, List<Integer> counts) {
+        return calculateScoreByPawn(counts) + calculateScoreByPieceExceptPawn(pieces);
+    }
+
+    private double calculateScoreByPieceExceptPawn(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::score)
+                .sum();
+    }
+
+    private double calculateScoreByPawn(List<Integer> counts) {
+        return counts.stream()
+                .mapToDouble(this::calculatePawnScoreByCount)
+                .sum();
+    }
+
+    private double calculatePawnScoreByCount(final Integer count) {
+        if (count > PAWN_SCORE) {
+            return PAWN_SCORE_BY_SAME_FILE * count;
+        }
+        return count;
+    }
+
+    public List<Team> determineWinningTeam(Map<Team, Double> scores) {
+        if (scores.get(BLACK) > scores.get(WHITE)) {
+            return List.of(BLACK);
+        }
+        if (scores.get(BLACK) < scores.get(WHITE)) {
+            return List.of(WHITE);
+        }
+        return List.of(BLACK, WHITE);
     }
 
     private void changeTeam() {
@@ -55,5 +96,9 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Team team() {
+        return team;
     }
 }

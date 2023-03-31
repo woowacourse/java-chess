@@ -6,19 +6,15 @@ public class Square {
     private final File file;
     private final Rank rank;
 
-    private Square(final File file, final Rank rank) {
+    Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public static Square of(final File file, final Rank rank) {
-        return new Square(file, rank);
     }
 
     public Square next(int fileDirection, int rankDirection) {
         File newFile = file.next(fileDirection);
         Rank newRank = rank.next(rankDirection);
-        return Squares.getSquare(newFile, newRank);
+        return Squares.of(newFile, newRank);
     }
 
     @Override
@@ -38,11 +34,11 @@ public class Square {
         return Objects.hash(file, rank);
     }
 
-    public File getFile() {
+    public File file() {
         return file;
     }
 
-    public Rank getRank() {
+    public Rank rank() {
         return rank;
     }
 }

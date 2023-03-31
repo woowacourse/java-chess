@@ -10,6 +10,6 @@ class SquareTest {
     @DisplayName("Square를 생성한다.")
     @Test
     void createSquare() {
-        assertDoesNotThrow(() -> Square.of(File.A, Rank.ONE));
+        assertDoesNotThrow(() -> Squares.of(File.A, Rank.ONE));
     }
 }

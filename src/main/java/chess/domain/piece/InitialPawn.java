@@ -16,7 +16,7 @@ public final class InitialPawn extends Piece {
     private static final int MOVE_LIMIT = 2;
     public static final int ZERO = 0;
 
-    public InitialPawn(final Team team) {
+    InitialPawn(final Team team) {
         super(team, INITIAL_PAWN);
     }
 
@@ -58,11 +58,11 @@ public final class InitialPawn extends Piece {
     }
 
     private void validateAdvance(final int rankInterval) {
-        if (this.getTeam() == WHITE && rankInterval < ZERO) {
+        if (this.team() == WHITE && rankInterval < ZERO) {
             throw new IllegalArgumentException("화이트 폰은 위로만 움직일 수 있습니다.");
         }
 
-        if (this.getTeam() == BLACK && rankInterval > ZERO) {
+        if (this.team() == BLACK && rankInterval > ZERO) {
             throw new IllegalArgumentException("블랙 폰은 아래로만 움직일 수 있습니다.");
         }
     }

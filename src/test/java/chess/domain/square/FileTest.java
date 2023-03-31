@@ -8,6 +8,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class FileTest {
+
+    @ParameterizedTest(name = "File 을 생성한다.")
+    @CsvSource({"a,A","b,B","c,C"})
+    void findFileBy(String input, File file) {
+        assertThat(File.findFileBy(input)).isEqualTo(file);
+    }
+
     @ParameterizedTest(name = "현재 칸과 이동할 칸의 File 차를 계산한다.")
     @CsvSource({"a,b,-1", "a,h,-7"})
     void calculateFileInterval(String src, String dst, int interval) {

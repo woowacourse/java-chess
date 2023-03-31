@@ -2,14 +2,17 @@ package chess.domain;
 
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KNIGHT;
-import static java.lang.Math.*;
+import static chess.domain.piece.PieceType.PAWN;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +20,16 @@ public class Board {
     private final Map<Square, Piece> board;
 
     public Board() {
-        this.board = Pieces.init();
+        this(Pieces.init());
     }
 
-    public boolean isSameColor(final Square source, final Team team) {
+    public Board(Map<Square, Piece> board) {
+        this.board = new HashMap<>(board);
+    }
+
+    public boolean isSameTeam(final Square source, final Team team) {
         Piece piece = findPieceBy(source);
-        return piece.getTeam() == team;
+        return piece.team() == team;
     }
 
     public void move(final Square source, final Square target) {
@@ -39,7 +46,7 @@ public class Board {
     private void updateSquare(final Square source, final Square target) {
         Piece piece = findPieceBy(source);
         if (piece.isSameType(INITIAL_PAWN)) {
-            piece = new Pawn(piece.getTeam());
+            piece = Pieces.of(piece.team(), PAWN);
         }
         board.put(target, piece);
         board.remove(source);
@@ -47,8 +54,8 @@ public class Board {
 
     private boolean canMove(final Square source, final Square target) {
         final Piece piece = findPieceBy(source);
-        final int fileInterval = File.calculate(source.getFile(), target.getFile());
-        final int rankInterval = Rank.calculate(source.getRank(), target.getRank());
+        final int fileInterval = File.calculate(source.file(), target.file());
+        final int rankInterval = Rank.calculate(source.rank(), target.rank());
         piece.canMove(fileInterval, rankInterval, isEnemy(target, piece));
         if (piece.isSameType(KNIGHT)) {
             return !board.containsKey(target);
@@ -58,7 +65,7 @@ public class Board {
 
     private boolean isEnemy(final Square target, final Piece piece) {
         if (board.containsKey(target)) {
-            return !isSameTeam(piece, board.get(target));
+            return !isSameTeam(target, piece.team());
         }
         return false;
     }
@@ -89,11 +96,7 @@ public class Board {
 
     private boolean canMoveToNext(final Square source, final Square nextSquare) {
         Piece piece = board.get(source);
-        return !(board.containsKey(nextSquare) && isSameTeam(piece, board.get(nextSquare)));
-    }
-
-    private boolean isSameTeam(final Piece piece, final Piece nextPiece) {
-        return nextPiece.getTeam() == piece.getTeam();
+        return !(board.containsKey(nextSquare) && isSameTeam(nextSquare, piece.team()));
     }
 
     private int getMoveDirection(final int interval) {

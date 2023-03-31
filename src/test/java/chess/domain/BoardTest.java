@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판을 생성한다.")
     void createBoard() {
-        assertDoesNotThrow(Board::new);
+        assertDoesNotThrow(() -> new Board());
     }
 
     @Test
@@ -80,14 +81,14 @@ class BoardTest {
 
     @ParameterizedTest(name = "source 위치에 있는 말의 색이 현재 차례의 팀의 색과 같은지 확인한다.")
     @CsvSource({"a2,WHITE,true", "b7,BLACK,true", "c8,WHITE,false"})
-    void isSameColor(String source, Team team, boolean expected) {
-        assertThat(board.isSameColor(of(source), team)).isEqualTo(expected);
+    void isSameTeam(String source, Team team, boolean expected) {
+        assertThat(board.isSameTeam(of(source), team)).isEqualTo(expected);
     }
 
     private Square of(String input) {
         File file = File.findFileBy(input.split("")[0]);
         Rank rank = Rank.findRankBy(input.split("")[1]);
 
-        return Square.of(file, rank);
+        return Squares.of(file, rank);
     }
 }

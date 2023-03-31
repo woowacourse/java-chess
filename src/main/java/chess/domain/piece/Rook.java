@@ -8,7 +8,7 @@ import chess.domain.Team;
 import chess.domain.movement.Movement;
 
 public final class Rook extends Piece {
-    public Rook(final Team team) {
+    Rook(final Team team) {
         super(team, ROOK);
     }
 

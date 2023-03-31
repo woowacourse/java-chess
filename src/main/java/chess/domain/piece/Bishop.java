@@ -8,7 +8,7 @@ import chess.domain.Team;
 import chess.domain.movement.Movement;
 
 public final class Bishop extends Piece {
-    public Bishop(final Team team) {
+    Bishop(final Team team) {
         super(team, BISHOP);
     }
 

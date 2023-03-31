@@ -9,7 +9,7 @@ import chess.domain.movement.Movement;
 
 public final class King extends Piece {
 
-    public King(final Team team) {
+    King(final Team team) {
         super(team, KING);
     }
 

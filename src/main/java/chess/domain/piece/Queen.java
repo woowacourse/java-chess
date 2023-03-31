@@ -11,7 +11,7 @@ import chess.domain.movement.Movement;
 import java.util.List;
 
 public final class Queen extends Piece {
-    public Queen(final Team team) {
+    Queen(final Team team) {
         super(team, QUEEN);
     }
 

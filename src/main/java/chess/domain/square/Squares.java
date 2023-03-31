@@ -20,13 +20,13 @@ public class Squares {
 
     private static void addSquare(final Rank rank) {
         for (File file : File.values()) {
-            squares.add(Square.of(file, rank));
+            squares.add(new Square(file, rank));
         }
     }
 
-    public static Square getSquare(final File file, final Rank rank) {
-        return squares.stream().filter(square -> square.getFile() == file)
-                .filter(square -> square.getRank() == rank)
+    public static Square of(final File file, final Rank rank) {
+        return squares.stream().filter(square -> square.file() == file)
+                .filter(square -> square.rank() == rank)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 위치가 아닙니다."));
     }
