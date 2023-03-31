@@ -28,10 +28,11 @@ public class Board {
     }
 
     private void validateMoveRequest(Position origin, Position destination) {
-        if (piecePosition.get(origin) == EMPTY_PIECE) {
+        Piece piece = piecePosition.get(origin);
+        if (piece == EMPTY_PIECE) {
             throw new ChessGameException("이동할 말이 없습니다.");
         }
-        if (piecePosition.get(origin).isNotSameColor(turn.getCurrentTurn())) {
+        if (piece.isNotSameColor(turn.getCurrentTurn())) {
             throw new ChessGameException("상대 말을 움직일 수 없습니다.");
         }
         checkPath(origin, destination);
