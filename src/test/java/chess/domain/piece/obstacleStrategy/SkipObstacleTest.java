@@ -14,7 +14,7 @@ class SkipObstacleTest {
     @DisplayName("장애물을 체크할 필요가 없으므로 빈 위치 목록을 반환한다.")
     void skipObstacleTest() {
         ObstacleStrategy obstacleStrategy = new SkipObstacle();
-        List<Position> positions = obstacleStrategy.obstacleCheckingPositions(new Position(1, 0), new Position(2, 2));
+        List<Position> positions = obstacleStrategy.getObstacleCheckingPositions(new Position(1, 0), new Position(2, 2));
 
         assertThat(positions.size()).isEqualTo(0);
     }

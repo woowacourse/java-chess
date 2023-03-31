@@ -1,14 +1,18 @@
 package chess.controller.dto;
 
-import chess.controller.Command;
+import chess.controller.command.Command;
+import chess.controller.command.CommandType;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
-public class InputRenderer {
+public final class InputRenderer {
 
+    private static final Pattern NUMBER_REGEX = Pattern.compile("^-?[0-9]+$");
+    private static final int COMMAND_TYPE_INDEX = 0;
     private static final Map<String, Integer> FILE_TO_COLUMN = new HashMap<>();
     private static final Map<String, Integer> RANK_TO_ROW = new HashMap<>();
 
@@ -32,34 +36,49 @@ public class InputRenderer {
         RANK_TO_ROW.put("8", 7);
     }
 
-    public static CommandDto toCommandDto(final String string) {
-        Command command = toCommand(string);
-        if (command == Command.START || command == Command.END) {
-            return new CommandDto(command);
+    public static Command toCommand(final List<String> strings) {
+        CommandType commandType = toCommandType(strings.get(COMMAND_TYPE_INDEX));
+        if (hasOnlyCommandTypeCase(commandType)) {
+            validateArgumentCount(strings, 1);
+            return new Command(commandType);
         }
-
-        List<String> commandAndPositions = Arrays.asList(string.split(" "));
-        if (commandAndPositions.size() != 3) {
-            throw new IllegalArgumentException("올바른 명령어를 입력해주세요. 예. move b2 b3");
+        if (commandType == CommandType.LOAD) {
+            validateArgumentCount(strings, 2);
+            String argument = strings.get(1);
+            validateNumber(argument);
+            validateNotBigNumber(argument);
+            return new Command(commandType, Integer.parseInt(argument));
         }
-        List<Integer> source = toColumnAndRow(commandAndPositions.get(1));
-        List<Integer> target = toColumnAndRow(commandAndPositions.get(2));
-        return new CommandDto(command, source, target);
+        validateArgumentCount(strings, 3);
+        List<Integer> arguments = new ArrayList<>();
+        arguments.addAll(toColumnAndRow(strings.get(1)));
+        arguments.addAll(toColumnAndRow(strings.get(2)));
+        return new Command(commandType, arguments);
     }
 
-    private static Command toCommand(final String string) {
+    private static void validateArgumentCount(List<String> arguments, int count) {
+        if (arguments.size() != count) {
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
+        }
+    }
+
+    private static boolean hasOnlyCommandTypeCase(CommandType commandType) {
+        return commandType != CommandType.MOVE && commandType != CommandType.LOAD;
+    }
+
+    private static CommandType toCommandType(final String string) {
         try {
-            return Command.valueOf(getUpperCasedFirstWord(string));
+            return CommandType.valueOf(string.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
     }
 
-    private static String getUpperCasedFirstWord(String string) {
-        return string.split(" ")[0].toUpperCase();
-    }
+    private static List<Integer> toColumnAndRow(final String rawPosition) {
+        if (rawPosition.length() != 2) {
+            throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
+        }
 
-    private static List<Integer> toColumnAndRow(String rawPosition) {
         String file = String.valueOf(rawPosition.charAt(0));
         String rank = String.valueOf(rawPosition.charAt(1));
         if (!FILE_TO_COLUMN.containsKey(file)) {
@@ -69,5 +88,19 @@ public class InputRenderer {
             throw new IllegalArgumentException("유효하지 않은 Rank 입니다.");
         }
         return List.of(FILE_TO_COLUMN.get(file), RANK_TO_ROW.get(rank));
+    }
+
+    private static void validateNumber(String input) {
+        if (!NUMBER_REGEX.matcher(input).matches()) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
+
+    private static void validateNotBigNumber(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("서비스 규모가 작아서 큰 단위의 게임방은 지원하지 않습니다.");
+        }
     }
 }

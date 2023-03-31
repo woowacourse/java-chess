@@ -15,7 +15,7 @@ class BlockedByObstacleTest {
     @DisplayName("이동 경로의 장애물 확인이 필요한 위치들을 반환한다.")
     void blockedByObstacleTest() {
         ObstacleStrategy obstacleStrategy = new BlockedByObstacle();
-        List<Position> positions = obstacleStrategy.obstacleCheckingPositions(new Position(1, 0), new Position(5, 0));
+        List<Position> positions = obstacleStrategy.getObstacleCheckingPositions(new Position(1, 0), new Position(5, 0));
 
         assertThat(positions).containsExactly(new Position(2, 0), new Position(3, 0), new Position(4, 0));
     }

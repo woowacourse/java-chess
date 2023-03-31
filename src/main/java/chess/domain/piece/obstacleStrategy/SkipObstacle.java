@@ -5,10 +5,10 @@ import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
 
-public class SkipObstacle implements ObstacleStrategy {
+public final class SkipObstacle implements ObstacleStrategy {
 
     @Override
-    public List<Position> obstacleCheckingPositions(Position from, Position to) {
+    public List<Position> getObstacleCheckingPositions(final Position from, final Position to) {
         return Collections.emptyList();
     }
 }

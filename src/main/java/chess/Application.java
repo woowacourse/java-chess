@@ -1,12 +1,14 @@
 package chess;
 
-import chess.controller.ChessController;
 import chess.controller.ErrorController;
+import chess.controller.FrontController;
+import chess.dao.DBRoomDao;
+import chess.service.RoomConnectionService;
 
-public class Application {
+public final class Application {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new ErrorController());
-        chessController.run();
+        FrontController frontController = new FrontController(new ErrorController(), new RoomConnectionService(new DBRoomDao()));
+        frontController.run();
     }
 }

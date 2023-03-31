@@ -2,7 +2,7 @@ package chess.controller.dto;
 
 import java.util.List;
 
-public class BoardDto {
+public final class BoardDto {
 
     private final List<List<String>> board;
 

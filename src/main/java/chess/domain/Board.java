@@ -2,43 +2,60 @@ package chess.domain;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.NoneEmptyPiece;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.position.RelativePosition;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class Board {
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.PAWN;
+
+public final class Board implements BoardProvider {
 
     private static final int LINE_SIZE = 8;
+    public static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> board;
 
-    public Board(Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public void movePiece(Position from, Position to) {
+    public void movePiece(final Position from, final Position to) {
         validateSourceEmpty(from);
         validateObstacleInPath(from, to);
 
         NoneEmptyPiece source = (NoneEmptyPiece) board.get(from);
         Piece target = board.get(to);
         if (source.isMobile(RelativePosition.of(from, to), target)) {
-            board.put(to, source);
-            board.put(from, new EmptyPiece());
+            board.replace(to, source);
+            board.replace(from, new EmptyPiece());
+            checkPromotion(to, source);
         }
     }
 
-    private void validateSourceEmpty(Position from) {
+    private void checkPromotion(final Position position, final Piece piece) {
+        if (!piece.isPieceType(PAWN)) {
+            return;
+        }
+        Piece promotionResult = ((Pawn) piece).getPromotionResult(position);
+        if (!promotionResult.isPieceType(PAWN)) {
+            board.replace(position, promotionResult);
+        }
+    }
+
+    private void validateSourceEmpty(final Position from) {
         if (board.get(from).isEmpty()) {
             throw new IllegalArgumentException("조작할 수 있는 말이 없습니다.");
         }
     }
 
-    private void validateObstacleInPath(Position from, Position to) {
+    private void validateObstacleInPath(final Position from, final Position to) {
         NoneEmptyPiece source = (NoneEmptyPiece) board.get(from);
         List<Position> obstaclePositionsInPath = source.getObstacleCheckingPositions(from, to);
 
@@ -47,43 +64,63 @@ public class Board {
         }
     }
 
-    private boolean hasObstacle(List<Position> obstaclePositionsInPath) {
+    private boolean hasObstacle(final List<Position> obstaclePositionsInPath) {
         return obstaclePositionsInPath.stream()
                 .anyMatch(position -> !board.get(position).isEmpty());
     }
 
-    private List<List<Piece>> sortBoard() {
-        List<Position> positions = sortPosition();
-        List<List<Piece>> sortedBoard = new ArrayList<>();
+    public boolean isKingDead(final Team team) {
+        return board.values()
+                .stream()
+                .noneMatch(piece -> piece.isPieceType(KING) && piece.isSameTeam(team));
+    }
+
+    public boolean isTeamInPositionMatched(final Position position, final Team expected) {
+        return board.get(position).isSameTeam(expected);
+    }
+
+    private long countPawnsInSameColumn(final int column, final Team team) {
+        long pawnCount = board.keySet()
+                .stream()
+                .filter(position -> position.isColumn(column))
+                .map(board::get)
+                .filter(piece -> piece.isPieceType(PAWN) && piece.isSameTeam(team))
+                .count();
+
+        if (pawnCount > 1) {
+            return pawnCount;
+        }
+        return 0;
+    }
+
+    public List<Double> getScores(final Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isSameTeam(team))
+                .filter(piece -> !piece.isPieceType(KING))
+                .map(Piece::getScore)
+                .collect(Collectors.toList());
+    }
+
+    public double getMinusScore(final Team team) {
+        long pawnCount = 0;
         for (int i = 0; i < LINE_SIZE; i++) {
-            List<Piece> line = sortLine(positions, i);
-            sortedBoard.add(line);
+            pawnCount += countPawnsInSameColumn(i, team);
         }
-        return sortedBoard;
+        return pawnCount * PAWN_MINUS_SCORE;
     }
 
-    private List<Piece> sortLine(List<Position> positions, int i) {
-        List<Piece> line = new ArrayList<>();
-        for (int j = 0; j < LINE_SIZE; j++) {
-            Piece piece = board.get(positions.get(j + LINE_SIZE * i));
-            line.add(piece);
-        }
-        return line;
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 
-    private List<Position> sortPosition() {
-        List<Position> positions = new ArrayList<>(board.keySet());
-        positions.sort((p1, p2) -> {
-            if (p1.getRow() == p2.getRow()) {
-                return p1.getColumn() - p2.getColumn();
-            }
-            return p2.getRow() - p1.getRow();
-        });
-        return positions;
+    @Override
+    public List<Piece> getPieces() {
+        return List.copyOf(board.values());
     }
 
-    public List<List<Piece>> getBoard() {
-        return sortBoard();
+    @Override
+    public int getLineSize() {
+        return LINE_SIZE;
     }
-
 }

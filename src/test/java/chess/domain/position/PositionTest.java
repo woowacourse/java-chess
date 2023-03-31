@@ -31,4 +31,18 @@ class PositionTest {
         Position position = new Position(1, 5);
         assertThat(position.move(new RelativePosition(3, -2))).isEqualTo(new Position(4, 3));
     }
+
+    @Test
+    @DisplayName("column 이 주어진 값과 일치하면 true 를 반환한다.")
+    void isColumnTest1() {
+        Position position1 = new Position(1, 5);
+        assertThat(position1.isColumn(1)).isTrue();
+    }
+
+    @Test
+    @DisplayName("column 이 주어진 값과 일치하지 않으면 false 를 판단한다.")
+    void isColumnTest2() {
+        Position position1 = new Position(1, 5);
+        assertThat(position1.isColumn(4)).isFalse();
+    }
 }

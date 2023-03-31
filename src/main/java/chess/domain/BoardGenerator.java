@@ -8,56 +8,63 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class BoardGenerator {
-
-    private static final int BLACK_PAWN_INITIAL_ROW = 6;
-    private static final int WHITE_PAWN_INITIAL_ROW = 1;
+public final class BoardGenerator {
 
     private static final int BLACK_EDGE_ROW = 7;
-    private static final int WHITE_EDGE_ROW = 0;
-    private static final int EMPTY_START_ROW = 2;
+    private static final int BLACK_PAWN_INITIAL_ROW = 6;
     private static final int EMPTY_END_ROW = 5;
-
+    private static final int EMPTY_START_ROW = 2;
+    private static final int WHITE_PAWN_INITIAL_ROW = 1;
+    private static final int WHITE_EDGE_ROW = 0;
     private static final int LINE_SIZE = 8;
 
 
     public static Board createBoard() {
-        HashMap<Position, Piece> board = new HashMap<>();
-        initializePawns(board, Team.WHITE, WHITE_PAWN_INITIAL_ROW);
-        initializePawns(board, Team.BLACK, BLACK_PAWN_INITIAL_ROW);
-        initializePiecesOfEdgeLine(board, Team.WHITE, WHITE_EDGE_ROW);
-        initializePiecesOfEdgeLine(board, Team.BLACK, BLACK_EDGE_ROW);
-        initializeEmptyPieces(board);
+        Map<Position, Piece> board = new TreeMap<>();
+        board.putAll(initializePiecesOfEdgeLine(Team.BLACK, BLACK_EDGE_ROW));
+        board.putAll(initializePawns(Team.BLACK, BLACK_PAWN_INITIAL_ROW));
+        board.putAll(initializeEmptyPieces());
+        board.putAll(initializePawns(Team.WHITE, WHITE_PAWN_INITIAL_ROW));
+        board.putAll(initializePiecesOfEdgeLine(Team.WHITE, WHITE_EDGE_ROW));
         return new Board(board);
     }
 
-    private static void initializeEmptyPieces(HashMap<Position, Piece> board) {
-        for (int i = 0; i < LINE_SIZE; i++) {
-            for (int j = EMPTY_START_ROW; j <= EMPTY_END_ROW; j++) {
-                board.put(new Position(i, j), new EmptyPiece());
+    private static Map<Position, Piece> initializeEmptyPieces() {
+        Map<Position, Piece> positionsAndPieces = new LinkedHashMap<>();
+        for (int row = EMPTY_END_ROW; row >= EMPTY_START_ROW; row--) {
+            for (int column = 0; column < LINE_SIZE; column++) {
+                positionsAndPieces.put(new Position(column, row), new EmptyPiece());
             }
         }
+        return positionsAndPieces;
     }
 
-    private static void initializePiecesOfEdgeLine(HashMap<Position, Piece> board, Team team, int row) {
+    private static Map<Position, Piece> initializePiecesOfEdgeLine(final Team team, final int row) {
+        Map<Position, Piece> positionsAndPieces = new LinkedHashMap<>();
         List<Piece> pieces = new ArrayList<>(
                 List.of(Rook.from(team), Knight.from(team), Bishop.from(team), Queen.from(team),
                         King.from(team), Bishop.from(team), Knight.from(team), Rook.from(team))
         );
-        for (int i = 0; i < LINE_SIZE; i++) {
-            board.put(new Position(i, row), pieces.get(i));
+        for (int column = 0; column < LINE_SIZE; column++) {
+            positionsAndPieces.put(new Position(column, row), pieces.get(column));
         }
+        return positionsAndPieces;
     }
 
-    private static void initializePawns(HashMap<Position, Piece> board, Team team, int row) {
-        for (int i = 0; i < LINE_SIZE; i++) {
-            board.put(new Position(i, row), Pawn.from(team));
+    private static Map<Position, Piece> initializePawns(final Team team, final int row) {
+        Map<Position, Piece> positionsAndPieces = new LinkedHashMap<>();
+        for (int column = 0; column < LINE_SIZE; column++) {
+            positionsAndPieces.put(new Position(column, row), Pawn.from(team));
         }
+        return positionsAndPieces;
     }
 }

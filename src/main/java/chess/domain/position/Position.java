@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-public class Position {
+public final class Position implements Comparable<Position> {
 
     private static final int MIN_COORDINATE = 0;
     private static final int MAX_COORDINATE = 7;
@@ -20,11 +20,11 @@ public class Position {
         }
     }
 
-    private static boolean isInvalidColum(final int column) {
+    private boolean isInvalidColum(final int column) {
         return MIN_COORDINATE > column || MAX_COORDINATE < column;
     }
 
-    private static boolean isInvalidRow(final int row) {
+    private boolean isInvalidRow(final int row) {
         return MIN_COORDINATE > row || MAX_COORDINATE < row;
     }
 
@@ -33,6 +33,14 @@ public class Position {
         int column = this.column + relativePosition.getX();
         int row = this.row + relativePosition.getY();
         return new Position(column, row);
+    }
+
+    public boolean isColumn(final int column) {
+        return this.column == column;
+    }
+
+    public boolean isRow(final int row) {
+        return this.row == row;
     }
 
     public int getColumn() {
@@ -63,4 +71,13 @@ public class Position {
         result = 31 * result + row;
         return result;
     }
+
+    @Override
+    public int compareTo(Position o) {
+        if (this.row == o.row) {
+            return this.column - o.column;
+        }
+        return o.row - this.row;
+    }
+
 }

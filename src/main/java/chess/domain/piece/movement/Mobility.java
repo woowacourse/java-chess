@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.piece.movement;
 
 public enum Mobility {
     ONCE,

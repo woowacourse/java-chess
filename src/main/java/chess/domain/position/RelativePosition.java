@@ -3,7 +3,7 @@ package chess.domain.position;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class RelativePosition {
+public final class RelativePosition {
 
     private final int x;
     private final int y;
@@ -37,7 +37,7 @@ public class RelativePosition {
         return new RelativePosition(x / gcd, y / gcd);
     }
 
-    private int getGreatestCommonDivisor(int x, int y) {
+    private int getGreatestCommonDivisor(final int x, final int y) {
         BigInteger bigX = BigInteger.valueOf(x);
         BigInteger bigY = BigInteger.valueOf(y);
         return bigX.gcd(bigY).intValue();

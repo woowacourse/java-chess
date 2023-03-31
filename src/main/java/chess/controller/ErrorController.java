@@ -4,9 +4,9 @@ import chess.view.OutputView;
 
 import java.util.function.Supplier;
 
-public class ErrorController {
+public final class ErrorController {
 
-    public <T> T RetryIfThrowsException(final Supplier<T> strategy) {
+    public <T> T retryIfThrowsException(final Supplier<T> strategy) {
         T result = tryCatchStrategy(strategy);
         while (result == null) {
             result = tryCatchStrategy(strategy);
@@ -14,11 +14,10 @@ public class ErrorController {
         return result;
     }
 
-    public void tryCatchStrategy(final Runnable runnable) {
-        try {
-            runnable.run();
-        } catch (IllegalArgumentException exception) {
-            OutputView.printErrorMessage(exception.getMessage());
+    public void retryIfThrowsException(final Runnable runnable) {
+        boolean isSuccess = tryCatchStrategy(runnable);
+        while (!isSuccess) {
+            isSuccess = tryCatchStrategy(runnable);
         }
     }
 
@@ -29,6 +28,16 @@ public class ErrorController {
             OutputView.printErrorMessage(exception.getMessage());
         }
         return null;
+    }
+
+    public boolean tryCatchStrategy(final Runnable runnable) {
+        try {
+            runnable.run();
+            return true;
+        } catch (IllegalArgumentException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            return false;
+        }
     }
 
 }
