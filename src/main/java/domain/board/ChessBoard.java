@@ -86,7 +86,7 @@ public final class ChessBoard {
     private List<Piece> collectPiecesInPath(final PieceMove pieceMove) {
         final List<Piece> piecesInPath = new ArrayList<>();
         final Location end = pieceMove.getEnd();
-        final Direction direction = Direction.find(pieceMove);
+        final Direction direction = Direction.find(pieceMove.getColumnDiff(), pieceMove.getRowDiff());
         Location current = pieceMove.getStart();
         while (!current.equals(end)) {
             piecesInPath.add(board.get(current));

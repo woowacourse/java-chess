@@ -19,4 +19,12 @@ public final class PieceMove {
     public Location getEnd() {
         return end;
     }
+
+    public int getRowDiff() {
+        return start.getRow() - end.getRow();
+    }
+
+    public int getColumnDiff() {
+        return start.getCol() - end.getCol();
+    }
 }

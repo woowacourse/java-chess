@@ -1,10 +1,10 @@
 package domain.path.pathValidtor.validateTarget;
 
+import java.util.List;
 import domain.board.piece.Camp;
 import domain.board.piece.Piece;
 import domain.path.Path;
 import domain.path.direction.Direction;
-import java.util.List;
 
 public final class PawnMoveValidation implements ValidateTarget {
 
@@ -34,22 +34,22 @@ public final class PawnMoveValidation implements ValidateTarget {
 
     private boolean isWhiteAttack(final Path path) {
         final List<Direction> whiteAttackDirections = List.of(
-            Direction.LEFT_UP,
-            Direction.RIGHT_UP
+                Direction.LEFT_UP,
+                Direction.RIGHT_UP
         );
         return whiteAttackDirections.contains(path.getDirection())
-            && path.getMoveCount() == NORMAL_MOVE_COUNT
-            && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.BLACK;
+                && path.getMoveCount() == NORMAL_MOVE_COUNT
+                && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.BLACK;
     }
 
     private boolean isBlackAttack(final Path path) {
         final List<Direction> blackAttackDirections = List.of(
-            Direction.LEFT_DOWN,
-            Direction.RIGHT_DOWN
+                Direction.LEFT_DOWN,
+                Direction.RIGHT_DOWN
         );
         return blackAttackDirections.contains(path.getDirection())
-            && path.getMoveCount() == NORMAL_MOVE_COUNT
-            && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.WHITE;
+                && path.getMoveCount() == NORMAL_MOVE_COUNT
+                && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.WHITE;
     }
 
 
@@ -71,15 +71,15 @@ public final class PawnMoveValidation implements ValidateTarget {
 
     private static boolean isWhiteNormalMove(final Path path) {
         return path.getDirection() == Direction.UP
-            && path.getMoveCount() == NORMAL_MOVE_COUNT
-            && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.NONE;
+                && path.getMoveCount() == NORMAL_MOVE_COUNT
+                && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.NONE;
     }
 
     private static boolean isWhiteInitialMove(final Path path) {
         return path.getStartLocation().getRow() == WHITE_PAWN_INITIAL_ROW
-            && path.getDirection() == Direction.UP
-            && path.getMoveCount() == INITIAL_BONUS_MOVE_COUNT
-            && path.getPiecesInPath().get(INITIAL_BONUS_MOVE_COUNT).getCamp() == Camp.NONE;
+                && path.getDirection() == Direction.UP
+                && path.getMoveCount() == INITIAL_BONUS_MOVE_COUNT
+                && path.getPiecesInPath().get(INITIAL_BONUS_MOVE_COUNT).getCamp() == Camp.NONE;
     }
 
     private boolean isBlackMove(final Path path) {
@@ -88,14 +88,14 @@ public final class PawnMoveValidation implements ValidateTarget {
 
     private static boolean isBlackNormalMove(final Path path) {
         return path.getDirection() == Direction.DOWN
-            && path.getMoveCount() == NORMAL_MOVE_COUNT
-            && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.NONE;
+                && path.getMoveCount() == NORMAL_MOVE_COUNT
+                && path.getPiecesInPath().get(NORMAL_MOVE_COUNT).getCamp() == Camp.NONE;
     }
 
     private static boolean isBlackInitialMove(final Path path) {
         return path.getStartLocation().getRow() == BLACK_PAWN_INITIAL_ROW
-            && path.getDirection() == Direction.DOWN
-            && path.getMoveCount() == INITIAL_BONUS_MOVE_COUNT
-            && path.getPiecesInPath().get(INITIAL_BONUS_MOVE_COUNT).getCamp() == Camp.NONE;
+                && path.getDirection() == Direction.DOWN
+                && path.getMoveCount() == INITIAL_BONUS_MOVE_COUNT
+                && path.getPiecesInPath().get(INITIAL_BONUS_MOVE_COUNT).getCamp() == Camp.NONE;
     }
 }

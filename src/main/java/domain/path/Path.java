@@ -1,9 +1,10 @@
 package domain.path;
 
+import java.util.List;
+
 import domain.board.piece.Piece;
 import domain.path.direction.Direction;
 import domain.path.location.Location;
-import java.util.List;
 
 public final class Path {
 
@@ -24,7 +25,7 @@ public final class Path {
     }
 
     public Direction getDirection() {
-        return Direction.find(pieceMove);
+        return Direction.find(pieceMove.getColumnDiff(), pieceMove.getRowDiff());
     }
 
     public List<Piece> getPiecesInPath() {
@@ -34,8 +35,8 @@ public final class Path {
     @Override
     public String toString() {
         return "Path{" +
-            "pieceMove=" + pieceMove +
-            ", piecesInPath=" + piecesInPath +
-            '}';
+                "pieceMove=" + pieceMove +
+                ", piecesInPath=" + piecesInPath +
+                '}';
     }
 }

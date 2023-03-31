@@ -1,7 +1,7 @@
 package domain.path.location;
 
-import domain.path.direction.Direction;
 import java.util.Objects;
+import domain.path.direction.Direction;
 
 public final class Location {
 
@@ -17,38 +17,10 @@ public final class Location {
         return new Location(row, column);
     }
 
-    public boolean isSameCol(final Location location) {
-        if (column.getValue() == location.getCol()) {
-            return row.getValue() != location.getRow();
-        }
-        return false;
-    }
-
-    public boolean isSameRow(final Location location) {
-        if (row.getValue() == location.getRow()) {
-            return column.getValue() != location.getCol();
-        }
-        return false;
-    }
-
-    public boolean isDiagonal(final Location location) {
-        final int columnDifference = Math.abs(column.getValue() - location.getCol());
-        final int rowDifference = Math.abs(row.getValue() - location.getRow());
-        return columnDifference == rowDifference;
-    }
-
-    public boolean isHigherThan(final Location location) {
-        return this.row.getValue() > location.getRow();
-    }
-
-    public boolean isRightThan(final Location location) {
-        return this.column.getValue() > location.getCol();
-    }
-
     public Location addDirectionOnce(final Direction direction) {
         return Location.of(
-            row.add(direction.getRowDiff()),
-            column.add(direction.getColDiff())
+                row.add(direction.getRowDiff()),
+                column.add(direction.getColDiff())
         );
     }
 
@@ -80,8 +52,8 @@ public final class Location {
     @Override
     public String toString() {
         return "Location{" +
-            "column=" + column +
-            ", row=" + row +
-            '}';
+                "column=" + column +
+                ", row=" + row +
+                '}';
     }
 }
