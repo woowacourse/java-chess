@@ -17,5 +17,25 @@ public abstract class Piece {
 
     public abstract List<Square> findRoute(final Square source, final Square destination);
 
-    public abstract boolean isPawn();
+    public boolean isSameClass(final Class instanceClass) {
+        return this.getClass() == instanceClass;
+    };
+
+    public abstract String getType();
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                "type=" + this.getClass() +
+                '}';
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }

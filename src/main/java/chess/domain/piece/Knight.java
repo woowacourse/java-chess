@@ -23,7 +23,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
+    public String getType() {
+        return "Knight";
     }
 }

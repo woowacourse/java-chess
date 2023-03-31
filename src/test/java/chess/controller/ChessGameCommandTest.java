@@ -18,7 +18,7 @@ class ChessGameCommandTest {
     void 정상적인_게임_실행명령을_전달받으면_실행상태를_반환한다() {
         final String input = "start";
 
-        final ChessGameCommand chessGameCommand = ChessGameCommand.from(input);
+        final ChessGameCommand chessGameCommand = ChessGameCommand.generateExecuteCommand(input);
 
         assertThat(chessGameCommand).isEqualTo(ChessGameCommand.START);
     }
@@ -28,8 +28,8 @@ class ChessGameCommandTest {
     @ValueSource(strings = {"merry"})
     void 정상적이지_않은_게임_실행명령을_전달받으면_예외를_던진다(final String input) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> ChessGameCommand.from(input))
+                .isThrownBy(() -> ChessGameCommand.generateExecuteCommand(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .withMessage("start, end, move 중 입력해야 합니다.");
+                .withMessage("start, end 중 입력해야 합니다.");
     }
 }

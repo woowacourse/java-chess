@@ -1,13 +1,13 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Board {
+
+    private static final int NONE = 0;
+    public static final int INITIAL_KING_COUNTS = 2;
 
     private final Map<Square, Piece> board;
 
@@ -30,7 +30,7 @@ public class Board {
 
     private boolean isExistHurdle(final List<Square> squares) {
         return squares.stream()
-                .anyMatch(square -> board.containsKey(square));
+                .anyMatch(board::containsKey);
     }
 
     private boolean isAttackable(final Square source, final Square destination) {
@@ -68,5 +68,74 @@ public class Board {
 
     public Map<Square, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Double resultOf(final Color color) {
+        final double totalWithoutPawnScore = calculateWithoutPawn(color);
+        return totalWithoutPawnScore + calculatePawn(color);
+    }
+
+    private double calculatePawn(final Color color) {
+        int countPawn = countPawn(color);
+        int countPawnInSameFile = countPawnInSameFile(color);
+        return PieceScore.calculatePawn(countPawn, countPawnInSameFile);
+    }
+
+    private int countPawn(final Color color) {
+        return (int) board.values().stream()
+                .filter(piece -> piece.isSameClass(Pawn.class) && piece.isBlack() == color.isBlack())
+                .count();
+    }
+
+    private int countPawnInSameFile(final Color color) {
+        int countSamePawn = 0;
+        for (File file : File.values()) {
+            countSamePawn += countSamePawn(color, file);
+        }
+        return countSamePawn;
+    }
+
+    private int countSamePawn(Color color, File file) {
+        int countSamePawns = (int) Arrays.stream(Rank.values())
+                .filter(rank -> isPawnInSameFile(file, rank, color))
+                .count();
+        if (countSamePawns > 1) {
+            return countSamePawns;
+        }
+        return NONE;
+    }
+
+    private boolean isPawnInSameFile(File file, Rank rank, Color color) {
+        Piece piece = getPiece(file, rank);
+        return piece.isSameClass(Pawn.class) && piece.isSameColor(color);
+    }
+
+    private Piece getPiece(File file, Rank rank) {
+        return board.getOrDefault(new Square(file, rank), new Empty(Color.BLACK));
+    }
+
+    public double calculateWithoutPawn(Color color) {
+        Map<Class, Integer> numberOfPieces = new HashMap<>(Map.of(
+                Pawn.class, 0,
+                Rook.class, 0,
+                Knight.class, 0,
+                Bishop.class, 0,
+                Queen.class, 0,
+                King.class, 0
+        ));
+        for (Class pieceType : numberOfPieces.keySet()) {
+            int countPieces = (int) board.values().stream()
+                    .filter(piece -> !piece.isSameClass(Pawn.class) && piece.isSameColor(color) && piece.isSameClass(pieceType))
+                    .count();
+            numberOfPieces.put(pieceType, countPieces);
+        }
+        return PieceScore.calculateWithoutPawn(numberOfPieces);
+    }
+
+    public boolean hasBothKing() {
+        long countKing = board.values().stream()
+                .filter(piece -> piece.isSameClass(King.class))
+                .count();
+        return countKing == INITIAL_KING_COUNTS;
     }
 }

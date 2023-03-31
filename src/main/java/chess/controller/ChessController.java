@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.dao.ChessGameDao;
 import chess.controller.dto.ChessBoardDto;
 import chess.domain.ChessGame;
 import chess.view.InputView;
@@ -12,48 +13,77 @@ public class ChessController {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
-    private final ChessGame chessGame;
-
-    public ChessController(ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
-
     public void run() {
         outputView.printStartMessage();
         if (readChessStartCommand() == START) {
-            outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
-            playChessGame();
+            ChessGameDao chessGameDao = new ChessGameDao();
+            ChessGame savedChessGame = chessGameDao.findAll();
+            outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
+            playChessGame(savedChessGame);
         }
+        inputView.closeScanner();
     }
 
     private ChessGameCommand readChessStartCommand() {
-        while (true) {
-            try {
-                return ChessGameCommand.from(inputView.readChessExecuteCommand());
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
+        try {
+            return ChessGameCommand.generateExecuteCommand(inputView.readChessExecuteCommand());
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            return readChessStartCommand();
         }
     }
 
-    private void playChessGame() {
-        while (true) {
-            try {
-                repeatMove();
-                return;
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
+    private void playChessGame(ChessGame savedChessGame) {
+        try {
+            repeatMove(savedChessGame);
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            playChessGame(savedChessGame);
         }
     }
 
-    private void repeatMove() {
-        String gameCommandInput = inputView.readChessGameCommand();
-        while (ChessGameCommand.from(gameCommandInput) != ChessGameCommand.END) {
-            MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
-            chessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
-            outputView.printChessBoard(ChessBoardDto.from(chessGame.getBoard()));
-            gameCommandInput = inputView.readChessGameCommand();
+    private void repeatMove(ChessGame savedChessGame) {
+        while (checkRunnable(savedChessGame)) {
+            runCommand(savedChessGame, inputView.readChessGameCommand());
         }
+    }
+
+    private static boolean checkRunnable(ChessGame savedChessGame) {
+        if (savedChessGame.isFinished()) {
+            outputView.printWinner(savedChessGame.getWinner());
+            ChessGameDao chessGameDao = new ChessGameDao();
+            chessGameDao.deleteChessGame();
+            return false;
+        }
+        return !savedChessGame.isPaused();
+    }
+
+    private void runCommand(ChessGame savedChessGame, String gameCommandInput) {
+        if (ChessGameCommand.isEnd(gameCommandInput)) {
+            saveDatabase(savedChessGame);
+            return;
+        }
+        if (ChessGameCommand.isStatus(gameCommandInput)) {
+            printStatus(savedChessGame);
+            return;
+        }
+        movePiece(savedChessGame, gameCommandInput);
+    }
+
+    private static void saveDatabase(ChessGame savedChessGame) {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        chessGameDao.save(savedChessGame);
+        savedChessGame.pauseGame();
+    }
+
+    private static void movePiece(ChessGame savedChessGame, String gameCommandInput) {
+        MoveCommand chessMoveCommand = MoveCommand.from(gameCommandInput);
+        savedChessGame.move(chessMoveCommand.getSource(), chessMoveCommand.getDestination());
+        outputView.printChessBoard(ChessBoardDto.from(savedChessGame.getBoard()));
+    }
+
+    private static void printStatus(ChessGame savedChessGame) {
+        outputView.printResult(savedChessGame.getResult());
+        outputView.printWinner(savedChessGame.getWinner());
     }
 }
