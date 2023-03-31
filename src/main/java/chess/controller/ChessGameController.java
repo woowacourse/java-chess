@@ -106,7 +106,11 @@ public class ChessGameController {
     private void showWinnerOf(Game game) {
         outputView.printScore(TeamMapper.map(Team.BLACK), game.getScoreOf(Team.BLACK));
         outputView.printScore(TeamMapper.map(Team.WHITE), game.getScoreOf(Team.WHITE));
-        outputView.printWin(TeamMapper.map(game.getWinner()));
+        if (game.getWinner() != Team.NEUTRAL) {
+            outputView.printWin(TeamMapper.map(game.getWinner()));
+            return;
+        }
+        outputView.printDraw();
     }
 
     private List<PieceResponse> createResponses(Map<Position, Piece> pieces) {

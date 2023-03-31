@@ -29,11 +29,11 @@ public class OutputView {
     }
 
     public void printWin(String team) {
-        if (team.equals("무")) {
-            System.out.println("무승부");
-            return;
-        }
         System.out.println(team + " 승!");
+    }
+
+    public void printDraw() {
+        System.out.println("무승부");
     }
 
     private char[][] setUpBoard() {
