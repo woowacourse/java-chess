@@ -5,16 +5,12 @@ import chess.domain.game.state.RunGame;
 import chess.domain.piece.Camp;
 import chess.domain.piece.Piece;
 import chess.domain.position.ChessBoard;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 import chess.domain.repository.BoardDao;
 import chess.domain.repository.PieceDao;
 import chess.domain.repository.entity.BoardEntity;
 import chess.domain.repository.entity.PieceEntity;
-import chess.domain.repository.mapper.FileDtoMapper;
 import chess.domain.repository.mapper.PieceDtoMapper;
-import chess.domain.repository.mapper.RankDtoMapper;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +46,7 @@ public class LoadChessGameService {
         Map<Position, Piece> pieceByPosition = new LinkedHashMap<>();
 
         for (PieceEntity pieceEntity : allPieces) {
-            Position position = convertToPosition(pieceEntity);
+            Position position = Position.from(pieceEntity);
             String pieceType = pieceEntity.getPieceType();
             String camp = pieceEntity.getCamp();
             Piece piece = PieceDtoMapper.convertToPiece(pieceType, Camp.valueOf(camp));
@@ -58,14 +54,6 @@ public class LoadChessGameService {
         }
 
         return pieceByPosition;
-    }
-
-    private Position convertToPosition(PieceEntity pieceEntity) {
-        String[] split = pieceEntity.getPosition().split("");
-        File file = FileDtoMapper.convertToFile(split[0]);
-        Rank rank = RankDtoMapper.convertToRank(split[1]);
-
-        return Position.of(file, rank);
     }
 
     public void cleanUpGame() {

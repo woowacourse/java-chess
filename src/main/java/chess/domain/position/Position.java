@@ -1,5 +1,8 @@
 package chess.domain.position;
 
+import chess.domain.repository.entity.PieceEntity;
+import chess.domain.repository.mapper.FileDtoMapper;
+import chess.domain.repository.mapper.RankDtoMapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +28,14 @@ public final class Position {
 
     private static String toKey(File file, Rank rank) {
         return file.name() + rank.name();
+    }
+
+    public static Position from(PieceEntity pieceEntity) {
+        String[] split = pieceEntity.getPosition().split("");
+        File file = FileDtoMapper.convertToFile(split[0]);
+        Rank rank = RankDtoMapper.convertToRank(split[1]);
+
+        return Position.of(file, rank);
     }
 
     public int calculateRankGap(Position other) {
