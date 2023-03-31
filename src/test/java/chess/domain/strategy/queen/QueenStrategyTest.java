@@ -1,9 +1,9 @@
 package chess.domain.strategy.queen;
 
-import chess.domain.Position;
 import chess.domain.Color;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.Position;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class QueenStrategyTest {
+final class QueenStrategyTest {
 
     @DisplayName("올바른 위치일 경우 타겟 포지션이 반환된다.")
     @ParameterizedTest(name = "rank: {0}, file: {1}")
@@ -49,6 +49,6 @@ class QueenStrategyTest {
             //then
             assertThatThrownBy(() -> new QueenStrategy().validateDirection(moveRequest));
         }
-
     }
+
 }

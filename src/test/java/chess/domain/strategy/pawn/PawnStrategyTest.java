@@ -1,8 +1,8 @@
 package chess.domain.strategy.pawn;
 
 import chess.domain.Position;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PawnStrategyTest {
+final class PawnStrategyTest {
 
     PieceStrategy pawnStrategy = new PawnStrategy();
     MoveRequest request;
@@ -168,4 +168,5 @@ class PawnStrategyTest {
         // then
         assertDoesNotThrow(() -> pawnStrategy.validateDirection(request));
     }
+
 }

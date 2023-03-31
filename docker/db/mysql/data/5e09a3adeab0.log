@@ -1,0 +1,14 @@
+/usr/sbin/mysqld, Version: 8.0.28 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2023-03-25T07:37:28.852178Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:28.856943Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:28.859474Z	   42 Query	/* ApplicationName=IntelliJ IDEA 2022.3.1 */ select database()
+2023-03-25T07:37:28.864147Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:28.868906Z	   42 Query	SELECT @@session.transaction_isolation
+2023-03-25T07:37:33.814484Z	   42 Query	SELECT @@session.transaction_isolation
+2023-03-25T07:37:33.817910Z	   42 Query	/* ApplicationName=IntelliJ IDEA 2022.3.1 */ set session transaction read write
+2023-03-25T07:37:33.820259Z	   42 Query	SELECT @@session.transaction_read_only
+2023-03-25T07:37:33.826357Z	   42 Query	SHOW WARNINGS
+2023-03-25T07:37:33.832127Z	   42 Query	/* ApplicationName=IntelliJ IDEA 2022.3.1 */ SET net_write_timeout=600
+2023-03-25T07:37:33.836825Z	   42 Query	/* ApplicationName=IntelliJ IDEA 2022.3.1 */ SET GLOBAL general_log_file='/var/lib/mysql/localhost.log'

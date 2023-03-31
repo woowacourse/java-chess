@@ -1,69 +1,81 @@
 package chess.controller;
 
 import chess.domain.Color;
-import chess.domain.dto.res.PiecesResponse;
-import chess.domain.Pieces;
-import chess.domain.Player;
-import chess.domain.Players;
+import chess.domain.CommandAction;
+import chess.dto.response.PiecesResponse;
+import chess.service.GameService;
 import chess.ui.InputView;
 import chess.ui.OutputView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class ChessGameController {
 
-    private final Players players = initializeChessBoard();
+    private final GameService gameService;
 
-    private final Map<Command, Action> commands = Map.of(
+    private final CommandAction commandAction = new CommandAction(Map.of(
             Command.START, this::start,
             Command.MOVE, this::move,
-            Command.END, this::end
+            Command.END, this::end,
+            Command.STATUS, this::status)
     );
+
+    public ChessGameController(final GameService gameService) {
+        this.gameService = gameService;
+    }
 
     public void run() {
         OutputView.printStartGame();
-        List<String> commands = InputView.getCommands();
-        Command findCommand = Command.findCommand(commands);
-        this.commands.get(findCommand).execute(commands);
+        CommandManagement commandWithArguments;
+        do {
+            commandWithArguments = readCommand(InputView::getCommands);
+            commandAction.execute(commandWithArguments);
+        } while (commandWithArguments.isNotEnd() && gameService.everyKingAlive());
+        finishGame();
     }
 
-    private void start(final List<String> strings) {
-        Command findCommand = Command.START;
-
-        PiecesResponse piecesResponse = new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK));
-        OutputView.printInitializedChessBoard(piecesResponse);
-
-        while (findCommand.isNotEnd()) {
-            List<String> commands = InputView.getCommands();
-            findCommand = Command.findCommand(commands);
-            this.commands.get(findCommand).execute(commands);
+    private void finishGame() {
+        if (!gameService.everyKingAlive()) {
+            OutputView.printWinner(gameService.getWinnerPlayerColor());
+            gameService.updateTurn(Color.WHITE);
         }
     }
 
-    private void move(List<String> command) {
-        String inputMovablePiece = command.get(1);
-        String inputTargetPosition = command.get(2);
+    private CommandManagement readCommand(Supplier<List<String>> commandReader) {
+        try {
+            List<String> arguments = commandReader.get();
+            return new CommandManagement(arguments);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return readCommand(commandReader);
+        }
+    }
+
+    private void start(final CommandManagement commandManagement) {
+        PiecesResponse piecesResponse = new PiecesResponse(gameService.getPiecesByColor(Color.WHITE), gameService.getPiecesByColor(Color.BLACK));
+        OutputView.printInitializedChessBoard(piecesResponse);
+    }
+
+    private void status(final CommandManagement commandManagement) {
+        OutputView.printStatus(gameService.getScore());
+    }
+
+    private void move(final CommandManagement commandManagement) {
+        String inputMovablePiece = commandManagement.getMovablePiece();
+        String inputTargetPosition = commandManagement.getTargetPosition();
 
         try {
-            players.movePiece(inputMovablePiece, inputTargetPosition);
+            gameService.movePiece(inputMovablePiece, inputTargetPosition);
             OutputView.printChessBoardStatus(
-                    new PiecesResponse(players.getPiecesByColor(Color.WHITE), players.getPiecesByColor(Color.BLACK)));
+                    new PiecesResponse(gameService.getPiecesByColor(Color.WHITE), gameService.getPiecesByColor(Color.BLACK)));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void end(final List<String> strings) {
+    private void end(final CommandManagement commandManagement) {
     }
 
-    private Players initializeChessBoard() {
-        Pieces whitePieces = Pieces.createWhitePieces();
-        Pieces blackPieces = Pieces.createBlackPieces(whitePieces);
-
-        Player whitePlayer = Player.fromWhitePlayer(whitePieces);
-        Player blackPlayer = Player.fromBlackPlayer(blackPieces);
-
-        return Players.from(whitePlayer, blackPlayer);
-    }
 }

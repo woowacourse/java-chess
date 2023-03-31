@@ -3,34 +3,32 @@ package chess.domain;
 import java.util.Objects;
 
 public class File {
+    private static final int ASCII_LOWER_CASE_A = 97;
+    private static final int ASCII_LOWER_CASE_H = 104;
 
     private final char file;
 
-    public File(final int asciiValue){
-        this((char) asciiValue);
-    }
-
-    public File(final char file){
-        validate(file);
+    private File(final char file) {
         this.file = file;
     }
 
     public static File from(final char file) {
+        validate(file);
         return new File(file);
     }
 
-    private void validate(char file) {
-        if (file < 97 || 104 < file) {
+    private static void validate(final char file) {
+        if (file < ASCII_LOWER_CASE_A || ASCII_LOWER_CASE_H < file) {
             throw new IllegalArgumentException("기물의 세로 위치는 a부터 h까지 놓을 수 있습니다.");
         }
     }
 
-    public int calculateDistance(int file) {
+    public int calculateDistance(final int file) {
         return this.file - file;
     }
 
-    public char move(int fileDirection) {
-        return (char)(this.file + fileDirection);
+    public char move(final int distance) {
+        return (char) (this.file + distance);
     }
 
     public char getFile() {
@@ -56,4 +54,5 @@ public class File {
                 "file=" + file +
                 '}';
     }
+
 }

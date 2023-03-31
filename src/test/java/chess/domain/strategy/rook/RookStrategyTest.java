@@ -1,9 +1,9 @@
 package chess.domain.strategy.rook;
 
-import chess.domain.Position;
 import chess.domain.Color;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.Position;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 import chess.domain.strategy.PieceStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class RookStrategyTest {
                 new PositionDto(Position.from(3, 'a')) // targetPosition
         );
         // when, then
-        assertDoesNotThrow(()-> rookStrategy.validateDirection(request));
+        assertDoesNotThrow(() -> rookStrategy.validateDirection(request));
     }
 
     @Test
@@ -44,7 +44,7 @@ class RookStrategyTest {
         );
 
         // when, then
-        assertDoesNotThrow(()-> rookStrategy.validateDirection(request));
+        assertDoesNotThrow(() -> rookStrategy.validateDirection(request));
     }
 
     @Test

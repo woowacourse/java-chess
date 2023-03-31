@@ -1,9 +1,10 @@
 package chess.domain;
 
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Piece {
 
@@ -16,10 +17,10 @@ public class Piece {
     }
 
     public static Piece from(final int rank, final char file, final Shape shape) {
-         return new Piece(Position.from(rank, file), shape);
+        return new Piece(Position.from(rank, file), shape);
     }
 
-    public boolean isSameShape(Shape shape) {
+    public boolean isSameShape(final Shape shape) {
         return this.shape == shape;
     }
 
@@ -28,30 +29,22 @@ public class Piece {
             final Position inputTargetPosition,
             final Color movablePieceColor
     ) {
-        char file = inputTargetPosition.getFileValue();
-        int rank = inputTargetPosition.getRankValue();
-
-        shape.move(MoveRequest.from(
+        shape.validateDirectionByShape(MoveRequest.from(
                 positions,
                 movablePieceColor,
                 new PositionDto(position),
-                new PositionDto(Position.from(rank, file))
+                new PositionDto(inputTargetPosition)
         ));
 
-        Position changedPosition = Position.from(rank, file);
-        this.position = changedPosition;
-        return changedPosition;
+        this.position = inputTargetPosition;
+        return position;
     }
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "position=" + position +
-                ", shape=" + shape +
-                '}';
+    public boolean isSamePosition(final Position findPosition) {
+        return position.equals(findPosition);
     }
 
-    public Piece getNewPiece(int file) {
+    public Piece getNewPiece(final int file) {
         return new Piece(position.changePosition(file), this.shape);
     }
 
@@ -67,12 +60,33 @@ public class Piece {
         return position.getFileValue();
     }
 
-    public char getName(Color color) {
-        return this.shape.getNameByColor(color);
+    public double getScore() {
+        return shape.getScore();
     }
 
-    public boolean isSamePosition(Position findPosition) {
-        return position.equals(findPosition);
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Objects.equals(position, piece.position) && shape == piece.shape;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, shape);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "position=" + position +
+                ", shape=" + shape +
+                '}';
     }
 
 }

@@ -1,10 +1,10 @@
 package chess.domain.strategy.bishop;
 
 
-import chess.domain.Position;
 import chess.domain.Color;
-import chess.domain.dto.PositionDto;
-import chess.domain.dto.req.MoveRequest;
+import chess.domain.Position;
+import chess.dto.PositionDto;
+import chess.dto.request.MoveRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class BishopStrategyTest {
+public final class BishopStrategyTest {
     // TODO: 성공테스트
     @DisplayName("상하좌우로 움직일 수 없다.")
     @Nested

@@ -1,6 +1,6 @@
 package chess.domain.strategy;
 
-import chess.domain.dto.req.MoveRequest;
+import chess.dto.request.MoveRequest;
 
 public interface PieceStrategy {
 
