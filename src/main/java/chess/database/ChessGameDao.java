@@ -11,17 +11,17 @@ import chess.domain.square.Square;
 
 public final class ChessGameDao {
 
-    private final Database database;
+    private final Connection connection;
 
-    public ChessGameDao(final DatabaseName databaseName) {
-        database = new Database(databaseName);
+    public ChessGameDao(final Connection connection) {
+        this.connection = connection;
     }
 
     public void save(String gameId, ChessGame chessGame) {
         String query = "INSERT INTO Board (game_id, turn, piece_file, piece_rank, piece_type, piece_team) VALUES (?, ?, ?, ?, ?, ?)";
         Map<Square, Piece> board = chessGame.getBoard();
         for (Square square : board.keySet()) {
-            try (Connection connection = database.getConnection();
+            try (
                  PreparedStatement preparedStatement = connection.prepareStatement(query)
             ) {
                 char fileValue = square.getFileValue();

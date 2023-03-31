@@ -21,16 +21,15 @@ import chess.domain.square.Square;
 
 public class LoadGameDao {
 
-    private final Database database;
+    private final Connection connection;
 
-    public LoadGameDao(final DatabaseName databaseName) {
-        database = new Database(databaseName);
+    public LoadGameDao(final Connection connection) {
+        this.connection = connection;
     }
 
     public List<GameDto> getGamesById(String id) {
         final String query = "SELECT * FROM Game WHERE user_id = ? ORDER BY created_at DESC";
         try (
-                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, id);
@@ -51,7 +50,6 @@ public class LoadGameDao {
     public int getLastTurnById(String gameId) {
         final String query = "SELECT MAX(turn) AS result FROM Board WHERE game_id = ?";
         try (
-                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setInt(1, Integer.parseInt(gameId));
@@ -65,7 +63,7 @@ public class LoadGameDao {
 
     public ChessGame getGameById(String gameId, int turn) {
         final String query = "SELECT * FROM Board WHERE game_id = ? and turn = ?";
-        try (Connection connection = database.getConnection();
+        try (
              PreparedStatement preparedStatement = connection.prepareStatement(query)
         ) {
             Map<Square, Piece> board = new HashMap<>();
@@ -94,7 +92,6 @@ public class LoadGameDao {
     public void createGame(String userId) {
         final String query = "INSERT INTO Game (user_id) VALUES (?)";
         try (
-                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, userId);
@@ -107,7 +104,6 @@ public class LoadGameDao {
     public String getLastGameId(String userId) {
         final String query = "SELECT MAX(game_id) AS result FROM Game WHERE user_id = ?";
         try (
-                Connection connection = database.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
             preparedStatement.setString(1, userId);
