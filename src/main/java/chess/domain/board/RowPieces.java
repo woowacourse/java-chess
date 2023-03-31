@@ -1,14 +1,21 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.*;
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceMatcher;
+import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Column;
+import chess.domain.piece.coordinate.Coordinate;
+import chess.view.SymbolMatcher;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class RowPieces implements Comparable<RowPieces> {
-    
+
     private static final int FIRST_PIECE_INDEX = 0;
+    private static final int INDEX_NUMBER_APPLIER = 1;
 
     private final List<Piece> pieces;
 
@@ -20,9 +27,29 @@ public class RowPieces implements Comparable<RowPieces> {
         this.pieces = pieces;
     }
 
+    public double sumPiecePoints(Team team) {
+        List<Piece> piecesByTeam = makePiecesByTeam(team);
+        double sum = 0;
+
+        for (Piece piece : piecesByTeam) {
+            sum += piece.point().valueOfPoint();
+        }
+        return sum;
+    }
+
+    private List<Piece> makePiecesByTeam(Team team) {
+        return pieces.stream()
+                .filter(piece -> piece.isSameTeam(team))
+                .collect(Collectors.toList());
+    }
+
+    public boolean checkPawnByColumn(Column column, Team team) {
+        return pieces.get(Column.indexFromColumn(column) - INDEX_NUMBER_APPLIER).isSameTeamAndPawn(team);
+    }
+
     @Override
     public int compareTo(RowPieces o) {
-        Piece firstPiece = pieces.get(FIRST_PIECE_INDEX);
+        Piece firstPiece = this.pieces.get(FIRST_PIECE_INDEX);
         Piece otherPiece = o.pieces.get(FIRST_PIECE_INDEX);
         return firstPiece.compareTo(otherPiece);
     }
@@ -36,9 +63,9 @@ public class RowPieces implements Comparable<RowPieces> {
 
     private Piece findPieceByCoordinate(RowPieces rowPieces, Coordinate coordinate) {
         return rowPieces.pieces.stream()
-            .filter(piece -> piece.hasCoordinate(coordinate))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 컬럼입니다"));
+                .filter(piece -> piece.hasCoordinate(coordinate))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 컬럼입니다"));
     }
 
     public boolean isPieceByColumnNotEmpty(Coordinate coordinate) {
@@ -46,9 +73,9 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     public void move(
-        RowPieces destinationRowPieces,
-        Coordinate sourceCoordinate,
-        Coordinate destinationCoordinate
+            RowPieces destinationRowPieces,
+            Coordinate sourceCoordinate,
+            Coordinate destinationCoordinate
     ) {
         Piece sourcePiece = findPieceByCoordinate(this, sourceCoordinate);
         Piece newPiece = sourcePiece.newSourcePiece(destinationCoordinate);
@@ -58,7 +85,7 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     private void switchPiece(Piece newPiece, Coordinate coordinate) {
-        pieces.set(coordinate.columnIndex(), newPiece);
+        this.pieces.set(coordinate.columnIndex(), newPiece);
     }
 
     private Empty createEmpty(Coordinate coordinate) {
@@ -70,9 +97,13 @@ public class RowPieces implements Comparable<RowPieces> {
     }
 
     public boolean hasCoordinate(Coordinate coordinate) {
-        return pieces.stream().anyMatch(
-            piece -> piece.hasCoordinate(coordinate)
+        return this.pieces.stream().anyMatch(
+                piece -> piece.hasCoordinate(coordinate)
         );
+    }
+
+    public boolean isContainsKing(Team team) {
+        return pieces.stream().filter(piece -> piece.isSameTeam(team)).anyMatch(Piece::isKing);
     }
 
     public List<Piece> pieces() {

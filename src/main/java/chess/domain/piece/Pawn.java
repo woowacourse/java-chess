@@ -1,7 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
 
+import chess.view.SymbolMatcher;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -9,7 +10,12 @@ public class Pawn extends Piece {
     public Pawn(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.PAWN;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.PAWN;
@@ -22,7 +28,12 @@ public class Pawn extends Piece {
         int subtractedRow = subtractCoordinate.get(ROW_INDEX);
         return isPawnMovable(targetPiece, subtractedRow, subtractedColumn);
     }
-    
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return isSameTeam(team);
+    }
+
     private boolean isPawnMovable(Piece targetPiece, int subtractedRow, int subtractedColumn) {
         if (isOutOfMovementRadius(targetPiece,subtractedRow, subtractedColumn)) {
             return false;

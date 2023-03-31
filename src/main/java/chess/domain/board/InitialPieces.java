@@ -1,16 +1,16 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.Bishop;
-import chess.piece.Empty;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.piece.Team;
-import chess.piece.coordinate.Column;
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Column;
+import chess.domain.piece.coordinate.Coordinate;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -26,8 +26,9 @@ public enum InitialPieces {
     private static final String SECOND_INITIAL_ROW_OF_NOBLE = "8";
     private static final String FIRST_INITIAL_ROW_OF_PAWN = "2";
     private static final String SECOND_INITIAL_ROW_OF_PAWN = "7";
-    private static final int MIN_COLUMN_INDEX = 0;
-    private static final int MAX_COLUMN_INDEX = 7;
+    private static final int INDEX_NUMBER_APPLIER = 1;
+    private static final int MIN_COLUMN_INDEX = 1;
+    private static final int MAX_COLUMN_INDEX = 8;
     private final List<BiFunction<Team, Coordinate, Piece>> pieces;
 
     InitialPieces(List<BiFunction<Team, Coordinate, Piece>> pieces) {
@@ -49,8 +50,8 @@ public enum InitialPieces {
 
     private static List<Piece> getPieces(InitialPieces symbols, String rowNum, Team team) {
         return IntStream.rangeClosed(MIN_COLUMN_INDEX, MAX_COLUMN_INDEX)
-            .mapToObj(columnIndex -> symbols.pieces.get(columnIndex)
-                .apply(team, Coordinate.createCoordinate(rowNum, Column.symbolFromIndex(columnIndex + 1))))
+            .mapToObj(columnIndex -> symbols.pieces.get(columnIndex - INDEX_NUMBER_APPLIER)
+                .apply(team, Coordinate.createCoordinate(rowNum, Column.symbolFromIndex(columnIndex))))
             .collect(Collectors.toList());
     }
 

@@ -1,6 +1,7 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
+import chess.view.SymbolMatcher;
 
 public class King extends Piece {
     private static final int MAX_DIFFERENCE_OF_KING = 1;
@@ -8,7 +9,22 @@ public class King extends Piece {
     public King(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public Point point() {
+        return Point.KING;
+    }
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
+
     @Override
     public boolean isMovable(Piece targetPiece) {
         int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);

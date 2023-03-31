@@ -1,4 +1,4 @@
-package chess.piece.coordinate;
+package chess.domain.piece.coordinate;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,17 +14,15 @@ public class Coordinate {
     }
 
     public static Coordinate createCoordinate(String row, String column) {
-        return new Coordinate(Row.from(row), Column.fromName(column));
+        return new Coordinate(Row.from(row), Column.from(column));
     }
 
     public int compareByRowNum(Coordinate otherCoordinate) {
-        return Integer.compare(otherCoordinate.row.ordinal(),this.row.ordinal());
+        return this.row.compareIndex(otherCoordinate.row);
     }
 
     public int compareByColumn(Coordinate otherCoordinate){
-        System.out.println("otherCorNum : " +otherCoordinate.column.ordinal());
-        System.out.println("thisCorNum : "+this.column.ordinal());
-        return Integer.compare(otherCoordinate.column.ordinal(),this.column.ordinal());
+        return this.column.compareIndex(otherCoordinate.column);
     }
     
     public List<Integer> calculateCoordinateDistance(Coordinate otherCoordinate) {
@@ -43,7 +41,7 @@ public class Coordinate {
     }
 
     public int columnIndex(){
-        return column.ordinal();
+        return column.realFieldIndex();
     }
 
     public int compareTo(Coordinate otherCoordinate){

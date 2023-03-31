@@ -2,6 +2,7 @@ package chess.piece.coordinate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.coordinate.Column;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class ColumnTest {
     @ParameterizedTest
     @CsvSource(value = {"a,A","b,B","c,C","d,D","e,E","f,F","g,G","h,H"})
     void 문자로부터_컬럼_반환(String column, Column expected) {
-        assertThat(Column.fromName(column)).isEqualTo(expected);
+        assertThat(Column.from(column)).isEqualTo(expected);
     }
 
     @ParameterizedTest

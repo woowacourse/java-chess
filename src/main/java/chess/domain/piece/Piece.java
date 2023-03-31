@@ -1,7 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
 
+import chess.view.SymbolMatcher;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,13 +12,15 @@ public abstract class Piece {
     protected static final int ROW_INDEX = 1;
     protected static final int COLUMN_INDEX = 0;
 
-    private final Team team;
+    protected final Team team;
     private final Coordinate coordinate;
 
     protected Piece(Team team, Coordinate coordinate) {
         this.team = team;
         this.coordinate = coordinate;
     }
+
+    public abstract Point point();
 
     public abstract SymbolMatcher symbol();
 
@@ -62,12 +65,18 @@ public abstract class Piece {
         return false;
     }
 
+    public abstract boolean isSameTeamAndPawn(Team team);
+
     public boolean hasCoordinate(Coordinate coordinate) {
         return this.coordinate.equals(coordinate);
     }
 
     public int compareTo(Piece otherPiece){
         return this.coordinate.compareTo(otherPiece.coordinate);
+    }
+
+    public boolean isKing(){
+        return false;
     }
 
     @Override

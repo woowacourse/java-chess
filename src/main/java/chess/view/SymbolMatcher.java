@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.view;
 
 import java.util.Arrays;
 
@@ -21,10 +21,4 @@ public enum SymbolMatcher {
         return symbolMatcher.symbol;
     }
 
-    public static SymbolMatcher sourceOf(char sourceSymbol){
-        return Arrays.stream(values())
-            .filter(symbolMatcher -> symbolOf(symbolMatcher) == sourceSymbol)
-            .findFirst()
-            .orElseThrow( () -> new IllegalArgumentException("존재하지 않는 심볼입니다") );
-    }
 }

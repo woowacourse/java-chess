@@ -1,18 +1,28 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
+import chess.view.SymbolMatcher;
 
 public class Bishop extends Piece {
     public Bishop(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
-    
+
+    @Override
+    public Point point() {
+        return Point.BISHOP;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.BISHOP;
     }
-    
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
+    }
+
     @Override
     public boolean isMovable(Piece targetPiece) {
         int rowDistance = calculateRowOrColumnDistance(targetPiece, ROW_INDEX);

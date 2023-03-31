@@ -1,6 +1,10 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.PointCalculator;
+import chess.domain.piece.Team;
+import chess.domain.piece.coordinate.Coordinate;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +34,6 @@ public class ChessBoard {
     }
 
     public void move(Coordinate sourceCoordinate, Coordinate destinationCoordinate) {
-        System.out.println(destinationCoordinate);
         RowPieces sourceRowPieces = findRowPiecesByCoordinate(sourceCoordinate);
         RowPieces destinationRowPieces = findRowPiecesByCoordinate(destinationCoordinate);
 
@@ -86,7 +89,21 @@ public class ChessBoard {
     private Coordinate moveForDestination(Coordinate researchCoordinate, Coordinate destinationCoordinate) {
         int columnAdd = researchCoordinate.compareByColumn(destinationCoordinate);
         int rowAdd = researchCoordinate.compareByRowNum(destinationCoordinate);
-        return researchCoordinate.move(rowAdd,columnAdd);
+        return researchCoordinate.move(rowAdd, columnAdd);
+    }
+
+    public double calculateFinalPointsByTeam(Team team) {
+        List<Double> points = new ArrayList<>();
+        for (RowPieces rowPieces : chessBoard) {
+            points.add(rowPieces.sumPiecePoints(team));
+        }
+        return PointCalculator.sumPoints(points) - PointCalculator.totalExcludingPointsOfPawn(chessBoard,team);
+    }
+
+    public boolean isKingAlive(){
+        boolean blackKingAlive = chessBoard.stream().anyMatch(rowPieces -> rowPieces.isContainsKing(Team.BLACK));
+        boolean whiteKingAlive = chessBoard.stream().anyMatch(rowPieces -> rowPieces.isContainsKing(Team.WHITE));
+        return blackKingAlive && whiteKingAlive;
     }
 
     public List<RowPieces> chessBoard() {

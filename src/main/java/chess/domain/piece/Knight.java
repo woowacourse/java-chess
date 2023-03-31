@@ -1,15 +1,26 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.piece.coordinate.Coordinate;
+import chess.domain.piece.coordinate.Coordinate;
+import chess.view.SymbolMatcher;
 
 public class Knight extends Piece {
     public Knight(Team team, Coordinate coordinate) {
         super(team, coordinate);
     }
-    
+
+    @Override
+    public Point point() {
+        return Point.KNIGHT;
+    }
+
     @Override
     public SymbolMatcher symbol() {
         return SymbolMatcher.KNIGHT;
+    }
+
+    @Override
+    public boolean isSameTeamAndPawn(Team team) {
+        return false;
     }
     
     @Override

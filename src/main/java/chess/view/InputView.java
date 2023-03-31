@@ -1,11 +1,14 @@
 package chess.view;
 
+import chess.view.command.Command;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -21,11 +24,11 @@ public class InputView {
         throw new IllegalStateException("인스턴스를 생성할 수 없는 객체입니다.");
     }
 
-    public static String[] inputCommand() {
+    public static List<String> inputCommand() {
         try {
             String inputCommand = bufferedReader.readLine();
             validateInputCommand(inputCommand);
-            return inputCommand.split(" ");
+            return Arrays.stream(inputCommand.split(" ")).collect(Collectors.toList());
         } catch (IOException e) {
             return inputCommand();
         }
@@ -45,7 +48,7 @@ public class InputView {
     private static void validateStartOrEndCommandForm(String inputCommand) {
         String[] splitedInputCommand = inputCommand.split(" ");
         if (isCorrectCommand(splitedInputCommand[0])) {
-            throw new IllegalArgumentException("start, end, move 명령만 입력할 수 있습니다.");
+            throw new IllegalArgumentException("start, end, move, status 명령만 입력할 수 있습니다.");
         }
 
         if ("move".equals(splitedInputCommand[0]) && (splitedInputCommand.length != 3)) {
@@ -55,7 +58,7 @@ public class InputView {
     }
 
     private static boolean isCorrectCommand(String command) {
-        return !List.of("start", "end", "move").contains(command);
+        return !List.of("start", "end", "move","status").contains(command);
     }
 
     public static <T> T repeat(Supplier<T> inputProcess) {
@@ -67,23 +70,44 @@ public class InputView {
         }
     }
 
-    public static String extractCommand(String[] input) {
-        return input[COMMAND_INDEX];
+    public static Command extractCommand(List<String> input) {
+        String inputCommand = input.get(COMMAND_INDEX);
+        return Command.of(inputCommand);
     }
 
-    public static String[] extractSource(String[] coordinates) {
-        return coordinates[SOURCE_COORDINATE_INDEX].split("");
+    public static List<String> extractSource(List<String> sourceCoordinates) {
+        return Arrays.stream(sourceCoordinates.get(SOURCE_COORDINATE_INDEX).split("")).collect(Collectors.toList());
     }
 
-    public static String[] extractDestination(String[] coordinates) {
-        return coordinates[DESTINATION_COORDINATE_INDEX].split("");
+    public static List<String> extractDestination(List<String> destinationCoordinates) {
+        return Arrays.stream(destinationCoordinates.get(DESTINATION_COORDINATE_INDEX).split(""))
+            .collect(Collectors.toList());
     }
 
-    public static String extractColumn(String[] coordinate) {
-        return coordinate[COLUMN_INDEX];
+    public static String extractColumn(List<String> coordinate) {
+        return coordinate.get(COLUMN_INDEX);
     }
 
-    public static String extractRow(String[] coordinate) {
-        return coordinate[ROW_INDEX];
+    public static String extractRow(List<String> coordinate) {
+        return coordinate.get(ROW_INDEX);
+    }
+
+    public static Command inputRestartOrStart() {
+        System.out.println("\n> 이전 경기가 진행 중입니다");
+        System.out.println("> 이어서 진행하려면 restart, 새 게임을 시작하려면 start를 입력하세요\n");
+        try {
+            String inputCommand = bufferedReader.readLine();
+            validateRestartCommand(inputCommand);
+            return Command.of(inputCommand);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return inputRestartOrStart();
+        }
+    }
+
+    private static void validateRestartCommand(String inputCommand) {
+        if (!List.of("start", "restart").contains(inputCommand)){
+            throw new IllegalArgumentException("start, restart만 입력 가능합니다");
+        }
     }
 }
