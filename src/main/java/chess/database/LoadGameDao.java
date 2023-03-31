@@ -64,7 +64,7 @@ public class LoadGameDao {
     public ChessGame getGameById(String gameId, int turn) {
         final String query = "SELECT * FROM Board WHERE game_id = ? and turn = ?";
         try (
-             PreparedStatement preparedStatement = connection.prepareStatement(query)
+                PreparedStatement preparedStatement = connection.prepareStatement(query)
         ) {
             Map<Square, Piece> board = new HashMap<>();
             preparedStatement.setInt(1, Integer.parseInt(gameId));

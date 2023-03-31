@@ -22,7 +22,7 @@ public final class ChessGameDao {
         Map<Square, Piece> board = chessGame.getBoard();
         for (Square square : board.keySet()) {
             try (
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)
+                    PreparedStatement preparedStatement = connection.prepareStatement(query)
             ) {
                 char fileValue = square.getFileValue();
                 char rankValue = square.getRankValue();
