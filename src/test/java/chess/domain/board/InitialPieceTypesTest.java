@@ -17,7 +17,7 @@ class InitialPieceTypesTest {
     @Test
     void 좌표에_맞는_InitialPieceTypes_반환() {
         InitialPieceTypes initialPieceTypes = from(A_TWO);
-        assertThat(initialPieceTypes).isEqualTo(PAWN_TYPES);
+        assertThat(initialPieceTypes).isEqualTo(WHITE_PAWN_TYPES);
     }
     
     @Test
