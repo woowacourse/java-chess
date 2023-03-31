@@ -205,3 +205,121 @@
 - Empty 객체의 존재
   - 상태를 표현하기 위해서 Empty 객체를 만들었는데, 32개의 Piece만으로도 충분한데 굳이 32개의 Empty가 추가로 생기는 게 괜찮을까요?
 - Type Interface의 바디에 아무것도 들지 않았는데 이런 방법도 괜찮을까요?
+
+### **3단계 - 승패 및 점수**
+
+1. 기능 요구 사항
+- 체스 게임은 상대편 King이 잡히는 경우 게임에서 진다. King이 잡혔을 때 게임을 종료해야 한다.
+- 체스 게임은 현재 남아 있는 말에 대한 점수를 구할 수 있어야 한다.
+- "status" 명령을 입력하면 각 진영의 점수를 출력하고 어느 진영이 이겼는지 결과를 볼 수 있어야 한다.
+
+2. 점수 계산 규칙
+- 체스 프로그램에서 현재까지 남아 있는 말에 따라 점수를 계산할 수 있어야 한다.
+- 각 말의 점수는 queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+- pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
+- king은 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
+- 한 번에 한 쪽의 점수만을 계산해야 한다.
+
+### **추가된 기능들**
+
+### chessBoard 패키지
+- [x] ChessBoard
+  - 현재 King 이 잡힌 상태인지 반환
+  - Color 별로 점수 계산
+  - Color 별로 King 의 존재 여부 반환
+- [x] ColorScore
+  - Color, Score 를 담은 객체
+- [x] GameResult
+  - Win, Lose, Draw 와 그에 따른 메세지가 담겨있는 객체
+- [x] Result
+  - Color 별 승패 여부가 담긴 객체
+- [x] Score
+  - Color 별 점수가 담긴 객체
+- [x] StatusResult
+  - Status 명령어가 들어왔을 때 반환할 객체
+  - Score 를 가진다.
+  - Result 를 가진다.
+- [x] ChessGame
+  - King 이 잡힌 상태인지 반환한다.
+    - King 이 잡힌 상태이면, Result 를 반환한다.
+  - Status 가 들어오면 StatusResult 를 반환한다.
+- [x] ChessGameController
+  - King 이 잡혔을 때 게임이 종료된다.
+  - Status 명령어가 들어왔을 때 게임이 종료된다.
+- [x] OutputView
+  - 승패 여부를 출력한다.
+  - 점수를 출력한다.
+
+### **4단계 - DB 적용**
+
+1. 필수 요구사항
+- 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+- DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+2. 선택 요구사항
+- 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다.
+- 사용자별로 체스 게임 기록을 관리할 수 있다.
+
+### **추가된 기능들**
+
+### DataBase 구조
+
+![img_1.png](img_1.png)
+
+- Chess_Board.game_id -> Chess_Game.id 형태의 연관관계
+- 외래키 제약 조건을 on delete cascade 로 하여, 관련된 Chess_Game 레코드가 삭제되었을 때, 자동으로 Chess_Board 도 삭제도 되도록 하였음
+
+### dao 패키지
+- [x] JdbcChessGameDao
+  - save, select, update, delete 인터페이스를 제공한다. 
+  - [x] ChessGameDao
+    - 모든 체스 게임 목록을 받아올 수 있다. 
+    - 체스 보드를 저장할 수 있다.
+    - 체스 보드를 꺼내올 수 있다.
+    - 체스 보드를 업데이트 할 수 있다.
+    - 체스 보드를 삭제할 수 있다.
+
+### Type 패키지
+- [x] Piece Type
+  - INIT_PAWN 추가
+
+### Piece 패키지
+- [x] Color
+  - NONE 추가
+
+### View 패키지
+- [x] OutputView
+  - printStartMessage() 기능에 방 목록 출력 기능 추가
+
+### Controller
+- [x] ChessController
+  - 기존의 ChessGame -> ChessGameDao 로 변경
+  - 입장할 체스 게임의 ID 를 인스턴스 변수로 추가
+
+### DDL 
+
+- Chess Game
+```sql
+CREATE TABLE `chess_game` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `turn` varchar(45) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id_UNIQUE` (`id`)
+)
+```
+
+- Chess Board
+```sql
+CREATE TABLE `chess_board` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `x` int NOT NULL,
+    `y` int NOT NULL,
+    `piece_type` varchar(45) NOT NULL,
+    `piece_color` varchar(45) NOT NULL,
+    `game_id` int NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id_UNIQUE` (`id`),
+    KEY `game_id` (`game_id`),
+    CONSTRAINT `chess_board_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `chess_game` (`id`) ON DELETE CASCADE
+)
+```
+

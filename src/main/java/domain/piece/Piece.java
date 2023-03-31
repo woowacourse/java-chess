@@ -3,7 +3,6 @@ package domain.piece;
 import domain.chessboard.SquareStatus;
 import domain.chessboard.Type;
 import domain.coordinate.MovePosition;
-import domain.coordinate.Position;
 
 public abstract class Piece implements SquareStatus {
 
@@ -23,6 +22,11 @@ public abstract class Piece implements SquareStatus {
     @Override
     public final Color getColor() {
         return color;
+    }
+
+    @Override
+    public final double getScore() {
+        return pieceType.getValue();
     }
 
     protected final void validateMovable(MovePosition movePosition) {

@@ -1,14 +1,24 @@
 package domain;
 
+import controller.Result;
+import controller.StatusResult;
 import domain.chessboard.ChessBoard;
+import domain.chessboard.GameResult;
+import domain.chessboard.Score;
+import domain.chessboard.Square;
 import domain.chessboard.Type;
 import domain.coordinate.MovePosition;
 import domain.coordinate.PositionFactory;
 import domain.piece.Color;
+import domain.piece.Pawn;
 import domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
+import static domain.piece.Color.BLACK;
+import static domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -69,7 +79,7 @@ class ChessGameTest {
 
         //then
         final Color a5 = chessBoard.findSquare(PositionFactory.createPosition("a5")).getSquareStatus().getColor();
-        assertThat(a5).isEqualTo(Color.BLACK);
+        assertThat(a5).isEqualTo(BLACK);
     }
 
     @Test
@@ -99,6 +109,162 @@ class ChessGameTest {
         assertThatThrownBy(() -> chessGame.move(MovePosition.of(PositionFactory.createPosition("a1"), PositionFactory.createPosition("a2"))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("잘못된 도착 지점입니다.");
+    }
+
+    /*
+    RNBQKBNR
+    PPPPPPPP
+    ........
+    ........
+    ........
+    ........
+    pppppppp
+    rnbqkbnr
+     */
+    @Test
+    @DisplayName("White, Black 의 점수를 추출하고, 게임결과를 산출한다. (무승부)")
+    void drawByScore() {
+        // Given
+        ChessBoard chessBoard = ChessBoard.generate();
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        // When
+        Score score = Score.of(chessGame.getScoreThisColor(BLACK),
+                chessGame.getScoreThisColor(WHITE));
+        StatusResult statusResult = StatusResult.of(score);
+        Map<Color, Double> scoreValue = score.getValue();
+        Map<Color, GameResult> resultValue = statusResult.getResult().getValue();
+
+        // Then
+        assertThat(scoreValue.get(BLACK)).isEqualTo(38);
+        assertThat(scoreValue.get(WHITE)).isEqualTo(38);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.DRAW);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.DRAW);
+    }
+
+    /*
+    RNBQKBNR
+    PPPPPPPP
+    ........
+    ........
+    ........
+    ........
+    .ppppppp
+    rnbqkbnr
+     */
+    @Test
+    @DisplayName("White, Black 의 점수를 추출하고, 게임결과를 산출한다. (블랙 승)")
+    void blackWinByScore() {
+        // Given
+        ChessBoard chessBoard = ChessBoard.generate();
+        chessBoard.findSquare(PositionFactory.createPosition("a2")).liftPiece();
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        // When
+        Score score = Score.of(chessGame.getScoreThisColor(BLACK),
+                chessGame.getScoreThisColor(WHITE));
+        StatusResult statusResult = StatusResult.of(score);
+        Map<Color, Double> scoreValue = score.getValue();
+        Map<Color, GameResult> resultValue = statusResult.getResult().getValue();
+
+        // Then
+        assertThat(scoreValue.get(BLACK)).isEqualTo(38);
+        assertThat(scoreValue.get(WHITE)).isEqualTo(37);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.WIN);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.LOSE);
+    }
+
+    /*
+    RNBQKBNR
+    PPPPPPPP
+    ........
+    ........
+    p.......
+    p.......
+    pppppppp
+    rnbqkbnr
+     */
+    @Test
+    @DisplayName("Pawn 이 세로줄에 2개 이상 있을 시에 0.5점으로 치환된다.")
+    void threePawninColumn() {
+        // Given
+        ChessBoard chessBoard = ChessBoard.generate();
+        chessBoard.findSquare(PositionFactory.createPosition("a3")).putPiece(new Square(new Pawn(WHITE)));
+        chessBoard.findSquare(PositionFactory.createPosition("a4")).putPiece(new Square(new Pawn(WHITE)));
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        // When
+        Score score = Score.of(chessGame.getScoreThisColor(BLACK),
+                chessGame.getScoreThisColor(WHITE));
+        StatusResult statusResult = StatusResult.of(score);
+        Map<Color, Double> scoreValue = score.getValue();
+        Map<Color, GameResult> resultValue = statusResult.getResult().getValue();
+
+        // Then
+        assertThat(scoreValue.get(BLACK)).isEqualTo(38);
+        assertThat(scoreValue.get(WHITE)).isEqualTo(38.5);
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.LOSE);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.WIN);
+    }
+
+    /*
+    RNBQKBNR
+    PPPPPPPP
+    ........
+    ........
+    ........
+    ........
+    pppppppp
+    rnbq.bnr
+     */
+    @Test
+    @DisplayName("King 으로 게임 결과를 결정한다 (블랙 승)")
+    void blackWin() {
+        // Given
+        ChessBoard chessBoard = ChessBoard.generate();
+        chessBoard.findSquare(PositionFactory.createPosition("e1")).liftPiece();
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        // When
+        Result result = Result.createByKingDead(
+                chessGame.getExistKingThisColor(BLACK),
+                chessGame.getExistKingThisColor(WHITE)
+        );
+        Map<Color, GameResult> resultValue = result.getValue();
+
+        // Then
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.WIN);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.LOSE);
+    }
+
+    /*
+    RNBQ.BNR
+    PPPPPPPP
+    ........
+    ........
+    ........
+    ........
+    pppppppp
+    rnbqkbnr
+     */
+    @Test
+    @DisplayName("King 으로 게임 결과를 결정한다 (흰색 승)")
+    void whiteWin() {
+        // Given
+        ChessBoard chessBoard = ChessBoard.generate();
+        chessBoard.findSquare(PositionFactory.createPosition("e8")).liftPiece();
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        // When
+        Result result = Result.createByKingDead(
+                chessGame.getExistKingThisColor(BLACK),
+                chessGame.getExistKingThisColor(WHITE)
+        );
+        Map<Color, GameResult> resultValue = result.getValue();
+
+        // Then
+        assertThat(resultValue.get(BLACK)).isEqualTo(GameResult.LOSE);
+        assertThat(resultValue.get(WHITE)).isEqualTo(GameResult.WIN);
     }
 
 }

@@ -20,7 +20,7 @@ public class InputView {
     }
 
     private static void validate(List<String> input) {
-        if (input.size() != 1 && input.size() != 3) {
+        if (input.size() < 1 || input.size() > 3) {
             throw new IllegalStateException("안내된 명령어만 입력해주세요.");
         }
     }

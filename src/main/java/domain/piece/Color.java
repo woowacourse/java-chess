@@ -4,13 +4,20 @@ import java.util.Arrays;
 
 public enum Color {
 
-    BLACK, WHITE;
+    BLACK, WHITE, NONE;
 
     public Color reverse() {
         return Arrays.stream(values())
-                .filter(value -> value != this)
+                .filter(value -> value != this && value != NONE)
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    public static Color fromName(String name) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 
     public boolean isWhite() {

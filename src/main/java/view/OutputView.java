@@ -2,19 +2,32 @@ package view;
 
 import domain.chessboard.ChessBoard;
 import domain.chessboard.EmptyType;
+import domain.chessboard.GameResult;
 import domain.chessboard.Rank;
+import controller.Result;
+import domain.chessboard.Score;
 import domain.chessboard.Square;
+import controller.StatusResult;
 import domain.piece.Color;
 
 import java.util.List;
 
 public class OutputView {
 
-    public static void printStartMessage() {
+    public static void printStartMessage(List<String> roomsId) {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
+        printRooms(roomsId);
+        System.out.println("> 새로운 게임 시작 : start new");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
+    private static void printRooms(List<String> roomsId) {
+        roomsId.forEach((OutputView::printRoom));
+    }
+
+    private static void printRoom(String roomId) {
+        System.out.printf("> Room Id : %s (해당 게임 시작 명령어 : start %s)\n", roomId, roomId);
     }
 
     public static void printErrorMessage(String message) {
@@ -44,6 +57,29 @@ public class OutputView {
             return elementName.toUpperCase();
         }
         return elementName;
+    }
+
+    public static void printStatusResult(StatusResult statusResult) {
+        printScore(statusResult.getScore());
+        printResult(statusResult.getResult());
+    }
+
+    private static void printScore(Score score) {
+        score.getValue()
+                .forEach(OutputView::printScoreFormat);
+    }
+
+    public static void printResult(Result result) {
+        result.getValue()
+                .forEach(OutputView::printResultFormat);
+    }
+
+    private static void printScoreFormat(Color color, double value) {
+        System.out.printf("%s : %s점\n", color, value);
+    }
+
+    private static void printResultFormat(Color color, GameResult gameResult) {
+        System.out.printf("%s : %s\n", color, gameResult.getValue());
     }
 
 }

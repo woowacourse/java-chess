@@ -1,6 +1,5 @@
 package domain.chessboard;
 
-import domain.chessboard.RankFactory;
 import domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

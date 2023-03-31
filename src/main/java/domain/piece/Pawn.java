@@ -1,7 +1,6 @@
 package domain.piece;
 
 import domain.coordinate.MovePosition;
-import domain.coordinate.Position;
 import domain.coordinate.Route;
 
 import java.util.Collections;
@@ -9,7 +8,7 @@ import java.util.Collections;
 public class Pawn extends PawnFeature {
 
     public Pawn(final Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override
