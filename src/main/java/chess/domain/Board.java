@@ -25,9 +25,9 @@ public class Board {
             throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
         Piece sourcePiece = board.getOrDefault(source, new Empty());
-        if (sourcePiece.getPieceType() == PAWN && sourcePiece.isInitialPawn()) {
-            sourcePiece = new Pawn(sourcePiece.getTeam());
-        }
+//        if (sourcePiece.getPieceType() == PAWN && sourcePiece.isInitialPawn()) {
+//            sourcePiece = new Pawn(sourcePiece.getTeam());
+//        }
         board.put(destination, sourcePiece);
         board.remove(source);
 
@@ -40,7 +40,8 @@ public class Board {
 
         Piece sourcePiece = board.getOrDefault(source, new Empty());
         Piece destinationPiece = board.getOrDefault(destination, new Empty());
-        sourcePiece.validateMovement(fileInterval, rankInterval, destinationPiece);
+//        sourcePiece.validateMovement(fileInterval, rankInterval, destinationPiece);
+        sourcePiece.validateMovement(source, destination, destinationPiece);
 
         if (sourcePiece.getPieceType() == KNIGHT) {
             return true;

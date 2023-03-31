@@ -1,14 +1,17 @@
 package chess.controller;
 
 import chess.db.dao.BoardDao;
+import chess.db.dao.TurnDao;
 import chess.domain.Board;
 import chess.domain.BoardGenerator;
 import chess.domain.ChessGame;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,8 @@ public class GameController {
     private final OutputView outputView;
     private final Map<Command, Action> commandAction = new EnumMap<>(Command.class);
     private Command status = READY;
+    BoardDao boardDao = new BoardDao();
+    TurnDao turnDao = new TurnDao();
 
     public GameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
@@ -33,19 +38,12 @@ public class GameController {
         commandAction.put(START, (chessGame, ignore) -> start(chessGame));
         commandAction.put(STATUS, (chessGame, ignore) -> status(chessGame));
         commandAction.put(MOVE, this::move);
-        commandAction.put(END, (chessGame, ignore) -> end());
+        commandAction.put(END, (chessGame, ignore) -> end(chessGame));
     }
 
     public void run() {
         outputView.printGameStart();
-        BoardDao boardDao = new BoardDao();
-        Map<Square, Piece> storedBoard = boardDao.select();
-        if (storedBoard == null) {
-            storedBoard = BoardGenerator.init();
-            boardDao.insert(storedBoard);
-        }
-        ChessGame chessGame = new ChessGame(new Board(storedBoard), WHITE);
-
+        ChessGame chessGame = makeChessGame();
         Command command;
         do {
             List<String> gameCommand = repeatUntilValidate(() -> play(chessGame));
@@ -54,7 +52,21 @@ public class GameController {
         if (chessGame.isGameEnd()) {
             status(chessGame);
             boardDao.delete();
+            turnDao.delete();
         }
+    }
+
+    private ChessGame makeChessGame() {
+        Map<Square, Piece> storedBoard = boardDao.select();
+        Team team = turnDao.select();
+        if (storedBoard.equals(Collections.emptyMap())) {
+            storedBoard = BoardGenerator.init();
+            boardDao.insert(storedBoard);
+        }
+        if (Team.EMPTY.equals(team)) {
+            team = WHITE;
+        }
+        return new ChessGame(new Board(storedBoard), team);
     }
 
     public List<String> play(final ChessGame chessGame) {
@@ -68,7 +80,7 @@ public class GameController {
 
     private List<String> inputCommand() {
         List<String> gameCommand = inputView.readGameCommand();
-        Command command = Command.from(gameCommand.get(0));
+        Command.from(gameCommand.get(0));
         return gameCommand;
     }
 
@@ -93,11 +105,13 @@ public class GameController {
 
     private void move(final ChessGame chessGame, final List<String> gameCommand) {
         validateMoveCommandFormat(gameCommand);
-        chessGame.movePiece(gameCommand.get(1), gameCommand.get(2));
+        chessGame.movePiece(boardDao, gameCommand.get(1), gameCommand.get(2));
         outputView.printChessBoard(chessGame.getBoard());
+        turnDao.insert(chessGame.getTeam());
     }
 
-    private void end() {
+    private void end(final ChessGame chessGame) {
+        turnDao.insert(chessGame.getTeam());
     }
 
     private void validateMoveCommandFormat(final List<String> gameCommand) {

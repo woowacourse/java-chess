@@ -16,12 +16,12 @@ import static chess.domain.Team.BLACK;
 import static chess.domain.Team.WHITE;
 
 import chess.domain.piece.ordinary.Bishop;
-import chess.domain.piece.pawn.InitialPawn;
 import chess.domain.piece.ordinary.King;
 import chess.domain.piece.ordinary.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.ordinary.Queen;
 import chess.domain.piece.ordinary.Rook;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -62,6 +62,6 @@ public class BoardGenerator {
 
     private void initPawn(final Rank rank, final Team team) {
         Arrays.stream(File.values())
-                .forEach(file -> pieces.put(Squares.getSquare(file, rank), new InitialPawn(team)));
+                .forEach(file -> pieces.put(Squares.getSquare(file, rank), new Pawn(team)));
     }
 }

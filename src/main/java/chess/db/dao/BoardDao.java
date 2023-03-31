@@ -9,6 +9,7 @@ import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
 import java.sql.*;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class BoardDao {
             throw new RuntimeException(e);
         }
         if (pieces.isEmpty()) {
-            return null;
+            return Collections.emptyMap();
         }
         return pieces;
     }

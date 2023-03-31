@@ -25,12 +25,11 @@ public class ChessGame {
         this.team = team;
     }
 
-    public void movePiece(final String sourceInput, final String destinationInput) {
+    public void movePiece(final BoardDao boardDao, final String sourceInput, final String destinationInput) {
         Square source = convertSquare(sourceInput);
         Square destination = convertSquare(destinationInput);
         validateSameTeam(source);
         Piece origin = board.move(source, destination);
-        BoardDao boardDao = new BoardDao();
         boardDao.update(source, destination);
         if (origin.getPieceType() != PieceType.EMPTY) {
             boardDao.deleteBySquare(source);
@@ -82,5 +81,9 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }

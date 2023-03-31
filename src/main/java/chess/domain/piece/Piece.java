@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
 public abstract class Piece {
     private final Team team;
@@ -11,8 +14,11 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public final void validateMovement(final int fileInterval, final int rankInterval, final Piece target) {
-        if (!isValidMove(fileInterval, rankInterval, target) || !isValidTeam(target)) {
+    public final void validateMovement(final Square source, final Square destination, final Piece target) {
+        int fileInterval = File.calculate(source.getFile(), destination.getFile());
+        int rankInterval = Rank.calculate(source.getRank(), destination.getRank());
+
+        if (!isValidMove(fileInterval, rankInterval, target) || !isValidTeam(target) || !isValidPawnMove(source.getRank(), fileInterval, rankInterval)) {
             throw new IllegalArgumentException("같은 팀 말은 공격할 수 없습니다.");
         }
     }
@@ -21,7 +27,7 @@ public abstract class Piece {
 
     public abstract boolean isValidTeam(final Piece target);
 
-    public abstract boolean isInitialPawn();
+    public abstract boolean isValidPawnMove(Rank rank, int fileInterval, int rankInterval);
 
     public Team getTeam() {
         return team;

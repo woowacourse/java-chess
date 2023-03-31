@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.ordinary.Knight;
-import chess.domain.piece.pawn.InitialPawn;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -23,7 +23,7 @@ class BoardGeneratorTest {
         Square square2 = Squares.getSquare(File.G, Rank.EIGHT);
 
         assertThat(pieces).hasSize(32);
-        assertThat(pieces.get(square1)).isInstanceOf(InitialPawn.class);
+        assertThat(pieces.get(square1)).isInstanceOf(Pawn.class);
         assertThat(pieces.get(square2)).isInstanceOf(Knight.class);
     }
 }
