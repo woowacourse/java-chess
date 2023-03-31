@@ -4,8 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
-import chess.domain.result.Judge;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 
 import java.util.ArrayList;
@@ -39,19 +37,13 @@ public class KingDiedGame implements ChessGame {
 
     @Override
     public Color findWinner() {
-        Color sideKingDied = Judge.findSideKingDied(board);
-        if (sideKingDied.equals(Color.BLACK)) {
-            return Color.WHITE;
-        }
-        if (sideKingDied.equals(Color.WHITE)) {
-            return Color.BLACK;
-        }
-        return Color.NOTHING;
+        Color colorKingDied = board.findColorKingDied();
+        return colorKingDied.findOpponent();
     }
 
     @Override
-    public Map<Color, Score> status() {
-        return Judge.calculateScore(board);
+    public Map<Color, Double> status() {
+        return board.calculateScore();
     }
 
     @Override

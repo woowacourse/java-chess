@@ -2,9 +2,9 @@ package chess.domain.chessgame;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 
+import javax.print.attribute.standard.Sides;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class PauseChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Color, Score> status() {
+    public Map<Color, Double> status() {
         throw new IllegalArgumentException(ERROR_MESSAGE);
     }
 

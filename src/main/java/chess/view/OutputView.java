@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 
 import java.util.Collections;
@@ -39,9 +38,9 @@ public class OutputView {
         System.out.println("게임 종료");
     }
 
-    public void printStatus(Map<Color, Score> status) {
+    public void printStatus(Map<Color, Double> status) {
         for (Color color : status.keySet()) {
-            System.out.printf("%s : %.1f 점\n", color.name(), status.get(color).getValue());
+            System.out.printf("%s : %.1f 점\n", color.name(), status.get(color));
         }
     }
 

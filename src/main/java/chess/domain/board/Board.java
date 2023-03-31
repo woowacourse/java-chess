@@ -5,12 +5,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
 
+    public static final int KING_COUNT = 1;
+    public static final int CRITERIA_PAWN_PENALTY = 1;
     private final Map<Square, Piece> board;
     private Color turn;
 
@@ -40,6 +41,68 @@ public class Board {
 
         movePiece(sourceSquare, targetSquare, sourcePiece);
         turn = turn.findOpponent();
+    }
+
+    public Map<Color, Double> calculateScore() {
+        Map<Color, Double> scoreOfColor = new HashMap<>();
+        for (File file : File.values()) {
+            List<Piece> pieces = findPiecesByFile(file);
+            double whiteScore = scoreOfColor.get(Color.WHITE) + calculateScore(Color.WHITE, pieces);
+            scoreOfColor.put(Color.WHITE, whiteScore);
+            double blackScore = scoreOfColor.get(Color.BLACK) + calculateScore(Color.BLACK, pieces);
+            scoreOfColor.put(Color.BLACK, blackScore);
+        }
+        return scoreOfColor;
+    }
+
+    private List<Piece> findPiecesByFile(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> Square.of(file, rank))
+                .map(board::get)
+                .collect(Collectors.toList());
+    }
+
+    private double calculateScore(Color color, List<Piece> pieces) {
+        double score = 0;
+        for (Role role : Role.values()) {
+            score += calculateScoreByRole(pieces, role, color);
+        }
+        return score;
+    }
+
+    private double calculateScoreByRole(final List<Piece> pieces, final Role role, final Color color) {
+        int countPieces = (int) pieces.stream()
+                .filter(piece -> piece.isRole(role) && piece.getColor() == color)
+                .count();
+        if (isPawnPenalty(role, countPieces)) {
+            return countPieces * role.getScore() * 0.5;
+        }
+        return countPieces * role.getScore();
+    }
+
+    private boolean isPawnPenalty(Role role, int countPieces) {
+        return (role == Role.PAWN || role == Role.INITIAL_PAWN)
+                && countPieces > CRITERIA_PAWN_PENALTY;
+    }
+
+    public Color findColorKingDied() {
+        boolean whiteKingAlive = isKingAlive(Color.WHITE);
+        boolean blackKingAlive = isKingAlive(Color.BLACK);
+
+        if (whiteKingAlive && !blackKingAlive) {
+            return Color.BLACK;
+        }
+        if (blackKingAlive && !whiteKingAlive) {
+            return Color.WHITE;
+        }
+        return Color.NOTHING;
+    }
+
+    private boolean isKingAlive(final Color color) {
+        long count = board.values().stream()
+                .filter(piece -> piece.isRole(Role.KING) && piece.getColor() == color)
+                .count();
+        return count >= KING_COUNT;
     }
 
     private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {

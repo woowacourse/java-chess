@@ -5,8 +5,6 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
-import chess.domain.result.Judge;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ public class RunningChessGame implements ChessGame {
     }
 
     private ChessGame checkKingDead() {
-        Color sideKingDied = Judge.findSideKingDied(board);
+        Color sideKingDied = board.findColorKingDied();
         if (sideKingDied.equals(Color.NOTHING)) {
             return this;
         }
@@ -50,22 +48,22 @@ public class RunningChessGame implements ChessGame {
 
     @Override
     public Color findWinner() {
-        Map<Color, Score> sideScore = status();
-        Score blackScore = sideScore.get(Color.BLACK);
-        Score whiteScore = sideScore.get(Color.WHITE);
-        //TODO: compareTo로 바꾸기
-        if (blackScore.getValue() > whiteScore.getValue()) {
+        Map<Color, Double> sideScore = status();
+        Double whiteScore = sideScore.get(Color.WHITE);
+        Double blackScore = sideScore.get(Color.BLACK);
+
+        if (whiteScore.compareTo(blackScore) > 0) {
             return Color.BLACK;
         }
-        if (blackScore.getValue() < whiteScore.getValue()) {
+        if (whiteScore.compareTo(blackScore) < 0) {
             return Color.WHITE;
         }
         return Color.NOTHING;
     }
 
     @Override
-    public Map<Color, Score> status() {
-        return Judge.calculateScore(board);
+    public Map<Color, Double> status() {
+        return board.calculateScore();
     }
 
     @Override

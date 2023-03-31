@@ -3,7 +3,6 @@ package chess.domain.chessgame;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class InitChessGame implements ChessGame {
     }
 
     @Override
-    public Map<Color, Score> status() {
+    public Map<Color, Double> status() {
         throw new IllegalArgumentException(ERROR_MESSAGE);
     }
 

@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.chessgame.ChessGame;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 import chess.view.OutputView;
 
@@ -12,7 +11,7 @@ public class StatusCommand implements Command {
 
     @Override
     public ChessGame execute(final ChessGame chessGame, final List<String> input, final OutputView outputView) {
-        Map<Color, Score> status = chessGame.status();
+        Map<Color, Double> status = chessGame.status();
         outputView.printStatus(status);
         return chessGame;
     }

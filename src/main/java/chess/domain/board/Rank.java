@@ -22,11 +22,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.position == value)
                 .findFirst()
-                .orElseThrow(
-                        () -> {
-                            throw new IllegalArgumentException("해당 값의 랭크가 없습니다.");
-                        }
-                );
+                .orElseThrow(() -> new IllegalArgumentException("해당 값의 랭크가 없습니다."));
     }
 
     public int calculateDifference(final Rank target) {

@@ -2,7 +2,6 @@ package chess.domain.chessgame;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.result.Score;
 import chess.domain.side.Color;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface ChessGame {
 
     Color findWinner();
 
-    Map<Color, Score> status();
+    Map<Color, Double> status();
 
     List<List<Piece>> findChessBoard();
 
