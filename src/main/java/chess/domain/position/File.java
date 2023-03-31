@@ -31,4 +31,20 @@ public enum File {
         return foundFile.address;
     }
 
+    public static String findByAddress(final int address) {
+        return Arrays.stream(values())
+            .filter(file -> file.address == address)
+            .findAny()
+            .map(file -> file.index)
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_FILE_ERROR_MESSAGE));
+    }
+
+    public static int min() {
+        return A.address;
+    }
+
+    public static int max() {
+        return H.address;
+    }
+
 }

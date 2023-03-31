@@ -31,4 +31,12 @@ public enum Rank {
             .orElseThrow(() -> new IllegalArgumentException(WRONG_RANK_ERROR_MESSAGE));
     }
 
+    public static String findByAddress(final int address) {
+        return Arrays.stream(values())
+            .filter(rank -> rank.address == address)
+            .findAny()
+            .map(rank -> rank.index)
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_RANK_ERROR_MESSAGE));
+    }
+
 }

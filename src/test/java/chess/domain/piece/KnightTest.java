@@ -16,7 +16,7 @@ class KnightTest {
     void 이동_범위_확인() {
         Knight knight = new Knight(TeamColor.WHITE);
 
-        MovablePaths paths = knight.findMovablePaths(Position.of(2, 2));
+        MovablePaths paths = knight.findMovablePaths(Position.from("B2"));
 
         assertThat(paths.getTotalPositionCount()).isEqualTo(4);
     }

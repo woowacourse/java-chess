@@ -6,6 +6,65 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+
+
+## 어플리케이션 실행 시, 데이터베이스 연동 방법
+
+### 1. 어플리케이션 실행 시 테이블 자동 생성
+- docker 폴더로 이동
+```
+cd docker
+```
+  - docker 실행
+```
+docker-compose -p chess up -d
+```
+  - 어플리케이션 실행 시, Connection 이 생성되면서 테이블이 자동 생성된다.
+- docker 종료
+```
+docker-compose -p chess down
+```
+
+
+<br>
+
+### 2. 테이블을 직접 생성할 경우
+```
+cd docker
+docker-compose -p chess up -d
+docker exec -it chess-db-1 bash
+mysql -u user -p
+```
+- 비밀번호에 `password` 입력
+```sql
+use chess;
+```
+```sql
+CREATE TABLE IF NOT EXISTS `game` (
+    `game_id` bigint NOT NULL AUTO_INCREMENT,
+    `turn` varchar(45) NOT NULL,
+    `is_end` tinyint NOT NULL,
+    PRIMARY KEY (`game_id`)
+    );
+```
+
+```sql
+CREATE TABLE IF NOT EXISTS `piece` (
+    `piece_id` bigint NOT NULL AUTO_INCREMENT,
+    `type` varchar(45) NOT NULL,
+    `position` varchar(45) NOT NULL,
+    `color` varchar(45) NOT NULL,
+    `game_id` bigint NOT NULL,
+    PRIMARY KEY (`piece_id`),
+    FOREIGN KEY (`game_id`) REFERENCES `game` (`game_id`) ON UPDATE CASCADE
+    );
+```
+
+```sql
+show tables;
+```
+
+
 ## 기능 목록
 
 ### 체스 규칙
@@ -28,6 +87,14 @@
     - 앞뒤양옆, 대각선으로 1칸만 이동 가능하다.
 - 퀸
     - 앞뒤양옆, 대각선으로 장애물이 없을 때까지 원하는 만큼 이동 가능하다.
+
+
+### 게임 재시작 규칙
+
+- 한 번에 하나의 게임만 진행된다. (Room 기능 미구현)
+- 게임 시작이 요청되었을 때, 저장된 가장 마지막 게임이 종료되지 않았다면 (즉 King 이 잡히지 않았다면) 해당 게임을 이어서 진행한다.
+- 마지막 게임이 종료되었다면 새로운 게임을 시작한다.
+- 사용자가 END 를 입력했을 때, 어플리케이션을 강제 종료했을 때 모두 게임 상태가 저장된다.
 
 ### 시퀀스 다이어그램
 
@@ -62,6 +129,18 @@ sequenceDiagram
 
 - ChessGame
     - [x] 현재 플레이어 턴을 관리한다.
+    - [x] King 이 잡히면 게임을 종료한다.
+      - [x] 게임이 종료되면 Game 테이블의 `is_end` 필드를 true 로 바꾼다.
+    - [x] King 이 잡힌 팀을 기준으로 우승팀을 결정한다.
+    - [x] 체스말의 이동이 이루어졌다면 변경 사항을 반영한다.
+    - [x] 진행 중이던 게임을 반환하거나, 없다면 새 게임을 생성한다.
+- GameResult
+    - [x] 체스판에 남아있는 말들의 점수를 계산한다.
+        - [x] 한 번에 한 진영의 말들만 계산한다.
+- Pieces
+    - [x] 한 열에 있는 체스말들의 점수를 계산한다.
+        - [x] 킹(King: 0점), 퀸(Queen: 9점), 룩(Rook: 5점), 비숍(Bishop: 3점), 나이트(Knight: 2.5점) 으로 고정이다.
+        - [x] 폰(Pawn) 의 기본 점수는 1점이며, 같은 세로줄 (File)에 같은 진영의 폰이 있다면 0.5점으로 계산한다.
 - ChessBoard
     - [x] 비어 있는 체스판을 생성한다.
         - [x] 체스판에 초기 말을 세팅한다.
@@ -72,6 +151,8 @@ sequenceDiagram
             - [x] `예외` 출발지와 도착지가 동일할 수 없다.
         - [x] 도착지로의 경로를 따라 이동이 가능한지 확인한다.
             - [x] `예외` 이동 경로에 다른 말이 있으면(장애물) 이동할 수 없다.
+    - [x] King 이 잡히는 경우를 확인한다.
+        - [x] King 이 잡히면 ChessGame 에게 해당 사실을 알린다.
 - Piece
     - [x] 말은 움직일 수 있고, 종류 별로 구현할 수 있다.
         - [x] 종류에는 킹(King), 퀸(Queen), 룩(Rook), 비숍(Bishop), 나이트(Knight), 폰(Pawn)이 있다.
@@ -99,6 +180,8 @@ sequenceDiagram
     - [x] 초기 세팅 된 체스판을 출력한다.
     - [x] 이동 결과를 출력한다.
     - [x] 말의 타입과 색에 따라 이름을 출력한다.
+    - [x] 각 진영별 점수, 이긴 진영을 출력한다.
+      - [x] 아직 King 이 잡히지 않은 상황에서 출력이 요청되면 점수는 출력하고 이긴 진영은 안내하지 않는다.
 - 입력
     - [x] 게임 명령어를 입력받는다. (start, end, move)
         - [x] 입력이 end 일 때 까지 입력 받는다.
@@ -106,3 +189,4 @@ sequenceDiagram
         - [x] 입력이 move 일 때는 출발지와 도착지 경로를 함께 입력받는다.
             - [x] `예외` 입력이 move 일 때, 출발지나 도착지 정보가 유효하지 않으면 예외를 발생시킨다.
     - [x] 이동 위치를 입력받는다.
+    - [x] 현재 상황의 점수 계산, 이긴 진영을 확인하기 위해 status 를 입력받는다.

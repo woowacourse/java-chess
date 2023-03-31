@@ -1,10 +1,19 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.dao.ChessGameDao;
+import chess.dao.ConnectionProvider;
+import chess.dao.JdbcTemplate;
+import chess.dao.PieceDao;
+import chess.service.ChessService;
 
 public class ChessApplication {
+
     public static void main(String[] args) {
-        ChessController chessController = new ChessController();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionProvider.getConnection());
+        ChessController chessController = new ChessController(
+            new ChessService(new ChessGameDao(jdbcTemplate), new PieceDao(jdbcTemplate)));
         chessController.run();
     }
+
 }

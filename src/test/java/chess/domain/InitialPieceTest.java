@@ -15,8 +15,8 @@ class InitialPieceTest {
     @DisplayName("같은 색, 같은 종류의 말이면 같은 객체이다.")
     void 같은_색_같은_종류_말_캐싱() {
         Map<Position, Piece> piecesWithPosition = InitialPiece.getPiecesWithPosition();
-        Position firstWhiteRookPosition = Position.of(1, 1);
-        Position secondWhiteRookPosition = Position.of(8, 1);
+        Position firstWhiteRookPosition = Position.from("A1");
+        Position secondWhiteRookPosition = Position.from("H1");
 
         assertThat(piecesWithPosition.get(firstWhiteRookPosition)).isSameAs(
             piecesWithPosition.get(secondWhiteRookPosition));
@@ -26,8 +26,8 @@ class InitialPieceTest {
     @DisplayName("다른 색이면 같은 종류의 말이어도 다른 객체이다.")
     void 다른_색_같은_종류_말_캐싱() {
         Map<Position, Piece> piecesWithPosition = InitialPiece.getPiecesWithPosition();
-        Position blackRookPosition = Position.of(8, 8);
-        Position whiteRookPosition = Position.of(8, 1);
+        Position blackRookPosition = Position.from("H8");
+        Position whiteRookPosition = Position.from("H1");
 
         assertThat(piecesWithPosition.get(whiteRookPosition)).isNotSameAs(
             piecesWithPosition.get(blackRookPosition));

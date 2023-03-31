@@ -29,4 +29,14 @@ public enum TeamColor {
         return TeamColor.WHITE;
     }
 
+    public static TeamColor findByName(final String name) {
+        if (name.equalsIgnoreCase(WHITE.name())) {
+            return WHITE;
+        }
+        if (name.equalsIgnoreCase(BLACK.name())) {
+            return BLACK;
+        }
+        throw new IllegalArgumentException("존재하지 않는 팀 컬러 입니다.");
+    }
+
 }

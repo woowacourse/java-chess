@@ -45,17 +45,17 @@ public class PositionTest {
     @DisplayName("전달 받은 방향에 따른 다음 위치를 반환한다.")
     @Test
     void 다음_이동_위치_반환() {
-        Position current = Position.of(1, 1);
+        Position current = Position.from("A1");
 
         Position next = current.findNextPosition(Direction.NORTH_EAST);
 
-        assertThat(next).isEqualTo(Position.of(2, 2));
+        assertThat(next).isEqualTo(Position.from("B2"));
     }
 
     @DisplayName("전달 받은 방향에 따른 다음 위치가 범위 밖이라면, null 이 반환된다.")
     @Test
     void 다음_이동_불가() {
-        Position current = Position.of(8, 1);
+        Position current = Position.from("H1");
 
         Position next = current.findNextPosition(Direction.EAST);
 
@@ -65,9 +65,9 @@ public class PositionTest {
     @DisplayName("전달 받은 위치가 현재 위치로부터 대각선 한 칸 앞이면 참을 반환한다.")
     @Test
     void 대각선_한칸앞_확인() {
-        Position current = Position.of(1, 1);
+        Position current = Position.from("A1");
 
-        assertThat(current.isOneStepForwardDiagonal(Position.of(2, 2)))
+        assertThat(current.isOneStepForwardDiagonal(Position.from("B2")))
             .isTrue();
     }
 

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.path.MovablePaths;
 import chess.domain.position.Position;
 import chess.domain.TeamColor;
@@ -17,9 +18,21 @@ public abstract class Piece {
 
     public abstract MovablePaths findMovablePaths(final Position position);
 
-    public abstract boolean canMoveToEmptySquare(final Position source, final Position dest);
+    public boolean canMoveToEmptySquare(final Position source, final Position dest) {
+        return true;
+    }
 
-    public abstract boolean canAttack(final Piece target, final Position source, final Position dest);
+    public boolean canAttack(final Piece target, final Position source, final Position dest) {
+        return target.isDifferentColor(color);
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
 
     public boolean isDifferentColor(final TeamColor color) {
         return !isSameColor(color);
@@ -35,6 +48,14 @@ public abstract class Piece {
 
     public PieceType getType() {
         return type;
+    }
+
+    public Score getScore() {
+        return type.getScore();
+    }
+
+    public boolean isSameColorAndType(final TeamColor color, final PieceType type) {
+        return this.color == color && this.type == type;
     }
 
     @Override
@@ -53,5 +74,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, type);
     }
-
 }
