@@ -47,7 +47,7 @@ public class ChessService {
     public void start(int gameId, ChessGame chessGame) {
         chessGame.start();
 
-        gameDao.create(gameId, makeGameInfoDto(chessGame));
+        gameDao.create(makeGameInfoDto(gameId, chessGame));
 
         Map<Position, Piece> board = chessGame.getBoard().getPositionAndPiece();
         for (Entry<Position, Piece> positionAndPiece : board.entrySet()) {
@@ -61,7 +61,7 @@ public class ChessService {
         Piece movablePiece = chessGame.getBoard().getPieceAtPosition(source);
 
         chessGame.move(arguments);
-        gameDao.updateById(gameId, makeGameInfoDto(chessGame));
+        gameDao.updateById(makeGameInfoDto(gameId, chessGame));
         pieceDao.updateById(gameId, makePieceInfoDto(source, Empty.create(Color.NONE)));
         pieceDao.updateById(gameId, makePieceInfoDto(destination, movablePiece));
     }
@@ -69,11 +69,11 @@ public class ChessService {
     public void end(int gameId, ChessGame chessGame) {
         chessGame.end();
 
-        gameDao.updateById(gameId, makeGameInfoDto(chessGame));
+        gameDao.updateById(makeGameInfoDto(gameId, chessGame));
     }
 
-    private GameInfoDto makeGameInfoDto(ChessGame chessGame) {
-        return GameInfoDto.create(chessGame.getStatus(), chessGame.getTurn());
+    private GameInfoDto makeGameInfoDto(int gameId, ChessGame chessGame) {
+        return GameInfoDto.create(gameId, chessGame.getStatus(), chessGame.getTurn());
     }
 
     private PieceInfoDto makePieceInfoDto(Position position, Piece piece) {

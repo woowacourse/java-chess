@@ -55,7 +55,7 @@ public class JdbcGameDao implements GameDao {
             final var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return GameInfoDto.create(resultSet.getString("game_status"), resultSet.getString("game_turn"));
+                return GameInfoDto.create(gameId, resultSet.getString("game_status"), resultSet.getString("game_turn"));
             } else {
                 return null;
             }
@@ -65,11 +65,11 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public void create(int gameId, GameInfoDto gameInfoDto) {
+    public void create(GameInfoDto gameInfoDto) {
         final var gameQuery = "INSERT INTO game VALUES(?, ?, ?)";
         try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(gameQuery)) {
-            preparedStatement.setInt(1, gameId);
+            preparedStatement.setInt(1, gameInfoDto.getId());
             preparedStatement.setString(2, gameInfoDto.getStatus().name());
             preparedStatement.setString(3, gameInfoDto.getTurn().name());
             preparedStatement.executeUpdate();
@@ -79,13 +79,13 @@ public class JdbcGameDao implements GameDao {
     }
 
     @Override
-    public void updateById(int gameId, GameInfoDto gameInfoDto) {
+    public void updateById(GameInfoDto gameInfoDto) {
         final var sourceQuery = "UPDATE game SET game_status = ?, game_turn = ? WHERE game_id = ?";
         try (final var connection = ConnectionProvider.getConnection();
              final var preparedStatement = connection.prepareStatement(sourceQuery)) {
             preparedStatement.setString(1, gameInfoDto.getStatus().name());
             preparedStatement.setString(2, gameInfoDto.getTurn().name());
-            preparedStatement.setInt(3, gameId);
+            preparedStatement.setInt(3, gameInfoDto.getId());
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
