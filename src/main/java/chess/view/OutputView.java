@@ -33,7 +33,7 @@ public class OutputView {
         for (char column = FIRST_COLUMN; column <= LAST_COLUMN; column++) {
             String rawPosition = String.valueOf(column) + rank;
             ChessPiece chessPiece = chessBoard.get(Position.findPosition(rawPosition));
-            stringBuilder.append(chessPiece.getShape());
+            stringBuilder.append(chessPiece.getShapeToString());
         }
     }
 

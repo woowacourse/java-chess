@@ -12,7 +12,7 @@ public class Position {
     private final Column column;
     private final Rank rank;
 
-    private Position(Column column, Rank rank) {
+    public Position(Column column, Rank rank) {
         this.column = column;
         this.rank = rank;
     }
@@ -152,6 +152,13 @@ public class Position {
         return rank.getSequence();
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 
     @Override
     public boolean equals(Object o) {

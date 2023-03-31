@@ -9,7 +9,6 @@ public class ChessGame {
 
     private final ChessBoard chessBoard;
     private Color color;
-
     private boolean isPlaying;
 
     public ChessGame(ChessBoard chessBoard) {
@@ -82,5 +81,13 @@ public class ChessGame {
 
     public Map<Position, ChessPiece> getChessBoard() {
         return chessBoard.getChessBoard();
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

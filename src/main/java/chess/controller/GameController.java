@@ -48,7 +48,6 @@ public class GameController {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-
             chessGameDao.update(chessGame);
         }
     }

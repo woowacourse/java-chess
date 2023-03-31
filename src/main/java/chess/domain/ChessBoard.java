@@ -61,6 +61,10 @@ public class ChessBoard {
         return new ChessBoard(chessBoard);
     }
 
+    public static ChessBoard makeOnGameChessBoard(Map<Position, ChessPiece> chessBoard) {
+        return new ChessBoard(chessBoard);
+    }
+
     private static void generateRook(HashMap<Position, ChessPiece> chessBoard) {
         chessBoard.put(Position.findPosition(WHITE_ROOK_LEFT), new Rook(Color.WHITE));
         chessBoard.put(Position.findPosition(WHITE_ROOK_RIGHT), new Rook(Color.WHITE));
