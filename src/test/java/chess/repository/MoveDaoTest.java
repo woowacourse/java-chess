@@ -3,9 +3,10 @@ package chess.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.infra.connection.JdbcTemplate;
-import chess.infra.connection.TestConnectionPool;
-import java.util.List;
+import chess.mysql.JdbcTemplate;
+import chess.mysql.TestConnectionPool;
+import chess.repository.chess.MoveDao;
+import chess.repository.chess.MoveDto;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -32,8 +33,8 @@ class MoveDaoTest {
     void findMovesByBoardId() {
         assertThat(moveDao.findMovesByBoardId(3))
                 .containsExactly(
-                        List.of("a2", "a3", "1"),
-                        List.of("a7", "a5", "2")
+                        MoveDto.of(3, "a2", "a3", 1),
+                        MoveDto.of(3, "a7", "a5", 2)
                 );
     }
 
