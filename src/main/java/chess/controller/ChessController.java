@@ -2,7 +2,8 @@ package chess.controller;
 
 import chess.controller.mapper.request.ChessCommandTypeMapper;
 import chess.controller.mapper.request.PositionMapper;
-import chess.domain.ChessGameService;
+import chess.domain.PlayChessGameService;
+import chess.domain.LoadChessGameService;
 import chess.domain.game.ChessCommandType;
 import chess.domain.game.result.GameResult;
 import chess.domain.game.result.MatchResult;
@@ -31,14 +32,16 @@ public final class ChessController {
             ChessCommandType.STATUS, new ChessAction(this::status),
             ChessCommandType.FETCH, new ChessAction(this::load)
     );
-    private final ChessGameService gameService;
+    private final PlayChessGameService playChessGameService;
+    private final LoadChessGameService loadChessGameService;
 
-    public ChessController(ChessGameService gameService) {
-        this.gameService = gameService;
+    public ChessController(PlayChessGameService playChessGameService, LoadChessGameService loadChessGameService) {
+        this.playChessGameService = playChessGameService;
+        this.loadChessGameService = loadChessGameService;
     }
 
     public void run() {
-        outputView.printStartPrefix(gameService.isGameExist());
+        outputView.printStartPrefix(loadChessGameService.isGameExist());
         ChessGame chessGame = new ReadyGame();
 
         do {
@@ -80,14 +83,14 @@ public final class ChessController {
             return;
         }
 
-        gameService.cleanUpGame();
+        loadChessGameService.cleanUpGame();
         List<String> results = GameResultFormatter.convertToGameResult(gameResult);
         outputView.printResult(results);
     }
 
     private ChessGame start(List<String> commands, ChessGame chessGame) {
         validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
-        return gameService.start(chessGame);
+        return playChessGameService.start(chessGame);
     }
 
     private ChessGame move(List<String> commands, ChessGame chessGame) {
@@ -95,22 +98,22 @@ public final class ChessController {
 
         Position from = PositionMapper.toPosition(commands.get(1));
         Position to = PositionMapper.toPosition(commands.get(2));
-        return gameService.move(chessGame, from, to);
+        return playChessGameService.move(chessGame, from, to);
     }
 
     private ChessGame end(List<String> commands, ChessGame chessGame) {
         validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
-        return gameService.end(chessGame);
+        return playChessGameService.end(chessGame);
     }
 
     private ChessGame status(List<String> commands, ChessGame chessGame) {
         validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
-        return gameService.status(chessGame);
+        return playChessGameService.status(chessGame);
     }
 
     private ChessGame load(List<String> commands, ChessGame ignore) {
         validateInputCommandSize(commands, SIMPLE_COMMAND_SIZE);
-        return gameService.loadExistGame();
+        return loadChessGameService.loadExistGame();
     }
 
     private void validateInputCommandSize(List<String> commands, int size) {

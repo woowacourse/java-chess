@@ -1,7 +1,8 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.domain.ChessGameService;
+import chess.domain.PlayChessGameService;
+import chess.domain.LoadChessGameService;
 import chess.domain.repository.BoardDao;
 import chess.domain.repository.PieceDao;
 
@@ -11,8 +12,9 @@ public class Application {
         BoardDao boardDao = new BoardDao();
         PieceDao pieceDao = new PieceDao();
 
-        ChessGameService chessGameService = new ChessGameService(boardDao, pieceDao);
-        ChessController controller = new ChessController(chessGameService);
+        LoadChessGameService loadChessGameService = new LoadChessGameService(boardDao, pieceDao);
+        PlayChessGameService playChessGameService = new PlayChessGameService(boardDao, pieceDao);
+        ChessController controller = new ChessController(playChessGameService, loadChessGameService);
         controller.run();
     }
 }
