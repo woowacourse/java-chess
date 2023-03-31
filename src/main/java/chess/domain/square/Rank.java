@@ -20,8 +20,8 @@ public enum Rank {
         this.index = index;
     }
 
-    public static int calculate(final Rank src, final Rank dst) {
-        return src.index - dst.index;
+    public static int calculate(final Rank source, final Rank destination) {
+        return source.index - destination.index;
     }
 
     public Rank next(final int direction) {
@@ -40,5 +40,9 @@ public enum Rank {
                 .filter(value -> value.index == rankIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank Index를 입력했습니다."));
+    }
+
+    public String getRank() {
+        return rank;
     }
 }

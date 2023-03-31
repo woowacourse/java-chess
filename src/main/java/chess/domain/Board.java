@@ -7,58 +7,50 @@ import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.piece.PieceType.KNIGHT;
-import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.*;
 
 public class Board {
     private final Map<Square, Piece> board;
 
-    public Board() {
-        this.board = BoardGenerator.init();
+    public Board(final Map<Square, Piece> board) {
+        this.board = board;
     }
 
-    public boolean isSameTeam(final Square src, final Team team) {
-        Piece piece = findPieceBy(src);
-        return piece.getTeam() == team;
-    }
-
-    public void move(final Square src, final Square dst) {
-        if (!canMove(src, dst)) {
+    public Piece move(final Square source, final Square destination) {
+        if (!canMove(source, destination)) {
             throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
-        Piece srcPiece = board.getOrDefault(src, new Empty());
-        if (srcPiece.getPieceType() == PAWN && srcPiece.isInitialPawn()) {
-            srcPiece = new Pawn(srcPiece.getTeam());
-        }
-        board.put(dst, srcPiece);
-        board.remove(src);
+        Piece sourcePiece = board.getOrDefault(source, new Empty());
+//        if (sourcePiece.getPieceType() == PAWN && sourcePiece.isInitialPawn()) {
+//            sourcePiece = new Pawn(sourcePiece.getTeam());
+//        }
+        board.put(destination, sourcePiece);
+        board.remove(source);
+
+        return sourcePiece;
     }
 
-    private boolean canMove(final Square src, final Square dst) {
-        int fileInterval = File.calculate(src.getFile(), dst.getFile());
-        int rankInterval = Rank.calculate(src.getRank(), dst.getRank());
+    private boolean canMove(final Square source, final Square destination) {
+        int fileInterval = File.calculate(source.getFile(), destination.getFile());
+        int rankInterval = Rank.calculate(source.getRank(), destination.getRank());
 
-        Piece srcPiece = board.getOrDefault(src, new Empty());
-        Piece dstPiece = board.getOrDefault(dst, new Empty());
-        srcPiece.validateMovement(fileInterval, rankInterval, dstPiece);
+        Piece sourcePiece = board.getOrDefault(source, new Empty());
+        Piece destinationPiece = board.getOrDefault(destination, new Empty());
+//        sourcePiece.validateMovement(fileInterval, rankInterval, destinationPiece);
+        sourcePiece.validateMovement(source, destination, destinationPiece);
 
-        if (srcPiece.getPieceType() == KNIGHT) {
+        if (sourcePiece.getPieceType() == KNIGHT) {
             return true;
         }
-        return canMoveNextSquare(src, fileInterval, rankInterval);
+        return canMoveNextSquare(source, fileInterval, rankInterval);
     }
 
-    private Piece findPieceBy(final Square square) {
-        if (!board.containsKey(square)) {
-            throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
-        }
-        return board.get(square);
-    }
-
-    private boolean canMoveNextSquare(final Square src, final int fileInterval, final int rankInterval) {
-        Square square = src;
+    private boolean canMoveNextSquare(final Square source, final int fileInterval, final int rankInterval) {
+        Square square = source;
         int fileMoveDirection = getMoveDirection(fileInterval);
         int rankMoveDirection = getMoveDirection(rankInterval);
         int interval = getMoveInterval(fileInterval, rankInterval);
@@ -80,7 +72,51 @@ public class Board {
         return Math.max(Math.abs(fileInterval), Math.abs(rankInterval));
     }
 
-    public Map<Square, Piece> getPieces() {
-        return board;
+    public boolean isSameTeam(final Square source, final Team team) {
+        Piece piece = findPieceBy(source);
+        return piece.getTeam() == team;
+    }
+
+    private Piece findPieceBy(final Square square) {
+        if (!board.containsKey(square)) {
+            throw new IllegalArgumentException("말이 있는 위치를 입력해주세요.");
+        }
+        return board.get(square);
+    }
+
+    public boolean isKingDead(final Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .noneMatch(piece -> piece.getPieceType() == KING);
+    }
+
+    public double calculateTeamScore(final Team team) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .map(piece -> piece.getPieceType().getScore())
+                .reduce(0.0 - 0.5 * calculateSameLinePawn(team), Double::sum);
+    }
+
+    private int calculateSameLinePawn(final Team team) {
+        return calculatePawnNumber(team).values()
+                .stream()
+                .filter(count -> count >= 2)
+                .reduce(0, Integer::sum);
+    }
+
+    private Map<File, Integer> calculatePawnNumber(final Team team) {
+        Map<File, Integer> numberOfPawn = new HashMap<>();
+        board.keySet()
+                .stream()
+                .filter(square -> PAWN == board.get(square).getPieceType())
+                .filter(square -> team == board.get(square).getTeam())
+                .forEach(square -> numberOfPawn.put(square.getFile(), numberOfPawn.getOrDefault(square.getFile(), 0) + 1));
+        return numberOfPawn;
+    }
+
+    public Map<Square, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

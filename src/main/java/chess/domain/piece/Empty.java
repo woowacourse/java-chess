@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
+import chess.domain.square.Rank;
 
 public class Empty extends Piece{
 
@@ -19,7 +20,7 @@ public class Empty extends Piece{
     }
 
     @Override
-    public boolean isInitialPawn() {
+    public boolean isValidPawnMove(final Rank rank, final int fileInterval, final int rankInterval) {
         return false;
     }
 }

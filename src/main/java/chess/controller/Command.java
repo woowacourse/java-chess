@@ -5,7 +5,9 @@ import java.util.Arrays;
 public enum Command {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status"),
+    READY("");
 
     private final String command;
 
@@ -17,6 +19,6 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(value -> value.command.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("start, end, move 중에 입력해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException("start, end, move, status 중에 입력해주세요."));
     }
 }

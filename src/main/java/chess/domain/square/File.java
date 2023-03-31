@@ -20,8 +20,8 @@ public enum File {
         this.index = index;
     }
 
-    public static int calculate(final File src, final File dst) {
-        return src.index - dst.index;
+    public static int calculate(final File source, final File destination) {
+        return source.index - destination.index;
     }
 
     public File next(final int direction) {
@@ -40,5 +40,9 @@ public enum File {
                 .filter(value -> value.index == fileIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 File index를 입력했습니다."));
+    }
+
+    public String getFile() {
+        return file;
     }
 }

@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.movement.Movement;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.square.Rank;
 
 public abstract class OrdinaryPiece extends Piece {
 
@@ -26,7 +27,7 @@ public abstract class OrdinaryPiece extends Piece {
     }
 
     @Override
-    public final boolean isInitialPawn() {
-        return false;
+    public boolean isValidPawnMove(final Rank rank, final int fileInterval, final int rankInterval) {
+        return true;
     }
 }
