@@ -2,28 +2,17 @@
 
 ## DB 정보
 
-chess 라는 schema 를 통해서 실제 게임을 관리합니다  
-chess_test 라는 schema 를 통해서 테스트를 관리합니다
-
-```java
-System.getenv("password");
-```
-
-를 통해서 mysql 패스워드를 관리합니다  
-env 에 password 로 패스워드를 등록해주세요
-
-script.sql  
-에 테이블 생성 스크립트가 있습니다
+chess 라는 schema 를 통해서 게임을 관리합니다
 
 ## 2단계
 
 - view
-    - [ ] 사용자의 id 를 받는다
-    - [ ] 사용자의 게임을 입력받는다
+    - [x] 사용자의 id 를 받는다
+    - [x] 사용자의 게임을 입력받는다
 
 - controller
     - [x] status를 입력할 경우 현재 게임의 상태를 출력한다
-    - [ ] 사용자의 id를 입력받아 해당 id 에 해당하는 thread 를 통해서 게임을 진행한다
+    - [x] 사용자의 id를 입력받아 해당 id 에 해당하는 thread 를 통해서 게임을 진행한다
 
 ### 도메인
 
@@ -49,7 +38,7 @@ script.sql
     - [x] board 에서 king 이 죽었는지 여부를 확인한다
 - chessGame
     - [x] 게임이 king 이 죽었을 때, 종료된다
-    - [ ] dao 로부터 move 로부터 받은 정보를 불러올 수 있어야 한다
+    - [x] dao 로부터 move 로부터 받은 정보를 불러올 수 있어야 한다
 
 #### 인프라
 
