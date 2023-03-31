@@ -35,9 +35,9 @@ class PawnTest {
         void Black폰이_갈수없는_방향으로_이동하려고_하면_예외 (Column endColumn, Rank endRank) {
             Position start = Position.of(Column.C, Rank.THREE);
             Position end = Position.of(endColumn, endRank);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(blackPawn.isMovable(start, end, colorOfDestination))
+            assertThat(blackPawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -45,9 +45,9 @@ class PawnTest {
         void 첫번째_이동이고_Black폰이_한번에_이동가능한_거리가_아니면_예외() {
             Position start = Position.of(Column.C, Rank.SEVEN);
             Position end = Position.of(Column.C, Rank.TWO);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(blackPawn.isMovable(start, end, colorOfDestination))
+            assertThat(blackPawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -55,9 +55,9 @@ class PawnTest {
         void 첫번째_이동_이후_Black폰이_한번에_이동가능한_거리가_아니면_예외() {
             Position start = Position.of(Column.B, Rank.FIVE);
             Position end = Position.of(Column.B,Rank.THREE);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(blackPawn.isMovable(start, end, colorOfDestination))
+            assertThat(blackPawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -66,8 +66,9 @@ class PawnTest {
         void 이동하려는_방향이_직선인경우_도착점_기물의_색깔이_NONE이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.B, Rank.SEVEN);
             Position end = Position.of(Column.B, Rank.FIVE);
+            Piece toMove = new Pawn(colorOfDestination);
 
-            assertThat(blackPawn.isMovable(start, end, colorOfDestination))
+            assertThat(blackPawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -76,8 +77,9 @@ class PawnTest {
         void 이동하려는_방향이_대각선인경우_도착점_기물의_색깔이_WHITE이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.B, Rank.SEVEN);
             Position end = Position.of(Column.C, Rank.SIX);
+            Piece toMove = new Pawn(colorOfDestination);
 
-            assertThat(blackPawn.isMovable(start, end, colorOfDestination))
+            assertThat(blackPawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -85,9 +87,9 @@ class PawnTest {
         void 이동에_모든조건을_충족하면_true를_반환한다() {
             Position start = Position.of(Column.C, Rank.SEVEN);
             Position end = Position.of(Column.C, Rank.FIVE);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(blackPawn.isMovable(start, end, colorOfDestination))
+            assertThat(blackPawn.isMovable(start, end, toMove))
                     .isTrue();
         }
     }
@@ -108,9 +110,9 @@ class PawnTest {
         void White폰이_갈수없는_방향으로_이동하려고_하면_예외 (Column endColumn, Rank endRank) {
             Position start = Position.of(Column.C, Rank.THREE);
             Position end = Position.of(endColumn, endRank);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(whitePawn.isMovable(start, end, colorOfDestination))
+            assertThat(whitePawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -118,9 +120,9 @@ class PawnTest {
         void 첫번째_이동이고_White폰이_한번에_이동가능한_거리가_아니면_예외() {
             Position start = Position.of(Column.C, Rank.TWO);
             Position end = Position.of(Column.C, Rank.FIVE);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(whitePawn.isMovable(start, end, colorOfDestination))
+            assertThat(whitePawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -128,9 +130,9 @@ class PawnTest {
         void 첫번째_이동_이후_White폰이_한번에_이동가능한_거리가_아니면_예외() {
             Position start = Position.of(Column.B, Rank.FOUR);
             Position end = Position.of(Column.B,Rank.SIX);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(whitePawn.isMovable(start, end, colorOfDestination))
+            assertThat(whitePawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -139,8 +141,9 @@ class PawnTest {
         void 이동하려는_방향이_직선인경우_도착점_기물의_색깔이_NONE이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.H, Rank.TWO);
             Position end = Position.of(Column.H, Rank.THREE);
+            Piece toMove = new Rook(colorOfDestination);
 
-            assertThat(whitePawn.isMovable(start, end, colorOfDestination))
+            assertThat(whitePawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -149,8 +152,9 @@ class PawnTest {
         void 이동하려는_방향이_대각선인경우_도착점_기물의_색깔이_Black이_아니면_예외(Color colorOfDestination) {
             Position start = Position.of(Column.B, Rank.SIX);
             Position end = Position.of(Column.C, Rank.SEVEN);
+            Piece toMove = new Rook(colorOfDestination);
 
-            assertThat(whitePawn.isMovable(start, end, colorOfDestination))
+            assertThat(whitePawn.isMovable(start, end, toMove))
                     .isFalse();
         }
 
@@ -158,9 +162,9 @@ class PawnTest {
         void 이동에_모든조건을_충족하면_true를_반환한다() {
             Position start = Position.of(Column.C, Rank.SIX);
             Position end = Position.of(Column.C, Rank.SEVEN);
-            Color colorOfDestination = Color.NONE;
+            Piece toMove = EmptyPiece.of();
 
-            assertThat(whitePawn.isMovable(start, end, colorOfDestination))
+            assertThat(whitePawn.isMovable(start, end, toMove))
                     .isTrue();
         }
     }

@@ -36,8 +36,11 @@ class ChessGameTest {
     void BLACK턴인데_WHIGHT기물을_이동하면_예외() {
         Position startPosition = Position.of(Column.C, Rank.TWO);
         Position endPosition = Position.of(Column.C, Rank.THREE);
+        chessGame.move(startPosition, endPosition);
+        Position startPosition2 = Position.of(Column.D, Rank.TWO);
+        Position endPosition2 = Position.of(Column.D, Rank.THREE);
 
-        assertThatThrownBy(()-> chessGame.move(startPosition,endPosition))
+        assertThatThrownBy(()-> chessGame.move(startPosition2,endPosition2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물을 움직일 수 없습니다");
     }
