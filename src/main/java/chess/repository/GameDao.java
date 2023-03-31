@@ -60,7 +60,7 @@ public class GameDao {
         return new ChessGame(board, team);
     }
 
-    public Team findTeamById(int gameId) {
+    private Team findTeamById(int gameId) {
         final var query = "SELECT team FROM game WHERE game_id = ?";
         return jdbcTemplate.executeQuery(query, resultSet -> {
             if (resultSet.next()) {
@@ -80,7 +80,7 @@ public class GameDao {
         jdbcTemplate.executeUpdate(query, gameId);
     }
 
-    public Board findBoardById(int gameId) {
+    private Board findBoardById(int gameId) {
         final var query = "SELECT square_file, square_rank, piece_team, piece_type FROM board WHERE game_id = ?";
         return jdbcTemplate.executeQuery(query, resultSet -> {
             final Map<Square, Piece> board = new HashMap<>();
