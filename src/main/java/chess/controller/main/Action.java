@@ -1,6 +1,5 @@
-package chess.controller;
+package chess.controller.main;
 
-import chess.view.request.Request;
 import java.util.function.Consumer;
 
 public class Action {

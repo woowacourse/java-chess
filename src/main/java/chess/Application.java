@@ -1,13 +1,13 @@
 package chess;
 
-import chess.controller.ChessController;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.controller.ControllerFactory;
+import chess.controller.main.MainController;
 
 public class Application {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new OutputView(), new InputView());
-        chessController.run();
+        ControllerFactory controllerFactory = ControllerFactory.getInstance();
+        MainController mainController = controllerFactory.getMainController();
+        mainController.run();
     }
 }
