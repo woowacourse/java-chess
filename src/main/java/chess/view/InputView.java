@@ -7,13 +7,13 @@ public class InputView {
 
     private static final String DELIMITER = "\\s+";
 
-    private final Scanner scanner;
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public InputView(final Scanner scanner) {
-        this.scanner = scanner;
+    private InputView() {
     }
 
-    public List<String> readGameCommand() {
-        return List.of(scanner.nextLine().trim().split(DELIMITER));
+    public static List<String> readGameCommand() {
+        final String input = scanner.nextLine();
+        return List.of(input.trim().split(DELIMITER));
     }
 }

@@ -8,7 +8,6 @@ import chess.domain.Rank;
 import java.util.List;
 
 public abstract class Piece {
-
     protected static final String INVALID_DESTINATION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
     protected static final String INVALID_MOVING_CAUSE_OF_CATCHING = "같은 색 말은 잡을 수 없습니다.";
 
@@ -26,6 +25,18 @@ public abstract class Piece {
 
     public final boolean isBlack() {
         return color == Color.BLACK;
+    }
+
+    public final boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
+    public final boolean existsIn(List<Position> pathPosstions) {
+        return pathPosstions.contains(position);
+    }
+
+    public final boolean isInSameFile(final File file) {
+        return position.isSameFile(file);
     }
 
     protected final void validateSamePosition(final Position targetPosition) {
@@ -51,6 +62,12 @@ public abstract class Piece {
     public abstract Piece move(final Piece pieceInTargetPosition);
 
     public abstract List<Position> getPassingPositions(final Position targetPosition);
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public abstract double getScore();
 
     public final Color getColor() {
         return color;

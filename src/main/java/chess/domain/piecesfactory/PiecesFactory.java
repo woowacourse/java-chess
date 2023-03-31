@@ -1,4 +1,4 @@
-package chess.domain.board.maker;
+package chess.domain.piecesfactory;
 
 import chess.domain.piece.Piece;
 

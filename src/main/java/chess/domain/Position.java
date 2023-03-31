@@ -88,6 +88,10 @@ public class Position {
         return this.rank.isLowerThan(otherPosition.rank);
     }
 
+    public boolean isSameFile(final File file) {
+        return this.file == file;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

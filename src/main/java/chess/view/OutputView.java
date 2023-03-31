@@ -1,10 +1,12 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.piece.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,20 +42,26 @@ public class OutputView {
             Rank.SEVEN, 1,
             Rank.EIGHT, 0
     );
+    private static final Map<Color, String> MESSAGE_BY_COLOR = new LinkedHashMap<>(Map.of(
+            Color.BLACK, "black",
+            Color.WHITE, "white"
+    ));
 
-    public void printGameStartGuideMessage() {
+    public static void printGameStartGuideMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
-        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 상황 : status");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + NEW_LINE);
     }
 
-    public void printBoard(final List<Piece> pieces) {
+    public static void printBoard(final List<Piece> pieces, final Color color) {
         final String boardMessage = generateBoardMessage(pieces);
+        System.out.printf("<순서 : %s>%n", color.name());
         System.out.println(boardMessage);
     }
 
-    private String generateBoardMessage(final List<Piece> pieces) {
+    private static String generateBoardMessage(final List<Piece> pieces) {
         final StringBuilder mapBuilder = generateEmptyBoardBuilder();
 
         for (Piece piece : pieces) {
@@ -72,12 +80,12 @@ public class OutputView {
         return mapBuilder;
     }
 
-    private void setUpPieceInBoard(final StringBuilder mapBuilder, final Piece piece) {
+    private static void setUpPieceInBoard(final StringBuilder mapBuilder, final Piece piece) {
         final int positionIndex = calculateIndex(piece.getPosition());
         mapBuilder.replace(positionIndex, positionIndex + 1, getPieceAccordingToSign(piece));
     }
 
-    private int calculateIndex(final Position position) {
+    private static int calculateIndex(final Position position) {
         final int oneLineLength = COLUMN_BY_FILE.size() + NEW_LINE.length();
         return oneLineLength * ROW_BY_RANK.get(position.getRank()) + COLUMN_BY_FILE.get(position.getFile());
     }
@@ -88,5 +96,28 @@ public class OutputView {
             return upperPieceMessage;
         }
         return upperPieceMessage.toLowerCase();
+    }
+
+    public static void printScores(final Map<Color, Double> scoreByColor) {
+        for (Color color : MESSAGE_BY_COLOR.keySet()) {
+            final Double score = scoreByColor.get(color);
+            final String colorMessage = MESSAGE_BY_COLOR.get(color);
+            System.out.printf("> %s: %s%n", colorMessage, score.toString());
+        }
+    }
+
+    public static void printWinner(final Color color) {
+        System.out.println(printWinnerMessage(color));
+    }
+
+    private static String printWinnerMessage(final Color color) {
+        if (color == Color.EMPTY) {
+            return "현재 동점입니다." + NEW_LINE;
+        }
+        return String.format("현재 %s 진영이 이기고 있습니다.%n", MESSAGE_BY_COLOR.get(color));
+    }
+
+    public static void printErrorMessage(final String message) {
+        System.out.println(message + NEW_LINE);
     }
 }

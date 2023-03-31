@@ -32,4 +32,19 @@ public class Bishop extends Piece {
         validateDestination(targetPosition);
         return position.findPassingPositions(targetPosition);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public double getScore() {
+        return 3;
+    }
 }

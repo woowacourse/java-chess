@@ -19,10 +19,13 @@ class FileTest {
     @ParameterizedTest
     @CsvSource({"A, 3", "B, 2", "D, 0", "H, 4"})
     void 거리를_계산한다(final File otherFile, final int expectedDistance) {
+        //given
         final File file = D;
 
+        //when
         final int actualDistance = file.calculateDistance(otherFile);
 
+        //then
         assertThat(actualDistance).isEqualTo(expectedDistance);
     }
 
@@ -31,21 +34,27 @@ class FileTest {
 
         @Test
         void 오름차순_파일들을_반환한다() {
+            //given
             final File startFile = A;
             final File endFile = H;
 
+            //when
             final List<File> betweenFiles = startFile.getFilesTo(endFile);
 
+            //then
             assertThat(betweenFiles).containsExactly(B, C, D, E, F, G);
         }
 
         @Test
         void 내림차순_파일들을_반환한다() {
+            //given
             final File startFile = H;
             final File endFile = A;
 
+            //when
             final List<File> betweenFiles = startFile.getFilesTo(endFile);
 
+            //then
             assertThat(betweenFiles).containsExactly(G, F, E, D, C, B);
         }
     }

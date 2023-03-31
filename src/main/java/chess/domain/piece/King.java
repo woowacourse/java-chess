@@ -33,4 +33,19 @@ public class King extends Piece {
         validateDestination(targetPosition);
         return position.findPassingPositions(targetPosition);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public double getScore() {
+        return 0;
+    }
 }

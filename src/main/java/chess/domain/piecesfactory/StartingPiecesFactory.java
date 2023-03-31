@@ -1,4 +1,4 @@
-package chess.domain.board.maker;
+package chess.domain.piecesfactory;
 
 import chess.domain.Color;
 import chess.domain.File;
@@ -37,7 +37,6 @@ public class StartingPiecesFactory implements PiecesFactory {
         startingPieces.addAll(makeStatingPawns(color));
         startingPieces.addAll(makeStartingKing(color));
         startingPieces.addAll(makeStartingQueen(color));
-        System.out.println();
         return startingPieces;
     }
 

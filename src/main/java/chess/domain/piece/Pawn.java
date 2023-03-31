@@ -45,7 +45,7 @@ public class Pawn extends Piece {
     }
 
     private void validateVerticalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
-        if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.BLANK)) {
+        if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.EMPTY)) {
             throw new IllegalArgumentException(INVALID_DESTINATION_MESSAGE);
         }
     }
@@ -71,5 +71,20 @@ public class Pawn extends Piece {
         validateSamePosition(targetPosition);
         validateDestination(targetPosition);
         return position.findPassingPositions(targetPosition);
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public double getScore() {
+        return 1;
     }
 }
