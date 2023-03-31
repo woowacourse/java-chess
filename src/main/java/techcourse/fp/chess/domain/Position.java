@@ -4,9 +4,6 @@ import java.util.Objects;
 
 public final class Position {
 
-    private static final int ONE_SPACE = 1;
-    private static final int TWO_SPACES = 2;
-
     private final File file;
     private final Rank rank;
 
@@ -19,19 +16,14 @@ public final class Position {
         return new Position(file, rank);
     }
 
-    public boolean isOnDiagonal(final Position target) {
-        return Math.abs(getFileOrder() - target.getFileOrder()) == ONE_SPACE
-                && Math.abs(getRankOrder() - target.getRankOrder()) == ONE_SPACE;
+    public static Position createByName(final String fileName, final int rank) {
+        return new Position(File.createByName(fileName), Rank.of(rank));
     }
 
-    public boolean isUpDown(final Position target) {
-        return getFileOrder() == target.getFileOrder() &&
-                Math.abs(getRankOrder() - target.getRankOrder()) == ONE_SPACE;
-    }
-
-    public boolean isUpDownTwo(final Position target) {
-        return getFileOrder() == target.getFileOrder() &&
-                Math.abs(getRankOrder() - target.getRankOrder()) == TWO_SPACES;
+    public static Position from(final String rawValue) {
+        final File file = File.createByName(String.valueOf(rawValue.charAt(0)));
+        final Rank rank = Rank.of(Integer.parseInt(String.valueOf(rawValue.charAt(1))));
+        return new Position(file, rank);
     }
 
     public int getFileOrder() {
@@ -48,6 +40,14 @@ public final class Position {
 
     public int getGapOfRankOrder(Position other) {
         return this.getRankOrder() - other.getRankOrder();
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

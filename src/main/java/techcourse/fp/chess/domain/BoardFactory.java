@@ -3,8 +3,9 @@ package techcourse.fp.chess.domain;
 import java.util.HashMap;
 import java.util.Map;
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.Turn;
 import techcourse.fp.chess.domain.piece.ordinary.Bishop;
 import techcourse.fp.chess.domain.piece.ordinary.King;
 import techcourse.fp.chess.domain.piece.ordinary.Knight;
@@ -30,13 +31,13 @@ public final class BoardFactory {
         initQueen(board);
         initKing(board);
 
-        return new Board(board);
+        return new Board(board, Turn.createByStartTurn(Color.WHITE));
     }
 
     private static void initializeBoard(final Map<Position, Piece> board) {
         for (File file : File.values()) {
             for (Rank rank : Rank.values()) {
-                board.put(Position.of(file, rank), Empty.create());
+                board.put(Position.of(file, rank), EmptyPiece.create());
             }
         }
     }

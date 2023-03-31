@@ -1,7 +1,7 @@
 package techcourse.fp.chess.view;
 
 import techcourse.fp.chess.domain.piece.Color;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 import techcourse.fp.chess.domain.piece.Piece;
 import techcourse.fp.chess.domain.piece.ordinary.Bishop;
 import techcourse.fp.chess.domain.piece.ordinary.King;
@@ -46,7 +46,7 @@ public final class PieceRender {
             return renderByColor(piece.getColor(), "k");
         }
 
-        if (piece.getClass() == Empty.class) {
+        if (piece.getClass() == EmptyPiece.class) {
             return ".";
         }
 

@@ -3,14 +3,14 @@ package techcourse.fp.chess.domain.piece;
 import java.util.List;
 import techcourse.fp.chess.domain.Position;
 
-public final class Empty extends Piece {
+public final class EmptyPiece extends Piece {
 
-    public Empty(final Color color) {
-        super(color);
+    public EmptyPiece(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 
-    public static Empty create() {
-        return new Empty(Color.EMPTY);
+    public static EmptyPiece create() {
+        return new EmptyPiece(Color.EMPTY, PieceType.EMPTY);
     }
 
     @Override

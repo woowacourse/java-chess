@@ -1,4 +1,4 @@
-package techcourse.fp.chess.dto;
+package techcourse.fp.chess.dto.response;
 
 import java.util.ArrayList;
 import java.util.List;

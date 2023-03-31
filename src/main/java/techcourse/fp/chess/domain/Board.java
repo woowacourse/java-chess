@@ -1,19 +1,25 @@
 package techcourse.fp.chess.domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.Color;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 import techcourse.fp.chess.domain.piece.Piece;
+import techcourse.fp.chess.domain.piece.Turn;
 
 public final class Board {
 
     private static final int BOARD_SIZE = 8;
+    private static final int NUMBER_OF_KING = 2;
 
     private final Map<Position, Piece> board;
+    private final Turn turn;
 
-    public Board(Map<Position, Piece> board) {
+    public Board(final Map<Position, Piece> board, final Turn turn) {
         validate(board);
-        this.board = board;
+        this.board = new HashMap<>(board);
+        this.turn = turn;
     }
 
     private void validate(final Map<Position, Piece> board) {
@@ -26,22 +32,61 @@ public final class Board {
         final Piece sourcePiece = board.get(source);
         final Piece targetPiece = board.get(target);
 
+        validateTurn(sourcePiece);
         final List<Position> path = sourcePiece.findPath(source, target, targetPiece);
+        validateObstacle(path);
 
+        board.put(target, sourcePiece);
+        board.put(source, EmptyPiece.create());
+
+        turn.nextTurn();
+    }
+
+    private void validateTurn(final Piece sourcePiece) {
+        if (turn.isOtherSide(sourcePiece.getColor())) {
+            throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateObstacle(final List<Position> path) {
         if (hasObstacle(path)) {
             throw new IllegalArgumentException("이동하려는 경로에 기물이 존재합니다.");
         }
-
-        board.put(target, sourcePiece);
-        board.put(source, Empty.create());
     }
 
     private boolean hasObstacle(final List<Position> path) {
-        return !path.stream()
-                .allMatch(position -> board.get(position).isEmpty());
+        return path.stream()
+                .anyMatch(position -> board.get(position).isNotEmpty());
+    }
+
+    public boolean isGameEnd() {
+        return board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() < NUMBER_OF_KING;
+    }
+
+    public Color findWinner() {
+        if (!isGameEnd()) {
+            throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");
+        }
+
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("킹이 존재하지 않습니다."))
+                .getColor();
+    }
+
+    public double findScoreByColor(Color color) {
+        return ScoreCalculator.calculate(board, color);
     }
 
     public Map<Position, Piece> getBoard() {
         return Map.copyOf(board);
+    }
+
+    public Color getTurn() {
+        return turn.getCurrentTurn();
     }
 }

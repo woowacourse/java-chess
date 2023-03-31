@@ -2,16 +2,22 @@ package techcourse.fp.chess.domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static techcourse.fp.chess.domain.PieceFixtures.BLACK_PAWN;
+import static techcourse.fp.chess.domain.PieceFixtures.EMPTY;
+import static techcourse.fp.chess.domain.PieceFixtures.WHITE_PAWN;
+import static techcourse.fp.chess.domain.PositionFixtures.A1;
 import static techcourse.fp.chess.domain.PositionFixtures.A2;
 import static techcourse.fp.chess.domain.PositionFixtures.A3;
 import static techcourse.fp.chess.domain.PositionFixtures.A4;
 import static techcourse.fp.chess.domain.PositionFixtures.A5;
+import static techcourse.fp.chess.domain.PositionFixtures.B2;
+import static techcourse.fp.chess.domain.PositionFixtures.C3;
 import static techcourse.fp.chess.domain.PositionFixtures.H2;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import techcourse.fp.chess.domain.piece.Empty;
+import techcourse.fp.chess.domain.piece.EmptyPiece;
 
 public class WhitePawnTest {
 
@@ -41,6 +47,14 @@ public class WhitePawnTest {
                 .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
     }
 
+    @DisplayName("백 폰은 아래로 이동할 수 없다.")
+    @Test
+    void fail_test4() {
+        assertThatThrownBy(() -> whitePawn.findPath(A2, A1, EMPTY))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
+    }
+
     @DisplayName("한 칸 전진이 ")
     @Nested
     class OneStepMove {
@@ -48,7 +62,7 @@ public class WhitePawnTest {
         @DisplayName("성공한다.")
         @Test
         void fail_test4() {
-            assertThat(whitePawn.findPath(A2, A3, Empty.create())).isEmpty();
+            assertThat(whitePawn.findPath(A2, A3, EmptyPiece.create())).isEmpty();
         }
 
         @DisplayName("실패한다 - 도착지에 아군 기물 존재")
@@ -76,7 +90,7 @@ public class WhitePawnTest {
         @DisplayName("성공한다.")
         @Test
         void fail_test7() {
-            assertThat(whitePawn.findPath(A2, A4, Empty.create())).containsExactly(A3);
+            assertThat(whitePawn.findPath(A2, A4, EmptyPiece.create())).containsExactly(A3);
         }
 
         @DisplayName("실패 한다. - 도착지에 아군 기물 존재")
@@ -98,7 +112,40 @@ public class WhitePawnTest {
         @DisplayName("실패 한다. - 폰이 최초 이동이 아닌 경우")
         @Test
         void fail_by_start_position() {
-            assertThatThrownBy(() -> whitePawn.findPath(A3, A5, Empty.create()))
+            assertThatThrownBy(() -> whitePawn.findPath(A3, A5, EmptyPiece.create()))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
+        }
+    }
+
+    @DisplayName("백 폰의 공격이")
+    @Nested
+    class Attack {
+
+        @DisplayName("성공한다. - 좌측 상단을 공격하는 경우")
+        @Test
+        void success_left() {
+            assertThat(whitePawn.findPath(B2, A3, BLACK_PAWN)).isEmpty();
+        }
+
+        @DisplayName("성공한다. - 우측 상단을 공격하는 경우")
+        @Test
+        void success_right() {
+            assertThat(whitePawn.findPath(B2, C3, BLACK_PAWN)).isEmpty();
+        }
+
+        @DisplayName("실패한다. - 공격 지점에 아군이 있는 경우")
+        @Test
+        void fail_by_ally() {
+            assertThatThrownBy(() -> whitePawn.findPath(B2, A3, WHITE_PAWN))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
+        }
+
+        @DisplayName("실패한다. - 공격 지점이 비어 있는 경우")
+        @Test
+        void fail_by_empty() {
+            assertThatThrownBy(() -> whitePawn.findPath(B2, A3, EMPTY))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰이 해당 지점으로 이동할 수 없습니다.");
         }

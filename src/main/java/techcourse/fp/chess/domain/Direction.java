@@ -3,7 +3,6 @@ package techcourse.fp.chess.domain;
 import java.util.List;
 
 public enum Direction {
-
     UP(0, 1),
     DOWN(0, -1),
     RIGHT(1, 0),
@@ -55,11 +54,36 @@ public enum Direction {
                 RIGHT_TWO_UP, RIGHT_TWO_DOWN, LEFT_TWO_UP, LEFT_TWO_DOWN);
     }
 
+    public static List<Direction> ofWhitePawnAttack() {
+        return List.of(UP_RIGHT, UP_LEFT);
+    }
+
+    public static Direction ofWhitePawnMove() {
+        return UP;
+    }
+
+    public static List<Direction> ofBlackPawnAttack() {
+        return List.of(DOWN_RIGHT, DOWN_LEFT);
+    }
+
+    public static Direction ofBlackPawnMove() {
+        return DOWN;
+    }
+
     public int getRank() {
         return rank;
     }
 
     public int getFile() {
         return file;
+    }
+
+    public boolean isSame(final int file, final int rank) {
+        return this.file == file && this.rank == rank;
+    }
+
+    public boolean isReachable(final int file, final int rank) {
+        final int biggerNumber = Math.max(Math.abs(file), Math.abs(rank));
+        return this.file * biggerNumber == file && this.rank * biggerNumber == rank;
     }
 }
