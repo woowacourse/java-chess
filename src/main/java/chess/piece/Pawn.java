@@ -9,8 +9,8 @@ public class Pawn extends ChessPiece {
     private static final int WHITE_PAWN_FIRST_Y = 2;
     private static final int BLACK_PAWN_FIRST_Y = 7;
 
-    public Pawn(Shape shape, Side side) {
-        super(shape, side);
+    public Pawn(Side side) {
+        super(side);
     }
 
     @Override

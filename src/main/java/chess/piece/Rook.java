@@ -7,8 +7,8 @@ import chess.position.Position;
 
 public class Rook extends ChessPiece {
 
-    public Rook(Shape shape, Side side) {
-        super(shape, side);
+    public Rook(Side side) {
+        super(side);
     }
 
     @Override

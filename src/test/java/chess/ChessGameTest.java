@@ -1,18 +1,22 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.piece.ChessPiece;
 import chess.piece.Knight;
+import chess.piece.Pawn;
 import chess.piece.Shape;
 import chess.piece.Side;
 import chess.position.MovablePosition;
 import chess.position.Position;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class ChessGameTest {
 
@@ -50,7 +54,7 @@ class ChessGameTest {
 
         ChessBoard chessBoard = ChessBoard.generateChessBoard();
         ChessGame chessGame = new ChessGame(chessBoard);
-        ChessPiece knight = new Knight(Shape.KNIGHT, Side.BLACK);
+        ChessPiece knight = new Knight(Side.BLACK);
         Position targetPosition = Position.initPosition(1, 3);
 
         chessGame.copyChessPiece(knight, targetPosition);
@@ -69,8 +73,60 @@ class ChessGameTest {
                 List.of(Position.initPosition(3, 3), Position.initPosition(1, 3),
                         Position.initPosition(2, 2), Position.initPosition(2, 4)));
 
-        Assertions.assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
+        assertThatThrownBy(() -> chessGame.validateMovablePosition(targetPosition, movablePosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 위치로 움직일 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"e1, true", "e8, true", "d1, false", "d8, false", "a2, false"})
+    @DisplayName("체스판에서 King의 소멸 여부를 체크한다.")
+    void checkKingIsDead(String removePostion, boolean isEnd) {
+        ChessBoard chessBoard = ChessBoard.generateChessBoard();
+        ChessGame chessGame = new ChessGame(chessBoard);
+        chessGame.removeChessPiece(Position.of(removePostion));
+        assertThat(chessGame.isGameEnd(chessBoard)).isEqualTo(isEnd);
+    }
+
+    @Test
+    @DisplayName("해당 사이드의 점수를 계산한다.")
+    void shouldSuccessCalculateScore() {
+        ChessBoard chessBoard = ChessBoard.generateChessBoard();
+        ChessGame chessGame = new ChessGame(chessBoard);
+
+        assertAll(
+                () -> assertThat(chessGame.takeScore(Side.BLACK)).isEqualTo(38),
+                () -> assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(38),
+                () -> {
+                    chessGame.removeChessPiece(Position.of("a1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(33);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("b1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(30.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("c1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(27.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("d1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(18.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("e1"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(18.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("a2"));
+                    chessGame.copyChessPiece(new Pawn(Side.WHITE), Position.of("b3"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(17.5);
+                },
+                () -> {
+                    chessGame.removeChessPiece(Position.of("c2"));
+                    chessGame.copyChessPiece(new Pawn(Side.WHITE), Position.of("b4"));
+                    assertThat(chessGame.takeScore(Side.WHITE)).isEqualTo(17);
+                }
+        );
     }
 }

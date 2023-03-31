@@ -1,5 +1,8 @@
 package chess;
 
+import chess.database.ChessBoardDao;
+import chess.database.ChessGameDao;
+import chess.database.JdbcConnector;
 import chess.piece.ChessPiece;
 import chess.piece.Empty;
 import chess.piece.Shape;
@@ -11,15 +14,52 @@ public class ChessGame {
 
     private static final String OUT_OF_CHESS_BOUND_ERROR = "[ERROR] 해당 위치로 움직일 수 없습니다.";
 
+    private final int gameIdx;
     private final ChessBoard chessBoard;
+    private final ChessGameDao chessGameDao;
+
+    public ChessGame(ChessBoard chessBoard, int gameIdx) {
+        this.chessGameDao = new ChessGameDao(new JdbcConnector());
+        this.chessBoard = chessBoard;
+        if (gameIdx == 0) {
+            chessGameDao.addGame();
+            this.gameIdx = chessGameDao.findLastInsertGame();
+            addChessBoard(new ChessBoardDao(new JdbcConnector()), this.gameIdx);
+            return;
+        }
+        this.gameIdx = gameIdx;
+    }
 
     public ChessGame(ChessBoard chessBoard) {
+        this.gameIdx = 0;
         this.chessBoard = chessBoard;
+        this.chessGameDao = new ChessGameDao(new JdbcConnector());
+    }
+
+    public void addChessBoard(ChessBoardDao chessBoardDao, int gameIdx) {
+        for (int file = 1; file <= 8; file++) {
+            circuitRank(chessBoardDao, gameIdx, file);
+        }
+    }
+
+    private void circuitRank(ChessBoardDao chessBoardDao, int gameIdx, int file) {
+        for (int rank = 1; rank <= 8; rank++) {
+            chessBoardDao.addBoard(gameIdx, file, rank,
+                    chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getShape().name(),
+                    chessBoard.getChessPieceByPosition(Position.initPosition(file, rank)).getSide().name());
+        }
     }
 
     public void moveChessPiece(Position sourcePosition, Position targetPosition) {
+        ChessBoardDao chessBoardDao = new ChessBoardDao(new JdbcConnector());
         ChessPiece chessPiece = findChessPiece(sourcePosition);
         copyChessPiece(chessPiece, targetPosition);
+        chessBoardDao.movePiece(gameIdx, targetPosition.getXPosition(), targetPosition.getYPosition(),
+                chessBoard.getChessPieceByPosition(sourcePosition).getShape().name(),
+                chessBoard.getChessPieceByPosition(sourcePosition).getSide().name());
+        chessBoardDao.movePiece(gameIdx, sourcePosition.getXPosition(), sourcePosition.getYPosition(),
+                Shape.EMPTY.name(),
+                Side.EMPTY.name());
         removeChessPiece(sourcePosition);
     }
 
@@ -32,7 +72,7 @@ public class ChessGame {
     }
 
     public void removeChessPiece(Position sourcePosition) {
-        chessBoard.getChessBoard().put(sourcePosition, new Empty(Shape.EMPTY, Side.EMPTY));
+        chessBoard.getChessBoard().put(sourcePosition, new Empty(Side.EMPTY));
     }
 
     public boolean validateMovablePosition(Position targetPosition, MovablePosition movablePosition) {
@@ -41,5 +81,18 @@ public class ChessGame {
             return true;
         }
         throw new IllegalArgumentException(OUT_OF_CHESS_BOUND_ERROR);
+    }
+
+    public boolean isGameEnd(ChessBoard chessBoard) {
+        return chessBoard.checkKingIsDead();
+    }
+
+    public double takeScore(Side side) {
+        ChessScore chessScore = new ChessScore(chessBoard);
+        return chessScore.calculateScore(side);
+    }
+
+    public int getGameIdx() {
+        return gameIdx;
     }
 }
