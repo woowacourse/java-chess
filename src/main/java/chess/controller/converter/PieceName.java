@@ -12,7 +12,8 @@ public enum PieceName {
     BISHOP(PieceType.BISHOP, "B"),
     QUEEN(PieceType.QUEEN, "Q"),
     KING(PieceType.KING, "K"),
-    PAWN(PieceType.PAWN, "P");
+    PAWN(PieceType.PAWN, "P"),
+    EMPTY(PieceType.EMPTY, ".");
 
     private static final String WRONG_TYPE_ERROR_MESSAGE = "존재하지 않는 말 타입입니다.";
 
@@ -26,17 +27,20 @@ public enum PieceName {
 
     public static String findNameByPiece(final Piece piece) {
         PieceName foundName = Arrays.stream(values())
-                .filter(pieceName -> pieceName.type == piece.getType())
+                .filter(pieceName -> piece.isSameType(pieceName.type))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(WRONG_TYPE_ERROR_MESSAGE));
-        return foundName.getName(piece.getColor());
+        return foundName.getName(piece.getCamp());
     }
 
     public String getName(Camp camp) {
         if (camp == Camp.WHITE) {
             return name.toLowerCase();
         }
-        return name.toUpperCase();
+        if (camp == Camp.BLACK) {
+            return name.toUpperCase();
+        }
+        return name;
     }
 
 }

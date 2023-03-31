@@ -1,7 +1,9 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Path {
 
@@ -42,18 +44,13 @@ public class Path {
         return positions.contains(position);
     }
 
-    public int findPositionIndex(Position position) {
-        if (positions.contains(position)) {
-            return positions.indexOf(position);
-        }
-        throw new IllegalArgumentException("경로에 존재하지 않는 위치입니다.");
-    }
-
-    public Position findByIndex(int index) {
-        if (index < 0 || index >= positions.size()) {
-            throw new IllegalArgumentException("잘못된 범위의 인덱스로 위치를 조회할 수 없습니다.");
-        }
-        return positions.get(index);
+    public boolean hasObstacleAtAnyStepPositions(Position source, Position destination,
+                                                 Map<Position, Piece> piecesByPosition) {
+        return positions.stream()
+                .filter(position -> !position.equals(source))
+                .filter(position -> !position.equals(destination))
+                .map(piecesByPosition::get)
+                .anyMatch(piece -> !piece.isEmpty());
     }
 
     public List<Position> positions() {

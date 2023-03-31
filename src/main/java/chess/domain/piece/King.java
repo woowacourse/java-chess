@@ -13,14 +13,16 @@ public class King extends Piece {
     private static final List<Direction> directions;
 
     static {
-        directions = List.of(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.NORTH_EAST,
-                Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        directions = List.of(
+                Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
+                Direction.NORTH_EAST, Direction.NORTH_WEST,
+                Direction.SOUTH_EAST, Direction.SOUTH_WEST
+        );
     }
 
     public King(final Camp camp) {
         super(camp, PieceType.KING);
     }
-
 
     @Override
     public CheckablePaths findCheckablePaths(final Position current) {
@@ -39,6 +41,11 @@ public class King extends Piece {
     @Override
     public boolean canAttack(Position source, Position dest, Piece target) {
         return isDifferentCamp(target.camp);
+    }
+
+    @Override
+    public double sumPointsOf(final List<Position> existingPositions) {
+        return (type.getPoint()) * (existingPositions.size());
     }
 
 }

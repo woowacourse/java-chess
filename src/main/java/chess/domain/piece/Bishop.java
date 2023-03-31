@@ -13,7 +13,10 @@ public class Bishop extends Piece {
     private static final List<Direction> directions;
 
     static {
-        directions = List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+        directions = List.of(
+                Direction.NORTH_EAST, Direction.NORTH_WEST,
+                Direction.SOUTH_EAST, Direction.SOUTH_WEST
+        );
     }
 
     public Bishop(final Camp camp) {
@@ -37,6 +40,11 @@ public class Bishop extends Piece {
     @Override
     public boolean canAttack(Position source, Position dest, Piece target) {
         return isDifferentCamp(target.camp);
+    }
+
+    @Override
+    public double sumPointsOf(final List<Position> existingPositions) {
+        return (type.getPoint()) * (existingPositions.size());
     }
 
 }

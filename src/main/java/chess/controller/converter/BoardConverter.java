@@ -11,7 +11,6 @@ public class BoardConverter {
     private static final int FIRST_INDEX = 1;
     private static final int RANK_SIZE = 8;
     private static final int FILE_SIZE = 8;
-    private static final String EMPTY_SQUARE = ".";
 
     private BoardConverter() {
     }
@@ -35,10 +34,6 @@ public class BoardConverter {
 
     private static void insertSquare(final List<String> rank, final int fileIndex, final int rankIndex,
                                      final Map<Position, Piece> piecesByPosition) {
-        if (piecesByPosition.containsKey(Position.of(fileIndex, rankIndex))) {
-            rank.add(PieceName.findNameByPiece(piecesByPosition.get(Position.of(fileIndex, rankIndex))));
-            return;
-        }
-        rank.add(EMPTY_SQUARE);
+        rank.add(PieceName.findNameByPiece(piecesByPosition.get(Position.of(fileIndex, rankIndex))));
     }
 }

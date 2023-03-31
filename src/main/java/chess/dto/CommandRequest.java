@@ -1,32 +1,32 @@
 package chess.dto;
 
-import chess.view.Command;
 import java.util.Collections;
 import java.util.List;
 
 public class CommandRequest {
 
-    private final Command command;
+    private final String command;
     private final List<Integer> sourceCoordinate;
     private final List<Integer> destinationCoordinate;
 
-    private CommandRequest(final Command command, final List<Integer> sourceCoordinate,
+    private CommandRequest(final String command, final List<Integer> sourceCoordinate,
                            final List<Integer> destinationCoordinate) {
         this.command = command;
         this.sourceCoordinate = sourceCoordinate;
         this.destinationCoordinate = destinationCoordinate;
     }
 
-    public static CommandRequest fromMoveCommand(final List<Integer> source,
+    public static CommandRequest fromMoveCommand(final String command,
+                                                 final List<Integer> source,
                                                  final List<Integer> destination) {
-        return new CommandRequest(Command.MOVE, source, destination);
+        return new CommandRequest(command, source, destination);
     }
 
-    public static CommandRequest fromControlCommand(final Command command) {
+    public static CommandRequest fromControlCommand(final String command) {
         return new CommandRequest(command, Collections.emptyList(), Collections.emptyList());
     }
 
-    public Command getCommand() {
+    public String getCommand() {
         return command;
     }
 
