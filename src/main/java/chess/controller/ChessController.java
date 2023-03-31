@@ -18,7 +18,7 @@ public class ChessController {
     public ChessController(OutputView outputView, InputView inputView, BoardDao boardDao) {
         this.outputView = outputView;
         this.inputView = inputView;
-        this.command = new StartCommand(boardDao);
+        this.command = new StartCommand(boardDao, outputView);
     }
 
     public void run() {

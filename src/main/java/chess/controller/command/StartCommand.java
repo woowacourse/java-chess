@@ -9,8 +9,8 @@ import static chess.controller.command.CommandType.INVALID_COMMAND_MESSAGE;
 
 public class StartCommand extends Command {
 
-    public StartCommand(BoardDao boardDao) {
-        super(boardDao, CommandType.START, new OutputView());
+    public StartCommand(BoardDao boardDao, OutputView outputView) {
+        super(boardDao, CommandType.START, outputView);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class ProdConnector implements Connector {
     private static final String SERVER = "localhost:3306";
     private static final String DATABASE = "chess";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "xxxx";
+    private static final String PASSWORD = "Cjmcjm1121!";
 
     @Override
     public Connection getConnection() {
