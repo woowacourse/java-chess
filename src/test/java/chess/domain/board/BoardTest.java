@@ -83,8 +83,7 @@ class BoardTest {
         Square target = new Square(File.A, Rank.TWO);
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(TargetSameTeamException.class)
-                .hasMessage("타겟 지점의 말이 같은 진영의 말입니다.");
+                .isInstanceOf(TargetSameTeamException.class);
     }
 
     @DisplayName("Source부터 Target까지의 경로 상에 피스가 있을 경우 이동할 수 없다.")
@@ -96,8 +95,7 @@ class BoardTest {
         board.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.FOUR));
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(PathBlockedException.class)
-                .hasMessage("이동 경로에 말이 존재합니다.");
+                .isInstanceOf(PathBlockedException.class);
     }
 
     @DisplayName("Target에 상대 피스가 있을 경우 이동할 수 있다.")
@@ -124,8 +122,7 @@ class BoardTest {
         board.move(new Square(File.B, Rank.FIVE), new Square(File.B, Rank.SIX));
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(PawnMoveForwardException.class)
-                .hasMessage("폰은 대각선으로만 상대 진영말을 잡을 수 있습니다.");
+                .isInstanceOf(PawnMoveForwardException.class);
     }
 
     @DisplayName("폰이 대각선 방향 이동을 할 때 Target 위치에 같은 팀의 말이면 움직일 수 없다.")
@@ -137,8 +134,7 @@ class BoardTest {
         board.move(new Square(File.B, Rank.TWO), new Square(File.B, Rank.THREE));
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(TargetSameTeamException.class)
-                .hasMessage("타겟 지점의 말이 같은 진영의 말입니다.");
+                .isInstanceOf(TargetSameTeamException.class);
     }
 
     @DisplayName("폰이 대각선 방향 이동을 할 때 Target 위치에 빈 말이 있으면 움직일 수 없다.")
@@ -148,8 +144,7 @@ class BoardTest {
         Square target = new Square(File.C, Rank.THREE);
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(PawnMoveDiagonalException.class)
-                .hasMessage("폰은 상대 팀이 있을 때만 대각선으로 움직일 수 있습니다.");
+                .isInstanceOf(PawnMoveDiagonalException.class);
     }
 
     @DisplayName("Pawn이 같은 줄에 여러개라면 0.5점으로 계산한다.")

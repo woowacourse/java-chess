@@ -43,8 +43,7 @@ class PawnTest {
             Pawn pawn = new Pawn(Team.WHITE, true);
 
             assertThatThrownBy(() -> pawn.validateMovableRange(source, target))
-                    .isInstanceOf(PieceCanNotMoveException.class)
-                    .hasMessage("이동할 수 없는 말입니다.");
+                    .isInstanceOf(PieceCanNotMoveException.class);
         }
 
         @DisplayName("폰은 오른쪽 대각선으로 움직일 수 있다.")
@@ -99,8 +98,7 @@ class PawnTest {
             Pawn pawn = new Pawn(Team.BLACK, true);
 
             assertThatThrownBy(() -> pawn.validateMovableRange(source, target))
-                    .isInstanceOf(PieceCanNotMoveException.class)
-                    .hasMessage("이동할 수 없는 말입니다.");
+                    .isInstanceOf(PieceCanNotMoveException.class);
         }
 
         @DisplayName("폰은 오른쪽 대각선으로 움직일 수 있다.")

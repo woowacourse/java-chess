@@ -5,6 +5,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
+import chess.exception.ErrorCode;
 import chess.exception.PathBlockedException;
 import chess.exception.PawnMoveDiagonalException;
 import chess.exception.PawnMoveForwardException;
@@ -50,10 +51,10 @@ public class Board {
         Piece targetPiece = board.get(target);
 
         if (isBlocked(source, target, direction) && !sourcePiece.isSamePieceType(PieceType.KNIGHT)) {
-            throw new PathBlockedException();
+            throw new PathBlockedException(ErrorCode.PATH_BLOCKED);
         }
         if (sourcePiece.isSameTeam(targetPiece.getTeam())) {
-            throw new TargetSameTeamException();
+            throw new TargetSameTeamException(ErrorCode.TARGET_SAME_TEAM);
         }
     }
 
@@ -71,10 +72,10 @@ public class Board {
     private void validatePawnPathBlocked(Square target, Direction direction) {
         boolean isTargetEmpty = board.get(target).isEmpty();
         if (!isTargetEmpty && Direction.isMoveForward(direction)) {
-            throw new PawnMoveForwardException();
+            throw new PawnMoveForwardException(ErrorCode.PAWN_MOVE_FORWARD);
         }
         if (isTargetEmpty && Direction.isMoveDiagonal(direction)) {
-            throw new PawnMoveDiagonalException();
+            throw new PawnMoveDiagonalException(ErrorCode.PAWN_MOVE_DIAGONAL);
         }
     }
 

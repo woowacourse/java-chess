@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Square;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.exception.ErrorCode;
 import chess.exception.TeamNotMatchException;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class Game {
 
     public void move(Square source, Square target) {
         if (isNotCurrentTurn(source) || board.isEmptyPiece(source)) {
-            throw new TeamNotMatchException(turn);
+            throw new TeamNotMatchException(ErrorCode.TEAM_NOT_MATCH);
         }
         board.move(source, target);
         turn = turn.nextTurn(turn);

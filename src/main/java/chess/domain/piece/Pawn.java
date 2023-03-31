@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
+import chess.exception.ErrorCode;
 import chess.exception.PieceCanNotMoveException;
 import java.util.List;
 
@@ -33,10 +34,10 @@ public class Pawn extends Piece {
         Direction direction = Direction.calculateDirection(source, target);
 
         if (!possibleDirections.contains(direction)) {
-            throw new PieceCanNotMoveException();
+            throw new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE);
         }
         if (!validateMovableRange(source, target, direction)) {
-            throw new PieceCanNotMoveException();
+            throw new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE);
         }
     }
 

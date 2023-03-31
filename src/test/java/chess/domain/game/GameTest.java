@@ -30,8 +30,7 @@ class GameTest {
         Square target = new Square(File.A, Rank.SIX);
 
         assertThatThrownBy(() -> game.move(source, target))
-                .isInstanceOf(TeamNotMatchException.class)
-                .hasMessage("WHITE팀의 말을 선택해주세요.");
+                .isInstanceOf(TeamNotMatchException.class);
     }
 
     @DisplayName("내 차례일 경우 움직일 수 있다.")

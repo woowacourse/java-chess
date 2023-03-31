@@ -69,8 +69,7 @@ class KingTest {
         Square target = new Square(File.A, Rank.THREE);
 
         assertThatThrownBy(() -> king.validateMovableRange(source, target))
-                .isInstanceOf(PieceCanNotMoveException.class)
-                .hasMessage("이동할 수 없는 말입니다.");
+                .isInstanceOf(PieceCanNotMoveException.class);
     }
 
     @DisplayName("이동할 수 없는 방향일 경우 움직일 수 없다.")
@@ -81,7 +80,6 @@ class KingTest {
         Square target = new Square(File.A, Rank.THREE);
 
         assertThatThrownBy(() -> king.validateMovableRange(source, target))
-                .isInstanceOf(PieceCanNotMoveException.class)
-                .hasMessage("이동할 수 없는 말입니다.");
+                .isInstanceOf(PieceCanNotMoveException.class);
     }
 }

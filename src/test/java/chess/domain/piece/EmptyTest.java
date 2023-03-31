@@ -18,7 +18,6 @@ class EmptyTest {
         Square target = new Square(File.A, Rank.FOUR);
 
         assertThatThrownBy(() -> empty.validateMovableRange(source, target))
-                .isInstanceOf(PieceCanNotMoveException.class)
-                .hasMessage("이동할 수 없는 말입니다.");
+                .isInstanceOf(PieceCanNotMoveException.class);
     }
 }

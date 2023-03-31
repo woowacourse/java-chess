@@ -1,6 +1,7 @@
 package chess.domain.board;
 
-import chess.exception.RankCanNotFindException;
+import chess.exception.ErrorCode;
+import chess.exception.RankCanNotFoundException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
@@ -33,7 +34,7 @@ public enum Rank {
 
     public static Rank findRank(int rankIndex) {
         if (!RANKS.containsKey(rankIndex)) {
-            throw new RankCanNotFindException();
+            throw new RankCanNotFoundException(ErrorCode.RANK_CAN_NOT_FOUND);
         }
         return RANKS.get(rankIndex);
     }

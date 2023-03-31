@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.dto.GameDto;
 import chess.dto.PiecesDto;
+import chess.exception.ErrorCode;
 import chess.exception.GameIdNotFoundException;
 import java.util.Map;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class ChessService {
         gameDao.save(game);
         Optional<GameDto> gameDto = gameDao.select();
         Optional<Integer> gameId = gameDto.map(GameDto::getGameId);
-        pieceDao.save(game, gameId.orElseThrow(GameIdNotFoundException::new));
+        pieceDao.save(game, gameId.orElseThrow(() -> new GameIdNotFoundException(ErrorCode.GAME_ID_NOT_FOUND)));
     }
 
     public void delete() {

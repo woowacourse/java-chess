@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.exception.ErrorCode;
 import java.util.List;
 
 public class OutputView {
@@ -55,7 +56,7 @@ public class OutputView {
         System.out.println(winner.name() + " 팀이 승리하였습니다.");
     }
 
-    public void printErrorMessage(String message) {
-        System.err.println(message);
+    public void printErrorMessage(ErrorCode errorCode) {
+        System.err.println(ErrorMessage.from(errorCode).getMessage());
     }
 }

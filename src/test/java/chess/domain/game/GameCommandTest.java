@@ -50,15 +50,13 @@ class GameCommandTest {
     @Test
     void Should_ThrowException_When_OtherGameCommand() {
         assertThatThrownBy(() -> new GameCommand(List.of("kouz")))
-                .isInstanceOf(IllegalCommandException.class)
-                .hasMessage("올바른 커맨드를 입력해주세요.");
+                .isInstanceOf(IllegalCommandException.class);
     }
 
     @DisplayName("잘못된 좌표가 입력될 시 오류가 발생한다.")
     @Test
     void Should_ThrowException_When_OtherMoveSquare() {
         assertThatThrownBy(() -> new GameCommand(List.of("move", "aa", "a3")))
-                .isInstanceOf(IllegalCommandException.class)
-                .hasMessage("올바른 커맨드를 입력해주세요.");
+                .isInstanceOf(IllegalCommandException.class);
     }
 }

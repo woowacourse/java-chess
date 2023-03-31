@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
+import chess.exception.ErrorCode;
 import chess.exception.PieceCanNotMoveException;
 import java.util.List;
 
@@ -20,14 +21,14 @@ public class King extends Piece {
         Direction direction = Direction.calculateDirection(source, target);
 
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
-            throw new PieceCanNotMoveException();
+            throw new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE);
         }
         validateOneStep(source, target, direction);
     }
 
     private void validateOneStep(Square source, Square target, Direction direction) {
         if (!source.isMovableToTarget(target, direction.getFile(), direction.getRank())) {
-            throw new PieceCanNotMoveException();
+            throw new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE);
         }
     }
 }

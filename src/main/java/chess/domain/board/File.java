@@ -1,6 +1,7 @@
 package chess.domain.board;
 
-import chess.exception.FileCanNotFindException;
+import chess.exception.ErrorCode;
+import chess.exception.FileCanNotFoundException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
@@ -33,7 +34,7 @@ public enum File {
 
     public static File findFile(int fileIndex) {
         if (!FILES.containsKey(fileIndex)) {
-            throw new FileCanNotFindException();
+            throw new FileCanNotFoundException(ErrorCode.FILE_CAN_NOT_FOUND);
         }
         return FILES.get(fileIndex);
     }

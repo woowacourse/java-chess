@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.exception.ErrorCode;
 import chess.exception.IllegalCommandException;
 import chess.exception.IllegalStartCommandException;
 import java.util.List;
@@ -37,20 +38,20 @@ public class GameCommand {
 
         if (!(START_COMMAND.equals(command) || END_COMMAND.equals(command)
                 || STATUS_COMMAND.equals(command) || SAVE_COMMAND.equals(command))) {
-            throw new IllegalCommandException();
+            throw new IllegalCommandException(ErrorCode.ILLEGAL_COMMAND);
         }
     }
 
     private void validateMoveCommand(String source, String target) {
         if (!source.matches(SQUARE_BOUND_REGULAR_EXPRESSION) && target.matches(
                 SQUARE_BOUND_REGULAR_EXPRESSION)) {
-            throw new IllegalCommandException();
+            throw new IllegalCommandException(ErrorCode.ILLEGAL_COMMAND);
         }
     }
 
     public void isStart() {
         if (!START_COMMAND.equals(gameCommand.get(GameCommandIndex.COMMAND.index))) {
-            throw new IllegalStartCommandException();
+            throw new IllegalStartCommandException(ErrorCode.ILLEGAL_START_COMMAND);
         }
     }
 

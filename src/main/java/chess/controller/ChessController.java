@@ -6,6 +6,7 @@ import chess.domain.board.Square;
 import chess.domain.game.Game;
 import chess.domain.game.GameCommand;
 import chess.domain.piece.Team;
+import chess.exception.CustomException;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -39,8 +40,8 @@ public class ChessController {
             gameCommand.isStart();
             game = loadGame();
             outputView.printChessBoard(game.getPieces());
-        } catch (Exception e) {
-            outputView.printErrorMessage(e.getMessage());
+        } catch (CustomException e) {
+            outputView.printErrorMessage(e.getErrorCode());
             start(generateGameCommand());
         }
     }
@@ -61,8 +62,8 @@ public class ChessController {
     private GameCommand generateGameCommand() {
         try {
             return new GameCommand(inputView.readGameCommand());
-        } catch (Exception e) {
-            outputView.printErrorMessage(e.getMessage());
+        } catch (CustomException e) {
+            outputView.printErrorMessage(e.getErrorCode());
             return generateGameCommand();
         }
     }
@@ -90,8 +91,8 @@ public class ChessController {
             Square target = squares.get(TARGET_INDEX);
             game.move(source, target);
             outputView.printChessBoard(game.getPieces());
-        } catch (Exception e) {
-            outputView.printErrorMessage(e.getMessage());
+        } catch (CustomException e) {
+            outputView.printErrorMessage(e.getErrorCode());
         }
     }
 
