@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class Board {
 
     private final Map<Square, Piece> board;
 
-    private Board(final Map<Square, Piece> board) {
+    public Board(final Map<Square, Piece> board) {
         this.board = board;
     }
 
@@ -65,7 +65,6 @@ public class Board {
     private void checkDestination(final Square current, final Square destination, final Direction direction) {
         if (hasPiece(destination)) {
             checkEnemy(current, destination);
-            killEnemy(destination);
             return;
         }
         checkPawn(current, direction);
@@ -81,10 +80,6 @@ public class Board {
         Piece currentPiece = getPiece(current);
         Piece destinationPiece = getPiece(destination);
         return !currentPiece.isEnemy(destinationPiece);
-    }
-
-    private void killEnemy(final Square destination) {
-        board.remove(destination);
     }
 
     private void checkPawn(final Square current, final Direction direction) {
@@ -107,6 +102,13 @@ public class Board {
     private void movePiece(final Square current, final Square destination) {
         board.put(destination, getPiece(current));
         board.remove(current);
+    }
+
+    public boolean hasKing(Team team) {
+        return board.keySet()
+                .stream()
+                .map(board::get)
+                .anyMatch(piece -> piece.isAlly(team) && piece.isKing());
     }
 
     public Map<Square, Piece> getBoard() {

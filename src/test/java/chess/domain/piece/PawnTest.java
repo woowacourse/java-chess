@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
@@ -38,7 +37,8 @@ class PawnTest {
         Square current = Square.of(File.A, Rank.THREE);
         Square destination = Square.of(File.A, Rank.FIVE);
         assertThatThrownBy(() -> pawn.findDirection(current, destination))
-                .isInstanceOf(WrongDirectionException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
     }
 
     @Test
@@ -48,6 +48,7 @@ class PawnTest {
         Square current = Square.of(File.A, Rank.SIX);
         Square destination = Square.of(File.A, Rank.FOUR);
         assertThatThrownBy(() -> pawn.findDirection(current, destination))
-                .isInstanceOf(WrongDirectionException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
     }
 }

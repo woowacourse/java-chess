@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.domain.dto;
 
 import java.util.Arrays;
 

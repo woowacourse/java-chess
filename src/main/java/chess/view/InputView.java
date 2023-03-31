@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Scanner;
 
-import chess.dto.SquareDto;
+import chess.view.dto.SquareDto;
 
 public class InputView {
 
@@ -16,6 +16,10 @@ public class InputView {
             OutputView.printErrorMessage(e.getMessage());
             return readCommand();
         }
+    }
+
+    public static String readNext() {
+        return scanner.next();
     }
 
     public static SquareDto readSquare() {

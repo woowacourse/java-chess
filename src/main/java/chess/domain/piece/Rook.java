@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.square.Direction;
-import chess.domain.square.Square;
 
 public class Rook extends Piece {
 
@@ -10,9 +9,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Direction findDirection(final Square current, final Square destination) {
-        int fileDifference = current.getFileDifference(destination);
-        int rankDifference = current.getRankDifference(destination);
+    public Direction judgeDirection(final int fileDifference, final int rankDifference) {
         return PieceDirection.STRAIGHT.findDirection(fileDifference, rankDifference);
     }
 }

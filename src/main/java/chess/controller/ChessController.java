@@ -1,88 +1,97 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.dto.SquareDto;
+import chess.domain.dto.ChessGameDto;
+import chess.domain.game.ChessGame;
+import chess.domain.game.User;
+import chess.domain.piece.Team;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
-    private final ChessGame chessGame = new ChessGame();
-
     public void run() {
-        OutputView.printStartMessage();
-        OutputView.printCommandMessage();
-        Command initialCommand = readInitialCommand();
-        if (initialCommand == Command.END) {
-            return;
-        }
-        if (initialCommand == Command.START) {
-            playGame();
-        }
+        LoginController loginController = new LoginController();
+        User user = loginController.getUser();
+        Command initialCommand = readInitialCommand(user.getNickname());
+        initializeByCommand(initialCommand, user);
     }
 
-    private Command readInitialCommand() {
+    private Command readInitialCommand(String nickname) {
+        OutputView.printStartMessage(nickname);
+        OutputView.printInitialCommandMessage();
+        Command command = InputView.readCommand();
+        while (isNotInitialCommand(command)) {
+            printInitialCommandErrorMessage(command);
+            command = InputView.readCommand();
+        }
+        return command;
+    }
+
+    private boolean isNotInitialCommand(Command command) {
+        return !(command == Command.START || command == Command.REPLAY || command == Command.END);
+    }
+
+    private void printInitialCommandErrorMessage(Command command) {
+        String initialErrorMessage = command.getInitialErrorMessage();
+        OutputView.printErrorMessage(initialErrorMessage);
+    }
+
+    private void initializeByCommand(Command command, User user) {
+        if (command == Command.END) {
+            return;
+        }
+        if (command == Command.REPLAY) {
+            replay(user);
+            return;
+        }
+        startGame(user);
+    }
+
+    private void replay(User user) {
+        ReplayController replayController = new ReplayController();
+        replayController.replayGame(user);
+    }
+
+    private void startGame(User user) {
+        OutputView.printPlayNewGameMessage();
+        Command newGameCommand = readNewGameCommand();
+        LoadGameController loadGameController = new LoadGameController();
+        ChessGameDto chessGameDto = loadGameController.getChessGameDtoByCommand(user, newGameCommand);
+        playGameWhenBothKingAlive(chessGameDto);
+    }
+
+    private Command readNewGameCommand() {
         Command command = InputView.readCommand();
         try {
-            validateInitialCommand(command);
+            validateNewGameCommand(command);
             return command;
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return readInitialCommand();
+            return readNewGameCommand();
         }
     }
 
-    private void validateInitialCommand(final Command command) {
-        if (command == Command.MOVE) {
-            throw new IllegalArgumentException("게임 시작 전에는 기물을 이동할 수 없습니다.");
-        }
-    }
-
-    private void playGame() {
-        OutputView.printGameStatus(chessGame.getGameStatus());
-        while (readPlayCommand() == Command.MOVE) {
-            SquareDto current = readSquare();
-            SquareDto destination = readSquare();
-            move(current, destination);
-        }
-    }
-
-    private Command readPlayCommand() {
-        Command command = InputView.readCommand();
-        try {
-            validatePlayCommand(command);
-            return command;
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return readPlayCommand();
-        }
-    }
-
-    private void validatePlayCommand(final Command command) {
-        if (command == Command.START) {
-            throw new IllegalArgumentException("이미 게임을 시작하셨습니다.");
-        }
-    }
-
-    private SquareDto readSquare() {
-        try {
-            return InputView.readSquare();
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return null;
-        }
-    }
-
-    private void move(final SquareDto currentDto, final SquareDto destinationDto) {
-        if (currentDto == null || destinationDto == null) {
+    private void validateNewGameCommand(Command command) {
+        if (command == Command.NEW || command == Command.EXIST) {
             return;
         }
-        try {
-            chessGame.move(currentDto, destinationDto);
-            OutputView.printGameStatus(chessGame.getGameStatus());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
+        throw new IllegalArgumentException("새로운 게임을 시작하려면 new, 이미 존재하는 게임을 확인하려면 exist를 입력해주세요.");
+    }
+
+    private void playGameWhenBothKingAlive(ChessGameDto chessGameDto) {
+        String gameId = chessGameDto.getId();
+        ChessGame chessGame = chessGameDto.getChessGame();
+        if (chessGame.isKingDead()) {
+            printWinner(chessGame);
+            return;
         }
+        PlayController playController = new PlayController();
+        playController.playGame(gameId, chessGame);
+    }
+
+    private void printWinner(ChessGame chessGame) {
+        Team winner = chessGame.getWinner();
+        OutputView.printWinner(winner);
     }
 }

@@ -34,6 +34,10 @@ public enum File {
         }
     }
 
+    public int getFileNumber() {
+        return value - A.value;
+    }
+
     public char getValue() {
         return value;
     }

@@ -1,10 +1,10 @@
-package chess.dto;
+package chess.domain.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;

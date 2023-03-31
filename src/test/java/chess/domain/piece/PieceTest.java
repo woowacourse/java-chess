@@ -36,4 +36,18 @@ class PieceTest {
         Piece rook = new Rook(Team.WHITE);
         assertThat(rook.isPawn()).isFalse();
     }
+
+    @Test
+    @DisplayName("킹이면 true를 반환한다.")
+    void is_king_true() {
+        Piece king = new King(Team.WHITE);
+        assertThat(king.isKing()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 아니면 false를 반환한다.")
+    void is_king_false() {
+        Piece bishop = new Bishop(Team.WHITE);
+        assertThat(bishop.isKing()).isFalse();
+    }
 }

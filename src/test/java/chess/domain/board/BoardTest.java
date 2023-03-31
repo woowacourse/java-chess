@@ -1,14 +1,14 @@
-package chess.domain;
+package chess.domain.board;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Team;
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -26,25 +26,43 @@ class BoardTest {
     @Test
     @DisplayName("흰색 기물의 위치와 흰색을 입력받으면 true를 리턴한다.")
     void return_true_when_white_piece_and_white_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), Team.WHITE)).isTrue();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), WHITE)).isTrue();
     }
 
     @Test
     @DisplayName("흰색 기물의 위치와 검은색을 입력받으면 false를 리턴한다.")
     void return_false_when_white_piece_and_black_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), Team.BLACK)).isFalse();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.TWO), BLACK)).isFalse();
     }
 
     @Test
     @DisplayName("검은색 기물의 위치와 검은색을 입력받으면 true를 리턴한다.")
     void return_true_when_black_piece_and_black_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), Team.BLACK)).isTrue();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), BLACK)).isTrue();
     }
 
     @Test
     @DisplayName("검은색 기물의 위치와 흰색을 입력받으면 false를 리턴한다.")
     void return_false_when_black_piece_and_white_color() {
-        Assertions.assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), Team.WHITE)).isFalse();
+        assertThat(board.isPieceTurn(Square.of(File.A, Rank.SEVEN), WHITE)).isFalse();
+    }
+
+    @Test
+    @DisplayName("초기 보드에서 각각 팀이 모두 킹을 가지고 있다.")
+    void has_king_true() {
+        assertThat(board.hasKing(WHITE)).isTrue();
+        assertThat(board.hasKing(BLACK)).isTrue();
+    }
+
+    @Test
+    void has_king_false() {
+        board.move(Square.of(File.E, Rank.TWO), Square.of(File.E, Rank.FOUR));
+        board.move(Square.of(File.D, Rank.SEVEN), Square.of(File.D, Rank.SIX));
+        board.move(Square.of(File.F, Rank.ONE), Square.of(File.B, Rank.FIVE));
+        board.move(Square.of(File.H, Rank.SEVEN), Square.of(File.H, Rank.SIX));
+        board.move(Square.of(File.B, Rank.FIVE), Square.of(File.E, Rank.EIGHT));
+        assertThat(board.hasKing(BLACK)).isFalse();
+        assertThat(board.hasKing(WHITE)).isTrue();
     }
 
     @Test
@@ -111,7 +129,9 @@ class BoardTest {
             assertThatThrownBy(() -> {
                 board.move(current, nextMove);
                 board.move(nextMove, destination);
-            }).isInstanceOf(WrongDirectionException.class);
+            })
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test
@@ -120,7 +140,8 @@ class BoardTest {
             Square current = Square.of(File.A, Rank.TWO);
             Square destination = Square.of(File.A, Rank.ONE);
             assertThatThrownBy(() -> board.move(current, destination))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -165,7 +186,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftRook, Square.of(File.B, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test
@@ -217,7 +239,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftKnight, Square.of(File.B, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
@@ -260,7 +283,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteLeftBishop, Square.of(File.D, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test
@@ -316,7 +340,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteKing, Square.of(File.C, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("King은 1칸만 이동할 수 있습니다.");
         }
     }
 
@@ -361,7 +386,8 @@ class BoardTest {
         @DisplayName("잘못된 위치로는 이동 실패")
         void move_fail() {
             assertThatThrownBy(() -> board.move(whiteQueen, Square.of(File.A, Rank.THREE)))
-                    .isInstanceOf(WrongDirectionException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 기물이 이동할 수 없는 위치입니다.");
         }
 
         @Test

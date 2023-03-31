@@ -20,7 +20,6 @@ import static chess.domain.square.Direction.UP_UP_RIGHT;
 import java.util.Arrays;
 import java.util.List;
 
-import chess.domain.piece.exception.WrongDirectionException;
 import chess.domain.square.Direction;
 
 public enum PieceDirection {
@@ -63,25 +62,25 @@ public enum PieceDirection {
         return getDirection(fileDifference, rankDifference);
     }
 
-    private Direction getKingAndQueenDirection(final int fileDifference, final int rankDifference) {
-        try {
-            return DIAGONAL.findDirection(fileDifference, rankDifference);
-        } catch (WrongDirectionException exception) {
-            return STRAIGHT.findDirection(fileDifference, rankDifference);
-        }
+    private Direction getAbsDirection(final int fileDifference, final int rankDifference) {
+        final int fileDirection = divideByAbs(fileDifference);
+        final int rankDirection = divideByAbs(rankDifference);
+        return getDirection(fileDirection, rankDirection);
     }
 
     private Direction getDiagonalDirection(final int fileDifference, final int rankDifference) {
         if (Math.abs(fileDifference) == Math.abs(rankDifference)) {
             return getAbsDirection(fileDifference, rankDifference);
         }
-        throw new WrongDirectionException();
+        throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
     }
 
-    private Direction getAbsDirection(final int fileDifference, final int rankDifference) {
-        final int fileDirection = divideByAbs(fileDifference);
-        final int rankDirection = divideByAbs(rankDifference);
-        return getDirection(fileDirection, rankDirection);
+    private Direction getKingAndQueenDirection(final int fileDifference, final int rankDifference) {
+        try {
+            return DIAGONAL.findDirection(fileDifference, rankDifference);
+        } catch (IllegalArgumentException exception) {
+            return STRAIGHT.findDirection(fileDifference, rankDifference);
+        }
     }
 
     private Direction getDirection(final int fileDirection, final int rankDirection) {
@@ -89,6 +88,6 @@ public enum PieceDirection {
                 .filter(direction ->
                         direction.getFileDirection() == fileDirection && direction.getRankDirection() == rankDirection)
                 .findAny()
-                .orElseThrow(WrongDirectionException::new);
+                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다."));
     }
 }
