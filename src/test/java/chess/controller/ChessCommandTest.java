@@ -15,7 +15,9 @@ class ChessCommandTest {
     @CsvSource(value = {
             "start, START",
             "move, MOVE",
-            "end, END",})
+            "pause, PAUSE",
+            "status, STATUS",
+            "fetch, FETCH",})
     void fromUserInputStartTest(String userInput, ChessCommandType expectedChessCommand) {
         ChessCommandType chessCommandType = ChessCommandTypeMapper.toChessCommandType(userInput);
 
@@ -23,7 +25,7 @@ class ChessCommandTest {
     }
 
     @ParameterizedTest(name = "유효하지 않은 입력인 경우 예외가 발생합니다. - {0}")
-    @ValueSource(strings = {"Start", "END", "ada", "Hello"})
+    @ValueSource(strings = {"aba", "", "ada", "Hello"})
     void fromUserInputExceptionTest(String userInput) {
         assertThatThrownBy(() -> ChessCommandTypeMapper.toChessCommandType(userInput))
                 .isInstanceOf(IllegalArgumentException.class);
