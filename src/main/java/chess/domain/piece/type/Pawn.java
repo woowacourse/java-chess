@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Position start, final Position end, final Piece destinationPiece) {
-        return isStraightMove(start, end) && isMovableStraightDestination(destinationPiece)
+       return (isStraightMove(start, end) && isMovableStraightDestination(destinationPiece))
                 || isDiagonalMovable(start,end) && isMovableDiagonalDestination(destinationPiece);
     }
 
@@ -35,6 +35,7 @@ public class Pawn extends Piece {
             currentPosition = currentPosition.moveByUnitVectorING(vectorX, vectorY);
             route.add(currentPosition);
         } while (!currentPosition.equals(end));
+
         return route;
     }
 

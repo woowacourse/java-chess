@@ -27,11 +27,11 @@ public abstract class Piece {
 
     public final void checkMovable(Position start, Position end, Piece destinationPiece) {
         if (!isMovable(start, end, destinationPiece)) {
-            throw new IllegalStateException("기물이 이동 할 수 있는 위치가 아닙니다");
+            throw new IllegalArgumentException("기물이 이동 할 수 있는 위치가 아닙니다");
         }
     }
 
-    public abstract boolean isMovable(Position start, Position end, Piece destinationPiece);
+    protected abstract boolean isMovable(Position start, Position end, Piece destinationPiece);
 
     public abstract List<Position> createRoute(Position start, Position end);
 

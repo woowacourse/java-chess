@@ -30,7 +30,7 @@ public class ChessBoard {
     public void move(Position start, Position end) {
         checkIfMoveToSamePosition(start, end);
         Piece pieceToMove = findPieceInBoardByPosition(start);
-        Piece pieceAtDestination = findPieceInBoardByPosition(start);
+        Piece pieceAtDestination = findPieceInBoardByPosition(end);
         checkIfOtherPiecesOnPath(pieceToMove.findRoute(start, end, pieceAtDestination), end);
 
         movePiece(start, end, pieceToMove);
@@ -39,12 +39,6 @@ public class ChessBoard {
     private static void checkIfMoveToSamePosition(Position start, Position end) {
         if (start.equals(end)) {
             throw new IllegalArgumentException("제자리로는 이동할 수 없습니다");
-        }
-    }
-    private void checkIfPieceMovable(final Position start, final Position end, final Piece pieceToMove) {
-        Piece destinationPiece = findPieceInBoardByPosition(end);
-        if (!pieceToMove.isMovable(start, end, destinationPiece)) {
-            throw new IllegalArgumentException("기물이 이동 할 수 있는 위치가 아닙니다");
         }
     }
 
