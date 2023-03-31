@@ -64,8 +64,8 @@ public class ChessBoard {
     public Map<Column, Long> findPieceCountOfColumn(Color color, PieceType pieceType) {
         return Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(Column.values()).map(column -> Position.of(column, rank)))
-                .filter(position -> chessBoard.get(position).isSameColor(color)
-                        && chessBoard.get(position).getPieceType() == pieceType)
+                .filter(position -> chessBoard.get(position).isSameColor(color))
+                .filter(position ->chessBoard.get(position).getPieceType() == pieceType)
                 .collect(Collectors.groupingBy(Position::getColumn,
                         Collectors.counting()));
     }

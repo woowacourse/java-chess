@@ -54,7 +54,7 @@ public class ChessGame {
     }
 
     private double findScoreByColor(Color color) {
-        return chessBoard.findScoreOfPiecesByColor(teamBlack) - findOverloadPawnScore(teamBlack);
+        return chessBoard.findScoreOfPiecesByColor(color) - findOverloadPawnScore(color);
     }
     private double findOverloadPawnScore(Color color) {
         Map<Column, Long> pawnCountByColumn = chessBoard.findPieceCountOfColumn(color, PieceType.PAWN);
