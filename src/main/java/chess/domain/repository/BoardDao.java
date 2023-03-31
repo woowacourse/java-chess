@@ -11,7 +11,7 @@ public class BoardDao {
     public Long saveBoard(String turn) {
         String saveBoardWithDefaultQuery = "INSERT INTO board (turn) VALUES (?)";
 
-        try (Connection connection = ConnectionGenerator.getConnection();
+        try (Connection connection = ChessConnectionGenerator.getConnection();
              var preparedStatement = connection.prepareStatement(saveBoardWithDefaultQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, turn);
             preparedStatement.executeUpdate();
@@ -29,7 +29,7 @@ public class BoardDao {
 
     public boolean existBoard() {
         final var query = "SELECT * FROM board";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
@@ -42,7 +42,7 @@ public class BoardDao {
 
     public BoardEntity findExistBoard() {
         final var query = "SELECT * FROM board";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -58,7 +58,7 @@ public class BoardDao {
 
     public void deleteAll() {
         final var query = "DELETE FROM board";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
 
@@ -69,7 +69,7 @@ public class BoardDao {
 
     public void updateCamp(String currentCamp) {
         final var query = "UPDATE board as b SET b.turn = ?";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, currentCamp);
 

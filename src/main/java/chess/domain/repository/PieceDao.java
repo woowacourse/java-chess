@@ -12,7 +12,7 @@ public class PieceDao {
 
     public void savePieces(List<PieceEntity> pieces) {
         StringBuilder newGamePiecesSaveQuery = getBulkPiecesInsertQuery(pieces);
-        try (Connection connection = ConnectionGenerator.getConnection();
+        try (Connection connection = ChessConnectionGenerator.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(newGamePiecesSaveQuery.toString())) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
@@ -38,7 +38,7 @@ public class PieceDao {
 
     public List<PieceEntity> findAllPieces() {
         final var query = "SELECT * FROM piece";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<PieceEntity> results = new ArrayList<>();
@@ -63,7 +63,7 @@ public class PieceDao {
 
     public void deleteAll() {
         final var query = "DELETE FROM piece";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
 
@@ -74,7 +74,7 @@ public class PieceDao {
 
     public void updatePiecePositionTo(String from, String to) {
         final var query = "UPDATE piece as p SET p.position = ? WHERE position = ?";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, to);
             preparedStatement.setString(2, from);
@@ -87,7 +87,7 @@ public class PieceDao {
     public void deleteByPosition(String position) {
         String saveBoardWithDefaultQuery = "DELETE FROM piece WHERE position = ?";
 
-        try (Connection connection = ConnectionGenerator.getConnection();
+        try (Connection connection = ChessConnectionGenerator.getConnection();
              var preparedStatement = connection.prepareStatement(saveBoardWithDefaultQuery)) {
             preparedStatement.setString(1, position);
             preparedStatement.executeUpdate();
@@ -99,7 +99,7 @@ public class PieceDao {
     public boolean isExistByPosition(String position) {
         String saveBoardWithDefaultQuery = "SELECT piece_id FROM piece WHERE position LIKE ?";
 
-        try (Connection connection = ConnectionGenerator.getConnection();
+        try (Connection connection = ChessConnectionGenerator.getConnection();
              var preparedStatement = connection.prepareStatement(saveBoardWithDefaultQuery)) {
             preparedStatement.setString(1, position);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -112,7 +112,7 @@ public class PieceDao {
 
     public PieceEntity findByPosition(String position) {
         final var query = "SELECT * FROM piece WHERE position = ?";
-        try (final var connection = ConnectionGenerator.getConnection();
+        try (final var connection = ChessConnectionGenerator.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, position);
             ResultSet resultSet = preparedStatement.executeQuery();
