@@ -1,21 +1,14 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Rook extends Piece {
-    private Rook(Side side) {
-        super(side);
-    }
-
-    public static Rook createOfWhite() {
-        return new Rook(Side.WHITE);
-    }
-
-    public static Rook createOfBlack() {
-        return new Rook(Side.BLACK);
+    public Rook(Side side) {
+        super(side, PieceType.ROOK);
     }
 
     @Override

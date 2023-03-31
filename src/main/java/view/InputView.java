@@ -6,37 +6,33 @@ import java.util.Scanner;
 
 public class InputView {
     private static final String INPUT_COMMAND_DELIMITER = " ";
-    private static final int MOVE_COMMAND_INPUT_CORRECT_SIZE = 3;
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
-    private final Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
-    public String requestUserCommandInGame() {
+    public static List<String> requestUserCommandInGame() {
         String userCommand = SCANNER.nextLine();
+
         if (userCommand.isEmpty()) {
-            throw new IllegalArgumentException("aaa");
+            throw new IllegalArgumentException("아무 값도 입력되지 않았습니다.");
         }
-
-        List<String> userCommands = Arrays.asList(userCommand.split(INPUT_COMMAND_DELIMITER));
-        if (GameCommand.from(userCommands.get(COMMAND_INDEX)).equals(GameCommand.END)) {
-            return userCommand;
-        }
-        if (userCommands.size() != MOVE_COMMAND_INPUT_CORRECT_SIZE) {
-            throw new IllegalArgumentException("이동 입력은 move b2 b3 형식으로 입력해주세요.");
-        }
-
-        if (!GameCommand.from(userCommands.get(COMMAND_INDEX)).equals(GameCommand.MOVE)) {
-            throw new IllegalArgumentException("이동 입력은 move b2 b3 형식으로 입력해주세요.");
-        }
-
-        return userCommands.get(SOURCE_POSITION_INDEX) + userCommands.get(TARGET_POSITION_INDEX);
+        return Arrays.asList(userCommand.split(INPUT_COMMAND_DELIMITER));
     }
 
-    public void requestStartCommand() {
-        if (GameCommand.from(SCANNER.nextLine()).equals(GameCommand.START)) {
+    public static void requestStartCommand() {
+        List<String> userInputs = Arrays.asList(SCANNER.nextLine());
+        if (GameCommand.from(userInputs).equals(GameCommand.START)) {
             return;
         }
         throw new IllegalArgumentException("게임 시작 명령어를 입력해주세요.");
+    }
+
+    public static List<String> requestLoadGameOrNewGame() {
+        List<String> userInputs = Arrays.asList(SCANNER.nextLine().split(INPUT_COMMAND_DELIMITER));
+        GameCommand gameCommand = GameCommand.from(userInputs);
+
+        if (gameCommand == GameCommand.NEW || gameCommand == GameCommand.LOAD) {
+            return userInputs;
+        }
+
+        throw new IllegalArgumentException("new 또는 load (roomId)를 입력해주세요");
     }
 }

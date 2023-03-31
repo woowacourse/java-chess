@@ -16,8 +16,8 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"c,5", "c,2", "f,4", "a,4"})
     void shouldReturnTrueWhenMovementIsPerpendicular(String targetFile, String targetRank) {
-        Queen whiteKing = Queen.createOfWhite();
-        boolean movable = whiteKing.isMovable(new EmptyPiece(), Position.of("c", "4"), Position.of(targetFile, targetRank));
+        Queen whiteQueen = new Queen(Side.WHITE);
+        boolean movable = whiteQueen.isMovable(new EmptyPiece(), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(movable).isTrue();
     }
@@ -26,7 +26,7 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"a,6", "d,5", "a,2", "f,1"})
     void shouldReturnTrueWhenMovementIsDiagonal(String targetFile, String targetRank) {
-        Queen blackQueen = Queen.createOfBlack();
+        Queen blackQueen = new Queen(Side.BLACK);
         boolean movable = blackQueen.isMovable(new EmptyPiece(), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(movable).isTrue();
@@ -36,7 +36,7 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"d,6", "f,6"})
     void shouldReturnFalseWhenMovementIsNotPerpendicularAndDiagonal(String targetFile, String targetRank) {
-        Queen whiteQueen = Queen.createOfWhite();
+        Queen whiteQueen = new Queen(Side.WHITE);
         boolean movable = whiteQueen.isMovable(new EmptyPiece(), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(movable).isFalse();
@@ -46,8 +46,8 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"c,5", "c,2", "f,4", "a,4"})
     void shouldReturnFalseWhenMovementIsCorrectButTargetPieceIsSameSide(String targetFile, String targetRank) {
-        Queen whiteQueen = Queen.createOfWhite();
-        boolean movable = whiteQueen.isMovable(Pawn.createOfWhite(), Position.of("c", "4"), Position.of(targetFile, targetRank));
+        Queen whiteQueen = new Queen(Side.WHITE);
+        boolean movable = whiteQueen.isMovable(new Pawn(Side.WHITE), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(movable).isFalse();
     }
@@ -56,8 +56,8 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"a,6", "d,5", "a,2", "f,1"})
     void shouldReturnTrueWhenMovementIsCorrectAndTargetPieceIsOpponentSide(String targetFile, String targetRank) {
-        Queen whiteQueen = Queen.createOfWhite();
-        boolean movable = whiteQueen.isMovable(Pawn.createOfBlack(), Position.of("c", "4"), Position.of(targetFile, targetRank));
+        Queen whiteQueen = new Queen(Side.WHITE);
+        boolean movable = whiteQueen.isMovable(new Pawn(Side.BLACK), Position.of("c", "4"), Position.of(targetFile, targetRank));
 
         assertThat(movable).isTrue();
     }
@@ -65,7 +65,7 @@ class QueenTest {
     @DisplayName("Queen이 오른쪽 위로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveRightUpward() {
-        Queen whiteQueen = Queen.createOfWhite();
+        Queen whiteQueen = new Queen(Side.WHITE);
         List<Position> path = whiteQueen.collectPath(Position.of("c", "2"), Position.of("g", "6"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("d", "3"), Position.of("e", "4"), Position.of("f", "5"));
@@ -74,7 +74,7 @@ class QueenTest {
     @DisplayName("Queen이 왼쪽 아래로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveLeftDownward() {
-        Queen whiteQueen = Queen.createOfWhite();
+        Queen whiteQueen = new Queen(Side.WHITE);
         List<Position> path = whiteQueen.collectPath(Position.of("g", "6"), Position.of("c", "2"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("f", "5"), Position.of("e", "4"), Position.of("d", "3"));
@@ -83,7 +83,7 @@ class QueenTest {
     @DisplayName("Queen이 수직 위로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveUpwardPerpendicular() {
-        Queen whiteQueen = Queen.createOfWhite();
+        Queen whiteQueen = new Queen(Side.WHITE);
         List<Position> path = whiteQueen.collectPath(Position.of("c", "4"), Position.of("c", "8"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "5"), Position.of("c", "6"), Position.of("c", "7"));
@@ -92,7 +92,7 @@ class QueenTest {
     @DisplayName("Queen이 수평 왼쪽으로 이동하면 해당 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenQueenMoveLeftPerpendicular() {
-        Queen whiteQueen = Queen.createOfWhite();
+        Queen whiteQueen = new Queen(Side.WHITE);
         List<Position> path = whiteQueen.collectPath(Position.of("d", "5"), Position.of("a", "5"));
 
         assertThat(path).containsExactlyInAnyOrder(Position.of("c", "5"), Position.of("b", "5"));
@@ -101,12 +101,12 @@ class QueenTest {
     @DisplayName("black queen의 경우 black queen카테고리를 반환한다.")
     @Test
     void blackBishopCategoryTest() {
-        assertThat(Queen.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_QUEEN);
+        assertThat(new Queen(Side.BLACK).getCategory()).isEqualTo(PieceCategory.BLACK_QUEEN);
     }
 
     @DisplayName("white queen의 경우 white queen카테고리를 반환한다.")
     @Test
     void whiteBishopCategoryTest() {
-        assertThat(Queen.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_QUEEN);
+        assertThat(new Queen(Side.WHITE).getCategory()).isEqualTo(PieceCategory.WHITE_QUEEN);
     }
 }

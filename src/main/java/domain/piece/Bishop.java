@@ -1,21 +1,14 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Bishop extends Piece {
-    private Bishop(Side side) {
-        super(side);
-    }
-
-    public static Bishop createOfWhite() {
-        return new Bishop(Side.WHITE);
-    }
-
-    public static Bishop createOfBlack() {
-        return new Bishop(Side.BLACK);
+    public Bishop(Side side) {
+        super(side, PieceType.BISHOP);
     }
 
     @Override

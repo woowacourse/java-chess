@@ -15,7 +15,7 @@ public class PawnTest {
     @DisplayName("White 진영인 경우 - target position이 source position보다 rank가 1높고, target position이 비어있으면 true를 반환한다.")
     @Test
     void shouldReturnIfIsMovableToTargetPositionWhenPawnIsWhiteSide() {
-        Pawn whitePawn = Pawn.createOfWhite();
+        Pawn whitePawn = new Pawn(Side.WHITE);
         boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", "2"), Position.of("a", "3"));
         assertThat(movable).isTrue();
     }
@@ -23,7 +23,7 @@ public class PawnTest {
     @DisplayName("Black 진영인 경우 - target position이 source position보다 rank가 1낮고, target position이 비어있으면 true를 반환한다.")
     @Test
     void shouldReturnIfIsMovableToTargetPositionWhenPawnIsBlackSide() {
-        Pawn blackPawn = Pawn.createOfBlack();
+        Pawn blackPawn = new Pawn(Side.BLACK);
         boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", "7"), Position.of("a", "6"));
         assertThat(movable).isTrue();
     }
@@ -32,7 +32,7 @@ public class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"2, 4, true", "2,3,true", "2,5,false", "3,4,true", "3,5,false"})
     void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsWhiteSideAndFirstMoving(String sourceRank, String targetRank, boolean result) {
-        Pawn whitePawn = Pawn.createOfWhite();
+        Pawn whitePawn = new Pawn(Side.WHITE);
         boolean movable = whitePawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
         assertThat(movable).isEqualTo(result);
     }
@@ -41,7 +41,7 @@ public class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"7, 5, true", "7,6,true", "7,4,false", "6,5,true", "6,4,false"})
     void shouldReturnIfIsMovableTwoStepTargetPositionWhenPawnIsBlackSideAndFirstMoving(String sourceRank, String targetRank, boolean result) {
-        Pawn blackPawn = Pawn.createOfBlack();
+        Pawn blackPawn = new Pawn(Side.BLACK);
         boolean movable = blackPawn.isMovable(new EmptyPiece(), Position.of("a", sourceRank), Position.of("a", targetRank));
         assertThat(movable).isEqualTo(result);
     }
@@ -49,8 +49,8 @@ public class PawnTest {
     @DisplayName("targetPiece와 동일한 팀이라면 true를 반환한다.")
     @Test
     void shouldReturnIfSameSideWhenTargetIsWhiteSideAndSourceSideIsWhite() {
-        Pawn sourcePawn = Pawn.createOfWhite();
-        Pawn targetPawn = Pawn.createOfWhite();
+        Pawn sourcePawn = new Pawn(Side.WHITE);
+        Pawn targetPawn = new Pawn(Side.WHITE);
 
         assertThat(sourcePawn.isSameSideWith(targetPawn)).isEqualTo(true);
     }
@@ -58,8 +58,8 @@ public class PawnTest {
     @DisplayName("targetPiece와 다른 팀이라면 false를 반환한다.")
     @Test
     void shouldReturnIfDifferentSideWhenTargetIsWhiteSideAndSourceSideIsBlack() {
-        Pawn sourcePawn = Pawn.createOfWhite();
-        Pawn targetPawn = Pawn.createOfBlack();
+        Pawn sourcePawn = new Pawn(Side.WHITE);
+        Pawn targetPawn = new Pawn(Side.BLACK);
 
         assertThat(sourcePawn.isSameSideWith(targetPawn)).isEqualTo(false);
     }
@@ -67,8 +67,8 @@ public class PawnTest {
     @DisplayName("targetPiece의 상대 팀이라면 true를 반환한다.")
     @Test
     void shouldReturnTrueWhenTargetPieceIsOpponentSide() {
-        Pawn sourcePawn = Pawn.createOfWhite();
-        Pawn targetPawn = Pawn.createOfBlack();
+        Pawn sourcePawn = new Pawn(Side.WHITE);
+        Pawn targetPawn = new Pawn(Side.BLACK);
 
         assertThat(sourcePawn.isOpponentSideWith(targetPawn)).isEqualTo(true);
     }
@@ -76,8 +76,8 @@ public class PawnTest {
     @DisplayName("targetPiece의 같은 팀이라면 false를 반환한다.")
     @Test
     void shouldReturnFalseWhenTargetPieceIsSameSide() {
-        Pawn sourcePawn = Pawn.createOfWhite();
-        Pawn targetPawn = Pawn.createOfWhite();
+        Pawn sourcePawn = new Pawn(Side.WHITE);
+        Pawn targetPawn = new Pawn(Side.WHITE);
 
         assertThat(sourcePawn.isOpponentSideWith(targetPawn)).isEqualTo(false);
     }
@@ -89,9 +89,9 @@ public class PawnTest {
             String sourceFile, String sourceRank,
             String targetFile, String targetRank,
             boolean result) {
-        Pawn sourcePawn = Pawn.createOfWhite();
+        Pawn sourcePawn = new Pawn(Side.WHITE);
         boolean movable = sourcePawn.isMovable(
-                Pawn.createOfBlack(),
+                new Pawn(Side.BLACK),
                 Position.of(sourceFile, sourceRank),
                 Position.of(targetFile, targetRank));
         assertThat(movable).isEqualTo(result);
@@ -104,9 +104,9 @@ public class PawnTest {
             String sourceFile, String sourceRank,
             String targetFile, String targetRank,
             boolean result) {
-        Pawn sourcePawn = Pawn.createOfBlack();
+        Pawn sourcePawn = new Pawn(Side.BLACK);
         boolean movable = sourcePawn.isMovable(
-                Pawn.createOfWhite(),
+                new Pawn(Side.WHITE),
                 Position.of(sourceFile, sourceRank),
                 Position.of(targetFile, targetRank));
         assertThat(movable).isEqualTo(result);
@@ -115,7 +115,7 @@ public class PawnTest {
     @DisplayName("White 진영의 Pawn이 위로 한 칸 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldHasNoPositionWhenGetPathWhitePawn() {
-        Pawn pawn = Pawn.createOfWhite();
+        Pawn pawn = new Pawn(Side.WHITE);
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "3"));
         assertThat(path).isEmpty();
     }
@@ -123,7 +123,7 @@ public class PawnTest {
     @DisplayName("White 진영의 Pawn이 위로 두 칸 이동할 때 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenWhitePawnMoveTwoSteps() {
-        Pawn pawn = Pawn.createOfWhite();
+        Pawn pawn = new Pawn(Side.WHITE);
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("b", "4"));
         assertThat(path).containsExactlyInAnyOrder(Position.of("b", "3"));
     }
@@ -131,7 +131,7 @@ public class PawnTest {
     @DisplayName("White 진영의 Pawn이 오른쪽 위로 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldReturnPathWhenWhitePawnMoveRightUpward() {
-        Pawn pawn = Pawn.createOfWhite();
+        Pawn pawn = new Pawn(Side.WHITE);
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "3"));
         assertThat(path).isEmpty();
     }
@@ -139,7 +139,7 @@ public class PawnTest {
     @DisplayName("White 진영의 Pawn이 왼쪽 위로 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldReturnPathWhenWhitePawnMoveLeftUpward() {
-        Pawn pawn = Pawn.createOfWhite();
+        Pawn pawn = new Pawn(Side.WHITE);
         List<Position> path = pawn.collectPath(Position.of("b", "2"), Position.of("c", "1"));
         assertThat(path).isEmpty();
     }
@@ -147,7 +147,7 @@ public class PawnTest {
     @DisplayName("Black 진영의 Pawn이 아래로 한 칸 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldHasNoPositionWhenGetPathBlackPawn() {
-        Pawn pawn = Pawn.createOfBlack();
+        Pawn pawn = new Pawn(Side.BLACK);
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "6"));
         assertThat(path).isEmpty();
     }
@@ -155,7 +155,7 @@ public class PawnTest {
     @DisplayName("Black 진영의 Pawn이 아래로 두 칸 이동할 때 경로를 반환한다.")
     @Test
     void shouldReturnPathWhenBlackPawnMoveTwoSteps() {
-        Pawn pawn = Pawn.createOfBlack();
+        Pawn pawn = new Pawn(Side.BLACK);
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("b", "5"));
         assertThat(path).containsExactlyInAnyOrder(Position.of("b", "6"));
     }
@@ -163,7 +163,7 @@ public class PawnTest {
     @DisplayName("Black 진영의 Pawn이 오른쪽 아래로 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldReturnPathWhenBLackPawnMoveRightDownward() {
-        Pawn pawn = Pawn.createOfBlack();
+        Pawn pawn = new Pawn(Side.BLACK);
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("c", "6"));
         assertThat(path).isEmpty();
     }
@@ -171,7 +171,7 @@ public class PawnTest {
     @DisplayName("Black 진영의 Pawn이 왼쪽 아래로 이동하면, 이동 경로는 위치를 0개 가진다.")
     @Test
     void shouldReturnPathWhenBlackPawnMoveLeftDownward() {
-        Pawn pawn = Pawn.createOfBlack();
+        Pawn pawn = new Pawn(Side.BLACK);
         List<Position> path = pawn.collectPath(Position.of("b", "7"), Position.of("a", "6"));
         assertThat(path).isEmpty();
     }
@@ -179,12 +179,12 @@ public class PawnTest {
     @DisplayName("black pawn의 경우 black pawn카테고리를 반환한다.")
     @Test
     void blackBishopCategoryTest() {
-        assertThat(Pawn.createOfBlack().getCategory()).isEqualTo(PieceCategory.BLACK_PAWN);
+        assertThat(new Pawn(Side.BLACK).getCategory()).isEqualTo(PieceCategory.BLACK_PAWN);
     }
 
     @DisplayName("white pawn의 경우 white pawn카테고리를 반환한다.")
     @Test
     void whiteBishopCategoryTest() {
-        assertThat(Pawn.createOfWhite().getCategory()).isEqualTo(PieceCategory.WHITE_PAWN);
+        assertThat(new Pawn(Side.WHITE).getCategory()).isEqualTo(PieceCategory.WHITE_PAWN);
     }
 }

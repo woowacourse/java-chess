@@ -1,21 +1,14 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
-    private King(Side side) {
-        super(side);
-    }
-
-    public static King createOfWhite() {
-        return new King(Side.WHITE);
-    }
-
-    public static King createOfBlack() {
-        return new King(Side.BLACK);
+    public King(Side side) {
+        super(side, PieceType.KING);
     }
 
     @Override

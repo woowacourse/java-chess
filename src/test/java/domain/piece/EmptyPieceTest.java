@@ -13,7 +13,7 @@ class EmptyPieceTest {
     @Test
     void shouldThrowExceptionWhenCallIsMovable() {
         assertThatThrownBy(() ->
-                new EmptyPiece().isMovable(Pawn.createOfBlack(), Position.of("a", "5"), Position.of("c", "7")))
+                new EmptyPiece().isMovable(new Pawn(Side.BLACK), Position.of("a", "5"), Position.of("c", "7")))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("지원하지 않는 메서드 입니다.");
     }

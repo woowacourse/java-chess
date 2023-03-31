@@ -20,9 +20,9 @@ public enum File {
         this.order = order;
     }
 
-    public static File from(String rankText) {
+    public static File from(String fileText) {
         return Arrays.stream(File.values())
-                .filter(rank -> rank.getText().equals(rankText))
+                .filter(file -> file.getText().equals(fileText))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file입니다."));
     }

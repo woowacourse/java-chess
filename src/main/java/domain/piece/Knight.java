@@ -1,21 +1,14 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
-    private Knight(Side side) {
-        super(side);
-    }
-
-    public static Knight createOfWhite() {
-        return new Knight(Side.WHITE);
-    }
-
-    public static Knight createOfBlack() {
-        return new Knight(Side.BLACK);
+    public Knight(Side side) {
+        super(side, PieceType.KNIGHT);
     }
 
     @Override

@@ -1,21 +1,14 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Queen extends Piece {
-    private Queen(Side side) {
-        super(side);
-    }
-
-    public static Queen createOfWhite() {
-        return new Queen(Side.WHITE);
-    }
-
-    public static Queen createOfBlack() {
-        return new Queen(Side.BLACK);
+    public Queen(Side side) {
+        super(side, PieceType.QUEEN);
     }
 
     @Override

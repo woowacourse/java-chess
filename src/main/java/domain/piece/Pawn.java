@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.game.PieceType;
 import view.PieceCategory;
 
 import java.util.Collections;
@@ -7,16 +8,8 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
-    private Pawn(Side side) {
-        super(side);
-    }
-
-    public static Pawn createOfBlack() {
-        return new Pawn(Side.BLACK);
-    }
-
-    public static Pawn createOfWhite() {
-        return new Pawn(Side.WHITE);
+    public Pawn(Side side) {
+        super(side, PieceType.PAWN);
     }
 
     @Override
