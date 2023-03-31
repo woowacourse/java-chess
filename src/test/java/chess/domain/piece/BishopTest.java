@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.Direction;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
@@ -17,23 +16,19 @@ class BishopTest {
         return Stream.of(
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.H, Rank.SEVEN),
-                        Direction.RIGHT_UP
+                        new Square(File.G, Rank.SEVEN)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.C, Rank.ONE),
-                        Direction.RIGHT_DOWN
+                        new Square(File.C, Rank.ONE)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.A, Rank.ONE),
-                        Direction.LEFT_DOWN
+                        new Square(File.A, Rank.ONE)
                 ),
                 Arguments.of(
                         new Square(File.B, Rank.TWO),
-                        new Square(File.A, Rank.THREE),
-                        Direction.LEFT_UP
+                        new Square(File.A, Rank.THREE)
                 )
         );
     }
@@ -41,9 +36,9 @@ class BishopTest {
     @DisplayName("대각선으로 거리 제한 없이 움직일 수 있다.")
     @ParameterizedTest(name = "{displayName} [{index}]")
     @MethodSource("possibleBishopTestProvider")
-    void Should_Success_When_BishopMove(final Square source, final Square target, final Direction direction) {
-        final Bishop bishop = new Bishop(Team.WHITE);
+    void Should_Success_When_BishopMove(Square source, Square target) {
+        Bishop bishop = new Bishop(Team.WHITE);
 
-        assertThat(bishop.isMovable(source, target, direction)).isTrue();
+        assertDoesNotThrow(() -> bishop.validateMovableRange(source, target));
     }
 }

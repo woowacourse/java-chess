@@ -1,21 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
 import chess.domain.board.Square;
 
 public abstract class Piece {
     protected final Team team;
-    protected final Role role;
+    protected final PieceType pieceType;
 
-    public Piece(Team team, Role role) {
+    public Piece(Team team, PieceType pieceType) {
         this.team = team;
-        this.role = role;
+        this.pieceType = pieceType;
     }
 
-    public abstract boolean isMovable(Square source, Square target, Direction direction);
+    public abstract void validateMovableRange(Square source, Square target);
 
-    public boolean isSameRole(Role role) {
-        return this.role == role;
+    public boolean isSamePieceType(PieceType pieceType) {
+        return this.pieceType == pieceType;
     }
 
     public boolean isSameTeam(Team team) {
@@ -34,7 +33,7 @@ public abstract class Piece {
         return team;
     }
 
-    public Role getRole() {
-        return role;
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

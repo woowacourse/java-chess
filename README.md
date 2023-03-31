@@ -82,3 +82,78 @@
 - [x] KnightMove -> Move로 합치기
 - [x] 콘솔에 노출될 문구 -> view에서 확인할 수 있도록 수정하기
 - [x] direction 계산 로직 -> gcd를 사용하는 것으로 수정
+
+## [3단계 미션]
+
+### 기능 요구사항
+
+- Game
+  - [x]  King이 잡혔을 때 게임이 종료된다.
+  - [x]  게임 종료 후 남아 있는 말에 대한 점수를 구할 수 있어야 한다.
+  - [x]  게임 종료 후 각 진영의 점수를 계산할 수 있다.
+  - [x]  게임 종료 후 어느 진영이 이겼는지 결과를 확인할 수 있다.
+  - [x]  “status” 명령에 대해 결과를 출력할 수 있다.
+
+- GameCommand
+  - [x]  "status" 명령인지 확인할 수 있다.
+
+- 점수 계산
+  - [x]  한 번에 한 쪽의 점수만을 계산해야 한다.
+
+- Queen
+  - [x]  9점을 가진다.
+
+- Rook
+  - [x]  5점을 가진다.
+
+- Bishop
+  - [x]  3점을 가진다.
+
+- Knight
+  - [x]  2.5점을 가진다.
+
+- Pawn
+  - [x]  1점을 가진다.
+
+  - if 같은 세로줄에 같은 색의 폰이 있는 경우
+    - [x]  0.5점을 가진다.
+
+- King
+  - [x]  잡히는 경우 경기가 끝나기 때문에 점수가 없다.
+
+## [4단계 미션]
+
+### 기능 요구사항
+
+- [x] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+- [x] DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+
+### SQL 구조
+
+```sql
+CREATE TABLE game
+(
+    id   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    turn VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE piece
+(
+    id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    game_id    INT          NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES game (id) ON UPDATE CASCADE,
+    piece_type VARCHAR(255) NOT NULL,
+    piece_file VARCHAR(255) NOT NULL,
+    piece_rank VARCHAR(255) NOT NULL,
+    piece_team VARCHAR(255) NOT NULL
+);
+```
+
+## [3,4단계 미션 후 리팩토링 목록]
+
+- [x]  null 체크 Optional 객체를 사용하도록 변경
+- [x]  `getWhitePieces(), getBlackPieces()` 하나의 메서드로 리팩토링
+- [x]  `calculateWhiteScore(),``calculateBlackScore()`  하나의 메서드로 리팩토링
+- [x]  BoardFactory로 책임 분리
+- [x]  문자열을 먼저 두고 equals 비교 하도록 수정
+- [x]  객체들의 책임 분리

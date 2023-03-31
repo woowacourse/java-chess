@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Square;
+import chess.exception.ErrorCode;
+import chess.exception.PieceCanNotMoveException;
 import java.util.List;
 
 public class King extends Piece {
@@ -11,14 +13,22 @@ public class King extends Piece {
     );
 
     public King(Team team) {
-        super(team, Role.KING);
+        super(team, PieceType.KING);
     }
 
     @Override
-    public boolean isMovable(Square source, Square target, Direction direction) {
-        if (POSSIBLE_DIRECTIONS.contains(direction)) {
-            return source.isMovableToTarget(target, direction.getFile(), direction.getRank());
+    public void validateMovableRange(Square source, Square target) {
+        Direction direction = Direction.calculateDirection(source, target);
+
+        if (!POSSIBLE_DIRECTIONS.contains(direction)) {
+            throw new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE);
         }
-        return false;
+        validateOneStep(source, target, direction);
+    }
+
+    private void validateOneStep(Square source, Square target, Direction direction) {
+        if (!source.isMovableToTarget(target, direction.getFile(), direction.getRank())) {
+            throw new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.exception.ErrorCode;
 import chess.exception.PieceCanNotMoveException;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -54,7 +55,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.file == fileDirection && direction.rank == rankDirection)
                 .findFirst()
-                .orElseThrow(PieceCanNotMoveException::new);
+                .orElseThrow(() -> new PieceCanNotMoveException(ErrorCode.PIECE_CAN_NOT_MOVE));
     }
 
     public static boolean isMoveForward(Direction direction) {
