@@ -1,20 +1,22 @@
-package chess.domain.piece;
+package chess.domain.piece.normal;
 
-import chess.domain.board.Position;
-import chess.domain.piece.normal.Knight;
 import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static chess.domain.piece.PawnTest.B4;
-import static chess.domain.piece.PawnTest.E4;
-import static chess.domain.piece.QueenTest.*;
+import static chess.domain.piece.normal.QueenTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
+
+    public static final Position B4 = new Position(File.B, Rank.FOUR);
+    public static final Position E4 = new Position(File.E, Rank.FOUR);
 
     @DisplayName("나이트는 유효한 위치를 받으면 경로를 반환한다.")
     @Test

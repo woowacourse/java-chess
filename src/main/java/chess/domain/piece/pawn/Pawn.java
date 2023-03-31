@@ -1,9 +1,9 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.Position;
-import chess.domain.piece.normal.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Kind;
+import chess.domain.position.Position;
 
 import java.util.Map;
 import java.util.Set;
@@ -23,13 +23,13 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Map<Position, Boolean> isEmptyPosition, final Position source, final Position target) {
+    public boolean canMove(final Map<Position, Boolean> isEmptyPositions, final Position source, final Position target) {
         if (source.isFileEquals(target)) {
-            return isEmptyPosition.keySet()
+            return isEmptyPositions.keySet()
                     .stream()
-                    .allMatch(isEmptyPosition::get);
+                    .allMatch(isEmptyPositions::get);
         }
-        return !isEmptyPosition.get(target);
+        return !isEmptyPositions.get(target);
     }
 
     @Override

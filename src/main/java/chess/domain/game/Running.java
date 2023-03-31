@@ -1,11 +1,11 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Map;
 
 public final class Running implements GameStatus {
 
@@ -20,6 +20,11 @@ public final class Running implements GameStatus {
     @Override
     public GameStatus start() {
         throw new UnsupportedOperationException("게임을 시작한 후에 다시 시작할 수 없습니다.");
+    }
+
+    @Override
+    public GameStatus load(final GameStatus gameStatus) {
+        throw new UnsupportedOperationException("시작한 후에는 게임을 불러올 수 없습니다.");
     }
 
     @Override
@@ -45,7 +50,22 @@ public final class Running implements GameStatus {
         return Color.BLACK;
     }
 
-    public List<Squares> getBoard() {
-        return board.getSquares();
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
+    }
+
+    @Override
+    public double computeScore(final Color color) {
+        return board.computeScore(color);
+    }
+
+    @Override
+    public Color getTurn() {
+        return turn;
+    }
+
+    @Override
+    public Color computeWinner() {
+        return board.computeWinner();
     }
 }

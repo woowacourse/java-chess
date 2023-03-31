@@ -1,11 +1,11 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Map;
 
 public final class Waiting implements GameStatus {
 
@@ -15,7 +15,12 @@ public final class Waiting implements GameStatus {
 
     @Override
     public GameStatus start() {
-        return new Running(new Board(), Color.WHITE);
+        return new Running(Board.createInitialBoard(), Color.WHITE);
+    }
+
+    @Override
+    public GameStatus load(final GameStatus gameStatus) {
+        return gameStatus;
     }
 
     @Override
@@ -34,7 +39,22 @@ public final class Waiting implements GameStatus {
     }
 
     @Override
-    public List<Squares> getBoard() {
+    public Map<Position, Piece> getBoard() {
         throw new UnsupportedOperationException("보드가 존재하지 않습니다.");
+    }
+
+    @Override
+    public double computeScore(final Color color) {
+        throw new UnsupportedOperationException("시작하지 않은 게임의 점수를 볼 수 없습니다.");
+    }
+
+    @Override
+    public Color getTurn() {
+        throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public Color computeWinner() {
+        throw new UnsupportedOperationException("시작한 후에 승자를 결정할 수 있습니다.");
     }
 }

@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.property.Color;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PawnTest {
+public class PawnTest {
 
     public static final Position B5 = new Position(File.B, Rank.FIVE);
     public static final Position A4 = new Position(File.A, Rank.FOUR);

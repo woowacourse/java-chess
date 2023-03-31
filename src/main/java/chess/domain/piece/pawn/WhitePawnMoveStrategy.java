@@ -1,6 +1,7 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.board.Position;
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 
 import java.util.Set;
 
@@ -13,9 +14,10 @@ public final class WhitePawnMoveStrategy implements PawnMoveStrategy {
 
     @Override
     public Set<Position> computePath(final Position source, final Position target) {
+        Path path = Path.of(source, target);
         if (source.distanceEquals(target, FORWARD_TWO_SQUARES) && source.isFileEquals(target)) {
             validateIsFirstMove(source);
-            return source.generateFilePath(target);
+            return path.computePath(source, target);
         }
         if (source.fileSubLessThan(target, FILE_SUB_EXCLUDE) && source.rankSubEquals(target, RANK_DISTANCE)) {
             return Set.of(target);

@@ -8,24 +8,15 @@ import java.util.stream.Collectors;
 public final class InputView {
 
     private static final String DELIMITER = " ";
-    private static final int COMMAND_INEDX = 0;
     private final Scanner scanner;
 
     public InputView(final Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public String inputFirstCommand() {
-        return scanner.nextLine().strip().toUpperCase();
-    }
-
     public List<String> inputCommand() {
         String input = scanner.nextLine();
-        List<String> commands = generateCommandsForm(input);
-        if (Command.from(commands.get(COMMAND_INEDX)) == Command.MOVE) {
-            validateMoveCommand(commands);
-        }
-        return commands;
+        return generateCommandsForm(input);
     }
 
     private List<String> generateCommandsForm(final String input) {
@@ -33,11 +24,5 @@ public final class InputView {
                 .map(String::strip)
                 .map(String::toUpperCase)
                 .collect(Collectors.toList());
-    }
-
-    private void validateMoveCommand(final List<String> commands) {
-        if (commands.size() != 3) {
-            throw new IllegalArgumentException("이동 명령어를 다시 확인하세요.");
-        }
     }
 }

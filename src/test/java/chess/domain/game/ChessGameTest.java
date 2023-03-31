@@ -1,9 +1,8 @@
-package chess.domain;
+package chess.domain.game;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
-import chess.domain.game.ChessGame;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,8 +38,10 @@ class ChessGameTest {
     void end_onGoing_false() {
         //given
         final var chessGame = new ChessGame();
+
         //when
         chessGame.end();
+
         //then
         assertThat(chessGame.isOnGoing()).isFalse();
     }
@@ -58,5 +59,22 @@ class ChessGameTest {
         final var chessGame = new ChessGame();
         chessGame.startGame();
         assertThat(chessGame.isOnGoing()).isTrue();
+    }
+
+    @Test
+    @DisplayName("이동 후에 턴이 바뀐다.")
+    void turnChange_afterMove() {
+        //given
+        final var chessGame = new ChessGame();
+        chessGame.startGame();
+        final var source = new Position(File.A, Rank.TWO);
+        final var target = new Position(File.A, Rank.FOUR);
+        chessGame.playTurn(source, target);
+
+        //when
+        String turn = chessGame.getTurn();
+
+        //then
+        assertThat(turn).isEqualTo("BLACK");
     }
 }

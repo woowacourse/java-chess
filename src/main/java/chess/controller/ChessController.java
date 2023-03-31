@@ -1,80 +1,42 @@
 package chess.controller;
 
-import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.controller.command.Command;
+import chess.controller.command.CommandFactory;
 import chess.domain.game.ChessGame;
-import chess.view.*;
+import chess.view.InputView;
+import chess.view.OutputView;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class ChessController {
 
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGame chessGame;
-    private final Map<Command, Action> commandMap = new HashMap<>();
 
-    public ChessController(final InputView inputView, final OutputView outputView, final ChessGame chessGame) {
+    public ChessController(
+            final InputView inputView,
+            final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.chessGame = chessGame;
-        commandMap.put(Command.START, new Action(ignored -> start()));
-        commandMap.put(Command.MOVE, new Action(this::move));
-        commandMap.put(Command.END, new Action(ignored -> end()));
     }
 
     public void play() {
+        final var chessGame = new ChessGame();
         outputView.startMessage();
         while (chessGame.isOnGoing()) {
-            repeatRead();
+            repeatTurns(chessGame);
         }
     }
 
-    private void repeatRead() {
+    private void repeatTurns(ChessGame chessGame) {
         try {
-            List<String> commands = inputView.inputCommand();
-            Command command = Command.from(commands.get(COMMAND_INDEX));
-            commandMap.get(command).excute(commands);
+            List<String> input = inputView.inputCommand();
+            Command command = CommandFactory.from(input);
+            command.execute(chessGame);
         } catch (RuntimeException e) {
-            outputView.printErrorMesage(e);
+            outputView.printErrorMessage(e);
             outputView.printGuideMessage();
-            repeatRead();
+            repeatTurns(chessGame);
         }
-    }
-
-    private void start() {
-        chessGame.startGame();
-        printBoard(chessGame.getBoard());
-    }
-
-    private void move(final List<String> commands) {
-        Position parsedFile = PositionParser.parse(commands.get(SOURCE_INDEX));
-        Position parsedRank = PositionParser.parse(commands.get(TARGET_INDEX));
-        chessGame.playTurn(parsedFile, parsedRank);
-        printBoard(chessGame.getBoard());
-    }
-
-
-    private void end() {
-        chessGame.end();
-    }
-
-    private void printBoard(final List<Squares> board) {
-        List<List<String>> pieceNames = board.stream()
-                .map(Squares::getPieces)
-                .map(KindMapper::mapToStrings)
-                .collect(Collectors.toList());
-
-        Collections.reverse(pieceNames);
-
-        pieceNames.forEach(outputView::printRank);
     }
 }

@@ -1,13 +1,16 @@
 package chess.domain.game;
 
-import chess.domain.board.Position;
-import chess.domain.board.Squares;
+import chess.domain.piece.Piece;
+import chess.domain.piece.property.Color;
+import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Map;
 
 public interface GameStatus {
 
     GameStatus start();
+
+    GameStatus load(GameStatus gameStatus);
 
     GameStatus playTurn(Position source, Position target);
 
@@ -15,5 +18,11 @@ public interface GameStatus {
 
     boolean isOnGoing();
 
-    List<Squares> getBoard();
+    Map<Position, Piece> getBoard();
+
+    double computeScore(Color color);
+
+    Color getTurn();
+
+    Color computeWinner();
 }

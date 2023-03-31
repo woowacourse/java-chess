@@ -7,10 +7,6 @@ public enum Color {
     NONE;
 
     public boolean isBlack() {
-        return this.equals(BLACK);
-    }
-
-    public boolean isWhite() {
-        return this.equals(WHITE);
+        return this == BLACK;
     }
 }
