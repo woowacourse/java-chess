@@ -16,6 +16,8 @@ public class ChessGame {
     private static final int POSITION_SIZE = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    public static final int PAWN_SCORE = 1;
+    public static final double PAWN_SCORE_BY_SAME_FILE = 0.5;
 
     private final Board board;
     private Team team;
@@ -72,8 +74,8 @@ public class ChessGame {
     }
 
     private double calculatePawnScoreByCount(final Integer count) {
-        if (count > 1) {
-            return 0.5 * count;
+        if (count > PAWN_SCORE) {
+            return PAWN_SCORE_BY_SAME_FILE * count;
         }
         return count;
     }
