@@ -1,15 +1,19 @@
 package chess.view;
 
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class OutputView {
+public final class OutputView {
 
     private static final Map<Class<?>, String> PIECE_VALUE_MAP = new HashMap<>();
 
@@ -68,5 +72,30 @@ public class OutputView {
             return pieceDisplay.toUpperCase();
         }
         return pieceDisplay;
+    }
+
+    public static void printExceptionMessage(final String message) {
+        System.out.println("[ERROR] " + message);
+    }
+
+    public static void printScore(final Map<Color, Double> score) {
+        System.out.println("BLACK팀(대문자) 점수 : " + score.get(BLACK));
+        System.out.println("WHITE팀(소문자) 점수 : " + score.get(WHITE));
+    }
+
+    public static void printWinner(final Color winner) {
+        if (winner != null) {
+            System.out.println("승리 팀은 " + winner.name() + "팀 입니다!!! 축하합니다!!!");
+            return;
+        }
+        System.out.println("무승부입니다!");
+    }
+
+    public static void printStartMessage() {
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.println("> 점수 계산 : status");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 }
