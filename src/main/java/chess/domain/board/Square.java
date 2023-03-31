@@ -11,9 +11,21 @@ public class Square {
         this.rank = rank;
     }
 
-    public Square nextSquare(final Square source, final Move move) {
-        final int nextFile = source.getFile() + move.getFile();
-        final int nextRank = source.getRank() + move.getRank();
+    public Square(final String position) {
+        this.file = File.findFileByLetter(position.charAt(0));
+        this.rank = Rank.findRankByLetter(position.charAt(1));
+    }
+
+    public Square nextSquare(final Move move) {
+        if (move == Move.UP_UP || move == Move.DOWN_DOWN) {
+            final int nextFile = this.getX() + Integer.signum(move.getX());
+            final int nextRank = this.getY() + Integer.signum(move.getY());
+
+            return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
+        }
+
+        final int nextFile = this.getX() + move.getX();
+        final int nextRank = this.getY() + move.getY();
 
         return new Square(File.findFile(nextFile), Rank.findRank(nextRank));
     }
@@ -35,11 +47,19 @@ public class Square {
         return Objects.hash(file, rank);
     }
 
-    public int getFile() {
-        return file.getFile();
+    public int getX() {
+        return file.getValue();
     }
 
-    public int getRank() {
-        return rank.getRank();
+    public int getY() {
+        return rank.getValue();
+    }
+
+    public Rank rank() {
+        return rank;
+    }
+
+    public File file() {
+        return file;
     }
 }

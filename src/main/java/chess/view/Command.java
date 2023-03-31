@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.view;
 
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -12,12 +12,14 @@ public class Command {
     private static final int TARGET_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
     private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
     private static final String SQUARE_BOUND_REGULAR_EXPRESSION = "^[a-h][1-8]$";
+    private static final String RESET_COMMAND = "reset";
 
-    private String command;
+    private String input;
     private Square source;
     private Square target;
 
@@ -26,14 +28,14 @@ public class Command {
     }
 
     private void extractCommand(final List<String> commands) {
-        command = commands.get(COMMAND_INDEX);
+        input = commands.get(COMMAND_INDEX);
 
         if (isMove() && commands.size() == MOVE_COMMAND_SIZE) {
             source = convertToSquare(commands.get(SOURCE_INDEX));
             target = convertToSquare(commands.get(TARGET_INDEX));
             return;
         }
-        if (!isStart() && !isEnd()) {
+        if (!isStart() && !isEnd() && !isStatus() && !isReset()) {
             throw new IllegalArgumentException("게임 명령어가 올바르지 않습니다.");
         }
     }
@@ -52,16 +54,24 @@ public class Command {
         }
     }
 
-    public boolean isMove() {
-        return command.equals(MOVE_COMMAND);
+    public boolean isStatus() {
+        return input.equals(STATUS_COMMAND);
     }
 
     public boolean isStart() {
-        return command.equals(START_COMMAND);
+        return input.equals(START_COMMAND);
+    }
+
+    public boolean isMove() {
+        return input.equals(MOVE_COMMAND);
     }
 
     public boolean isEnd() {
-        return command.equals(END_COMMAND);
+        return input.equals(END_COMMAND);
+    }
+
+    public boolean isReset() {
+        return input.equals(RESET_COMMAND);
     }
 
     public Square getSource() {

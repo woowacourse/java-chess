@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.List;
 
 public class King extends Piece {
@@ -25,12 +26,29 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && isNotSlidingMove(target, move);
+    public boolean isMovable(final Piece targetPiece,
+                             final boolean isPathBlocked) {
+        return possibleMoves.contains(calculateMove(targetPiece)) && isNotSlidingMove(targetPiece);
     }
 
-    private boolean isNotSlidingMove(final Square target, final Move move) {
-        return move.getFile() == target.getFile() - position().getFile()
-                && move.getRank() == target.getRank() - position().getRank();
+    private boolean isNotSlidingMove(final Piece target) {
+        final Move move = calculateMove(target);
+        return position().getX() == target.position().getX() - move.getX()
+                && position().getY() == target.position().getY() - move.getY();
+    }
+
+    @Override
+    public Piece move(final Square target) {
+        return new King(camp(), target);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.KING;
+    }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.KING.equals(pieceType);
     }
 }

@@ -6,6 +6,7 @@ import chess.domain.board.File;
 import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -64,6 +65,6 @@ class QueenTest {
     void Should_Success_When_QueenMove(final Square source, final Square target, final Move move) {
         final Queen queen = new Queen(Camp.WHITE, source);
 
-        assertThat(queen.isMovable(target, move, false)).isTrue();
+        assertThat(queen.isMovable(new Pawn(Camp.BLACK, target), false)).isTrue();
     }
 }

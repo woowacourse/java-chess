@@ -15,10 +15,10 @@ public enum File {
 
     private static final char OFFSET_LETTER = 'a';
 
-    private final int x;
+    private final int value;
 
-    File(final int x) {
-        this.x = x;
+    File(final int value) {
+        this.value = value;
     }
 
     public static File findFileByLetter(final char letter) {
@@ -27,12 +27,12 @@ public enum File {
 
     public static File findFile(final int fileIndex) {
         return Arrays.stream(File.values())
-                .filter(file -> file.getFile() == fileIndex)
+                .filter(file -> file.getValue() == fileIndex)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 인덱스의 파일을 찾을 수 없습니다."));
     }
 
-    public int getFile() {
-        return x;
+    public int getValue() {
+        return value;
     }
 }

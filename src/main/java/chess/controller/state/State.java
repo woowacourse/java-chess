@@ -1,29 +1,54 @@
 package chess.controller.state;
 
-import chess.domain.piece.Camp;
+import chess.dao.GameDao;
+import chess.domain.board.Square;
+import chess.domain.game.Game;
+import chess.view.OutputView;
 
 public abstract class State {
-    private final Camp turn;
+    private final Game game;
+    private final GameDao gameDao;
 
-    State(final Camp turn) {
-        this.turn = turn;
+    State(final Game game) {
+        this.game = game;
+        gameDao = new GameDao();
     }
 
     public Running start() {
         throw new IllegalStateException("게임을 시작할 수 없는 상태입니다.");
     }
 
-    public Running next() {
+    public State move(final Square source, final Square target) {
         throw new IllegalStateException("다음 턴으로 넘길 수 없는 상태입니다.");
     }
 
-    public abstract End end();
+    public State status() {
+        throw new IllegalStateException("상태를 볼 수 없는 상태입니다.");
+    }
 
-    public Camp turn() {
-        return turn;
+    public Running reset() {
+        final Game newGame = new Game();
+        OutputView.printChessBoard(newGame.getPieces());
+        return new Running(newGame);
+    }
+
+    public End end() {
+        return new End(game);
+    }
+
+    protected Game game() {
+        return game;
     }
 
     public boolean isRunning() {
         return true;
+    }
+
+    protected void saveGameHistory() {
+        gameDao.addMove(game.getPieces(), game.turn());
+    }
+
+    protected Game lastGame() {
+        return gameDao.restoreLastGame();
     }
 }

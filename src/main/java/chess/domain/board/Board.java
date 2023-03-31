@@ -1,74 +1,89 @@
 package chess.domain.board;
 
-import chess.domain.piece.Camp;
+import chess.domain.game.Camp;
 import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private static final boolean MOVED = true;
-
     private final Map<Square, Piece> board;
 
+    public Board(final Map<Square, Piece> board) {
+        this.board = board;
+    }
+
     public Board() {
-        this.board = BoardFactory.createBoard();
+        this(BoardFactory.createBoard());
     }
 
     public void move(final Square source, final Square target) {
-        if (!isMovable(source, target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
+        final Piece sourcePiece = board.get(source);
 
-        updateIfPawn(source, target);
-        board.put(target, board.get(source));
-        board.put(source, Empty.of());
+        board.put(target, sourcePiece.move(target));
+        board.put(source, new Empty(source));
     }
 
-    private boolean isMovable(final Square source, final Square target) {
+    public boolean isMovable(final Square source, final Square target) {
         final Piece sourcePiece = board.get(source);
-        final Move move = Move.calculateMove(source, target);
-        final boolean isPathBlocked = isPathBlocked(source, target, move);
+        final Piece targetPiece = board.get(target);
 
-        if (isSourceAndTargetSameCamp(source, target)) {
+        if (sourcePiece.camp() == targetPiece.camp()) {
             return false;
         }
-        return sourcePiece.isMovable(target, move, isPathBlocked);
-    }
 
-    private boolean isSourceAndTargetSameCamp(final Square source, final Square target) {
-        final Piece sourcePiece = board.get(source);
-        final Camp targetCamp = board.get(target).getCamp();
-
-        return sourcePiece.isSameCamp(targetCamp);
-    }
-
-    private void updateIfPawn(final Square source, final Square target) {
-        if (board.get(source).getClass() == Pawn.class) {
-            board.put(source, new Pawn(board.get(source).getCamp(), target, MOVED));
-        }
+        final Move move = Move.calculateMove(source, target);
+        final boolean isPathBlocked = isPathBlocked(source, target, move);
+        return sourcePiece.isMovable(targetPiece, isPathBlocked);
     }
 
     private boolean isPathBlocked(final Square source, final Square target, final Move move) {
-        final Square nextSquare = source.nextSquare(source, move);
+        final Square nextSquare = source.nextSquare(move);
 
         if (nextSquare.equals(target)) {
             return false;
         }
-        if (isEmptyPiece(nextSquare)) {
+        if (board.get(nextSquare).isSameType(PieceType.EMPTY)) {
             return isPathBlocked(nextSquare, target, move);
         }
         return true;
     }
 
-    private boolean isEmptyPiece(final Square source) {
-        return board.get(source).equals(Empty.of());
-    }
-
     public boolean isSameCamp(final Square square, final Camp camp) {
         return board.get(square).isSameCamp(camp);
+    }
+
+    public int countVerticalPawn(final Camp camp) {
+        return (int) board.values()
+                .stream()
+                .filter(piece -> isSameCampVerticalPawn(piece, camp))
+                .count();
+    }
+
+    private boolean isSameCampVerticalPawn(final Piece piece, final Camp camp) {
+        if (!piece.isSameCamp(camp) || !piece.isSameType(PieceType.PAWN)) {
+            return false;
+        }
+        return isSameCampPawnOnMove(piece, Move.UP) || isSameCampPawnOnMove(piece, Move.DOWN);
+    }
+
+    private boolean isSameCampPawnOnMove(final Piece piece, final Move move) {
+        final Square position = piece.position();
+        if (!position.rank().canMove(move)) {
+            return false;
+        }
+
+        final Square targetSquare = new Square(position.file(), position.rank().moveRank(move));
+        final Piece targetPiece = board.get(targetSquare);
+        return targetPiece.isSameCamp(piece.camp()) && targetPiece.isSameType(PieceType.PAWN);
+    }
+
+    public boolean isKingExist(final Camp camp) {
+        return board.values()
+                .stream()
+                .anyMatch(piece -> piece.isSameCamp(camp) && piece.isSameType(PieceType.KING));
     }
 
     public List<Piece> getPieces() {

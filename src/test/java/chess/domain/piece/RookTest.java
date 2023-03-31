@@ -6,6 +6,7 @@ import chess.domain.board.File;
 import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,6 +45,6 @@ class RookTest {
     void Should_Success_When_RookMove(final Square source, final Square target, final Move move) {
         final Rook rook = new Rook(Camp.WHITE, source);
 
-        assertThat(rook.isMovable(target, move, false)).isTrue();
+        assertThat(rook.isMovable(new Pawn(Camp.BLACK, target), false)).isTrue();
     }
 }

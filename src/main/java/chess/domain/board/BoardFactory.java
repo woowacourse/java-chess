@@ -1,7 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.game.Camp;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Camp;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -19,6 +19,9 @@ import java.util.stream.Stream;
 
 public final class BoardFactory {
     private static final int BOARD_LINE_SIZE = 8;
+
+    private BoardFactory() {
+    }
 
     public static Map<Square, Piece> createBoard() {
         final Map<Square, Piece> board = new LinkedHashMap<>();
@@ -52,10 +55,10 @@ public final class BoardFactory {
 
         pieces.addAll(createFirstLine(Camp.BLACK, squares.subList(0, 8)));
         pieces.addAll(createSecondLine(Camp.BLACK, squares.subList(8, 16)));
-        pieces.addAll(createEmptyLine());
-        pieces.addAll(createEmptyLine());
-        pieces.addAll(createEmptyLine());
-        pieces.addAll(createEmptyLine());
+        pieces.addAll(createEmptyLine(squares.subList(16, 24)));
+        pieces.addAll(createEmptyLine(squares.subList(24, 32)));
+        pieces.addAll(createEmptyLine(squares.subList(32, 40)));
+        pieces.addAll(createEmptyLine(squares.subList(40, 48)));
         pieces.addAll(createSecondLine(Camp.WHITE, squares.subList(48, 56)));
         pieces.addAll(createFirstLine(Camp.WHITE, squares.subList(56, 64)));
 
@@ -85,13 +88,23 @@ public final class BoardFactory {
         return pieces;
     }
 
-    private static List<Piece> createEmptyLine() {
+    private static List<Piece> createEmptyLine(final List<Square> squares) {
         final List<Piece> pieces = new ArrayList<>();
 
         for (int i = 0; i < BOARD_LINE_SIZE; i++) {
-            pieces.add(Empty.of());
+            pieces.add(new Empty(squares.get(i)));
         }
 
         return pieces;
+    }
+
+    public static Map<Square, Piece> createBoard(final List<Piece> pieces) {
+        final Map<Square, Piece> board = new LinkedHashMap<>();
+
+        for (final Piece piece : pieces) {
+            board.put(piece.position(), piece);
+        }
+
+        return board;
     }
 }

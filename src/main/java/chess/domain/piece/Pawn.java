@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -21,7 +22,7 @@ public class Pawn extends Piece {
     }
 
     private List<Move> makePossibleMoves() {
-        if (camp.equals(Camp.WHITE)) {
+        if (camp().equals(Camp.WHITE)) {
             return generateWhitePossibleMoves();
         }
 
@@ -31,15 +32,11 @@ public class Pawn extends Piece {
     private List<Move> generateWhitePossibleMoves() {
         if (isMoved) {
             return List.of(
-                    Move.UP,
-                    Move.UP_RIGHT,
-                    Move.UP_LEFT
+                    Move.UP
             );
         }
         return List.of(
                 Move.UP,
-                Move.UP_RIGHT,
-                Move.UP_LEFT,
                 Move.UP_UP
         );
     }
@@ -47,21 +44,66 @@ public class Pawn extends Piece {
     private List<Move> generateBlackPossibleMoves() {
         if (isMoved) {
             return List.of(
-                    Move.DOWN,
-                    Move.DOWN_RIGHT,
-                    Move.DOWN_LEFT
+                    Move.DOWN
             );
         }
         return List.of(
                 Move.DOWN,
-                Move.DOWN_RIGHT,
-                Move.DOWN_LEFT,
                 Move.DOWN_DOWN
         );
     }
 
+    private List<Move> possibleMovesIfTargetExist() {
+        if (camp().equals(Camp.WHITE)) {
+            return whitePossibleMovesIfTargetExist();
+        }
+
+        return blackPossibleMovesIfTargetExist();
+    }
+
+    private List<Move> whitePossibleMovesIfTargetExist() {
+        return List.of(
+                Move.UP_RIGHT,
+                Move.UP_LEFT
+        );
+    }
+
+    private List<Move> blackPossibleMovesIfTargetExist() {
+        return List.of(
+                Move.DOWN_RIGHT,
+                Move.DOWN_LEFT
+        );
+    }
+
     @Override
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && !isPathBlocked;
+    public boolean isMovable(final Piece targetPiece,
+                             final boolean isPathBlocked) {
+        final Move move = calculateMove(targetPiece);
+        if (targetPiece.isSameType(PieceType.EMPTY)) {
+            //    적이 없을 경우
+            return possibleMoves.contains(move) && isNotSlidingMove(targetPiece.position(), move) && !isPathBlocked;
+        } else {
+            return possibleMovesIfTargetExist().contains(move) && isNotSlidingMove(targetPiece.position(), move);
+        }
+    }
+
+    private boolean isNotSlidingMove(final Square targetSquare, final Move move) {
+        return (targetSquare.getX() == position().getX() + move.getX())
+                && (targetSquare.getY() == position().getY() + move.getY());
+    }
+
+    @Override
+    public Piece move(final Square target) {
+        return new Pawn(camp(), target, true);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.PAWN;
+    }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.PAWN.equals(pieceType);
     }
 }

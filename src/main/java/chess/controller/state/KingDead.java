@@ -1,25 +1,13 @@
 package chess.controller.state;
 
-import chess.domain.board.Square;
 import chess.domain.game.Camp;
 import chess.domain.game.Game;
 import chess.view.OutputView;
 
-public class Running extends State {
-    Running(final Game game) {
+public class KingDead extends State {
+    KingDead(final Game game) {
         super(game);
-    }
-
-    @Override
-    public State move(final Square source, final Square target) {
-        game().move(source, target);
-        saveGameHistory();
-        OutputView.printChessBoard(game().getPieces());
-
-        if (game().judgeWinner() != Camp.EMPTY) {
-            return new KingDead(game());
-        }
-        return new Running(game());
+        status();
     }
 
     @Override

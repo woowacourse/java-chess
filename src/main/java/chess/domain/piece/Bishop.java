@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Move;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.List;
 
 public class Bishop extends Piece {
@@ -21,7 +22,23 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
-        return possibleMoves.contains(move) && !isPathBlocked;
+    public boolean isMovable(final Piece targetPiece,
+                             final boolean isPathBlocked) {
+        return possibleMoves.contains(calculateMove(targetPiece)) && !isPathBlocked;
+    }
+
+    @Override
+    public Piece move(final Square target) {
+        return new Bishop(camp(), target);
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.BISHOP;
+    }
+
+    @Override
+    public boolean isSameType(final PieceType pieceType) {
+        return PieceType.BISHOP.equals(pieceType);
     }
 }

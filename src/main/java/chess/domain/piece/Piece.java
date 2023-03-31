@@ -4,27 +4,34 @@ import chess.domain.board.File;
 import chess.domain.board.Move;
 import chess.domain.board.Rank;
 import chess.domain.board.Square;
+import chess.domain.game.Camp;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected final Camp camp;
-    protected final Square position;
+    private final Camp camp;
+    private final Square position;
 
-    public Piece(final Camp camp, final Square position) {
+    protected Piece(final Camp camp, final Square position) {
         this.camp = camp;
         this.position = position;
     }
 
-    public Piece(final Camp camp) {
+    protected Piece(final Camp camp) {
         this.camp = camp;
         this.position = new Square(File.EMPTY, Rank.EMPTY);
     }
 
-    public boolean isMovable(final Square target, final Move move, final boolean isPathBlocked) {
+    public boolean isMovable(final Piece targetPiece, final boolean isPathBlocked) {
         throw new UnsupportedOperationException();
     }
 
-    protected Square position() {
+    public abstract Piece move(Square target);
+
+    protected Move calculateMove(final Piece target) {
+        return Move.calculateMove(position, target.position);
+    }
+
+    public Square position() {
         return position;
     }
 
@@ -32,9 +39,13 @@ public abstract class Piece {
         return this.camp == camp;
     }
 
-    public Camp getCamp() {
+    public Camp camp() {
         return camp;
     }
+
+    public abstract PieceType pieceType();
+
+    public abstract boolean isSameType(PieceType pieceType);
 
     @Override
     public boolean equals(final Object o) {
