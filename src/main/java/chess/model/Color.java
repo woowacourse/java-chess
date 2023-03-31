@@ -9,4 +9,6 @@ public interface Color {
     boolean isNotEmpty();
 
     boolean isEmpty();
+
+    boolean isSameColor(Color targetColor);
 }

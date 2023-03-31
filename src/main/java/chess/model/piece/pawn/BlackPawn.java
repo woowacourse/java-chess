@@ -5,6 +5,7 @@ import static chess.model.position.Direction.SOUTH_EAST;
 import static chess.model.position.Direction.SOUTH_WEST;
 
 import chess.model.Color;
+import chess.model.piece.Piece;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import java.util.Set;
@@ -28,5 +29,10 @@ public class BlackPawn extends Pawn {
         final int rank = Math.abs(distance.rank());
 
         return rank == MINIMUM_DISTANCE;
+    }
+
+    @Override
+    public Piece update() {
+        return this;
     }
 }

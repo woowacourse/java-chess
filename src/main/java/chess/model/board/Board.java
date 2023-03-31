@@ -12,7 +12,7 @@ public class Board {
 
     private final Map<Position, Piece> squares;
 
-    private Board(final Map<Position, Piece> squares) {
+    public Board(final Map<Position, Piece> squares) {
         this.squares = squares;
     }
 
@@ -103,6 +103,12 @@ public class Board {
         final Piece movePiece = squares.get(source);
         squares.put(target, movePiece.update());
         squares.put(source, Empty.getInstance());
+    }
+
+    public boolean findKing(final PieceColor targetColor) {
+        return squares.values().stream()
+                .filter(piece -> piece.isSameColor(targetColor))
+                .anyMatch(Piece::isKing);
     }
 
     public Map<Position, Piece> getSquares() {

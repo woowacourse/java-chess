@@ -21,7 +21,8 @@ public enum Rank {
 
     public static Rank findRank(final int value) {
         return Arrays.stream(values())
-                .filter(rank -> rank.value == value).findFirst()
+                .filter(rank -> rank.value == value)
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 

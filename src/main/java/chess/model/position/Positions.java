@@ -38,6 +38,12 @@ public class Positions {
                 .collect(toUnmodifiableList());
     }
 
+    public static List<Position> getPositionsBy(final File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> getInstance(file, rank))
+                .collect(toUnmodifiableList());
+    }
+
     public static Position getInstance(final File file, final Rank rank) {
         final Ranks ranks = cache.get(file);
         return ranks.getPosition(rank);

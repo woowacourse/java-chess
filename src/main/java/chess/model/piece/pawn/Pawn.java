@@ -10,7 +10,9 @@ import java.util.Set;
 public abstract class Pawn extends Piece {
 
     private static final int MINIMUM_DISTANCE = 1;
-    public static final Set<Direction> DIRECTIONS = Direction.diagonal();
+    private static final double SCORE = 1;
+
+    private static final Set<Direction> DIRECTIONS = Direction.diagonal();
 
     public Pawn(final Color color) {
         super(color, PieceType.PAWN);
@@ -30,7 +32,29 @@ public abstract class Pawn extends Piece {
 
     protected abstract boolean isRightDistance(final Distance distance);
 
-    protected boolean isSatisfySpecialCondition(final Distance distance, final Color targetColor) {
+    public abstract Piece update();
+
+    @Override
+    public final boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public final boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public final boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
+
+    protected final boolean isSatisfySpecialCondition(final Distance distance, final Color targetColor) {
         final int rank = Math.abs(distance.rank());
 
         final Direction direction = distance.findDirection();
@@ -47,7 +71,7 @@ public abstract class Pawn extends Piece {
         return Direction.isUpOrDown(direction) && targetColor.isEmpty();
     }
 
-    protected boolean isRightAttack(final Distance distance, final Color targetColor) {
+    protected final boolean isRightAttack(final Distance distance, final Color targetColor) {
         return hasEnemy(targetColor) && isDiagonalAttack(distance);
     }
 
@@ -58,9 +82,5 @@ public abstract class Pawn extends Piece {
     private boolean isDiagonalAttack(final Distance distance) {
         return Direction.isDiagonal(distance.findDirection())
                 && Math.abs(distance.rank()) == MINIMUM_DISTANCE;
-    }
-
-    public Piece update() {
-        return this;
     }
 }

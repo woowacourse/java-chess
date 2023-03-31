@@ -18,19 +18,27 @@ public abstract class Piece {
 
     public abstract Piece update();
 
-    public Color getColor() {
+    public abstract boolean isPawn();
+
+    public abstract boolean isEmpty();
+
+    public abstract boolean isKing();
+
+    public abstract double getScore();
+
+    public final boolean isDifferentColor(final PieceColor color) {
+        return this.color.isDifferent(color);
+    }
+
+    public final boolean isSameColor(final Color targetColor) {
+        return this.color == targetColor;
+    }
+
+    public final Color getColor() {
         return color;
     }
 
-    public Type getType() {
+    public final Type getType() {
         return type;
-    }
-
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public boolean isDifferentColor(final PieceColor color) {
-        return this.color.isDifferent(color);
     }
 }

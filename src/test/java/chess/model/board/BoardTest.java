@@ -7,6 +7,7 @@ import static chess.model.board.PositionFixture.A7;
 import static chess.model.board.PositionFixture.F1;
 import static chess.model.board.PositionFixture.F5;
 import static chess.model.board.PositionFixture.H3;
+import static chess.model.piece.PieceColor.BLACK;
 import static chess.model.piece.PieceColor.WHITE;
 import static chess.model.piece.PieceType.BISHOP;
 import static chess.model.piece.PieceType.KING;
@@ -138,4 +139,42 @@ class BoardTest {
         }
     }
 
+    @Nested
+    @DisplayName("findKing()을 테스트한다.")
+    class findKingTest {
+        @Test
+        @DisplayName("킹이 있으면 true가 나온다.")
+        void findKing_whenHasKing_thenReturnBoolean() {
+            // when, then
+            assertThat(board.findKing(WHITE)).isTrue();
+        }
+
+        /**
+         * RNBQKB.R
+         * PPPPPPPP
+         * ........
+         * ........
+         * ........
+         * ........
+         * pppppp.p
+         * rnbqNbnr
+         */
+        @Test
+        @DisplayName("킹이 없으면 false가 나온다.")
+        void findKing_whenNoKing_thenReturnBoolean() {
+            // when
+            killWhiteKing();
+
+            // then
+            assertThat(board.findKing(WHITE)).isFalse();
+        }
+
+        private void killWhiteKing() {
+            board.move(PositionFixture.G8, PositionFixture.F6, BLACK);
+            board.move(PositionFixture.F6, PositionFixture.D5, BLACK);
+            board.move(PositionFixture.D5, PositionFixture.E3, BLACK);
+            board.move(PositionFixture.E3, PositionFixture.G2, BLACK);
+            board.move(PositionFixture.G2, PositionFixture.E1, BLACK);
+        }
+    }
 }

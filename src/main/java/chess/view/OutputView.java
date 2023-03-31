@@ -1,6 +1,8 @@
 package chess.view;
 
 import chess.controller.BoardResponse;
+import chess.controller.ScoreResponses;
+import chess.model.piece.PieceColor;
 import java.util.List;
 
 public class OutputView {
@@ -30,5 +32,32 @@ public class OutputView {
 
     public void printErrorMessage(final String message) {
         System.out.printf("%n[ERROR] %s%n", message);
+    }
+
+    public void printScores(final ScoreResponses responses) {
+        responses.getResponses()
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    public void printIfHasGame(final boolean hasGame) {
+        System.out.println();
+        printHasGameStatus(hasGame);
+    }
+
+    private static void printHasGameStatus(final boolean hasGame) {
+        if (hasGame) {
+            System.out.println("기존에 플레이 하던 게임이 있습니다. 이어서 시작합니다.");
+            System.out.println();
+            return;
+        }
+
+        System.out.println("새 게임을 시작합니다.");
+        System.out.println();
+    }
+
+    public void printCurrentPlayer(final PieceColor currentPlayer) {
+        System.out.printf("%s님의 차례입니다.%n", currentPlayer.name());
+        System.out.println();
     }
 }

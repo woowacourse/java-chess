@@ -16,7 +16,7 @@ public class InputView {
     private static final int MOVE_COMMAND_INDEX = 0;
     private static final int SOURCE_COMMAND_INDEX = 1;
     private static final int TARGET_COMMAND_INDEX = 2;
-    private static final Position DEFAULT_POSITION = new Position(File.A, Rank.FIRST);
+    private static final Position DEFAULT_POSITION = Position.of(File.A, Rank.FIRST);
     private static final int COMMAND_INDEX = 0;
     private static final int POSITION_INDEX = 1;
 
@@ -76,7 +76,7 @@ public class InputView {
         final int rankValue = mapToRankValue(inputRank);
         final Rank rank = Rank.findRank(rankValue);
 
-        return new Position(file, rank);
+        return Position.of(file, rank);
     }
 
     private int mapToRankValue(final String inputRank) {

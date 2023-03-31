@@ -12,18 +12,26 @@ public abstract class NonSlidingPiece extends Piece {
         super(color, type);
     }
 
-    public boolean isMovable(final Distance distance, final Color targetColor) {
+    protected abstract boolean isRightDirection(final Direction direction);
+
+    protected abstract boolean isRightDistance(final Distance distance);
+
+    public final boolean isMovable(final Distance distance, final Color targetColor) {
         return isRightDirection(distance.findDirection()) && isRightDistance(distance);
     }
 
-    protected abstract boolean isRightDirection(final Direction direction);
-
-    protected boolean isRightDistance(final Distance distance) {
-        return true;
+    @Override
+    public final Piece update() {
+        return this;
     }
 
     @Override
-    public Piece update() {
-        return this;
+    public final boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public final boolean isEmpty() {
+        return false;
     }
 }
