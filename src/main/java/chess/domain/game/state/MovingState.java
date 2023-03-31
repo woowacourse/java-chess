@@ -1,9 +1,8 @@
 package chess.domain.game.state;
 
-import chess.domain.game.exception.ChessGameException;
-
 public class MovingState implements GameState {
 
+    private static final StatusType STATUS_TYPE = StatusType.PLAYING;
     private static final MovingState INSTANCE = new MovingState();
 
     private MovingState() {
@@ -15,7 +14,7 @@ public class MovingState implements GameState {
 
     @Override
     public GameState start() {
-        throw new ChessGameException("게임이 이미 시작되었습니다.");
+        return StartState.getInstance();
     }
 
     @Override
@@ -24,7 +23,17 @@ public class MovingState implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState run() {
         return this;
+    }
+
+    @Override
+    public StatusType getStatusType() {
+        return STATUS_TYPE;
+    }
+
+    @Override
+    public boolean isStarted() {
+        return true;
     }
 }

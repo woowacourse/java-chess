@@ -1,10 +1,12 @@
 package chess.domain.piece.state;
 
 import chess.domain.piece.ColorCompareResult;
+import chess.domain.piece.PieceType;
 
 public class KingState implements MoveState {
 
     private static final KingState instance = new KingState();
+    private static final PieceType pieceType = PieceType.KING;
 
     private KingState() {
     }
@@ -23,5 +25,15 @@ public class KingState implements MoveState {
             return false;
         }
         return Math.abs(x) <= 1 && Math.abs(y) <= 1;
+    }
+
+    @Override
+    public PieceType getType() {
+        return pieceType;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

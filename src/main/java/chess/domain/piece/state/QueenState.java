@@ -1,10 +1,12 @@
 package chess.domain.piece.state;
 
 import chess.domain.piece.ColorCompareResult;
+import chess.domain.piece.PieceType;
 
 public class QueenState implements MoveState {
 
     private static final QueenState instance = new QueenState();
+    private static final PieceType pieceType = PieceType.QUEEN;
 
     private QueenState() {
     }
@@ -30,5 +32,10 @@ public class QueenState implements MoveState {
             return true;
         }
         return x != 0 && y == 0;
+    }
+
+    @Override
+    public PieceType getType() {
+        return pieceType;
     }
 }

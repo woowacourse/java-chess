@@ -1,48 +1,27 @@
 package chess.view;
 
-import chess.controller.request.Input;
-import chess.controller.request.RequestType;
-import chess.view.request.EndRequest;
-import chess.view.request.MoveRequest;
-import chess.view.request.StartRequest;
-import java.util.Map;
-import java.util.Map.Entry;
+import chess.controller.main.Input;
+import chess.controller.main.Request;
+import chess.view.request.RequestImpl;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
-import java.util.function.Function;
-import java.util.regex.Pattern;
 
 public class InputView implements Input {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    private final Map<Pattern, Function<String, RequestType>> requests;
+    private final LoginImpl loginImpl;
+    private final JoinBoardImpl joinBoard;
 
-    public InputView() {
-        requests = Map.of(
-                Pattern.compile("^start$"), StartRequest::new,
-                Pattern.compile("^end$"), EndRequest::new,
-                Pattern.compile("^move [a-h][1-8] [a-h][1-8]$"), MoveRequest::new
-        );
+    public InputView(LoginImpl loginImpl, JoinBoardImpl joinBoard) {
+        this.loginImpl = loginImpl;
+        this.joinBoard = joinBoard;
     }
 
     @Override
-    public RequestType inputGameCommand() {
-        while (true) {
-            try {
-                return inputPlayerCommand();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private RequestType inputPlayerCommand() {
-        String input = scanner.nextLine();
-        return requests.entrySet().stream()
-                .filter(entry -> entry.getKey().matcher(input).matches())
-                .map(Entry::getValue)
-                .map(value -> value.apply(input))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바른 명령어가 아닙니다."));
+    public Request inputGameCommand() {
+        List<String> commands = Arrays.asList(scanner.nextLine().split(" "));
+        return new RequestImpl(commands, loginImpl.getUserId(), joinBoard.getBoardId());
     }
 }

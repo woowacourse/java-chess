@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,5 +39,17 @@ class KnightStateTest {
     void 나이트의_다음_상태는_처음과_같다() {
         //expect
         assertSame(knightState, knightState.getNextState());
+    }
+
+    @Test
+    void 나이트의_점수는_2_5_점이다() {
+        //expect
+        assertThat(knightState.getScore()).isEqualTo(2.5, withPrecision(0.0001));
+    }
+
+    @Test
+    void 나이트는_킹이_아니다() {
+        //expect
+        assertFalse(knightState.isKing());
     }
 }

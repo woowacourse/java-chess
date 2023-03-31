@@ -1,6 +1,8 @@
 package chess.domain.state;
 
 import static chess.domain.piece.ColorCompareResult.DIFFERENT_COLOR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,5 +38,17 @@ class QueenStateTest {
     void 퀸의_다음_상태는_처음과_같다() {
         //expect
         assertSame(queenState, queenState.getNextState());
+    }
+
+    @Test
+    void 퀸의_점수는_9점이다() {
+        //expect
+        assertThat(queenState.getScore()).isEqualTo(9.0, withPrecision(0.0001));
+    }
+
+    @Test
+    void 퀸은_킹이_아니다() {
+        //expect
+        assertFalse(queenState.isKing());
     }
 }

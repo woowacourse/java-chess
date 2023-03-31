@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -71,5 +73,23 @@ class PawnStateTest {
     void 움직인_폰의_다음_상태는_움직인_폰_상태이다() {
         //expect
         assertSame(movedPawnState, movedPawnState.getNextState());
+    }
+
+    @Test
+    void 폰의_점수는_1점이다() {
+        //expect
+        assertThat(initialPawnState.getScore()).isEqualTo(1, withPrecision(0.0001));
+    }
+
+    @Test
+    void 폰은_킹이_아니다() {
+        //expect
+        assertFalse(initialPawnState.isKing());
+    }
+
+    @Test
+    void 움직인_폰의_타입을_가져와도_폰이다() {
+        //expect
+        assertSame(initialPawnState.getType(), movedPawnState.getType());
     }
 }
