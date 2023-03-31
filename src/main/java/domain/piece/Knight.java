@@ -1,7 +1,10 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Path;
 import domain.position.Position;
+
+import java.util.Set;
 
 public final class Knight extends Piece {
 
@@ -32,5 +35,15 @@ public final class Knight extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected Set<Direction> getMovableDirections() {
+        throw new UnsupportedOperationException("[ERROR] Knight 객체에서는 지원하지 않는 기능입니다.");
     }
 }

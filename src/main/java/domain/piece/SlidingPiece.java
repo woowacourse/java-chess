@@ -12,4 +12,14 @@ public abstract class SlidingPiece extends Piece{
     public boolean isMovablePath(Position start, Path path) {
         return isMovableDirection(start, path.getFirstPosition());
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

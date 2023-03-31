@@ -71,6 +71,19 @@ class PawnTest {
         assertThat(result).isTrue();
     }
 
+    @Test
+    @DisplayName("기본점수가 1점이다.")
+    void getScoreTest() {
+        // given
+        Piece pawn = new WhitePawn();
+
+        // when
+        double score = pawn.getScore();
+
+        // then
+        assertThat(score).isEqualTo(1);
+    }
+
     static Stream<Arguments> isMovableInitialRowBlackPawnTestCase() {
         return Stream.of(
                 Arguments.of(new Path(Position.of(7, 5), Position.of(6, 5))),

@@ -1,7 +1,10 @@
 package domain.piece;
 
+import domain.position.Direction;
 import domain.position.Path;
 import domain.position.Position;
+
+import java.util.Set;
 
 public abstract class Pawn extends Piece {
 
@@ -24,6 +27,16 @@ public abstract class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected Set<Direction> getMovableDirections() {
+        throw new UnsupportedOperationException("[ERROR] Pawn 객체에서는 지원하지 않는 기능입니다.");
     }
 
     protected final boolean isMovableInitialRowPawn(Position start, Path path) {

@@ -1,24 +1,21 @@
 package domain.piece;
 
 import domain.position.Direction;
-import domain.position.Path;
 import domain.position.Position;
 
 import java.util.Set;
 
 public final class Bishop extends SlidingPiece {
 
-    public static final Set<Direction> BISHOP_MOVABLE_DIRECTIONS = Set.of(Direction.DIAGONAL);
-
     public Bishop(Color color) {
         super(PieceName.BISHOP, color);
     }
 
-    @Override
-    protected boolean isMovableDirection(Position start, Position nextPosition) {
-        Direction nextDirection = Direction.of(start, nextPosition);
-        return BISHOP_MOVABLE_DIRECTIONS.contains(nextDirection);
-    }
+//    @Override
+//    protected boolean isMovableDirection(Position start, Position nextPosition) {
+//        Direction nextDirection = Direction.of(start, nextPosition);
+//        return BISHOP_MOVABLE_DIRECTIONS.contains(nextDirection);
+//    }
 
     @Override
     protected boolean isMovableDistance(int distance) {
@@ -26,7 +23,7 @@ public final class Bishop extends SlidingPiece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
+    protected Set<Direction> getMovableDirections() {
+        return Set.of(Direction.DIAGONAL);
     }
 }

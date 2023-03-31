@@ -69,6 +69,19 @@ class KingTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    @DisplayName("기본점수가 0점이다.")
+    void getScoreTest() {
+        // given
+        King king = new King(Color.WHITE);
+
+        // when
+        double score = king.getScore();
+
+        // then
+        assertThat(score).isEqualTo(0);
+    }
+
     static Stream<Arguments> isMovablePathTest_SuccessCase() {
         return Stream.of(
                 Arguments.of(new Path(Position.of(3, 3), Position.of(4, 3))),
