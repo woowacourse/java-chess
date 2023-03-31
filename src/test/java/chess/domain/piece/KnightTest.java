@@ -25,9 +25,9 @@ class KnightTest {
     }
 
     @Test
-    void 나이트는_Empty가_아니다() {
+    void 나이트의_RoleType은_KNIGHT이다() {
         Knight knight = new Knight(Color.WHITE);
 
-        assertThat(knight.isEmpty()).isEqualTo(false);
+        assertThat(knight.isSameRoleType(RoleType.KNIGHT)).isTrue();
     }
 }

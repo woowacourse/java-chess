@@ -1,27 +1,30 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import java.util.Map;
 
 public class ChessGame {
-
     private final Board board;
-    private final Turn turn;
+    private final Color firstTurnColor;
+    private Turn turn;
 
-    public ChessGame(Board board) {
+    public ChessGame(Board board, Color firstTurnColor) {
         this.board = board;
-        this.turn = new Turn();
+        this.firstTurnColor = firstTurnColor;
+        this.turn = new Turn(firstTurnColor);
     }
 
-    public void movePieceTo(Position sourcePosition, Position targetPosition) {
-        move(sourcePosition, targetPosition);
+    public ChessGame() {
+        this(new Board(), Color.WHITE);
     }
 
-    private void move(Position sourcePosition, Position targetPosition) {
-        validateTurn(sourcePosition);
-        board.movePiece(sourcePosition, targetPosition);
-        turn.next();
+    public void move(Position source, Position target) {
+        validateTurn(source);
+        board.movePiece(source, target);
+        turn = turn.next();
     }
 
     private void validateTurn(Position sourcePosition) {
@@ -31,7 +34,20 @@ public class ChessGame {
         }
     }
 
-    public Board getBoard() {
-        return board;
+    public void start() {
+        board.initialize();
+        turn = new Turn(firstTurnColor);
+    }
+
+    public boolean isEnd() {
+        return board.checkKingDead();
+    }
+
+    public boolean isNotInitialize() {
+        return board.isNotInitialize();
+    }
+
+    public GameResult getResult() {
+        return new GameResult(Map.copyOf(board.getBoards()));
     }
 }

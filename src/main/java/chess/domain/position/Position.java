@@ -2,15 +2,21 @@ package chess.domain.position;
 
 import static java.util.stream.Collectors.toList;
 
+import chess.view.FileCoordinateView;
+import chess.view.RankCoordinateView;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position {
 
-    private static final int VALID_STRAIGHT = 0;
     private static final List<Position> KNIGHT_PATH = Collections.emptyList();
+    private static final int VALID_STRAIGHT = 0;
+    private static final int POSITION_FILE = 0;
+    private static final int POSITION_RANK = 1;
 
     private final FileCoordinate fileCoordinate;
     private final RankCoordinate rankCoordinate;
@@ -18,6 +24,13 @@ public class Position {
     public Position(FileCoordinate fileCoordinate, RankCoordinate rankCoordinate) {
         this.fileCoordinate = fileCoordinate;
         this.rankCoordinate = rankCoordinate;
+    }
+
+    public static Position of(String position) {
+        List<String> fileAndRank = Arrays.stream(position.split(""))
+                .collect(Collectors.toList());
+        return new Position(FileCoordinateView.findBy(fileAndRank.get(POSITION_FILE)),
+                RankCoordinateView.findBy(fileAndRank.get(POSITION_RANK)));
     }
 
     public int calculateFileGap(Position targetPosition) {
@@ -28,7 +41,7 @@ public class Position {
         return rankCoordinate.calculateGap(targetPosition.rankCoordinate);
     }
 
-    public List<Position> findPath(Position targetPosition) {
+    public List<Position> findPathWithoutSourceAndTarget(Position targetPosition) {
         List<RankCoordinate> betweenRanks = rankCoordinate.betweenRanks(targetPosition.rankCoordinate);
         List<FileCoordinate> betweenFiles = fileCoordinate.betweenFiles(targetPosition.fileCoordinate);
 
@@ -64,6 +77,18 @@ public class Position {
         return IntStream.range(0, ranks.size())
                 .mapToObj(index -> new Position(files.get(index), ranks.get(index)))
                 .collect(toList());
+    }
+
+    public boolean isSameRank(RankCoordinate other) {
+        return rankCoordinate == other;
+    }
+
+    public FileCoordinate getFileCoordinate() {
+        return fileCoordinate;
+    }
+
+    public RankCoordinate getRankCoordinate() {
+        return rankCoordinate;
     }
 
     @Override

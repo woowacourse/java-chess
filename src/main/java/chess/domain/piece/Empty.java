@@ -7,7 +7,7 @@ public class Empty extends Piece {
     private static final String INVALID_PIECE_MESSAGE = "움직일 수 없습니다.";
 
     private Empty(Color color) {
-        super(color);
+        super(color, RoleType.EMPTY);
     }
 
     public static Empty create() {
@@ -16,16 +16,6 @@ public class Empty extends Piece {
 
     @Override
     protected boolean validMove(Position sourcePosition, Position targetPosition, Color targetColor) {
-        throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
-
-    @Override
-    public Piece move() {
         throw new UnsupportedOperationException(INVALID_PIECE_MESSAGE);
     }
 }

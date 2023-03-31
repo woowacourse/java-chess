@@ -24,9 +24,9 @@ class BishopTest {
     }
 
     @Test
-    void 비숍은_Empty가_아니다() {
+    void 비숍의_RoleType은_BISHOP이다() {
         Bishop bishop = new Bishop(Color.WHITE);
 
-        assertThat(bishop.isEmpty()).isEqualTo(false);
+        assertThat(bishop.isSameRoleType(RoleType.BISHOP)).isTrue();
     }
 }

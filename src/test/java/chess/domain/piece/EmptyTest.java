@@ -18,13 +18,8 @@ class EmptyTest {
     void Empty말의_메서드를_호출하면_예외가_발생한다() {
         Empty empty = Empty.create();
 
-        assertAll(
-                () -> assertThatThrownBy(() -> empty.canMove(B_1, B_7, WHITE))
-                        .isInstanceOf(UnsupportedOperationException.class)
-                        .hasMessage("움직일 수 없습니다."),
-                () -> assertThatThrownBy(() -> empty.move())
-                        .isInstanceOf(UnsupportedOperationException.class)
-                        .hasMessage("움직일 수 없습니다."));
+        assertThatThrownBy(() -> empty.canMove(B_1, B_7, WHITE))
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("움직일 수 없습니다.");
     }
-
 }

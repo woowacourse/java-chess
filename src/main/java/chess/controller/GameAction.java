@@ -1,8 +1,10 @@
 package chess.controller;
 
-import java.util.List;
+import chess.dto.ChessRequest;
+import chess.service.ChessGameService;
 
 @FunctionalInterface
 public interface GameAction {
-    void execute(List<String> commands);
+    GameCommand execute(ChessGameService chessGameService, ChessRequest chessRequest);
+
 }

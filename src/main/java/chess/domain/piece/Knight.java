@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 public class Knight extends Piece {
 
     public Knight(Color color) {
-        super(color);
+        super(color, RoleType.KNIGHT);
     }
 
     @Override
@@ -17,15 +17,5 @@ public class Knight extends Piece {
 
     private boolean isMovable(int firstGap, int secondGap) {
         return firstGap == 1 && secondGap == 2;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public Piece move() {
-        return new Knight(getColor());
     }
 }

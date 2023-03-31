@@ -25,9 +25,9 @@ class KingTest {
     }
 
     @Test
-    void 킹은_Empty가_아니다() {
+    void 킹의_RoleType은_KING이다() {
         King king = new King(Color.WHITE);
 
-        assertThat(king.isEmpty()).isEqualTo(false);
+        assertThat(king.isSameRoleType(RoleType.KING)).isTrue();
     }
 }
