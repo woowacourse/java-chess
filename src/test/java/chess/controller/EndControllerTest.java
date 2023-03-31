@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.game.EndController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

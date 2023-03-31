@@ -1,14 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.Color;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.piece.BishopPiece;
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.InitPawnPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;
-import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
@@ -25,7 +25,7 @@ public class BoardGenerator {
         board.putAll(makeBlackPiece());
         board.putAll(makeWhitePiece());
         board.putAll(makeEmptyPiece());
-        return new Board(board);
+        return new Board(board, Color.WHITE);
     }
 
     private static Map<Position, Piece> makeBlackPiece() {
@@ -55,7 +55,7 @@ public class BoardGenerator {
     private static Map<Position, Piece> makePawns(Color color, Rank rank) {
         Map<Position, Piece> result = new HashMap<>();
         for (File file : File.values()) {
-            result.put(Position.of(file, rank), new PawnPiece(color));
+            result.put(Position.of(file, rank), new InitPawnPiece(color));
         }
         return result;
     }
@@ -76,4 +76,5 @@ public class BoardGenerator {
         }
         return result;
     }
+
 }

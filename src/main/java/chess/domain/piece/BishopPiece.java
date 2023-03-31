@@ -1,11 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 
 public class BishopPiece extends Piece {
     public BishopPiece(Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     @Override
@@ -18,5 +17,10 @@ public class BishopPiece extends Piece {
     @Override
     public boolean canJump() {
         return false;
+    }
+
+    @Override
+    public Piece nextPiece() {
+        return this;
     }
 }

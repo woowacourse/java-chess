@@ -1,35 +1,34 @@
 package chess.domain.dto;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 
 public class PieceDto {
 
-    private final String pieceType;
     private final String pieceColor;
+    private final String pieceName;
 
-    private PieceDto(String pieceType, String pieceColor) {
-        this.pieceType = pieceType;
+    private PieceDto(String pieceName, String pieceColor) {
+        this.pieceName = pieceName;
         this.pieceColor = pieceColor;
     }
 
     public static PieceDto from(Piece piece) {
-        return new PieceDto(PieceType.getNameOf(piece), piece.getColor().name());
+        return new PieceDto(piece.getType().getName(), piece.getColor().name());
+    }
+
+    public String getPieceName() {
+        return pieceName;
+    }
+
+    public String getPieceColor() {
+        return pieceColor;
     }
 
     @Override
     public String toString() {
         return "PieceResponse{" +
-                "pieceType='" + pieceType + '\'' +
+                "pieceType='" + pieceName + '\'' +
                 ", pieceColor='" + pieceColor + '\'' +
                 '}';
-    }
-
-    public String getPieceType() {
-        return pieceType;
-    }
-
-    public String getPieceColor() {
-        return pieceColor;
     }
 }

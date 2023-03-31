@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 
 public class EmptyPiece extends Piece {
     private static final EmptyPiece EMPTY = new EmptyPiece();
 
     private EmptyPiece() {
-        super(Color.NONE);
+        super(Color.NONE, PieceType.EMPTY);
     }
 
     public static EmptyPiece getInstance() {
@@ -23,4 +22,11 @@ public class EmptyPiece extends Piece {
     public boolean canJump() {
         return false;
     }
+
+    @Override
+    public Piece nextPiece() {
+        return this;
+    }
+
+
 }

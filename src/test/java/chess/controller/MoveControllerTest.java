@@ -1,9 +1,11 @@
 package chess.controller;
 
-import chess.domain.Color;
+import chess.controller.game.MoveController;
+import chess.controller.room.GameSession;
 import chess.domain.Position;
 import chess.domain.board.BoardGenerator;
-import chess.domain.board.BoardSession;
+import chess.domain.game.Game;
+import chess.domain.piece.Color;
 import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.Assertions;
@@ -25,31 +27,30 @@ public class MoveControllerTest {
 
     @BeforeEach
     void setting() {
-        BoardSession.clear();
+        GameSession.clear();
     }
 
     @Test
-    void Move_명령은_Baord_Session에_보드가_생성된_후_실행가능_하다() {
+    void Move_명령은_Game_Session에_보드가_생성된_후_실행가능_하다() {
         //given
         Response response = controller.execute(new Request("move a1 a2"));
 
         //when
         ResponseType type = response.getType();
-        String cause = response.getCause();
 
         assertThat(type).isEqualTo(ResponseType.FAIL);
-        assertThat(cause).isEqualTo("게임이 시작하지 않았습니다");
     }
 
     @Test
     void Move_Contoller_는_전진_명령을_수행한다() {
         //given
         Request request = new Request("move a2 a3");
-        BoardSession.makeSession(BoardGenerator.makeBoard());
+        GameSession.makeSession(Game.of(BoardGenerator.makeBoard()));
 
         //when
-        Response response = controller.execute(request);
-        Map<Position, Piece> board = BoardSession.getBoard().getBoard();
+        controller.execute(request);
+        Game game = GameSession.getGame();
+        Map<Position, Piece> board = game.getBoard().getBoardData();
         Piece result = board.get(A3);
 
 

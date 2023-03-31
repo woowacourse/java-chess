@@ -1,13 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Position;
 
 public class PawnPiece extends Piece {
-    private boolean moved = false;
-
     public PawnPiece(Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override
@@ -32,32 +29,10 @@ public class PawnPiece extends Piece {
     private boolean checkPositionChange(Position from, Position to, Piece piece) {
         int x = from.calculateFileDifference(to);
         int y = from.calculateRankDifference(to);
-        if (!moved) {
-            return InitialMove(x, y, piece);
-        }
-        return afterInitialMoved(x, y, piece);
+        return checkMove(x, y, piece);
     }
 
-    private boolean InitialMove(int x, int y, Piece piece) {
-        boolean canMove = firstMove(x, y, piece);
-        if (canMove) {
-            moved = true;
-        }
-        return canMove;
-    }
-
-    private boolean firstMove(int x, int y, Piece piece) {
-        if (isStraightMove(x, y, 2)) {
-            return piece.color == Color.NONE;
-        }
-        if (isOneDiagonalMove(x, y)) {
-            return piece.color != color && piece.color != Color.NONE;
-        }
-
-        return false;
-    }
-
-    private boolean afterInitialMoved(int x, int y, Piece piece) {
+    private boolean checkMove(int x, int y, Piece piece) {
         if (isStraightMove(x, y, 1)) {
             return piece.color == Color.NONE;
         }
@@ -78,5 +53,10 @@ public class PawnPiece extends Piece {
     @Override
     public boolean canJump() {
         return false;
+    }
+
+    @Override
+    public Piece nextPiece() {
+        return this;
     }
 }
