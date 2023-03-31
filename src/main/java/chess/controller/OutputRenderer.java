@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -9,11 +9,16 @@ import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.result.ScoreAndWinnerResult;
+import chess.service.BoardAndTurn;
+import chess.dto.ViewBoardDto;
+import chess.dto.TempResultDto;
 
 public class OutputRenderer {
 
 	private static final int BOARD_SIZE = 8;
 	private static final Map<PieceType, String> PIECE_TO_STRING = new EnumMap<>(PieceType.class);
+	private static final Map<Team, String> TURN_TO_STRING = new EnumMap<>(Team.class);
 
 	static {
 		PIECE_TO_STRING.put(PieceType.EMPTY, ".");
@@ -24,14 +29,19 @@ public class OutputRenderer {
 		PIECE_TO_STRING.put(PieceType.BISHOP, "B");
 		PIECE_TO_STRING.put(PieceType.PAWN, "P");
 		PIECE_TO_STRING.put(PieceType.INITIAL_PAWN, "P");
+		TURN_TO_STRING.put(Team.BLACK, "흑");
+		TURN_TO_STRING.put(Team.WHITE, "백");
+		TURN_TO_STRING.put(Team.EMPTY, "무승부");
 	}
 
-	public static BoardDto toBoardDto(final Map<Position, Piece> board) {
+	public static ViewBoardDto toViewBoardDto(final BoardAndTurn boardTurn) {
+		Map<Position, Piece> board = boardTurn.getBoard();
 		List<Position> positions = new ArrayList<>(board.keySet());
 		sortPositions(positions);
 
-		List<List<String>> boardDto = stringifyPieces(board, positions);
-		return new BoardDto(boardDto);
+		List<List<String>> board2D = stringifyPieces(board, positions);
+		String turn = TURN_TO_STRING.get(boardTurn.getTurn());
+		return new ViewBoardDto(board2D, turn);
 	}
 
 	private static void sortPositions(final List<Position> positions) {
@@ -71,5 +81,24 @@ public class OutputRenderer {
 			sign = sign.toLowerCase();
 		}
 		return sign;
+	}
+
+	public static TempResultDto toTempResultDto(final ScoreAndWinnerResult result) {
+		String winner = TURN_TO_STRING.get(result.getWinner());
+		String whiteScore = to10DividedString(result.getWhiteScoreMultipliedBy10());
+		String blackScore = to10DividedString(result.getBlackScoreMultipliedBy10());
+		return new TempResultDto(winner, whiteScore, blackScore);
+	}
+
+	private static String to10DividedString(final int score) {
+		if (score == 0) {
+			return "0";
+		}
+		String multipliedString = Integer.toString(score);
+		String last = multipliedString.substring(multipliedString.length() - 1);
+		if (last.equals("0")) {
+			return multipliedString.substring(0, multipliedString.length() - 1);
+		}
+		return multipliedString.substring(0, multipliedString.length() - 2) + "." + last;
 	}
 }

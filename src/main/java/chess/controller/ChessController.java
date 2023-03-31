@@ -1,53 +1,33 @@
 package chess.controller;
 
-import chess.domain.Position;
+import chess.controller.dto.CommandDto;
 import chess.service.ChessService;
-import chess.view.Command;
-import chess.view.CommandDto;
-import chess.view.InputRenderer;
 import chess.view.InputView;
-import chess.view.OutputRenderer;
 import chess.view.OutputView;
 
 public class ChessController {
 
-	private final ChessService service;
-
-	public ChessController() {
-		this.service = new ChessService();
-	}
-
-	public void run() {
-		OutputView.printInitialMessage();
-		while(isRunCommandNotEnd()) {
-			OutputView.printBoard(OutputRenderer.toBoardDto(service.getBoard()));
+	public void run(final ChessService chessService) {
+		if (!chessService.isGameStarted()) {
+			OutputView.printInitialMessage();
+		}
+		runInputCommand(chessService);
+		if (chessService.isGameDone()) {
+			OutputView.printWinner(chessService.getFinalWinner().toString());
 		}
 	}
 
-	private boolean isRunCommandNotEnd() {
-		return ExceptionHandler.RetryIfThrowsException(() -> {
-			CommandDto commandDto = readCommand();
-			Command command = commandDto.getCommand();
-			if (command == Command.START) {
-				initialize();
-			}
-			if (command == Command.MOVE) {
-				move(commandDto.getSourcePosition(), commandDto.getTargetPosition());
-			}
-			return command != Command.END;
+	private void runInputCommand(final ChessService service) {
+		ExceptionHandler.RetryIfThrowsException(() -> {
+			Command command = readCommand();
+			return command.run(service);
 		});
 	}
 
-	private CommandDto readCommand() {
-		return ExceptionHandler.RetryIfThrowsException(() ->
-			InputRenderer.toCommandDto(InputView.readCommand()));
-	}
-
-	private void initialize() {
-		service.initialize();
-	}
-
-	private void move(Position source, Position target) {
-		service.movePiece(source, target);
+	private Command readCommand() {
+		return ExceptionHandler.RetryIfThrowsException(() -> {
+			CommandDto commandDto = InputView.readCommand();
+			return commandDto.getCommand();
+		});
 	}
 }

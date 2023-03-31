@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Collections;
 import java.util.Map;
 
 import chess.domain.piece.Empty;
@@ -70,8 +71,6 @@ public class Board {
 		Piece sourcePiece = board.get(source);
 		Piece targetPiece = board.get(target);
 		if (isSameTeam(sourcePiece, targetPiece)) {
-			System.out.println("srcTeam.team, White, Black, Empty = " + sourcePiece.isGivenTeam(Team.WHITE) + " " + sourcePiece.isGivenTeam(Team.BLACK) + " " + sourcePiece.isGivenTeam(Team.EMPTY));
-			System.out.println("dstTeam.team, White, Black, Empty = " + targetPiece.isGivenTeam(Team.WHITE) + " " + targetPiece.isGivenTeam(Team.BLACK) + " " + targetPiece.isGivenTeam(Team.EMPTY));
 			throw new IllegalArgumentException(SAME_TEAM_IN_TARGET_ERROR_MESSAGE);
 		}
 	}
@@ -146,13 +145,18 @@ public class Board {
 	}
 
 	private boolean isInitialPawnPosition(final Team team, final Position position) {
-		if (team.isBlack() && position.getRow() == INITIAL_BLACK_PAWN_ROW) {
+		if (team == Team.BLACK && position.getRow() == INITIAL_BLACK_PAWN_ROW) {
 			return true;
 		}
-		return team.isWhite() && position.getRow() == INITIAL_WHITE_PAWN_ROW;
+		return team == Team.WHITE && position.getRow() == INITIAL_WHITE_PAWN_ROW;
+	}
+
+	public boolean isKingPosition(final Position position) {
+		return board.get(position)
+			.isGivenType(PieceType.KING);
 	}
 
 	public Map<Position, Piece> getBoard() {
-		return board;
+		return Collections.unmodifiableMap(board);
 	}
 }

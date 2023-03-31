@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.Fixtures.*;
+import static chess.domain.Fixtures.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -143,5 +143,21 @@ class BoardTest {
 			board.movePiece(Team.WHITE, new Position(i, 1), new Position(i, 1 + distance));
 			board.movePiece(Team.BLACK, new Position(i, 6), new Position(i, 6 - distance));
 		}
+	}
+
+	@Test
+	@DisplayName("킹의 위치라면 true를 반환해야 한다.")
+	void isKingPositionTrueTest() {
+		assertTrue(board.isKingPosition(E1));
+		assertTrue(board.isKingPosition(E8));
+	}
+
+	@Test
+	@DisplayName("킹의 위치가 아니라면 false를 반환해야 한다.")
+	void isKingPositionFalseTest() {
+		assertFalse(board.isKingPosition(D1));
+		assertFalse(board.isKingPosition(F1));
+		assertFalse(board.isKingPosition(D8));
+		assertFalse(board.isKingPosition(F8));
 	}
 }
