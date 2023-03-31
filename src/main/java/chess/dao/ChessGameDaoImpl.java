@@ -53,26 +53,34 @@ public final class ChessGameDaoImpl implements ChessGameDao {
         Map<Position, Piece> board = chessGame.getBoard();
         Long gameId = chessGame.getGameId();
 
-        board.forEach(
-                (position, piece) -> {
+        String sql = "INSERT INTO board SET " +
+                "position = ?," +
+                "piece = ?," +
+                "color = ?," +
+                "game_id = ?";
 
-                    String sql = "INSERT INTO board SET " +
-                            "position = ?," +
-                            "piece = ?," +
-                            "color = ?," +
-                            "game_id = ?";
-                    try (final var connection = this.getConnection();
-                         var preparedStatement = connection.prepareStatement(sql)) {
-                        preparedStatement.setString(1, PositionStringMapper.mapping(position));
-                        preparedStatement.setString(2, piece.getName());
-                        preparedStatement.setString(3, piece.getColor().name());
-                        preparedStatement.setLong(4, gameId);
-                        preparedStatement.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new IllegalArgumentException("게임을 저장할 수 없습니다.");
-                    }
-                }
-        );
+        final var connection = this.getConnection();
+        try {
+            var preparedStatement = connection.prepareStatement(sql);
+            for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+                preparedStatement.setString(1, PositionStringMapper.mapping(entry.getKey()));
+                preparedStatement.setString(2, entry.getValue().getName());
+                preparedStatement.setString(3, entry.getValue().getColor().name());
+                preparedStatement.setLong(4, gameId);
+                preparedStatement.addBatch();
+                preparedStatement.clearParameters();
+            }
+            preparedStatement.executeBatch();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException("게임 저장에 오류가 발생했습니다.");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void updateGame(ChessGame chessGame, Position source, Position target) {
