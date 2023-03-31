@@ -99,7 +99,6 @@ public class ChessController {
 
             if (Command.isMove(startCommand)) {
                 move(board, moveCommands);
-                return;
             }
 
             final BoardSearch boardSearch = BoardSearch.countPiecePerClassTypeFrom(board.chessBoard());
