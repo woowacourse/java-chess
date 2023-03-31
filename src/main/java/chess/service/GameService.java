@@ -19,8 +19,8 @@ public class GameService {
     private final PieceDao pieceDao;
 
     public GameService() {
-        this.players = PlayersFactory.createChessBoard();
         this.pieceDao = new PieceDaoImpl();
+        this.players = new PlayersFactory(this).createChessBoard();
     }
 
     public void movePiece(final String inputMovablePiece, final String inputTargetPosition) {
@@ -100,5 +100,17 @@ public class GameService {
     public void updateTurn(Color color) {
         pieceDao.deleteAll();
         new TurnDaoImpl().update(color);
+    }
+
+    public List<Piece> findPieceByColor(Color color) {
+        return pieceDao.findPieceByColor(color);
+    }
+
+    public Color getCurrentTurn() {
+        return new TurnDaoImpl().getCurrentTurn();
+    }
+
+    public void create(Piece piece, Color color) {
+        pieceDao.create(piece, color);
     }
 }

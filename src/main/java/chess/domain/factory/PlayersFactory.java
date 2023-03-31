@@ -5,52 +5,52 @@ import chess.domain.Piece;
 import chess.domain.Pieces;
 import chess.domain.Player;
 import chess.domain.Players;
-import chess.dao.PieceDao;
-import chess.dao.PieceDaoImpl;
-import chess.dao.TurnDao;
-import chess.dao.TurnDaoImpl;
+import chess.service.GameService;
 
 import java.util.List;
 
 public class PlayersFactory {
 
-    public static Players createChessBoard() {
+    private final GameService gameService;
 
-        PieceDao dao = new PieceDaoImpl();
-        TurnDao turnDao = new TurnDaoImpl();
+    public PlayersFactory(GameService gameService) {
+        this.gameService = gameService;
+    }
 
-        Pieces whitePieces = getDbWhitePieces(dao);
-        Pieces blackPieces = getDbBlackPieces(dao);
+    public Players createChessBoard() {
+        Pieces whitePieces = getDbWhitePieces();
+        Pieces blackPieces = getDbBlackPieces();
 
         Player whitePlayer = Player.fromWhitePlayer(whitePieces);
         Player blackPlayer = Player.fromBlackPlayer(blackPieces);
 
-        return Players.of(whitePlayer, blackPlayer, turnDao.getCurrentTurn());
+        return Players.of(whitePlayer, blackPlayer, gameService.getCurrentTurn());
     }
 
-    private static Pieces getDbWhitePieces(PieceDao dao) {
-        List<Piece> dbWhitePieces = dao.findPieceByColor(Color.WHITE);
+    private Pieces getDbWhitePieces() {
+        List<Piece> dbWhitePieces = gameService.findPieceByColor(Color.WHITE);
         if (dbWhitePieces.isEmpty()) {
             Pieces whitePieces = Pieces.createWhitePieces();
-            insertAll(dao, whitePieces, Color.WHITE);
+            insertAll(whitePieces, Color.WHITE);
             return whitePieces;
         }
         return Pieces.from(dbWhitePieces);
     }
 
-    private static Pieces getDbBlackPieces(PieceDao dao) {
-        List<Piece> dbBlackPieces = dao.findPieceByColor(Color.BLACK);
+    private Pieces getDbBlackPieces() {
+        List<Piece> dbBlackPieces = gameService.findPieceByColor(Color.BLACK);
         if (dbBlackPieces.isEmpty()) {
             Pieces blackPieces = Pieces.createBlackPieces();
-            insertAll(dao, blackPieces, Color.BLACK);
+            insertAll(blackPieces, Color.BLACK);
             return blackPieces;
         }
         return Pieces.from(dbBlackPieces);
     }
 
-    private static void insertAll(PieceDao dao, Pieces pieces, Color color) {
+    private void insertAll(Pieces pieces, Color color) {
         for (Piece piece : pieces.getPieces()) {
-            dao.create(piece, color);
+            gameService.create(piece, color);
         }
     }
+
 }

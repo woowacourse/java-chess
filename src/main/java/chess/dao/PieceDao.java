@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface PieceDao {
 
-    void create (Piece piece, Color color);
+    void create(Piece piece, Color color);
 
-    List<Piece> findPieceByColor (Color color);
+    List<Piece> findPieceByColor(Color color);
 
     void updatePosition (Piece updatedPiece, Position from);
 
