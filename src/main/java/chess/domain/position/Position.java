@@ -107,6 +107,18 @@ public class Position {
         return rank.equals(other.rank);
     }
 
+    public boolean isSameFile(File file) {
+        return this.file.equals(file);
+    }
+
+    public String getFileIndex() {
+        return Integer.toString(file.getFileIndex());
+    }
+
+    public String getRankIndex() {
+        return Integer.toString(rank.getRankIndex());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

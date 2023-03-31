@@ -20,4 +20,10 @@ public class BlankMoveRule implements MoveRule {
     public boolean isPawnMove() {
         return false;
     }
+
+    @Override
+    public boolean isKingMove() {
+        return false;
+    }
+
 }

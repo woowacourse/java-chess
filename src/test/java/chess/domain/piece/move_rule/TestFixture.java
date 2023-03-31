@@ -22,4 +22,10 @@ public class TestFixture {
     public static final Position D1 = Position.of(File.FILE_D, Rank.RANK1);
     public static final Position D4 = Position.of(File.FILE_D, Rank.RANK4);
 
+    public static final Position G1 = Position.of(File.FILE_G, Rank.RANK1);
+    public static final Position G3 = Position.of(File.FILE_G, Rank.RANK3);
+
+    public static final Position H1 = Position.of(File.FILE_H, Rank.RANK1);
+    public static final Position H4 = Position.of(File.FILE_H, Rank.RANK4);
+
 }

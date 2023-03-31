@@ -1,7 +1,7 @@
 package chess.controller.command;
 
-import chess.domain.chessGame.ChessGameState;
+import chess.domain.chessGame.ChessGame;
 
 public interface CommandExecute {
-    ChessGameState execute(String current, String next);
+    ChessGame execute(String current, String next);
 }

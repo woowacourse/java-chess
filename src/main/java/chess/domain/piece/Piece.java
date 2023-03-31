@@ -7,12 +7,20 @@ import java.util.List;
 import java.util.Objects;
 
 public class Piece {
-    private final MoveRule moveRule;
-    private final Color color;
+    protected final MoveRule moveRule;
+    private final PlayingCamp playingCamp;
+    private final PieceType pieceType;
 
-    public Piece(MoveRule moveRule, Color color) {
+    public Piece(MoveRule moveRule, PlayingCamp playingCamp) {
         this.moveRule = moveRule;
-        this.color = color;
+        this.playingCamp = playingCamp;
+        this.pieceType = moveRule.pieceType();
+    }
+
+    public Piece(PieceType pieceType, PlayingCamp playingCamp) {
+        this.moveRule = pieceType.getRule();
+        this.playingCamp = playingCamp;
+        this.pieceType = pieceType;
     }
 
     public List<Position> move(Position currentPosition, Position nextPosition) {
@@ -20,27 +28,35 @@ public class Piece {
     }
 
     public boolean isOpponent(Piece other) {
-        return this.color != other.color;
+        return this.playingCamp != other.playingCamp;
     }
 
     public boolean isFriendly(Piece other) {
-        return this.color == other.color;
+        return this.playingCamp == other.playingCamp;
     }
 
-    public boolean isSameColor(Color color) {
-        return this.color == color;
+    public boolean isSameCamp(PlayingCamp playingCamp) {
+        return this.playingCamp == playingCamp;
     }
 
     public boolean isPawn() {
         return moveRule.isPawnMove();
     }
 
+    public boolean isKing() {
+        return moveRule.isKingMove();
+    }
+
     public PieceType getPieceType() {
         return moveRule.pieceType();
     }
 
-    public Color getColor() {
-        return color;
+    public PlayingCamp getPlayingCamp() {
+        return playingCamp;
+    }
+
+    public double getScore() {
+        return this.pieceType.getScore();
     }
 
     @Override
@@ -48,19 +64,19 @@ public class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Objects.equals(moveRule.getClass(), piece.moveRule.getClass()) && color == piece.color;
+        return Objects.equals(moveRule.getClass(), piece.moveRule.getClass()) && playingCamp == piece.playingCamp;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(moveRule.getClass(), color);
+        return Objects.hash(moveRule.getClass(), playingCamp);
     }
 
     @Override
     public String toString() {
         return "Piece{" +
                 "moveRule=" + moveRule +
-                ", color=" + color +
+                ", color=" + playingCamp +
                 '}';
     }
 }

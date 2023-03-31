@@ -1,23 +1,17 @@
 package chess.controller.command;
 
-import chess.domain.PieceDto;
-import chess.domain.chessGame.ChessGameState;
-import chess.domain.position.Position;
-import chess.view.OutputView;
-
-import java.util.Map;
+import chess.domain.chessGame.ChessGame;
 
 public class MoveCommandExecute implements CommandExecute {
-    private final ChessGameState chessGameState;
+    private final ChessGame chessGame;
 
-    public MoveCommandExecute(ChessGameState chessGameState) {
-        this.chessGameState = chessGameState;
+    public MoveCommandExecute(ChessGame chessGame) {
+        this.chessGame = chessGame;
     }
 
     @Override
-    public ChessGameState execute(String current, String next) {
-        Map<Position, PieceDto> board = chessGameState.move(current, next);
-        OutputView.getInstance().printBoard(board);
-        return chessGameState;
+    public ChessGame execute(String current, String next) {
+        chessGame.move(current, next);
+        return chessGame;
     }
 }

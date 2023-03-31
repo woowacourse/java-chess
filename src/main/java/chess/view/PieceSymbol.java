@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
+import chess.domain.piece.PlayingCamp;
 
 import java.util.Arrays;
 
@@ -11,7 +11,8 @@ public enum PieceSymbol {
     QUEEN(PieceType.QUEEN, "Q", "q"),
     KNIGHT(PieceType.KNIGHT, "N", "n"),
     KING(PieceType.KING, "K", "k"),
-    PAWN(PieceType.PAWN, "P", "p"),
+    BLACK_PAWN(PieceType.BLACK_PAWN, "P", "P"),
+    WHITE_PAWN(PieceType.WHITE_PAWN, "p", "p"),
     BLANK(PieceType.BLANK, " ", " ");
 
     private final PieceType pieceType;
@@ -30,8 +31,8 @@ public enum PieceSymbol {
                 .findAny().orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물 종류입니다."));
     }
 
-    public String getPrintingSymbol(Color color) {
-        if (color == Color.BLACK) {
+    public String getPrintingSymbol(PlayingCamp playingCamp) {
+        if (playingCamp == PlayingCamp.BLACK) {
             return bigSymbol;
         }
         return smallSymbol;
