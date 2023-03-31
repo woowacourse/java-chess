@@ -21,7 +21,7 @@ public enum File {
         this.index = index;
     }
     
-    static File findByLabel(String label) {
+    public static File findByLabel(String label) {
         return Arrays.stream(values())
                 .filter(value -> value.label.equals(label))
                 .findAny()
@@ -33,10 +33,6 @@ public enum File {
                 .filter(value -> value.index == index)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_ERROR_MESSAGE));
-    }
-    
-    public String getLabel() {
-        return this.label;
     }
     
     public int getIndex() {

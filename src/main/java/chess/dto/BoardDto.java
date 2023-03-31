@@ -1,13 +1,13 @@
-package chess.controller.dto;
+package chess.dto;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class BoardDto {
-    
+
     private final List<RankDto> ranks;
 
     private BoardDto(List<RankDto> ranks) {
@@ -23,7 +23,7 @@ public class BoardDto {
         Collections.reverse(rankDtos);
         return new BoardDto(rankDtos);
     }
-    
+
     public List<RankDto> getRanks() {
         return this.ranks;
     }

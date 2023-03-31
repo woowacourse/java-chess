@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class Position implements Comparable<Position> {
         return Direction.findByUnitVector(fileGap / gcd, rankGap / gcd);
     }
 
-    public int getGreatestCommonDivisor(int bigNum, int smallNum) {
+    private int getGreatestCommonDivisor(int bigNum, int smallNum) {
         while (smallNum != 0) {
             int remainder = bigNum % smallNum;
 

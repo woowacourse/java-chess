@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.Color;
 import chess.domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

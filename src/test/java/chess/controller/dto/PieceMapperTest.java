@@ -3,7 +3,7 @@ package chess.controller.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -11,6 +11,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.dto.PieceMapper;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceMapperTest {
 
-    private static final Empty EMPTY = Empty.create();
+    private static final Empty EMPTY = Empty.create(Color.NONE);
     private static final Pawn WHITE_PAWN = Pawn.create(Color.WHITE);
     private static final Pawn BLACK_PAWN = Pawn.create(Color.BLACK);
     private static final Bishop WHITE_BISHOP = Bishop.create(Color.WHITE);

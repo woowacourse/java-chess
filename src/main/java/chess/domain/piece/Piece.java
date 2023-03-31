@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
@@ -35,6 +36,10 @@ public abstract class Piece {
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
+
+    public boolean isSameType(PieceType pieceType) {
+        return this.getType() == pieceType;
+    }
     
     @Override
     public int hashCode() {
@@ -56,7 +61,11 @@ public abstract class Piece {
     public PieceType getType() {
         return type;
     }
-    
+
+    public Color getColor() {
+        return color;
+    }
+
     public boolean isWhite() {
         return color == Color.WHITE;
     }

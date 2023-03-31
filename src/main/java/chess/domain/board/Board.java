@@ -1,25 +1,19 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.piece.Color;
+import chess.domain.Color;
+import chess.domain.ScoreBoard;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Board {
-
-    public static final int WHITE_GENERALS_RANK = 0;
-    public static final int WHITE_PAWNS_RANK = 1;
-    public static final int BLACK_PAWNS_RANK = 6;
-    public static final int BLACK_GENERALS_RANK = 7;
-
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -27,43 +21,20 @@ public class Board {
     }
 
     public static Board create() {
-        Map<Position, Piece> board = new TreeMap<>();
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Position position = Position.from(file, rank);
-                board.put(position, Empty.create());
-            }
-        }
+        return BoardGenerator.generate();
+    }
+
+    public static Board load(Map<Position, Piece> board) {
         return new Board(board);
     }
 
-    public void initialize() {
-        List<Piece> whiteGenerals = PieceFactory.createWhiteGenerals();
-        List<Piece> whitePawns = PieceFactory.createWhitePawns();
-        List<Piece> blackPawns = PieceFactory.createBlackPawns();
-        List<Piece> blackGenerals = PieceFactory.createBlackGenerals();
-        for (Position position : board.keySet()) {
-            placePieceAtPosition(whiteGenerals, position, WHITE_GENERALS_RANK);
-            placePieceAtPosition(whitePawns, position, WHITE_PAWNS_RANK);
-            placePieceAtPosition(blackPawns, position, BLACK_PAWNS_RANK);
-            placePieceAtPosition(blackGenerals, position, BLACK_GENERALS_RANK);
-        }
-    }
-
-    private void placePieceAtPosition(final List<Piece> pieces, final Position position, int rank) {
-        if (position.isRank(rank)) {
-            board.put(position, pieces.get(position.getFile().getIndex()));
-        }
-    }
-
-    public Piece getValidSourcePiece(final Position source, final Color color) {
+    public void validateSourcePiece(final Position source, final Color color) {
         if (isEmpty(source)) {
             throw new IllegalArgumentException("피스가 존재하지 않습니다.");
         }
         if (!isSameColor(source, color)) {
             throw new IllegalArgumentException("상대편 피스입니다.");
         }
-        return board.get(source);
     }
 
     public void checkBetweenRoute(final Position source, final Position destination) {
@@ -106,7 +77,11 @@ public class Board {
 
     public void replace(final Position source, final Position destination) {
         board.put(destination, board.get(source));
-        board.put(source, Empty.create());
+        board.put(source, Empty.create(Color.NONE));
+    }
+
+    public ScoreBoard getScoreBoard() {
+        return ScoreBoard.make(Collections.unmodifiableMap(board));
     }
 
     private boolean isEmpty(final Position position) {
@@ -124,5 +99,13 @@ public class Board {
             result.add(board.get(position));
         }
         return result;
+    }
+
+    public Map<Position, Piece> getPositionAndPiece() {
+        return Collections.unmodifiableMap(board);
+    }
+
+    public Piece getPieceAtPosition(final Position position) {
+        return board.get(position);
     }
 }
