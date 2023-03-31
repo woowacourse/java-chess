@@ -57,7 +57,7 @@ public final class Application {
     }
 
     private static void playLoadGame(final ChessDao dao) {
-        final List<Room> rooms = ChessGame.findAllRooms(dao);
+        final List<Room> rooms = dao.findAllRooms();
         OutputView.printRooms(rooms);
 
         final int roomId = InputView.readRoomNumber();

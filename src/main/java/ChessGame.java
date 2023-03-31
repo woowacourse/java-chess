@@ -6,7 +6,6 @@ import domain.piece.Piece;
 import domain.piece.Team;
 import domain.position.Position;
 
-import java.util.List;
 import java.util.Map;
 
 public final class ChessGame {
@@ -37,10 +36,6 @@ public final class ChessGame {
         final Board board = dao.findBoardByRoomId(roomId);
         dao.deleteBoard(roomId);
         return new ChessGame(roomId, board, dao);
-    }
-
-    public static List<Room> findAllRooms(ChessDao dao) {
-        return dao.findAllRooms();
     }
 
     public void save() {
