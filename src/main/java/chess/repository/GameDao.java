@@ -7,7 +7,7 @@ import static chess.domain.piece.PieceType.PAWN;
 import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.GameState;
-import chess.domain.Pieces;
+import chess.domain.piece.Pieces;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -85,7 +85,7 @@ public class GameDao {
         return jdbcTemplate.executeQuery(query, resultSet -> {
             final Map<Square, Piece> board = new HashMap<>();
             while (resultSet.next()) {
-                final Square square = Squares.getSquare(File.valueOf(resultSet.getString("square_file")),
+                final Square square = Squares.of(File.valueOf(resultSet.getString("square_file")),
                         Rank.valueOf(resultSet.getString("square_rank")));
                 final Piece piece = Pieces.of(Team.valueOf(resultSet.getString("piece_team")),
                         PieceType.valueOf(resultSet.getString("piece_type")));

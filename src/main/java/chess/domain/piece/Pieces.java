@@ -1,19 +1,11 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.*;
 import static chess.domain.square.File.*;
 import static chess.domain.square.Rank.*;
 import static chess.domain.Team.*;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.InitialPawn;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.Team;
 import chess.domain.square.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,19 +36,19 @@ public class Pieces {
     }
 
     private static void initPieceExceptPawn(final Rank rank, final Team team) {
-        initPieces.put(Squares.getSquare(E, rank), of(team, KING));
-        initPieces.put(Squares.getSquare(D, rank), of(team, QUEEN));
-        initPieces.put(Squares.getSquare(A, rank), of(team, ROOK));
-        initPieces.put(Squares.getSquare(H, rank), of(team, ROOK));
-        initPieces.put(Squares.getSquare(B, rank), of(team, KNIGHT));
-        initPieces.put(Squares.getSquare(G, rank), of(team, KNIGHT));
-        initPieces.put(Squares.getSquare(C, rank), of(team, BISHOP));
-        initPieces.put(Squares.getSquare(F, rank), of(team, BISHOP));
+        initPieces.put(Squares.of(E, rank), of(team, KING));
+        initPieces.put(Squares.of(D, rank), of(team, QUEEN));
+        initPieces.put(Squares.of(A, rank), of(team, ROOK));
+        initPieces.put(Squares.of(H, rank), of(team, ROOK));
+        initPieces.put(Squares.of(B, rank), of(team, KNIGHT));
+        initPieces.put(Squares.of(G, rank), of(team, KNIGHT));
+        initPieces.put(Squares.of(C, rank), of(team, BISHOP));
+        initPieces.put(Squares.of(F, rank), of(team, BISHOP));
     }
 
     private static void initPawn(final Rank rank, final Team team) {
         Arrays.stream(File.values())
-                .forEach(file -> initPieces.put(Squares.getSquare(file, rank), of(team, INITIAL_PAWN)));
+                .forEach(file -> initPieces.put(Squares.of(file, rank), of(team, INITIAL_PAWN)));
     }
 
     private static void createPieces() {

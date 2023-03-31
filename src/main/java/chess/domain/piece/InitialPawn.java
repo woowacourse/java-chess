@@ -16,7 +16,7 @@ public final class InitialPawn extends Piece {
     private static final int MOVE_LIMIT = 2;
     public static final int ZERO = 0;
 
-    public InitialPawn(final Team team) {
+    InitialPawn(final Team team) {
         super(team, INITIAL_PAWN);
     }
 

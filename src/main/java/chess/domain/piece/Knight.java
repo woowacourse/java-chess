@@ -7,7 +7,7 @@ import chess.domain.Team;
 import chess.domain.movement.Movement;
 
 public final class Knight extends Piece {
-    public Knight(final Team team) {
+    Knight(final Team team) {
         super(team, KNIGHT);
     }
 

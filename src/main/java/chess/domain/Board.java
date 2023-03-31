@@ -2,11 +2,12 @@ package chess.domain;
 
 import static chess.domain.piece.PieceType.INITIAL_PAWN;
 import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -45,7 +46,7 @@ public class Board {
     private void updateSquare(final Square source, final Square target) {
         Piece piece = findPieceBy(source);
         if (piece.isSameType(INITIAL_PAWN)) {
-            piece = new Pawn(piece.team());
+            piece = Pieces.of(piece.team(), PAWN);
         }
         board.put(target, piece);
         board.remove(source);

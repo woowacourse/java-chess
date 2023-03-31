@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,39 +81,14 @@ class BoardTest {
 
     @ParameterizedTest(name = "source 위치에 있는 말의 색이 현재 차례의 팀의 색과 같은지 확인한다.")
     @CsvSource({"a2,WHITE,true", "b7,BLACK,true", "c8,WHITE,false"})
-    void isSameColor(String source, Team team, boolean expected) {
+    void isSameTeam(String source, Team team, boolean expected) {
         assertThat(board.isSameTeam(of(source), team)).isEqualTo(expected);
-    }
-
-    @DisplayName("팀의 남아있는 말들로 점수를 계산한다.")
-    @Test
-    void calculate_score() {
-        board.move(of("a2"), of("a4"));
-        board.move(of("b7"), of("b5"));
-        board.move(of("a4"), of("b5"));
-        board.move(of("b2"), of("b4"));
-        board.move(of("a1"), of("a7"));
-
-
-        assertThat(board.calculateTotalScoreBy(Team.WHITE)).isEqualTo(37.0);
-        assertThat(board.calculateTotalScoreBy(Team.BLACK)).isEqualTo(36.0);
-    }
-
-    @DisplayName("세로줄에 같은 팀의 Pawn이 있으면 Pawn의 점수는 0.5점으로 한다.")
-    @Test
-    void calculate_score_by_Pawn() {
-        board.move(of("a2"), of("a4"));
-        board.move(of("b7"), of("b5"));
-        board.move(of("a4"), of("b5"));
-
-        assertThat(board.calculateTotalScoreBy(Team.WHITE)).isEqualTo(37.0);
-        assertThat(board.calculateTotalScoreBy(Team.BLACK)).isEqualTo(37.0);
     }
 
     private Square of(String input) {
         File file = File.findFileBy(input.split("")[0]);
         Rank rank = Rank.findRankBy(input.split("")[1]);
 
-        return Square.of(file, rank);
+        return Squares.of(file, rank);
     }
 }

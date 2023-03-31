@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class ChessGame {
 
         File file = File.findFileBy(position.get(FILE_INDEX));
         Rank rank = Rank.findRankBy(position.get(RANK_INDEX));
-        return Square.of(file, rank);
+        return Squares.of(file, rank);
     }
 
     private void validatePosition(final List<String> position) {

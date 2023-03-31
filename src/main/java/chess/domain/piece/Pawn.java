@@ -10,7 +10,7 @@ import chess.domain.Team;
 import chess.domain.movement.Movement;
 
 public final class Pawn extends Piece {
-    public Pawn(final Team team) {
+    Pawn(final Team team) {
         super(team, PAWN);
     }
 

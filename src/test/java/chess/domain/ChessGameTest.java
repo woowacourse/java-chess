@@ -7,7 +7,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.square.Square;
+import chess.domain.square.Squares;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +31,7 @@ class ChessGameTest {
         Board board = chessGame.getBoard();
         Map<Square, Piece> pieces = board.getBoard();
 
-        assertThat(pieces.containsKey(Square.of(A, THREE)))
+        assertThat(pieces.containsKey(Squares.of(A, THREE)))
                 .isTrue();
     }
 
