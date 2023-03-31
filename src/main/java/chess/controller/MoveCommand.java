@@ -1,9 +1,8 @@
 package chess.controller;
 
-import chess.dao.BoardDAO;
+import chess.dao.ChessGameDao;
 import chess.domain.board.Square;
 import chess.domain.chessgame.ChessGame;
-import chess.domain.chessgame.KingDiedGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
@@ -23,21 +22,18 @@ public class MoveCommand implements Command {
         Piece sourcePiece = chessGame.getBoard().findPiece(sourceSquare.getFile(), sourceSquare.getRank());
         String targetSquareInput = input.get(TARGET_INDEX_OF_MOVE_COMMAND);
         Square targetSquare = Square.from(targetSquareInput);
-        ChessGame afterMoveChessGame = chessGame.move(sourceSquareInput, targetSquareInput);
-        BoardDAO dao = new BoardDAO();
+        chessGame.move(sourceSquareInput, targetSquareInput);
+        ChessGameDao dao = new ChessGameDao();
         dao.updatePiece(sourceSquare, Role.VACANT_PIECE.create(Color.NOTHING));
         dao.updatePiece(targetSquare, sourcePiece);
-        dao.updateBoard(afterMoveChessGame.getBoard().getTurn());
-        printMoveResult(afterMoveChessGame, outputView);
-        if (afterMoveChessGame instanceof KingDiedGame) {
-            dao.deleteAll();
-        }
-        return afterMoveChessGame;
+        dao.updateGame(chessGame);
+        printMoveResult(chessGame, outputView);
+        return chessGame;
     }
 
     private void printMoveResult(ChessGame chessGame, OutputView outputView) {
         outputView.printBoard(chessGame.findChessBoard());
-        if (chessGame instanceof KingDiedGame) {
+        if (chessGame.isKindDied()) {
             Color winnerColor = chessGame.findWinner();
             outputView.printHigherScoreSide(winnerColor);
         }

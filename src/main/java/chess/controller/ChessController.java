@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.chessgame.ChessGame;
-import chess.domain.chessgame.InitChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -20,7 +19,7 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        ChessGame chessGame = new InitChessGame();
+        ChessGame chessGame = ChessGame.createInit();
         while (chessGame.isContinue()) {
             chessGame = playGame(chessGame);
         }

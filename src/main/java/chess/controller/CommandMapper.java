@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public enum CommandMapper {
     START("start", new StartCommand()),
+    LIST("list", new ListCommand()),
+    LOAD("load", new LoadCommand()),
     MOVE("move", new MoveCommand()),
     STATUS("status", new StatusCommand()),
     END("end", new EndCommand());
