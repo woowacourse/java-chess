@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +13,8 @@ class InitialPawnTest {
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable() {
         // when
-        InitialPawn blackInitialPawn = new InitialPawn(Side.from(Color.BLACK), Role.INITIAL_PAWN);
-        InitialPawn whiteInitialPawn = new InitialPawn(Side.from(Color.WHITE), Role.INITIAL_PAWN);
+        InitialPawn blackInitialPawn = new InitialPawn(Color.BLACK, Role.INITIAL_PAWN);
+        InitialPawn whiteInitialPawn = new InitialPawn(Color.WHITE, Role.INITIAL_PAWN);
 
         // expected
         assertThat(blackInitialPawn.canMove(SOUTH, 2)).isTrue();
@@ -26,8 +25,8 @@ class InitialPawnTest {
     @DisplayName("이동할 수 없는지 확인한다.")
     void canNotMove() {
         // when
-        InitialPawn blackInitialPawn = new InitialPawn(Side.from(Color.BLACK), Role.INITIAL_PAWN);
-        InitialPawn whiteInitialPawn = new InitialPawn(Side.from(Color.WHITE), Role.INITIAL_PAWN);
+        InitialPawn blackInitialPawn = new InitialPawn(Color.BLACK, Role.INITIAL_PAWN);
+        InitialPawn whiteInitialPawn = new InitialPawn(Color.WHITE, Role.INITIAL_PAWN);
 
         // expected
         assertThat(blackInitialPawn.canMove(NORTH, 2)).isFalse();

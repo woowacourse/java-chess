@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -42,7 +41,7 @@ class QueenTest {
     @DisplayName("이동할 수 있는지 확인한다.")
     void isMovable(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
+        Queen queen = new Queen(Color.BLACK, Role.QUEEN);
 
         // expected
         assertThat(queen.canMove(direction, distance)).isTrue();
@@ -53,7 +52,7 @@ class QueenTest {
     @DisplayName("이동할 수 없는지 확인한다.")
     void isUnmovable(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
+        Queen queen = new Queen(Color.BLACK, Role.QUEEN);
 
         // expected
         assertThat(queen.canMove(direction, distance)).isFalse();
@@ -64,8 +63,8 @@ class QueenTest {
     @DisplayName("공격할 수 있는지 확인한다.")
     void canAttack(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
-        Pawn opponentPiece = new Pawn(Side.from(WHITE), Role.PAWN);
+        Queen queen = new Queen(Color.BLACK, Role.QUEEN);
+        Pawn opponentPiece = new Pawn(WHITE, Role.PAWN);
 
         // expected
         assertThat(queen.canAttack(direction, distance, opponentPiece)).isTrue();
@@ -76,8 +75,8 @@ class QueenTest {
     @DisplayName("공격할 수 없는지 확인한다.")
     void canNotAttack(final Direction direction, final int distance) {
         // when
-        Queen queen = new Queen(Side.from(Color.BLACK), Role.QUEEN);
-        Pawn opponentPiece = new Pawn(Side.from(BLACK), Role.PAWN);
+        Queen queen = new Queen(Color.BLACK, Role.QUEEN);
+        Pawn opponentPiece = new Pawn(BLACK, Role.PAWN);
 
         // expected
         assertThat(queen.canAttack(direction, distance, opponentPiece)).isFalse();

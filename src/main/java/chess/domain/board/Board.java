@@ -1,28 +1,32 @@
 package chess.domain.board;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.InitialPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Role;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
-    private static final Color FIRST_TURN_COLOR = Color.WHITE;
 
+    public static final int KING_COUNT = 1;
+    public static final int CRITERIA_PAWN_PENALTY = 1;
     private final Map<Square, Piece> board;
-    private Side turn;
+    private Color turn;
 
-    Board(final Map<Square, Piece> board) {
+    Board(final Map<Square, Piece> board, Color turn) {
         this.board = board;
-        this.turn = Side.from(FIRST_TURN_COLOR);
+        this.turn = turn;
     }
 
     public Piece findPiece(final File file, final Rank rank) {
-        return board.getOrDefault(Square.of(file, rank), Role.VACANT_PIECE.create(Side.from(Color.NOTHING)));
+        return board.getOrDefault(Square.of(file, rank), Role.VACANT_PIECE.create(Color.NOTHING));
+    }
+
+    public Piece findPiece(final Square square) {
+        return board.getOrDefault(square, Role.VACANT_PIECE.create(Color.NOTHING));
     }
 
     public void makeMove(final Square sourceSquare, final Square targetSquare) {
@@ -37,16 +41,79 @@ public class Board {
         validateMovablePath(sourceSquare, direction, distance);
 
         movePiece(sourceSquare, targetSquare, sourcePiece);
-    }
-
-    public void turnSwitch() {
         turn = turn.findOpponent();
     }
 
+    public Map<Color, Double> calculateScore() {
+        Map<Color, Double> scoreOfColor = new HashMap<>();
+        for (File file : File.values()) {
+            List<Piece> pieces = findPiecesByFile(file);
+            double whiteScore = scoreOfColor.getOrDefault(Color.WHITE, 0.0) + calculateScore(Color.WHITE, pieces);
+            scoreOfColor.put(Color.WHITE, whiteScore);
+            double blackScore = scoreOfColor.getOrDefault(Color.BLACK, 0.0) + calculateScore(Color.BLACK, pieces);
+            scoreOfColor.put(Color.BLACK, blackScore);
+        }
+        return scoreOfColor;
+    }
+
+    private List<Piece> findPiecesByFile(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> Square.of(file, rank))
+                .map(board::get)
+                .collect(Collectors.toList());
+    }
+
+    private double calculateScore(Color color, List<Piece> pieces) {
+        double score = 0;
+        for (Role role : Role.values()) {
+            score += calculateScoreByRole(pieces, role, color);
+        }
+        return score;
+    }
+
+    private double calculateScoreByRole(final List<Piece> pieces, final Role role, final Color color) {
+        int countPieces = (int) pieces.stream()
+                .filter(piece -> piece.isRole(role) && piece.getColor() == color)
+                .count();
+        if (isPawnPenalty(role, countPieces)) {
+            return countPieces * role.getScore() * 0.5;
+        }
+        return countPieces * role.getScore();
+    }
+
+    private boolean isPawnPenalty(Role role, int countPieces) {
+        return (role == Role.PAWN || role == Role.INITIAL_PAWN)
+                && countPieces > CRITERIA_PAWN_PENALTY;
+    }
+
+    public Color findColorKingDied() {
+        boolean whiteKingAlive = isKingAlive(Color.WHITE);
+        boolean blackKingAlive = isKingAlive(Color.BLACK);
+
+        if (whiteKingAlive && !blackKingAlive) {
+            return Color.BLACK;
+        }
+        if (blackKingAlive && !whiteKingAlive) {
+            return Color.WHITE;
+        }
+        return Color.NOTHING;
+    }
+
+    private boolean isKingAlive(final Color color) {
+        long count = board.values().stream()
+                .filter(piece -> piece.isRole(Role.KING) && piece.getColor() == color)
+                .count();
+        return count >= KING_COUNT;
+    }
+
     private void movePiece(final Square sourceSquare, final Square targetSquare, final Piece sourcePiece) {
-        Piece vacantPiece = Role.VACANT_PIECE.create(Side.from(Color.NOTHING));
+        Piece vacantPiece = Role.VACANT_PIECE.create(Color.NOTHING);
         board.put(sourceSquare, vacantPiece);
-        board.put(targetSquare, sourcePiece.update());
+        if (sourcePiece.isRole(Role.INITIAL_PAWN)) {
+            board.put(targetSquare, ((InitialPawn) sourcePiece).update());
+            return;
+        }
+        board.put(targetSquare, sourcePiece);
     }
 
     private void validateSourceAndTarget(final Square sourceSquare, final Square targetSquare) {
@@ -64,8 +131,8 @@ public class Board {
 
     private void validateCurrentTurn(final Square sourceSquare) {
         Piece sourcePiece = board.get(sourceSquare);
-        Side sourceSide = sourcePiece.getSide();
-        if (sourceSide.isOpponent(turn) || sourcePiece.isRole(Role.VACANT_PIECE)) {
+        Color sourceColor = sourcePiece.getColor();
+        if (sourceColor.isOpponent(turn) || sourcePiece.isRole(Role.VACANT_PIECE)) {
             throw new IllegalArgumentException("진영에 맞는 말을 움직여주세요.");
         }
     }
@@ -118,5 +185,9 @@ public class Board {
         if (pieceOnPath.isNotVacant()) {
             throw new IllegalArgumentException("해당 칸으로는 이동할 수 없습니다.");
         }
+    }
+
+    public Color getTurn() {
+        return turn;
     }
 }

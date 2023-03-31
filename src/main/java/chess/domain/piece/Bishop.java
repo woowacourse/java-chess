@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.side.Side;
+import chess.domain.side.Color;
 
 public class Bishop extends Piece {
-    public Bishop(final Side side, final Role role) {
-        super(side, role);
+    public Bishop(final Color color, final Role role) {
+        super(color, role);
     }
 
     @Override
@@ -15,10 +15,5 @@ public class Bishop extends Piece {
     @Override
     public boolean canAttack(final Direction direction, final int distance, final Piece target) {
         return canMove(direction, distance) && isOpponentSide(target);
-    }
-
-    @Override
-    public Piece update() {
-        return this;
     }
 }

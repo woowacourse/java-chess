@@ -1,34 +1,29 @@
 package chess.domain.piece;
 
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
 public abstract class Piece {
-    protected final Side side;
+    protected final Color color;
     protected final Role role;
 
-    public Piece(Side side, Role role) {
-        this.side = side;
+    public Piece(Color color, Role role) {
+        this.color = color;
         this.role = role;
     }
 
     public boolean isOpponentSide(final Piece targetPiece) {
-        if (side.equals(Side.from(Color.NOTHING))) {
+        if (color.equals(Color.NOTHING)) {
             return false;
         }
-        return side.findOpponent().equals(targetPiece.side);
+        return color.findOpponent().equals(targetPiece.color);
     }
 
     public boolean isRole(Role role) {
-        return this.role.equals(role);
+        return this.role == role;
     }
 
     public boolean isNotVacant() {
         return this.role != Role.VACANT_PIECE;
-    }
-
-    public Side getSide() {
-        return side;
     }
 
     public Role getRole() {
@@ -36,12 +31,18 @@ public abstract class Piece {
     }
 
     public Color getColor() {
-        return side.getColor();
+        return color;
     }
 
     public abstract boolean canMove(final Direction direction, final int distance);
 
     public abstract boolean canAttack(final Direction direction, final int distance, final Piece target);
 
-    public abstract Piece update();
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", role=" + role +
+                '}';
+    }
 }

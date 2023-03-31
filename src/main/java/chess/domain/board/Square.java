@@ -69,9 +69,21 @@ public class Square {
         return of(nextFile, nextRank);
     }
 
+    public static List<Square> findAllSquare() {
+        return new ArrayList<>(CACHE.values());
+    }
+
     @Override
     public String toString() {
         String squareFormat = String.format("%s%d", file, rank.getPosition());
         return squareFormat.toLowerCase();
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

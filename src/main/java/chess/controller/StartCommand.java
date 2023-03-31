@@ -1,21 +1,24 @@
 package chess.controller;
 
-import chess.service.ChessGame;
+import chess.dao.ChessGameDao;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.chessgame.ChessGame;
+import chess.domain.chessgame.GameState;
 import chess.view.OutputView;
 
-public class StartCommand implements Command {
-    private final OutputView outputView;
-    private final ChessGame chessGame;
+import java.util.List;
 
-    public StartCommand(final OutputView outputView, final ChessGame chessGame) {
-        this.outputView = outputView;
-        this.chessGame = chessGame;
-    }
+public class StartCommand implements Command {
 
     @Override
-    public void execute(final String command) {
-        chessGame.initializeBoard();
-        outputView.printBoard(chessGame.findChessBoard());
+    public ChessGame execute(final ChessGame chessGame, final List<String> input, final OutputView outputView) {
+        ChessGameDao chessGameDao = new ChessGameDao();
+        Board initBoard = BoardFactory.createInitial();
+        Long id = chessGameDao.insertNewGame(initBoard);
+        ChessGame startGame = new ChessGame(id, GameState.RUNNING, initBoard);
+        outputView.printBoard(startGame.findChessBoard());
+        return startGame;
     }
 
 }

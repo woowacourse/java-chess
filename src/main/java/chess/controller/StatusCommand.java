@@ -1,16 +1,19 @@
 package chess.controller;
 
 import chess.domain.chessgame.ChessGame;
+import chess.domain.side.Color;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
-public class EndCommand implements Command {
+public class StatusCommand implements Command {
 
     @Override
     public ChessGame execute(final ChessGame chessGame, final List<String> input, final OutputView outputView) {
-        outputView.printEndMessage();
-        chessGame.pause();
+        Map<Color, Double> status = chessGame.status();
+        outputView.printStatus(status);
         return chessGame;
     }
+
 }

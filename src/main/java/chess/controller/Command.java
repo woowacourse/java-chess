@@ -1,5 +1,10 @@
 package chess.controller;
 
+import chess.domain.chessgame.ChessGame;
+import chess.view.OutputView;
+
+import java.util.List;
+
 public interface Command {
-    void execute(final String command);
+    ChessGame execute(final ChessGame chessGame, final List<String> input, final OutputView outputView);
 }

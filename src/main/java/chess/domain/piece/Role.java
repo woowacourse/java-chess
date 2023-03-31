@@ -3,58 +3,80 @@ package chess.domain.piece;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.side.Color;
-import chess.domain.side.Side;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public enum Role {
-    VACANT_PIECE(VacantPiece::new,
+    VACANT_PIECE(0,
+            VacantPiece::new,
             List.of(File.values()),
-            Map.of(Side.from(Color.NOTHING), List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX))),
-    PAWN(Pawn::new,
+            Map.of(Color.NOTHING, List.of(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX))),
+    PAWN(1,
+            Pawn::new,
             Collections.EMPTY_LIST,
             Collections.EMPTY_MAP),
-    INITIAL_PAWN(InitialPawn::new,
+    INITIAL_PAWN(1,
+            InitialPawn::new,
             List.of(File.values()),
-            Map.of(Side.from(Color.WHITE), List.of(Rank.TWO), Side.from(Color.BLACK), List.of(Rank.SEVEN))),
-    ROOK(Rook::new,
+            Map.of(Color.WHITE, List.of(Rank.TWO), Color.BLACK, List.of(Rank.SEVEN))),
+    ROOK(5,
+            Rook::new,
             List.of(File.A, File.H),
-            Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    KNIGHT(Knight::new,
+            Map.of(Color.WHITE, List.of(Rank.ONE), Color.BLACK, List.of(Rank.EIGHT))),
+    KNIGHT(2.5,
+            Knight::new,
             List.of(File.B, File.G),
-            Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    BISHOP(Bishop::new,
+            Map.of(Color.WHITE, List.of(Rank.ONE), Color.BLACK, List.of(Rank.EIGHT))),
+    BISHOP(3,
+            Bishop::new,
             List.of(File.C, File.F),
-            Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    QUEEN(Queen::new,
+            Map.of(Color.WHITE, List.of(Rank.ONE), Color.BLACK, List.of(Rank.EIGHT))),
+    QUEEN(9,
+            Queen::new,
             List.of(File.D),
-            Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT))),
-    KING(King::new,
+            Map.of(Color.WHITE, List.of(Rank.ONE), Color.BLACK, List.of(Rank.EIGHT))),
+    KING(0,
+            King::new,
             List.of(File.E),
-            Map.of(Side.from(Color.WHITE), List.of(Rank.ONE), Side.from(Color.BLACK), List.of(Rank.EIGHT)));
+            Map.of(Color.WHITE, List.of(Rank.ONE), Color.BLACK, List.of(Rank.EIGHT)));
 
-    private final Constructor<Side, Role, Piece> createPiece;
+    private final double score;
+    private final Constructor<Color, Role, Piece> createPiece;
     private final List<File> initialFiles;
-    private final Map<Side, List<Rank>> initialRanks;
+    private final Map<Color, List<Rank>> initialRanks;
 
-    Role(final Constructor<Side, Role, Piece> createPiece, final List<File> initialFiles, final Map<Side, List<Rank>> initialRanks) {
+    Role(final double score, final Constructor<Color, Role, Piece> createPiece, final List<File> initialFiles, final Map<Color, List<Rank>> initialRanks) {
+        this.score = score;
         this.createPiece = createPiece;
         this.initialFiles = initialFiles;
         this.initialRanks = initialRanks;
     }
 
-    public Piece create(final Side side) {
-        return createPiece.construct(side, this);
+    public Piece create(final Color color) {
+        return createPiece.construct(color, this);
     }
 
     public List<File> getInitialFiles() {
         return initialFiles;
     }
 
-    public List<Rank> getInitialRanksBySide(final Side side) {
-        return initialRanks.getOrDefault(side, List.of());
+    public List<Rank> getInitialRanksBySide(final Color color) {
+        return initialRanks.getOrDefault(color, List.of());
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public static Role findRoleByName(String name) {
+        Role[] roles = Role.values();
+        return Arrays.stream(roles)
+                .filter(roleName -> roleName.name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("피스가 없음"));
     }
 
     @FunctionalInterface
