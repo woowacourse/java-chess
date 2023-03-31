@@ -1,6 +1,11 @@
 package chess.view;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
+import chess.controller.dto.GameResultBySideDto;
+import chess.controller.dto.ScoreBySideDto;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
@@ -10,9 +15,12 @@ public class OutputView {
     }
 
     public static void printGameCommandInputMessage() {
-        printMessage("> 게임 시작 : start" + NEWLINE
+        printMessage(
+                "> 이전 게임 재시작 : restart 이전 게임 ID - 예. restart 1" + NEWLINE
+                + "> 게임 시작 : start" + NEWLINE
                 + "> 게임 종료 : end" + NEWLINE
-                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3" + NEWLINE
+                + "> 게임 점수 및 결과 출력 : status");
     }
 
     public static void printBoard(List<List<String>> nameBoard) {
@@ -21,6 +29,24 @@ public class OutputView {
             System.out.println(rowNames);
         }
         System.out.println();
+    }
+
+    public static void printCurrentTurn(String turnDisplayName) {
+        printMessage("현재 " + turnDisplayName + "턴입니다.");
+    }
+
+    public static void printScoreBySide(ScoreBySideDto scoreBySideDto) {
+        Map<String, BigDecimal> scoreBySideForPrint = scoreBySideDto.getScoreBySideForPrint();
+        for (String sideName : scoreBySideForPrint.keySet()) {
+            printMessage(sideName + " Score : " + scoreBySideForPrint.get(sideName) + "점");
+        }
+    }
+
+    public static void printGameResultBySide(GameResultBySideDto gameResultBySideDto) {
+        Map<String, String> gameResultBySideForPrint = gameResultBySideDto.getGameResultBySideForPrint();
+        for (String sideName : gameResultBySideForPrint.keySet()) {
+            printMessage(sideName + " Result : " + gameResultBySideForPrint.get(sideName));
+        }
     }
 
     private static void printMessage(String message) {
