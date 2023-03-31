@@ -33,4 +33,12 @@ public class PieceInfoDto {
     public Piece getPiece() {
         return piece;
     }
+
+    @Override
+    public String toString() {
+        return "PieceInfoDto{" +
+                "position=" + position +
+                ", piece=" + piece +
+                '}';
+    }
 }

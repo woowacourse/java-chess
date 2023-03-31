@@ -33,4 +33,13 @@ public class GameInfoDto {
     public Color getTurn() {
         return turn;
     }
+
+    @Override
+    public String toString() {
+        return "GameInfoDto{" +
+                "id=" + id +
+                ", status=" + status +
+                ", turn=" + turn +
+                '}';
+    }
 }
