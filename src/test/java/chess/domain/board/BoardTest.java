@@ -1,10 +1,10 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.Board;
+import chess.domain.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -12,7 +12,6 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -138,55 +137,6 @@ class BoardTest {
                 board.checkRestrictionForPawn(Position.from("a2"), Position.from("b3"), Color.WHITE);
             }).isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("목적지에 같은 색깔의 피스가 있습니다.");
-        }
-    }
-
-    @Nested
-    @DisplayName("진영의 점수를 계산한다")
-    class CalculatePoint {
-        @Test
-        @DisplayName("점수를 계산한다")
-        void BasicPoint() {
-            Board board = Board.create();
-            board.replace(Position.from("a2"), Position.from("a8"));
-            board.replace(Position.from("a8"), Position.from("b8"));
-            board.replace(Position.from("b8"), Position.from("c8"));
-            board.replace(Position.from("c8"), Position.from("g8"));
-
-            /*
-            ...QKBpR
-            PPPPPPPP
-            ........
-            ........
-            ........
-            ........
-            .ppppppp
-            rnbqkbnr
-             */
-            Map<Color, Double> score = board.getScoreBoard().getScore();
-            double blackScore = score.get(Color.BLACK);
-            assertThat(blackScore).isEqualTo(25);
-        }
-
-        @Test
-        @DisplayName("같은 세로줄에 같은 색의 폰이 있는 경우의 점수를 계산한다")
-        void DoublePawnPoint() {
-            Board board = Board.create();
-            board.replace(Position.from("a2"), Position.from("b3"));
-
-            /*
-            RNBQKBNR
-            PPPPPPPP
-            ........
-            ........
-            ........
-            .p......
-            .ppppppp
-            rnbqkbnr
-            */
-            Map<Color, Double> score = board.getScoreBoard().getScore();
-            double whiteScore = score.get(Color.WHITE);
-            assertThat(whiteScore).isEqualTo(37);
         }
     }
 }
