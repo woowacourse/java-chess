@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.maker.InitialRankCondition;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import static chess.domain.position.Position.CROSS_ADJACENT_MANHATTAN_DISTANCE;
 import static chess.domain.position.Position.DIAGONAL_ADJACENT_MANHATTAN_DISTANCE;
@@ -37,13 +38,13 @@ public class Pawn extends Piece {
     private void validateDiagonalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
         if (position.isInDiagonalPosition(targetPosition)
                 && !pieceInTargetPosition.isSameColor(color.getOppositeColor())) {
-            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
+            throw new ChessException(ExceptionCode.INVALID_DESTINATION);
         }
     }
 
     private void validateHorizontalColor(final Piece pieceInTargetPosition, final Position targetPosition) {
         if (position.isInCrossPosition(targetPosition) && !pieceInTargetPosition.isSameColor(Color.BLANK)) {
-            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
+            throw new ChessException(ExceptionCode.INVALID_DESTINATION);
         }
     }
 

@@ -50,11 +50,55 @@
         - [x] 이동할 순서가 아니면 예외가 발생한다.
     - [x] 말을 이동시킨다.
     - [x] 말이 이동하면, 다음 턴에 이동할 색을 변경한다.
+    - [x] 왕(King)이 잡히면 승패의 결과가 결정되고, 게임을 종료시킨다.
+    - [x] 체스 기물에 따라 점수를 계산한다.
+      - queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+      - pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
+      - king은 점수가 없다(0점)
 
 - 게임 명령어 (GameCommand)
     - [x] start: 게임 시작
+      - start new를 통해서 새로운 방을 생성할 수 있다
+      - start 3 과 같이 방 번호를 입력하여 이미 있는 방에 들어갈 수 있다
     - [x] end: 게임 종료
     - [x] move: 말 이동
+    - [x] status: 게임의 상태를 출력한다
+      - 게임 진행중인 경우 색상별 기물 점수 합을 출력한다
+      - 게임의 King이 잡힌 팀이 있는 경우 승리 팀을 출력한다
+
+#### DB 연결
+
+[table 생성 ddl sql](ddl.sql)
+```sql
+CREATE TABLE gameRooms (
+    room_id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+    turn_color VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE pieces (
+    position_file VARCHAR(5) NOT NULL,
+    position_rank VARCHAR(5) NOT NULL,
+    type VARCHAR(10) NOT NULL ,
+    color VARCHAR(5) NOT NULL ,
+    room_id INTEGER NOT NULL ,
+    PRIMARY KEY (position_file, position_rank, room_id)
+);
+```
+
+- [x] 게임 방에 대한 정보를 저장한다
+  - 현제 턴의 색상 정보를 저장한다
+- [x] 진행중인 게임의 정보를 불러오거나 새게임을 실행한다
+  - [x] 새 게임을 시작할지 이미 있는 방에 들어갈지 고를 수 있다
+  - [x] 진행중인 게임을 불러올 때 해당 게임의 기물들 정보를 모두 불러온다
+  - [x] 새 게임을 실행 시 게임 방 정보를 생성한다
+- [x] 게임의 기물 정보를 저장한다
+  - [x] 새 게임 생성시 기물 정보를 db에 초기화 한다
+  - [x] 이동을 할 때마다 기물 정보를 저장한다
+    - 기물 이동시 위치 정보 변경
+    - 기물이 잡히면 해당 기물 정보 제거
+- [x] 게임이 한 사람의 승리로 종료되면 해당 게임의 정보를 제거한다
+  - 게임방의 정보를 제거한다
+  - 해당 게임 내 모든 기물의 정보를 제거한다
 
 #### 뷰 기능 목록
 
@@ -67,10 +111,16 @@
 
 - [x] 게임 시작 안내 메시지를 출력한다
 - [x] 체스판을 출력한다
+- [x] 게임의 점수 상태를 출력한다
+- [x] 게임의 승패 결과를 출력한다
+- [x] 존제하는 방의 정보에 대해서 출력한다
 
 ```
-체스 게임을 시작합니다.
-게임 시작은 start, 종료는 end 명령을 입력하세요.
+> 체스 게임을 시작합니다.
+> 게임 시작 : start new 또는 start n (n은 입장할 게임 방 번호)
+> 게임 종료 : end
+> 게임 이동 : move source위치 target위치 - 예. move b2 b3
+> 상태 확인 : status (게임 진행 중 점수 확인, 게임 오버시 승자 확인)
 ```
 
 - 게임이 시작된 경우 체스보드와 체스말을 출력한다.

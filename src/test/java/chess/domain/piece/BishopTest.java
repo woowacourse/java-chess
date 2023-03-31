@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class BishopTest {
         final Piece bishop = new Bishop(C8, Color.BLACK);
 
         assertThatThrownBy(() -> bishop.getPassingPositions(Position.of(file, rank)))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
@@ -77,7 +78,7 @@ class BishopTest {
         final Piece sameColorPiece = new Pawn(D6, BLACK);
 
         assertThatThrownBy(() -> originalBishop.move(sameColorPiece))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.TARGET_IS_SAME_COLOR.name());
     }
 }

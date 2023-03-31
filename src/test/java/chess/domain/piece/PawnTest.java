@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -78,7 +79,7 @@ class PawnTest {
             final Piece pawn = new Pawn(B7, Color.BLACK);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
 
@@ -89,7 +90,7 @@ class PawnTest {
             final Piece pawn = new Pawn(B6, Color.BLACK);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
@@ -138,7 +139,7 @@ class PawnTest {
             final Piece pawn = new Pawn(B2, Color.WHITE);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
 
@@ -149,7 +150,7 @@ class PawnTest {
             final Piece pawn = new Pawn(B3, Color.WHITE);
 
             assertThatThrownBy(() -> pawn.getPassingPositions(Position.of(file, rank)))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(ChessException.class)
                     .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
         }
     }
@@ -180,7 +181,7 @@ class PawnTest {
         final Piece sameColorPiece = new Pawn(A5, color);
 
         assertThatThrownBy(() -> originalPawn.move(sameColorPiece))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 
@@ -191,7 +192,7 @@ class PawnTest {
         final Piece originalPawn = new Pawn(A6, BLACK);
 
         assertThatThrownBy(() -> originalPawn.move(pieceInTargetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ChessException.class)
                 .hasMessage(ExceptionCode.INVALID_DESTINATION.name());
     }
 

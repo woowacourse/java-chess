@@ -1,12 +1,14 @@
 package chess.domain.board;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.BlankPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.maker.PiecesGenerator;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.Optional;
 import java.util.Set;
@@ -19,8 +21,9 @@ public class Board {
         this.existingPieces = pieces;
     }
 
-    public static Board createBoardWith(final PiecesGenerator piecesGenerator) {
-        return new Board(piecesGenerator.generate());
+    public static Board createWith(final PiecesGenerator piecesGenerator) {
+        final Set<Piece> generatedPieces = piecesGenerator.generate();
+        return new Board(generatedPieces);
     }
 
     public void move(final Position currentPosition, final Position targetPosition) {
@@ -34,7 +37,7 @@ public class Board {
 
     private Piece findPieceOrElseThrowIn(final Position position) {
         return findPieceOptionalIn(position)
-                .orElseThrow(() -> new IllegalArgumentException(ExceptionCode.PIECE_CAN_NOT_FOUND.name()));
+                .orElseThrow(() -> new ChessException(ExceptionCode.PIECE_CAN_NOT_FOUND));
     }
 
     private Optional<Piece> findPieceOptionalIn(final Position position) {
@@ -47,7 +50,7 @@ public class Board {
         final boolean isBlocked = existingPieces.stream()
                 .anyMatch(piece -> passingPositions.contains(piece.getPosition()));
         if (isBlocked) {
-            throw new IllegalArgumentException(ExceptionCode.PIECE_MOVING_PATH_BLOCKED.name());
+            throw new ChessException(ExceptionCode.PIECE_MOVING_PATH_BLOCKED);
         }
     }
 
@@ -67,5 +70,10 @@ public class Board {
 
     public Set<Piece> getExistingPieces() {
         return Set.copyOf(existingPieces);
+    }
+
+    public boolean isKingExist(final Color color) {
+        return existingPieces.stream()
+                .anyMatch(piece -> piece.isSameColor(color) && PieceType.findByPiece(piece).equals(PieceType.KING));
     }
 }

@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,16 +24,16 @@ public class BlankPiece extends Piece {
 
     @Override
     protected boolean canMove(final Position targetPosition) {
-        throw new IllegalStateException(ExceptionCode.ACCESS_BLANK_PIECE.name());
+        throw new ChessException(ExceptionCode.ACCESS_BLANK_PIECE);
     }
 
     @Override
     public Piece move(final Piece pieceInTargetPosition) {
-        throw new IllegalStateException(ExceptionCode.ACCESS_BLANK_PIECE.name());
+        throw new ChessException(ExceptionCode.ACCESS_BLANK_PIECE);
     }
 
     @Override
     public Path getPassingPositions(final Position targetPosition) {
-        throw new IllegalStateException(ExceptionCode.ACCESS_BLANK_PIECE.name());
+        throw new ChessException(ExceptionCode.ACCESS_BLANK_PIECE);
     }
 }

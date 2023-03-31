@@ -1,42 +1,34 @@
 package chess.domain.state;
 
-import chess.constant.ExceptionCode;
-import chess.controller.command.Command;
-import chess.controller.command.Type;
+import chess.dao.ChessGameDao;
+import chess.dao.PieceDao;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
-import chess.domain.piece.maker.StartingPiecesGenerator;
+import chess.domain.position.Position;
+import chess.dto.domaintocontroller.GameStatus;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.Set;
 
-public final class ChessReady extends ChessState {
+public final class ChessReady extends ChessBeforeStart {
 
-    ChessReady(final ChessGame chessGame) {
-        super(chessGame);
+    ChessReady(final ChessGame chessGame, final ChessGameDao chessGameDao, PieceDao pieceDao) {
+        super(chessGame, chessGameDao, pieceDao);
     }
 
     @Override
-    public ChessState process(final Command command) {
-        if (command.is(Type.START)) {
-            final ChessGame newChessGame = ChessGame.createWith(new StartingPiecesGenerator());
-            return new ChessRunning(newChessGame);
-        }
-        if (command.is(Type.MOVE)) {
-            throw new IllegalStateException(ExceptionCode.GAME_NOT_INITIALIZED.name());
-        }
-        if(command.is(Type.END)){
-            return new ChessEnd(chessGame);
-        }
-        throw new IllegalArgumentException(ExceptionCode.INVALID_COMMAND.name());
+    public ChessState move(final Position sourcePosition, final Position targetPosition) {
+        throw new ChessException(ExceptionCode.GAME_NOT_INITIALIZED);
+    }
+
+    @Override
+    public GameStatus status() {
+        throw new ChessException(ExceptionCode.GAME_NOT_INITIALIZED);
     }
 
     @Override
     public Set<Piece> getExistingPieces() {
-        throw new IllegalStateException(ExceptionCode.GAME_NOT_INITIALIZED.name());
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
+        throw new ChessException(ExceptionCode.GAME_NOT_INITIALIZED);
     }
 }

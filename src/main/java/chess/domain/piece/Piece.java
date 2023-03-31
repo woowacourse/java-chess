@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
-import chess.constant.ExceptionCode;
 import chess.domain.piece.property.Color;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.exception.ChessException;
+import chess.exception.ExceptionCode;
 
 import java.util.Objects;
 
@@ -23,13 +24,13 @@ public abstract class Piece {
 
     protected final void validateSamePosition(final Position targetPosition) {
         if (position.equals(targetPosition)) {
-            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
+            throw new ChessException(ExceptionCode.INVALID_DESTINATION);
         }
     }
 
     protected final void validateDestination(final Position targetPosition) {
         if (!canMove(targetPosition)) {
-            throw new IllegalArgumentException(ExceptionCode.INVALID_DESTINATION.name());
+            throw new ChessException(ExceptionCode.INVALID_DESTINATION);
         }
     }
 
@@ -39,7 +40,7 @@ public abstract class Piece {
 
     protected final void validateCatchingSameColor(final Piece pieceInTargetPosition) {
         if (pieceInTargetPosition.isSameColor(color)) {
-            throw new IllegalArgumentException(ExceptionCode.TARGET_IS_SAME_COLOR.name());
+            throw new ChessException(ExceptionCode.TARGET_IS_SAME_COLOR);
         }
     }
 
