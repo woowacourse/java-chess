@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class EmptyPieceTest {
         Team team = Team.BLACK;
 
         assertThatIllegalArgumentException().isThrownBy(
-                () -> new EmptyPiece(team)
+                () -> new EmptyPiece(team, Type.NO_PIECE)
         ).withMessage(EmptyPiece.INVALID_EMPTY_TEAM);
     }
 
@@ -25,7 +26,7 @@ class EmptyPieceTest {
         Team team = Team.NEUTRALITY;
 
         assertThatNoException().isThrownBy(
-                () -> new EmptyPiece(team)
+                () -> new EmptyPiece(team,Type.NO_PIECE)
         );
     }
 

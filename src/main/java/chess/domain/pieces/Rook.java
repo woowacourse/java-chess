@@ -11,8 +11,8 @@ import static chess.domain.Direction.*;
 
 public class Rook extends Piece {
 
-    public Rook(final Team team) {
-        super(team);
+    public Rook(final Team team, final Type type) {
+        super(team, type);
         this.directions = List.of(UP, DOWN, LEFT, RIGHT);
         validateTeam(team);
         this.type = Type.ROOK;
@@ -29,12 +29,4 @@ public class Rook extends Piece {
     public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
     }
 
-    @Override
-    public void checkExistPiece(List<Piece> pieces) {
-        for (int i = 0; i < pieces.size() - 1; i++) {
-            if (pieces.get(i).getTeam() != Team.NEUTRALITY) {
-                throw new IllegalArgumentException("[ERROR] 경로에 기물이 존재합니다.");
-            }
-        }
-    }
 }

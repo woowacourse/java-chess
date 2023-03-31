@@ -1,23 +1,29 @@
 package chess.domain.state;
 
-import chess.domain.board.Board;
-import chess.view.Command;
+import chess.domain.pieces.component.Team;
 
-public class Ready implements State{
-
+public class Ready implements State {
     @Override
     public boolean isEnd() {
         return false;
     }
 
     @Override
-    public State progress(Command command, Board board) {
-        if (command.isStart()) {
-            return new WhiteTurn();
-        }
-        if (command.isMove()) {
-            throw new IllegalArgumentException("start 입력 후 move를 입력하실 수 있습니다.");
-        }
-        return new End();
+    public void move(Runnable runnable) {
+        throw new IllegalStateException("start를 먼저 실행해 주세요");
+    }
+
+    @Override
+    public Team getTurn() {
+        throw new IllegalStateException("준 상태에는 턴이 존재하지 않습니다.");
+    }
+
+    @Override
+    public void checkStartState() {
+    }
+
+    @Override
+    public State changeState() {
+        return new WhiteTurn();
     }
 }

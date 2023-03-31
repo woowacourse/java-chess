@@ -1,20 +1,30 @@
 package chess.domain.state;
 
-import chess.domain.board.Board;
-import chess.view.Command;
+import chess.domain.pieces.component.Team;
 
-public class End implements State{
-
+public class End implements State {
     @Override
     public boolean isEnd() {
         return true;
     }
 
     @Override
-    public State progress(Command command, Board board) {
-        if(!command.isEnd()){
-            throw new IllegalArgumentException("이미 게임이 종료되었습니다");
-        }
-        return this;
+    public void move(Runnable runnable) {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public Team getTurn() {
+        throw new IllegalStateException("end 상태에는 턴이 존재하지 않습니다.");
+    }
+
+    @Override
+    public void checkStartState() {
+        throw new IllegalStateException("end 상태에선 차례가 없습니다.");
+    }
+
+    @Override
+    public State changeState() {
+        throw new IllegalStateException("end는 상태를 바꿀 수 없습니다.");
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
 
 public final class EmptyPiece extends Piece {
 
-    public EmptyPiece(final Team team) {
-        super(team);
+    public EmptyPiece(final Team team, final Type type) {
+        super(team, type);
         this.directions = new ArrayList<>();
         validateTeam(team);
         this.type = Type.NO_PIECE;
@@ -28,9 +28,5 @@ public final class EmptyPiece extends Piece {
     @Override
     public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces) {
         throw new IllegalArgumentException("[ERROR] 이동 할 기물이 없습니다.");
-    }
-
-    @Override
-    public void checkExistPiece(List<Piece> pieces) {
     }
 }

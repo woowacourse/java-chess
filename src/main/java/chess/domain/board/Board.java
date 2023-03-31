@@ -3,12 +3,16 @@ package chess.domain.board;
 import chess.domain.Direction;
 import chess.domain.pieces.EmptyPiece;
 import chess.domain.pieces.Piece;
+import chess.domain.pieces.component.Team;
+import chess.domain.pieces.component.Type;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static chess.domain.pieces.component.Team.NEUTRALITY;
+import static java.util.stream.Collectors.toList;
 
 public class Board {
 
@@ -18,25 +22,33 @@ public class Board {
         this.board = board;
     }
 
-    public static Board create() {
-        return new Board(BoardFactory.create());
+    public static Board create(Map<Position, Piece> create) {
+        return new Board(create);
     }
 
     public void movePiece(Position currentPosition, Position targetPosition) {
         Piece currentPiece = board.get(currentPosition);
         Direction movableDirection = Direction.findDirection(currentPosition, targetPosition);
-        List<Piece> pieces = getLogicExistPiece(currentPosition, targetPosition, movableDirection);
+        List<Piece> pieces = fineLogicExistPiece(currentPosition, targetPosition, movableDirection);
 
         currentPiece.checkDirection(movableDirection);
         currentPiece.checkStep(currentPosition, movableDirection, pieces);
-        currentPiece.checkExistPiece(pieces);
+        checkExistPiece(pieces);
         currentPiece.checkSameTeam(currentPiece, board.get(targetPosition));
         move(currentPosition, targetPosition);
     }
 
-    private List<Piece> getLogicExistPiece(final Position current, final Position target, final Direction movableDirection) {
+    private void checkExistPiece(List<Piece> pieces) {
+        for (int i = 0; i < pieces.size() - 1; i++) {
+            if (pieces.get(i).getTeam() != Team.NEUTRALITY) {
+                throw new IllegalArgumentException("[ERROR] 경로에 기물이 존재합니다.");
+            }
+        }
+    }
+
+    private List<Piece> fineLogicExistPiece(final Position current, final Position target, final Direction movableDirection) {
         List<Piece> pieces = new ArrayList<>();
-        if (movableDirection == Direction.KNIGHT) {
+        if (board.get(current).getType() == Type.KNIGHT || board.get(current).getType() == Type.NO_PIECE) {
             return pieces;
         }
 
@@ -50,7 +62,7 @@ public class Board {
 
     private void move(final Position currentPosition, final Position targetPosition) {
         Piece currentPointPiece = board.get(currentPosition);
-        board.put(currentPosition, new EmptyPiece(NEUTRALITY));
+        board.put(currentPosition, new EmptyPiece(NEUTRALITY, Type.NO_PIECE));
         board.put(targetPosition, currentPointPiece);
     }
 
@@ -58,8 +70,61 @@ public class Board {
         return currentPosition.nextPosition(movableDirection.getRank(), movableDirection.getFile());
     }
 
+    public double calculateTeamScore(Team team) {
+        double score = board.keySet()
+                .stream()
+                .filter(key -> !board.get(key).isPawn() && board.get(key).getTeam() == team)
+                .mapToDouble(key -> board.get(key).getType().getScore())
+                .sum();
+
+        List<Position> pawns = findPawn(team);
+        score += pawns.size() - (0.5 * countSameFilesPawn(pawns));
+        return score;
+    }
+
+    private List<Position> findPawn(Team team) {
+        return board.keySet()
+                .stream()
+                .filter(key -> board.get(key).isPawn() && board.get(key).getTeam() == team)
+                .collect(toList());
+    }
+
+    private int countSameFilesPawn(List<Position> pawns) {
+        return Arrays.stream(File.values())
+                .mapToInt(file -> countSameFilePawn(pawns, file))
+                .sum();
+    }
+
+    private int countSameFilePawn(List<Position> pawns, File file) {
+        List<Position> collect = pawns
+                .stream()
+                .filter(position -> position.getFile() == file.getFile())
+                .collect(toList());
+
+        if (collect.size() >= 2) {
+            return collect.size();
+        }
+        return 0;
+    }
+
+    public List<Team> kingTeams() {
+        return findKingPosition().stream()
+                .map(position -> board.get(position).getTeam())
+                .collect(toList());
+    }
+
+    private List<Position> findKingPosition() {
+        return board.keySet()
+                .stream()
+                .filter(key -> board.get(key).getType() == Type.KING)
+                .collect(toList());
+    }
+
+    public Team getTeam(Position a) {
+        return board.get(a).getTeam();
+    }
+
     public Map<Position, Piece> getBoard() {
         return this.board;
     }
-
 }

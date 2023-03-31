@@ -5,7 +5,8 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.pieces.Piece;
-import chess.view.Command;
+import chess.domain.pieces.PieceFactory;
+import chess.service.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -20,15 +21,38 @@ public class Application {
 
         while (!chessGame.isEnd()) {
             changeState();
-            printBoard();
+            if (chessGame.isKingDie()) {
+                OutputView.printWinner(chessGame.winTeam().getValue());
+                chessGame.changeTurnEnd();
+                break;
+            }
         }
+
     }
 
     private static void changeState() {
         try {
             Command command = new Command(InputView.readCommand());
-            chessGame.changeState(command);
-        } catch (IllegalArgumentException e) {
+            if (command.isStatus()) {
+                OutputView.printScore(chessGame.calculateScore());
+                printBoard();
+                return;
+            }
+            if (command.isMove()) {
+                chessGame.move(command.getCurrentPosition(), command.getTargetPosition());
+                chessGame.changeTurn();
+                printBoard();
+                return;
+            }
+            if (command.isStart()) {
+                chessGame.start();
+                printBoard();
+                return;
+            }
+            if (command.isEnd()) {
+                chessGame.changeTurnEnd();
+            }
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
             changeState();
         }
@@ -46,12 +70,7 @@ public class Application {
         List<String> pieceNames = new ArrayList<>();
         for (int file = 0; file < 8; file++) {
             Piece piece = board.getBoard().get(new Position(Rank.of(rank), File.ofByFile(file)));
-
-            if (piece.isWhiteTeam()) {
-                pieceNames.add(piece.getType().getName().toLowerCase());
-                continue;
-            }
-            pieceNames.add(piece.getType().getName());
+            pieceNames.add(PieceFactory.from(piece));
         }
         return List.copyOf(pieceNames);
     }

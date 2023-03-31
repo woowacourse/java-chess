@@ -6,6 +6,7 @@ import chess.domain.pieces.component.Team;
 import chess.domain.pieces.component.Type;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     protected static final String INVALID_EMPTY_TEAM = "[ERROR] EmptyPiece 의 팀은 NEUTRALITY 여야 합니다.";
@@ -15,18 +16,14 @@ public abstract class Piece {
     protected Type type;
     protected List<Direction> directions;
 
-    public Piece(final Team team) {
+    public Piece(final Team team, final Type type) {
         this.team = team;
+        this.type = type;
     }
 
-    public Type getType() {
-        return type;
-    }
+    abstract public void validateTeam(final Team team);
 
-    public Team getTeam() {
-        return this.team;
-    }
-
+    abstract public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces);
 
     public void checkDirection(Direction direction) {
         if (!this.directions.contains(direction)) {
@@ -40,17 +37,28 @@ public abstract class Piece {
         }
     }
 
-    public boolean isBlackTeam(){
-        return this.team == Team.BLACK;
+    public boolean isPawn() {
+        return this.type == Type.PAWN;
     }
 
-    public boolean isWhiteTeam(){
-        return this.team == Team.WHITE;
+    public Type getType() {
+        return type;
     }
 
-    abstract public void validateTeam(final Team team);
+    public Team getTeam() {
+        return this.team;
+    }
 
-    abstract public void checkStep(Position currentPosition, Direction direction, List<Piece> pieces);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return team == piece.team && type == piece.type && Objects.equals(directions, piece.directions);
+    }
 
-    abstract public void checkExistPiece(List<Piece> pieces);
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, type, directions);
+    }
 }
