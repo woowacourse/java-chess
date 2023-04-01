@@ -5,31 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class MovementTest {
-
-    @Test
-    @DisplayName("룩의 이동 방향과 이동 거리를 입력하면 Movement 객체가 정상적으로 생성된다.")
-    void shouldSucceedGeneratingRookMovement() {
-        Position position = Position.findPosition("a1");
-        Direction direction = Direction.EAST;
-        int distance = 3;
-
-        assertDoesNotThrow(() -> Movement.generateRookMovement(position, direction, distance));
-    }
-
-    @Test
-    @DisplayName("룩의 이동 로직과 맞지 않는 이동 방향을 입력하여 Movement 객체 생성 시 예외가 발생한다.")
-    void shouldFailGeneratingRookMovement() {
-        Position position = Position.findPosition("a1");
-        Direction direction = Direction.NORTH_EAST_EAST;
-        int distance = 3;
-
-        assertThatThrownBy(() -> Movement.generateRookMovement(position, direction, distance))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 룩은 해당 방향으로 이동할 수 없습니다.");
-    }
 
     @Test
     @DisplayName("체스 이동 경로에 장애물(같은 편 또는 다른 편 기물)이 존재하지 않을 경우 false를 리턴한다.")

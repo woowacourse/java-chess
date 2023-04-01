@@ -61,6 +61,10 @@ public class ChessBoard {
         return new ChessBoard(chessBoard);
     }
 
+    public static ChessBoard makeOnGameChessBoard(Map<Position, ChessPiece> chessBoard) {
+        return new ChessBoard(chessBoard);
+    }
+
     private static void generateRook(HashMap<Position, ChessPiece> chessBoard) {
         chessBoard.put(Position.findPosition(WHITE_ROOK_LEFT), new Rook(Color.WHITE));
         chessBoard.put(Position.findPosition(WHITE_ROOK_RIGHT), new Rook(Color.WHITE));
@@ -166,7 +170,15 @@ public class ChessBoard {
     public Map<Position, ChessPiece> getChessPiecesByColor(Color color) {
         return chessBoard.entrySet().stream()
                 .filter(positionChessPieceEntry -> positionChessPieceEntry.getValue().getColor().equals(color))
-                .collect(Collectors.toMap(positionChessPieceEntry -> positionChessPieceEntry.getKey(), positionChessPieceEntry -> positionChessPieceEntry.getValue()));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public boolean isWhiteKing() {
+        return chessBoard.containsValue(new King(Color.WHITE));
+    }
+
+    public boolean isBlackKing() {
+        return chessBoard.containsValue(new King(Color.BLACK));
     }
 }
 

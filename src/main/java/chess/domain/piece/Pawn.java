@@ -6,9 +6,12 @@ import java.util.List;
 
 public class Pawn extends ChessPiece {
 
-    public static final List<Direction> MOVABLE_DIRECTION = List.of(Direction.NORTH, Direction.SOUTH, Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+    public static final List<Direction> MOVABLE_DIRECTION_OF_WHITE_PAWN = List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST);
+    public static final List<Direction> MOVABLE_DIRECTION_OF_BLACK_PAWN = List.of(Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
     public static final int MAX_MOVEMENT_OF_INIT_PAWN = 2;
     public static final int MAX_MOVEMENT_OF_NON_INIT_PAWN = 1;
+    public static final int WHITE_PAWN_INIT_RANK = 2;
+    public static final int BLACK_PAWN_INIT_RANK = 7;
 
     public Pawn(Color color) {
         super(color);
@@ -27,25 +30,11 @@ public class Pawn extends ChessPiece {
 
     @Override
     public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
-        if (color.equals(Color.WHITE) && Direction.isMovableNorth(sourcePosition, targetPosition)) {
-            return Direction.NORTH;
-        }
-        if (color.equals(Color.WHITE) && Direction.isMovableNorthEast(sourcePosition, targetPosition)) {
-            return Direction.NORTH_EAST;
-        }
-        if (color.equals(Color.WHITE) && Direction.isMovableNorthWest(sourcePosition, targetPosition)) {
-            return Direction.NORTH_WEST;
-        }
-        if (color.equals(Color.BLACK) && Direction.isMovableToSouth(sourcePosition, targetPosition)) {
-            return Direction.SOUTH;
-        }
-        if (color.equals(Color.BLACK) && Direction.isMovableSouthEast(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_EAST;
-        }
-        if (color.equals(Color.BLACK) && Direction.isMovableSouthWest(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_WEST;
-        }
-        throw new IllegalArgumentException("[ERROR] 북쪽(화이트폰) 또는 남쪽(블랙폰) 중 이동 가능한 방향이 없습니다.");
+        Direction direction = Direction.findDirectionFromSourceToTarget(sourcePosition, targetPosition);
+
+        validateDirection(direction);
+
+        return direction;
     }
 
     @Override
@@ -62,8 +51,12 @@ public class Pawn extends ChessPiece {
     }
 
     public void validateDirection(Direction direction) {
-        if (!MOVABLE_DIRECTION.contains(direction)) {
-            throw new IllegalArgumentException("[ERROR] 해당 방향으로는 이동할 수 없습니다.");
+        if (this.color.equals(Color.WHITE) && !MOVABLE_DIRECTION_OF_WHITE_PAWN.contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 화이트폰은 해당 방향으로 이동할 수 없습니다.");
+        }
+
+        if (this.color.equals(Color.BLACK) && !MOVABLE_DIRECTION_OF_BLACK_PAWN.contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 블랙폰은 해당 방향으로 이동할 수 없습니다.");
         }
     }
 
@@ -77,11 +70,11 @@ public class Pawn extends ChessPiece {
     }
 
     public boolean isFirstMovement(Position position) {
-        if (this.color.equals(Color.WHITE) && position.isInWhitePawnInitRank()) {
+        if (this.color.equals(Color.WHITE) && isWhitePawnInInitRank(position)) {
             return true;
         }
 
-        return this.color.equals(Color.BLACK) && position.isInBlackPawnInitRank();
+        return this.color.equals(Color.BLACK) && isBlackPawnInInitRank(position);
     }
 
     @Override
@@ -125,5 +118,13 @@ public class Pawn extends ChessPiece {
         Position targetPosition = movement.findTargetPosition();
         ChessPiece targetChessPiece = chessBoard.getChessPiece(targetPosition);
         return !targetChessPiece.equals(new Empty()) && this.color.equals(targetColor);
+    }
+
+    private boolean isWhitePawnInInitRank(Position position) {
+        return position.getRankSequence() == WHITE_PAWN_INIT_RANK;
+    }
+
+    private boolean isBlackPawnInInitRank(Position position) {
+        return position.getRankSequence() == BLACK_PAWN_INIT_RANK;
     }
 }

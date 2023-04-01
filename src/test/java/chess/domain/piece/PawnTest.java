@@ -54,18 +54,18 @@ class PawnTest {
 
         assertThatThrownBy(() -> whitePawn.findMovableDirection(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 북쪽(화이트폰) 또는 남쪽(블랙폰) 중 이동 가능한 방향이 없습니다.");
+                .hasMessage("[ERROR] 화이트폰은 해당 방향으로 이동할 수 없습니다.");
     }
 
     @Test
-    @DisplayName("화이트폰이 북쪽으로 이동할 수 없을 때 예외가 발생한다.")
+    @DisplayName("블랙폰이 남쪽으로 이동할 수 없을 때 예외가 발생한다.")
     void shouldFailToFindSouthDirection() {
         Position sourcePosition = Position.findPosition("a7");
         Position targetPosition = Position.findPosition("b5");
 
         assertThatThrownBy(() -> blackPawn.findMovableDirection(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 북쪽(화이트폰) 또는 남쪽(블랙폰) 중 이동 가능한 방향이 없습니다.");
+                .hasMessage("[ERROR] 블랙폰은 해당 방향으로 이동할 수 없습니다.");
     }
 
     @Test
@@ -81,7 +81,7 @@ class PawnTest {
 
         assertAll(
                 () -> assertThat(whitePawn.findDistance(northDirection, sourcePosition1, targetPosition1)).isEqualTo(expectedDistance),
-                () -> assertThat(whitePawn.findDistance(southDirection, sourcePosition2, targetPosition2)).isEqualTo(expectedDistance)
+                () -> assertThat(blackPawn.findDistance(southDirection, sourcePosition2, targetPosition2)).isEqualTo(expectedDistance)
         );
     }
 
@@ -147,10 +147,10 @@ class PawnTest {
     void shouldSucceedToMatchMovableDirection() {
 
         assertAll(
-                () -> assertDoesNotThrow(() -> whitePawn.validateDirection(Direction.SOUTH)),
+                () -> assertDoesNotThrow(() -> blackPawn.validateDirection(Direction.SOUTH)),
+                () -> assertDoesNotThrow(() -> blackPawn.validateDirection(Direction.SOUTH_EAST)),
+                () -> assertDoesNotThrow(() -> blackPawn.validateDirection(Direction.SOUTH_WEST)),
                 () -> assertDoesNotThrow(() -> whitePawn.validateDirection(Direction.NORTH)),
-                () -> assertDoesNotThrow(() -> whitePawn.validateDirection(Direction.SOUTH_EAST)),
-                () -> assertDoesNotThrow(() -> whitePawn.validateDirection(Direction.SOUTH_WEST)),
                 () -> assertDoesNotThrow(() -> whitePawn.validateDirection(Direction.NORTH_EAST)),
                 () -> assertDoesNotThrow(() -> whitePawn.validateDirection(Direction.NORTH_WEST))
         );
@@ -163,16 +163,16 @@ class PawnTest {
         assertAll(
                 () -> assertThatThrownBy(() -> whitePawn.validateDirection(Direction.NORTH_EAST_EAST))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("[ERROR] 해당 방향으로는 이동할 수 없습니다."),
+                        .hasMessage("[ERROR] 화이트폰은 해당 방향으로 이동할 수 없습니다."),
                 () -> assertThatThrownBy(() -> whitePawn.validateDirection(Direction.EAST))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("[ERROR] 해당 방향으로는 이동할 수 없습니다."),
-                () -> assertThatThrownBy(() -> whitePawn.validateDirection(Direction.SOUTH_EAST_EAST))
+                        .hasMessage("[ERROR] 화이트폰은 해당 방향으로 이동할 수 없습니다."),
+                () -> assertThatThrownBy(() -> blackPawn.validateDirection(Direction.SOUTH_EAST_EAST))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("[ERROR] 해당 방향으로는 이동할 수 없습니다."),
-                () -> assertThatThrownBy(() -> whitePawn.validateDirection(Direction.WEST))
+                        .hasMessage("[ERROR] 블랙폰은 해당 방향으로 이동할 수 없습니다."),
+                () -> assertThatThrownBy(() -> blackPawn.validateDirection(Direction.WEST))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("[ERROR] 해당 방향으로는 이동할 수 없습니다.")
+                        .hasMessage("[ERROR] 블랙폰은 해당 방향으로 이동할 수 없습니다.")
         );
     }
 

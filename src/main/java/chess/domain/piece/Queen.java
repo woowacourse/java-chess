@@ -25,31 +25,11 @@ public class Queen extends ChessPiece {
 
     @Override
     public Direction findMovableDirection(Position sourcePosition, Position targetPosition) {
-        if (Direction.isMovableToEast(sourcePosition, targetPosition)) {
-            return Direction.EAST;
-        }
-        if (Direction.isMovableToWest(sourcePosition, targetPosition)) {
-            return Direction.WEST;
-        }
-        if (Direction.isMovableToSouth(sourcePosition, targetPosition)) {
-            return Direction.SOUTH;
-        }
-        if (Direction.isMovableNorth(sourcePosition, targetPosition)) {
-            return Direction.NORTH;
-        }
-        if (Direction.isMovableNorthEast(sourcePosition, targetPosition)) {
-            return Direction.NORTH_EAST;
-        }
-        if (Direction.isMovableNorthWest(sourcePosition, targetPosition)) {
-            return Direction.NORTH_WEST;
-        }
-        if (Direction.isMovableSouthEast(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_EAST;
-        }
-        if (Direction.isMovableSouthWest(sourcePosition, targetPosition)) {
-            return Direction.SOUTH_WEST;
-        }
-        throw new IllegalArgumentException("[ERROR] 동,서,남,북,북동,북서,남동,남서 방향 중 이동 가능한 방향이 없습니다.");
+        Direction direction = Direction.findDirectionFromSourceToTarget(sourcePosition, targetPosition);
+
+        validateDirection(direction);
+
+        return direction;
     }
 
     @Override
@@ -66,7 +46,7 @@ public class Queen extends ChessPiece {
 
     public void validateDirection(Direction direction) {
         if (!MOVABLE_DIRECTION.contains(direction)) {
-            throw new IllegalArgumentException("[ERROR] 해당 방향으로는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 동,서,남,북,북동,북서,남동,남서 방향 중 이동 가능한 방향이 없습니다.");
         }
     }
 

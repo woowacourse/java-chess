@@ -22,8 +22,12 @@ public abstract class ChessPiece {
 
     public abstract boolean isMovable(Movement movement, ChessBoard chessBoard);
 
-    public String getShape() {
+    public String getShapeToString() {
         return shape.getShape();
+    }
+
+    public Shape getShape() {
+        return shape;
     }
 
     public Color getColor() {

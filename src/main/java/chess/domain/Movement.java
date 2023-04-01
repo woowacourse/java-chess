@@ -16,14 +16,6 @@ public class Movement {
         this.distance = distance;
     }
 
-    public static Movement generateRookMovement(Position sourcePosition, Direction direction, int distance) {
-        if (!Direction.isRookDirection(direction)) {
-            throw new IllegalArgumentException("[ERROR] 룩은 해당 방향으로 이동할 수 없습니다.");
-        }
-
-        return new Movement(sourcePosition, direction, distance);
-    }
-
     public Position findTargetPosition() {
         Position tempPosition = sourcePosition;
         for (int step = 0; step < distance; step++) {
