@@ -35,7 +35,7 @@ class RookTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b1, c1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("b3", toPoint));
         }
@@ -48,7 +48,7 @@ class RookTest {
                     Arrays.asList(new Empty(), new WhiteRook(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertAll(
                     () -> assertThatThrownBy(() -> board.move("b2", "a1"))
@@ -71,7 +71,7 @@ class RookTest {
                     Arrays.asList(new Empty(), new BlackRook(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b3", "b1"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -86,7 +86,7 @@ class RookTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new WhiteRook(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b4", "b2"))
                     .isInstanceOf(InvalidDestinationPointException.class);

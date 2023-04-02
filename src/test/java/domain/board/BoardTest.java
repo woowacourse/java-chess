@@ -110,7 +110,7 @@ class BoardTest {
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             board.move("a2", "a1");
 
@@ -127,7 +127,7 @@ class BoardTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
 
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("a1", "a3"))
                     .isInstanceOf(TargetPieceNotFoundException.class);

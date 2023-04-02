@@ -36,7 +36,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             board.move("a3", "a1");
 
@@ -53,7 +53,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a4, b4, c4
                     Arrays.asList(new BlackPawn(), new Empty(), new Empty()) // a5, b5, c5
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
             board.move("a5", "a3");
 
             assertThatThrownBy(() -> board.move("a3", "a1"))
@@ -70,7 +70,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertAll(
                     () -> assertThatThrownBy(() -> board.move("b2", "a1"))
@@ -99,7 +99,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b3", "b1"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -114,7 +114,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new BlackPawn(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b4", "b2"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -130,7 +130,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("b2", target));
         }
@@ -147,7 +147,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             board.move("b1", "b3");
 
@@ -164,7 +164,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a4, b4, c4
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a5, b5, c5
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
             board.move("b1", "b3");
 
             assertThatThrownBy(() -> board.move("b3", "b5"))
@@ -181,7 +181,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertAll(
                     () -> assertThatThrownBy(() -> board.move("b2", "b1"))
@@ -210,7 +210,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b2", "b4"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -225,7 +225,7 @@ public class PawnTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new WhitePawn(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b2", "b4"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -241,7 +241,7 @@ public class PawnTest {
                     Arrays.asList(new BlackKing(), new Empty(), new BlackPawn()), // a3, b3, c3
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("b2", target));
         }

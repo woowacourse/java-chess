@@ -33,7 +33,7 @@ class KingTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b1, c1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("b3", toPoint));
         }
@@ -48,7 +48,7 @@ class KingTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b1, c1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertAll(
                     () -> assertThatThrownBy(() -> board.move("b3", "b5"))
@@ -66,7 +66,7 @@ class KingTest {
                     Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new WhiteKing(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b3", "b2"))
                     .isInstanceOf(InvalidDestinationPointException.class);

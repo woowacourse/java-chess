@@ -34,7 +34,7 @@ class KnightTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()), // a2, b2, c2, d2, e2
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()) // a1, b1, c1, d1, e1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("c3", toPoint));
         }
@@ -47,7 +47,7 @@ class KnightTest {
                     Arrays.asList(new Empty(), new BlackKnight(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertAll(
                     () -> assertThatThrownBy(() -> board.move("b2", "a1"))
@@ -81,7 +81,7 @@ class KnightTest {
                     Arrays.asList(new Empty(), new BlackPawn(), new BlackPawn(), new BlackPawn(), new Empty()), // a2, b2, c2, d2, e2
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()) // a1, b1, c1, d1, e1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("c3", "d5"));
         }
@@ -94,7 +94,7 @@ class KnightTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new BlackKnight(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("a3", "b1"))
                     .isInstanceOf(InvalidDestinationPointException.class);

@@ -15,12 +15,12 @@ import java.util.List;
 public class Board {
     private final List<List<Piece>> pieceStatus;
 
-    public Board(List<List<Piece>> pieceStatus) {
-        this.pieceStatus = pieceStatus;
-    }
-
     public Board() {
         this.pieceStatus = BoardInitializer.initializeBoard();
+    }
+
+    private Board(List<List<Piece>> pieceStatus) {
+        this.pieceStatus = pieceStatus;
     }
 
     public void reset() {

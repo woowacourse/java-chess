@@ -35,7 +35,7 @@ class BishopTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()), // a2, b2, c2, d2, e2
                     Arrays.asList(new Empty(), new Empty(), new Empty(), new Empty(), new Empty()) // a1, b1, c1, d1, e1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("c3", toPoint));
         }
@@ -48,7 +48,7 @@ class BishopTest {
                     Arrays.asList(new Empty(), new WhiteBishop(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertAll(
                     () -> assertThatThrownBy(() -> board.move("b2", "b1"))
@@ -70,7 +70,7 @@ class BishopTest {
                     Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
                     Arrays.asList(new BlackBishop(), new BlackRook(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("a3", "c1"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -84,7 +84,7 @@ class BishopTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new BlackBishop(), new Empty(), new Empty()) // a3, b3, c3
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("a3", "c1"))
                     .isInstanceOf(InvalidDestinationPointException.class);

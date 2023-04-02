@@ -35,7 +35,7 @@ class QueenTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
                     Arrays.asList(new Empty(), new Empty(), new Empty()) // a1, b1, c1
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertDoesNotThrow(() -> board.move("b3", toPoint));
         }
@@ -49,7 +49,7 @@ class QueenTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new WhiteQueen(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b4", "b1"))
                     .isInstanceOf(InvalidDestinationPointException.class);
@@ -64,7 +64,7 @@ class QueenTest {
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
                     Arrays.asList(new Empty(), new WhiteQueen(), new Empty()) // a4, b4, c4
             );
-            Board board = new Board(boardStatus);
+            Board board = Textures.makeBoard(boardStatus);
 
             assertThatThrownBy(() -> board.move("b4", "b2"))
                     .isInstanceOf(InvalidDestinationPointException.class);
