@@ -41,20 +41,29 @@ public class Board {
 
     private void move(Point fromPoint, Point toPoint) {
         Piece piece = findPieceByPoint(fromPoint);
-        onCaseOfEmptyPoint(piece);
+        validateFromPoint(piece);
 
         List<Point> movablePoints = MovablePointFinder.addPoints(piece, fromPoint, toPoint, pieceStatus);
-
-        if (!movablePoints.contains(toPoint)) {
-            throw new InvalidDestinationPointException();
-        }
+        validateToPoint(toPoint, movablePoints);
 
         if (piece.isWhitePawn() || piece.isBlackPawn()) {
-            onCaseOfFirstStepOfPawn(fromPoint, toPoint, piece);
+            movePawnOfFirstStep(fromPoint, toPoint, piece);
             return;
         }
 
         move(fromPoint, toPoint, piece);
+    }
+
+    private static void validateFromPoint(Piece piece) {
+        if (piece.isEmpty()) {
+            throw new TargetPieceNotFoundException();
+        }
+    }
+
+    private static void validateToPoint(Point toPoint, List<Point> movablePoints) {
+        if (!movablePoints.contains(toPoint)) {
+            throw new InvalidDestinationPointException();
+        }
     }
 
     private void move(Point fromPoint, Point toPoint, Piece piece) {
@@ -64,7 +73,7 @@ public class Board {
                 .set(toPoint.findIndexFromLeft(), piece);
     }
 
-    private void onCaseOfFirstStepOfPawn(Point fromPoint, Point toPoint, Piece piece) {
+    private void movePawnOfFirstStep(Point fromPoint, Point toPoint, Piece piece) {
         if (piece.isBlackPawn()) {
             move(fromPoint, toPoint, new OnceMovedBlackPawn());
         }
@@ -76,11 +85,5 @@ public class Board {
     private Piece findPieceByPoint(Point fromPoint) {
         return pieceStatus.get(fromPoint.findIndexFromBottom())
                 .get(fromPoint.findIndexFromLeft());
-    }
-
-    private static void onCaseOfEmptyPoint(Piece piece) {
-        if (piece.isEmpty()) {
-            throw new TargetPieceNotFoundException();
-        }
     }
 }
