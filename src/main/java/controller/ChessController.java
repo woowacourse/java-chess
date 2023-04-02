@@ -5,40 +5,37 @@ import view.Command;
 import view.InputView;
 import view.OutputView;
 
-import java.util.Optional;
-
 public class ChessController {
+    private final Board board;
     private final OutputView outputView;
     private final InputView inputView;
 
-    public ChessController(InputView inputview, OutputView outputView) {
+    public ChessController(Board board, InputView inputview, OutputView outputView) {
+        this.board = board;
         this.inputView = inputview;
         this.outputView = outputView;
     }
 
-    public Optional<Board> makeBoard() {
+    public void initializeBoard() {
         outputView.printAskingBootingCommandMessage();
         Command command = inputView.getGameCommand();
         if (command.isStarting()) {
-            Board board = new Board();
             board.initialize();
-            printBoardStatus(board);
-            return Optional.of(board);
+            printBoardStatus();
         }
-        return Optional.empty();
     }
 
-    public void movePiece(Board board) {
+    public void movePiece() {
         try {
             Command command = inputView.getGameCommand();
             command.execute(board);
-            printBoardStatus(board);
+            printBoardStatus();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
         }
     }
 
-    private void printBoardStatus(Board board) {
+    private void printBoardStatus() {
         outputView.printStatus(board.findCurrentStatus());
     }
 }
