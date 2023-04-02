@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class Result {
 
+    public static final double DOUBLE_PAWN_SCORE = 0.5;
+    public static final int DEFAULT_PAWN_COUNT = 1;
+
     public double calculateTeamAt(final Map<Coordinate, Piece> board, final Camp camp) {
         return board.keySet()
                     .stream()
@@ -36,11 +39,11 @@ public class Result {
                                                   isPawnInSameColumn(board, coordinate, targetCoordinate, camp))
                                           .count();
 
-        if (countPawnInSameColumn == 1) {
+        if (countPawnInSameColumn == DEFAULT_PAWN_COUNT) {
             return board.get(targetCoordinate)
                         .score();
         }
-        return 0.5;
+        return DOUBLE_PAWN_SCORE;
     }
 
     private boolean isPawnInSameColumn(final Map<Coordinate, Piece> board,

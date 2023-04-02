@@ -11,6 +11,8 @@ import java.util.stream.IntStream;
 
 public class BoardInitialImage {
 
+    public static final int START_INDEX = 0;
+    public static final int END_INDEX = 8;
     private static final int BOARD_FILE = 8;
     private static final int WHITE_BACK_RANK = 0;
     private static final int WHITE_FRONT_RANK = 1;
@@ -57,7 +59,7 @@ public class BoardInitialImage {
     }
 
     private static List<Piece> makeWhiteFrontRank() {
-        return IntStream.range(0, 8)
+        return IntStream.range(START_INDEX, END_INDEX)
                         .mapToObj(i -> new WhitePawn())
                         .collect(Collectors.toList());
     }
@@ -92,7 +94,7 @@ public class BoardInitialImage {
     }
 
     private static List<Piece> makeBlackFrontRank() {
-        return IntStream.range(0, 8)
+        return IntStream.range(START_INDEX, END_INDEX)
                         .mapToObj(i -> new BlackPawn())
                         .collect(Collectors.toList());
     }
