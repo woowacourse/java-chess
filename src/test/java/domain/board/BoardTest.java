@@ -33,7 +33,6 @@ class BoardTest {
     @DisplayName("체스판의 현재 상태를 조회할 수 있다.")
     void initialize() {
         Board board = new Board();
-        board.initialize();
         List<List<Piece>> status = board.findCurrentStatus();
 
         assertThat(status).hasSize(8);

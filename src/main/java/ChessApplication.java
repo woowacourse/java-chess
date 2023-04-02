@@ -12,18 +12,17 @@ public class ChessApplication {
                 new InputView(new ScannerInputReader()),
                 new OutputView());
 
-        controller.initializeBoard();
-        play(controller);
+        try {
+            controller.initializeBoard();
+            play(controller);
+        } catch (GameFinishedException e) {
+            //TODO : 게임이 끝날 때 동작
+        }
     }
 
     private static void play(ChessController controller) {
         while (true) {
-            try {
-                controller.movePiece();
-            } catch (GameFinishedException e) {
-                //TODO : 게임이 끝날 때 동작
-                return;
-            }
+            controller.movePiece();
         }
     }
 }

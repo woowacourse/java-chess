@@ -16,7 +16,7 @@ public class Command {
 
     public void execute(Board board) {
         if (commandType.isStart()) {
-            board.initialize();
+            board.reset();
         }
 
         if (commandType.isMoving()) {

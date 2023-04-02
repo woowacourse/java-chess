@@ -20,7 +20,6 @@ public class ChessController {
         outputView.printAskingBootingCommandMessage();
         Command command = inputView.getGameCommand();
         if (command.isStarting()) {
-            board.initialize();
             printBoardStatus();
         }
     }

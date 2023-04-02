@@ -20,10 +20,10 @@ public class Board {
     }
 
     public Board() {
-        this.pieceStatus = new ArrayList<>();
+        this.pieceStatus = BoardInitializer.initializeBoard();
     }
 
-    public void initialize() {
+    public void reset() {
         pieceStatus.clear();
         pieceStatus.addAll(BoardInitializer.initializeBoard());
     }
