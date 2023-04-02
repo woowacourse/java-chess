@@ -1,4 +1,4 @@
-CREATE TABLE game_room
+CREATE TABLE game_rooms
 (
     id   INT         NOT NULL AUTO_INCREMENT,
     turn VARCHAR(12) NOT NULL,
@@ -13,6 +13,6 @@ CREATE TABLE pieces
     `type`       VARCHAR(12) NOT NULL,
     camp         VARCHAR(12) NOT NULL,
     game_room_id INT         NOT NULL,
-    FOREIGN KEY (game_room_id) REFERENCES game_room (id),
+    FOREIGN KEY (game_room_id) REFERENCES game_rooms (id),
     PRIMARY KEY (id)
 );
