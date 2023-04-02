@@ -22,10 +22,16 @@ public enum Inclination {
         this.inclination = inclination;
     }
 
-    public static Inclination of(final double targetValue) {
+    public static Inclination of(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        double targetValue = calculate(startCoordinate, endCoordinate);
         return Arrays.stream(values())
                      .filter(value -> Double.compare(value.inclination, targetValue) == 0)
                      .findAny()
                      .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 기울기입니다."));
+    }
+
+    private static double calculate(final Coordinate startCoordinate, final Coordinate endCoordinate) {
+        Coordinate differenceCoordinate = startCoordinate.minus(endCoordinate);
+        return (double) differenceCoordinate.row() / differenceCoordinate.column();
     }
 }
