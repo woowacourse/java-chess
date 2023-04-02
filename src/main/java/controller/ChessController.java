@@ -1,10 +1,11 @@
 package controller;
 
 import domain.Board;
-import exception.GameFinishedException;
 import view.Command;
 import view.InputView;
 import view.OutputView;
+
+import java.util.Optional;
 
 public class ChessController {
     private final OutputView outputView;
@@ -15,25 +16,26 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-    public void boot() {
+    public Optional<Board> makeBoard() {
         outputView.printAskingBootingCommandMessage();
-
-        Board board = new Board();
-        controlGame(board);
+        Command command = inputView.getGameCommand();
+        if (command.isStarting()) {
+            Board board = new Board();
+            board.initialize();
+            printBoardStatus(board);
+            return Optional.of(board);
+        }
+        return Optional.empty();
     }
 
-    private void controlGame(Board board) {
+    public void movePiece(Board board) {
         try {
             Command command = inputView.getGameCommand();
             command.execute(board);
             printBoardStatus(board);
-        } catch (GameFinishedException e) {
-            return;
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
         }
-
-        controlGame(board);
     }
 
     private void printBoardStatus(Board board) {

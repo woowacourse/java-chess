@@ -31,6 +31,10 @@ public class Command {
         }
     }
 
+    public boolean isStarting() {
+        return this.commandType == CommandType.START;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
