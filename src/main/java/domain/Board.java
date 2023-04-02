@@ -43,7 +43,7 @@ public class Board {
         Piece piece = findPieceByPoint(fromPoint);
         validateFromPoint(piece);
 
-        List<Point> movablePoints = MovablePointFinder.addPoints(piece, fromPoint, toPoint, pieceStatus);
+        List<Point> movablePoints = MovablePointFinder.addPoints(fromPoint, toPoint, pieceStatus);
         validateToPoint(toPoint, movablePoints);
 
         if (piece.isWhitePawn() || piece.isBlackPawn()) {
