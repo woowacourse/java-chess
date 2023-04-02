@@ -9,12 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class KingTest {
@@ -38,9 +38,10 @@ class KingTest {
             assertDoesNotThrow(() -> board.move("b3", toPoint));
         }
 
-        @Test
+        @ParameterizedTest(name = "{displayName} - {1}")
+        @CsvSource(value = {"b5,위로 두 칸 이동 불가", "b1,아래 두 칸 이동 불가"})
         @DisplayName("킹을 자신의 반경에서 1칸을 초과하여 이동하려는 경우 예외가 발생한다.")
-        void pawnMoveToInvalidDirection() {
+        void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a5, b5, c5
@@ -51,12 +52,8 @@ class KingTest {
             ));
 
             // when & then
-            assertAll(
-                    () -> assertThatThrownBy(() -> board.move("b3", "b5"))
-                            .as("위로 두 칸 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b3", "b1"))
-                            .as("아래 두 칸 이동 불가").isInstanceOf(InvalidDestinationPointException.class)
-            );
+            assertThatThrownBy(() -> board.move("b3", destination))
+                    .as(description).isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test

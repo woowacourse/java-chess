@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
@@ -21,7 +22,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PawnTest {
@@ -68,9 +68,11 @@ public class PawnTest {
             assertDoesNotThrow(() -> board.move("a3", "a2"));
         }
 
-        @Test
+        @ParameterizedTest(name = "{displayName} - {1}")
+        @CsvSource(value = {"a1,왼쪽 아래 이동 불가", "c1,오른쪽 아래 이동 불가", "c2,오른쪽 이동 불가", "c3,오른쪽 위 이동 불가",
+                "b3,위 이동 불가", "a3,왼쪽 위 이동 불가", "a2,왼쪽 이동 불가"})
         @DisplayName("주위에 장기말이 없을 때, 폰을 위쪽 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
-        void pawnMoveToInvalidDirection() {
+        void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
@@ -79,22 +81,8 @@ public class PawnTest {
             ));
 
             // when & then
-            assertAll(
-                    () -> assertThatThrownBy(() -> board.move("b2", "a1"))
-                            .as("왼쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c1"))
-                            .as("오른쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c2"))
-                            .as("오른쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c3"))
-                            .as("오른쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "b3"))
-                            .as("위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "a3"))
-                            .as("왼쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "a2"))
-                            .as("왼쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class)
-            );
+            assertThatThrownBy(() -> board.move("b2", destination))
+                    .as(description).isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test
@@ -187,9 +175,11 @@ public class PawnTest {
             assertDoesNotThrow(() -> board.move("b3", "b4"));
         }
 
-        @Test
+        @ParameterizedTest(name = "{displayName} - {1}")
+        @CsvSource(value = {"b1,아래 이동 불가", "a1,왼쪽 아래 이동 불가", "c1,오른쪽 아래 이동 불가",
+                "c2,오른쪽 이동 불가", "c3,오른쪽 위 이동 불가", "a3,왼쪽 위 이동 불가", "a2,왼쪽 이동 불가"})
         @DisplayName("주위에 장기말이 없을 때, 폰을 위 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
-        void pawnMoveToInvalidDirection() {
+        void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
@@ -198,22 +188,8 @@ public class PawnTest {
             ));
 
             // when & then
-            assertAll(
-                    () -> assertThatThrownBy(() -> board.move("b2", "b1"))
-                            .as("아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "a1"))
-                            .as("왼쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c1"))
-                            .as("오른쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c2"))
-                            .as("오른쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c3"))
-                            .as("오른쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "a3"))
-                            .as("왼쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "a2"))
-                            .as("왼쪽 이동 불가").isInstanceOf(InvalidDestinationPointException.class)
-            );
+            assertThatThrownBy(() -> board.move("b2", destination))
+                    .as(description).isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test

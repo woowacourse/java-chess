@@ -10,12 +10,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class RookTest {
@@ -39,9 +39,10 @@ class RookTest {
             assertDoesNotThrow(() -> board.move("b3", toPoint));
         }
 
-        @Test
+        @ParameterizedTest(name = "{displayName} - {1}")
+        @CsvSource(value = {"a1,왼쪽 아래 이동 불가", "c1,오른쪽 아래 이동 불가", "c3,오른쪽 위 이동 불가", "a3,왼쪽 위 이동 불가"})
         @DisplayName("룩을 대각선 방향으로 이동하려는 경우 예외가 발생한다.")
-        void pawnMoveToInvalidDirection() {
+        void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Arrays.asList(
                     Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
@@ -50,16 +51,8 @@ class RookTest {
             ));
 
             // when & then
-            assertAll(
-                    () -> assertThatThrownBy(() -> board.move("b2", "a1"))
-                            .as("왼쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c1"))
-                            .as("오른쪽 아래 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "c3"))
-                            .as("오른쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class),
-                    () -> assertThatThrownBy(() -> board.move("b2", "a3"))
-                            .as("왼쪽 위 이동 불가").isInstanceOf(InvalidDestinationPointException.class)
-            );
+            assertThatThrownBy(() -> board.move("b2", destination))
+                    .as(description).isInstanceOf(InvalidDestinationPointException.class);
         }
 
         @Test
