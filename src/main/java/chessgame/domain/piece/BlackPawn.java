@@ -27,7 +27,7 @@ public class BlackPawn extends Pawn {
 
     private boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,
                                                    final Coordinate endCoordinate) {
-        Inclination inclination = startCoordinate.getInclination(endCoordinate);
+        Inclination inclination = Inclination.of(startCoordinate, endCoordinate);
         return inclination.equals(Inclination.NEGATIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 2);
     }
@@ -37,7 +37,7 @@ public class BlackPawn extends Pawn {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        Inclination inclination = startCoordinate.getInclination(endCoordinate);
+        Inclination inclination = Inclination.of(startCoordinate, endCoordinate);
         return inclination.equals(Inclination.NEGATIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 1);
     }
@@ -48,7 +48,7 @@ public class BlackPawn extends Pawn {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        Inclination inclination = startCoordinate.getInclination(endCoordinate);
+        Inclination inclination = Inclination.of(startCoordinate, endCoordinate);
         Coordinate differenceCoordinate = startCoordinate.minus(endCoordinate);
         return availableInclinationsWhenCatch.contains(inclination)
                 && differenceCoordinate.hasNegativeRowValue()

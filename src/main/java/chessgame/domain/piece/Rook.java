@@ -23,7 +23,7 @@ public class Rook extends Piece {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
+        return availableInclinations.contains(Inclination.of(startCoordinate, endCoordinate));
     }
 
     @Override

@@ -57,10 +57,6 @@ public class Coordinate {
         return column.isZero();
     }
 
-    public Inclination getInclination(final Coordinate otherCoordinate) {
-        return Inclination.of(this, otherCoordinate);
-    }
-
     public boolean hasDistanceLessThan(final Coordinate otherCoordinate, final double distance) {
         int differenceRow = this.row.minus(otherCoordinate.row);
         int differenceColumn = this.column.minus(otherCoordinate.column);
