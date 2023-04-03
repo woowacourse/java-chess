@@ -72,18 +72,15 @@ public class ChessController {
     private ChessGame makeGameRoom(final List<String> commands) {
         String roomId = commands.get(ROOM_ID_INDEX);
         if (roomId.equals(NEW_ROOM)) {
-            return makeNewGameRoom();
+            roomId = makeNewGameRoom();
         }
         return makeAlreadyExistGameRoom(roomId);
     }
 
-    private ChessGame makeNewGameRoom() {
+    private String makeNewGameRoom() {
         chessGameService.addNewGame(BoardInitialImage.generate(), Camp.WHITE);
         GameRoomDto gameRoomDto = chessGameService.findLeastPieces();
-
-        long roomId = gameRoomDto.getRoomId();
-        Map<Coordinate, Piece> board = chessGameService.findPiecesByRoomId(roomId);
-        return new ChessGame(board, gameRoomDto);
+        return String.valueOf(gameRoomDto.getRoomId());
     }
 
     private ChessGame makeAlreadyExistGameRoom(final String roomId) {
