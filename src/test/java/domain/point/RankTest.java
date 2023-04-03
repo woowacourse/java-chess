@@ -1,6 +1,6 @@
 package domain.point;
 
-import domain.exception.PointOutOfBoardException;
+import domain.util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,8 @@ class RankTest {
     @DisplayName("제일 높은 랭크에서 한 단계를 더 올리려 하면 예외가 발생한다.")
     void invalidUp() {
         assertThatThrownBy(Rank.EIGHT::up)
-                .isInstanceOf(PointOutOfBoardException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExceptionMessages.POINT_OUT_OF_BOARD);
     }
 
     @Test
@@ -46,6 +47,7 @@ class RankTest {
     @DisplayName("제일 낮은 랭크에서 한 단계를 더 내리려 하면 예외가 발생한다.")
     void invalidDown() {
         assertThatThrownBy(Rank.ONE::down)
-                .isInstanceOf(PointOutOfBoardException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExceptionMessages.POINT_OUT_OF_BOARD);
     }
 }

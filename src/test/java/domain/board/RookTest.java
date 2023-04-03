@@ -1,11 +1,11 @@
 package domain.board;
 
 import domain.Board;
-import domain.exception.InvalidDestinationPointException;
 import domain.piece.pawn.WhitePawn;
 import domain.piece.rook.BlackRook;
 import domain.piece.rook.WhiteRook;
 import domain.point.Point;
+import domain.util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -48,7 +48,9 @@ class RookTest {
 
             // when & then
             assertThatThrownBy(() -> board.move("b2", destination))
-                    .as(description).isInstanceOf(InvalidDestinationPointException.class);
+                    .as(description)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
 
         @Test
@@ -62,7 +64,8 @@ class RookTest {
 
             // when & then
             assertThatThrownBy(() -> board.move("b3", "b1"))
-                    .isInstanceOf(InvalidDestinationPointException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
 
         @Test
@@ -76,7 +79,8 @@ class RookTest {
 
             // when & then
             assertThatThrownBy(() -> board.move("b4", "b2"))
-                    .isInstanceOf(InvalidDestinationPointException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
     }
 }

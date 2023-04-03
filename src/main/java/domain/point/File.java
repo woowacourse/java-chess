@@ -1,6 +1,6 @@
 package domain.point;
 
-import domain.exception.PointOutOfBoardException;
+import domain.util.ExceptionMessages;
 
 import java.util.Arrays;
 
@@ -24,7 +24,7 @@ public enum File {
 
     public File left() {
         if (this == A) {
-            throw new PointOutOfBoardException();
+            throw new IllegalArgumentException(ExceptionMessages.POINT_OUT_OF_BOARD);
         }
 
         int index = parseSymbolToIndex();
@@ -33,7 +33,7 @@ public enum File {
 
     public File right() {
         if (this == H) {
-            throw new PointOutOfBoardException();
+            throw new IllegalArgumentException(ExceptionMessages.POINT_OUT_OF_BOARD);
         }
 
         int index = parseSymbolToIndex();

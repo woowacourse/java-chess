@@ -1,7 +1,6 @@
 package domain.board;
 
 import domain.Board;
-import domain.exception.TargetPieceNotFoundException;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.piece.bishop.BlackBishop;
@@ -17,6 +16,7 @@ import domain.piece.queen.WhiteQueen;
 import domain.piece.rook.BlackRook;
 import domain.piece.rook.WhiteRook;
 import domain.point.Point;
+import domain.util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -118,7 +118,8 @@ class BoardTest {
 
             // when & then
             assertThatThrownBy(() -> board.move("a1", "a3"))
-                    .isInstanceOf(TargetPieceNotFoundException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
         }
     }
 }

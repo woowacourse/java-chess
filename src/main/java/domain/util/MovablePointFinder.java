@@ -1,6 +1,5 @@
 package domain.util;
 
-import domain.exception.PointOutOfBoardException;
 import domain.piece.Piece;
 import domain.point.Direction;
 import domain.point.Point;
@@ -66,7 +65,7 @@ public class MovablePointFinder {
     private static Point movePointThroughDirection(Point point, Direction direction) {
         try {
             point = point.move(direction);
-        } catch (PointOutOfBoardException ignored) {}
+        } catch (IllegalArgumentException ignored) {}
         return point;
     }
 
@@ -74,7 +73,7 @@ public class MovablePointFinder {
         try {
             addPointsIfBlackPawn(piece, from, pieceStatus, points);
             addPointsIfWhitePawn(piece, from, pieceStatus, points);
-        } catch (PointOutOfBoardException ignore) {}
+        } catch (IllegalArgumentException ignore) {}
     }
 
     private static void addPointsIfWhitePawn(Piece piece, Point from, Map<Point, Piece> pieceStatus, List<Point> points) {

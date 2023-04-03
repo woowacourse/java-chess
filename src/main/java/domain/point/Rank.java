@@ -1,6 +1,6 @@
 package domain.point;
 
-import domain.exception.PointOutOfBoardException;
+import domain.util.ExceptionMessages;
 
 import java.util.Arrays;
 
@@ -38,7 +38,7 @@ public enum Rank {
 
     public Rank up() {
         if (this == EIGHT) {
-            throw new PointOutOfBoardException();
+            throw new IllegalArgumentException(ExceptionMessages.POINT_OUT_OF_BOARD);
         }
 
         int indexFromBottomOfNewRank = Integer.parseInt(symbol);
@@ -47,7 +47,7 @@ public enum Rank {
 
     public Rank down() {
         if (this == ONE) {
-            throw new PointOutOfBoardException();
+            throw new IllegalArgumentException(ExceptionMessages.POINT_OUT_OF_BOARD);
         }
 
         int index = Integer.parseInt(symbol);

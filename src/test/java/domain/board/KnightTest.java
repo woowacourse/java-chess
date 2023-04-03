@@ -1,11 +1,11 @@
 package domain.board;
 
 import domain.Board;
-import domain.exception.InvalidDestinationPointException;
 import domain.piece.knight.BlackKnight;
 import domain.piece.knight.WhiteKnight;
 import domain.piece.pawn.BlackPawn;
 import domain.point.Point;
+import domain.util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,9 @@ class KnightTest {
 
             // when & then
             assertThatThrownBy(() -> board.move("b2", destination))
-                    .as(description).isInstanceOf(InvalidDestinationPointException.class);
+                    .as(description)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
 
         @Test
@@ -84,7 +86,8 @@ class KnightTest {
 
             // when & then
             assertThatThrownBy(() -> board.move("a3", "b1"))
-                    .isInstanceOf(InvalidDestinationPointException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
     }
 }

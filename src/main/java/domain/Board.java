@@ -1,7 +1,5 @@
 package domain;
 
-import domain.exception.InvalidDestinationPointException;
-import domain.exception.TargetPieceNotFoundException;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.piece.pawn.OnceMovedBlackPawn;
@@ -10,6 +8,7 @@ import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;
 import domain.util.BoardInitializer;
+import domain.util.ExceptionMessages;
 import domain.util.MovablePointFinder;
 
 import java.util.ArrayList;
@@ -68,13 +67,13 @@ public class Board {
 
     private static void validateFromPoint(Piece piece) {
         if (piece.isEmpty()) {
-            throw new TargetPieceNotFoundException();
+            throw new IllegalArgumentException(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
         }
     }
 
     private static void validateToPoint(Point toPoint, List<Point> movablePoints) {
         if (!movablePoints.contains(toPoint)) {
-            throw new InvalidDestinationPointException();
+            throw new IllegalArgumentException(ExceptionMessages.INVALID_DESTINATION);
         }
     }
 
