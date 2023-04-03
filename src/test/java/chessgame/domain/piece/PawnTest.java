@@ -21,13 +21,23 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("화이트 폰은 위로 두 칸 이동할 수 있다")
+    @DisplayName("화이트 폰은 1행에서 이동 시 위로 두 칸 이동할 수 있다")
     void isReachableByRuleUpTwo() {
         Coordinate startCoordinate = Coordinate.createOnBoard(1, 0);
         Coordinate endCoordinate = Coordinate.createOnBoard(3, 0);
         Pawn pawn = new WhitePawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+    }
+
+    @Test
+    @DisplayName("화이트 폰은 1행 외에서 이동 시 위로 두 칸 이동할 수 없다")
+    void isReachableByRuleCantUpTwo() {
+        Coordinate startCoordinate = Coordinate.createOnBoard(2, 0);
+        Coordinate endCoordinate = Coordinate.createOnBoard(4, 0);
+        Pawn pawn = new WhitePawn();
+
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
 
     @Test
@@ -93,13 +103,23 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("블랙 폰은 아래로 두 칸 이동할 수 있다")
+    @DisplayName("블랙 폰은 6행에서 이동 시 아래로 두 칸 이동할 수 있다")
     void isReachableByRuleDownTwo() {
         Coordinate startCoordinate = Coordinate.createOnBoard(6, 0);
         Coordinate endCoordinate = Coordinate.createOnBoard(4, 0);
         Pawn pawn = new BlackPawn();
 
         assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙 폰은 6행 외에서 이동 시 아래로 두 칸 이동할 수 없다")
+    void isReachableByRuleCantDownTwo() {
+        Coordinate startCoordinate = Coordinate.createOnBoard(5, 0);
+        Coordinate endCoordinate = Coordinate.createOnBoard(3, 0);
+        Pawn pawn = new BlackPawn();
+
+        assertThat(pawn.isReachableByRule(startCoordinate, endCoordinate)).isFalse();
     }
 
     @Test

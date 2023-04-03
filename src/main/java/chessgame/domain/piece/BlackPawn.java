@@ -3,6 +3,7 @@ package chessgame.domain.piece;
 import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
 import chessgame.domain.coordinate.Inclination;
+import chessgame.domain.coordinate.Row;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import static chessgame.domain.coordinate.Inclination.ONE;
 
 public class BlackPawn extends Pawn {
 
+    private static final Row firstMoveRow = Row.createWithoutValidate(6);
     private static final List<Inclination> availableInclinationsWhenCatch = List.of(ONE, MINUS_ONE);
 
     public BlackPawn() {
@@ -19,10 +21,14 @@ public class BlackPawn extends Pawn {
 
     @Override
     public boolean isReachableByRule(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        if (isFirstMove) {
+        if (isFirstMove(startCoordinate)) {
             return isReachableByRuleWhenFirstMove(startCoordinate, endCoordinate);
         }
         return isReachableByRuleAfterFirstMove(startCoordinate, endCoordinate);
+    }
+
+    private boolean isFirstMove(final Coordinate startCoordinate) {
+        return startCoordinate.isSameRow(firstMoveRow);
     }
 
     private boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate,

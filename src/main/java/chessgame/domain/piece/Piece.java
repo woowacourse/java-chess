@@ -7,12 +7,10 @@ public abstract class Piece {
 
     private final PieceType pieceType;
     private final Camp camp;
-    protected boolean isFirstMove;
 
     protected Piece(final PieceType pieceType, final Camp camp) {
         this.pieceType = pieceType;
         this.camp = camp;
-        this.isFirstMove = true;
     }
 
     public abstract boolean isReachableByRule(final Coordinate startCoordinate,
@@ -41,10 +39,6 @@ public abstract class Piece {
         return this.pieceType.equals(otherType);
     }
 
-    public void checkMoved() {
-        this.isFirstMove = false;
-    }
-
     public PieceType pieceType() {
         return pieceType;
     }
@@ -62,7 +56,6 @@ public abstract class Piece {
         return "Piece{" +
                 "pieceType=" + pieceType +
                 ", camp=" + camp +
-                ", isFirstMove=" + isFirstMove +
                 '}';
     }
 }

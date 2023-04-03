@@ -31,7 +31,6 @@ public class Board {
             Piece endPiece = board.get(endCoordinate);
             board.put(startCoordinate, new Empty());
             board.put(endCoordinate, startPiece);
-            startPiece.checkMoved();
             return endPiece.isSameTypeWith(PieceType.KING);
         }
         throw new IllegalArgumentException("[ERROR] 해당 기물을 옮길 수 없습니다.");

@@ -70,6 +70,10 @@ public class Coordinate {
         return Math.abs(differenceRow) <= distance && Math.abs(differenceColumn) <= distance;
     }
 
+    public boolean isSameRow(Row otherRow) {
+        return this.row.equals(otherRow);
+    }
+
     public boolean isSameColumn(Coordinate otherCoordinate) {
         return this.column.equals(otherCoordinate.column);
     }
