@@ -32,8 +32,8 @@ public class WhitePawn extends Pawn {
     }
 
     public boolean isReachableByRuleWhenFirstMove(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        Inclination inclination = startCoordinate.getInclination(endCoordinate);
-        return inclination.equals(Inclination.NEGATIVE_INFINITY)
+        Inclination inclination = Inclination.of(startCoordinate, endCoordinate);
+        return inclination.equals(Inclination.POSITIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 2);
     }
 
@@ -41,8 +41,8 @@ public class WhitePawn extends Pawn {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        Inclination inclination = startCoordinate.getInclination(endCoordinate);
-        return inclination.equals(Inclination.NEGATIVE_INFINITY)
+        Inclination inclination = Inclination.of(startCoordinate, endCoordinate);
+        return inclination.equals(Inclination.POSITIVE_INFINITY)
                 && startCoordinate.hasDistanceLessThan(endCoordinate, 1);
     }
 
@@ -51,7 +51,7 @@ public class WhitePawn extends Pawn {
         if (startCoordinate.equals(endCoordinate)) {
             return false;
         }
-        Inclination inclination = startCoordinate.getInclination(endCoordinate);
+        Inclination inclination = Inclination.of(startCoordinate, endCoordinate);
         Coordinate differenceCoordinate = startCoordinate.minus(endCoordinate);
         return availableInclinationsWhenCatch.contains(inclination)
                 && differenceCoordinate.hasPositiveRowValue()

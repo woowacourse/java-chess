@@ -1,31 +1,11 @@
-package chessgame.domain.piece;
+package chessgame.domain.coordinate;
 
-import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.coordinate.Inclination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CoordinateTest {
-
-    @Test
-    @DisplayName("상대 좌표와의 기울기가 1인 경우를 계산한다")
-    void hasInclinationOfOne() {
-        Coordinate startCoordinate = Coordinate.createOnBoard(0, 0);
-        Coordinate endCoordinate = Coordinate.createOnBoard(1, 1);
-
-        assertThat(startCoordinate.getInclination(endCoordinate)).isEqualTo(Inclination.ONE);
-    }
-
-    @Test
-    @DisplayName("상대 좌표와의 기울기가 -1인 경우를 계산한다")
-    void hasInclinationOfMinusOne() {
-        Coordinate startCoordinate = Coordinate.createOnBoard(0, 1);
-        Coordinate endCoordinate = Coordinate.createOnBoard(1, 0);
-
-        assertThat(startCoordinate.getInclination(endCoordinate)).isEqualTo(Inclination.MINUS_ONE);
-    }
 
     @Test
     @DisplayName("거리가 1인 경우 참을 반환한다")

@@ -28,7 +28,7 @@ public class King extends Piece {
     }
 
     private static boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate) {
-        return availableInclinations.contains(startCoordinate.getInclination(endCoordinate));
+        return availableInclinations.contains(Inclination.of(startCoordinate, endCoordinate));
     }
 
     @Override
