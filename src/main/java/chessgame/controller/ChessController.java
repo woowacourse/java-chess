@@ -34,20 +34,20 @@ public class ChessController {
     }
 
     public void run() {
-        Command command;
+        CommandType commandType;
 
         do {
-            command = readCommend();
-        } while (command.canContinue());
+            commandType = readCommend();
+        } while (commandType.canContinue());
     }
 
-    private Command readCommend() {
+    private CommandType readCommend() {
         try {
             printGameStartMessage();
             List<String> commands = inputView.readCommand();
-            Command command = Command.of(commands);
-            processStartGame(command, commands);
-            return command;
+            CommandType commandType = CommandType.of(commands);
+            processStartGame(commandType, commands);
+            return commandType;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return readCommend();
@@ -59,12 +59,12 @@ public class ChessController {
         outputView.printGameStartMessage(gameRoomDtos);
     }
 
-    private void processStartGame(final Command command, final List<String> commands) {
-        if (command.isStart()) {
+    private void processStartGame(final CommandType commandType, final List<String> commands) {
+        if (commandType.isStart()) {
             ChessGame chessGame = makeGameRoom(commands);
             playGame(chessGame);
         }
-        if (command.isMove() || command.isStatus()) {
+        if (commandType.isMove() || commandType.isStatus()) {
             throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");
         }
     }
@@ -90,52 +90,52 @@ public class ChessController {
     }
 
     private void playGame(final ChessGame chessGame) {
-        Command command;
+        CommandType commandType;
 
         do {
-            command = readPlayCommand(chessGame);
-            printGameResultWhenEnd(command, chessGame);
-        } while (command.canContinue());
+            commandType = readPlayCommand(chessGame);
+            printGameResultWhenEnd(commandType, chessGame);
+        } while (commandType.canContinue());
     }
 
-    private Command readPlayCommand(final ChessGame chessGame) {
+    private CommandType readPlayCommand(final ChessGame chessGame) {
         try {
             outputView.printBoard(chessGame.getBoard());
             List<String> commands = inputView.readCommand();
-            Command command = Command.of(commands);
-            return processPlayGame(command, commands, chessGame);
+            CommandType commandType = CommandType.of(commands);
+            return processPlayGame(commandType, commands, chessGame);
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
             return readPlayCommand(chessGame);
         }
     }
 
-    private Command processPlayGame(final Command command,
-                                    final List<String> commands,
-                                    final ChessGame chessGame) {
-        if (command.isStart()) {
+    private CommandType processPlayGame(final CommandType commandType,
+                                        final List<String> commands,
+                                        final ChessGame chessGame) {
+        if (commandType.isStart()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
         }
-        if (command.isMove()) {
+        if (commandType.isMove()) {
             return processMove(commands, chessGame);
         }
-        if (command.isStatus()) {
+        if (commandType.isStatus()) {
             printGameStatus(chessGame);
         }
-        return command;
+        return commandType;
     }
 
-    private Command processMove(final List<String> commands, final ChessGame chessGame) {
+    private CommandType processMove(final List<String> commands, final ChessGame chessGame) {
         Coordinate startCoordinate = convertCoordinate(commands.get(START_COORDINATE_INDEX));
         Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
         boolean isKing = chessGame.move(startCoordinate, endCoordinate);
         if (isKing) {
             printGameWinnerWhenCatchKing(chessGame);
             chessGameService.deleteGame(chessGame);
-            return Command.END;
+            return CommandType.END;
         }
         chessGameService.updateGame(chessGame);
-        return Command.MOVE;
+        return CommandType.MOVE;
     }
 
     private Coordinate convertCoordinate(final String frontCoordinate) {
@@ -154,8 +154,8 @@ public class ChessController {
         outputView.printGameStatus(chessGame.getStatus());
     }
 
-    private void printGameResultWhenEnd(final Command command, final ChessGame chessGame) {
-        if (command.isEnd()) {
+    private void printGameResultWhenEnd(final CommandType commandType, final ChessGame chessGame) {
+        if (commandType.isEnd()) {
             outputView.printGameResult(chessGame.getBoard(), chessGame.getStatus());
         }
     }
