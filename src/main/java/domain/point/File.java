@@ -15,11 +15,11 @@ public enum File {
     H("h", 7);
 
     private final String symbol;
-    private final int indexFromLeft;
+    private final int index;
 
-    File(String symbol, int indexFromLeft) {
+    File(String symbol, int index) {
         this.symbol = symbol;
-        this.indexFromLeft = indexFromLeft;
+        this.index = index;
     }
 
     public File left() {
@@ -27,8 +27,8 @@ public enum File {
             throw new PointOutOfBoardException();
         }
 
-        int indexFromLeftOfNewFile = parseSymbolToIndexFromLeft();
-        return findByIndexFromLeft(indexFromLeftOfNewFile - 1);
+        int index = parseSymbolToIndex();
+        return findByIndex(index - 1);
     }
 
     public File right() {
@@ -36,17 +36,17 @@ public enum File {
             throw new PointOutOfBoardException();
         }
 
-        int indexFromLeftOfNewFile = parseSymbolToIndexFromLeft();
-        return findByIndexFromLeft(indexFromLeftOfNewFile + 1);
+        int index = parseSymbolToIndex();
+        return findByIndex(index + 1);
     }
 
-    private int parseSymbolToIndexFromLeft() {
+    private int parseSymbolToIndex() {
         return symbol.charAt(0) - 97;
     }
 
-    private File findByIndexFromLeft(int index) {
+    private File findByIndex(int index) {
         return Arrays.stream(File.values())
-                .filter(file -> file.indexFromLeft == index)
+                .filter(file -> file.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 파일의 인덱스입니다."));
     }
@@ -56,10 +56,6 @@ public enum File {
                 .filter(file -> file.symbol.equals(symbol))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("우효하지 않은 파일 값입니다."));
-    }
-
-    public int getIndexFromLeft() {
-        return indexFromLeft;
     }
 
     public String getSymbol() {
