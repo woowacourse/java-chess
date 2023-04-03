@@ -17,14 +17,6 @@ public class Point {
         return new Point(file, rank);
     }
 
-    public int findIndexFromLeft() {
-        return file.getIndexFromLeft();
-    }
-
-    public int findIndexFromBottom() {
-        return rank.getIndexFromBottom();
-    }
-
     public Point up() {
         return new Point(file, rank.up());
     }

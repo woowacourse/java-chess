@@ -2,34 +2,46 @@ package domain;
 
 import domain.exception.InvalidDestinationPointException;
 import domain.exception.TargetPieceNotFoundException;
-import domain.piece.*;
+import domain.piece.Empty;
+import domain.piece.Piece;
 import domain.piece.pawn.OnceMovedBlackPawn;
 import domain.piece.pawn.OneMovedWhitePawn;
+import domain.point.File;
 import domain.point.Point;
+import domain.point.Rank;
 import domain.util.BoardInitializer;
 import domain.util.MovablePointFinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private final List<List<Piece>> pieceStatus;
+    private final Map<Point, Piece> pieceStatus;
 
     public Board() {
         this.pieceStatus = BoardInitializer.initializeBoard();
     }
 
-    private Board(List<List<Piece>> pieceStatus) {
+    private Board(Map<Point, Piece> pieceStatus) {
         this.pieceStatus = pieceStatus;
     }
 
     public void reset() {
         pieceStatus.clear();
-        pieceStatus.addAll(BoardInitializer.initializeBoard());
+        pieceStatus.putAll(BoardInitializer.initializeBoard());
     }
 
     public List<List<Piece>> findCurrentStatus() {
-        return new ArrayList<>(pieceStatus);
+        List<List<Piece>> status = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            List<Piece> statusPerFile = new ArrayList<>();
+            for (File file : File.values()) {
+                statusPerFile.add(pieceStatus.get(new Point(file, rank)));
+            }
+            status.add(statusPerFile);
+        }
+        return status;
     }
 
     public void move(String from, String to) {
@@ -40,7 +52,7 @@ public class Board {
     }
 
     private void move(Point fromPoint, Point toPoint) {
-        Piece piece = findPieceByPoint(fromPoint);
+        Piece piece = pieceStatus.get(fromPoint);
         validateFromPoint(piece);
 
         List<Point> movablePoints = MovablePointFinder.addPoints(fromPoint, toPoint, pieceStatus);
@@ -67,10 +79,8 @@ public class Board {
     }
 
     private void move(Point fromPoint, Point toPoint, Piece piece) {
-        pieceStatus.get(fromPoint.findIndexFromBottom())
-                .set(fromPoint.findIndexFromLeft(), new Empty());
-        pieceStatus.get(toPoint.findIndexFromBottom())
-                .set(toPoint.findIndexFromLeft(), piece);
+        pieceStatus.put(fromPoint, new Empty());
+        pieceStatus.put(toPoint, piece);
     }
 
     private void movePawnOfFirstStep(Point fromPoint, Point toPoint, Piece piece) {
@@ -80,10 +90,5 @@ public class Board {
         if (piece.isWhitePawn()) {
             move(fromPoint, toPoint, new OneMovedWhitePawn());
         }
-    }
-
-    private Piece findPieceByPoint(Point fromPoint) {
-        return pieceStatus.get(fromPoint.findIndexFromBottom())
-                .get(fromPoint.findIndexFromLeft());
     }
 }

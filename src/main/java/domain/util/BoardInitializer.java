@@ -13,83 +13,74 @@ import domain.piece.queen.BlackQueen;
 import domain.piece.queen.WhiteQueen;
 import domain.piece.rook.BlackRook;
 import domain.piece.rook.WhiteRook;
+import domain.point.File;
+import domain.point.Point;
+import domain.point.Rank;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import static domain.point.File.*;
+import static domain.point.Rank.*;
 
 public class BoardInitializer {
-
-    public static final int LOWEST_EMPTY_RANK = 2;
-    public static final int HIGHEST_EMPTY_RANK = 5;
-    public static final int FILE_SIZE = 8;
 
     private BoardInitializer() {
     }
 
-    public static List<List<Piece>> initializeBoard() {
-        List<List<Piece>> status = new ArrayList<>();
+    public static Map<Point, Piece> initializeBoard() {
+        Map<Point, Piece> status = new HashMap<>();
         initializeFirstWhiteRank(status);
-        initializeSecondWhiteRank(status);
+        initializeSecondRank(status);
         initializeEmptyRanks(status);
-        initializeSecondBlackRank(status);
-        initializeFirstBlackRank(status);
+        initializeSevenRank(status);
+        initializeEightRank(status);
 
         return status;
     }
 
-    private static void initializeEmptyRanks(List<List<Piece>> status) {
-        for (int rankIndex = LOWEST_EMPTY_RANK; rankIndex <= HIGHEST_EMPTY_RANK; rankIndex++) {
-            initializeEmptyRank(status);
+    private static void initializeEmptyRanks(Map<Point, Piece> status) {
+        initializeEmptyRank(status, THREE);
+        initializeEmptyRank(status, FOUR);
+        initializeEmptyRank(status, FIVE);
+    }
+
+    private static void initializeEmptyRank(Map<Point, Piece> status, Rank rank) {
+        for (File file : File.values()) {
+            status.put(new Point(file, rank), new Empty());
         }
     }
 
-    private static void initializeEmptyRank(List<List<Piece>> status) {
-        List<Piece> rank = new ArrayList<>();
-        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
-            rank.add(new Empty());
+    private static void initializeFirstWhiteRank(Map<Point, Piece> status) {
+        status.put(new Point(A, ONE), new WhiteRook());
+        status.put(new Point(B, ONE), new WhiteKnight());
+        status.put(new Point(C, ONE), new WhiteBishop());
+        status.put(new Point(D, ONE), new WhiteQueen());
+        status.put(new Point(E, ONE), new WhiteKing());
+        status.put(new Point(F, ONE), new WhiteBishop());
+        status.put(new Point(G, ONE), new WhiteKnight());
+        status.put(new Point(H, ONE), new WhiteRook());
+    }
+
+    private static void initializeSecondRank(Map<Point, Piece> status) {
+        for (File file : File.values()) {
+            status.put(new Point(file, TWO), new WhitePawn());
         }
-        status.add(rank);
     }
 
-    private static void initializeFirstWhiteRank(List<List<Piece>> status) {
-        List<Piece> rank = new ArrayList<>();
-        rank.add(new WhiteRook());
-        rank.add(new WhiteKnight());
-        rank.add(new WhiteBishop());
-        rank.add(new WhiteQueen());
-        rank.add(new WhiteKing());
-        rank.add(new WhiteBishop());
-        rank.add(new WhiteKnight());
-        rank.add(new WhiteRook());
-        status.add(rank);
+    private static void initializeEightRank(Map<Point, Piece> status) {
+        status.put(new Point(A, EIGHT), new BlackRook());
+        status.put(new Point(B, EIGHT), new BlackKnight());
+        status.put(new Point(C, EIGHT), new BlackBishop());
+        status.put(new Point(D, EIGHT),new BlackQueen());
+        status.put(new Point(E, EIGHT),new BlackKing());
+        status.put(new Point(F, EIGHT),new BlackBishop());
+        status.put(new Point(G, EIGHT),new BlackKnight());
+        status.put(new Point(H, EIGHT),new BlackRook());
     }
 
-    private static void initializeSecondWhiteRank(List<List<Piece>> status) {
-        List<Piece> rank = new ArrayList<>();
-        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
-            rank.add(new WhitePawn());
+    private static void initializeSevenRank(Map<Point, Piece> status) {
+        for (File file : File.values()) {
+            status.put(new Point(file, SEVEN), new BlackPawn());
         }
-        status.add(rank);
-    }
-
-    private static void initializeFirstBlackRank(List<List<Piece>> status) {
-        List<Piece> rank = new ArrayList<>();
-        rank.add(new BlackRook());
-        rank.add(new BlackKnight());
-        rank.add(new BlackBishop());
-        rank.add(new BlackQueen());
-        rank.add(new BlackKing());
-        rank.add(new BlackBishop());
-        rank.add(new BlackKnight());
-        rank.add(new BlackRook());
-        status.add(rank);
-    }
-
-    private static void initializeSecondBlackRank(List<List<Piece>> status) {
-        List<Piece> rank = new ArrayList<>();
-        for (int fileIndex = 0; fileIndex < FILE_SIZE; fileIndex++) {
-            rank.add(new BlackPawn());
-        }
-        status.add(rank);
     }
 }

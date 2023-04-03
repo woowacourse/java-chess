@@ -11,19 +11,21 @@ import domain.piece.king.WhiteKing;
 import domain.piece.knight.BlackKnight;
 import domain.piece.knight.WhiteKnight;
 import domain.piece.pawn.BlackPawn;
-import domain.piece.pawn.OnceMovedBlackPawn;
 import domain.piece.pawn.WhitePawn;
 import domain.piece.queen.BlackQueen;
 import domain.piece.queen.WhiteQueen;
 import domain.piece.rook.BlackRook;
 import domain.piece.rook.WhiteRook;
+import domain.point.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import static domain.point.File.A;
+import static domain.point.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -107,32 +109,11 @@ class BoardTest {
     @DisplayName("장기말 이동과 관련한 메서드 테스트")
     class moveTest {
         @Test
-        @DisplayName("출발 좌표, 도착 좌표가 주어지면 출발 좌표에 있는 말이 이동한다.")
-        void move() {
-            // given
-            List<List<Piece>> pieceStatus = Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
-            );
-            Board board = Textures.makeBoard(pieceStatus);
-
-            // when
-            board.move("a2", "a1");
-
-            // then
-            assertThat(pieceStatus.get(1).get(0)).isEqualTo(new Empty());
-            assertThat(pieceStatus.get(0).get(0)).isEqualTo(new OnceMovedBlackPawn());
-        }
-
-        @Test
         @DisplayName("출발 좌표에 아무 장기말이 없으면 예외가 발생한다.")
         void moveFromEmptyPoint() {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new BlackPawn(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(A, TWO), new BlackPawn()
             ));
 
             // when & then

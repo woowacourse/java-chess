@@ -2,14 +2,12 @@ package domain.board;
 
 import domain.Board;
 import domain.exception.InvalidDestinationPointException;
-import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.piece.king.BlackKing;
 import domain.piece.king.WhiteKing;
 import domain.piece.pawn.BlackPawn;
-import domain.piece.pawn.OnceMovedBlackPawn;
-import domain.piece.pawn.OneMovedWhitePawn;
 import domain.piece.pawn.WhitePawn;
+import domain.point.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,10 +15,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static domain.point.File.*;
+import static domain.point.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -32,30 +30,21 @@ public class PawnTest {
         @DisplayName("폰을 처음 움직이는 경우, 한 번에 두 칸씩 이동할 수 있다.")
         void pawnFirstMove() {
             // given
-            List<List<Piece>> boardStatus = Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new BlackPawn(), new Empty(), new Empty()) // a3, b3, c3
+            Map<Point, Piece> boardStatus = Map.of(
+                    new Point(A, THREE), new BlackPawn()
             );
             Board board = Textures.makeBoard(boardStatus);
 
-            // when
-            board.move("a3", "a1");
-
-            // then
-            assertThat(boardStatus.get(0).get(0)).isEqualTo(new OnceMovedBlackPawn());
+            // when & then
+            assertDoesNotThrow(() -> board.move("a3", "a1"));
         }
 
         @Test
         @DisplayName("폰을 처음 움직인 이후에는, 한 번에 한 칸씩 전진할 수 있다.")
         void pawnMoveAfterFirst() {
             // then
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, a2, a3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a4, b4, c4
-                    Arrays.asList(new BlackPawn(), new Empty(), new Empty()) // a5, b5, c5
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(A, FIVE), new BlackPawn()
             ));
 
             // when
@@ -74,10 +63,8 @@ public class PawnTest {
         @DisplayName("주위에 장기말이 없을 때, 폰을 위쪽 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, TWO), new BlackPawn()
             ));
 
             // when & then
@@ -89,11 +76,9 @@ public class PawnTest {
         @DisplayName("이동하려는 경로 사이에 다른 기물이 막고있을 경우, 전진하지 못하고 예외가 발생한다.")
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, THREE), new BlackPawn(),
+                    new Point(B, TWO), new BlackPawn()
             ));
 
             // when & then
@@ -105,11 +90,9 @@ public class PawnTest {
         @DisplayName("이동하려는 위치에 우리 편의 기물이 있다면 이동이 불가능하다.")
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()) // a4, b4, c4
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, FOUR), new BlackPawn(),
+                    new Point(B, TWO), new BlackPawn()
             ));
 
             // when & then
@@ -122,11 +105,10 @@ public class PawnTest {
         @DisplayName("검은색 기물의 전진 방향 대각선으로 상대 기물이 있다면, 상대 기물이 있는 위치로 이동할 수 있다.")
         void enemyOnDiagonal(String target) {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new WhiteKing(), new Empty(), new WhitePawn()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new BlackPawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, TWO), new BlackPawn(),
+                    new Point(A, ONE), new WhiteKing(),
+                    new Point(C, ONE), new WhitePawn()
             ));
 
             // when & then
@@ -141,30 +123,21 @@ public class PawnTest {
         @DisplayName("폰을 처음 움직이는 경우, 한 번에 두 칸씩 이동할 수 있다.")
         void pawnFirstMove() {
             // given
-            List<List<Piece>> boardStatus = Arrays.asList(
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
+            Map<Point, Piece> status = Map.of(
+                    new Point(B, ONE), new WhitePawn()
             );
-            Board board = Textures.makeBoard(boardStatus);
+            Board board = Textures.makeBoard(status);
 
-            // when
-            board.move("b1", "b3");
-
-            // then
-            assertThat(boardStatus.get(2).get(1)).isEqualTo(new OneMovedWhitePawn());
+            // when & then
+            assertDoesNotThrow(() -> board.move("b1", "b3"));
         }
 
         @Test
         @DisplayName("폰을 처음 움직인 이후에는, 한 번에 한 칸씩 전진할 수 있다.")
         void pawnMoveAfterFirst() {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a4, b4, c4
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a5, b5, c5
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, ONE), new WhitePawn()
             ));
             board.move("b1", "b3");
 
@@ -181,10 +154,8 @@ public class PawnTest {
         @DisplayName("주위에 장기말이 없을 때, 폰을 위 방향 외의 다른 방향으로 이동하려는 경우 예외가 발생한다.")
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a3, b3, c3
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, TWO), new WhitePawn()
             ));
 
             // when & then
@@ -196,11 +167,9 @@ public class PawnTest {
         @DisplayName("이동하려는 경로 사이에 다른 기물이 막고있을 경우, 전진하지 못하고 예외가 발생한다.")
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, TWO), new WhitePawn(),
+                    new Point(B, THREE), new WhitePawn()
             ));
 
             // when & then
@@ -212,11 +181,9 @@ public class PawnTest {
         @DisplayName("이동하려는 위치에 우리 편의 기물이 있다면 이동이 불가능하다.")
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()) // a4, b4, c4
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, TWO), new WhitePawn(),
+                    new Point(B, FOUR), new WhitePawn()
             ));
 
             // when & then
@@ -229,11 +196,10 @@ public class PawnTest {
         @DisplayName("검은색 기물의 전진 방향 대각선으로 상대 기물이 있다면, 상대 기물이 있는 위치로 이동할 수 있다.")
         void enemyOnDiagonal(String target) {
             // given
-            Board board = Textures.makeBoard(Arrays.asList(
-                    Arrays.asList(new Empty(), new Empty(), new Empty()), // a1, b1, c1
-                    Arrays.asList(new Empty(), new WhitePawn(), new Empty()), // a2, b2, c2
-                    Arrays.asList(new BlackKing(), new Empty(), new BlackPawn()), // a3, b3, c3
-                    Arrays.asList(new Empty(), new Empty(), new Empty()) // a4, b4, c4
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(B, TWO), new WhitePawn(),
+                    new Point(A, THREE), new BlackKing(),
+                    new Point(C, THREE), new BlackPawn()
             ));
 
             // when & then

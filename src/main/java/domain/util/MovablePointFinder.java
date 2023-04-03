@@ -14,20 +14,17 @@ public class MovablePointFinder {
     private MovablePointFinder() {
     }
 
-    public static List<Point> addPoints(Point startingPoint, Point destinationPoint, List<List<Piece>> pieceStatus) {
+    public static List<Point> addPoints(Point startingPoint, Point destinationPoint, Map<Point, Piece> pieceStatus) {
         final List<Point> points = new ArrayList<>();
-        Optional<Piece> pieceOptional = findPiece(pieceStatus, startingPoint);
-        if (pieceOptional.isPresent()) {
-            Piece piece = pieceOptional.get();
-            Map<Direction, Integer> directionsAndRanges = piece.getMovableDirectionAndRange();
-            directionsAndRanges.forEach((direction, range)
-                    -> points.addAll(findPointsThroughDirection(startingPoint, destinationPoint, direction, range, pieceStatus)));
-            addPointsIfPawn(piece, startingPoint, pieceStatus, points);
-        }
+        Piece piece = pieceStatus.get(startingPoint);
+        Map<Direction, Integer> directionsAndRanges = piece.getMovableDirectionAndRange();
+        directionsAndRanges.forEach((direction, range)
+                -> points.addAll(findPointsThroughDirection(startingPoint, destinationPoint, direction, range, pieceStatus)));
+        addPointsIfPawn(piece, startingPoint, pieceStatus, points);
         return points;
     }
 
-    private static List<Point> findPointsThroughDirection(Point startingPoint, Point destinationPoint, Direction direction, Integer range, List<List<Piece>> pieceStatus) {
+    private static List<Point> findPointsThroughDirection(Point startingPoint, Point destinationPoint, Direction direction, Integer range, Map<Point, Piece> pieceStatus) {
         List<Point> points = new ArrayList<>();
         Point currentPoint = startingPoint;
         for (int count = 0; count < range; count++) {
@@ -40,23 +37,21 @@ public class MovablePointFinder {
         return points;
     }
 
-    private static Optional<Point> findPointThroughDirection(Point previousPoint, Point startingPoint, Point destinationPoint, Direction direction, List<List<Piece>> pieceStatus) {
+    private static Optional<Point> findPointThroughDirection(Point previousPoint, Point startingPoint, Point destinationPoint, Direction direction, Map<Point, Piece> pieceStatus) {
         Point point = movePointThroughDirection(previousPoint, direction);
         // 한 칸 앞으로
 
         if (point.equals(destinationPoint)) {
-            Optional<Piece> pieceOnStartingPoint = findPiece(pieceStatus, startingPoint);
-            Optional<Piece> pieceOnDestinationPoint = findPiece(pieceStatus, destinationPoint);
-            if (pieceOnStartingPoint.isPresent() &&
-                    pieceOnDestinationPoint.isPresent() &&
-                    isDestinationReachable(pieceOnStartingPoint.get(), pieceOnDestinationPoint.get())) {
+            Piece pieceOnStartingPoint = pieceStatus.get(startingPoint);
+            Piece pieceOnDestinationPoint = pieceStatus.get(destinationPoint);
+            if (isDestinationReachable(pieceOnStartingPoint, pieceOnDestinationPoint)) {
                 return Optional.of(point);
             }
         }
         // 목적지와 같은 칸
 
-        Optional<Piece> piece = findPiece(pieceStatus, point);
-        if (piece.isPresent() && !piece.get().isEmpty()) {
+        Piece piece = pieceStatus.get(point);
+        if (!piece.isEmpty()) {
             return Optional.empty();
         }
         // 목적지로 가는 도중의 길
@@ -75,52 +70,42 @@ public class MovablePointFinder {
         return point;
     }
 
-    private static void addPointsIfPawn(Piece piece, Point from, List<List<Piece>> pieceStatus, List<Point> points) {
+    private static void addPointsIfPawn(Piece piece, Point from, Map<Point, Piece> pieceStatus, List<Point> points) {
         try {
             addPointsIfBlackPawn(piece, from, pieceStatus, points);
             addPointsIfWhitePawn(piece, from, pieceStatus, points);
         } catch (PointOutOfBoardException ignore) {}
     }
 
-    private static void addPointsIfWhitePawn(Piece piece, Point from, List<List<Piece>> pieceStatus, List<Point> points) {
+    private static void addPointsIfWhitePawn(Piece piece, Point from, Map<Point, Piece> pieceStatus, List<Point> points) {
         if (!piece.isWhitePawn()) {
             return;
         }
 
-        Optional<Piece> pieceLeftUp = findPiece(pieceStatus, from.leftUp());
-        if (pieceLeftUp.isPresent() && !pieceLeftUp.get().isEmpty() && piece.isOppositeWith(pieceLeftUp.get())) {
+        Piece pieceLeftUp = pieceStatus.get(from.leftUp());
+        if (!pieceLeftUp.isEmpty() && piece.isOppositeWith(pieceLeftUp)) {
             points.add(from.leftUp());
         }
 
-        Optional<Piece> pieceRightUp = findPiece(pieceStatus, from.rightUp());
-        if (pieceRightUp.isPresent() && !pieceRightUp.get().isEmpty() && piece.isOppositeWith(pieceRightUp.get())) {
+        Piece pieceRightUp = pieceStatus.get(from.rightUp());
+        if (!pieceRightUp.isEmpty() && piece.isOppositeWith(pieceRightUp)) {
             points.add(from.rightUp());
         }
     }
 
-    private static void addPointsIfBlackPawn(Piece piece, Point startingPoint, List<List<Piece>> pieceStatus, List<Point> points) {
+    private static void addPointsIfBlackPawn(Piece piece, Point startingPoint, Map<Point, Piece> pieceStatus, List<Point> points) {
         if (!piece.isBlackPawn()) {
             return;
         }
 
-        Optional<Piece> pieceLeftDown = findPiece(pieceStatus, startingPoint.leftDown());
-        if (pieceLeftDown.isPresent() && !pieceLeftDown.get().isEmpty() && piece.isOppositeWith(pieceLeftDown.get())) {
+        Piece pieceLeftDown = pieceStatus.get(startingPoint.leftDown());
+        if (!pieceLeftDown.isEmpty() && piece.isOppositeWith(pieceLeftDown)) {
             points.add(startingPoint.leftDown());
         }
 
-        Optional<Piece> pieceRightDown = findPiece(pieceStatus, startingPoint.rightDown());
-        if (pieceRightDown.isPresent() && !pieceRightDown.get().isEmpty() && piece.isOppositeWith(pieceRightDown.get())) {
+        Piece pieceRightDown = pieceStatus.get(startingPoint.rightDown());
+        if (!pieceRightDown.isEmpty() && piece.isOppositeWith(pieceRightDown)) {
             points.add(startingPoint.rightDown());
-        }
-    }
-
-    private static Optional<Piece> findPiece(List<List<Piece>> pieceStatus, Point point) {
-        try {
-            return Optional.of(pieceStatus
-                    .get(point.findIndexFromBottom())
-                    .get(point.findIndexFromLeft()));
-        } catch (IndexOutOfBoundsException e) {
-            return Optional.empty();
         }
     }
 }
