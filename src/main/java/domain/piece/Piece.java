@@ -25,4 +25,6 @@ public abstract class Piece {
     public abstract String getSymbol();
 
     public abstract boolean isKing();
+
+    public abstract float getScore();
 }

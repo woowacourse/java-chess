@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public enum CommandType {
     START("start"::equals),
     END("end"::equals),
+    STATUS("status"::equals),
     MOVE(command -> Pattern.matches(Constants.MOVE_COMMAND_REGEX, command));
 
     private final Predicate<String> condition;
@@ -32,6 +33,10 @@ public enum CommandType {
 
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isStatus() {
+        return this == STATUS;
     }
 
     private static class Constants {

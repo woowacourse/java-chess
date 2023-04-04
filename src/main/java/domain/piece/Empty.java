@@ -5,6 +5,9 @@ import domain.point.Direction;
 import java.util.Map;
 
 public class Empty extends Piece {
+
+    public static final int SCORE = 0;
+
     @Override
     public String getSymbol() {
         return ".";
@@ -48,5 +51,10 @@ public class Empty extends Piece {
     @Override
     public boolean isBlackPawn() {
         return false;
+    }
+
+    @Override
+    public float getScore() {
+        return SCORE;
     }
 }

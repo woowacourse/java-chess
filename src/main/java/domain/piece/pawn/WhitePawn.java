@@ -1,12 +1,11 @@
 package domain.piece.pawn;
 
-import domain.piece.Piece;
 import domain.point.Direction;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WhitePawn extends Piece {
+public class WhitePawn extends Pawn {
     @Override
     public String getSymbol() {
         return "p";
@@ -35,11 +34,6 @@ public class WhitePawn extends Piece {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public boolean isBlackPawn() {
         return false;
     }
@@ -47,10 +41,5 @@ public class WhitePawn extends Piece {
     @Override
     public boolean isWhitePawn() {
         return true;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
     }
 }

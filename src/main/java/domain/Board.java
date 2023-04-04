@@ -3,7 +3,7 @@ package domain;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.piece.pawn.OnceMovedBlackPawn;
-import domain.piece.pawn.OneMovedWhitePawn;
+import domain.piece.pawn.OnceMovedWhitePawn;
 import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;
@@ -95,7 +95,7 @@ public class Board {
             move(startingPoint, destinationPoint, new OnceMovedBlackPawn(), turn);
         }
         if (piece.isWhitePawn()) {
-            move(startingPoint, destinationPoint, new OneMovedWhitePawn(), turn);
+            move(startingPoint, destinationPoint, new OnceMovedWhitePawn(), turn);
         }
     }
 }

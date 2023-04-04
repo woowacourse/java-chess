@@ -2,8 +2,12 @@ package view;
 
 import domain.Board;
 import domain.Turn;
+import domain.piece.Piece;
+import domain.util.ScoreCalculator;
 import exception.GameFinishedException;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Command {
@@ -25,6 +29,11 @@ public class Command {
             String fromPoint = split[1];
             String toPoint = split[2];
             board.move(fromPoint, toPoint, turn);
+        }
+
+        if (commandType.isStatus()) {
+            List<List<Piece>> currentStatus = board.findCurrentStatus();
+            Map<Turn, Float> score = ScoreCalculator.calculate(currentStatus);
         }
 
         if (commandType.isEnd()) {

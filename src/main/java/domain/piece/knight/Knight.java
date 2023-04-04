@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Knight extends Piece {
+
+    public static final float SCORE = 2.5f;
+
     @Override
     public Map<Direction, Integer> getMovableDirectionAndRange() {
         HashMap<Direction, Integer> movableRange = new HashMap<>();
@@ -39,5 +42,10 @@ public abstract class Knight extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public float getScore() {
+        return SCORE;
     }
 }
