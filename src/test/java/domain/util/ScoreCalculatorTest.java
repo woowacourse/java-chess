@@ -32,12 +32,13 @@ class ScoreCalculatorTest {
         ));
 
         // when
-        Map<Turn, Float> score = ScoreCalculator.calculate(board.findCurrentStatus());
+        float blackScore = ScoreCalculator.calculate(board.findCurrentStatus(), Turn.BLACK);
+        float whiteScore = ScoreCalculator.calculate(board.findCurrentStatus(), Turn.WHITE);
 
         // then
         assertAll(
-                () -> assertThat(score.get(Turn.BLACK)).isEqualTo(14),
-                () -> assertThat(score.get(Turn.WHITE)).isEqualTo(4)
+                () -> assertThat(blackScore).isEqualTo(14),
+                () -> assertThat(whiteScore).isEqualTo(4)
         );
     }
 
@@ -53,12 +54,13 @@ class ScoreCalculatorTest {
         ));
 
         // when
-        Map<Turn, Float> score = ScoreCalculator.calculate(board.findCurrentStatus());
+        float blackScore = ScoreCalculator.calculate(board.findCurrentStatus(), Turn.BLACK);
+        float whiteScore = ScoreCalculator.calculate(board.findCurrentStatus(), Turn.WHITE);
 
         // then
         assertAll(
-                () -> assertThat(score.get(Turn.BLACK)).isEqualTo(6),
-                () -> assertThat(score.get(Turn.WHITE)).isEqualTo(1)
+                () -> assertThat(blackScore).isEqualTo(6),
+                () -> assertThat(whiteScore).isEqualTo(1)
         );
     }
 }

@@ -5,37 +5,27 @@ import domain.piece.Piece;
 import domain.piece.pawn.*;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static domain.Turn.*;
-
 public class ScoreCalculator {
-    public static Map<Turn, Float> calculate(List<List<Piece>> board) {
-        Map<Turn, Float> score = new HashMap<>();
-        score.put(BLACK, 0f);
-        score.put(WHITE, 0f);
-
-        calculateBoard(switchColumnsAndRows(board), score);
-
-        return score;
+    public static float calculate(List<List<Piece>> board, Turn turn) {
+        return calculateBoard(switchColumnsAndRows(board), turn);
     }
 
-    private static void calculateBoard(List<List<Piece>> board, Map<Turn, Float> score) {
-        for (List<Piece> column : board) {
-            calculateLine(score, column);
-        }
+    private static float calculateBoard(List<List<Piece>> board, Turn turn) {
+        return (float) board.stream()
+                .mapToDouble(column -> calculateLine(column, turn))
+                .sum();
     }
 
-    private static void calculateLine(Map<Turn, Float> score, List<Piece> column) {
-        validatePawnsDuplicatedOnColumn(column);
+    private static float calculateLine(List<Piece> line, Turn turn) {
+        validatePawnsDuplicatedOnColumn(line);
 
-        for (Piece piece : column) {
-            calculatePieceScore(score, piece);
-        }
+        return (float) line.stream()
+                .mapToDouble(piece -> calculatePieceScore(piece, turn))
+                .sum();
     }
 
     private static void validatePawnsDuplicatedOnColumn(List<Piece> column) {
@@ -65,13 +55,15 @@ public class ScoreCalculator {
         }
     }
 
-    private static void calculatePieceScore(Map<Turn, Float> score, Piece piece) {
-        if (piece.isBlack()) {
-            score.put(BLACK, score.get(BLACK) + piece.getScore());
+    private static float calculatePieceScore(Piece piece, Turn turn) {
+        if (turn.isBlack() && piece.isBlack()) {
+            return piece.getScore();
         }
-        if (piece.isWhite()) {
-            score.put(WHITE, score.get(WHITE) + piece.getScore());
+        if (turn.isWhite() && piece.isWhite()) {
+            return piece.getScore();
         }
+
+        return 0f;
     }
 
     private static List<List<Piece>> switchColumnsAndRows(List<List<Piece>> board) {

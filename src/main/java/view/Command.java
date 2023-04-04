@@ -7,7 +7,6 @@ import domain.util.ScoreCalculator;
 import exception.GameFinishedException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Command {
@@ -33,7 +32,8 @@ public class Command {
 
         if (commandType.isStatus()) {
             List<List<Piece>> currentStatus = board.findCurrentStatus();
-            Map<Turn, Float> score = ScoreCalculator.calculate(currentStatus);
+            float blackScore = ScoreCalculator.calculate(currentStatus, Turn.BLACK);
+            float whiteScore = ScoreCalculator.calculate(currentStatus, Turn.WHITE);
         }
 
         if (commandType.isEnd()) {
