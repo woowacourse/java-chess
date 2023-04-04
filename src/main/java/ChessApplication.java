@@ -34,7 +34,7 @@ public class ChessApplication {
                 //TODO : 게임이 끝날 때 동작
                 return;
             } catch (CheckMateException e) {
-                System.out.printf("게임 끝 ~~ 이긴 팀 : %s%n", e.getTurn());
+                controller.checkmate(turn);
                 return;
             }
         }

@@ -48,4 +48,8 @@ public class ChessController {
     private void printBoardStatus() {
         outputView.printStatus(board.findCurrentStatus());
     }
+
+    public void checkmate(Turn turn) {
+        outputView.printWinner(turn);
+    }
 }

@@ -1,5 +1,6 @@
 package view;
 
+import domain.Turn;
 import domain.piece.Piece;
 import domain.point.File;
 import domain.point.Rank;
@@ -10,13 +11,10 @@ import java.util.stream.Collectors;
 public class OutputView {
     public void printStatus(List<List<Piece>> status) {
         Collections.reverse(status);
-
         Iterator<Rank> ranks = getRankIterator();
-
         for (List<Piece> pieces : status) {
             printRankInformation(ranks, pieces);
         }
-
         printFileInformation();
     }
 
@@ -42,11 +40,9 @@ public class OutputView {
     private static void assignRankInformationToStringBuffer(Iterator<Rank> iterator, StringBuffer stringBuffer) {
         Rank rank = iterator.next();
         stringBuffer.append(String.format("  %s", rank.getSymbol()));
-
         if (rank == Rank.EIGHT) {
             stringBuffer.append("  (rank 8)");
         }
-
         if (rank == Rank.ONE) {
             stringBuffer.append("  (rank 1)");
         }
@@ -81,7 +77,11 @@ public class OutputView {
         Optional<Winner> winnerOptional = Winner.of(blackScore, whiteScore);
         winnerOptional.ifPresentOrElse(winner ->
                 System.out.printf("> %f점 차이로 %s가 앞서가는 중!%n", winner.getScore(), winner.getName()),
-                () -> System.out.println("> 한치 앞도 알 수 없는 치열한 접점 중 !"));
+                () -> System.out.println("> 한치 앞도 알 수 없는 치열한 접점 중 !")
+        );
+    }
 
+    public void printWinner(Turn turn) {
+        System.out.printf("> 게임 종료! 승자 : %s%n", turn);
     }
 }

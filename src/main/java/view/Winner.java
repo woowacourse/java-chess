@@ -12,7 +12,7 @@ public class Winner {
             return Optional.of(new Winner("WHITE", Math.abs(blackMinusWhite)));
         }
         if (blackMinusWhite > 0) {
-            return Optional.of(new Winner("WHITE", blackMinusWhite));
+            return Optional.of(new Winner("BLACK", blackMinusWhite));
         }
         return Optional.empty();
     }
