@@ -42,6 +42,7 @@ public class BoardInitializer {
         initializeEmptyRank(status, THREE);
         initializeEmptyRank(status, FOUR);
         initializeEmptyRank(status, FIVE);
+        initializeEmptyRank(status, SIX);
     }
 
     private static void initializeEmptyRank(Map<Point, Piece> status, Rank rank) {
