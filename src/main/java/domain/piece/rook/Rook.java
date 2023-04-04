@@ -17,4 +17,19 @@ public abstract class Rook extends Piece {
 
         return movableRange;
     }
+
+    @Override
+    public boolean isWhitePawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

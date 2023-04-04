@@ -33,4 +33,19 @@ public class OneMovedWhitePawn extends Piece {
     public boolean isWhite() {
         return true;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isWhitePawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlackPawn() {
+        return false;
+    }
 }

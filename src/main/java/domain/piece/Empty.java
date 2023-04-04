@@ -29,4 +29,19 @@ public class Empty extends Piece {
     public boolean isWhite() {
         return false;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
+    public boolean isWhitePawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackPawn() {
+        return false;
+    }
 }

@@ -33,4 +33,19 @@ public class BlackPawn extends Piece {
     public boolean isWhite() {
         return false;
     }
+
+    @Override
+    public boolean isBlackPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isWhitePawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

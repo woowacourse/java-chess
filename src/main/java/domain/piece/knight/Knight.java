@@ -20,4 +20,19 @@ public abstract class Knight extends Piece {
         movableRange.put(Direction.LEFT_DOWN_L, 1);
         return movableRange;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isWhitePawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackPawn() {
+        return false;
+    }
 }

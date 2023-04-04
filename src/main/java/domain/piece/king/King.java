@@ -20,4 +20,19 @@ public abstract class King extends Piece {
         movableRange.put(Direction.RIGHT_DOWN, 1);
         return movableRange;
     }
+
+    @Override
+    public boolean isWhitePawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

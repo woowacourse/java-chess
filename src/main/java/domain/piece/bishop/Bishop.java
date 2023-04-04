@@ -16,4 +16,19 @@ public abstract class Bishop extends Piece {
         movableRange.put(Direction.RIGHT_UP, 8);
         return movableRange;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isWhitePawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackPawn() {
+        return false;
+    }
 }
