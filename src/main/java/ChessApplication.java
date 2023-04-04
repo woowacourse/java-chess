@@ -1,5 +1,6 @@
 import controller.ChessController;
 import domain.Board;
+import domain.Turn;
 import exception.GameFinishedException;
 import view.InputView;
 import view.OutputView;
@@ -23,9 +24,11 @@ public class ChessApplication {
     }
 
     private static void play(ChessController controller) {
+        Turn turn = Turn.BLACK;
         while (true) {
             try {
-                controller.movePiece();
+                controller.movePiece(turn);
+                turn = turn.switchTurn();
             } catch (GameFinishedException e) {
                 //TODO : 게임이 끝날 때 동작
                 return;

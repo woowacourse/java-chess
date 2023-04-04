@@ -1,6 +1,7 @@
 package view;
 
 import domain.Board;
+import domain.Turn;
 import exception.GameFinishedException;
 
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class Command {
         this.value = value;
     }
 
-    public void execute(Board board) {
+    public void execute(Board board, Turn turn) {
         if (commandType.isStart()) {
             board.reset();
         }
@@ -23,7 +24,7 @@ public class Command {
             String[] split = value.split(" ");
             String fromPoint = split[1];
             String toPoint = split[2];
-            board.move(fromPoint, toPoint);
+            board.move(fromPoint, toPoint, turn);
         }
 
         if (commandType.isEnd()) {

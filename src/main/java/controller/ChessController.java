@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Board;
+import domain.Turn;
 import exception.GameFinishedException;
 import view.Command;
 import view.InputView;
@@ -28,10 +29,10 @@ public class ChessController {
         }
     }
 
-    public void movePiece() {
+    public void movePiece(Turn turn) {
         try {
             Command command = inputView.getGameCommand();
-            command.execute(board);
+            command.execute(board, turn);
             printBoardStatus();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());

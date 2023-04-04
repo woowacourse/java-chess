@@ -17,6 +17,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
+import static domain.Turn.BLACK;
+import static domain.Turn.WHITE;
 import static domain.point.File.*;
 import static domain.point.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,7 +38,7 @@ public class PawnTest {
             Board board = Textures.makeBoard(boardStatus);
 
             // when & then
-            assertDoesNotThrow(() -> board.move("a3", "a1"));
+            assertDoesNotThrow(() -> board.move("a3", "a1", BLACK));
         }
 
         @Test
@@ -48,14 +50,14 @@ public class PawnTest {
             ));
 
             // when
-            board.move("a5", "a3");
+            board.move("a5", "a3", BLACK);
 
             // then
-            assertThatThrownBy(() -> board.move("a3", "a1"))
+            assertThatThrownBy(() -> board.move("a3", "a1", BLACK))
                     .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
-            assertDoesNotThrow(() -> board.move("a3", "a2"));
+            assertDoesNotThrow(() -> board.move("a3", "a2", BLACK));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -69,7 +71,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b2", destination))
+            assertThatThrownBy(() -> board.move("b2", destination, BLACK))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -85,7 +87,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", "b1"))
+            assertThatThrownBy(() -> board.move("b3", "b1", BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -100,7 +102,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b4", "b2"))
+            assertThatThrownBy(() -> board.move("b4", "b2", BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -117,7 +119,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b2", target));
+            assertDoesNotThrow(() -> board.move("b2", target, BLACK));
         }
     }
 
@@ -134,7 +136,7 @@ public class PawnTest {
             Board board = Textures.makeBoard(status);
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b1", "b3"));
+            assertDoesNotThrow(() -> board.move("b1", "b3", WHITE));
         }
 
         @Test
@@ -144,14 +146,14 @@ public class PawnTest {
             Board board = Textures.makeBoard(Map.of(
                     new Point(B, ONE), new WhitePawn()
             ));
-            board.move("b1", "b3");
+            board.move("b1", "b3", WHITE);
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", "b5"))
+            assertThatThrownBy(() -> board.move("b3", "b5", WHITE))
                     .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
-            assertDoesNotThrow(() -> board.move("b3", "b4"));
+            assertDoesNotThrow(() -> board.move("b3", "b4", WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -165,7 +167,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b2", destination))
+            assertThatThrownBy(() -> board.move("b2", destination, WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -181,7 +183,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b2", "b4"))
+            assertThatThrownBy(() -> board.move("b2", "b4", WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -196,7 +198,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b2", "b4"))
+            assertThatThrownBy(() -> board.move("b2", "b4", WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -213,7 +215,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b2", target));
+            assertDoesNotThrow(() -> board.move("b2", target, WHITE));
         }
     }
 }

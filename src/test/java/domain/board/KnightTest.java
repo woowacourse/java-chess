@@ -15,6 +15,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
+import static domain.Turn.BLACK;
+import static domain.Turn.WHITE;
 import static domain.point.File.*;
 import static domain.point.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,7 +36,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("c3", toPoint));
+            assertDoesNotThrow(() -> board.move("c3", toPoint, WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -49,7 +51,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b2", destination))
+            assertThatThrownBy(() -> board.move("b2", destination, BLACK))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -72,7 +74,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("c3", "d5"));
+            assertDoesNotThrow(() -> board.move("c3", "d5", WHITE));
         }
 
         @Test
@@ -85,7 +87,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("a3", "b1"))
+            assertThatThrownBy(() -> board.move("a3", "b1", BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

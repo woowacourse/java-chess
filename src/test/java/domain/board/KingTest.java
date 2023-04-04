@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
+import static domain.Turn.WHITE;
 import static domain.point.File.B;
 import static domain.point.Rank.THREE;
 import static domain.point.Rank.TWO;
@@ -34,7 +35,7 @@ class KingTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b3", toPoint));
+            assertDoesNotThrow(() -> board.move("b3", toPoint, WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -47,7 +48,7 @@ class KingTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", destination))
+            assertThatThrownBy(() -> board.move("b3", destination, WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -63,7 +64,7 @@ class KingTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", "b2"))
+            assertThatThrownBy(() -> board.move("b3", "b2", WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

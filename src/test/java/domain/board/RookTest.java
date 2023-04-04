@@ -15,6 +15,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
+import static domain.Turn.BLACK;
+import static domain.Turn.WHITE;
 import static domain.point.File.B;
 import static domain.point.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,7 +36,7 @@ class RookTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b3", toPoint));
+            assertDoesNotThrow(() -> board.move("b3", toPoint, WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -47,7 +49,7 @@ class RookTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b2", destination))
+            assertThatThrownBy(() -> board.move("b2", destination, WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -63,7 +65,7 @@ class RookTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", "b1"))
+            assertThatThrownBy(() -> board.move("b3", "b1", BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -78,7 +80,7 @@ class RookTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b4", "b2"))
+            assertThatThrownBy(() -> board.move("b4", "b2", WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

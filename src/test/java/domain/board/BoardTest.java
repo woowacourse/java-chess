@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.Board;
+import domain.Turn;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.piece.bishop.BlackBishop;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import static domain.point.File.A;
+import static domain.point.Rank.THREE;
 import static domain.point.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -117,9 +119,24 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("a1", "a3"))
+            assertThatThrownBy(() -> board.move("a1", "a3", Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
+        }
+
+        @Test
+        @DisplayName("주어진 진영의 차례에 알맞지 않은 기물의 이동이 일어나면 예외가 발생한다.")
+        void invalidTurn() {
+            // given
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(A, THREE), new BlackPawn(),
+                    new Point(A, TWO), new Empty()
+            ));
+
+            // when & then
+            assertThatThrownBy(() -> board.move("a3", "a2", Turn.WHITE))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(ExceptionMessages.INVALID_GAME_TURN);
         }
     }
 }

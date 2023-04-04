@@ -43,16 +43,16 @@ public class Board {
         return status;
     }
 
-    public void move(String from, String to) {
+    public void move(String from, String to, Turn turn) {
         Point fromPoint = Point.fromSymbol(from);
         Point toPoint = Point.fromSymbol(to);
 
-        move(fromPoint, toPoint);
+        move(fromPoint, toPoint, turn);
     }
 
-    private void move(Point fromPoint, Point toPoint) {
+    private void move(Point fromPoint, Point toPoint, Turn turn) {
         Piece piece = pieceStatus.get(fromPoint);
-        validateFromPoint(piece);
+        validateFromPoint(piece, turn);
 
         List<Point> movablePoints = MovablePointFinder.addPoints(fromPoint, toPoint, pieceStatus);
         validateToPoint(toPoint, movablePoints);
@@ -65,9 +65,12 @@ public class Board {
         move(fromPoint, toPoint, piece);
     }
 
-    private static void validateFromPoint(Piece piece) {
+    private static void validateFromPoint(Piece piece, Turn turn) {
         if (piece.isEmpty()) {
             throw new IllegalArgumentException(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
+        }
+        if (!turn.isTurnOf(piece)) {
+            throw new IllegalArgumentException(ExceptionMessages.INVALID_GAME_TURN);
         }
     }
 
