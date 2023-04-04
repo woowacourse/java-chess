@@ -8,7 +8,7 @@ public class Column {
 
     private final int value;
 
-    public Column(final int value) {
+    private Column(final int value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class Column {
         return new Column(value);
     }
 
-    public static Column fromWithoutValidate(final int value) {
+    public static Column createWithoutValidate(final int value) {
         return new Column(value);
     }
 
@@ -55,6 +55,10 @@ public class Column {
         return this.value == 0;
     }
 
+    public int value() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,5 +70,12 @@ public class Column {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Column{" +
+                "value=" + value +
+                '}';
     }
 }

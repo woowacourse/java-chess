@@ -1,99 +1,55 @@
 package chessgame.controller;
 
-import chessgame.domain.board.ChessGame;
-import chessgame.domain.coordinate.Coordinate;
+import chessgame.controller.commandstatus.CommandStatus;
+import chessgame.controller.commandstatus.RedayCommand;
+import chessgame.service.ChessGameService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public class ChessController {
 
-    public static final char ASCII_ALPHABET_A = 'a';
-    public static final int START_COORDINATE_INDEX = 1;
-    public static final int COLUMN_INDEX = 0;
-    public static final int ROW_INDEX = 1;
-    public static final int END_COORDINATE_INDEX = 2;
-
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameService chessGameService;
+    private final Map<Command, BiFunction<CommandStatus, List<String>, CommandStatus>> executeByCommand = Map.of(
+            Command.START, CommandStatus::start,
+            Command.MOVE, CommandStatus::move,
+            Command.STATUS, (command, commands) -> command.status(),
+            Command.END, (command, commands) -> command.end()
+    );
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView, ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameService = chessGameService;
     }
 
     public void run() {
-        Command command;
+        CommandStatus command = new RedayCommand(chessGameService, outputView);
 
         do {
-            command = readCommend();
+            command = readCommend(command);
         } while (command.canContinue());
     }
 
-    private Command readCommend() {
+    private CommandStatus readCommend(CommandStatus commandStatus) {
         try {
-            outputView.printGameStartMessage();
             List<String> commands = inputView.readCommand();
             Command command = Command.of(commands);
-            processStartGame(command);
-            return command;
+            commandStatus = processCommand(commandStatus, command, commands);
+            return commandStatus;
         } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception.getMessage());
-            return readCommend();
+            return readCommend(commandStatus);
         }
     }
 
-    private void processStartGame(final Command command) {
-        if (command.isStart()) {
-            playGame(new ChessGame());
-        }
-        if (command.isMove()) {
-            throw new IllegalArgumentException("[ERROR] 아직 게임을 시작하지 않았습니다.");
-        }
-    }
-
-    private void playGame(final ChessGame chessGame) {
-        Command command;
-
-        do {
-            command = readPlayCommand(chessGame);
-        } while (command.canContinue());
-    }
-
-    private Command readPlayCommand(final ChessGame chessGame) {
-        try {
-            outputView.printBoard(chessGame.getBoard());
-            List<String> commands = inputView.readCommand();
-            Command command = Command.of(commands);
-            processPlayGame(command, commands, chessGame);
-            return command;
-        } catch (IllegalArgumentException exception) {
-            outputView.printExceptionMessage(exception.getMessage());
-            return readPlayCommand(chessGame);
-        }
-    }
-
-    private void processPlayGame(final Command command,
-                                 final List<String> commands,
-                                 final ChessGame chessGame) {
-        if (command.isStart()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
-        }
-        if (command.isMove()) {
-            processMove(commands, chessGame);
-        }
-    }
-
-    private void processMove(final List<String> commands, final ChessGame chessGame) {
-        Coordinate startCoordinate = convertCoordinate(commands.get(START_COORDINATE_INDEX));
-        Coordinate endCoordinate = convertCoordinate(commands.get(END_COORDINATE_INDEX));
-        chessGame.move(startCoordinate, endCoordinate);
-    }
-
-    private Coordinate convertCoordinate(final String frontCoordinate) {
-        int row = Character.getNumericValue(frontCoordinate.charAt(ROW_INDEX)) - 1;
-        int column = (int) frontCoordinate.charAt(COLUMN_INDEX) - ASCII_ALPHABET_A;
-        return Coordinate.fromOnBoard(row, column);
+    private CommandStatus processCommand(CommandStatus commandStatus, Command command, List<String> commands) {
+        return executeByCommand.get(command)
+                               .apply(commandStatus, commands);
     }
 }

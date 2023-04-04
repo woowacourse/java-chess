@@ -9,7 +9,7 @@ public class Row {
 
     private final int value;
 
-    public Row(final int value) {
+    private Row(final int value) {
         this.value = value;
     }
 
@@ -18,7 +18,7 @@ public class Row {
         return new Row(value);
     }
 
-    public static Row fromWithoutValidate(final int value) {
+    public static Row createWithoutValidate(final int value) {
         return new Row(value);
     }
 
@@ -56,6 +56,10 @@ public class Row {
         return this.value == 0;
     }
 
+    public int value() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,5 +71,12 @@ public class Row {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Row{" +
+                "value=" + value +
+                '}';
     }
 }

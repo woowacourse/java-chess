@@ -1,39 +1,61 @@
 package chessgame.domain.piece;
 
+import chessgame.domain.chessgame.Camp;
 import chessgame.domain.coordinate.Coordinate;
-import chessgame.domain.piecetype.PieceType;
-
-import java.util.Optional;
 
 public abstract class Piece {
 
-    private boolean isFirstMove;
+    private final PieceType pieceType;
+    private final Camp camp;
 
-    public Piece() {
-        isFirstMove = true;
+    protected Piece(final PieceType pieceType, final Camp camp) {
+        this.pieceType = pieceType;
+        this.camp = camp;
     }
 
-    public abstract Optional<PieceType> piece();
+    public abstract boolean isReachableByRule(final Coordinate startCoordinate,
+                                              final Coordinate endCoordinate);
 
-    public abstract boolean isSameCamp(final Camp camp);
-
-    public abstract boolean isExist();
-
-    public abstract boolean isMovable(final Coordinate startCoordinate, final Coordinate endCoordinate);
-
-    public abstract boolean isCatchable(final Optional<Camp> otherCamp,
+    public abstract boolean isCatchable(final Camp otherCamp,
                                         final Coordinate startCoordinate,
                                         final Coordinate endCoordinate);
 
+
     public abstract boolean canReap();
 
-    public abstract Optional<Camp> camp();
-
-    protected boolean isFirstMove() {
-        return isFirstMove;
+    public boolean isEmpty() {
+        return pieceType.isEmpty();
     }
 
-    public void checkMoved() {
-        isFirstMove = false;
+    public boolean isNotEmpty() {
+        return !pieceType.isEmpty();
+    }
+
+    public boolean isSameCamp(final Camp camp) {
+        return this.camp.equals(camp);
+    }
+
+    public boolean isSameTypeWith(final PieceType otherType) {
+        return this.pieceType.equals(otherType);
+    }
+
+    public PieceType pieceType() {
+        return pieceType;
+    }
+
+    public Camp camp() {
+        return camp;
+    }
+
+    public double score() {
+        return pieceType.score();
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "pieceType=" + pieceType +
+                ", camp=" + camp +
+                '}';
     }
 }
