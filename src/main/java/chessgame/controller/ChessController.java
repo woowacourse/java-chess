@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-public class Controller {
+public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -22,7 +22,7 @@ public class Controller {
             Command.END, (command, commands) -> command.end()
     );
 
-    public Controller(final InputView inputView, final OutputView outputView, ChessGameService chessGameService) {
+    public ChessController(final InputView inputView, final OutputView outputView, ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.chessGameService = chessGameService;
