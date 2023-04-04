@@ -34,14 +34,14 @@ public class ChessController {
         }
     }
 
-    public void movePiece(Turn turn) {
+    public void executeByCommand(Turn turn) {
         try {
             Command command = inputView.getGameCommand();
-            command.execute(board, turn);
+            command.execute(board, turn, outputView);
             printBoardStatus();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
-            movePiece(turn);
+            executeByCommand(turn);
         }
     }
 

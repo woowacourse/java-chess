@@ -18,7 +18,7 @@ public class Command {
         this.value = value;
     }
 
-    public void execute(Board board, Turn turn) {
+    public void execute(Board board, Turn turn, OutputView outputView) {
         if (commandType.isStart()) {
             board.reset();
         }
@@ -34,6 +34,7 @@ public class Command {
             List<List<Piece>> currentStatus = board.findCurrentStatus();
             float blackScore = ScoreCalculator.calculate(currentStatus, Turn.BLACK);
             float whiteScore = ScoreCalculator.calculate(currentStatus, Turn.WHITE);
+            outputView.printScoreStatus(blackScore, whiteScore);
         }
 
         if (commandType.isEnd()) {

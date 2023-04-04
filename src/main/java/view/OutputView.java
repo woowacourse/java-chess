@@ -4,10 +4,7 @@ import domain.piece.Piece;
 import domain.point.File;
 import domain.point.Rank;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -74,5 +71,17 @@ public class OutputView {
 
     public void printExceptionMessage(String message) {
         System.out.printf("[ERROR] %s%n", message);
+    }
+
+    public void printScoreStatus(float blackScore, float whiteScore) {
+        System.out.println("> 현재 체스 점수");
+        System.out.printf("> BLACK 점수 : %f%n", blackScore);
+        System.out.printf("> WHITE 점수 : %f%n", whiteScore);
+
+        Optional<Winner> winnerOptional = Winner.of(blackScore, whiteScore);
+        winnerOptional.ifPresentOrElse(winner ->
+                System.out.printf("> %f점 차이로 %s가 앞서가는 중!%n", winner.getScore(), winner.getName()),
+                () -> System.out.println("> 한치 앞도 알 수 없는 치열한 접점 중 !"));
+
     }
 }

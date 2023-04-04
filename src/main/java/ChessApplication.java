@@ -28,7 +28,7 @@ public class ChessApplication {
         Turn turn = Turn.WHITE;
         while (true) {
             try {
-                controller.movePiece(turn);
+                controller.executeByCommand(turn);
                 turn = turn.switchTurn();
             } catch (GameFinishedException e) {
                 //TODO : 게임이 끝날 때 동작
