@@ -14,7 +14,5 @@ public class Application {
         ChessGameService chessGameService = new ChessGameService();
         Controller controller = new Controller(inputView, outputView, chessGameService);
         controller.run();
-//        ChessController chessController = new ChessController(inputView, outputView, chessGameService);
-//        chessController.run();
     }
 }
