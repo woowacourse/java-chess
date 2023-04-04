@@ -19,13 +19,18 @@ public class ChessController {
     }
 
     public void initializeBoard() {
-        outputView.printAskingBootingCommandMessage();
-        Command command = inputView.getGameCommand();
-        if (command.isStarting()) {
-            printBoardStatus();
-        }
-        if (command.isEnding()) {
-            throw new GameFinishedException();
+        try {
+            outputView.printAskingBootingCommandMessage();
+            Command command = inputView.getGameCommand();
+            if (command.isStarting()) {
+                printBoardStatus();
+            }
+            if (command.isEnding()) {
+                throw new GameFinishedException();
+            }
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            initializeBoard();
         }
     }
 
@@ -36,6 +41,7 @@ public class ChessController {
             printBoardStatus();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
+            movePiece(turn);
         }
     }
 

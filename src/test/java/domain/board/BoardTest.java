@@ -18,6 +18,7 @@ import domain.piece.rook.BlackRook;
 import domain.piece.rook.WhiteRook;
 import domain.point.Point;
 import domain.util.ExceptionMessages;
+import exception.CheckMateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -137,6 +138,20 @@ class BoardTest {
             assertThatThrownBy(() -> board.move("a3", "a2", Turn.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_GAME_TURN);
+        }
+
+        @Test
+        @DisplayName("King을 잡으면 체크메이트 되었다는 의미의 예외가 발생한다.")
+        void checkMate() {
+            // given
+            Board board = Textures.makeBoard(Map.of(
+                    new Point(A, THREE), new BlackRook(),
+                    new Point(A, TWO), new WhiteKing()
+            ));
+
+            // when & then
+            assertThatThrownBy(() -> board.move("a3", "a2", Turn.BLACK))
+                    .isEqualTo(new CheckMateException(Turn.BLACK));
         }
     }
 }

@@ -2,10 +2,10 @@ package domain.board;
 
 import domain.Board;
 import domain.piece.Piece;
-import domain.piece.king.BlackKing;
-import domain.piece.king.WhiteKing;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.pawn.WhitePawn;
+import domain.piece.rook.BlackRook;
+import domain.piece.rook.WhiteRook;
 import domain.point.Point;
 import domain.util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
@@ -114,7 +114,7 @@ public class PawnTest {
             // given
             Board board = Textures.makeBoard(Map.of(
                     new Point(B, TWO), new BlackPawn(),
-                    new Point(A, ONE), new WhiteKing(),
+                    new Point(A, ONE), new WhiteRook(),
                     new Point(C, ONE), new WhitePawn()
             ));
 
@@ -205,12 +205,12 @@ public class PawnTest {
 
         @ParameterizedTest(name = "{displayName} - {0}")
         @ValueSource(strings = {"a3", "c3"})
-        @DisplayName("검은색 기물의 전진 방향 대각선으로 상대 기물이 있다면, 상대 기물이 있는 위치로 이동할 수 있다.")
+        @DisplayName("하얀색 기물의 전진 방향 대각선으로 상대 기물이 있다면, 상대 기물이 있는 위치로 이동할 수 있다.")
         void enemyOnDiagonal(String target) {
             // given
             Board board = Textures.makeBoard(Map.of(
                     new Point(B, TWO), new WhitePawn(),
-                    new Point(A, THREE), new BlackKing(),
+                    new Point(A, THREE), new BlackRook(),
                     new Point(C, THREE), new BlackPawn()
             ));
 

@@ -10,6 +10,7 @@ import domain.point.Rank;
 import domain.util.BoardInitializer;
 import domain.util.ExceptionMessages;
 import domain.util.MovablePointFinder;
+import exception.CheckMateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,19 +51,19 @@ public class Board {
         move(fromPoint, toPoint, turn);
     }
 
-    private void move(Point fromPoint, Point toPoint, Turn turn) {
-        Piece piece = pieceStatus.get(fromPoint);
+    private void move(Point startingPoint, Point destinationPoint, Turn turn) {
+        Piece piece = pieceStatus.get(startingPoint);
         validateFromPoint(piece, turn);
 
-        List<Point> movablePoints = MovablePointFinder.addPoints(fromPoint, toPoint, pieceStatus);
-        validateToPoint(toPoint, movablePoints);
+        List<Point> movablePoints = MovablePointFinder.addPoints(startingPoint, destinationPoint, pieceStatus);
+        validateToPoint(destinationPoint, movablePoints);
 
         if (piece.isWhitePawn() || piece.isBlackPawn()) {
-            movePawnOfFirstStep(fromPoint, toPoint, piece);
+            movePawnOfFirstStep(startingPoint, destinationPoint, piece, turn);
             return;
         }
 
-        move(fromPoint, toPoint, piece);
+        move(startingPoint, destinationPoint, piece, turn);
     }
 
     private static void validateFromPoint(Piece piece, Turn turn) {
@@ -74,23 +75,27 @@ public class Board {
         }
     }
 
-    private static void validateToPoint(Point toPoint, List<Point> movablePoints) {
-        if (!movablePoints.contains(toPoint)) {
+    private static void validateToPoint(Point destinationPoint, List<Point> movablePoints) {
+        if (!movablePoints.contains(destinationPoint)) {
             throw new IllegalArgumentException(ExceptionMessages.INVALID_DESTINATION);
         }
     }
 
-    private void move(Point fromPoint, Point toPoint, Piece piece) {
-        pieceStatus.put(fromPoint, new Empty());
-        pieceStatus.put(toPoint, piece);
+    private void move(Point startingPoint, Point destinationPoint, Piece piece, Turn turn) {
+        Piece previousPiece = pieceStatus.get(destinationPoint);
+        pieceStatus.put(startingPoint, new Empty());
+        pieceStatus.put(destinationPoint, piece);
+        if (previousPiece.isKing()) {
+            throw new CheckMateException(turn);
+        }
     }
 
-    private void movePawnOfFirstStep(Point fromPoint, Point toPoint, Piece piece) {
+    private void movePawnOfFirstStep(Point startingPoint, Point destinationPoint, Piece piece, Turn turn) {
         if (piece.isBlackPawn()) {
-            move(fromPoint, toPoint, new OnceMovedBlackPawn());
+            move(startingPoint, destinationPoint, new OnceMovedBlackPawn(), turn);
         }
         if (piece.isWhitePawn()) {
-            move(fromPoint, toPoint, new OneMovedWhitePawn());
+            move(startingPoint, destinationPoint, new OneMovedWhitePawn(), turn);
         }
     }
 }

@@ -29,6 +29,11 @@ public abstract class Rook extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isEmpty() {
         return false;
     }

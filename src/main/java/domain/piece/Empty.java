@@ -36,6 +36,11 @@ public class Empty extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isWhitePawn() {
         return false;
     }

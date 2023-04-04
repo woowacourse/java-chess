@@ -23,4 +23,6 @@ public abstract class Piece {
     public abstract boolean isBlack();
 
     public abstract String getSymbol();
+
+    public abstract boolean isKing();
 }

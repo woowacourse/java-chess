@@ -35,4 +35,9 @@ public abstract class Knight extends Piece {
     public boolean isBlackPawn() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

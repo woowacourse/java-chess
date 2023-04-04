@@ -31,4 +31,9 @@ public abstract class Bishop extends Piece {
     public boolean isBlackPawn() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

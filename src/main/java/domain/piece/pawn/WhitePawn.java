@@ -48,4 +48,9 @@ public class WhitePawn extends Piece {
     public boolean isWhitePawn() {
         return true;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }
