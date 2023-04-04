@@ -3,7 +3,7 @@ package chessgame.controller;
 import java.util.Arrays;
 import java.util.List;
 
-public enum CommandType {
+public enum Command {
 
     START("start", 2),
     END("end", 1),
@@ -13,12 +13,12 @@ public enum CommandType {
     private final String message;
     private final int commandCount;
 
-    CommandType(final String message, final int commandCount) {
+    Command(final String message, final int commandCount) {
         this.message = message;
         this.commandCount = commandCount;
     }
 
-    public static CommandType of(final List<String> targetMessage) {
+    public static Command of(final List<String> targetMessage) {
         String commandLower = targetMessage.get(0)
                                            .toLowerCase();
         return Arrays.stream(values())
@@ -33,18 +33,18 @@ public enum CommandType {
     }
 
     public boolean isStart() {
-        return this.equals(CommandType.START);
+        return this.equals(Command.START);
     }
 
     public boolean isEnd() {
-        return this.equals(CommandType.END);
+        return this.equals(Command.END);
     }
 
     public boolean isMove() {
-        return this.equals(CommandType.MOVE);
+        return this.equals(Command.MOVE);
     }
 
     public boolean isStatus() {
-        return this.equals(CommandType.STATUS);
+        return this.equals(Command.STATUS);
     }
 }
