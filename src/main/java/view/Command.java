@@ -35,6 +35,10 @@ public class Command {
         return this.commandType == CommandType.START;
     }
 
+    public boolean isEnding() {
+        return this.commandType == CommandType.END;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Board;
+import exception.GameFinishedException;
 import view.Command;
 import view.InputView;
 import view.OutputView;
@@ -21,6 +22,9 @@ public class ChessController {
         Command command = inputView.getGameCommand();
         if (command.isStarting()) {
             printBoardStatus();
+        }
+        if (command.isEnding()) {
+            throw new GameFinishedException();
         }
     }
 

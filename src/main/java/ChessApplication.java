@@ -14,15 +14,22 @@ public class ChessApplication {
 
         try {
             controller.initializeBoard();
-            play(controller);
         } catch (GameFinishedException e) {
             //TODO : 게임이 끝날 때 동작
+            return;
         }
+
+        play(controller);
     }
 
     private static void play(ChessController controller) {
         while (true) {
-            controller.movePiece();
+            try {
+                controller.movePiece();
+            } catch (GameFinishedException e) {
+                //TODO : 게임이 끝날 때 동작
+                return;
+            }
         }
     }
 }
