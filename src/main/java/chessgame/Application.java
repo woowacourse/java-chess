@@ -1,6 +1,6 @@
 package chessgame;
 
-import chessgame.controller.ChessController;
+import chessgame.controller.Controller;
 import chessgame.service.ChessGameService;
 import chessgame.view.InputView;
 import chessgame.view.OutputView;
@@ -12,7 +12,9 @@ public class Application {
         InputView inputView = new InputView(new Scanner(System.in));
         OutputView outputView = new OutputView();
         ChessGameService chessGameService = new ChessGameService();
-        ChessController chessController = new ChessController(inputView, outputView, chessGameService);
-        chessController.run();
+        Controller controller = new Controller(inputView, outputView, chessGameService);
+        controller.run();
+//        ChessController chessController = new ChessController(inputView, outputView, chessGameService);
+//        chessController.run();
     }
 }
