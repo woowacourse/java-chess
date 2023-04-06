@@ -46,13 +46,18 @@ public class ChessController {
     }
 
     private ChessGame findGame(String id) {
-        Board board = new Board();
         List<Movement> movements = boardDao.findStatusById(id);
+        Board board = loadSavedBoard(movements);
+        return new ChessGame(id, board);
+    }
+
+    private static Board loadSavedBoard(List<Movement> movements) {
+        Board board = new Board();
         Turn turn = Turn.WHITE;
         for (Movement movement : movements) {
             board.move(movement.getStartingPoint(), movement.getDestinationPoint(), turn);
             turn = turn.switchTurn();
         }
-        return new ChessGame(id, board);
+        return board;
     }
 }
