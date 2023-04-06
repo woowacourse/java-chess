@@ -1,13 +1,12 @@
 import controller.BoardController;
 import controller.ChessController;
-import dto.ChessGame;
 import dao.BoardDao;
 import domain.Turn;
+import dto.ChessGame;
 import exception.CheckMateException;
 import exception.GameFinishedException;
 import view.InputView;
 import view.OutputView;
-import view.ScannerInputReader;
 
 public class ChessApplication {
     public static void main(String[] args) {
@@ -25,22 +24,20 @@ public class ChessApplication {
                 inputView);
         try {
             controller.initializeBoard();
+            play(controller, outputView);
         } catch (GameFinishedException e) {
-            //TODO : 게임이 끝날 때 동작
-            return;
+            outputView.printGameEndMessage();
         }
-
-        play(controller);
     }
 
-    private static void play(BoardController controller) {
+    private static void play(BoardController controller, OutputView outputView) {
         Turn turn = Turn.WHITE;
         while (true) {
             try {
                 controller.executeByCommand(turn);
                 turn = turn.switchTurn();
             } catch (GameFinishedException e) {
-                //TODO : 게임이 끝날 때 동작
+                outputView.printGameEndMessage();
                 return;
             } catch (CheckMateException e) {
                 controller.checkmate(turn);

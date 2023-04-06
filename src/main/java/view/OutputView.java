@@ -94,4 +94,8 @@ public class OutputView {
         System.out.println("> 해당 아이디로 만든 게임방이 없습니다. 새로 생성할까요? (Y/N)");
         System.out.print("> ");
     }
+
+    public void printGameEndMessage() {
+        System.out.println("> 게임을 종료합니다.");
+    }
 }
