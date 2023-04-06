@@ -1,5 +1,6 @@
 package controller;
 
+import dao.BoardDao;
 import domain.Board;
 import domain.Turn;
 import exception.GameFinishedException;
@@ -7,15 +8,19 @@ import view.Command;
 import view.InputView;
 import view.OutputView;
 
-public class ChessController {
+public class BoardController {
+    private final String id;
     private final Board board;
+    private final BoardDao boardDao;
     private final OutputView outputView;
     private final InputView inputView;
 
-    public ChessController(Board board, InputView inputview, OutputView outputView) {
+    public BoardController(String id, Board board, BoardDao boardDao, OutputView outputView, InputView inputView) {
+        this.id = id;
         this.board = board;
-        this.inputView = inputview;
+        this.boardDao = boardDao;
         this.outputView = outputView;
+        this.inputView = inputView;
     }
 
     public void initializeBoard() {
@@ -37,7 +42,7 @@ public class ChessController {
     public void executeByCommand(Turn turn) {
         try {
             Command command = inputView.getGameCommand();
-            command.execute(board, turn, outputView);
+            command.execute(id, board, boardDao, turn, outputView);
             printBoardStatus();
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());

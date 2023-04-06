@@ -13,6 +13,14 @@ public class Movement {
         this.destinationPoint = destinationPoint;
     }
 
+    public Point getStartingPoint() {
+        return startingPoint;
+    }
+
+    public Point getDestinationPoint() {
+        return destinationPoint;
+    }
+
     public String getStartingSymbol() {
         return startingPoint.getSymbol();
     }

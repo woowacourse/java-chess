@@ -1,4 +1,5 @@
-import controller.ChessController;
+import controller.BoardController;
+import dao.BoardDao;
 import domain.Board;
 import domain.Turn;
 import exception.CheckMateException;
@@ -9,11 +10,12 @@ import view.ScannerInputReader;
 
 public class ChessApplication {
     public static void main(String[] args) {
-        ChessController controller = new ChessController(
+        BoardController controller = new BoardController(
+                "게임65",
                 new Board(),
-                new InputView(new ScannerInputReader()),
-                new OutputView());
-
+                new BoardDao(),
+                new OutputView(),
+                new InputView(new ScannerInputReader()));
         try {
             controller.initializeBoard();
         } catch (GameFinishedException e) {
@@ -24,7 +26,7 @@ public class ChessApplication {
         play(controller);
     }
 
-    private static void play(ChessController controller) {
+    private static void play(BoardController controller) {
         Turn turn = Turn.WHITE;
         while (true) {
             try {

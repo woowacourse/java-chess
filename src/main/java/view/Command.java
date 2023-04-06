@@ -1,8 +1,11 @@
 package view;
 
+import dao.BoardDao;
+import dao.Movement;
 import domain.Board;
 import domain.Turn;
 import domain.piece.Piece;
+import domain.point.Point;
 import domain.util.ScoreCalculator;
 import exception.GameFinishedException;
 
@@ -18,16 +21,16 @@ public class Command {
         this.value = value;
     }
 
-    public void execute(Board board, Turn turn, OutputView outputView) {
+    public void execute(String id, Board board, BoardDao boardDao, Turn turn, OutputView outputView) {
         if (commandType.isStart()) {
             board.reset();
         }
 
         if (commandType.isMoving()) {
             String[] split = value.split(" ");
-            String fromPoint = split[1];
-            String toPoint = split[2];
-            board.move(fromPoint, toPoint, turn);
+            Movement movement = new Movement(Point.fromSymbol(split[1]), Point.fromSymbol(split[2]));
+            board.move(movement.getStartingPoint(), movement.getDestinationPoint(), turn);
+            boardDao.updateMovement(id, movement);
         }
 
         if (commandType.isStatus()) {

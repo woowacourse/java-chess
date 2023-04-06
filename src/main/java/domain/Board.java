@@ -44,14 +44,7 @@ public class Board {
         return status;
     }
 
-    public void move(String from, String to, Turn turn) {
-        Point fromPoint = Point.fromSymbol(from);
-        Point toPoint = Point.fromSymbol(to);
-
-        move(fromPoint, toPoint, turn);
-    }
-
-    private void move(Point startingPoint, Point destinationPoint, Turn turn) {
+    public void move(Point startingPoint, Point destinationPoint, Turn turn) {
         Piece piece = pieceStatus.get(startingPoint);
         validateFromPoint(piece, turn);
 
