@@ -121,4 +121,8 @@ public class Point {
         if (direction == Direction.DOWN_RIGHT_L) return downRightL();
         return rightDown();
     }
+
+    public String getSymbol() {
+        return file.getSymbol() + rank.getSymbol();
+    }
 }
