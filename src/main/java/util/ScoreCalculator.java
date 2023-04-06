@@ -22,7 +22,6 @@ public class ScoreCalculator {
 
     private static float calculateLine(List<Piece> line, Turn turn) {
         validatePawnsDuplicatedOnColumn(line);
-
         return (float) line.stream()
                 .mapToDouble(piece -> calculatePieceScore(piece, turn))
                 .sum();
@@ -37,8 +36,7 @@ public class ScoreCalculator {
         long blackPawnCountOnColumn = column.stream()
                 .filter(Piece::isBlackPawn)
                 .count();
-
-        if (2 <= blackPawnCountOnColumn) {
+        if (arePawnsDuplicatingOnColumn(blackPawnCountOnColumn)) {
             Collections.replaceAll(column, new BlackPawn(), new DuplicatedOnColumnBlackPawn());
             Collections.replaceAll(column, new OnceMovedBlackPawn(), new DuplicatedOnColumnBlackPawn());
         }
@@ -48,11 +46,14 @@ public class ScoreCalculator {
         long whitePawnCountOnColumn = column.stream()
                 .filter(Piece::isWhitePawn)
                 .count();
-
-        if (2 <= whitePawnCountOnColumn) {
+        if (arePawnsDuplicatingOnColumn(whitePawnCountOnColumn)) {
             Collections.replaceAll(column, new WhitePawn(), new DuplicatedOnColumnWhitePawn());
             Collections.replaceAll(column, new OnceMovedWhitePawn(), new DuplicatedOnColumnWhitePawn());
         }
+    }
+
+    private static boolean arePawnsDuplicatingOnColumn(long pawnsCount) {
+        return 2 <= pawnsCount;
     }
 
     private static float calculatePieceScore(Piece piece, Turn turn) {
@@ -62,7 +63,6 @@ public class ScoreCalculator {
         if (turn.isWhite() && piece.isWhite()) {
             return piece.getScore();
         }
-
         return 0f;
     }
 

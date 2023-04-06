@@ -1,5 +1,6 @@
 package domain;
 
+import dao.Movement;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.piece.pawn.OnceMovedBlackPawn;
@@ -34,29 +35,37 @@ public class Board {
 
     public List<List<Piece>> findCurrentStatus() {
         List<List<Piece>> status = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            List<Piece> statusPerFile = new ArrayList<>();
-            for (File file : File.values()) {
-                statusPerFile.add(pieceStatus.get(new Point(file, rank)));
-            }
-            status.add(statusPerFile);
-        }
+        findCurrentRanks(status);
         return status;
     }
 
-    public void move(Point startingPoint, Point destinationPoint, Turn turn) {
-        Piece piece = pieceStatus.get(startingPoint);
+    private void findCurrentRanks(List<List<Piece>> status) {
+        for (Rank rank : Rank.values()) {
+            List<Piece> files = new ArrayList<>();
+            findCurrentFiles(rank, files);
+            status.add(files);
+        }
+    }
+
+    private void findCurrentFiles(Rank rank, List<Piece> files) {
+        for (File file : File.values()) {
+            files.add(pieceStatus.get(new Point(file, rank)));
+        }
+    }
+
+    public void move(Movement movement, Turn turn) {
+        Piece piece = pieceStatus.get(movement.getStartingPoint());
         validateFromPoint(piece, turn);
 
-        List<Point> movablePoints = MovablePointFinder.addPoints(startingPoint, destinationPoint, pieceStatus);
-        validateToPoint(destinationPoint, movablePoints);
+        List<Point> movablePoints = MovablePointFinder.addPoints(movement, pieceStatus);
+        validateDestinationPoint(movement.getDestinationPoint(), movablePoints);
 
         if (piece.isWhitePawn() || piece.isBlackPawn()) {
-            movePawnOfFirstStep(startingPoint, destinationPoint, piece, turn);
+            movePawnOfFirstStep(movement, piece, turn);
             return;
         }
 
-        move(startingPoint, destinationPoint, piece, turn);
+        move(movement, piece, turn);
     }
 
     private static void validateFromPoint(Piece piece, Turn turn) {
@@ -68,27 +77,27 @@ public class Board {
         }
     }
 
-    private static void validateToPoint(Point destinationPoint, List<Point> movablePoints) {
-        if (!movablePoints.contains(destinationPoint)) {
+    private static void validateDestinationPoint(Point point, List<Point> movablePoints) {
+        if (!movablePoints.contains(point)) {
             throw new IllegalArgumentException(ExceptionMessages.INVALID_DESTINATION);
         }
     }
 
-    private void move(Point startingPoint, Point destinationPoint, Piece piece, Turn turn) {
-        Piece previousPiece = pieceStatus.get(destinationPoint);
-        pieceStatus.put(startingPoint, new Empty());
-        pieceStatus.put(destinationPoint, piece);
+    private void move(Movement movement, Piece piece, Turn turn) {
+        Piece previousPiece = pieceStatus.get(movement.getDestinationPoint());
+        pieceStatus.put(movement.getStartingPoint(), new Empty());
+        pieceStatus.put(movement.getDestinationPoint(), piece);
         if (previousPiece.isKing()) {
             throw new CheckMateException(turn);
         }
     }
 
-    private void movePawnOfFirstStep(Point startingPoint, Point destinationPoint, Piece piece, Turn turn) {
+    private void movePawnOfFirstStep(Movement movement, Piece piece, Turn turn) {
         if (piece.isBlackPawn()) {
-            move(startingPoint, destinationPoint, new OnceMovedBlackPawn(), turn);
+            move(movement, new OnceMovedBlackPawn(), turn);
         }
         if (piece.isWhitePawn()) {
-            move(startingPoint, destinationPoint, new OnceMovedWhitePawn(), turn);
+            move(movement, new OnceMovedWhitePawn(), turn);
         }
     }
 }

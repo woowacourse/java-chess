@@ -1,5 +1,6 @@
 package util;
 
+import dao.Movement;
 import domain.piece.Piece;
 import domain.point.Direction;
 import domain.point.Point;
@@ -13,21 +14,21 @@ public class MovablePointFinder {
     private MovablePointFinder() {
     }
 
-    public static List<Point> addPoints(Point startingPoint, Point destinationPoint, Map<Point, Piece> pieceStatus) {
+    public static List<Point> addPoints(Movement movement, Map<Point, Piece> pieceStatus) {
         final List<Point> points = new ArrayList<>();
-        Piece piece = pieceStatus.get(startingPoint);
+        Piece piece = pieceStatus.get(movement.getStartingPoint());
         Map<Direction, Integer> directionsAndRanges = piece.getMovableDirectionAndRange();
         directionsAndRanges.forEach((direction, range)
-                -> points.addAll(findPointsThroughDirection(startingPoint, destinationPoint, direction, range, pieceStatus)));
-        addPointsIfPawn(piece, startingPoint, pieceStatus, points);
+                -> points.addAll(findPointsThroughDirection(movement, direction, range, pieceStatus)));
+        addPointsIfPawn(piece, movement.getStartingPoint(), pieceStatus, points);
         return points;
     }
 
-    private static List<Point> findPointsThroughDirection(Point startingPoint, Point destinationPoint, Direction direction, Integer range, Map<Point, Piece> pieceStatus) {
+    private static List<Point> findPointsThroughDirection(Movement movement, Direction direction, Integer range, Map<Point, Piece> pieceStatus) {
         List<Point> points = new ArrayList<>();
-        Point currentPoint = startingPoint;
+        Point currentPoint = movement.getStartingPoint();
         for (int count = 0; count < range; count++) {
-            Optional<Point> point = findPointThroughDirection(currentPoint, startingPoint, destinationPoint, direction, pieceStatus);
+            Optional<Point> point = findPointThroughDirection(currentPoint, movement, direction, pieceStatus);
             if (point.isPresent()) {
                 points.add(point.get());
                 currentPoint = point.get();
@@ -36,13 +37,13 @@ public class MovablePointFinder {
         return points;
     }
 
-    private static Optional<Point> findPointThroughDirection(Point previousPoint, Point startingPoint, Point destinationPoint, Direction direction, Map<Point, Piece> pieceStatus) {
+    private static Optional<Point> findPointThroughDirection(Point previousPoint, Movement movement, Direction direction, Map<Point, Piece> pieceStatus) {
         Point point = movePointThroughDirection(previousPoint, direction);
         // 한 칸 앞으로
 
-        if (point.equals(destinationPoint)) {
-            Piece pieceOnStartingPoint = pieceStatus.get(startingPoint);
-            Piece pieceOnDestinationPoint = pieceStatus.get(destinationPoint);
+        if (point.equals(movement.getDestinationPoint())) {
+            Piece pieceOnStartingPoint = pieceStatus.get(movement.getStartingPoint());
+            Piece pieceOnDestinationPoint = pieceStatus.get(movement.getDestinationPoint());
             if (isDestinationReachable(pieceOnStartingPoint, pieceOnDestinationPoint)) {
                 return Optional.of(point);
             }
