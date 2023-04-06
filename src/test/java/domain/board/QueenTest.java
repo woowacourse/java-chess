@@ -6,7 +6,7 @@ import domain.piece.queen.BlackQueen;
 import domain.piece.queen.WhiteQueen;
 import domain.piece.rook.WhiteRook;
 import domain.point.Point;
-import domain.util.ExceptionMessages;
+import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

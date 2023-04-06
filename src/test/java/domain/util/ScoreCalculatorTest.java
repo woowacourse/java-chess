@@ -13,6 +13,7 @@ import domain.point.Point;
 import domain.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import util.ScoreCalculator;
 
 import java.util.Map;
 

@@ -1,6 +1,6 @@
 import controller.BoardController;
 import controller.ChessController;
-import controller.ChessGame;
+import dto.ChessGame;
 import dao.BoardDao;
 import domain.Turn;
 import exception.CheckMateException;
@@ -12,15 +12,14 @@ import view.ScannerInputReader;
 public class ChessApplication {
     public static void main(String[] args) {
         OutputView outputView = new OutputView();
-        InputView inputView = new InputView(new ScannerInputReader());
+        InputView inputView = new InputView();
         BoardDao boardDao = new BoardDao();
 
         ChessController chessController = new ChessController(inputView, outputView, boardDao);
         ChessGame chessGame = chessController.findChessGame();
 
         BoardController controller = new BoardController(
-                chessGame.getId(),
-                chessGame.getChessGame(),
+                chessGame,
                 boardDao,
                 outputView,
                 inputView);

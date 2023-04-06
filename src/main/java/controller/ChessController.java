@@ -1,9 +1,11 @@
 package controller;
 
+import controller.command.YNCommand;
 import dao.BoardDao;
 import dao.Movement;
 import domain.Board;
 import domain.Turn;
+import dto.ChessGame;
 import view.InputView;
 import view.OutputView;
 

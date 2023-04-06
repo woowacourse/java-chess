@@ -1,6 +1,6 @@
 package domain.point;
 
-import domain.util.ExceptionMessages;
+import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

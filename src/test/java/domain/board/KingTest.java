@@ -4,7 +4,7 @@ import domain.Board;
 import domain.piece.king.WhiteKing;
 import domain.piece.pawn.WhitePawn;
 import domain.point.Point;
-import domain.util.ExceptionMessages;
+import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package view;
+package controller.command;
 
 import dao.BoardDao;
 import dao.Movement;
@@ -6,8 +6,9 @@ import domain.Board;
 import domain.Turn;
 import domain.piece.Piece;
 import domain.point.Point;
-import domain.util.ScoreCalculator;
+import util.ScoreCalculator;
 import exception.GameFinishedException;
+import view.OutputView;
 
 import java.util.List;
 import java.util.Objects;

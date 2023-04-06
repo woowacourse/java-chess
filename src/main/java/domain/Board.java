@@ -7,9 +7,9 @@ import domain.piece.pawn.OnceMovedWhitePawn;
 import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;
-import domain.util.BoardInitializer;
-import domain.util.ExceptionMessages;
-import domain.util.MovablePointFinder;
+import util.BoardInitializer;
+import util.ExceptionMessages;
+import util.MovablePointFinder;
 import exception.CheckMateException;
 
 import java.util.ArrayList;

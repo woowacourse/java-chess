@@ -1,4 +1,4 @@
-package controller;
+package controller.command;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

@@ -1,10 +1,11 @@
 package controller;
 
+import controller.command.Command;
 import dao.BoardDao;
 import domain.Board;
 import domain.Turn;
+import dto.ChessGame;
 import exception.GameFinishedException;
-import view.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -15,9 +16,9 @@ public class BoardController {
     private final OutputView outputView;
     private final InputView inputView;
 
-    public BoardController(String id, Board board, BoardDao boardDao, OutputView outputView, InputView inputView) {
-        this.id = id;
-        this.board = board;
+    public BoardController(ChessGame chessGame, BoardDao boardDao, OutputView outputView, InputView inputView) {
+        this.id = chessGame.getId();
+        this.board = chessGame.getBoard();
         this.boardDao = boardDao;
         this.outputView = outputView;
         this.inputView = inputView;

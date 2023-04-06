@@ -1,4 +1,4 @@
-package domain.util;
+package util;
 
 import domain.Turn;
 import domain.piece.Piece;

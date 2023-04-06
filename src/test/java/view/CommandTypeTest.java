@@ -1,5 +1,6 @@
 package view;
 
+import controller.command.CommandType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

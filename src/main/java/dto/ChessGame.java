@@ -1,4 +1,4 @@
-package controller;
+package dto;
 
 import domain.Board;
 
@@ -15,7 +15,7 @@ public class ChessGame {
         return id;
     }
 
-    public Board getChessGame() {
+    public Board getBoard() {
         return board;
     }
 }

@@ -1,6 +1,6 @@
 package domain.point;
 
-import domain.util.ExceptionMessages;
+import util.ExceptionMessages;
 
 import java.util.Arrays;
 

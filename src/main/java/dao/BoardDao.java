@@ -3,7 +3,7 @@ package dao;
 import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;
-import domain.util.ExceptionMessages;
+import util.ExceptionMessages;
 
 import java.sql.*;
 import java.util.ArrayList;

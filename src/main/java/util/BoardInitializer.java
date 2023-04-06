@@ -1,4 +1,4 @@
-package domain.util;
+package util;
 
 import domain.piece.*;
 import domain.piece.bishop.BlackBishop;
