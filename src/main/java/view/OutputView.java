@@ -84,4 +84,14 @@ public class OutputView {
     public void printWinner(Turn turn) {
         System.out.printf("> 게임 종료! 승자 : %s%n", turn);
     }
+
+    public void printStartingMessage() {
+        System.out.println("> 환영합니다. 입장하실 체스 게임의 아이디를 입력해주세요.");
+        System.out.print("> ");
+    }
+
+    public void printAskingNewGame() {
+        System.out.println("> 해당 아이디로 만든 게임방이 없습니다. 새로 생성할까요? (Y/N)");
+        System.out.print("> ");
+    }
 }

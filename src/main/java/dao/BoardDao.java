@@ -5,10 +5,7 @@ import domain.point.Point;
 import domain.point.Rank;
 import domain.util.ExceptionMessages;
 
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +35,8 @@ public final class BoardDao {
                 preparedStatement.setString(1, id);
                 preparedStatement.executeUpdate();
             }
+        } catch (final SQLIntegrityConstraintViolationException e) {
+            throw new IllegalArgumentException(ExceptionMessages.ALREADY_EXISTING_ID);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

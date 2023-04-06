@@ -35,7 +35,7 @@ class KingTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b3", toPoint, WHITE));
+            assertDoesNotThrow(() -> board.move(Point.fromSymbol("b3"), Point.fromSymbol(toPoint), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -48,7 +48,7 @@ class KingTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", destination, WHITE))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("b3"), Point.fromSymbol(destination), WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -64,7 +64,7 @@ class KingTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b3", "b2", WHITE))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("b3"), Point.fromSymbol("b2"), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

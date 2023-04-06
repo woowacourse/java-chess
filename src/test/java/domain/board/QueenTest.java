@@ -36,7 +36,7 @@ class QueenTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move("b3", toPoint, BLACK));
+            assertDoesNotThrow(() -> board.move(Point.fromSymbol("b3"), Point.fromSymbol(toPoint), BLACK));
         }
 
         @Test
@@ -49,7 +49,7 @@ class QueenTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b4", "b1", WHITE))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("b4"), Point.fromSymbol("b1"), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -64,7 +64,7 @@ class QueenTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("b4", "b2", WHITE))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("b4"), Point.fromSymbol("b2"), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

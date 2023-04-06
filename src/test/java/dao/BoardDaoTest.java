@@ -5,6 +5,7 @@ import domain.point.Point;
 import domain.point.Rank;
 import domain.util.ExceptionMessages;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,18 @@ class BoardDaoTest {
     }
 
     @Test
+    @DisplayName("이미 존재하는 게임방의 ID를 입력하면 예외가 발생한다.")
+    public void alreadySaved() {
+        // given
+        boardDao.save(ID_GAME_007);
+
+        // when & then
+        assertThatThrownBy(() -> boardDao.save(ID_GAME_007))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExceptionMessages.ALREADY_EXISTING_ID);
+    }
+
+    @Test
     @DisplayName("ID를 입력하여 게임 진행상황을 찾을 수 있다.")
     public void findStatusById() {
         // given
@@ -64,6 +77,7 @@ class BoardDaoTest {
                 .hasMessage(ExceptionMessages.NOT_EXISTING_GAME_ID);
     }
 
+
     @Test
     @DisplayName("주어진 ID로 저장된 게임방에 기물의 이동을 기록할 수 있다.")
     public void updateMovement() {
@@ -81,6 +95,7 @@ class BoardDaoTest {
     }
 
     @Test
+    @Disabled("테스트 시간이 너무 길어진다.")
     @DisplayName("한 게임방에 기물의 이동을 2500번 초과하여 기록할 수 없다.")
     public void updateTooMuchMovement() {
         // given

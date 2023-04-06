@@ -120,7 +120,7 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("a1", "a3", Turn.BLACK))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("a1"), Point.fromSymbol("a3"), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
         }
@@ -135,7 +135,7 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("a3", "a2", Turn.WHITE))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("a3"), Point.fromSymbol("a2"), Turn.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_GAME_TURN);
         }
@@ -150,7 +150,7 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move("a3", "a2", Turn.BLACK))
+            assertThatThrownBy(() -> board.move(Point.fromSymbol("a3"), Point.fromSymbol("a2"), Turn.BLACK))
                     .isEqualTo(new CheckMateException(Turn.BLACK));
         }
     }
