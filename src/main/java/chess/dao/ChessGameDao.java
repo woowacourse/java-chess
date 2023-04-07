@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.chessgame.ChessGame;
+import chess.domain.chessgame.ChessGame;
 
 import java.util.Optional;
 

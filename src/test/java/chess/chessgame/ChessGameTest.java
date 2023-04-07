@@ -1,6 +1,11 @@
 package chess.chessgame;
 
-import chess.chessboard.*;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessBoardFactory;
+import chess.domain.chessgame.ChessGame;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -35,13 +40,13 @@ class ChessGameTest {
             @Test
             @DisplayName("처음에 백이 먼저 공격해야 정상적으로 동작한다")
             void it_returns_empty_piece1() {
-                assertThatNoException().isThrownBy(() -> chessGame.move(whiteSource1, whiteDestination1));
+                assertThatNoException().isThrownBy(() -> chessGame.moveWithCapture(whiteSource1, whiteDestination1));
             }
 
             @Test
             @DisplayName("처음에 흑이 먼저 공격하면 예외를 던진다")
             void it_throws_exception1() {
-                assertThatThrownBy(() -> chessGame.move(blackSource, blackDestination))
+                assertThatThrownBy(() -> chessGame.moveWithCapture(blackSource, blackDestination))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("공격 순서가 잘못되었습니다");
             }
@@ -49,26 +54,26 @@ class ChessGameTest {
             @Test
             @DisplayName("백이 공격하고 나서 흑이 공격해야 정상동작한다")
             void it_returns_empty_piece2() {
-                chessGame.move(whiteSource1, whiteDestination1);
+                chessGame.moveWithCapture(whiteSource1, whiteDestination1);
 
-                assertThatNoException().isThrownBy(() -> chessGame.move(blackSource, blackDestination));
+                assertThatNoException().isThrownBy(() -> chessGame.moveWithCapture(blackSource, blackDestination));
             }
 
             @Test
             @DisplayName("흑이 공격하고 나서 백이 공격해야 정상동작한다")
             void it_returns_pawn1() {
-                chessGame.move(whiteSource1, whiteDestination1);
-                chessGame.move(blackSource, blackDestination);
+                chessGame.moveWithCapture(whiteSource1, whiteDestination1);
+                chessGame.moveWithCapture(blackSource, blackDestination);
 
-                assertThatNoException().isThrownBy(() -> chessGame.move(whiteSource2, whiteDestination2));
+                assertThatNoException().isThrownBy(() -> chessGame.moveWithCapture(whiteSource2, whiteDestination2));
             }
 
             @Test
             @DisplayName("백이 공격하고 나서 백이 공격하면 예외를 던진다")
             void it_throws_exception2() {
-                chessGame.move(whiteSource1, whiteDestination1);
+                chessGame.moveWithCapture(whiteSource1, whiteDestination1);
 
-                assertThatThrownBy(() -> chessGame.move(whiteSource2, whiteDestination2))
+                assertThatThrownBy(() -> chessGame.moveWithCapture(whiteSource2, whiteDestination2))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("공격 순서가 잘못되었습니다");
             }

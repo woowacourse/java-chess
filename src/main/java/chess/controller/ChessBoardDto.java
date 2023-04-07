@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.chessboard.ChessBoard;
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
-import chess.piece.Piece;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ public class ChessBoardDto {
         this.pieceDtos = pieceDtos;
     }
 
-    public static ChessBoardDto of(ChessBoard chessBoard) {
+    public static ChessBoardDto from(ChessBoard chessBoard) {
         final Map<Position, Piece> chessBoardPieces = chessBoard.getPieces();
         final List<List<PieceDto>> pieceDtos = initChessBoard();
 

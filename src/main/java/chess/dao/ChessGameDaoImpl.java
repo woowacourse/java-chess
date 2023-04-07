@@ -1,10 +1,14 @@
 package chess.dao;
 
-import chess.chessboard.*;
-import chess.chessgame.ChessGame;
-import chess.piece.Piece;
-import chess.piece.PieceFactory;
-import chess.piece.PieceType;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessgame.ChessGame;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.domain.strategy.PieceType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +28,7 @@ public class ChessGameDaoImpl implements ChessGameDao {
              final PreparedStatement psForChessGame = connection.prepareStatement(chessGameQuery);
              final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
-            final Side turn = chessGame.getTurn();
+            final Color turn = chessGame.getTurn();
             final ChessBoard chessBoard = chessGame.getChessBoard();
             final Map<Position, Piece> pieces = chessBoard.getPieces();
 
@@ -84,25 +88,25 @@ public class ChessGameDaoImpl implements ChessGameDao {
              final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
             final ResultSet resultSetForChessGame = psForChessGame.executeQuery();
-            Side turn = null;
+            Color turn = null;
 
             if (resultSetForChessGame.next()) {
-                turn = Side.valueOf(resultSetForChessGame.getString("turn"));
+                turn = Color.valueOf(resultSetForChessGame.getString("turn"));
             }
             Map<Position, Piece> map = new HashMap<>();
             final ResultSet resultSetForPieces = psForPiece.executeQuery();
             while (resultSetForPieces.next()) {
-                final Side side = Side.valueOf(resultSetForPieces.getString("side"));
+                final Color color = Color.valueOf(resultSetForPieces.getString("color"));
                 final PieceType type = PieceType.valueOf(resultSetForPieces.getString("type"));
                 final File file = File.valueOf(resultSetForPieces.getString("file"));
                 final Rank rank = Rank.valueOf(resultSetForPieces.getString("rank"));
                 final Position position = Position.of(rank, file);
-                map.put(position, PieceFactory.generate(type, side));
+                map.put(position, PieceFactory.generate(type, color));
             }
             if (turn == null) {
                 return Optional.empty();
             }
-            return Optional.of(new ChessGame(turn, new ChessBoard(map)));
+            return Optional.of(new ChessGame(new ChessBoard(map)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

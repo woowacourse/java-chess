@@ -1,8 +1,8 @@
 package chess;
 
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class PositionFixture {
     public static final Position ONE_B = Position.of(Rank.ONE, File.B);

@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.domain.piece.*;
+
 public enum PieceFixture {
     ROOK(Rook.class),
     KNIGHT(Knight.class),

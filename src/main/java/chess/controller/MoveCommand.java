@@ -1,39 +1,22 @@
 package chess.controller;
 
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.List;
-import java.util.Objects;
 
-public class MoveCommand implements Command {
+public class MoveCommand {
 
+    private final Command command;
     private final List<String> options;
 
-    private MoveCommand(final List<String> options) {
-        this.options = options;
+    public MoveCommand(final Command command) {
+        this.command = command;
+        this.options = command.getOptions();
     }
 
-    public static Command from(final List<String> commandWithOptions) {
-        final String command = commandWithOptions.get(0);
-        validateCommandIsMove(command);
-
-        final int optionBeginIndex = 1;
-        final int optionEndIndex = commandWithOptions.size();
-
-        final List<String> options = commandWithOptions.subList(optionBeginIndex, optionEndIndex);
-
-        return new MoveCommand(options);
-    }
-
-    private static void validateCommandIsMove(final String command) {
-        if (!Objects.equals(command, "move")) {
-            throw new IllegalArgumentException("잘못된 명령어입니다.");
-        }
-    }
-
-    public Position getSourceSquare() {
+    public Position getSourcePosition() {
         return Position.of(getSourceRank(), getSourceFile());
     }
 
@@ -51,7 +34,7 @@ public class MoveCommand implements Command {
         return options.get(0);
     }
 
-    public Position getDestinationSquare() {
+    public Position getDestinationPosition() {
         return Position.of(getDestinationRank(), getDestinationFile());
     }
 
@@ -67,10 +50,5 @@ public class MoveCommand implements Command {
 
     private String getSecondOption() {
         return options.get(1);
-    }
-
-    @Override
-    public CommandType getCommandType() {
-        return CommandType.MOVE;
     }
 }

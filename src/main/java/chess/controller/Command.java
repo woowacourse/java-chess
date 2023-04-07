@@ -1,20 +1,28 @@
 package chess.controller;
 
+import java.util.Collections;
 import java.util.List;
 
-public interface Command {
+public class Command {
 
-    final int COMMAND_INDEX = 0;
-    Command EMPTY_COMMAND = () -> CommandType.EMPTY;
+    static final int COMMAND_INDEX = 0;
+    static final Command EMPTY_COMMAND = new Command(CommandType.EMPTY, Collections.emptyList());
 
-    static Command from(List<String> commandWithOptions) {
+    private final CommandType commandType;
+
+    private final List<String> options;
+
+    public Command(final CommandType commandType, List<String> options) {
+        this.commandType = commandType;
+        this.options = options;
+    }
+
+    public static Command from(List<String> commandWithOptions) {
         validateLengthNotZero(commandWithOptions);
 
-        if (commandWithOptions.size() == 1) {
-            return new OptionLessCommand(commandWithOptions);
-        }
+        final CommandType commandType = CommandType.from(commandWithOptions);
 
-        return MoveCommand.from(commandWithOptions);
+        return new Command(commandType, commandWithOptions.subList(1, commandWithOptions.size()));
     }
 
     private static void validateLengthNotZero(List<String> commandWithOptions) {
@@ -23,5 +31,23 @@ public interface Command {
         }
     }
 
-    CommandType getCommandType();
+    public boolean isStart() {
+        return commandType == CommandType.START;
+    }
+
+    public boolean isMove() {
+        return commandType == CommandType.MOVE;
+    }
+
+    public boolean isStatus() {
+        return commandType == CommandType.STATUS;
+    }
+
+    public boolean isEnd() {
+        return commandType == CommandType.END;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
 }

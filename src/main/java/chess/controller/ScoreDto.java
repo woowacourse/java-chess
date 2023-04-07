@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.chessgame.PlayerScore;
+import chess.domain.chessgame.PlayerScore;
 
 public class ScoreDto {
 

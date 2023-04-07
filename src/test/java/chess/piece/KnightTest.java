@@ -1,9 +1,12 @@
 package chess.piece;
 
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
-import chess.chessboard.Side;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Queen;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,7 @@ public class KnightTest {
             @Test
             @DisplayName("해당 진영의 Knight를 2개 생성한다")
             void it_returns_knights() {
-                assertThat(Knight.getKnightsOf(Side.BLACK)).hasSize(2);
+                assertThat(Knight.getKnightsOf(Color.BLACK)).hasSize(2);
             }
         }
     }
@@ -31,15 +34,15 @@ public class KnightTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Knight whiteKnight = Knight.getKnightsOf(Side.WHITE)
+        Knight whiteKnight = Knight.getKnightsOf(Color.WHITE)
                                    .get(0);
         Position fromPosition = Position.of(Rank.FOUR, File.D);
         Position movablePosition1 = Position.of(Rank.TWO, File.C);
         Position movablePosition2 = Position.of(Rank.FIVE, File.F);
         Position unMovablePosition = Position.of(Rank.TWO, File.B);
-        Knight whiteKnight2 = Knight.getKnightsOf(Side.WHITE)
+        Knight whiteKnight2 = Knight.getKnightsOf(Color.WHITE)
                                     .get(1);
-        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
+        Queen blackQueen = Queen.getQueenOf(Color.BLACK);
 
         @Nested
         @DisplayName("갈 수 있는 위치에")

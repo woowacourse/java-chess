@@ -9,7 +9,7 @@ CREATE TABLE pieces
 (
     `id`            INT         NOT NULL AUTO_INCREMENT,
     `chess_game_id` INT         NOT NULL,
-    `side`          VARCHAR(20) NOT NULL,
+    `color`         VARCHAR(20) NOT NULL,
     `type`          VARCHAR(20) NOT NULL,
     `file`          VARCHAR(20) NOT NULL,
     `rank`          VARCHAR(20) NOT NULL,

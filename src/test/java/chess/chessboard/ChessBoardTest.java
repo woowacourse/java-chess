@@ -1,6 +1,12 @@
 package chess.chessboard;
 
-import chess.piece.*;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessBoardFactory;
+import chess.domain.piece.*;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.piece.PieceFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -149,7 +155,7 @@ class ChessBoardTest {
             void it_returns_true1() {
                 Position from = Position.of(Rank.SEVEN, File.A);
                 Position to = Position.of(Rank.FIVE, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Color.BLACK)
                                      .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -162,9 +168,9 @@ class ChessBoardTest {
                 Position from = Position.of(Rank.SEVEN, File.A);
                 Position middle = Position.of(Rank.SIX, File.A);
                 Position to = Position.of(Rank.FIVE, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Color.BLACK)
                                      .get(0));
-                pieces.put(middle, Queen.getQueenOf(Side.WHITE));
+                pieces.put(middle, Queen.getQueenOf(Color.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -177,8 +183,8 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.SIX, File.A);
-                final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                final Queen expected = Queen.getQueenOf(Color.WHITE);
+                pieces.put(from, Pawn.getPawnsOf(Color.BLACK)
                                      .get(0));
                 pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
@@ -191,9 +197,9 @@ class ChessBoardTest {
             void it_returns_false2() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.SIX, File.A);
-                pieces.put(from, Pawn.getPawnsOf(Side.BLACK)
+                pieces.put(from, Pawn.getPawnsOf(Color.BLACK)
                                      .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Color.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -214,7 +220,7 @@ class ChessBoardTest {
             void it_returns_true() {
                 Position from = Position.of(Rank.THREE, File.E);
                 Position to = Position.of(Rank.SEVEN, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Color.BLACK)
                                        .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -227,9 +233,9 @@ class ChessBoardTest {
                 Position from = Position.of(Rank.THREE, File.E);
                 Position middle = Position.of(Rank.FIVE, File.C);
                 Position to = Position.of(Rank.SEVEN, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Color.BLACK)
                                        .get(0));
-                pieces.put(middle, Queen.getQueenOf(Side.WHITE));
+                pieces.put(middle, Queen.getQueenOf(Color.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -242,9 +248,9 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.SIX, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Color.BLACK)
                                        .get(0));
-                final Queen expected = Queen.getQueenOf(Side.WHITE);
+                final Queen expected = Queen.getQueenOf(Color.WHITE);
                 pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -258,9 +264,9 @@ class ChessBoardTest {
             void it_returns_false2() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.SIX, File.A);
-                pieces.put(from, Bishop.getBishopsOf(Side.BLACK)
+                pieces.put(from, Bishop.getBishopsOf(Color.BLACK)
                                        .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Color.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -278,7 +284,7 @@ class ChessBoardTest {
             void it_returns_true() {
                 Position from = Position.of(Rank.THREE, File.E);
                 Position to = Position.of(Rank.THREE, File.A);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Color.BLACK)
                                      .get(0));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -291,9 +297,9 @@ class ChessBoardTest {
                 Position from = Position.of(Rank.THREE, File.E);
                 Position middle = Position.of(Rank.THREE, File.B);
                 Position to = Position.of(Rank.THREE, File.A);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Color.BLACK)
                                      .get(0));
-                pieces.put(middle, Queen.getQueenOf(Side.WHITE));
+                pieces.put(middle, Queen.getQueenOf(Color.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -306,9 +312,9 @@ class ChessBoardTest {
             void it_returns_true2() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.SIX, File.B);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Color.BLACK)
                                      .get(0));
-                final Queen expected = Queen.getQueenOf(Side.WHITE);
+                final Queen expected = Queen.getQueenOf(Color.WHITE);
                 pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -322,9 +328,9 @@ class ChessBoardTest {
             void it_returns_false2() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.FIVE, File.B);
-                pieces.put(from, Rook.getRooksOf(Side.BLACK)
+                pieces.put(from, Rook.getRooksOf(Color.BLACK)
                                      .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Color.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -342,8 +348,8 @@ class ChessBoardTest {
             void it_returns_true() {
                 Position from = Position.of(Rank.THREE, File.E);
                 Position to = Position.of(Rank.TWO, File.G);
-                final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
+                final Queen expected = Queen.getQueenOf(Color.WHITE);
+                pieces.put(from, Knight.getKnightsOf(Color.BLACK)
                                        .get(0));
                 pieces.put(to, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
@@ -358,9 +364,9 @@ class ChessBoardTest {
             void it_returns_false() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.FIVE, File.C);
-                pieces.put(from, Knight.getKnightsOf(Side.BLACK)
+                pieces.put(from, Knight.getKnightsOf(Color.BLACK)
                                        .get(0));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                pieces.put(to, Queen.getQueenOf(Color.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -380,7 +386,7 @@ class ChessBoardTest {
                 Position to1 = Position.of(Rank.THREE, File.A);
                 Position to2 = Position.of(Rank.SEVEN, File.A);
 
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                pieces.put(from, Queen.getQueenOf(Color.BLACK));
 
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -397,9 +403,9 @@ class ChessBoardTest {
                 Position middle2 = Position.of(Rank.FIVE, File.C);
                 Position to1 = Position.of(Rank.THREE, File.A);
                 Position to2 = Position.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
-                pieces.put(middle1, Queen.getQueenOf(Side.WHITE));
-                pieces.put(middle2, Queen.getQueenOf(Side.WHITE));
+                pieces.put(from, Queen.getQueenOf(Color.BLACK));
+                pieces.put(middle1, Queen.getQueenOf(Color.WHITE));
+                pieces.put(middle2, Queen.getQueenOf(Color.WHITE));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to1))
@@ -416,8 +422,8 @@ class ChessBoardTest {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to1 = Position.of(Rank.THREE, File.F);
                 Position to2 = Position.of(Rank.SEVEN, File.A);
-                final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
+                final Queen expected = Queen.getQueenOf(Color.WHITE);
+                pieces.put(from, Queen.getQueenOf(Color.BLACK));
                 pieces.put(to1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -432,9 +438,9 @@ class ChessBoardTest {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to1 = Position.of(Rank.THREE, File.A);
                 Position to2 = Position.of(Rank.SEVEN, File.A);
-                pieces.put(from, Queen.getQueenOf(Side.BLACK));
-                pieces.put(to1, King.getKingOf(Side.BLACK));
-                pieces.put(to2, King.getKingOf(Side.BLACK));
+                pieces.put(from, Queen.getQueenOf(Color.BLACK));
+                pieces.put(to1, King.getKingOf(Color.BLACK));
+                pieces.put(to2, King.getKingOf(Color.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to1))
@@ -456,8 +462,8 @@ class ChessBoardTest {
                 Position from = Position.of(Rank.THREE, File.E);
                 Position to1 = Position.of(Rank.THREE, File.F);
                 Position to2 = Position.of(Rank.FOUR, File.D);
-                final Queen expected = Queen.getQueenOf(Side.WHITE);
-                pieces.put(from, King.getKingOf(Side.BLACK));
+                final Queen expected = Queen.getQueenOf(Color.WHITE);
+                pieces.put(from, King.getKingOf(Color.BLACK));
                 pieces.put(to1, expected);
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
@@ -471,8 +477,8 @@ class ChessBoardTest {
             void it_returns_false() {
                 Position from = Position.of(Rank.SEVEN, File.B);
                 Position to = Position.of(Rank.SIX, File.A);
-                pieces.put(from, King.getKingOf(Side.BLACK));
-                pieces.put(to, Queen.getQueenOf(Side.BLACK));
+                pieces.put(from, King.getKingOf(Color.BLACK));
+                pieces.put(to, Queen.getQueenOf(Color.BLACK));
                 ChessBoard chessBoard = new ChessBoard(pieces);
 
                 assertThatThrownBy(() -> chessBoard.moveWithCapture(from, to))
@@ -495,18 +501,18 @@ class ChessBoardTest {
         @Test
         @DisplayName("Black 진영을 입력하면 해당 진영의 모든 기물을 반환한다")
         void it_returns_black_pieces() {
-            assertThat(chessBoard.getPieces(Side.BLACK)
+            assertThat(chessBoard.getPieces(Color.BLACK)
                                  .values())
-                    .allMatch(piece -> piece.isSideOf(Side.BLACK))
+                    .allMatch(piece -> piece.isSideOf(Color.BLACK))
                     .hasSize(16);
         }
 
         @Test
         @DisplayName("White 진영을 입력하면 해당 진영의 모든 기물을 반환한다")
         void it_returns_white_pieces() {
-            assertThat(chessBoard.getPieces(Side.WHITE)
+            assertThat(chessBoard.getPieces(Color.WHITE)
                                  .values())
-                    .allMatch(piece -> piece.isSideOf(Side.WHITE))
+                    .allMatch(piece -> piece.isSideOf(Color.WHITE))
                     .hasSize(16);
         }
     }

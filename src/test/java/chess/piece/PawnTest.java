@@ -1,9 +1,12 @@
 package chess.piece;
 
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
-import chess.chessboard.Side;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,7 @@ class PawnTest {
             @Test
             @DisplayName("해당 진영의 Pawn을 8개 생성한다")
             void it_returns_pawns() {
-                assertThat(Pawn.getPawnsOf(Side.BLACK)).hasSize(8);
+                assertThat(Pawn.getPawnsOf(Color.BLACK)).hasSize(8);
             }
         }
     }
@@ -31,10 +34,10 @@ class PawnTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Pawn whitePawn = Pawn.getPawnsOf(Side.WHITE)
+        Pawn whitePawn = Pawn.getPawnsOf(Color.WHITE)
                              .get(0);
-        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
-        Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
+        Queen blackQueen = Queen.getQueenOf(Color.BLACK);
+        Queen whiteQueen = Queen.getQueenOf(Color.WHITE);
 
         @Nested
         @DisplayName("움직인적 없는 Pawn에 대해")

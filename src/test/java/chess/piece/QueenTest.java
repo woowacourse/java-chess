@@ -1,9 +1,12 @@
 package chess.piece;
 
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
-import chess.chessboard.Side;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Queen;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,8 +26,8 @@ public class QueenTest {
             @Test
             @DisplayName("해당 진영의 Queen을 1개 생성한다")
             void it_returns_queen() {
-                Queen queen = Queen.getQueenOf(Side.BLACK);
-                assertThat(queen.getSide()).isEqualTo(Side.BLACK);
+                Queen queen = Queen.getQueenOf(Color.BLACK);
+                assertThat(queen.getSide()).isEqualTo(Color.BLACK);
             }
         }
     }
@@ -32,14 +35,14 @@ public class QueenTest {
     @Nested
     @DisplayName("isMovable 메서드는")
     class isMovable {
-        Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
+        Queen whiteQueen = Queen.getQueenOf(Color.WHITE);
         Position fromPosition = Position.of(Rank.FOUR, File.D);
         Position movablePosition1 = Position.of(Rank.ONE, File.G);
         Position movablePosition2 = Position.of(Rank.FOUR, File.H);
         Position unMovablePosition = Position.of(Rank.THREE, File.B);
-        Bishop whiteBishop = Bishop.getBishopsOf(Side.WHITE)
+        Bishop whiteBishop = Bishop.getBishopsOf(Color.WHITE)
                                    .get(0);
-        Queen blackQueen = Queen.getQueenOf(Side.BLACK);
+        Queen blackQueen = Queen.getQueenOf(Color.BLACK);
 
         @Nested
         @DisplayName("이동할 수 있는 위치에 아군 기물이 있지 않다면")

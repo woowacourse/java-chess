@@ -1,7 +1,6 @@
 package chess.controller;
 
-import chess.chessboard.Side;
-import chess.piece.*;
+import chess.domain.piece.*;
 
 public class PieceDto {
     private final String outputFormat;
@@ -32,7 +31,7 @@ public class PieceDto {
             outputFormat = "k";
         }
 
-        if (piece.isSideOf(Side.BLACK)) {
+        if (piece.isSideOf(Color.BLACK)) {
             outputFormat = outputFormat.toUpperCase();
         }
 

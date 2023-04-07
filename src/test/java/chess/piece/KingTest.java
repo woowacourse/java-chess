@@ -1,9 +1,12 @@
 package chess.piece;
 
-import chess.chessboard.File;
-import chess.chessboard.Position;
-import chess.chessboard.Rank;
-import chess.chessboard.Side;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Queen;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,8 +26,8 @@ public class KingTest {
             @Test
             @DisplayName("해당 진영의 King을 1개 생성한다")
             void it_returns_king() {
-                King king = King.getKingOf(Side.BLACK);
-                assertThat(king.getSide()).isEqualTo(Side.BLACK);
+                King king = King.getKingOf(Color.BLACK);
+                assertThat(king.getSide()).isEqualTo(Color.BLACK);
             }
         }
     }
@@ -35,15 +38,15 @@ public class KingTest {
         @Nested
         @DisplayName("자신의 위치와 이동하려는 위치, 해당 위치에 존재하는 기물이 주어지면")
         class given_another_piece {
-            King whiteKing = King.getKingOf(Side.WHITE);
+            King whiteKing = King.getKingOf(Color.WHITE);
             Position from = Position.of(Rank.FOUR, File.D);
             Position movablePosition1 = Position.of(Rank.FIVE, File.D);
             Position movablePosition2 = Position.of(Rank.FIVE, File.E);
             Position movablePosition3 = Position.of(Rank.FOUR, File.C);
             Position movablePosition4 = Position.of(Rank.THREE, File.D);
             Position movablePosition5 = Position.of(Rank.THREE, File.E);
-            Queen whiteQueen = Queen.getQueenOf(Side.WHITE);
-            Queen blackQueen = Queen.getQueenOf(Side.BLACK);
+            Queen whiteQueen = Queen.getQueenOf(Color.WHITE);
+            Queen blackQueen = Queen.getQueenOf(Color.BLACK);
 
             @Test
             @DisplayName("갈 수 있고 해당 위치의 기물이 아군 기물이 아닌 경우 true를 반환한다")

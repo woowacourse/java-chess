@@ -1,8 +1,14 @@
 package chess.chessgame;
 
-import chess.chessboard.*;
-import chess.piece.Pawn;
-import chess.piece.Piece;
+import chess.domain.chessboard.ChessBoard;
+import chess.domain.chessboard.ChessBoardFactory;
+import chess.domain.chessgame.PlayerScore;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,14 +33,14 @@ class PlayerScoreTest {
         @Test
         @DisplayName("각 기물별 점수를 더해서 PlayerScore를 반환한다")
         void it_returns_PlayerScore1() {
-            final PlayerScore playerScore = PlayerScore.from(chessBoard.getPieces(Side.BLACK));
+            final PlayerScore playerScore = PlayerScore.from(chessBoard.getPieces(Color.BLACK));
             assertThat(playerScore).isEqualTo(new PlayerScore(38));
         }
 
         @Test
         @DisplayName("Pawn이 한 세로줄에 여러개 있으면 하나당 0.5점으로 점수를 계산해서 PlayerScore를 반환한다")
         void it_returns_PlayerScore2() {
-            final List<Pawn> pawns = Pawn.getPawnsOf(Side.BLACK);
+            final List<Pawn> pawns = Pawn.getPawnsOf(Color.BLACK);
             final Pawn pawn1 = pawns.get(0);
             final Pawn pawn2 = pawns.get(1);
             final Position position1 = Position.of(Rank.TWO, File.B);
@@ -42,7 +48,7 @@ class PlayerScoreTest {
             final Map<Position, Piece> pieces = Map.of(position1, pawn1, position2, pawn2);
             chessBoard = new ChessBoard(pieces);
 
-            final PlayerScore actual = PlayerScore.from(chessBoard.getPieces(Side.BLACK));
+            final PlayerScore actual = PlayerScore.from(chessBoard.getPieces(Color.BLACK));
 
             assertThat(actual).isEqualTo(new PlayerScore(1));
         }
