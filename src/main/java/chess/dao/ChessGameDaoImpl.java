@@ -8,7 +8,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.strategy.PieceType;
+import chess.domain.strategy.piecemovestrategy.PieceType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

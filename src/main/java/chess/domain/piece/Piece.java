@@ -1,45 +1,17 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.strategy.PieceType;
+import chess.domain.strategy.piecemovestrategy.PieceType;
 
-public abstract class Piece {
+public interface Piece {
 
-    private final Color color;
-    private final PieceType pieceType;
+    void move(Position from, Position to, Piece target);
 
-    Piece(final Color color, PieceType pieceType) {
-        this.color = color;
-        this.pieceType = pieceType;
-    }
+    Position getPosition();
 
-    protected boolean isOppositeSide(final Piece piece) {
-        return isNotSameSide(piece) && !piece.isEmpty();
-    }
+    Color getColor();
 
-    protected boolean isNotSameSide(final Piece piece) {
-        return this.color != piece.color;
-    }
+    PieceType getPieceType();
 
-    public boolean isSideOf(final Color color) {
-        return this.color == color;
-    }
-
-    protected boolean isEmpty() {
-        return this.color == Color.EMPTY;
-    }
-
-    abstract public boolean isValidMove(Position from, Position to, Piece piece);
-
-    public Color getSide() {
-        return color;
-    }
-
-    public PieceType getPieceType() {
-        return pieceType;
-    }
-
-    public double getScore() {
-        return pieceType.getScore();
-    }
+    double getScore();
 }

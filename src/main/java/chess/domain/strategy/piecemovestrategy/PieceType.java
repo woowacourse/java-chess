@@ -1,4 +1,4 @@
-package chess.domain.strategy;
+package chess.domain.strategy.piecemovestrategy;
 
 import chess.domain.piece.Piece;
 

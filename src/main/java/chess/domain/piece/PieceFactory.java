@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.strategy.PieceType;
+import chess.domain.strategy.piecemovestrategy.PieceType;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class PieceFactory {
         factoryMap.put(PieceType.ROOK, Rook::new);
         factoryMap.put(PieceType.BISHOP, Bishop::new);
         factoryMap.put(PieceType.KNIGHT, Knight::new);
-        factoryMap.put(PieceType.PAWN, Pawn::new);
+        factoryMap.put(PieceType.PAWN, t -> new Pawn(position, pawnMoveStrategy));
         factoryMap.put(PieceType.EMPTY, ignored -> EmptyPiece.getInstance());
     }
 

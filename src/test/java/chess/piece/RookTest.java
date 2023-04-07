@@ -1,9 +1,6 @@
 package chess.piece;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -11,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Rook 클래스")

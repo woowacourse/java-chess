@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.piece.Color;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,11 +23,8 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public boolean isBackOf(final Position other, final Color color) {
-        if (color == Color.WHITE) {
-            return other.rank.isBiggerThan(this.rank);
-        }
-        return this.rank.isBiggerThan(other.rank);
+    public boolean isAtLowRank(final Position other) {
+        return rank.isSmallerThan(other.rank);
     }
 
     public List<Position> positionsOfPath(Position to) {

@@ -1,7 +1,6 @@
 package chess;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 
 public class PieceFixture {

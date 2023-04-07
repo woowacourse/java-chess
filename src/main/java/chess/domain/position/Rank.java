@@ -58,8 +58,8 @@ public enum Rank {
         return Math.abs(position - other.position);
     }
 
-    public boolean isBiggerThan(final Rank other) {
-        return this.position > other.position;
+    public boolean isSmallerThan(final Rank other) {
+        return this.position < other.position;
     }
 
     public int getPosition() {

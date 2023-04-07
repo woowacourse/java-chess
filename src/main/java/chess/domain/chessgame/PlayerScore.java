@@ -3,7 +3,7 @@ package chess.domain.chessgame;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.strategy.PieceType;
+import chess.domain.strategy.piecemovestrategy.PieceType;
 
 import java.util.Collection;
 import java.util.Map;
