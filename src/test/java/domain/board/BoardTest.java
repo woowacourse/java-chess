@@ -1,9 +1,11 @@
 package domain.board;
 
+import dao.Movement;
 import domain.Board;
 import domain.Turn;
 import domain.piece.Empty;
 import domain.piece.Piece;
+import domain.piece.Textures;
 import domain.piece.bishop.BlackBishop;
 import domain.piece.bishop.WhiteBishop;
 import domain.piece.king.BlackKing;
@@ -120,7 +122,7 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(Point.fromSymbol("a1"), Point.fromSymbol("a3"), Turn.BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a1"), Point.fromSymbol("a3")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
         }
@@ -135,7 +137,7 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(Point.fromSymbol("a3"), Point.fromSymbol("a2"), Turn.WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a2")), Turn.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_GAME_TURN);
         }
@@ -150,7 +152,7 @@ class BoardTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(Point.fromSymbol("a3"), Point.fromSymbol("a2"), Turn.BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a2")), Turn.BLACK))
                     .isEqualTo(new CheckMateException(Turn.BLACK));
         }
     }

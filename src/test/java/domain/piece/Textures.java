@@ -1,8 +1,6 @@
-package domain.board;
+package domain.piece;
 
 import domain.Board;
-import domain.piece.Empty;
-import domain.piece.Piece;
 import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;

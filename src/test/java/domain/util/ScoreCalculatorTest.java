@@ -2,7 +2,7 @@ package domain.util;
 
 import domain.Board;
 import domain.Turn;
-import domain.board.Textures;
+import domain.piece.Textures;
 import domain.piece.bishop.WhiteBishop;
 import domain.piece.pawn.BlackPawn;
 import domain.piece.pawn.WhitePawn;

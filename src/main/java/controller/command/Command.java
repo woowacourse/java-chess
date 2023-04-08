@@ -30,7 +30,7 @@ public class Command {
         if (commandType.isMoving()) {
             String[] split = value.split(" ");
             Movement movement = new Movement(Point.fromSymbol(split[1]), Point.fromSymbol(split[2]));
-            board.move(movement.getStartingPoint(), movement.getDestinationPoint(), turn);
+            board.move(movement, turn);
             boardDao.updateMovement(id, movement);
         }
 

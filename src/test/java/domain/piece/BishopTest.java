@@ -1,55 +1,56 @@
-package domain.board;
+package domain.piece;
 
+import dao.Movement;
 import domain.Board;
+import domain.Turn;
+import domain.piece.bishop.BlackBishop;
+import domain.piece.bishop.WhiteBishop;
 import domain.piece.pawn.WhitePawn;
 import domain.piece.rook.BlackRook;
-import domain.piece.rook.WhiteRook;
 import domain.point.Point;
-import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import util.ExceptionMessages;
 
 import java.util.Map;
 
-import static domain.Turn.BLACK;
-import static domain.Turn.WHITE;
-import static domain.point.File.B;
+import static domain.point.File.*;
 import static domain.point.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class RookTest {
+class BishopTest {
     @Nested
-    @DisplayName("룩이 이동하는 경우")
+    @DisplayName("비숍이 이동하는 경우")
     class moveCase {
         @ParameterizedTest(name = "{displayName} - {0}")
-        @ValueSource(strings = {"b4", "b5", "c3", "b2", "b1", "a3"})
-        @DisplayName("주위에 어떤 장기말도 없을 때, 룩은 가로와 세로 두 방향으로 무한히 이동할 수 있다.")
+        @ValueSource(strings = {"b4", "a5", "b2", "a1", "d4", "e5", "d2", "e1"})
+        @DisplayName("주위에 어떤 장기말도 없을 때, 룩은 양 대각선 방향으로 무한히 이동할 수 있다.")
         void rookFirstMove(String toPoint) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, THREE), new WhiteRook()
+                    new Point(C, THREE), new WhiteBishop()
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(Point.fromSymbol("b3"), Point.fromSymbol(toPoint), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(new Point(C, THREE), Point.fromSymbol(toPoint)), Turn.WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
-        @CsvSource(value = {"a1,왼쪽 아래 이동 불가", "c1,오른쪽 아래 이동 불가", "c3,오른쪽 위 이동 불가", "a3,왼쪽 위 이동 불가"})
-        @DisplayName("룩을 대각선 방향으로 이동하려는 경우 예외가 발생한다.")
+        @CsvSource(value = {"b1,아래 이동 불가", "c2,오른쪽 이동 불가", "b3,위 이동 불가", "a2,왼쪽 이동 불가"})
+        @DisplayName("룩을 가로세로 방향으로 이동하려는 경우 예외가 발생한다.")
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhiteRook()
+                    new Point(B, TWO), new WhiteBishop()
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(Point.fromSymbol("b2"), Point.fromSymbol(destination), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), Turn.WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -60,12 +61,13 @@ class RookTest {
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhiteRook(),
+                    new Point(B, TWO), new WhitePawn(),
+                    new Point(A, THREE), new BlackBishop(),
                     new Point(B, THREE), new BlackRook()
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(Point.fromSymbol("b3"), Point.fromSymbol("b1"), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -75,12 +77,12 @@ class RookTest {
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhitePawn(),
-                    new Point(B, FOUR), new WhiteRook()
+                    new Point(C, ONE), new BlackRook(),
+                    new Point(A, THREE), new BlackBishop()
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(Point.fromSymbol("b4"), Point.fromSymbol("b2"), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
