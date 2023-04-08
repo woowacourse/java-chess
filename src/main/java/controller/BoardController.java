@@ -4,7 +4,6 @@ import controller.command.Command;
 import controller.command.CommandType;
 import dao.BoardDao;
 import dao.Movement;
-import domain.Board;
 import domain.Turn;
 import domain.piece.Piece;
 import domain.point.Point;
@@ -19,15 +18,13 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class BoardController {
-    private final String id;
-    private final Board board;
+    private final ChessGame chessGame;
     private final BoardDao boardDao;
     private final OutputView outputView;
     private final InputView inputView;
 
     public BoardController(ChessGame chessGame, BoardDao boardDao, OutputView outputView, InputView inputView) {
-        this.id = chessGame.getId();
-        this.board = chessGame.getBoard();
+        this.chessGame = chessGame;
         this.boardDao = boardDao;
         this.outputView = outputView;
         this.inputView = inputView;
@@ -71,7 +68,7 @@ public class BoardController {
     }
 
     private void start() {
-        outputView.printStatus(board.findCurrentStatus());
+        outputView.printStatus(chessGame.findCurrentStatus());
     }
 
     private void end() {
@@ -81,13 +78,13 @@ public class BoardController {
     private void move(Command command, Turn turn) {
         String[] split = command.getValue().split(" ");
         Movement movement = new Movement(Point.fromSymbol(split[1]), Point.fromSymbol(split[2]));
-        board.move(movement, turn);
-        boardDao.updateMovement(id, movement);
+        chessGame.move(movement, turn);
+        boardDao.updateMovement(chessGame.getId(), movement);
         start();
     }
 
     private void status() {
-        List<List<Piece>> currentStatus = board.findCurrentStatus();
+        List<List<Piece>> currentStatus = chessGame.findCurrentStatus();
         float blackScore = ScoreCalculator.calculate(currentStatus, Turn.BLACK);
         float whiteScore = ScoreCalculator.calculate(currentStatus, Turn.WHITE);
         outputView.printScoreStatus(blackScore, whiteScore);
