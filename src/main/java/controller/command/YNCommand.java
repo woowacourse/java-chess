@@ -19,8 +19,4 @@ public enum YNCommand {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효한 커맨드 입력이 아닙니다."));
     }
-
-    public boolean isYes() {
-        return this == YES;
-    }
 }

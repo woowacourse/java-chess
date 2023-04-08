@@ -23,22 +23,6 @@ public enum CommandType {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 커멘드 입력입니다."));
     }
 
-    public boolean isEnd() {
-        return this == END;
-    }
-
-    public boolean isMoving() {
-        return this == MOVE;
-    }
-
-    public boolean isStart() {
-        return this == START;
-    }
-
-    public boolean isStatus() {
-        return this == STATUS;
-    }
-
     private static class Constants {
         private static final String MOVE_COMMAND_REGEX = "^move [a-z][0-9] [a-z][0-9]$";
     }
