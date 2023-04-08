@@ -1,7 +1,5 @@
 package chess.domain.strategy.piecemovestrategy;
 
-import chess.domain.piece.Piece;
-
 public enum PieceType {
 
     PAWN(1),
@@ -13,20 +11,18 @@ public enum PieceType {
     EMPTY(0),
     ;
 
-    public static final int ALL_KING_COUNT = 2;
-
     private final double score;
 
     PieceType(final double score) {
         this.score = score;
     }
 
-    public static boolean isKing(final Piece piece) {
-        return piece.getPieceType() == KING;
+    public static boolean isKing(final PieceType pieceType) {
+        return pieceType == KING;
     }
 
-    public static boolean isPawn(final Piece piece) {
-        return piece.getPieceType() == PAWN;
+    public static boolean isPawn(final PieceType pieceType) {
+        return pieceType == PAWN;
     }
 
     public double getScore() {

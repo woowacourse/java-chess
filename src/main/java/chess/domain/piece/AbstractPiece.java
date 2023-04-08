@@ -30,12 +30,17 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public boolean isFriend(final Piece target) {
-        return color == target.getColor();
+        return isColorMatch(target.getColor());
     }
 
     @Override
     public boolean isEnemy(final Piece target) {
         return color.isEnemyColor(target.getColor());
+    }
+
+    @Override
+    public boolean isColorMatch(final Color color) {
+        return this.color == color;
     }
 
     @Override

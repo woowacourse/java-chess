@@ -6,10 +6,11 @@ import chess.domain.position.Position;
 import chess.domain.strategy.piecemovestrategy.PieceType;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -23,8 +24,8 @@ public class PlayerScore {
         this.playerScore = playerScore;
     }
 
-    public static PlayerScore from(final Map<Position, Piece> pieces) {
-        final double nonPawnScore = calculateNonPawnScore(pieces.values());
+    public static PlayerScore from(final List<Piece> pieces) {
+        final double nonPawnScore = calculateNonPawnScore(pieces);
         final double pawnScore = calculatePawnScore(pieces);
 
         return new PlayerScore(nonPawnScore + pawnScore);
@@ -32,12 +33,13 @@ public class PlayerScore {
 
     private static double calculateNonPawnScore(final Collection<Piece> pieces) {
         return pieces.stream()
-                     .filter(PieceType::isPawn)
-                     .mapToDouble(Piece::getScore)
+                     .map(Piece::getPieceType)
+                     .filter(pieceType -> !PieceType.isPawn(pieceType))
+                     .mapToDouble(PieceType::getScore)
                      .sum();
     }
 
-    private static double calculatePawnScore(final Map<Position, Piece> pieces) {
+    private static double calculatePawnScore(final List<Piece> pieces) {
         final Map<File, Long> fileCount = countPawnByFile(pieces);
 
         return fileCount.values()
@@ -46,12 +48,12 @@ public class PlayerScore {
                         .sum();
     }
 
-    private static Map<File, Long> countPawnByFile(final Map<Position, Piece> pieces) {
-        return pieces.keySet()
-                     .stream()
-                     .filter(position -> PieceType.isPawn(pieces.get(position)))
+    private static Map<File, Long> countPawnByFile(final List<Piece> pieces) {
+        return pieces.stream()
+                     .filter(piece -> PieceType.isPawn(piece.getPieceType()))
+                     .map(Piece::getPosition)
                      .map(Position::getFile)
-                     .collect(groupingBy(Function.identity(), counting()));
+                     .collect(groupingBy(identity(), counting()));
     }
 
     private static double calculatePawnScoreEachFile(Long count) {

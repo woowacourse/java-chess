@@ -13,6 +13,8 @@ public interface Piece {
 
     boolean isEnemy(Piece target);
 
+    boolean isColorMatch(Color color);
+
     Position getPosition();
 
     Color getColor();

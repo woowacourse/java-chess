@@ -1,11 +1,14 @@
 package chess.domain.chessboard;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.strategy.piecemovestrategy.PieceType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final Map<Position, Piece> pieces;
@@ -56,17 +59,17 @@ public class ChessBoard {
         pieces.put(to, pieceToMove);
     }
 
-//    public Map<Position, Piece> getPieces(final Color color) {
-//        return pieces.entrySet()
-//                     .stream()
-//                     .filter(positionPieceEntry -> positionPieceEntry.getValue()
-//                                                                     .isSideOf(color))
-//                     .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
-//    }
-//
-//    public Piece getPiece(final Position position) {
-//        return pieces.get(position);
-//    }
+    public boolean isPieceColorNotMatch(final Position position, final Color color) {
+        final Piece piece = pieces.get(position);
+        return piece.isColorMatch(color);
+    }
+
+    public List<Piece> getPieces(final Color color) {
+        return pieces.values()
+                     .stream()
+                     .filter(piece -> piece.isColorMatch(color))
+                     .collect(Collectors.toList());
+    }
 
     public Map<Position, Piece> getPieces() {
         return new HashMap<>(pieces);
