@@ -25,6 +25,7 @@ public final class Pawn extends AbstractPiece {
     private void validateMovable(final Position from, final Position to, final Piece target) {
         validateNotSamePosition(from, to);
         validateNotSameColor(target);
+        validateTargetPositionIdentity(to, target);
         validateMovablePosition(from, to, target);
     }
 

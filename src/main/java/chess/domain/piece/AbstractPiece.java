@@ -22,6 +22,12 @@ public abstract class AbstractPiece implements Piece {
         }
     }
 
+    protected void validateTargetPositionIdentity(final Position to, final Piece target) {
+        if (!to.equals(target.getPosition())) {
+            throw new IllegalArgumentException("가려고 하는 곳과 목표물의 위치가 일치하지 않습니다");
+        }
+    }
+
     @Override
     public boolean isFriend(final Piece target) {
         return color == target.getColor();

@@ -5,29 +5,21 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.status.GameStatus;
-import chess.domain.status.KingAliveStatus;
-import chess.domain.status.ReadyStatus;
 
 import java.util.Map;
 
 public class ChessGame {
 
-    private static final ChessGame unplayableGame = new ChessGame(null, new ReadyStatus());
-
     private final ChessBoard chessBoard;
     private GameStatus gameStatus;
 
     public ChessGame(final ChessBoard chessBoard) {
-        this(chessBoard, new KingAliveStatus(Color.initialTurn()));
+        this(chessBoard);
     }
 
     public ChessGame(final ChessBoard chessBoard, final GameStatus gameStatus) {
         this.chessBoard = chessBoard;
         this.gameStatus = gameStatus;
-    }
-
-    public static ChessGame getUnplayableGame() {
-        return unplayableGame;
     }
 
     public void moveWithCapture(final Position from, final Position to) {
@@ -46,6 +38,7 @@ public class ChessGame {
         final Map<Position, Piece> piecesOfPlayer = chessBoard.getPieces(player);
 
         return PlayerScore.from(piecesOfPlayer);
+        return null;
     }
 
     public ChessBoard getChessBoard() {

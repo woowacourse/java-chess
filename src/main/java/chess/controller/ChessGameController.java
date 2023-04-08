@@ -16,12 +16,12 @@ public class ChessGameController {
     }
 
     public void run() {
-        outputView.printInstructions();
-
-        ChessGameService chessGameService = new ChessGameService();
-        ChessGame chessGame = ChessGame.getUnplayableGame();
-        Command command = Command.EMPTY_COMMAND;
-        execute(chessGameService, chessGame, command);
+//        outputView.printInstructions();
+//
+//        ChessGameService chessGameService = new ChessGameService();
+//        ChessGame chessGame = ChessGame.getUnplayableGame();
+//        Command command = Command.EMPTY_COMMAND;
+//        execute(chessGameService, chessGame, command);
 
     }
 
@@ -49,30 +49,31 @@ public class ChessGameController {
     }
 
     private ChessGame startGame(final ChessGameService chessGameService, ChessGame chessGame) {
-        if (!chessGame.isGameOver()) {
-            throw new IllegalArgumentException("게임이 진행 중입니다");
-        }
-        chessGame = chessGameService.readGame();
-        outputView.printChessBoard(chessGameService.getChessBoard(chessGame));
-        return chessGame;
+//        if (!chessGame.isGameOver()) {
+//            throw new IllegalArgumentException("게임이 진행 중입니다");
+//        }
+//        chessGame = chessGameService.readGame();
+//        outputView.printChessBoard(chessGameService.getChessBoard(chessGame));
+//        return chessGame;
+        return null;
     }
 
     private void movePiece(final Command command, final ChessGameService chessGameService, final ChessGame chessGame) {
         final MoveCommand moveCommand = new MoveCommand(command);
 
-        chessGameService.moveWithCapture(chessGame, moveCommand);
+//        chessGameService.moveWithCapture(chessGame, moveCommand);
     }
 
     private void printScores(final ChessGameService chessGameService, final ChessGame chessGame) {
-        if (chessGame.isGameOver()) {
-            throw new IllegalArgumentException("게임이 진행 중이지 않습니다");
-        }
-        outputView.printScore(chessGameService.calculateScores(chessGame));
+//        if (chessGame.isGameOver()) {
+//            throw new IllegalArgumentException("게임이 진행 중이지 않습니다");
+//        }
+//        outputView.printScore(chessGameService.calculateScores(chessGame));
     }
 
     private void printResultIfGameOver(final ChessGameService chessGameService, final ChessGame chessGame) {
-        if (chessGameService.isGameOver(chessGame)) {
-            outputView.printResult(chessGameService.getResult(chessGame));
-        }
+//        if (chessGameService.isGameOver(chessGame)) {
+//            outputView.printResult(chessGameService.getResult(chessGame));
+//        }
     }
 }

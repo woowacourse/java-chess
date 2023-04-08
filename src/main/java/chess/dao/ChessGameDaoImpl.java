@@ -4,7 +4,6 @@ import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -28,8 +27,8 @@ public class ChessGameDaoImpl implements ChessGameDao {
              final PreparedStatement psForChessGame = connection.prepareStatement(chessGameQuery);
              final var psForPiece = connection.prepareStatement(pieceQuery)
         ) {
-            final Color turn = chessGame.getTurn();
-            final ChessBoard chessBoard = chessGame.getChessBoard();
+            final Color turn = null;
+            final ChessBoard chessBoard = null;
             final Map<Position, Piece> pieces = chessBoard.getPieces();
 
             psForChessGame.setInt(1, 1);
@@ -41,8 +40,8 @@ public class ChessGameDaoImpl implements ChessGameDao {
                 final Position position = positionPieceEntry.getKey();
 
                 psForPiece.setInt(1, 1);
-                psForPiece.setString(2, piece.getSide()
-                                             .name());
+//                psForPiece.setString(2, piece.getSide()
+//                                             .name());
                 psForPiece.setString(3, piece.getPieceType()
                                              .name());
                 psForPiece.setString(4, position.getFile()
@@ -101,12 +100,12 @@ public class ChessGameDaoImpl implements ChessGameDao {
                 final File file = File.valueOf(resultSetForPieces.getString("file"));
                 final Rank rank = Rank.valueOf(resultSetForPieces.getString("rank"));
                 final Position position = Position.of(rank, file);
-                map.put(position, PieceFactory.generate(type, color));
+//                map.put(position, PieceFactory.generate(type, color));
             }
             if (turn == null) {
                 return Optional.empty();
             }
-            return Optional.of(new ChessGame(new ChessBoard(map)));
+            return Optional.of(null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

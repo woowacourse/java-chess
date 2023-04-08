@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Piece;
 
 public class PieceDto {
     private final String outputFormat;
@@ -11,29 +11,29 @@ public class PieceDto {
 
     public static PieceDto from(final Piece piece) {
         String outputFormat = ".";
-
-        if (piece instanceof Pawn) {
-            outputFormat = "p";
-        }
-        if (piece instanceof Knight) {
-            outputFormat = "n";
-        }
-        if (piece instanceof Bishop) {
-            outputFormat = "b";
-        }
-        if (piece instanceof Rook) {
-            outputFormat = "r";
-        }
-        if (piece instanceof Queen) {
-            outputFormat = "q";
-        }
-        if (piece instanceof King) {
-            outputFormat = "k";
-        }
-
-        if (piece.isSideOf(Color.BLACK)) {
-            outputFormat = outputFormat.toUpperCase();
-        }
+//
+//        if (piece instanceof Pawn) {
+//            outputFormat = "p";
+//        }
+//        if (piece instanceof Knight) {
+//            outputFormat = "n";
+//        }
+//        if (piece instanceof Bishop) {
+//            outputFormat = "b";
+//        }
+//        if (piece instanceof Rook) {
+//            outputFormat = "r";
+//        }
+//        if (piece instanceof Queen) {
+//            outputFormat = "q";
+//        }
+//        if (piece instanceof King) {
+//            outputFormat = "k";
+//        }
+//
+//        if (piece.isSideOf(Color.BLACK)) {
+//            outputFormat = outputFormat.toUpperCase();
+//        }
 
         return new PieceDto(outputFormat);
     }

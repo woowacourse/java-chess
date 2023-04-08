@@ -9,8 +9,8 @@ public final class WhitePawnMove extends PawnMoveStrategy {
 
     @Override
     public boolean isMovableToEmpty(final Position from, final Position to) {
-        if (from.isAtRank(INITIAL_POSITION)) {
-            return isBonusMoveOfInitialPosition(from, to);
+        if (from.isAtRank(INITIAL_POSITION) && isBonusMoveOfInitialPosition(from, to)) {
+            return true;
         }
         return isGoalPositionInFace(from, to);
     }
