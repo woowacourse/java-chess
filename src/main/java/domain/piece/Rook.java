@@ -1,14 +1,21 @@
-package domain.piece.rook;
+package domain.piece;
 
-import domain.piece.Piece;
+import dao.Movement;
+import domain.Turn;
 import domain.point.Direction;
+import domain.point.Point;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public abstract class Rook extends Piece {
+public class Rook extends Piece {
 
     public static final float SCORE = 5f;
+
+    public Rook(Turn turn) {
+        super(turn);
+    }
 
     @Override
     public Map<Direction, Integer> getMovableDirectionAndRange() {
@@ -22,27 +29,28 @@ public abstract class Rook extends Piece {
     }
 
     @Override
-    public boolean isWhitePawn() {
+    protected List<Point> findSpecializedPoints(Movement movement, Map<Point, Piece> status) {
+        return List.of();
+    }
+
+    @Override
+    public boolean exists() {
         return false;
     }
 
     @Override
-    public boolean isBlackPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public float getScore() {
+    public float getScore(List<Piece> line) {
         return SCORE;
+    }
+
+    @Override
+    protected String getInitial() {
+        return "r";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return getClass() == obj.getClass()
+                && turn == ((Rook) obj).turn;
     }
 }

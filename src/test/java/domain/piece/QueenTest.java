@@ -2,17 +2,13 @@ package domain.piece;
 
 import dao.Movement;
 import domain.Board;
-import domain.piece.pawn.WhitePawn;
-import domain.piece.queen.BlackQueen;
-import domain.piece.queen.WhiteQueen;
-import domain.piece.rook.WhiteRook;
 import domain.point.Point;
-import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import util.ExceptionMessages;
 
 import java.util.Map;
 
@@ -33,11 +29,11 @@ class QueenTest {
         void rookFirstMove(String toPoint) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, THREE), new BlackQueen()
+                    new Point(B, THREE), new Queen(BLACK)
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), BLACK));
+            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), BLACK));
         }
 
         @Test
@@ -45,12 +41,12 @@ class QueenTest {
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhiteRook(),
-                    new Point(B, FOUR), new WhiteQueen()
+                    new Point(B, TWO), new Rook(WHITE),
+                    new Point(B, FOUR), new Queen(WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b1")), WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b1")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -60,12 +56,12 @@ class QueenTest {
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhitePawn(),
-                    new Point(B, FOUR), new WhiteQueen()
+                    new Point(B, TWO), new Pawn(WHITE),
+                    new Point(B, FOUR), new Queen(WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

@@ -57,7 +57,7 @@ public class ChessController {
         Board board = new Board();
         Turn turn = Turn.WHITE;
         for (Movement movement : movements) {
-            board.move(movement, turn);
+            board.move2(movement, turn);
             turn = turn.switchTurn();
         }
         return board;

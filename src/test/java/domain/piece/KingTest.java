@@ -2,16 +2,14 @@ package domain.piece;
 
 import dao.Movement;
 import domain.Board;
-import domain.piece.king.WhiteKing;
-import domain.piece.pawn.WhitePawn;
 import domain.point.Point;
-import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import util.ExceptionMessages;
 
 import java.util.Map;
 
@@ -32,11 +30,11 @@ class KingTest {
         void rookFirstMove(String toPoint) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, THREE), new WhiteKing()
+                    new Point(B, THREE), new King(WHITE)
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), WHITE));
+            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -45,11 +43,11 @@ class KingTest {
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, THREE), new WhiteKing()
+                    new Point(B, THREE), new King(WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(destination)), WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(destination)), WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -60,12 +58,12 @@ class KingTest {
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, THREE), new WhiteKing(),
-                    new Point(B, TWO), new WhitePawn()
+                    new Point(B, THREE), new King(WHITE),
+                    new Point(B, TWO), new Pawn(WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b2")), WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b2")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

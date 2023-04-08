@@ -3,10 +3,6 @@ package domain.piece;
 import dao.Movement;
 import domain.Board;
 import domain.Turn;
-import domain.piece.bishop.BlackBishop;
-import domain.piece.bishop.WhiteBishop;
-import domain.piece.pawn.WhitePawn;
-import domain.piece.rook.BlackRook;
 import domain.point.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -33,11 +29,11 @@ class BishopTest {
         void rookFirstMove(String toPoint) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(C, THREE), new WhiteBishop()
+                    new Point(C, THREE), new Bishop(Turn.WHITE)
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(new Movement(new Point(C, THREE), Point.fromSymbol(toPoint)), Turn.WHITE));
+            assertDoesNotThrow(() -> board.move2(new Movement(new Point(C, THREE), Point.fromSymbol(toPoint)), Turn.WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -46,11 +42,11 @@ class BishopTest {
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhiteBishop()
+                    new Point(B, TWO), new Bishop(Turn.WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), Turn.WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), Turn.WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -61,13 +57,13 @@ class BishopTest {
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhitePawn(),
-                    new Point(A, THREE), new BlackBishop(),
-                    new Point(B, THREE), new BlackRook()
+                    new Point(B, TWO), new Pawn(Turn.WHITE),
+                    new Point(A, THREE), new Bishop(Turn.BLACK),
+                    new Point(B, THREE), new Rook(Turn.BLACK)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -77,12 +73,12 @@ class BishopTest {
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(C, ONE), new BlackRook(),
-                    new Point(A, THREE), new BlackBishop()
+                    new Point(C, ONE), new Rook(Turn.BLACK),
+                    new Point(A, THREE), new Bishop(Turn.BLACK)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

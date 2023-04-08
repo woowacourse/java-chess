@@ -2,17 +2,14 @@ package domain.piece;
 
 import dao.Movement;
 import domain.Board;
-import domain.piece.knight.BlackKnight;
-import domain.piece.knight.WhiteKnight;
-import domain.piece.pawn.BlackPawn;
 import domain.point.Point;
-import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import util.ExceptionMessages;
 
 import java.util.Map;
 
@@ -33,11 +30,11 @@ class KnightTest {
         void rookFirstMove(String toPoint) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(C, THREE), new WhiteKnight()
+                    new Point(C, THREE), new Knight(WHITE)
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("c3"), Point.fromSymbol(toPoint)), WHITE));
+            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("c3"), Point.fromSymbol(toPoint)), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -48,11 +45,11 @@ class KnightTest {
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new BlackKnight()
+                    new Point(B, TWO), new Knight(BLACK)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), BLACK))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), BLACK))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -63,19 +60,19 @@ class KnightTest {
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, FOUR), new BlackPawn(),
-                    new Point(B, THREE), new BlackPawn(),
-                    new Point(B, TWO), new BlackPawn(),
-                    new Point(C, FOUR), new BlackPawn(),
-                    new Point(C, THREE), new WhiteKnight(),
-                    new Point(C, TWO), new BlackPawn(),
-                    new Point(D, FOUR), new BlackPawn(),
-                    new Point(D, THREE), new BlackPawn(),
-                    new Point(D, TWO), new BlackPawn()
+                    new Point(B, FOUR), new Pawn(BLACK),
+                    new Point(B, THREE), new Pawn(BLACK),
+                    new Point(B, TWO), new Pawn(BLACK),
+                    new Point(C, FOUR), new Pawn(BLACK),
+                    new Point(C, THREE), new Knight(WHITE),
+                    new Point(C, TWO), new Pawn(BLACK),
+                    new Point(D, FOUR), new Pawn(BLACK),
+                    new Point(D, THREE), new Pawn(BLACK),
+                    new Point(D, TWO), new Pawn(BLACK)
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("c3"), Point.fromSymbol("d5")), WHITE));
+            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("c3"), Point.fromSymbol("d5")), WHITE));
         }
 
         @Test
@@ -83,12 +80,12 @@ class KnightTest {
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, ONE), new BlackPawn(),
-                    new Point(A, THREE), new BlackKnight()
+                    new Point(B, ONE), new Pawn(BLACK),
+                    new Point(A, THREE), new Knight(BLACK)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("b1")), BLACK))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("b1")), BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

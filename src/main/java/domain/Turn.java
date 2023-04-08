@@ -1,7 +1,5 @@
 package domain;
 
-import domain.piece.Piece;
-
 public enum Turn {
     BLACK, WHITE;
 
@@ -10,10 +8,6 @@ public enum Turn {
             return WHITE;
         }
         return BLACK;
-    }
-
-    public boolean isTurnOf(Piece piece) {
-        return (piece.isBlack() && this == BLACK) || (piece.isWhite() && this == WHITE);
     }
 
     public boolean isBlack() {

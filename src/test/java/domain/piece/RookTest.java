@@ -2,17 +2,14 @@ package domain.piece;
 
 import dao.Movement;
 import domain.Board;
-import domain.piece.pawn.WhitePawn;
-import domain.piece.rook.BlackRook;
-import domain.piece.rook.WhiteRook;
 import domain.point.Point;
-import util.ExceptionMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import util.ExceptionMessages;
 
 import java.util.Map;
 
@@ -33,11 +30,11 @@ class RookTest {
         void rookFirstMove(String toPoint) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, THREE), new WhiteRook()
+                    new Point(B, THREE), new Rook(WHITE)
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), WHITE));
+            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -46,11 +43,11 @@ class RookTest {
         void pawnMoveToInvalidDirection(String destination, String description) {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhiteRook()
+                    new Point(B, TWO), new Rook(WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -61,12 +58,12 @@ class RookTest {
         void givenPieceBetWeenTwoPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhiteRook(),
-                    new Point(B, THREE), new BlackRook()
+                    new Point(B, TWO), new Rook(WHITE),
+                    new Point(B, THREE), new Rook(BLACK)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b1")), BLACK))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b1")), BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -76,12 +73,12 @@ class RookTest {
         void givenTeamOnPoint_whenPawnMoveToPoint() {
             // given
             Board board = Textures.makeBoard(Map.of(
-                    new Point(B, TWO), new WhitePawn(),
-                    new Point(B, FOUR), new WhiteRook()
+                    new Point(B, TWO), new Pawn(WHITE),
+                    new Point(B, FOUR), new Rook(WHITE)
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), WHITE))
+            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

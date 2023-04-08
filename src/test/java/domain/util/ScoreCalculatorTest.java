@@ -2,12 +2,11 @@ package domain.util;
 
 import domain.Board;
 import domain.Turn;
+import domain.piece.Bishop;
+import domain.piece.Queen;
+import domain.piece.Rook;
 import domain.piece.Textures;
-import domain.piece.bishop.WhiteBishop;
-import domain.piece.pawn.BlackPawn;
-import domain.piece.pawn.WhitePawn;
-import domain.piece.queen.BlackQueen;
-import domain.piece.rook.BlackRook;
+import domain.piece.Pawn;
 import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;
@@ -26,10 +25,10 @@ class ScoreCalculatorTest {
     void score() {
         // given
         Board board = Textures.makeBoard(Map.of(
-                new Point(File.F, Rank.FOUR), new BlackRook(),
-                new Point(File.D, Rank.FOUR), new BlackQueen(),
-                new Point(File.E, Rank.SIX), new WhiteBishop(),
-                new Point(File.A, Rank.TWO), new WhitePawn()
+                new Point(File.F, Rank.FOUR), new Rook(Turn.BLACK),
+                new Point(File.D, Rank.FOUR), new Queen(Turn.BLACK),
+                new Point(File.E, Rank.SIX), new Bishop(Turn.WHITE),
+                new Point(File.A, Rank.TWO), new Pawn(Turn.WHITE)
         ));
 
         // when
@@ -48,10 +47,10 @@ class ScoreCalculatorTest {
     void pawnCase() {
         // given
         Board board = Textures.makeBoard(Map.of(
-                new Point(File.F, Rank.FOUR), new WhitePawn(),
-                new Point(File.F, Rank.FIVE), new BlackPawn(),
-                new Point(File.F, Rank.TWO), new BlackRook(),
-                new Point(File.F, Rank.ONE), new BlackPawn()
+                new Point(File.F, Rank.FOUR), new Pawn(Turn.WHITE),
+                new Point(File.F, Rank.FIVE), new Pawn(Turn.BLACK),
+                new Point(File.F, Rank.TWO), new Rook(Turn.BLACK),
+                new Point(File.F, Rank.ONE), new Pawn(Turn.BLACK)
         ));
 
         // when

@@ -2,16 +2,14 @@ package domain;
 
 import dao.Movement;
 import domain.piece.Empty;
+import domain.piece.King;
 import domain.piece.Piece;
-import domain.piece.pawn.OnceMovedBlackPawn;
-import domain.piece.pawn.OnceMovedWhitePawn;
 import domain.point.File;
 import domain.point.Point;
 import domain.point.Rank;
+import exception.CheckMateException;
 import util.BoardInitializer;
 import util.ExceptionMessages;
-import util.MovablePointFinder;
-import exception.CheckMateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,51 +51,19 @@ public class Board {
         }
     }
 
-    public void move(Movement movement, Turn turn) {
+    public void move2(Movement movement, Turn turn) {
         Piece piece = pieceStatus.get(movement.getStartingPoint());
-        validateFromPoint(piece, turn);
 
-        List<Point> movablePoints = MovablePointFinder.addPoints(movement, pieceStatus);
-        validateDestinationPoint(movement.getDestinationPoint(), movablePoints);
-
-        if (piece.isWhitePawn() || piece.isBlackPawn()) {
-            movePawnOfFirstStep(movement, piece, turn);
+        if (piece.canMove(movement, pieceStatus, turn)) {
+            Piece previousPiece = pieceStatus.get(movement.getDestinationPoint());
+            pieceStatus.put(movement.getStartingPoint(), new Empty());
+            pieceStatus.put(movement.getDestinationPoint(), piece);
+            if (previousPiece.getClass() == King.class) {
+                // TODO: 테스트코드 통과를 위해 작성하였지만 추후 고쳐야 할 코드
+                throw new CheckMateException(turn);
+            }
             return;
         }
-
-        move(movement, piece, turn);
-    }
-
-    private static void validateFromPoint(Piece piece, Turn turn) {
-        if (piece.isEmpty()) {
-            throw new IllegalArgumentException(ExceptionMessages.TARGET_PIECE_NOT_FOUND);
-        }
-        if (!turn.isTurnOf(piece)) {
-            throw new IllegalArgumentException(ExceptionMessages.INVALID_GAME_TURN);
-        }
-    }
-
-    private static void validateDestinationPoint(Point point, List<Point> movablePoints) {
-        if (!movablePoints.contains(point)) {
-            throw new IllegalArgumentException(ExceptionMessages.INVALID_DESTINATION);
-        }
-    }
-
-    private void move(Movement movement, Piece piece, Turn turn) {
-        Piece previousPiece = pieceStatus.get(movement.getDestinationPoint());
-        pieceStatus.put(movement.getStartingPoint(), new Empty());
-        pieceStatus.put(movement.getDestinationPoint(), piece);
-        if (previousPiece.isKing()) {
-            throw new CheckMateException(turn);
-        }
-    }
-
-    private void movePawnOfFirstStep(Movement movement, Piece piece, Turn turn) {
-        if (piece.isBlackPawn()) {
-            move(movement, new OnceMovedBlackPawn(), turn);
-        }
-        if (piece.isWhitePawn()) {
-            move(movement, new OnceMovedWhitePawn(), turn);
-        }
+        throw new IllegalArgumentException(ExceptionMessages.INVALID_DESTINATION);
     }
 }
