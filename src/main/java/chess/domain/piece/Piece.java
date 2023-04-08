@@ -7,6 +7,12 @@ public interface Piece {
 
     void move(Position from, Position to, Piece target);
 
+    boolean isEmpty();
+
+    boolean isFriend(Piece target);
+
+    boolean isEnemy(Piece target);
+
     Position getPosition();
 
     Color getColor();

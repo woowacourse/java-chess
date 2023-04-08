@@ -17,7 +17,7 @@ public class PieceFactory {
         factoryMap.put(PieceType.ROOK, Rook::new);
         factoryMap.put(PieceType.BISHOP, Bishop::new);
         factoryMap.put(PieceType.KNIGHT, Knight::new);
-        factoryMap.put(PieceType.PAWN, t -> new Pawn(position, pawnMoveStrategy));
+        factoryMap.put(PieceType.PAWN, t -> new Pawn(color, position, pawnMoveStrategy));
         factoryMap.put(PieceType.EMPTY, ignored -> EmptyPiece.getInstance());
     }
 

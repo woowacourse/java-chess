@@ -4,14 +4,13 @@ import chess.domain.position.Position;
 import chess.domain.strategy.piecemovestrategy.PieceMoveStrategy;
 import chess.domain.strategy.piecemovestrategy.PieceType;
 
-public final class NonPawnPiece implements Piece {
+public final class NonPawnPiece extends AbstractPiece {
 
-    private final Color color;
     private final PieceMoveStrategy pieceMoveStrategy;
     private Position position;
 
     public NonPawnPiece(final Color color, final Position position, final PieceMoveStrategy pieceMoveStrategy) {
-        this.color = color;
+        super(color);
         this.position = position;
         this.pieceMoveStrategy = pieceMoveStrategy;
     }
@@ -29,18 +28,6 @@ public final class NonPawnPiece implements Piece {
         validateMovablePosition(from, to);
     }
 
-    private void validateNotSamePosition(final Position from, final Position to) {
-        if (from.equals(to)) {
-            throw new IllegalArgumentException("이동하려는 위치가 현재 위치입니다");
-        }
-    }
-
-    private void validateNotSameColor(final Piece target) {
-        if (target.getColor() == color) {
-            throw new IllegalArgumentException("같은 색 기물은 잡을 수 없습니다");
-        }
-    }
-
     private void validateMovablePosition(final Position from, final Position to) {
         if (!pieceMoveStrategy.isMovable(from, to)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다");
@@ -48,13 +35,13 @@ public final class NonPawnPiece implements Piece {
     }
 
     @Override
-    public Position getPosition() {
-        return position;
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
-    public Color getColor() {
-        return color;
+    public Position getPosition() {
+        return position;
     }
 
     @Override
