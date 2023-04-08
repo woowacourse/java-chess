@@ -17,30 +17,19 @@ public class ChessApplication {
         ChessController chessController = new ChessController(inputView, outputView, boardDao);
         ChessGame chessGame = chessController.findChessGame();
 
-        BoardController controller = new BoardController(
-                chessGame,
-                boardDao,
-                outputView,
-                inputView);
-        try {
-            controller.initializeBoard();
-            play(controller, outputView);
-        } catch (GameFinishedException e) {
-            outputView.printGameEndMessage();
-        }
+        BoardController boardController = new BoardController(chessGame, boardDao, outputView, inputView);
+        boardController.initializeBoard();
+
+        play(boardController);
     }
 
-    private static void play(BoardController controller, OutputView outputView) {
+    private static void play(BoardController controller) {
         Turn turn = Turn.WHITE;
         while (true) {
             try {
                 controller.executeByCommand(turn);
                 turn = turn.switchTurn();
-            } catch (GameFinishedException e) {
-                outputView.printGameEndMessage();
-                return;
-            } catch (CheckMateException e) {
-                controller.checkmate(turn);
+            } catch (GameFinishedException | CheckMateException e) {
                 return;
             }
         }

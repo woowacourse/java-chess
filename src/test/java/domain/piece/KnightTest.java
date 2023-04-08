@@ -34,7 +34,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("c3"), Point.fromSymbol(toPoint)), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("c3"), Point.fromSymbol(toPoint)), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -49,7 +49,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), BLACK))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -72,7 +72,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("c3"), Point.fromSymbol("d5")), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("c3"), Point.fromSymbol("d5")), WHITE));
         }
 
         @Test
@@ -85,7 +85,7 @@ class KnightTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("b1")), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("b1")), BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

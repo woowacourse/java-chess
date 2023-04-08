@@ -51,7 +51,7 @@ public class Board {
         }
     }
 
-    public void move2(Movement movement, Turn turn) {
+    public void move(Movement movement, Turn turn) {
         Piece piece = pieceStatus.get(movement.getStartingPoint());
 
         if (piece.canMove(movement, pieceStatus, turn)) {

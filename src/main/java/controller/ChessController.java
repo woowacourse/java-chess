@@ -10,11 +10,18 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
     private final BoardDao boardDao;
+
+    private final Map<YNCommand, Function<String, ChessGame>> savingGameCommandActions = Map.of(
+            YNCommand.YES, this::saveNewGame,
+            YNCommand.NO, ignored -> this.findChessGame()
+    );
 
     public ChessController(InputView inputView, OutputView outputView, BoardDao boardDao) {
         this.inputView = inputView;
@@ -36,28 +43,29 @@ public class ChessController {
         try {
             outputView.printAskingNewGame();
             YNCommand command = inputView.getYNCommand();
-            if (command.isYes()) {
-                boardDao.save(id);
-                return new ChessGame(id, new Board());
-            }
-            return findChessGame();
+            return savingGameCommandActions.get(command).apply(id);
         } catch (IllegalArgumentException e) {
             outputView.printExceptionMessage(e.getMessage());
             return saveGame(id);
         }
     }
 
+    private ChessGame saveNewGame(String id) {
+        boardDao.save(id);
+        return new ChessGame(id, new Board());
+    }
+
     private ChessGame findGame(String id) {
         List<Movement> movements = boardDao.findStatusById(id);
-        Board board = loadSavedBoard(movements);
+        Board board = loadBoard(movements);
         return new ChessGame(id, board);
     }
 
-    private static Board loadSavedBoard(List<Movement> movements) {
+    private static Board loadBoard(List<Movement> movements) {
         Board board = new Board();
         Turn turn = Turn.WHITE;
         for (Movement movement : movements) {
-            board.move2(movement, turn);
+            board.move(movement, turn);
             turn = turn.switchTurn();
         }
         return board;

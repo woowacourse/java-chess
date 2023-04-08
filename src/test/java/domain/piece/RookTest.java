@@ -34,7 +34,7 @@ class RookTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol(toPoint)), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -47,7 +47,7 @@ class RookTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -63,7 +63,7 @@ class RookTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b1")), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b1")), BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -78,7 +78,7 @@ class RookTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

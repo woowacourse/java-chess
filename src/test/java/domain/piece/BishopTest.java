@@ -33,7 +33,7 @@ class BishopTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(new Point(C, THREE), Point.fromSymbol(toPoint)), Turn.WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(new Point(C, THREE), Point.fromSymbol(toPoint)), Turn.WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -46,7 +46,7 @@ class BishopTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), Turn.WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), Turn.WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -63,7 +63,7 @@ class BishopTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -78,7 +78,7 @@ class BishopTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("c1")), Turn.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }

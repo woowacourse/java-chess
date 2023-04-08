@@ -34,7 +34,7 @@ public class PawnTest {
             Board board = Textures.makeBoard(boardStatus);
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a1")), BLACK));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a1")), BLACK));
         }
 
         @Test
@@ -46,14 +46,14 @@ public class PawnTest {
             ));
 
             // when
-            board.move2(new Movement(Point.fromSymbol("a5"), Point.fromSymbol("a3")), BLACK);
+            board.move(new Movement(Point.fromSymbol("a5"), Point.fromSymbol("a3")), BLACK);
 
             // then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a1")), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a1")), BLACK))
                     .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a2")), BLACK));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("a3"), Point.fromSymbol("a2")), BLACK));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -67,7 +67,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), BLACK))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -83,7 +83,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b1")), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b1")), BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -98,7 +98,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), BLACK))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b4"), Point.fromSymbol("b2")), BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -115,7 +115,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(target)), BLACK));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(target)), BLACK));
         }
     }
 
@@ -132,7 +132,7 @@ public class PawnTest {
             Board board = Textures.makeBoard(status);
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b1"), Point.fromSymbol("b3")), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b1"), Point.fromSymbol("b3")), WHITE));
         }
 
         @Test
@@ -142,14 +142,14 @@ public class PawnTest {
             Board board = Textures.makeBoard(Map.of(
                     new Point(B, ONE), new Pawn(WHITE)
             ));
-            board.move2(new Movement(Point.fromSymbol("b1"), Point.fromSymbol("b3")), WHITE);
+            board.move(new Movement(Point.fromSymbol("b1"), Point.fromSymbol("b3")), WHITE);
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b5")), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b5")), WHITE))
                     .as("최초의 이동이 아닌데 두 칸을 한번에 전진하려는 경우 예외가 발생한다.")
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b4")), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b3"), Point.fromSymbol("b4")), WHITE));
         }
 
         @ParameterizedTest(name = "{displayName} - {1}")
@@ -163,7 +163,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(destination)), WHITE))
                     .as(description)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
@@ -179,7 +179,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol("b4")), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol("b4")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -194,7 +194,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol("b4")), WHITE))
+            assertThatThrownBy(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol("b4")), WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ExceptionMessages.INVALID_DESTINATION);
         }
@@ -211,7 +211,7 @@ public class PawnTest {
             ));
 
             // when & then
-            assertDoesNotThrow(() -> board.move2(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(target)), WHITE));
+            assertDoesNotThrow(() -> board.move(new Movement(Point.fromSymbol("b2"), Point.fromSymbol(target)), WHITE));
         }
     }
 }
