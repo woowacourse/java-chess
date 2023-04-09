@@ -1,6 +1,6 @@
 package domain.point;
 
-import domain.exception.PointOutOfBoardException;
+import util.ExceptionMessages;
 
 import java.util.Arrays;
 
@@ -15,11 +15,11 @@ public enum Rank {
     EIGHT("8", 7);
 
     private final String symbol;
-    private final int indexFromBottom;
+    private final int index;
 
-    Rank(String symbol, int indexFromBottom) {
+    Rank(String symbol, int index) {
         this.symbol = symbol;
-        this.indexFromBottom = indexFromBottom;
+        this.index = index;
     }
 
     public static Rank findBySymbol(String symbol) {
@@ -29,36 +29,32 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크 값입니다."));
     }
 
-    private static Rank findByIndexFromBottom(int index) {
+    private static Rank findByIndex(int index) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.indexFromBottom == index)
+                .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 랭크의 인덱스입니다."));
     }
 
     public Rank up() {
         if (this == EIGHT) {
-            throw new PointOutOfBoardException();
+            throw new IllegalArgumentException(ExceptionMessages.POINT_OUT_OF_BOARD);
         }
 
         int indexFromBottomOfNewRank = Integer.parseInt(symbol);
-        return findByIndexFromBottom(indexFromBottomOfNewRank);
+        return findByIndex(indexFromBottomOfNewRank);
     }
 
     public Rank down() {
         if (this == ONE) {
-            throw new PointOutOfBoardException();
+            throw new IllegalArgumentException(ExceptionMessages.POINT_OUT_OF_BOARD);
         }
 
-        int indexFromBottomOfNewRank = Integer.parseInt(symbol);
-        return findByIndexFromBottom(indexFromBottomOfNewRank - 2);
+        int index = Integer.parseInt(symbol);
+        return findByIndex(index - 2);
     }
 
     public String getSymbol() {
         return symbol;
-    }
-
-    public int getIndexFromBottom() {
-        return indexFromBottom;
     }
 }

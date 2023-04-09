@@ -1,28 +1,37 @@
+import controller.BoardController;
 import controller.ChessController;
-import domain.Board;
+import dao.BoardDao;
+import domain.Turn;
+import dto.ChessGame;
+import exception.CheckMateException;
 import exception.GameFinishedException;
 import view.InputView;
 import view.OutputView;
-import view.ScannerInputReader;
 
 public class ChessApplication {
     public static void main(String[] args) {
-        ChessController controller = new ChessController(
-                new Board(),
-                new InputView(new ScannerInputReader()),
-                new OutputView());
+        OutputView outputView = new OutputView();
+        InputView inputView = new InputView();
+        BoardDao boardDao = new BoardDao();
 
-        try {
-            controller.initializeBoard();
-            play(controller);
-        } catch (GameFinishedException e) {
-            //TODO : 게임이 끝날 때 동작
-        }
+        ChessController chessController = new ChessController(inputView, outputView, boardDao);
+        ChessGame chessGame = chessController.findChessGame();
+
+        BoardController boardController = new BoardController(chessGame, boardDao, outputView, inputView);
+        boardController.initializeBoard();
+
+        play(boardController);
     }
 
-    private static void play(ChessController controller) {
+    private static void play(BoardController controller) {
+        Turn turn = Turn.WHITE;
         while (true) {
-            controller.movePiece();
+            try {
+                controller.executeByCommand(turn);
+                turn = turn.switchTurn();
+            } catch (GameFinishedException | CheckMateException e) {
+                return;
+            }
         }
     }
 }

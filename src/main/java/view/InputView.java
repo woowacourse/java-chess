@@ -1,13 +1,22 @@
 package view;
 
-public class InputView {
-    private final InputReader inputReader;
+import controller.command.Command;
+import controller.command.YNCommand;
 
-    public InputView(InputReader inputReader) {
-        this.inputReader = inputReader;
-    }
+import java.util.Scanner;
+
+public class InputView {
+    private final Scanner scanner = new Scanner(System.in);
 
     public Command getGameCommand() {
-        return new Command(inputReader.readInput());
+        return new Command(scanner.nextLine());
+    }
+
+    public String getGameId() {
+        return scanner.nextLine();
+    }
+
+    public YNCommand getYNCommand() {
+        return YNCommand.from(scanner.nextLine());
     }
 }

@@ -1,0 +1,5 @@
+create table board (
+    id varchar(10) NOT NULL,
+    status varchar(10000) NOT NULL,
+    PRIMARY KEY (id)
+);

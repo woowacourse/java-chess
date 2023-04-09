@@ -1,89 +1,69 @@
 package domain;
 
-import domain.exception.InvalidDestinationPointException;
-import domain.exception.TargetPieceNotFoundException;
-import domain.piece.*;
-import domain.piece.pawn.OnceMovedBlackPawn;
-import domain.piece.pawn.OneMovedWhitePawn;
+import dao.Movement;
+import domain.piece.Empty;
+import domain.piece.King;
+import domain.piece.Piece;
+import domain.point.File;
 import domain.point.Point;
-import domain.util.BoardInitializer;
-import domain.util.MovablePointFinder;
+import domain.point.Rank;
+import exception.CheckMateException;
+import util.BoardInitializer;
+import util.ExceptionMessages;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private final List<List<Piece>> pieceStatus;
+    private final Map<Point, Piece> pieceStatus;
 
     public Board() {
         this.pieceStatus = BoardInitializer.initializeBoard();
     }
 
-    private Board(List<List<Piece>> pieceStatus) {
+    private Board(Map<Point, Piece> pieceStatus) {
         this.pieceStatus = pieceStatus;
     }
 
     public void reset() {
         pieceStatus.clear();
-        pieceStatus.addAll(BoardInitializer.initializeBoard());
+        pieceStatus.putAll(BoardInitializer.initializeBoard());
     }
 
     public List<List<Piece>> findCurrentStatus() {
-        return new ArrayList<>(pieceStatus);
+        List<List<Piece>> status = new ArrayList<>();
+        findCurrentRanks(status);
+        return status;
     }
 
-    public void move(String from, String to) {
-        Point fromPoint = Point.fromSymbol(from);
-        Point toPoint = Point.fromSymbol(to);
-
-        move(fromPoint, toPoint);
+    private void findCurrentRanks(List<List<Piece>> status) {
+        for (Rank rank : Rank.values()) {
+            List<Piece> files = new ArrayList<>();
+            findCurrentFiles(rank, files);
+            status.add(files);
+        }
     }
 
-    private void move(Point fromPoint, Point toPoint) {
-        Piece piece = findPieceByPoint(fromPoint);
-        validateFromPoint(piece);
+    private void findCurrentFiles(Rank rank, List<Piece> files) {
+        for (File file : File.values()) {
+            files.add(pieceStatus.get(new Point(file, rank)));
+        }
+    }
 
-        List<Point> movablePoints = MovablePointFinder.addPoints(fromPoint, toPoint, pieceStatus);
-        validateToPoint(toPoint, movablePoints);
+    public void move(Movement movement, Turn turn) {
+        Piece piece = pieceStatus.get(movement.getStartingPoint());
 
-        if (piece.isWhitePawn() || piece.isBlackPawn()) {
-            movePawnOfFirstStep(fromPoint, toPoint, piece);
+        if (piece.canMove(movement, pieceStatus, turn)) {
+            Piece previousPiece = pieceStatus.get(movement.getDestinationPoint());
+            pieceStatus.put(movement.getStartingPoint(), new Empty());
+            pieceStatus.put(movement.getDestinationPoint(), piece);
+            if (previousPiece.getClass() == King.class) {
+                // TODO: 테스트코드 통과를 위해 작성하였지만 추후 고쳐야 할 코드
+                throw new CheckMateException(turn);
+            }
             return;
         }
-
-        move(fromPoint, toPoint, piece);
-    }
-
-    private static void validateFromPoint(Piece piece) {
-        if (piece.isEmpty()) {
-            throw new TargetPieceNotFoundException();
-        }
-    }
-
-    private static void validateToPoint(Point toPoint, List<Point> movablePoints) {
-        if (!movablePoints.contains(toPoint)) {
-            throw new InvalidDestinationPointException();
-        }
-    }
-
-    private void move(Point fromPoint, Point toPoint, Piece piece) {
-        pieceStatus.get(fromPoint.findIndexFromBottom())
-                .set(fromPoint.findIndexFromLeft(), new Empty());
-        pieceStatus.get(toPoint.findIndexFromBottom())
-                .set(toPoint.findIndexFromLeft(), piece);
-    }
-
-    private void movePawnOfFirstStep(Point fromPoint, Point toPoint, Piece piece) {
-        if (piece.isBlackPawn()) {
-            move(fromPoint, toPoint, new OnceMovedBlackPawn());
-        }
-        if (piece.isWhitePawn()) {
-            move(fromPoint, toPoint, new OneMovedWhitePawn());
-        }
-    }
-
-    private Piece findPieceByPoint(Point fromPoint) {
-        return pieceStatus.get(fromPoint.findIndexFromBottom())
-                .get(fromPoint.findIndexFromLeft());
+        throw new IllegalArgumentException(ExceptionMessages.INVALID_DESTINATION);
     }
 }

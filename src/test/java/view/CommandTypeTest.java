@@ -1,5 +1,6 @@
 package view;
 
+import controller.command.CommandType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,8 @@ class CommandTypeTest {
     void findByCommand() {
         assertAll(
                 () -> assertThat(CommandType.findByCommand("start")).isEqualTo(CommandType.START),
-                () -> assertThat(CommandType.findByCommand("end")).isEqualTo(CommandType.END)
+                () -> assertThat(CommandType.findByCommand("end")).isEqualTo(CommandType.END),
+                () -> assertThat(CommandType.findByCommand("status")).isEqualTo(CommandType.STATUS)
         );
     }
 

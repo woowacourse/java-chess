@@ -17,14 +17,6 @@ public class Point {
         return new Point(file, rank);
     }
 
-    public int findIndexFromLeft() {
-        return file.getIndexFromLeft();
-    }
-
-    public int findIndexFromBottom() {
-        return rank.getIndexFromBottom();
-    }
-
     public Point up() {
         return new Point(file, rank.up());
     }
@@ -128,5 +120,9 @@ public class Point {
         if (direction == Direction.DOWN_LEFT_L) return downLeftL();
         if (direction == Direction.DOWN_RIGHT_L) return downRightL();
         return rightDown();
+    }
+
+    public String getSymbol() {
+        return file.getSymbol() + rank.getSymbol();
     }
 }

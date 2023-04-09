@@ -1,25 +1,20 @@
 package view;
 
+import domain.Turn;
 import domain.piece.Piece;
 import domain.point.File;
 import domain.point.Rank;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OutputView {
     public void printStatus(List<List<Piece>> status) {
         Collections.reverse(status);
-
         Iterator<Rank> ranks = getRankIterator();
-
         for (List<Piece> pieces : status) {
             printRankInformation(ranks, pieces);
         }
-
         printFileInformation();
     }
 
@@ -45,11 +40,9 @@ public class OutputView {
     private static void assignRankInformationToStringBuffer(Iterator<Rank> iterator, StringBuffer stringBuffer) {
         Rank rank = iterator.next();
         stringBuffer.append(String.format("  %s", rank.getSymbol()));
-
         if (rank == Rank.EIGHT) {
             stringBuffer.append("  (rank 8)");
         }
-
         if (rank == Rank.ONE) {
             stringBuffer.append("  (rank 1)");
         }
@@ -74,5 +67,35 @@ public class OutputView {
 
     public void printExceptionMessage(String message) {
         System.out.printf("[ERROR] %s%n", message);
+    }
+
+    public void printScoreStatus(float blackScore, float whiteScore) {
+        System.out.println("> 현재 체스 점수");
+        System.out.printf("> BLACK 점수 : %f%n", blackScore);
+        System.out.printf("> WHITE 점수 : %f%n", whiteScore);
+
+        Optional<Winner> winnerOptional = Winner.of(blackScore, whiteScore);
+        winnerOptional.ifPresentOrElse(winner ->
+                System.out.printf("> %f점 차이로 %s가 앞서가는 중!%n", winner.getScore(), winner.getName()),
+                () -> System.out.println("> 한치 앞도 알 수 없는 치열한 접점 중 !")
+        );
+    }
+
+    public void printWinner(Turn turn) {
+        System.out.printf("> 게임 종료! 승자 : %s%n", turn);
+    }
+
+    public void printStartingMessage() {
+        System.out.println("> 환영합니다. 입장하실 체스 게임의 아이디를 입력해주세요.");
+        System.out.print("> ");
+    }
+
+    public void printAskingNewGame() {
+        System.out.println("> 해당 아이디로 만든 게임방이 없습니다. 새로 생성할까요? (Y/N)");
+        System.out.print("> ");
+    }
+
+    public void printGameEndMessage() {
+        System.out.println("> 게임을 종료합니다.");
     }
 }
