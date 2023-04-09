@@ -19,28 +19,29 @@ public class ChessGameService {
     private final ResultMapper resultMapper = new ResultMapper();
 
 
-    public ChessGame createNewGame(final long gameId) {
-//        validateNotDuplicateGameId(gameId);
+    public ChessGame createNewGame(final int gameId) {
+        validateNotDuplicateGameId(gameId);
 
         final ChessGame chessGame = ChessGame.createNewChessGame(gameId);
         chessGameDao.save(chessGame);
         return chessGame;
     }
 
-    private void validateNotDuplicateGameId(final long gameId) {
+    private void validateNotDuplicateGameId(final int gameId) {
         if (chessGameDao.findById(gameId)
                         .isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다");
         }
     }
 
-    public ChessGame readGame(final long gameId) {
+    public ChessGame loadGame(final int gameId) {
         return chessGameDao.findById(gameId)
                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다"));
     }
 
     public PieceDto[][] moveWithCapture(final ChessGame chessGame, final Position from, final Position to) {
         chessGame.moveWithCapture(from, to);
+        chessGameDao.update(chessGame);
         return chessBoardMapper.toDto(chessGame.getChessBoard());
     }
 

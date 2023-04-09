@@ -10,7 +10,7 @@ public class KingAliveStatus implements GameStatus {
 
     private final Color turn;
 
-    KingAliveStatus(final Color turn) {
+    public KingAliveStatus(final Color turn) {
         this.turn = turn;
     }
 

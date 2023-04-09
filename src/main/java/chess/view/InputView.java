@@ -23,10 +23,10 @@ public class InputView {
                       .collect(Collectors.toUnmodifiableList());
     }
 
-    public long readGameId() {
-        System.out.println("새로 시작할 게임 id를 입력하세요");
+    public int readGameId() {
+        System.out.println("게임 id를 입력하세요");
         try {
-            return Long.parseLong(scanner.nextLine());
+            return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("게임 아이디는 정수로 입력해주세요");
         }

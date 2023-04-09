@@ -13,6 +13,7 @@ public final class CommandMapper {
     private static final Map<String, Function<List<String>, Command>> commandFactoryMethodSelector = new HashMap<>();
 
     static {
+        commandFactoryMethodSelector.put(LoadCommand.COMMAND, LoadCommand::of);
         commandFactoryMethodSelector.put(StartCommand.COMMAND, StartCommand::of);
         commandFactoryMethodSelector.put(MoveCommand.COMMAND, MoveCommand::of);
         commandFactoryMethodSelector.put(StatusCommand.COMMAND, StatusCommand::of);

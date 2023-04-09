@@ -22,7 +22,7 @@ public class StatusCommand extends AbstractCommand {
 
     @Override
     public ChessGame execute(final InputView inputView, final OutputView outputView, final ChessGameService chessGameService, final ChessGame chessGame) {
-        validateNotEmptyGame(chessGame);
+        validatePlaying(chessGame);
 
         if (chessGameService.isGameOver(chessGame)) {
             outputView.printWinner(chessGameService.getWinner(chessGame));

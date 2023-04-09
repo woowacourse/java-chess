@@ -13,10 +13,11 @@ public class OutputView {
 
     public void printInstructionMessage() {
         printMessageStartingWithPrompt("체스 게임을 시작합니다.");
-        printMessageStartingWithPrompt("게임 시작 : start");
+        printMessageStartingWithPrompt("게임 불러오기 : load");
+        printMessageStartingWithPrompt("새로운 게임 시작 : start");
         printMessageStartingWithPrompt("게임 종료 : end");
         printMessageStartingWithPrompt("게임 이동 : move from위치 target위치 - 예. move b2 b3");
-        printMessageStartingWithPrompt("점수 확인(게임 진행) 및 승자 확인(게임 종료) : status");
+        printMessageStartingWithPrompt("점수 확인 : status");
     }
 
     private void printMessageStartingWithPrompt(final String message) {

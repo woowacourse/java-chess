@@ -46,7 +46,7 @@ public class ChessBoardFactory {
         createWhiteNonPawnPieces(pieces, File.B, KnightMove.getInstance());
         createWhiteNonPawnPieces(pieces, File.C, BishopMove.getInstance());
         createWhiteNonPawnPieces(pieces, File.D, QueenMove.getInstance());
-        createWhiteNonPawnPieces(pieces, File.E, KnightMove.getInstance());
+        createWhiteNonPawnPieces(pieces, File.E, KingMove.getInstance());
         createWhiteNonPawnPieces(pieces, File.F, BishopMove.getInstance());
         createWhiteNonPawnPieces(pieces, File.G, KnightMove.getInstance());
         createWhiteNonPawnPieces(pieces, File.H, RookMove.getInstance());
@@ -62,7 +62,7 @@ public class ChessBoardFactory {
         createBlackNonPawnPieces(pieces, File.B, KnightMove.getInstance());
         createBlackNonPawnPieces(pieces, File.C, BishopMove.getInstance());
         createBlackNonPawnPieces(pieces, File.D, QueenMove.getInstance());
-        createBlackNonPawnPieces(pieces, File.E, KnightMove.getInstance());
+        createBlackNonPawnPieces(pieces, File.E, KingMove.getInstance());
         createBlackNonPawnPieces(pieces, File.F, BishopMove.getInstance());
         createBlackNonPawnPieces(pieces, File.G, KnightMove.getInstance());
         createBlackNonPawnPieces(pieces, File.H, RookMove.getInstance());

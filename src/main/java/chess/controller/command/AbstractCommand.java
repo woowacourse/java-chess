@@ -13,15 +13,21 @@ public abstract class AbstractCommand implements Command {
     }
 
     protected void validatePlaying(final ChessGame chessGame) {
-        validateNotEmptyGame(chessGame);
+        validateGameNotEmpty(chessGame);
         if (chessGame.isGameOver()) {
             throw new IllegalArgumentException("게임이 종료되었습니다");
         }
     }
 
-    protected void validateNotEmptyGame(final ChessGame chessGame) {
+    protected void validateGameNotEmpty(final ChessGame chessGame) {
         if (chessGame == null) {
             throw new IllegalArgumentException("게임을 먼저 시작해주세요");
+        }
+    }
+
+    protected void validateGameEmpty(final ChessGame chessGame) {
+        if (chessGame != null) {
+            System.out.println("플레이 중인 게임이 있습니다");
         }
     }
 

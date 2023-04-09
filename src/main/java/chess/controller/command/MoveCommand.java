@@ -37,6 +37,10 @@ public class MoveCommand extends AbstractCommand {
 
         final PieceDto[][] pieceDtos = chessGameService.moveWithCapture(chessGame, from, to);
         outputView.printChessBoard(pieceDtos);
+        if (chessGameService.isGameOver(chessGame)) {
+            outputView.printWinner(chessGameService.getWinner(chessGame));
+            return null;
+        }
         return chessGame;
     }
 }

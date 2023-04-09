@@ -8,9 +8,9 @@ public interface ChessGameDao {
 
     void save(ChessGame chessGame);
 
-    void delete();
+    void deleteGameById(int id);
 
     void update(ChessGame chessGame);
 
-    Optional<ChessGame> findById(long id);
+    Optional<ChessGame> findById(int id);
 }

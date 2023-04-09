@@ -11,18 +11,22 @@ import java.util.List;
 
 public class ChessGame {
 
-    private final long id;
+    private final int id;
     private final ChessBoard chessBoard;
     private GameStatus gameStatus;
 
-    private ChessGame(final long id, final ChessBoard chessBoard, final GameStatus gameStatus) {
+    private ChessGame(final int id, final ChessBoard chessBoard, final GameStatus gameStatus) {
         this.id = id;
         this.chessBoard = chessBoard;
         this.gameStatus = gameStatus;
     }
 
-    public static ChessGame createNewChessGame(long id) {
+    public static ChessGame createNewChessGame(int id) {
         return new ChessGame(id, createNewChessBoard(), GameStatus.getInitialStatus());
+    }
+
+    public static ChessGame createChessGame(final int id, final ChessBoard chessBoard, final GameStatus gameStatus) {
+        return new ChessGame(id, chessBoard, gameStatus);
     }
 
     private static ChessBoard createNewChessBoard() {
@@ -64,5 +68,9 @@ public class ChessGame {
 
     public Color getTurn() {
         return gameStatus.getTurn();
+    }
+
+    public int getId() {
+        return id;
     }
 }

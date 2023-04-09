@@ -9,7 +9,7 @@ public class KingDeadStatus implements GameStatus {
 
     private final Color winner;
 
-    KingDeadStatus(final Color winner) {
+    public KingDeadStatus(final Color winner) {
         this.winner = winner;
     }
 
@@ -35,6 +35,6 @@ public class KingDeadStatus implements GameStatus {
 
     @Override
     public Color getTurn() {
-        throw new UnsupportedOperationException("게임이 진행 중이지 않습니다");
+        return getWinner();
     }
 }
