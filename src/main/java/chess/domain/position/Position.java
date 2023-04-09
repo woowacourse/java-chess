@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 public class Position {
 
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final Map<Integer, Position> cache = new HashMap<>();
 
     private final Rank rank;
@@ -17,6 +19,22 @@ public class Position {
 
     public static Position of(final Rank rank, final File file) {
         return cache.computeIfAbsent(toKey(rank, file), key -> new Position(rank, file));
+    }
+
+    public static Position of(String rankAndFile) {
+        rankAndFile = rankAndFile.strip();
+        validateLength(rankAndFile);
+
+        final String[] split = rankAndFile.split("");
+        final String file = split[FILE_INDEX];
+        final String rank = split[RANK_INDEX];
+        return Position.of(Rank.from(rank), File.from(file));
+    }
+
+    private static void validateLength(final String rankAndFile) {
+        if (rankAndFile.length() != 2) {
+            throw new IllegalArgumentException("존재하지 않는 위치입니다");
+        }
     }
 
     private static Integer toKey(final Rank rank, final File file) {
@@ -43,10 +61,6 @@ public class Position {
         final int verticalDistance = calculateVerticalDistance(other);
         final int horizontalDistance = calculateHorizontalDistance(other);
 
-        return isLine(verticalDistance, horizontalDistance);
-    }
-
-    private boolean isLine(final int verticalDistance, final int horizontalDistance) {
         return verticalDistance == 0 || horizontalDistance == 0;
     }
 
@@ -56,22 +70,16 @@ public class Position {
         final int verticalDistance = calculateVerticalDistance(other);
         final int horizontalDistance = calculateHorizontalDistance(other);
 
-        return isDiagonal(verticalDistance, horizontalDistance);
-    }
-
-    private boolean isDiagonal(final int verticalDistance, final int horizontalDistance) {
         return verticalDistance == horizontalDistance;
     }
 
-    public void validateNotSameSquare(final Position other) {
+    private void validateNotSameSquare(final Position other) {
         if (this == other) {
             throw new IllegalArgumentException("같은 위치의 position입니다");
         }
     }
 
     private List<Position> positionsOfLine(final Position otherPosition) {
-        assert isLine(otherPosition);
-
         if (isAtRank(otherPosition.rank)) {
             return positionsOfRank(otherPosition);
         }
@@ -93,8 +101,6 @@ public class Position {
     }
 
     private List<Position> positionsOfDiagonal(final Position otherPosition) {
-        assert isDiagonal(otherPosition);
-
         final List<Rank> ranks = Rank.ranksBetween(this.rank, otherPosition.rank);
         final List<File> files = File.filesBetween(this.file, otherPosition.file);
         final List<Position> positions = new ArrayList<>();

@@ -6,7 +6,6 @@ import chess.domain.position.Position;
 import chess.domain.strategy.piecemovestrategy.PieceType;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class PlayerScore {
         this.playerScore = playerScore;
     }
 
-    public static PlayerScore from(final List<Piece> pieces) {
+    public static PlayerScore from(final Collection<Piece> pieces) {
         final double nonPawnScore = calculateNonPawnScore(pieces);
         final double pawnScore = calculatePawnScore(pieces);
 
@@ -39,7 +38,7 @@ public class PlayerScore {
                      .sum();
     }
 
-    private static double calculatePawnScore(final List<Piece> pieces) {
+    private static double calculatePawnScore(final Collection<Piece> pieces) {
         final Map<File, Long> fileCount = countPawnByFile(pieces);
 
         return fileCount.values()
@@ -48,7 +47,7 @@ public class PlayerScore {
                         .sum();
     }
 
-    private static Map<File, Long> countPawnByFile(final List<Piece> pieces) {
+    private static Map<File, Long> countPawnByFile(final Collection<Piece> pieces) {
         return pieces.stream()
                      .filter(piece -> PieceType.isPawn(piece.getPieceType()))
                      .map(Piece::getPosition)

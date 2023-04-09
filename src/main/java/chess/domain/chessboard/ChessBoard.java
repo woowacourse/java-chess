@@ -1,6 +1,7 @@
 package chess.domain.chessboard;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.strategy.piecemovestrategy.PieceType;
@@ -13,8 +14,22 @@ import java.util.stream.Collectors;
 public class ChessBoard {
     private final Map<Position, Piece> pieces;
 
-    public ChessBoard(Map<Position, Piece> pieces) {
+    ChessBoard(Map<Position, Piece> pieces) {
         this.pieces = new HashMap<>(pieces);
+    }
+
+    public static ChessBoard of(final Map<Position, Piece> pieces) {
+        return new ChessBoard(pieces);
+    }
+
+    public static ChessBoard of(final Piece... pieceArray) {
+        final Map<Position, Piece> pieces = new HashMap<>();
+
+        for (final Piece piece : pieceArray) {
+            pieces.put(piece.getPosition(), piece);
+        }
+
+        return ChessBoard.of(pieces);
     }
 
     public Piece moveWithCapture(final Position from, final Position to) {
@@ -57,6 +72,7 @@ public class ChessBoard {
 
         pieceToMove.move(from, to, target);
         pieces.put(to, pieceToMove);
+        pieces.put(from, new Empty(from));
     }
 
     public boolean isPieceColorNotMatch(final Position position, final Color color) {

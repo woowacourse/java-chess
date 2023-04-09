@@ -1,79 +1,41 @@
 package chess.controller;
 
+import chess.controller.command.Command;
+import chess.controller.command.CommandMapper;
 import chess.domain.chessgame.ChessGame;
 import chess.service.ChessGameService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final ChessGameService chessGameService;
 
-    public ChessGameController(final InputView inputView, final OutputView outputView) {
+    public ChessGameController(final InputView inputView, final OutputView outputView, final ChessGameService chessGameService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.chessGameService = chessGameService;
     }
 
     public void run() {
-//        outputView.printInstructions();
-//
-//        ChessGameService chessGameService = new ChessGameService();
-//        ChessGame chessGame = ChessGame.getUnplayableGame();
-//        Command command = Command.EMPTY_COMMAND;
-//        execute(chessGameService, chessGame, command);
+        outputView.printInstructionMessage();
 
-    }
+        final CommandMapper commandMapper = CommandMapper.getInstance();
+        Command command = Command.emptyCommand();
+        ChessGame chessGame = null;
 
-    private void execute(final ChessGameService chessGameService, ChessGame chessGame, Command command) {
-
-        while (!command.isEnd()) {
+        while (!command.isGameEnd()) {
             try {
-                command = inputView.readCommand();
-
-                if (command.isStart()) {
-                    chessGame = startGame(chessGameService, chessGame);
-                }
-                if (command.isMove()) {
-                    movePiece(command, chessGameService, chessGame);
-                }
-                if (command.isStatus()) {
-                    printScores(chessGameService, chessGame);
-                }
-
-                printResultIfGameOver(chessGameService, chessGame);
+                final List<String> commandWithOptions = inputView.readCommand();
+                command = commandMapper.getCommand(commandWithOptions);
+                chessGame = command.execute(inputView, outputView, chessGameService, chessGame);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
-    }
-
-    private ChessGame startGame(final ChessGameService chessGameService, ChessGame chessGame) {
-//        if (!chessGame.isGameOver()) {
-//            throw new IllegalArgumentException("게임이 진행 중입니다");
-//        }
-//        chessGame = chessGameService.readGame();
-//        outputView.printChessBoard(chessGameService.getChessBoard(chessGame));
-//        return chessGame;
-        return null;
-    }
-
-    private void movePiece(final Command command, final ChessGameService chessGameService, final ChessGame chessGame) {
-        final MoveCommand moveCommand = new MoveCommand(command);
-
-//        chessGameService.moveWithCapture(chessGame, moveCommand);
-    }
-
-    private void printScores(final ChessGameService chessGameService, final ChessGame chessGame) {
-//        if (chessGame.isGameOver()) {
-//            throw new IllegalArgumentException("게임이 진행 중이지 않습니다");
-//        }
-//        outputView.printScore(chessGameService.calculateScores(chessGame));
-    }
-
-    private void printResultIfGameOver(final ChessGameService chessGameService, final ChessGame chessGame) {
-//        if (chessGameService.isGameOver(chessGame)) {
-//            outputView.printResult(chessGameService.getResult(chessGame));
-//        }
     }
 }

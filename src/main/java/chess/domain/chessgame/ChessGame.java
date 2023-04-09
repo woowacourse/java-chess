@@ -11,16 +11,18 @@ import java.util.List;
 
 public class ChessGame {
 
+    private final long id;
     private final ChessBoard chessBoard;
     private GameStatus gameStatus;
 
-    public ChessGame(final ChessBoard chessBoard, final GameStatus gameStatus) {
+    private ChessGame(final long id, final ChessBoard chessBoard, final GameStatus gameStatus) {
+        this.id = id;
         this.chessBoard = chessBoard;
         this.gameStatus = gameStatus;
     }
 
-    public ChessGame() {
-        this(createNewChessBoard(), GameStatus.getInitialStatus());
+    public static ChessGame createNewChessGame(long id) {
+        return new ChessGame(id, createNewChessBoard(), GameStatus.getInitialStatus());
     }
 
     private static ChessBoard createNewChessBoard() {
@@ -41,7 +43,6 @@ public class ChessGame {
 
     public PlayerScore calculateScore(Color color) {
         final List<Piece> pieces = chessBoard.getPieces(color);
-
         return PlayerScore.from(pieces);
     }
 
@@ -50,7 +51,15 @@ public class ChessGame {
     }
 
     public Color getWinner() {
+        validateGameOver();
+
         return gameStatus.getWinner();
+    }
+
+    private void validateGameOver() {
+        if (!isGameOver()) {
+            throw new IllegalArgumentException("게임이 진행 중입니다");
+        }
     }
 
     public Color getTurn() {

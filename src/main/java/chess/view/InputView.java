@@ -1,43 +1,34 @@
 package chess.view;
 
-import chess.controller.Command;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    private static void validateOptionsLength(final List<String> parsedCommandInput) {
-        final String firstOption = parsedCommandInput.get(1);
-        final String secondOption = parsedCommandInput.get(2);
-
-        if (firstOption.length() != 2 || secondOption.length() != 2) {
-            throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
-        }
+    public InputView(final Scanner scanner) {
+        this.scanner = scanner;
     }
 
-    private static void validateCommandSize(final List<String> parsedCommandInput) {
-        if (parsedCommandInput.size() != 1 && parsedCommandInput.size() != 3) {
-            throw new IllegalArgumentException("잘못된 명령어 형식입니다.");
-        }
+    public List<String> readCommand() {
+        final String[] split = scanner.nextLine()
+                                      .split(" ");
+        List<String> command = Arrays.asList(split);
+
+        return command.stream()
+                      .map(String::strip)
+                      .collect(Collectors.toUnmodifiableList());
     }
 
-    public Command readCommand() {
-        final String rawCommandInput = scanner.nextLine();
-
-        List<String> parsedCommandInput = Arrays.asList(rawCommandInput.split(" "));
-        validate(parsedCommandInput);
-
-        return Command.from(parsedCommandInput);
-    }
-
-    private void validate(List<String> parsedCommandInput) {
-        validateCommandSize(parsedCommandInput);
-        if (parsedCommandInput.size() != 1) {
-            validateOptionsLength(parsedCommandInput);
+    public long readGameId() {
+        System.out.println("새로 시작할 게임 id를 입력하세요");
+        try {
+            return Long.parseLong(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("게임 아이디는 정수로 입력해주세요");
         }
     }
 }

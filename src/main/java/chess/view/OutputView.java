@@ -1,67 +1,84 @@
 package chess.view;
 
-import chess.controller.ChessBoardDto;
-import chess.controller.PieceDto;
-import chess.controller.ScoreDto;
-import chess.dto.ResultDto;
-
-import java.util.List;
+import chess.dto.PieceDto;
+import chess.dto.ScoreDto;
+import chess.dto.WinnerDto;
 
 public class OutputView {
 
+    public static final String BLACK_COLOR = "black";
+    public static final String WHITE_COLOR = "white";
+
     private static final String PROMPT = "> ";
 
-    public void printInstructions() {
-        printMessageWithPrompt("체스 게임을 시작합니다.");
-        printMessageWithPrompt("게임 시작 : start");
-        printMessageWithPrompt("게임 종료 : end");
-        printMessageWithPrompt("게임 이동 : move from위치 target위치 - 예. move b2 b3");
-        printMessageWithPrompt("점수 확인 및 승자 확인 : status");
+    public void printInstructionMessage() {
+        printMessageStartingWithPrompt("체스 게임을 시작합니다.");
+        printMessageStartingWithPrompt("게임 시작 : start");
+        printMessageStartingWithPrompt("게임 종료 : end");
+        printMessageStartingWithPrompt("게임 이동 : move from위치 target위치 - 예. move b2 b3");
+        printMessageStartingWithPrompt("점수 확인(게임 진행) 및 승자 확인(게임 종료) : status");
     }
 
-    private void printMessageWithPrompt(final String message) {
-        System.out.println(PROMPT + message);
+    private void printMessageStartingWithPrompt(final String message) {
+        println(PROMPT + message);
     }
 
-    public void printChessBoard(ChessBoardDto chessBoardDto) {
-        final List<List<PieceDto>> pieceDtos = chessBoardDto.getPieceDtos();
+    public void printNewGameStartingMessage() {
+        println("새로운 게임을 시작합니다");
+    }
 
-        printBlankLine();
-
-        for (List<PieceDto> rank : pieceDtos) {
-            printOneRank(rank);
+    public void printChessBoard(PieceDto[][] chessBoardDto) {
+        println("");
+        for (final PieceDto[] rank : chessBoardDto) {
+            printPiecesOfRank(rank);
         }
     }
 
-    private void printOneRank(final List<PieceDto> rank) {
-        for (PieceDto pieceDto : rank) {
+    private void printPiecesOfRank(final PieceDto[] rank) {
+        for (final PieceDto pieceDto : rank) {
             printPiece(pieceDto);
         }
-
-        printBlankLine();
+        println("");
     }
 
     private void printPiece(final PieceDto pieceDto) {
-        System.out.print(pieceDto.getOutputFormat());
+        print(generatePieceOutput(pieceDto));
+    }
+
+    private String generatePieceOutput(final PieceDto pieceDto) {
+        final String color = pieceDto.getColor();
+        final String type = pieceDto.getType();
+
+        if (color.equals(BLACK_COLOR)) {
+            return type.toUpperCase();
+        }
+        if (color.equals(WHITE_COLOR)) {
+            return type.toLowerCase();
+        }
+        return type;
     }
 
     public void printScore(final ScoreDto scoreDto) {
-        System.out.println("흑팀: " + scoreDto.getBlackScore());
-        System.out.println("백팀: " + scoreDto.getWhiteScore());
+        println("백팀: " + scoreDto.getWhiteScore());
+        println("흑팀: " + scoreDto.getBlackScore());
     }
 
-    public void printInvalidMoveMessage() {
-        System.out.println("이동할 수 없습니다.");
+    public void printWinner(final WinnerDto winnerDto) {
+        final String winner = winnerDto.getWinner();
+
+        println(winner + "가 왕을 잡았습니다!");
+        println("승자: " + winner);
     }
 
-    private void printBlankLine() {
-        System.out.println();
+    public void printGameEndMessage() {
+        println("게임을 종료합니다!");
     }
 
-    public void printResult(final ResultDto resultDto) {
-        final String winner = resultDto.getWinner();
+    private void print(final String message) {
+        System.out.print(message);
+    }
 
-        System.out.println(winner + "가 왕을 잡았습니다!");
-        System.out.println("승자: " + winner);
+    private void println(final String message) {
+        System.out.println(message);
     }
 }

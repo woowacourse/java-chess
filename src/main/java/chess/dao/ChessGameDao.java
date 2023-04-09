@@ -12,5 +12,5 @@ public interface ChessGameDao {
 
     void update(ChessGame chessGame);
 
-    Optional<ChessGame> find();
+    Optional<ChessGame> findById(long id);
 }

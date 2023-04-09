@@ -110,4 +110,9 @@ public class ChessGameDaoImpl implements ChessGameDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Optional<ChessGame> findById(final long id) {
+        return Optional.empty();
+    }
 }

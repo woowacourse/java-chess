@@ -34,6 +34,7 @@ public enum Rank {
         final int bigger = Math.max(from.position, to.position);
 
         List<Rank> ranks = ranksBetween(smaller, bigger);
+
         return sortByPosition(from, to, ranks);
     }
 
