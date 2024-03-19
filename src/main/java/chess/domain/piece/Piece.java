@@ -11,4 +11,16 @@ public abstract class Piece {
         this.color = color;
         this.pieceType = pieceType;
     }
+
+    public boolean isWhite() {
+        return color.isWhite();
+    }
+
+    public boolean isBlack() {
+        return color.isBlack();
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
 }

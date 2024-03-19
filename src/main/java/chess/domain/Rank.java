@@ -30,4 +30,8 @@ public enum Rank {
         int newY = this.value + y;
         return Rank.from(newY);
     }
+
+    public int getValue() {
+        return value;
+    }
 }

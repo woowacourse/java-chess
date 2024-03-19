@@ -30,4 +30,8 @@ public enum File {
         int newX = this.value + x;
         return File.from(newX);
     }
+
+    public int getValue() {
+        return value;
+    }
 }
