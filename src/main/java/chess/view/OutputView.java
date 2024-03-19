@@ -20,22 +20,41 @@ public class OutputView {
             PieceType.KING, "K", PieceType.QUEEN, "Q", PieceType.KNIGHT, "N",
             PieceType.BISHOP, "B", PieceType.ROOK, "R", PieceType.PAWN, "P"
     );
+    private static final String EMPTY_SPACE = ".";
 
     public void printBoard(Map<Position, PieceDto> board) {
         for (Row row : ROW_ORDER) {
-            for (Column column : COLUMN_ORDER) {
-                PieceDto piece = board.get(new Position(row, column));
-                if (piece == null) {
-                    System.out.print(".");
-                    continue;
-                }
-                String display = PIECE_DISPLAY.get(piece.type());
-                if (!piece.isBlack()) {
-                    display = display.toLowerCase();
-                }
-                System.out.print(display);
-            }
-            System.out.println();
+            printBoardOneLine(board, row);
         }
+    }
+
+    private void printBoardOneLine(Map<Position, PieceDto> board, Row row) {
+        for (Column column : COLUMN_ORDER) {
+            PieceDto piece = board.get(new Position(row, column));
+            printPiece(piece);
+        }
+        System.out.println();
+    }
+    
+    private void printPiece(PieceDto piece) {
+        if (piece == null) {
+            System.out.print(EMPTY_SPACE);
+            return;
+        }
+        if (piece.isBlack()) {
+            printBlackPiece(piece.type());
+            return;
+        }
+        printWhitePiece(piece.type());
+    }
+    
+    private void printBlackPiece(PieceType type) {
+        String display = PIECE_DISPLAY.get(type);
+        System.out.print(display.toUpperCase());
+    }
+
+    private void printWhitePiece(PieceType type) {
+        String display = PIECE_DISPLAY.get(type);
+        System.out.print(display.toLowerCase());
     }
 }
