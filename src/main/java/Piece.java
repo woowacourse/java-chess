@@ -8,6 +8,10 @@ public abstract class Piece {
         this.side = side;
     }
 
+    public boolean isBlack() {
+        return side.isBlack();
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;

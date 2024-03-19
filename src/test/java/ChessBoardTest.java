@@ -16,10 +16,10 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position("a", "8"), new Rook(Side.BLACK)),
-                Map.entry(new Position("h", "8"), new Rook(Side.BLACK)),
-                Map.entry(new Position("a", "1"), new Rook(Side.WHITE)),
-                Map.entry(new Position("h", "1"), new Rook(Side.WHITE))
+                Map.entry(new Position(Horizontal.A, Vertical.EIGHTH), new Rook(Side.BLACK)),
+                Map.entry(new Position(Horizontal.H, Vertical.EIGHTH), new Rook(Side.BLACK)),
+                Map.entry(new Position(Horizontal.A, Vertical.FIRST), new Rook(Side.WHITE)),
+                Map.entry(new Position(Horizontal.H, Vertical.FIRST), new Rook(Side.WHITE))
         );
     }
 
@@ -31,10 +31,10 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position("b", "8"), new Knight(Side.BLACK)),
-                Map.entry(new Position("g", "8"), new Knight(Side.BLACK)),
-                Map.entry(new Position("b", "1"), new Knight(Side.WHITE)),
-                Map.entry(new Position("g", "1"), new Knight(Side.WHITE))
+                Map.entry(new Position(Horizontal.B, Vertical.EIGHTH), new Knight(Side.BLACK)),
+                Map.entry(new Position(Horizontal.G, Vertical.EIGHTH), new Knight(Side.BLACK)),
+                Map.entry(new Position(Horizontal.B, Vertical.FIRST), new Knight(Side.WHITE)),
+                Map.entry(new Position(Horizontal.G, Vertical.FIRST), new Knight(Side.WHITE))
         );
     }
 
@@ -46,10 +46,10 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position("c", "8"), new Bishop(Side.BLACK)),
-                Map.entry(new Position("f", "8"), new Bishop(Side.BLACK)),
-                Map.entry(new Position("c", "1"), new Bishop(Side.WHITE)),
-                Map.entry(new Position("f", "1"), new Bishop(Side.WHITE))
+                Map.entry(new Position(Horizontal.C, Vertical.EIGHTH), new Bishop(Side.BLACK)),
+                Map.entry(new Position(Horizontal.F, Vertical.EIGHTH), new Bishop(Side.BLACK)),
+                Map.entry(new Position(Horizontal.C, Vertical.FIRST), new Bishop(Side.WHITE)),
+                Map.entry(new Position(Horizontal.F, Vertical.FIRST), new Bishop(Side.WHITE))
         );
     }
 
@@ -61,8 +61,8 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position("d", "8"), new Queen(Side.BLACK)),
-                Map.entry(new Position("d", "1"), new Queen(Side.WHITE))
+                Map.entry(new Position(Horizontal.D, Vertical.EIGHTH), new Queen(Side.BLACK)),
+                Map.entry(new Position(Horizontal.D, Vertical.FIRST), new Queen(Side.WHITE))
         );
     }
 
@@ -74,8 +74,36 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position("e", "8"), new King(Side.BLACK)),
-                Map.entry(new Position("e", "1"), new King(Side.WHITE))
+                Map.entry(new Position(Horizontal.E, Vertical.EIGHTH), new King(Side.BLACK)),
+                Map.entry(new Position(Horizontal.E, Vertical.FIRST), new King(Side.WHITE))
+        );
+    }
+
+    @DisplayName("검은색 폰은 a7~h7에 위치한다. 흰색 폰은 a2~h2에 위치한다.")
+    @Test
+    void pawnPositionTest() {
+        ChessBoard chessBoard = new ChessBoard(new LinkedHashMap<>());
+
+        chessBoard.init();
+
+        assertThat(chessBoard.getBoard()).contains(
+                Map.entry(new Position(Horizontal.A, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.B, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.C, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.D, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.E, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.F, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.G, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Horizontal.H, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+
+                Map.entry(new Position(Horizontal.A, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.B, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.C, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.D, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.E, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.F, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.G, Vertical.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Horizontal.H, Vertical.SECOND), new Pawn(Side.WHITE))
         );
     }
 }

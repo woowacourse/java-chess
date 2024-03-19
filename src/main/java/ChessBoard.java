@@ -1,4 +1,7 @@
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ChessBoard {
 
@@ -9,27 +12,22 @@ public class ChessBoard {
     }
 
     public void init() {
-        initSide(Side.BLACK);
-        initSide(Side.WHITE);
+        Arrays.stream(Side.values()).forEach(this::initSide);
     }
 
-    public void initSide(Side side) { // RNBQKBNR
-        String defaultLine = getLine(side);
-        board.put(new Position("a", defaultLine), new Rook(side));
-        board.put(new Position("b", defaultLine), new Knight(side));
-        board.put(new Position("c", defaultLine), new Bishop(side));
-        board.put(new Position("d", defaultLine), new Queen(side));
-        board.put(new Position("e", defaultLine), new King(side));
-        board.put(new Position("f", defaultLine), new Bishop(side));
-        board.put(new Position("g", defaultLine), new Knight(side));
-        board.put(new Position("h", defaultLine), new Rook(side));
+    private void initSide(Side side) {
+        initPiece(InitPosition.ROOK, side, () -> new Rook(side));
+        initPiece(InitPosition.KNIGHT, side, () -> new Knight(side));
+        initPiece(InitPosition.BISHOP, side, () -> new Bishop(side));
+        initPiece(InitPosition.QUEEN, side, () -> new Queen(side));
+        initPiece(InitPosition.KING, side, () -> new King(side));
+        initPiece(InitPosition.PAWN, side, () -> new Pawn(side));
     }
 
-    private static String getLine(Side side) {
-        if (side == Side.BLACK) {
-            return "8";
-        }
-        return "1";
+    private void initPiece(InitPosition initPosition, Side side, Supplier<Piece> pieceSupplier) {
+        List<Horizontal> horizontals = initPosition.getHorizontals();
+        Vertical vertical = initPosition.vertical(side);
+        horizontals.forEach(horizontal -> board.put(new Position(horizontal, vertical), pieceSupplier.get()));
     }
 
     public Map<Position, Piece> getBoard() {

@@ -2,10 +2,10 @@ import java.util.Objects;
 
 public class Position {
 
-    private final String horizontal;
-    private final String vertical;
+    private final Horizontal horizontal;
+    private final Vertical vertical;
 
-    public Position(String horizontal, String vertical) {
+    public Position(Horizontal horizontal, Vertical vertical) {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
