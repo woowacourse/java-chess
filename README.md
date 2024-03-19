@@ -1,7 +1,25 @@
-# java-chess
+# 기능 요구사항
 
-체스 미션 저장소
+## 체스판
+- [ ] 체스판을 초기화한다. 
+- [ ] 체스판의 가로 위치는 왼쪽부터 a ~ h이고, 세로는 아래부터 1 ~ 8이다.
+- [ ] 체스판에서 각 진영은 검은색(대문자)과 흰색(소문자) 편으로 구분한다.
+- [ ] 체스판의 초기 상태는 아래와 같다.
+    ```
+    RNBQKBNR  8
+    PPPPPPPP  7
+    ........  6
+    ........  5
+    ........  4
+    ........  3
+    pppppppp  2
+    rnbqkbnr  1
+    ```
 
-## 우아한테크코스 코드리뷰
+## 말
+- [ ] 말은 체스판에 위치한다.
+- [ ] 말의 종류는 King, Queen, Rook, Bishop, Knight, Pawn이 있다.
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+## 입력
+- [ ] start 명령을 입력하면 게임이 시작된다.
+- [ ] end 명령을 입력하면 게임이 종료된다.
