@@ -60,6 +60,8 @@ public enum Direction {
         return RIGHT;
     }
 
+    //TODO 테스트하기
+
     public static List<Direction> createDirections(int verticalDistance, int horizontalDistance) {
         List<Direction> directions = new ArrayList<>();
         while (verticalDistance != 0 || horizontalDistance != 0) {
@@ -69,5 +71,13 @@ public enum Direction {
             horizontalDistance -= direction.horizontal;
         }
         return directions;
+    }
+
+    public boolean isOrthogonal() {
+        return this == UP || this == DOWN || this == LEFT || this == RIGHT;
+    }
+
+    public boolean isDiagonal() {
+        return !isOrthogonal();
     }
 }
