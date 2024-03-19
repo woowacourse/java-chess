@@ -3,9 +3,7 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class Position {
-    //TODO: ROW 클래스 이름 수정
     //TODO: 포지션 캐싱
-    //TODO: 포지션 관련 클래스들 이퀄스 해시 재정의
 
     private final RowPosition rowPosition;
     private final ColumnPosition columnPosition;
