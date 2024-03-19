@@ -10,4 +10,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public PositionDifference calculateDifferenceTo(Position position) {
+        return new PositionDifference(
+                file.calculateDifference(position.file),
+                rank.calculateDifference(position.rank)
+        );
+    }
 }
