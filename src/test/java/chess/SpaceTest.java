@@ -20,7 +20,7 @@ class SpaceTest {
         Piece piece1 = new Pawn(Color.BLACK);
         Piece piece2 = null;
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
-        Space space2 = new Space(piece2, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
 
         space1.movePiece(space2);
 
@@ -36,7 +36,7 @@ class SpaceTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.FOUR));
 
-        assertThatThrownBy(()->space1.movePiece(space2))
+        assertThatThrownBy(() -> space1.movePiece(space2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
@@ -47,5 +47,18 @@ class SpaceTest {
         Space space = new Space(null, new Position(File.a, Rank.ONE));
 
         assertThat(space.isBlankSpace()).isTrue();
+    }
+
+    @Test
+    @DisplayName("이동할 위치에 나의 말이 있으면 이동할 수 없다")
+    void should_not_move_when_target_space_has_same_color_piece() {
+        Piece piece1 = new Pawn(Color.BLACK);
+        Piece piece2 = new Pawn(Color.BLACK);
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
+
+        assertThatThrownBy(() -> space1.movePiece(space2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치에 피스가 이미 있습니다.");
     }
 }
