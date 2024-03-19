@@ -31,9 +31,9 @@ public class PositionTest {
         Position position = Position.of("a1");
         Position otherPosition = Position.of("c5");
 
-        PositionDifference actual = position.calculateDifference(otherPosition);
-        PositionDifference expected = new PositionDifference(2, 4);
+        PositionDifference actualPositionDifference = position.calculateDifference(otherPosition);
+        PositionDifference expectedPositionDifference = new PositionDifference(2, 4);
 
-        Assertions.assertThat(actual).isEqualTo(expected);
+        Assertions.assertThat(actualPositionDifference).isEqualTo(expectedPositionDifference);
     }
 }
