@@ -34,8 +34,8 @@ public class Board {
     }
 
     private void initializeSpecialPiece(int rankValue, Team team) {
-        pieces.put(new Coordinate(rankValue, 'd'), new Piece(PieceType.KING, team));
-        pieces.put(new Coordinate(rankValue, 'e'), new Piece(PieceType.QUEEN, team));
+        pieces.put(new Coordinate(rankValue, 'e'), new Piece(PieceType.KING, team));
+        pieces.put(new Coordinate(rankValue, 'd'), new Piece(PieceType.QUEEN, team));
         pieces.put(new Coordinate(rankValue, 'c'), new Piece(PieceType.BISHOP, team));
         pieces.put(new Coordinate(rankValue, 'f'), new Piece(PieceType.BISHOP, team));
         pieces.put(new Coordinate(rankValue, 'b'), new Piece(PieceType.KNIGHT, team));

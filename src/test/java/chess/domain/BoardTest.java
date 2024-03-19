@@ -18,23 +18,23 @@ class BoardTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("백팀의 킹은 d1에 있다.")
+    @DisplayName("백팀의 킹은 e1에 있다.")
     @Test
     void whiteKing() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(1, 'd'));
+        Piece result = board.findByCoordinate(new Coordinate(1, 'e'));
 
         Piece expected = new Piece(PieceType.KING, Team.WHITE);
         assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("백팀의 퀸은 e1 있다.")
+    @DisplayName("백팀의 퀸은 d1 있다.")
     @Test
     void whiteQueen() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(1, 'e'));
+        Piece result = board.findByCoordinate(new Coordinate(1, 'd'));
 
         Piece expected = new Piece(PieceType.QUEEN, Team.WHITE);
         assertThat(result).isEqualTo(expected);
@@ -99,23 +99,23 @@ class BoardTest {
         assertThat(result).isEqualTo(Collections.nCopies(8, new Piece(PieceType.PAWN, Team.WHITE)));
     }
 
-    @DisplayName("흑팀의 킹은 d8에 있다.")
+    @DisplayName("흑팀의 킹은 e8에 있다.")
     @Test
     void blackKing() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(8, 'd'));
+        Piece result = board.findByCoordinate(new Coordinate(8, 'e'));
 
         Piece expected = new Piece(PieceType.KING, Team.BLACK);
         assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("흑팀의 퀸은 e8 있다.")
+    @DisplayName("흑팀의 퀸은 d8 있다.")
     @Test
     void blackQueen() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(8, 'e'));
+        Piece result = board.findByCoordinate(new Coordinate(8, 'd'));
 
         Piece expected = new Piece(PieceType.QUEEN, Team.BLACK);
         assertThat(result).isEqualTo(expected);
