@@ -23,7 +23,7 @@ public class BoardFactory {
     private void createByRank(int rank, Map<Position, Piece> board) {
         for (char file = 'a'; file <= 'h'; file++) {
             Position position = new Position(file, rank);
-            Piece piece = null;
+            Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
 
             if (rank == 1 || rank == 8) {
                 piece = makePiece(file, piece, rank);

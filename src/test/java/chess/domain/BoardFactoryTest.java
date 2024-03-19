@@ -67,7 +67,7 @@ public class BoardFactoryTest {
 
         for (int rank = 3; rank <= 6; rank++) {
             for (char file = 'a'; file <= 'h'; file++) {
-                expected.put(new Position(file, rank), null);
+                expected.put(new Position(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
             }
         }
 
