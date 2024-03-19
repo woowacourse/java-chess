@@ -33,7 +33,7 @@ public class Position {
         validateRange(row, column);
         return positions.stream()
                 .filter(position -> position.row == row && position.column == column)
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalStateException("캐시에 해당 값이 존재하지 않습니다."));
     }
 
