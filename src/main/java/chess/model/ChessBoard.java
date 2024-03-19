@@ -8,4 +8,8 @@ public class ChessBoard {
     public ChessBoard(Map<ChessPosition, Piece> board) {
         this.board = board;
     }
+
+    public Map<ChessPosition, Piece> getBoard() {
+        return board;
+    }
 }

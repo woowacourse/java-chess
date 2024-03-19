@@ -2,11 +2,13 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
         InputView inputView = new InputView();
-        ChessController chessController = new ChessController(inputView);
+        OutputView outputView = new OutputView();
+        ChessController chessController = new ChessController(inputView, outputView);
         chessController.run();
     }
 }

@@ -15,4 +15,8 @@ public enum File {
     File(int coordinate) {
         this.coordinate = coordinate;
     }
+
+    public int getCoordinate() {
+        return coordinate;
+    }
 }

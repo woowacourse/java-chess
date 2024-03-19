@@ -15,4 +15,8 @@ public enum Rank {
     Rank(int coordinate) {
         this.coordinate = coordinate;
     }
+
+    public int getCoordinate() {
+        return coordinate;
+    }
 }

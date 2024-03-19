@@ -8,4 +8,12 @@ public class ChessPosition {
         this.file = file;
         this.rank = rank;
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }
