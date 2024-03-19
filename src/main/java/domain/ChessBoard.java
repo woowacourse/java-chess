@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoard {
-
     public static final int RANK_SIZE = 8;
     private final List<Rank> ranks;
 

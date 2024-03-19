@@ -3,7 +3,6 @@ package domain;
 import java.util.Objects;
 
 public class Piece {
-
     private final PieceType pieceType;
     private final Color color;
 

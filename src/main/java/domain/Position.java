@@ -3,7 +3,6 @@ package domain;
 import java.util.Objects;
 
 public class Position {
-
     private final int column;
     private final int row;
 
