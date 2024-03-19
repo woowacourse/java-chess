@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ class ChessBoardTest {
     void should_CheckPositionEmptiness_When_GivenPosition() {
         Map<Position, Piece> positionPiece = new HashMap<>();
         Position position = Position.of(1, 1);
-        positionPiece.put(position, new King());
+        positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
         assertThat(chessBoard.positionIsEmpty(Position.of(2, 2))).isTrue();
@@ -30,7 +31,7 @@ class ChessBoardTest {
     void should_CheckPositionNotEmptiness_When_GivenPosition() {
         Map<Position, Piece> positionPiece = new HashMap<>();
         Position position = Position.of(1, 1);
-        positionPiece.put(position, new King());
+        positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
         assertThat(chessBoard.positionIsEmpty(Position.of(1, 1))).isFalse();
@@ -41,7 +42,7 @@ class ChessBoardTest {
     void should_GetPieceByPosition_When_GiveTargetPosition() {
         Map<Position, Piece> positionPiece = new HashMap<>();
         Position position = Position.of(1, 1);
-        positionPiece.put(position, new King());
+        positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
         assertThat(chessBoard.findPieceByPosition(position)).isInstanceOf(King.class);
@@ -52,7 +53,7 @@ class ChessBoardTest {
     void should_ThrowNoSuchElementException_When_TargetPositionIsEmpty() {
         Map<Position, Piece> positionPiece = new HashMap<>();
         Position position = Position.of(1, 1);
-        positionPiece.put(position, new King());
+        positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
         assertThatThrownBy(() -> chessBoard.findPieceByPosition(Position.of(1, 2)))
