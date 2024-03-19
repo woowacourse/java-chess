@@ -1,3 +1,6 @@
+package chess;
+
+import chess.Column;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +11,7 @@ public class ColumnTest {
 
     @Test
     @DisplayName("세로는 1~8 사이의 숫자로 생성된다.")
-    void makeColumnTest() {
+    void Column_create_with_valid_range_number() {
         assertThatCode(() -> {
             Column.valueOf("1");
         }).doesNotThrowAnyException();
@@ -16,7 +19,7 @@ public class ColumnTest {
 
     @Test
     @DisplayName("1~8이 아닌 숫자로 만들어진 세로는 존재하지 않는다.")
-    void testValueOf() {
+    void Column_validate_with_range_number() {
         assertThatThrownBy(() -> Column.valueOf("10")).isInstanceOf(IllegalArgumentException.class);
     }
 }

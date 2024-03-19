@@ -1,3 +1,5 @@
+package chess;
+
 public class Position {
     private final Row row;
     private final Column column;
