@@ -58,8 +58,8 @@ public class BoardFactory {
                 new Point("a", rank), new Rook(team),
                 new Point("b", rank), new Knight(team),
                 new Point("c", rank), new Bishop(team),
-                new Point("d", rank), new King(team),
-                new Point("e", rank), new Queen(team),
+                new Point("d", rank), new Queen(team),
+                new Point("e", rank), new King(team),
                 new Point("f", rank), new Bishop(team),
                 new Point("g", rank), new Knight(team),
                 new Point("h", rank), new Rook(team)
