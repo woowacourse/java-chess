@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 class Rank {
 
     private static final int MIN_VALUE_RANGE = 1;
@@ -13,5 +15,18 @@ class Rank {
         }
 
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rank rank = (Rank) o;
+        return value == rank.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

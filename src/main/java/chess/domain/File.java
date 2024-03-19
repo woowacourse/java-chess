@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 class File {
 
     private static final char MIN_VALUE_RANGE = 'a';
@@ -13,5 +15,18 @@ class File {
         }
 
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        File file = (File) o;
+        return value == file.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
