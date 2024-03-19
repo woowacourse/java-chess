@@ -15,7 +15,7 @@ public class Rook extends Piece {
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return position.forwardToDirection(direction, destination);
+        return position.findCourses(direction, destination);
     }
 
     @Override

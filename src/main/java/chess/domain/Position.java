@@ -61,15 +61,15 @@ public class Position {
         throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
     }
 
-    public Set<Position> forwardToDirection(Direction direction, Position other) {
+    public Set<Position> findCourses(Direction direction, Position other) {
         Set<Position> positions = new HashSet<>();
-        int newX = x;
-        int newY = y;
+        int newX = x + direction.getDx();
+        int newY = y + direction.getDy();
 
         while (newX != other.x || newY != other.y) {
+            positions.add(new Position(newX, newY));
             newX += direction.getDx();
             newY += direction.getDy();
-            positions.add(new Position(newX, newY));
         }
         return positions;
     }

@@ -81,20 +81,20 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("현재 위치가 (1, 1)이고, Direction이 UP, Destination이 (1, 3), 이동할 수 있는 좌표 값들 : (1, 2), (1, 3)을 반환한다.")
+    @DisplayName("현재 위치가 (1, 1)이고, Direction이 UP, Destination이 (1, 3), 이동할 수 있는 좌표 값들 : (1, 2)를 반환한다.")
     void forwardToDirection() {
         Position position = new Position(1, 1);
 
-        assertThat(position.forwardToDirection(Direction.UP, new Position(1, 3))).containsExactlyInAnyOrder(
-                new Position(1, 2), new Position(1, 3));
+        assertThat(position.findCourses(Direction.UP, new Position(1, 3))).containsExactlyInAnyOrder(
+                new Position(1, 2));
     }
 
     @Test
-    @DisplayName("현재 위치가 (1, 1)이고, Direction이 RIGHT_UP, Destination이 (4, 4), 이동할 수 있는 좌표 값들 : (2, 2), (3, 3), (4, 4)을 반환한다.")
+    @DisplayName("현재 위치가 (1, 1)이고, Direction이 RIGHT_UP, Destination이 (4, 4), 이동할 수 있는 좌표 값들 : (2, 2), (3, 3)을 반환한다.")
     void forwardToDirectionRightUp() {
         Position position = new Position(1, 1);
 
-        assertThat(position.forwardToDirection(Direction.RIGHT_UP, new Position(4, 4))).containsExactlyInAnyOrder(
-                new Position(2, 2), new Position(3, 3), new Position(4, 4));
+        assertThat(position.findCourses(Direction.RIGHT_UP, new Position(4, 4))).containsExactlyInAnyOrder(
+                new Position(2, 2), new Position(3, 3));
     }
 }
