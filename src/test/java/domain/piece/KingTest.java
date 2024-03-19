@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -14,5 +15,14 @@ class KingTest {
         boolean isMovable = king.isMovable(targetRow, targetColumn);
 
         assertThat(isMovable).isTrue();
+    }
+
+    @Test
+    void 두_칸_이상_움직일_수_없다() {
+        King king = new King(1, 1);
+
+        boolean isMovable = king.isMovable(3, 1);
+
+        assertThat(isMovable).isFalse();
     }
 }
