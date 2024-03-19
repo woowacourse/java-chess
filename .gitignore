@@ -32,4 +32,4 @@ out/
 .vscode/
 
 ### Zeus6768 ###
-.docker/db/
+/docker/db/
