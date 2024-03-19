@@ -1,3 +1,5 @@
+package model;
+
 import point.Point;
 
 public class Square {
@@ -8,6 +10,10 @@ public class Square {
     public Square(Point point, SquareInfo squareInfo) {
         this.point = point;
         this.squareInfo = squareInfo;
+    }
+
+    public SquareInfo getSquareInfo() {
+        return squareInfo;
     }
 
     @Override

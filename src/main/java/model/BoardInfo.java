@@ -1,3 +1,5 @@
+package model;
+
 public enum BoardInfo {
 
     KING,
@@ -6,5 +8,6 @@ public enum BoardInfo {
     PAWN,
     QUEEN,
     ROOK,
-    BLANK
+    BLANK;
+
 }
