@@ -2,7 +2,7 @@ package domain.piece;
 
 public class Pawn extends Piece {
 
-    protected Pawn(Color color) {
+    public Pawn(Color color) {
         super(color);
     }
 }
