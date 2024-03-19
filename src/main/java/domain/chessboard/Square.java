@@ -1,5 +1,7 @@
-package domain;
+package domain.chessboard;
 
+import domain.piece.PieceType;
+import domain.piece.Position;
 import java.util.Objects;
 
 public class Square {

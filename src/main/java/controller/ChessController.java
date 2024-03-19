@@ -2,7 +2,7 @@ package controller;
 
 import static view.StartOrEndCommand.START;
 
-import domain.ChessBoard;
+import domain.chessboard.ChessBoard;
 import view.InputView;
 import view.OutputView;
 

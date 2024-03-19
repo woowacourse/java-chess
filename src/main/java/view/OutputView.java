@@ -1,11 +1,11 @@
 package view;
 
-import domain.ChessBoard;
-import domain.Color;
-import domain.PieceType;
-import domain.PieceRole;
-import domain.Rank;
-import domain.Square;
+import domain.chessboard.ChessBoard;
+import domain.chessboard.Rank;
+import domain.chessboard.Square;
+import domain.piece.Color;
+import domain.piece.PieceRole;
+import domain.piece.PieceType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

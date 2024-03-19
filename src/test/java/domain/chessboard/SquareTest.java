@@ -1,5 +1,9 @@
-package domain;
+package domain.chessboard;
 
+import domain.piece.Color;
+import domain.piece.PieceRole;
+import domain.piece.PieceType;
+import domain.piece.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

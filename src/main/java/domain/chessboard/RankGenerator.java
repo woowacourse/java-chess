@@ -1,13 +1,17 @@
-package domain;
+package domain.chessboard;
 
-import static domain.PieceRole.BISHOP;
-import static domain.PieceRole.KING;
-import static domain.PieceRole.KNIGHT;
-import static domain.PieceRole.NONE;
-import static domain.PieceRole.PAWN;
-import static domain.PieceRole.QUEEN;
-import static domain.PieceRole.ROOK;
+import static domain.piece.PieceRole.BISHOP;
+import static domain.piece.PieceRole.KING;
+import static domain.piece.PieceRole.KNIGHT;
+import static domain.piece.PieceRole.NONE;
+import static domain.piece.PieceRole.PAWN;
+import static domain.piece.PieceRole.QUEEN;
+import static domain.piece.PieceRole.ROOK;
 
+import domain.piece.Color;
+import domain.piece.PieceRole;
+import domain.piece.PieceType;
+import domain.piece.Position;
 import java.util.ArrayList;
 import java.util.List;
 
