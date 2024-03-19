@@ -11,7 +11,7 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(final File file, final Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -37,6 +37,14 @@ public class Position {
 
     private static String keyOf(final File file, final Rank rank) {
         return file.name() + rank.name();
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

@@ -6,7 +6,7 @@ import chess.domain.attribute.Position;
 import chess.domain.attribute.Rank;
 
 public class Knight extends UnslidingPiece {
-    public Knight(final Color color, final File file) {
-        super(color, Position.of(file, Rank.startRankOf(color)));
+    public Knight(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

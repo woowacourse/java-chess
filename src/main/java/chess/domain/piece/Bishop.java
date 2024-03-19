@@ -6,7 +6,7 @@ import chess.domain.attribute.Position;
 import chess.domain.attribute.Rank;
 
 public class Bishop extends SlidingPiece {
-    public Bishop(final Color color, final File file) {
-        super(color, Position.of(file, Rank.startRankOf(color)));
+    public Bishop(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

@@ -1,23 +1,40 @@
 package chess.domain.piece;
 
+import java.util.Objects;
+
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Position;
 
 public abstract class Piece {
 
     protected final Color color;
-    protected final Position position;
+    protected final PieceType pieceType;
 
-    protected Piece(final Color color, final Position position) {
+    protected Piece(final Color color, final PieceType pieceType) {
         this.color = color;
-        this.position = position;
+        this.pieceType = pieceType;
     }
 
     public Color getColor() {
         return color;
     }
 
-    public Position getPosition() {
-        return position;
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        return object instanceof Piece other
+                && color == other.color
+                && pieceType == other.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, pieceType);
     }
 }

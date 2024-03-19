@@ -2,15 +2,7 @@ package chess.domain.attribute;
 
 public enum Rank {
 
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN,
-    EIGHT
-    ;
+    ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT;
 
     public static Rank startRankOf(final Color color) {
         if (color == Color.WHITE) {

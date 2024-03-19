@@ -6,7 +6,7 @@ import chess.domain.attribute.Position;
 import chess.domain.attribute.Rank;
 
 public class Queen extends SlidingPiece {
-    public Queen(final Color color) {
-        super(color, Position.of(File.D, Rank.startRankOf(color)));
+    public Queen(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

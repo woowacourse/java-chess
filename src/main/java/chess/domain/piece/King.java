@@ -9,9 +9,7 @@ import chess.domain.attribute.Rank;
 
 public class King extends UnslidingPiece {
 
-    private static final File START_FILE = E;
-
-    public King(final Color color) {
-        super(color, Position.of(START_FILE, Rank.startRankOf(color)));
+    public King(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

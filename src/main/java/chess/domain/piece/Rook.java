@@ -6,7 +6,7 @@ import chess.domain.attribute.Position;
 import chess.domain.attribute.Rank;
 
 public class Rook extends SlidingPiece {
-    public Rook(final Color color, final File file) {
-        super(color, Position.of(file, Rank.startRankOf(color)));
+    public Rook(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

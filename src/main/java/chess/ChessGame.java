@@ -23,5 +23,6 @@ public class ChessGame {
     }
 
     private void play() {
+        resultView.printBoard();
     }
 }

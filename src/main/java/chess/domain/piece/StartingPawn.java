@@ -6,7 +6,7 @@ import chess.domain.attribute.Position;
 import chess.domain.attribute.Rank;
 
 public class StartingPawn extends AbstractPawn {
-    public StartingPawn(final Color color, final File file) {
-        super(color, Position.of(file, Rank.startPawnRankOf(color)));
+    public StartingPawn(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

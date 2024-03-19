@@ -5,7 +5,7 @@ import chess.domain.attribute.Position;
 
 public class Pawn extends AbstractPawn {
 
-    protected Pawn(final Color color, final Position position) {
-        super(color, position);
+    protected Pawn(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }

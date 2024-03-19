@@ -5,7 +5,7 @@ import chess.domain.attribute.Position;
 
 public abstract class SlidingPiece extends Piece {
 
-    protected SlidingPiece(final Color color, final Position position) {
-        super(color, position);
+    protected SlidingPiece(final Color color, final PieceType pieceType) {
+        super(color, pieceType);
     }
 }
