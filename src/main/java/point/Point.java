@@ -2,7 +2,7 @@ package point;
 
 import java.util.Objects;
 
-public class Point {
+public class Point { // TODO Position 네이밍 고려
 
     //TODO : 64개 캐싱
 

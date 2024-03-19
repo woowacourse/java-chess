@@ -5,37 +5,46 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+import piece.Bishop;
+import piece.Blank;
+import piece.King;
+import piece.Knight;
+import piece.Pawn;
+import piece.Piece;
+import piece.Queen;
+import piece.Rook;
 import point.Column;
 import point.Point;
 import point.Row;
 
 public class GameBoard {
 
-    private static final Map<Column, BoardInfo> initPosition = new HashMap<>();
+    private static final Map<Column, BiFunction<Camp, Point, Piece>> initPosition = new HashMap<>();
 
     static {
-        initPosition.put(Column.FIRST, BoardInfo.ROOK);
-        initPosition.put(Column.SECOND, BoardInfo.KNIGHT);
-        initPosition.put(Column.THIRD, BoardInfo.BISHOP);
-        initPosition.put(Column.FOURTH, BoardInfo.KING);
-        initPosition.put(Column.FIFTH, BoardInfo.QUEEN);
-        initPosition.put(Column.SIXTH, BoardInfo.BISHOP);
-        initPosition.put(Column.SEVENTH, BoardInfo.KNIGHT);
-        initPosition.put(Column.EIGHTH, BoardInfo.ROOK);
+        initPosition.put(Column.FIRST, Rook::new);
+        initPosition.put(Column.SECOND, Knight::new);
+        initPosition.put(Column.THIRD, Bishop::new);
+        initPosition.put(Column.FOURTH, King::new);
+        initPosition.put(Column.FIFTH, Queen::new);
+        initPosition.put(Column.SIXTH, Bishop::new);
+        initPosition.put(Column.SEVENTH, Knight::new);
+        initPosition.put(Column.EIGHTH, Rook::new);
     }
 
-    private final List<List<Square>> board;
+    private final List<List<Piece>> board;
 
     public GameBoard() {
         this.board = init();
     }
 
-    private List<List<Square>> init() {
-        List<List<Square>> board = new ArrayList<>();
-        for (Column column : Column.values()) {
-            List<Square> line = new ArrayList<>();
+    private List<List<Piece>> init() {
+        List<List<Piece>> board = new ArrayList<>();
+        for (Column column : Column.values()) { //TODO 굳이 row, column 안 타도 됨
+            List<Piece> line = new ArrayList<>();
             for (Row row : Row.values()) {
-                line.add(new Square(new Point(row, column), new SquareInfo(BoardInfo.BLANK, Camp.GRAY)));
+                line.add(new Blank());
             }
             board.add(line);
         }
@@ -44,10 +53,10 @@ public class GameBoard {
 
     public void setting() {
 
-        var first = settingExceptPawn(Camp.BLACK);
-        var second = settingPawn(Camp.BLACK);
-        var seventh = settingPawn(Camp.WHITE);
-        var eighth = settingExceptPawn(Camp.WHITE);
+        var first = settingExceptPawn(Camp.BLACK, Row.EIGHTH);
+        var second = settingPawn(Camp.BLACK, Column.SEVENTH);
+        var seventh = settingPawn(Camp.WHITE, Column.SECOND);
+        var eighth = settingExceptPawn(Camp.WHITE, Row.FIFTH);
 
         board.set(0, first);
         board.set(1, second);
@@ -55,20 +64,19 @@ public class GameBoard {
         board.set(7, eighth);
     }
 
-    private List<Square> settingExceptPawn(final Camp camp) {
+    private List<Piece> settingExceptPawn(final Camp camp, Row row) {
         return Arrays.stream(Column.values())
-                .map(column -> new Square(new Point(Row.EIGHTH, column),
-                        new SquareInfo(initPosition.get(column), camp)))
+                .map(column -> initPosition.get(column).apply(camp, new Point(row, column)))
                 .toList();
     }
 
-    private List<Square> settingPawn(final Camp camp) {
-        return Arrays.stream(Column.values())
-                .map(column -> new Square(new Point(Row.SEVENTH, column), new SquareInfo(BoardInfo.PAWN, camp)))
+    private List<Piece> settingPawn(final Camp camp, final Column column) {
+        return Arrays.stream(Row.values())
+                .map(row -> (Piece) new Pawn(camp, new Point(row, column)))
                 .toList();
     }
 
-    public List<List<Square>> getBoard() {
+    public List<List<Piece>> getBoard() {
         return board;
     }
 }

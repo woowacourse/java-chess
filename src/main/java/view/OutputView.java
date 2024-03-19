@@ -1,10 +1,8 @@
 package view;
 
 import java.util.List;
-import model.Camp;
 import model.GameBoard;
-import model.Square;
-import view.message.BoardInfoFormat;
+import piece.Piece;
 
 public class OutputView {
 
@@ -13,18 +11,15 @@ public class OutputView {
     }
 
     public void printGameBoard(GameBoard gameBoard) {
-        for (List<Square> line : gameBoard.getBoard()) {
-            for (Square square : line) {
-                if (square.getSquareInfo().getCamp() == Camp.BLACK) {
-                    System.out.print(
-                            BoardInfoFormat.from(square.getSquareInfo().getBoardInfo()).getValue().toUpperCase());
-                } else {
-                    System.out.print(BoardInfoFormat.from(square.getSquareInfo().getBoardInfo()).getValue());
-                }
+        for (List<Piece> line : gameBoard.getBoard()) {
+            for (Piece piece : line) {
+                System.out.print(piece);
             }
             System.out.println();
         }
+        System.out.println();
     }
+
 
     public void printException(final Exception exception) {
         System.out.printf("[ERROR] %s%n", exception.getMessage());

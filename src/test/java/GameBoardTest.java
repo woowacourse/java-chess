@@ -1,9 +1,9 @@
 import java.util.List;
 import model.GameBoard;
-import model.Square;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import piece.Piece;
 
 class GameBoardTest {
 
@@ -27,17 +27,12 @@ class GameBoardTest {
     @DisplayName("Test name")
     void methodName() {
         //given
+        GameBoard gameBoard = new GameBoard();
 
-        var gameBoard = new GameBoard();
-
+        //when
         gameBoard.setting();
 
-        var board = gameBoard.getBoard();
-
-        for (List<Square> list : board) {
-            System.out.println(list);
-        }
-        //when
+        List<List<Piece>> board = gameBoard.getBoard();
 
         //then
     }
