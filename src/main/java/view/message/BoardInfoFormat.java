@@ -1,4 +1,4 @@
-package view;
+package view.message;
 
 import model.BoardInfo;
 

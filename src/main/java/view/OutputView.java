@@ -4,6 +4,7 @@ import java.util.List;
 import model.Camp;
 import model.GameBoard;
 import model.Square;
+import view.message.BoardInfoFormat;
 
 public class OutputView {
 
