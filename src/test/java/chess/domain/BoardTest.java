@@ -1,8 +1,5 @@
 package chess.domain;
 
-import chess.domain.Board;
-import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.view.OutputView;
 import java.util.Map;
 import org.assertj.core.api.Assertions;

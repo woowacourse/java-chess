@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.strategy;
 
 public enum Direction {
     N(-1, 0),

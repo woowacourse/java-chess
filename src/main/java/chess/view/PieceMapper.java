@@ -1,12 +1,13 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import chess.domain.Piece;
+import chess.domain.PieceType;
 import java.util.Arrays;
 
-public enum pieceMapper {
+public enum PieceMapper {
 
-    PAWN(PieceType.PAWN, "p"),
+    BLACK_PAWN(PieceType.BLACK_PAWN, "P"),
+    WHITE_PAWN(PieceType.WHITE_PAWN, "p"),
     ROOK(PieceType.ROOK, "r"),
     KNIGHT(PieceType.KNIGHT, "n"),
     BISHOP(PieceType.BISHOP, "b"),
@@ -16,14 +17,14 @@ public enum pieceMapper {
     private final PieceType pieceType;
     private final String value;
 
-    pieceMapper(PieceType pieceType, String value) {
+    PieceMapper(PieceType pieceType, String value) {
         this.pieceType = pieceType;
         this.value = value;
     }
 
-    public static String findByPiece(Piece piece) {
+    public static String findByPieceType(Piece piece) {
         String value = Arrays.stream(values())
-                .filter(pieceMapper -> piece.isSameType(pieceMapper.pieceType))
+                .filter(pieceMapper -> piece.getPieceType() == pieceMapper.pieceType)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 기물이 없습니다."))
                 .value;

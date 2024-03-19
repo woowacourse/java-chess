@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Board;
 import chess.view.Commend;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -12,7 +13,7 @@ public class ChessGame {
         outputView.printStartMessage();
         Commend commend = Commend.inputToCommend(inputView.readCommend());
         if (commend == Commend.START) {
-
+            outputView.printBoard(new Board());
         }
     }
 }
