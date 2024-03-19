@@ -18,6 +18,23 @@ public class Rook extends Piece {
 
     public Set<Position> calculateMovablePositions(Position currentRookPosition, Board board) {
         Set<Position> movablePositions = new HashSet<>();
+        directions.forEach(direction -> {
+            Position position = currentRookPosition;
+            while (position.canMoveNext(direction)) {
+                position = position.next(direction);
+                Piece piece = board.findPieceByPosition(position);
+
+                if (isSameColor(piece)) {
+                    break;
+                }
+
+                movablePositions.add(position);
+
+                if (!piece.isEmpty()) {
+                    break;
+                }
+            }
+        });
         return movablePositions;
     }
 }

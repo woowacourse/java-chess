@@ -20,7 +20,19 @@ public abstract class Piece {
         return color.isBlack();
     }
 
+    public boolean isEmpty() {
+        return getPieceType() == PieceType.NONE;
+    }
+
+    public boolean isSameColor(Piece piece) {
+        return color.isSame(piece.color);
+    }
+
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

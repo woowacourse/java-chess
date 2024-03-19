@@ -3,6 +3,7 @@ package chess.domain;
 public enum Color {
     WHITE,
     BLACK,
+    NONE,
     ;
 
     public boolean isBlack() {
@@ -19,5 +20,9 @@ public enum Color {
         }
 
         return BLACK;
+    }
+
+    public boolean isSame(Color color) {
+        return this == color;
     }
 }
