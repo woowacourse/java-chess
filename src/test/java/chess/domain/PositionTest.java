@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,5 +24,15 @@ public class PositionTest {
         Assertions.assertThatThrownBy(() -> Position.of(position))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("보드의 범위를 벗어난 좌표입니다.");
+    }
+
+    @DisplayName("서로 다른 좌표간의 차이를 반환한다.")
+    @Test
+    void calculatePositionDifferenceTest() {
+        Position position = Position.of("a1");
+        Position otherPosition = Position.of("c5");
+        List<Integer> differences = position.calculateDifference(otherPosition);
+
+        Assertions.assertThat(differences).isEqualTo(List.of(2, 4));
     }
 }
