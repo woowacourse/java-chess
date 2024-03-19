@@ -36,4 +36,8 @@ public class Piece {
     public int hashCode() {
         return Objects.hash(pieceType);
     }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
 }

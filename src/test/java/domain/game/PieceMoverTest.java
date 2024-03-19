@@ -1,4 +1,4 @@
-package game;
+package domain.game;
 
 import domain.chessboard.Square;
 import domain.piece.Color;

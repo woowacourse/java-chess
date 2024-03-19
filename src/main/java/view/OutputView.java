@@ -1,13 +1,13 @@
 package view;
 
-import domain.chessboard.ChessBoard;
-import domain.chessboard.Rank;
 import domain.chessboard.Square;
+import domain.game.PieceMover;
 import domain.piece.Color;
+import domain.piece.Piece;
 import domain.piece.PieceRole;
 import domain.piece.PieceType;
+import domain.piece.Position;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -35,5 +35,20 @@ public class OutputView {
 
     public void printCommandMessage() {
         System.out.printf(START_OR_END_MESSAGE);
+    }
+
+    public void printPieceStatus(final PieceMover mover) {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                Square square = new Square(new Position(column, row));
+                if (mover.hasPiece(square)) {
+                    Piece piece = mover.findPieceBySquare(square);
+                    System.out.print(pieceSymbol.get(piece.getPieceType()));
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
     }
 }

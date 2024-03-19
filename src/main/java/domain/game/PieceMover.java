@@ -1,4 +1,4 @@
-package game;
+package domain.game;
 
 import domain.chessboard.Square;
 import domain.piece.Piece;
@@ -29,6 +29,11 @@ public class PieceMover {
 
         pieceBySquare.put(targetSquare, findPiece);
         pieceBySquare.remove(sourceSquare);
+    }
+
+
+    public boolean hasPiece(final Square square) {
+        return pieceBySquare.containsKey(square);
     }
 
     public Piece findPieceBySquare(Square targetSquare) {
