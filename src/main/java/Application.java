@@ -1,3 +1,4 @@
+import controller.InputController;
 import java.util.Scanner;
 import model.Command;
 import model.GameBoard;
@@ -10,8 +11,9 @@ public class Application {
         gameBoard.setting();
         InputView inputView = new InputView(new Scanner(System.in));
         OutputView outputView = new OutputView();
+        InputController inputController = new InputController(inputView, outputView);
         outputView.printStartMessage();
-        while(Command.from(inputView.readCommand()) != Command.END) {
+        while (inputController.getCommand() != Command.END) {
             outputView.printGameBoard(gameBoard);
         }
     }

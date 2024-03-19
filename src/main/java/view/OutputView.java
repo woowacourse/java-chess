@@ -16,13 +16,17 @@ public class OutputView {
         for (List<Square> line : gameBoard.getBoard()) {
             for (Square square : line) {
                 if (square.getSquareInfo().getCamp() == Camp.BLACK) {
-                    System.out.print(BoardInfoFormat.from(square.getSquareInfo().getBoardInfo()).getValue().toUpperCase());
-                }
-                else {
+                    System.out.print(
+                            BoardInfoFormat.from(square.getSquareInfo().getBoardInfo()).getValue().toUpperCase());
+                } else {
                     System.out.print(BoardInfoFormat.from(square.getSquareInfo().getBoardInfo()).getValue());
                 }
             }
             System.out.println();
         }
+    }
+
+    public void printException(final Exception exception) {
+        System.out.printf("[ERROR] %s%n", exception.getMessage());
     }
 }
