@@ -45,7 +45,7 @@ rnbqkbnr
 
 ### `move source위치 target위치`를 입력하면 source 위치에서 target 위치로 말을 이동한다.
 - [ ] `move`를 입력할 때마다 턴이 바뀐다.
-- [ ] source 혹은 target 이 보드의 범위를 벗어난 좌표이면 예외를 발생한다.
+- [x] source 혹은 target 이 보드의 범위를 벗어난 좌표이면 예외를 발생한다.
 - [ ] source 위치에 말이 없으면 예외를 발생한다.
 - [ ] source 위치의 말이 턴에 맞는 말이 아니면 예외를 발생한다.
 - [ ] source 혹은 target 이 체스판의 범위가 아닌 경우 예외를 발생한다.
