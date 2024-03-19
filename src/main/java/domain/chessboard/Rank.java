@@ -1,4 +1,4 @@
-package domain;
+package domain.chessboard;
 
 import java.util.List;
 
