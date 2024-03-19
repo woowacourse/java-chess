@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 public enum Rank {
 

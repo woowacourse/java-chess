@@ -7,5 +7,7 @@ public enum Type {
     KNIGHT,
     PAWN,
     QUEEN,
-    ROOK;
+    ROOK,
+    NONE,
+    ;
 }
