@@ -11,7 +11,7 @@ public class ChessBoard {
         this.board = board;
     }
 
-    public boolean isEmptyPosition(Position position) {
+    public boolean positionIsEmpty(Position position) {
         return !board.containsKey(position);
     }
 }

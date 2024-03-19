@@ -20,7 +20,7 @@ class ChessBoardTest {
         positionPiece.put(position, new King());
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
-        assertThat(chessBoard.isEmptyPosition(Position.of(2, 2))).isTrue();
+        assertThat(chessBoard.positionIsEmpty(Position.of(2, 2))).isTrue();
     }
 
     @DisplayName("체스보드의 특정위치에 기물이 있는 지 확인할 수 있다")
@@ -31,6 +31,6 @@ class ChessBoardTest {
         positionPiece.put(position, new King());
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
-        assertThat(chessBoard.isEmptyPosition(Position.of(1, 1))).isFalse();
+        assertThat(chessBoard.positionIsEmpty(Position.of(1, 1))).isFalse();
     }
 }
