@@ -1,9 +1,14 @@
 import java.util.List;
+import model.Camp;
 import model.GameBoard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
+import piece.Rook;
+import point.Column;
+import point.Position;
+import point.Row;
 
 class GameBoardTest {
 
@@ -33,7 +38,22 @@ class GameBoardTest {
         gameBoard.setting();
 
         List<List<Piece>> board = gameBoard.getBoard();
-
+        for (List<Piece> pieces : board) {
+            System.out.println(pieces.toString());
+        }
         //then
+    }
+
+    @Test
+    void name() {
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.setting();
+
+        Position position = new Position(Row.EIGHTH, Column.FIRST);
+
+        Piece piece = gameBoard.findByPosition(position);
+        Rook expected = new Rook(Camp.BLACK, position);
+
+        Assertions.assertThat(piece).isEqualTo(expected);
     }
 }

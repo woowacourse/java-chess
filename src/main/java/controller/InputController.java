@@ -17,12 +17,12 @@ public class InputController {
     public Command getCommand() {
         Command command = null;
         while (command == null) {
-            command = readCommand();
+            command = (Command) readCommand();
         }
         return command;
     }
 
-    private Command readCommand() {
+    private Object readCommand() {
         try {
             return Command.from(inputView.readCommand());
         } catch (IllegalArgumentException exception) {

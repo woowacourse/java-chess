@@ -1,8 +1,11 @@
 package model;
 
+import java.util.regex.Pattern;
+
 public enum Command {
 
     START("start"),
+    MOVE("move [a-h][1-8] [a-h][1-8]"),
     END("end")
     ;
 
@@ -14,7 +17,7 @@ public enum Command {
 
     public static Command from(String value) {
         for (Command command : values()) {
-            if (command.value.equals(value)) {
+            if (Pattern.compile(command.value).matcher(value).matches()) {
                 return command;
             }
         }

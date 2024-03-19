@@ -1,16 +1,22 @@
 package piece;
 
+import java.util.Objects;
 import model.Camp;
-import point.Point;
+import point.Position;
 
 public class Queen extends Piece {
 
     private final Camp camp;
-    private Point point;
+    private Position position;
 
-    public Queen(final Camp camp, final Point point) {
+    public Queen(final Camp camp, final Position position) {
         this.camp = camp;
-        this.point = point;
+        this.position = position;
+    }
+
+    @Override
+    void move(Position targetPosition) {
+        this.position = targetPosition;
     }
 
     @Override
@@ -19,5 +25,22 @@ public class Queen extends Piece {
             return "q";
         }
         return "Q";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Queen queen = (Queen) o;
+        return camp == queen.camp && Objects.equals(position, queen.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(camp, position);
     }
 }

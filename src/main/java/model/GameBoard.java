@@ -15,19 +15,19 @@ import piece.Piece;
 import piece.Queen;
 import piece.Rook;
 import point.Column;
-import point.Point;
+import point.Position;
 import point.Row;
 
 public class GameBoard {
 
-    private static final Map<Column, BiFunction<Camp, Point, Piece>> initPosition = new HashMap<>();
+    private static final Map<Column, BiFunction<Camp, Position, Piece>> initPosition = new HashMap<>();
 
     static {
         initPosition.put(Column.FIRST, Rook::new);
         initPosition.put(Column.SECOND, Knight::new);
         initPosition.put(Column.THIRD, Bishop::new);
-        initPosition.put(Column.FOURTH, King::new);
-        initPosition.put(Column.FIFTH, Queen::new);
+        initPosition.put(Column.FOURTH, Queen::new);
+        initPosition.put(Column.FIFTH, King::new);
         initPosition.put(Column.SIXTH, Bishop::new);
         initPosition.put(Column.SEVENTH, Knight::new);
         initPosition.put(Column.EIGHTH, Rook::new);
@@ -66,13 +66,27 @@ public class GameBoard {
 
     private List<Piece> settingExceptPawn(final Camp camp, Row row) {
         return Arrays.stream(Column.values())
-                .map(column -> initPosition.get(column).apply(camp, new Point(row, column)))
+                .map(column -> initPosition.get(column).apply(camp, new Position(row, column)))
                 .toList();
+    }
+
+    public Piece findByPosition(Position position) {
+        int rowIndex = position.getRow().getIndex();
+        int colIndex = position.getColumn().getIndex();
+
+        for (List<Piece> pieces : board) {
+            System.out.println(pieces.toString());
+        }
+        System.out.println("====");
+
+        System.out.println("position" + position);
+        System.out.println("(" + rowIndex + ", " + colIndex + ")");
+        return board.get(rowIndex).get(colIndex);
     }
 
     private List<Piece> settingPawn(final Camp camp, final Column column) {
         return Arrays.stream(Row.values())
-                .map(row -> (Piece) new Pawn(camp, new Point(row, column)))
+                .map(row -> (Piece) new Pawn(camp, new Position(row, column)))
                 .toList();
     }
 
