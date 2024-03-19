@@ -18,6 +18,9 @@ public class Space {
     }
 
     public void movePiece(Space targetSpace) {
+        if (!piece.isMovable(position, targetSpace.position)) {
+            throw new IllegalArgumentException("이동 규칙을 위반한 움직임 입니다.");
+        }
         if (targetSpace.isBlankSpace()) {
             targetSpace.piece = piece;
             piece = null;

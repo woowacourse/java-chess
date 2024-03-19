@@ -1,6 +1,7 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.piece.Color;
 import chess.piece.Pawn;
@@ -25,6 +26,18 @@ class SpaceTest {
 
         assertThat(space2.pieceCharacter()).isEqualTo(PieceSign.findSign(piece1));
         assertThat(space1.isBlankSpace()).isTrue();
+    }
+
+    @Test
+    @DisplayName("각 피스의 이동 규칙을 위반한 이동은 할 수 없다")
+    void should_not_move_when_violate_move_rule() {
+        Piece piece1 = new Pawn(Color.BLACK);
+        Piece piece2 = null;
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.a, Rank.FOUR));
+
+        assertThatThrownBy(()->space1.movePiece(space2))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

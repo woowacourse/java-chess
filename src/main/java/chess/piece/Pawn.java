@@ -1,8 +1,13 @@
 package chess.piece;
 
+import chess.Rule;
 import chess.position.Position;
+import chess.position.PositionDifference;
+import chess.position.RankDifference;
 
 public class Pawn extends Piece {
+
+    private final Rule rule = (fileDifference, rankDifference) -> rankDifference.equals(new RankDifference(1));
 
     public Pawn(Color color) {
         super(color);
@@ -10,6 +15,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position from, Position to) {
-        return false;
+        PositionDifference positionDifference= from.calculateDifferenceTo(to);
+        return positionDifference.isObeyRule(rule);
     }
 }
