@@ -2,17 +2,14 @@ package chess.domain;
 
 import java.util.Set;
 
-public class Rook {
+public class Rook extends Piece {
     private static Set<Direction> directions = Direction.getFourDirection();
 
-    private Position position;
-    private final Color color;
-
     public Rook(Position position, Color color) {
-        this.position = position;
-        this.color = color;
+        super(position, color);
     }
 
+    @Override
     public Set<Position> findMovablePositions(Position destination) {
         Direction direction = position.findDirectionTo(destination);
         if (!directions.contains(direction)) {
@@ -21,12 +18,8 @@ public class Rook {
         return position.forwardToDirection(direction, destination);
     }
 
-
-    public boolean isSameColor(Color other) {
-        return color == other;
-    }
-
-    public void update(Position destination) {
-        this.position = destination;
+    @Override
+    public Rook update(Position destination) {
+        return new Rook(destination, color);
     }
 }

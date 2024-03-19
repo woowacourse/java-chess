@@ -2,17 +2,14 @@ package chess.domain;
 
 import java.util.Set;
 
-public class King {
+public class King extends Piece {
     private static Set<Direction> directions = Direction.getEightDirection();
 
-    private Position position;
-    private final Color color;
-
     public King(Position position, Color color) {
-        this.position = position;
-        this.color = color;
+        super(position, color);
     }
 
+    @Override
     public Set<Position> findMovablePositions(Position destination) {
         Set<Position> movable = position.findMovablePositions(directions);
 
@@ -22,11 +19,8 @@ public class King {
         throw new IllegalArgumentException("이동할 수 없습니다.");
     }
 
-    public boolean isSameColor(Color other) {
-        return color == other;
-    }
-
-    public void update(Position destination) {
-        this.position = destination;
+    @Override
+    public King update(Position destination) {
+        return new King(destination, color);
     }
 }
