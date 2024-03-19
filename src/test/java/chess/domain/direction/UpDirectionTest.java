@@ -10,11 +10,20 @@ import org.junit.jupiter.api.Test;
 class UpDirectionTest {
 
     @Test
-    @DisplayName("한칸 위로 이동한다.")
+    @DisplayName("상 방향은 row 1 증가한다.")
     void move() {
         Direction direction = new UpDirection();
-        Position from = new Position(1, 1);
+        Position from = new Position(1, 3);
 
-        assertThat(direction.move(from)).isEqualTo(List.of(new Position(1, 2)));
+        assertThat(direction.move(from)).isEqualTo(List.of(new Position(2, 3)));
+    }
+
+    @Test
+    @DisplayName("row가 최대인 경우 이동할 수 없다.")
+    void canNotMove() {
+        Direction direction = new UpDirection();
+        Position from = new Position(8, 3);
+
+        assertThat(direction.move(from)).isEmpty();
     }
 }

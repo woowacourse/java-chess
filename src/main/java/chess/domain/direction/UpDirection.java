@@ -7,6 +7,9 @@ public class UpDirection implements Direction {
 
     @Override
     public List<Position> move(final Position from) {
-        return List.of(new Position(from.row(),from.column() + 1));
+        if (!from.isMaximumRow()) {
+            return List.of(new Position(from.row() + 1, from.column()));
+        }
+        return List.of();
     }
 }
