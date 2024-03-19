@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,6 +59,19 @@ public class Position {
             return Direction.findDirection(dx, dy);
         }
         throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+    }
+
+    public Set<Position> forwardToDirection(Direction direction, Position other) {
+        Set<Position> positions = new HashSet<>();
+        int newX = x;
+        int newY = y;
+
+        while (newX != other.x || newY != other.y) {
+            newX += direction.getDx();
+            newY += direction.getDy();
+            positions.add(new Position(newX, newY));
+        }
+        return positions;
     }
 
     @Override

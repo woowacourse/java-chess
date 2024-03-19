@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.util.Arrays;
 import java.util.Set;
 
 public enum Direction {
@@ -46,6 +47,14 @@ public enum Direction {
                 UP_LEFT_LEFT, DOWN_LEFT_LEFT, UP_RIGHT_RIGHT, DOWN_RIGHT_RIGHT
         );
     }
+
+    public static Direction findDirection(int dx, int dy) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.dx == dx && direction.dy == dy)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("해당 방향이 없음"));
+    }
+
 
     public int getDx() {
         return dx;
