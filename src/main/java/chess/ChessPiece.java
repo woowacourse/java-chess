@@ -1,3 +1,5 @@
+package chess;
+
 public enum ChessPiece {
     BLACK_KING("K"),
     WHITE_KING("k"),
@@ -10,7 +12,8 @@ public enum ChessPiece {
     BLACK_KNIGHT("N"),
     WHITE_KNIGHT("n"),
     BLACK_PAWN("P"),
-    WHITE_PAWN("p");
+    WHITE_PAWN("p"),
+    NONE(".");
 
     private final String name;
 
