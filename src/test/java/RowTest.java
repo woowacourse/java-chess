@@ -19,7 +19,7 @@ public class RowTest {
 
     @Test
     @DisplayName("a~h가 아닌 알파벳으로 만들어진 가로는 존재하지 않는다.")
-    void validateValueOf() {
+    void testValueOf() {
         assertThatThrownBy(() -> Row.valueOf("z")).isInstanceOf(IllegalArgumentException.class);
     }
 
