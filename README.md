@@ -33,22 +33,22 @@
 - [x] BLACK, WHITE
 
 ### pawn
-- [ ] piece를 상속한다.
+- [x] piece를 상속한다.
 
 ### knight
-- [ ] piece를 상속한다.
+- [x] piece를 상속한다.
 
 ### bishop
-- [ ] piece를 상속한다.
+- [x] piece를 상속한다.
 
 ### rook
-- [ ] piece를 상속한다.
+- [x] piece를 상속한다.
 
 ### queen
-- [ ] piece를 상속한다.
+- [x] piece를 상속한다.
 
 ### king
-- [ ] piece를 상속한다.
+- [x] piece를 상속한다.
 
 
 ### 출력 예시

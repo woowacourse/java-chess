@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Position;
+import chess.domain.Team;
 
 public abstract class Piece {
     private final Position position;
