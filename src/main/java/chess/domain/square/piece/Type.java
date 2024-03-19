@@ -1,6 +1,6 @@
-package chess.domain.square;
+package chess.domain.square.piece;
 
-public enum Piece implements Square {
+public enum Type {
     PAWN,
     KNIGHT,
     BISHOP,
