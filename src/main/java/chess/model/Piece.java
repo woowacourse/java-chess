@@ -1,4 +1,9 @@
 package chess.model;
 
-public interface Piece {
+public abstract class Piece implements MoveStrategy {
+    protected final Side side;
+
+    protected Piece(Side side) {
+        this.side = side;
+    }
 }

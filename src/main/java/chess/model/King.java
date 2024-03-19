@@ -1,4 +1,7 @@
 package chess.model;
 
-public class King implements Piece {
+public class King extends Piece {
+    public King(Side side) {
+        super(side);
+    }
 }

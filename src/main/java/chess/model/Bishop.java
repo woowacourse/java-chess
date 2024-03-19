@@ -1,4 +1,7 @@
 package chess.model;
 
-public class Bishop implements Piece {
+public class Bishop extends Piece {
+    public Bishop(Side side) {
+        super(side);
+    }
 }
