@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,6 @@ public class BoardTest {
     @Test
     void createBoard() {
         // when & then
-        assertThatCode(() -> new Board()).doesNotThrowAnyException();
+        assertThatCode(Board::new).doesNotThrowAnyException();
     }
 }

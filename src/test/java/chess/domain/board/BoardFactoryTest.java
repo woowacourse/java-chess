@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Position;
+import chess.domain.piece.ColorType;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

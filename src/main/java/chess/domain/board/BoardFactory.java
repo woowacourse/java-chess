@@ -1,10 +1,20 @@
-package chess.domain;
+package chess.domain.board;
+
+import chess.domain.piece.ColorType;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.Position;
 
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: 코드 리팩토링 필요
+// TODO: 코드 리팩토링
 public class BoardFactory {
+
+    private static final int RANK_START = 1;
+    private static final int RANK_END = 8;
+    private static final char FILE_START = 'a';
+    private static final char FILE_END = 'h';
 
     public BoardFactory() {
 
@@ -13,7 +23,7 @@ public class BoardFactory {
     public Map<Position, Piece> create() {
         Map<Position, Piece> board = new HashMap<>();
 
-        for (int rank = 1; rank <= 8; rank++) {
+        for (int rank = RANK_START; rank <= RANK_END; rank++) {
             createByRank(rank, board);
         }
 
@@ -21,7 +31,7 @@ public class BoardFactory {
     }
 
     private void createByRank(int rank, Map<Position, Piece> board) {
-        for (char file = 'a'; file <= 'h'; file++) {
+        for (char file = FILE_START; file <= FILE_END; file++) {
             Position position = new Position(file, rank);
             Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
 
