@@ -20,10 +20,10 @@
 ### board
 - [x] piece들을 가진다.
 
-
 ### piece
 - [x] 위치를 가진다.
 - [x] 팀을 가진다.
+- [x] 자신의 타입을 반환할 수 있다.
 
 ### position
 - [x] 이차원 위치 값을 가지고 있는다.
@@ -31,6 +31,8 @@
 
 ### team(enum)
 - [x] BLACK, WHITE
+
+### kind(enum)
 
 ### pawn
 - [x] piece를 상속한다.

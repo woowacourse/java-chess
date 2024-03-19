@@ -13,6 +13,8 @@ public abstract class Piece {
         this.team = team;
     }
 
+    public abstract Kind findKind();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

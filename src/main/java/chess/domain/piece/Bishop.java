@@ -7,4 +7,9 @@ public class Bishop extends Piece {
     public Bishop(Position position, Team team) {
         super(position, team);
     }
+
+    @Override
+    public Kind findKind() {
+        return Kind.BISHOP;
+    }
 }

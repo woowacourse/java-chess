@@ -7,4 +7,9 @@ public class King extends Piece {
     public King(Position position, Team team) {
         super(position, team);
     }
+
+    @Override
+    public Kind findKind() {
+        return Kind.KING;
+    }
 }

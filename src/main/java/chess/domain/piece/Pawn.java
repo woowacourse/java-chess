@@ -7,4 +7,9 @@ public class Pawn extends Piece {
     public Pawn(Position position, Team team) {
         super(position, team);
     }
+
+    @Override
+    public Kind findKind() {
+        return Kind.PAWN;
+    }
 }
