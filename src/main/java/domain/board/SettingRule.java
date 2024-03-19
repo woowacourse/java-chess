@@ -21,6 +21,14 @@ public class SettingRule {
                 return new Piece(Type.KING, Color.BLACK);
             }
         }
+        if (file == File.D) {
+            if (rank == Rank.ONE) {
+                return new Piece(Type.QUEEN, Color.WHITE);
+            }
+            if (rank == Rank.EIGHT) {
+                return new Piece(Type.QUEEN, Color.BLACK);
+            }
+        }
         return new Piece(Type.NONE, Color.NONE);
     }
 }

@@ -50,4 +50,22 @@ public class SettingRuleTest {
         }
     }
 
+    @Nested
+    class QueenTest {
+
+        @Test
+        @DisplayName("랭크가 1, 파일이 d일 경우 흰색 퀸을 반환한다.")
+        void findPieceByPosition_RankOneFileD_WhiteQueen() {
+            assertThat(settingRule.findPieceByPosition(Rank.ONE, File.D))
+                    .isEqualTo(new Piece(Type.QUEEN, Color.WHITE));
+        }
+
+        @Test
+        @DisplayName("랭크가 8, 파일이 d일 경우 검정색 퀸을 반환한다.")
+        void findPieceByPosition_RankEightFileD_BlackQueen() {
+            assertThat(settingRule.findPieceByPosition(Rank.EIGHT, File.D))
+                    .isEqualTo(new Piece(Type.QUEEN, Color.BLACK));
+        }
+    }
+
 }
