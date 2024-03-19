@@ -10,4 +10,8 @@ public class ChessGame {
     public ChessGame(Map<Point, Piece> board) {
         this.board = new Board(board);
     }
+
+    public Map<Point, Piece> getBoard() {
+        return board.getBoard();
+    }
 }

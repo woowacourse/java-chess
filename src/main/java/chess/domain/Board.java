@@ -10,4 +10,8 @@ public class Board {
     public Board(Map<Point, Piece> board) {
         this.board = board;
     }
+
+    public Map<Point, Piece> getBoard() {
+        return board;
+    }
 }
