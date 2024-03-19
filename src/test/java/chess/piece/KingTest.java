@@ -1,7 +1,8 @@
-package chess;
+package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

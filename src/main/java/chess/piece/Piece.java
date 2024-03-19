@@ -1,4 +1,6 @@
-package chess;
+package chess.piece;
+
+import chess.Team;
 
 public abstract class Piece {
 
