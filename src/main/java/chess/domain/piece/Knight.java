@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
+import chess.domain.piece.character.Team;
 
 public class Knight extends Piece {
     public Knight(Position position, Team team) {
@@ -9,7 +11,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Kind findKind() {
-        return Kind.KNIGHT;
+    public Character findCharacter() {
+        return Character.findCharacter(team, Kind.KNIGHT);
     }
 }

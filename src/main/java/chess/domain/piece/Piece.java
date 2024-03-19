@@ -1,19 +1,20 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Team;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final Position position;
-    private final Team team;
+    protected final Position position;
+    protected final Team team;
 
     public Piece(Position position, Team team) {
         this.position = position;
         this.team = team;
     }
 
-    public abstract Kind findKind();
+    public abstract Character findCharacter();
 
     @Override
     public boolean equals(Object o) {
