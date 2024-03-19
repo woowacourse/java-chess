@@ -8,4 +8,11 @@ public record PositionDifference(int xDifference, int yDifference) {
     public boolean isOnAxis() {
         return xDifference == 0 || yDifference == 0;
     }
+
+    public boolean isWithinUnitRange() {
+        if (!(isMagnitudeEqual() || isOnAxis())) {
+            return false;
+        }
+        return xDifference <= 1 && yDifference <= 1;
+    }
 }
