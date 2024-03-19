@@ -16,7 +16,14 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Piece move(Position position) {
-        return null;
+    public Piece move(Position newPosition) {
+        int differenceRow = position.differenceRow(newPosition);
+        int differenceColumn = position.differenceColumn(newPosition);
+
+        if (!position.equals(newPosition) && (differenceRow == 0 || differenceColumn == 0)) {
+            return new Rook(newPosition, team);
+        }
+
+        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 }
