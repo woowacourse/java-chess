@@ -1,11 +1,8 @@
-public class Piece {
-    private final PieceType type;
-
-    public Piece(PieceType type) {
-        this.type = type;
-    }
-
-    public PieceType getType() {
-        return type;
-    }
+public enum Piece implements Square {
+    PAWN,
+    KNIGHT,
+    BISHOP,
+    ROOK,
+    QUEEN,
+    KING;
 }
