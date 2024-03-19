@@ -10,11 +10,20 @@ import org.junit.jupiter.api.Test;
 class RightDirectionTest {
 
     @Test
-    @DisplayName("오른쪽으로 이동한다.")
+    @DisplayName("우 방향은 column을 1 증가한다.")
     void move() {
         Direction direction = new RightDirection();
-        Position from = new Position(1, 1);
+        Position from = new Position(3, 1);
 
-        assertThat(direction.move(from)).isEqualTo(List.of(new Position(2, 1)));
+        assertThat(direction.move(from)).isEqualTo(List.of(new Position(3, 2)));
+    }
+
+    @Test
+    @DisplayName("column이 최대인 경우 이동할 수 없다.")
+    void canNotMove() {
+        Direction direction = new RightDirection();
+        Position from = new Position(3, 8);
+
+        assertThat(direction.move(from)).isEmpty();
     }
 }
