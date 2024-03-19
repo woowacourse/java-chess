@@ -37,4 +37,19 @@ public class ChessBoardTest {
                 Map.entry(new Position("g", "1"), new Knight(Side.WHITE))
         );
     }
+
+    @DisplayName("검은색 비숍은 c8, f8에 위치한다. 흰색 나이트는 c1, f1에 위치한다.")
+    @Test
+    void bishopPositionTest() {
+        ChessBoard chessBoard = new ChessBoard(new LinkedHashMap<>());
+
+        chessBoard.init();
+
+        assertThat(chessBoard.getBoard()).contains(
+                Map.entry(new Position("c", "8"), new Bishop(Side.BLACK)),
+                Map.entry(new Position("f", "8"), new Bishop(Side.BLACK)),
+                Map.entry(new Position("c", "1"), new Bishop(Side.WHITE)),
+                Map.entry(new Position("f", "1"), new Bishop(Side.WHITE))
+        );
+    }
 }

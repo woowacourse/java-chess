@@ -19,6 +19,8 @@ public class ChessBoard {
         board.put(new Position("h", defaultLine), new Rook(side));
         board.put(new Position("b", defaultLine), new Knight(side));
         board.put(new Position("g", defaultLine), new Knight(side));
+        board.put(new Position("c", defaultLine), new Bishop(side));
+        board.put(new Position("f", defaultLine), new Bishop(side));
     }
 
     private static String getLine(Side side) {
