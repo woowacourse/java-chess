@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Objects;
+
 public class Position {
     //TODO: ROW 클래스 이름 수정
     //TODO: 포지션 캐싱
@@ -15,5 +17,23 @@ public class Position {
     public Position(RowPosition rowPosition, ColumnPosition columnPosition) {
         this.rowPosition = rowPosition;
         this.columnPosition = columnPosition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position position = (Position) o;
+        return Objects.equals(rowPosition, position.rowPosition) && Objects.equals(columnPosition,
+                position.columnPosition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rowPosition, columnPosition);
     }
 }
