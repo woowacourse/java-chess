@@ -3,10 +3,10 @@ package domain;
 import java.util.Objects;
 
 public class Square {
-    private final char piece;
+    private final Piece piece;
     private final Position position;
 
-    public Square(final char piece, final Position position) {
+    public Square(final Piece piece, final Position position) {
         this.piece = piece;
         this.position = position;
     }
