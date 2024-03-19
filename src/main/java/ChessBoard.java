@@ -9,10 +9,23 @@ public class ChessBoard {
     }
 
     public void init() {
-        board.put(new Position("a", "8"), Piece.BLACK_ROOK);
-        board.put(new Position("h", "8"), Piece.BLACK_ROOK);
-        board.put(new Position("a", "1"), Piece.WHITE_ROOK);
-        board.put(new Position("h", "1"), Piece.WHITE_ROOK);
+        initSide(Side.BLACK);
+        initSide(Side.WHITE);
+    }
+
+    public void initSide(Side side) { // RNBQKBNR
+        String defaultLine = getLine(side);
+        board.put(new Position("a", defaultLine), new Rook(side));
+        board.put(new Position("h", defaultLine), new Rook(side));
+        board.put(new Position("b", defaultLine), new Knight(side));
+        board.put(new Position("g", defaultLine), new Knight(side));
+    }
+
+    private static String getLine(Side side) {
+        if (side == Side.BLACK) {
+            return "8";
+        }
+        return "1";
     }
 
     public Map<Position, Piece> getBoard() {
