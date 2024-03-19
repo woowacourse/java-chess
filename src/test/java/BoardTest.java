@@ -21,7 +21,7 @@ public class BoardTest {
     void startPieceLocation() {
         Board board = new Board();
 
-        List<Piece> pieces = board.pieces;
+        List<Piece> pieces = board.pieces();
 
         assertThat(pieces).containsExactlyInAnyOrder(
                 new Rook(Position.of(1, 1), Team.WHITE),

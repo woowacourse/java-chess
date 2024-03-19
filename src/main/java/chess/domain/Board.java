@@ -8,12 +8,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Board {
-    public List<Piece> pieces;
+    private List<Piece> pieces;
 
     public Board() {
         createBoard();
@@ -45,5 +46,9 @@ public class Board {
                 new Knight(Position.of(row, 7), team),
                 new Rook(Position.of(row, 8), team)
         ));
+    }
+
+    public List<Piece> pieces() {
+        return Collections.unmodifiableList(pieces);
     }
 }
