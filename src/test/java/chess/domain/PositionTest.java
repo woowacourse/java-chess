@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,8 +30,10 @@ public class PositionTest {
     void calculatePositionDifferenceTest() {
         Position position = Position.of("a1");
         Position otherPosition = Position.of("c5");
-        List<Integer> differences = position.calculateDifference(otherPosition);
 
-        Assertions.assertThat(differences).isEqualTo(List.of(2, 4));
+        PositionDifference actual = position.calculateDifference(otherPosition);
+        PositionDifference expected = new PositionDifference(2, 4);
+
+        Assertions.assertThat(actual).isEqualTo(expected);
     }
 }

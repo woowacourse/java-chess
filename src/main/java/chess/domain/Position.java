@@ -1,8 +1,5 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Position {
     private final int x;
     private final int y;
@@ -30,12 +27,10 @@ public class Position {
         return coordinate < 1 || coordinate > 8;
     }
 
-    public List<Integer> calculateDifference(Position otherPosition) {
-        List<Integer> differences = new ArrayList<>();
+    public PositionDifference calculateDifference(Position otherPosition) {
+        int xDifference = Math.abs(this.x - otherPosition.x);
+        int yDifference = Math.abs(this.y - otherPosition.y);
 
-        differences.add(Math.abs(this.x - otherPosition.x));
-        differences.add(Math.abs(this.y - otherPosition.y));
-
-        return differences;
+        return new PositionDifference(xDifference, yDifference);
     }
 }
