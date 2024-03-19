@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum File {
     a(1),
     b(2),
@@ -15,5 +17,17 @@ public enum File {
 
     File(int value) {
         this.value = value;
+    }
+
+    public static File from(int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.value == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
+    }
+
+    public File add(int x) {
+        int newX = this.value + x;
+        return File.from(newX);
     }
 }

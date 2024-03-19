@@ -3,12 +3,18 @@ package chess.domain;
 import java.util.Objects;
 
 public class Position {
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
+    public Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
+    }
+
+    public Position next(Direction direction) {
+        int x = direction.getX();
+        int y = direction.getY();
+        return new Position(file.add(x), rank.add(y));
     }
 
     @Override
@@ -19,11 +25,11 @@ public class Position {
         if (!(o instanceof Position position)) {
             return false;
         }
-        return rank == position.rank && file == position.file;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(file, rank);
     }
 }

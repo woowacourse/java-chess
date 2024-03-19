@@ -51,4 +51,12 @@ public enum Direction {
                 SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH,
                 WEST_WEST_NORTH, WEST_WEST_SOUTH);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
