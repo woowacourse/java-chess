@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;

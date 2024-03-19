@@ -1,18 +1,15 @@
 package chess;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessGame {
 
@@ -38,28 +35,24 @@ public class ChessGame {
         Map<Position, Piece> boardOutput = board.toBoardOutput().board();
         List<String> output = new ArrayList<>();
 
-        List<Rank> ranks = reverseRank();
-        for (Rank rank : ranks) {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            makeRankOutput(rank, stringBuilder, boardOutput);
-
-            output.add(stringBuilder.toString());
+        for (Rank rank : Rank.values()) {
+            output.add(makeRankOutput(rank, boardOutput));
         }
 
         outputView.writeBoard(output);
     }
 
-    private static void makeRankOutput(Rank rank, StringBuilder stringBuilder, Map<Position, Piece> boardOutput) {
+    private String makeRankOutput(Rank rank, Map<Position, Piece> boardOutput) {
+        StringBuilder stringBuilder = new StringBuilder();
+
         for (File file : File.values()) {
-            stringBuilder.append(PieceView.toView(boardOutput.get(Position.of(file, rank))));
+            Position position = Position.of(file, rank);
+            Piece piece = boardOutput.get(position);
+
+            String pieceView = PieceView.toView(piece);
+            stringBuilder.append(pieceView);
         }
-    }
 
-    private List<Rank> reverseRank() {
-        List<Rank> ranks = new ArrayList<>(List.of(Rank.values()));
-        Collections.reverse(ranks);
-
-        return ranks;
+        return stringBuilder.toString();
     }
 }
