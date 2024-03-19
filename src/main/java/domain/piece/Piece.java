@@ -7,4 +7,8 @@ public abstract class Piece {
     protected Piece(Color color) {
         this.color = color;
     }
+
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
 }
