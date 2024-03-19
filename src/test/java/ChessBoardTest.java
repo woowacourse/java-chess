@@ -52,4 +52,17 @@ public class ChessBoardTest {
                 Map.entry(new Position("f", "1"), new Bishop(Side.WHITE))
         );
     }
+
+    @DisplayName("검은색 퀸은 d8에 위치한다. 흰색 퀸은 d1에 위치한다.")
+    @Test
+    void PositionTest() {
+        ChessBoard chessBoard = new ChessBoard(new LinkedHashMap<>());
+
+        chessBoard.init();
+
+        assertThat(chessBoard.getBoard()).contains(
+                Map.entry(new Position("d", "8"), new Queen(Side.BLACK)),
+                Map.entry(new Position("d", "1"), new Queen(Side.WHITE))
+        );
+    }
 }
