@@ -9,7 +9,7 @@ import view.message.BoardInfoFormat;
 public class OutputView {
 
     public void printStartMessage() {
-        System.out.printf("체스 게임을 시작합니다.%n게임 시작은 %s, 종료는 %s 명령을 입력하세요.%n", "start", "end");
+        System.out.println("체스 게임을 시작합니다.");
     }
 
     public void printGameBoard(GameBoard gameBoard) {
