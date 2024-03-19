@@ -12,16 +12,17 @@ class RankTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 8})
     @DisplayName("1부터 8까지의 세로 위치를 가진다.")
-    void createRank(int num) {
-        Rank rank = new Rank(num);
-        assertThat(rank).isEqualTo(new Rank(num));
+    void createRank(int position) {
+        Rank rank = new Rank(position);
+
+        assertThat(rank).isEqualTo(new Rank(position));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
     @DisplayName("세로 위치가 1보다 작거나 8보다 크다면 예외가 발생한다.")
-    void invalidRank(int num) {
-        assertThatThrownBy(() -> new Rank(num))
+    void invalidRank(int position) {
+        assertThatThrownBy(() -> new Rank(position))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
