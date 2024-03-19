@@ -1,12 +1,12 @@
 package chess.position;
 
-public class Column {
+public class ColumnPosition {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 8;
 
     private final int columnNumber;
 
-    public Column(int columnNumber) {
+    public ColumnPosition(int columnNumber) {
         validateNumberRange(columnNumber);
         this.columnNumber = columnNumber;
     }

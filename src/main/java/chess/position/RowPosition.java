@@ -1,12 +1,12 @@
 package chess.position;
 
-public class Row {
+public class RowPosition {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 8;
 
     private final int rowNumber;
 
-    public Row(int rowNumber) {
+    public RowPosition(int rowNumber) {
         validateNumberRange(rowNumber);
         this.rowNumber = rowNumber;
     }

@@ -7,12 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class ColumnTest {
+class ColumnPositionTest {
     @DisplayName("실패 : 지정된 범위가 아닌 열 번호가 주어지면 생성에 실패한다")
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
     void should_ThrowIllegaStateException_When_GiveOutRangedColumnNumber(int outRangedColumnNumber) {
-        assertThatThrownBy(() -> new Column(outRangedColumnNumber))
+        assertThatThrownBy(() -> new ColumnPosition(outRangedColumnNumber))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("체스판의 열 번호는 " + outRangedColumnNumber + "가 될 수 없습니다.");
     }
@@ -21,7 +21,7 @@ class ColumnTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 8})
     void should_MakeColumnObject_When_GiveValidRangeColumnNumber(int validRangedColumnNumber) {
-        assertThatCode(() -> new Column(validRangedColumnNumber))
+        assertThatCode(() -> new ColumnPosition(validRangedColumnNumber))
                 .doesNotThrowAnyException();
     }
 }
