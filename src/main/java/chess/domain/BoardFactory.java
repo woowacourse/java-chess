@@ -22,7 +22,7 @@ public class BoardFactory {
     public static Board createBoard() {
         Map<Square, Piece> initialArrangement = new TreeMap<>(
                 Comparator.comparing(Square::rank).reversed()
-                .thenComparing(Square::file)
+                        .thenComparing(Square::file)
         );
         initialArrangement.putAll(createLine(Rank.ONE, createPieceLine(Color.WHITE)));
         initialArrangement.putAll(createLine(Rank.TWO, createPawnLine(Color.WHITE)));
