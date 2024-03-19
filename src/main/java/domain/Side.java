@@ -1,3 +1,5 @@
+package domain;
+
 public enum Side {
 
     BLACK,
