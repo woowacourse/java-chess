@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final String FRONT_RANK_FORMAT = "%s  %d ";
-    private static final String BACK_RANK_FORMAT = FRONT_RANK_FORMAT + "(rank %d)";
+    private static final String FRONT_RANK_FORMAT = "%s  %d%n";
+    private static final String BACK_RANK_FORMAT = "%s  %d (rank %d)%n";
     private static final Map<Piece, String> pieceSymbol = new HashMap<>();
 
     static {
@@ -31,6 +31,7 @@ public class OutputView {
         pieceSymbol.put(new Piece(PieceType.KING, Color.WHITE), "k");
         pieceSymbol.put(new Piece(PieceType.PAWN, Color.WHITE), "p");
 
+        pieceSymbol.put(new Piece(PieceType.NONE, Color.NONE), ".");
     }
 
     public void printChessBoard(final ChessBoard chessBoard) {
@@ -50,7 +51,7 @@ public class OutputView {
             String symbol = pieceSymbol.get(square.getPiece());
             stringBuilder.append(symbol);
         }
-        System.out.printf(BACK_RANK_FORMAT, stringBuilder, index, index);
+        System.out.printf(BACK_RANK_FORMAT, stringBuilder.toString(), index, index);
     }
 
     private void printFrontRank(final Rank rank, int index) {
