@@ -1,13 +1,15 @@
 package domain;
 
+import java.util.List;
+
 public class Rank {
-    private final String points;
+    private final List<Square> squares;
 
     public Rank(final RankGenerator rankGenerator, final int index) {
-        this.points = rankGenerator.generate(index);
+        this.squares = rankGenerator.generate(index);
     }
 
     public int size() {
-        return points.length();
+        return squares.size();
     }
 }
