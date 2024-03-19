@@ -1,6 +1,4 @@
-package chess.piece;
-
-import chess.Team;
+package chess.domain.piece;
 
 public final class Knight extends Piece {
 

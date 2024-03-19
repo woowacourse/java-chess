@@ -1,9 +1,13 @@
-package chess;
+package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.piece.King;
-import chess.piece.Piece;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
