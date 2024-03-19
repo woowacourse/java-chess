@@ -36,21 +36,4 @@ public class OutputView {
     public void printCommandMessage() {
         System.out.printf(START_OR_END_MESSAGE);
     }
-
-    public void printChessBoard(final ChessBoard chessBoard) {
-        List<Rank> ranks = chessBoard.getRanks();
-        for (Rank rank : ranks) {
-            printRankMessage(rank);
-        }
-        System.out.println();
-    }
-
-    private void printRankMessage(final Rank rank) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Square square : rank.getSquares()) {
-            String symbol = pieceSymbol.get(square.getPiece());
-            stringBuilder.append(symbol);
-        }
-        System.out.println(stringBuilder);
-    }
 }

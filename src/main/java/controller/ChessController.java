@@ -19,7 +19,6 @@ public class ChessController {
         outputView.printCommandMessage();
         while (inputView.enterStartOrEnd() == START) {
             ChessBoard chessBoard = new ChessBoard();
-            outputView.printChessBoard(chessBoard);
         }
     }
 }
