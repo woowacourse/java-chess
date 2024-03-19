@@ -10,4 +10,8 @@ public class ChessBoard {
     public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
     }
+
+    public boolean isEmptyPosition(Position position) {
+        return !board.containsKey(position);
+    }
 }
