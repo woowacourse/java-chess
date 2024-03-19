@@ -2,12 +2,13 @@ package chess;
 
 public enum PieceSign {
 
-    PAWN(Piece.class, "p");
+    PAWN(Pawn.class, "p"),
+    ;
 
-    private final Class<Piece> pieceClass;
+    private final Class<? extends Piece> pieceClass;
     private final String sign;
 
-    PieceSign(Class<Piece> pieceClass, String sign) {
+    PieceSign(Class<? extends Piece> pieceClass, String sign) {
         this.pieceClass = pieceClass;
         this.sign = sign;
     }

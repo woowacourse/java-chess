@@ -9,8 +9,8 @@ class SpaceTest {
 
     @Test
     @DisplayName("피스를 움직일 수 있다")
-    void should_change_piece() {
-        Piece piece1 = new Piece();
+    void should_move_piece() {
+        Piece piece1 = new Pawn(Color.BLACK);
         Piece piece2 = null;
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.ONE));
