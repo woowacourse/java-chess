@@ -1,8 +1,8 @@
 package view;
 
 import domain.Color;
-import domain.Piece;
-import domain.PieceType;
+import domain.pieceType.Piece;
+import domain.pieceType.PieceType;
 import java.util.Arrays;
 
 public enum PieceTypeFormat {
@@ -29,8 +29,6 @@ public enum PieceTypeFormat {
                 .map(type -> piece.getColor() == Color.WHITE ? type.whiteFormat : type.blackFormat)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("피스 타입이 없습니다."));
-
-
     }
 
 

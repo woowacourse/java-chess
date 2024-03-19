@@ -1,9 +1,9 @@
 package view;
 
 import domain.File;
-import domain.Piece;
 import domain.Rank;
 import domain.Square;
+import domain.pieceType.Piece;
 import java.util.Map;
 
 public class OutputView {
