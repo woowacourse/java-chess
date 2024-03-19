@@ -17,8 +17,12 @@ public class ChessGame {
     }
 
     public void start() {
-        Command command = inputView.readCommand();
-        BoardStatus boardStatus = new ChessBoard(PiecesGenerator.getInstance()).status();
-        outputView.printChessBoard(boardStatus);
+        outputView.printGameStartMessage();
+
+        Command command = Command.END;
+        while((command = inputView.readCommand()).isRunning()) {
+            BoardStatus boardStatus = new ChessBoard(PiecesGenerator.getInstance()).status();
+            outputView.printChessBoard(boardStatus);
+        }
     }
 }

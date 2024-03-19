@@ -16,7 +16,6 @@ public class InputView {
     }
 
     public Command readCommand() {
-        System.out.println(String.format("체스 게임을 시작합니다.%n게임 시작은 start, 종료는 end 명령을 입력하세요."));
         String commandText = scanner.nextLine();
 
         return Command.findByText(commandText);
