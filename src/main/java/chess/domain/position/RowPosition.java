@@ -1,4 +1,4 @@
-package chess.position;
+package chess.domain.position;
 
 public class RowPosition {
     private static final int MIN_NUMBER = 1;

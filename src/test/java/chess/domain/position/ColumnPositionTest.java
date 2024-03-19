@@ -1,4 +1,4 @@
-package chess.position;
+package chess.domain.position;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

@@ -1,7 +1,7 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Piece;
-import chess.position.Position;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.Map;
 
 public class ChessBoard {

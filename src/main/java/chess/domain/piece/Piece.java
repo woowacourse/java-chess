@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.position.Position;
+import chess.domain.position.Position;
 
 public interface Piece {
     boolean canMoveTo(Position target);

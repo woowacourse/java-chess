@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.position.Position;
+import chess.domain.position.Position;
 
 public class Rook implements Piece {
     @Override

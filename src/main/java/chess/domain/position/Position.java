@@ -1,4 +1,4 @@
-package chess.position;
+package chess.domain.position;
 
 public class Position {
     //TODO: ROW 클래스 이름 수정
