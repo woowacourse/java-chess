@@ -7,4 +7,12 @@ public class SquareInfo {
         this.boardInfo = boardInfo;
         this.camp = camp;
     }
+
+    @Override
+    public String toString() {
+        if (boardInfo == BoardInfo.BLANK) {
+            return ".";
+        }
+        return boardInfo.toString();
+    }
 }

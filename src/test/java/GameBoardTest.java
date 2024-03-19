@@ -1,3 +1,4 @@
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,5 +19,24 @@ class GameBoardTest {
         GameBoard gameBoard = new GameBoard();
 
         Assertions.assertThat(gameBoard.getBoard()).allMatch(line -> line.size() == 8);
+    }
+
+    @Test
+    @DisplayName("Test name")
+    void methodName() {
+        //given
+
+        var gameBoard = new GameBoard();
+
+        gameBoard.setting();
+
+        var board = gameBoard.getBoard();
+
+        for (List<Square> list : board) {
+            System.out.println(list);
+        }
+        //when
+
+        //then
     }
 }

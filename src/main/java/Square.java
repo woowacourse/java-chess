@@ -9,4 +9,9 @@ public class Square {
         this.point = point;
         this.squareInfo = squareInfo;
     }
+
+    @Override
+    public String toString() {
+        return squareInfo.toString();
+    }
 }
