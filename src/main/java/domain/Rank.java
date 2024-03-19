@@ -14,6 +14,10 @@ public final class Rank {
         return this.value - otherRank.value;
     }
 
+    public boolean isRankTwo() {
+        return value == 2;
+    }
+
     public int value() {
         return value;
     }

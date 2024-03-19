@@ -12,6 +12,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public boolean isPawnInitialPosition() {
+        return rank.isRankTwo();
+    }
+
     public int calculateFileDifference(Position otherPosition) {
         return file.subtract(otherPosition.file);
     }
