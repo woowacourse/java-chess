@@ -1,8 +1,15 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
+
+    public static final List<Position> ALL_POSITIONS = Arrays.stream(Row.values())
+            .flatMap(row -> Arrays.stream(Column.values())
+                    .map(column -> new Position(row, column)))
+            .toList();
 
     private final Row row;
     private final Column column;
