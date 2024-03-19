@@ -24,24 +24,24 @@ public class RankGenerator {
     public List<Square> generate(int row) {
         List<Square> result = new ArrayList<>();
         for (int column = 0; column < 8; column++) {
-            result.add(generateSquare(column, row));
+            result.add(new Square(generatePieceType(column, row), new Position(column, row)));
         }
         return result;
     }
 
-    private Square generateSquare(int column, int row) {
+    private PieceType generatePieceType(int column, int row) {
         if (row == 0) {
-            return new Square(new PieceType(back.get(column), Color.BLACK), new Position(column, row));
+            return new PieceType(back.get(column), Color.BLACK);
         }
         if (row == 1) {
-            return new Square(new PieceType(front.get(column), Color.BLACK), new Position(column, row));
+            return new PieceType(front.get(column), Color.BLACK);
         }
         if (row == 6) {
-            return new Square(new PieceType(front.get(column), Color.WHITE), new Position(column, row));
+            return new PieceType(front.get(column), Color.WHITE);
         }
         if (row == 7) {
-            return new Square(new PieceType(back.get(column), Color.WHITE), new Position(column, row));
+            return new PieceType(back.get(column), Color.WHITE);
         }
-        return new Square(new PieceType(none.get(column)), new Position(column, row));
+        return new PieceType(none.get(column));
     }
 }
