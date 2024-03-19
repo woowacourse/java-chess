@@ -3,6 +3,9 @@ package domain;
 import static domain.PieceMoveResult.FAILURE;
 import static domain.PieceMoveResult.SUCCESS;
 
+import java.util.List;
+import java.util.Optional;
+
 public class Pawn extends AbstractPiece {
 
     private final Position initialPosition;
@@ -14,25 +17,23 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public PieceMoveResult tryMove(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
-        Position nowPosition = getPosition();
-        if (isMoveForward(nowPosition, targetPosition)) {
+        if (isMoveForward(targetPosition) && isEmpty(targetPosition, piecesOnChessBoard)) {
             return SUCCESS;
         }
-        if (isMoveForwardTwo(targetPosition, nowPosition)) {
+        if (isMoveForwardTwo(targetPosition, piecesOnChessBoard) && isEmpty(targetPosition, piecesOnChessBoard)) {
+            return SUCCESS;
+        }
+        if (isMoveDiagonal(targetPosition) && isOtherTeam(targetPosition, piecesOnChessBoard)) {
             return SUCCESS;
         }
         return FAILURE;
     }
 
-    private boolean isMoveForwardTwo(Position targetPosition, Position nowPosition) {
-        return nowPosition.rowDistance(targetPosition) == 2 * forwardDirection() && nowPosition.isSameColumn(
-                targetPosition)
-                && nowPosition.equals(initialPosition);
-    }
-
-    private boolean isMoveForward(Position nowPosition, Position targetPosition) {
-        return nowPosition.rowDistance(targetPosition) == forwardDirection() && nowPosition.isSameColumn(
-                targetPosition);
+    private boolean isMoveForward(Position targetPosition) {
+        Position nowPosition = getPosition();
+        boolean sameColumn = nowPosition.isSameColumn(targetPosition);
+        boolean rightDirection = nowPosition.rowDistance(targetPosition) == forwardDirection();
+        return rightDirection && sameColumn;
     }
 
     private int forwardDirection() {
@@ -41,5 +42,38 @@ public class Pawn extends AbstractPiece {
             return 1;
         }
         return -1;
+    }
+
+    private boolean isEmpty(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
+        Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
+        return targetTeam.isEmpty();
+    }
+
+    private boolean isMoveForwardTwo(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
+        Position nowPosition = getPosition();
+        List<Position> route = nowPosition.route(targetPosition);
+        boolean rightDirection = nowPosition.rowDistance(targetPosition) == 2 * forwardDirection();
+        boolean sameColumn = nowPosition.isSameColumn(targetPosition);
+        boolean firstMove = nowPosition.equals(initialPosition);
+        boolean allPieceOnRouteIsEmpty = isAllPieceOnRouteIsEmpty(piecesOnChessBoard, route);
+        return rightDirection && sameColumn && firstMove && allPieceOnRouteIsEmpty;
+    }
+
+    private boolean isAllPieceOnRouteIsEmpty(PiecesOnChessBoard piecesOnChessBoard, List<Position> route) {
+        return route.stream()
+                .map(piecesOnChessBoard::whichTeam)
+                .allMatch(Optional::isEmpty);
+    }
+
+    private boolean isMoveDiagonal(Position targetPosition) {
+        Position nowPosition = getPosition();
+        int rowDistance = nowPosition.rowDistance(targetPosition);
+        int columnDistance = nowPosition.columnDistance(targetPosition);
+        return rowDistance == forwardDirection() && Math.abs(columnDistance) == 1;
+    }
+
+    private boolean isOtherTeam(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
+        Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
+        return targetTeam.isPresent() && !targetTeam.get().equals(getTeam());
     }
 }
