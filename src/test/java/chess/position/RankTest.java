@@ -10,10 +10,10 @@ class RankTest {
     @Test
     @DisplayName("Rank와 Rank간 거리를 계산할 수 있다.")
     void should_calculate_distance() {
-        Rank rankTwo = Rank.TWO;
         Rank rankOne = Rank.ONE;
+        Rank rankTwo = Rank.TWO;
 
-        RankDifference expectedDistance = rankTwo.calculateDifference(rankOne);
+        RankDifference expectedDistance = rankOne.calculateDifference(rankTwo);
 
         assertThat(expectedDistance).isEqualTo(new RankDifference(1));
     }

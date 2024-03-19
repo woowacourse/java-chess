@@ -10,10 +10,10 @@ class FileTest {
     @Test
     @DisplayName("FIle과 FIle간 거리를 계산할 수 있다.")
     void should_calculate_distance() {
-        File fileB = File.b;
         File fileA = File.a;
+        File fileB = File.b;
 
-        FileDifference expectedDistance = fileB.calculateDifference(fileA);
+        FileDifference expectedDistance = fileA.calculateDifference(fileB);
 
         assertThat(expectedDistance).isEqualTo(new FileDifference(1));
     }
