@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class Point {

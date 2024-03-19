@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import user.User;
 
 public class UserDao {
 
@@ -19,7 +18,7 @@ public class UserDao {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:"+e.getMessage());
+            System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
             return null;
         }
