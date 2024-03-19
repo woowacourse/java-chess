@@ -6,6 +6,7 @@ public class Application {
         GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
         OutputView outputView = new OutputView();
+        outputView.printStartMessage();
         outputView.printGameBoard(gameBoard);
     }
 }
