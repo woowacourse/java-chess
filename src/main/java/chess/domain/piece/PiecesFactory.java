@@ -3,6 +3,9 @@ package chess.domain.piece;
 import java.util.List;
 
 public class PiecesFactory {
+    private PiecesFactory() {
+    }
+
     public static List<Piece> createBlackPieces() {
         return List.of(
                 new Rook(Color.BLACK),
