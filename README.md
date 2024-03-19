@@ -30,7 +30,7 @@
   - [x] 1-8 사이의 값이어야한다.
 
 ### team(enum)
-- [ ] BLACK, WHITE
+- [x] BLACK, WHITE
 
 ### pawn
 - [ ] piece를 상속한다.
