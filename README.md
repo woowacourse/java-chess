@@ -1,7 +1,12 @@
-# java-chess
+## 체스
 
-체스 미션 저장소
+## 위치
 
-## 우아한테크코스 코드리뷰
+### 가로
+    - [ ] 가로 위치는 왼쪽부터 a ~ h이다.
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+### 세로
+    - [ ] 세로 위치는 아래부터 위로 1 ~ 8 이다.
+
+### 진영
+    - [ ] 진영은 대문자와 소문자로 구분된다.
