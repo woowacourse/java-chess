@@ -6,7 +6,11 @@ public class ChessBoard {
 
     private final List<Square> board;
 
-    public ChessBoard(List<Square> board) {
+    private ChessBoard(List<Square> board) {
         this.board = board;
+    }
+
+    public ChessBoard() {
+        this(BoardGenerator.generate());
     }
 }
