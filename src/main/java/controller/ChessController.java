@@ -1,17 +1,25 @@
 package controller;
 
+import static view.StartOrEndCommand.START;
+
 import domain.ChessBoard;
+import view.InputView;
 import view.OutputView;
 
 public class ChessController {
+    private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController(final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
-        outputView.printChessBoard(chessBoard);
+        outputView.printCommandMessage();
+        while (inputView.enterStartOrEnd() == START) {
+            ChessBoard chessBoard = new ChessBoard();
+            outputView.printChessBoard(chessBoard);
+        }
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+    private static final String START_OR_END_MESSAGE = "체스 게임을 시작합니다.%n게임 시작은 start, 종료는 end 명령을 입력하세요.%n";
 
     private static final Map<Piece, String> pieceSymbol = new HashMap<>();
 
@@ -32,11 +33,16 @@ public class OutputView {
         pieceSymbol.put(new Piece(PieceType.NONE, Color.NONE), ".");
     }
 
+    public void printCommandMessage() {
+        System.out.printf(START_OR_END_MESSAGE);
+    }
+
     public void printChessBoard(final ChessBoard chessBoard) {
         List<Rank> ranks = chessBoard.getRanks();
         for (Rank rank : ranks) {
             printRankMessage(rank);
         }
+        System.out.println();
     }
 
     private void printRankMessage(final Rank rank) {
