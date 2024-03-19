@@ -12,6 +12,14 @@ public class Position {
         this.rank = rank;
     }
 
+    public int calculateFileDifference(Position otherPosition) {
+        return file.subtract(otherPosition.file);
+    }
+
+    public int calculateRankDifference(Position otherPosition) {
+        return rank.subtract(otherPosition.rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
