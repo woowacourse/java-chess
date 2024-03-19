@@ -3,10 +3,10 @@ package chess.domain;
 import java.util.Objects;
 
 public class Square {
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Square(final Rank rank, final File file) {
+    public Square(final File file, final Rank rank) {
         this.rank = rank;
         this.file = file;
     }

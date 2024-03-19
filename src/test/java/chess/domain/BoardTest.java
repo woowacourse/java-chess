@@ -1,14 +1,11 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +24,6 @@ class BoardTest {
 
         //then
         assertThat(pieces).hasSize(expectedSize);
-        assertThat(pieces).contains(new Pawn(Color.WHITE, new Square(Rank.A, File.TWO)));
+        assertThat(pieces).contains(new Pawn(Color.WHITE, new Square(File.A, Rank.TWO)));
     }
 }

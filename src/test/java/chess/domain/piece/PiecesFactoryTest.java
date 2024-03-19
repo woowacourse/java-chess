@@ -26,14 +26,14 @@ class PiecesFactoryTest {
             //when & then
             assertThat(blackPieces)
                     .containsExactly(
-                            new Rook(Color.BLACK, new Square(Rank.A, File.EIGHT)),
-                            new Knight(Color.BLACK, new Square(Rank.B, File.EIGHT)),
-                            new Bishop(Color.BLACK, new Square(Rank.C, File.EIGHT)),
-                            new Queen(Color.BLACK, new Square(Rank.D, File.EIGHT)),
-                            new King(Color.BLACK, new Square(Rank.E, File.EIGHT)),
-                            new Bishop(Color.BLACK, new Square(Rank.F, File.EIGHT)),
-                            new Knight(Color.BLACK, new Square(Rank.G, File.EIGHT)),
-                            new Rook(Color.BLACK, new Square(Rank.H, File.EIGHT))
+                            new Rook(Color.BLACK, new Square(File.A, Rank.EIGHT)),
+                            new Knight(Color.BLACK, new Square(File.B, Rank.EIGHT)),
+                            new Bishop(Color.BLACK, new Square(File.C, Rank.EIGHT)),
+                            new Queen(Color.BLACK, new Square(File.D, Rank.EIGHT)),
+                            new King(Color.BLACK, new Square(File.E, Rank.EIGHT)),
+                            new Bishop(Color.BLACK, new Square(File.F, Rank.EIGHT)),
+                            new Knight(Color.BLACK, new Square(File.G, Rank.EIGHT)),
+                            new Rook(Color.BLACK, new Square(File.H, Rank.EIGHT))
                     );
         }
 
@@ -48,14 +48,14 @@ class PiecesFactoryTest {
             //when & then
             assertAll(
                     () -> assertThat(blackPawns).containsExactly(
-                            new Pawn(Color.BLACK, new Square(Rank.A, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.B, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.C, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.D, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.E, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.F, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.G, File.SEVEN)),
-                            new Pawn(Color.BLACK, new Square(Rank.H, File.SEVEN))
+                            new Pawn(Color.BLACK, new Square(File.A, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.B, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.C, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.D, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.E, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.F, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.G, Rank.SEVEN)),
+                            new Pawn(Color.BLACK, new Square(File.H, Rank.SEVEN))
                     ),
                     () -> assertThat(blackPawns).hasSize(expectedSize)
             );
@@ -74,14 +74,14 @@ class PiecesFactoryTest {
             //when & then
             assertThat(whitePieces)
                     .containsExactly(
-                            new Rook(Color.WHITE, new Square(Rank.A, File.ONE)),
-                            new Knight(Color.WHITE, new Square(Rank.B, File.ONE)),
-                            new Bishop(Color.WHITE, new Square(Rank.C, File.ONE)),
-                            new Queen(Color.WHITE, new Square(Rank.D, File.ONE)),
-                            new King(Color.WHITE, new Square(Rank.E, File.ONE)),
-                            new Bishop(Color.WHITE, new Square(Rank.F, File.ONE)),
-                            new Knight(Color.WHITE, new Square(Rank.G, File.ONE)),
-                            new Rook(Color.WHITE, new Square(Rank.H, File.ONE))
+                            new Rook(Color.WHITE, new Square(File.A, Rank.ONE)),
+                            new Knight(Color.WHITE, new Square(File.B, Rank.ONE)),
+                            new Bishop(Color.WHITE, new Square(File.C, Rank.ONE)),
+                            new Queen(Color.WHITE, new Square(File.D, Rank.ONE)),
+                            new King(Color.WHITE, new Square(File.E, Rank.ONE)),
+                            new Bishop(Color.WHITE, new Square(File.F, Rank.ONE)),
+                            new Knight(Color.WHITE, new Square(File.G, Rank.ONE)),
+                            new Rook(Color.WHITE, new Square(File.H, Rank.ONE))
                     );
         }
 
@@ -96,14 +96,14 @@ class PiecesFactoryTest {
             //when & then
             assertAll(
                     () -> assertThat(whitePawns).containsExactly(
-                            new Pawn(Color.WHITE, new Square(Rank.A, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.B, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.C, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.D, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.E, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.F, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.G, File.TWO)),
-                            new Pawn(Color.WHITE, new Square(Rank.H, File.TWO))
+                            new Pawn(Color.WHITE, new Square(File.A, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.B, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.C, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.D, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.E, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.F, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.G, Rank.TWO)),
+                            new Pawn(Color.WHITE, new Square(File.H, Rank.TWO))
                     ),
                     () -> assertThat(whitePawns).hasSize(expectedSize)
             );
