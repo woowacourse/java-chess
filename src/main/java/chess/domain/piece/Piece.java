@@ -9,4 +9,12 @@ public class Piece {
         this.pieceType = pieceType;
         this.colorType = colorType;
     }
+
+    public boolean isBlack() {
+        return colorType.equals(ColorType.BLACK);
+    }
+
+    public boolean isSameType(String pieceViewName) {
+        return pieceType.name().equals(pieceViewName);
+    }
 }

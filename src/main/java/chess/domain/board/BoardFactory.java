@@ -1,20 +1,17 @@
 package chess.domain.board;
 
+import chess.domain.File;
+import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.Position;
 
 import java.util.HashMap;
 import java.util.Map;
 
 // TODO: 코드 리팩토링
 public class BoardFactory {
-
-    private static final int RANK_START = 1;
-    private static final int RANK_END = 8;
-    private static final char FILE_START = 'a';
-    private static final char FILE_END = 'h';
 
     public BoardFactory() {
 
@@ -23,23 +20,23 @@ public class BoardFactory {
     public Map<Position, Piece> create() {
         Map<Position, Piece> board = new HashMap<>();
 
-        for (int rank = RANK_START; rank <= RANK_END; rank++) {
+        for (Rank rank : Rank.values()) {
             createByRank(rank, board);
         }
 
         return board;
     }
 
-    private void createByRank(int rank, Map<Position, Piece> board) {
-        for (char file = FILE_START; file <= FILE_END; file++) {
-            Position position = new Position(file, rank);
+    private void createByRank(Rank rank, Map<Position, Piece> board) {
+        for (File file : File.values()) {
+            Position position = Position.of(file, rank);
             Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
 
-            if (rank == 1 || rank == 8) {
+            if (rank.equals(Rank.ONE) || rank.equals(Rank.EIGHT)) {
                 piece = makePiece(file, piece, rank);
             }
 
-            if (rank == 2 || rank == 7) {
+            if (rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN)) {
                 piece = decideColorType(rank, PieceType.PAWN);
             }
 
@@ -47,32 +44,32 @@ public class BoardFactory {
         }
     }
 
-    private Piece makePiece(char file, Piece piece, int rank) {
-        if (file == 'a' || file == 'h') {
+    private Piece makePiece(File file, Piece piece, Rank rank) {
+        if (file.equals(File.a) || file.equals(File.h)) {
             return decideColorType(rank, PieceType.ROOK);
         }
 
-        if (file == 'b' || file == 'g') {
+        if (file.equals(File.b) || file.equals(File.g)) {
             return decideColorType(rank, PieceType.KNIGHT);
         }
 
-        if (file == 'c' || file == 'f') {
+        if (file.equals(File.c) || file.equals(File.f)) {
             return decideColorType(rank, PieceType.BISHOP);
         }
 
-        if (file == 'd') {
+        if (file.equals(File.d)) {
             return decideColorType(rank, PieceType.QUEEN);
         }
 
-        if (file == 'e') {
+        if (file.equals(File.e)) {
             return decideColorType(rank, PieceType.KING);
         }
 
         return piece;
     }
 
-    private Piece decideColorType(int rank, PieceType pieceType) {
-        if (rank == 1 || rank == 2) {
+    private Piece decideColorType(Rank rank, PieceType pieceType) {
+        if (rank == Rank.ONE || rank == Rank.TWO) {
             return new Piece(pieceType, ColorType.WHITE);
         }
 

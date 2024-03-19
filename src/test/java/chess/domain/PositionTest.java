@@ -12,6 +12,6 @@ public class PositionTest {
     @Test
     void createPosition() {
         // when & then
-        assertThatCode(() -> new Position('a', 3)).doesNotThrowAnyException();
+        assertThatCode(() -> Position.of(File.a, Rank.THREE)).doesNotThrowAnyException();
     }
 }

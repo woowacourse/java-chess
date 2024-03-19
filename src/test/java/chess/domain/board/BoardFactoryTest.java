@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.File;
+import chess.domain.Rank;
 import chess.domain.Position;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
@@ -7,6 +9,7 @@ import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,45 +36,46 @@ public class BoardFactoryTest {
         Map<Position, Piece> expected = new HashMap<>();
 
         // TODO: 개선하기
-        expected.put(new Position('a', 1), new Piece(PieceType.ROOK, ColorType.WHITE));
-        expected.put(new Position('b', 1), new Piece(PieceType.KNIGHT, ColorType.WHITE));
-        expected.put(new Position('c', 1), new Piece(PieceType.BISHOP, ColorType.WHITE));
-        expected.put(new Position('d', 1), new Piece(PieceType.QUEEN, ColorType.WHITE));
-        expected.put(new Position('e', 1), new Piece(PieceType.KING, ColorType.WHITE));
-        expected.put(new Position('f', 1), new Piece(PieceType.BISHOP, ColorType.WHITE));
-        expected.put(new Position('g', 1), new Piece(PieceType.KNIGHT, ColorType.WHITE));
-        expected.put(new Position('h', 1), new Piece(PieceType.ROOK, ColorType.WHITE));
+        expected.put(Position.of(File.a, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
+        expected.put(Position.of(File.b, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
+        expected.put(Position.of(File.c, Rank.ONE), new Piece(PieceType.BISHOP, ColorType.WHITE));
+        expected.put(Position.of(File.d, Rank.ONE), new Piece(PieceType.QUEEN, ColorType.WHITE));
+        expected.put(Position.of(File.e, Rank.ONE), new Piece(PieceType.KING, ColorType.WHITE));
+        expected.put(Position.of(File.f, Rank.ONE), new Piece(PieceType.BISHOP, ColorType.WHITE));
+        expected.put(Position.of(File.g, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
+        expected.put(Position.of(File.h, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
 
-        expected.put(new Position('a', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('b', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('c', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('d', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('e', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('f', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('g', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(new Position('h', 2), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.a, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.b, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.c, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.d, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.e, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.f, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.g, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        expected.put(Position.of(File.h, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
 
-        expected.put(new Position('a', 8), new Piece(PieceType.ROOK, ColorType.BLACK));
-        expected.put(new Position('b', 8), new Piece(PieceType.KNIGHT, ColorType.BLACK));
-        expected.put(new Position('c', 8), new Piece(PieceType.BISHOP, ColorType.BLACK));
-        expected.put(new Position('d', 8), new Piece(PieceType.QUEEN, ColorType.BLACK));
-        expected.put(new Position('e', 8), new Piece(PieceType.KING, ColorType.BLACK));
-        expected.put(new Position('f', 8), new Piece(PieceType.BISHOP, ColorType.BLACK));
-        expected.put(new Position('g', 8), new Piece(PieceType.KNIGHT, ColorType.BLACK));
-        expected.put(new Position('h', 8), new Piece(PieceType.ROOK, ColorType.BLACK));
+        expected.put(Position.of(File.a, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
+        expected.put(Position.of(File.b, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
+        expected.put(Position.of(File.c, Rank.EIGHT), new Piece(PieceType.BISHOP, ColorType.BLACK));
+        expected.put(Position.of(File.d, Rank.EIGHT), new Piece(PieceType.QUEEN, ColorType.BLACK));
+        expected.put(Position.of(File.e, Rank.EIGHT), new Piece(PieceType.KING, ColorType.BLACK));
+        expected.put(Position.of(File.f, Rank.EIGHT), new Piece(PieceType.BISHOP, ColorType.BLACK));
+        expected.put(Position.of(File.g, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
+        expected.put(Position.of(File.h, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
 
-        expected.put(new Position('a', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('b', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('c', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('d', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('e', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('f', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('g', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(new Position('h', 7), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.a, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.b, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.c, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.d, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.e, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.f, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.g, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        expected.put(Position.of(File.h, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
 
-        for (int rank = 3; rank <= 6; rank++) {
-            for (char file = 'a'; file <= 'h'; file++) {
-                expected.put(new Position(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
+        for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
+            System.out.println(rank);
+            for (File file : File.values()) {
+                expected.put(Position.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
             }
         }
 
