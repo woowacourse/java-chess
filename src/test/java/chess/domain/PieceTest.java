@@ -1,11 +1,11 @@
-package chess;
+package chess.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.PieceType.KING;
-import static chess.Team.BLACK;
+import static chess.domain.PieceType.KING;
+import static chess.domain.Team.BLACK;
 
 class PieceTest {
 

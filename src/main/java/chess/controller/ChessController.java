@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.ChessBoard;
+import chess.domain.ChessBoard;
 import chess.view.GameStartCommand;
 import chess.view.InputView;
 import chess.view.OutputView;

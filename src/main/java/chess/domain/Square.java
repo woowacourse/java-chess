@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

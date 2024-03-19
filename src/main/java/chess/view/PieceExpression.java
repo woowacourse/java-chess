@@ -1,12 +1,12 @@
 package chess.view;
 
-import chess.Piece;
+import chess.domain.Piece;
 
 import java.util.Arrays;
 
-import static chess.PieceType.*;
-import static chess.Team.BLACK;
-import static chess.Team.WHITE;
+import static chess.domain.PieceType.*;
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
 
 public enum PieceExpression {
 
