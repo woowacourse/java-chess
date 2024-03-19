@@ -18,4 +18,8 @@ public enum GameCommand {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("start 혹은 end를 입력해주세요."));
     }
+
+    public boolean isEnd() {
+        return this.equals(END);
+    }
 }
