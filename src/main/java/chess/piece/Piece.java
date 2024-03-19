@@ -15,4 +15,6 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(Position from, Position to);
+
+    public abstract boolean isCatchable(Position from, Position to);
 }
