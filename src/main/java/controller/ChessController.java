@@ -1,6 +1,7 @@
 package controller;
 
 import domain.ChessTable;
+import domain.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -15,8 +16,11 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessTable chessTable = ChessTable.create();
-        outputView.printChessTable(chessTable.getPieceContainer());
+        outputView.printHeader();
+        while (Command.START == inputView.readCommand()) {
+            final ChessTable chessTable = ChessTable.create();
+            outputView.printChessTable(chessTable.getPieceContainer());
+        }
     }
 
 
