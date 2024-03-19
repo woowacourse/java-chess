@@ -53,4 +53,30 @@ class PositionTest {
         assertThat(position.findMovablePositions(Set.of(Direction.UP, Direction.RIGHT)))
                 .containsExactly(new Position(2, 1), new Position(1, 2));
     }
+
+    @Test
+    @DisplayName("현재 위치가 (1, 1)이고, Destination이 (1, 3), 방향이 UP이다.")
+    void findDirectionToUp() {
+        Position position = new Position(1, 1);
+
+        assertThat(position.findDirectionTo(new Position(1, 3))).isEqualTo(Direction.UP);
+    }
+
+    @Test
+    @DisplayName("현재 위치가 (1, 1)이고, Destination이 (3, 1), 방향이 RIGHT이다.")
+    void findDirectionToRight() {
+        Position position = new Position(1, 1);
+
+        assertThat(position.findDirectionTo(new Position(3, 1))).isEqualTo(Direction.RIGHT);
+    }
+
+    @Test
+    @DisplayName("현재 위치가 (1, 1)이고, Destination이 (2, 4), 여덟 방향에 속하지 않으므로 예외를 던진다.")
+    void findDirectionByNotInEightDirection() {
+        Position position = new Position(1, 1);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> position.findDirectionTo(new Position(2, 4)))
+                .withMessage("이동할 수 없는 방향입니다.");
+    }
 }

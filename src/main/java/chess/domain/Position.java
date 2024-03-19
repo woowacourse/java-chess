@@ -44,6 +44,22 @@ public class Position {
         return newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8;
     }
 
+    public Direction findDirectionTo(Position destination) {
+        int dx = destination.x - this.x;
+        int dy = destination.y - this.y;
+
+        if (Math.abs(dx) == Math.abs(dy) || (dx + dy != 0 && dx * dy == 0)) {
+            if (dx != 0) {
+                dx = dx / Math.abs(dx);
+            }
+            if (dy != 0) {
+                dy = dy / Math.abs(dy);
+            }
+            return Direction.findDirection(dx, dy);
+        }
+        throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
