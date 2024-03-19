@@ -33,6 +33,10 @@ public enum PieceExpression {
     }
 
     public static String mapToExpression(final Piece piece) {
+        if (piece == null) {
+            return EMPTY.expression;
+        }
+
         return Arrays.stream(values())
                 .filter(value -> value.piece.equals(piece))
                 .findFirst()
