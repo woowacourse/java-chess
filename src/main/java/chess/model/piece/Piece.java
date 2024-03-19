@@ -12,7 +12,8 @@ public enum Piece {
     WHITE_QUEEN(Color.WHITE, Type.QUEEN),
     WHITE_KNIGHT(Color.WHITE, Type.KNIGHT),
     WHITE_PAWN(Color.WHITE, Type.PAWN),
-    WHITE_KING(Color.WHITE, Type.KING);
+    WHITE_KING(Color.WHITE, Type.KING),
+    EMPTY(Color.NONE, Type.NONE);
 
     private final Color color;
     private final Type type;

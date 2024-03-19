@@ -6,7 +6,8 @@ public enum Type {
     QUEEN("q"),
     KNIGHT("n"),
     PAWN("p"),
-    KING("k");
+    KING("k"),
+    NONE(".");
 
     private final Signature signature;
 
