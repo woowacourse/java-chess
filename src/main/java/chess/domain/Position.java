@@ -1,8 +1,8 @@
 package chess.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -13,12 +13,12 @@ public class Position {
     private static final List<Position> positions;
 
     static {
-        positions = new ArrayList<>();
-        for (int i = MIN_COLUMN; i <= MAX_COLUMN; i++) {
-            for (int j = MIN_ROW; j <= MAX_ROW; j++) {
-                positions.add(new Position(j, i));
-            }
-        }
+        positions = IntStream.rangeClosed(MIN_COLUMN, MAX_COLUMN)
+                .boxed()
+                .flatMap(column -> IntStream.rangeClosed(MIN_ROW, MAX_ROW)
+                        .boxed()
+                        .map(row -> new Position(row, column)))
+                .toList();
     }
 
     private final int row;
@@ -38,14 +38,34 @@ public class Position {
     }
 
     private static void validateRange(int row, int column) {
-        if (row < MIN_ROW || row > MAX_ROW) {
+        if (isRowOutOfRange(row)) {
             throw new IllegalArgumentException(
                     "가로는 %d부터 %d 사이의 값이어야 합니다: %d".formatted(MIN_ROW, MAX_ROW, row));
         }
-        if (column < MIN_COLUMN || column > MAX_COLUMN) {
+        if (isColumnOutOfRange(column)) {
             throw new IllegalArgumentException(
                     "세로는 %d부터 %d 사이의 값이어야 합니다: %d".formatted(MIN_COLUMN, MAX_COLUMN, column));
         }
+    }
+
+    public static boolean isColumnOutOfRange(int column) {
+        return column < MIN_COLUMN || column > MAX_COLUMN;
+    }
+
+    public static boolean isRowOutOfRange(int row) {
+        return row < MIN_ROW || row > MAX_ROW;
+    }
+
+    public int differenceRow(Position newPosition) {
+        return newPosition.row - row;
+    }
+
+    public int differenceColumn(Position newPosition) {
+        return newPosition.column - column;
+    }
+
+    public boolean isSameRow(int row) {
+        return this.row == row;
     }
 
     @Override
