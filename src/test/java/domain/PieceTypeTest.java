@@ -4,12 +4,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PieceTest {
+class PieceTypeTest {
 
     @DisplayName("기물은 기물 종류와 색을 갖는다.")
     @Test
     void generatePiece() {
-        Piece piece = new Piece(PieceRole.PAWN, Color.BLACK);
-        Assertions.assertThat(piece).isEqualTo(new Piece(PieceRole.PAWN, Color.BLACK));
+        PieceType pieceType = new PieceType(PieceRole.PAWN, Color.BLACK);
+        Assertions.assertThat(pieceType).isEqualTo(new PieceType(PieceRole.PAWN, Color.BLACK));
     }
 }

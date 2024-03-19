@@ -27,17 +27,17 @@ public class RankGenerator {
 
     private Square generateSquare(int column, int row) {
         if (row == 0) {
-            return new Square(new Piece(back.get(column), Color.BLACK), new Position(column, row));
+            return new Square(new PieceType(back.get(column), Color.BLACK), new Position(column, row));
         }
         if (row == 1) {
-            return new Square(new Piece(front.get(column), Color.BLACK), new Position(column, row));
+            return new Square(new PieceType(front.get(column), Color.BLACK), new Position(column, row));
         }
         if (row == 6) {
-            return new Square(new Piece(front.get(column), Color.WHITE), new Position(column, row));
+            return new Square(new PieceType(front.get(column), Color.WHITE), new Position(column, row));
         }
         if (row == 7) {
-            return new Square(new Piece(back.get(column), Color.WHITE), new Position(column, row));
+            return new Square(new PieceType(back.get(column), Color.WHITE), new Position(column, row));
         }
-        return new Square(new Piece(none.get(column)), new Position(column, row));
+        return new Square(new PieceType(none.get(column)), new Position(column, row));
     }
 }

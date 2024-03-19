@@ -2,16 +2,16 @@ package domain;
 
 import java.util.Objects;
 
-public class Piece {
+public class PieceType {
     private final PieceRole pieceRole;
     private final Color color;
 
-    public Piece(final PieceRole pieceRole, final Color color) {
+    public PieceType(final PieceRole pieceRole, final Color color) {
         this.pieceRole = pieceRole;
         this.color = color;
     }
 
-    public Piece(final PieceRole pieceRole) {
+    public PieceType(final PieceRole pieceRole) {
         this.pieceRole = pieceRole;
         this.color = Color.NONE;
     }
@@ -24,8 +24,8 @@ public class Piece {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Piece piece = (Piece) o;
-        return pieceRole == piece.pieceRole && color == piece.color;
+        PieceType pieceType = (PieceType) o;
+        return pieceRole == pieceType.pieceRole && color == pieceType.color;
     }
 
     @Override
