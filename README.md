@@ -4,12 +4,12 @@
 
 ### 체스말 (Piece)
 
-- [ ] King, Queen, Rook, Knight, Bishop, Pawn 등 여섯 종류의 말이 있다.
-- [ ] Color 를 가진다.
+- [x] King, Queen, Rook, Knight, Bishop, Pawn 등 여섯 종류의 말이 있다.
+- [x] Color 를 가진다.
 
 ### 색 (Color)
 
-- [ ] WHITE, BLACK 두 가지의 색을 가진다.
+- [x] WHITE, BLACK 두 가지의 색을 가진다.
 
 ### 위치 (Position)
 
