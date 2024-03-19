@@ -16,9 +16,11 @@ import static domain.Position.F6;
 import static domain.Position.G1;
 import static domain.Position.G7;
 import static domain.Position.H8;
+import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,13 +50,21 @@ class BishopTest {
         );
     }
 
+    public static Stream<Arguments> moveFailureCauseRouteParameters() {
+        return Stream.of(
+                Arguments.of(H8, F6),
+                Arguments.of(A7, B6),
+                Arguments.of(A1, B2),
+                Arguments.of(G1, F2)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("moveSuccessParameters")
     @DisplayName("비숍의 이동 규칙대로 이동이 가능한지 검증")
     void moveSuccess(Position targetPosition) {
         Bishop bishop = new Bishop(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(bishop.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(SUCCESS);
     }
@@ -64,9 +74,38 @@ class BishopTest {
     @DisplayName("비숍의 이동 규칙을 위반한 이동이 불가능한지 검증")
     void moveFailure(Position targetPosition) {
         Bishop bishop = new Bishop(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(bishop.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveFailureCauseRouteParameters")
+    @DisplayName("비숍의 이동 경로에 다른 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseRoute(Position targetPosition, Position other) {
+        Bishop bishop = new Bishop(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(other, WHITE)));
+        Assertions.assertThat(bishop.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("비숍의 목적지에 같은 팀 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseTargetIsSameTeam(Position targetPosition) {
+        Bishop bishop = new Bishop(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, WHITE)));
+        Assertions.assertThat(bishop.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("비숍의 목적지에 다른 팀 말이 있는 경우 이동이 가능한지 검증")
+    void moveSuccessWhenTargetIsOtherTeam(Position targetPosition) {
+        Bishop bishop = new Bishop(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, BLACK)));
+        Assertions.assertThat(bishop.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(SUCCESS);
     }
 }

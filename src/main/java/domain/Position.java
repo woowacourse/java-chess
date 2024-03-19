@@ -1,5 +1,11 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
+
 public enum Position {
     A1(1, 1), A2(2, 1), A3(3, 1), A4(4, 1), A5(5, 1), A6(6, 1), A7(7, 1), A8(8, 1),
     B1(1, 2), B2(2, 2), B3(3, 2), B4(4, 2), B5(5, 2), B6(6, 2), B7(7, 2), B8(8, 2),
@@ -18,6 +24,48 @@ public enum Position {
         this.column = column;
     }
 
+    public List<Position> route(Position targetPosition) {
+        if (this.equals(targetPosition)) {
+            return Collections.emptyList();
+        }
+        int absRowDistance = Math.abs(rowDistance(targetPosition));
+        int absColDistance = Math.abs(columnDistance(targetPosition));
+        if (absRowDistance == absColDistance) {
+            List<Integer> rows = calculateBetween(row, targetPosition.row);
+            List<Integer> columns = calculateBetween(column, targetPosition.column);
+            List<Position> result = new ArrayList<>();
+            for (int i = 0; i < rows.size(); i++) {
+                result.add(Position.getInstance(rows.get(i), columns.get(i)));
+            }
+            return Collections.unmodifiableList(result);
+        }
+        if (absRowDistance == 0) {
+            List<Integer> between = calculateBetween(column, targetPosition.column);
+            List<Position> result = new ArrayList<>();
+            for (Integer integer : between) {
+                result.add(Position.getInstance(row, integer));
+            }
+            return Collections.unmodifiableList(result);
+        }
+        if (absColDistance == 0) {
+            List<Integer> between = calculateBetween(row, targetPosition.row);
+            List<Position> result = new ArrayList<>();
+            for (Integer integer : between) {
+                result.add(Position.getInstance(integer, column));
+            }
+            return Collections.unmodifiableList(result);
+        }
+        throw new RuntimeException();
+    }
+
+    private List<Integer> calculateBetween(int from, int to) {
+        int distance = to - from;
+        int delta = distance / Math.abs(distance);
+        return IntStream.range(1, Math.abs(distance))
+                .mapToObj(value -> value * delta + from)
+                .toList();
+    }
+
     public int rowDistance(Position targetPosition) {
         return targetPosition.row - row;
     }
@@ -26,12 +74,19 @@ public enum Position {
         return targetPosition.column - column;
     }
 
-    public boolean isSameColumn(Position targetPosition) {
-        return targetPosition.column == column;
+    public static Position getInstance(int row, int column) {
+        return Arrays.stream(values())
+                .filter(position -> position.row == row)
+                .filter(position -> position.column == column)
+                .findFirst()
+                .orElseThrow();
     }
 
     public boolean isSameRow(Position targetPosition) {
         return targetPosition.row == row;
     }
 
+    public boolean isSameColumn(Position targetPosition) {
+        return targetPosition.column == column;
+    }
 }

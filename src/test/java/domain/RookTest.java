@@ -17,9 +17,11 @@ import static domain.Position.E4;
 import static domain.Position.F4;
 import static domain.Position.G4;
 import static domain.Position.H4;
+import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,13 +51,21 @@ class RookTest {
         );
     }
 
+    public static Stream<Arguments> moveFailureCauseRouteParameters() {
+        return Stream.of(
+                Arguments.of(D8, D6),
+                Arguments.of(D1, D2),
+                Arguments.of(H4, F4),
+                Arguments.of(A4, B4)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("moveSuccessParameters")
     @DisplayName("룩의 이동 규칙대로 이동이 가능한지 검증")
     void moveSuccess(Position targetPosition) {
         Rook rook = new Rook(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(rook.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(SUCCESS);
     }
@@ -65,9 +75,38 @@ class RookTest {
     @DisplayName("룩의 이동 규칙을 위반한 이동이 불가능한지 검증")
     void moveFailure(Position targetPosition) {
         Rook rook = new Rook(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(rook.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveFailureCauseRouteParameters")
+    @DisplayName("룩의 이동 경로에 다른 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseRoute(Position targetPosition, Position other) {
+        Rook rook = new Rook(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(other, WHITE)));
+        Assertions.assertThat(rook.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("룩의 목적지에 같은 팀 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseTargetIsSameTeam(Position targetPosition) {
+        Rook rook = new Rook(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, WHITE)));
+        Assertions.assertThat(rook.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("룩의 목적지에 다른 팀 말이 있는 경우 이동이 가능한지 검증")
+    void moveSuccessWhenTargetIsOtherTeam(Position targetPosition) {
+        Rook rook = new Rook(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, BLACK)));
+        Assertions.assertThat(rook.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(SUCCESS);
     }
 }

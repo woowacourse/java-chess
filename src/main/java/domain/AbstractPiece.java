@@ -26,7 +26,13 @@ public abstract class AbstractPiece implements Piece {
 
     public abstract PieceMoveResult tryMove(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard);
 
-    protected Team getTeam() {
+    @Override
+    public boolean isOn(Position position) {
+        return this.position.equals(position);
+    }
+
+    @Override
+    public Team getTeam() {
         return team;
     }
 

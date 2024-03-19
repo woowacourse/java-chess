@@ -11,6 +11,7 @@ import static domain.Position.A7;
 import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,7 @@ class PawnTest {
     void moveOneSuccess() {
         Pawn pawnWhite = new Pawn(A2, WHITE);
         Pawn pawnBlack = new Pawn(A7, BLACK);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         PieceMoveResult actualWhite = pawnWhite.move(A3, piecesOnChessBoard);
         PieceMoveResult actualBlack = pawnBlack.move(A6, piecesOnChessBoard);
         org.junit.jupiter.api.Assertions.assertAll(
@@ -37,8 +37,7 @@ class PawnTest {
     void moveTwoSuccess() {
         Pawn pawnWhite = new Pawn(A2, WHITE);
         Pawn pawnBlack = new Pawn(A7, BLACK);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         PieceMoveResult actualWhite = pawnWhite.move(A4, piecesOnChessBoard);
         PieceMoveResult actualBlack = pawnBlack.move(A5, piecesOnChessBoard);
         org.junit.jupiter.api.Assertions.assertAll(
@@ -52,8 +51,7 @@ class PawnTest {
     void moveTwoFail() {
         Pawn pawnWhite = new Pawn(A2, WHITE);
         Pawn pawnBlack = new Pawn(A7, BLACK);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         pawnWhite.move(A3, piecesOnChessBoard);
         pawnBlack.move(A6, piecesOnChessBoard);
         PieceMoveResult actualWhite = pawnWhite.move(A5, piecesOnChessBoard);

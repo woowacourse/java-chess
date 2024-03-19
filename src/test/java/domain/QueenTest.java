@@ -30,9 +30,11 @@ import static domain.Position.G4;
 import static domain.Position.G7;
 import static domain.Position.H4;
 import static domain.Position.H8;
+import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,13 +69,25 @@ class QueenTest {
         );
     }
 
+    public static Stream<Arguments> moveFailureCauseRouteParameters() {
+        return Stream.of(
+                Arguments.of(D8, D6),
+                Arguments.of(D1, D2),
+                Arguments.of(H4, F4),
+                Arguments.of(A4, B4),
+                Arguments.of(H8, F6),
+                Arguments.of(A7, B6),
+                Arguments.of(A1, B2),
+                Arguments.of(G1, F2)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("moveSuccessParameters")
     @DisplayName("퀸의 이동 규칙대로 이동이 가능한지 검증")
     void moveSuccess(Position targetPosition) {
         Queen queen = new Queen(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(queen.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(SUCCESS);
     }
@@ -83,9 +97,38 @@ class QueenTest {
     @DisplayName("퀸의 이동 규칙을 위반한 이동이 불가능한지 검증")
     void moveFailure(Position targetPosition) {
         Queen queen = new Queen(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(queen.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveFailureCauseRouteParameters")
+    @DisplayName("퀸의 이동 경로에 다른 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseRoute(Position targetPosition, Position other) {
+        Queen queen = new Queen(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(other, WHITE)));
+        Assertions.assertThat(queen.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("퀸의 목적지에 같은 팀 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseTargetIsSameTeam(Position targetPosition) {
+        Queen queen = new Queen(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, WHITE)));
+        Assertions.assertThat(queen.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("퀸의 목적지에 다른 팀 말이 있는 경우 이동이 가능한지 검증")
+    void moveSuccessWhenTargetIsOtherTeam(Position targetPosition) {
+        Queen queen = new Queen(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, BLACK)));
+        Assertions.assertThat(queen.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(SUCCESS);
     }
 }

@@ -11,9 +11,11 @@ import static domain.Position.E2;
 import static domain.Position.E6;
 import static domain.Position.F3;
 import static domain.Position.F5;
+import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,8 +49,7 @@ class KnightTest {
     @DisplayName("나이트의 이동 규칙대로 이동이 가능한지 검증")
     void moveSuccess(Position targetPosition) {
         Knight knight = new Knight(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(knight.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(SUCCESS);
     }
@@ -58,9 +59,28 @@ class KnightTest {
     @DisplayName("나이트의 이동 규칙을 위반한 이동이 불가능한지 검증")
     void moveFailure(Position targetPosition) {
         Knight knight = new Knight(D4, WHITE);
-        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard() {
-        };
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
         Assertions.assertThat(knight.move(targetPosition, piecesOnChessBoard))
                 .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("나이트의 목적지에 같은 팀 말이 있는 경우 이동이 불가능한지 검증")
+    void moveFailureCauseTargetIsSameTeam(Position targetPosition) {
+        Knight knight = new Knight(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, WHITE)));
+        Assertions.assertThat(knight.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(FAILURE);
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveSuccessParameters")
+    @DisplayName("나이트의 목적지에 다른 팀 말이 있는 경우 이동이 가능한지 검증")
+    void moveSuccessWhenTargetIsOtherTeam(Position targetPosition) {
+        Knight knight = new Knight(D4, WHITE);
+        PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of(new Pawn(targetPosition, BLACK)));
+        Assertions.assertThat(knight.move(targetPosition, piecesOnChessBoard))
+                .isEqualTo(SUCCESS);
     }
 }
