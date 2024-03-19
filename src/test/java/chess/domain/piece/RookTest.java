@@ -1,8 +1,13 @@
-package chess.domain;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.File;
+import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;

@@ -16,10 +16,10 @@ public class Rook extends Piece {
         this.directions = Direction.ofStraight();
     }
 
-    public Set<Position> calculateMovablePositions(Position currentRookPosition, Board board) {
+    public Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
         Set<Position> movablePositions = new HashSet<>();
         directions.forEach(direction -> {
-            Position position = currentRookPosition;
+            Position position = currentPosition;
             while (position.canMoveNext(direction)) {
                 position = position.next(direction);
                 Piece piece = board.findPieceByPosition(position);
