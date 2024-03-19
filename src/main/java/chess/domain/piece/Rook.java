@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Point;
 
 public final class Rook extends Piece {
 
