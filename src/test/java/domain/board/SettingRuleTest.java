@@ -109,4 +109,24 @@ public class SettingRuleTest {
                     .isEqualTo(new Piece(Type.KNIGHT, Color.BLACK));
         }
     }
+
+    @Nested
+    class RookTest {
+
+        @ParameterizedTest
+        @EnumSource(names = {"A", "H"})
+        @DisplayName("랭크가 1, 파일이 a 또는 h일 경우 흰색 룩을 반환한다.")
+        void findPieceByPosition_RankOneFileAH_WhiteRook(File file) {
+            assertThat(settingRule.findPieceByPosition(Rank.ONE, file))
+                    .isEqualTo(new Piece(Type.ROOK, Color.WHITE));
+        }
+
+        @ParameterizedTest
+        @EnumSource(names = {"A", "H"})
+        @DisplayName("랭크가 8, 파일이 a 또는 h일 경우 검정색 룩을 반환한다.")
+        void findPieceByPosition_RankEightFileAH_BlackRook(File file) {
+            assertThat(settingRule.findPieceByPosition(Rank.EIGHT, file))
+                    .isEqualTo(new Piece(Type.ROOK, Color.BLACK));
+        }
+    }
 }

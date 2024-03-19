@@ -45,6 +45,14 @@ public class SettingRule {
                 return new Piece(Type.KNIGHT, Color.BLACK);
             }
         }
+        if (file == File.A || file == File.H) {
+            if (rank == Rank.ONE) {
+                return new Piece(Type.ROOK, Color.WHITE);
+            }
+            if (rank == Rank.EIGHT) {
+                return new Piece(Type.ROOK, Color.BLACK);
+            }
+        }
         return new Piece(Type.NONE, Color.NONE);
     }
 }
