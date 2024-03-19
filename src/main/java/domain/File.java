@@ -10,6 +10,10 @@ public final class File {
         this.value = value;
     }
 
+    public int subtract(File otherFile) {
+        return this.value - otherFile.value;
+    }
+
     public int value() {
         return value;
     }
@@ -36,4 +40,5 @@ public final class File {
         return "File[" +
             "value=" + value + ']';
     }
+
 }
