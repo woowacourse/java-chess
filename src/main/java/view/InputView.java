@@ -5,11 +5,10 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static String inputCommand() {
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+    public static Command inputCommand() {
         String command = scanner.nextLine();
         validateCommand(command);
-        return command;
+        return Command.of(command);
     }
 
     private static void validateCommand(final String command) {
