@@ -14,4 +14,9 @@ public class Bishop extends Piece {
     public Character findCharacter() {
         return Character.findCharacter(team, Kind.BISHOP);
     }
+
+    @Override
+    public Piece move(Position position) {
+        return null;
+    }
 }

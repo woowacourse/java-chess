@@ -14,4 +14,9 @@ public class King extends Piece {
     public Character findCharacter() {
         return Character.findCharacter(team, Kind.KING);
     }
+
+    @Override
+    public Piece move(Position position) {
+        return null;
+    }
 }

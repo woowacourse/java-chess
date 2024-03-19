@@ -16,6 +16,8 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
+    public abstract Piece move(Position position);
+
     public Position position() {
         return position;
     }
@@ -29,11 +31,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return Objects.equals(position, piece.position) && team == piece.team;
+        return Objects.equals(position, piece.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, team);
+        return Objects.hash(position);
     }
 }

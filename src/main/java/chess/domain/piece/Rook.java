@@ -14,4 +14,9 @@ public class Rook extends Piece {
     public Character findCharacter() {
         return Character.findCharacter(team, Kind.ROOK);
     }
+
+    @Override
+    public Piece move(Position position) {
+        return null;
+    }
 }
