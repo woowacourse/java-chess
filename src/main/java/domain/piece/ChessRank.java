@@ -17,4 +17,16 @@ public enum ChessRank {
         this.value = value;
         this.index = index;
     }
+
+    public static int minIndex() {
+        return EIGHT.index;
+    }
+
+    public static int maxIndex() {
+        return ONE.index;
+    }
+
+    public int index() {
+        return index;
+    }
 }

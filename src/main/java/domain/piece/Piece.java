@@ -12,4 +12,8 @@ public abstract class Piece {
     public boolean isColor(final PieceColor color) {
         return this.color == color;
     }
+
+    public String name() {
+        return name;
+    }
 }

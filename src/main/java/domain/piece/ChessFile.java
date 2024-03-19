@@ -17,4 +17,16 @@ public enum ChessFile {
         this.value = value;
         this.index = index;
     }
+
+    public static int minIndex() {
+        return A.index;
+    }
+
+    public static int maxIndex() {
+        return H.index;
+    }
+
+    public int index() {
+        return index;
+    }
 }
