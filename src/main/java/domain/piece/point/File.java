@@ -1,4 +1,4 @@
-package piece.point;
+package domain.piece.point;
 
 public enum File {
     A,

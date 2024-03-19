@@ -1,4 +1,4 @@
-package piece;
+package domain.piece;
 
 public enum Color {
     BLACK,

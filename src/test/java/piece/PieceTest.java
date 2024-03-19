@@ -1,11 +1,13 @@
 package piece;
 
+import domain.piece.Color;
+import domain.piece.Piece;
 import fixture.PieceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import piece.point.File;
-import piece.point.Point;
-import piece.point.Rank;
+import domain.piece.point.File;
+import domain.piece.point.Point;
+import domain.piece.point.Rank;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

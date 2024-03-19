@@ -1,6 +1,6 @@
-package piece;
+package domain.piece;
 
-import piece.point.Point;
+import domain.piece.point.Point;
 
 public class King extends Piece {
     public King(final Point point, final Color color) {

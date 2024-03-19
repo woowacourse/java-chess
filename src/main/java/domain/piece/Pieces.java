@@ -1,6 +1,4 @@
-package piece;
-
-import piece.Piece;
+package domain.piece;
 
 import java.util.List;
 
@@ -11,4 +9,5 @@ public class Pieces {
     public Pieces(final List<Piece> value) {
         this.value = value;
     }
+
 }

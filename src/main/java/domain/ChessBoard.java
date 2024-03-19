@@ -6,4 +6,5 @@ public class ChessBoard {
     public ChessBoard(final Pieces pieces) {
         this.pieces = pieces;
     }
+
 }
