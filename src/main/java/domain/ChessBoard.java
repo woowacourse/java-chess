@@ -10,8 +10,8 @@ public class ChessBoard {
 
     public ChessBoard() {
         ranks = new ArrayList<>();
-        for (int index = 0; index < RANK_SIZE; index++) {
-            ranks.add(new Rank(new RankGenerator(), index));
+        for (int row = 0; row < RANK_SIZE; row++) {
+            ranks.add(new Rank(new RankGenerator(), row));
         }
     }
 

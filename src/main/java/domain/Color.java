@@ -3,7 +3,8 @@ package domain;
 public enum Color {
 
     BLACK,
-    WHITE;
+    WHITE,
+    NONE;
 
     Color() {
 

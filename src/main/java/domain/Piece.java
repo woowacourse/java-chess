@@ -12,6 +12,11 @@ public class Piece {
         this.color = color;
     }
 
+    public Piece(final PieceType pieceType) {
+        this.pieceType = pieceType;
+        this.color = Color.NONE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
