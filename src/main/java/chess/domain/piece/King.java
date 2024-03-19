@@ -16,7 +16,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Piece move(Position position) {
+    public Piece move(Position newPosition) {
         return null;
     }
 }

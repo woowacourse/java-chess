@@ -16,7 +16,7 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
-    public abstract Piece move(Position position);
+    public abstract Piece move(Position newPosition);
 
     public Position position() {
         return position;
