@@ -22,6 +22,10 @@ public class King {
         throw new IllegalArgumentException("이동할 수 없습니다.");
     }
 
+    public boolean isSameColor(Color other) {
+        return color == other;
+    }
+
     public void update(Position destination) {
         this.position = destination;
     }
