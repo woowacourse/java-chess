@@ -18,4 +18,8 @@ public class ChessBoard {
     public int size() {
         return ranks.size();
     }
+
+    public List<Rank> getRanks() {
+        return ranks;
+    }
 }

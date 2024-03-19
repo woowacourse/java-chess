@@ -12,4 +12,8 @@ public class Rank {
     public int size() {
         return squares.size();
     }
+
+    public List<Square> getSquares() {
+        return squares;
+    }
 }
