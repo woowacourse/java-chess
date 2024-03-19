@@ -55,7 +55,7 @@ public class ChessBoardTest {
 
     @DisplayName("검은색 퀸은 d8에 위치한다. 흰색 퀸은 d1에 위치한다.")
     @Test
-    void PositionTest() {
+    void queenPositionTest() {
         ChessBoard chessBoard = new ChessBoard(new LinkedHashMap<>());
 
         chessBoard.init();
@@ -63,6 +63,19 @@ public class ChessBoardTest {
         assertThat(chessBoard.getBoard()).contains(
                 Map.entry(new Position("d", "8"), new Queen(Side.BLACK)),
                 Map.entry(new Position("d", "1"), new Queen(Side.WHITE))
+        );
+    }
+
+    @DisplayName("검은색 킹은 e8에 위치한다. 흰색 킹은 e1에 위치한다.")
+    @Test
+    void kingPositionTest() {
+        ChessBoard chessBoard = new ChessBoard(new LinkedHashMap<>());
+
+        chessBoard.init();
+
+        assertThat(chessBoard.getBoard()).contains(
+                Map.entry(new Position("e", "8"), new King(Side.BLACK)),
+                Map.entry(new Position("e", "1"), new King(Side.WHITE))
         );
     }
 }
