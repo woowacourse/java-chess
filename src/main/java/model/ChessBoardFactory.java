@@ -3,6 +3,7 @@ package model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import model.piece.Color;
 import model.piece.Piece;
 import model.piece.state.Bishop;
 import model.piece.state.King;
@@ -46,33 +47,33 @@ public class ChessBoardFactory {
         for (int file = FILE_A; file <= FILE_C; file++) {
             Role role = pieceTypes.get(file - 1);
             int mirrorFileIndex = 9 - file;
-            chessBoard.put(Position.of(file, RANK_ONE), new Piece(false, role));
-            chessBoard.put(Position.of(mirrorFileIndex, RANK_ONE), new Piece(false, role));
-            chessBoard.put(Position.of(file, RANK_EIGHT), new Piece(true, role));
-            chessBoard.put(Position.of(mirrorFileIndex, RANK_EIGHT), new Piece(true, role));
+            chessBoard.put(Position.of(file, RANK_ONE), new Piece(Color.WHITE, role));
+            chessBoard.put(Position.of(mirrorFileIndex, RANK_ONE), new Piece(Color.WHITE, role));
+            chessBoard.put(Position.of(file, RANK_EIGHT), new Piece(Color.BLACK, role));
+            chessBoard.put(Position.of(mirrorFileIndex, RANK_EIGHT), new Piece(Color.BLACK, role));
         }
     }
 
     private static void initKingQueen() {
-        chessBoard.put(Position.of(FILE_D, RANK_ONE), new Piece(false, new Queen()));
-        chessBoard.put(Position.of(FILE_E, RANK_ONE), new Piece(false, new King()));
-        chessBoard.put(Position.of(FILE_D, RANK_EIGHT), new Piece(true, new Queen()));
-        chessBoard.put(Position.of(FILE_E, RANK_EIGHT), new Piece(true, new King()));
+        chessBoard.put(Position.of(FILE_D, RANK_ONE), new Piece(Color.WHITE, new Queen()));
+        chessBoard.put(Position.of(FILE_E, RANK_ONE), new Piece(Color.WHITE, new King()));
+        chessBoard.put(Position.of(FILE_D, RANK_EIGHT), new Piece(Color.BLACK, new Queen()));
+        chessBoard.put(Position.of(FILE_E, RANK_EIGHT), new Piece(Color.BLACK, new King()));
     }
 
     private static void initPawn() {
         for (int file = 1; file <= 8; file++) {
-            chessBoard.put(Position.of(file, RANK_TWO), new Piece(false, new Pawn()));
-            chessBoard.put(Position.of(file, RANK_SEVEN), new Piece(true, new Pawn()));
+            chessBoard.put(Position.of(file, RANK_TWO), new Piece(Color.WHITE, new Pawn()));
+            chessBoard.put(Position.of(file, RANK_SEVEN), new Piece(Color.BLACK, new Pawn()));
         }
     }
 
     private static void initSquare() {
         for (int file = FILE_A; file <= FILE_H; file++) {
-            chessBoard.put(Position.of(file, RANK_THREE), new Piece(false, new Square()));
-            chessBoard.put(Position.of(file, RANK_FOUR), new Piece(false, new Square()));
-            chessBoard.put(Position.of(file, RANK_FIVE), new Piece(false, new Square()));
-            chessBoard.put(Position.of(file, RANK_SIX), new Piece(false, new Square()));
+            chessBoard.put(Position.of(file, RANK_THREE), new Piece(Color.WHITE, new Square()));
+            chessBoard.put(Position.of(file, RANK_FOUR), new Piece(Color.WHITE, new Square()));
+            chessBoard.put(Position.of(file, RANK_FIVE), new Piece(Color.WHITE, new Square()));
+            chessBoard.put(Position.of(file, RANK_SIX), new Piece(Color.WHITE, new Square()));
         }
     }
 }
