@@ -1,4 +1,5 @@
 import domain.ChessBoard;
+import domain.piece.PieceStatus;
 import fixture.PieceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,8 +11,11 @@ import domain.piece.point.File;
 import domain.piece.point.Point;
 import domain.piece.point.Rank;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
+import static domain.piece.PieceStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessBoardTest {
@@ -57,5 +61,34 @@ class ChessBoardTest {
 
         Assertions.assertThatThrownBy(() -> sut.findPieceByPoint(notExistedPoint))
                   .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("기본 체스판을 생성한다.")
+    void create_default_board() {
+        final var sut = ChessBoard.createDefaultBoard();
+
+        final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SEVEN, Rank.TWO, Rank.ONE);
+
+        final var result = ranks.stream()
+                                .map(rank -> getRankPieces(sut, rank))
+                                .toList();
+
+
+        List<PieceStatus> pieceList = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
+        List<PieceStatus> pawnList = IntStream.range(0, 8)
+                                              .mapToObj(it -> PAWN)
+                                              .toList();
+
+        List<List<PieceStatus>> expected = List.of(pieceList, pawnList, pawnList, pieceList);
+        assertThat(result).isEqualTo(expected);
+    }
+
+    private List<PieceStatus> getRankPieces(final ChessBoard chessBoard, final Rank rank) {
+        return Arrays.stream(File.values())
+                     .map(file -> new Point(file, rank))
+                     .map(chessBoard::findPieceByPoint)
+                     .map(Piece::getStatus)
+                     .toList();
     }
 }

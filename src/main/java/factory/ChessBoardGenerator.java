@@ -21,7 +21,7 @@ public class ChessBoardGenerator {
         list.addAll(selectPawn(Rank.SEVEN, Color.BLACK));
 
         list.addAll(selectPawn(Rank.TWO, Color.WHITE));
-        list.addAll(selectPawn(Rank.ONE, Color.WHITE));
+        list.addAll(selectPiece(Rank.ONE, Color.WHITE));
         return new ChessBoard(new Pieces(list));
     }
 
