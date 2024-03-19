@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
-    @DisplayName("생성 테스트")
     @Test
+    @DisplayName("생성 테스트")
     void create() {
         Assertions.assertThatCode(() -> new ChessBoard())
                 .doesNotThrowAnyException();

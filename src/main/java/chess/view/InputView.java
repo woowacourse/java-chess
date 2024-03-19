@@ -8,9 +8,9 @@ public class InputView {
 
     public GameStartCommand readGameStartCommand() {
         System.out.println("체스 게임을 시작합니다.");
-        final String rawInput = read(String.format("게임 시작은 %s, 종료는 %s 명령을 입력하세요.",
+        String rawInput = read(String.format("게임 시작은 %s, 종료는 %s 명령을 입력하세요.",
                 GameStartCommand.START, GameStartCommand.END));
-        
+
         return GameStartCommand.map(rawInput);
     }
 

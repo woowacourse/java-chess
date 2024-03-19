@@ -18,16 +18,16 @@ public class Square {
         }
     }
 
-    private Square(char rank, int file) {
+    private Square(final char rank, final int file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public static Square of(char rank, int file) {
+    public static Square of(final char rank, final int file) {
         return CACHE.get(toKey(rank, file));
     }
 
-    private static String toKey(char rank, int file) {
+    private static String toKey(final char rank, final int file) {
         return String.valueOf(rank) + file;
     }
 }

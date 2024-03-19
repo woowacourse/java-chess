@@ -32,14 +32,6 @@ public class Piece {
         return pieceType.name() + team.name();
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
