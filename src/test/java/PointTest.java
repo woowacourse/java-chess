@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import piece.point.File;
+import piece.point.Point;
+import piece.point.Rank;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

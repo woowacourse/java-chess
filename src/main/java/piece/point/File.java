@@ -1,3 +1,5 @@
+package piece.point;
+
 public enum File {
     A,
     B,
