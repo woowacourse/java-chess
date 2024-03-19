@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.position.File;
-import chess.domain.position.Position;
+import chess.domain.position.Square;
 import chess.domain.position.Rank;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
@@ -17,8 +17,8 @@ public class BoardFactory {
 
     }
 
-    public Map<Position, Piece> create() {
-        Map<Position, Piece> board = new HashMap<>();
+    public Map<Square, Piece> create() {
+        Map<Square, Piece> board = new HashMap<>();
 
         for (Rank rank : Rank.values()) {
             createByRank(rank, board);
@@ -27,9 +27,9 @@ public class BoardFactory {
         return board;
     }
 
-    private void createByRank(Rank rank, Map<Position, Piece> board) {
+    private void createByRank(Rank rank, Map<Square, Piece> board) {
         for (File file : File.values()) {
-            Position position = Position.of(file, rank);
+            Square square = Square.of(file, rank);
             Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
 
             if (rank.equals(Rank.ONE) || rank.equals(Rank.EIGHT)) {
@@ -40,7 +40,7 @@ public class BoardFactory {
                 piece = decideColorType(rank, PieceType.PAWN);
             }
 
-            board.put(position, piece);
+            board.put(square, piece);
         }
     }
 

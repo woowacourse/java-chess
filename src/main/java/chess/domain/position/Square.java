@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Position {
+public class Square {
 
-    private static final Map<String, Position> pool = Arrays.stream(Rank.values())
-            .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Position(file, rank)))
+    private static final Map<String, Square> pool = Arrays.stream(Rank.values())
+            .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Square(file, rank)))
             .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
 
     private final File file;
@@ -18,12 +18,12 @@ public class Position {
         return file.name() + rank.name();
     }
 
-    private Position(File file, Rank rank) {
+    private Square(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(File file, Rank rank) {
+    public static Square of(File file, Rank rank) {
         return pool.get(toKey(file, rank));
     }
 }

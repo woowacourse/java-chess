@@ -1,7 +1,7 @@
 package chess;
 
 import chess.domain.position.File;
-import chess.domain.position.Position;
+import chess.domain.position.Square;
 import chess.domain.position.Rank;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
@@ -32,7 +32,7 @@ public class ChessGame {
     }
 
     private void printBoardOutput(Board board) {
-        Map<Position, Piece> boardOutput = board.toBoardOutput().board();
+        Map<Square, Piece> boardOutput = board.toBoardOutput().board();
         List<String> output = new ArrayList<>();
 
         for (Rank rank : Rank.values()) {
@@ -42,12 +42,12 @@ public class ChessGame {
         outputView.writeBoard(output);
     }
 
-    private String makeRankOutput(Rank rank, Map<Position, Piece> boardOutput) {
+    private String makeRankOutput(Rank rank, Map<Square, Piece> boardOutput) {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (File file : File.values()) {
-            Position position = Position.of(file, rank);
-            Piece piece = boardOutput.get(position);
+            Square square = Square.of(file, rank);
+            Piece piece = boardOutput.get(square);
 
             String pieceView = PieceView.toView(piece);
             stringBuilder.append(pieceView);

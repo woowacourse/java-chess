@@ -1,9 +1,9 @@
 package chess.dto;
 
-import chess.domain.position.Position;
+import chess.domain.position.Square;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
 
-public record BoardOutput(Map<Position, Piece> board) {
+public record BoardOutput(Map<Square, Piece> board) {
 }
