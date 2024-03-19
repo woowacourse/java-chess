@@ -2,5 +2,9 @@ package chess.model;
 
 public enum Side {
     BLACK,
-    WHITE
+    WHITE;
+
+    public boolean isWhite() {
+        return this.equals(WHITE);
+    }
 }
