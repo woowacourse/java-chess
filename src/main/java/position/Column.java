@@ -1,20 +1,17 @@
-package column;
+package position;
 
 import java.util.Objects;
 
 public class Column {
 
-    private int position;
+    private Position position;
 
     public Column(int position) {
-        this.position = position;
+        this.position = new Position(position);
     }
 
     public void move(int nextPosition) {
-        if (nextPosition < 0 || 7 < nextPosition) {
-            throw new IllegalArgumentException("움직일 수 있는 위치가 아닙니다.");
-        }
-        position = nextPosition;
+        position.move(nextPosition);
     }
 
     @Override
@@ -26,7 +23,7 @@ public class Column {
             return false;
         }
         Column column = (Column) o;
-        return position == column.position;
+        return Objects.equals(position, column.position);
     }
 
     @Override

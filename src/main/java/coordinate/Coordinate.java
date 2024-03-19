@@ -1,8 +1,8 @@
 package coordinate;
 
-import column.Column;
 import java.util.Objects;
-import row.Row;
+import position.Column;
+import position.Row;
 
 public class Coordinate {
 
