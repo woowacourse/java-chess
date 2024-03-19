@@ -37,7 +37,8 @@ class SpaceTest {
         Space space2 = new Space(piece2, new Position(File.a, Rank.FOUR));
 
         assertThatThrownBy(()->space1.movePiece(space2))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
 
     @Test
