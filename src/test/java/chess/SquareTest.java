@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class SquareTest {
+class SquareTest {
 
     @Test
     @DisplayName("칸을 생성한다.")
