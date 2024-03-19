@@ -1,6 +1,7 @@
 import java.util.List;
 import model.Camp;
 import model.GameBoard;
+import model.Square;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ class GameBoardTest {
     @Test
     void columnLengthIs8() {
         GameBoard gameBoard = new GameBoard();
-        List<List<Piece>> board = gameBoard.getBoard();
+        List<List<Square>> board = gameBoard.getBoard();
 
         Assertions.assertThat(board).allMatch(line -> line.size() == 8);
     }
@@ -38,11 +39,11 @@ class GameBoardTest {
         //when
         gameBoard.setting();
 
-        List<List<Piece>> board = gameBoard.getBoard();
+        List<List<Square>> board = gameBoard.getBoard();
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (List<Piece> pieces : board) {
-            stringBuilder.append(pieces.toString());
+        for (List<Square> squares : board) {
+            stringBuilder.append(squares.toString());
             stringBuilder.append(System.lineSeparator());
         }
 
@@ -67,7 +68,7 @@ class GameBoardTest {
 
         Position position = new Position(Row.EIGHTH, Column.FIRST);
 
-        Piece piece = gameBoard.findByPosition(position);
+        Piece piece = gameBoard.findByPosition(position).getPiece();
         Rook expected = new Rook(Camp.BLACK, position);
 
         Assertions.assertThat(piece).isEqualTo(expected);

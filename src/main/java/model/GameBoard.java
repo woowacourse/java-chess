@@ -33,18 +33,18 @@ public class GameBoard {
         initPosition.put(Column.EIGHTH, Rook::new);
     }
 
-    private final List<List<Piece>> board;
+    private final List<List<Square>> board;
 
     public GameBoard() {
         this.board = init();
     }
 
-    private List<List<Piece>> init() {
-        List<List<Piece>> board = new ArrayList<>();
+    private List<List<Square>> init() {
+        List<List<Square>> board = new ArrayList<>();
         for (Column column : Column.values()) { //TODO 굳이 row, column 안 타도 됨
-            List<Piece> line = new ArrayList<>();
+            List<Square> line = new ArrayList<>();
             for (Row row : Row.values()) {
-                line.add(new Blank());
+                line.add(new Square(new Blank()));
             }
             board.add(line);
         }
@@ -64,25 +64,25 @@ public class GameBoard {
         board.set(7, eighth);
     }
 
-    private List<Piece> settingExceptPawn(final Camp camp, Row row) {
+    private List<Square> settingExceptPawn(final Camp camp, Row row) {
         return Arrays.stream(Column.values())
-                .map(column -> initPosition.get(column).apply(camp, new Position(row, column)))
+                .map(column -> new Square(initPosition.get(column).apply(camp, new Position(row, column))))
                 .toList();
     }
 
-    public Piece findByPosition(Position position) {
+    public Square findByPosition(Position position) {
         int rowIndex = position.getRow().getIndex();
         int colIndex = position.getColumn().getIndex();
         return board.get(rowIndex).get(colIndex);
     }
 
-    private List<Piece> settingPawn(final Camp camp, final Column column) {
+    private List<Square> settingPawn(final Camp camp, final Column column) {
         return Arrays.stream(Row.values())
-                .map(row -> (Piece) new Pawn(camp, new Position(row, column)))
+                .map(row -> new Square(new Pawn(camp, new Position(row, column))))
                 .toList();
     }
 
-    public List<List<Piece>> getBoard() {
+    public List<List<Square>> getBoard() {
         return board;
     }
 }

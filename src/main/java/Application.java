@@ -20,9 +20,9 @@ public class Application {
             String input = inputView.readCommand();
             Command command = Command.from(input);
             if (command == Command.MOVE) {
-                List<String> cmd = List.of(input.split(" "));
+                List<String> cmd = List.of(input.split(" ")); // TODO 문자로 위치가 주어졌을 때 위치 찾는 테스트 추가하기
                 Moving moving = new Moving(Position.from(cmd.get(1)), Position.from(cmd.get(2)));
-//                moving.move(gameBoard);
+                moving.move(gameBoard);
             }
             if (command == Command.END) {
                 break;

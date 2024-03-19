@@ -2,7 +2,7 @@ package point;
 
 import java.util.Objects;
 
-public class Position {
+public class Position { //TODO row, column 위치 변경
 
     //TODO : 64개 캐싱
 
@@ -15,7 +15,7 @@ public class Position {
     }
 
     public static Position from(String command) {
-        return new Position(Row.from(command.charAt(0)), Column.from(command.charAt(1)));
+        return new Position(Row.from(command.charAt(1)), Column.from(command.charAt(0)));
     }
 
     public Row getRow() {
