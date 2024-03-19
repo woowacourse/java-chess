@@ -32,7 +32,7 @@ public class PositionTest {
         Position otherPosition = Position.of("c5");
 
         PositionDifference actualPositionDifference = position.calculateDifference(otherPosition);
-        PositionDifference expectedPositionDifference = new PositionDifference(2, 4);
+        PositionDifference expectedPositionDifference = new PositionDifference(-2, -4);
 
         Assertions.assertThat(actualPositionDifference).isEqualTo(expectedPositionDifference);
     }
