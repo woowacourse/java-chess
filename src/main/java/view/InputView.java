@@ -10,7 +10,6 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public boolean readStartCommand() {
-        System.out.printf("게임 시작은 %s, 종료는 %s 명령을 입력하세요.%n", START_COMMAND, END_COMMAND);
         String command = scanner.nextLine();
         if (command.equals(START_COMMAND)) {
             return true;
