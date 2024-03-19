@@ -11,6 +11,14 @@ public class Square {
         this.file = file;
     }
 
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

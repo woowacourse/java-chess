@@ -1,11 +1,8 @@
 package chess.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.File;
-import chess.domain.Rank;
-import chess.domain.Square;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
@@ -23,9 +20,9 @@ class PieceViewTest {
         String expectedEmptyValue = ".";
 
         //when
-        String pawnValue1 = PieceView.findValue(new Pawn(Color.WHITE, new Square(File.A, Rank.ONE)));
-        String pawnValue2 = PieceView.findValue(new Pawn(Color.BLACK, new Square(File.A, Rank.ONE)));
-        String emptyValue = PieceView.findValue(new EmptyPiece(new Square(File.A, Rank.ONE)));
+        String pawnValue1 = PieceView.findValue(new Pawn(Color.WHITE));
+        String pawnValue2 = PieceView.findValue(new Pawn(Color.BLACK));
+        String emptyValue = PieceView.findValue(new EmptyPiece());
 
         //then
         assertAll(

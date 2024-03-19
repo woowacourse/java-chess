@@ -1,15 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Square;
 import java.util.Objects;
 
 public abstract class Piece {
     private final Color color;
-    private final Square square;
 
-    public Piece(final Color color, final Square square) {
+    public Piece(final Color color) {
         this.color = color;
-        this.square = square;
     }
 
     public boolean isWhite() {
