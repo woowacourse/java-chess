@@ -1,7 +1,13 @@
 # java-chess
+## 1단계
 
-체스 미션 저장소
+### 도메인 로직
+-[ ] 체스판에서 말의 위치 값은 가로 위치는 왼쪽부터 a ~ h이고, 세로는 아래부터 위로 1 ~ 8로 구현한다.
 
-## 우아한테크코스 코드리뷰
+### 입력
+-[ ] 게임 진행 명령어 입력
+  -[ ] start는 최초 한번만 입력 가능
+  -[ ] 게임시작: start 종료: end
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+### 출력
+-[ ] 체스판을 출력한다
