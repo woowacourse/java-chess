@@ -26,7 +26,7 @@ public class BoardFactoryTest {
         Map<Position, Piece> actual = boardFactory.create();
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
     private Map<Position, Piece> createExpectedBoard() {
