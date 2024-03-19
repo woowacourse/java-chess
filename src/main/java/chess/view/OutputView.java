@@ -35,7 +35,7 @@ public class OutputView {
         }
         System.out.println();
     }
-    
+
     private void printPiece(PieceDto piece) {
         if (piece == null) {
             System.out.print(EMPTY_SPACE);
@@ -47,7 +47,7 @@ public class OutputView {
         }
         printWhitePiece(piece.type());
     }
-    
+
     private void printBlackPiece(PieceType type) {
         String display = PIECE_DISPLAY.get(type);
         System.out.print(display.toUpperCase());
