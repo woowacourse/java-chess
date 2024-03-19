@@ -73,14 +73,6 @@ public class GameBoard {
     public Piece findByPosition(Position position) {
         int rowIndex = position.getRow().getIndex();
         int colIndex = position.getColumn().getIndex();
-
-        for (List<Piece> pieces : board) {
-            System.out.println(pieces.toString());
-        }
-        System.out.println("====");
-
-        System.out.println("position" + position);
-        System.out.println("(" + rowIndex + ", " + colIndex + ")");
         return board.get(rowIndex).get(colIndex);
     }
 
