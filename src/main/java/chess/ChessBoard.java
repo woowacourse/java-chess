@@ -8,7 +8,6 @@ public class ChessBoard {
     private final Map<Square, Piece> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
-
         // 백팀 말 배치
         chessBoard.put(Square.of('a', 1), new Piece(PieceType.ROOK, Team.WHITE));
         chessBoard.put(Square.of('b', 1), new Piece(PieceType.KNIGHT, Team.WHITE));
