@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Objects;
 
-class Coordinate {
+public class Coordinate {
 
     private final Rank rank;
     private final File file;

@@ -1,6 +1,6 @@
 package chess.domain;
 
-enum PieceType {
+public enum PieceType {
 
     KING,
     QUEEN,

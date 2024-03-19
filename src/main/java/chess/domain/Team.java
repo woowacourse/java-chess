@@ -1,6 +1,6 @@
 package chess.domain;
 
-enum Team {
+public enum Team {
 
     BLACK, WHITE
 }

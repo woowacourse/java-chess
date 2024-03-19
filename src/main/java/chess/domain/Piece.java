@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Objects;
 
-class Piece {
+public class Piece {
 
     private final PieceType type;
     private final Team team;
@@ -10,6 +10,13 @@ class Piece {
     public Piece(PieceType type, Team team) {
         this.type = type;
         this.team = team;
+    }
+    public PieceType getType() {
+        return type;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     @Override
