@@ -31,6 +31,10 @@ public enum Rank {
         return Rank.from(newY);
     }
 
+    public boolean isInRange(int nextFile) {
+        return ONE.value <= nextFile && nextFile <= EIGHT.value;
+    }
+
     public int getValue() {
         return value;
     }

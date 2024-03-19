@@ -31,6 +31,10 @@ public enum File {
         return File.from(newX);
     }
 
+    public boolean isInRange(int nextFile) {
+        return a.value <= nextFile && nextFile <= h.value;
+    }
+
     public int getValue() {
         return value;
     }

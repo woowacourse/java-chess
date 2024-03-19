@@ -1,7 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +25,23 @@ public class PositionTest {
     @ParameterizedTest
     @MethodSource("nextPositionFailArguments")
     public void nextPositionFail(Position position, Direction direction) {
-        assertThatCode(() -> position.next(direction))
+        assertThatThrownBy(() -> position.next(direction))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("다음 방향으로 갈 수 없는지 알 수 있다.")
+    @ParameterizedTest
+    @MethodSource("nextPositionFailArguments")
+    public void cantMoveNext(Position position, Direction direction) {
+        assertThat(position.canMoveNext(direction)).isFalse();
+    }
+
+    @DisplayName("다음 방향으로 갈 수 있는지 알 수 있다.")
+    @Test
+    public void canMoveNext() {
+        Position position = new Position(File.a, Rank.ONE);
+
+        assertThat(position.canMoveNext(Direction.NORTH)).isTrue();
     }
 
     private static Stream<Arguments> nextPositionFailArguments() {

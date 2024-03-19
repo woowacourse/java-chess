@@ -11,10 +11,25 @@ public class Position {
         this.rank = rank;
     }
 
+    public boolean canMoveNext(Direction direction) {
+        int nextFile = this.file.getValue() + direction.getX();
+        int nextRank = this.rank.getValue() + direction.getY();
+
+        return file.isInRange(nextFile) && rank.isInRange(nextRank);
+    }
+
     public Position next(Direction direction) {
         int x = direction.getX();
         int y = direction.getY();
         return new Position(file.add(x), rank.add(y));
+    }
+
+    public int getFile() {
+        return file.getValue();
+    }
+
+    public int getRank() {
+        return rank.getValue();
     }
 
     @Override
@@ -31,13 +46,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public int getFile() {
-        return file.getValue();
-    }
-
-    public int getRank() {
-        return rank.getValue();
     }
 }
