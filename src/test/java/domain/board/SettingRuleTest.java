@@ -89,4 +89,24 @@ public class SettingRuleTest {
                     .isEqualTo(new Piece(Type.BISHOP, Color.BLACK));
         }
     }
+
+    @Nested
+    class KnightTest {
+
+        @ParameterizedTest
+        @EnumSource(names = {"B", "G"})
+        @DisplayName("랭크가 1, 파일이 b 또는 g일 경우 흰색 나이트를 반환한다.")
+        void findPieceByPosition_RankOneFileBG_WhiteKnight(File file) {
+            assertThat(settingRule.findPieceByPosition(Rank.ONE, file))
+                    .isEqualTo(new Piece(Type.KNIGHT, Color.WHITE));
+        }
+
+        @ParameterizedTest
+        @EnumSource(names = {"B", "G"})
+        @DisplayName("랭크가 8, 파일이 b 또는 g일 경우 검정색 나이트를 반환한다.")
+        void findPieceByPosition_RankEightFileBG_BlackKnight(File file) {
+            assertThat(settingRule.findPieceByPosition(Rank.EIGHT, file))
+                    .isEqualTo(new Piece(Type.KNIGHT, Color.BLACK));
+        }
+    }
 }

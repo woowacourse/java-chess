@@ -37,6 +37,14 @@ public class SettingRule {
                 return new Piece(Type.BISHOP, Color.BLACK);
             }
         }
+        if (file == File.B || file == File.G) {
+            if (rank == Rank.ONE) {
+                return new Piece(Type.KNIGHT, Color.WHITE);
+            }
+            if (rank == Rank.EIGHT) {
+                return new Piece(Type.KNIGHT, Color.BLACK);
+            }
+        }
         return new Piece(Type.NONE, Color.NONE);
     }
 }
