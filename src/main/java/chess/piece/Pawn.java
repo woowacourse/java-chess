@@ -1,4 +1,6 @@
-package chess;
+package chess.piece;
+
+import chess.position.Position;
 
 public class Pawn extends Piece {
 

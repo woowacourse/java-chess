@@ -1,4 +1,4 @@
-package chess;
+package chess.position;
 
 public enum File {
     a(1),

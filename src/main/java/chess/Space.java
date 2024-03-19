@@ -1,5 +1,8 @@
 package chess;
 
+import chess.piece.Piece;
+import chess.position.Position;
+
 public class Space {
 
     private Piece piece;

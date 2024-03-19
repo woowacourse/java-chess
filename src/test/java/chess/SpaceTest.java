@@ -2,6 +2,12 @@ package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.piece.Color;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

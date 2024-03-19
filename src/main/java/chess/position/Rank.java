@@ -1,4 +1,4 @@
-package chess;
+package chess.position;
 
 public enum Rank {
     ONE(1),

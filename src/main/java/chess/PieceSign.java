@@ -1,5 +1,8 @@
 package chess;
 
+import chess.piece.Pawn;
+import chess.piece.Piece;
+
 public enum PieceSign {
 
     PAWN(Pawn.class, "p"),

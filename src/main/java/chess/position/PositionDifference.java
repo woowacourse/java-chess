@@ -1,4 +1,6 @@
-package chess;
+package chess.position;
+
+import chess.Rule;
 
 public class PositionDifference {
 
