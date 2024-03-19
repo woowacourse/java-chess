@@ -1,8 +1,19 @@
 package domain.piece;
 
+import domain.Position;
+
 public class Knight extends Piece {
 
     public Knight(Color color) {
         super(color);
+    }
+
+    @Override
+    public boolean canMove(Position sourcePosition, Position targetPosition) {
+        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
+        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
+
+        return (Math.abs(fileDifference) == 1 && Math.abs(rankDifference) == 2)
+            || (Math.abs(fileDifference) == 2 && Math.abs(rankDifference) == 1);
     }
 }
