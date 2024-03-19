@@ -10,6 +10,10 @@ public final class Rank {
         this.value = value;
     }
 
+    public int subtract(Rank otherRank) {
+        return this.value - otherRank.value;
+    }
+
     public int value() {
         return value;
     }
