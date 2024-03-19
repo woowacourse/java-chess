@@ -1,3 +1,5 @@
+import point.Point;
+
 public class Square {
 
     private final Point point;

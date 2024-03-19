@@ -1,3 +1,5 @@
+package point;
+
 public class Point {
 
     //TODO : 64개 캐싱

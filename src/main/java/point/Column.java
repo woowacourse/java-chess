@@ -1,3 +1,5 @@
+package point;
+
 public enum Column {
 
     EIGHTH("8"),

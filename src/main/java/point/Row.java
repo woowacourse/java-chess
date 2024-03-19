@@ -1,3 +1,5 @@
+package point;
+
 public enum Row {
 
     FIRST("a"),

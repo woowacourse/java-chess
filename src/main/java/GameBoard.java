@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import point.Column;
+import point.Point;
+import point.Row;
 
 public class GameBoard {
 
