@@ -1,0 +1,57 @@
+package chess.domain;
+
+import java.util.Set;
+
+public enum Direction {
+    UP(0, 1),
+    DOWN(0, -1),
+    LEFT(-1, 0),
+    RIGHT(1, 0),
+    LEFT_UP(-1, 1),
+    RIGHT_UP(1, 1),
+    LEFT_DOWN(-1, -1),
+    RIGHT_DOWN(1, -1),
+
+    UP_UP_LEFT(-1, 2),
+    UP_UP_RIGHT(1, 2),
+    DOWN_DOWN_LEFT(-1, -2),
+    DOWN_DOWN_RIGHT(1, -2),
+    UP_LEFT_LEFT(-2, 1),
+    DOWN_LEFT_LEFT(-2, -1),
+    UP_RIGHT_RIGHT(2, 1),
+    DOWN_RIGHT_RIGHT(2, -1);
+
+    private final int dx;
+    private final int dy;
+
+    Direction(int dx, int dy) {
+        this.dx = dx;
+        this.dy = dy;
+    }
+
+    public static Set<Direction> getFourDirection() {
+        return Set.of(UP, DOWN, LEFT, RIGHT);
+    }
+
+    public static Set<Direction> getDiagonalDirection() {
+        return Set.of(LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN);
+    }
+
+    public static Set<Direction> getEightDirection() {
+        return Set.of(UP, DOWN, LEFT, RIGHT, LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN);
+    }
+
+    public static Set<Direction> getKnightDirection() {
+        return Set.of(UP_UP_LEFT, UP_UP_RIGHT, DOWN_DOWN_LEFT, DOWN_DOWN_RIGHT,
+                UP_LEFT_LEFT, DOWN_LEFT_LEFT, UP_RIGHT_RIGHT, DOWN_RIGHT_RIGHT
+        );
+    }
+
+    public int getDx() {
+        return dx;
+    }
+
+    public int getDy() {
+        return dy;
+    }
+}
