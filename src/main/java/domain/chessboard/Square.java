@@ -1,15 +1,12 @@
 package domain.chessboard;
 
-import domain.piece.PieceType;
 import domain.piece.Position;
 import java.util.Objects;
 
 public class Square {
-    private final PieceType pieceType;
     private final Position position;
 
-    public Square(final PieceType pieceType, final Position position) {
-        this.pieceType = pieceType;
+    public Square(final Position position) {
         this.position = position;
     }
 
@@ -28,9 +25,5 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(position);
-    }
-
-    public PieceType getPiece() {
-        return pieceType;
     }
 }
