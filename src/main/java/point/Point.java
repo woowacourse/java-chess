@@ -1,5 +1,7 @@
 package point;
 
+import java.util.Objects;
+
 public class Point {
 
     //TODO : 64개 캐싱
@@ -12,5 +14,19 @@ public class Point {
         this.column = column;
     }
 
-    //TODO : equals, hashcode 구현
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column);
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Point point)) {
+            return false;
+        }
+        return Objects.equals(row, point.row) && Objects.equals(column, point.column);
+    }
 }
