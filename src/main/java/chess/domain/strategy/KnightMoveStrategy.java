@@ -11,7 +11,10 @@ public class KnightMoveStrategy implements MoveStrategy {
         PositionDifference positionDifference = currentPosition.calculateDifference(newPosition);
 
         List<PositionDifference> knightPositionDifferences = List.of(
-                new PositionDifference(2, 1), new PositionDifference(1, 2)
+                new PositionDifference(2, 1), new PositionDifference(-2, 1),
+                new PositionDifference(2, -1), new PositionDifference(-2, -1),
+                new PositionDifference(1, 2), new PositionDifference(-1, 2),
+                new PositionDifference(1, -2), new PositionDifference(-1, -2)
         );
 
         return knightPositionDifferences.contains(positionDifference);

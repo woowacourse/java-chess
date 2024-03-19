@@ -12,9 +12,15 @@ public class KnightMoveStrategyTest {
 
     private static Stream<Arguments> knightCanMoveTestParameters() {
         return Stream.of(
-                Arguments.of(Position.of("a2"), Position.of("c3"), true),
-                Arguments.of(Position.of("a2"), Position.of("b4"), true),
-                Arguments.of(Position.of("a2"), Position.of("b3"), false)
+                Arguments.of(Position.of("d4"), Position.of("f5"), true),
+                Arguments.of(Position.of("d4"), Position.of("b5"), true),
+                Arguments.of(Position.of("d4"), Position.of("f3"), true),
+                Arguments.of(Position.of("d4"), Position.of("b3"), true),
+                Arguments.of(Position.of("d4"), Position.of("e6"), true),
+                Arguments.of(Position.of("d4"), Position.of("c6"), true),
+                Arguments.of(Position.of("d4"), Position.of("e2"), true),
+                Arguments.of(Position.of("d4"), Position.of("c2"), true),
+                Arguments.of(Position.of("d4"), Position.of("d5"), false)
         );
     }
 

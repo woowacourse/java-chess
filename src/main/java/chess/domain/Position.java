@@ -28,8 +28,8 @@ public class Position {
     }
 
     public PositionDifference calculateDifference(Position otherPosition) {
-        int xDifference = Math.abs(this.x - otherPosition.x);
-        int yDifference = Math.abs(this.y - otherPosition.y);
+        int xDifference = this.x - otherPosition.x;
+        int yDifference = this.y - otherPosition.y;
 
         return new PositionDifference(xDifference, yDifference);
     }

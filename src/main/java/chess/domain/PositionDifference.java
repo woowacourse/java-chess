@@ -13,6 +13,10 @@ public record PositionDifference(int xDifference, int yDifference) {
         if (!(isMagnitudeEqual() || isOnAxis())) {
             return false;
         }
-        return xDifference <= 1 && yDifference <= 1;
+        return Math.abs(xDifference) <= 1 && Math.abs(yDifference) <= 1;
+    }
+
+    public boolean isWithinVerticalRange(int minimum, int maximum) {
+        return (minimum <= yDifference) && (yDifference <= maximum);
     }
 }
