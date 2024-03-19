@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position from, Position to) {
-        PositionDifference positionDifference= from.calculateDifferenceTo(to);
+        PositionDifference positionDifference = from.calculateDifferenceTo(to);
         return positionDifference.isObeyRule(rule);
     }
 }
