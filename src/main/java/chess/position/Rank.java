@@ -17,6 +17,6 @@ public enum Rank {
     }
 
     public RankDifference calculateDifference(Rank rank) {
-        return new RankDifference(value - rank.value);
+        return new RankDifference(rank.value - value);
     }
 }

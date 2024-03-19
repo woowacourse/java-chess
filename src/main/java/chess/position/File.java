@@ -16,6 +16,6 @@ public enum File {
     }
 
     public FileDifference calculateDifference(File file) {
-        return new FileDifference(value - file.value);
+        return new FileDifference(file.value - value);
     }
 }
