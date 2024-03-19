@@ -26,4 +26,8 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 열 번호입니다."));
     }
+
+    public int calculateDifference(File other) {
+        return number - other.number;
+    }
 }

@@ -26,4 +26,8 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 행 번호입니다."));
     }
+
+    public int calculateDifference(Rank other) {
+        return number - other.number;
+    }
 }
