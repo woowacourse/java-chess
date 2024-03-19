@@ -1,49 +1,52 @@
+# TODO: 자세한 값이 아닌 문장으로 변경
+
 ## [♟ 체스 기능 목록]
 - [x] 커맨드 입력 기능
   - 게임 시작 : start
   - 게임 종료 : end
-- [ ] 체스판 생성 기능
+- [x] 체스판 생성
   - 체스판(ChessBoard)
       - 가로는 왼쪽에서 부터 a~h (8칸)
       - 세로는 아래에서 부터 1~8 (8칸)
-  - 피스(Piece)
-    - 속성
-      - 열: ChessFile
-        - 범위는 a~h까지만 허용된다.
-      - 행: ChessRank
-        - 범위는 1~8까지만 허용된다.
-      - 색깔: Color
-        - WHITE
-        - BLACK
-      - 이름: Name
-        - white는 소문자
-        - black은 대문자
-    - 종류 및 이름
-      - 폰(Pawn): p(white), P(black)
-      - 룩(Rook): r(white), R(black)
-      - 나이트(Knight): n(white), N(black)
-      - 비숍(Bishop): b(white), B(black)
-      - 킹(King): k(white), K(black)
-      - 퀸(Queen): q(white), Q(black)
-    - 피스 초기 위치 및 개수
-      - 폰(Pawn):
-        - white: 8개 [Rank 2 | File a~h]
-        - black: 8개 [Rank 7 | File a~h]
-      - 룩(Rook): 
-        - white: 2개 [Rank 1 | File a,h]
-        - black: 2개 [Rank 8 | File a,h]
-      - 나이트(Knight):
-        - white: 2개 [Rank 1 | File b,g]
-        - black: 2개 [Rank 8 | File b,g]
-      - 비숍(Bishop): 
-        - white: 2개 [Rank 1 | File c,f]
-        - black: 2개 [Rank 8 | File c,f]
-      - 킹(King):
-        - white: 1개 [Rank 1 | File e]
-        - black: 1개 [Rank 8 | File e]
-      - 퀸(Queen): 
-        - white: 1개 [Rank 1 | File d]
-        - black: 1개 [Rank 8 | File d]
+  - [x] 피스 생성
+    - 피스(Piece)
+      - 속성
+        - 열: ChessFile
+          - 범위는 a~h까지만 허용된다.
+        - 행: ChessRank
+          - 범위는 1~8까지만 허용된다.
+        - 색깔: Color
+          - WHITE
+          - BLACK
+        - 이름: Name
+          - white는 소문자
+          - black은 대문자
+      - 종류 및 이름
+        - 폰(Pawn): p(white), P(black)
+        - 룩(Rook): r(white), R(black)
+        - 나이트(Knight): n(white), N(black)
+        - 비숍(Bishop): b(white), B(black)
+        - 킹(King): k(white), K(black)
+        - 퀸(Queen): q(white), Q(black)
+      - 피스 초기 위치 및 개수
+        - 폰(Pawn):
+          - white: 8개 [Rank 2 | File a~h]
+          - black: 8개 [Rank 7 | File a~h]
+        - 룩(Rook): 
+          - white: 2개 [Rank 1 | File a,h]
+          - black: 2개 [Rank 8 | File a,h]
+        - 나이트(Knight):
+          - white: 2개 [Rank 1 | File b,g]
+          - black: 2개 [Rank 8 | File b,g]
+        - 비숍(Bishop): 
+          - white: 2개 [Rank 1 | File c,f]
+          - black: 2개 [Rank 8 | File c,f]
+        - 킹(King):
+          - white: 1개 [Rank 1 | File e]
+          - black: 1개 [Rank 8 | File e]
+        - 퀸(Queen): 
+          - white: 1개 [Rank 1 | File d]
+          - black: 1개 [Rank 8 | File d]
 - [ ] 체스판 출력 기능
   - [ ] 피스의 각 위치에 맞게 이름(Name) 출력
   - [ ] 체스판에서 피스가 없는 위치는 점(.) 출력
