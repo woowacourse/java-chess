@@ -3,16 +3,25 @@ import java.util.List;
 
 public class GameBoard {
 
-    private final List<List<String>> board;
+    private final List<List<Square>> board;
 
     public GameBoard() {
-        this.board = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            board.add(List.of(".", ".", ".", ".", ".", ".", ".", "."));
-        }
+        this.board = init();
     }
 
-    public List<List<String>> getBoard() {
+    private List<List<Square>> init() {
+        List<List<Square>> board = new ArrayList<>();
+        for (Column column : Column.values()) {
+            List<Square> line = new ArrayList<>();
+            for (Row row : Row.values()) {
+                line.add(new Square(new Point(row, column), new SquareInfo(BoardInfo.BLANK, Camp.GRAY)));
+            }
+            board.add(line);
+        }
+        return board;
+    }
+
+    public List<List<Square>> getBoard() {
         return board;
     }
 }
