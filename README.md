@@ -25,8 +25,8 @@
 
 ### 판 (Board)
 
-- [ ] Position 과 Piece 를 매핑한다.
+- [x] Position 과 Piece 를 매핑한다.
 
 ### BoardInitializer
 
-- [ ] 최초 판에 말을 놓은 Board 를 만든다.
+- [x] 최초 판에 말을 놓은 Board 를 만든다.
