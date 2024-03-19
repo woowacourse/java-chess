@@ -2,6 +2,11 @@
 
 체스 미션 저장소
 
-## 우아한테크코스 코드리뷰
+### 기능 요구 사항
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+## 위치
+- [ ] 각 위치는 file(a~h) 과 rank(1~8)로 구성되어 있다.
+- [ ] 각 위치는 피스 또는 빈칸을 가지고 있다.
+
+## 피스
+- [ ] 각 피스 종류마다 나타내는 기호가 있다.
