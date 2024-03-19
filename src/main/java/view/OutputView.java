@@ -1,7 +1,10 @@
 package view;
 
+import domain.File;
 import domain.Piece;
+import domain.Rank;
 import domain.Square;
+
 import java.util.Map;
 
 public class OutputView {
@@ -9,9 +12,9 @@ public class OutputView {
     public void printChessTable(final Map<Square, Piece> chessTable) {
         final StringBuilder sb = new StringBuilder();
 
-        for (int i = 8; i >= 1; i--) {
-            for (int j = 1; j <= 8; j++) {
-                final Square square = new Square(i, j);
+        for (final var rank : Rank.values()) {
+            for (final var file : File.values()) {
+                final Square square = new Square(rank, file);
 
                 if (chessTable.containsKey(square)) {
                     final Piece piece = chessTable.get(square);
