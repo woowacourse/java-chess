@@ -16,6 +16,10 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
+    public Position position() {
+        return position;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
