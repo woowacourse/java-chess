@@ -38,6 +38,14 @@ public class Location {
         }
     }
 
+    public int calculateVerticalDistance(Location target) {
+        return this.row.calculateDistance(target.row);
+    }
+
+    public int calculateHorizontalDistance(Location target) {
+        return this.column.calculateDistance(target.column);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -1,5 +1,6 @@
 package chess.domain.location;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -23,5 +24,13 @@ class ColumnTest {
         assertThatThrownBy(() -> Column.of("I"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 Column 입력입니다.");
+    }
+
+    @DisplayName("Column 거리를 계산한다.")
+    @Test
+    void calculateDistanceTest() {
+        Column source = Column.C;
+        Column target = Column.G;
+        assertThat(source.calculateDistance(target)).isEqualTo(4);
     }
 }

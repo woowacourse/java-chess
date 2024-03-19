@@ -3,19 +3,19 @@ package chess.domain.location;
 import java.util.Arrays;
 
 public enum Row {
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8");
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
-    private final String rowNumber;
+    private final int index;
 
-    Row(String rowNumber) {
-        this.rowNumber = rowNumber;
+    Row(int index) {
+        this.index = index;
     }
 
     public static Row of(String input) {
@@ -27,6 +27,10 @@ public enum Row {
 
     //TODO 네이밍 고민
     private boolean isNumber(String input) {
-        return this.rowNumber.equals(input);
+        return index == Integer.parseInt(input);
+    }
+
+    public int calculateDistance(Row other) {
+        return other.index - this.index;
     }
 }
