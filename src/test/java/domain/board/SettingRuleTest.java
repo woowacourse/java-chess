@@ -8,6 +8,8 @@ import domain.piece.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 @Nested
 public class SettingRuleTest {
@@ -68,4 +70,23 @@ public class SettingRuleTest {
         }
     }
 
+    @Nested
+    class BishopTest {
+
+        @ParameterizedTest
+        @EnumSource(names = {"C", "F"})
+        @DisplayName("랭크가 1, 파일이 c 또는 f일 경우 흰색 비숍을 반환한다.")
+        void findPieceByPosition_RankOneFileCF_WhiteBishop(File file) {
+            assertThat(settingRule.findPieceByPosition(Rank.ONE, file))
+                    .isEqualTo(new Piece(Type.BISHOP, Color.WHITE));
+        }
+
+        @ParameterizedTest
+        @EnumSource(names = {"C", "F"})
+        @DisplayName("랭크가 8, 파일이 c 또는 f일 경우 검정색 비숍을 반환한다.")
+        void findPieceByPosition_RankEightFileCF_BlackBishop(File file) {
+            assertThat(settingRule.findPieceByPosition(Rank.EIGHT, file))
+                    .isEqualTo(new Piece(Type.BISHOP, Color.BLACK));
+        }
+    }
 }
