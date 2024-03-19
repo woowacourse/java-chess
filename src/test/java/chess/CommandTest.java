@@ -1,5 +1,7 @@
 package chess;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.Command;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -45,6 +47,6 @@ class CommandTest {
         final Command command = Command.from(value);
 
         // when & then
-        Assertions.assertThat(command).isEqualTo(expected);
+        assertThat(command).isEqualTo(expected);
     }
 }

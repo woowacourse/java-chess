@@ -18,7 +18,8 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> command.value.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("[ERROR] 입력은 %s, %s로 해야 합니다.", START.value, END.value)));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("[ERROR] 입력은 %s, %s로 해야 합니다.", START.value, END.value)));
     }
 
     private static void validateBlank(final String value) {

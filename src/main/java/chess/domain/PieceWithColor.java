@@ -13,6 +13,10 @@ public class PieceWithColor {
         this.pieceColor = pieceColor;
     }
 
+    public String getPieceByColor() { // TODO: view와 너무 강한 의존성
+        return piece.applyColor(pieceColor);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
