@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public class Position {
 
@@ -8,5 +8,13 @@ public class Position {
     public Position(Row row, Column column) {
         this.row = row;
         this.column = column;
+    }
+
+    public int getRowIndex() {
+        return row.getIndex();
+    }
+
+    public int getColumnIndex() {
+        return column.getIndex();
     }
 }

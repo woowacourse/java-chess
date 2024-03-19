@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public enum Row {
     a("a", 0),
@@ -16,5 +16,9 @@ public enum Row {
     Row(String name, int index) {
         this.name = name;
         this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

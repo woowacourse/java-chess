@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public enum Column {
     RANK1("1", 7),
@@ -16,5 +16,9 @@ public enum Column {
     Column(String name, int index) {
         this.name = name;
         this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
