@@ -1,3 +1,8 @@
+package chess.domain.board;
+
+import chess.domain.board.position.Position;
+import chess.domain.square.Square;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 

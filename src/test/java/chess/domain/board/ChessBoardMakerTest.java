@@ -1,3 +1,11 @@
+package chess.domain.board;
+
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
+import chess.domain.square.Empty;
+import chess.domain.square.Piece;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

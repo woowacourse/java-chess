@@ -1,3 +1,5 @@
+package chess.domain.board.position;
+
 import java.util.Objects;
 
 public class Position {
