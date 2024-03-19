@@ -5,6 +5,6 @@ public final class King extends Piece {
     private static final String name = "K";
 
     public King(Team team) {
-        super(team);
+        super(name, team);
     }
 }
