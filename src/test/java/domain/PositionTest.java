@@ -10,14 +10,14 @@ class PositionTest {
     @Test
     void createPositionTest() {
         // Given
-        Row row = Row.A;
-        Column col = Column.ONE;
+        Rank row = Rank.ONE;
+        File col = File.A;
 
         // When
         Position position = new Position(row, col);
 
         // Then
-        assertThat(position.row()).isEqualTo(row);
-        assertThat(position.column()).isEqualTo(col);
+        assertThat(position.rank()).isEqualTo(row);
+        assertThat(position.file()).isEqualTo(col);
     }
 }
