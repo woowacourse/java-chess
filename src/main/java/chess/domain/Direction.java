@@ -1,5 +1,9 @@
 package chess.domain;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public enum Direction {
     NORTH(0, 1),
     SOUTH(0, -1),
@@ -27,5 +31,24 @@ public enum Direction {
     Direction(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Set<Direction> ofStraight() {
+        return Set.of(NORTH, SOUTH, WEST, EAST);
+    }
+
+    public static Set<Direction> ofDiagonal() {
+        return Set.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    }
+
+    public static Set<Direction> ofAll() {
+        return Stream.concat(ofStraight().stream(), ofDiagonal().stream())
+                .collect(Collectors.toSet());
+    }
+
+    public static Set<Direction> ofKnight() {
+        return Set.of(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST,
+                SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH,
+                WEST_WEST_NORTH, WEST_WEST_SOUTH);
     }
 }
