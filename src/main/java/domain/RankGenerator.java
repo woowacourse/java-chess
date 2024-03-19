@@ -1,20 +1,20 @@
 package domain;
 
-import static domain.PieceType.BISHOP;
-import static domain.PieceType.KING;
-import static domain.PieceType.KNIGHT;
-import static domain.PieceType.NONE;
-import static domain.PieceType.PAWN;
-import static domain.PieceType.QUEEN;
-import static domain.PieceType.ROOK;
+import static domain.PieceRole.BISHOP;
+import static domain.PieceRole.KING;
+import static domain.PieceRole.KNIGHT;
+import static domain.PieceRole.NONE;
+import static domain.PieceRole.PAWN;
+import static domain.PieceRole.QUEEN;
+import static domain.PieceRole.ROOK;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RankGenerator {
-    private static final List<PieceType> back = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
-    private static final List<PieceType> front = List.of(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN);
-    private static final List<PieceType> none = List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE);
+    private static final List<PieceRole> back = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
+    private static final List<PieceRole> front = List.of(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN);
+    private static final List<PieceRole> none = List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE);
 
 
     public List<Square> generate(int row) {

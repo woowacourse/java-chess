@@ -1,6 +1,6 @@
 package domain;
 
-public enum PieceType {
+public enum PieceRole {
     KING,
     QUEEN,
     ROOK,

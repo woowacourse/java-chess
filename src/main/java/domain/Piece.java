@@ -3,16 +3,16 @@ package domain;
 import java.util.Objects;
 
 public class Piece {
-    private final PieceType pieceType;
+    private final PieceRole pieceRole;
     private final Color color;
 
-    public Piece(final PieceType pieceType, final Color color) {
-        this.pieceType = pieceType;
+    public Piece(final PieceRole pieceRole, final Color color) {
+        this.pieceRole = pieceRole;
         this.color = color;
     }
 
-    public Piece(final PieceType pieceType) {
-        this.pieceType = pieceType;
+    public Piece(final PieceRole pieceRole) {
+        this.pieceRole = pieceRole;
         this.color = Color.NONE;
     }
 
@@ -25,11 +25,11 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return pieceType == piece.pieceType && color == piece.color;
+        return pieceRole == piece.pieceRole && color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceType, color);
+        return Objects.hash(pieceRole, color);
     }
 }

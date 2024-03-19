@@ -3,7 +3,7 @@ package view;
 import domain.ChessBoard;
 import domain.Color;
 import domain.Piece;
-import domain.PieceType;
+import domain.PieceRole;
 import domain.Rank;
 import domain.Square;
 import java.util.HashMap;
@@ -16,21 +16,21 @@ public class OutputView {
     private static final Map<Piece, String> pieceSymbol = new HashMap<>();
 
     static {
-        pieceSymbol.put(new Piece(PieceType.ROOK, Color.BLACK), "R");
-        pieceSymbol.put(new Piece(PieceType.KNIGHT, Color.BLACK), "N");
-        pieceSymbol.put(new Piece(PieceType.BISHOP, Color.BLACK), "B");
-        pieceSymbol.put(new Piece(PieceType.QUEEN, Color.BLACK), "Q");
-        pieceSymbol.put(new Piece(PieceType.KING, Color.BLACK), "K");
-        pieceSymbol.put(new Piece(PieceType.PAWN, Color.BLACK), "P");
+        pieceSymbol.put(new Piece(PieceRole.ROOK, Color.BLACK), "R");
+        pieceSymbol.put(new Piece(PieceRole.KNIGHT, Color.BLACK), "N");
+        pieceSymbol.put(new Piece(PieceRole.BISHOP, Color.BLACK), "B");
+        pieceSymbol.put(new Piece(PieceRole.QUEEN, Color.BLACK), "Q");
+        pieceSymbol.put(new Piece(PieceRole.KING, Color.BLACK), "K");
+        pieceSymbol.put(new Piece(PieceRole.PAWN, Color.BLACK), "P");
 
-        pieceSymbol.put(new Piece(PieceType.ROOK, Color.WHITE), "r");
-        pieceSymbol.put(new Piece(PieceType.KNIGHT, Color.WHITE), "n");
-        pieceSymbol.put(new Piece(PieceType.BISHOP, Color.WHITE), "b");
-        pieceSymbol.put(new Piece(PieceType.QUEEN, Color.WHITE), "q");
-        pieceSymbol.put(new Piece(PieceType.KING, Color.WHITE), "k");
-        pieceSymbol.put(new Piece(PieceType.PAWN, Color.WHITE), "p");
+        pieceSymbol.put(new Piece(PieceRole.ROOK, Color.WHITE), "r");
+        pieceSymbol.put(new Piece(PieceRole.KNIGHT, Color.WHITE), "n");
+        pieceSymbol.put(new Piece(PieceRole.BISHOP, Color.WHITE), "b");
+        pieceSymbol.put(new Piece(PieceRole.QUEEN, Color.WHITE), "q");
+        pieceSymbol.put(new Piece(PieceRole.KING, Color.WHITE), "k");
+        pieceSymbol.put(new Piece(PieceRole.PAWN, Color.WHITE), "p");
 
-        pieceSymbol.put(new Piece(PieceType.NONE, Color.NONE), ".");
+        pieceSymbol.put(new Piece(PieceRole.NONE, Color.NONE), ".");
     }
 
     public void printCommandMessage() {
