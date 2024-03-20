@@ -15,6 +15,23 @@ public record Point(File file, Rank rank) {
         return this.rank.ordinal();
     }
 
+
+    public File nextFile() {
+        return file.next();
+    }
+
+    public File prevFile() {
+        return file.prev();
+    }
+
+    public Rank nextRank() {
+        return rank.next();
+    }
+
+    public Rank prevRank() {
+        return rank.prev();
+    }
+
     public static Point from(String value) {
         validate(value);
         File file = File.from(value.charAt(0));
