@@ -27,6 +27,8 @@ public class GeneralMoveStrategy extends MoveStrategy {
         if (isAllBlankCourses(movablePositions) && !destinationPiece.isSameColor(turnColor)) {
             board.replace(to, currentPiece.update(to));
             board.replace(from, new Blank(from));
+            return;
         }
+        throw new IllegalArgumentException("이동할 수 없는 경로 입니다.");
     }
 }
