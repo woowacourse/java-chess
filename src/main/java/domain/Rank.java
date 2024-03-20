@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum Rank {
     EIGHT(8),
     SEVEN(7),
@@ -16,11 +18,18 @@ public enum Rank {
         this.index = index;
     }
 
-    public int getIndex() {
-        return index;
+    public int subtrack(final Rank other) {
+        return this.index - other.index;
     }
 
-    public int gap(final Rank other) {
-        return Math.abs(this.index - other.index);
+    public Rank move(final int i) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == this.index + i)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 랭크입니다."));
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

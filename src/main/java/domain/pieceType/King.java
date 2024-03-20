@@ -4,6 +4,7 @@ import domain.Color;
 import domain.File;
 import domain.Rank;
 import domain.Square;
+import java.util.List;
 
 public class King extends Piece {
 
@@ -14,18 +15,21 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square source, final Square target) {
+    public List<Square> calculatePath(final Square source, final Square target) {
         final File sourceFile = source.getFile();
         final File targetFile = target.getFile();
 
-        final int fileGqp = sourceFile.gap(targetFile);
+        final int fileVector = sourceFile.subtract(targetFile);
 
         final Rank sourceRank = source.getRank();
         final Rank targetRank = target.getRank();
 
-        final int rankGap = sourceRank.gap(targetRank);
+        final int rankVector = sourceRank.subtrack(targetRank);
 
-        return fileGqp < 2 && rankGap < 2;
+        if (Math.abs(fileVector) < 2 && Math.abs(rankVector) < 2) {
+            return List.of(target);
+        }
+        return List.of();
     }
 
     @Override

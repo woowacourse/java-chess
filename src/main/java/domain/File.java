@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum File {
     A(1),
     B(2),
@@ -16,7 +18,18 @@ public enum File {
         this.index = index;
     }
 
-    public int gap(final File other) {
-        return Math.abs(this.index - other.index);
+    public int subtract(final File other) {
+        return this.index - other.index;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public File move(final int vector) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == this.index + vector)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 파일입니다."));
     }
 }

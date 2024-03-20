@@ -2,6 +2,7 @@ package domain.pieceType;
 
 import domain.Color;
 import domain.Square;
+import java.util.List;
 
 public class Knight extends Piece {
 
@@ -12,8 +13,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square source, final Square target) {
-        return false;
+    public List<Square> calculatePath(final Square source, final Square target) {
+        return List.of();
     }
 
     @Override

@@ -2,6 +2,7 @@ package domain.pieceType;
 
 import domain.Color;
 import domain.Square;
+import java.util.List;
 
 public abstract class Piece {
 
@@ -11,7 +12,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean canMove(Square source, Square target);
+    public abstract List<Square> calculatePath(Square source, Square target);
 
     public abstract PieceType getPieceType();
 

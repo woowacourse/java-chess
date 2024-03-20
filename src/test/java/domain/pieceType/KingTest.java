@@ -6,6 +6,8 @@ import domain.Color;
 import domain.File;
 import domain.Rank;
 import domain.Square;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,10 +23,10 @@ class KingTest {
         final King king = new King(Color.BLACK);
 
         // when
-        final boolean canMove = king.canMove(source, target);
+        final List<Square> canMove = king.calculatePath(source, target);
 
         // then
-        assertThat(canMove).isTrue();
+        assertThat(canMove).hasSize(1).containsExactly(target);
     }
 
     static Stream<Arguments> squareArguments() {
@@ -38,5 +40,19 @@ class KingTest {
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.C)),
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.E))
         );
+    }
+
+    static Square makeSquare(final int x, final int y) {
+        final Rank rank = Arrays.stream(Rank.values())
+                .filter(r -> r.getIndex() == x)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        final File file = Arrays.stream(File.values())
+                .filter(f -> f.getIndex() == x)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        return new Square(rank, file);
     }
 }

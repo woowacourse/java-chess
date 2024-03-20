@@ -16,6 +16,10 @@ public class Square {
         return rank;
     }
 
+    public Square next(final int rankVector, final int fileVector) {
+        return new Square(rank.move(rankVector), file.move(fileVector));
+    }
+
     public File getFile() {
         return file;
     }
@@ -35,5 +39,13 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
     }
 }
