@@ -22,4 +22,12 @@ public class Rook extends Piece {
     public Rook update(Position destination) {
         return new Rook(destination, color);
     }
+
+    @Override
+    public PieceType pieceType() {
+        if (color == Color.WHITE) {
+            return PieceType.WHITE_ROOK;
+        }
+        return PieceType.BLACK_ROOK;
+    }
 }

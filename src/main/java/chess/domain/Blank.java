@@ -16,4 +16,9 @@ public class Blank extends Piece {
     public Piece update(Position destination) {
         throw new UnsupportedOperationException("해당 위치에 말이 없습니다.");
     }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.NONE;
+    }
 }

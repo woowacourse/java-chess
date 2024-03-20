@@ -18,4 +18,6 @@ public abstract class Piece {
     }
 
     public abstract Piece update(Position destination);
+
+    public abstract PieceType pieceType();
 }

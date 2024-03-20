@@ -39,4 +39,12 @@ class KingTest {
                 () -> assertThat(king.isSameColor(Color.BLACK)).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("말의 색상과 모양에 맞는 PieceType을 반환한다.")
+    void getPieceType() {
+        King king = new King(new Position(1, 1), Color.WHITE);
+
+        assertThat(king.pieceType()).isEqualTo(PieceType.WHITE_KING);
+    }
 }
