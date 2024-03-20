@@ -11,7 +11,6 @@ public class InputView {
     }
 
     public String readCommand() {
-        System.out.printf("게임 시작은 %s, 종료는 %s 명령을 입력하세요.%n", "start", "end");
         String rawCommand = scanner.nextLine();
         validate(rawCommand);
         return rawCommand;
