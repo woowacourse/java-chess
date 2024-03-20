@@ -8,7 +8,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMoveTo(Position start, Position destination) {
+    public boolean canMove(Position start, Position destination) {
         if (start.isHorizontalWith(destination) || start.isVerticalWith(destination)) {
             return true;
         }

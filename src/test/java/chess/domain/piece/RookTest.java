@@ -17,8 +17,8 @@ class RookTest {
         Position horizontalDestination = Position.of(0, 7);
 
         assertAll(
-                () -> assertThat(testRook.canMoveTo(startPosition, verticalDestination)).isTrue(),
-                () -> assertThat(testRook.canMoveTo(startPosition, horizontalDestination)).isTrue()
+                () -> assertThat(testRook.canMove(startPosition, verticalDestination)).isTrue(),
+                () -> assertThat(testRook.canMove(startPosition, horizontalDestination)).isTrue()
         );
     }
 
@@ -31,8 +31,8 @@ class RookTest {
         Position horizontalDestination = Position.of(1, 7);
 
         assertAll(
-                () -> assertThat(testRook.canMoveTo(startPosition, verticalDestination)).isFalse(),
-                () -> assertThat(testRook.canMoveTo(startPosition, horizontalDestination)).isFalse()
+                () -> assertThat(testRook.canMove(startPosition, verticalDestination)).isFalse(),
+                () -> assertThat(testRook.canMove(startPosition, horizontalDestination)).isFalse()
         );
     }
 }

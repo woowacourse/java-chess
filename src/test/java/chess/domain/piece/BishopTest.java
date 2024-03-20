@@ -15,7 +15,7 @@ class BishopTest {
         Position startPosition = Position.of(0, 0);
         Position diagonalPosition = Position.of(7, 7);
 
-        assertThat(testBishop.canMoveTo(startPosition, diagonalPosition)).isTrue();
+        assertThat(testBishop.canMove(startPosition, diagonalPosition)).isTrue();
     }
 
     @DisplayName("실패 : 룩은 직선관계에 있는 포지션이 아니면 이동할 수 없다")
@@ -25,6 +25,6 @@ class BishopTest {
         Position startPosition = Position.of(0, 0);
         Position diagonalPosition = Position.of(7, 6);
 
-        assertThat(testBishop.canMoveTo(startPosition, diagonalPosition)).isFalse();
+        assertThat(testBishop.canMove(startPosition, diagonalPosition)).isFalse();
     }
 }
