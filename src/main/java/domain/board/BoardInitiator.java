@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 import domain.piece.Bishop;
 import domain.piece.King;
@@ -9,10 +9,8 @@ import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.piece.info.File;
-import domain.piece.info.Position;
 import domain.piece.info.Rank;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,8 @@
-package domain.piece.info;
+package domain.board;
 
+import domain.piece.info.Direction;
+import domain.piece.info.File;
+import domain.piece.info.Rank;
 import java.util.Objects;
 
 public class Position {
@@ -19,20 +22,9 @@ public class Position {
         return rank.index();
     }
 
-    public Position goLeft() {
-        return new Position(file.goLeft(), rank);
-    }
-
-    public Position goRight() {
-        return new Position(file.goRight(), rank);
-    }
-
-    public Position goUp() {
-        return new Position(file, rank.goUp());
-    }
-
-    public Position goDown() {
-        return new Position(file, rank.goDown());
+    public Position next(final Direction direction) {
+        return new Position(File.of(fileIndex() + direction.file()),
+                Rank.of(rankIndex() + direction.rank()));
     }
 
     @Override
