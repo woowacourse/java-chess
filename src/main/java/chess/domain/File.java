@@ -3,20 +3,22 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum File {
-    a(1),
-    b(2),
-    c(3),
-    d(4),
-    e(5),
-    f(6),
-    g(7),
-    h(8),
+    A(1, "a"),
+    B(2, "b"),
+    C(3, "c"),
+    D(4, "d"),
+    E(5, "e"),
+    F(6, "f"),
+    G(7, "g"),
+    H(8, "h"),
     ;
 
     private final int value;
+    private final String command;
 
-    File(int value) {
+    File(int value, String command) {
         this.value = value;
+        this.command = command;
     }
 
     public static File from(int value) {
@@ -32,7 +34,7 @@ public enum File {
     }
 
     public boolean isInRange(int nextFile) {
-        return a.value <= nextFile && nextFile <= h.value;
+        return A.value <= nextFile && nextFile <= H.value;
     }
 
     public int getValue() {

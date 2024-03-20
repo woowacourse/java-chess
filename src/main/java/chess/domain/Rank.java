@@ -3,20 +3,22 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Rank {
-    EIGHT(8),
-    SEVEN(7),
-    SIX(6),
-    FIVE(5),
-    FOUR(4),
-    THREE(3),
-    TWO(2),
-    ONE(1),
+    EIGHT(8, "8"),
+    SEVEN(7, "7"),
+    SIX(6, "6"),
+    FIVE(5, "5"),
+    FOUR(4, "4"),
+    THREE(3, "3"),
+    TWO(2, "2"),
+    ONE(1, "1"),
     ;
 
     private final int value;
+    private final String command;
 
-    Rank(int value) {
+    Rank(int value, String command) {
         this.value = value;
+        this.command = command;
     }
 
     public static Rank from(int value) {
