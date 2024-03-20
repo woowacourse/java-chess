@@ -21,8 +21,8 @@ class KingStrategyTest {
         int rowDiff = coordinate.checkRow(destination);
         int columnDiff = coordinate.checkColumn(destination);
 
-        assertThatThrownBy(() -> KingStrategy.getMovingStrategy(rowDiff, columnDiff))
+        assertThatThrownBy(() -> KingStrategy.getMoveStrategy(rowDiff, columnDiff))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("invalid move");
+                .hasMessage("존재하는 움직임 전략이 없습니다.");
     }
 }

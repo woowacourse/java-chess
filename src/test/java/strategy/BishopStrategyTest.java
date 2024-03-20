@@ -21,7 +21,7 @@ class BishopStrategyTest {
         int rowDiff = coordinate.checkRow(destination);
         int columnDiff = coordinate.checkColumn(destination);
 
-        assertThatThrownBy(() -> BishopStrategy.getMovingStrategy(rowDiff, columnDiff))
+        assertThatThrownBy(() -> BishopStrategy.getMoveStrategy(rowDiff, columnDiff))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("invalid move");
     }
@@ -36,8 +36,8 @@ class BishopStrategyTest {
         int rowDiff = coordinate.checkRow(destination);
         int columnDiff = coordinate.checkColumn(destination);
 
-        assertThatThrownBy(() -> BishopStrategy.getMovingStrategy(rowDiff, columnDiff))
+        assertThatThrownBy(() -> BishopStrategy.getMoveStrategy(rowDiff, columnDiff))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("invalid move");
+                .hasMessage("존재하는 움직임 전략이 없습니다.");
     }
 }

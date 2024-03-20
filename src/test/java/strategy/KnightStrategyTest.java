@@ -9,19 +9,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 import position.Column;
 import position.Row;
 
-class RookStrategyTest {
+class KnightStrategyTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"2/2", "2/4", "4/2", "4/4"}, delimiter = '/')
-    @DisplayName("룩은 대각선으로 이동할 수 없다.")
-    void rookInvalidMoveTest(int row, int column) {
+    @CsvSource(value = {"4/3", "4/4"}, delimiter = '/')
+    @DisplayName("Knight의 이동 전략에 포함되지 않는 경우 예외를 발생시킨다.")
+    void invalidMoveTest(int row, int column) {
         Coordinate coordinate = new Coordinate(new Row(3), new Column(3));
         Coordinate destination = new Coordinate(new Row(row), new Column(column));
 
         int rowDiff = coordinate.checkRow(destination);
         int columnDiff = coordinate.checkColumn(destination);
 
-        assertThatThrownBy(() -> RookStrategy.getMoveStrategy(rowDiff, columnDiff))
+        assertThatThrownBy(() -> KnightStrategy.getMoveStrategy(rowDiff, columnDiff))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하는 움직임 전략이 없습니다.");
     }

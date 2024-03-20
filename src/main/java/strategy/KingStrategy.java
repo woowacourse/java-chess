@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum KingStrategy {
-    
+
     UP(-1, 0, List.of(-1, 0)),
     DOWN(1, 0, List.of(1, 0)),
     LEFT(0, -1, List.of(0, -1)),
@@ -24,12 +24,12 @@ public enum KingStrategy {
         this.direction = direction;
     }
 
-    public static KingStrategy getMovingStrategy(int rowDifference, int columnDifference) {
+    public static KingStrategy getMoveStrategy(int rowDifference, int columnDifference) {
         return Arrays.stream(KingStrategy.values())
                 .filter(strategy -> strategy.rowDifference == rowDifference
                         && strategy.columnDifference == columnDifference)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("invalid move"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하는 움직임 전략이 없습니다."));
     }
 
     public List<Integer> getDirection() {

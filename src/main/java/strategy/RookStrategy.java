@@ -20,12 +20,12 @@ public enum RookStrategy {
         this.direction = direction;
     }
 
-    public static RookStrategy getMovingStrategy(int rowDifference, int columnDifference) {
+    public static RookStrategy getMoveStrategy(int rowDifference, int columnDifference) {
         return Arrays.stream(RookStrategy.values())
                 .filter(strategy -> strategy.rowDifference == divideValueByAbs(rowDifference)
                         && strategy.columnDifference == divideValueByAbs(columnDifference))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("invalid move"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하는 움직임 전략이 없습니다."));
     }
 
     private static int divideValueByAbs(int value) {
