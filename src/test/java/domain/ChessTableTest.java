@@ -99,14 +99,14 @@ class ChessTableTest {
         // given
         final ChessTable chessTable = ChessTable.create();
 
-        final Square whiteSource = new Square(Rank.SEVEN, File.E);
-        final Square whiteTarget = new Square(Rank.FIVE, File.E);
+        final Square whiteSource = new Square(Rank.TWO, File.D);
+        final Square whiteTarget = new Square(Rank.FOUR, File.D);
         final Piece whitePiece = chessTable.getPieceSquares().get(whiteSource);
 
         chessTable.move(whiteSource, whiteTarget);
 
-        final Square blackSource = new Square(Rank.TWO, File.D);
-        final Square blackTarget = new Square(Rank.FOUR, File.D);
+        final Square blackSource = new Square(Rank.SEVEN, File.E);
+        final Square blackTarget = new Square(Rank.FIVE, File.E);
         final Piece blackPiece = chessTable.getPieceSquares().get(blackSource);
         chessTable.move(blackSource, blackTarget);
 
@@ -118,5 +118,20 @@ class ChessTableTest {
         assertThat(pieceSquares.values()).doesNotContain(blackPiece);
 
         assertThat(pieceSquares.get(blackTarget)).isEqualTo(whitePiece);
+    }
+
+    @DisplayName("자기 기물이 아닌 것을 움직일 수 없다.")
+    @Test
+    void myTurn() {
+        // given
+        final ChessTable chessTable = ChessTable.create();
+
+        final Square source = new Square(Rank.SEVEN, File.A);
+        final Square target = new Square(Rank.SIX, File.A);
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> chessTable.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("자기 말이 아닙니다.");
     }
 }

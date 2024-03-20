@@ -36,6 +36,7 @@ public class ChessTable {
     );
 
     private final Map<Square, Piece> pieceSquares;
+    private Color color;
 
     public ChessTable() {
         this.pieceSquares = new HashMap<>();
@@ -43,6 +44,7 @@ public class ChessTable {
 
     public ChessTable(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;
+        this.color = Color.WHITE;
     }
 
     public static ChessTable create() {
@@ -62,16 +64,16 @@ public class ChessTable {
         return new ChessTable(chessTable);
     }
 
-    public Map<Square, Piece> getPieceSquares() {
-        return Collections.unmodifiableMap(pieceSquares);
-    }
-
     public void move(final Square source, final Square target) {
         if (!pieceSquares.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
 
         final Piece sourcePiece = pieceSquares.get(source);
+
+        if (sourcePiece.getColor() != color) {
+            throw new IllegalArgumentException("자기 말이 아닙니다.");
+        }
 
         if (pieceSquares.containsKey(target)) {
             final Piece targetPiece = pieceSquares.get(target);
@@ -94,5 +96,10 @@ public class ChessTable {
 
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
+        color = color.toggle();
+    }
+
+    public Map<Square, Piece> getPieceSquares() {
+        return Collections.unmodifiableMap(pieceSquares);
     }
 }
