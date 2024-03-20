@@ -70,10 +70,10 @@ public class ChessBoardFactory {
 
     private static void initSquare() {
         for (int file = FILE_A; file <= FILE_H; file++) {
-            chessBoard.put(Position.of(file, RANK_THREE), new Piece(Color.WHITE, new Square()));
-            chessBoard.put(Position.of(file, RANK_FOUR), new Piece(Color.WHITE, new Square()));
-            chessBoard.put(Position.of(file, RANK_FIVE), new Piece(Color.WHITE, new Square()));
-            chessBoard.put(Position.of(file, RANK_SIX), new Piece(Color.WHITE, new Square()));
+            chessBoard.put(Position.of(file, RANK_THREE), new Piece(Color.UN_COLORED, new Square()));
+            chessBoard.put(Position.of(file, RANK_FOUR), new Piece(Color.UN_COLORED, new Square()));
+            chessBoard.put(Position.of(file, RANK_FIVE), new Piece(Color.UN_COLORED, new Square()));
+            chessBoard.put(Position.of(file, RANK_SIX), new Piece(Color.UN_COLORED, new Square()));
         }
     }
 }
