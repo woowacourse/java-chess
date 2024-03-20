@@ -2,7 +2,8 @@ package domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import domain.piece.Piece;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ class SquaresGeneratorTest {
     void generate_SquaresSize() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
 
-        List<Square> squares = squaresGenerator.generate();
+        Map<Position, Piece> squares = squaresGenerator.generate();
 
         assertThat(squares).hasSize(64);
     }

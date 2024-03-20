@@ -1,26 +1,25 @@
 package domain.board;
 
 import domain.piece.Piece;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SquaresGenerator {
 
     private final SettingRule settingRule = new SettingRule();
 
-    public List<Square> generate() {
-        List<Square> squares = new ArrayList<>();
+    public Map<Position, Piece> generate() {
+        Map<Position, Piece> squares = new LinkedHashMap<>();
         for (Rank rank : Rank.values()) {
-            generateSquares(rank, squares);
+            generate(rank, squares);
         }
         return squares;
     }
 
-    private void generateSquares(Rank rank, List<Square> squares) {
+    private void generate(Rank rank, Map<Position, Piece> squares) {
         for (File file : File.values()) {
             Piece piece = settingRule.findPieceByPosition(rank, file);
-            Square square = new Square(new Position(rank, file), piece);
-            squares.add(square);
+            squares.put(new Position(rank, file), piece);
         }
     }
 }
