@@ -92,6 +92,7 @@ class PositionTest {
         Assertions.assertThat(result).isFalse();
     }
 
+    @DisplayName("수직상의 거리차이가 같다.")
     @Test
     void isSameVerticalDifference() {
         // given
@@ -104,6 +105,8 @@ class PositionTest {
         // then
         Assertions.assertThat(result).isTrue();
     }
+
+    @DisplayName("수직상의 거리차이가 다르다.")
     @Test
     void isNotSameVerticalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
         // given
@@ -116,6 +119,8 @@ class PositionTest {
         // then
         Assertions.assertThat(result).isFalse();
     }
+
+    @DisplayName("수평상의 거리차이가 같다.")
     @Test
     void isSameHorizonalDifference() {
         // given
@@ -128,6 +133,8 @@ class PositionTest {
         // then
         Assertions.assertThat(result).isTrue();
     }
+
+    @DisplayName("수평상의 거리차이가 다르다.")
     @Test
     void isNotSameHorizonalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
         // given
@@ -138,6 +145,6 @@ class PositionTest {
         final boolean result = currentPosition.isHorizonalDifference(otherPosition, 2);
 
         // then
-        Assertions.assertThat(result).isFalse();
+      Assertions.assertThat(result).isFalse();
     }
 }
