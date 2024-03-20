@@ -33,4 +33,12 @@ public class Position {
 
         return new PositionDifference(xDifference, yDifference);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

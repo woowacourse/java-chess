@@ -40,4 +40,8 @@ public class Board {
 
         return positions;
     }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
 }
