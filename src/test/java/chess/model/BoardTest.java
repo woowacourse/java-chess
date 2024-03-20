@@ -3,8 +3,10 @@ package chess.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dto.BoardDto;
+import chess.model.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -71,5 +73,25 @@ class BoardTest {
         Board board = Board.createInitialBoard();
         assertThatCode(() -> board.move("b1", "c3"))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("b1에서 c3로 기물이 이동한다")
+    @Test
+    void moveSuccess() {
+        Board board = Board.createInitialBoard();
+        Position sourcePosition = Position.from("b1");
+        Piece sourcePiece = board.findPiece(sourcePosition);
+
+        board.move("b1", "c3");
+
+        Position targetPosition = Position.from("c3");
+        Piece targetPiece = board.findPiece(targetPosition);
+
+        Piece emptyPiece = board.findPiece(sourcePosition);
+
+        assertAll(
+                () -> assertThat(targetPiece).isEqualTo(sourcePiece),
+                () -> assertThat(emptyPiece.isNone()).isTrue()
+        );
     }
 }

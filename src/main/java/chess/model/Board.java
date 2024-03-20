@@ -57,13 +57,16 @@ public class Board {
     public void move(String sourceCoordinate, String targetCoordinate) {
         Position source = Position.from(sourceCoordinate);
         Position target = Position.from(targetCoordinate);
-
         Piece sourcePiece = findPiece(source);
         Piece targetPiece = findPiece(target);
 
         validatePiecesPosition(sourcePiece, targetPiece);
         validatePieceCanMove(sourcePiece, source, target);
         validatePieceRoute(sourcePiece, source, target);
+
+        board.put(target, sourcePiece);
+        board.put(source, Piece.from(PieceType.NONE));
+        turnCount++;
     }
 
     private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
