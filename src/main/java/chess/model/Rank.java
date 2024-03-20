@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE(1),
     TWO(2),
@@ -14,6 +16,13 @@ public enum Rank {
 
     Rank(int coordinate) {
         this.coordinate = coordinate;
+    }
+
+    public static Rank of(int coordinate) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.coordinate == coordinate)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
     }
 
     public int minus(Rank other) {
