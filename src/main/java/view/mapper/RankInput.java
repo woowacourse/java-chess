@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.board.Rank;
+import domain.position.Rank;
 import java.util.Arrays;
 
 public enum RankInput {

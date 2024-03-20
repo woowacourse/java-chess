@@ -1,6 +1,9 @@
 package domain.board;
 
 import domain.piece.Piece;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

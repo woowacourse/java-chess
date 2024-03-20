@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.Type;
+import domain.position.File;
+import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

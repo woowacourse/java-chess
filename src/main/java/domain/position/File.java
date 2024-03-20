@@ -1,4 +1,4 @@
-package domain.board;
+package domain.position;
 
 public enum File {
 

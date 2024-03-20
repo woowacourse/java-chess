@@ -3,6 +3,8 @@ package domain.board;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.Type;
+import domain.position.File;
+import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

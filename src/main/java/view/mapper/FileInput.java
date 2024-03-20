@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.board.File;
+import domain.position.File;
 import java.util.Arrays;
 
 public enum FileInput {
