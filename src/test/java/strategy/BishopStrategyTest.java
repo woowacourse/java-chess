@@ -23,7 +23,7 @@ class BishopStrategyTest {
 
         assertThatThrownBy(() -> BishopStrategy.getMoveStrategy(rowDiff, columnDiff))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("invalid move");
+                .hasMessage("존재하는 움직임 전략이 없습니다.");
     }
 
     @ParameterizedTest
