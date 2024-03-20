@@ -4,7 +4,7 @@ import chess.domain.Position;
 import java.awt.Point;
 import java.util.List;
 
-class KnightDirection implements Direction {
+public class KnightDirection implements Direction {
 
     private final List<Point> points = List.of(new Point(1, 2),
             new Point(1, -2),
