@@ -16,15 +16,14 @@ public class Board {
     }
 
     public void move(final Square from, final Square to, final Color turn) {
-        // 1. from 자리에 색이 turn과 같은지
-        // 2. piece가 from에서 to로 이동 가능한지
-        // 3. 경로에 다른 기물 있으면 예외
         validate(from, to, turn);
+        pieces.put(to, pieces.get(from));
+        pieces.remove(from);
     }
 
     private void validate(final Square from, final Square to, final Color turn) {
         checkTurn(from, turn);
-        checkMovable(from, to);
+         checkMovable(from, to);
         checkRoute(from, to);
         checkDestinationColor(from, to);
     }

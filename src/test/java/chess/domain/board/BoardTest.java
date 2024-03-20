@@ -3,20 +3,28 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Type;
 import chess.domain.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("게임판")
 class BoardTest {
+    Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = BoardFactory.createBoard();
+    }
 
     @DisplayName("초기화에 성공한다.")
     @Test
     void initialize() {
         //given
-        Board board = BoardFactory.createBoard();
         int expectedSize = 32;
 
         //when & then
@@ -27,7 +35,6 @@ class BoardTest {
     @Test
     void invalidTurn() {
         //given
-        Board board = BoardFactory.createBoard();
         Square from = Square.from("c2");
         Square to = Square.from("c3");
 
@@ -40,7 +47,6 @@ class BoardTest {
     @Test
     void invalidMovable() {
         //given
-        Board board = BoardFactory.createBoard();
         Square from = Square.from("c2");
         Square to = Square.from("c5");
 
@@ -53,7 +59,6 @@ class BoardTest {
     @Test
     void checkRoute() {
         //given
-        Board board = BoardFactory.createBoard();
         Square from = Square.from("c1");
         Square to = Square.from("f4");
 
@@ -66,7 +71,6 @@ class BoardTest {
     @Test
     void checkKnightRoute() {
         //given
-        Board board = BoardFactory.createBoard();
         Square from = Square.from("b1");
         Square to = Square.from("c3");
 
@@ -79,12 +83,27 @@ class BoardTest {
     @Test
     void invalidDestination() {
         //given
-        Board board = BoardFactory.createBoard();
         Square from = Square.from("a1");
         Square to = Square.from("a2");
 
         //when & then
         assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("목적지로 이동한다")
+    @Test
+    void move() {
+        Square from = Square.from("a2");
+        Square to = Square.from("a3");
+
+        //when
+        board.move(from, to, Color.WHITE);
+
+        //then
+        assertAll(
+                () -> assertThat(board.getPieces().get(to).type()).isEqualTo(Type.PAWN),
+                () -> assertThat(board.getPieces().get(to).color()).isEqualTo(Color.WHITE)
+        );
     }
 }
