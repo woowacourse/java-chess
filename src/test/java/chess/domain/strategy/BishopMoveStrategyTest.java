@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class BishopMoveStrategyTest {
 
-    private static Stream<Arguments> BishopMoveStrategyTestParameters() {
+    private static Stream<Arguments> bishopMoveStrategyTestParameters() {
         return Stream.of(
                 Arguments.of(Position.of("d4"), Position.of("a1"), true),
                 Arguments.of(Position.of("d4"), Position.of("b6"), true),
@@ -22,7 +22,7 @@ public class BishopMoveStrategyTest {
 
     @DisplayName("비숍의 이동 전략은 한 번에 대각선으로 여러 칸 이동 가능하다.")
     @ParameterizedTest
-    @MethodSource("BishopMoveStrategyTestParameters")
+    @MethodSource("bishopMoveStrategyTestParameters")
     void bishopCanMoveTest(Position currentPosition, Position newPosition, boolean expectedCanMove) {
         BishopMoveStrategy bishopMoveStrategy = new BishopMoveStrategy();
         boolean actualCanMove = bishopMoveStrategy.canMove(currentPosition, newPosition);
