@@ -102,4 +102,27 @@ class PawnTest {
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
+    @DisplayName("두 위치 사이의 폰이 갈 수 있는 위치들을 반환한다.")
+    @Test
+    void betweenPosition() {
+        assertThat(new Pawn(Team.WHITE, true)
+                .betweenPositions(Position.of(2, 3), Position.of(4, 3)))
+                .containsExactly(Position.of(3, 3));
+    }
+
+    @DisplayName("두 위치 사이의 폰이 갈 수 있는 위치들을 반환한다.")
+    @Test
+    void betweenPositionHasMoved() {
+        assertThat(new Pawn(Team.WHITE, false)
+                .betweenPositions(Position.of(3, 3), Position.of(4, 3)))
+                .isEmpty();
+    }
+
+    @DisplayName("두 위치 사이의 폰이 갈 수 있는 위치들을 반환한다.")
+    @Test
+    void betweenPositionOneWhenHasNotMoved() {
+        assertThat(new Pawn(Team.WHITE, true)
+                .betweenPositions(Position.of(2, 3), Position.of(3, 3)))
+                .isEmpty();
+    }
 }

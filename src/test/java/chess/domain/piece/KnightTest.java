@@ -38,4 +38,12 @@ class KnightTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
+
+    @DisplayName("두 위치 사이의 나이트가 갈 수 있는 위치들을 반환한다.")
+    @Test
+    void betweenPosition() {
+        assertThat(new Knight(Team.WHITE, true)
+                .betweenPositions(Position.of(3, 3), Position.of(2, 1)))
+                .isEmpty();
+    }
 }

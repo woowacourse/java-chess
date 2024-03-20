@@ -56,16 +56,16 @@ public class Position {
         return row < MIN_ROW || row > MAX_ROW;
     }
 
-    public int differenceRow(Position newPosition) {
+    public int calculateRowDifference(Position newPosition) {
         return newPosition.row - row;
     }
 
-    public int differenceColumn(Position newPosition) {
+    public int calculateColumnDifference(Position newPosition) {
         return newPosition.column - column;
     }
 
-    public boolean isSameRow(int row) {
-        return this.row == row;
+    public Position move(int rowDifference, int columnDifference) {
+        return Position.of(row + rowDifference, column + columnDifference);
     }
 
     @Override

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import java.util.List;
 
 public abstract class Piece {
     protected final Team team;
@@ -15,16 +16,26 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
-    public void validateMovable(Position oldPosition, Position newPosition) {
-        int differenceRow = oldPosition.differenceRow(newPosition);
-        int differenceColumn = oldPosition.differenceColumn(newPosition);
+    protected abstract boolean isRelativelyMovable(int rowDifference, int columnDifference);
 
-        if (!oldPosition.equals(newPosition) && isRelativelyMovable(differenceRow, differenceColumn)) {
+    protected abstract List<Position> betweenPositions(Position position, int rowDifference, int columnDifference);
+
+    public void validateMovable(Position oldPosition, Position newPosition) {
+        int rowDifference = oldPosition.calculateRowDifference(newPosition);
+        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
+
+        if (!oldPosition.equals(newPosition) && isRelativelyMovable(rowDifference, columnDifference)) {
             return;
         }
 
         throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 
-    protected abstract boolean isRelativelyMovable(int differentRow, int differentColumn);
+    public List<Position> betweenPositions(Position oldPosition, Position newPosition) {
+        validateMovable(oldPosition, newPosition);
+        int rowDifference = oldPosition.calculateRowDifference(newPosition);
+        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
+
+        return betweenPositions(oldPosition, rowDifference, columnDifference);
+    }
 }
