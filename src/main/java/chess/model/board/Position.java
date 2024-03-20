@@ -6,18 +6,16 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position {
-    private static final int MAX_BOARD_POSITION = 8;
-    private static final int MIN_BOARD_POSITION = 1;
     private static final Map<Integer, Position> POSITION_CACHE = new HashMap<>();
 
     static {
-        for (int x = MIN_BOARD_POSITION; x <= MAX_BOARD_POSITION; x++) {
+        for (int x = Board.MIN_LENGTH; x <= Board.MAX_LENGTH; x++) {
             addPositionsBy(x);
         }
     }
 
     private static void addPositionsBy(int x) {
-        for (int y = MIN_BOARD_POSITION; y <= MAX_BOARD_POSITION; y++) {
+        for (int y = Board.MIN_LENGTH; y <= Board.MAX_LENGTH; y++) {
             POSITION_CACHE.put(convertToKey(x, y), new Position(x, y));
         }
     }
