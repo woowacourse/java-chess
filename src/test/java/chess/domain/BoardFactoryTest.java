@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+@DisplayName("보드 팩토리")
 class BoardFactoryTest {
 
     @Test
