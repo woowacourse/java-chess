@@ -18,6 +18,13 @@ public enum Rank {
         this.index = index;
     }
 
+    public static Rank from(final String input) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == Integer.parseInt(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("랭크가 없습니다."));
+    }
+
     public int subtrack(final Rank other) {
         return this.index - other.index;
     }

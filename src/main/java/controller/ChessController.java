@@ -5,6 +5,7 @@ import static view.InputView.MOVE_COMMAND;
 import static view.InputView.START_COMMAND;
 
 import domain.ChessTable;
+import domain.Square;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -30,12 +31,14 @@ public class ChessController {
             if (START_COMMAND.equals(command)) {
                 // TODO : init 고려
                 chessTable = ChessTable.create();
-                outputView.printChessTable(chessTable.getPieceContainer());
+                outputView.printChessTable(chessTable.getPieceSquares());
                 continue;
             }
             if (MOVE_COMMAND.equals(command)) {
-                final String source = input.get(1);
-                final String target = input.get(2);
+                final String sourceInput = input.get(1);
+                final String targetInput = input.get(2);
+                final Square source = Square.from(sourceInput);
+                final Square target = Square.from(targetInput);
 
                 chessTable.move(source, target);
                 continue;

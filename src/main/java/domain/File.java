@@ -18,6 +18,13 @@ public enum File {
         this.index = index;
     }
 
+    public static File from(final String input) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().equals(input.toUpperCase()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("File이 없습니다."));
+    }
+
     public int subtract(final File other) {
         return this.index - other.index;
     }

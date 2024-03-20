@@ -8,6 +8,7 @@ import domain.pieceType.Queen;
 import domain.pieceType.Rook;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessTable {
@@ -33,14 +34,14 @@ public class ChessTable {
             File.H, new Rook(Color.WHITE)
     );
 
-    private final Map<Square, Piece> pieceContainer;
+    private final Map<Square, Piece> pieceSquares;
 
     public ChessTable() {
-        this.pieceContainer = new HashMap<>();
+        this.pieceSquares = new HashMap<>();
     }
 
-    public ChessTable(final Map<Square, Piece> pieceContainer) {
-        this.pieceContainer = pieceContainer;
+    public ChessTable(final Map<Square, Piece> pieceSquares) {
+        this.pieceSquares = pieceSquares;
     }
 
     public static ChessTable create() {
@@ -60,15 +61,24 @@ public class ChessTable {
         return new ChessTable(chessTable);
     }
 
-    public Map<Square, Piece> getPieceContainer() {
-        return Collections.unmodifiableMap(pieceContainer);
+    public Map<Square, Piece> getPieceSquares() {
+        return Collections.unmodifiableMap(pieceSquares);
 
 //        return pieceContainer.entrySet().stream()
 //                .collect(Collectors.toMap(Entry::getKey,
 //                        entry -> new PieceInfo(entry.getValue().getPieceType(), entry.getValue().getColor())));
     }
 
-    public void move(final String source, final String target) {
+    public void move(final Square source, final Square target) {
+        if (!pieceSquares.containsKey(source)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+        final Piece piece = pieceSquares.get(source);
+        final List<Square> path = piece.calculatePath(source, target);
+
+        if (path.isEmpty()) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+        }
 
     }
 }

@@ -12,6 +12,13 @@ public class Square {
         this.file = file;
     }
 
+    public static Square from(final String input) {
+        final String file = String.valueOf(input.charAt(0));
+        final String rank = String.valueOf(input.charAt(1));
+
+        return new Square(Rank.from(rank), File.from(file));
+    }
+
     public Rank getRank() {
         return rank;
     }
