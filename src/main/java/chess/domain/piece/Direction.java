@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
@@ -46,6 +47,21 @@ public enum Direction {
 
     public static List<Direction> findPawnDirections() {
         return List.of(UPPER_LEFT, UPPER, UPPER_RIGHT);
+    }
+
+    public static List<Direction> findBishopDirection() {
+        return List.of(UPPER_LEFT, UPPER_RIGHT, LOWER_LEFT, LOWER_RIGHT);
+    }
+
+    public static Direction of(int file, int rank) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.isMatch(file, rank))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private boolean isMatch(int file, int rank) {
+        return this.directionOfFile == file && this.directionOfRank == rank;
     }
 
     public int rank() {

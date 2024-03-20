@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Direction;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class Point {
         if (this.equals(point) || rankDistance == 0) {
             return false;
         }
-        return (double) fileDistance / rankDistance == 1;
+        return Math.abs((double) fileDistance / rankDistance) == 1;
     }
 
     public boolean isStraight(Point point) {
@@ -63,6 +64,21 @@ public class Point {
             return Optional.empty();
         }
         return Optional.of(new Point(fileOpt.get(), rankOpt.get()));
+    }
+
+    public Direction findRoute(Point point) {
+        int fileDistance = point.file.distance(this.file);
+        int rankDistance = point.rank.distance(this.rank);
+        int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
+        int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
+
+        if (fileDistance == 0 || rankDistance == 0) {
+            return Direction.of(unitFile, unitRank);
+        }
+        if (isDiagonal(point)) {
+            return Direction.of(unitFile, unitRank);
+        }
+        return Direction.of(fileDistance, rankDistance);
     }
 
     @Override

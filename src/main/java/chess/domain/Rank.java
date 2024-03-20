@@ -23,7 +23,7 @@ public class Rank {
     }
 
     public int distance(Rank rank) {
-        return Math.abs(this.rank - rank.rank);
+        return this.rank - rank.rank;
     }
 
     public boolean isFirstRank() {

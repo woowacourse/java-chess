@@ -25,7 +25,7 @@ public class File {
     }
 
     public int distance(File file) {
-        return Math.abs(this.file.charAt(0) - file.file.charAt(0));
+        return this.file.charAt(0) - file.file.charAt(0);
     }
 
     public Optional<File> add(int directionOfFile) {
