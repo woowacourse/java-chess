@@ -1,17 +1,18 @@
 package chess.piece;
 
-import java.util.List;
+import chess.board.Position;
 
 public class Bishop extends Piece {
 
     private static final int MAX_UNIT_MOVE = 8;
 
-    private static final List<Direction> DIRECTIONS = List.of(
-            Direction.POSITIVE_SLOPE_DIAGONAL,
-            Direction.NEGATIVE_SLOPE_DIAGONAL
-    );
-
     public Bishop(Color color) {
-        super(DIRECTIONS, new PieceAttributes(PieceType.BISHOP, color));
+        super(PieceType.BISHOP, color, MAX_UNIT_MOVE);
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position destination) {
+        return source.isOnPositiveSlopeDiagonal(destination) ||
+                source.isOnNegativeSlopeDiagonal(destination);
     }
 }

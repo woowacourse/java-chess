@@ -12,6 +12,14 @@ public class PieceAttributes {
         this.color = color;
     }
 
+    public boolean hasSameColorOf(Color color) {
+        return this.color == color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

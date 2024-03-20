@@ -1,15 +1,17 @@
 package chess.piece;
 
-import java.util.List;
+import chess.board.Position;
 
 public class Knight extends Piece {
 
     private static final int MAX_UNIT_MOVE = 1;
-    private static final List<Direction> DIRECTIONS = List.of(
-            Direction.KNIGHT
-    );
 
     public Knight(Color color) {
-        super(DIRECTIONS, new PieceAttributes(PieceType.KNIGHT, color));
+        super(PieceType.KNIGHT, color, MAX_UNIT_MOVE);
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position destination) {
+        return source.isOnKnightRoute(destination);
     }
 }

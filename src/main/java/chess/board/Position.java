@@ -16,6 +16,10 @@ public class Position {
         return new Position(File.from(fileName), Rank.from(rankNumber));
     }
 
+    public Position calculatePositionBy(int fileDifference, int rankDifference) {
+        return new Position(file.add(fileDifference), rank.add(rankDifference));
+    }
+
     public boolean isOnSameRank(Position other) {
         return rank == other.rank;
     }
@@ -25,17 +29,33 @@ public class Position {
     }
 
     public boolean isOnPositiveSlopeDiagonal(Position other) {
-        int rankDifference = rank.calculateDifference(other.rank);
-        int fileDifference = file.calculateDifference(other.file);
+        int rankDifference = rank.subtract(other.rank);
+        int fileDifference = file.subtract(other.file);
         return hasSameAbsoluteDifference(rankDifference, fileDifference) &&
                 hasSameSign(rankDifference, fileDifference);
     }
 
     public boolean isOnNegativeSlopeDiagonal(Position other) {
-        int rankDifference = rank.calculateDifference(other.rank);
-        int fileDifference = file.calculateDifference(other.file);
+        int rankDifference = rank.subtract(other.rank);
+        int fileDifference = file.subtract(other.file);
         return hasSameAbsoluteDifference(rankDifference, fileDifference) &&
                 hasDifferentSign(rankDifference, fileDifference);
+    }
+
+    public boolean hasLowerFileThan(Position other) {
+        return file.subtract(other.file) < 0;
+    }
+
+    public boolean hasHigherFileThan(Position other) {
+        return file.subtract(other.file) > 0;
+    }
+
+    public boolean hasLowerRankThan(Position other) {
+        return rank.subtract(other.rank) < 0;
+    }
+
+    public boolean hasHigherRankThan(Position other) {
+        return rank.subtract(other.rank) > 0;
     }
 
     private boolean hasDifferentSign(int rankDifference, int fileDifference) {
@@ -51,7 +71,17 @@ public class Position {
     }
 
     public boolean isOnKnightRoute(Position other) {
-        return Math.abs(rank.calculateDifference(other.rank) * file.calculateDifference(other.file)) == 2;
+        return Math.abs(rank.subtract(other.rank) * file.subtract(other.file)) == 2;
+    }
+
+    public boolean isAdjacent(Position other) {
+        int rankDifference = rank.subtract(other.rank);
+        int fileDifference = file.subtract(other.file);
+        return Math.abs(rankDifference) <= 1 && Math.abs(fileDifference) <= 1;
+    }
+
+    public boolean isNotEquals(Position other) {
+        return !this.equals(other);
     }
 
     @Override

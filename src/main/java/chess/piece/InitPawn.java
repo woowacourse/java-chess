@@ -1,17 +1,23 @@
 package chess.piece;
 
-import java.util.List;
+import chess.board.Position;
 
 public class InitPawn extends Piece {
 
     private static final int MAX_UNIT_MOVE = 2;
-    private static final List<Direction> DIRECTIONS = List.of(
-            Direction.VERTICAL,
-            Direction.POSITIVE_SLOPE_DIAGONAL,
-            Direction.NEGATIVE_SLOPE_DIAGONAL
-    );
 
     public InitPawn(Color color) {
-        super(DIRECTIONS, new PieceAttributes(PieceType.PAWN, color));
+        super(PieceType.PAWN, color, MAX_UNIT_MOVE);
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position destination) {
+        return false;
+//        return source.isOnSameFile(destination) && source.isForward(destination, MAX_UNIT_MOVE);
+    }
+
+    @Override
+    public boolean isAttackable(Position source, Position destination) {
+        return false;
     }
 }

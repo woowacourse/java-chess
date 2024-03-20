@@ -27,7 +27,14 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 열 번호입니다."));
     }
 
-    public int calculateDifference(File other) {
+    public int subtract(File other) {
         return number - other.number;
+    }
+
+    public File add(int fileDifference) {
+        return Arrays.stream(values())
+                .filter(file -> file.number == number + fileDifference)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 열 번호입니다."));
     }
 }

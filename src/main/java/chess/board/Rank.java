@@ -27,7 +27,14 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 행 번호입니다."));
     }
 
-    public int calculateDifference(Rank other) {
+    public int subtract(Rank other) {
         return number - other.number;
+    }
+
+    public Rank add(int rankDifference) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.number == number + rankDifference)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 행 번호입니다."));
     }
 }

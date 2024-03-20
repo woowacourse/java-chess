@@ -1,18 +1,17 @@
 package chess.piece;
 
-import java.util.List;
+import chess.board.Position;
 
 public class King extends Piece {
 
     private static final int MAX_UNIT_MOVE = 1;
-    private static final List<Direction> DIRECTIONS = List.of(
-            Direction.HORIZONTAL,
-            Direction.VERTICAL,
-            Direction.POSITIVE_SLOPE_DIAGONAL,
-            Direction.NEGATIVE_SLOPE_DIAGONAL
-    );
 
     public King(Color color) {
-        super(DIRECTIONS, new PieceAttributes(PieceType.KING, color));
+        super(PieceType.KING, color, MAX_UNIT_MOVE);
+    }
+
+    @Override
+    public boolean isMovable(Position source, Position destination) {
+        return source.isAdjacent(destination);
     }
 }
