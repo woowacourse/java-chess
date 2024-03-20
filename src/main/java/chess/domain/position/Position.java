@@ -17,7 +17,7 @@ public class Position {
             .collect(toMap(position -> Position.toKey(position.rowPosition, position.columnPosition),
                     position -> position));
 
-    public final RowPosition rowPosition;
+    private final RowPosition rowPosition;
     private final ColumnPosition columnPosition;
 
     public Position(RowPosition rowPosition, ColumnPosition columnPosition) {
@@ -33,6 +33,10 @@ public class Position {
 
     private static String toKey(RowPosition rowPosition, ColumnPosition colPosition) {
         return String.valueOf(rowPosition) + String.valueOf(colPosition);
+    }
+
+    public Position verticalReversePosition() {
+        return POOL.get(toKey(rowPosition.reverse(), this.columnPosition));
     }
 
     @Override

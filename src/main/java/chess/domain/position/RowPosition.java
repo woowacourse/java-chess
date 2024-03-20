@@ -13,6 +13,10 @@ public class RowPosition {
         this.rowNumber = rowNumber;
     }
 
+    public RowPosition reverse() {
+        return new RowPosition(MAX_NUMBER - rowNumber);
+    }
+
     private void validateNumberRange(int rowNumber) {
         if (MIN_NUMBER > rowNumber || rowNumber > MAX_NUMBER) {
             throw new IllegalStateException("체스판의 행 번호는 " + rowNumber + "가 될 수 없습니다.");

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ColumnPositionTest {
     @DisplayName("실패 : 지정된 범위가 아닌 열 번호가 주어지면 생성에 실패한다")
     @ParameterizedTest
-    @ValueSource(ints = {0, 9})
+    @ValueSource(ints = {-1, 8})
     void should_ThrowIllegaStateException_When_GiveOutRangedColumnNumber(int outRangedColumnNumber) {
         assertThatThrownBy(() -> new ColumnPosition(outRangedColumnNumber))
                 .isInstanceOf(IllegalStateException.class)
@@ -19,7 +19,7 @@ class ColumnPositionTest {
 
     @DisplayName("성공 : 지정된 범위의 행 번호가 주어지면 생성에 성공한다")
     @ParameterizedTest
-    @ValueSource(ints = {1, 8})
+    @ValueSource(ints = {0, 7})
     void should_MakeColumnObject_When_GiveValidRangeColumnNumber(int validRangedColumnNumber) {
         assertThatCode(() -> new ColumnPosition(validRangedColumnNumber))
                 .doesNotThrowAnyException();
