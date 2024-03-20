@@ -39,6 +39,10 @@ public class Position {
         return POOL.get(toKey(rowPosition.reverse(), this.columnPosition));
     }
 
+    public boolean isStraight(Position target) {
+        return rowPosition.equals(target.rowPosition) || columnPosition.equals(target.columnPosition);
+    }
+
     public boolean isVerticalWith(Position target) {
         return columnPosition.equals(target.columnPosition);
     }

@@ -14,23 +14,14 @@ class PositionTest {
         assertThat(testPosition.verticalReversePosition()).isEqualTo(Position.of(7, 0));
     }
 
-    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 수직인지 확인할 수 있다")
+    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 직선인지 확인할 수 있다")
     @Test
     void should_CheckVerticalRelationShipWithPositions() {
         Position position = Position.of(1, 1);
         assertAll(
-                () -> assertThat(position.isVerticalWith(Position.of(2, 1))).isTrue(),
-                () -> assertThat(position.isVerticalWith(Position.of(1, 2))).isFalse()
-        );
-    }
-
-    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 수평인지 확인할 수 있다")
-    @Test
-    void should_CheckHorizontalRelationShipWithPositions() {
-        Position position = Position.of(1, 1);
-        assertAll(
-                () -> assertThat(position.isHorizontalWith(Position.of(1, 2))).isTrue(),
-                () -> assertThat(position.isHorizontalWith(Position.of(2, 1))).isFalse()
+                () -> assertThat(position.isStraight(Position.of(2, 1))).isTrue(),
+                () -> assertThat(position.isStraight(Position.of(1, 2))).isTrue(),
+                () -> assertThat(position.isStraight(Position.of(4, 4))).isFalse()
         );
     }
 
