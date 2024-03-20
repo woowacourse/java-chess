@@ -20,6 +20,13 @@ public enum Rank {
         return this.coordinate - other.coordinate;
     }
 
+    public boolean isPawnInitialRank(Side side) {
+        if (side.isWhite()) {
+            return TWO.equals(this);
+        }
+        return SEVEN.equals(this);
+    }
+
     public int getCoordinate() {
         return coordinate;
     }

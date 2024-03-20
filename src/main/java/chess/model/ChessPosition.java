@@ -15,6 +15,10 @@ public class ChessPosition {
         return new Distance(fileDifference, rankDifference);
     }
 
+    public boolean isPawnInitialPosition(Side side) {
+        return rank.isPawnInitialRank(side);
+    }
+
     public File getFile() {
         return file;
     }

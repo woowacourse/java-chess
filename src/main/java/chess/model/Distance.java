@@ -9,6 +9,13 @@ public class Distance {
         this.rankDifference = rankDifference;
     }
 
+    public boolean isForward() {
+        if (fileDifference != 0) {
+            return false;
+        }
+        return rankDifference > 0;
+    }
+
     public boolean isDiagonalMovement() {
         if (isNotMoved()) {
             return false;
