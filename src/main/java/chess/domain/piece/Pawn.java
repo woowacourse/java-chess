@@ -42,4 +42,31 @@ public class Pawn extends Piece {
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public List<Position> betweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
+        int rowDifference = oldPosition.calculateRowDifference(newPosition);
+        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
+
+        validateAttackable(rowDifference, columnDifference);
+        return betweenPositions(oldPosition, rowDifference, columnDifference);
+    }
+
+    private void validateAttackable(int rowDifference, int columnDifference) {
+
+        if (isAttackable(rowDifference, columnDifference)) {
+            return;
+        }
+        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+    }
+
+    private boolean isAttackable(int rowDifference, int columnDifference) {
+        if (team == Team.WHITE) {
+            return rowDifference == 1 && Math.abs(columnDifference) == 1;
+        }
+        if (team == Team.BLACK) {
+            return rowDifference == -1 && Math.abs(columnDifference) == 1;
+        }
+        return false;
+    }
 }

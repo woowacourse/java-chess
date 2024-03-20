@@ -35,7 +35,13 @@ public class Board {
         if (pieces.containsKey(oldPosition)) {
             Piece thisPiece = pieces.get(oldPosition);
 
-            List<Position> betweenPositions = thisPiece.betweenPositions(oldPosition, newPosition);
+            List<Position> betweenPositions;
+            if (pieces.containsKey(newPosition)) {
+                betweenPositions = thisPiece.betweenPositionsWhenAttack(oldPosition, newPosition);
+            } else {
+                betweenPositions = thisPiece.betweenPositions(oldPosition, newPosition);
+            }
+
             for (Position betweenPosition : betweenPositions) {
                 if (pieces.containsKey(betweenPosition)) {
                     throw new IllegalArgumentException("이동을 가로막는 기물이 존재합니다.");

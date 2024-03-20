@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
@@ -89,5 +90,30 @@ class PawnTest {
         assertThat(new Pawn(Team.WHITE, true)
                 .betweenPositions(Position.of(2, 3), Position.of(3, 3)))
                 .isEmpty();
+    }
+
+    @DisplayName("공격 가능할 때, 대각으로 움직일 수 있다.")
+    @Test
+    void movableDiagonalWhenAttack() {
+        assertThatCode(() -> new Pawn(Team.WHITE, true)
+                .betweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 3)))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("공격 가능할 때, 두 위치 사이의 폰이 갈 수 있는 위치는 없다.")
+    @Test
+    void noneBetweenPositionWhenAttack() {
+        assertThat(new Pawn(Team.WHITE, true)
+                .betweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 3)))
+                .isEmpty();
+    }
+
+    @DisplayName("공격 가능할 때, 직선으로 움직이면 예외가 발생한다.")
+    @Test
+    void cannotMoveStraightWhenAttack() {
+        assertThatThrownBy(() -> new Pawn(Team.WHITE, true)
+                .betweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 2)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 }

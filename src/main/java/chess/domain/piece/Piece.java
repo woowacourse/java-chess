@@ -39,6 +39,10 @@ public abstract class Piece {
         return betweenPositions(oldPosition, rowDifference, columnDifference);
     }
 
+    public List<Position> betweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
+        return betweenPositions(oldPosition, newPosition);
+    }
+
     public boolean isSameTeamWith(Piece piece) {
         return team == piece.team;
     }
