@@ -9,9 +9,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
-        if (start.isStraightWith(destination) || start.isDiagonalWith(destination)) {
-            return true;
-        }
-        return false;
+        return start.isStraightWith(destination) || start.isDiagonalWith(destination);
     }
 }

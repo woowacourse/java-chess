@@ -9,9 +9,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
-        if (start.isDiagonalWith(destination)) {
-            return true;
-        }
-        return false;
+        return start.isDiagonalWith(destination);
     }
 }
