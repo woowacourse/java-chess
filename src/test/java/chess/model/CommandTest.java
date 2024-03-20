@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class CommandTest {
+
     @DisplayName("올바르지 않은 게임 명령어가 들어오면 예외가 발생한다")
     @ParameterizedTest
     @ValueSource(strings = {"", "starts", "END", "시작"})
