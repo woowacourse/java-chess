@@ -10,6 +10,7 @@ abstract class AbstractMoveStraightMovePiece extends AbstractCatchOnMovePiece {
 		super(position, team);
 	}
 
+	//Todo: 메서드 이름 수정, 메서드 분리
 	@Override
 	protected Optional<PieceMoveResult> attemptMove(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
 		Optional<PieceMoveResult> pieceMoveResult = tryMoveAssumeAlone(targetPosition, piecesOnChessBoard);

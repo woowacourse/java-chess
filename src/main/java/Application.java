@@ -7,6 +7,7 @@ import domain.Position;
 import view.InputView;
 import view.OutputView;
 
+//Todo: 메서드 분리, 클래스 분리
 public class Application {
 	public static void main(String[] args) {
 		OutputView outputView = new OutputView();

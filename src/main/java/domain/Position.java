@@ -24,6 +24,7 @@ public enum Position {
 		this.column = column;
 	}
 
+	//ToDO: 메서드 분리
 	List<Position> route(Position targetPosition) {
 		if (this.equals(targetPosition)) {
 			return Collections.emptyList();

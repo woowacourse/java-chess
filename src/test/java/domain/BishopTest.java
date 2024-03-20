@@ -16,6 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+//Todo: 장애물 관련 경계값 테스트 추가 및, 중복되는 테스트 구조 해결
 class BishopTest {
 	public static Stream<Arguments> moveFailureParameters() {
 		Set<Position> successParameters = moveSuccessParameters().map(Arguments::get)

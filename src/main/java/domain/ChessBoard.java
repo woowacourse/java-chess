@@ -21,6 +21,7 @@ class ChessBoard {
 		piecesOnBoard = new ArrayList<>(List.of(pieces));
 	}
 
+	//Todo: 메서드 분리
 	boolean move(Position from, Position to) {
 		if (isEmptyPosition(from) || isOtherTeamTurn(from)) {
 			return false;
