@@ -39,6 +39,10 @@ public class Position {
         return POOL.get(toKey(rowPosition.reverse(), this.columnPosition));
     }
 
+    public boolean isVerticalWith(Position target) {
+        return columnPosition.equals(target.columnPosition);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
