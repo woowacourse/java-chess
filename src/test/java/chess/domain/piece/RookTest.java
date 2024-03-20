@@ -27,12 +27,12 @@ class RookTest {
     void should_CanNotMove_When_DestinationIsNotStraight_From_StartPosition() {
         Rook testRook = new Rook(Team.WHITE);
         Position startPosition = Position.of(0, 0);
-        Position verticalDestination = Position.of(7, 1);
-        Position horizontalDestination = Position.of(1, 7);
+        Position notVerticalDestination = Position.of(7, 1);
+        Position notHorizontalDestination = Position.of(1, 7);
 
         assertAll(
-                () -> assertThat(testRook.canMove(startPosition, verticalDestination)).isFalse(),
-                () -> assertThat(testRook.canMove(startPosition, horizontalDestination)).isFalse()
+                () -> assertThat(testRook.canMove(startPosition, notVerticalDestination)).isFalse(),
+                () -> assertThat(testRook.canMove(startPosition, notHorizontalDestination)).isFalse()
         );
     }
 }
