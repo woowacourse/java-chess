@@ -28,4 +28,12 @@ public class Step {
     public boolean isEnemy() {
         return squareState.isEnemy();
     }
+
+    public boolean isUpside() {
+        return direction.isUpside();
+    }
+
+    public boolean isDownside() {
+        return direction.isDownside();
+    }
 }
