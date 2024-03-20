@@ -1,8 +1,8 @@
 package view;
 
 import domain.Color;
-import domain.pieceType.Piece;
-import domain.pieceType.PieceType;
+import domain.piece.Piece;
+import domain.piece.PieceType;
 import java.util.Arrays;
 
 public enum PieceTypeFormat {

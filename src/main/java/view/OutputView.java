@@ -3,7 +3,7 @@ package view;
 import domain.File;
 import domain.Rank;
 import domain.Square;
-import domain.pieceType.Piece;
+import domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {

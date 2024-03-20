@@ -1,4 +1,4 @@
-package domain.pieceType;
+package domain.piece;
 
 public enum PieceType {
     BISHOP,

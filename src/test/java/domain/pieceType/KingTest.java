@@ -6,6 +6,7 @@ import domain.Color;
 import domain.File;
 import domain.Rank;
 import domain.Square;
+import domain.piece.King;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;

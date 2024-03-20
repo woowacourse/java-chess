@@ -19,8 +19,12 @@ public enum Rank {
     }
 
     public static Rank from(final String input) {
+        return Rank.find(Integer.parseInt(input));
+    }
+
+    private static Rank find(final int index) {
         return Arrays.stream(values())
-                .filter(rank -> rank.index == Integer.parseInt(input))
+                .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("랭크가 없습니다."));
     }
@@ -30,10 +34,7 @@ public enum Rank {
     }
 
     public Rank move(final int i) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.index == this.index + i)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 랭크입니다."));
+        return Rank.find(this.index + i);
     }
 
     public int getIndex() {

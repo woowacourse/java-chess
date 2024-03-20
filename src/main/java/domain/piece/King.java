@@ -1,9 +1,8 @@
-package domain.pieceType;
+package domain.piece;
 
 import domain.Color;
-import domain.File;
-import domain.Rank;
 import domain.Square;
+import domain.Vector;
 import java.util.List;
 
 public class King extends Piece {
@@ -16,19 +15,12 @@ public class King extends Piece {
 
     @Override
     public List<Square> calculatePath(final Square source, final Square target) {
-        final File sourceFile = source.getFile();
-        final File targetFile = target.getFile();
+        final Vector vector = Vector.of(source, target);
 
-        final int fileVector = sourceFile.subtract(targetFile);
-
-        final Rank sourceRank = source.getRank();
-        final Rank targetRank = target.getRank();
-
-        final int rankVector = sourceRank.subtrack(targetRank);
-
-        if (Math.abs(fileVector) < 2 && Math.abs(rankVector) < 2) {
+        if (vector.maxAxiosSize() == 1) {
             return List.of(target);
         }
+
         return List.of();
     }
 

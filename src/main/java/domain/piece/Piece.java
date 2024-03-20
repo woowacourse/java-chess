@@ -1,4 +1,4 @@
-package domain.pieceType;
+package domain.piece;
 
 import domain.Color;
 import domain.Square;

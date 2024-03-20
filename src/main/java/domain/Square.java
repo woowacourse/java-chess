@@ -8,8 +8,8 @@ public class Square {
     private final File file;
 
     public Square(final Rank rank, final File file) {
-        this.rank = rank;
         this.file = file;
+        this.rank = rank;
     }
 
     public static Square from(final String input) {
@@ -19,40 +19,40 @@ public class Square {
         return new Square(Rank.from(rank), File.from(file));
     }
 
-    public Rank getRank() {
-        return rank;
-    }
-
-    public Square next(final int rankVector, final int fileVector) {
-        return new Square(rank.move(rankVector), file.move(fileVector));
+    public Square next(final int rankDirection, final int fileDirection) {
+        return new Square(rank.move(rankDirection), file.move(fileDirection));
     }
 
     public File getFile() {
         return file;
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof final Square square)) {
             return false;
         }
-        final Square square = (Square) o;
-        return rank == square.rank && file == square.file;
+        return getFile() == square.getFile() && getRank() == square.getRank();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(getFile(), getRank());
     }
 
     @Override
     public String toString() {
         return "Square{" +
-                "rank=" + rank +
-                ", file=" + file +
+                "file=" + file +
+                ", rank=" + rank +
                 '}';
     }
 }

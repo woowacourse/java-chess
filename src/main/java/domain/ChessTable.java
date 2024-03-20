@@ -1,12 +1,13 @@
 package domain;
 
-import domain.pieceType.Bishop;
-import domain.pieceType.King;
-import domain.pieceType.Knight;
-import domain.pieceType.Pawn;
-import domain.pieceType.Piece;
-import domain.pieceType.Queen;
-import domain.pieceType.Rook;
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Piece;
+import domain.piece.PieceType;
+import domain.piece.Queen;
+import domain.piece.Rook;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -53,12 +54,8 @@ public class ChessTable {
         for (final File file : File.values()) {
             chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Color.BLACK));
             chessTable.put(new Square(Rank.TWO, file), new Pawn(Color.WHITE));
-        }
-
-        for (final File file : File.values()) {
             chessTable.put(new Square(Rank.EIGHT, file), BLACK_PIECE_TYPE_ORDERS.get(file));
             chessTable.put(new Square(Rank.ONE, file), WHITE_PIECE_TYPE_ORDERS.get(file));
-
         }
 
         return new ChessTable(chessTable);
@@ -82,12 +79,21 @@ public class ChessTable {
             }
 
         }
-        final Piece piece = pieceSquares.get(source);
-        final List<Square> path = piece.calculatePath(source, target);
+        final List<Square> path = sourcePiece.calculatePath(source, target);
 
         if (path.isEmpty()) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
+
+        if (sourcePiece.getPieceType() == PieceType.PAWN) {
+            if (pieceSquares.containsKey(target) && (Math.abs(source.getFile().subtract(target.getFile())) != 1)) {
+                throw new IllegalArgumentException();
+            }
+            if (!pieceSquares.containsKey(target) && (Math.abs(source.getFile().subtract(target.getFile())) == 1)) {
+                throw new IllegalArgumentException();
+            }
+        }
+
         for (final Square square : path) {
             if (!square.equals(target) && pieceSquares.containsKey(square)) {
                 throw new IllegalArgumentException("갈 수 없는 경로입니다.");

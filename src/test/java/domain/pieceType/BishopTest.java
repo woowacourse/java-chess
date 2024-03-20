@@ -6,6 +6,7 @@ import domain.Color;
 import domain.File;
 import domain.Rank;
 import domain.Square;
+import domain.piece.Bishop;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
