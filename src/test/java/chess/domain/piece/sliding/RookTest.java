@@ -1,9 +1,11 @@
-package chess.domain.piece;
+package chess.domain.piece.sliding;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.domain.color.Color;
+import chess.domain.piece.Position;
+import chess.domain.piece.sliding.Rook;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

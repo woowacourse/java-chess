@@ -1,10 +1,14 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.color.Color;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Position;
+import chess.domain.piece.pawn.WhiteFirstPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

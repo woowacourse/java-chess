@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.blank;
 
 import chess.domain.color.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Position;
 import java.util.Set;
 
 public class Blank extends Piece {

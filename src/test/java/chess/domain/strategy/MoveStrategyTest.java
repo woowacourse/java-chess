@@ -3,11 +3,11 @@ package chess.domain.strategy;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import chess.domain.color.Color;
-import chess.domain.piece.King;
+import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.TestBoardFactory;
-import chess.domain.piece.WhiteFirstPawn;
+import chess.domain.piece.pawn.WhiteFirstPawn;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

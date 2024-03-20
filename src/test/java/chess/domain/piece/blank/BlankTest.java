@@ -1,9 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.blank;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Blank;
 import chess.domain.piece.Position;
+import chess.domain.piece.blank.Blank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
