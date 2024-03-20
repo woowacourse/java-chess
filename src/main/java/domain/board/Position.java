@@ -19,6 +19,22 @@ public class Position {
         return rank.index();
     }
 
+    public Position goLeft() {
+        return new Position(file.goLeft(), rank);
+    }
+
+    public Position goRight() {
+        return new Position(file.goRight(), rank);
+    }
+
+    public Position goUp() {
+        return new Position(file, rank.goUp());
+    }
+
+    public Position goDown() {
+        return new Position(file, rank.goDown());
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
