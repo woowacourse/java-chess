@@ -12,9 +12,13 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        if (this.position.isSecondRank()) {
-           return this.position.isForwardDifference(target, 2) || this.position.isForwardDifference(target, 1);
+        if (isInitPosition()) {
+           return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
         }
-        return this.position.isForwardDifference(target, 1);
+        return this.position.isForwardWithDistance(target, 1);
+    }
+
+    private boolean isInitPosition() {
+        return this.position.isTwoRank(); //TODO 네이밍 고려
     }
 }

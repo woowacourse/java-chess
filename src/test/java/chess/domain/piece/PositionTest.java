@@ -100,7 +100,7 @@ class PositionTest {
         final Position otherPosition = new Position('d', 7);
 
         // when
-        final boolean result = currentPosition.isVerticalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isVerticalWithDistance(otherPosition, 2);
 
         // then
         Assertions.assertThat(result).isTrue();
@@ -114,7 +114,7 @@ class PositionTest {
         final Position otherPosition = new Position('d', 6);
 
         // when
-        final boolean result = currentPosition.isVerticalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isVerticalWithDistance(otherPosition, 2);
 
         // then
         Assertions.assertThat(result).isFalse();
@@ -128,7 +128,7 @@ class PositionTest {
         final Position otherPosition = new Position('b', 5);
 
         // when
-        final boolean result = currentPosition.isHorizontalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isHorizontalWithDistance(otherPosition, 2);
 
         // then
         Assertions.assertThat(result).isTrue();
@@ -142,7 +142,7 @@ class PositionTest {
         final Position otherPosition = new Position('a', 5);
 
         // when
-        final boolean result = currentPosition.isHorizontalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isHorizontalWithDistance(otherPosition, 2);
 
         // then
         Assertions.assertThat(result).isFalse();
@@ -156,7 +156,7 @@ class PositionTest {
         final Position otherPosition = new Position('b', 7);
 
         // when
-        final boolean result = currentPosition.isDiagonalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isDiagonalWithDistance(otherPosition, 2);
 
         // then
         Assertions.assertThat(result).isTrue();
@@ -170,7 +170,7 @@ class PositionTest {
         final Position otherPosition = new Position('b', 7);
 
         // when
-        final boolean result = currentPosition.isDiagonalDifference(otherPosition, 1);
+        final boolean result = currentPosition.isDiagonalWithDistance(otherPosition, 1);
 
         // then
         Assertions.assertThat(result).isFalse();

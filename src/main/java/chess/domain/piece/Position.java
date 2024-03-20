@@ -17,39 +17,39 @@ public class Position {
     }
 
     public boolean isStraightWith(final Position target) {
-        if (this.file == target.file && this.rank != target.rank) {
-            return true;
-        }
+        return isVerticalWith(target) || isHorizontalWith(target);
+    }
 
-        if (this.file != target.file && this.rank == target.rank) {
-            return true;
-        }
+    public boolean isVerticalWithDistance(final Position target, final int distance) {
+        return this.rank.getDistance(target.rank) == distance;
+    }
 
-        return false;
+    public boolean isHorizontalWithDistance(final Position target, final int distance) {
+        return this.file.getDistance(target.file) == distance;
     }
 
     public boolean isDiagonalWith(final Position target) {
-        return this.file.differenceWith(target.file) == this.rank.differenceWith(target.rank);
+        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
     }
 
-    public boolean isVerticalDifference(final Position target, final int difference) {
-        return this.rank.differenceWith(target.rank) == difference;
+    public boolean isDiagonalWithDistance(final Position target, final int distance) {
+       return isDiagonalWith(target) && this.file.getDistance(target.file) == distance;
     }
 
-    public boolean isHorizontalDifference(final Position target, final int difference) {
-        return this.file.differenceWith(target.file) == difference;
-    }
-
-    public boolean isDiagonalDifference(final Position target, final int difference) {
-       return isDiagonalWith(target) && this.file.differenceWith(target.file) == difference;
-    }
-
-    public boolean isSecondRank() {
+    public boolean isTwoRank() {
         return this.rank.equals(Rank.TWO);
     }
 
-    public boolean isForwardDifference(final Position target, final int difference) {
-        return target.rank.minus(this.rank) == difference;
+    public boolean isForwardWithDistance(final Position target, final int distance) {
+        return target.rank.minus(this.rank) == distance;
+    }
+
+    private boolean isVerticalWith(final Position target) {
+        return this.file != target.file && this.rank == target.rank;
+    }
+
+    private boolean isHorizontalWith(final Position target) {
+        return this.file == target.file && this.rank != target.rank;
     }
 
     @Override

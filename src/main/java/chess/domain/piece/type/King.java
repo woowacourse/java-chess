@@ -12,6 +12,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return (this.position.isDiagonalDifference(target, 1) || this.position.isHorizontalDifference(target, 1) || this.position.isVerticalDifference(target, 1));
+        return (this.position.isDiagonalWithDistance(target, 1) || this.position.isHorizontalWithDistance(target, 1) || this.position.isVerticalWithDistance(target, 1));
     }
 }
