@@ -9,6 +9,12 @@ public class ChessPosition {
         this.rank = rank;
     }
 
+    public Distance calculateDistance(ChessPosition other) {
+        int fileDifference = file.minus(other.file);
+        int rankDifference = rank.minus(other.rank);
+        return new Distance(fileDifference, rankDifference);
+    }
+
     public File getFile() {
         return file;
     }

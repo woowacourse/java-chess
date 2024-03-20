@@ -16,6 +16,10 @@ public enum File {
         this.coordinate = coordinate;
     }
 
+    public int minus(File other) {
+        return this.coordinate - other.coordinate;
+    }
+
     public int getCoordinate() {
         return coordinate;
     }

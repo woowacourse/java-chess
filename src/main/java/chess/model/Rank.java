@@ -16,6 +16,10 @@ public enum Rank {
         this.coordinate = coordinate;
     }
 
+    public int minus(Rank other) {
+        return this.coordinate - other.coordinate;
+    }
+
     public int getCoordinate() {
         return coordinate;
     }
