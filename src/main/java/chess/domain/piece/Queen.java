@@ -18,13 +18,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isRelativelyMovable(int rowDifference, int columnDifference) {
+    protected boolean isMovable(int rowDifference, int columnDifference) {
         return (rowDifference == 0 || columnDifference == 0)
                 || Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 
     @Override
-    protected List<Position> betweenPositions(Position position, int rowDifference, int columnDifference) {
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
         if (Math.abs(rowDifference) == Math.abs(columnDifference)) {
             int absoluteDifference = Math.abs(rowDifference);

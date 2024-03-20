@@ -37,9 +37,9 @@ public class Board {
 
             List<Position> betweenPositions;
             if (pieces.containsKey(newPosition)) {
-                betweenPositions = thisPiece.betweenPositionsWhenAttack(oldPosition, newPosition);
+                betweenPositions = thisPiece.findBetweenPositionsWhenAttack(oldPosition, newPosition);
             } else {
-                betweenPositions = thisPiece.betweenPositions(oldPosition, newPosition);
+                betweenPositions = thisPiece.findBetweenPositions(oldPosition, newPosition);
             }
 
             for (Position betweenPosition : betweenPositions) {

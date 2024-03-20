@@ -16,9 +16,9 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
-    protected abstract boolean isRelativelyMovable(int rowDifference, int columnDifference);
+    protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
-    protected abstract List<Position> betweenPositions(Position position, int rowDifference, int columnDifference);
+    protected abstract List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference);
 
     public abstract Piece move();
 
@@ -26,23 +26,23 @@ public abstract class Piece {
         int rowDifference = oldPosition.calculateRowDifference(newPosition);
         int columnDifference = oldPosition.calculateColumnDifference(newPosition);
 
-        if (!oldPosition.equals(newPosition) && isRelativelyMovable(rowDifference, columnDifference)) {
+        if (!oldPosition.equals(newPosition) && isMovable(rowDifference, columnDifference)) {
             return;
         }
 
         throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 
-    public List<Position> betweenPositions(Position oldPosition, Position newPosition) {
+    public List<Position> findBetweenPositions(Position oldPosition, Position newPosition) {
         validateMovable(oldPosition, newPosition);
         int rowDifference = oldPosition.calculateRowDifference(newPosition);
         int columnDifference = oldPosition.calculateColumnDifference(newPosition);
 
-        return betweenPositions(oldPosition, rowDifference, columnDifference);
+        return findBetweenPositions(oldPosition, rowDifference, columnDifference);
     }
 
-    public List<Position> betweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
-        return betweenPositions(oldPosition, newPosition);
+    public List<Position> findBetweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
+        return findBetweenPositions(oldPosition, newPosition);
     }
 
     public boolean isSameTeamWith(Piece piece) {

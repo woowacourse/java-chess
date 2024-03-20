@@ -24,7 +24,7 @@ class KnightTest {
     @Test
     void knightMoveOverDayHieroglyph() {
         assertThatThrownBy(() -> new Knight(Team.WHITE, true)
-                .betweenPositions(Position.of(1, 1), Position.of(3, 3)))
+                .findBetweenPositions(Position.of(1, 1), Position.of(3, 3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -33,7 +33,7 @@ class KnightTest {
     @Test
     void betweenPosition() {
         assertThat(new Knight(Team.WHITE, true)
-                .betweenPositions(Position.of(3, 3), Position.of(2, 1)))
+                .findBetweenPositions(Position.of(3, 3), Position.of(2, 1)))
                 .isEmpty();
     }
 }

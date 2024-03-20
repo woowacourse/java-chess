@@ -24,7 +24,7 @@ class QueenTest {
     @Test
     void queenMoveOverLineAndDiagonalLine() {
         assertThatThrownBy(() -> new Queen(Team.WHITE, true)
-                .betweenPositions(Position.of(1, 1), Position.of(2, 3)))
+                .findBetweenPositions(Position.of(1, 1), Position.of(2, 3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -33,7 +33,7 @@ class QueenTest {
     @Test
     void betweenPositionDiagonal() {
         assertThat(new Queen(Team.WHITE, true)
-                .betweenPositions(Position.of(4, 4), Position.of(7, 7)))
+                .findBetweenPositions(Position.of(4, 4), Position.of(7, 7)))
                 .containsExactly(Position.of(5, 5), Position.of(6, 6));
     }
 
@@ -41,7 +41,7 @@ class QueenTest {
     @Test
     void betweenPositionDiagonalMinus() {
         assertThat(new Queen(Team.WHITE, true)
-                .betweenPositions(Position.of(4, 4), Position.of(1, 1)))
+                .findBetweenPositions(Position.of(4, 4), Position.of(1, 1)))
                 .containsExactly(Position.of(3, 3), Position.of(2, 2));
     }
 
@@ -49,7 +49,7 @@ class QueenTest {
     @Test
     void betweenPositionLine() {
         assertThat(new Queen(Team.WHITE, true)
-                .betweenPositions(Position.of(4, 4), Position.of(4, 7)))
+                .findBetweenPositions(Position.of(4, 4), Position.of(4, 7)))
                 .containsExactly(Position.of(4, 5), Position.of(4, 6));
     }
 
@@ -57,7 +57,7 @@ class QueenTest {
     @Test
     void betweenPositionLineMinus() {
         assertThat(new Queen(Team.WHITE, true)
-                .betweenPositions(Position.of(4, 4), Position.of(1, 4)))
+                .findBetweenPositions(Position.of(4, 4), Position.of(1, 4)))
                 .containsExactly(Position.of(3, 4), Position.of(2, 4));
     }
 }

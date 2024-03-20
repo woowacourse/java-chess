@@ -18,14 +18,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isRelativelyMovable(int rowDifference, int columnDifference) {
+    protected boolean isMovable(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 
     @Override
-    protected List<Position> betweenPositions(Position position, int rowDifference, int columnDifference) {
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
-
         int absoluteDifference = Math.abs(rowDifference);
         int rowSign = rowDifference / absoluteDifference;
         int columnSign = columnDifference / absoluteDifference;
@@ -33,7 +32,6 @@ public class Bishop extends Piece {
         for (int movement = 1; movement < absoluteDifference; movement++) {
             positions.add(position.move(rowSign * movement, columnSign * movement));
         }
-
         return positions;
     }
 

@@ -26,7 +26,7 @@ class PawnTest {
     @Test
     void startWhitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE, true)
-                .betweenPositions(Position.of(2, 1), Position.of(5, 1)))
+                .findBetweenPositions(Position.of(2, 1), Position.of(5, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -35,7 +35,7 @@ class PawnTest {
     @Test
     void startBlackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.BLACK, true)
-                .betweenPositions(Position.of(7, 1), Position.of(4, 1)))
+                .findBetweenPositions(Position.of(7, 1), Position.of(4, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -44,7 +44,7 @@ class PawnTest {
     @Test
     void whitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE, false)
-                .betweenPositions(Position.of(3, 1), Position.of(5, 1)))
+                .findBetweenPositions(Position.of(3, 1), Position.of(5, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -53,7 +53,7 @@ class PawnTest {
     @Test
     void blackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.BLACK, false)
-                .betweenPositions(Position.of(6, 1), Position.of(4, 1)))
+                .findBetweenPositions(Position.of(6, 1), Position.of(4, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -63,7 +63,7 @@ class PawnTest {
     @EnumSource
     void whitePawnMoveColumn(Team team) {
         assertThatThrownBy(() -> new Pawn(team, true)
-                .betweenPositions(Position.of(7, 1), Position.of(7, 2)))
+                .findBetweenPositions(Position.of(7, 1), Position.of(7, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -72,7 +72,7 @@ class PawnTest {
     @Test
     void betweenPosition() {
         assertThat(new Pawn(Team.WHITE, true)
-                .betweenPositions(Position.of(2, 3), Position.of(4, 3)))
+                .findBetweenPositions(Position.of(2, 3), Position.of(4, 3)))
                 .containsExactly(Position.of(3, 3));
     }
 
@@ -80,7 +80,7 @@ class PawnTest {
     @Test
     void betweenPositionHasMoved() {
         assertThat(new Pawn(Team.WHITE, false)
-                .betweenPositions(Position.of(3, 3), Position.of(4, 3)))
+                .findBetweenPositions(Position.of(3, 3), Position.of(4, 3)))
                 .isEmpty();
     }
 
@@ -88,7 +88,7 @@ class PawnTest {
     @Test
     void betweenPositionOneWhenHasNotMoved() {
         assertThat(new Pawn(Team.WHITE, true)
-                .betweenPositions(Position.of(2, 3), Position.of(3, 3)))
+                .findBetweenPositions(Position.of(2, 3), Position.of(3, 3)))
                 .isEmpty();
     }
 
@@ -96,7 +96,7 @@ class PawnTest {
     @Test
     void movableDiagonalWhenAttack() {
         assertThatCode(() -> new Pawn(Team.WHITE, true)
-                .betweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 3)))
+                .findBetweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 3)))
                 .doesNotThrowAnyException();
     }
 
@@ -104,7 +104,7 @@ class PawnTest {
     @Test
     void noneBetweenPositionWhenAttack() {
         assertThat(new Pawn(Team.WHITE, true)
-                .betweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 3)))
+                .findBetweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 3)))
                 .isEmpty();
     }
 
@@ -112,7 +112,7 @@ class PawnTest {
     @Test
     void cannotMoveStraightWhenAttack() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE, true)
-                .betweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 2)))
+                .findBetweenPositionsWhenAttack(Position.of(2, 2), Position.of(3, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

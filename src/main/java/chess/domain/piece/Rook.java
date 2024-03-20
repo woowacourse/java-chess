@@ -18,12 +18,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected boolean isRelativelyMovable(int rowDifference, int columnDifference) {
+    protected boolean isMovable(int rowDifference, int columnDifference) {
         return rowDifference == 0 || columnDifference == 0;
     }
 
     @Override
-    protected List<Position> betweenPositions(Position position, int rowDifference, int columnDifference) {
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
 
         if (columnDifference == 0) {

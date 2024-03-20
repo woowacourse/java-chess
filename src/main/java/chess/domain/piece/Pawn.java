@@ -18,7 +18,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isRelativelyMovable(int rowDifference, int columnDifference) {
+    protected boolean isMovable(int rowDifference, int columnDifference) {
         if (columnDifference != 0) {
             return false;
         }
@@ -34,7 +34,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<Position> betweenPositions(Position position, int rowDifference, int columnDifference) {
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
         if (hasNotMoved && Math.abs(rowDifference) == 2) {
             positions.add(position.move(rowDifference / 2, 0));
@@ -44,12 +44,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> betweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
+    public List<Position> findBetweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
         int rowDifference = oldPosition.calculateRowDifference(newPosition);
         int columnDifference = oldPosition.calculateColumnDifference(newPosition);
 
         validateAttackable(rowDifference, columnDifference);
-        return betweenPositions(oldPosition, rowDifference, columnDifference);
+        return findBetweenPositions(oldPosition, rowDifference, columnDifference);
     }
 
     private void validateAttackable(int rowDifference, int columnDifference) {
