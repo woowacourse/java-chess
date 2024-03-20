@@ -1,8 +1,10 @@
 package domain.piece;
 
 import domain.piece.info.Color;
-import domain.piece.info.Position;
+import domain.piece.info.Direction;
 import domain.piece.info.Type;
+import domain.strategy.MoveStrategy;
+import java.util.List;
 
 public abstract class Piece {
     private final Color color;
@@ -25,5 +27,15 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public abstract boolean isMovable();
+    public abstract MoveStrategy strategy();
+
+    public boolean isNotNone() {
+        return type != Type.NONE;
+    }
+
+    public boolean isPawn() {
+        return type == Type.PAWN;
+    }
+
+    public abstract List<Direction> movableDirections();
 }
