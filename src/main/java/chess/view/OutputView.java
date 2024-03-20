@@ -17,6 +17,7 @@ public class OutputView {
         char[][] board = setUpBoard();
         addPieceToBoard(pieces, board);
         printBoardStatus(board);
+        System.out.println();
     }
 
     private char[][] setUpBoard() {
