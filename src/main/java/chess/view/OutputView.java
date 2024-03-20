@@ -5,22 +5,10 @@ import chess.domain.piece.Piece;
 import chess.domain.position.ColumnPosition;
 import chess.domain.position.Position;
 import chess.domain.position.RowPosition;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OutputView {
-
-    private static List<String> outputOrder = List.of(
-            "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-            , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-            , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-            , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-            , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-            , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-            , "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"
-    );
-
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String POSITION_EMPTY_MESSAGE = ".";
 
