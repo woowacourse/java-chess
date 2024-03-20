@@ -34,8 +34,11 @@ public class OutputView {
             for (int j = 0; j < 8; j++) {
                 System.out.print(res[i][j]);
             }
+            System.out.print("   " + (8 - i));
             System.out.println();
         }
+
+        System.out.printf("%nabcdefgh%n");
     }
 
 
