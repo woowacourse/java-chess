@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMoveTo(Position target) {
+    public boolean canMoveTo(Position start, Position destination) {
         //TODO: 폰 움직임 전략 구현 필요
         return false;
     }

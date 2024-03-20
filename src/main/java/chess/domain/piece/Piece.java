@@ -9,7 +9,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean canMoveTo(Position target);
+    public abstract boolean canMoveTo(Position start, Position destination);
 
     public boolean isBlackTeam() {
         return team == Team.BLACK;
