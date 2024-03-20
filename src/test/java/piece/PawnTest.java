@@ -16,7 +16,7 @@ class PawnTest {
         Coordinate coordinate = new Coordinate(new Row(0), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(1));
 
-        Pawn pawn = new Pawn();
+        Pawn pawn = new Pawn(true);
 
         Assertions.assertThat(pawn.getPath(coordinate, nextCoordinate)).isEqualTo(List.of(-1, 0));
     }
@@ -27,7 +27,7 @@ class PawnTest {
         Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(4), new Column(1));
 
-        Pawn pawn = new Pawn();
+        Pawn pawn = new Pawn(true);
 
         Assertions.assertThatThrownBy(() -> pawn.getPath(coordinate, nextCoordinate))
                 .isInstanceOf(IllegalArgumentException.class)
