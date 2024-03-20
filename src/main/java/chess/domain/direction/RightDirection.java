@@ -2,7 +2,7 @@ package chess.domain.direction;
 
 import chess.domain.Position;
 
-public class RightDirection extends Direction {
+public class RightDirection extends StraightDirection {
 
     RightDirection(final int moveCount) {
         super(moveCount);
