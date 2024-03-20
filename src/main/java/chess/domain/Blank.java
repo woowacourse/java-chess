@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.Set;
 
 public class Blank extends Piece {
-    protected Blank(Position position) {
+    public Blank(Position position) {
         super(position, Color.NONE);
     }
 
