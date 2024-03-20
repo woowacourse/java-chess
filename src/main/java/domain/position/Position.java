@@ -12,6 +12,12 @@ public class Position {
         this.rank = rank;
     }
 
+    public boolean isDiagonal(Position target) {
+        int fileDistance = this.file.distance(target.file);
+        int rankDistance = this.rank.distance(target.rank);
+        return fileDistance == rankDistance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
