@@ -25,4 +25,9 @@ public class Bishop implements Piece {
     public boolean isSameColor(boolean isBlack) {
         return this.isBlack == isBlack;
     }
+
+    @Override
+    public boolean isBlack() {
+        return isBlack;
+    }
 }

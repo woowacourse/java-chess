@@ -8,4 +8,6 @@ public interface Piece {
     boolean isSameColor(boolean color);
 
     List<Integer> getDirection(Coordinate coordinate, Coordinate destination, boolean canAttack);
+
+    boolean isBlack();
 }

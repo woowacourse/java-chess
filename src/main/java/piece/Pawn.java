@@ -69,4 +69,9 @@ public class Pawn implements Piece {
         }
         return position == WHITE_PAWN_FIRST_POSITION;
     }
+
+    @Override
+    public boolean isBlack() {
+        return isBlack;
+    }
 }
