@@ -11,7 +11,7 @@ class BishopTest {
 
     @Test
     @DisplayName("(1, 1) -> (2 + ?, 2 + ?)")
-    void findMovablePositionsRight() {
+    void findMovablePositionsDiagonal() {
         Bishop bishop = new Bishop(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = bishop.findMovablePositions(new Position(4, 4));
         assertThat(movablePositions)
