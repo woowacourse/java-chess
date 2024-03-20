@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Path;
 
 public class Rook extends Piece {
-    protected Rook(Color color) {
+    public Rook(Color color) {
         super(color);
     }
 

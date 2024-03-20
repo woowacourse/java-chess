@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Path;
 
 public class Knight extends Piece {
-    protected Knight(Color color) {
+    public Knight(Color color) {
         super(color);
     }
 

@@ -6,7 +6,7 @@ public class King extends Piece {
 
     private static final int MAX_MOVE_DISTANCE = 1;
 
-    protected King(Color color) {
+    public King(Color color) {
         super(color);
     }
 

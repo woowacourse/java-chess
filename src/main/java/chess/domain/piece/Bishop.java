@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Path;
 
 public class Bishop extends Piece {
-    protected Bishop(Color color) {
+    public Bishop(Color color) {
         super(color);
     }
 

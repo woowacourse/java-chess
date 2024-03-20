@@ -2,11 +2,13 @@ package chess.domain.piece;
 
 import chess.domain.board.Path;
 
+//TODO 색깔 기본으로 넘기기
 public class BlackPawn extends Piece {
 
     private boolean moved = false;
 
-    protected BlackPawn(Color color) {
+    //
+    public BlackPawn(Color color) {
         super(color);
     }
 
