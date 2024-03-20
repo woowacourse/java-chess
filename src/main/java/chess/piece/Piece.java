@@ -1,12 +1,18 @@
 package chess.piece;
 
-public enum Piece {
+import java.util.List;
 
-    KING,
-    QUEEN,
-    ROOK,
-    BISHOP,
-    KNIGHT,
-    PAWN,
-    ;
+public abstract class Piece {
+
+    private final List<Direction> directions;
+    private final PieceAttributes pieceAttributes;
+
+    public Piece(List<Direction> directions, PieceAttributes pieceAttributes) {
+        this.directions = directions;
+        this.pieceAttributes = pieceAttributes;
+    }
+
+    public boolean hasAttributesOf(PieceAttributes pieceAttributes) {
+        return this.pieceAttributes.equals(pieceAttributes);
+    }
 }
