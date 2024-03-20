@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Path;
@@ -14,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class KingTest {
-    private static King KING = new King(Color.BLACK);
+    private static final King KING = new King(Color.BLACK);
 
     @DisplayName("한 칸의 빈 곳으로의 경로는 움직일 수 있다.")
     @ParameterizedTest
