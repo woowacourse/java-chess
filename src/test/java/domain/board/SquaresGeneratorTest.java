@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 class SquaresGeneratorTest {
 
     @Test
-    @DisplayName("64개의 칸을 가진 새로운 보드를 생성한다.")
-    void generate_Board() {
+    @DisplayName("64개의 칸을 생성한다.")
+    void generate_SquaresSize() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
 
         List<Square> squares = squaresGenerator.generate();
