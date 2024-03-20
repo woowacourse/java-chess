@@ -1,12 +1,13 @@
 package domain.pieceType;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.Color;
 import domain.File;
 import domain.Rank;
 import domain.Square;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -24,7 +25,7 @@ class QueenTest {
         final List<Square> path = queen.calculatePath(source, target);
 
         // then
-        Assertions.assertEquals(path, expected);
+        assertThat(path).isEqualTo(expected);
     }
 
     static Stream<Arguments> squareArguments() {
