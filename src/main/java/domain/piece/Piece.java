@@ -41,4 +41,12 @@ public class Piece {
     public PieceType getPieceType() {
         return pieceType;
     }
+
+    public boolean isEqualColor(final Piece target) {
+        return pieceType.isEqualColor(target.getColor());
+    }
+
+    private Color getColor() {
+        return pieceType.getColor();
+    }
 }

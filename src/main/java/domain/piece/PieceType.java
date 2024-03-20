@@ -32,4 +32,12 @@ public class PieceType {
     public int hashCode() {
         return Objects.hash(pieceRole, color);
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public boolean isEqualColor(final Color target) {
+        return this.color == target;
+    }
 }
