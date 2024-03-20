@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static chess.domain.ChessPiece.*;
 import static chess.domain.ChessPiece.BLACK_KNIGHT;
@@ -17,14 +14,14 @@ public class ChessBoard {
 
     public static ChessBoard initializeChessBoard() {
         Map<Column, List<ChessPiece>> board = new LinkedHashMap<>();
-        board.put(Column.valueOf("8"), List.of(BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK));
-        board.put(Column.valueOf("7"), List.of(BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN));
-        board.put(Column.valueOf("6"), List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE));
-        board.put(Column.valueOf("5"), List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE));
-        board.put(Column.valueOf("4"), List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE));
-        board.put(Column.valueOf("3"), List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE));
-        board.put(Column.valueOf("2"), List.of(WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN));
-        board.put(Column.valueOf("1"), List.of(WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK));
+        board.put(Column.valueOf("8"), new ArrayList<>(List.of(BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK)));
+        board.put(Column.valueOf("7"), new ArrayList<>(List.of(BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN)));
+        board.put(Column.valueOf("6"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
+        board.put(Column.valueOf("5"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
+        board.put(Column.valueOf("4"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
+        board.put(Column.valueOf("3"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
+        board.put(Column.valueOf("2"), new ArrayList<>(List.of(WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN)));
+        board.put(Column.valueOf("1"), new ArrayList<>(List.of(WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK)));
 
         return new ChessBoard(board);
     }
@@ -52,7 +49,7 @@ public class ChessBoard {
             if(!obstacle.isNone()) {
                 throw new IllegalArgumentException("이동할 수 없습니다.");
             }
-            movingPosition = direction.move(source);
+            movingPosition = direction.move(movingPosition);
         }
 
         //목적지에 방해물 있는지

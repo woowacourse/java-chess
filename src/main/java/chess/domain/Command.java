@@ -1,9 +1,11 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Command {
     START("start"),
+    MOVE("move"),
     END("end");
 
     private final String command;
@@ -12,7 +14,7 @@ public enum Command {
     }
 
     public static Command getStartCommand(String command) {
-        if(!START.command.equals(command)) {
+        if(!START.command.equals(command)){
             throw new IllegalArgumentException("첫 명령어는 start만 입력할 수 있습니다.");
         }
         return START;
@@ -20,6 +22,7 @@ public enum Command {
 
     //TODO : 리팩토링
     public static Command getProcessCommand(String command) {
+
         Command inputCommand = Arrays.stream(values())
                 .filter(value -> value.command.equals(command))
                 .findFirst()
@@ -32,6 +35,9 @@ public enum Command {
         return inputCommand;
     }
 
+    public boolean isMove(){
+        return this == MOVE;
+    }
     public boolean isEnd() {
         return this == END;
     }
