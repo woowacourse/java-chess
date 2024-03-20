@@ -6,8 +6,13 @@ import chess.domain.Position;
 import chess.domain.strategy.MoveStrategy;
 
 public abstract class ChessPiece implements Piece {
-    private PieceInfo pieceInfo;
-    private MoveStrategy moveStrategy;
+    private final PieceInfo pieceInfo;
+    private final MoveStrategy moveStrategy;
+
+    public ChessPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+        this.pieceInfo = pieceInfo;
+        this.moveStrategy = moveStrategy;
+    }
 
     @Override
     public boolean move(Position newPosition, Board board) {
