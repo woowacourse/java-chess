@@ -7,8 +7,10 @@ import chess.domain.square.Square;
 import java.util.Map;
 
 public class Pawn extends Piece {
-    public static final int MOVED_MAX_DIFF = 1;
-    public static final int NOT_MOVED_MAX_DIFF = 2;
+    public static final int ATTACKABLE_FILE_DISTANCE = 1;
+    public static final int MOVED_MAX_DISTANCE = 1;
+    public static final int NOT_MOVED_MAX_DISTANCE = 2;
+    public static final int ATTACKABLE_RANK_DISTANCE = 1;
     private boolean isMoved;
 
     private Pawn(Color color, boolean isMoved) {
@@ -21,18 +23,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isValidPath(Path path) {
+    protected boolean isValidMovePath(Path path) {
         if (color == Color.BLACK) {
-            return path.isDown(maxDiff());
+            return path.isDown(maxDistance());
         }
-        return path.isUp(maxDiff());
+        return path.isUp(maxDistance());
     }
 
-    private int maxDiff() {
+    private int maxDistance() {
         if (isMoved) {
-            return MOVED_MAX_DIFF;
+            return MOVED_MAX_DISTANCE;
         }
-        return NOT_MOVED_MAX_DIFF;
+        return NOT_MOVED_MAX_DISTANCE;
     }
 
     @Override
@@ -43,5 +45,13 @@ public class Pawn extends Piece {
     @Override
     protected void move() {
         isMoved = true;
+    }
+
+    @Override
+    protected boolean isValidAttackPath(Path path) {
+        if (color == Color.BLACK) {
+            return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
+        }
+        return path.subtractRank() == ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
     }
 }

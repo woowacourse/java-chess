@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RookTest {
     private static final Map<Position, Square> board = new HashMap<>();
 
+    // TODO: indent 2 -> 1로 줄이기
     @BeforeEach
     void setUp() {
         for (Rank rank : Rank.values()) {
@@ -53,7 +54,7 @@ public class RookTest {
                 .isFalse();
     }
 
-    @DisplayName("경로에 장애물이 있으면 움직일 수 없다.")
+    @DisplayName("경로에 장애물이 있으면 공격할 수 없다.")
     @Test
     void canNotMoveWithObstacleTest() {
         // given
@@ -67,6 +68,49 @@ public class RookTest {
 
         // when
         assertThat(piece.canMove(path, board))
+                .isFalse();
+    }
+
+    @DisplayName("룩은 직선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
+    @Test
+    void canAttackTest() {
+        // given
+        Piece piece = Rook.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("룩은 직선 경로가 아니면 공격할 수 없다.")
+    @Test
+    void canNotAttackInvalidPathTest() {
+        // given
+        Piece piece = Rook.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
+
+    @DisplayName("경로에 장애물이 있으면 공격할 수 없다.")
+    @Test
+    void canNotAttackWithObstacleTest() {
+        // given
+        Piece piece = Rook.from(Color.WHITE);
+        Piece obstacle = Rook.from(Color.BLACK);
+
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.FIRST, File.B), obstacle);
+
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
                 .isFalse();
     }
 }

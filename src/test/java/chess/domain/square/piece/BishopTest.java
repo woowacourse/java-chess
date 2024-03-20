@@ -69,4 +69,47 @@ class BishopTest {
         assertThat(piece.canMove(path, board))
                 .isFalse();
     }
+
+    @DisplayName("비숍은 대각선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
+    @Test
+    void canAttackTest() {
+        // given
+        Piece piece = Bishop.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("비숍은 대각선 경로가 아니면 공격할 수 없다.")
+    @Test
+    void canNotAttackInvalidPathTest() {
+        // given
+        Piece piece = Bishop.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
+
+    @DisplayName("경로에 장애물이 있으면 공격할 수 없다.")
+    @Test
+    void canNotAttackWithObstacleTest() {
+        // given
+        Piece piece = Bishop.from(Color.WHITE);
+        Piece obstacle = Bishop.from(Color.BLACK);
+
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.SECOND, File.B), obstacle);
+
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
 }

@@ -21,7 +21,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isValidPath(Path path) {
+    protected boolean isValidMovePath(Path path) {
         return path.isStraight() || path.isDiagonal();
     }
 
@@ -37,5 +37,10 @@ public class Queen extends Piece {
 
     @Override
     protected void move() {
+    }
+
+    @Override
+    protected boolean isValidAttackPath(Path path) {
+        return isValidMovePath(path);
     }
 }

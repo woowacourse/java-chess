@@ -65,4 +65,43 @@ class KingTest {
         assertThat(piece.canMove(path, board))
                 .isFalse();
     }
+
+    @DisplayName("킹은 한 칸 짜리 직선 경로이면 공격할 수 있다.")
+    @Test
+    void canStraightAttackTest() {
+        // given
+        Piece piece = King.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("킹은 한 칸 짜리 대각선 경로이면 공격할 수 있다.")
+    @Test
+    void canDiagonalAttackTest() {
+        // given
+        Piece piece = King.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("킹은 한 칸 짜리 경로가 아니면 공격할 수 없다.")
+    @Test
+    void canNotAttackTest() {
+        // given
+        Piece piece = King.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
 }

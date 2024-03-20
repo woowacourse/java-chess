@@ -25,8 +25,12 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("랭크는 1에서 8 사이의 숫자이어야 합니다."));
     }
 
-    public int calculateDiff(Rank rank) {
-        return Math.abs(rank.value - value);
+    public int calculateDistance(Rank rank) {
+        return Math.abs(subtract(rank));
+    }
+
+    public int subtract(Rank rank) {
+        return value - rank.value;
     }
 
     public int getValue() {

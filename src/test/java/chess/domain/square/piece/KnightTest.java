@@ -65,4 +65,43 @@ public class KnightTest {
         assertThat(piece.canMove(path, board))
                 .isFalse();
     }
+
+    @DisplayName("나이트는 파일 두칸, 랭크 한칸만큼 떨어진 칸을 공격할 수 있다.")
+    @Test
+    void canTwoFileOneRankAttackTest() {
+        // given
+        Piece piece = Knight.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("나이트는 파일 한칸, 랭크 두칸만큼 떨어진 칸을 공격할 수 있다.")
+    @Test
+    void canOneFileTwoRankAttackTest() {
+        // given
+        Piece piece = Knight.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("나이트는 정해진 규칙이 아닌 칸으로 공격할 수 없다.")
+    @Test
+    void canNotAttackTest() {
+        // given
+        Piece piece = Knight.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
 }

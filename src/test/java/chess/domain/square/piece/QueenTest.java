@@ -99,4 +99,77 @@ public class QueenTest {
         assertThat(piece.canMove(path, board))
                 .isFalse();
     }
+
+    @DisplayName("퀸은 직선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
+    @Test
+    void canStraightAttackTest() {
+        // given
+        Piece piece = Queen.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("퀸은 대각선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
+    @Test
+    void canDiagonalAttackTest() {
+        // given
+        Piece piece = Queen.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("퀸은 대각선 또는 직선 경로가 아니면 공격할 수 없다.")
+    @Test
+    void canNotAttackInvalidPathTest() {
+        // given
+        Piece piece = Queen.from(Color.WHITE);
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
+
+    @DisplayName("직선 경로에 장애물이 있으면 공격할 수 없다.")
+    @Test
+    void canNotAttackStraightWithObstacleTest() {
+        // given
+        Piece piece = Queen.from(Color.WHITE);
+        Piece obstacle = Queen.from(Color.BLACK);
+
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.FIRST, File.B), obstacle);
+
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
+
+    @DisplayName("대각선 경로에 장애물이 있으면 공격할 수 없다.")
+    @Test
+    void canNotAttackDiagonalWithObstacleTest() {
+        // given
+        Piece piece = Queen.from(Color.WHITE);
+        Piece obstacle = Queen.from(Color.BLACK);
+
+        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.SECOND, File.B), obstacle);
+
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+
+        // when
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
 }

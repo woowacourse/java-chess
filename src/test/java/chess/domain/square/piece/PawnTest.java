@@ -30,6 +30,7 @@ class PawnTest {
         }
     }
 
+    // TODO: @Nested 로 분리하기
     @DisplayName("한 번도 이동하지 않은 블랙 폰은 밑으로 두 칸 움직일 수 있다.")
     @Test
     void blackCanMoveTwoStraightTest() {
@@ -151,6 +152,106 @@ class PawnTest {
                 new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.A)),
                 new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.C)),
                 new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A))
+        );
+    }
+
+    @DisplayName("블랙 폰은 왼쪽 대각선 한 칸 밑을 공격할 수 있다.")
+    @Test
+    void blackCanLeftDownAttackTest() {
+        // given
+        Piece piece = Pawn.from(Color.BLACK);
+        board.put(new Position(Rank.EIGHTH, File.B), piece);
+        Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.A));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("블랙 폰은 오른쪽 대각선 한 칸 밑을 공격할 수 있다.")
+    @Test
+    void blackCanRightDownAttackTest() {
+        // given
+        Piece piece = Pawn.from(Color.BLACK);
+        board.put(new Position(Rank.EIGHTH, File.B), piece);
+        Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.C));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("블랙 폰은 왼쪽 또는 오른쪽 대각선 한 칸 밑을 제외하고 공격할 수 없다.")
+    @ParameterizedTest
+    @MethodSource("provideUnValidAttackPathForBlack")
+    void blackCanNotAttackTest(Path path) {
+        // given
+        Piece piece = Pawn.from(Color.BLACK);
+        board.put(new Position(Rank.SEVENTH, File.B), piece);
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
+
+    static Stream<Path> provideUnValidAttackPathForBlack() {
+        return Stream.of(
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.B)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C))
+        );
+    }
+
+    @DisplayName("화이트 폰은 왼쪽 대각선 한 칸 위를 공격할 수 있다.")
+    @Test
+    void whiteCanLeftDownAttackTest() {
+        // given
+        Piece piece = Pawn.from(Color.WHITE);
+        board.put(new Position(Rank.SEVENTH, File.B), piece);
+        Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("화이트 폰은 오른쪽 대각선 한 칸 위를 공격할 수 있다.")
+    @Test
+    void whiteCanRightDownAttackTest() {
+        // given
+        Piece piece = Pawn.from(Color.WHITE);
+        board.put(new Position(Rank.SEVENTH, File.B), piece);
+        Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isTrue();
+    }
+
+    @DisplayName("화이트 폰은 왼쪽 또는 오른쪽 대각선 한 칸 밑을 제외하고 공격할 수 없다.")
+    @ParameterizedTest
+    @MethodSource("provideUnValidAttackPathForWhite")
+    void whiteCanNotAttackTest(Path path) {
+        // given
+        Piece piece = Pawn.from(Color.WHITE);
+        board.put(new Position(Rank.SEVENTH, File.B), piece);
+
+        // when & then
+        assertThat(piece.canAttack(path, board))
+                .isFalse();
+    }
+
+    static Stream<Path> provideUnValidAttackPathForWhite() {
+        return Stream.of(
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.C)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.B)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C))
         );
     }
 }

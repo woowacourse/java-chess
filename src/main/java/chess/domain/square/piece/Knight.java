@@ -22,9 +22,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected boolean isValidPath(Path path) {
-        return (path.calculateRankDiff() == MIN_MOVABLE_DIFF && path.calculateFileDiff() == MAX_MOVABLE_DIFF) ||
-                (path.calculateRankDiff() == MAX_MOVABLE_DIFF && path.calculateFileDiff() == MIN_MOVABLE_DIFF);
+    protected boolean isValidMovePath(Path path) {
+        return (path.calculateRankDistance() == MIN_MOVABLE_DIFF && path.calculateFileDistance() == MAX_MOVABLE_DIFF) ||
+                (path.calculateRankDistance() == MAX_MOVABLE_DIFF && path.calculateFileDistance() == MIN_MOVABLE_DIFF);
     }
 
     @Override
@@ -34,5 +34,10 @@ public class Knight extends Piece {
 
     @Override
     protected void move() {
+    }
+
+    @Override
+    protected boolean isValidAttackPath(Path path) {
+        return isValidMovePath(path);
     }
 }

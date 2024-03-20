@@ -21,7 +21,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean isValidPath(Path path) {
+    protected boolean isValidMovePath(Path path) {
         return path.isStraight(MOVABLE_MAX_DIFF) || path.isDiagonal(MOVABLE_MAX_DIFF);
     }
 
@@ -32,5 +32,10 @@ public class King extends Piece {
 
     @Override
     protected void move() {
+    }
+
+    @Override
+    protected boolean isValidAttackPath(Path path) {
+        return isValidMovePath(path);
     }
 }

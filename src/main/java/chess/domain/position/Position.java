@@ -11,12 +11,20 @@ public class Position {
         this.file = file;
     }
 
-    public int calculateRankDiff(Position position) {
-        return rank.calculateDiff(position.rank);
+    public int calculateRankDistance(Position position) {
+        return rank.calculateDistance(position.rank);
     }
 
-    public int calculateFileDiff(Position position) {
-        return file.calculateDiff(position.file);
+    public int subtractRank(Position position) {
+        return rank.subtract(position.rank);
+    }
+
+    public int calculateFileDistance(Position position) {
+        return file.calculateDistance(position.file);
+    }
+
+    public int subtractFile(Position position) {
+        return file.subtract(position.file);
     }
 
     @Override

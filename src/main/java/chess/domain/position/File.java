@@ -25,8 +25,12 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("파일은 1에서 8 사이의 숫자이어야 합니다."));
     }
 
-    public int calculateDiff(File file) {
-        return Math.abs(file.value - value);
+    public int calculateDistance(File file) {
+        return Math.abs(subtract(file));
+    }
+
+    public int subtract(File file) {
+        return value - file.value;
     }
 
     public int getValue() {

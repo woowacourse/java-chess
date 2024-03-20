@@ -13,36 +13,44 @@ public class Path {
         this.end = end;
     }
 
-    public int calculateRankDiff() {
-        return start.calculateRankDiff(end);
+    public int calculateRankDistance() {
+        return start.calculateRankDistance(end);
     }
 
-    public int calculateFileDiff() {
-        return start.calculateFileDiff(end);
+    public int calculateFileDistance() {
+        return start.calculateFileDistance(end);
     }
 
     public boolean isStraight() {
         return isStraightRank() || isStraightFile();
     }
 
-    public boolean isStraight(int maxDiff) {
-        return isStraight() && Math.max(calculateFileDiff(), calculateRankDiff()) <= maxDiff;
+    public boolean isStraight(int maxDistance) {
+        return isStraight() && Math.max(calculateFileDistance(), calculateRankDistance()) <= maxDistance;
     }
 
     private boolean isStraightRank() {
-        return calculateRankDiff() > 0 && calculateFileDiff() == 0;
+        return calculateRankDistance() > 0 && calculateFileDistance() == 0;
     }
 
     private boolean isStraightFile() {
-        return calculateRankDiff() == 0 && calculateFileDiff() > 0;
+        return calculateRankDistance() == 0 && calculateFileDistance() > 0;
     }
 
     public boolean isDiagonal() {
-        return calculateRankDiff() == calculateFileDiff();
+        return calculateRankDistance() == calculateFileDistance();
     }
 
-    public boolean isDiagonal(int maxDiff) {
-        return isDiagonal() && calculateRankDiff() <= maxDiff;
+    public boolean isDiagonal(int maxDistance) {
+        return isDiagonal() && calculateRankDistance() <= maxDistance;
+    }
+
+    public int subtractRank() {
+        return end.subtractRank(start);
+    }
+
+    public int subtractFile() {
+        return end.subtractFile(start);
     }
 
     public boolean isDown(int maxDiff) {
@@ -100,10 +108,10 @@ public class Path {
     private List<Position> findUphill() {
         int minRankValue = Math.min(start.getRankValue(), end.getRankValue()) + 1;
         int minFileValue = Math.min(start.getFileValue(), end.getFileValue()) + 1;
-        int valueDiff = Math.max(start.getFileValue(), end.getFileValue()) - minFileValue;
+        int distance = calculateFileDistance() - 1;
 
         List<Position> positions = new ArrayList<>();
-        for (int i = 0; i < valueDiff; i++) {
+        for (int i = 0; i < distance; i++) {
             positions.add(new Position(Rank.from(minRankValue + i), File.from(minFileValue + i)));
         }
         return positions;
@@ -112,10 +120,10 @@ public class Path {
     private List<Position> findDownhill() {
         int maxRankValue = Math.max(start.getRankValue(), end.getRankValue()) + 1;
         int minFileValue = Math.min(start.getFileValue(), end.getFileValue()) + 1;
-        int valueDiff = Math.max(start.getFileValue(), end.getFileValue()) - minFileValue;
+        int distance = calculateFileDistance() - 1;
 
         List<Position> positions = new ArrayList<>();
-        for (int i = 0; i < valueDiff; i++) {
+        for (int i = 0; i < distance; i++) {
             positions.add(new Position(Rank.from(maxRankValue - i), File.from(minFileValue + i)));
         }
         return positions;

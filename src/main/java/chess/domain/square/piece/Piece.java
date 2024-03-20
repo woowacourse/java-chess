@@ -15,15 +15,22 @@ public abstract class Piece implements Square {
 
     @Override
     public final boolean canMove(Path path, Map<Position, Square> board) {
-        return isValidPath(path) && isNotObstructed(path, board);
+        return isValidMovePath(path) && isNotObstructed(path, board);
     }
 
-    protected abstract boolean isValidPath(Path path);
+    protected abstract boolean isValidMovePath(Path path);
 
     protected abstract boolean isNotObstructed(Path path, Map<Position, Square> board);
 
     // TODO: Pawn이 움직인 적이 있는지 확인하는 로직 개선
     protected abstract void move();
+
+    @Override
+    public boolean canAttack(Path path, Map<Position, Square> board) {
+        return isValidAttackPath(path) && isNotObstructed(path, board);
+    }
+
+    protected abstract boolean isValidAttackPath(Path path);
 
     public Color getColor() {
         return color;
