@@ -9,9 +9,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.position.Column;
+import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -26,8 +26,8 @@ class BoardFactoryTest {
             "SEVEN, A", "SEVEN, B", "SEVEN, C", "SEVEN, D", "SEVEN, E", "SEVEN, F", "SEVEN, G", "SEVEN, H"
     })
     @DisplayName("폰이 초기 위치에 있다.")
-    void pawnTest(Row row, Column column) {
-        Piece piece = BOARD.find(new Position(row, column)).get();
+    void pawnTest(Rank rank, File file) {
+        Piece piece = BOARD.find(new Position(file, rank)).get();
 
         assertThat(piece).isInstanceOf(Pawn.class);
     }
@@ -37,8 +37,8 @@ class BoardFactoryTest {
             "ONE, B", "ONE, G", "EIGHT, B", "EIGHT, G"
     })
     @DisplayName("나이트가 초기 위치에 있다.")
-    void knightTest(Row row, Column column) {
-        Piece piece = BOARD.find(new Position(row, column)).get();
+    void knightTest(Rank rank, File file) {
+        Piece piece = BOARD.find(new Position(file, rank)).get();
 
         assertThat(piece).isInstanceOf(Knight.class);
     }
@@ -48,8 +48,8 @@ class BoardFactoryTest {
             "ONE, C", "ONE, F", "EIGHT, C", "EIGHT, F"
     })
     @DisplayName("비숍이 초기 위치에 있다.")
-    void BishopTest(Row row, Column column) {
-        Piece piece = BOARD.find(new Position(row, column)).get();
+    void BishopTest(Rank rank, File file) {
+        Piece piece = BOARD.find(new Position(file, rank)).get();
 
         assertThat(piece).isInstanceOf(Bishop.class);
     }
@@ -59,8 +59,8 @@ class BoardFactoryTest {
             "ONE, A", "ONE, H", "EIGHT, A", "EIGHT, H"
     })
     @DisplayName("륙이 초기 위치에 있다.")
-    void rookTest(Row row, Column column) {
-        Piece piece = BOARD.find(new Position(row, column)).get();
+    void rookTest(Rank rank, File file) {
+        Piece piece = BOARD.find(new Position(file, rank)).get();
 
         assertThat(piece).isInstanceOf(Rook.class);
     }
@@ -70,8 +70,8 @@ class BoardFactoryTest {
             "ONE, D", "EIGHT, D"
     })
     @DisplayName("퀸이 초기 위치에 있다.")
-    void queenTest(Row row, Column column) {
-        Piece piece = BOARD.find(new Position(row, column)).get();
+    void queenTest(Rank rank, File file) {
+        Piece piece = BOARD.find(new Position(file, rank)).get();
 
         assertThat(piece).isInstanceOf(Queen.class);
     }
@@ -81,8 +81,8 @@ class BoardFactoryTest {
             "ONE, E", "EIGHT, E"
     })
     @DisplayName("킹이 초기 위치에 있다.")
-    void kingTest(Row row, Column column) {
-        Piece piece = BOARD.find(new Position(row, column)).get();
+    void kingTest(Rank rank, File file) {
+        Piece piece = BOARD.find(new Position(file, rank)).get();
 
         assertThat(piece).isInstanceOf(King.class);
     }

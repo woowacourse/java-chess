@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.position.Column;
+import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.position.Rank;
 import chess.dto.PieceDto;
 import chess.dto.PieceType;
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final List<Row> ROW_ORDER = List.of(
-            Row.EIGHT, Row.SEVEN, Row.SIX, Row.FIVE, Row.FOUR, Row.THREE, Row.TWO, Row.ONE
+    private static final List<Rank> RANK_ORDER = List.of(
+            Rank.EIGHT, Rank.SEVEN, Rank.SIX, Rank.FIVE, Rank.FOUR, Rank.THREE, Rank.TWO, Rank.ONE
     );
-    private static final List<Column> COLUMN_ORDER = List.of(
-            Column.A, Column.B, Column.C, Column.D, Column.E, Column.F, Column.G, Column.H
+    private static final List<File> FILE_ORDER = List.of(
+            File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H
     );
     private static final Map<PieceType, String> PIECE_DISPLAY = Map.of(
             PieceType.KING, "K", PieceType.QUEEN, "Q", PieceType.KNIGHT, "N",
@@ -31,15 +31,15 @@ public class OutputView {
     }
 
     public void printBoard(Map<Position, PieceDto> board) {
-        for (Row row : ROW_ORDER) {
-            printBoardOneLine(board, row);
+        for (Rank rank : RANK_ORDER) {
+            printBoardOneLine(board, rank);
         }
         System.out.println();
     }
 
-    private void printBoardOneLine(Map<Position, PieceDto> board, Row row) {
-        for (Column column : COLUMN_ORDER) {
-            PieceDto piece = board.get(new Position(row, column));
+    private void printBoardOneLine(Map<Position, PieceDto> board, Rank rank) {
+        for (File file : FILE_ORDER) {
+            PieceDto piece = board.get(new Position(file, rank));
             printPiece(piece);
         }
         System.out.println();

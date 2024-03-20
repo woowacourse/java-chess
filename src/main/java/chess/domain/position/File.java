@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Arrays;
 
-public enum Column {
+public enum File {
 
     A(1),
     B(2),
@@ -15,26 +15,26 @@ public enum Column {
 
     private final int westToEast;
 
-    Column(int westToEast) {
+    File(int westToEast) {
         this.westToEast = westToEast;
     }
 
-    public Column toEast() {
+    public File toEast() {
         if (westToEast >= 8) {
             throw new IllegalStateException("동쪽으로 이동할 수 없습니다.");
         }
         return find(westToEast + 1);
     }
 
-    public Column toWest() {
+    public File toWest() {
         if (westToEast <= 1) {
             throw new IllegalStateException("서쪽으로 이동할 수 없습니다.");
         }
         return find(westToEast - 1);
     }
 
-    private Column find(int westToEast) {
-        return Arrays.stream(Column.values())
+    private File find(int westToEast) {
+        return Arrays.stream(File.values())
                 .filter(column -> column.westToEast == westToEast)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치가 없습니다."));

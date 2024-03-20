@@ -6,33 +6,34 @@ import java.util.Objects;
 
 public class Position {
 
-    public static final List<Position> ALL_POSITIONS = Arrays.stream(Row.values())
-            .flatMap(row -> Arrays.stream(Column.values())
-                    .map(column -> new Position(row, column)))
+    public static final List<Position> ALL_POSITIONS = Arrays.stream(Rank.values())
+            .flatMap(row -> Arrays.stream(File.values())
+                    .map(column -> new Position(column, row)))
             .toList();
 
-    private final Row row;
-    private final Column column;
+    private final File file;
+    private final Rank rank;
 
-    public Position(Row row, Column column) {
-        this.row = Objects.requireNonNull(row);
-        this.column = Objects.requireNonNull(column);
+    public Position(File file, Rank rank) {
+        this.file = Objects.requireNonNull(file);
+        this.rank = Objects.requireNonNull(rank);
     }
 
+
     public Position moveToEast() {
-        return new Position(this.row, this.column.toEast());
+        return new Position(file.toEast(), rank);
     }
 
     public Position moveToWest() {
-        return new Position(this.row, this.column.toWest());
+        return new Position(file.toWest(), rank);
     }
 
     public Position moveToNorth() {
-        return new Position(this.row.toNorth(), this.column);
+        return new Position(file, rank.toNorth());
     }
 
     public Position moveToSouth() {
-        return new Position(this.row.toSouth(), this.column);
+        return new Position(file, rank.toSouth());
     }
 
     @Override
@@ -44,11 +45,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return row == position.row && column == position.column;
+        return rank == position.rank && file == position.file;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(rank, file);
     }
 }
