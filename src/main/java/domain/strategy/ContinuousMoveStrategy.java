@@ -17,7 +17,7 @@ public class ContinuousMoveStrategy implements MoveStrategy {
     }
 
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Set<Position> otherPiecesPosition) {
+    public boolean isMovable(final Position source, final Position destination, final Set<Position> piecePositions) {
         UnitVector optimalVector = findOptimalVector(source, destination);
 
         if (!acceptableVectors.contains(optimalVector)) {
@@ -25,11 +25,18 @@ public class ContinuousMoveStrategy implements MoveStrategy {
         }
 
         List<Position> movePaths = Stream.iterate(source, position -> position.add(optimalVector))
-                .takeWhile(position -> !position.equals(destination) && !otherPiecesPosition.contains(position))
+                .takeWhile(position -> isAlive(position, destination, piecePositions))
                 .limit(moveBound)
                 .toList();
 
         return isReachable(destination, optimalVector, movePaths);
+    }
+
+    // TODO: 메서드 이름 짓기
+    private static boolean isAlive(final Position current, final Position destination, final Set<Position> piecePositions) {
+        boolean isReachedDestination = current.equals(destination);
+        boolean isOtherPieceExist = piecePositions.contains(current);
+        return !isReachedDestination && !isOtherPieceExist;
     }
 
     private boolean isReachable(final Position destination, final UnitVector optimalVector, final List<Position> movePaths) {
