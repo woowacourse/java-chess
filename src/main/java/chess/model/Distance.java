@@ -34,7 +34,7 @@ public class Distance {
         if (isCrossMovement() || isDiagonalMovement()) {
             return Math.abs(fileDifference) == displacement || Math.abs(rankDifference) == displacement;
         }
-        return false;
+        return Math.abs(fileDifference) + Math.abs(rankDifference) == displacement;
     }
 
     private boolean isNotMoved() {
