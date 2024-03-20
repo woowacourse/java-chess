@@ -20,9 +20,31 @@ public class ChessGame {
         outputView.printGameIntro();
         Command command = inputView.askCommand();
         if (command == Command.START) {
-            Board board = new InitialBoardGenerator().create();
-            BoardDTO boardDTO = new BoardDTO(board);
-            outputView.printBoard(boardDTO);
+            start();
+        }
+    }
+
+    private void start() {
+        Board board = new InitialBoardGenerator().create();
+        GameStatus gameStatus = new GameStatus();
+        while (gameStatus.isRunning()) {
+            play(board);
+            control(gameStatus);
+        }
+    }
+
+    private void play(Board board) {
+        BoardDTO boardDTO = new BoardDTO(board);
+        outputView.printBoard(boardDTO);
+    }
+
+    private void control(GameStatus gameStatus) {
+        Command command = inputView.askCommand();
+        if (command == Command.START) {
+            throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
+        }
+        if (command == Command.END) {
+            gameStatus.stop();
         }
     }
 }
