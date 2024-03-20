@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class DirectionTest {
 
@@ -87,5 +89,16 @@ class DirectionTest {
         // when, then
         assertThat(Direction.calculateBetween(source, destination))
                 .isEqualTo(Direction.NEGATIVE_FILE_SAME_RANK);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"b,3", "f,3", "b,5", "f,5"})
+    @DisplayName("나이트 이동 방향을 올바르게 판단한다.")
+    void determineKnightDirectionTest(String fileName, int rankNumber) {
+        // given
+        Position destination = Position.of(fileName, rankNumber);
+        // when, then
+        assertThat(Direction.calculateBetween(source, destination))
+                .isEqualTo(Direction.KNIGHT);
     }
 }
