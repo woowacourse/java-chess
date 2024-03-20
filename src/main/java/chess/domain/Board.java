@@ -9,4 +9,8 @@ public class Board {
     public Board(Map<Position, Piece> values) {
         this.values = values;
     }
+
+    public Map<Position, Piece> get() {
+        return values;
+    }
 }

@@ -13,7 +13,7 @@ class BoardFactoryTest {
     @Test
     @DisplayName("보드를 생성한다.")
     void createBoard() {
-        Map<Position, Piece> actual = BoardFactory.createBoard();
+        Board actual = BoardFactory.createBoard();
 
         Map<Position, Piece> expected = new HashMap<>();
         expected.put(new Position(new Rank(8), File.a), new Piece(PieceName.ROOK, PieceColor.BLACK));
@@ -52,7 +52,7 @@ class BoardFactoryTest {
         expected.put(new Position(new Rank(2), File.g), new Piece(PieceName.PAWN, PieceColor.WHITE));
         expected.put(new Position(new Rank(2), File.h), new Piece(PieceName.PAWN, PieceColor.WHITE));
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(new Board(expected));
     }
 
 }

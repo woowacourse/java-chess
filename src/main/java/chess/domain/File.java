@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum File {
 
-    a(0),
-    b(1),
-    c(2),
-    d(3),
-    e(4),
-    f(5),
-    g(6),
-    h(7);
+    a(1),
+    b(2),
+    c(3),
+    d(4),
+    e(5),
+    f(6),
+    g(7),
+    h(8);
 
 
     static final String ERROR_NOT_EXIST_FILE = "존재하지 않는 파일입니다.";
@@ -33,7 +33,7 @@ public enum File {
         }
     }
 
-    public int getFile() {
+    public int get() {
         return file;
     }
 }

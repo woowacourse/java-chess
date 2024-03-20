@@ -12,7 +12,10 @@ public class BoardFactory {
     public static final List<PieceName> PIECE_NAMES = List.of(PieceName.ROOK, PieceName.KNIGHT, PieceName.BISHOP,
             PieceName.QUEEN, PieceName.KING, PieceName.BISHOP, PieceName.KNIGHT, PieceName.ROOK);
 
-    public static Map<Position, Piece> createBoard() {
+    private BoardFactory() {
+    }
+
+    public static Board createBoard() {
         Map<Position, Piece> board = new HashMap<>();
 
         board.putAll(createPiecesWithoutPawn(new Rank(8), PieceColor.BLACK));
@@ -20,7 +23,7 @@ public class BoardFactory {
         board.putAll(createPawns(new Rank(2), PieceColor.WHITE));
         board.putAll(createPiecesWithoutPawn(new Rank(1), PieceColor.WHITE));
 
-        return board;
+        return new Board(board);
     }
 
     // TODO: 필드 및 메서드명 재고
