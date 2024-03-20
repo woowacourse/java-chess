@@ -16,10 +16,13 @@ public class OutputView {
 
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
+    private static final String MOVE_COMMAND = "move";
 
     public void printStartMessage() {
-        System.out.println("체스 게임을 시작합니다.");
-        System.out.printf("게임 시작은 %s, 종료는 %s 명령을 입력하세요.%n", START_COMMAND, END_COMMAND);
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.printf("> 게임 시작 : %s%n", START_COMMAND);
+        System.out.printf("> 게임 종료 : %s%n", END_COMMAND);
+        System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n", MOVE_COMMAND, MOVE_COMMAND);
     }
 
     public void printBoard(Map<Position, Piece> board) {
