@@ -65,14 +65,14 @@ public class ChessBoard {
     }
 
     public void move(final Position currentPosition, final Position nextPosition) {
-        Piece currentPiece = findBy(currentPosition);
+        final Piece currentPiece = findBy(currentPosition);
+
         if (!currentPiece.canMoveTo(nextPosition)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
         }
         if (existInWay(currentPiece, nextPosition)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
         }
-
     }
 
     private boolean exist(final Position other) {
@@ -84,7 +84,8 @@ public class ChessBoard {
         if (exist(nextPosition)) {
            return true;
         }
-        // 경로 중간에 있는 경우
-        return false;
+
+        final Set<Position> route = currentPiece.getRoute(nextPosition);
+        return pieces.stream().anyMatch(piece -> route.contains(piece.getPosition()));
     }
 }

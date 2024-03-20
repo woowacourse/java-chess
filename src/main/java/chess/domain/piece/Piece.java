@@ -15,6 +15,10 @@ public abstract class Piece {
 
     public abstract boolean canMoveTo(final Position target);
 
+    public Position getPosition() {
+        return position;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

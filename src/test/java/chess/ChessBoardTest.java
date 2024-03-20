@@ -67,11 +67,11 @@ class ChessBoardTest {
     @Test
     void existInWay() {
         // given
-        final Position currentPositioin = new Position('a', 1);
-        final Position nextPosition = new Position('a', 2);
+        final Position currentPosition = new Position('a', 1);
+        final Position nextPosition = new Position('a', 4);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move(currentPositioin, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
     }
