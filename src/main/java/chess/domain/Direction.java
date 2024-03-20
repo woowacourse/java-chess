@@ -55,6 +55,10 @@ public enum Direction {
         return Set.of(Direction.UP_UP, Direction.UP, Direction.LEFT_UP, Direction.RIGHT_UP);
     }
 
+    public static Set<Direction> getBlackFirstPawnDirection() {
+        return Set.of(Direction.DOWN_DOWN, Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
+    }
+
     public static Direction findDirection(int dx, int dy) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.dx == dx && direction.dy == dy)
