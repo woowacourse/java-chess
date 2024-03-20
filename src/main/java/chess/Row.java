@@ -6,20 +6,20 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toMap;
 
 public class Row {
-    private final String value;
-    private static final Map<String, Row> CACHE = IntStream.rangeClosed('a', 'h')
+    private final int value;
+    private static final Map<Integer, Row> CACHE = IntStream.rangeClosed(0, 7)
             .boxed()
             .collect(toMap(
-                    i -> String.valueOf((char) i.intValue()),
-                    i -> new Row(String.valueOf((char) i.intValue()))
+                    i -> i,
+                    i -> new Row(i)
             ));
 
-    private Row(String value) {
+    private Row(int value) {
         this.value = value;
     }
     public static Row valueOf(String value) {
         validate(value);
-        return CACHE.get(value);
+        return CACHE.get(value.charAt(0) - 'a');
     }
     private static void validate(String value){
         validateAlphabet(value);
@@ -38,5 +38,13 @@ public class Row {
         if(value.length()!=1){
             throw new IllegalArgumentException("a~h까지 가능합니다.");
         }
+    }
+
+    public boolean isBigger(Row srcRow) {
+        return this.value > srcRow.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class Column {
     private final int value;
-    private static final Map<Integer, Column> CACHE = IntStream.rangeClosed(1, 8)
+    private static final Map<Integer, Column> CACHE = IntStream.rangeClosed(0, 7)
             .boxed()
             .collect(toMap(Function.identity(), Column::new));
 
@@ -18,7 +18,7 @@ public class Column {
 
     public static Column valueOf(String value) {
         validate(value);
-        return CACHE.get(Integer.parseInt(value));
+        return CACHE.get(Integer.parseInt(value) - 1);
     }
 
     private static void validate(String value) {
@@ -34,5 +34,9 @@ public class Column {
         if(value < 1 || value > 8) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
+    }
+
+    public boolean isBigger(Column srcColumn) {
+        return this.value > srcColumn.value;
     }
 }
