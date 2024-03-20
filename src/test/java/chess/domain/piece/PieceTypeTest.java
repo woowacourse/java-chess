@@ -95,4 +95,68 @@ class PieceTypeTest {
             assertThat(actual).isTrue();
         }
     }
+
+    @DisplayName("비숍")
+    @Nested
+    class Bishop {
+
+        @BeforeEach
+        void setUp() {
+            type = PieceType.BISHOP;
+            source = Square.of(File.c, Rank.EIGHT);
+        }
+
+        @DisplayName("비숍은 대각선 방향으로 움직일 수 있다.")
+        @Test
+        void knightWhiteCanMove() {
+            // given
+            Square destination = Square.of(File.f, Rank.FIVE);
+            ColorType colorType = ColorType.WHITE;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+    }
+
+    @DisplayName("룩")
+    @Nested
+    class Rook {
+
+        @BeforeEach
+        void setUp() {
+            type = PieceType.ROOK;
+            source = Square.of(File.a, Rank.EIGHT);
+        }
+
+        @DisplayName("룩은 수직 방향으로 움직일 수 있다.")
+        @Test
+        void rookVerticalCanMove() {
+            // given
+            Square destination = Square.of(File.a, Rank.FIVE);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("룩은 수평 방향으로 움직일 수 있다.")
+        @Test
+        void rookHorizontalCanMove() {
+            // given
+            Square destination = Square.of(File.a, Rank.FIVE);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+    }
 }

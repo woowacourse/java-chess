@@ -1,16 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.position.Square;
-import chess.domain.strategy.KnightMoveStrategy;
-import chess.domain.strategy.MoveStrategy;
-import chess.domain.strategy.PawnMoveStrategy;
+import chess.domain.strategy.*;
 
 public enum PieceType {
 
     KING(new PawnMoveStrategy()),
     QUEEN(new PawnMoveStrategy()),
-    ROOK(new PawnMoveStrategy()),
-    BISHOP(new PawnMoveStrategy()),
+    ROOK(new RookMoveStrategy()),
+    BISHOP(new BishopMoveStrategy()),
     KNIGHT(new KnightMoveStrategy()),
     PAWN(new PawnMoveStrategy()),
     EMPTY(new PawnMoveStrategy()),
