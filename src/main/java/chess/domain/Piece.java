@@ -36,8 +36,6 @@ public class Piece {
         if (isPawnCondition(from, to, pieces)) {
             obstacles.add(to);
         }
-
-        System.out.println(obstacles);
         return obstacles;
     }
 
