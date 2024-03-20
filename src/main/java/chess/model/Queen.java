@@ -6,6 +6,12 @@ public class Queen extends Piece {
     }
 
     @Override
+    public boolean canMove(ChessPosition target) {
+        Distance distance = target.calculateDistance(this.chessPosition);
+        return distance.isCrossMovement() || distance.isDiagonalMovement();
+    }
+
+    @Override
     public String getText() {
         if (side.isWhite()) {
             return "q";
