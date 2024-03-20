@@ -26,4 +26,8 @@ public class Square {
     public static Square of(File file, Rank rank) {
         return pool.get(toKey(file, rank));
     }
+
+    public Square forward(int index) {
+        return Square.of(file, rank.forward(index));
+    }
 }
