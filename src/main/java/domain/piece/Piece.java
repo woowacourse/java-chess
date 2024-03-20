@@ -14,24 +14,20 @@ public class Piece {
         this.color = color;
     }
 
-    public List<Position> route(Position resource, Position target) { // todo movable
+    public List<Position> route(Position resource, Position target) {
         Direction direction = resource.getDirection(target);
-        // direction  valid
+        if (!type.isMovable(direction)) {
+            throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+        }
         List<Position> positions = new ArrayList<>();
         Position current = resource.next(direction);
         while (!current.equals(target)) {
             positions.add(current);
             current = current.next(direction);
         }
-        // move count valid
+        if (!type.isValidMoveCount(positions.size() + 1)) {
+            throw new IllegalArgumentException("이동할 수 없는 거리입니다.");
+        }
         return positions;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Color getColor() {
-        return color;
     }
 }
