@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.piece.type.Bishop;
 import chess.domain.piece.type.King;
+import chess.domain.piece.type.Night;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;

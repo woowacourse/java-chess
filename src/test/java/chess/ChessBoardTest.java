@@ -3,7 +3,7 @@ package chess;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
-import chess.domain.Night;
+import chess.domain.piece.type.Night;
 import chess.domain.piece.type.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.type.King;

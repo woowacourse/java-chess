@@ -91,4 +91,53 @@ class PositionTest {
         // then
         Assertions.assertThat(result).isFalse();
     }
+
+    @Test
+    void isSameVerticalDifference() {
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position otherPosition = new Position('d', 7);
+
+        // when
+        final boolean result = currentPosition.isVerticalDifference(otherPosition, 2);
+
+        // then
+        Assertions.assertThat(result).isTrue();
+    }
+    @Test
+    void isNotSameVerticalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position otherPosition = new Position('d', 6);
+
+        // when
+        final boolean result = currentPosition.isVerticalDifference(otherPosition, 2);
+
+        // then
+        Assertions.assertThat(result).isFalse();
+    }
+    @Test
+    void isSameHorizonalDifference() {
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position otherPosition = new Position('b', 5);
+
+        // when
+        final boolean result = currentPosition.isHorizonalDifference(otherPosition, 2);
+
+        // then
+        Assertions.assertThat(result).isTrue();
+    }
+    @Test
+    void isNotSameHorizonalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position otherPosition = new Position('a', 5);
+
+        // when
+        final boolean result = currentPosition.isHorizonalDifference(otherPosition, 2);
+
+        // then
+        Assertions.assertThat(result).isFalse();
+    }
 }

@@ -35,6 +35,14 @@ public class Position {
         return false;
     }
 
+    public boolean isVerticalDifference(final Position target, final int difference) {
+        return this.rank.differenceWith(target.rank) == difference;
+    }
+
+    public boolean isHorizonalDifference(final Position target, final int difference) {
+        return this.file.differenceWith(target.file) == difference;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
