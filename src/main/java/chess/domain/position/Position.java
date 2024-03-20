@@ -19,6 +19,13 @@ public class Position {
         this.rank = Objects.requireNonNull(rank);
     }
 
+    public int calculateFileDifference(Position position) {
+        return file.calculateDifference(position.file);
+    }
+
+    public int calculateRankDifference(Position position) {
+        return rank.calculateDifference(position.rank);
+    }
 
     public Position moveToEast() {
         return new Position(file.toEast(), rank);

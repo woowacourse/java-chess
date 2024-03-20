@@ -39,4 +39,8 @@ public enum Rank {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치가 없습니다."));
     }
+
+    public int calculateDifference(Rank rank) {
+        return rank.southToNorth - this.southToNorth;
+    }
 }
