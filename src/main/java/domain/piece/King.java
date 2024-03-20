@@ -15,7 +15,6 @@ public class King extends Piece {
         }
         int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
         int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        return rankDifference == 1 || rankDifference == -1
-            || fileDifference == 1 || fileDifference == -1;
+        return Math.abs(rankDifference) <= 1 && Math.abs(fileDifference) <= 1;
     }
 }
