@@ -12,7 +12,7 @@ class BoardTest {
     void initialize() {
         //given
         Board board = BoardFactory.createBoard();
-        int expectedSize = 64;
+        int expectedSize = 32;
 
         //when & then
         assertThat(board.getPieces().keySet().size()).isEqualTo(expectedSize);
