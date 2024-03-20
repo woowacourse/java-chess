@@ -22,11 +22,11 @@ public class RowPosition {
     }
 
     public boolean isHigherThan(RowPosition target) {
-        return rowNumber > target.rowNumber;
+        return rowNumber < target.rowNumber;
     }
 
     public boolean isLowerThan(RowPosition target) {
-        return rowNumber < target.rowNumber;
+        return rowNumber > target.rowNumber;
     }
 
     private void validateNumberRange(int rowNumber) {
