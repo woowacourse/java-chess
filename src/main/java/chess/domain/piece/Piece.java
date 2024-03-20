@@ -3,7 +3,6 @@ package chess.domain.piece;
 import java.util.Objects;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
 
 public abstract class Piece {
 

@@ -20,8 +20,7 @@ public enum PieceType {
     BISHOP(2, (color, index) -> Position.of(startBishopFileOf(index), startRankOf(color))),
     KNIGHT(2, (color, index) -> Position.of(startKnightFileOf(index), startRankOf(color))),
     ROOK(2, (color, index) -> Position.of(startRookFileOf(index), startRankOf(color))),
-    PAWN(8, (color, index) -> Position.of(startPawnFileOf(index), startPawnRankOf(color)))
-    ;
+    PAWN(8, (color, index) -> Position.of(startPawnFileOf(index), startPawnRankOf(color)));
 
     private final int count;
     private final BiFunction<Color, Integer, Position> startPosition;

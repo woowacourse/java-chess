@@ -5,8 +5,7 @@ import java.util.Arrays;
 public enum StartCommand {
 
     START("start"),
-    END("end")
-    ;
+    END("end");
 
     private final String message;
 
