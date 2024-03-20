@@ -1,10 +1,8 @@
 package chess.view;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import chess.domain.Piece;
-import chess.domain.PieceType;
-import chess.domain.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.Assertions;

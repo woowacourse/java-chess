@@ -1,13 +1,13 @@
 package chess.view;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.PieceType.*;
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.piece.PieceType.*;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 
 public class PieceExpression {
 

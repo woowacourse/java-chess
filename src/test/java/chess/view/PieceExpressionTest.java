@@ -1,16 +1,16 @@
 package chess.view;
 
-import static chess.domain.PieceType.BISHOP;
-import static chess.domain.PieceType.KING;
-import static chess.domain.PieceType.KNIGHT;
-import static chess.domain.PieceType.PAWN;
-import static chess.domain.PieceType.QUEEN;
-import static chess.domain.PieceType.ROOK;
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

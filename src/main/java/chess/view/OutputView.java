@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.ChessBoard;
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 
 import java.util.List;
 
