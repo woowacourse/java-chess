@@ -52,12 +52,12 @@ public class Chessboard {
 
     private static Set<Piece> createPieces(final Color color) {
         Set<Piece> pieces = new HashSet<>();
-        pieces.add(new King(color, KING));
-        pieces.add(new Queen(color, QUEEN));
-        pieces.add(new Bishop(color, BISHOP));
-        pieces.add(new Knight(color, KNIGHT));
-        pieces.add(new Rook(color, ROOK));
-        pieces.add(new StartingPawn(color, PAWN));
+        pieces.add(new King(color));
+        pieces.add(new Queen(color));
+        pieces.add(new Bishop(color));
+        pieces.add(new Knight(color));
+        pieces.add(new Rook(color));
+        pieces.add(new StartingPawn(color));
         return pieces;
     }
 
