@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.piece.Bishop;
 import domain.piece.Color;
+import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Queen;
@@ -24,7 +25,7 @@ class BoardTest {
      * (공통) 출발 위치 == 도착 위치면 예외 (o)
      * 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다.(o)
      * rook, bishop, queen은 경로에 말이 있으면 안 됨. (o)
-     * knight는 경로에 말이 있어도 움직일 수 있음.
+     * knight는 경로에 말이 있어도 움직일 수 있음. (o)
      * pawn은 2칸 이동 시 경로에 말이 있으면 안 됨.
      * pawn은 바로 앞 칸에 기물이 있으면 이동 X
      * pawn은 대각선 앞 칸에 상대 기물이 있으면 이동 O
@@ -67,8 +68,8 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("성공: 말의 규칙에 맞는 위치로 이동")
-    void move_LegalMove() {
+    @DisplayName("성공: Knight가 규칙에 맞는 위치로 이동")
+    void move_LegalMoveKnight() {
         Position sourcePosition = new Position(new File(2), new Rank(1));
         Position targetPosition = new Position(new File(3), new Rank(3));
         Knight knight = new Knight(Color.WHITE);
@@ -79,6 +80,21 @@ class BoardTest {
         board.move(sourcePosition, targetPosition);
         assertThat(board.getSquares().get(sourcePosition)).isNull();
         assertThat(board.getSquares().get(targetPosition)).isEqualTo(knight);
+    }
+
+    @Test
+    @DisplayName("성공: King이 규칙에 맞는 위치로 이동")
+    void move_LegalMoveKing() {
+        Position sourcePosition = new Position(new File(2), new Rank(2));
+        Position targetPosition = new Position(new File(1), new Rank(3));
+        King king = new King(Color.WHITE);
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(sourcePosition, king)
+        ));
+
+        board.move(sourcePosition, targetPosition);
+        assertThat(board.getSquares().get(sourcePosition)).isNull();
+        assertThat(board.getSquares().get(targetPosition)).isEqualTo(king);
     }
 
     @Test
