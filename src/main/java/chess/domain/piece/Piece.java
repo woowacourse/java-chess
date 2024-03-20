@@ -30,4 +30,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, position);
     }
+
+    public boolean isPosition(final Position other) {
+        return this.position.equals(other);
+    }
 }

@@ -13,13 +13,16 @@ import chess.domain.piece.Position;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
 import java.util.Set;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
+    final ChessBoard chessBoard = ChessBoard.init();
+
     @Test
     void create() {
-        final ChessBoard chessBoard = ChessBoard.init();
         final Set<Piece> chessBoardDetail = chessBoard.getPieces();
 
         assertThat(chessBoardDetail).containsExactlyInAnyOrder(

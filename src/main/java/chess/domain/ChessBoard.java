@@ -56,4 +56,11 @@ public class ChessBoard {
     public Set<Piece> getPieces() {
         return pieces;
     }
+
+    public Piece findBy(final Position other) {
+        return pieces.stream()
+                .filter(piece -> piece.isPosition(other))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다."));
+    }
 }
