@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Path;
 
-public class BlackPawn extends Piece{
+public class BlackPawn extends Piece {
 
     private boolean moved = false;
 
@@ -27,7 +27,7 @@ public class BlackPawn extends Piece{
         if (path.containsDiagonal()) {
             return path.isSizeOf(1) && path.isTargetHasEnemy();
         }
-        if(path.isSizeOf(2)) {
+        if (path.isSizeOf(2)) {
             return path.isAllEmpty() && isFirstMove();
         }
         return path.isSizeOf(1) && path.isAllEmpty();

@@ -79,5 +79,4 @@ class RookTest {
         Assertions.assertThat(ROOK.canMove(manyDirectionPath))
                 .isTrue();
     }
-
 }

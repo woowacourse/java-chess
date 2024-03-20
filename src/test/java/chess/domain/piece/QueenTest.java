@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class QueenTest {
 
-    private static Queen QUEEN = new Queen(Color.BLACK);
+    private static final Queen QUEEN = new Queen(Color.BLACK);
 
     @DisplayName("한 방향으로 이루어지지 않은 경로로 움직일 수 없다.")
     @Test

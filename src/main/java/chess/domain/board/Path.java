@@ -38,6 +38,7 @@ public class Path {
         return !isEmptyPathExcludedTarget();
     }
 
+    //TODO targetStep으로 빼기
     private boolean isEmptyPathExcludedTarget() {
         return steps.subList(0, steps.size() - 1)
                 .stream()
@@ -55,5 +56,19 @@ public class Path {
     public boolean canReach() {
         Step lastStep = steps.get(steps.size() - 1);
         return lastStep.isEmpty() || lastStep.isEnemy();
+    }
+
+    public boolean isUpside() {
+        return steps.stream()
+                .allMatch((Step::isUpside));
+    }
+
+    public boolean isTargetHasEnemy() {
+        return steps.get(steps.size() - 1).isEnemy();
+    }
+
+    public boolean isDownside() {
+        return steps.stream()
+                .allMatch((Step::isDownside));
     }
 }

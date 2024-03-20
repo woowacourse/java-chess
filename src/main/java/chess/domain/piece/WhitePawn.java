@@ -26,7 +26,7 @@ public class WhitePawn extends Piece {
         if (path.containsDiagonal()) {
             return path.isSizeOf(1) && path.isTargetHasEnemy();
         }
-        if(path.isSizeOf(2)) {
+        if (path.isSizeOf(2)) {
             return path.isAllEmpty() && isFirstMove();
         }
         return path.isSizeOf(1) && path.isAllEmpty();
