@@ -1,7 +1,6 @@
 package chess.controller;
 
-import chess.model.ChessBoard;
-import chess.model.ChessBoardInitializer;
+import chess.model.*;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.MoveArguments;
@@ -25,5 +24,7 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard(initializer.create());
         outputView.printChessBoard(chessBoard);
         MoveArguments moveArguments = inputView.readMoveArguments();
+        ChessPosition source = moveArguments.createSourcePosition();
+        ChessPosition target = moveArguments.createTargetPosition();
     }
 }

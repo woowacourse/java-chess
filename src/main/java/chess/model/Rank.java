@@ -18,7 +18,7 @@ public enum Rank {
         this.coordinate = coordinate;
     }
 
-    public static Rank of(int coordinate) {
+    public static Rank from(int coordinate) {
         return Arrays.stream(values())
                 .filter(rank -> rank.coordinate == coordinate)
                 .findFirst()
