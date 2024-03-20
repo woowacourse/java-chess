@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.square.Square;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -10,6 +11,8 @@ public abstract class Piece {
         this.color = color;
         this.type = type;
     }
+
+    public abstract boolean canMove(final Square from, final Square to);
 
     public Color color() {
         return color;
