@@ -55,24 +55,4 @@ public class Position {
             ", rank=" + rank +
             '}';
     }
-
-    public List<Position> findStraightRoutePositions(Position targetPosition) {
-        if (this.calculateFileDifference(targetPosition) == 0) {
-            int minRank = Math.min(rank.value(), targetPosition.rank.value());
-            int maxRank = Math.max(rank.value(), targetPosition.rank.value());
-            return IntStream.range(minRank, maxRank)
-                .mapToObj(rank -> new Position(file, new Rank(rank)))
-                .toList();
-        }
-
-        if (this.calculateRankDifference(targetPosition) == 0) {
-            int minFile = Math.min(file.value(), targetPosition.file.value());
-            int maxFile = Math.max(file.value(), targetPosition.file.value());
-            return IntStream.range(minFile, maxFile)
-                .mapToObj(file -> new Position(new File(file), rank))
-                .toList();
-        }
-
-        throw new IllegalArgumentException("직선 이동이 아닙니다.");
-    }
 }
