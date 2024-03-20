@@ -4,7 +4,7 @@ import coordinate.Coordinate;
 import java.util.List;
 import strategy.QueenStrategy;
 
-public class Queen {
+public class Queen implements Piece {
 
     private final boolean isBlack;
 
@@ -12,11 +12,17 @@ public class Queen {
         this.isBlack = isBlack;
     }
 
-    public List<Integer> getDirection(Coordinate coordinate, Coordinate nextCoordinate) {
+    @Override
+    public List<Integer> getDirection(Coordinate coordinate, Coordinate nextCoordinate, boolean isAttack) {
         int rowDifference = coordinate.checkRow(nextCoordinate);
         int columnDifference = coordinate.checkColumn(nextCoordinate);
 
         QueenStrategy queenStrategy = QueenStrategy.getMoveStrategy(rowDifference, columnDifference);
         return queenStrategy.getDirection();
+    }
+
+    @Override
+    public boolean isSameColor(boolean isBlack) {
+        return this.isBlack == isBlack;
     }
 }

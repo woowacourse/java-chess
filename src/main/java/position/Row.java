@@ -6,8 +6,12 @@ public class Row {
 
     private Position position;
 
+    public Row(Position position) {
+        this.position = position;
+    }
+
     public Row(int position) {
-        this.position = new Position(position);
+        this(new Position(position));
     }
 
     public void move(int nextPosition) {
@@ -20,6 +24,14 @@ public class Row {
 
     public int getRowMinus(Row row) {
         return position.getMinusPosition(row.position);
+    }
+
+    public Row update(int rowDirection) {
+        return new Row(position.update(rowDirection));
+    }
+
+    public Row copied() {
+        return new Row(position.copied());
     }
 
     @Override
