@@ -6,12 +6,10 @@ import point.Position;
 
 public class Queen extends Piece {
 
-    private final Camp camp;
     private Position position;
 
-    public Queen(final Camp camp, final Position position) {
-        this.camp = camp;
-        this.position = position;
+    public Queen(final Camp camp) {
+        super(camp);
     }
 
     @Override

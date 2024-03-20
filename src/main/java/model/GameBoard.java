@@ -1,13 +1,11 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 import piece.Bishop;
-import piece.Blank;
 import piece.King;
 import piece.Knight;
 import piece.Pawn;
@@ -20,7 +18,7 @@ import point.Row;
 
 public class GameBoard {
 
-    private static final Map<Column, BiFunction<Camp, Position, Piece>> initPosition = new HashMap<>();
+    private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
 
     static {
         initPosition.put(Column.FIRST, Rook::new);
@@ -33,56 +31,44 @@ public class GameBoard {
         initPosition.put(Column.EIGHTH, Rook::new);
     }
 
-    private final List<List<Square>> board;
+    private List<List<Square>> board2;
+    private Map<Position, Piece> board;
+
 
     public GameBoard() {
-        this.board = init();
-    }
-
-    private List<List<Square>> init() {
-        List<List<Square>> board = new ArrayList<>();
-        for (Column column : Column.values()) { //TODO 굳이 row, column 안 타도 됨
-            List<Square> line = new ArrayList<>();
-            for (Row row : Row.values()) {
-                line.add(new Square(new Blank()));
-            }
-            board.add(line);
-        }
-        return board;
+        this.board = new HashMap<>();
     }
 
     public void setting() {
 
-        var first = settingExceptPawn(Camp.BLACK, Row.EIGHTH);
-        var second = settingPawn(Camp.BLACK, Column.SEVENTH);
-        var seventh = settingPawn(Camp.WHITE, Column.SECOND);
-        var eighth = settingExceptPawn(Camp.WHITE, Row.FIFTH);
-
-        board.set(0, first);
-        board.set(1, second);
-        board.set(6, seventh);
-        board.set(7, eighth);
+        settingExceptPawn(Camp.BLACK, Row.EIGHTH);
+        settingPawn(Camp.BLACK, Row.SEVENTH);
+        settingPawn(Camp.WHITE, Row.SECOND);
+        settingExceptPawn(Camp.WHITE, Row.FIRST);
     }
 
-    private List<Square> settingExceptPawn(final Camp camp, Row row) {
-        return Arrays.stream(Column.values())
-                .map(column -> new Square(initPosition.get(column).apply(camp, new Position(row, column))))
-                .toList();
+    private void settingExceptPawn(final Camp camp, Row row) {
+        for (Column column : Column.values()) {
+            board.put(new Position(row, column), initPosition.get(column).apply(camp));
+        }
+    }
+    private void settingPawn(final Camp camp, final Row row) {
+        for (Column column : Column.values()) {
+            board.put(new Position(row, column), new Pawn(camp));
+        }
     }
 
     public Square findByPosition(Position position) {
         int rowIndex = position.getRow().getIndex();
         int colIndex = position.getColumn().getIndex();
-        return board.get(rowIndex).get(colIndex);
+        return board2.get(rowIndex).get(colIndex);
     }
 
-    private List<Square> settingPawn(final Camp camp, final Column column) {
-        return Arrays.stream(Row.values())
-                .map(row -> new Square(new Pawn(camp, new Position(row, column))))
-                .toList();
+    public List<List<Square>> getBoard2() {
+        return board2;
     }
 
-    public List<List<Square>> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return board;
     }
 }

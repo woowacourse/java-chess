@@ -2,8 +2,6 @@ package point;
 
 import model.GameBoard;
 import model.Square;
-import piece.Blank;
-import piece.Piece;
 
 public class Moving {
 
@@ -15,7 +13,7 @@ public class Moving {
         this.nextPosition = nextPosition;
     }
 
-    public void move(GameBoard gameBoard) {
+    public void move(GameBoard gameBoard) { // TODO 메서드를 gameBoard 안으로 이동
         Square currentSquare = gameBoard.findByPosition(currentPosition);
         if (currentSquare.isBlank()) {
             throw new IllegalArgumentException("기물이 없음");

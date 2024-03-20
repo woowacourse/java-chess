@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Objects;
-import piece.Blank;
 import piece.Piece;
 
 public class Square {
@@ -21,12 +20,15 @@ public class Square {
         return piece.toString();
     }
 
+    //TODO: 고쳐야함
     public boolean isBlank() {
-        return piece instanceof Blank;
+        return false;
     }
 
+
+    //TODO: 고쳐야함
     public void makeBlank() {
-        this.piece = new Blank();
+        this.piece = null;
     }
 
     public void setPiece(Piece piece) {

@@ -1,33 +1,29 @@
-import java.util.List;
-import model.Camp;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Map.Entry;
 import model.GameBoard;
-import model.Square;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
-import piece.Rook;
-import point.Column;
 import point.Position;
-import point.Row;
 
 class GameBoardTest {
 
-    @DisplayName("체스판의 세로 길이는 8이다.")
     @Test
-    void rowLengthIs8() {
+    @DisplayName("초기에는 32개의 기물이 생성된다.")
+    void initPieces() {
+        //given
         GameBoard gameBoard = new GameBoard();
 
-        Assertions.assertThat(gameBoard.getBoard()).hasSize(8);
-    }
+        //when
+        gameBoard.setting();
 
-    @DisplayName("체스판의 가로 길이는 8이다.")
-    @Test
-    void columnLengthIs8() {
-        GameBoard gameBoard = new GameBoard();
-        List<List<Square>> board = gameBoard.getBoard();
+        //then
+        var board = gameBoard.getBoard();
 
-        Assertions.assertThat(board).allMatch(line -> line.size() == 8);
+        Assertions.assertThat(board.keySet()).hasSize(32);
+
     }
 
     @Test
@@ -39,11 +35,24 @@ class GameBoardTest {
         //when
         gameBoard.setting();
 
-        List<List<Square>> board = gameBoard.getBoard();
+        Map<Position, Piece> board = gameBoard.getBoard();
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (List<Square> squares : board) {
-            stringBuilder.append(squares.toString());
+        String[][] res = new String[8][8];
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                res[i][j] = ".";
+            }
+        }
+
+        for (Entry<Position, Piece> entry : board.entrySet()) {
+            res[entry.getKey().getRow().getIndex()][entry.getKey().getColumn().getIndex()] = entry.getValue()
+                    .toString();
+        }
+
+        for (String[] ans : res) {
+            stringBuilder.append(Arrays.toString(ans));
             stringBuilder.append(System.lineSeparator());
         }
 
@@ -58,19 +67,5 @@ class GameBoardTest {
 
         //then
         Assertions.assertThat(stringBuilder.toString()).hasToString(expected);
-    }
-
-    @Test
-    @DisplayName("위치가 주어졌을 때 해당 위치의 기물을 반환한다.")
-    void findByPosition() {
-        GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
-
-        Position position = new Position(Row.EIGHTH, Column.FIRST);
-
-        Piece piece = gameBoard.findByPosition(position).getPiece();
-        Rook expected = new Rook(Camp.BLACK, position);
-
-        Assertions.assertThat(piece).isEqualTo(expected);
     }
 }

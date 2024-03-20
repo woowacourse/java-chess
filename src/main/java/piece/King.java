@@ -6,13 +6,13 @@ import point.Position;
 
 public class King extends Piece {
 
-    private final Camp camp;
     private Position position;
 
-    public King(final Camp camp, final Position position) {
-        this.camp = camp;
-        this.position = position;
+
+    public King(final Camp camp) {
+        super(camp);
     }
+
 
     @Override
     void move(Position targetPosition) {

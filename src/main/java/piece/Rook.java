@@ -5,13 +5,10 @@ import model.Camp;
 import point.Position;
 
 public class Rook extends Piece {
-
-    private final Camp camp;
     private Position position;
 
-    public Rook(final Camp camp, final Position position) {
-        this.camp = camp;
-        this.position = position;
+    public Rook(final Camp camp) {
+        super(camp);
     }
 
     @Override
@@ -33,7 +30,7 @@ public class Rook extends Piece {
             return true;
         }
 
-        if(!(o instanceof Rook rook)) {
+        if (!(o instanceof Rook rook)) {
             return false;
         }
         return camp == rook.camp && Objects.equals(position, rook.position);

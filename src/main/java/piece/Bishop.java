@@ -6,14 +6,12 @@ import point.Position;
 
 public class Bishop extends Piece {
 
-    private final Camp camp;
     private Position position;
 
-
-    public Bishop(final Camp camp, Position position) {
-        this.camp = camp;
-        this.position = position;
+    public Bishop(final Camp camp) {
+        super(camp);
     }
+
 
     @Override
     void move(Position targetPosition) {

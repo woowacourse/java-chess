@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 import model.GameBoard;
 import model.Square;
-import piece.Piece;
 
 public class OutputView {
 
@@ -12,7 +11,7 @@ public class OutputView {
     }
 
     public void printGameBoard(GameBoard gameBoard) {
-        for (List<Square> line : gameBoard.getBoard()) {
+        for (List<Square> line : gameBoard.getBoard2()) {
             for (Square square : line) {
                 System.out.print(square.getPiece());
             }

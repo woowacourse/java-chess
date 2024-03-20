@@ -6,7 +6,6 @@ import model.Square;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import piece.Pawn;
 
 class MovingTest {
 
@@ -38,7 +37,7 @@ class MovingTest {
         //when
         moving.move(gameBoard);
 
-        var board = gameBoard.getBoard();
+        var board = gameBoard.getBoard2();
         for (List<Square> pieces : board) {
             System.out.println(pieces.toString());
         }

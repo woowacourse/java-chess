@@ -6,12 +6,10 @@ import point.Position;
 
 public class Pawn extends Piece {
 
-    private final Camp camp;
     private Position position;
 
-    public Pawn(final Camp camp, final Position position) {
-        this.camp = camp;
-        this.position = position;
+    public Pawn(final Camp camp) {
+        super(camp);
     }
 
     @Override
