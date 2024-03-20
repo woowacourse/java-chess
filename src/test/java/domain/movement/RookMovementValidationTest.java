@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class RookMovementValidationTest {
     @ParameterizedTest
-    @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT",})
+    @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT"})
     void 이동할_수_있는_방향이다(Direction direction) {
         MovementValidation rookMovementValidation = new RookMovementValidation();
 
@@ -16,7 +16,7 @@ class RookMovementValidationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT"}, mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = Direction.class,names = {"UP", "DOWN", "LEFT", "RIGHT"}, mode = EnumSource.Mode.EXCLUDE)
     void 이동할_수_없는_방향이다(Direction direction) {
         MovementValidation rookMovementValidation = new RookMovementValidation();
 

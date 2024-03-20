@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class QueenMovementValidationTest {
     @ParameterizedTest
-    @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT", "UP_LEFT", "UP_RIGHT", "DOWN_LEFT",
-            "DOWN_RIGHT"})
+    @EnumSource(value = Direction.class,
+            names = {"UP", "DOWN", "LEFT", "RIGHT", "UP_LEFT", "UP_RIGHT", "DOWN_LEFT", "DOWN_RIGHT"})
     void 이동할_수_있는_방향이다(Direction direction) {
         MovementValidation queenMovementValidation = new QueenMovementValidation();
 
@@ -17,8 +17,9 @@ class QueenMovementValidationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT", "UP_LEFT", "UP_RIGHT", "DOWN_LEFT",
-            "DOWN_RIGHT"}, mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = Direction.class,
+            names = {"UP", "DOWN", "LEFT", "RIGHT", "UP_LEFT", "UP_RIGHT", "DOWN_LEFT", "DOWN_RIGHT"},
+            mode = EnumSource.Mode.EXCLUDE)
     void 이동할_수_없는_방향이다(Direction direction) {
         MovementValidation queenMovementValidation = new QueenMovementValidation();
 

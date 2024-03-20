@@ -16,7 +16,8 @@ class BishopMovementValidationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = Direction.class, names = {"UP_LEFT", "UP_RIGHT", "DOWN_LEFT", "DOWN_RIGHT"},
+    @EnumSource(value = Direction.class,
+            names = {"UP_LEFT", "UP_RIGHT", "DOWN_LEFT", "DOWN_RIGHT"},
             mode = EnumSource.Mode.EXCLUDE)
     void 이동할_수_없는_방향이다(Direction direction) {
         MovementValidation bishopMovementValidation = new BishopMovementValidation();
