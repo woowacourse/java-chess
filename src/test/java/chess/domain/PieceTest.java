@@ -108,5 +108,38 @@ class PieceTest {
                     Map.of(new Position(row, column), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
     }
+
+    @Nested
+    class BishopMove {
+
+        @ParameterizedTest
+        @CsvSource({"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8",
+                "7,1", "6,2", "3,5", "2,6", "1,7"})
+        @DisplayName("비숍은 도착 위치가 비어있는 경우 이동할 수 있다.")
+        void canMoveWhenToPositionIsEmpty(int row, int column) {
+            Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false, Map.of())).isTrue();
+        }
+
+        @ParameterizedTest
+        @CsvSource({"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8",
+                "7,1", "6,2", "3,5", "2,6", "1,7"})
+        @DisplayName("비숍은 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
+        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+            Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false,
+                    Map.of(new Position(row, column), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+        }
+
+        @ParameterizedTest
+        @CsvSource({"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8",
+                "7,1", "6,2", "3,5", "2,6", "1,7"})
+        @DisplayName("비숍은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
+        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+            Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false,
+                    Map.of(new Position(row, column), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+        }
+    }
 }
 
