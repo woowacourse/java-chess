@@ -1,6 +1,7 @@
 package domain;
 
 import static domain.PieceMoveResult.*;
+import static domain.PieceType.*;
 
 import java.util.Optional;
 
@@ -23,5 +24,10 @@ class Knight extends AbstractCatchOnMovePiece {
 		int absRowDistance = Math.abs(nowPosition.rowDistance(targetPosition));
 		int absColDistance = Math.abs(nowPosition.columnDistance(targetPosition));
 		return (absRowDistance == 2 && absColDistance == 1) || (absRowDistance == 1 && absColDistance == 2);
+	}
+
+	@Override
+	public PieceType getPieceType() {
+		return KNIGHT;
 	}
 }

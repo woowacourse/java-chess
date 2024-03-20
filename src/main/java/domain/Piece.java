@@ -1,9 +1,11 @@
 package domain;
 
-interface Piece {
-	PieceMoveResult move(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard);
+abstract class Piece {
+	abstract PieceMoveResult move(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard);
 
-	boolean isOn(Position position);
+	abstract boolean isOn(Position position);
 
-	Team getTeam();
+	public abstract Team getTeam();
+
+	public abstract PieceType getPieceType();
 }

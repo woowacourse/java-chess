@@ -1,6 +1,7 @@
 package domain;
 
 import static domain.PieceMoveResult.*;
+import static domain.PieceType.*;
 
 import java.util.Optional;
 
@@ -17,5 +18,10 @@ class Rook extends AbstractMoveStraightMovePiece {
 			return Optional.of(FAILURE);
 		}
 		return Optional.empty();
+	}
+
+	@Override
+	public PieceType getPieceType() {
+		return ROOK;
 	}
 }

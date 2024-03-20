@@ -1,6 +1,7 @@
 package domain;
 
 import static domain.PieceMoveResult.*;
+import static domain.PieceType.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,5 +75,10 @@ class Pawn extends AbstractPiece {
 	private boolean isOtherTeam(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
 		Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
 		return targetTeam.isPresent() && !targetTeam.get().equals(getTeam());
+	}
+
+	@Override
+	public PieceType getPieceType() {
+		return PAWN;
 	}
 }

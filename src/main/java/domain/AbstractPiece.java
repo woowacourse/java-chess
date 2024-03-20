@@ -2,7 +2,7 @@ package domain;
 
 import static domain.PieceMoveResult.*;
 
-abstract class AbstractPiece implements Piece {
+abstract class AbstractPiece extends Piece {
 	private final Team team;
 	private Position position;
 
