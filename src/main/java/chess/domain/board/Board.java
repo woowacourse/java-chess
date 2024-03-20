@@ -19,9 +19,9 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.StartingPawn;
+
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,19 +35,19 @@ public class Board {
 
     public static Board create() {
         Map<Position, Piece> board = new HashMap<>();
-        Set<Piece> pieces = new LinkedHashSet<>();
-
+        Set<Piece> pieces = new HashSet<>();
         pieces.addAll(createPieces(WHITE));
         pieces.addAll(createPieces(BLACK));
-
-        for (final Piece piece : pieces) {
-            PieceType pieceType = piece.getPieceType();
-            for (int index = 0; index < pieceType.getCount(); index++) {
-                Position position = pieceType.startPosition(piece.getColor(), index);
-                board.put(position, piece);
-            }
-        }
+        pieces.forEach(piece -> putPieces(board, piece));
         return new Board(board);
+    }
+
+    private static void putPieces(final Map<Position, Piece> board, final Piece piece) {
+        PieceType pieceType = piece.getPieceType();
+        for (int index = 0; index < pieceType.getCount(); index++) {
+            Position position = pieceType.startPositionOf(piece.getColor(), index);
+            board.put(position, piece);
+        }
     }
 
     private static Set<Piece> createPieces(final Color color) {
