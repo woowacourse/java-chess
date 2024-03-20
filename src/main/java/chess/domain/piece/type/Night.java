@@ -3,6 +3,7 @@ package chess.domain.piece.type;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Night extends Piece {
@@ -21,6 +22,6 @@ public class Night extends Piece {
 
     @Override
     public Set<Position> getRoute(Position target) {
-        return null;
+        return new HashSet<>();
     }
 }
