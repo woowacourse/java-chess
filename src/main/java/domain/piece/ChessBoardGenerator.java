@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PiecesGenerator {
+public class ChessBoardGenerator implements BoardGenerator {
     // TODO: 미안해 자바야...
     static final List<Position> WHITE_PAWN_POSITIONS = List.of(
             new Position(ChessFile.A, ChessRank.TWO), new Position(ChessFile.B, ChessRank.TWO), new Position(ChessFile.C, ChessRank.TWO), new Position(ChessFile.D, ChessRank.TWO),
@@ -40,15 +40,16 @@ public class PiecesGenerator {
     static final Position BLACK_KING_POSITION = new Position(ChessFile.E, ChessRank.EIGHT);
     static final Position BLACK_QUEEN_POSITION = new Position(ChessFile.D, ChessRank.EIGHT);
 
-    private final static PiecesGenerator INSTANCE = new PiecesGenerator();
+    private final static ChessBoardGenerator INSTANCE = new ChessBoardGenerator();
 
-    private PiecesGenerator() {
+    private ChessBoardGenerator() {
     }
 
-    public static PiecesGenerator getInstance() {
+    public static ChessBoardGenerator getInstance() {
         return INSTANCE;
     }
 
+    @Override
     public Map<Position, Piece> generate() {
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.putAll(generateWhitePieces());
