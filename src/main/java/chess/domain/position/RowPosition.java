@@ -3,6 +3,8 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class RowPosition {
+    public static final RowPosition ONE = new RowPosition(1);
+    public static final RowPosition SIX = new RowPosition(6);
     public static final int MIN_NUMBER = 0;
     public static final int MAX_NUMBER = 7;
 
