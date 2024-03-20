@@ -9,24 +9,24 @@ import java.util.List;
 
 public class BoardDto {
 
-    private final List<LineDto> lines;
+    private final List<RankDto> ranks;
 
-    public BoardDto(List<LineDto> lines) {
-        this.lines = lines;
+    public BoardDto(List<RankDto> rank) {
+        this.ranks = rank;
     }
 
     public static BoardDto from(Board board) {
-        List<LineDto> lines = new ArrayList<>();
+        List<RankDto> ranks = new ArrayList<>();
         for (int i = 0; i <= 7; i++) {
-            lines.add(LineDto.of(board, i));
+            ranks.add(RankDto.of(board, i));
         }
-        return new BoardDto(lines);
+        return new BoardDto(ranks);
     }
 
     @Override
     public String toString() {
-        return lines.stream()
-                .map(LineDto::toString)
+        return ranks.stream()
+                .map(RankDto::toString)
                 .collect(collectingAndThen(toList(), list -> String.join("\n", list)));
     }
 }
