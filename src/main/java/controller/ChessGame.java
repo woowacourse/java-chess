@@ -20,10 +20,23 @@ public class ChessGame {
         outputView.printGameStartMessage();
 
         CommandInfo commandInfo = inputView.readCommand();
-        while (commandInfo.command().isRunning()) {
-            BoardStatus boardStatus = new ChessBoard(PiecesGenerator.getInstance()).status();
-            outputView.printChessBoard(boardStatus);
-            commandInfo = inputView.readCommand();
+        ChessBoard chessBoard = new ChessBoard(PiecesGenerator.getInstance());
+
+        if (!commandInfo.command().isStart()) {
+            throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
         }
+        while (!commandInfo.command().isEnd()) {
+            BoardStatus boardStatus = chessBoard.status();
+            outputView.printChessBoard(boardStatus);
+
+            commandInfo = inputView.readCommand();
+            if (commandInfo.command().isStart()) {
+                throw new IllegalArgumentException("게임 도중 start 명령어를 입력할 수 없습니다.");
+            }
+            if (commandInfo.command().isMove()) {
+
+            }
+        }
+        // 게임 종료
     }
 }

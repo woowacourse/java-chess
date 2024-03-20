@@ -21,7 +21,15 @@ public enum Command {
                         new IllegalArgumentException("존재하지 않는 명령어 입니다."));
     }
 
-    public boolean isRunning() {
-        return this != END;
+    public boolean isStart() {
+        return this == START;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
+
+    public boolean isEnd() {
+        return this == END;
     }
 }
