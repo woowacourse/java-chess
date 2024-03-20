@@ -27,4 +27,8 @@ public enum Direction {
         this.x = x;
         this.y = y;
     }
+
+    public double calculateGradiant() {
+        return this.y / (double) this.x;
+    }
 }
