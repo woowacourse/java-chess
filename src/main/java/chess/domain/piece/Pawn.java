@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.Calculator;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
@@ -8,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
+    public static final int WHITE_NORMAL_MOVEMENT = 1;
+    public static final int WHITE_START_MOVEMENT = 2;
+    public static final int BLACK_NORMAL_MOVEMENT = -1;
+    public static final int BLACK_START_MOVEMENT = -2;
+    public static final int ATTACK_COLUMN_MOVEMENT = 1;
+
     public Pawn(Team team, boolean hasNotMoved) {
         super(team, hasNotMoved);
     }
@@ -24,20 +31,16 @@ public class Pawn extends Piece {
         }
 
         if (team == Team.WHITE) {
-            return rowDifference == 1 || (hasNotMoved && rowDifference == 2);
+            return rowDifference == WHITE_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == WHITE_START_MOVEMENT);
         }
-        if (team == Team.BLACK) {
-            return rowDifference == -1 || (hasNotMoved && rowDifference == -2);
-        }
-
-        return false;
+        return rowDifference == BLACK_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == BLACK_START_MOVEMENT);
     }
 
     @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
-        if (hasNotMoved && Math.abs(rowDifference) == 2) {
-            positions.add(position.move(rowDifference / 2, 0));
+        if (Math.abs(rowDifference) == WHITE_START_MOVEMENT) {
+            positions.add(position.move(Calculator.calculateSign(rowDifference), 0));
             return positions;
         }
         return new ArrayList<>();
@@ -47,13 +50,11 @@ public class Pawn extends Piece {
     public List<Position> findBetweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
         int rowDifference = oldPosition.calculateRowDifference(newPosition);
         int columnDifference = oldPosition.calculateColumnDifference(newPosition);
-
         validateAttackable(rowDifference, columnDifference);
         return findBetweenPositions(oldPosition, rowDifference, columnDifference);
     }
 
     private void validateAttackable(int rowDifference, int columnDifference) {
-
         if (isAttackable(rowDifference, columnDifference)) {
             return;
         }
@@ -62,12 +63,9 @@ public class Pawn extends Piece {
 
     private boolean isAttackable(int rowDifference, int columnDifference) {
         if (team == Team.WHITE) {
-            return rowDifference == 1 && Math.abs(columnDifference) == 1;
+            return rowDifference == WHITE_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
         }
-        if (team == Team.BLACK) {
-            return rowDifference == -1 && Math.abs(columnDifference) == 1;
-        }
-        return false;
+        return rowDifference == BLACK_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Bishop extends Piece {
         int rowSign = rowDifference / absoluteDifference;
         int columnSign = columnDifference / absoluteDifference;
 
-        for (int movement = 1; movement < absoluteDifference; movement++) {
+        for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
             positions.add(position.move(rowSign * movement, columnSign * movement));
         }
         return positions;

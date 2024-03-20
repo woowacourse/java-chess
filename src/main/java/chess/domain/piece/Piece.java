@@ -6,6 +6,8 @@ import chess.domain.piece.character.Team;
 import java.util.List;
 
 public abstract class Piece {
+    protected static final int MIN_MOVEMENT = 1;
+
     protected final Team team;
     protected final boolean hasNotMoved;
 

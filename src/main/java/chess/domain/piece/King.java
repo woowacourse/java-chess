@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
+    private static final int MAX_MOVE_DIFFERENCE = 1;
+
     public King(Team team, boolean hasNotMoved) {
         super(team, hasNotMoved);
     }
@@ -19,7 +21,7 @@ public class King extends Piece {
 
     @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) <= 1 && Math.abs(columnDifference) <= 1;
+        return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
     }
 
     @Override
