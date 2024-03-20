@@ -1,8 +1,14 @@
 package chess;
 
+import java.util.Map;
+
+import chess.domain.attribute.Position;
+import chess.domain.chessboard.Chessboard;
+import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.ResultView;
 import chess.view.command.StartCommand;
+import chess.view.dto.ChessboardDto;
 
 public class ChessGame {
 
@@ -23,6 +29,8 @@ public class ChessGame {
     }
 
     private void play() {
-        resultView.printBoard();
+        Map<Position, Piece> chessboard = Chessboard.create().getChessboard();
+        ChessboardDto chessboardDto = new ChessboardDto(chessboard);
+        resultView.printBoard(chessboardDto);
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.chessboard;
 
 import static java.util.Map.entry;
 
@@ -19,14 +19,14 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.StartingPawn;
 
-class BoardTest {
+class ChessboardTest {
 
 
     @DisplayName("체스판을 생성한다.")
     @Test
     void create() {
-        Board board = Board.create();
-        assertThat(board.getBoard())
+        Chessboard chessBoard = Chessboard.create();
+        assertThat(chessBoard.getChessboard())
                 .contains(
                         entry(Position.of(File.E, Rank.ONE), new King(Color.WHITE, PieceType.KING)),
                         entry(Position.of(File.E, Rank.EIGHT), new King(Color.BLACK, PieceType.KING)),
