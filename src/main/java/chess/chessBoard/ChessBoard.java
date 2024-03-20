@@ -1,16 +1,20 @@
-package chess.chessBoard;
+package chess.chessboard;
 
-import java.util.List;
+import chess.chesspiece.ChessPiece;
+import java.util.Map;
+import java.util.Optional;
 
 public class ChessBoard {
 
-    private final List<Square> board;
+    private static final BoardGenerator BOARD_GENERATOR = BoardGenerator.getInstance();
 
-    private ChessBoard(List<Square> board) {
+    private final Map<Square, Optional<ChessPiece>> board;
+
+    private ChessBoard(Map<Square, Optional<ChessPiece>> board) {
         this.board = board;
     }
 
     public ChessBoard() {
-        this(BoardGenerator.generate());
+        this(BOARD_GENERATOR.generate());
     }
 }
