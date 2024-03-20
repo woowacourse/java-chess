@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class SpaceTest {
 
     @Test
-    @DisplayName("피스를 움직일 수 있다")
+    @DisplayName("피스를 움직이면 이동하려는 위치에 해당피스가 있다")
     void should_move_piece() {
         Piece piece1 = new Pawn(Color.WHITE);
         Piece piece2 = new EmptyPiece();
@@ -26,6 +26,18 @@ class SpaceTest {
         space1.movePiece(space2);
 
         assertThat(space2.pieceCharacter()).isEqualTo(PieceSign.findSign(piece1));
+    }
+
+    @Test
+    @DisplayName("피스를 움직이면 이동하려는 위치에 해당피스가 있다")
+    void should_be_empty_starting_space_when_move() {
+        Piece piece1 = new Pawn(Color.WHITE);
+        Piece piece2 = new EmptyPiece();
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
+
+        space1.movePiece(space2);
+
         assertThat(space1.isBlankSpace()).isTrue();
     }
 

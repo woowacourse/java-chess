@@ -2,10 +2,12 @@ package chess;
 
 import chess.piece.Pawn;
 import chess.piece.Piece;
+import chess.piece.Rook;
 
 public enum PieceSign {
 
     PAWN(Pawn.class, "p"),
+    ROOK(Rook.class, "r"),
     ;
 
     private final Class<? extends Piece> pieceClass;
