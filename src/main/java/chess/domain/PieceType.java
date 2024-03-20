@@ -69,7 +69,7 @@ public enum PieceType {
                     new DownLeftDirection(1)),
             new Movement(new CombinationPolicy(new ColorPolicy(Color.BLACK), new EnemyExistPolicy()),
                     new DownRightDirection(1)),
-            new Movement(new ColorPolicy(Color.WHITE), new DownDirection(1))
+            new Movement(new ColorPolicy(Color.BLACK), new DownDirection(1))
     ),
     EMPTY(),
     ;
