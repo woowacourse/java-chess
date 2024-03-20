@@ -49,6 +49,11 @@ public class Position {
         return rowInterval == colInterval;
     }
 
+    public Direction directionTo(Position target) {
+        boolean destinationHigher = target.rowPosition.isHigherThan(rowPosition);
+        return Direction.from(destinationHigher);
+    }
+
     public int squaredDistanceWith(Position target) {
         int rowInterval = rowPosition.intervalWith(target.rowPosition);
         int colInterval = columnPosition.intervalWith(target.columnPosition);

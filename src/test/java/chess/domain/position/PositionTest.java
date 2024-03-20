@@ -46,4 +46,16 @@ class PositionTest {
 
         assertThat(position1.squaredDistanceWith(position2)).isEqualTo(5);
     }
+
+    @DisplayName("다른 포지션으로의 위 아래 방향을 계산할 수 있다.")
+    @Test
+    void should_CalculateDirectionToTargetPosition() {
+        Position higherPosition = Position.of(0, 0);
+        Position lowerPosition = Position.of(1, 0);
+
+        assertAll(
+                () -> assertThat(lowerPosition.directionTo(higherPosition)).isEqualTo(Direction.UP),
+                () -> assertThat(higherPosition.directionTo(lowerPosition)).isEqualTo(Direction.DOWN)
+        );
+    }
 }
