@@ -2,13 +2,19 @@ package controller;
 
 import static view.Command.START;
 
+import domain.Board;
+import domain.BoardInitiator;
 import domain.piece.Piece;
-import domain.piece.Pieces;
 import domain.piece.info.Color;
-import dto.PieceInfo;
+import domain.piece.info.Position;
+import dto.DtoMapper;
+import dto.RankInfo;
 import dto.PositionInfo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import view.InputView;
 import view.OutputView;
 import view.PieceShape;
@@ -17,28 +23,17 @@ public class ChessController {
     public void start() {
         OutputView.printGameStartMessage();
         while (START.equals(InputView.inputCommand())) {
-            Pieces pieces = Pieces.init();
-            OutputView.printChessBoard(createPieceInfo(pieces));
+            final Board board = new Board(BoardInitiator.init());
+            OutputView.printChessBoard(createPieceInfo(board));
         }
     }
 
-    private List<PieceInfo> createPieceInfo(final Pieces pieces) {
-        List<PieceInfo> pieceInfos = new ArrayList<>();
-        for (Piece piece : pieces.pieces()) {
-            String shape = piece.shape().name();
-            PieceShape pieceShape = PieceShape.of(shape);
-            PositionInfo position = new PositionInfo(piece.position().rankIndex(), piece.position().fileIndex());
-            boolean isWhite = isPieceWhite(piece);
-
-            pieceInfos.add(new PieceInfo(pieceShape, isWhite, position));
+    private List<RankInfo> createPieceInfo(final Board board) {
+        final List<RankInfo> rankInfos = new ArrayList<>();
+        for (int rank = 7; rank >= 0; rank--) {
+            final RankInfo pieceShapeOfRank = DtoMapper.getPieceShapeOfRank(board, rank);
+            rankInfos.add(pieceShapeOfRank);
         }
-        return pieceInfos;
-    }
-
-    private static boolean isPieceWhite(final Piece piece) {
-        if (piece.color().equals(Color.WHITE)) {
-            return true;
-        }
-        return false;
+        return rankInfos;
     }
 }
