@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.ChessBoard;
+import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.position.ColumnPosition;
 import chess.domain.position.Position;
