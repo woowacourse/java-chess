@@ -140,6 +140,14 @@ class PieceTest {
             assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false,
                     Map.of(new Position(row, column), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
+
+        @Test
+        @DisplayName("비숍은 이동 경로에 말이 있는 경우 이동할 수 없다.")
+        void canNotMoveWhenPieceExistIn() {
+            Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(8, 8), false,
+                    Map.of(new Position(6, 6), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+        }
     }
 }
 
