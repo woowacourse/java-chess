@@ -6,7 +6,9 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceRole;
 import domain.piece.PieceType;
-import domain.piece.Position;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class OutputView {
     public void printPieceStatus(final PieceMover mover) {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
-                Square square = new Square(new Position(column, row));
+                Square square = new Square(new Position(new File((char)('a' + column)), new Rank(row)));
                 if (mover.hasPiece(square)) {
                     Piece piece = mover.findPieceBySquare(square);
                     System.out.print(pieceSymbol.get(piece.getPieceType()));

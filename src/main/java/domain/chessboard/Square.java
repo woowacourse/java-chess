@@ -1,6 +1,6 @@
 package domain.chessboard;
 
-import domain.piece.Position;
+import domain.position.Position;
 import java.util.Objects;
 
 public class Square {

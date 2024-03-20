@@ -9,6 +9,9 @@ import static domain.piece.PieceRole.ROOK;
 
 import domain.chessboard.Square;
 import domain.game.PieceMover;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -17,11 +20,14 @@ public class PieceGenerator {
     private static final List<PieceRole> BACK = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
     private static final List<PieceRole> FRONT = List.of(PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN, PAWN);
 
+    private PieceGenerator(){
+    }
+
     public static void generate(final PieceMover mover) {
         for (int row = 0; row < 8; row++) {
             List<Piece> pieces = generateRankPieces(row);
             for (int column = 0; column < pieces.size(); column++) {
-                Square square = new Square(new Position(column, row));
+                Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
                 Piece piece = pieces.get(column);
                 mover.add(square, piece);
             }
@@ -47,7 +53,9 @@ public class PieceGenerator {
     private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color, final int row) {
         return IntStream.range(0, pieceRoles.size())
                 .mapToObj(column ->
-                        new Piece(new PieceType(pieceRoles.get(column), color), new Position(column, row)))
-                .toList();
+                        new Piece(new PieceType(pieceRoles.get(column), color),
+                                new Position(
+                                        new File((char) ('a' + column)), new Rank(row)))).toList();
+
     }
 }

@@ -2,10 +2,10 @@ package domain.chessboard;
 
 import java.util.List;
 
-public class Rank {
+public class RankLine {
     private final List<Square> squares;
 
-    public Rank(final RankGenerator rankGenerator, final int row) {
+    public RankLine(final RankGenerator rankGenerator, final int row) {
         this.squares = rankGenerator.generate(row);
     }
 

@@ -1,14 +1,14 @@
-package domain.piece;
+package domain.position;
 
 import java.util.Objects;
 
 public class Position {
-    private final int column;
-    private final int row;
+    private final File file;
+    private final Rank rank;
 
-    public Position(final int column, final int row) {
-        this.column = column;
-        this.row = row;
+    public Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
     @Override
@@ -20,11 +20,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return column == position.column && row == position.row;
+        return Objects.equals(file, position.file) && Objects.equals(rank, position.rank);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(column, row);
+        return Objects.hash(file, rank);
     }
 }
