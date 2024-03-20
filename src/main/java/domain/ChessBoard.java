@@ -30,7 +30,9 @@ class ChessBoard {
 		if (moveResult.equals(CATCH)) {
 			removeDeadPiece(to);
 		}
-		currentTeam = currentTeam.otherTeam();
+		if (!moveResult.equals(FAILURE)) {
+			currentTeam = currentTeam.otherTeam();
+		}
 		return moveResult.toBoolean();
 	}
 

@@ -1,19 +1,25 @@
 package view;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-import domain.Command;
-
 public class InputView {
-	public Command readCommand() {
+	public String readStartOrEnd() {
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
-		String[] split = input.split(" ");
-		if (split.length != 1) {
-			String[] options = Arrays.copyOfRange(split, 1, split.length);
-			return new Command(split[0], options);
+		while (!input.equals("start") && !input.equals("end")) {
+			System.out.println("다시 입력해 주세요");
+			input = scanner.nextLine();
 		}
-		return new Command(input);
+		return input;
+	}
+
+	public String readEndOrMove() {
+		Scanner scanner = new Scanner(System.in);
+		String input = scanner.nextLine();
+		while (!input.startsWith("move") && !input.equals("end")) {
+			System.out.println("다시 입력해 주세요");
+			input = scanner.nextLine();
+		}
+		return input;
 	}
 }

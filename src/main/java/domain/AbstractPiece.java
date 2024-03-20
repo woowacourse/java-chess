@@ -17,7 +17,7 @@ abstract class AbstractPiece extends Piece {
 			return FAILURE;
 		}
 		PieceMoveResult pieceMoveResult = tryMove(targetPosition, piecesOnChessBoard);
-		if (pieceMoveResult.equals(SUCCESS)) {
+		if (!pieceMoveResult.equals(FAILURE)) {
 			position = targetPosition;
 		}
 		return pieceMoveResult;
