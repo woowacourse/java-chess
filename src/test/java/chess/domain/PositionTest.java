@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class SquareTest {
+class PositionTest {
 
     @Test
     @DisplayName("칸을 생성한다.")
@@ -12,6 +12,6 @@ class SquareTest {
         char rank = 'a';
         int file = 1;
 
-        Assertions.assertThat(Square.of(rank, file)).isInstanceOf(Square.class);
+        Assertions.assertThat(Position.of(rank, file)).isInstanceOf(Position.class);
     }
 }

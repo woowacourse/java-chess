@@ -3,9 +3,9 @@ package chess.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Square {
+public class Position {
 
-    private static final Map<String, Square> CACHE = new LinkedHashMap<>();
+    private static final Map<String, Position> CACHE = new LinkedHashMap<>();
 
     private final char rank;
     private final int file;
@@ -13,17 +13,17 @@ public class Square {
     static {
         for (char i = 'a'; i <= 'h'; i++) {
             for (int j = 1; j <= 8; j++) {
-                CACHE.put(toKey(i, j), new Square(i, j));
+                CACHE.put(toKey(i, j), new Position(i, j));
             }
         }
     }
 
-    private Square(final char rank, final int file) {
+    private Position(final char rank, final int file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public static Square of(final char rank, final int file) {
+    public static Position of(final char rank, final int file) {
         return CACHE.get(toKey(rank, file));
     }
 
