@@ -1,14 +1,15 @@
-package chess.domain;
+package chess.domain.strategy;
 
-import chess.domain.strategy.MoveStrategy;
-import java.util.HashMap;
+import chess.domain.Color;
+import chess.domain.Piece;
+import chess.domain.PieceType;
+import chess.domain.Position;
 import java.util.Map;
 
-public class BlankMoveStrategy implements MoveStrategy {
-    private final Map<Position, Piece> board;
+public class BlankMoveStrategy extends MoveStrategy {
 
     public BlankMoveStrategy(Map<Position, Piece> board) {
-        this.board = new HashMap<>(board);
+        super(board);
     }
 
     @Override
