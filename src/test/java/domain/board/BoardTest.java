@@ -31,7 +31,7 @@ class BoardTest {
      */
 
     @Test
-    @DisplayName("출발점에 말이 없으면 이동 불가")
+    @DisplayName("실패: 출발점에 말이 없으면 이동 불가")
     void move_NoPieceAtSourcePosition() {
         Board board = Board.generatedBy(new InitialBoardGenerator());
         Position sourcePosition = new Position(new File(4), new Rank(4));
@@ -43,7 +43,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("도착점에 본인의 말이 있으면 이동 불가")
+    @DisplayName("실패: 도착점에 본인의 말이 있으면 이동 불가")
     void move_OwnPieceExistAtTargetPosition() {
         Board board = Board.generatedBy(new InitialBoardGenerator());
         Position sourcePosition = new Position(new File(1), new Rank(1));
@@ -55,7 +55,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("출발 위치와 도착 위치가 같으면 이동 불가")
+    @DisplayName("실패: 출발 위치와 도착 위치가 같으면 이동 불가")
     void move_SourcePositionIsSameAsTargetPosition() {
         Board board = Board.generatedBy(new InitialBoardGenerator());
         Position sourcePosition = new Position(new File(1), new Rank(1));
@@ -65,7 +65,6 @@ class BoardTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("source 위치와 target 위치가 같을 수 없습니다.");
     }
-    //* 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다.
 
     @Test
     @DisplayName("성공: 말의 규칙에 맞는 위치로 이동")
