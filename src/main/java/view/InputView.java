@@ -1,5 +1,7 @@
 package view;
 
+import dto.CommandInfo;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -15,9 +17,14 @@ public class InputView {
         return INSTANCE;
     }
 
-    public Command readCommand() {
-        String commandText = scanner.nextLine();
-
-        return Command.findByText(commandText);
+    public CommandInfo readCommand() {
+        String[] commandText = scanner.nextLine().split(" ");
+        if (commandText.length == 1) {
+            return CommandInfo.fromNonMovable(Command.findByText(commandText[0]));
+        }
+        if (commandText.length == 3) {
+            return CommandInfo.ofMovable(Command.findByText(commandText[0]), commandText[1], commandText[2]);
+        }
+        throw new IllegalArgumentException("명령 입력 형식이 올바르지 않습니다.");
     }
 }

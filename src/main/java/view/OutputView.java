@@ -20,7 +20,12 @@ public class OutputView {
     }
 
     public void printGameStartMessage() {
-        System.out.println(String.format("체스 게임을 시작합니다.%n게임 시작은 start, 종료는 end 명령을 입력하세요."));
+        StringJoiner startMessageJoiner = new StringJoiner("%n");
+        startMessageJoiner.add("> 체스 게임을 시작합니다.");
+        startMessageJoiner.add("> 게임 시작 : start");
+        startMessageJoiner.add("> 게임 종료 : end");
+        startMessageJoiner.add("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println(String.format(startMessageJoiner.toString()));
     }
 
     public void printChessBoard(final BoardStatus status) {

@@ -3,7 +3,7 @@ package controller;
 import domain.ChessBoard;
 import domain.piece.PiecesGenerator;
 import dto.BoardStatus;
-import view.Command;
+import dto.CommandInfo;
 import view.InputView;
 import view.OutputView;
 
@@ -19,10 +19,11 @@ public class ChessGame {
     public void start() {
         outputView.printGameStartMessage();
 
-        Command command = Command.END;
-        while((command = inputView.readCommand()).isRunning()) {
+        CommandInfo commandInfo = inputView.readCommand();
+        while (commandInfo.command().isRunning()) {
             BoardStatus boardStatus = new ChessBoard(PiecesGenerator.getInstance()).status();
             outputView.printChessBoard(boardStatus);
+            commandInfo = inputView.readCommand();
         }
     }
 }
