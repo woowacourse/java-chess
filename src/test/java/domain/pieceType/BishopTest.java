@@ -32,7 +32,7 @@ class BishopTest {
         return Stream.of(
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.EIGHT, File.H),
                         List.of(new Square(Rank.FIVE, File.E), new Square(Rank.SIX, File.F),
-                                new Square(Rank.SEVEN, File.G)), new Square(Rank.EIGHT, File.H)),
+                                new Square(Rank.SEVEN, File.G), new Square(Rank.EIGHT, File.H))),
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.ONE, File.A),
                         List.of(new Square(Rank.THREE, File.C), new Square(Rank.TWO, File.B),
                                 new Square(Rank.ONE, File.A))),
@@ -44,8 +44,7 @@ class BishopTest {
                                 new Square(Rank.ONE, File.G))),
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.TWO, File.G), List.of()),
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.THREE, File.G), List.of()),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.G), List.of())
-        );
+                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.G), List.of()));
     }
 
 }

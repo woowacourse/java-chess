@@ -20,28 +20,26 @@ public class Bishop extends Piece {
         final File sourceFile = source.getFile();
         final File targetFile = target.getFile();
 
-        final int fileSub = sourceFile.subtract(targetFile);
+        final int fileSub = targetFile.subtract(sourceFile);
 
         final Rank sourceRank = source.getRank();
         final Rank targetRank = target.getRank();
 
-        final int rankSub = sourceRank.subtrack(targetRank);
+        final int rankSub = targetRank.subtrack(sourceRank);
 
         if (Math.abs(fileSub) == Math.abs(rankSub)) {
-            return List.of();
+            final int fileVector = fileSub == 0 ? 0 : fileSub / Math.abs(fileSub);
+            final int rankVector = rankSub == 0 ? 0 : rankSub / Math.abs(rankSub);
+
+            final int length = Math.max(Math.abs(fileSub), Math.abs(rankSub));
+
+            return Stream.iterate(source.next(rankVector, fileVector),
+                            i -> i.next(rankVector, fileVector))
+                    .limit(length)
+                    .toList();
         }
 
-        final int fileVector = fileSub / Math.abs(fileSub);
-        final int rankVector = rankSub / Math.abs(rankSub);
-
-        final Square nextSquare = source.next(rankVector, fileVector);
-
-        final int length = Math.max(Math.abs(fileSub), Math.abs(rankSub));
-
-        return Stream.iterate(source.next(rankVector, fileVector),
-                        i -> i.next(rankVector, fileVector))
-                .limit(length)
-                .toList();
+        return List.of();
     }
 
     @Override
