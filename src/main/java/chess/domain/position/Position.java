@@ -19,6 +19,22 @@ public class Position {
         this.column = Objects.requireNonNull(column);
     }
 
+    public Position moveToEast() {
+        return new Position(this.row, this.column.toEast());
+    }
+
+    public Position moveToWest() {
+        return new Position(this.row, this.column.toWest());
+    }
+
+    public Position moveToNorth() {
+        return new Position(this.row.toNorth(), this.column);
+    }
+
+    public Position moveToSouth() {
+        return new Position(this.row.toSouth(), this.column);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
