@@ -38,11 +38,11 @@ public class Rook implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        if (rankDiff > 0) {
+        if (Math.abs(rankDiff) > 0) {
             int rankUnit = rankDiff / Math.abs(rankDiff);
 
             List<Position> path = new ArrayList<>();
-            for (int i = rankDiff; i != 1; i--) {
+            for (int i = Math.abs(rankDiff); i != 1; i--) {
                 source = source.move(rankUnit, 0);
                 path.add(source);
             }
@@ -52,7 +52,7 @@ public class Rook implements Piece {
         int fileUnit = fileDiff / Math.abs(fileDiff);
 
         List<Position> path = new ArrayList<>();
-        for (int i = rankDiff; i != 1; i--) {
+        for (int i = Math.abs(fileDiff); i != 1; i--) {
             source = source.move(0, fileUnit);
             path.add(source);
         }
