@@ -27,4 +27,15 @@ class BishopTest {
 
         assertThat(actual).isTrue();
     }
+
+    @Test
+    @DisplayName("목적지로 향하는 경로에 다른 기물이 존재하면 이동할 수 없다.")
+    void cannotMove() {
+        Board board = new Board(Map.of(Position.from("d5"), new Rook(PieceColor.BLACK)));
+        Bishop bishop = new Bishop(PieceColor.BLACK);
+
+        boolean actual = bishop.canMove(Position.from("c6"), Position.from("h1"), board);
+
+        assertThat(actual).isFalse();
+    }
 }

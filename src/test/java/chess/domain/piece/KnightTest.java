@@ -23,4 +23,15 @@ class KnightTest {
 
         assertThat(actual).isTrue();
     }
+
+    @Test
+    @DisplayName("이동 경로에 기물이 존재하여도 뛰어넘어 갈 수 있다.")
+    void canMoveIfPieceExistsOnPath() {
+        Board board = new Board(Map.of(Position.from("c5"), new Rook(PieceColor.BLACK)));
+        Knight knight = new Knight(PieceColor.BLACK);
+
+        boolean actual = knight.canMove(Position.from("c6"), Position.from("b4"), board);
+
+        assertThat(actual).isTrue();
+    }
 }

@@ -20,7 +20,10 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean canMove(Position source, Position target, Board board);
+    public boolean canMove(Position source, Position target, Board board) {
+        List<Position> path = generatePath(source, target);
+        return path.stream().allMatch(board::isNotExistPiece);
+    }
 
     protected List<Position> generatePath(Position source, Position target) {
         List<Position> path = new ArrayList<>();
@@ -39,15 +42,7 @@ public abstract class Piece {
 
         return path;
     }
-
-    protected boolean isSameRank(Position source, Position target) {
-        return source.rank() == target.rank();
-    }
-
-    protected boolean isSameFile(Position source, Position target) {
-        return source.file() == target.file();
-    }
-
+    
     public PieceType getName() {
         return name;
     }

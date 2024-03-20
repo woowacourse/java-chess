@@ -15,7 +15,8 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target, Board board) {
-        return (differenceFile(source, target) == 1 && differenceRank(source, target) == 2) ||
+        return board.isNotExistPiece(target) &&
+                differenceFile(source, target) == 1 && differenceRank(source, target) == 2 ||
                 differenceFile(source, target) == 2 && differenceRank(source, target) == 1;
     }
 

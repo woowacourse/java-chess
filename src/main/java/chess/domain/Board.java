@@ -27,7 +27,7 @@ public class Board {
         return values;
     }
 
-    public boolean existPiece(Position position) {
-        return values.containsKey(position);
+    public boolean isNotExistPiece(Position position) {
+        return !values.containsKey(position);
     }
 }
