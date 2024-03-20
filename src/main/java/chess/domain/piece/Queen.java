@@ -9,7 +9,10 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
-        //TODO: 퀸 움직임 전략 구현 필요
+        if (start.isVerticalWith(destination) || start.isHorizontalWith(destination)
+                || start.isDiagonalWith(destination)) {
+            return true;
+        }
         return false;
     }
 }
