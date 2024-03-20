@@ -1,5 +1,9 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.pieceType.Piece;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,5 +53,70 @@ class ChessTableTest {
         Assertions.assertThatThrownBy(() -> chessTable.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 기물이 없습니다.");
+    }
+
+    @DisplayName("경로에 다른 기물이 있으면 못간다.")
+    @Test
+    void blockingPiece() {
+        // given
+        final ChessTable chessTable = ChessTable.create();
+
+        final Square source = new Square(Rank.ONE, File.D);
+        final Square target = new Square(Rank.TWO, File.E);
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> chessTable.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("갈 수 없는 경로입니다.");
+    }
+
+
+    @DisplayName("기물을 움직인다.")
+    @Test
+    void movePawn() {
+        // given
+        final ChessTable chessTable = ChessTable.create();
+
+        final Square source = new Square(Rank.TWO, File.D);
+        final Square target = new Square(Rank.FOUR, File.D);
+
+        final Piece sourcePiece = chessTable.getPieceSquares().get(source);
+
+        // when &
+        chessTable.move(source, target);
+
+        //then
+        final Map<Square, Piece> pieceSquares = chessTable.getPieceSquares();
+        assertThat(pieceSquares.containsKey(source)).isFalse();
+
+        assertThat(pieceSquares.get(target)).isEqualTo(sourcePiece);
+    }
+
+
+    @DisplayName("상대방 기물을 잡는다.")
+    @Test
+    void killEnemy() {
+        // given
+        final ChessTable chessTable = ChessTable.create();
+
+        final Square whiteSource = new Square(Rank.SEVEN, File.E);
+        final Square whiteTarget = new Square(Rank.FIVE, File.E);
+        final Piece whitePiece = chessTable.getPieceSquares().get(whiteSource);
+
+        chessTable.move(whiteSource, whiteTarget);
+
+        final Square blackSource = new Square(Rank.TWO, File.D);
+        final Square blackTarget = new Square(Rank.FOUR, File.D);
+        final Piece blackPiece = chessTable.getPieceSquares().get(blackSource);
+        chessTable.move(blackSource, blackTarget);
+
+        // when
+        chessTable.move(whiteTarget, blackTarget);
+
+        //then
+        final Map<Square, Piece> pieceSquares = chessTable.getPieceSquares();
+        assertThat(pieceSquares.values()).doesNotContain(blackPiece);
+
+        assertThat(pieceSquares.get(blackTarget)).isEqualTo(whitePiece);
     }
 }

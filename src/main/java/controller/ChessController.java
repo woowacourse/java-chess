@@ -41,6 +41,7 @@ public class ChessController {
                 final Square target = Square.from(targetInput);
 
                 chessTable.move(source, target);
+                outputView.printChessTable(chessTable.getPieceSquares());
                 continue;
             }
             if (END_COMMAND.equals(command)) {

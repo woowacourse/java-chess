@@ -1,6 +1,7 @@
 package domain;
 
 import domain.pieceType.Bishop;
+import domain.pieceType.King;
 import domain.pieceType.Knight;
 import domain.pieceType.Pawn;
 import domain.pieceType.Piece;
@@ -18,7 +19,7 @@ public class ChessTable {
             File.B, new Knight(Color.BLACK),
             File.C, new Bishop(Color.BLACK),
             File.D, new Queen(Color.BLACK),
-            File.E, new Knight(Color.BLACK),
+            File.E, new King(Color.BLACK),
             File.F, new Bishop(Color.BLACK),
             File.G, new Knight(Color.BLACK),
             File.H, new Rook(Color.BLACK)
@@ -28,7 +29,7 @@ public class ChessTable {
             File.B, new Knight(Color.WHITE),
             File.C, new Bishop(Color.WHITE),
             File.D, new Queen(Color.WHITE),
-            File.E, new Knight(Color.WHITE),
+            File.E, new King(Color.WHITE),
             File.F, new Bishop(Color.WHITE),
             File.G, new Knight(Color.WHITE),
             File.H, new Rook(Color.WHITE)
@@ -63,15 +64,21 @@ public class ChessTable {
 
     public Map<Square, Piece> getPieceSquares() {
         return Collections.unmodifiableMap(pieceSquares);
-
-//        return pieceContainer.entrySet().stream()
-//                .collect(Collectors.toMap(Entry::getKey,
-//                        entry -> new PieceInfo(entry.getValue().getPieceType(), entry.getValue().getColor())));
     }
 
     public void move(final Square source, final Square target) {
         if (!pieceSquares.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+
+        final Piece sourcePiece = pieceSquares.get(source);
+
+        if (pieceSquares.containsKey(target)) {
+            final Piece targetPiece = pieceSquares.get(target);
+            if (targetPiece.getColor() == sourcePiece.getColor()) {
+                throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+            }
+
         }
         final Piece piece = pieceSquares.get(source);
         final List<Square> path = piece.calculatePath(source, target);
@@ -79,6 +86,13 @@ public class ChessTable {
         if (path.isEmpty()) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
+        for (final Square square : path) {
+            if (!square.equals(target) && pieceSquares.containsKey(square)) {
+                throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+            }
+        }
 
+        pieceSquares.put(target, sourcePiece);
+        pieceSquares.remove(source);
     }
 }
