@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    private final Color color;
-    private final Position position;
+    protected final Color color;
+    protected final Position position;
 
     public Piece(final Color color, final Position position) {
         this.color = color;

@@ -16,6 +16,18 @@ public class Position {
         this(File.from(file), Rank.from(rank));
     }
 
+    public boolean isStraightWith(final Position target) {
+        if (this.file == target.file && this.rank != target.rank) {
+            return true;
+        }
+
+        if (this.file != target.file && this.rank == target.rank) {
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
