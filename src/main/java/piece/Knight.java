@@ -25,8 +25,6 @@ public class Knight extends Piece {
         }
         int dRow = Math.abs(currentPosition.getRowIndex() - nextPosition.getRowIndex());
         int dColumn = Math.abs(currentPosition.getColumnIndex() - nextPosition.getColumnIndex());
-
-        System.out.println("drow : " + dRow + "dcol : " + dColumn);
         return dRow + dColumn == 3 && dRow != 0 && dColumn != 0;
     }
 

@@ -21,6 +21,6 @@
 * [x] Pawn
 * [x] Knight
 * [ ] King
-* [ ] Bishop
+* [x] Bishop
 * [ ] Queen
 * [ ] Rook
