@@ -28,7 +28,7 @@ public class Board {
     public Board() {
         Map<Position, Piece> board = new HashMap<>();
         initialize(board);
-        
+
         this.board = board;
     }
 
@@ -36,7 +36,7 @@ public class Board {
         placeEmptyPieces(board, createPieceLocationsByIndex(0, 64), Team.NONE);
     }
 
-    public void placePieces() {
+    public void placeInitialPieces() {
         placeBlackPieces();
         placeWhitePieces();
     }

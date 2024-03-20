@@ -16,7 +16,7 @@ public class ChessController {
 
     public void startChess() {
         Board board = new Board();
-        board.placePieces();
+        board.placeInitialPieces();
         OutputView.printBoard(makeBoardDto(board.getBoard()));
     }
 
