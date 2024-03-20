@@ -1,8 +1,10 @@
 package chess.model.piece;
 
-public class Piece {
+import chess.model.Position;
 
-    private final PieceType type;
+public abstract class Piece implements MoveStrategy {
+
+    protected final PieceType type;
 
     protected Piece(PieceType pieceType) {
         this.type = pieceType;
@@ -45,7 +47,15 @@ public class Piece {
         if (PieceType.WHITE_KING.equals(pieceType)) {
             return new King(pieceType);
         }
-        return new Piece(pieceType);
+        return new None(pieceType);
+    }
+
+    protected final int calculateRowDifference(Position source, Position target) {
+        return target.getRow() - source.getRow();
+    }
+
+    protected final int calculateColumnDifference(Position source, Position target) {
+        return target.getColumn() - source.getColumn();
     }
 
     public boolean isNone() {

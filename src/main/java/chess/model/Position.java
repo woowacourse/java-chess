@@ -35,6 +35,14 @@ public class Position {
         }
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

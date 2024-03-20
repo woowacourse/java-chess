@@ -17,7 +17,7 @@ class PositionTest {
     @Test
     void createValidPosition() {
         assertThatCode(() -> new Position(3, 6))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("0 이상 7 이하의 좌표 값이 아니면 예외가 발생한다")
@@ -25,13 +25,13 @@ class PositionTest {
     @MethodSource("provideInvalidPosition")
     void createInvalidPosition(int x, int y) {
         assertThatThrownBy(() -> new Position(x, y))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     public static Stream<Arguments> provideInvalidPosition() {
         return Stream.of(
-            Arguments.of(-1, 6),
-            Arguments.of(3, 8)
+                Arguments.of(-1, 6),
+                Arguments.of(3, 8)
         );
     }
 
@@ -44,9 +44,9 @@ class PositionTest {
 
     public static Stream<Arguments> provideValidCoordinate() {
         return Stream.of(
-            Arguments.of("b2", new Position(6, 1)),
-            Arguments.of("h8", new Position(0, 7)),
-            Arguments.of("a1", new Position(7, 0))
+                Arguments.of("b2", new Position(6, 1)),
+                Arguments.of("h8", new Position(0, 7)),
+                Arguments.of("a1", new Position(7, 0))
         );
     }
 }

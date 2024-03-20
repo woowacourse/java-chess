@@ -29,13 +29,21 @@ public enum PieceType {
 
     public static PieceType findPieceTypeByName(String name) {
         return Arrays.stream(values())
-            .filter(pieceType -> pieceType.displayName.equals(name))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 기물 이름입니다."));
+                .filter(pieceType -> pieceType.displayName.equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 기물 이름입니다."));
     }
 
     public boolean isSameColor(int turnCount) {
         return colorId == (turnCount % COLOR_COUNT);
+    }
+
+    public boolean isWhite() {
+        return colorId == 0;
+    }
+
+    public boolean isBlack() {
+        return colorId == 1;
     }
 
     public String getDisplayName() {

@@ -9,14 +9,14 @@ import java.util.Map;
 public class Board {
 
     private static final List<String> INITIAL_BOARD = List.of(
-        "RNBQKBNR",
-        "PPPPPPPP",
-        "........",
-        "........",
-        "........",
-        "........",
-        "pppppppp",
-        "rnbqkbnr"
+            "RNBQKBNR",
+            "PPPPPPPP",
+            "........",
+            "........",
+            "........",
+            "........",
+            "pppppppp",
+            "rnbqkbnr"
     );
 
     private final Map<Position, Piece> board;

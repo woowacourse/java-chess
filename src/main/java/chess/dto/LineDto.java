@@ -24,7 +24,7 @@ public class LineDto {
 
     private static String findPieceName(Board board, Position position) {
         return board.findPiece(position)
-            .toString();
+                .toString();
     }
 
     @Override

@@ -18,6 +18,6 @@ public final class InputView {
     public static String askGameCommand() {
         System.out.println(COMMEND_MENU);
         return SCANNER.nextLine()
-            .strip();
+                .strip();
     }
 }

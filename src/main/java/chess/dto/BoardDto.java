@@ -26,7 +26,7 @@ public class BoardDto {
     @Override
     public String toString() {
         return lines.stream()
-            .map(LineDto::toString)
-            .collect(collectingAndThen(toList(), list -> String.join("\n", list)));
+                .map(LineDto::toString)
+                .collect(collectingAndThen(toList(), list -> String.join("\n", list)));
     }
 }

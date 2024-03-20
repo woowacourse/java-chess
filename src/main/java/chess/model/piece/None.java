@@ -2,9 +2,9 @@ package chess.model.piece;
 
 import chess.model.Position;
 
-public class Rook extends Piece {
+public class None extends Piece {
 
-    public Rook(PieceType pieceType) {
+    protected None(PieceType pieceType) {
         super(pieceType);
     }
 
