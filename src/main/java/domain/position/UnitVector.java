@@ -1,6 +1,7 @@
 package domain.position;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.BiPredicate;
 
 public enum UnitVector {
@@ -36,6 +37,18 @@ public enum UnitVector {
 
     private static boolean isInvalid(int rowDiff, int colDiff) {
         return (rowDiff != 0 && colDiff != 0) && (Math.abs(rowDiff) != Math.abs(colDiff));
+    }
+
+    public static Set<UnitVector> orthogonalVectors() {
+        return Set.of(UP, RIGHT, DOWN, LEFT);
+    }
+
+    public static Set<UnitVector> diagonalVectors() {
+        return Set.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+    }
+
+    public static Set<UnitVector> omnidirectionalVectors() {
+        return Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
     }
 
     public int getRow() {

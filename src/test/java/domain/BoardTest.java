@@ -11,7 +11,7 @@ class BoardTest {
     @Test
     void createBoard() {
         // When
-        Board board = Board.init();
+        Board board = BoardInitializer.init();
 
         // Then
         assertThat(board).isNotNull();

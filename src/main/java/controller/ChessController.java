@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Board;
+import domain.BoardInitializer;
 import domain.GameCommand;
 import dto.BoardDto;
 import dto.RequestDto;
@@ -28,7 +29,7 @@ public class ChessController {
     }
 
     private void startGame() {
-        Board board = Board.init();
+        Board board = BoardInitializer.init();
 
         BoardDto boardDto = BoardDto.from(board);
 
