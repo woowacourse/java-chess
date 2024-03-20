@@ -3,8 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 import model.Command;
 import model.GameBoard;
-import point.Moving;
-import point.Position;
+import model.position.Moving;
+import model.position.Position;
 import view.InputView;
 import view.OutputView;
 

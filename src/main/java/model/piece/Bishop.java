@@ -1,11 +1,11 @@
-package piece;
+package model.piece;
 
 import java.util.HashSet;
 import java.util.Set;
 import model.Camp;
-import point.Column;
-import point.Position;
-import point.Row;
+import model.position.Column;
+import model.position.Position;
+import model.position.Row;
 
 public class Bishop extends Piece {
 

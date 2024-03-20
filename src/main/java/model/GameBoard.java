@@ -5,17 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-import piece.Bishop;
-import piece.King;
-import piece.Knight;
-import piece.Pawn;
-import piece.Piece;
-import piece.Queen;
-import piece.Rook;
-import point.Column;
-import point.Moving;
-import point.Position;
-import point.Row;
+import model.piece.Bishop;
+import model.piece.King;
+import model.piece.Knight;
+import model.piece.Pawn;
+import model.piece.Piece;
+import model.piece.Queen;
+import model.piece.Rook;
+import model.position.Column;
+import model.position.Moving;
+import model.position.Position;
+import model.position.Row;
 
 public class GameBoard {
 

@@ -1,17 +1,17 @@
+package model;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.Camp;
-import model.GameBoard;
+import model.piece.Piece;
+import model.piece.Queen;
+import model.position.Column;
+import model.position.Moving;
+import model.position.Position;
+import model.position.Row;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import piece.Piece;
-import piece.Queen;
-import point.Column;
-import point.Moving;
-import point.Position;
-import point.Row;
 
 class GameBoardTest {
 

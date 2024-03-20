@@ -1,8 +1,8 @@
-package piece;
+package model.piece;
 
 import java.util.Set;
 import model.Camp;
-import point.Position;
+import model.position.Position;
 
 public class Knight extends Piece {
 

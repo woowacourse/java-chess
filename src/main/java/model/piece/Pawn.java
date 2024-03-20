@@ -1,9 +1,9 @@
-package piece;
+package model.piece;
 
 import java.util.Set;
 import model.Camp;
-import point.Position;
-import point.Row;
+import model.position.Position;
+import model.position.Row;
 
 public class Pawn extends Piece {
 

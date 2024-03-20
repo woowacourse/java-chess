@@ -1,4 +1,4 @@
-package point;
+package model.position;
 
 public class Moving {
 

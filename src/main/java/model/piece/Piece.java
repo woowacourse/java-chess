@@ -1,9 +1,9 @@
-package piece;
+package model.piece;
 
 import java.util.Objects;
 import java.util.Set;
 import model.Camp;
-import point.Position;
+import model.position.Position;
 
 public abstract class Piece {
 

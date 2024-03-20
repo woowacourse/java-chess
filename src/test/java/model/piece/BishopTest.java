@@ -1,13 +1,13 @@
-package piece;
+package model.piece;
 
 import java.util.stream.Stream;
 import model.Camp;
+import model.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import point.Position;
 
 class BishopTest {
 
@@ -34,7 +34,7 @@ class BishopTest {
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
                 Arguments.of(Position.from("c8"), Position.from("a8")),
-                Arguments.of(Position.from("c8"),Position.from("c3")),
+                Arguments.of(Position.from("c8"), Position.from("c3")),
                 Arguments.of(Position.from("f8"), Position.from("e8")),
                 Arguments.of(Position.from("g4"), Position.from("c3"))
         );

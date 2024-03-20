@@ -3,8 +3,8 @@ package view;
 import java.util.Map;
 import java.util.Map.Entry;
 import model.GameBoard;
-import piece.Piece;
-import point.Position;
+import model.piece.Piece;
+import model.position.Position;
 
 public class OutputView {
 
