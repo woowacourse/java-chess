@@ -6,6 +6,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.strategy.BishopMoveStrategy;
@@ -114,5 +115,17 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    public void placePiece(Position currentPosition, Piece piece) {
+        board.put(currentPosition, piece);
+    }
+
+    public boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
+        List<Position> internalPositions = currentPosition.getInternalPositions(newPosition);
+
+        return internalPositions.stream()
+                .map(board::get)
+                .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
 }
