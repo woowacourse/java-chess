@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.dto.BoardDto;
+import chess.model.Board;
 import chess.model.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -9,6 +11,11 @@ public final class ChessGame {
 
     public void run() {
         Command command = prepareCommand();
+        if (command == Command.START) {
+            Board board = Board.createInitialBoard();
+            BoardDto boardDto = BoardDto.from(board);
+            OutputView.printChessBoard(boardDto);
+        }
     }
 
     private Command prepareCommand() {
