@@ -7,10 +7,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static domain.position.UnitVector.*;
+public class ContinuousMoveStrategy implements MoveStrategy {
+    private final Set<UnitVector> acceptableVectors;
+    private final int moveBound;
 
-public class OrthogonalMoveStrategy implements ContinuousMoveStrategy {
-    private static final Set<UnitVector> acceptableVectors = Set.of(UP, RIGHT, DOWN, LEFT);
+    public ContinuousMoveStrategy(Set<UnitVector> acceptableVectors, int moveBound) {
+        this.acceptableVectors = acceptableVectors;
+        this.moveBound = moveBound;
+    }
 
     @Override
     public boolean isMovable(final Position source, final Position destination, final Set<Position> otherPiecesPosition) {
@@ -22,7 +26,7 @@ public class OrthogonalMoveStrategy implements ContinuousMoveStrategy {
 
         List<Position> movePaths = Stream.iterate(source, position -> position.add(optimalVector))
                 .takeWhile(position -> !position.equals(destination) && !otherPiecesPosition.contains(position))
-                .limit(8)
+                .limit(moveBound)
                 .toList();
 
         return isReachable(destination, optimalVector, movePaths);
