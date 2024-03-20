@@ -11,10 +11,10 @@ public class Pawn implements Piece {
     private static final int WHITE_PAWN_FIRST_POSITION = 6;
     private static final int MAX_PAWN_DISTANCE_DIFFERENCE = 2;
 
-    private final boolean isBlack;
+    private final Color color;
 
-    public Pawn(boolean isBlack) {
-        this.isBlack = isBlack;
+    public Pawn(Color color) {
+        this.color = color;
     }
 
     @Override
@@ -29,8 +29,8 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean isSameColor(boolean isBlack) {
-        return this.isBlack == isBlack;
+    public boolean isSameColor(Color currentTurn) {
+        return this.color == currentTurn;
     }
 
     private List<Integer> getAttackDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
@@ -47,24 +47,44 @@ public class Pawn implements Piece {
         return pawnPath.getDirection();
     }
 
+    // todo: validateMoveBackward
     private void validate(PawnStrategy pawnStrategy, Coordinate coordinate, int rowDifference) {
         validateIsCanMovePawn(coordinate, rowDifference);
-        pawnStrategy.validatePossibleStrategyColor(isBlack);
+        pawnStrategy.validatePossibleStrategyColor(color);
     }
 
     private void validateAttack(PawnAttackStrategy pawnStrategy, Coordinate coordinate, int rowDifference) {
         validateIsCanMovePawn(coordinate, rowDifference);
-        pawnStrategy.validatePossibleStrategyColor(isBlack);
+        pawnStrategy.validatePossibleStrategyColor(color);
     }
 
+    // todo: validateCanMove ?
     private void validateIsCanMovePawn(Coordinate coordinate, int rowDifference) {
         if (!isFirstPosition(coordinate.getRowValue()) && Math.abs(rowDifference) == MAX_PAWN_DISTANCE_DIFFERENCE) {
             throw new IllegalArgumentException("폰은 처음에만 2칸을 이동할 수 있습니다.");
         }
     }
 
+    // todo: validateIsCanMovePawn 대체?
+//    private void validateCanMove(Coordinate coordinate, int rowDifference) {
+//        if (isInitialPawn(coordinate) || Math.abs(rowDifference) == 1) {
+//            return;
+//        }
+//        throw new IllegalArgumentException("폰은 처음에만 2칸을 이동할 수 있습니다.");
+//    }
+
+    /* todo: getter 제거
+    public boolean isSameRow(Row row) {
+        return this.row.equals(row);
+    }
+     */
+//    private boolean isInitialPawn(Coordinate coordinate) {
+//        return (coordinate.hasSameRow(new Row(1))  && color == Color.BLACK)
+//                || (coordinate.hasSameRow(new Row(6)) && color == Color.WHITE);
+//    }
+
     private boolean isFirstPosition(int position) {
-        if (isBlack) {
+        if (isBlack()) {
             return position == BLACK_PAWN_FIRST_POSITION;
         }
         return position == WHITE_PAWN_FIRST_POSITION;
@@ -72,6 +92,6 @@ public class Pawn implements Piece {
 
     @Override
     public boolean isBlack() {
-        return isBlack;
+        return color == Color.BLACK;
     }
 }

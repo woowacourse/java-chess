@@ -6,10 +6,10 @@ import strategy.KnightStrategy;
 
 public class Knight implements Piece {
 
-    private final boolean isBlack;
+    private final Color color;
 
-    public Knight(boolean isBlack) {
-        this.isBlack = isBlack;
+    public Knight(Color color) {
+        this.color = color;
     }
 
     @Override
@@ -22,12 +22,12 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean isSameColor(boolean isBlack) {
-        return this.isBlack == isBlack;
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     @Override
     public boolean isBlack() {
-        return isBlack;
+        return color == Color.BLACK;
     }
 }

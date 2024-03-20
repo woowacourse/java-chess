@@ -7,6 +7,7 @@ import coordinate.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import piece.Color;
 import position.Column;
 import position.Row;
 
@@ -20,13 +21,13 @@ class ChessBoardTest {
     void moveAfterKill() {
         Coordinate whitePawnStart = createCoordinate(6, 1);
         Coordinate whitePawnDestination = createCoordinate(4, 1);
-        chessBoard.playTurn(whitePawnStart, whitePawnDestination, false);
+        chessBoard.playTurn(whitePawnStart, whitePawnDestination, Color.WHITE);
 
         Coordinate blackPawnStart = createCoordinate(1, 0);
         Coordinate blackPawnDestination = createCoordinate(3, 0);
-        chessBoard.playTurn(blackPawnStart, blackPawnDestination, true);
+        chessBoard.playTurn(blackPawnStart, blackPawnDestination, Color.BLACK);
 
-        chessBoard.playTurn(whitePawnDestination, blackPawnDestination, false);
+        chessBoard.playTurn(whitePawnDestination, blackPawnDestination, Color.WHITE);
 
         assertThat(chessBoard.getBoard().get(createCoordinate(3, 0)))
                 .isNotNull();
@@ -40,7 +41,7 @@ class ChessBoardTest {
     void move() {
         Coordinate blackKnightStart = createCoordinate(0, 1);
         Coordinate blackKnightDestination = createCoordinate(2, 0);
-        chessBoard.playTurn(blackKnightStart.copied(), blackKnightDestination, true);
+        chessBoard.playTurn(blackKnightStart.copied(), blackKnightDestination, Color.BLACK);
 
         assertThat(chessBoard.getBoard().get(blackKnightStart)).isNull();
         assertThat(chessBoard.getBoard().get(blackKnightDestination)).isNotNull();
@@ -52,7 +53,7 @@ class ChessBoardTest {
     void cantMoveOtherPiece() {
         Coordinate blackPawnStart = createCoordinate(1, 7);
         Coordinate blackPawnDestination = createCoordinate(3, 7);
-        assertThatThrownBy(() -> chessBoard.playTurn(blackPawnStart, blackPawnDestination, false))
+        assertThatThrownBy(() -> chessBoard.playTurn(blackPawnStart, blackPawnDestination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대의 말을 움직일 수 없습니다.");
     }
@@ -61,7 +62,7 @@ class ChessBoardTest {
     @DisplayName("이동 경로에 말이 있으면 이동할 수 없다.")
     @Test
     void cantMoveWhenPieceInPath() {
-        assertThatThrownBy(() -> chessBoard.playTurn(createCoordinate(0, 0), createCoordinate(5, 0), true))
+        assertThatThrownBy(() -> chessBoard.playTurn(createCoordinate(0, 0), createCoordinate(5, 0), Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 말이 존재합니다.");
     }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import piece.Bishop;
+import piece.Color;
 import piece.King;
 import piece.Knight;
 import piece.Pawn;
@@ -25,26 +26,26 @@ public class ChessBoardInitializer {
     public static Map<Coordinate, Piece> createInitialBoard() {
         Map<Coordinate, Piece> board = new HashMap<>();
         for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
-            board.put(new Coordinate(new Row(BLACK_FIRST_RANK), new Column(i)), createFirstRank(true).get(i));
-            board.put(new Coordinate(new Row(WHITE_FIRST_RANK), new Column(i)), createFirstRank(false).get(i));
+            board.put(new Coordinate(new Row(BLACK_FIRST_RANK), new Column(i)), createFirstRank(Color.BLACK).get(i));
+            board.put(new Coordinate(new Row(WHITE_FIRST_RANK), new Column(i)), createFirstRank(Color.WHITE).get(i));
         }
         for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
-            board.put(new Coordinate(new Row(BLACK_SECOND_RANK), new Column(i)), new Pawn(true));
-            board.put(new Coordinate(new Row(WHITE_SECOND_RANK), new Column(i)), new Pawn(false));
+            board.put(new Coordinate(new Row(BLACK_SECOND_RANK), new Column(i)), new Pawn(Color.BLACK));
+            board.put(new Coordinate(new Row(WHITE_SECOND_RANK), new Column(i)), new Pawn(Color.WHITE));
         }
         return board;
     }
 
-    private static List<Piece> createFirstRank(boolean isBlack) {
+    private static List<Piece> createFirstRank(Color color) {
         return List.of(
-                new Rook(isBlack),
-                new Knight(isBlack),
-                new Bishop(isBlack),
-                new Queen(isBlack),
-                new King(isBlack),
-                new Bishop(isBlack),
-                new Knight(isBlack),
-                new Rook(isBlack)
+                new Rook(color),
+                new Knight(color),
+                new Bishop(color),
+                new Queen(color),
+                new King(color),
+                new Bishop(color),
+                new Knight(color),
+                new Rook(color)
         );
     }
 }

@@ -3,6 +3,7 @@ package controller;
 import chessboard.ChessBoard;
 import coordinate.Coordinate;
 import java.util.List;
+import piece.Color;
 import position.Column;
 import position.Row;
 import view.InputView;
@@ -33,7 +34,7 @@ public class ChessGameController {
     }
 
     private void startGame(ChessBoard chessBoard) {
-        boolean startTurn = false;
+        Color currentTurn = Color.WHITE;
         while (true) {
             List<String> commands = inputView.receiveCommands();
             if (Command.END.isSameIdentifier(commands.get(0))) {
@@ -44,10 +45,17 @@ public class ChessGameController {
             }
             Coordinate start = createCoordinate(commands.get(1));
             Coordinate to = createCoordinate(commands.get(2));
-            chessBoard.playTurn(start, to, startTurn);
-            startTurn = !startTurn;
+            chessBoard.playTurn(start, to, currentTurn);
+            currentTurn = changeTurn(currentTurn);
             outputView.printBoard(chessBoard.getBoard());
         }
+    }
+
+    private Color changeTurn(Color currentTurn) {
+        if (currentTurn == Color.BLACK) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
     }
 
     private Coordinate createCoordinate(String input) {

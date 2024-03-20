@@ -6,10 +6,10 @@ import strategy.QueenStrategy;
 
 public class Queen implements Piece {
 
-    private final boolean isBlack;
+    private final Color color;
 
-    public Queen(boolean isBlack) {
-        this.isBlack = isBlack;
+    public Queen(Color color) {
+        this.color = color;
     }
 
     @Override
@@ -22,12 +22,12 @@ public class Queen implements Piece {
     }
 
     @Override
-    public boolean isSameColor(boolean isBlack) {
-        return this.isBlack == isBlack;
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     @Override
     public boolean isBlack() {
-        return isBlack;
+        return color == Color.BLACK;
     }
 }

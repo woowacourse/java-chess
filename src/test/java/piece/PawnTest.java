@@ -16,7 +16,7 @@ class PawnTest {
         Coordinate coordinate = new Coordinate(new Row(0), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(1));
 
-        Pawn pawn = new Pawn(true);
+        Pawn pawn = new Pawn(Color.BLACK);
 
         Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false)).isEqualTo(List.of(1, 0));
     }
@@ -27,7 +27,7 @@ class PawnTest {
         Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(4), new Column(1));
 
-        Pawn pawn = new Pawn(true);
+        Pawn pawn = new Pawn(Color.BLACK);
 
         Assertions.assertThatThrownBy(() -> pawn.getDirection(coordinate, nextCoordinate, false))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -40,7 +40,7 @@ class PawnTest {
         Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
 
-        Pawn pawn = new Pawn(false);
+        Pawn pawn = new Pawn(Color.WHITE);
 
         Assertions.assertThatCode(() -> pawn.getDirection(coordinate, nextCoordinate, true))
                 .doesNotThrowAnyException();
@@ -52,7 +52,7 @@ class PawnTest {
         Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
 
-        Pawn pawn = new Pawn(false);
+        Pawn pawn = new Pawn(Color.WHITE);
 
         Assertions.assertThatThrownBy(() -> pawn.getDirection(coordinate, nextCoordinate, false))
                 .isInstanceOf(IllegalArgumentException.class)

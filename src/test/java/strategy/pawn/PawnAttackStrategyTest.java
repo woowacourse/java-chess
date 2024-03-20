@@ -3,6 +3,7 @@ package strategy.pawn;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import piece.Color;
 
 class PawnAttackStrategyTest {
 
@@ -17,7 +18,8 @@ class PawnAttackStrategyTest {
     @DisplayName("폰은 뒤로 갈 수 없다.")
     @Test
     void pawnCanNotGoBack() {
-        Assertions.assertThatThrownBy(() -> PawnAttackStrategy.DOWN_RIGHT_DIAGONAL.validatePossibleStrategyColor(false))
+        Assertions.assertThatThrownBy(
+                        () -> PawnAttackStrategy.DOWN_RIGHT_DIAGONAL.validatePossibleStrategyColor(Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 뒤로 갈 수 없습니다.");
     }

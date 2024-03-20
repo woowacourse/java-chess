@@ -6,10 +6,10 @@ import strategy.RookStrategy;
 
 public class Rook implements Piece {
 
-    private final boolean isBlack;
+    private final Color color;
 
-    public Rook(boolean isBlack) {
-        this.isBlack = isBlack;
+    public Rook(Color color) {
+        this.color = color;
     }
 
     @Override
@@ -22,12 +22,12 @@ public class Rook implements Piece {
     }
 
     @Override
-    public boolean isSameColor(boolean isBlack) {
-        return this.isBlack == isBlack;
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     @Override
     public boolean isBlack() {
-        return isBlack;
+        return color == Color.BLACK;
     }
 }

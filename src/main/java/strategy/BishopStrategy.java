@@ -3,6 +3,8 @@ package strategy;
 import java.util.Arrays;
 import java.util.List;
 
+// todo: Direction을 정의해서 추상화할 수 있을 듯!(얘기해보자)
+// todo: 두 좌표를 받아서 방향만 넣는것임!
 public enum BishopStrategy {
 
     UP_LEFT_DIAGONAL(-1, -1, List.of(-1, -1)),
