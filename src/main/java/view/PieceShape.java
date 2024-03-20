@@ -1,20 +1,25 @@
 package view;
 
-import dto.PieceInfo;
+import domain.piece.Piece;
+import dto.RankInfo;
 import java.util.Arrays;
+import java.util.List;
 
 public enum PieceShape {
-    KING("K"),
-    QUEEN("Q"),
-    ROOK("R"),
-    BISHOP("B"),
-    KNIGHT("N"),
-    PAWN("P");
+    KING("K", "k"),
+    QUEEN("Q", "q"),
+    ROOK("R", "r"),
+    BISHOP("B", "b"),
+    KNIGHT("N", "n"),
+    PAWN("P", "p"),
+    NONE(".", ".");
 
-    private final String shape;
+    private final String blackShape;
+    private final String whiteShape;
 
-    PieceShape(String shape) {
-        this.shape = shape;
+    PieceShape(final String blackShape, final String whiteShape) {
+        this.blackShape = blackShape;
+        this.whiteShape = whiteShape;
     }
 
     public static PieceShape of(final String shape) {
@@ -24,10 +29,21 @@ public enum PieceShape {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 기물 모양입니다."));
     }
 
-    public static String shapeValue(final PieceInfo pieceInfo) {
-        if (pieceInfo.isWhite()) {
-            return pieceInfo.shape().shape.toLowerCase();
-        }
-        return pieceInfo.shape().shape;
+
+    public static String whiteShapeOf(final String type) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equals(type))
+                .map(value -> value.whiteShape)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 기물 모양입니다."));
+
+    }
+
+    public static String blackShapeOf(final String type) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equals(type))
+                .map(value -> value.blackShape)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 기물 모양입니다."));
     }
 }
