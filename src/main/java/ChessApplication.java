@@ -1,4 +1,5 @@
 import domain.board.Board;
+import domain.board.InitialBoardGenerator;
 import view.InputView;
 import view.OutputView;
 
@@ -11,7 +12,7 @@ public class ChessApplication {
         outputView.printStartMessage();
 
         while (inputView.readStartCommand()) {
-            outputView.printBoard(Board.initialize().getSquares());
+            outputView.printBoard(Board.generatedBy(new InitialBoardGenerator()).getSquares());
         }
     }
 }
