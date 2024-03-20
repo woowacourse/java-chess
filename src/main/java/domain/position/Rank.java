@@ -39,4 +39,8 @@ public enum Rank {
         }
         return fromNumber(this.number - 1);
     }
+
+    int subtract(Rank rank) {
+        return this.number - rank.number;
+    }
 }

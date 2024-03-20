@@ -1,5 +1,7 @@
 package domain.movement;
 
+import java.util.List;
+
 public enum Direction {
     UP(1, 0),
     DOWN(-1, 0),
@@ -18,6 +20,9 @@ public enum Direction {
     KNIGHT_LEFT_DOWN(-1, -2),
     KNIGHT_LEFT_UP(1, -2);
 
+    private static final List<Direction> KNIGHT = List.of(KNIGHT_UP_LEFT, KNIGHT_UP_RIGHT, KNIGHT_RIGHT_UP,
+            KNIGHT_RIGHT_DOWN,
+            KNIGHT_DOWN_RIGHT, KNIGHT_DOWN_LEFT, KNIGHT_LEFT_DOWN, KNIGHT_LEFT_UP);
     private final int rankDiff;
     private final int fileDiff;
 
@@ -27,11 +32,9 @@ public enum Direction {
     }
 
     public static Direction of(int rankDiff, int fileDiff) {
-        if (fileDiff == 0 && rankDiff == 0) {
-            throw new IllegalArgumentException("동일한 위치입니다.");
-        }
+        validateNoDifference(rankDiff, fileDiff);
 
-        for (Direction direction : values()) {
+        for (Direction direction : KNIGHT) {
             if (direction.rankDiff == rankDiff && direction.fileDiff == fileDiff) {
                 return direction;
             }
@@ -39,9 +42,7 @@ public enum Direction {
 
         int count = Math.max(Math.abs(fileDiff), Math.abs(rankDiff));
 
-        if (fileDiff % count != 0 || rankDiff % count != 0) {
-            throw new IllegalArgumentException("올바르지 않은 방향입니다.");
-        }
+        validateInvalidDirection(rankDiff, fileDiff, count);
 
         fileDiff /= count;
         rankDiff /= count;
@@ -55,4 +56,15 @@ public enum Direction {
         throw new IllegalArgumentException("올바르지 않은 방향입니다.");
     }
 
+    private static void validateNoDifference(int rankDiff, int fileDiff) {
+        if (fileDiff == 0 && rankDiff == 0) {
+            throw new IllegalArgumentException("동일한 위치입니다.");
+        }
+    }
+
+    private static void validateInvalidDirection(int rankDiff, int fileDiff, int count) {
+        if (fileDiff % count != 0 || rankDiff % count != 0) {
+            throw new IllegalArgumentException("올바르지 않은 방향입니다.");
+        }
+    }
 }

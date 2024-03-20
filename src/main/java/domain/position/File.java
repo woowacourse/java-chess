@@ -49,4 +49,8 @@ public enum File {
         }
         return File.fromOrder(this.order - 1);
     }
+
+    public int subtract(File file) {
+        return this.order - file.order;
+    }
 }
