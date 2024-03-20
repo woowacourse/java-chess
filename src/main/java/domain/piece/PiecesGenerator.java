@@ -15,28 +15,28 @@ import java.util.Map;
 public class PiecesGenerator {
     // TODO: 미안해 자바야...
     static final List<Position> WHITE_PAWN_POSITIONS = List.of(
-            new Position(ChessRank.TWO, ChessFile.A), new Position(ChessRank.TWO, ChessFile.B), new Position(ChessRank.TWO, ChessFile.C), new Position(ChessRank.TWO, ChessFile.D),
-            new Position(ChessRank.TWO, ChessFile.E), new Position(ChessRank.TWO, ChessFile.F), new Position(ChessRank.TWO, ChessFile.G), new Position(ChessRank.TWO, ChessFile.H));
+            new Position(ChessFile.A, ChessRank.TWO), new Position(ChessFile.B, ChessRank.TWO), new Position(ChessFile.C, ChessRank.TWO), new Position(ChessFile.D, ChessRank.TWO),
+            new Position(ChessFile.E, ChessRank.TWO), new Position(ChessFile.F, ChessRank.TWO), new Position(ChessFile.G, ChessRank.TWO), new Position(ChessFile.H, ChessRank.TWO));
     static final List<Position> WHITE_ROOK_POSITION = List.of(
-            new Position(ChessRank.ONE, ChessFile.A), new Position(ChessRank.ONE, ChessFile.H));
+            new Position(ChessFile.A, ChessRank.ONE), new Position(ChessFile.H, ChessRank.ONE));
     static final List<Position> WHITE_KNIGHT_POSITION = List.of(
-            new Position(ChessRank.ONE, ChessFile.B), new Position(ChessRank.ONE, ChessFile.G));
+            new Position(ChessFile.B, ChessRank.ONE), new Position(ChessFile.G, ChessRank.ONE));
     static final List<Position> WHITE_BISHOP_POSITION = List.of(
-            new Position(ChessRank.ONE, ChessFile.C), new Position(ChessRank.ONE, ChessFile.F));
-    static final Position WHITE_KING_POSITION = new Position(ChessRank.ONE, ChessFile.E);
-    static final Position WHITE_QUEEN_POSITION = new Position(ChessRank.ONE, ChessFile.D);
+            new Position(ChessFile.C, ChessRank.ONE), new Position(ChessFile.F, ChessRank.ONE));
+    static final Position WHITE_KING_POSITION = new Position(ChessFile.E, ChessRank.ONE);
+    static final Position WHITE_QUEEN_POSITION = new Position(ChessFile.D, ChessRank.ONE);
     static final List<Position> BLACK_PAWN_POSITIONS = List.of(
-            new Position(ChessRank.SEVEN, ChessFile.A), new Position(ChessRank.SEVEN, ChessFile.B), new Position(ChessRank.SEVEN, ChessFile.C), new Position(ChessRank.SEVEN, ChessFile.D),
-            new Position(ChessRank.SEVEN, ChessFile.E), new Position(ChessRank.SEVEN, ChessFile.F), new Position(ChessRank.SEVEN, ChessFile.G), new Position(ChessRank.SEVEN, ChessFile.H));
+            new Position(ChessFile.A, ChessRank.SEVEN), new Position(ChessFile.B, ChessRank.SEVEN), new Position(ChessFile.C, ChessRank.SEVEN), new Position(ChessFile.D, ChessRank.SEVEN),
+            new Position(ChessFile.E, ChessRank.SEVEN), new Position(ChessFile.F, ChessRank.SEVEN), new Position(ChessFile.G, ChessRank.SEVEN), new Position(ChessFile.H, ChessRank.SEVEN));
 
     static final List<Position> BLACK_ROOK_POSITION = List.of(
-            new Position(ChessRank.EIGHT, ChessFile.A), new Position(ChessRank.EIGHT, ChessFile.H));
+            new Position(ChessFile.A, ChessRank.EIGHT), new Position(ChessFile.H, ChessRank.EIGHT));
     static final List<Position> BLACK_KNIGHT_POSITION = List.of(
-            new Position(ChessRank.EIGHT, ChessFile.B), new Position(ChessRank.EIGHT, ChessFile.G));
+            new Position(ChessFile.B, ChessRank.EIGHT), new Position(ChessFile.G, ChessRank.EIGHT));
     static final List<Position> BLACK_BISHOP_POSITION = List.of(
-            new Position(ChessRank.EIGHT, ChessFile.C), new Position(ChessRank.EIGHT, ChessFile.F));
-    static final Position BLACK_KING_POSITION = new Position(ChessRank.EIGHT, ChessFile.E);
-    static final Position BLACK_QUEEN_POSITION = new Position(ChessRank.EIGHT, ChessFile.D);
+            new Position(ChessFile.C, ChessRank.EIGHT), new Position(ChessFile.F, ChessRank.EIGHT));
+    static final Position BLACK_KING_POSITION = new Position(ChessFile.E, ChessRank.EIGHT);
+    static final Position BLACK_QUEEN_POSITION = new Position(ChessFile.D, ChessRank.EIGHT);
 
     private final static PiecesGenerator INSTANCE = new PiecesGenerator();
 
