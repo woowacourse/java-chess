@@ -62,6 +62,7 @@ public class Board {
         Piece targetPiece = findPiece(target);
 
         validatePiecesPosition(sourcePiece, targetPiece);
+        validatePieceCanMove(sourcePiece, source, target);
     }
 
     private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
@@ -70,6 +71,12 @@ public class Board {
         }
         if (targetPiece.isSameColorBy(turnCount)) {
             throw new IllegalArgumentException("target위치에 내 기물이 존재합니다.");
+        }
+    }
+
+    private void validatePieceCanMove(Piece sourcePiece, Position source, Position target) {
+        if (!sourcePiece.canMove(source, target)) {
+            throw new IllegalArgumentException("target위치로 기물을 이동할 수 없습니다.");
         }
     }
 

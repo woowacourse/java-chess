@@ -45,4 +45,13 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("target위치에 내 기물이 존재합니다.");
     }
+
+    @DisplayName("이동 시 target 위치로 이동할 수 없는 기물이면 예외가 발생한다")
+    @Test
+    void pieceCanNotMoveOnTargetCoordinate() {
+        Board board = Board.createInitialBoard();
+        assertThatThrownBy(() -> board.move("c2", "c5"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("target위치로 기물을 이동할 수 없습니다.");
+    }
 }
