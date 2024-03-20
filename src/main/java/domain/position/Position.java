@@ -28,6 +28,20 @@ public class Position {
         return (fileDistance == 1 && rankDistance == 2) || (fileDistance == 2 && rankDistance == 1);
     }
 
+    public boolean isNeighbor(Position target) {
+        int fileDistance = this.file.distance(target.file);
+        int rankDistance = this.rank.distance(target.rank);
+        return isDiagonalNeighbor(fileDistance, rankDistance) || isStraightNeighbor(fileDistance, rankDistance);
+    }
+
+    private boolean isDiagonalNeighbor(int fileDistance, int rankDistance) {
+        return fileDistance == 1 && rankDistance == 1;
+    }
+
+    private boolean isStraightNeighbor(int fileDistance, int rankDistance) {
+        return (fileDistance == 0 && rankDistance == 1) || (fileDistance == 1 && rankDistance == 0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

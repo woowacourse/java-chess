@@ -126,4 +126,40 @@ public class PositionTest {
             assertThat(source.isStraightDiagonal(target)).isFalse();
         }
     }
+
+    @Nested
+    class EveryDirectionPositionTest {
+
+        private static Stream<Arguments> provideFileAndRank() {
+            return Stream.of(
+                    Arguments.of(File.C, Rank.THREE),
+                    Arguments.of(File.C, Rank.FOUR),
+                    Arguments.of(File.C, Rank.FIVE),
+                    Arguments.of(File.D, Rank.THREE),
+                    Arguments.of(File.D, Rank.FIVE),
+                    Arguments.of(File.E, Rank.THREE),
+                    Arguments.of(File.E, Rank.FOUR),
+                    Arguments.of(File.E, Rank.FIVE)
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideFileAndRank")
+        @DisplayName("두 위치가 모든 방향 한 칸 내에 존재하면 참을 반환한다.")
+        void isNeighbor_True(File file, Rank rank) {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(file, rank);
+
+            assertThat(source.isNeighbor(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 모든 방향 한 칸 내에 존재하지 않으면 거짓을 반환한다.")
+        void isNeighbor_False() {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(File.A, Rank.THREE);
+
+            assertThat(source.isNeighbor(target)).isFalse();
+        }
+    }
 }
