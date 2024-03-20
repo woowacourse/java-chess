@@ -11,4 +11,8 @@ public class ChessPieceProperty {
         this.chessPieceType = chessPieceType;
         this.moveStrategy = moveStrategy;
     }
+
+    public ChessPieceType getChessPieceType() {
+        return chessPieceType;
+    }
 }

@@ -17,4 +17,8 @@ public class ChessPiece {
     public boolean isWhiteCamp() {
         return camp == Camp.WHITE;
     }
+
+    public ChessPieceType getChessPieceType() {
+        return chessPieceProperty.getChessPieceType();
+    }
 }
