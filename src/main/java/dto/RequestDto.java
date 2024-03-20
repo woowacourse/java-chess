@@ -1,16 +1,17 @@
 package dto;
 
-import domain.position.File;
 import domain.GameCommand;
-import domain.position.Rank;
+import domain.position.Position;
 
-public record RequestDto(GameCommand gameCommand, Rank rank, File file) {
-    public static RequestDto of(GameCommand gameCommand) {
-        // TODO: null 값 해결
-        return new RequestDto(gameCommand, null, null);
+import java.util.Optional;
+
+public record RequestDto(GameCommand command, Optional<Position> source, Optional<Position> destination) {
+
+    public static RequestDto of(GameCommand command) {
+        return new RequestDto(command, Optional.empty(), Optional.empty());
     }
 
-    public static RequestDto of(GameCommand gameCommand, Rank rank, File file) {
-        return new RequestDto(gameCommand, rank, file);
+    public static RequestDto of(GameCommand command, Position source, Position destination) {
+        return new RequestDto(command, Optional.of(source), Optional.of(destination));
     }
 }
