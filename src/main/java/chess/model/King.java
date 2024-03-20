@@ -3,13 +3,13 @@ package chess.model;
 public class King extends Piece {
     private static final int DISPLACEMENT = 1;
 
-    public King(Side side, ChessPosition chessPosition) {
-        super(side, chessPosition);
+    public King(final Side side) {
+        super(side);
     }
 
     @Override
-    public boolean canMove(ChessPosition target) {
-        Distance distance = target.calculateDistance(this.chessPosition);
+    public boolean canMove(ChessPosition source, ChessPosition target) {
+        Distance distance = target.calculateDistance(source);
         return distance.hasSame(DISPLACEMENT);
     }
 

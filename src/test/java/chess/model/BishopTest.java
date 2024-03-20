@@ -1,13 +1,12 @@
 package chess.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {
 
@@ -17,10 +16,10 @@ class BishopTest {
     void canMove(ChessPosition target, boolean expected) {
         // given
         ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        Bishop bishop = new Bishop(Side.WHITE, source);
+        Bishop bishop = new Bishop(Side.WHITE);
 
         // when
-        boolean result = bishop.canMove(target);
+        boolean result = bishop.canMove(source, target);
 
         // then
         assertThat(result).isEqualTo(expected);

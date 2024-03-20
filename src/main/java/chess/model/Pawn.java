@@ -4,14 +4,14 @@ public class Pawn extends Piece {
     private static final int DISPLACEMENT = 1;
     private static final int INITIAL_SPECIAL_DISPLACEMENT = 2;
 
-    public Pawn(Side side, ChessPosition chessPosition) {
-        super(side, chessPosition);
+    public Pawn(final Side side) {
+        super(side);
     }
 
     @Override
-    public boolean canMove(ChessPosition target) {
-        Distance distance = target.calculateDistance(this.chessPosition);
-        if (chessPosition.isPawnInitialPosition(side)) {
+    public boolean canMove(ChessPosition source, ChessPosition target) {
+        Distance distance = target.calculateDistance(source);
+        if (source.isPawnInitialPosition(side)) {
             return canMoveForwardWith(distance, DISPLACEMENT) ||
                     canMoveForwardWith(distance, INITIAL_SPECIAL_DISPLACEMENT);
         }

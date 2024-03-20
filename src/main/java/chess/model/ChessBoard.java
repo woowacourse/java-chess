@@ -1,15 +1,17 @@
 package chess.model;
 
-import java.util.List;
+import java.util.Map;
 
 public class ChessBoard {
-    private final List<Piece> board;
+    private final Map<ChessPosition, Piece> board;
 
-    public ChessBoard(List<Piece> board) {
+    public ChessBoard(Map<ChessPosition, Piece> board) {
         this.board = board;
     }
 
-    public List<Piece> getBoard() {
+
+
+    public Map<ChessPosition, Piece> getBoard() {
         return board;
     }
 }

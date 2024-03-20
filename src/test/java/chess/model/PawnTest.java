@@ -1,13 +1,12 @@
 package chess.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
     @ParameterizedTest
@@ -16,10 +15,10 @@ class PawnTest {
     void canMoveInitialPosition(ChessPosition target, boolean expected) {
         // given
         ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        Pawn pawn = new Pawn(Side.WHITE, source);
+        Pawn pawn = new Pawn(Side.WHITE);
 
         // when
-        boolean result = pawn.canMove(target);
+        boolean result = pawn.canMove(source, target);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -31,10 +30,10 @@ class PawnTest {
     void canMove(ChessPosition target, boolean expected) {
         // given
         ChessPosition source = new ChessPosition(File.C, Rank.THREE);
-        Pawn pawn = new Pawn(Side.WHITE, source);
+        Pawn pawn = new Pawn(Side.WHITE);
 
         // when
-        boolean result = pawn.canMove(target);
+        boolean result = pawn.canMove(source, target);
 
         // then
         assertThat(result).isEqualTo(expected);

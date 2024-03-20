@@ -1,15 +1,12 @@
 package chess.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class KnightTest {
     @ParameterizedTest
@@ -18,10 +15,10 @@ class KnightTest {
     void canMove(ChessPosition target, boolean expected) {
         // given
         ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        Knight knight = new Knight(Side.WHITE, source);
+        Knight knight = new Knight(Side.WHITE);
 
         // when
-        boolean result = knight.canMove(target);
+        boolean result = knight.canMove(source, target);
 
         // then
         assertThat(result).isEqualTo(expected);

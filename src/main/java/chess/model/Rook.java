@@ -1,13 +1,14 @@
 package chess.model;
 
 public class Rook extends Piece {
-    public Rook(Side side, ChessPosition chessPosition) {
-        super(side, chessPosition);
+
+    public Rook(final Side side) {
+        super(side);
     }
 
     @Override
-    public boolean canMove(ChessPosition target) {
-        Distance distance = target.calculateDistance(this.chessPosition);
+    public boolean canMove(ChessPosition source, ChessPosition target) {
+        Distance distance = target.calculateDistance(source);
         return distance.isCrossMovement();
     }
 

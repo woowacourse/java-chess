@@ -1,13 +1,12 @@
 package chess.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
     @ParameterizedTest
@@ -16,10 +15,10 @@ class RookTest {
     void canMove(ChessPosition target, boolean expected) {
         // given
         ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        Rook rook = new Rook(Side.WHITE, source);
+        Rook rook = new Rook(Side.WHITE);
 
         // when
-        boolean result = rook.canMove(target);
+        boolean result = rook.canMove(source, target);
 
         // then
         assertThat(result).isEqualTo(expected);
