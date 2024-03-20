@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.movement.EastMovement;
 import chess.domain.movement.MovementRule;
-import chess.domain.movement.NorthMovement;
-import chess.domain.movement.SouthMovement;
-import chess.domain.movement.WestMovement;
+import chess.domain.movement.continuous.EastMovement;
+import chess.domain.movement.continuous.NorthMovement;
+import chess.domain.movement.continuous.SouthMovement;
+import chess.domain.movement.continuous.WestMovement;
 import java.util.List;
 
 public final class Rook extends chess.domain.piece.Piece {

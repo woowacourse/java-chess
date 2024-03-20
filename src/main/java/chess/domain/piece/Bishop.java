@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.movement.MovementRule;
-import chess.domain.movement.NorthEastMovement;
-import chess.domain.movement.NorthWestMovement;
-import chess.domain.movement.SouthEastMovement;
-import chess.domain.movement.SouthWestMovement;
+import chess.domain.movement.continuous.NorthEastMovement;
+import chess.domain.movement.continuous.NorthWestMovement;
+import chess.domain.movement.continuous.SouthEastMovement;
+import chess.domain.movement.continuous.SouthWestMovement;
 import java.util.List;
 
 public final class Bishop extends Piece {

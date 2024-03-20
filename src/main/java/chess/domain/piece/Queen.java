@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.movement.EastMovement;
 import chess.domain.movement.MovementRule;
-import chess.domain.movement.NorthEastMovement;
-import chess.domain.movement.NorthMovement;
-import chess.domain.movement.NorthWestMovement;
-import chess.domain.movement.SouthEastMovement;
-import chess.domain.movement.SouthWestMovement;
-import chess.domain.movement.WestMovement;
+import chess.domain.movement.continuous.EastMovement;
+import chess.domain.movement.continuous.NorthEastMovement;
+import chess.domain.movement.continuous.NorthMovement;
+import chess.domain.movement.continuous.NorthWestMovement;
+import chess.domain.movement.continuous.SouthEastMovement;
+import chess.domain.movement.continuous.SouthWestMovement;
+import chess.domain.movement.continuous.WestMovement;
 import java.util.List;
 
 public final class Queen extends chess.domain.piece.Piece {

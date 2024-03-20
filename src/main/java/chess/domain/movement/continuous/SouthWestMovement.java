@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.movement.continuous;
 
 import chess.domain.position.Position;
 

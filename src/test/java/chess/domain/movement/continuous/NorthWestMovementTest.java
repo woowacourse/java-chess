@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.movement.continuous;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

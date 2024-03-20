@@ -1,5 +1,6 @@
-package chess.domain.movement;
+package chess.domain.movement.continuous;
 
+import chess.domain.movement.MovementRule;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
