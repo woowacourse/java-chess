@@ -37,10 +37,6 @@ public class Position {
         double dy = this.rank - target.rank;
 
         // TODO: 개선 필요
-        if(dx == 0) {
-            return Double.POSITIVE_INFINITY;
-        }
-        // TODO: 개선 필요
         if(dy == 0) {
             return 0;
         }

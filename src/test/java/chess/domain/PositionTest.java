@@ -39,7 +39,7 @@ class PositionTest {
 
         double actualGradient = position1.calculateGradient(position2);
 
-        assertThat(actualGradient).isEqualTo(Double.POSITIVE_INFINITY);
+        assertThat(actualGradient).isInfinite();
     }
 
     @ParameterizedTest
