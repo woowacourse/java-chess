@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.Objects;
+
 public class ChessPosition {
     private final File file;
     private final Rank rank;
@@ -19,11 +21,32 @@ public class ChessPosition {
         return rank.isPawnInitialRank(side);
     }
 
+    public File findNextFile(int offset) {
+        return file.findNextFile(offset);
+    }
+
+    public Rank findNextRank(int offset) {
+        return rank.findNextRank(offset);
+    }
+
     public File getFile() {
         return file;
     }
 
     public Rank getRank() {
         return rank;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessPosition that = (ChessPosition) o;
+        return file == that.file && rank == that.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }

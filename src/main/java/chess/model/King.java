@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.List;
+
 public class King extends Piece {
     private static final int DISPLACEMENT = 1;
 
@@ -8,9 +10,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(ChessPosition source, ChessPosition target) {
+    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target) {
         Distance distance = target.calculateDistance(source);
-        return distance.hasSame(DISPLACEMENT);
+        if (distance.hasSame(DISPLACEMENT)) {
+            return List.of(target);
+        }
+        return List.of();
     }
 
     @Override

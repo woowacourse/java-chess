@@ -2,7 +2,9 @@ package chess.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,25 +14,43 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
-    @DisplayName("Bishop이 타켓 위치로 움직일 수 있는지 판단한다.")
-    void canMove(ChessPosition target, boolean expected) {
+    @DisplayName("Bishop이 타켓 위치까지 움직이는 경로를 찾는다.")
+    void findPath(ChessPosition target, List<ChessPosition> expected) {
         // given
         ChessPosition source = new ChessPosition(File.C, Rank.TWO);
         Bishop bishop = new Bishop(Side.WHITE);
 
         // when
-        boolean result = bishop.canMove(source, target);
+        List<ChessPosition> path = bishop.findPath(source, target);
 
         // then
-        assertThat(result).isEqualTo(expected);
+        assertThat(path).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {
         return Stream.of(
-                Arguments.of(new ChessPosition(File.D, Rank.THREE), true),
-                Arguments.of(new ChessPosition(File.F, Rank.FIVE), true),
-                Arguments.of(new ChessPosition(File.F, Rank.ONE), false),
-                Arguments.of(new ChessPosition(File.A, Rank.THREE), false)
+                Arguments.of(
+                        new ChessPosition(File.D, Rank.THREE),
+                        List.of(
+                                new ChessPosition(File.D, Rank.THREE)
+                        )
+                ),
+                Arguments.of(
+                        new ChessPosition(File.F, Rank.FIVE),
+                        List.of(
+                                new ChessPosition(File.D, Rank.THREE),
+                                new ChessPosition(File.E, Rank.FOUR),
+                                new ChessPosition(File.F, Rank.FIVE)
+                        )
+                ),
+                Arguments.of(
+                        new ChessPosition(File.F, Rank.ONE),
+                        List.of()
+                ),
+                Arguments.of(
+                        new ChessPosition(File.A, Rank.THREE),
+                        List.of()
+                )
         );
     }
 }

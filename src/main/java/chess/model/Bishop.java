@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.List;
+
 public class Bishop extends Piece {
 
     public Bishop(final Side side) {
@@ -7,9 +9,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(ChessPosition source, ChessPosition target) {
+    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target) {
         Distance distance = target.calculateDistance(source);
-        return distance.isDiagonalMovement();
+        if(distance.isDiagonalMovement()) {
+            return distance.findPath(source);
+        }
+        return List.of();
     }
 
     @Override
