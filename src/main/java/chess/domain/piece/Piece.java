@@ -10,4 +10,8 @@ public abstract class Piece {
     }
 
     abstract boolean canMove(Path path);
+
+    public boolean isBlack() {
+        return this.color == Color.BLACK;
+    }
 }
