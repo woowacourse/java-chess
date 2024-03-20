@@ -86,6 +86,10 @@ public enum File {
         }
     }
 
+    public static boolean isInRange(final int column) {
+        return FILE_MIN <= column && column <= FILE_MAX;
+    }
+
     public int getColumn() {
         return column;
     }

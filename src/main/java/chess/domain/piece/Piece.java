@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
 import java.util.Objects;
+import java.util.Set;
 
 import chess.domain.attribute.Color;
+import chess.domain.attribute.Square;
 
 public abstract class Piece {
 
@@ -13,6 +15,8 @@ public abstract class Piece {
         this.color = color;
         this.pieceType = pieceType;
     }
+
+    public abstract Set<Square> movableSquares(final Square currentSquare);
 
     public Color getColor() {
         return color;

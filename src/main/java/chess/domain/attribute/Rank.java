@@ -45,6 +45,10 @@ public enum Rank {
         return SEVEN;
     }
 
+    public static boolean isInRange(final int row) {
+        return RANK_MIN <= row && row <= RANK_MAX;
+    }
+
     public int getValue() {
         return row;
     }

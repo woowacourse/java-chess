@@ -3,6 +3,7 @@ package chess.domain.attribute;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import chess.domain.chessboard.attribute.Direction;
 
@@ -41,6 +42,19 @@ public class Square {
         return file.name() + rank.name();
     }
 
+    public Optional<Square> move(final Direction direction) {
+        int row = rank.getValue() + direction.getRow();
+        int column = file.getColumn() + direction.getColumn();
+        if (isInRange(column, row)) {
+            return Optional.of(Square.of(File.of(column), Rank.of(row)));
+        }
+        return Optional.empty();
+    }
+
+    public static boolean isInRange(final int column, final int row) {
+        return File.isInRange(column) && Rank.isInRange(row);
+    }
+
     public File getFile() {
         return file;
     }
@@ -62,11 +76,5 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    public Square move(final Direction direction) {
-        int row = rank.getValue() + direction.getRow();
-        int column = file.getColumn() + direction.getColumn();
-        return Square.of(File.of(column), Rank.of(row));
     }
 }

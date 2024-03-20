@@ -2,12 +2,6 @@ package chess.domain.chessboard;
 
 import static chess.domain.attribute.Color.BLACK;
 import static chess.domain.attribute.Color.WHITE;
-import static chess.domain.piece.PieceType.BISHOP;
-import static chess.domain.piece.PieceType.KING;
-import static chess.domain.piece.PieceType.KNIGHT;
-import static chess.domain.piece.PieceType.PAWN;
-import static chess.domain.piece.PieceType.QUEEN;
-import static chess.domain.piece.PieceType.ROOK;
 
 import java.util.HashMap;
 import java.util.HashSet;

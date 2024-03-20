@@ -1,5 +1,9 @@
 package chess.domain.chessboard.attribute;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public enum Direction {
     UP(1, 0),
     UP_LEFT(1, -1),
@@ -17,6 +21,11 @@ public enum Direction {
     Direction(final int row, final int column) {
         this.row = row;
         this.column = column;
+    }
+
+    public static Set<Direction> all() {
+        return Arrays.stream(values())
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public int getRow() {

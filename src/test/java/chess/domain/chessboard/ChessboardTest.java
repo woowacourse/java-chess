@@ -9,12 +9,11 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.attribute.Color;
 import chess.domain.attribute.File;
-import chess.domain.attribute.Square;
 import chess.domain.attribute.Rank;
+import chess.domain.attribute.Square;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.StartingPawn;

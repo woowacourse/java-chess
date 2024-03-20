@@ -1,8 +1,8 @@
 package chess.domain.attribute;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -32,28 +32,28 @@ class SquareTest {
     @MethodSource
     void move(Direction direction, Square next) {
         Square current = Square.of(File.D, Rank.FOUR);
-        assertThat(current.move(direction)).isEqualTo(next);
+        Square actual = current.move(direction).get();
+        assertThat(actual).isEqualTo(next);
     }
 
     private static Stream<Arguments> moveException() {
         return Stream.of(
-                Arguments.of(Square.of(File.D, Rank.EIGHT), Direction.UP, "랭크는 1~8 사이로 입력해주세요: 9"),
-                Arguments.of(Square.of(File.A, Rank.EIGHT), Direction.UP_LEFT, "파일은 1~8 사이로 입력해주세요: 0"),
-                Arguments.of(Square.of(File.H, Rank.EIGHT), Direction.UP_RIGHT, "파일은 1~8 사이로 입력해주세요: 9"),
-                Arguments.of(Square.of(File.D, Rank.ONE), Direction.DOWN, "랭크는 1~8 사이로 입력해주세요: 0"),
-                Arguments.of(Square.of(File.A, Rank.ONE), Direction.DOWN_LEFT, "파일은 1~8 사이로 입력해주세요: 0"),
-                Arguments.of(Square.of(File.H, Rank.ONE), Direction.DOWN_RIGHT, "파일은 1~8 사이로 입력해주세요: 9"),
-                Arguments.of(Square.of(File.A, Rank.FOUR), Direction.LEFT, "파일은 1~8 사이로 입력해주세요: 0"),
-                Arguments.of(Square.of(File.H, Rank.FOUR), Direction.RIGHT, "파일은 1~8 사이로 입력해주세요: 9")
+                Arguments.of(Square.of(File.D, Rank.EIGHT), Direction.UP),
+                Arguments.of(Square.of(File.A, Rank.EIGHT), Direction.UP_LEFT),
+                Arguments.of(Square.of(File.H, Rank.EIGHT), Direction.UP_RIGHT),
+                Arguments.of(Square.of(File.D, Rank.ONE), Direction.DOWN),
+                Arguments.of(Square.of(File.A, Rank.ONE), Direction.DOWN_LEFT),
+                Arguments.of(Square.of(File.H, Rank.ONE), Direction.DOWN_RIGHT),
+                Arguments.of(Square.of(File.A, Rank.FOUR), Direction.LEFT),
+                Arguments.of(Square.of(File.H, Rank.FOUR), Direction.RIGHT)
         );
     }
 
-    @DisplayName("이동할 수 없는 칸으로 이동한 경우 예외가 발생한다.")
+    @DisplayName("이동할 수 없는 칸으로 이동하면 빈 값을 반환한다.")
     @ParameterizedTest
     @MethodSource
-    void moveException(Square current, Direction direction, String message) {
-        assertThatThrownBy(() -> current.move(direction))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+    void moveException(Square current, Direction direction) {
+        Optional<Square> square = current.move(direction);
+        assertThat(square).isEmpty();
     }
 }
