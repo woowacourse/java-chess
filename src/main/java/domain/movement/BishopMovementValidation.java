@@ -2,18 +2,18 @@ package domain.movement;
 
 import java.util.Set;
 
-public class BishopMovementValidation implements MovementValidation{
-    private static final Set<Direction> DIRECTIONS = Set.of(
+public class BishopMovementValidation extends AbstractMovementValidation {
+    private static final Set<Direction> VALID_DIRECTIONS = Set.of(
             Direction.UP_LEFT, Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT
     );
 
     @Override
-    public boolean isMovable(Direction direction) {
-        return DIRECTIONS.contains(direction);
+    public boolean isValidMoveCount(int moveCount) {
+        return moveCount > 0;
     }
 
     @Override
-    public boolean isValidMoveCount(int moveCount) {
-        return moveCount > 0;
+    Set<Direction> validDirections() {
+        return VALID_DIRECTIONS;
     }
 }
