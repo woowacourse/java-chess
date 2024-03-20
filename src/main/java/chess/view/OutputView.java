@@ -10,7 +10,7 @@ public class OutputView {
     public void printChessBoard(final ChessBoard chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        List<Piece> values = chessBoard.findAllPieces(); //이놈은 게터가 있다!! (똥)
+        List<Piece> values = chessBoard.findAllPieces(); //이놈은 게터가 있다!! (똥)(똥)(똥)(똥)(똥)(똥)(똥)
 
         int idx = 1;
         for (Piece value : values) {
