@@ -20,22 +20,11 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Location, Piece> map;
-
-    public static void main(String[] args) {
-        Board board = new Board();
-    }
+    private final Map<Location, Piece> board;
 
     public Board() {
-        this.map = new HashMap<>();
+        this.board = new HashMap<>();
         initialSetting();
-
-        /*for (Row value : Row.values()) {
-            for (Column column : Column.values()) {
-                System.out.print(map.get(new Location(column, value)) + " ");
-            }
-            System.out.println();
-        }*/
     }
 
     private void initialSetting() {
@@ -50,46 +39,46 @@ public class Board {
 
     private void initialPawnSetting() {
         for (Column value : Column.values()) {
-            map.put(new Location(value, Row.TWO), new WhitePawn(Color.WHITE));
+            board.put(new Location(value, Row.TWO), new WhitePawn(Color.WHITE));
         }
         for (Column value : Column.values()) {
-            map.put(new Location(value, Row.SEVEN), new BlackPawn(Color.BLACK));
+            board.put(new Location(value, Row.SEVEN), new BlackPawn(Color.BLACK));
         }
     }
 
     private void initialRookSetting() {
-        map.put(new Location(Column.A, Row.ONE), new Rook(Color.WHITE));
-        map.put(new Location(Column.A, Row.EIGHT), new Rook(Color.BLACK));
-        map.put(new Location(Column.H, Row.ONE), new Rook(Color.WHITE));
-        map.put(new Location(Column.H, Row.EIGHT), new Rook(Color.BLACK));
+        board.put(new Location(Column.A, Row.ONE), new Rook(Color.WHITE));
+        board.put(new Location(Column.A, Row.EIGHT), new Rook(Color.BLACK));
+        board.put(new Location(Column.H, Row.ONE), new Rook(Color.WHITE));
+        board.put(new Location(Column.H, Row.EIGHT), new Rook(Color.BLACK));
     }
 
     private void initialKnightSetting() {
-        map.put(new Location(Column.B, Row.ONE), new Knight(Color.WHITE));
-        map.put(new Location(Column.B, Row.EIGHT), new Knight(Color.BLACK));
-        map.put(new Location(Column.G, Row.ONE), new Knight(Color.WHITE));
-        map.put(new Location(Column.G, Row.EIGHT), new Knight(Color.BLACK));
+        board.put(new Location(Column.B, Row.ONE), new Knight(Color.WHITE));
+        board.put(new Location(Column.B, Row.EIGHT), new Knight(Color.BLACK));
+        board.put(new Location(Column.G, Row.ONE), new Knight(Color.WHITE));
+        board.put(new Location(Column.G, Row.EIGHT), new Knight(Color.BLACK));
     }
 
     private void initialBishopSetting() {
-        map.put(new Location(Column.C, Row.ONE), new Bishop(Color.WHITE));
-        map.put(new Location(Column.C, Row.EIGHT), new Bishop(Color.BLACK));
-        map.put(new Location(Column.F, Row.ONE), new Bishop(Color.WHITE));
-        map.put(new Location(Column.F, Row.EIGHT), new Bishop(Color.BLACK));
+        board.put(new Location(Column.C, Row.ONE), new Bishop(Color.WHITE));
+        board.put(new Location(Column.C, Row.EIGHT), new Bishop(Color.BLACK));
+        board.put(new Location(Column.F, Row.ONE), new Bishop(Color.WHITE));
+        board.put(new Location(Column.F, Row.EIGHT), new Bishop(Color.BLACK));
     }
 
     private void initialQueenSetting() {
-        map.put(new Location(Column.D, Row.ONE), new Queen(Color.WHITE));
-        map.put(new Location(Column.D, Row.EIGHT), new Queen(Color.BLACK));
+        board.put(new Location(Column.D, Row.ONE), new Queen(Color.WHITE));
+        board.put(new Location(Column.D, Row.EIGHT), new Queen(Color.BLACK));
     }
 
     private void initialKingSetting() {
-        map.put(new Location(Column.E, Row.ONE), new King(Color.WHITE));
-        map.put(new Location(Column.E, Row.EIGHT), new King(Color.BLACK));
+        board.put(new Location(Column.E, Row.ONE), new King(Color.WHITE));
+        board.put(new Location(Column.E, Row.EIGHT), new King(Color.BLACK));
     }
 
     public Map<Location, Piece> getBoard() {
-        return Collections.unmodifiableMap(map);
+        return Collections.unmodifiableMap(board);
     }
 
     public void move(String sourceInput, String targetInput) {
@@ -98,8 +87,8 @@ public class Board {
         Piece piece = findPieceAt(source);
         Path path = createPath(source, target);
         if (piece.canMove(path)) {
-            map.remove(source);
-            map.put(target, piece);
+            board.remove(source);
+            board.put(target, piece);
             return;
         }
         throw new IllegalArgumentException("유효하지 않은 움직임입니다.");
@@ -112,7 +101,7 @@ public class Board {
         Location currentLocation = source;
         for (Direction direction : directions) {
             currentLocation = currentLocation.move(direction);
-            Piece locatedPiece = map.get(currentLocation);
+            Piece locatedPiece = board.get(currentLocation);
             squareStates.add(findSquareStates(movingPiece, locatedPiece));
         }
         return Path.of(directions, squareStates);
@@ -129,7 +118,7 @@ public class Board {
     }
 
     private Piece findPieceAt(Location source) {
-        Piece piece = map.get(source);
+        Piece piece = board.get(source);
         if (piece == null) {
             throw new IllegalArgumentException("말이 존재하지 않습니다.");
         }
