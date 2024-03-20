@@ -10,12 +10,6 @@ public class King extends Piece {
         super(camp);
     }
 
-
-    @Override
-    public void move(Position targetPosition) {
-
-    }
-
     @Override
     public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
         if (!canMovable(currentPosition, nextPosition)) {

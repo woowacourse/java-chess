@@ -29,11 +29,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void move(Position targetPosition) {
-
-    }
-
-    @Override
     public String toString() {
         if (camp == Camp.WHITE) {
             return "n";

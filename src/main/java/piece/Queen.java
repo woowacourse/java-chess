@@ -20,11 +20,6 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void move(Position targetPosition) {
-
-    }
-
-    @Override
     public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
         if (!canMovable(currentPosition, nextPosition)) {
             throw new IllegalArgumentException("이동 불가");
