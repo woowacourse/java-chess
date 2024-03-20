@@ -1,12 +1,13 @@
-package chess;
+package chess.domain;
 
 import java.util.List;
 import java.util.function.BiPredicate;
 
-import static chess.Direction.*;
+import static chess.domain.Direction.*;
+import static chess.domain.Team.*;
 
 public enum ChessPiece {
-    BLACK_KING("K", List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
+    BLACK_KING("K", BLACK, List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -21,7 +22,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    WHITE_KING("k", List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
+    WHITE_KING("k", WHITE, List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -36,7 +37,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    BLACK_QUEEN("Q", List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
+    BLACK_QUEEN("Q", BLACK, List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -53,7 +54,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    WHITE_QUEEN("q", List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
+    WHITE_QUEEN("q", WHITE, List.of(UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -70,7 +71,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    BLACK_ROOK("R", List.of(UP, DOWN, LEFT, RIGHT),
+    BLACK_ROOK("R", BLACK, List.of(UP, DOWN, LEFT, RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -82,7 +83,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    WHITE_ROOK("r", List.of(UP, DOWN, LEFT, RIGHT),
+    WHITE_ROOK("r", WHITE, List.of(UP, DOWN, LEFT, RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -94,7 +95,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    BLACK_BISHOP("B", List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
+    BLACK_BISHOP("B", BLACK, List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -108,7 +109,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    WHITE_BISHOP("b", List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
+    WHITE_BISHOP("b", WHITE, List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -122,7 +123,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    BLACK_KNIGHT("N", List.of(),
+    BLACK_KNIGHT("N",BLACK, List.of(),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -139,7 +140,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    WHITE_KNIGHT("n", List.of(),
+    WHITE_KNIGHT("n", WHITE, List.of(),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -156,7 +157,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    BLACK_PAWN("P", List.of(DOWN, DOWN_LEFT, DOWN_RIGHT),
+    BLACK_PAWN("P", BLACK, List.of(DOWN, DOWN_LEFT, DOWN_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -180,7 +181,7 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    WHITE_PAWN("p", List.of(UP, UP_LEFT, UP_RIGHT),
+    WHITE_PAWN("p", WHITE, List.of(UP, UP_LEFT, UP_RIGHT),
             (src, trg) -> {
                 Row srcRow = src.getRow();
                 Column srcColumn = src.getColumn();
@@ -204,17 +205,19 @@ public enum ChessPiece {
                 }
                 return false;
             }),
-    NONE(".", List.of(),
+    NONE(".", NOTHING, List.of(),
             (src, trg) -> {
                 return false;
             });
 
     private final String name;
+    private final Team team;
     private final List<Direction> movableDirection;
     private final BiPredicate<Position, Position> condition;
 
-    ChessPiece(String name, List<Direction> movableDirection, BiPredicate<Position, Position> condition) {
+    ChessPiece(String name, Team team, List<Direction> movableDirection, BiPredicate<Position, Position> condition) {
         this.name = name;
+        this.team = team;
         this.movableDirection = movableDirection;
         this.condition = condition;
     }
@@ -224,8 +227,18 @@ public enum ChessPiece {
     }
 
     public boolean isValidMovingRule(Position src,Position trg){
+        if (src.getRow() == trg.getRow() && src.getColumn() == trg.getColumn()) {
+            throw new IllegalArgumentException("제자리로 이동할 수 없습니다.");
+        }
         return condition.test(src,trg);
     }
 
 
+    public boolean isNone() {
+        return this == NONE;
+    }
+
+    public boolean isTeam(ChessPiece myPiece) {
+        return this.team == myPiece.team;
+    }
 }
