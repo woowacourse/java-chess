@@ -18,6 +18,10 @@ public final class Rank {
         return value == 2;
     }
 
+    public boolean isRankSeven() {
+        return value == 7;
+    }
+
     public int value() {
         return value;
     }

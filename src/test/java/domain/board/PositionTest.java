@@ -27,6 +27,6 @@ class PositionTest {
     @DisplayName("Rank가 2인지 여부 반환")
     void isPawnInitialPosition() {
         Position position = new Position(new File(1), new Rank(2));
-        assertThat(position.isPawnInitialPosition()).isTrue();
+        assertThat(position.isWhitePawnInitialPosition()).isTrue();
     }
 }

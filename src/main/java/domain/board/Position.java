@@ -1,8 +1,6 @@
 package domain.board;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Position {
 
@@ -19,8 +17,12 @@ public class Position {
             new Rank(rank.value() + direction.getRankDirection()));
     }
 
-    public boolean isPawnInitialPosition() {
+    public boolean isWhitePawnInitialPosition() {
         return rank.isRankTwo();
+    }
+
+    public boolean isBlackPawnInitialPosition() {
+        return rank.isRankSeven();
     }
 
     public int calculateFileDifference(Position otherPosition) {
