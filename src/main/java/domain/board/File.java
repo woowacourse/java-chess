@@ -1,21 +1,17 @@
-package domain;
+package domain.board;
 
 import java.util.Objects;
 
-public final class Rank {
+public final class File {
 
     private final int value;
 
-    public Rank(int value) {
+    public File(int value) {
         this.value = value;
     }
 
-    public int subtract(Rank otherRank) {
-        return this.value - otherRank.value;
-    }
-
-    public boolean isRankTwo() {
-        return value == 2;
+    public int subtract(File otherFile) {
+        return this.value - otherFile.value;
     }
 
     public int value() {
@@ -30,7 +26,7 @@ public final class Rank {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        var that = (Rank) obj;
+        var that = (File) obj;
         return this.value == that.value;
     }
 
@@ -41,7 +37,8 @@ public final class Rank {
 
     @Override
     public String toString() {
-        return "Rank[" +
+        return "File[" +
             "value=" + value + ']';
     }
+
 }

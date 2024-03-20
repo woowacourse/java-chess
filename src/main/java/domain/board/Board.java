@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 import domain.piece.Bishop;
 import domain.piece.Color;
@@ -67,7 +67,7 @@ public class Board {
         board.put(new Position(new File(5), new Rank(1)), new Queen(Color.WHITE));
     }
 
-    // TODO: 테스트를 위한 getter
+    // TODO: getter 사용을 지양하는 방법을 고민
     public Map<Position, Piece> getSquares() {
         return squares;
     }

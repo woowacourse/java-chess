@@ -3,9 +3,9 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.File;
-import domain.Position;
-import domain.Rank;
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

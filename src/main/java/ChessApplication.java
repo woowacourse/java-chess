@@ -1,4 +1,4 @@
-import domain.Board;
+import domain.board.Board;
 import view.InputView;
 import view.OutputView;
 

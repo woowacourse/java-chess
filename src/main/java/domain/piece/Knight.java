@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.Position;
+import domain.board.Position;
 
 public class Knight extends Piece {
 
