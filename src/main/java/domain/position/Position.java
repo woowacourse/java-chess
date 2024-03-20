@@ -18,6 +18,10 @@ public class Position {
         return fileDistance == rankDistance;
     }
 
+    public boolean isStraight(Position target) {
+        return this.file.isSame(target.file) || this.rank.isSame(target.rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

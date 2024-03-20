@@ -13,4 +13,8 @@ public enum Rank {
         int targetIndex = ranks.indexOf(target);
         return Math.abs(sourceIndex - targetIndex);
     }
+
+    public boolean isSame(Rank rank) {
+        return this == rank;
+    }
 }

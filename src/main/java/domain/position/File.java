@@ -13,4 +13,8 @@ public enum File {
         int targetIndex = files.indexOf(target);
         return Math.abs(sourceIndex - targetIndex);
     }
+
+    public boolean isSame(File target) {
+        return this == target;
+    }
 }
