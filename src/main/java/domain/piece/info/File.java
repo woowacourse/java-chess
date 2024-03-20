@@ -19,6 +19,20 @@ public enum File {
         this.index = index;
     }
 
+    public static File of(final String fileName) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().equals(fileName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("파일이 잘못되었습니다."));
+    }
+
+    public static File of(final int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.index() == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("파일이 잘못되었습니다."));
+    }
+
     public int index() {
         return index;
     }
@@ -51,5 +65,7 @@ public enum File {
         return List.of(D);
     }
 
-
+    public File getNextFile(final int nextIndex) {
+        return File.of(index + nextIndex);
+    }
 }

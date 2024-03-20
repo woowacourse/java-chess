@@ -1,5 +1,6 @@
 package domain.piece.info;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Rank {
@@ -11,13 +12,19 @@ public enum Rank {
     FOUR(3),
     THREE(2),
     TWO(1),
-    ONE(0),
-    ;
+    ONE(0);
 
     private final int index;
 
     Rank(final int index) {
         this.index = index;
+    }
+
+    public static Rank of(final int rankNumber) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == rankNumber)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("랭크가 잘못되었습니다."));
     }
 
     public int index() {
