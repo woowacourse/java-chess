@@ -3,6 +3,7 @@ package chess;
 import chess.piece.EmptyPiece;
 import chess.piece.Piece;
 import chess.position.Position;
+import java.util.List;
 
 public class Space {
 
@@ -18,7 +19,8 @@ public class Space {
         return PieceSign.findSign(piece);
     }
 
-    public void movePiece(Space targetSpace) {
+    public void movePiece(Space targetSpace, List<Space> spaces) {
+        validateClearRoute(targetSpace, spaces);
         if (piece.isCatchable(position, targetSpace.position)) {
             targetSpace.piece = piece;
             piece = new EmptyPiece();
@@ -30,7 +32,7 @@ public class Space {
         if (piece.isSameColor(targetSpace.piece)) {
             throw new IllegalArgumentException("해당 위치에 피스가 이미 있습니다.");
         }
-        if (targetSpace.isBlankSpace()) {
+        if (targetSpace.doesNotHavePiece()) {
             targetSpace.piece = piece;
             piece = new EmptyPiece();
             return;
@@ -38,7 +40,25 @@ public class Space {
         throw new IllegalArgumentException("해당 위치의 상대 말을 잡을 수 없습니다.");
     }
 
-    public boolean isBlankSpace() {
+    private void validateClearRoute(Space targetSpace, List<Space> spaces) {
+        //TODO: 나이트 바로 반환 구현
+        List<Position> routes = targetSpace.position.findRoute(position);
+        for(Position position : routes){
+            for(Space space: spaces){
+                if(space.position.equals(position)){
+                    if(space.hasPiece()){
+                        throw new IllegalArgumentException("루트에 피스가 있습니다.");
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean hasPiece() {
+        return !piece.isSameColor(new EmptyPiece());
+    }
+
+    public boolean doesNotHavePiece() {
         return piece.isSameColor(new EmptyPiece());
     }
 }

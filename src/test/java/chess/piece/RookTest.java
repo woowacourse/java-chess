@@ -6,6 +6,7 @@ import chess.Space;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class RookTest {
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
 
-        space1.movePiece(space2);
+        space1.movePiece(space2, List.of(space1, space2));
 
         assertThat(space2.pieceCharacter()).isEqualTo("r");
     }
