@@ -22,11 +22,11 @@ public class PieceGenerator {
             new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
     private static final List<PieceRole> FRONT = Collections.nCopies(8, new Pawn());
 
-    private PieceGenerator(){
+    private PieceGenerator() {
     }
 
     public static void generate(final PieceMover mover) {
-        for (int row = 0; row < 8; row++) {
+        for (int row = 8; row >= 1; row--) {
             List<Piece> pieces = generateRankPieces(row);
             for (int column = 0; column < pieces.size(); column++) {
                 Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
@@ -37,16 +37,16 @@ public class PieceGenerator {
     }
 
     public static List<Piece> generateRankPieces(final int row) {
-        if (row == 0) {
+        if (row == 8) {
             return generateListPiece(BACK, Color.BLACK, row);
         }
-        if (row == 1) {
+        if (row == 7) {
             return generateListPiece(FRONT, Color.BLACK, row);
         }
-        if (row == 6) {
+        if (row == 2) {
             return generateListPiece(FRONT, Color.WHITE, row);
         }
-        if (row == 7) {
+        if (row == 1) {
             return generateListPiece(BACK, Color.WHITE, row);
         }
         return new ArrayList<>();
