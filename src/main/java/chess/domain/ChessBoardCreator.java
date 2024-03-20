@@ -19,23 +19,23 @@ public class ChessBoardCreator {
 
     private static final Map<Class<? extends Piece>, List<Position>> INITIAL_PIECE_ARRANGEMENT = new HashMap<>() {
         {
-            List<Position> rookPositions = List.of(Position.of(1, 1), Position.of(1, 8));
+            List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
             put(Rook.class, rookPositions);
 
-            List<Position> knightPositions = List.of(Position.of(1, 2), Position.of(1, 7));
+            List<Position> knightPositions = List.of(Position.of(0, 1), Position.of(0, 6));
             put(Knight.class, knightPositions);
 
-            List<Position> bishopPositions = List.of(Position.of(1, 3), Position.of(1, 6));
+            List<Position> bishopPositions = List.of(Position.of(0, 2), Position.of(0, 5));
             put(Bishop.class, bishopPositions);
 
-            List<Position> queenPositions = List.of(Position.of(1, 4));
+            List<Position> queenPositions = List.of(Position.of(0, 3));
             put(Queen.class, queenPositions);
 
-            List<Position> kingPositions = List.of(Position.of(1, 5));
+            List<Position> kingPositions = List.of(Position.of(0, 4));
             put(King.class, kingPositions);
 
             List<Position> pawnPositions = IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
-                    .mapToObj(col -> Position.of(2, col))
+                    .mapToObj(col -> Position.of(1, col))
                     .toList();
             put(Pawn.class, pawnPositions);
         }
@@ -57,7 +57,7 @@ public class ChessBoardCreator {
     private Map<Position, Piece> mapPositionToPiece(Class<? extends Piece> pieceType, List<Position> positions) {
         Map<Position, Piece> positionPiece = new HashMap<>();
         positions.forEach(position -> {
-            positionPiece.put(position, createPieceInstance(pieceType, Team.WHITE));
+            positionPiece.put(position, createPieceInstance(pieceType, Team.BLACK));
 //            positionPiece.put(position, createPieceInstance(pieceType, Team.BLACK));
         });
         return positionPiece;

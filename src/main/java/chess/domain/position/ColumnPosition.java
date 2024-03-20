@@ -3,8 +3,8 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class ColumnPosition {
-    public static final int MIN_NUMBER = 1;
-    public static final int MAX_NUMBER = 8;
+    public static final int MIN_NUMBER = 0;
+    public static final int MAX_NUMBER = 7;
 
     private final int columnNumber;
 
