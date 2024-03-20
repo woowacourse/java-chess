@@ -7,4 +7,8 @@ public class InputView {
 
     private InputView() {
     }
+
+    public static String readGameCommand() {
+        return scanner.nextLine().trim();
+    }
 }
