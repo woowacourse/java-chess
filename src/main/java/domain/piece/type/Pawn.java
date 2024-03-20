@@ -4,6 +4,7 @@ import domain.Direction;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
 import domain.piece.PieceNamePattern;
+import domain.position.ChessRank;
 import domain.position.Position;
 
 import java.util.List;
@@ -19,18 +20,26 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return isMovableDirection(source, target) && isMovableDistance(source, target);
+        Direction direction = source.findDirectionTo(target);
+        return isMovableDirection(direction) && isMovableDistance(source, target, direction);
     }
 
-    private boolean isMovableDirection(Position source, Position target) {
-        Direction direction = source.findDirectionTo(target);
+    private boolean isMovableDirection(Direction direction) {
         if (color.isWhite()) {
             return WHITE_DIRECTION.contains(direction);
         }
         return BLACK_DIRECTION.contains(direction);
     }
 
-    private boolean isMovableDistance(Position source, Position target) {
-        return source.calculateDistanceTo(target) == 1;
+    private boolean isMovableDistance(Position source, Position target, Direction direction) {
+        int distance = source.calculateDistanceTo(target);
+
+        if (color.isWhite() && source.isRank(ChessRank.TWO) && direction == Direction.TOP) {
+            return (distance == 1 || distance == 2);
+        }
+        if (!color.isWhite() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
+            return (distance == 1 || distance == 2);
+        }
+        return distance == 1;
     }
 }
