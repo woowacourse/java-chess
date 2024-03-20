@@ -11,6 +11,7 @@ class PositionTest {
     @Test
     void should_ReturnVerticalReversePosition() {
         Position testPosition = Position.of(0, 0);
+
         assertThat(testPosition.verticalReversePosition()).isEqualTo(Position.of(7, 0));
     }
 
@@ -18,6 +19,7 @@ class PositionTest {
     @Test
     void should_CheckVerticalRelationShipWithPositions() {
         Position position = Position.of(1, 1);
+
         assertAll(
                 () -> assertThat(position.isStraightWith(Position.of(2, 1))).isTrue(),
                 () -> assertThat(position.isStraightWith(Position.of(1, 2))).isTrue(),
@@ -29,9 +31,19 @@ class PositionTest {
     @Test
     void should_CheckDiagonalRelationShipWithPositions() {
         Position position = Position.of(1, 1);
+
         assertAll(
                 () -> assertThat(position.isDiagonalWith(Position.of(2, 2))).isTrue(),
                 () -> assertThat(position.isDiagonalWith(Position.of(2, 1))).isFalse()
         );
+    }
+
+    @DisplayName("한 포지션에서 다른 포지션까지의 위치 차의 제곱을 계산할 수 있다")
+    @Test
+    void should_ReturnSquaredDistanceBetweenPositions() {
+        Position position1 = Position.of(1, 1);
+        Position position2 = Position.of(2, 3);
+
+        assertThat(position1.squaredDistanceWith(position2)).isEqualTo(5);
     }
 }

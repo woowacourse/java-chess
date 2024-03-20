@@ -49,6 +49,12 @@ public class Position {
         return rowInterval == colInterval;
     }
 
+    public int squaredDistanceWith(Position target) {
+        int rowInterval = rowPosition.intervalWith(target.rowPosition);
+        int colInterval = columnPosition.intervalWith(target.columnPosition);
+        return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
