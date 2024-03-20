@@ -9,6 +9,7 @@ import java.util.Map;
 public class Board {
     public static final String INVALID_TURN = "헤당 색의 턴이 아닙니다.";
     public static final String INVALID_PIECE_MOVEMENT = "해당 기물은 위치로 이동할 수 없습니다.";
+    public static final String NO_PIECE_EXCEPTION = "해당 위치에 기물이 없습니다.";
     private final Map<Square, Piece> pieces;
 
     public Board(final Map<Square, Piece> pieces) {
@@ -22,21 +23,24 @@ public class Board {
     }
 
     private void validate(final Square from, final Square to, final Color turn) {
-        checkTurn(from, turn);
         checkMovable(from, to);
+        checkTurn(from, turn);
         checkRoute(from, to);
         checkDestinationColor(from, to);
+    }
+
+    private void checkMovable(final Square from, final Square to) {
+        if (!pieces.containsKey(from)) {
+            throw new IllegalArgumentException(NO_PIECE_EXCEPTION);
+        }
+        if (!pieces.get(from).canMove(from, to)) {
+            throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
+        }
     }
 
     private void checkTurn(final Square from, final Color turn) {
         if (!pieces.get(from).color().equals(turn)) {
             throw new IllegalArgumentException(INVALID_TURN);
-        }
-    }
-
-    private void checkMovable(final Square from, final Square to) {
-        if (!pieces.get(from).canMove(from, to)) {
-            throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
     }
 

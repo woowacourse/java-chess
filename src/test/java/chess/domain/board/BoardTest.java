@@ -31,6 +31,18 @@ class BoardTest {
         assertThat(board.getPieces().keySet().size()).isEqualTo(expectedSize);
     }
 
+    @DisplayName("기물이 없는 위치를 이동시킬 경우 예외가 발생한다")
+    @Test
+    void noPiece() {
+        //given
+        Square from = Square.from("c4");
+        Square to = Square.from("c5");
+
+        //when & then
+        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("해당 턴이 아닌 경우 예외가 발생한다")
     @Test
     void invalidTurn() {
