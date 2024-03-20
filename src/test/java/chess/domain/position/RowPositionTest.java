@@ -3,6 +3,7 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,5 +45,29 @@ class RowPositionTest {
         int expectedDifference = 7;
 
         assertThat(testRowPosition_1.intervalWith(testRowPosition_2)).isEqualTo(expectedDifference);
+    }
+
+    @DisplayName("행 번호가 더 높은지 확인할 수 있다")
+    @Test
+    void should_CheckIsHigherThanOtherRowNumber() {
+        RowPosition higherPosition = new RowPosition(1);
+        RowPosition lowerPosition = new RowPosition(0);
+
+        assertAll(
+                () -> assertThat(higherPosition.isHigherThan(lowerPosition)).isTrue(),
+                () -> assertThat(lowerPosition.isHigherThan(higherPosition)).isFalse()
+        );
+    }
+
+    @DisplayName("행 번호가 더 낮은지 확인할 수 있다")
+    @Test
+    void should_CheckIsLowerThanOtherRowNumber() {
+        RowPosition higherPosition = new RowPosition(0);
+        RowPosition lowerPosition = new RowPosition(1);
+
+        assertAll(
+                () -> assertThat(higherPosition.isLowerThan(lowerPosition)).isTrue(),
+                () -> assertThat(lowerPosition.isLowerThan(higherPosition)).isFalse()
+        );
     }
 }

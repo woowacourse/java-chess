@@ -21,6 +21,14 @@ public class RowPosition {
         return Math.abs(rowNumber - otherRowPosition.rowNumber);
     }
 
+    public boolean isHigherThan(RowPosition target) {
+        return rowNumber > target.rowNumber;
+    }
+
+    public boolean isLowerThan(RowPosition target) {
+        return rowNumber < target.rowNumber;
+    }
+
     private void validateNumberRange(int rowNumber) {
         if (MIN_NUMBER > rowNumber || rowNumber > MAX_NUMBER) {
             throw new IllegalStateException("체스판의 행 번호는 " + rowNumber + "가 될 수 없습니다.");
