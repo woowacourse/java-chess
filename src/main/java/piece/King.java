@@ -11,8 +11,13 @@ public class King extends Piece {
 
 
     @Override
-    void move(Position targetPosition) {
+    public void move(Position targetPosition) {
 
+    }
+
+    @Override
+    public boolean canMovable(Position currentPosition, Position nextPosition) {
+        return false;
     }
 
     @Override

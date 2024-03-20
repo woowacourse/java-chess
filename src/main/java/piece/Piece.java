@@ -12,7 +12,9 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    abstract void move(Position targetPosition);
+    public abstract void move(Position targetPosition);
+
+    public abstract boolean canMovable(Position currentPosition, Position nextPosition); //TODO 이동 위치에 어떤 기물이 있는지도 파악해야함
 
     public Camp getCamp() {
         return camp;

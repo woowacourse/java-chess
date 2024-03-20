@@ -18,12 +18,12 @@ public class Position { //TODO row, column 위치 변경
         return new Position(Row.from(command.charAt(1)), Column.from(command.charAt(0)));
     }
 
-    public Row getRow() {
-        return row;
+    public int getRow() {
+        return row.getIndex();
     }
 
-    public Column getColumn() {
-        return column;
+    public int getColumn() {
+        return column.getIndex();
     }
 
     @Override

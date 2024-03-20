@@ -6,7 +6,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
+import point.Column;
+import point.Moving;
 import point.Position;
+import point.Row;
 
 class GameBoardTest {
 
@@ -47,7 +50,7 @@ class GameBoardTest {
         }
 
         for (Entry<Position, Piece> entry : board.entrySet()) {
-            res[entry.getKey().getRow().getIndex()][entry.getKey().getColumn().getIndex()] = entry.getValue()
+            res[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue()
                     .toString();
         }
 
@@ -67,5 +70,39 @@ class GameBoardTest {
 
         //then
         Assertions.assertThat(stringBuilder.toString()).hasToString(expected);
+    }
+
+    @Test
+    @DisplayName("기물이 없는 위치가 주어졌을 때 예외가 발생한다.")
+    void blankPosition() {
+        //given
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.setting();
+
+        Moving moving = new Moving(new Position(Row.FOURTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
+
+        //when & then
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰의 처음 위치에서 앞으로 2칸 이동시킨다.")
+    void movePiece() {
+        //given
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.setting();
+
+        Position pawnPosition = new Position(Row.SEVENTH, Column.FIRST);
+        Position nextPosition = new Position(Row.FIFTH, Column.FIRST);
+        Moving moving = new Moving(pawnPosition, nextPosition);
+
+
+
+        //when
+        gameBoard.move(moving);
+
+        //then
+        Assertions.assertThat(gameBoard.findPieceByPosition(nextPosition)).isEqualTo(null);
     }
 }

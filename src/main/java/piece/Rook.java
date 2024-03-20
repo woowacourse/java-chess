@@ -10,7 +10,13 @@ public class Rook extends Piece {
     }
 
     @Override
-    void move(Position targetPosition) {
+    public boolean canMovable(Position currentPosition, Position nextPosition) {
+        return false;
+    }
+
+    @Override
+    public void move(Position targetPosition) {
+
     }
 
     @Override

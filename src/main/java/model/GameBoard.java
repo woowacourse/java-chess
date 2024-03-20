@@ -13,6 +13,7 @@ import piece.Piece;
 import piece.Queen;
 import piece.Rook;
 import point.Column;
+import point.Moving;
 import point.Position;
 import point.Row;
 
@@ -58,10 +59,16 @@ public class GameBoard {
         }
     }
 
-    public Square findByPosition(Position position) {
-        int rowIndex = position.getRow().getIndex();
-        int colIndex = position.getColumn().getIndex();
-        return board2.get(rowIndex).get(colIndex);
+    public Piece findPieceByPosition(Position position) {
+        return board.get(position);
+    }
+
+    public void move(Moving moving) {
+        if (!board.containsKey(moving.getCurrentPosition())) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+        Piece piece = board.get(moving.getCurrentPosition());
+        piece.move(moving.getNextPosition());
     }
 
     public List<List<Square>> getBoard2() {
