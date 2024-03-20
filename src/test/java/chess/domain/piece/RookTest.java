@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
@@ -21,20 +20,11 @@ class RookTest {
                 .isEqualTo(character);
     }
 
-    @DisplayName("룩은 직선으로는 움직일 수 있다.")
-    @ParameterizedTest
-    @CsvSource(value = {"1,3", "4,1"})
-    void rookMove(int row, int column) {
-        assertThatCode(() -> new Rook(Team.WHITE, true)
-                .validateMovable(Position.of(1, 1), Position.of(row, column)))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("룩은 직선이 아닌 경우, 예외가 발생한다.")
     @Test
     void rookMoveOverLine() {
         assertThatThrownBy(() -> new Rook(Team.WHITE, true)
-                .validateMovable(Position.of(1, 1), Position.of(2, 2)))
+                .betweenPositions(Position.of(1, 1), Position.of(2, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

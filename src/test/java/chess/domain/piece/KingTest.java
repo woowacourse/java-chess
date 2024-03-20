@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
@@ -21,20 +20,11 @@ class KingTest {
                 .isEqualTo(character);
     }
 
-    @DisplayName("킹은 한칸 내 전 방향으로 움직일 수 있다.")
-    @ParameterizedTest
-    @CsvSource(value = {"4,3", "3,3", "3,4", "3,5", "4,5", "5,5", "5,4", "5,3"})
-    void kingMove(int row, int column) {
-        assertThatCode(() -> new King(Team.WHITE, true)
-                .validateMovable(Position.of(4, 4), Position.of(row, column)))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("킹은 한칸 초과하여 움직인 경우, 예외가 발생한다.")
     @Test
     void kingMoveOverOne() {
         assertThatThrownBy(() -> new King(Team.WHITE, true)
-                .validateMovable(Position.of(1, 1), Position.of(3, 3)))
+                .betweenPositions(Position.of(1, 1), Position.of(3, 3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

@@ -20,7 +20,7 @@ public abstract class Piece {
 
     protected abstract List<Position> betweenPositions(Position position, int rowDifference, int columnDifference);
 
-    public void validateMovable(Position oldPosition, Position newPosition) {
+    private void validateMovable(Position oldPosition, Position newPosition) {
         int rowDifference = oldPosition.calculateRowDifference(newPosition);
         int columnDifference = oldPosition.calculateColumnDifference(newPosition);
 

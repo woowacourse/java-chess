@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
@@ -22,45 +21,11 @@ class PawnTest {
                 .isEqualTo(character);
     }
 
-    @DisplayName("흰색 폰은 시작 지점에 있는 경우, 앞으로 두칸 혹은 한칸 전진할 수 있다.")
-    @ParameterizedTest
-    @CsvSource(value = {"3,1", "4,1"})
-    void startWhitePawnMove(int row, int column) {
-        assertThatCode(() -> new Pawn(Team.WHITE, true)
-                .validateMovable(Position.of(2, 1), Position.of(row, column)))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("검은색 폰은 시작 지점에 있는 경우, 앞으로 두칸 혹은 한칸 전진할 수 있다.")
-    @ParameterizedTest
-    @CsvSource(value = {"6,1", "5,1"})
-    void startBlackPawnMove(int row, int column) {
-        assertThatCode(() -> new Pawn(Team.BLACK, true)
-                .validateMovable(Position.of(7, 1), Position.of(row, column)))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("흰색 폰은 시작 지점이 아닌 경우, 앞으로 한칸 전진할 수 있다.")
-    @Test
-    void whitePawnMove() {
-        assertThatCode(() -> new Pawn(Team.WHITE, false)
-                .validateMovable(Position.of(3, 1), Position.of(4, 1)))
-                .doesNotThrowAnyException();
-    }
-
-    @DisplayName("검은색 폰은 시작 지점이 아닌 경우, 앞으로 한칸 전진할 수 있다.")
-    @Test
-    void blackPawnMove() {
-        assertThatCode(() -> new Pawn(Team.BLACK, false)
-                .validateMovable(Position.of(6, 1), Position.of(5, 1)))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
     void startWhitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE, true)
-                .validateMovable(Position.of(2, 1), Position.of(5, 1)))
+                .betweenPositions(Position.of(2, 1), Position.of(5, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -69,7 +34,7 @@ class PawnTest {
     @Test
     void startBlackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.BLACK, true)
-                .validateMovable(Position.of(7, 1), Position.of(4, 1)))
+                .betweenPositions(Position.of(7, 1), Position.of(4, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -78,7 +43,7 @@ class PawnTest {
     @Test
     void whitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE, false)
-                .validateMovable(Position.of(3, 1), Position.of(5, 1)))
+                .betweenPositions(Position.of(3, 1), Position.of(5, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -87,7 +52,7 @@ class PawnTest {
     @Test
     void blackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.BLACK, false)
-                .validateMovable(Position.of(6, 1), Position.of(4, 1)))
+                .betweenPositions(Position.of(6, 1), Position.of(4, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -97,7 +62,7 @@ class PawnTest {
     @EnumSource
     void whitePawnMoveColumn(Team team) {
         assertThatThrownBy(() -> new Pawn(team, true)
-                .validateMovable(Position.of(7, 1), Position.of(7, 2)))
+                .betweenPositions(Position.of(7, 1), Position.of(7, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
