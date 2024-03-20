@@ -28,4 +28,12 @@ class MovementTest {
                 () -> assertThat(movement.isSatisfied(Color.BLACK, false, false)).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("이동은 가지고 있는 방향을 반환한다.")
+    void getDirection() {
+        UpRightDirection direction = new UpRightDirection(2);
+        Movement movement = new Movement(new ColorPolicy(Color.WHITE), direction);
+        assertThat(movement.getDirection()).isEqualTo(direction);
+    }
 }

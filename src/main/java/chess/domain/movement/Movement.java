@@ -16,4 +16,8 @@ public class Movement {
     public boolean isSatisfied(Color color, boolean firstMove, boolean existEnemy) {
         return policy.isSatisfied(color, firstMove, existEnemy);
     }
+
+    public Direction getDirection() {
+        return direction;
+    }
 }
