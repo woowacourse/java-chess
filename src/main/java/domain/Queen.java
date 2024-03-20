@@ -4,8 +4,8 @@ import static domain.PieceMoveResult.*;
 
 import java.util.Optional;
 
-public class Queen extends AbstractMoveStraightMovePiece {
-	public Queen(Position position, Team team) {
+class Queen extends AbstractMoveStraightMovePiece {
+	Queen(Position position, Team team) {
 		super(position, team);
 	}
 

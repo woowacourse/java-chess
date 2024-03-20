@@ -1,9 +1,9 @@
 package domain;
 
-public class PieceWrapper {
+class PieceWrapper {
 	private final Piece piece;
 
-	public PieceWrapper(Piece piece) {
+	PieceWrapper(Piece piece) {
 		this.piece = piece;
 	}
 
@@ -11,7 +11,7 @@ public class PieceWrapper {
 		return piece.isOn(position);
 	}
 
-	public Team getTeam() {
+	Team getTeam() {
 		return piece.getTeam();
 	}
 }

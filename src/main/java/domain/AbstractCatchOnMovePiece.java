@@ -4,8 +4,8 @@ import static domain.PieceMoveResult.*;
 
 import java.util.Optional;
 
-public abstract class AbstractCatchOnMovePiece extends AbstractPiece {
-	public AbstractCatchOnMovePiece(Position position, Team team) {
+abstract class AbstractCatchOnMovePiece extends AbstractPiece {
+	AbstractCatchOnMovePiece(Position position, Team team) {
 		super(position, team);
 	}
 

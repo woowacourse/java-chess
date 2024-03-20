@@ -5,8 +5,8 @@ import static domain.Team.*;
 
 import java.util.List;
 
-public class InitialPieces {
-	public static final List<Piece> INITIAL_PIECES = List.of(
+class InitialPieces {
+	static final List<Piece> INITIAL_PIECES = List.of(
 		new Pawn(A2, WHITE), new Pawn(B2, WHITE), new Pawn(C2, WHITE), new Pawn(D2, WHITE),
 		new Pawn(E2, WHITE), new Pawn(F2, WHITE), new Pawn(G2, WHITE), new Pawn(H2, WHITE),
 		new Rook(A1, WHITE), new Rook(H1, WHITE), new Knight(B1, WHITE), new Rook(G1, WHITE),

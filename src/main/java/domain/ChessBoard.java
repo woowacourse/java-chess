@@ -9,11 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class ChessBoard {
-	private List<Piece> piecesOnBoard;
+class ChessBoard {
+	private final List<Piece> piecesOnBoard;
 	private Team currentTeam = WHITE;
 
-	public ChessBoard() {
+	ChessBoard() {
 		piecesOnBoard = new ArrayList<>(INITIAL_PIECES);
 	}
 
@@ -66,7 +66,7 @@ public class ChessBoard {
 			.findFirst().orElseThrow();
 	}
 
-	public List<Piece> getPiecesOnBoard() {
+	List<Piece> getPiecesOnBoard() {
 		return Collections.unmodifiableList(piecesOnBoard);
 	}
 }

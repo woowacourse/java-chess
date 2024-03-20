@@ -4,8 +4,8 @@ import static domain.PieceMoveResult.*;
 
 import java.util.Optional;
 
-public class Bishop extends AbstractMoveStraightMovePiece {
-	public Bishop(Position position, Team team) {
+class Bishop extends AbstractMoveStraightMovePiece {
+	Bishop(Position position, Team team) {
 		super(position, team);
 	}
 

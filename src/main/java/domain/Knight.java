@@ -4,9 +4,9 @@ import static domain.PieceMoveResult.*;
 
 import java.util.Optional;
 
-public class Knight extends AbstractCatchOnMovePiece {
+class Knight extends AbstractCatchOnMovePiece {
 
-	public Knight(Position position, Team team) {
+	Knight(Position position, Team team) {
 		super(position, team);
 	}
 

@@ -5,11 +5,11 @@ import static domain.PieceMoveResult.*;
 import java.util.List;
 import java.util.Optional;
 
-public class Pawn extends AbstractPiece {
+class Pawn extends AbstractPiece {
 
 	private final Position initialPosition;
 
-	public Pawn(Position position, Team team) {
+	Pawn(Position position, Team team) {
 		super(position, team);
 		this.initialPosition = position;
 	}
