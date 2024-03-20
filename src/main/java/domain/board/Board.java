@@ -15,6 +15,10 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
+    public boolean isNoPieceAt(Position position) {
+        return !squares.containsKey(position);
+    }
+
     // TODO: getter 사용을 지양하는 방법을 고민
     public Map<Position, Piece> getSquares() {
         return squares;
