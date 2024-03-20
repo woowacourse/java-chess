@@ -26,7 +26,7 @@ class BoardTest {
      * 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다.(o)
      * rook, bishop, queen은 경로에 말이 있으면 안 됨. (o)
      * knight는 경로에 말이 있어도 움직일 수 있음. (o)
-     * pawn은 2칸 이동 시 경로에 말이 있으면 안 됨.
+     * pawn은 2칸 이동 시 경로에 말이 있으면 안 됨. (o)
      * pawn은 바로 앞 칸에 기물이 있으면 이동 X
      * pawn은 대각선 앞 칸에 상대 기물이 있으면 이동 O
      */
@@ -170,6 +170,28 @@ class BoardTest {
             Map.of(
                 sourcePosition, queen,
                 middlePosition, pawn
+            )
+        ));
+
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("실패: pawn 2칸 전진 시 경로에 말이 있는 경우 이동 불가")
+    void move_Pawn_PieceExistsOnRouteWhenMoveForwardTwo() {
+        Position sourcePosition = new Position(new File(2), new Rank(2));
+        Position middlePosition = new Position(new File(2), new Rank(3));
+        Position targetPosition = new Position(new File(2), new Rank(4));
+
+        Pawn pawn = new Pawn(Color.WHITE);
+        Queen queen = new Queen(Color.WHITE);
+
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(
+                sourcePosition, pawn,
+                middlePosition, queen
             )
         ));
 
