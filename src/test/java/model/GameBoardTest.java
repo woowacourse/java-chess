@@ -81,7 +81,7 @@ class GameBoardTest {
         GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
-        Moving moving = new Moving(new Position(Row.FOURTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
+        Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
 
         //when & then
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
@@ -95,9 +95,9 @@ class GameBoardTest {
         gameBoard.setting();
 
         Map<Position, Piece> board = gameBoard.getBoard();
-        board.put(new Position(Row.SIXTH, Column.FIFTH), new Queen(Camp.BLACK));
+        board.put(Position.from("e6"), new Queen(Camp.BLACK));
 
-        Moving moving = new Moving(new Position(Row.SEVENTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
+        Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -111,9 +111,9 @@ class GameBoardTest {
         gameBoard.setting();
 
         Map<Position, Piece> board = gameBoard.getBoard();
-        board.put(new Position(Row.FIFTH, Column.FIFTH), new Queen(Camp.BLACK));
+        board.put(Position.from("e5"), new Queen(Camp.BLACK));
 
-        Moving moving = new Moving(new Position(Row.SEVENTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
+        Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)

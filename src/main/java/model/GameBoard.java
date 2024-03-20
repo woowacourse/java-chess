@@ -22,14 +22,14 @@ public class GameBoard {
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
 
     static {
-        initPosition.put(Column.FIRST, Rook::new);
-        initPosition.put(Column.SECOND, Knight::new);
-        initPosition.put(Column.THIRD, Bishop::new);
-        initPosition.put(Column.FOURTH, Queen::new);
-        initPosition.put(Column.FIFTH, King::new);
-        initPosition.put(Column.SIXTH, Bishop::new);
-        initPosition.put(Column.SEVENTH, Knight::new);
-        initPosition.put(Column.EIGHTH, Rook::new);
+        initPosition.put(Column.A, Rook::new);
+        initPosition.put(Column.B, Knight::new);
+        initPosition.put(Column.C, Bishop::new);
+        initPosition.put(Column.D, Queen::new);
+        initPosition.put(Column.E, King::new);
+        initPosition.put(Column.F, Bishop::new);
+        initPosition.put(Column.G, Knight::new);
+        initPosition.put(Column.H, Rook::new);
     }
 
     private final Map<Position, Piece> board;
@@ -48,13 +48,13 @@ public class GameBoard {
 
     private void settingExceptPawn(final Camp camp, Row row) {
         for (Column column : Column.values()) {
-            board.put(new Position(row, column), initPosition.get(column).apply(camp));
+            board.put(new Position(column, row), initPosition.get(column).apply(camp));
         }
     }
 
     private void settingPawn(final Camp camp, final Row row) {
         for (Column column : Column.values()) {
-            board.put(new Position(row, column), new Pawn(camp));
+            board.put(new Position(column, row), new Pawn(camp));
         }
     }
 

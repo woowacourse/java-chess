@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public enum Row {
 
-    //TODO enum 의 first,second 이딴 값 이름 수정
-
     FIRST("1", 7),
     SECOND("2", 6),
     THIRD("3", 5),

@@ -2,20 +2,20 @@ package model.position;
 
 import java.util.Objects;
 
-public class Position { //TODO row, column 위치 변경
+public class Position {
 
     //TODO : 64개 캐싱
 
-    private final Row row;
     private final Column column;
+    private final Row row;
 
-    public Position(Row row, Column column) {
-        this.row = row;
+    public Position(Column column, Row row) {
         this.column = column;
+        this.row = row;
     }
 
     public static Position from(String command) {
-        return new Position(Row.from(command.charAt(1)), Column.from(command.charAt(0)));
+        return new Position(Column.from(command.charAt(0)), Row.from(command.charAt(1)));
     }
 
     public int getRowIndex() {

@@ -32,7 +32,7 @@ public class Rook extends Piece {
         for (int i = 1; i < d; i++) {
             Row row = Row.from(currentRow + (i * dRow[index]));
             Column column = Column.from(currentColumn + (i * dColumn[index]));
-            route.add(new Position(row, column));
+            route.add(new Position(column, row));
         }
         return route;
     }

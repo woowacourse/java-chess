@@ -18,9 +18,9 @@ public class Pawn extends Piece {
                 return Set.of();
             }
             if (Camp.BLACK == camp) {
-                return Set.of(new Position(Row.SIXTH, currentPosition.getColumn()));
+                return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
             }
-            return Set.of(new Position(Row.THIRD, currentPosition.getColumn()));
+            return Set.of(new Position(currentPosition.getColumn(), Row.THIRD));
         }
         System.out.println(currentPosition);
         System.out.println(nextPosition);

@@ -4,16 +4,14 @@ import java.util.Objects;
 
 public enum Column {
 
-
-    //TODO enum 의 first,second 이딴 값 이름 수정
-    FIRST("a", 0),
-    SECOND("b", 1),
-    THIRD("c", 2),
-    FOURTH("d", 3),
-    FIFTH("e", 4),
-    SIXTH("f", 5),
-    SEVENTH("g", 6),
-    EIGHTH("h", 7),
+    A("a", 0),
+    B("b", 1),
+    C("c", 2),
+    D("d", 3),
+    E("e", 4),
+    F("f", 5),
+    G("g", 6),
+    H("h", 7),
     ;
 
     private final String value;
