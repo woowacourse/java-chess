@@ -10,4 +10,9 @@ public class Queen extends Piece {
     public boolean isQueen() {
         return true;
     }
+
+    @Override
+    public boolean canMove(Position current, Position target) {
+        return false;
+    }
 }

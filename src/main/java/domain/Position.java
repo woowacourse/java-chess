@@ -24,4 +24,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    public boolean isSameRank(Position other) {
+        return this.rank == other.rank;
+    }
+
+    public boolean isSameFile(Position other) {
+        return this.file == other.file;
+    }
 }

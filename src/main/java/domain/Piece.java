@@ -38,6 +38,8 @@ public abstract class Piece {
         return side.isBlack();
     }
 
+    public abstract boolean canMove(Position current, Position target);
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
