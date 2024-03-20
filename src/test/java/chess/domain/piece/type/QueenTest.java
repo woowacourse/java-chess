@@ -27,10 +27,10 @@ class QueenTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
+        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position('f', 7));
+        boolean canMove = queen.canMoveTo(new Position('f', 7));
 
         // then
         assertThat(canMove).isTrue();
@@ -40,10 +40,10 @@ class QueenTest {
     @Test
     void canNotMove() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
+        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position('a', 1));
+        boolean canMove = queen.canMoveTo(new Position('a', 1));
 
         // then
         assertThat(canMove).isFalse();

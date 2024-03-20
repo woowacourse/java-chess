@@ -29,18 +29,19 @@ public class Position {
     }
 
     public boolean isDiagonalWith(final Position target) {
-        if (this.file.differenceWith(target.file) == this.rank.differenceWith(target.rank)) {
-            return true;
-        }
-        return false;
+        return this.file.differenceWith(target.file) == this.rank.differenceWith(target.rank);
     }
 
     public boolean isVerticalDifference(final Position target, final int difference) {
         return this.rank.differenceWith(target.rank) == difference;
     }
 
-    public boolean isHorizonalDifference(final Position target, final int difference) {
+    public boolean isHorizontalDifference(final Position target, final int difference) {
         return this.file.differenceWith(target.file) == difference;
+    }
+
+    public boolean isDiagonalDifference(final Position target, final int difference) {
+       return isDiagonalWith(target) && this.file.differenceWith(target.file) == difference;
     }
 
     @Override

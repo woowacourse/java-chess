@@ -128,7 +128,7 @@ class PositionTest {
         final Position otherPosition = new Position('b', 5);
 
         // when
-        final boolean result = currentPosition.isHorizonalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isHorizontalDifference(otherPosition, 2);
 
         // then
         Assertions.assertThat(result).isTrue();
@@ -142,9 +142,37 @@ class PositionTest {
         final Position otherPosition = new Position('a', 5);
 
         // when
-        final boolean result = currentPosition.isHorizonalDifference(otherPosition, 2);
+        final boolean result = currentPosition.isHorizontalDifference(otherPosition, 2);
 
         // then
-      Assertions.assertThat(result).isFalse();
+        Assertions.assertThat(result).isFalse();
+    }
+
+    @DisplayName("대각선상의 거리차이가 같다.")
+    @Test
+    void isSameDiagonalDifference() {
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position otherPosition = new Position('b', 7);
+
+        // when
+        final boolean result = currentPosition.isDiagonalDifference(otherPosition, 2);
+
+        // then
+        Assertions.assertThat(result).isTrue();
+    }
+
+    @DisplayName("대각선상의 거리차이가 같지 않다.")
+    @Test
+    void isNotSameDiagonalDifference() {
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position otherPosition = new Position('b', 7);
+
+        // when
+        final boolean result = currentPosition.isDiagonalDifference(otherPosition, 1);
+
+        // then
+        Assertions.assertThat(result).isFalse();
     }
 }
