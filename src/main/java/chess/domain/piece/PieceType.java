@@ -5,8 +5,8 @@ import chess.domain.strategy.*;
 
 public enum PieceType {
 
-    KING(new PawnMoveStrategy()),
-    QUEEN(new PawnMoveStrategy()),
+    KING(new KingMoveStrategy()),
+    QUEEN(new QueenMoveStrategy()),
     ROOK(new RookMoveStrategy()),
     BISHOP(new BishopMoveStrategy()),
     KNIGHT(new KnightMoveStrategy()),

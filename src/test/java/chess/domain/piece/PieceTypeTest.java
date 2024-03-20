@@ -159,4 +159,110 @@ class PieceTypeTest {
             assertThat(actual).isTrue();
         }
     }
+
+    @DisplayName("퀸")
+    @Nested
+    class Queen {
+
+        @BeforeEach
+        void setUp() {
+            type = PieceType.QUEEN;
+            source = Square.of(File.d, Rank.EIGHT);
+        }
+
+        @DisplayName("퀸은 수직 방향으로 움직일 수 있다.")
+        @Test
+        void queenVerticalCanMove() {
+            // given
+            Square destination = Square.of(File.d, Rank.FIVE);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("퀸은 수평 방향으로 움직일 수 있다.")
+        @Test
+        void queenHorizontalCanMove() {
+            // given
+            Square destination = Square.of(File.a, Rank.EIGHT);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("퀸은 대각선 방향으로 움직일 수 있다.")
+        @Test
+        void queenWhiteCanMove() {
+            // given
+            Square destination = Square.of(File.h, Rank.FOUR);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+    }
+
+    @DisplayName("킹")
+    @Nested
+    class King {
+
+        @BeforeEach
+        void setUp() {
+            type = PieceType.KING;
+            source = Square.of(File.e, Rank.EIGHT);
+        }
+
+        @DisplayName("킹은 수직 1칸 이동할 수 있다.")
+        @Test
+        void kingVerticalMove() {
+            // given
+            Square destination = Square.of(File.e, Rank.SEVEN);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("킹은 수평 1칸 이동할 수 있다.")
+        @Test
+        void kingHorizontalMove() {
+            // given
+            Square destination = Square.of(File.d, Rank.EIGHT);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("킹은 대각선 방향으로 1칸 이동할 수 있다.")
+        @Test
+        void queenWhiteCanMove() {
+            // given
+            Square destination = Square.of(File.f, Rank.SEVEN);
+            ColorType colorType = ColorType.BLACK;
+
+            // when
+            boolean actual = type.canMove(source, destination, colorType);
+
+            // then
+            assertThat(actual).isTrue();
+        }
+    }
 }
