@@ -17,6 +17,15 @@ public class Knight extends Piece {
 
     @Override
     public Piece move(Position newPosition) {
-        return null;
+        int differenceRow = position.differenceRow(newPosition);
+        int differenceColumn = position.differenceColumn(newPosition);
+
+        if (!position.equals(newPosition)
+                && ((Math.abs(differenceRow) == 1 && Math.abs(differenceColumn) == 2)
+                || (Math.abs(differenceRow) == 2 && Math.abs(differenceColumn) == 1))) {
+            return new King(newPosition, team);
+        }
+
+        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 }
