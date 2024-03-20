@@ -1,9 +1,6 @@
-import domain.piece.point.Rank;
+import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.EnumSet;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,13 +23,5 @@ class RankTest {
         final var sut = rank.prev();
 
         assertThat(sut).isEqualTo(Rank.THREE);
-    }
-
-    @Test
-    @DisplayName("현재 랭크가 끝인지 확인한다.")
-    void check_in_last_bound() {
-        Set<Rank> set = EnumSet.of(Rank.ONE, Rank.EIGHT);
-
-        set.forEach(rank -> assertThat(rank.isAtBoundary()).isTrue());
     }
 }

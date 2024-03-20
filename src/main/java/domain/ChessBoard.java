@@ -1,8 +1,6 @@
 package domain;
 
-import domain.piece.Piece;
-import domain.piece.Pieces;
-import domain.piece.point.Point;
+import domain.piece.attribute.point.Point;
 import factory.ChessBoardGenerator;
 
 import java.util.Map;

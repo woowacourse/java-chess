@@ -1,4 +1,4 @@
-package domain.piece;
+package domain;
 
 public enum PieceStatus {
     KING,

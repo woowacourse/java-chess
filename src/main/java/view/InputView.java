@@ -10,8 +10,11 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static ChessCommand inputChessCommand() {
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
-        return ChessCommand.from(scanner.nextLine());
+        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요. 이동은 move 명령을 입력하세요.");
+        return ChessCommand.from(scanner.next());
     }
 
+    public static String inputChessPoint() {
+        return scanner.next();
+    }
 }

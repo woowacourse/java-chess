@@ -1,6 +1,6 @@
-package domain.piece;
+package domain;
 
-import domain.piece.point.Point;
+import domain.piece.attribute.point.Point;
 
 import java.util.*;
 

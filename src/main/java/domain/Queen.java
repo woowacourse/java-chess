@@ -1,6 +1,7 @@
-package domain.piece;
+package domain;
 
-import domain.piece.point.Point;
+import domain.piece.attribute.Color;
+import domain.piece.attribute.point.Point;
 
 public class Queen extends Piece {
     public Queen(final Point point, final Color color) {

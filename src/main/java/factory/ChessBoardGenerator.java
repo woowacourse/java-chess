@@ -1,10 +1,10 @@
 package factory;
 
-import domain.ChessBoard;
-import domain.piece.*;
-import domain.piece.point.File;
-import domain.piece.point.Point;
-import domain.piece.point.Rank;
+import domain.*;
+import domain.piece.attribute.Color;
+import domain.piece.attribute.point.File;
+import domain.piece.attribute.point.Point;
+import domain.piece.attribute.point.Rank;
 
 import java.util.ArrayList;
 import java.util.Arrays;

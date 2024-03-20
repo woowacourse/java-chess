@@ -1,4 +1,4 @@
-package domain.piece.point;
+package domain.piece.attribute.point;
 
 public enum File {
     A('a'),
@@ -19,8 +19,8 @@ public enum File {
         return values()[this.ordinal() - 1];
     }
 
-    public boolean isAtBoundary() {
-        return this.ordinal() == 0 || this.ordinal() == values().length - 1;
+    public static boolean isInBoundary(int index) {
+        return index >= 0 && index < values().length;
     }
 
     File(final char value) {
@@ -34,6 +34,10 @@ public enum File {
             }
         }
         throw new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value));
+    }
+
+    public static File findByIndex(int ordinalIndex) {
+        return values()[ordinalIndex];
     }
 
 }

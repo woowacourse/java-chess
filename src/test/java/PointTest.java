@@ -1,13 +1,13 @@
+import domain.piece.attribute.point.Index;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.piece.point.File;
-import domain.piece.point.Point;
-import domain.piece.point.Rank;
+import domain.piece.attribute.point.File;
+import domain.piece.attribute.point.Point;
+import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class PointTest {
     @Test
@@ -43,5 +43,25 @@ class PointTest {
     void throw_exception_when_file_or_rank_char_out_of_range(String invalidValue) {
         assertThatThrownBy(() -> Point.from(invalidValue))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("포인트가 자신의 인덱스를 알려준다.")
+    void get_index_by_point() {
+        Point point = Point.from("e5");
+
+        final var sut = point.toIndex();
+
+        assertThat(sut).isEqualTo(new Index(4, 4));
+    }
+
+    @Test
+    @DisplayName("파일 과 랭크의 인덱스를 통해 포인트를 생성한다.")
+    void create_with_index() {
+        final var index = new Index(3, 5);
+
+        final var sut = Point.fromIndex(index);
+
+        assertThat(sut).isEqualTo(new Point(File.F, Rank.FOUR));
     }
 }
