@@ -1,39 +1,38 @@
 package chess.domain.square.piece;
 
+import chess.domain.position.Path;
+import chess.domain.position.Position;
 import chess.domain.square.Square;
 
-public class Piece implements Square {
-    private final Type type;
+import java.util.Map;
+
+public abstract class Piece implements Square {
     public final Color color;
 
-    public Piece(Type type, Color color) {
-        this.type = type;
+    public Piece(Color color) {
         this.color = color;
     }
 
-    public Type getType() {
-        return type;
+    @Override
+    public final boolean canMove(Path path, Map<Position, Square> board) {
+        return isValidPath(path) && isNotObstructed(path, board);
     }
+
+    protected abstract boolean isValidPath(Path path);
+
+    protected abstract boolean isNotObstructed(Path path, Map<Position, Square> board);
+
+    // TODO: Pawn이 움직인 적이 있는지 확인하는 로직 개선
+    protected abstract void move();
 
     public Color getColor() {
         return color;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Piece piece = (Piece) o;
-
-        if (type != piece.type) return false;
-        return color == piece.color;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = type != null ? type.hashCode() : 0;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                '}';
     }
 }
