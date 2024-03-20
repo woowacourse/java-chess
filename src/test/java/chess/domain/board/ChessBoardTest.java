@@ -7,6 +7,7 @@ import chess.domain.position.Rank;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
 import chess.domain.square.piece.Color;
+import chess.domain.square.piece.Queen;
 import chess.domain.square.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,7 @@ public class ChessBoardTest {
                 .hasMessage("시작 위치에 체스말이 존재해야 합니다.");
     }
 
-    @DisplayName("체스말을 움직인다.")
+    @DisplayName("target이 비어있는 경우 체스말을 움직인다.")
     @Test
     void movePieceTest() {
         // given
@@ -59,6 +60,24 @@ public class ChessBoardTest {
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);
     }
+
+    @DisplayName("target이 체스말인 경우 공격한다.")
+    @Test
+    void moveAttackTest() {
+        // given
+        squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
+        squares.put(new Position(Rank.FIRST, File.B), Queen.from(Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(squares);
+        Map<Position, Square> expected = provideEmptyBoard();
+        expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
+
+        // when
+        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
+
+        // then
+        assertThat(chessBoard.getSquares()).isEqualTo(expected);
+    }
+
 
     static Map<Position, Square> provideEmptyBoard() {
         Map<Position, Square> squares = new HashMap<>();

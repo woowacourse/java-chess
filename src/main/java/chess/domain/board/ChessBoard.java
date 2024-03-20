@@ -22,23 +22,29 @@ public class ChessBoard {
 
     public void move(Path path) {
         validateStartEmpty(path);
-        tryExchange(path);
+        if (squares.get(path.getEnd()) == Empty.getInstance()) {
+            tryExchange(path);
+            return;
+        }
+        tryAttack(path);
     }
 
     private void tryExchange(Path path) {
-        if (squares.get(path.getEnd()) == Empty.getInstance()) {
-            Square startSquare = squares.get(path.getStart());
-            exchange(path, startSquare);
-        }
-    }
-
-    // TODO: 메소드명 개선
-    private void exchange(Path path, Square startSquare) {
+        Square startSquare = squares.get(path.getStart());
         if (startSquare.canMove(path, squares)) {
             startSquare.move();
             Square tmp = squares.get(path.getEnd());
             squares.put(path.getEnd(), startSquare);
             squares.put(path.getStart(), tmp);
+        }
+    }
+
+    private void tryAttack(Path path) {
+        Square startSquare = squares.get(path.getStart());
+        if (startSquare.canAttack(path, squares)) {
+            startSquare.move();
+            squares.put(path.getEnd(), startSquare);
+            squares.put(path.getStart(), Empty.getInstance());
         }
     }
 
