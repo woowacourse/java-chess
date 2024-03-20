@@ -63,4 +63,28 @@ public class ChessBoard {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다."));
     }
+
+    public void move(final Position currentPosition, final Position nextPosition) {
+        Piece currentPiece = findBy(currentPosition);
+        if (!currentPiece.canMoveTo(nextPosition)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
+        }
+        if (existInWay(currentPiece, nextPosition)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
+        }
+
+    }
+
+    private boolean exist(final Position other) {
+        return pieces.stream()
+                .anyMatch(piece -> piece.isPosition(other));
+    }
+
+    private boolean existInWay(final Piece currentPiece, final Position nextPosition) {
+        if (exist(nextPosition)) {
+           return true;
+        }
+        // 경로 중간에 있는 경우
+        return false;
+    }
 }

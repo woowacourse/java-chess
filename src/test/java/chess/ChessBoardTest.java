@@ -1,19 +1,19 @@
 package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
-import chess.domain.piece.type.Night;
-import chess.domain.piece.type.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.type.Bishop;
+import chess.domain.piece.type.King;
+import chess.domain.piece.type.Night;
+import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
 import java.util.Set;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +53,7 @@ class ChessBoardTest {
                 new Pawn(Color.BLACK, new Position('g', 2)),
                 new Pawn(Color.BLACK, new Position('h', 2)),
 
-                 new Rook(Color.BLACK, new Position('a', 1)),
+                new Rook(Color.BLACK, new Position('a', 1)),
                 new Night(Color.BLACK, new Position('b', 1)),
                 new Bishop(Color.BLACK, new Position('c', 1)),
                 new Queen(Color.BLACK, new Position('d', 1)),
@@ -61,5 +61,18 @@ class ChessBoardTest {
                 new Bishop(Color.BLACK, new Position('f', 1)),
                 new Night(Color.BLACK, new Position('g', 1)),
                 new Rook(Color.BLACK, new Position('h', 1)));
+    }
+
+    @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다.")
+    @Test
+    void existInWay() {
+        // given
+        final Position currentPositioin = new Position('a', 1);
+        final Position nextPosition = new Position('a', 2);
+
+        // when && then
+        assertThatThrownBy(() -> chessBoard.move(currentPositioin, nextPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
     }
 }
