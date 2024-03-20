@@ -16,12 +16,20 @@ public class OutputView {
     public void printInitBoard(Board board) {
         List<Piece> pieces = board.extractPieces();
         for (int i = 0; i < pieces.size(); i++) {
-            if (i % 8 == 0) {
-                System.out.println();
-            }
             String piece = PieceOutput.asString(pieces.get(i));
             System.out.print(piece);
+            separateLineByFileIndex(i);
         }
+    }
+
+    private void separateLineByFileIndex(int fileIndex) {
+        if (isLastFile(fileIndex)) {
+            System.out.println();
+        }
+    }
+
+    private boolean isLastFile(int fileIndex) {
+        return fileIndex % 8 == 7;
     }
 
     private enum PieceOutput {
