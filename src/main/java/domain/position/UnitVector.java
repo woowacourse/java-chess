@@ -37,4 +37,12 @@ public enum UnitVector {
     private static boolean isInvalid(int rowDiff, int colDiff) {
         return (rowDiff != 0 && colDiff != 0) && (Math.abs(rowDiff) != Math.abs(colDiff));
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 }

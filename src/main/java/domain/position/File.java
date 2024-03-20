@@ -1,5 +1,7 @@
 package domain.position;
 
+import java.util.Arrays;
+
 public enum File {
     A(0),
     B(1),
@@ -18,5 +20,12 @@ public enum File {
 
     public int getIndex() {
         return index;
+    }
+
+    public static File of(final int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.getIndex() == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스입니다."));
     }
 }

@@ -1,5 +1,7 @@
 package domain.position;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE(7),
     TWO(6),
@@ -18,5 +20,12 @@ public enum Rank {
 
     public int getIndex() {
         return index;
+    }
+
+    public static Rank of(final int index) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.getIndex() == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스입니다."));
     }
 }
