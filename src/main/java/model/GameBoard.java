@@ -70,7 +70,9 @@ public class GameBoard {
             }
         }
 
-        if (piece.getCamp().equals(board.get(moving.getNextPosition()).getCamp())) {
+        Position nextPosition = moving.getNextPosition();
+
+        if (board.containsKey(nextPosition) && piece.getCamp().equals(board.get(nextPosition).getCamp())) {
             throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
         }
 
