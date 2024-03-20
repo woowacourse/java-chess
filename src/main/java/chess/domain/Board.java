@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.square.Square;
 import java.util.Map;
 
 public class Board {
