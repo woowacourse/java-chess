@@ -17,7 +17,7 @@
     - [x] QUEEN
   - [ ] (가로막고 있는 말 고려O) 이동 가능한 위치가 아닌 경우 예외를 발생시킨다.
     - [x] ROOK
-    - [ ] BISHOP
+    - [x] BISHOP
     - [x] NIGHT
     - [ ] PAWN
     - [ ] KING
