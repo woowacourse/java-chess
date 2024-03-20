@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piece.piecerole.PieceRole;
 import java.util.Objects;
 
 public class PieceType {

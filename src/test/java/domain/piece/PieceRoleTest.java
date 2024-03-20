@@ -1,6 +1,8 @@
 package domain.piece;
 
 import domain.game.PositionFixture;
+import domain.piece.piecerole.King;
+import domain.piece.piecerole.PieceRole;
 import domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -4,7 +4,7 @@
 //import domain.game.PieceMover;
 //import domain.piece.Color;
 //import domain.piece.Piece;
-//import domain.piece.PieceRole;
+//import domain.piece.piecerole.PieceRole;
 //import domain.piece.PieceType;
 //import domain.position.File;
 //import domain.position.Position;

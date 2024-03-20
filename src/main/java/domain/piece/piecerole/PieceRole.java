@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.piecerole;
 
 import domain.position.Position;
 

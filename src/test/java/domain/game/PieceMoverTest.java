@@ -3,7 +3,7 @@
 //import domain.chessboard.Square;
 //import domain.piece.Color;
 //import domain.piece.Piece;
-//import domain.piece.PieceRole;
+//import domain.piece.piecerole.PieceRole;
 //import domain.piece.PieceType;
 //import domain.position.Position;
 //import org.assertj.core.api.Assertions;

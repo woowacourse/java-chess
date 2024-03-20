@@ -3,16 +3,12 @@ package domain.piece;
 import domain.game.Direction;
 import domain.position.Position;
 
-public enum Movable {
-
-    UP(Direction.NORTH),
-    DOWN(Direction.SOUTH),
-    LEFT(Direction.WEST),
-    RIGHT(Direction.EAST);
-
+public class Movable {
+    private final int maxMovement;
     private final Direction direction;
 
-    Movable(Direction direction) {
+    public Movable(int maxMovement, Direction direction) {
+        this.maxMovement = maxMovement;
         this.direction = direction;
     }
 
