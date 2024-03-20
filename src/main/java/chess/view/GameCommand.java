@@ -22,6 +22,6 @@ public enum GameCommand {
     }
 
     public boolean isContinue() {
-        return this != END;
+        return this == MOVE;
     }
 }

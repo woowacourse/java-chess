@@ -23,19 +23,36 @@ public class ChessGame {
         this.outputView = outputView;
     }
 
-    public void play() {
+    public void start() {
         outputView.printStartGame();
+        GameCommand command = inputView.readCommand();
+        if (command == GameCommand.START) {
+            Board board = BoardFactory.startGame();
+            showBoard(board);
+            play(board);
+        }
+        if (command == GameCommand.MOVE) {
+            throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+        }
+    }
+
+    private void play(Board board) {
         GameCommand gameCommand;
         do {
             gameCommand = inputView.readCommand();
-            play(gameCommand);
+            play(gameCommand, board);
         } while (gameCommand.isContinue());
     }
 
-    private void play(GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
-            Board board = BoardFactory.startGame();
+    private void play(GameCommand gameCommand, Board board) {
+        if (gameCommand == GameCommand.MOVE) {
+            Position start = inputView.readPosition();
+            Position end = inputView.readPosition();
+            board.move(start, end);
             showBoard(board);
+        }
+        if (gameCommand == GameCommand.START) {
+            throw new IllegalArgumentException("이미 게임을 시작했습니다.");
         }
     }
 

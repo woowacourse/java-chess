@@ -10,6 +10,6 @@ public class ChessApplication {
         OutputView outputView = new OutputView();
         ChessGame chessGame = new ChessGame(inputView, outputView);
 
-        chessGame.play();
+        chessGame.start();
     }
 }
