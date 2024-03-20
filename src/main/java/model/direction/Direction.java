@@ -23,4 +23,8 @@ public enum Direction {
     public boolean isMovedPositionAvailable(Position position) {
         return position.isAvailablePosition(position.file() + fileDifferential, position.rank() + rankDifferential);
     }
+
+    public Position getMovedPosition(Position position) {
+        return Position.of(position.file() + fileDifferential, position.rank() + rankDifferential);
+    }
 }
