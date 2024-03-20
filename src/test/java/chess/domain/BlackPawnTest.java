@@ -21,17 +21,8 @@ class BlackPawnTest {
     }
 
     @Test
-    @DisplayName("(2, 7) -> (2, 6)")
-    void findMovablePositions() {
-        BlackPawn blackPawn = new BlackPawn(new Position(2, 7));
-        Position destination = new Position(2, 6);
-
-        assertThat(blackPawn.findMovablePositions(destination)).contains(destination);
-    }
-
-    @Test
     @DisplayName("(2, 7)일 때 (2, 5)로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestinationUpUp() {
+    void findMovablePositionsByInvalidDestinationDownDown() {
         BlackPawn blackPawn = new BlackPawn(new Position(2, 7));
         Position destination = new Position(2, 5);
 

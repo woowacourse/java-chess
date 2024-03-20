@@ -21,26 +21,32 @@ class BlackFirstPawnTest {
     }
 
     @Test
-    @DisplayName("(2,7) -> (2,6)")
-    void findMovablePositions() {
-        BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
-        Position destination = new Position(2, 6);
-
-        assertThat(blackFirstPawn.findMovablePositions(destination)).contains(destination);
-    }
-
-    @Test
-    @DisplayName("(2,7) -> (2, 5)")
+    @DisplayName("(2, 7) -> (2, 5), (2, 6)")
     void findMovablePositionsByUpUp() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
         Position destination = new Position(2, 5);
 
-        assertThat(blackFirstPawn.findMovablePositions(destination)).contains(destination);
+        assertThat(blackFirstPawn.findMovablePositions(destination)).containsExactly(new Position(2, 6));
     }
 
+
     @Test
+    @DisplayName("왼쪽, 오른쪽으로는 이동할 수 없다.")
+    void findMovablePositionsByInvalidDestinationLeftRight() {
+        BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
+
+        assertAll(
+                () -> assertThatIllegalArgumentException()
+                        .isThrownBy(() -> blackFirstPawn.findMovablePositions(new Position(1, 7)))
+                        .withMessage("이동할 수 없습니다."),
+                () -> assertThatIllegalArgumentException()
+                        .isThrownBy(() -> blackFirstPawn.findMovablePositions(new Position(3, 7)))
+                        .withMessage("이동할 수 없습니다.")
+        );
+    }
+
     @DisplayName("(2,7)일 때 (2, 1)로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestinationDown() {
+    void findMovablePositionsByInvalidFarDestination() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
         Position destination = new Position(2, 1);
 

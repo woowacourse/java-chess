@@ -21,21 +21,27 @@ class WhiteFirstPawnTest {
     }
 
     @Test
-    @DisplayName("(2, 2) -> (2, 3)")
-    void findMovablePositions() {
-        WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn(new Position(2, 2));
-        Position destination = new Position(2, 3);
-
-        assertThat(whiteFirstPawn.findMovablePositions(destination)).contains(destination);
-    }
-
-    @Test
-    @DisplayName("(2, 2) -> (2, 4)")
+    @DisplayName("(2, 2) -> (2, 4), (2, 3)")
     void findMovablePositionsByUpUp() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn(new Position(2, 2));
         Position destination = new Position(2, 4);
 
-        assertThat(whiteFirstPawn.findMovablePositions(destination)).contains(destination);
+        assertThat(whiteFirstPawn.findMovablePositions(destination)).containsExactly(new Position(2, 3));
+    }
+
+    @Test
+    @DisplayName("왼쪽, 오른쪽으로는 이동할 수 없다.")
+    void findMovablePositionsByInvalidDestinationLeftRight() {
+        WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn(new Position(2, 2));
+
+        assertAll(
+                () -> assertThatIllegalArgumentException()
+                        .isThrownBy(() -> whiteFirstPawn.findMovablePositions(new Position(1, 2)))
+                        .withMessage("이동할 수 없습니다."),
+                () -> assertThatIllegalArgumentException()
+                        .isThrownBy(() -> whiteFirstPawn.findMovablePositions(new Position(3, 2)))
+                        .withMessage("이동할 수 없습니다.")
+        );
     }
 
     @Test
@@ -43,6 +49,17 @@ class WhiteFirstPawnTest {
     void findMovablePositionsByInvalidDestinationDown() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn(new Position(2, 2));
         Position destination = new Position(2, 1);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> whiteFirstPawn.findMovablePositions(destination))
+                .withMessage("이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("(2, 2)일 때 (2, 5)로는 이동할 수 없다.")
+    void findMovablePositionsByInvalidFarDestination() {
+        WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn(new Position(2, 2));
+        Position destination = new Position(2, 5);
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> whiteFirstPawn.findMovablePositions(destination))

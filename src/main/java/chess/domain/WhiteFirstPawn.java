@@ -2,21 +2,11 @@ package chess.domain;
 
 import java.util.Set;
 
-public class WhiteFirstPawn extends Piece {
-    private static Set<Direction> directions = Direction.getWhiteFirstPawnDirection();
+public class WhiteFirstPawn extends Pawn {
+    private static Set<Direction> DIRECTIONS = Direction.getWhiteFirstPawnDirection();
 
     public WhiteFirstPawn(Position position) {
-        super(position, Color.WHITE);
-    }
-
-    @Override
-    public Set<Position> findMovablePositions(Position destination) {
-        Set<Position> movable = position.findMovablePositions(directions);
-
-        if (movable.contains(destination)) {
-            return Set.of(destination);
-        }
-        throw new IllegalArgumentException("이동할 수 없습니다.");
+        super(position, Color.WHITE, DIRECTIONS);
     }
 
     public boolean isCaptureMove(Position destination) {

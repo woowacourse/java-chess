@@ -21,12 +21,18 @@ class WhitePawnTest {
     }
 
     @Test
-    @DisplayName("(2, 2) -> (2, 3)")
-    void findMovablePositions() {
+    @DisplayName("왼쪽, 오른쪽으로는 이동할 수 없다.")
+    void findMovablePositionsByInvalidDestinationLeftRight() {
         WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
-        Position destination = new Position(2, 3);
 
-        assertThat(whitePawn.findMovablePositions(destination)).contains(destination);
+        assertAll(
+                () -> assertThatIllegalArgumentException()
+                        .isThrownBy(() -> whitePawn.findMovablePositions(new Position(1, 2)))
+                        .withMessage("이동할 수 없습니다."),
+                () -> assertThatIllegalArgumentException()
+                        .isThrownBy(() -> whitePawn.findMovablePositions(new Position(3, 2)))
+                        .withMessage("이동할 수 없습니다.")
+        );
     }
 
     @Test
@@ -40,11 +46,24 @@ class WhitePawnTest {
                 .withMessage("이동할 수 없습니다.");
     }
 
+
+
     @Test
     @DisplayName("(2, 2)일 때 (2, 1)으로는 이동할 수 없다.")
     void findMovablePositionsByInvalidDestinationDown() {
         WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
         Position destination = new Position(2, 1);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> whitePawn.findMovablePositions(destination))
+                .withMessage("이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("(2, 2)일 때 (2, 5)로는 이동할 수 없다.")
+    void findMovablePositionsByInvalidFarDestination() {
+        WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
+        Position destination = new Position(2, 5);
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> whitePawn.findMovablePositions(destination))
