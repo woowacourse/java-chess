@@ -12,6 +12,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return false;
+        return this.position.isDiagonalWith(target);
     }
 }

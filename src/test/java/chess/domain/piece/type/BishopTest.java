@@ -12,12 +12,12 @@ class BishopTest {
 
     @DisplayName("비숍을 대각선으로 이동한다.")
     @Test
-    void isStraight() {
+    void canMove() {
         // given
         final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position('d', 6)); // 상
+        boolean canMove = bishop.canMoveTo(new Position('e', 4));
 
         // then
         assertThat(canMove).isTrue();
@@ -25,12 +25,12 @@ class BishopTest {
 
     @DisplayName("비숍은 대각선 이외로는 이동할 수 없다.")
     @Test
-    void isNotStraight() {
+    void canNotMove() {
         // given
         final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position('e', 4)); // 대각선 위
+        boolean canMove = bishop.canMoveTo(new Position('d', 6)); // 대각선 위
 
         // then
         assertThat(canMove).isFalse();
