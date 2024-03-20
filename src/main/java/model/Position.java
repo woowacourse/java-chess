@@ -34,6 +34,14 @@ public class Position {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Position 입니다."));
     }
 
+    public int file() {
+        return file;
+    }
+
+    public int rank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
