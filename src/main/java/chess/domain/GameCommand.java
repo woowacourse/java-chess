@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum GameCommand {
     START("start"),
     END("end"),
-    ;
+    MOVE("move");
 
     private final String value;
 

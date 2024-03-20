@@ -12,6 +12,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PositionTest {
 
+    private static Stream<Arguments> nextPositionFailArguments() {
+        return Stream.of(
+                Arguments.arguments(new Position(File.A, Rank.ONE), Direction.SOUTH,
+                        new Position(File.A, Rank.EIGHT), Direction.NORTH,
+                        new Position(File.H, Rank.ONE), Direction.SOUTH_EAST,
+                        new Position(File.H, Rank.EIGHT), Direction.NORTH_EAST
+                )
+        );
+    }
+
     @DisplayName("방향에 따른 다음 위치를 결정한다")
     @Test
     public void nextPosition() {
@@ -42,15 +52,5 @@ public class PositionTest {
         Position position = new Position(File.A, Rank.ONE);
 
         assertThat(position.canMoveNext(Direction.NORTH)).isTrue();
-    }
-
-    private static Stream<Arguments> nextPositionFailArguments() {
-        return Stream.of(
-                Arguments.arguments(new Position(File.A, Rank.ONE), Direction.SOUTH,
-                        new Position(File.A, Rank.EIGHT), Direction.NORTH,
-                        new Position(File.H, Rank.ONE), Direction.SOUTH_EAST,
-                        new Position(File.H, Rank.EIGHT), Direction.NORTH_EAST
-                )
-        );
     }
 }
