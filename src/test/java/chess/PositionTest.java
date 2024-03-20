@@ -11,7 +11,7 @@ public class PositionTest {
     @DisplayName("Position을 생성한다.")
     void makePosition() {
         assertThatCode(() -> {
-            new Position("b2");
+            Position.of("b2");
         }).doesNotThrowAnyException();
     }
 
@@ -19,7 +19,7 @@ public class PositionTest {
     @DisplayName("잘못된 Position을 넘기면 에러가 발생한다.")
     void wrongValueTest () {
        assertThatThrownBy(()->{
-           new Position("x5");
+           Position.of("x5");
        }).isInstanceOf(IllegalArgumentException.class);
     }
 }

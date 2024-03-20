@@ -15,7 +15,7 @@ class DirectionTest {
     "a2,a1,DOWN","a1,b1,RIGHT"})
     @DisplayName("출발지와 목적지를 넘겨주면 방향을 가져온다.")
     void Direction_Find_direction_with_positions(String source,String target,Direction inputDirection) {
-        Direction direction = Direction.findDirection(new Position(source), new Position(target));
+        Direction direction = Direction.findDirection(Position.of(source), Position.of(target));
 
         assertThat(direction).isEqualTo(inputDirection);
     }

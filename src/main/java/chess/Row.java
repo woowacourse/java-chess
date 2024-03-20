@@ -11,17 +11,24 @@ public class Row {
             .boxed()
             .collect(toMap(
                     i -> i,
-                    i -> new Row(i)
+                    Row::new
             ));
 
     private Row(int value) {
         this.value = value;
     }
+
     public static Row valueOf(String value) {
         validate(value);
         return CACHE.get(value.charAt(0) - 'a');
     }
-    private static void validate(String value){
+
+    public Row update(int direction) {
+        int rowDirection = direction;
+        return CACHE.get(this.value + direction);
+    }
+
+    private static void validate(String value) {
         validateAlphabet(value);
         validateSize(value);
     }
@@ -29,13 +36,13 @@ public class Row {
     private static void validateAlphabet(String value) {
         //TODO : charAt 말고 다른 방법 생각해보기
         char row = value.charAt(0);
-        if(row<'a'||row>'h'){
+        if (row < 'a' || row > 'h') {
             throw new IllegalArgumentException("a~h까지 가능합니다.");
         }
     }
 
-    private static void validateSize(String value){
-        if(value.length()!=1){
+    private static void validateSize(String value) {
+        if (value.length() != 1) {
             throw new IllegalArgumentException("a~h까지 가능합니다.");
         }
     }

@@ -36,6 +36,11 @@ public class Column {
         }
     }
 
+    public Column update(int direction) {
+        int columnDirection = direction;
+        return CACHE.get(this.value + columnDirection);
+    }
+
     public boolean isBigger(Column srcColumn) {
         return this.value > srcColumn.value;
     }

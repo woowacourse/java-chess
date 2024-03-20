@@ -11,8 +11,17 @@ public enum Direction {
     DOWN_LEFT(-1, -1),
     DOWN_RIGHT(1, -1);
 
-    private int rowDirection;
-    private int columnDirection;
+    private final int rowDirection;
+
+    public int getColumnDirection() {
+        return columnDirection;
+    }
+
+    public int getRowDirection() {
+        return rowDirection;
+    }
+
+    private final int columnDirection;
 
     Direction(int rowDirection, int columnDirection) {
         this.rowDirection = rowDirection;
@@ -27,9 +36,7 @@ public enum Direction {
         boolean isRowBigger = trgRow.isBigger(srcRow);
         boolean isColumnBigger = trgColumn.isBigger(srcColumn);
 
-        if (srcRow == trgRow && srcColumn == trgColumn) {
-            throw new IllegalArgumentException("제자리로 이동할 수 없습니다.");
-        }
+
         if (srcRow == trgRow && isColumnBigger) {
             return UP;
         }
@@ -52,5 +59,9 @@ public enum Direction {
             return DOWN_LEFT;
         }
         return DOWN_RIGHT;
+    }
+
+    public Position move(Position source) {
+        return source.move(rowDirection, columnDirection);
     }
 }
