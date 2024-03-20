@@ -24,15 +24,15 @@ class PositionTest {
         );
     }
 
-//    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 수평인지 확인할 수 있다")
-//    @Test
-//    void should_CheckHorizontalRelationShipWithPositions() {
-//        Position position = Position.of(1, 1);
-//        assertAll(
-//                () -> assertThat(position.isHorizontalWith(Position.of(1, 2))).isTrue(),
-//                () -> assertThat(position.isHorizontalWith(Position.of(2, 1))).isFalse());
-//        );
-//    }
+    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 수평인지 확인할 수 있다")
+    @Test
+    void should_CheckHorizontalRelationShipWithPositions() {
+        Position position = Position.of(1, 1);
+        assertAll(
+                () -> assertThat(position.isHorizontalWith(Position.of(1, 2))).isTrue(),
+                () -> assertThat(position.isHorizontalWith(Position.of(2, 1))).isFalse()
+        );
+    }
 //
 //    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 대각인지 확인할 수 있다")
 //    @Test

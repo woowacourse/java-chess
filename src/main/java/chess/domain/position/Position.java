@@ -43,6 +43,10 @@ public class Position {
         return columnPosition.equals(target.columnPosition);
     }
 
+    public boolean isHorizontalWith(Position target) {
+        return rowPosition.equals(target.rowPosition);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
