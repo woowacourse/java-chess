@@ -13,14 +13,14 @@ class PositionTest {
     @Test
     void createPositionTest() {
         // Given
-        Rank row = Rank.ONE;
-        File col = File.A;
+        File file = File.A;
+        Rank rank = Rank.ONE;
 
         // When
-        Position position = new Position(row, col);
+        Position position = new Position(file, rank);
 
         // Then
-        assertThat(position.rank()).isEqualTo(row);
-        assertThat(position.file()).isEqualTo(col);
+        assertThat(position.rank()).isEqualTo(rank);
+        assertThat(position.file()).isEqualTo(file);
     }
 }

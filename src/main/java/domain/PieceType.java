@@ -10,18 +10,18 @@ import static domain.position.File.*;
 import static domain.position.Rank.*;
 
 public enum PieceType {
-    BLACK_PAWN(Arrays.stream(File.values()).map(file -> new Position(SEVEN, file)).toList()),
-    BLACK_ROOK(List.of(new Position(EIGHT, A), new Position(EIGHT, H))),
-    BLACK_KNIGHT(List.of(new Position(EIGHT, B), new Position(EIGHT, G))),
-    BLACK_BISHOP(List.of(new Position(EIGHT, C), new Position(EIGHT, F))),
-    BLACK_QUEEN(List.of(new Position(EIGHT, D))),
-    BLACK_KING(List.of(new Position(EIGHT, E))),
-    WHITE_PAWN(Arrays.stream(File.values()).map(file -> new Position(TWO, file)).toList()),
-    WHITE_ROOK(List.of(new Position(ONE, A), new Position(ONE, H))),
-    WHITE_KNIGHT(List.of(new Position(ONE, B), new Position(ONE, G))),
-    WHITE_BISHOP(List.of(new Position(ONE, C), new Position(ONE, F))),
-    WHITE_QUEEN(List.of(new Position(ONE, D))),
-    WHITE_KING(List.of(new Position(ONE, E)));
+    BLACK_PAWN(Arrays.stream(File.values()).map(file -> new Position(file, SEVEN)).toList()),
+    BLACK_ROOK(List.of(new Position(A, EIGHT), new Position(H, EIGHT))),
+    BLACK_KNIGHT(List.of(new Position(B, EIGHT), new Position(G, EIGHT))),
+    BLACK_BISHOP(List.of(new Position(C, EIGHT), new Position(F, EIGHT))),
+    BLACK_QUEEN(List.of(new Position(D, EIGHT))),
+    BLACK_KING(List.of(new Position(E, EIGHT))),
+    WHITE_PAWN(Arrays.stream(File.values()).map(file -> new Position(file, TWO)).toList()),
+    WHITE_ROOK(List.of(new Position(A, ONE), new Position(H, ONE))),
+    WHITE_KNIGHT(List.of(new Position(B, ONE), new Position(G, ONE))),
+    WHITE_BISHOP(List.of(new Position(C, ONE), new Position(F, ONE))),
+    WHITE_QUEEN(List.of(new Position(D, ONE))),
+    WHITE_KING(List.of(new Position(E, ONE)));
 
     private final List<Position> initPosition;
 
