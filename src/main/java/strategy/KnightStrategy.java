@@ -14,22 +14,25 @@ public enum KnightStrategy {
     DDR(2, -1, List.of(2, -1)),
     DDL(2, 1, List.of(2, 1));
 
-    final int x;
-    final int y;
-    final List<Integer> strategy;
+    final int rowDifference;
+    final int columnDifference;
+    final List<Integer> direction;
 
-    KnightStrategy(int x, int y, List<Integer> strategy) {
-        this.x = x;
-        this.y = y;
-        this.strategy = strategy;
+    KnightStrategy(int rowDifference, int columnDifference, List<Integer> direction) {
+        this.rowDifference = rowDifference;
+        this.columnDifference = columnDifference;
+        this.direction = direction;
     }
 
-    public static List<Integer> getMoveStrategy(int rowDifference, int columnDifference) {
-        KnightStrategy knightStrategy = Arrays.stream(KnightStrategy.values())
-                .filter(enumValue -> enumValue.x == rowDifference && enumValue.y == columnDifference)
+    public static KnightStrategy getMoveStrategy(int rowDifference, int columnDifference) {
+        return Arrays.stream(KnightStrategy.values())
+                .filter(enumValue -> enumValue.rowDifference == rowDifference
+                        && enumValue.columnDifference == columnDifference)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하는 움직임 전략이 없습니다."));
+    }
 
-        return knightStrategy.strategy;
+    public List<Integer> getDirection() {
+        return this.direction;
     }
 }
