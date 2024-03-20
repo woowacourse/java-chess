@@ -6,8 +6,11 @@ import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Knight extends Piece {
+    private static final Set<Integer> MOVE_DIFFERENCES = Set.of(1, 2);
+
     public Knight(Team team, boolean hasNotMoved) {
         super(team, hasNotMoved);
     }
@@ -19,8 +22,8 @@ public class Knight extends Piece {
 
     @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
-        return (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 2)
-                || (Math.abs(rowDifference) == 2 && Math.abs(columnDifference) == 1);
+        List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
+        return differenceList.containsAll(MOVE_DIFFERENCES);
     }
 
     @Override
