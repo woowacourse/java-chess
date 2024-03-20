@@ -10,6 +10,6 @@ public class RookMoveStrategy implements MoveStrategy {
     public boolean check(Square source, Square destination, ColorType colorType) {
         SquareDifferent diff = source.calculateDiff(destination);
 
-        return diff.rankDiff() == 0 || diff.fileDiff() == 0;
+        return Math.abs(diff.rankDiff()) == 0 || Math.abs(diff.fileDiff()) == 0;
     }
 }

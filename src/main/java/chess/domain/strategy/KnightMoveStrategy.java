@@ -13,10 +13,13 @@ public class KnightMoveStrategy implements MoveStrategy {
     public boolean check(Square source, Square destination, ColorType colorType) {
         SquareDifferent diff = source.calculateDiff(destination);
 
-        if (diff.rankDiff() == 2 && diff.fileDiff() == 1) {
+        int rankDiff = Math.abs(diff.rankDiff());
+        int fileDiff = Math.abs(diff.fileDiff());
+
+        if (rankDiff == 2 && fileDiff == 1) {
             return true;
         }
 
-        return diff.rankDiff() == 1 && diff.fileDiff() == 2;
+        return rankDiff == 1 && fileDiff == 2;
     }
 }

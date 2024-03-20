@@ -32,6 +32,6 @@ public enum Rank {
     public int calculateDiff(Rank rank) {
         List<Rank> ranks = List.of(Rank.values());
 
-        return Math.abs(ranks.indexOf(this) - ranks.indexOf(rank));
+        return ranks.indexOf(this) - ranks.indexOf(rank);
     }
 }

@@ -32,6 +32,6 @@ public enum File {
     public int calculateDiff(File file) {
         List<File> files = List.of(File.values());
 
-        return Math.abs(files.indexOf(this) - files.indexOf(file));
+        return files.indexOf(this) - files.indexOf(file);
     }
 }

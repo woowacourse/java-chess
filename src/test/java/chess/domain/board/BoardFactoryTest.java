@@ -73,7 +73,6 @@ public class BoardFactoryTest {
         expected.put(Square.of(File.h, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
 
         for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
-            System.out.println(rank);
             for (File file : File.values()) {
                 expected.put(Square.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
             }

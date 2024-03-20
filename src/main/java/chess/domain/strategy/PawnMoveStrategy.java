@@ -2,6 +2,7 @@ package chess.domain.strategy;
 
 import chess.domain.piece.ColorType;
 import chess.domain.position.Square;
+import chess.dto.SquareDifferent;
 
 public class PawnMoveStrategy implements MoveStrategy {
 
@@ -9,11 +10,13 @@ public class PawnMoveStrategy implements MoveStrategy {
     private static final int PAWN_FIRST_FORWARD_INDEX = 2;
 
     /**
-     * 1칸 앞으로 전진만 가능
+     * 1칸 앞으로 전진만 가능 (Black 7 -> 6, White 2 -> 3)
      * 첫 번째 이동 (Rank.2, Rank.7일 때는 2칸 전진 가능)
      */
     @Override
     public boolean check(Square source, Square destination, ColorType colorType) {
+        SquareDifferent diff = source.calculateDiff(destination);
+
         int forwardIndex = PAWN_FORWARD_INDEX;
         int firstForwardIndex = PAWN_FIRST_FORWARD_INDEX;
 
@@ -23,13 +26,14 @@ public class PawnMoveStrategy implements MoveStrategy {
         }
 
         if (source.isPawnStartSquare()) {
-            return checkCanForward(source, destination, forwardIndex) || checkCanForward(source, destination, firstForwardIndex);
+            return checkCanForward(firstForwardIndex, diff.rankDiff(), diff.fileDiff())
+                    || checkCanForward(forwardIndex, diff.rankDiff(), diff.fileDiff());
         }
 
-        return checkCanForward(source, destination, forwardIndex);
+        return checkCanForward(forwardIndex, diff.rankDiff(), diff.fileDiff());
     }
 
-    private boolean checkCanForward(Square source, Square destination, int index) {
-        return source.moveVertical(index).equals(destination);
+    private boolean checkCanForward(int forwardIndex, int rankDiff, int fileDiff) {
+        return rankDiff == forwardIndex && fileDiff == 0;
     }
 }

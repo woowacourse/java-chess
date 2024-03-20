@@ -13,6 +13,6 @@ public class BishopMoveStrategy implements MoveStrategy {
     public boolean check(Square source, Square destination, ColorType colorType) {
         SquareDifferent squareDifferent = source.calculateDiff(destination);
 
-        return squareDifferent.fileDiff() - squareDifferent.rankDiff() == 0;
+        return Math.abs(squareDifferent.fileDiff()) - Math.abs(squareDifferent.rankDiff()) == 0;
     }
 }

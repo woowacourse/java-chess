@@ -8,18 +8,19 @@ public class QueenMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean check(Square source, Square destination, ColorType colorType) {
-        return isDiagonal(source, destination) || isStraight(source, destination);
-    }
-
-    private static boolean isDiagonal(Square source, Square destination) {
         SquareDifferent squareDifferent = source.calculateDiff(destination);
 
-        return squareDifferent.fileDiff() - squareDifferent.rankDiff() == 0;
+        int rankDiff = Math.abs(squareDifferent.rankDiff());
+        int fileDiff = Math.abs(squareDifferent.fileDiff());
+
+        return isDiagonal(rankDiff, fileDiff) || isStraight(rankDiff, fileDiff);
     }
 
-    private boolean isStraight(Square source, Square destination) {
-        SquareDifferent diff = source.calculateDiff(destination);
+    private static boolean isDiagonal(int rankDiff, int fileDiff) {
+        return fileDiff - rankDiff == 0;
+    }
 
-        return diff.rankDiff() == 0 || diff.fileDiff() == 0;
+    private boolean isStraight(int fileDiff, int rankDiff) {
+        return rankDiff == 0 || fileDiff == 0;
     }
 }

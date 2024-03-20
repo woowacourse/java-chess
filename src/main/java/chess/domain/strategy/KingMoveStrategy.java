@@ -9,11 +9,13 @@ public class KingMoveStrategy implements MoveStrategy {
     @Override
     public boolean check(Square source, Square destination, ColorType colorType) {
         SquareDifferent diff = source.calculateDiff(destination);
+        int fileDiff = Math.abs(diff.fileDiff());
+        int rankDiff = Math.abs(diff.rankDiff());
 
-        if (diff.fileDiff() + diff.rankDiff() == 1) {
+        if (fileDiff + rankDiff == 1) {
             return true;
         }
 
-        return diff.fileDiff() == 1 && diff.rankDiff() == 1;
+        return fileDiff == 1 && rankDiff == 1;
     }
 }
