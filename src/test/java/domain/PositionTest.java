@@ -1,5 +1,8 @@
 package domain;
 
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

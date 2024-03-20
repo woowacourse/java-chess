@@ -1,8 +1,8 @@
 package dto;
 
-import domain.File;
+import domain.position.File;
 import domain.GameCommand;
-import domain.Rank;
+import domain.position.Rank;
 
 public record RequestDto(GameCommand gameCommand, Rank rank, File file) {
     public static RequestDto of(GameCommand gameCommand) {

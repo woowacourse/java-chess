@@ -1,4 +1,4 @@
-package domain;
+package domain.position;
 
 // TODO: 캐싱 기법 고민하기
 public record Position(Rank rank, File file) {

@@ -1,10 +1,13 @@
 package domain;
 
+import domain.position.File;
+import domain.position.Position;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static domain.File.*;
-import static domain.Rank.*;
+import static domain.position.File.*;
+import static domain.position.Rank.*;
 
 public enum PieceType {
     BLACK_PAWN(Arrays.stream(File.values()).map(file -> new Position(SEVEN, file)).toList()),

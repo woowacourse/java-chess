@@ -1,4 +1,4 @@
-package domain;
+package domain.position;
 
 public enum File {
     A(0),

@@ -1,7 +1,7 @@
 package view;
 
 import domain.PieceType;
-import domain.Position;
+import domain.position.Position;
 import dto.BoardDto;
 
 import java.util.Arrays;
