@@ -12,7 +12,7 @@ class KingTest {
     @CsvSource({"BLACK, true", "WHITE, false"})
     @DisplayName("해당 팀이 검정 팀인지 확인한다.")
     void isBlackTeamTest(Team team, boolean expected) {
-        chess.domain.piece.King king = new chess.domain.piece.King(team);
+        King king = new King(team);
 
         assertThat(king.isBlackTeam()).isEqualTo(expected);
     }
