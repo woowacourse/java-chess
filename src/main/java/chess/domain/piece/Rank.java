@@ -19,7 +19,11 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 랭크 입력이 아닙니다."));
     }
 
-    public int differenceWith(final Rank rank) {
-        return Math.abs(this.number - rank.number);
+    public int minus(final Rank other) {
+        return this.number - other.number;
+    }
+
+    public int differenceWith(final Rank other) {
+        return Math.abs(this.number - other.number);
     }
 }

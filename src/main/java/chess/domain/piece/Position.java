@@ -44,6 +44,14 @@ public class Position {
        return isDiagonalWith(target) && this.file.differenceWith(target.file) == difference;
     }
 
+    public boolean isSecondRank() {
+        return this.rank.equals(Rank.TWO);
+    }
+
+    public boolean isForwardDifference(final Position target, final int difference) {
+        return target.rank.minus(this.rank) == difference;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

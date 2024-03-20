@@ -12,6 +12,9 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return false;
+        if (this.position.isSecondRank()) {
+           return this.position.isForwardDifference(target, 2) || this.position.isForwardDifference(target, 1);
+        }
+        return this.position.isForwardDifference(target, 1);
     }
 }
