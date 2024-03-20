@@ -43,14 +43,6 @@ public class Position {
         return rowPosition.equals(target.rowPosition) || columnPosition.equals(target.columnPosition);
     }
 
-    public boolean isVerticalWith(Position target) {
-        return columnPosition.equals(target.columnPosition);
-    }
-
-    public boolean isHorizontalWith(Position target) {
-        return rowPosition.equals(target.rowPosition);
-    }
-
     public boolean isDiagonalWith(Position target) {
         int rowInterval = rowPosition.intervalWith(target.rowPosition);
         int colInterval = columnPosition.intervalWith(target.columnPosition);
