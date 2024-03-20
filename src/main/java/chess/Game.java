@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import chess.dto.PieceResponse;
@@ -29,6 +30,15 @@ public class Game {
         if (command.equals("start")) {
             outputView.printBoard(createResponses(board.getPieces()));
         }
+
+        Color nowTurn = Color.WHITE;
+        while (true) {
+            List<String> movement = inputView.readMovement();
+            Square from = Square.from(movement.get(0));
+            Square to = Square.from(movement.get(1));
+
+            flip(nowTurn);
+        }
     }
 
     private List<PieceResponse> createResponses(final Map<Square, Piece> pieces) {
@@ -37,5 +47,13 @@ public class Game {
             responses.add(PieceResponse.of(positionToPiece.getKey(), positionToPiece.getValue()));
         }
         return responses;
+    }
+
+    private void flip(Color color) {
+        if (color.equals(Color.WHITE)) {
+            color = Color.BLACK;
+            return;
+        }
+        color = Color.WHITE;
     }
 }
