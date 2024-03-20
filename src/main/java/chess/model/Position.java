@@ -25,7 +25,7 @@ public class Position {
             throw new IllegalArgumentException("유효하지 않은 좌표값입니다.");
         }
         int column = coordinate.charAt(COLUMN_INDEX) - MIN_COLUMN;
-        int row = coordinate.charAt(ROW_INDEX) - MIN_ROW;
+        int row = MAX_VALUE - coordinate.charAt(ROW_INDEX) + MIN_ROW;
         return new Position(row, column);
     }
 

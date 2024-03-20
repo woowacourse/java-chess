@@ -44,9 +44,9 @@ class PositionTest {
 
     public static Stream<Arguments> provideValidCoordinate() {
         return Stream.of(
-                Arguments.of("b2", new Position(1, 1)),
-                Arguments.of("h8", new Position(7, 7)),
-                Arguments.of("a1", new Position(0, 0))
+            Arguments.of("b2", new Position(6, 1)),
+            Arguments.of("h8", new Position(0, 7)),
+            Arguments.of("a1", new Position(7, 0))
         );
     }
 }

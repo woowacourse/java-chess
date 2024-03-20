@@ -20,17 +20,19 @@ public class Board {
     );
 
     private final Map<Position, Piece> board;
+    private int turnCount;
 
-    private Board(Map<Position, Piece> board) {
+    private Board(Map<Position, Piece> board, int turnCount) {
         this.board = board;
+        this.turnCount = turnCount;
     }
 
     public static Board createInitialBoard() {
-        return new Board(generateBoard(INITIAL_BOARD));
+        return new Board(generateBoard(INITIAL_BOARD), 0);
     }
 
     public static Board createCustomBoard(List<String> customBoard) {
-        return new Board(generateBoard(customBoard));
+        return new Board(generateBoard(customBoard), 0);
     }
 
     private static Map<Position, Piece> generateBoard(List<String> customBoard) {
@@ -49,6 +51,25 @@ public class Board {
             PieceType pieceType = PieceType.findPieceTypeByName(String.valueOf(pieceName));
             Piece piece = Piece.from(pieceType);
             board.put(position, piece);
+        }
+    }
+
+    public void move(String sourceCoordinate, String targetCoordinate) {
+        Position source = Position.from(sourceCoordinate);
+        Position target = Position.from(targetCoordinate);
+
+        Piece sourcePiece = findPiece(source);
+        Piece targetPiece = findPiece(target);
+
+        validatePiecesPosition(sourcePiece, targetPiece);
+    }
+
+    private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
+        if (sourcePiece.isNone()) {
+            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
+        }
+        if (targetPiece.isSameColorBy(turnCount)) {
+            throw new IllegalArgumentException("target위치에 내 기물이 존재합니다.");
         }
     }
 

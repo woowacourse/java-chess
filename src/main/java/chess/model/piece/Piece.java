@@ -48,6 +48,14 @@ public class Piece {
         return new Piece(pieceType);
     }
 
+    public boolean isNone() {
+        return type == PieceType.NONE;
+    }
+
+    public boolean isSameColorBy(int turnCount) {
+        return type.isSameColor(turnCount);
+    }
+
     @Override
     public String toString() {
         return type.getDisplayName();
