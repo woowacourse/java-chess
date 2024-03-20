@@ -1,55 +1,87 @@
 # TODO: 자세한 값이 아닌 문장으로 변경
+### 입출력 기능
+- [x] 체스 게임 시작 메세지를 출력한다.
+- [ ] 명령을 입력한다.
+  - [x] `start` 입력 시 게임을 시작한다.
+  - [x] `end` 입력 시 게임을 종료한다.
+  - [ ] `move source위치 target위치`를 입력받아 이동한다.
+  - [x] 존재하지 않는 명령어를 입력할 수 없다.
+- [x] 체스판을 출력한다.
+  - [x] 기물이 존재하지 않는 위치는 점(.)을 출력한다.
+  - [x] 기물이 존재하는 위치에는 기물의 이름을 출력한다.
 
-## [♟ 체스 기능 목록]
-- [x] 커맨드 입력 기능
-  - [x] start 입력 시 게임 시작
-  - [x] end 입력 시 게임 종료 
-- [x] 체스판 생성
-  - 체스판(ChessBoard)
-      - 가로는 왼쪽에서 부터 a~h (8칸)
-      - 세로는 아래에서 부터 1~8 (8칸)
-  - [x] 피스 생성
-    - 피스(Piece)
-      - 속성
-        - 열: ChessFile
-          - 범위는 a~h까지만 허용된다.
-        - 행: ChessRank
-          - 범위는 1~8까지만 허용된다.
-        - 색깔: Color
-          - WHITE
-          - BLACK
-        - 이름: Name
-          - white는 소문자
-          - black은 대문자
-      - 종류 및 이름
-        - 폰(Pawn): p(white), P(black)
-        - 룩(Rook): r(white), R(black)
-        - 나이트(Knight): n(white), N(black)
-        - 비숍(Bishop): b(white), B(black)
-        - 킹(King): k(white), K(black)
-        - 퀸(Queen): q(white), Q(black)
-      - 피스 초기 위치 및 개수
-        - 폰(Pawn):
-          - white: 8개 [Rank 2 | File a~h]
-          - black: 8개 [Rank 7 | File a~h]
-        - 룩(Rook): 
-          - white: 2개 [Rank 1 | File a,h]
-          - black: 2개 [Rank 8 | File a,h]
-        - 나이트(Knight):
-          - white: 2개 [Rank 1 | File b,g]
-          - black: 2개 [Rank 8 | File b,g]
-        - 비숍(Bishop): 
-          - white: 2개 [Rank 1 | File c,f]
-          - black: 2개 [Rank 8 | File c,f]
-        - 킹(King):
-          - white: 1개 [Rank 1 | File e]
-          - black: 1개 [Rank 8 | File e]
-        - 퀸(Queen): 
-          - white: 1개 [Rank 1 | File d]
-          - black: 1개 [Rank 8 | File d]
-- [x] 체스판 출력 기능
-  - [x] 피스의 각 위치에 맞게 이름(Name) 출력
-  - [x] 체스판에서 피스가 없는 위치는 점(.) 출력
+### 체스판
+- [x] 위치에 있는 기물을 알고 있다.
+- [ ] `source` 위치에서 `target` 위치로 기물을 이동한다.
+  - [ ] `target` 위치에 같은 색 기물이 존재하면 이동할 수 없다.
+  - [ ] `target` 위치에 다른 색 기물이 존재하면 기물을 제거하고 이동한다.
+- [x] 현재 체스판에 있는 기물들의 이름과 위치 정보를 알려준다.
+- [ ] 같은 색상의 기물을 연속해서 움직일 수 없다.
+- [ ] `source`위치에 기물이 존재하지 않으면 움직일 수 없다.
+
+### 기물
+- [x] 기물은 이름을 가진다.
+  - [x] 흰색 기물은 소문자, 검은색 기물은 대문자 이름을 가진다.
+- [x] 기물은 색상을 가진다.
+- [x] 종류 및 이름
+  - 폰(Pawn): p(white), P(black)
+  - 룩(Rook): r(white), R(black)
+  - 나이트(Knight): n(white), N(black)
+  - 비숍(Bishop): b(white), B(black)
+  - 킹(King): k(white), K(black)
+  - 퀸(Queen): q(white), Q(black)
+- [ ] 기물마다 이동 규칙을 가진다.
+  - [ ] 폰
+    - [ ] 처음에만 한 칸 또는 두 칸 앞으로 이동할 수 있다.
+    - [ ] 한 번 움직인 다음부터는 한 칸씩 앞으로만 이동할 수 있다.
+    - [ ] 공격은 대각선으로만 가능하다.
+  - [ ] 룩
+    - [ ] 방해하는 기물이 없다면 가로/세로 직선으로 원하는 만큼 이동할 수 있다.
+  - [ ] 나이트
+    - [ ] 한 방향으로 2칸 + 옆으로 1칸 `L`모양으로 이동할 수 있다.
+    - [ ] 이동할 때 다른 기물을 뛰어넘을 수 있다.
+  - [ ] 비숍
+    - [ ] 방해하는 기물이 없다면 대각선으로 원하는 만큼 이동할 수 있다.
+  - [ ] 킹
+    - [ ] 주위 방향으로 1칸씩 이동할 수 있다.
+  - [ ] 퀸
+    - [ ] 방해하는 기물이 없다면 주위 방향으로 원하는 만큼 이동할 수 있다.
+- 피스 초기 위치 및 개수
+  - 폰(Pawn):
+  - white: 8개 [Rank 2 | File a~h]
+  - black: 8개 [Rank 7 | File a~h]
+  - 룩(Rook):
+  - white: 2개 [Rank 1 | File a,h]
+  - black: 2개 [Rank 8 | File a,h]
+  - 나이트(Knight):
+  - white: 2개 [Rank 1 | File b,g]
+  - black: 2개 [Rank 8 | File b,g]
+  - 비숍(Bishop):
+  - white: 2개 [Rank 1 | File c,f]
+  - black: 2개 [Rank 8 | File c,f]
+  - 킹(King):
+  - white: 1개 [Rank 1 | File e]
+  - black: 1개 [Rank 8 | File e]
+  - 퀸(Queen):
+  - white: 1개 [Rank 1 | File d]
+  - black: 1개 [Rank 8 | File d]
+
+### 위치
+- [x] 위치는 Rank와 File로 이루어져있다.
+- [ ] Rank
+  - [x] 세로는 아래에서 부터 1~8 (8칸)
+  - [x] rank는 게임 보드 상에서의 인덱스를 가진다.
+  - [ ] 값(value)에 대응하는 인덱스를 찾는다.
+    - [ ] 범위에서 벗어난 값 입력 시, 예외를 발생시킨다.
+- [ ] File
+  - [x] 가로는 왼쪽에서 부터 a~h (8칸)
+  - [x] file은 게임 보드 상에서의 인덱스를 가진다.
+  - [ ] 값(value)에 대응하는 인덱스를 찾는다.
+    - [ ] 범위에서 벗어난 값 입력 시, 예외를 발생시킨다.
+- [ ] 현재 위치에서 주어진 범위만큼 떨어진 위치를 알 수 있다.
+
+### 추가 기능
+- [ ] `start` 전에 `move`를 입력할 수 없다.
   
 ## 프로그래밍 요구 사항
 - [ ] 자바 코드 컨벤션을 지키면서 프로그래밍한다.
