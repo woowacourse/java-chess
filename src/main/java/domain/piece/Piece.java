@@ -1,8 +1,10 @@
 package domain.piece;
 
+import domain.position.Position;
+
 public abstract class Piece {
-    private final String name;
-    private final PieceColor color;
+    protected final String name;
+    protected final PieceColor color;
 
     public Piece(final String name, final PieceColor color) {
         this.name = name;
@@ -12,6 +14,8 @@ public abstract class Piece {
     public boolean isColor(final PieceColor color) {
         return this.color == color;
     }
+
+    public abstract boolean isMovable(final Position source, final Position target);
 
     public String name() {
         return name;

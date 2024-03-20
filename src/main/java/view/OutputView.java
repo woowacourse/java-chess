@@ -1,7 +1,7 @@
 package view;
 
-import domain.piece.ChessFile;
-import domain.piece.ChessRank;
+import domain.position.ChessFile;
+import domain.position.ChessRank;
 import dto.BoardStatus;
 import dto.PieceInfo;
 
@@ -49,7 +49,7 @@ public class OutputView {
 
     private void applyBoardStatus(final BoardStatus status, final String[][] board) {
         for (PieceInfo pieceInfo : status.pieceInfos()) {
-            board[pieceInfo.rankIndex()][pieceInfo.fileIndex()] = pieceInfo.name();
+            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = pieceInfo.name();
         }
     }
 

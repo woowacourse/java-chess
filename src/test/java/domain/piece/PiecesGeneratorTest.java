@@ -1,12 +1,12 @@
 package domain.piece;
 
-import domain.Position;
 import domain.piece.type.Bishop;
 import domain.piece.type.King;
 import domain.piece.type.Knight;
 import domain.piece.type.Pawn;
 import domain.piece.type.Queen;
 import domain.piece.type.Rook;
+import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

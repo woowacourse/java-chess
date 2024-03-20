@@ -2,6 +2,7 @@ package domain;
 
 import domain.piece.Piece;
 import domain.piece.PiecesGenerator;
+import domain.position.Position;
 import dto.BoardStatus;
 
 import java.util.HashMap;

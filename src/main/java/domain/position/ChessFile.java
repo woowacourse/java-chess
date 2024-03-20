@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.position;
 
 import java.util.Arrays;
 
@@ -20,10 +20,6 @@ public enum ChessFile {
         this.index = index;
     }
 
-    public static int minIndex() {
-        return A.index;
-    }
-
     public static int maxIndex() {
         return H.index;
     }
@@ -37,5 +33,9 @@ public enum ChessFile {
 
     public int index() {
         return index;
+    }
+
+    public String value() {
+        return value;
     }
 }
