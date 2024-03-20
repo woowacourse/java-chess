@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 public final class ChessGame {
 
     public void run() {
+        InputView.printGameIntro();
         Command command = prepareCommand();
         while (command.isRunning()) {
             executeGame(command);
