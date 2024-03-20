@@ -8,4 +8,10 @@ public class Position {
         row=Row.valueOf(position.substring(0, 1));
         column = Column.valueOf(position.substring(1));
     }
+    public Row getRow(){
+        return row;
+    }
+    public Column getColumn(){
+        return column;
+    }
 }

@@ -39,4 +39,8 @@ public class Column {
     public boolean isBigger(Column srcColumn) {
         return this.value > srcColumn.value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

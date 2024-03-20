@@ -27,25 +27,28 @@ public enum Direction {
         boolean isRowBigger = trgRow.isBigger(srcRow);
         boolean isColumnBigger = trgColumn.isBigger(srcColumn);
 
-        if(srcRow == trgRow && isColumnBigger) {
+        if (srcRow == trgRow && srcColumn == trgColumn) {
+            throw new IllegalArgumentException("제자리로 이동할 수 없습니다.");
+        }
+        if (srcRow == trgRow && isColumnBigger) {
             return UP;
         }
-        if(srcRow == trgRow && !isColumnBigger) {
+        if (srcRow == trgRow && !isColumnBigger) {
             return DOWN;
         }
-        if(!isRowBigger&&srcColumn==trgColumn){
+        if (!isRowBigger && srcColumn == trgColumn) {
             return LEFT;
         }
-        if(isRowBigger&&srcColumn==trgColumn){
+        if (isRowBigger && srcColumn == trgColumn) {
             return RIGHT;
         }
-        if(!isRowBigger&&isColumnBigger){
+        if (!isRowBigger && isColumnBigger) {
             return UP_LEFT;
         }
-        if(isRowBigger&&isColumnBigger){
+        if (isRowBigger && isColumnBigger) {
             return UP_RIGHT;
         }
-        if(!isRowBigger&&!isColumnBigger){
+        if (!isRowBigger && !isColumnBigger) {
             return DOWN_LEFT;
         }
         return DOWN_RIGHT;
