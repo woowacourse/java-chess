@@ -9,7 +9,9 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveTo(Position start, Position destination) {
-        //TODO: 룩 움직임 전략 구현 필요
+        if (start.isHorizontalWith(destination) || start.isVerticalWith(destination)) {
+            return true;
+        }
         return false;
     }
 }
