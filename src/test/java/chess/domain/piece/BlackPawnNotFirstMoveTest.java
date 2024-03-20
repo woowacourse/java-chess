@@ -30,7 +30,7 @@ public class BlackPawnNotFirstMoveTest {
         Pawn blackPawnNotFirstMove = new Pawn(pieceInfo, new BlackPawnNotFirstMoveStrategy());
         Board board = new Board();
 
-        boolean actualIsMoved = blackPawnNotFirstMove.move(newPosition, board);
+        boolean actualIsMoved = blackPawnNotFirstMove.move(newPosition, board, false);
 
         Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
     }

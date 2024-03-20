@@ -32,7 +32,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(pieceInfo, new BishopMoveStrategy());
         Board board = new Board();
 
-        boolean actualIsMoved = bishop.move(newPosition, board);
+        boolean actualIsMoved = bishop.move(newPosition, board, false);
 
         Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
     }

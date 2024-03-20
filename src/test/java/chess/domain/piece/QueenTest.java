@@ -36,7 +36,7 @@ public class QueenTest {
         Queen queen = new Queen(pieceInfo, new QueenMoveStrategy());
         Board board = new Board();
 
-        boolean actualIsMoved = queen.move(newPosition, board);
+        boolean actualIsMoved = queen.move(newPosition, board, false);
 
         Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
     }

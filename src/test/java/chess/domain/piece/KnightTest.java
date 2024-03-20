@@ -36,7 +36,7 @@ public class KnightTest {
         Knight knight = new Knight(pieceInfo, new KnightMoveStrategy());
         Board board = new Board();
 
-        boolean actualIsMoved = knight.move(newPosition, board);
+        boolean actualIsMoved = knight.move(newPosition, board, false);
 
         Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
     }

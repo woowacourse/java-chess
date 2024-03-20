@@ -36,7 +36,7 @@ public class KingTest {
         King king = new King(pieceInfo, new KingMoveStrategy());
         Board board = new Board();
 
-        boolean actualIsMoved = king.move(newPosition, board);
+        boolean actualIsMoved = king.move(newPosition, board, false);
 
         Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
     }
