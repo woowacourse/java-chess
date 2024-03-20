@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.domain.chessboard.attribute.Direction;
+
 public class Square {
 
     private static final Map<String, Square> SQUARES = new HashMap<>();
@@ -60,5 +62,11 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public Square move(final Direction direction) {
+        int row = rank.getValue() + direction.getRow();
+        int column = file.getColumn() + direction.getColumn();
+        return Square.of(File.of(column), Rank.of(row));
     }
 }
