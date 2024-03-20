@@ -13,5 +13,4 @@ class PositionTest {
 
         assertThat(testPosition.verticalReversePosition()).isEqualTo(Position.of(7, 0));
     }
-
 }
