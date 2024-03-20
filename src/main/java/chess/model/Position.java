@@ -6,6 +6,11 @@ public class Position {
 
     private static final int MIN_VALUE = 0;
     private static final int MAX_VALUE = 7;
+    private static final int VALID_COORDINATE_LENGTH = 2;
+    private static final char MIN_COLUMN = 'a';
+    private static final char MIN_ROW = '1';
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
     private final int row;
     private final int column;
 
@@ -13,6 +18,15 @@ public class Position {
         validateRange(row, column);
         this.row = row;
         this.column = column;
+    }
+
+    public static Position from(String coordinate) {
+        if (coordinate.length() != VALID_COORDINATE_LENGTH) {
+            throw new IllegalArgumentException("유효하지 않은 좌표값입니다.");
+        }
+        int column = coordinate.charAt(COLUMN_INDEX) - MIN_COLUMN;
+        int row = coordinate.charAt(ROW_INDEX) - MIN_ROW;
+        return new Position(row, column);
     }
 
     private void validateRange(int row, int column) {

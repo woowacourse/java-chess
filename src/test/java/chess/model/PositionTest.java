@@ -1,5 +1,6 @@
 package chess.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -31,6 +32,21 @@ class PositionTest {
         return Stream.of(
             Arguments.of(-1, 6),
             Arguments.of(3, 8)
+        );
+    }
+
+    @DisplayName("문자열 좌표를 받아 Position 객체를 생성한다")
+    @ParameterizedTest
+    @MethodSource("provideValidCoordinate")
+    void createValidPositionWithCoordinate(String coordinate, Position expected) {
+        assertThat(Position.from(coordinate)).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> provideValidCoordinate() {
+        return Stream.of(
+                Arguments.of("b2", new Position(1, 1)),
+                Arguments.of("h8", new Position(7, 7)),
+                Arguments.of("a1", new Position(0, 0))
         );
     }
 }
