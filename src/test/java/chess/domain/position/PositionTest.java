@@ -58,4 +58,13 @@ class PositionTest {
                 () -> assertThat(higherPosition.directionTo(lowerPosition)).isEqualTo(Direction.DOWN)
         );
     }
+
+    @DisplayName("포지션이 같은 행에 있는지 확인할 수 있다")
+    @Test
+    void should_CheckSameRowToTarget() {
+        Position position = Position.of(0, 0);
+        RowPosition rowPosition = new RowPosition(0);
+
+        assertThat(position.rowIs(rowPosition)).isTrue();
+    }
 }
