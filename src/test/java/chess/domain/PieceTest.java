@@ -35,6 +35,59 @@ class PieceTest {
                             Map.of(new Position(2, 4), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue());
         }
 
+        @Test
+        @DisplayName("폰이 직선으로 이동할 경우 도착 위치에 말이 있다면 이동이 불가능하다.")
+        void canNotMoveStraightWhenPieceExistInToPosition() {
+            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
+            assertAll(
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 1), new Position(2, 1), true,
+                                    Map.of(new Position(2, 1), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 1), new Position(2, 1), true,
+                                    Map.of(new Position(2, 1), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse());
+        }
+
+
+        @Test
+        @DisplayName("폰이 직선으로 이동할 경우 도착 위치 전의 경로에 말이 있다면 이동이 불가능하다.")
+        void canNotMoveStraightWhenPieceExistInPath() {
+            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
+            assertAll(
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 1), new Position(3, 1), true,
+                                    Map.of(new Position(2, 1), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse(),
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 1), new Position(3, 1), true,
+                                    Map.of(new Position(2, 1), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
+        }
+
+        @Test
+        @DisplayName("폰이 대각선으로 이동할 경우 도착 위치가 같은 색의 말인 경우 이동이 불가능하다.")
+        void canNotMoveDiagonalWhenToPositionIsSameColor() {
+            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
+            assertAll(
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 3), new Position(2, 2), true,
+                                    Map.of(new Position(2, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 3), new Position(2, 4), true,
+                                    Map.of(new Position(2, 4), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
+        }
+
+        @Test
+        @DisplayName("폰이 대각선으로 이동할 경우 도착 위치가 비어있을 경우 이동이 불가능하다.")
+        void canNotMoveDiagonalWhenToPositionIsEmpty() {
+            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
+            assertAll(
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 3), new Position(2, 2), true,
+                                    Map.of())).isFalse(),
+                    () -> assertThat(
+                            whitePawn.canMove(new Position(1, 3), new Position(2, 4), true,
+                                    Map.of())).isFalse());
+        }
     }
+    
 }
 
