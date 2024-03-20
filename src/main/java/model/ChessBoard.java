@@ -9,4 +9,8 @@ public class ChessBoard {
     public ChessBoard() {
         this.chessBoard = ChessBoardFactory.create();
     }
+
+    public Map<Position, Piece> getChessBoard() {
+        return Map.copyOf(chessBoard);
+    }
 }
