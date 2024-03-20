@@ -13,7 +13,6 @@ public enum File {
     g(7),
     h(8);
 
-
     static final String ERROR_NOT_EXIST_FILE = "존재하지 않는 파일입니다.";
 
     private final int file;

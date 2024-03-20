@@ -1,0 +1,17 @@
+package chess.domain.piece;
+
+import chess.domain.PieceColor;
+import chess.domain.PieceType;
+import chess.domain.Position;
+
+public class Queen extends Piece {
+
+    public Queen(PieceColor color) {
+        super(PieceType.QUEEN, color);
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target) {
+        return false;
+    }
+}

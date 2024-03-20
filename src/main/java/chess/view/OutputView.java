@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.Position;
 
 import java.util.Arrays;
@@ -27,8 +27,8 @@ public class OutputView {
     private static void setPiecesOnBoard(final Map<Position, Piece> board, final char[][] result) {
         board.forEach(((position, piece) -> {
             int col = position.file().get() - 1;
-            int row = position.rank().rank() - 1;
-            result[row][col] = PieceMapper.map(piece.name(), piece.color());
+            int row = position.rank().get() - 1;
+            result[row][col] = PieceMapper.map(piece.getName(), piece.getColor());
         }));
     }
 

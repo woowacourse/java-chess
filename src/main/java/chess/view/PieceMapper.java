@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.PieceColor;
-import chess.domain.PieceName;
+import chess.domain.PieceType;
 
 public enum PieceMapper {
 
@@ -18,10 +18,10 @@ public enum PieceMapper {
         this.name = name;
     }
 
-    public static char map(PieceName pieceName, PieceColor pieceColor) {
+    public static char map(PieceType pieceType, PieceColor pieceColor) {
         if (pieceColor == PieceColor.BLACK) {
-            return Character.toUpperCase(valueOf(pieceName.name()).name);
+            return Character.toUpperCase(valueOf(pieceType.name()).name);
         }
-        return valueOf(pieceName.name()).name;
+        return valueOf(pieceType.name()).name;
     }
 }

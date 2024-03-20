@@ -2,6 +2,13 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,41 +23,41 @@ class BoardFactoryTest {
         Board actual = BoardFactory.createBoard();
 
         Map<Position, Piece> expected = new HashMap<>();
-        expected.put(new Position(new Rank(8), File.a), new Piece(PieceName.ROOK, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.b), new Piece(PieceName.KNIGHT, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.c), new Piece(PieceName.BISHOP, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.d), new Piece(PieceName.QUEEN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.e), new Piece(PieceName.KING, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.f), new Piece(PieceName.BISHOP, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.g), new Piece(PieceName.KNIGHT, PieceColor.BLACK));
-        expected.put(new Position(new Rank(8), File.h), new Piece(PieceName.ROOK, PieceColor.BLACK));
+        expected.put(new Position(File.a, Rank.EIGHT), new Rook(PieceColor.BLACK));
+        expected.put(new Position(File.b, Rank.EIGHT), new Knight(PieceColor.BLACK));
+        expected.put(new Position(File.c, Rank.EIGHT), new Bishop(PieceColor.BLACK));
+        expected.put(new Position(File.d, Rank.EIGHT), new Queen(PieceColor.BLACK));
+        expected.put(new Position(File.e, Rank.EIGHT), new King(PieceColor.BLACK));
+        expected.put(new Position(File.f, Rank.EIGHT), new Bishop(PieceColor.BLACK));
+        expected.put(new Position(File.g, Rank.EIGHT), new Knight(PieceColor.BLACK));
+        expected.put(new Position(File.h, Rank.EIGHT), new Rook(PieceColor.BLACK));
 
-        expected.put(new Position(new Rank(7), File.a), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.b), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.c), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.d), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.e), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.f), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.g), new Piece(PieceName.PAWN, PieceColor.BLACK));
-        expected.put(new Position(new Rank(7), File.h), new Piece(PieceName.PAWN, PieceColor.BLACK));
+        expected.put(new Position(File.a, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.b, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.c, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.d, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.e, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.f, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.g, Rank.SEVEN), new Pawn(PieceColor.BLACK));
+        expected.put(new Position(File.h, Rank.SEVEN), new Pawn(PieceColor.BLACK));
 
-        expected.put(new Position(new Rank(1), File.a), new Piece(PieceName.ROOK, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.b), new Piece(PieceName.KNIGHT, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.c), new Piece(PieceName.BISHOP, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.d), new Piece(PieceName.QUEEN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.e), new Piece(PieceName.KING, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.f), new Piece(PieceName.BISHOP, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.g), new Piece(PieceName.KNIGHT, PieceColor.WHITE));
-        expected.put(new Position(new Rank(1), File.h), new Piece(PieceName.ROOK, PieceColor.WHITE));
+        expected.put(new Position(File.a, Rank.ONE), new Rook(PieceColor.WHITE));
+        expected.put(new Position(File.b, Rank.ONE), new Knight(PieceColor.WHITE));
+        expected.put(new Position(File.c, Rank.ONE), new Bishop(PieceColor.WHITE));
+        expected.put(new Position(File.d, Rank.ONE), new Queen(PieceColor.WHITE));
+        expected.put(new Position(File.e, Rank.ONE), new King(PieceColor.WHITE));
+        expected.put(new Position(File.f, Rank.ONE), new Bishop(PieceColor.WHITE));
+        expected.put(new Position(File.g, Rank.ONE), new Knight(PieceColor.WHITE));
+        expected.put(new Position(File.h, Rank.ONE), new Rook(PieceColor.WHITE));
 
-        expected.put(new Position(new Rank(2), File.a), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.b), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.c), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.d), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.e), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.f), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.g), new Piece(PieceName.PAWN, PieceColor.WHITE));
-        expected.put(new Position(new Rank(2), File.h), new Piece(PieceName.PAWN, PieceColor.WHITE));
+        expected.put(new Position(File.a, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.b, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.c, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.d, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.e, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.f, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.g, Rank.TWO), new Pawn(PieceColor.WHITE));
+        expected.put(new Position(File.h, Rank.TWO), new Pawn(PieceColor.WHITE));
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(new Board(expected));
     }
