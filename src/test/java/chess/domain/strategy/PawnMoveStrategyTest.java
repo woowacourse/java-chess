@@ -34,7 +34,7 @@ public class PawnMoveStrategyTest {
         // given
         MoveStrategy moveStrategy = new PawnMoveStrategy();
         Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.b, Rank.FOUR);
+        Square destination = Square.of(File.c, Rank.FOUR);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -42,5 +42,21 @@ public class PawnMoveStrategyTest {
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("폰은 상대 말이 있을 경우 대각선 1칸이 입력되면 이동 가능을 반환한다.")
+    @Test
+    void moveOneDiagonal() {
+        // given
+        MoveStrategy moveStrategy = new PawnMoveStrategy();
+        Square source = Square.of(File.a, Rank.THREE);
+        Square destination = Square.of(File.b, Rank.FOUR);
+        ColorType colorType = ColorType.WHITE;
+
+        // when
+        boolean actual = moveStrategy.check(source, destination, colorType);
+
+        // then
+        assertThat(actual).isTrue();
     }
 }

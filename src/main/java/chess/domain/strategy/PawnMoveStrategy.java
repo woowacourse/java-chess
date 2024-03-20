@@ -26,14 +26,19 @@ public class PawnMoveStrategy implements MoveStrategy {
         }
 
         if (source.isPawnStartSquare()) {
-            return checkCanForward(firstForwardIndex, diff.rankDiff(), diff.fileDiff())
+            return checkDiagonal(diff.rankDiff(), diff.fileDiff())
+                    || checkCanForward(firstForwardIndex, diff.rankDiff(), diff.fileDiff())
                     || checkCanForward(forwardIndex, diff.rankDiff(), diff.fileDiff());
         }
 
-        return checkCanForward(forwardIndex, diff.rankDiff(), diff.fileDiff());
+        return checkCanForward(forwardIndex, diff.rankDiff(), diff.fileDiff()) || checkDiagonal(diff.rankDiff(), diff.fileDiff());
     }
 
     private boolean checkCanForward(int forwardIndex, int rankDiff, int fileDiff) {
         return rankDiff == forwardIndex && fileDiff == 0;
+    }
+
+    private boolean checkDiagonal(int rankDiff, int fileDiff) {
+        return rankDiff == 1 && Math.abs(fileDiff) == 1;
     }
 }
