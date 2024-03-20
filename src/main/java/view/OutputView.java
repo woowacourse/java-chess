@@ -5,28 +5,37 @@ import java.util.List;
 import view.dto.PieceInfo;
 
 public class OutputView {
-    private static final int BOARD_SIZE = 8;
-    private final char[][] chessBoard = new char[BOARD_SIZE][BOARD_SIZE];
 
-    public void printChessBoard(List<PieceInfo> pieceInfos) {
+    private static final int BOARD_SIZE = 8;
+
+    private static final char[][] chessBoard = new char[BOARD_SIZE][BOARD_SIZE];
+
+    private OutputView() {
+    }
+
+    public static void printInitialGamePrompt(){
+        System.out.println("체스 게임을 시작합니다.");
+        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+    }
+    public static void printChessBoard(List<PieceInfo> pieceInfos) {
         initializeChessBoard();
-        pieceInfos.forEach(this::placePieceOnBoard);
+        pieceInfos.forEach(OutputView::placePieceOnBoard);
         printBoard();
     }
 
-    private void initializeChessBoard() {
+    private static void initializeChessBoard() {
         for (char[] row : chessBoard) {
             Arrays.fill(row, ChessSymbol.getSymbolForRole("Square"));
         }
     }
 
-    private void placePieceOnBoard(PieceInfo pieceInfo) {
+    private static void placePieceOnBoard(PieceInfo pieceInfo) {
         int row = 8 - pieceInfo.rank();
         int column = pieceInfo.file() - 1;
         chessBoard[row][column] = getPieceSymbol(pieceInfo);
     }
 
-    private char getPieceSymbol(PieceInfo pieceInfo) {
+    private static char getPieceSymbol(PieceInfo pieceInfo) {
         char symbol = ChessSymbol.getSymbolForRole(pieceInfo.role());
         if (pieceInfo.color()
                 .equals("WHITE")) {
@@ -35,9 +44,10 @@ public class OutputView {
         return symbol;
     }
 
-    private void printBoard() {
+    private static void printBoard() {
         Arrays.stream(chessBoard)
                 .map(String::valueOf)
                 .forEach(System.out::println);
+        System.out.println();
     }
 }
