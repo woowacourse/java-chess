@@ -8,6 +8,7 @@ import static domain.game.Direction.SOUTH_WEST;
 import domain.piece.Movable;
 import domain.position.Position;
 import java.util.List;
+import java.util.Objects;
 
 public class Bishop implements PieceRole {
     private final List<Movable> routes;
@@ -23,6 +24,24 @@ public class Bishop implements PieceRole {
 
     @Override
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        return false;
+        return routes.stream()
+                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Bishop bishop = (Bishop) o;
+        return Objects.equals(routes, bishop.routes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(routes);
     }
 }

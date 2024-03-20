@@ -26,7 +26,7 @@ public class PieceType {
             return false;
         }
         PieceType pieceType = (PieceType) o;
-        return pieceRole == pieceType.pieceRole && color == pieceType.color;
+        return pieceRole.equals(pieceType.getPieceRole()) && color == pieceType.color;
     }
 
     @Override
@@ -36,6 +36,10 @@ public class PieceType {
 
     public Color getColor() {
         return color;
+    }
+
+    public PieceRole getPieceRole() {
+        return pieceRole;
     }
 
     public boolean isEqualColor(final Color target) {

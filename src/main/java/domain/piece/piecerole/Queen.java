@@ -8,6 +8,7 @@ import static domain.game.Direction.WEST;
 import domain.piece.Movable;
 import domain.position.Position;
 import java.util.List;
+import java.util.Objects;
 
 public class Queen implements PieceRole {
     private final List<Movable> routes;
@@ -25,5 +26,22 @@ public class Queen implements PieceRole {
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
         return routes.stream()
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Queen queen = (Queen) o;
+        return Objects.equals(routes, queen.routes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(routes);
     }
 }

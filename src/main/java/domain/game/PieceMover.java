@@ -53,6 +53,6 @@ public class PieceMover {
     }
 
     public Piece findPieceBySquare(Square targetSquare) {
-        return pieceBySquare.get(targetSquare);
+       return pieceBySquare.get(targetSquare);
     }
 }
