@@ -8,4 +8,8 @@ public class PieceInfo {
         this.position = position;
         this.team = team;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

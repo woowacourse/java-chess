@@ -18,7 +18,7 @@ public class WhitePawnNotFirstMoveStrategyTest {
         );
     }
 
-    @DisplayName("처음 움직이는 것이 아닌 검정 폰의 이동 전략은 한 번에 한 칸 아래로 이동 가능하다.")
+    @DisplayName("처음 움직이는 것이 아닌 흰색 폰의 이동 전략은 한 번에 한 칸 아래로 이동 가능하다.")
     @ParameterizedTest
     @MethodSource("whitePawnCanMoveTestParameters")
     void pawnCanMoveTest(Position currentPosition, Position newPosition, boolean expectedCanMove) {
