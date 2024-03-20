@@ -10,6 +10,7 @@ import chess.domain.piece.Rook;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -28,6 +29,28 @@ public class Board {
         pieces.putAll(createPawn(7, Team.BLACK));
         pieces.putAll(createPawn(2, Team.WHITE));
         pieces.putAll(createEdgeRow(1, Team.WHITE));
+    }
+
+    public void move(Position oldPosition, Position newPosition) {
+        if (pieces.containsKey(oldPosition)) {
+            Piece thisPiece = pieces.get(oldPosition);
+
+            List<Position> betweenPositions = thisPiece.betweenPositions(oldPosition, newPosition);
+            for (Position betweenPosition : betweenPositions) {
+                if (pieces.containsKey(betweenPosition)) {
+                    throw new IllegalArgumentException("이동을 가로막는 기물이 존재합니다.");
+                }
+            }
+
+            if (pieces.containsKey(newPosition) && thisPiece.isSameTeamWith(pieces.get(newPosition))) {
+                throw new IllegalArgumentException("해당 위치에 아군 기물이 존재합니다.");
+            }
+
+            pieces.put(newPosition, thisPiece);
+            pieces.remove(oldPosition);
+            return;
+        }
+        throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
     }
 
     public Map<Position, Character> mapPositionToCharacter() {

@@ -38,4 +38,8 @@ public abstract class Piece {
 
         return betweenPositions(oldPosition, rowDifference, columnDifference);
     }
+
+    public boolean isSameTeamWith(Piece piece) {
+        return team == piece.team;
+    }
 }
