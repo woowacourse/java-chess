@@ -12,6 +12,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return false;
+        return this.position.isStraightWith(target) || this.position.isDiagonalWith(target);
     }
 }
