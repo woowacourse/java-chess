@@ -5,6 +5,8 @@ import domain.piece.Pieces;
 import domain.piece.point.Point;
 import factory.ChessBoardGenerator;
 
+import java.util.Map;
+
 public class ChessBoard {
     private final Pieces pieces;
 
@@ -19,5 +21,9 @@ public class ChessBoard {
 
     public static ChessBoard createDefaultBoard() {
         return ChessBoardGenerator.createDefaultBoard();
+    }
+
+    public Map<Point, Piece> toMap() {
+        return pieces.toMap();
     }
 }

@@ -20,6 +20,14 @@ public abstract class Piece {
         return this.point.equals(point);
     }
 
+    public boolean isEqualColor(final Color color) {
+        return this.color == color;
+    }
+
+    public Point getPoint() {
+        return this.point;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -31,6 +39,5 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(point, color);
     }
-
 
 }

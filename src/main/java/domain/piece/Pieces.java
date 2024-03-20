@@ -2,8 +2,7 @@ package domain.piece;
 
 import domain.piece.point.Point;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Pieces {
 
@@ -19,4 +18,12 @@ public class Pieces {
                     .findAny();
     }
 
+    public Map<Point, Piece> toMap() {
+        Map<Point, Piece> map = new HashMap<>();
+
+        for (final Piece piece : value) {
+            map.put(piece.getPoint(), piece);
+        }
+        return map;
+    }
 }
