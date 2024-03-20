@@ -4,6 +4,7 @@ import chess.model.ChessBoard;
 import chess.model.ChessBoardInitializer;
 import chess.view.GameCommand;
 import chess.view.InputView;
+import chess.view.MoveArguments;
 import chess.view.OutputView;
 
 public class ChessController {
@@ -23,5 +24,6 @@ public class ChessController {
         ChessBoardInitializer initializer = new ChessBoardInitializer();
         ChessBoard chessBoard = new ChessBoard(initializer.create());
         outputView.printChessBoard(chessBoard);
+        MoveArguments moveArguments = inputView.readMoveArguments();
     }
 }
