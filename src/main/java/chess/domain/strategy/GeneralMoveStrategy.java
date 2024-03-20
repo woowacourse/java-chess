@@ -1,9 +1,9 @@
 package chess.domain.strategy;
 
-import chess.domain.Blank;
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Position;
+import chess.domain.piece.Blank;
+import chess.domain.color.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 import java.util.Map;
 import java.util.Set;
 

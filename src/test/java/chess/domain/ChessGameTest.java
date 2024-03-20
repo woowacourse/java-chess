@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
+import chess.domain.color.Color;
+import chess.domain.piece.Position;
+import chess.domain.piece.Rook;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

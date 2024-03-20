@@ -1,5 +1,9 @@
 package chess.domain;
 
+import chess.domain.color.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Position;
 import chess.domain.strategy.BlankMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 import java.util.Map;

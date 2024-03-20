@@ -1,11 +1,12 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.color.Color;
 import java.util.Set;
 
-public class Rook extends Piece {
-    private static Set<Direction> directions = Direction.getFourDirection();
+public class Bishop extends Piece {
+    private static Set<Direction> directions = Direction.getDiagonalDirection();
 
-    public Rook(Position position, Color color) {
+    public Bishop(Position position, Color color) {
         super(position, color);
     }
 
@@ -19,15 +20,15 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Rook update(Position destination) {
-        return new Rook(destination, color);
+    public Bishop update(Position destination) {
+        return new Bishop(destination, color);
     }
 
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {
-            return PieceType.WHITE_ROOK;
+            return PieceType.WHITE_BISHOP;
         }
-        return PieceType.BLACK_ROOK;
+        return PieceType.BLACK_BISHOP;
     }
 }

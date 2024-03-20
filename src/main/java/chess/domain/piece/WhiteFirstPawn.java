@@ -1,11 +1,12 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.color.Color;
 import java.util.Set;
 
-public class WhitePawn extends Pawn {
-    private static Set<Direction> DIRECTIONS = Set.of(Direction.UP, Direction.LEFT_UP, Direction.RIGHT_UP);
+public class WhiteFirstPawn extends Pawn {
+    private static Set<Direction> DIRECTIONS = Direction.getWhiteFirstPawnDirection();
 
-    public WhitePawn(Position position) {
+    public WhiteFirstPawn(Position position) {
         super(position, Color.WHITE, DIRECTIONS);
     }
 

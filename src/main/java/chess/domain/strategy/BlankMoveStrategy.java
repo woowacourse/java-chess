@@ -1,8 +1,8 @@
 package chess.domain.strategy;
 
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Position;
+import chess.domain.color.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 import java.util.Map;
 
 public class BlankMoveStrategy extends MoveStrategy {

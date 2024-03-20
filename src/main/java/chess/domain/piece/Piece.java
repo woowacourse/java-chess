@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.color.Color;
 import java.util.Set;
 
 public abstract class Piece {

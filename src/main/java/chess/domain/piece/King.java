@@ -1,11 +1,12 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.color.Color;
 import java.util.Set;
 
-public class Knight extends Piece {
-    private static Set<Direction> directions = Direction.getKnightDirection();
+public class King extends Piece {
+    private static Set<Direction> directions = Direction.getEightDirection();
 
-    public Knight(Position position, Color color) {
+    public King(Position position, Color color) {
         super(position, color);
     }
 
@@ -20,15 +21,15 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Knight update(Position destination) {
-        return new Knight(destination, color);
+    public King update(Position destination) {
+        return new King(destination, color);
     }
 
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {
-            return PieceType.WHITE_KNIGHT;
+            return PieceType.WHITE_KING;
         }
-        return PieceType.BLACK_KNIGHT;
+        return PieceType.BLACK_KING;
     }
 }

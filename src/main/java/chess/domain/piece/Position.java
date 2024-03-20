@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.HashSet;
 import java.util.Objects;

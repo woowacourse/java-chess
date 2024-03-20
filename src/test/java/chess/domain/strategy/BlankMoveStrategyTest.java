@@ -1,9 +1,11 @@
-package chess.domain;
+package chess.domain.strategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.strategy.BlankMoveStrategy;
+import chess.domain.BoardFactory;
+import chess.domain.color.Color;
+import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
