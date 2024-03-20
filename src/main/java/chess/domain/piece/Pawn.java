@@ -11,7 +11,9 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(final Square from, final Square to) {
         int rankDiff = to.getRankIndex() - from.getRankIndex();
-
-        return rankDiff == 1;
+        if (color().equals(Color.WHITE)) {
+            return rankDiff == 1;
+        }
+        return rankDiff == -1;
     }
 }
