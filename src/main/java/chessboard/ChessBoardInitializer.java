@@ -16,15 +16,21 @@ import position.Row;
 
 public class ChessBoardInitializer {
 
+    private static final int BLACK_FIRST_RANK = 0;
+    private static final int BLACK_SECOND_RANK = 1;
+    private static final int WHITE_FIRST_RANK = 7;
+    private static final int WHITE_SECOND_RANK = 6;
+    private static final int CHESS_BOARD_SIZE = 8;
+
     public static Map<Coordinate, Piece> createInitialBoard() {
         Map<Coordinate, Piece> board = new HashMap<>();
-        for (int i = 0; i < 8; i++) {
-            board.put(new Coordinate(new Row(0), new Column(i)), createFirstRank(true).get(i));
-            board.put(new Coordinate(new Row(7), new Column(i)), createFirstRank(false).get(i));
+        for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
+            board.put(new Coordinate(new Row(BLACK_FIRST_RANK), new Column(i)), createFirstRank(true).get(i));
+            board.put(new Coordinate(new Row(WHITE_FIRST_RANK), new Column(i)), createFirstRank(false).get(i));
         }
-        for (int i = 0; i < 8; i++) {
-            board.put(new Coordinate(new Row(1), new Column(i)), new Pawn(true));
-            board.put(new Coordinate(new Row(6), new Column(i)), new Pawn(false));
+        for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
+            board.put(new Coordinate(new Row(BLACK_SECOND_RANK), new Column(i)), new Pawn(true));
+            board.put(new Coordinate(new Row(WHITE_SECOND_RANK), new Column(i)), new Pawn(false));
         }
         return board;
     }

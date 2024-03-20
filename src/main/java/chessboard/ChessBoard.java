@@ -8,8 +8,10 @@ import piece.Piece;
 
 public class ChessBoard {
 
+    private static final int ROW_DIRECTION = 0;
+    private static final int COLUMN_DIRECTION = 1;
     private static final Map<Coordinate, Piece> board = ChessBoardInitializer.createInitialBoard();
-
+    
     public void playTurn(Coordinate coordinate, Coordinate destination, boolean blackTurn) {
         Piece piece = findPiece(coordinate);
         validateTurn(piece, blackTurn);
@@ -24,7 +26,7 @@ public class ChessBoard {
 
     private void validateCanMove(Coordinate coordinate, Coordinate destination, List<Integer> direction) {
         while (!coordinate.equals(destination)) {
-            coordinate.moveByDistances(direction.get(0), direction.get(1));
+            coordinate.moveByDistances(direction.get(ROW_DIRECTION), direction.get(COLUMN_DIRECTION));
 
             hasPieceOnPath(coordinate, destination);
         }

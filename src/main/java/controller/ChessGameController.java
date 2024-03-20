@@ -12,6 +12,7 @@ import view.util.Command;
 
 public class ChessGameController {
 
+    private static final int CHESS_BOARD_SIZE = 8;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -52,7 +53,7 @@ public class ChessGameController {
     private Coordinate createCoordinate(String input) {
         String[] split = input.split("");
         int column = ColumnSymbol.from(split[0]).getPosition();
-        int row = 8 - Integer.parseInt(split[1]);
+        int row = CHESS_BOARD_SIZE - Integer.parseInt(split[1]);
 
         return new Coordinate(new Row(row), new Column(column));
     }
