@@ -12,6 +12,8 @@ public enum Direction {
     RIGHT_UP(1, 1),
     LEFT_DOWN(-1, -1),
     RIGHT_DOWN(1, -1),
+    UP_UP(0, 2),
+    DOWN_DOWN(0, -2),
 
     UP_UP_LEFT(-1, 2),
     UP_UP_RIGHT(1, 2),
@@ -21,6 +23,7 @@ public enum Direction {
     DOWN_LEFT_LEFT(-2, -1),
     UP_RIGHT_RIGHT(2, 1),
     DOWN_RIGHT_RIGHT(2, -1);
+
 
     private final int dx;
     private final int dy;
@@ -46,6 +49,10 @@ public enum Direction {
         return Set.of(UP_UP_LEFT, UP_UP_RIGHT, DOWN_DOWN_LEFT, DOWN_DOWN_RIGHT,
                 UP_LEFT_LEFT, DOWN_LEFT_LEFT, UP_RIGHT_RIGHT, DOWN_RIGHT_RIGHT
         );
+    }
+
+    public static Set<Direction> getWhiteFirstPawnDirection() {
+        return Set.of(Direction.UP_UP, Direction.UP, Direction.LEFT_UP, Direction.RIGHT_UP);
     }
 
     public static Direction findDirection(int dx, int dy) {
