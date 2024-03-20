@@ -17,6 +17,9 @@ public class Board {
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
+        }
         if (isNoPieceAt(sourcePosition)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
         }
