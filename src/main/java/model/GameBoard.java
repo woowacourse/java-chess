@@ -58,11 +58,16 @@ public class GameBoard {
         }
     }
 
-    public void move(Moving moving) {
+    public void move(Moving moving, Camp camp) {
         if (!board.containsKey(moving.currentPosition())) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
+
         Piece piece = board.get(moving.currentPosition());
+        if (!piece.isSameCamp(camp)) {
+            throw new IllegalArgumentException("자신의 기물만 이동 가능합니다.");
+        }
+
         Set<Position> positions = piece.getRoute(moving.currentPosition(), moving.nextPosition());
         for (Position position : positions) {
             if (board.containsKey(position)) {

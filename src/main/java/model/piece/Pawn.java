@@ -22,6 +22,8 @@ public class Pawn extends Piece {
             }
             return Set.of(new Position(Row.THIRD, currentPosition.getColumn()));
         }
+        System.out.println(currentPosition);
+        System.out.println(nextPosition);
         throw new IllegalArgumentException("이동 불가");
     }
 

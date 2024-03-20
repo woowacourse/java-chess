@@ -1,6 +1,7 @@
 import controller.InputController;
 import java.util.List;
 import java.util.Scanner;
+import model.Camp;
 import model.Command;
 import model.GameBoard;
 import model.position.Moving;
@@ -16,18 +17,29 @@ public class Application {
         OutputView outputView = new OutputView();
         InputController inputController = new InputController(inputView, outputView);
         outputView.printStartMessage();
+        Camp camp = Camp.WHITE;
+
         while (true) {
             String input = inputView.readCommand();
             Command command = Command.from(input);
             if (command == Command.MOVE) {
                 List<String> cmd = List.of(input.split(" ")); // TODO 문자로 위치가 주어졌을 때 위치 찾는 테스트 추가하기
                 Moving moving = new Moving(Position.from(cmd.get(1)), Position.from(cmd.get(2)));
-                gameBoard.move(moving);
+                gameBoard.move(moving, camp);
+                camp = turn(camp);
             }
             if (command == Command.END) {
                 break;
             }
             outputView.printGameBoard(gameBoard);
+            System.out.println("현재 턴: " + camp.toString());
         }
+    }
+
+    private static Camp turn(Camp camp) {
+        if (camp == Camp.WHITE) {
+            return Camp.BLACK;
+        }
+        return Camp.WHITE;
     }
 }

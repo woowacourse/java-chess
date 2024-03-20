@@ -84,7 +84,7 @@ class GameBoardTest {
         Moving moving = new Moving(new Position(Row.FOURTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -99,7 +99,7 @@ class GameBoardTest {
 
         Moving moving = new Moving(new Position(Row.SEVENTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있습니다.");
     }
@@ -115,8 +115,24 @@ class GameBoardTest {
 
         Moving moving = new Moving(new Position(Row.SEVENTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("도착 지점에 같은 진영의 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("상대방의 기물을 이동시키려 하면 예외가 발생한다.")
+    void invalidTurn() {
+        //given
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.setting();
+
+        //when
+        Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
+
+        //then
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("자신의 기물만 이동 가능합니다.");
     }
 }

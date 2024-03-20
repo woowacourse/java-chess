@@ -23,6 +23,10 @@ public abstract class Piece {
         return camp;
     }
 
+    public boolean isSameCamp(final Camp target) {
+        return camp == target;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
