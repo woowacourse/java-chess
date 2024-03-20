@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Horizontal horizontal;
-    private final Vertical vertical;
+    private final Rank rank;
+    private final File file;
 
-    public Position(Horizontal horizontal, Vertical vertical) {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
+    public Position(Rank rank, File file) {
+        this.rank = rank;
+        this.file = file;
     }
 
     @Override
@@ -17,11 +17,11 @@ public class Position {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Position position = (Position) object;
-        return Objects.equals(horizontal, position.horizontal) && Objects.equals(vertical, position.vertical);
+        return Objects.equals(rank, position.rank) && Objects.equals(file, position.file);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(horizontal, vertical);
+        return Objects.hash(rank, file);
     }
 }

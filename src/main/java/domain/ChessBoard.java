@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -11,6 +12,10 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
+    }
+
+    public ChessBoard() {
+        this(new LinkedHashMap<>());
     }
 
     public void init() {
@@ -27,9 +32,17 @@ public class ChessBoard {
     }
 
     private void initPiece(InitPosition initPosition, Side side, Supplier<Piece> pieceSupplier) {
-        List<Horizontal> horizontals = initPosition.getHorizontals();
-        Vertical vertical = initPosition.vertical(side);
-        horizontals.forEach(horizontal -> board.put(new Position(horizontal, vertical), pieceSupplier.get()));
+        List<Rank> ranks = initPosition.getHorizontals();
+        File file = initPosition.vertical(side);
+        ranks.forEach(horizontal -> board.put(new Position(horizontal, file), pieceSupplier.get()));
+    }
+
+    public boolean hasPiece(Position position) {
+        return board.containsKey(position);
+    }
+
+    public Piece piece(Position position) {
+        return board.get(position);
     }
 
     public Map<Position, Piece> getBoard() {

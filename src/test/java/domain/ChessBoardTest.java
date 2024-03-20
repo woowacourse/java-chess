@@ -1,6 +1,5 @@
 package domain;
 
-import domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +18,10 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position(Horizontal.A, Vertical.EIGHTH), new Rook(Side.BLACK)),
-                Map.entry(new Position(Horizontal.H, Vertical.EIGHTH), new Rook(Side.BLACK)),
-                Map.entry(new Position(Horizontal.A, Vertical.FIRST), new Rook(Side.WHITE)),
-                Map.entry(new Position(Horizontal.H, Vertical.FIRST), new Rook(Side.WHITE))
+                Map.entry(new Position(Rank.A, File.EIGHTH), new Rook(Side.BLACK)),
+                Map.entry(new Position(Rank.H, File.EIGHTH), new Rook(Side.BLACK)),
+                Map.entry(new Position(Rank.A, File.FIRST), new Rook(Side.WHITE)),
+                Map.entry(new Position(Rank.H, File.FIRST), new Rook(Side.WHITE))
         );
     }
 
@@ -34,10 +33,10 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position(Horizontal.B, Vertical.EIGHTH), new Knight(Side.BLACK)),
-                Map.entry(new Position(Horizontal.G, Vertical.EIGHTH), new Knight(Side.BLACK)),
-                Map.entry(new Position(Horizontal.B, Vertical.FIRST), new Knight(Side.WHITE)),
-                Map.entry(new Position(Horizontal.G, Vertical.FIRST), new Knight(Side.WHITE))
+                Map.entry(new Position(Rank.B, File.EIGHTH), new Knight(Side.BLACK)),
+                Map.entry(new Position(Rank.G, File.EIGHTH), new Knight(Side.BLACK)),
+                Map.entry(new Position(Rank.B, File.FIRST), new Knight(Side.WHITE)),
+                Map.entry(new Position(Rank.G, File.FIRST), new Knight(Side.WHITE))
         );
     }
 
@@ -49,10 +48,10 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position(Horizontal.C, Vertical.EIGHTH), new Bishop(Side.BLACK)),
-                Map.entry(new Position(Horizontal.F, Vertical.EIGHTH), new Bishop(Side.BLACK)),
-                Map.entry(new Position(Horizontal.C, Vertical.FIRST), new Bishop(Side.WHITE)),
-                Map.entry(new Position(Horizontal.F, Vertical.FIRST), new Bishop(Side.WHITE))
+                Map.entry(new Position(Rank.C, File.EIGHTH), new Bishop(Side.BLACK)),
+                Map.entry(new Position(Rank.F, File.EIGHTH), new Bishop(Side.BLACK)),
+                Map.entry(new Position(Rank.C, File.FIRST), new Bishop(Side.WHITE)),
+                Map.entry(new Position(Rank.F, File.FIRST), new Bishop(Side.WHITE))
         );
     }
 
@@ -64,8 +63,8 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position(Horizontal.D, Vertical.EIGHTH), new Queen(Side.BLACK)),
-                Map.entry(new Position(Horizontal.D, Vertical.FIRST), new Queen(Side.WHITE))
+                Map.entry(new Position(Rank.D, File.EIGHTH), new Queen(Side.BLACK)),
+                Map.entry(new Position(Rank.D, File.FIRST), new Queen(Side.WHITE))
         );
     }
 
@@ -77,8 +76,8 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position(Horizontal.E, Vertical.EIGHTH), new King(Side.BLACK)),
-                Map.entry(new Position(Horizontal.E, Vertical.FIRST), new King(Side.WHITE))
+                Map.entry(new Position(Rank.E, File.EIGHTH), new King(Side.BLACK)),
+                Map.entry(new Position(Rank.E, File.FIRST), new King(Side.WHITE))
         );
     }
 
@@ -90,23 +89,23 @@ public class ChessBoardTest {
         chessBoard.init();
 
         assertThat(chessBoard.getBoard()).contains(
-                Map.entry(new Position(Horizontal.A, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.B, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.C, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.D, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.E, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.F, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.G, Vertical.SEVENTH), new Pawn(Side.BLACK)),
-                Map.entry(new Position(Horizontal.H, Vertical.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.A, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.B, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.C, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.D, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.E, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.F, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.G, File.SEVENTH), new Pawn(Side.BLACK)),
+                Map.entry(new Position(Rank.H, File.SEVENTH), new Pawn(Side.BLACK)),
 
-                Map.entry(new Position(Horizontal.A, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.B, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.C, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.D, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.E, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.F, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.G, Vertical.SECOND), new Pawn(Side.WHITE)),
-                Map.entry(new Position(Horizontal.H, Vertical.SECOND), new Pawn(Side.WHITE))
+                Map.entry(new Position(Rank.A, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.B, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.C, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.D, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.E, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.F, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.G, File.SECOND), new Pawn(Side.WHITE)),
+                Map.entry(new Position(Rank.H, File.SECOND), new Pawn(Side.WHITE))
         );
     }
 }

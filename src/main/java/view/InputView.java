@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public InputView() {
     }

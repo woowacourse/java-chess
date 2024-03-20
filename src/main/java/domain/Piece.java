@@ -10,6 +10,30 @@ public abstract class Piece {
         this.side = side;
     }
 
+    public boolean isRook() {
+        return false;
+    }
+
+    public boolean isKnight() {
+        return false;
+    }
+
+    public boolean isBishop() {
+        return false;
+    }
+
+    public boolean isQueen() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     public boolean isBlack() {
         return side.isBlack();
     }

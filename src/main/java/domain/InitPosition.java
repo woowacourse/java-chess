@@ -5,49 +5,45 @@ import java.util.function.Function;
 
 public enum InitPosition {
 
-    ROOK(List.of(Horizontal.A, Horizontal.H), majorPieceVertical()),
-    KNIGHT(List.of(Horizontal.B, Horizontal.G), majorPieceVertical()),
-    BISHOP(List.of(Horizontal.C, Horizontal.F), majorPieceVertical()),
-    QUEEN(List.of(Horizontal.D), majorPieceVertical()),
-    KING(List.of(Horizontal.E), majorPieceVertical()),
-    PAWN(List.of(Horizontal.values()), pawnVertical()),
+    ROOK(List.of(Rank.A, Rank.H), majorPieceVertical()),
+    KNIGHT(List.of(Rank.B, Rank.G), majorPieceVertical()),
+    BISHOP(List.of(Rank.C, Rank.F), majorPieceVertical()),
+    QUEEN(List.of(Rank.D), majorPieceVertical()),
+    KING(List.of(Rank.E), majorPieceVertical()),
+    PAWN(List.of(Rank.values()), pawnVertical()),
     ;
 
-    private final List<Horizontal> horizontals;
-    private final Function<Side, Vertical> vertical;
+    private final List<Rank> ranks;
+    private final Function<Side, File> vertical;
 
-    InitPosition(List<Horizontal> horizontals, Function<Side, Vertical> vertical) {
-        this.horizontals = horizontals;
+    InitPosition(List<Rank> ranks, Function<Side, File> vertical) {
+        this.ranks = ranks;
         this.vertical = vertical;
     }
 
-    private static Function<Side, Vertical> majorPieceVertical() {
+    private static Function<Side, File> majorPieceVertical() {
         return side -> {
             if (side.isBlack()) {
-                return Vertical.EIGHTH;
+                return File.EIGHTH;
             }
-            return Vertical.FIRST;
+            return File.FIRST;
         };
     }
 
-    private static Function<Side, Vertical> pawnVertical() {
+    private static Function<Side, File> pawnVertical() {
         return side -> {
             if (side.isBlack()) {
-                return Vertical.SEVENTH;
+                return File.SEVENTH;
             }
-            return Vertical.SECOND;
+            return File.SECOND;
         };
     }
 
-    public Vertical vertical(Side side) {
+    public File vertical(Side side) {
         return vertical.apply(side);
     }
 
-    public List<Horizontal> getHorizontals() {
-        return horizontals;
-    }
-
-    public Function<Side, Vertical> getVertical() {
-        return vertical;
+    public List<Rank> getHorizontals() {
+        return ranks;
     }
 }
