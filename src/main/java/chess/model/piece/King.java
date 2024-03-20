@@ -10,6 +10,8 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return false;
+        int rowDifference = Math.abs(calculateRowDifference(source, target));
+        int columnDifference = Math.abs(calculateColumnDifference(source, target));
+        return rowDifference < 2 && columnDifference < 2;
     }
 }
