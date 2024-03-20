@@ -34,7 +34,7 @@ public class ChessGame {
                 throw new IllegalArgumentException("게임 도중 start 명령어를 입력할 수 없습니다.");
             }
             if (commandInfo.command().isMove()) {
-
+                //commandInfo.source().get();
             }
         }
         // 게임 종료
