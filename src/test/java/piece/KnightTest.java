@@ -11,32 +11,32 @@ import point.Column;
 import point.Position;
 import point.Row;
 
-class PawnTest {
+class KnightTest {
 
     @DisplayName("이동할 수 없는 경로면 false를 반환한다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
     void cantMovable(final Position currentPosition, final Position nextPosition) {
-        Pawn pawn = new Pawn(Camp.BLACK);
+        Knight knight = new Knight(Camp.BLACK);
 
-        Assertions.assertThat(pawn.canMovable(currentPosition, nextPosition)).isFalse();
+        Assertions.assertThat(knight.canMovable(currentPosition, nextPosition)).isFalse();
     }
 
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
     void invalidRoute(final Position currentPosition, final Position nextPosition) {
-        Pawn pawn = new Pawn(Camp.BLACK);
+        Knight knight = new Knight(Camp.BLACK);
 
-        Assertions.assertThatThrownBy(() -> pawn.getRoute(currentPosition, nextPosition))
+        Assertions.assertThatThrownBy(() -> knight.getRoute(currentPosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.SIXTH, Column.FIRST), new Position(Row.FOURTH, Column.FIRST)),
-                Arguments.of(new Position(Row.SEVENTH, Column.FIRST), new Position(Row.FOURTH, Column.FIRST)),
-                Arguments.of(new Position(Row.SEVENTH, Column.FIRST), new Position(Row.EIGHTH, Column.FIRST))
+                Arguments.of(new Position(Row.FIFTH, Column.FOURTH), new Position(Row.FIFTH, Column.FIRST)),
+                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.THIRD, Column.SIXTH)),
+                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.FIFTH, Column.FIFTH))
         );
     }
 
@@ -44,17 +44,15 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
     void canMovable(final Position currentPosition, final Position nextPosition) {
-        Pawn pawn = new Pawn(Camp.BLACK);
+        Knight knight = new Knight(Camp.BLACK);
 
-        Assertions.assertThat(pawn.canMovable(currentPosition, nextPosition)).isTrue();
+        Assertions.assertThat(knight.canMovable(currentPosition, nextPosition)).isTrue();
     }
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.SEVENTH, Column.FIRST), new Position(Row.FIFTH, Column.FIRST)),
-                Arguments.of(new Position(Row.SIXTH, Column.FIRST), new Position(Row.FIFTH, Column.FIRST))
+                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.SEVENTH, Column.THIRD)),
+                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.SIXTH, Column.SECOND))
         );
     }
-
-
 }

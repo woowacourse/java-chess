@@ -12,12 +12,22 @@ public class Knight extends Piece {
 
     @Override
     public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-        return null;
+        if (canMovable(currentPosition, nextPosition)) {
+            return Set.of();
+        }
+        throw new IllegalArgumentException("이동 불가");
     }
 
     @Override
     protected boolean canMovable(Position currentPosition, Position nextPosition) {
-        return false;
+        if (currentPosition.equals(nextPosition)) {
+            return false;
+        }
+        int dRow = Math.abs(currentPosition.getRowIndex() - nextPosition.getRowIndex());
+        int dColumn = Math.abs(currentPosition.getColumnIndex() - nextPosition.getColumnIndex());
+
+        System.out.println("drow : " + dRow + "dcol : " + dColumn);
+        return dRow + dColumn == 3 && dRow != 0 && dColumn != 0;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean canMovable(Position currentPosition, Position nextPosition) {
-        if (currentPosition == nextPosition) {
+        if (currentPosition.equals(nextPosition)) {
             return false;
         }
         int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
