@@ -14,6 +14,10 @@ public class Column {
         position.move(nextPosition);
     }
 
+    public int getColumnMinus(Column column) {
+        return position.getMinusPosition(column.position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

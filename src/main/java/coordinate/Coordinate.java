@@ -19,6 +19,18 @@ public class Coordinate {
         column.move(columnPosition);
     }
 
+    public int checkRow(Coordinate coordinate) {
+        return row.getRowMinus(coordinate.row);
+    }
+
+    public int checkColumn(Coordinate coordinate) {
+        return column.getColumnMinus(coordinate.column);
+    }
+
+    public int getRowValue() {
+        return row.getPositionValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

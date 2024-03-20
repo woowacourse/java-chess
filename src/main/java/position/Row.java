@@ -14,6 +14,14 @@ public class Row {
         position.move(nextPosition);
     }
 
+    public int getPositionValue() {
+        return position.getPosition();
+    }
+
+    public int getRowMinus(Row row) {
+        return position.getMinusPosition(row.position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

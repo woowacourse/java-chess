@@ -13,11 +13,19 @@ public class Position {
         this.position = position;
     }
 
+    public int getMinusPosition(Position position) {
+        return this.position - position.position;
+    }
+
     public void move(int nextPosition) {
         if (nextPosition < MIN_POSITION || MAX_POSITION < nextPosition) {
             throw new IllegalArgumentException("움직일 수 있는 위치가 아닙니다.");
         }
         position = nextPosition;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     @Override
