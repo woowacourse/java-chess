@@ -223,4 +223,168 @@ class PieceTest {
                     .hasMessage("이동할 수 없는 방향입니다.");
         }
     }
+
+    @Nested
+    class 화이트_폰 {
+        private final Piece whitePawn = new Piece(Type.WHITE_PAWN, Color.WHITE);
+
+        @Test
+        void UP_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.D, Rank.THREE);
+
+            List<Position> positions = whitePawn.route(resource, target);
+            assertThat(positions).hasSize(0);
+        }
+
+        @Test
+        void UP_LEFT_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.C, Rank.THREE);
+
+            List<Position> positions = whitePawn.route(resource, target);
+            assertThat(positions).hasSize(0);
+        }
+
+        @Test
+        void UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.E, Rank.THREE);
+
+            List<Position> positions = whitePawn.route(resource, target);
+            assertThat(positions).hasSize(0);
+        }
+
+        @Test
+        void 첫_위치에서_UP_방향으로_두_칸_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.D, Rank.FOUR);
+
+            List<Position> positions = whitePawn.route(resource, target);
+            assertThat(positions).hasSize(1);
+            assertThat(positions).containsExactly(new Position(File.D, Rank.THREE));
+        }
+
+        @Test
+        void UP_방향으로_두_칸_이상_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.D, Rank.FOUR);
+
+            assertThatThrownBy(() -> whitePawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 거리입니다.");
+        }
+
+        @Test
+        void DOWN_방향으로_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.D, Rank.ONE);
+
+            assertThatThrownBy(() -> whitePawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 방향입니다.");
+        }
+
+        @Test
+        void DOWN_LEFT_방향으로_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.C, Rank.ONE);
+
+            assertThatThrownBy(() -> whitePawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 방향입니다.");
+        }
+
+        @Test
+        void L자_방향으로_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.F, Rank.THREE);
+
+            assertThatThrownBy(() -> whitePawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 방향입니다.");
+        }
+    }
+
+    @Nested
+    class 블랙_폰 {
+        private final Piece blackPawn = new Piece(Type.BLACK_PAWN, Color.BLACK);
+
+        @Test
+        void DOWN_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.D, Rank.ONE);
+
+            List<Position> positions = blackPawn.route(resource, target);
+            assertThat(positions).hasSize(0);
+        }
+
+        @Test
+        void DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.C, Rank.ONE);
+
+            List<Position> positions = blackPawn.route(resource, target);
+            assertThat(positions).hasSize(0);
+        }
+
+        @Test
+        void DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.E, Rank.ONE);
+
+            List<Position> positions = blackPawn.route(resource, target);
+            assertThat(positions).hasSize(0);
+        }
+
+        @Test
+        void 첫_위치에서_DOWN_방향으로_두_칸_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.D, Rank.SEVEN);
+            Position target = new Position(File.D, Rank.FIVE);
+
+            List<Position> positions = blackPawn.route(resource, target);
+            assertThat(positions).hasSize(1);
+            assertThat(positions).containsExactly(new Position(File.D, Rank.SIX));
+        }
+
+        @Test
+        void DOWN_방향으로_두_칸_이상_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.THREE);
+            Position target = new Position(File.D, Rank.ONE);
+
+            assertThatThrownBy(() -> blackPawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 거리입니다.");
+        }
+
+        @Test
+        void UP_방향으로_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.D, Rank.THREE);
+
+            assertThatThrownBy(() -> blackPawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 방향입니다.");
+        }
+
+        @Test
+        void UP_LEFT_방향으로_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.C, Rank.THREE);
+
+            assertThatThrownBy(() -> blackPawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 방향입니다.");
+        }
+
+        @Test
+        void L자_방향으로_이동하면_예외가_발생한다() {
+            Position resource = new Position(File.D, Rank.TWO);
+            Position target = new Position(File.F, Rank.ONE);
+
+            assertThatThrownBy(() -> blackPawn.route(resource, target))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이동할 수 없는 방향입니다.");
+        }
+    }
 }
