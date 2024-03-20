@@ -128,4 +128,10 @@ public class Board {
                 .map(board::get)
                 .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
+
+    public boolean checkDifferentTeamPieceExist(Team currentTeam, Position otherPosition) {
+        Piece otherPiece = board.get(otherPosition);
+
+        return otherPiece.isDifferentTeam(currentTeam);
+    }
 }

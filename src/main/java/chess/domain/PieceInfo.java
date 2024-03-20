@@ -16,4 +16,8 @@ public class PieceInfo {
     public Team getTeam() {
         return team;
     }
+
+    public boolean isDifferentTeam(Team otherTeam) {
+        return team != otherTeam;
+    }
 }

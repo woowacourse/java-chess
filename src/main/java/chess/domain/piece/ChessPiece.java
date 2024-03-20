@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Board;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.strategy.MoveStrategy;
 
 public abstract class ChessPiece implements Piece {
@@ -32,5 +33,10 @@ public abstract class ChessPiece implements Piece {
     @Override
     public PieceInfo getPieceInfo() {
         return pieceInfo;
+    }
+
+    @Override
+    public boolean isDifferentTeam(Team otherTeam) {
+        return pieceInfo.isDifferentTeam(otherTeam);
     }
 }
