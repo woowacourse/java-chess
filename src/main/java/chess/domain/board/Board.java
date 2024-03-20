@@ -23,7 +23,7 @@ public class Board {
 
     private void validate(final Square from, final Square to, final Color turn) {
         checkTurn(from, turn);
-         checkMovable(from, to);
+        checkMovable(from, to);
         checkRoute(from, to);
         checkDestinationColor(from, to);
     }
