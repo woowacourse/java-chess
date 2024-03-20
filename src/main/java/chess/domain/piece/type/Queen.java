@@ -9,4 +9,9 @@ public class Queen extends Piece {
     public Queen(final Color color, final Position position) {
         super(color, position);
     }
+
+    @Override
+    public boolean canMoveTo(final Position target) {
+        return false;
+    }
 }

@@ -54,4 +54,41 @@ class PositionTest {
         // then
         Assertions.assertThat(result).isFalse();
     }
+
+    @DisplayName("대각선으로 이동할 수 있다.")
+    @Test
+    void canMoveDiagonal() {
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position targetPositionRightUp = new Position('e', 6);
+        final Position targetPositionRightDown = new Position('e', 4);
+        final Position targetPositionLeftUP = new Position('c', 6);
+        final Position targetPositionLeftDown = new Position('c', 4);
+
+        // when
+        final boolean resultRightUp = currentPosition.isDiagonalWith(targetPositionRightUp);
+        final boolean resultRightDown = currentPosition.isDiagonalWith(targetPositionRightDown);
+        final boolean resultLeftUP = currentPosition.isDiagonalWith(targetPositionLeftUP);
+        final boolean resultLeftDown = currentPosition.isDiagonalWith(targetPositionLeftDown);
+
+        // then
+        Assertions.assertThat(resultRightUp).isTrue();
+        Assertions.assertThat(resultRightDown).isTrue();
+        Assertions.assertThat(resultLeftUP).isTrue();
+        Assertions.assertThat(resultLeftDown).isTrue();
+    }
+
+    @DisplayName("대각선으로 이동할 수 없다.")
+    @Test
+    void canNotMoveDiagonal() {
+        // given
+        final Position currentPosition = new Position('d', 5);
+        final Position notMovablePosition = new Position('d', 6);
+
+        // when
+        final boolean result = currentPosition.isDiagonalWith(notMovablePosition);
+
+        // then
+        Assertions.assertThat(result).isFalse();
+    }
 }

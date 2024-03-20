@@ -20,4 +20,8 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
     }
+
+    public int differenceWith(final File other) {
+        return Math.abs(this.index - other.index);
+    }
 }

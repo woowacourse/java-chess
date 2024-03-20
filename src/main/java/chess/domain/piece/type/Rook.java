@@ -10,6 +10,7 @@ public class Rook extends Piece {
         super(color, position);
     }
 
+    @Override
     public boolean canMoveTo(final Position target) {
         if (this.position.isStraightWith(target)) {
             return true;

@@ -12,6 +12,8 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public abstract boolean canMoveTo(final Position target);
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

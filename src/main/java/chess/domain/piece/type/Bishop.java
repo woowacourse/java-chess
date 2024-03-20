@@ -9,4 +9,9 @@ public class Bishop extends Piece {
     public Bishop(final Color color, final Position position) {
         super(color, position);
     }
+
+    @Override
+    public boolean canMoveTo(final Position target) {
+        return false;
+    }
 }

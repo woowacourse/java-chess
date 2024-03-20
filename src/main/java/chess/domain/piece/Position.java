@@ -28,6 +28,13 @@ public class Position {
         return false;
     }
 
+    public boolean isDiagonalWith(final Position target) {
+        if (this.file.differenceWith(target.file) == this.rank.differenceWith(target.rank)) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

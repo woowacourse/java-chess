@@ -9,4 +9,9 @@ public class Night extends Piece {
     public Night(final Color color, final Position position) {
         super(color, position);
     }
+
+    @Override
+    public boolean canMoveTo(final Position target) {
+        return false;
+    }
 }

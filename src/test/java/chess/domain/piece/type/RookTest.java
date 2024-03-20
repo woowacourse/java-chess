@@ -22,7 +22,7 @@ public class RookTest {
         assertThat(canMove).isTrue();
     }
 
-    @DisplayName("룩은 대각선으로는 이동할 수 없다.")
+    @DisplayName("룩은 직선 이외로는 이동할 수 없다.") // TODO: 대각선+직선 이동 케이스 추가
     @Test
     void isNotStraight() {
         // given
