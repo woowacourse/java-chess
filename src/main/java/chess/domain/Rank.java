@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public enum Rank {
+
     ONE(1),
     TWO(2),
     THREE(3),
@@ -37,6 +38,13 @@ public enum Rank {
         if (!NUMBER_PATTERN.matcher(rank).matches()) {
             throw new IllegalArgumentException(ERROR_NOT_NUMERIC);
         }
+    }
+
+    public Rank add(int value) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.rank == this.rank + value)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[" + (this.rank + value) + "] (은)는" + ERROR_NOT_EXIST_RANK));
     }
 
     public int get() {

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
 import chess.domain.Position;
@@ -12,7 +13,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Position source, Position target, Board board) {
         // TODO: 순서 의존에 대해 생각 해보기
         if (isBackward(source, target)) {
             return false;

@@ -2,10 +2,13 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Board;
 import chess.domain.PieceColor;
 import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 @DisplayName("나이트")
 class KnightTest {
@@ -13,9 +16,10 @@ class KnightTest {
     @Test
     @DisplayName("에 대한 이동 루트가 한칸 전진 후 대각선 한칸 전진 하는지 판단한다.")
     void canMove() {
+        Board board = new Board(Map.of());
         Knight knight = new Knight(PieceColor.BLACK);
 
-        boolean actual = knight.canMove(Position.from("c6"), Position.from("a7"));
+        boolean actual = knight.canMove(Position.from("c6"), Position.from("a7"), board);
 
         assertThat(actual).isTrue();
     }

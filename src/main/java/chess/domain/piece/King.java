@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.File;
-import chess.domain.PieceColor;
-import chess.domain.PieceType;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.*;
+
+import java.util.Map;
 
 public class King extends Piece {
 
@@ -13,7 +11,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Position source, Position target, Board board) {
         return (getDeltaRank(source.rank(), target.rank()) <= 1 &&
                 getDeltaFile(source.file(), target.file()) <= 1);
     }

@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
 import chess.domain.Position;
+
+import java.util.Map;
 
 public class Knight extends Piece {
 
@@ -11,7 +14,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Position source, Position target, Board board) {
         return (differenceFile(source, target) == 1 && differenceRank(source, target) == 2) ||
                 differenceFile(source, target) == 2 && differenceRank(source, target) == 1;
     }

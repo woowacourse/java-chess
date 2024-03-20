@@ -32,6 +32,13 @@ public enum File {
         }
     }
 
+    public File add(int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.file == this.file + value)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("[" + (this.file + value) + "] (은)는" + ERROR_NOT_EXIST_FILE));
+    }
+
     public int get() {
         return file;
     }
