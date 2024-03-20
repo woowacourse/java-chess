@@ -7,7 +7,7 @@ public class PieceWrapper {
 		this.piece = piece;
 	}
 
-	public boolean isOn(Position position) {
+	boolean isOn(Position position) {
 		return piece.isOn(position);
 	}
 
