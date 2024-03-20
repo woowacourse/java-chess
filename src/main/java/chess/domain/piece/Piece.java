@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-public class Piece {
+import chess.domain.Point;
+
+public abstract class Piece {
 
     private final String name;
     private final Team team;
@@ -9,6 +11,8 @@ public class Piece {
         this.name = name;
         this.team = team;
     }
+
+    public abstract boolean isMovable(Point currentPoint, Point nextPoint);
 
     public boolean isSameTeam(Team team) {
         return this.team == team;
@@ -19,5 +23,9 @@ public class Piece {
             return name.toLowerCase();
         }
         return name;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 }

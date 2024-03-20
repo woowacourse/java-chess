@@ -22,7 +22,9 @@ public final class Knight extends Piece {
         List<Direction> directions = Direction.findKnightDirections();
 
         return directions.stream()
-                .map(direction -> currentPoint.add(direction.getDirectionOfFile(), direction.getDirectionOfRank()))
-                .filter(Optional::isPresent).map(Optional::get).toList();
+                .map(direction -> currentPoint.add(direction.file(), direction.rank()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
     }
 }
