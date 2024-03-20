@@ -15,7 +15,7 @@ class RookTest {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = rook.findMovablePositions(new Position(4, 1));
         assertThat(movablePositions)
-                .containsExactlyInAnyOrder(new Position(2, 1), new Position(3, 1), new Position(4, 1));
+                .containsExactlyInAnyOrder(new Position(2, 1), new Position(3, 1));
     }
 
     @Test
@@ -24,7 +24,7 @@ class RookTest {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = rook.findMovablePositions(new Position(1, 4));
         assertThat(movablePositions)
-                .containsExactlyInAnyOrder(new Position(1, 2), new Position(1, 3), new Position(1, 4));
+                .containsExactlyInAnyOrder(new Position(1, 2), new Position(1, 3));
     }
 
     @Test
