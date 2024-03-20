@@ -1,6 +1,7 @@
 package piece;
 
 import java.util.Objects;
+import java.util.Set;
 import model.Camp;
 import point.Position;
 
@@ -14,7 +15,10 @@ public abstract class Piece {
 
     public abstract void move(Position targetPosition);
 
-    public abstract boolean canMovable(Position currentPosition, Position nextPosition); //TODO 이동 위치에 어떤 기물이 있는지도 파악해야함
+    //TODO : 리턴값 자료구조 정하기
+    public abstract Set<Position> getRoute(Position currentPosition, Position nextPosition);
+
+    protected abstract boolean canMovable(Position currentPosition, Position nextPosition);
 
     public Camp getCamp() {
         return camp;

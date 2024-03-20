@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import piece.Bishop;
 import piece.King;
@@ -68,7 +69,16 @@ public class GameBoard {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
         Piece piece = board.get(moving.getCurrentPosition());
-        piece.move(moving.getNextPosition());
+        Set<Position> positions = piece.getRoute(moving.getCurrentPosition(), moving.getNextPosition());
+        for (Position position : positions) {
+            if (board.containsKey(position)) {
+                throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
+            }
+        }
+
+        if (piece.getCamp().equals(board.get(moving.getNextPosition()).getCamp())) {
+            throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
+        }
     }
 
     public List<List<Square>> getBoard2() {

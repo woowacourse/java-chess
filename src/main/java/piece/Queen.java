@@ -1,5 +1,6 @@
 package piece;
 
+import java.util.Set;
 import model.Camp;
 import point.Position;
 
@@ -12,6 +13,11 @@ public class Queen extends Piece {
     @Override
     public void move(Position targetPosition) {
 
+    }
+
+    @Override
+    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
+        return null;
     }
 
     @Override

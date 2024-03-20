@@ -1,5 +1,6 @@
 package piece;
 
+import java.util.Set;
 import model.Camp;
 import point.Position;
 
@@ -7,6 +8,11 @@ public class Rook extends Piece {
 
     public Rook(final Camp camp) {
         super(camp);
+    }
+
+    @Override
+    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
+        return null;
     }
 
     @Override

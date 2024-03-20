@@ -1,5 +1,6 @@
 package piece;
 
+import java.util.Set;
 import model.Camp;
 import point.Position;
 import point.Row;
@@ -11,22 +12,39 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMovable(Position currentPosition, Position nextPosition) {
-        int dRow = currentPosition.getRow() - nextPosition.getRow();
-        int dColumn = currentPosition.getColumn() - nextPosition.getColumn();
+    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
+        if (canMovable(currentPosition, nextPosition)) {
+            if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
+                return Set.of();
+            }
+            if (Camp.BLACK == camp) {
+                return Set.of(new Position(Row.SIXTH, currentPosition.getColumn()));
+            }
+            return Set.of(new Position(Row.THIRD, currentPosition.getColumn()));
+        }
+        throw new IllegalArgumentException("이동 불가");
+    }
+
+    @Override
+    protected boolean canMovable(Position currentPosition, Position nextPosition) {
+        if (currentPosition == nextPosition) {
+            return false;
+        }
+        int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
+        int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
 
         if (dColumn != 0) {
             return false;
         }
 
         if (Camp.BLACK == camp) {
-            if (Row.SEVENTH.getIndex() == currentPosition.getRow() && (dRow == -1 || dRow == -2)) {
+            if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && (dRow == -1 || dRow == -2)) {
                 return true;
             }
             return dRow == -1;
         }
 
-        if (Row.SECOND.getIndex() == currentPosition.getRow() && (dRow == 1 || dRow == 2)) {
+        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && (dRow == 1 || dRow == 2)) {
             return true;
         }
         return dRow == 1;

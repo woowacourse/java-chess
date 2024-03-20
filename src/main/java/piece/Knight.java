@@ -1,5 +1,6 @@
 package piece;
 
+import java.util.Set;
 import model.Camp;
 import point.Position;
 
@@ -10,7 +11,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMovable(Position currentPosition, Position nextPosition) {
+    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
+        return null;
+    }
+
+    @Override
+    protected boolean canMovable(Position currentPosition, Position nextPosition) {
         return false;
     }
 

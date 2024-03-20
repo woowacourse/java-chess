@@ -1,11 +1,13 @@
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.Camp;
 import model.GameBoard;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
+import piece.Queen;
 import point.Column;
 import point.Moving;
 import point.Position;
@@ -50,7 +52,7 @@ class GameBoardTest {
         }
 
         for (Entry<Position, Piece> entry : board.entrySet()) {
-            res[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue()
+            res[entry.getKey().getRowIndex()][entry.getKey().getColumnIndex()] = entry.getValue()
                     .toString();
         }
 
@@ -86,23 +88,35 @@ class GameBoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("이동 경로에 다른 기물이 있으면 예외를 발생시킨다.")
     @Test
-    @DisplayName("폰의 처음 위치에서 앞으로 2칸 이동시킨다.")
-    void movePiece() {
-        //given
+    void routeContainPiece() {
         GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
-        Position pawnPosition = new Position(Row.SEVENTH, Column.FIRST);
-        Position nextPosition = new Position(Row.FIFTH, Column.FIRST);
-        Moving moving = new Moving(pawnPosition, nextPosition);
+        Map<Position, Piece> board = gameBoard.getBoard();
+        board.put(new Position(Row.SIXTH, Column.FIFTH), new Queen(Camp.BLACK));
 
+        Moving moving = new Moving(new Position(Row.SEVENTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
 
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로에 다른 기물이 있습니다.");
+    }
 
-        //when
-        gameBoard.move(moving);
+    @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
+    @Test
+    void targetPositionIsEqualCamp() {
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.setting();
 
-        //then
-        Assertions.assertThat(gameBoard.findPieceByPosition(nextPosition)).isEqualTo(null);
+        Map<Position, Piece> board = gameBoard.getBoard();
+        board.put(new Position(Row.FIFTH, Column.FIFTH), new Queen(Camp.BLACK));
+
+        Moving moving = new Moving(new Position(Row.SEVENTH, Column.FIFTH), new Position(Row.FIFTH, Column.FIFTH));
+
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 지점에 같은 진영의 기물이 있습니다.");
     }
 }
