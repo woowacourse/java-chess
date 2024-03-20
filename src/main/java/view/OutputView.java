@@ -20,6 +20,7 @@ public class OutputView {
             System.out.print(piece);
             separateLineByFileIndex(i);
         }
+        System.out.println();
     }
 
     private void separateLineByFileIndex(int fileIndex) {
