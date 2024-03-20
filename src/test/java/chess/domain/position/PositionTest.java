@@ -19,9 +19,9 @@ class PositionTest {
     void should_CheckVerticalRelationShipWithPositions() {
         Position position = Position.of(1, 1);
         assertAll(
-                () -> assertThat(position.isStraight(Position.of(2, 1))).isTrue(),
-                () -> assertThat(position.isStraight(Position.of(1, 2))).isTrue(),
-                () -> assertThat(position.isStraight(Position.of(4, 4))).isFalse()
+                () -> assertThat(position.isStraightWith(Position.of(2, 1))).isTrue(),
+                () -> assertThat(position.isStraightWith(Position.of(1, 2))).isTrue(),
+                () -> assertThat(position.isStraightWith(Position.of(4, 4))).isFalse()
         );
     }
 

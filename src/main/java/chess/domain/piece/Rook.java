@@ -9,7 +9,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
-        if (start.isStraight(destination)) {
+        if (start.isStraightWith(destination)) {
             return true;
         }
         return false;
