@@ -10,6 +10,10 @@ public class Piece {
         this.team = team;
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
     public String getName() {
         if (team.isWhite()) {
             return name.toLowerCase();
