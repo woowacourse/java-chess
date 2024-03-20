@@ -1,6 +1,4 @@
-package chess.chessPiece.movestrategy;
-
-import chess.chessPiece.movestrategy.MoveStrategy;
+package chess.chesspiece.movestrategy;
 
 public class BishopMoveStrategy implements MoveStrategy {
     @Override

@@ -1,4 +1,4 @@
-package chess.chessPiece.movestrategy;
+package chess.chesspiece.movestrategy;
 
 public interface MoveStrategy {
 

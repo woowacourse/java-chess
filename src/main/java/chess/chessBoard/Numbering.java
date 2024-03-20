@@ -1,4 +1,4 @@
-package chess.chessBoard;
+package chess.chessboard;
 
 public enum Numbering {
 

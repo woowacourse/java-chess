@@ -1,6 +1,6 @@
-package chess.chessPiece;
+package chess.chesspiece;
 
-import chess.chessBoard.Numbering;
+import chess.chessboard.Numbering;
 
 public class ChessPieceCampAssignment {
 

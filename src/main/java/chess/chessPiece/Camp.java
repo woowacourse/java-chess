@@ -1,4 +1,4 @@
-package chess.chessPiece;
+package chess.chesspiece;
 
 public enum Camp {
 
