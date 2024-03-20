@@ -2,6 +2,14 @@ package chess.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 
 public class Board {
 
@@ -29,19 +37,19 @@ public class Board {
 
     private void initializePawn(int rankValue, Team team) {
         for (char fileValue = 'a'; fileValue <= 'h'; fileValue++) {
-            pieces.put(new Coordinate(rankValue, fileValue), new Piece(PieceType.PAWN, team));
+            pieces.put(new Coordinate(rankValue, fileValue), new Pawn(team));
         }
     }
 
     private void initializeSpecialPiece(int rankValue, Team team) {
-        pieces.put(new Coordinate(rankValue, 'e'), new Piece(PieceType.KING, team));
-        pieces.put(new Coordinate(rankValue, 'd'), new Piece(PieceType.QUEEN, team));
-        pieces.put(new Coordinate(rankValue, 'c'), new Piece(PieceType.BISHOP, team));
-        pieces.put(new Coordinate(rankValue, 'f'), new Piece(PieceType.BISHOP, team));
-        pieces.put(new Coordinate(rankValue, 'b'), new Piece(PieceType.KNIGHT, team));
-        pieces.put(new Coordinate(rankValue, 'g'), new Piece(PieceType.KNIGHT, team));
-        pieces.put(new Coordinate(rankValue, 'a'), new Piece(PieceType.ROOK, team));
-        pieces.put(new Coordinate(rankValue, 'h'), new Piece(PieceType.ROOK, team));
+        pieces.put(new Coordinate(rankValue, 'e'), new King(team));
+        pieces.put(new Coordinate(rankValue, 'd'), new Queen(team));
+        pieces.put(new Coordinate(rankValue, 'c'), new Bishop(team));
+        pieces.put(new Coordinate(rankValue, 'f'), new Bishop(team));
+        pieces.put(new Coordinate(rankValue, 'b'), new Knight(team));
+        pieces.put(new Coordinate(rankValue, 'g'), new Knight(team));
+        pieces.put(new Coordinate(rankValue, 'a'), new Rook(team));
+        pieces.put(new Coordinate(rankValue, 'h'), new Rook(team));
     }
 
     public Piece findByCoordinate(Coordinate coordinate) {

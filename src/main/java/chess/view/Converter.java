@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 import chess.domain.Board;
 import chess.domain.Coordinate;
-import chess.domain.Piece;
-import chess.domain.Team;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 class Converter {
 

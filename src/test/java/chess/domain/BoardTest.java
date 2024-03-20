@@ -6,6 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +33,7 @@ class BoardTest {
 
         Piece result = board.findByCoordinate(new Coordinate(1, 'e'));
 
-        Piece expected = new Piece(PieceType.KING, Team.WHITE);
+        Piece expected = new King(Team.WHITE);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -36,7 +44,7 @@ class BoardTest {
 
         Piece result = board.findByCoordinate(new Coordinate(1, 'd'));
 
-        Piece expected = new Piece(PieceType.QUEEN, Team.WHITE);
+        Piece expected = new Queen(Team.WHITE);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -48,7 +56,7 @@ class BoardTest {
         Piece bishop1 = board.findByCoordinate(new Coordinate(1, 'c'));
         Piece bishop2 = board.findByCoordinate(new Coordinate(1, 'f'));
 
-        Piece expected = new Piece(PieceType.BISHOP, Team.WHITE);
+        Piece expected = new Bishop(Team.WHITE);
 
         assertThat(bishop1)
                 .isEqualTo(bishop2)
@@ -63,7 +71,7 @@ class BoardTest {
         Piece knight1 = board.findByCoordinate(new Coordinate(1, 'b'));
         Piece knight2 = board.findByCoordinate(new Coordinate(1, 'g'));
 
-        Piece expected = new Piece(PieceType.KNIGHT, Team.WHITE);
+        Piece expected = new Knight(Team.WHITE);
 
         assertThat(knight1)
                 .isEqualTo(knight2)
@@ -78,7 +86,7 @@ class BoardTest {
         Piece rook1 = board.findByCoordinate(new Coordinate(1, 'a'));
         Piece rook2 = board.findByCoordinate(new Coordinate(1, 'h'));
 
-        Piece expected = new Piece(PieceType.ROOK, Team.WHITE);
+        Piece expected = new Rook(Team.WHITE);
 
         assertThat(rook1)
                 .isEqualTo(rook2)
@@ -96,7 +104,7 @@ class BoardTest {
             result.add(piece);
         }
 
-        assertThat(result).isEqualTo(Collections.nCopies(8, new Piece(PieceType.PAWN, Team.WHITE)));
+        assertThat(result).isEqualTo(Collections.nCopies(8, new Pawn(Team.WHITE)));
     }
 
     @DisplayName("흑팀의 킹은 e8에 있다.")
@@ -106,7 +114,7 @@ class BoardTest {
 
         Piece result = board.findByCoordinate(new Coordinate(8, 'e'));
 
-        Piece expected = new Piece(PieceType.KING, Team.BLACK);
+        Piece expected = new King(Team.BLACK);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -117,7 +125,7 @@ class BoardTest {
 
         Piece result = board.findByCoordinate(new Coordinate(8, 'd'));
 
-        Piece expected = new Piece(PieceType.QUEEN, Team.BLACK);
+        Piece expected = new Queen(Team.BLACK);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -129,7 +137,7 @@ class BoardTest {
         Piece bishop1 = board.findByCoordinate(new Coordinate(8, 'c'));
         Piece bishop2 = board.findByCoordinate(new Coordinate(8, 'f'));
 
-        Piece expected = new Piece(PieceType.BISHOP, Team.BLACK);
+        Piece expected = new Bishop(Team.BLACK);
 
         assertThat(bishop1)
                 .isEqualTo(bishop2)
@@ -144,7 +152,7 @@ class BoardTest {
         Piece knight1 = board.findByCoordinate(new Coordinate(8, 'b'));
         Piece knight2 = board.findByCoordinate(new Coordinate(8, 'g'));
 
-        Piece expected = new Piece(PieceType.KNIGHT, Team.BLACK);
+        Piece expected = new Knight(Team.BLACK);
 
         assertThat(knight1)
                 .isEqualTo(knight2)
@@ -159,7 +167,7 @@ class BoardTest {
         Piece rook1 = board.findByCoordinate(new Coordinate(8, 'a'));
         Piece rook2 = board.findByCoordinate(new Coordinate(8, 'h'));
 
-        Piece expected = new Piece(PieceType.ROOK, Team.BLACK);
+        Piece expected = new Rook(Team.BLACK);
 
         assertThat(rook1)
                 .isEqualTo(rook2)
@@ -177,7 +185,7 @@ class BoardTest {
             result.add(piece);
         }
 
-        assertThat(result).isEqualTo(Collections.nCopies(8, new Piece(PieceType.PAWN, Team.BLACK)));
+        assertThat(result).isEqualTo(Collections.nCopies(8, new Pawn(Team.BLACK)));
     }
 
     @DisplayName("보드의 기물의 수는 32개이다.")

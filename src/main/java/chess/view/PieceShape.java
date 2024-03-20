@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
-import chess.domain.PieceType;
+import chess.domain.piece.PieceType;
 
 enum PieceShape {
 
