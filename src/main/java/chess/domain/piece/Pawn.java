@@ -1,10 +1,18 @@
 package chess.domain.piece;
 
+import chess.domain.movement.BlackPawnDefaultMovement;
+import chess.domain.movement.BlackPawnFirstMovement;
 import chess.domain.movement.MovementRule;
-import chess.domain.position.Position;
+import chess.domain.movement.WhitePawnDefaultMovement;
+import chess.domain.movement.WhitePawnFirstMovement;
 import java.util.List;
 
 public final class Pawn extends Piece {
+
+    private static final List<MovementRule> BLACK_MOVEMENT_RULES = List.of(
+            new BlackPawnFirstMovement(), new BlackPawnDefaultMovement());
+    private static final List<MovementRule> WHITE_MOVEMENT_RULES = List.of(
+            new WhitePawnFirstMovement(), new WhitePawnDefaultMovement());
 
     public Pawn(Team team) {
         super(team, findMovementRule(team));
@@ -12,14 +20,8 @@ public final class Pawn extends Piece {
 
     private static List<MovementRule> findMovementRule(Team team) {
         if (team.isBlack()) {
-            return List.of();
+            return BLACK_MOVEMENT_RULES;
         }
-        return List.of();
-    }
-
-    // TODO
-    @Override
-    public List<Position> findPath(Position start, Position end) {
-        return super.findPath(start, end);
+        return WHITE_MOVEMENT_RULES;
     }
 }
