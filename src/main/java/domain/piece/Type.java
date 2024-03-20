@@ -6,6 +6,5 @@ public enum Type {
     BISHOP,
     KNIGHT,
     ROOK,
-    PAWN,
-    EMPTY
+    PAWN;
 }

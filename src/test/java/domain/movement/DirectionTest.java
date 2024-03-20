@@ -1,18 +1,10 @@
 package domain.movement;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class DirectionTest {
-    @Test
-    void 움직임이_없으면_예외가_발생한다() {
-        Assertions.assertThatThrownBy(() -> Direction.of(0, 0))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("동일한 위치입니다.");
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"1, 0", "4, 0"})
     void 위_방향을_반환한다(int rankDiff, int fileDiff) {
