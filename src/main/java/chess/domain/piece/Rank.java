@@ -4,7 +4,14 @@ import java.util.Arrays;
 
 public enum Rank {
 
-    ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8);
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
     private final int number;
 
@@ -23,7 +30,7 @@ public enum Rank {
         return this.number - other.number;
     }
 
-    public int differenceWith(final Rank other) {
+    public int getDistance(final Rank other) {
         return Math.abs(this.number - other.number);
     }
 }
