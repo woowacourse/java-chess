@@ -16,9 +16,6 @@ public class Rook extends Piece {
         if (rowDifference > 0 && columnDifference == 0) {
             return true;
         }
-        if (rowDifference == 0 && columnDifference > 0) {
-            return true;
-        }
-        return false;
+        return rowDifference == 0 && columnDifference > 0;
     }
 }

@@ -1,5 +1,11 @@
 package chess.model.piece;
 
+import static chess.model.piece.PieceType.*;
+import static chess.model.piece.PieceType.BLACK_PAWN;
+import static chess.model.piece.PieceType.BLACK_ROOK;
+import static chess.model.piece.PieceType.WHITE_PAWN;
+import static chess.model.piece.PieceType.WHITE_ROOK;
+
 import chess.model.Position;
 
 public abstract class Piece implements MoveStrategy {
@@ -11,40 +17,22 @@ public abstract class Piece implements MoveStrategy {
     }
 
     public static Piece from(PieceType pieceType) {
-        if (PieceType.BLACK_PAWN.equals(pieceType)) {
+        if (pieceType == BLACK_PAWN || pieceType == WHITE_PAWN) {
             return new Pawn(pieceType);
         }
-        if (PieceType.BLACK_ROOK.equals(pieceType)) {
+        if (pieceType == BLACK_ROOK || pieceType == WHITE_ROOK) {
             return new Rook(pieceType);
         }
-        if (PieceType.BLACK_KNIGHT.equals(pieceType)) {
+        if (pieceType == BLACK_KNIGHT || pieceType == WHITE_KNIGHT) {
             return new Knight(pieceType);
         }
-        if (PieceType.BLACK_BISHOP.equals(pieceType)) {
+        if (pieceType == BLACK_BISHOP || pieceType == WHITE_BISHOP) {
             return new Bishop(pieceType);
         }
-        if (PieceType.BLACK_QUEEN.equals(pieceType)) {
+        if (pieceType == BLACK_QUEEN || pieceType == WHITE_QUEEN) {
             return new Queen(pieceType);
         }
-        if (PieceType.BLACK_KING.equals(pieceType)) {
-            return new King(pieceType);
-        }
-        if (PieceType.WHITE_PAWN.equals(pieceType)) {
-            return new Pawn(pieceType);
-        }
-        if (PieceType.WHITE_ROOK.equals(pieceType)) {
-            return new Rook(pieceType);
-        }
-        if (PieceType.WHITE_KNIGHT.equals(pieceType)) {
-            return new Knight(pieceType);
-        }
-        if (PieceType.WHITE_BISHOP.equals(pieceType)) {
-            return new Bishop(pieceType);
-        }
-        if (PieceType.WHITE_QUEEN.equals(pieceType)) {
-            return new Queen(pieceType);
-        }
-        if (PieceType.WHITE_KING.equals(pieceType)) {
+        if (pieceType == BLACK_KING || pieceType == WHITE_KING) {
             return new King(pieceType);
         }
         return new None(pieceType);
@@ -59,7 +47,7 @@ public abstract class Piece implements MoveStrategy {
     }
 
     public boolean isNone() {
-        return type == PieceType.NONE;
+        return type == NONE;
     }
 
     public boolean isSameColorBy(int turnCount) {
