@@ -4,11 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum PawnAttackStrategy {
-
-    UP(-1, 0, List.of(-1, 0), false),
-    DOWN(1, 0, List.of(1, 0), true),
-    UP_UP(-2, 0, List.of(-1, 0), false),
-    DOWN_DOWN(2, 0, List.of(1, 0), true),
+    
     UP_RIGHT_DIAGONAL(-1, 1, List.of(-1, 1), false),
     UP_LEFT_DIAGONAL(-1, -1, List.of(-1, -1), false),
     DOWN_LEFT_DIAGONAL(1, -1, List.of(1, -1), true),
