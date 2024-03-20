@@ -2,7 +2,7 @@ package controller;
 
 import domain.Board;
 import domain.BoardInitializer;
-import domain.GameCommand;
+import domain.TeamColor;
 import dto.BoardDto;
 import dto.RequestDto;
 import view.InputView;
@@ -18,21 +18,36 @@ public class ChessController {
     }
 
     public void run() {
-        outputView.printWelcomeMessage();
         RequestDto requestDto = inputView.inputGameCommand();
-
-        if (requestDto.gameCommand() == GameCommand.END) {
-            return;
-        }
-
-        startGame();
-    }
-
-    private void startGame() {
         Board board = BoardInitializer.init();
+        printStatus(board);
 
-        BoardDto boardDto = BoardDto.from(board);
+        boolean isWhiteTurn = true;
 
-        outputView.printBoard(boardDto);
+        requestDto = inputView.inputGameCommand();
+        while (requestDto.command().isContinuable()) {
+            try {
+                board.movePiece(defineTeam(isWhiteTurn), requestDto.source().get(), requestDto.destination().get());
+                isWhiteTurn = !isWhiteTurn;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+            printStatus(board);
+            requestDto = inputView.inputGameCommand();
+        }
     }
+
+    private TeamColor defineTeam(boolean isWhiteTurn) {
+        if (isWhiteTurn) {
+            return TeamColor.WHITE;
+        }
+        return TeamColor.BLACK;
+    }
+
+    private void printStatus(Board board) {
+        BoardDto boardDto = BoardDto.from(board);
+        outputView.printBoard(boardDto);
+        System.out.println();
+    }
+
 }
