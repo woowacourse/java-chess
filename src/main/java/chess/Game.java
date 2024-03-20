@@ -27,17 +27,14 @@ public class Game {
         Board board = BoardFactory.createBoard();
         String command = inputView.readStartCommand();
 
-        if (command.equals("start")) {
-            outputView.printBoard(createResponses(board.getPieces()));
-        }
-
         Color nowTurn = Color.WHITE;
-        while (true) {
+        while (command.equals("start")) {
+            outputView.printBoard(createResponses(board.getPieces()));
             List<String> movement = inputView.readMovement();
             Square from = Square.from(movement.get(0));
             Square to = Square.from(movement.get(1));
-
-            flip(nowTurn);
+            board.move(from, to, nowTurn);
+            nowTurn = flip(nowTurn);
         }
     }
 
@@ -49,11 +46,10 @@ public class Game {
         return responses;
     }
 
-    private void flip(Color color) {
+    private Color flip(Color color) {
         if (color.equals(Color.WHITE)) {
-            color = Color.BLACK;
-            return;
+            return Color.BLACK;
         }
-        color = Color.WHITE;
+        return Color.WHITE;
     }
 }
