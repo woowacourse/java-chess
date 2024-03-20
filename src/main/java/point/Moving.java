@@ -1,8 +1,5 @@
 package point;
 
-import model.GameBoard;
-import model.Square;
-
 public class Moving {
 
     private final Position currentPosition;
