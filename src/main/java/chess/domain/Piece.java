@@ -11,6 +11,7 @@ public class Piece {
         this.type = type;
         this.team = team;
     }
+
     public PieceType getType() {
         return type;
     }
