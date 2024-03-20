@@ -14,7 +14,7 @@ class PieceViewTest {
     void findValue() {
         //given
         char expectedWhitePawn = 'p';
-        char expectedBlackPawn= 'P';
+        char expectedBlackPawn = 'P';
 
         //when
         char whitePawnDisplay = PieceView.getDisplayOf("PAWN", "WHITE");
