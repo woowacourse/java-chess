@@ -60,9 +60,9 @@ public enum Direction {
         return RIGHT;
     }
 
-    //TODO 테스트하기
 
     public static List<Direction> createDirections(int verticalDistance, int horizontalDistance) {
+        validateDistance(verticalDistance, horizontalDistance);
         List<Direction> directions = new ArrayList<>();
         while (verticalDistance != 0 || horizontalDistance != 0) {
             Direction direction = of(verticalDistance, horizontalDistance);
@@ -71,6 +71,12 @@ public enum Direction {
             horizontalDistance -= direction.horizontal;
         }
         return directions;
+    }
+
+    private static void validateDistance(int verticalDistance, int horizontalDistance) {
+        if (verticalDistance == 0 && horizontalDistance == 0) {
+            throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
+        }
     }
 
     public boolean isOrthogonal() {
