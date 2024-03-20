@@ -1,11 +1,8 @@
 package domain.piece;
 
-public enum PieceRole {
-    KING,
-    QUEEN,
-    ROOK,
-    BISHOP,
-    KNIGHT,
-    PAWN,
-    NONE;
+import domain.position.Position;
+
+public interface PieceRole {
+
+    boolean canMove(Position sourcePosition, Position targetPosition);
 }
