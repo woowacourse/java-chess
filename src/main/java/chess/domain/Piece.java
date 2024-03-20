@@ -19,11 +19,13 @@ public class Piece {
         }
     }
 
+    // TODO: private로 변경
     public Piece(final PieceType pieceType, final Team team) {
         this.pieceType = pieceType;
         this.team = team;
     }
 
+    // TODO: 각 인자로 null이 올 수 없도록 검증 추가 필요
     public static Piece of(final PieceType pieceType, final Team team) {
         return CACHE.get(toKey(pieceType, team));
     }
