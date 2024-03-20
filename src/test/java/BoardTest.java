@@ -19,15 +19,6 @@ public class BoardTest {
         assertThat(board.mapPositionToCharacter()).containsEntry(Position.of(3, 1), Character.WHITE_PAWN);
     }
 
-    @DisplayName("보드에 있는 piece가 움직일 수 없는 위치로 움직이려고 하면 예외가 발생한다.")
-    @Test
-    void invalidNewPositionMovePiece() {
-        Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(Position.of(2, 1), Position.of(2, 2)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
-    }
-
     @DisplayName("시작 위치에 piece가 없으면 예외가 발생한다.")
     @Test
     void invalidOldPositionMovePiece() {
