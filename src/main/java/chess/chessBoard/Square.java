@@ -1,5 +1,7 @@
 package chess.chessboard;
 
+import java.util.Objects;
+
 public class Square {
 
     private final Lettering lettering;
@@ -8,5 +10,30 @@ public class Square {
     public Square(Lettering lettering, Numbering numbering) {
         this.lettering = lettering;
         this.numbering = numbering;
+    }
+
+    public Lettering getLettering() {
+        return lettering;
+    }
+
+    public Numbering getNumbering() {
+        return numbering;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Square square = (Square) object;
+        return lettering == square.lettering && numbering == square.numbering;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lettering, numbering);
     }
 }
