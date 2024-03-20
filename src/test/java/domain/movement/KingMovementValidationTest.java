@@ -11,7 +11,7 @@ class KingMovementValidationTest {
     @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT", "UP_LEFT", "UP_RIGHT", "DOWN_LEFT",
             "DOWN_RIGHT"})
     void 이동할_수_있는_방향이다(Direction direction) {
-        KingMovementValidation kingMovementValidation = new KingMovementValidation();
+        MovementValidation kingMovementValidation = new KingMovementValidation();
 
         assertThat(kingMovementValidation.isMovable(direction)).isTrue();
     }
@@ -20,21 +20,21 @@ class KingMovementValidationTest {
     @EnumSource(value = Direction.class, names = {"UP", "DOWN", "LEFT", "RIGHT", "UP_LEFT", "UP_RIGHT", "DOWN_LEFT",
             "DOWN_RIGHT"}, mode = EnumSource.Mode.EXCLUDE)
     void 이동할_수_없는_방향이다(Direction direction) {
-        KingMovementValidation kingMovementValidation = new KingMovementValidation();
+        MovementValidation kingMovementValidation = new KingMovementValidation();
 
         assertThat(kingMovementValidation.isMovable(direction)).isFalse();
     }
 
     @Test
     void 한_칸만_이동할_수_있다() {
-        KingMovementValidation kingMovementValidation = new KingMovementValidation();
+        MovementValidation kingMovementValidation = new KingMovementValidation();
 
         assertThat(kingMovementValidation.isValidMoveCount(1)).isTrue();
     }
 
     @Test
     void 두_칸_이상_이동할_수_없다() {
-        KingMovementValidation kingMovementValidation = new KingMovementValidation();
+        MovementValidation kingMovementValidation = new KingMovementValidation();
 
         assertThat(kingMovementValidation.isValidMoveCount(2)).isFalse();
     }
