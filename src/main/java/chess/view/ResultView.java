@@ -15,6 +15,7 @@ public class ResultView {
     public void printBoard(final ChessboardDto chessboardDto) {
         List<List<String>> chessboard = chessboardDto.getChessboard();
         chessboard.forEach(squares -> System.out.println(String.join("", squares)));
+        System.out.println();
     }
 }
 
