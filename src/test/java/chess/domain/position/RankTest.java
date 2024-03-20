@@ -17,7 +17,7 @@ class RankTest {
         int index = 2;
 
         // when
-        Rank actual = rank.forward(index);
+        Rank actual = rank.moveVertical(index);
 
         // then
         assertThat(actual).isEqualTo(Rank.EIGHT);
@@ -31,6 +31,6 @@ class RankTest {
         int index = 3;
 
         // when & then
-        assertThatThrownBy(() -> rank.forward(index)).isInstanceOf(IndexOutOfBoundsException.class);
+        assertThatThrownBy(() -> rank.moveVertical(index)).isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

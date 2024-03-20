@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.dto.SquareDifferent;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -27,7 +29,23 @@ public class Square {
         return pool.get(toKey(file, rank));
     }
 
-    public Square forward(int index) {
-        return Square.of(file, rank.forward(index));
+    public boolean isPawnStartSquare() {
+        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
+    }
+
+    public Square moveVertical(int index) {
+        return Square.of(file, rank.moveVertical(index));
+    }
+
+    public Square moveHorizontal(int index) {
+        return Square.of(file.moveHorizontal(index), rank);
+    }
+
+    public Square moveDiagonal(int horizontalIndex, int verticalIndex) {
+        return Square.of(file.moveHorizontal(horizontalIndex), rank.moveVertical(verticalIndex));
+    }
+
+    public SquareDifferent calculateDiff(Square another) {
+        return new SquareDifferent(rank.calculateDiff(another.rank), file.calculateDiff(another.file));
     }
 }
