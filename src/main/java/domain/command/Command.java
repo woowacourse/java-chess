@@ -6,4 +6,8 @@ public enum Command {
     MOVE,
     END,
     ;
+
+    public boolean isStart() {
+        return this == START;
+    }
 }

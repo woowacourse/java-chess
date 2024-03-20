@@ -11,11 +11,11 @@ public class Game {
     private final OutputView outputView = new OutputView();
 
     public void play() {
-
         outputView.printStartNotice();
         Command command = inputView.readCommand();
-
-        Board board = Board.create();
-        outputView.printInitBoard(board);
+        if (command.isStart()) {
+            Board board = Board.create();
+            outputView.printInitBoard(board);
+        }
     }
 }
