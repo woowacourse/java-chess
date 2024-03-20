@@ -26,33 +26,21 @@ public class Queen extends Piece {
     @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
-        if (Math.abs(rowDifference) == Math.abs(columnDifference)) {
-            int absoluteDifference = Math.abs(rowDifference);
-            int rowSign = rowDifference / absoluteDifference;
-            int columnSign = columnDifference / absoluteDifference;
+        int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
+        int rowSign = calculateSign(rowDifference);
+        int columnSign = calculateSign(columnDifference);
 
-            for (int movement = 1; movement < absoluteDifference; movement++) {
-                positions.add(position.move(rowSign * movement, columnSign * movement));
-            }
+        for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
+            positions.add(position.move(rowSign * movement, columnSign * movement));
         }
-
-        if (columnDifference == 0) {
-            int absoluteDifference = Math.abs(rowDifference);
-            int rowSign = rowDifference / absoluteDifference;
-            for (int movement = 1; movement < absoluteDifference; movement++) {
-                positions.add(position.move(rowSign * movement, 0));
-            }
-        }
-
-        if (rowDifference == 0) {
-            int absoluteDifference = Math.abs(columnDifference);
-            int columnSign = columnDifference / absoluteDifference;
-            for (int movement = 1; movement < absoluteDifference; movement++) {
-                positions.add(position.move(0, columnSign * movement));
-            }
-        }
-
         return positions;
+    }
+
+    private int calculateSign(int value) {
+        if (value == 0) {
+            return 0;
+        }
+        return value / Math.abs(value);
     }
 
     @Override
