@@ -26,11 +26,8 @@ public enum Rank {
                         String.format("rejected value: %d - 존재하지 않은 rank입니다.", number)));
     }
 
-    public Rank next() {
-        if (this == Rank.EIGHT) {
-            throw new IllegalArgumentException("범위를 벗어난 rank입니다.");
-        }
-        return fromNumber(this.number + 1);
+    public Rank next(int diff) {
+        return fromNumber(this.number + diff);
     }
 
     public Rank prev() {

@@ -25,6 +25,12 @@ public class Position {
         }
     }
 
+    public Position next(Direction direction) {
+        File nextFile = file.next(direction.fileDiff());
+        Rank nextRank = rank.next(direction.rankDiff());
+        return new Position(nextFile, nextRank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

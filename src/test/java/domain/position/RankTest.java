@@ -24,31 +24,31 @@ class RankTest {
     void 현재_rank의_다음_rank를_반환한다() {
         Rank rank = Rank.fromNumber(1);
 
-        assertThat(rank.next()).isEqualTo(Rank.TWO);
+        assertThat(rank.next(1)).isEqualTo(Rank.TWO);
     }
 
     @Test
     void rank_8의_다음_rank를_호출하면_예외가_발생한다() {
         Rank rank = Rank.fromNumber(8);
 
-        assertThatThrownBy(rank::next)
+        assertThatThrownBy(() -> rank.next(1))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("범위를 벗어난 rank입니다.");
+                .hasMessageContaining("존재하지 않은 rank입니다.");
     }
 
     @Test
     void 현재_rank의_이전_rank를_반환한다() {
         Rank rank = Rank.fromNumber(8);
 
-        assertThat(rank.prev()).isEqualTo(Rank.SEVEN);
+        assertThat(rank.next(-1)).isEqualTo(Rank.SEVEN);
     }
 
     @Test
     void rank_1의_이전_rank를_호출하면_예외가_발생한다() {
         Rank rank = Rank.fromNumber(1);
 
-        assertThatThrownBy(rank::prev)
+        assertThatThrownBy(() -> rank.next(-1))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("범위를 벗어난 rank입니다.");
+                .hasMessageContaining("존재하지 않은 rank입니다.");
     }
 }

@@ -36,18 +36,8 @@ public enum File {
                         String.format("rejected value: %d - 존재하지 않은 file입니다.", order)));
     }
 
-    public File next() {
-        if (this == H) {
-            throw new IllegalArgumentException("범위를 벗어난 file입니다.");
-        }
-        return File.fromOrder(this.order + 1);
-    }
-
-    public File prev() {
-        if (this == A) {
-            throw new IllegalArgumentException("범위를 벗어난 file입니다.");
-        }
-        return File.fromOrder(this.order - 1);
+    public File next(int diff) {
+        return File.fromOrder(this.order + diff);
     }
 
     public int subtract(File file) {
