@@ -1,4 +1,4 @@
-package strategy;
+package strategy.pawn;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,5 +12,13 @@ class PawnStrategyTest {
         Assertions.assertThatThrownBy(() -> PawnStrategy.getMoveStrategy(3, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하는 움직임 전략이 없습니다.");
+    }
+
+    @DisplayName("폰은 뒤로 갈 수 없다.")
+    @Test
+    void pawnCanNotGoBack() {
+        Assertions.assertThatThrownBy(() -> PawnStrategy.DOWN.validatePossibleStrategyColor(false))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 뒤로 갈 수 없습니다.");
     }
 }

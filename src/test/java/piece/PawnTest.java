@@ -18,7 +18,7 @@ class PawnTest {
 
         Pawn pawn = new Pawn(true);
 
-        Assertions.assertThat(pawn.getPath(coordinate, nextCoordinate)).isEqualTo(List.of(-1, 0));
+        Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false)).isEqualTo(List.of(1, 0));
     }
 
     @DisplayName("폰이 첫 움직임이 아닐경우 2칸을 이동할 수 없다.")
@@ -29,8 +29,33 @@ class PawnTest {
 
         Pawn pawn = new Pawn(true);
 
-        Assertions.assertThatThrownBy(() -> pawn.getPath(coordinate, nextCoordinate))
+        Assertions.assertThatThrownBy(() -> pawn.getDirection(coordinate, nextCoordinate, false))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 처음에만 2칸을 이동할 수 있습니다.");
+    }
+
+    @DisplayName("폰이 공격이 가능한 상태라면 대각선으로도 갈 수 있다.")
+    @Test
+    void canMoveDiagonalWhenCanAttack() {
+        Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
+        Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
+
+        Pawn pawn = new Pawn(false);
+
+        Assertions.assertThatCode(() -> pawn.getDirection(coordinate, nextCoordinate, true))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("폰이 공격이 가능한 상태가 아니라면 대각선으로 갈 수 없다.")
+    @Test
+    void canNotMoveDiagonalWhenNotAttack() {
+        Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
+        Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
+
+        Pawn pawn = new Pawn(false);
+
+        Assertions.assertThatThrownBy(() -> pawn.getDirection(coordinate, nextCoordinate, false))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하는 움직임 전략이 없습니다.");
     }
 }
