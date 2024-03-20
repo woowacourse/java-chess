@@ -3,7 +3,7 @@ package chess.domain.movement;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class BlackPawnDefaultMovement implements MovementRule{
+public class BlackPawnDefaultMovement implements MovementRule {
 
     @Override
     public boolean isMovable(Position start, Position end) {
