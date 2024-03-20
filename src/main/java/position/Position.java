@@ -14,7 +14,7 @@ public class Position {
     }
 
     public int getMinusPosition(Position position) {
-        return this.position - position.position;
+        return position.position - this.position;
     }
 
     public void move(int nextPosition) {
