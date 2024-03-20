@@ -19,27 +19,21 @@ public class Bishop extends Piece {
 
     @Override
     public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-
-        if (canMovable(currentPosition, nextPosition)) {
-            Set<Position> route = new HashSet<>();
-
-            int currentRow = currentPosition.getRowIndex();
-            int currentColumn = currentPosition.getColumnIndex();
-
-            int nextRow = nextPosition.getRowIndex();
-
-            int d = Math.abs(currentRow - nextRow);
-
-            int index = findIndex(currentPosition, nextPosition);
-
-            for (int i = 1; i < d; i++) {
-                Row row = Row.from(currentRow + (i * dRow[index]));
-                Column column = Column.from(currentColumn + (i * dColumn[index]));
-                route.add(new Position(column, row));
-            }
-            return route;
+        if (!canMovable(currentPosition, nextPosition)) {
+            throw new IllegalArgumentException("이동 불가");
         }
-        throw new IllegalArgumentException("이동 불가");
+        Set<Position> route = new HashSet<>();
+        int currentRow = currentPosition.getRowIndex();
+        int currentColumn = currentPosition.getColumnIndex();
+        int nextRow = nextPosition.getRowIndex();
+        int d = Math.abs(currentRow - nextRow);
+        int index = findIndex(currentPosition, nextPosition);
+        for (int i = 1; i < d; i++) {
+            Row row = Row.from(currentRow + (i * dRow[index]));
+            Column column = Column.from(currentColumn + (i * dColumn[index]));
+            route.add(new Position(column, row));
+        }
+        return route;
     }
 
     private int findIndex(Position currentPosition, Position nextPosition) {

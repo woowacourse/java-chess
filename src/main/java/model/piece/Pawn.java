@@ -13,18 +13,16 @@ public class Pawn extends Piece {
 
     @Override
     public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-        if (canMovable(currentPosition, nextPosition)) {
-            if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
-                return Set.of();
-            }
-            if (Camp.BLACK == camp) {
-                return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
-            }
-            return Set.of(new Position(currentPosition.getColumn(), Row.THIRD));
+        if (!canMovable(currentPosition, nextPosition)) {
+            throw new IllegalArgumentException("이동 불가");
         }
-        System.out.println(currentPosition);
-        System.out.println(nextPosition);
-        throw new IllegalArgumentException("이동 불가");
+        if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
+            return Set.of();
+        }
+        if (Camp.BLACK == camp) {
+            return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
+        }
+        return Set.of(new Position(currentPosition.getColumn(), Row.THIRD));
     }
 
     @Override
