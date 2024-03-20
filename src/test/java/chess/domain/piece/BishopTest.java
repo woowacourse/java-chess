@@ -17,7 +17,7 @@ class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK,BLACK_BISHOP", "WHITE,WHITE_BISHOP"})
     void findCharacter(Team team, Character character) {
-        assertThat(new Bishop(Position.of(1, 1), team).findCharacter())
+        assertThat(new Bishop(team, true).findCharacter())
                 .isEqualTo(character);
     }
 
@@ -25,16 +25,16 @@ class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"5,5", "3,5", "5,3", "3,3"})
     void bishopMove(int row, int column) {
-        assertThatCode(() -> new Bishop(Position.of(4, 4), Team.WHITE)
-                .move(Position.of(row, column)))
+        assertThatCode(() -> new Bishop(Team.WHITE, true)
+                .validateMovable(Position.of(4, 4), Position.of(row, column)))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("비숍은 대각선이 아닌 경우, 예외가 발생한다.")
     @Test
     void bishopMoveOverDiagonalLine() {
-        assertThatThrownBy(() -> new Bishop(Position.of(1, 3), Team.WHITE)
-                .move(Position.of(1, 4)))
+        assertThatThrownBy(() -> new Bishop(Team.WHITE, true)
+                .validateMovable(Position.of(4, 4), Position.of(1, 4)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

@@ -18,7 +18,7 @@ class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK,BLACK_PAWN", "WHITE,WHITE_PAWN"})
     void findCharacter(Team team, Character character) {
-        assertThat(new Pawn(Position.of(1, 1), team).findCharacter())
+        assertThat(new Pawn(team, true).findCharacter())
                 .isEqualTo(character);
     }
 
@@ -26,8 +26,8 @@ class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"3,1", "4,1"})
     void startWhitePawnMove(int row, int column) {
-        assertThatCode(() -> new Pawn(Position.of(2, 1), Team.WHITE)
-                .move(Position.of(row, column)))
+        assertThatCode(() -> new Pawn(Team.WHITE, true)
+                .validateMovable(Position.of(2, 1), Position.of(row, column)))
                 .doesNotThrowAnyException();
     }
 
@@ -35,32 +35,32 @@ class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"6,1", "5,1"})
     void startBlackPawnMove(int row, int column) {
-        assertThatCode(() -> new Pawn(Position.of(7, 1), Team.BLACK)
-                .move(Position.of(row, column)))
+        assertThatCode(() -> new Pawn(Team.BLACK, true)
+                .validateMovable(Position.of(7, 1), Position.of(row, column)))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("흰색 폰은 시작 지점에 있는 경우, 앞으로 한칸 전진할 수 있다.")
+    @DisplayName("흰색 폰은 시작 지점이 아닌 경우, 앞으로 한칸 전진할 수 있다.")
     @Test
     void whitePawnMove() {
-        assertThatCode(() -> new Pawn(Position.of(3, 1), Team.WHITE)
-                .move(Position.of(4, 1)))
+        assertThatCode(() -> new Pawn(Team.WHITE, false)
+                .validateMovable(Position.of(3, 1), Position.of(4, 1)))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("검은색 폰은 시작 지점에 있는 경우, 앞으로 한칸 전진할 수 있다.")
+    @DisplayName("검은색 폰은 시작 지점이 아닌 경우, 앞으로 한칸 전진할 수 있다.")
     @Test
     void blackPawnMove() {
-        assertThatCode(() -> new Pawn(Position.of(6, 1), Team.BLACK)
-                .move(Position.of(5, 1)))
+        assertThatCode(() -> new Pawn(Team.BLACK, false)
+                .validateMovable(Position.of(6, 1), Position.of(5, 1)))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
     void startWhitePawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Position.of(2, 1), Team.WHITE)
-                .move(Position.of(5, 1)))
+        assertThatThrownBy(() -> new Pawn(Team.WHITE, true)
+                .validateMovable(Position.of(2, 1), Position.of(5, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -68,8 +68,8 @@ class PawnTest {
     @DisplayName("검은색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
     void startBlackPawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Position.of(7, 1), Team.BLACK)
-                .move(Position.of(4, 1)))
+        assertThatThrownBy(() -> new Pawn(Team.BLACK, true)
+                .validateMovable(Position.of(7, 1), Position.of(4, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -77,8 +77,8 @@ class PawnTest {
     @DisplayName("흰색 폰은 1칸 초과시 예외가 발생한다.")
     @Test
     void whitePawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Position.of(3, 1), Team.WHITE)
-                .move(Position.of(5, 1)))
+        assertThatThrownBy(() -> new Pawn(Team.WHITE, false)
+                .validateMovable(Position.of(3, 1), Position.of(5, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -86,8 +86,8 @@ class PawnTest {
     @DisplayName("검은색 폰은 1칸 초과시 예외가 발생한다.")
     @Test
     void blackPawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Position.of(6, 1), Team.BLACK)
-                .move(Position.of(4, 1)))
+        assertThatThrownBy(() -> new Pawn(Team.BLACK, false)
+                .validateMovable(Position.of(6, 1), Position.of(4, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -96,8 +96,8 @@ class PawnTest {
     @ParameterizedTest
     @EnumSource
     void whitePawnMoveColumn(Team team) {
-        assertThatThrownBy(() -> new Pawn(Position.of(7, 1), team)
-                .move(Position.of(7, 2)))
+        assertThatThrownBy(() -> new Pawn(team, true)
+                .validateMovable(Position.of(7, 1), Position.of(7, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

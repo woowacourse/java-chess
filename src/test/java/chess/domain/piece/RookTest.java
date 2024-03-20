@@ -17,7 +17,7 @@ class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK,BLACK_ROOK", "WHITE,WHITE_ROOK"})
     void findCharacter(Team team, Character character) {
-        assertThat(new Rook(Position.of(1, 1), team).findCharacter())
+        assertThat(new Rook(team, true).findCharacter())
                 .isEqualTo(character);
     }
 
@@ -25,16 +25,16 @@ class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"1,3", "4,1"})
     void rookMove(int row, int column) {
-        assertThatCode(() -> new Rook(Position.of(1, 1), Team.WHITE)
-                .move(Position.of(row, column)))
+        assertThatCode(() -> new Rook(Team.WHITE, true)
+                .validateMovable(Position.of(1, 1), Position.of(row, column)))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("룩은 직선이 아닌 경우, 예외가 발생한다.")
     @Test
     void rookMoveOverLine() {
-        assertThatThrownBy(() -> new Rook(Position.of(1, 1), Team.WHITE)
-                .move(Position.of(2, 2)))
+        assertThatThrownBy(() -> new Rook(Team.WHITE, true)
+                .validateMovable(Position.of(1, 1), Position.of(2, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

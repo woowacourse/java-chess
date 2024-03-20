@@ -17,7 +17,7 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK,BLACK_QUEEN", "WHITE,WHITE_QUEEN"})
     void findCharacter(Team team, Character character) {
-        assertThat(new Queen(Position.of(1, 1), team).findCharacter())
+        assertThat(new Queen(team, true).findCharacter())
                 .isEqualTo(character);
     }
 
@@ -25,16 +25,16 @@ class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"4,2", "2,2", "2,4", "2,6", "4,6", "6,6", "6,4", "6,2"})
     void queenMove(int row, int column) {
-        assertThatCode(() -> new Queen(Position.of(4, 4), Team.WHITE)
-                .move(Position.of(row, column)))
+        assertThatCode(() -> new Queen(Team.WHITE, true)
+                .validateMovable(Position.of(4, 4), Position.of(row, column)))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("퀸은 직선 혹은 대각선이 아닌 경우, 예외가 발생한다.")
     @Test
     void rookMoveOverLineAndDiagonalLine() {
-        assertThatThrownBy(() -> new Queen(Position.of(1, 1), Team.WHITE)
-                .move(Position.of(2, 3)))
+        assertThatThrownBy(() -> new Queen(Team.WHITE, true)
+                .validateMovable(Position.of(1, 1), Position.of(2, 3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }

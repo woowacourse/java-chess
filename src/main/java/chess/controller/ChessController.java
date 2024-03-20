@@ -9,7 +9,7 @@ public class ChessController {
         OutputView.printStartMessage();
         if (InputView.inputCommand()) {
             Board board = new Board();
-            OutputView.printChessBoard(board.mapPositionToKind());
+            OutputView.printChessBoard(board.mapPositionToCharacter());
             InputView.inputEndCommand();
         }
     }
