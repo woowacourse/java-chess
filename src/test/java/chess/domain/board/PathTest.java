@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 class PathTest {
 
+    //TODO 최대 7칸의 경로를 생성해야 한다.
+
     @DisplayName("경로의 길이를 판별할 수 있다.")
     @Test
     void isSizeOfTest() {
