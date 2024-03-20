@@ -1,14 +1,16 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Column {
-    RANK1("1", 7),
-    RANK2("2", 6),
-    RANK3("3", 5),
-    RANK4("4", 4),
-    RANK5("5", 3),
-    RANK6("6", 2),
-    RANK7("7", 1),
-    RANK8("8", 0);
+    a("a", 0),
+    b("b", 1),
+    c("c", 2),
+    d("d", 3),
+    e("e", 4),
+    f("f", 5),
+    g("g", 6),
+    h("h", 7);
 
     private String name;
     private int index;
@@ -20,5 +22,17 @@ public enum Column {
 
     public int getIndex() {
         return index;
+    }
+
+    public Column calculateNextColumn(int distance) {
+        return Arrays.stream(values())
+                .filter(column -> column.index == this.index + distance)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 Column 가 없습니다."));
+    }
+
+    public boolean isNextInRange(int distance) {
+        int nextIndex = index + distance;
+        return a.index <= nextIndex && nextIndex <= h.index;
     }
 }

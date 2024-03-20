@@ -18,18 +18,18 @@ public class Board {
     }
 
     private void initializeBlackTeam() {
-        initializePawn(Column.RANK7, Color.BLACK);
-        initializeHighValuePiece(Column.RANK8, Color.BLACK);
+        initializePawn(Row.RANK7, Color.BLACK);
+        initializeHighValuePiece(Row.RANK8, Color.BLACK);
     }
 
     private void initializeWhiteTeam() {
-        initializePawn(Column.RANK2, Color.WHITE);
-        initializeHighValuePiece(Column.RANK1, Color.WHITE);
+        initializePawn(Row.RANK2, Color.WHITE);
+        initializeHighValuePiece(Row.RANK1, Color.WHITE);
     }
 
-    private void initializePawn(Column column, Color color) {
+    private void initializePawn(Row row, Color color) {
 
-        for (Row row : Row.values()) {
+        for (Column column : Column.values()) {
             Position position = new Position(row, column);
             if (color == Color.WHITE) {
                 board.put(position, new Piece(PieceType.WHITE_PAWN, color));
@@ -39,18 +39,18 @@ public class Board {
         }
     }
 
-    private void initializeHighValuePiece(Column column, Color color) {
-        board.put(new Position(Row.a, column), new Piece(PieceType.ROOK, color));
-        board.put(new Position(Row.h, column), new Piece(PieceType.ROOK, color));
+    private void initializeHighValuePiece(Row row, Color color) {
+        board.put(new Position(row, Column.a), new Piece(PieceType.ROOK, color));
+        board.put(new Position(row, Column.h), new Piece(PieceType.ROOK, color));
 
-        board.put(new Position(Row.b, column), new Piece(PieceType.KNIGHT, color));
-        board.put(new Position(Row.g, column), new Piece(PieceType.KNIGHT, color));
+        board.put(new Position(row, Column.b), new Piece(PieceType.KNIGHT, color));
+        board.put(new Position(row, Column.g), new Piece(PieceType.KNIGHT, color));
 
-        board.put(new Position(Row.c, column), new Piece(PieceType.BISHOP, color));
-        board.put(new Position(Row.f, column), new Piece(PieceType.BISHOP, color));
+        board.put(new Position(row, Column.c), new Piece(PieceType.BISHOP, color));
+        board.put(new Position(row, Column.f), new Piece(PieceType.BISHOP, color));
 
-        board.put(new Position(Row.d, column), new Piece(PieceType.QUEEN, color));
-        board.put(new Position(Row.e, column), new Piece(PieceType.KING, color));
+        board.put(new Position(row, Column.d), new Piece(PieceType.QUEEN, color));
+        board.put(new Position(row, Column.e), new Piece(PieceType.KING, color));
     }
 
     public Map<Position, Piece> getBoard() {
