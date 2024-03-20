@@ -17,7 +17,7 @@ public class BoardDto {
 
     public static BoardDto from(Board board) {
         List<LineDto> lines = new ArrayList<>();
-        for (int i = 8; i > 0; i--) {
+        for (int i = 0; i <= 7; i++) {
             lines.add(LineDto.of(board, i));
         }
         return new BoardDto(lines);

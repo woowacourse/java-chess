@@ -19,7 +19,7 @@ class PositionTest {
             .doesNotThrowAnyException();
     }
 
-    @DisplayName("1 이상 8 이하의 좌표 값이 아니면 예외가 발생한다")
+    @DisplayName("0 이상 7 이하의 좌표 값이 아니면 예외가 발생한다")
     @ParameterizedTest
     @MethodSource("provideInvalidPosition")
     void createInvalidPosition(int x, int y) {
@@ -29,8 +29,8 @@ class PositionTest {
 
     public static Stream<Arguments> provideInvalidPosition() {
         return Stream.of(
-            Arguments.of(0, 6),
-            Arguments.of(3, 9)
+            Arguments.of(-1, 6),
+            Arguments.of(3, 8)
         );
     }
 }

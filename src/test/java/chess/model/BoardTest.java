@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-    @DisplayName("기물을 배치한다")
+    @DisplayName("체스판에 기물을 초기화 한다")
     @Test
     void createPiecesOnBoard() {
-        Board board = new Board();
+        Board board = Board.createInitialBoard();
         BoardDto boardDto = BoardDto.from(board);
 
         String expected = """

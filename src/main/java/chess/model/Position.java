@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Position {
 
-    private static final int MIN_VALUE = 1;
-    private static final int MAX_VALUE = 8;
+    private static final int MIN_VALUE = 0;
+    private static final int MAX_VALUE = 7;
     private final int row;
     private final int column;
 

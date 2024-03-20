@@ -2,10 +2,8 @@ package chess.dto;
 
 import chess.model.Board;
 import chess.model.Position;
-import chess.model.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class LineDto {
 
@@ -17,7 +15,7 @@ public class LineDto {
 
     public static LineDto of(Board board, int row) {
         List<String> line = new ArrayList<>();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 0; i <= 7; i++) {
             Position position = new Position(row, i);
             line.add(findPieceName(board, position));
         }
@@ -25,12 +23,8 @@ public class LineDto {
     }
 
     private static String findPieceName(Board board, Position position) {
-        Optional<Piece> piece = board.findPiece(position);
-        if (piece.isPresent()) {
-            return piece.get()
-                .toString();
-        }
-        return ".";
+        return board.findPiece(position)
+            .toString();
     }
 
     @Override
