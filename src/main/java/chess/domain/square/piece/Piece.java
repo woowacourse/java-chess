@@ -27,10 +27,16 @@ public abstract class Piece implements Square {
 
     @Override
     public boolean canAttack(Path path, Map<Position, Square> board) {
-        return isValidAttackPath(path) && isNotObstructed(path, board);
+        return isValidAttackPath(path) && isNotObstructed(path, board) && isEnemyAttack(path, board);
     }
 
     protected abstract boolean isValidAttackPath(Path path);
+
+    private final boolean isEnemyAttack(Path path, Map<Position, Square> board) {
+        Piece endPiece = (Piece) board.get(path.getEnd());
+
+        return color != endPiece.color;
+    }
 
     public Color getColor() {
         return color;
