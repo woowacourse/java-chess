@@ -44,4 +44,8 @@ public enum Row {
     public int getIndex() {
         return index;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

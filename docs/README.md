@@ -23,4 +23,4 @@
 * [ ] King
 * [x] Bishop
 * [ ] Queen
-* [ ] Rook
+* [x] Rook

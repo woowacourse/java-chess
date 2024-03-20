@@ -42,6 +42,10 @@ public enum Column {
         throw new IllegalArgumentException("col 없음");
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public int getIndex() {
         return index;
     }

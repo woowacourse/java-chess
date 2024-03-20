@@ -52,6 +52,6 @@ public class Position { //TODO row, column 위치 변경
 
     @Override
     public String toString() {
-        return "(" + row.getIndex() + ", " + column.getIndex() + ")";
+        return column.getValue() + row.getValue() + "  (" + row.getIndex() + ", " + column.getIndex() + ")";
     }
 }
