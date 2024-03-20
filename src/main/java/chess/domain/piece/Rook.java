@@ -57,6 +57,10 @@ public class Rook implements Piece {
             path.add(source);
         }
         return path;
+    }
 
+    @Override
+    public Color getColor() {
+        return color;
     }
 }

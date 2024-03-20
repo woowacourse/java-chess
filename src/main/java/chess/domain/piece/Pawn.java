@@ -79,4 +79,9 @@ public class Pawn implements Piece {
         }
         return rankDiff == 1 && fileDiff == 0;
     }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
 }

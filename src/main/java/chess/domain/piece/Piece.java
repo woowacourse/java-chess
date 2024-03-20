@@ -10,5 +10,7 @@ public interface Piece {
 
     boolean canMove(Position source, Position target, Color color);
 
+    Color getColor();
+
     List<Position> searchPath(Position source, Position target);
 }

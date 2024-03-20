@@ -66,4 +66,9 @@ public class Queen implements Piece {
         }
         return path;
     }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
 }

@@ -46,4 +46,9 @@ public class Bishop implements Piece {
         }
         return path;
     }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
 }

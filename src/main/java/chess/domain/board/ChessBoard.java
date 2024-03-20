@@ -31,6 +31,34 @@ public class ChessBoard {
         return new ChessBoardDto(chessBoard);
     }
 
+    public void move(Position source, Position target) {
+        if (canMove(source, target)) {
+            Piece sourcePiece = chessBoard.get(source);
+            chessBoard.put(target, sourcePiece);
+            chessBoard.remove(source);
+        }
+    }
+
+    private boolean canMove(Position source, Position target) {
+        if (!chessBoard.containsKey(source)) {
+            throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
+        }
+
+        Piece sourcePiece = chessBoard.get(source);
+        Color targetPieceColor = Color.NONE;
+
+        if (chessBoard.containsKey(target)) {
+            Piece targetPiece = chessBoard.get(target);
+            targetPieceColor = targetPiece.getColor();
+        }
+
+        if (sourcePiece.canMove(source, target, targetPieceColor)) {
+            return sourcePiece.searchPath(source, target).stream()
+                    .noneMatch(chessBoard::containsKey);
+        }
+        return false;
+    }
+
     private void initializeBlackPieces() {
         initializeEdgeRank(Rank.EIGHT, Color.BLACK);
         initializePawnRank(Rank.SEVEN, Color.BLACK);

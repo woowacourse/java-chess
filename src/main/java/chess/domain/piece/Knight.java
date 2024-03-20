@@ -38,4 +38,9 @@ public class Knight implements Piece {
     public List<Position> searchPath(Position source, Position target) {
         return new ArrayList<>();
     }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
 }
