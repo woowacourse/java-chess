@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.Map;
 
 public class Board {

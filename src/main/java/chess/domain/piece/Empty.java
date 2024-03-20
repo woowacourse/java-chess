@@ -2,8 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Board;
 import chess.domain.Color;
-import chess.domain.PieceType;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.Set;
 

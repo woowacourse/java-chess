@@ -3,8 +3,7 @@ package chess.domain.piece;
 import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.Direction;
-import chess.domain.PieceType;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import java.util.HashSet;
 import java.util.Set;
 

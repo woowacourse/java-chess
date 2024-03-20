@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
+import chess.domain.Direction;
 import java.util.Objects;
 
 public class Position {

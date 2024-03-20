@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.PieceType;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
