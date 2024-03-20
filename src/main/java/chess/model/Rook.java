@@ -6,6 +6,12 @@ public class Rook extends Piece {
     }
 
     @Override
+    public boolean canMove(ChessPosition target) {
+        Distance distance = target.calculateDistance(this.chessPosition);
+        return distance.isCrossMovement();
+    }
+
+    @Override
     public String getText() {
         if (side.isWhite()) {
             return "r";
