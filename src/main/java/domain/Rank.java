@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum Rank {
 
-    A(0),
-    B(1),
-    C(2),
-    D(3),
-    E(4),
-    F(5),
-    G(6),
-    H(7),
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1),
     ;
 
     private final int order;
@@ -32,5 +32,9 @@ public enum Rank {
                 .filter(it -> it.order == order)
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public int gap(Rank other) {
+        return Math.abs(this.order - other.order);
     }
 }

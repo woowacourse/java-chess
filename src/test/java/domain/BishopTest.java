@@ -10,27 +10,27 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookTest {
+class BishopTest {
 
-    private static Stream<Arguments> rooks() {
+    private static Stream<Arguments> bishops() {
         return Stream.of(
-                Arguments.arguments(File.B, Rank.FOUR),
-                Arguments.arguments(File.F, Rank.FOUR),
-                Arguments.arguments(File.D, Rank.TWO),
-                Arguments.arguments(File.D, Rank.SIX)
+                Arguments.arguments(File.B, Rank.SIX),
+                Arguments.arguments(File.F, Rank.SIX),
+                Arguments.arguments(File.B, Rank.TWO),
+                Arguments.arguments(File.F, Rank.TWO)
         );
     }
 
-    @DisplayName("룩은 수직 또는 수평 방향으로 임의의 칸 수만큼 움직인다.")
+    @DisplayName("비숍은 대각선 방향으로 임의의 칸 수만큼 움직인다.")
     @ParameterizedTest
-    @MethodSource("rooks")
+    @MethodSource("bishops")
     void canMoveTest(File targetFile, Rank targetRank) {
-        Rook rook = new Rook(Side.BLACK);
+        Bishop bishop = new Bishop(Side.BLACK);
 
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = rook.canMove(current, target);
+        boolean actual = bishop.canMove(current, target);
 
         assertThat(actual).isTrue();
     }

@@ -32,9 +32,9 @@ public class ChessBoard {
     }
 
     private void initPiece(InitPosition initPosition, Side side, Supplier<Piece> pieceSupplier) {
-        List<Rank> ranks = initPosition.getHorizontals();
-        File file = initPosition.vertical(side);
-        ranks.forEach(horizontal -> board.put(new Position(horizontal, file), pieceSupplier.get()));
+        List<File> files = initPosition.getHorizontals();
+        Rank rank = initPosition.vertical(side);
+        files.forEach(horizontal -> board.put(new Position(horizontal, rank), pieceSupplier.get()));
     }
 
     public boolean hasPiece(Position position) {

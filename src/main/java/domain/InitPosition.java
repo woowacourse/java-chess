@@ -5,45 +5,45 @@ import java.util.function.Function;
 
 public enum InitPosition {
 
-    ROOK(List.of(Rank.A, Rank.H), majorPieceVertical()),
-    KNIGHT(List.of(Rank.B, Rank.G), majorPieceVertical()),
-    BISHOP(List.of(Rank.C, Rank.F), majorPieceVertical()),
-    QUEEN(List.of(Rank.D), majorPieceVertical()),
-    KING(List.of(Rank.E), majorPieceVertical()),
-    PAWN(List.of(Rank.values()), pawnVertical()),
+    ROOK(List.of(File.A, File.H), majorPieceVertical()),
+    KNIGHT(List.of(File.B, File.G), majorPieceVertical()),
+    BISHOP(List.of(File.C, File.F), majorPieceVertical()),
+    QUEEN(List.of(File.D), majorPieceVertical()),
+    KING(List.of(File.E), majorPieceVertical()),
+    PAWN(List.of(File.values()), pawnVertical()),
     ;
 
-    private final List<Rank> ranks;
-    private final Function<Side, File> vertical;
+    private final List<File> files;
+    private final Function<Side, Rank> vertical;
 
-    InitPosition(List<Rank> ranks, Function<Side, File> vertical) {
-        this.ranks = ranks;
+    InitPosition(List<File> files, Function<Side, Rank> vertical) {
+        this.files = files;
         this.vertical = vertical;
     }
 
-    private static Function<Side, File> majorPieceVertical() {
+    private static Function<Side, Rank> majorPieceVertical() {
         return side -> {
             if (side.isBlack()) {
-                return File.EIGHTH;
+                return Rank.EIGHT;
             }
-            return File.FIRST;
+            return Rank.ONE;
         };
     }
 
-    private static Function<Side, File> pawnVertical() {
+    private static Function<Side, Rank> pawnVertical() {
         return side -> {
             if (side.isBlack()) {
-                return File.SEVENTH;
+                return Rank.SEVEN;
             }
-            return File.SECOND;
+            return Rank.TWO;
         };
     }
 
-    public File vertical(Side side) {
+    public Rank vertical(Side side) {
         return vertical.apply(side);
     }
 
-    public List<Rank> getHorizontals() {
-        return ranks;
+    public List<File> getHorizontals() {
+        return files;
     }
 }

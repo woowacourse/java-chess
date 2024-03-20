@@ -18,14 +18,14 @@ class RankTest {
     @Test
     void findTest() {
         Assertions.assertAll(
-                () -> assertThat(Rank.find(0)).isEqualTo(Rank.A),
-                () -> assertThat(Rank.find(1)).isEqualTo(Rank.B),
-                () -> assertThat(Rank.find(2)).isEqualTo(Rank.C),
-                () -> assertThat(Rank.find(3)).isEqualTo(Rank.D),
-                () -> assertThat(Rank.find(4)).isEqualTo(Rank.E),
-                () -> assertThat(Rank.find(5)).isEqualTo(Rank.F),
-                () -> assertThat(Rank.find(6)).isEqualTo(Rank.G),
-                () -> assertThat(Rank.find(7)).isEqualTo(Rank.H)
+                () -> assertThat(Rank.find(0)).isEqualTo(Rank.ONE),
+                () -> assertThat(Rank.find(1)).isEqualTo(Rank.TWO),
+                () -> assertThat(Rank.find(2)).isEqualTo(Rank.THREE),
+                () -> assertThat(Rank.find(3)).isEqualTo(Rank.FOUR),
+                () -> assertThat(Rank.find(4)).isEqualTo(Rank.FIVE),
+                () -> assertThat(Rank.find(5)).isEqualTo(Rank.SIX),
+                () -> assertThat(Rank.find(6)).isEqualTo(Rank.SEVEN),
+                () -> assertThat(Rank.find(7)).isEqualTo(Rank.EIGHT)
         );
     }
 }

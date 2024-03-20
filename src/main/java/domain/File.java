@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum File {
 
-    EIGHTH(7),
-    SEVENTH(6),
-    SIXTH(5),
-    FIFTH(4),
-    FORTH(3),
-    THIRD(2),
-    SECOND(1),
-    FIRST(0),
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8),
     ;
 
     private final int order;
@@ -32,5 +32,9 @@ public enum File {
                 .filter(it -> it.order == order)
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public int gap(File other) {
+        return Math.abs(this.order - other.order);
     }
 }

@@ -13,17 +13,17 @@ public class MessageResolver {
 
     public String resolveChessBoardMessage(ChessBoard chessBoard) {
         StringBuilder message = new StringBuilder();
-        for (int vertical = Rank.max(); vertical >= 0; vertical--) {
-            StringBuilder rank = resolveRankMessage(File.find(vertical), chessBoard);
+        for (int vertical = File.max(); vertical >= 0; vertical--) {
+            StringBuilder rank = resolveRankMessage(Rank.find(vertical), chessBoard);
             message.append(rank);
         }
         return message.toString();
     }
 
-    private StringBuilder resolveRankMessage(File file, ChessBoard chessBoard) {
+    private StringBuilder resolveRankMessage(Rank rank, ChessBoard chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int horizontal = 0; horizontal <= Rank.max(); horizontal++) {
-            Position position = new Position(Rank.find(horizontal), file);
+        for (int horizontal = 0; horizontal <= File.max(); horizontal++) {
+            Position position = new Position(File.find(horizontal), rank);
             String square = resolveSquareMessage(chessBoard, position);
             stringBuilder.append(square);
         }

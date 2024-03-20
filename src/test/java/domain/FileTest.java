@@ -18,14 +18,14 @@ class FileTest {
     @Test
     void findTest() {
         Assertions.assertAll(
-                () -> assertThat(File.find(0)).isEqualTo(File.FIRST),
-                () -> assertThat(File.find(1)).isEqualTo(File.SECOND),
-                () -> assertThat(File.find(2)).isEqualTo(File.THIRD),
-                () -> assertThat(File.find(3)).isEqualTo(File.FORTH),
-                () -> assertThat(File.find(4)).isEqualTo(File.FIFTH),
-                () -> assertThat(File.find(5)).isEqualTo(File.SIXTH),
-                () -> assertThat(File.find(6)).isEqualTo(File.SEVENTH),
-                () -> assertThat(File.find(7)).isEqualTo(File.EIGHTH)
+                () -> assertThat(File.find(0)).isEqualTo(File.A),
+                () -> assertThat(File.find(1)).isEqualTo(File.B),
+                () -> assertThat(File.find(2)).isEqualTo(File.C),
+                () -> assertThat(File.find(3)).isEqualTo(File.D),
+                () -> assertThat(File.find(4)).isEqualTo(File.E),
+                () -> assertThat(File.find(5)).isEqualTo(File.F),
+                () -> assertThat(File.find(6)).isEqualTo(File.G),
+                () -> assertThat(File.find(7)).isEqualTo(File.H)
         );
     }
 }
