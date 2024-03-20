@@ -90,4 +90,40 @@ public class PositionTest {
             assertThat(source.isStraight(target)).isFalse();
         }
     }
+
+    @Nested
+    class StraightDiagonalPositionTest {
+
+        private static Stream<Arguments> provideFileAndRank() {
+            return Stream.of(
+                    Arguments.of(File.B, Rank.THREE),
+                    Arguments.of(File.B, Rank.FIVE),
+                    Arguments.of(File.C, Rank.TWO),
+                    Arguments.of(File.C, Rank.SIX),
+                    Arguments.of(File.E, Rank.TWO),
+                    Arguments.of(File.E, Rank.SIX),
+                    Arguments.of(File.F, Rank.THREE),
+                    Arguments.of(File.F, Rank.FIVE)
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideFileAndRank")
+        @DisplayName("두 위치가 한 칸 직선 한 칸 대각선에 존재하면 참을 반환한다.")
+        void isStraightDiagonal_True(File file, Rank rank) {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(file, rank);
+
+            assertThat(source.isStraightDiagonal(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 한 칸 직선 한 칸 대각선에 존재하지 않으면 거짓을 반환한다.")
+        void isStraightDiagonal_False() {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(File.A, Rank.THREE);
+
+            assertThat(source.isStraightDiagonal(target)).isFalse();
+        }
+    }
 }

@@ -22,6 +22,12 @@ public class Position {
         return this.file.isSame(target.file) || this.rank.isSame(target.rank);
     }
 
+    public boolean isStraightDiagonal(Position target) {
+        int fileDistance = this.file.distance(target.file);
+        int rankDistance = this.rank.distance(target.rank);
+        return (fileDistance == 1 && rankDistance == 2) || (fileDistance == 2 && rankDistance == 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
