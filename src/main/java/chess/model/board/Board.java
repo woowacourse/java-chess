@@ -1,18 +1,23 @@
 package chess.model.board;
 
-import java.util.ArrayList;
+import chess.model.piece.Piece;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private final List<Square> squares;
+    private static final List<Position> ALL_POSITIONS = Position.values();
 
-    public Board(List<Square> squares) {
-        this.squares = new ArrayList<>(squares);
+    private final Map<Position, Piece> squares;
+
+    public Board(Map<Position, Piece> squares) {
+        this.squares = new HashMap<>(squares);
+        ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Piece.EMPTY));
     }
 
     public List<String> getSignatures() {
-        return squares.stream()
-                .map(Square::getPieceSignature)
+        return squares.values().stream()
+                .map(Piece::getSignature)
                 .toList();
     }
 }

@@ -1,6 +1,7 @@
 package chess.model.board;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,5 +41,9 @@ public class Position {
             throw new IllegalArgumentException("체스판 범위를 벗어난 좌표값입니다.");
         }
         return POSITION_CACHE.get(key);
+    }
+
+    public static List<Position> values() {
+        return List.copyOf(POSITION_CACHE.values());
     }
 }
