@@ -12,6 +12,14 @@ public class Piece {
         this.color = color;
     }
 
+    public boolean isSameType(Type type) {
+        return this.type == type;
+    }
+
+    public boolean isWhite() {
+        return this.color == Color.WHITE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
