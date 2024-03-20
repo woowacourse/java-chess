@@ -10,8 +10,8 @@ class DirectionTest {
     @DisplayName("(1,1) -> (2,2)로 이동하면,  방향이다.")
     @Test
     void moveToNorthEast() {
-        Position sourcePosition = PositionFixture.generateSourcePosition();
-        Position targetPosition = PositionFixture.generateTargetPosition();
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateC2Position();
 
         Direction findDirection = Direction.findDirection(sourcePosition, targetPosition);
         Assertions.assertThat(findDirection).isEqualTo(Direction.SOUTH_EAST);

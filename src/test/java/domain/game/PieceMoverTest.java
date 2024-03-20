@@ -16,8 +16,8 @@ class PieceMoverTest {
     @DisplayName("source에 위치한 piece를 target으로 이동한다.")
     @Test
     void movePieceToTarget() {
-        Position sourcePosition = PositionFixture.generateSourcePosition();
-        Position targetPosition = PositionFixture.generateTargetPosition();
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateC2Position();
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
@@ -35,8 +35,8 @@ class PieceMoverTest {
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
     @Test
     void movePieceIfSourceHasNotPiece() {
-        Position sourcePosition = PositionFixture.generateSourcePosition();
-        Position targetPosition = PositionFixture.generateTargetPosition();
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateC2Position();
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
@@ -49,8 +49,8 @@ class PieceMoverTest {
     @DisplayName("옮기고자 하는 위치에 같은 진영의 Piece가 있다면 에러를 반환한다.")
     @Test
     void hasSameColorPiece() {
-        Position sourcePosition = PositionFixture.generateSourcePosition();
-        Position targetPosition = PositionFixture.generateTargetPosition();
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateC2Position();
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
@@ -68,13 +68,12 @@ class PieceMoverTest {
     @DisplayName("같은 위치로의 이동이라면 에러를 반환한다.")
     @Test
     void moveToSameSquare() {
-        Position sourcePosition = PositionFixture.generateSourcePosition();
-        Position targetPosition = PositionFixture.generateSourcePosition();
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateB1Position();
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
         Piece sourcePiece = new Piece(new PieceType(new King(), Color.BLACK), sourcePosition);
-//a
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
 
