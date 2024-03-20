@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Piece {
 
+    // TODO: 빈 공간을 나타내는 Piece 생성 고려
     private static final Map<String, Piece> CACHE = new HashMap<>();
 
     private final PieceType pieceType;

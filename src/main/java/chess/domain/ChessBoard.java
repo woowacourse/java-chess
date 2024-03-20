@@ -48,4 +48,15 @@ public class ChessBoard {
                 .stream()
                 .toList();
     }
+
+    public Piece findPieceByPosition(final Position position) {
+        return chessBoard.get(position);
+    }
+
+    public void move(final Position source, final Position target) {
+        Piece piece = chessBoard.get(source);
+
+        chessBoard.put(target, piece);
+        chessBoard.put(source, null);
+    }
 }
