@@ -35,7 +35,7 @@ public class ChessController {
 
             // TODO: 무슨 piece인지 검사해서 원하는 출력값 출력하게 하기
 
-            rawBoard.get(position.getY() - 1).set(position.getX() - 1, "?");
+            rawBoard.get(position.getY() - 1).set(position.getX() - 1, "p");
         }
         return new BoardDto(rawBoard);
     }
