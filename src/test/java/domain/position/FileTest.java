@@ -20,4 +20,36 @@ class FileTest {
 
         assertThat(file).isEqualTo(File.A);
     }
+
+    @Test
+    void 현재_file의_다음_file을_반환한다() {
+        File file = File.fromName("a");
+
+        assertThat(file.next()).isEqualTo(File.B);
+    }
+
+    @Test
+    void file_H의_다음_file을_호출하면_예외가_발생한다() {
+        File file = File.fromName("h");
+
+        assertThatThrownBy(file::next)
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("범위를 벗어난 file입니다.");
+    }
+
+    @Test
+    void 현재_file의_이전_file을_반환한다() {
+        File file = File.fromName("h");
+
+        assertThat(file.prev()).isEqualTo(File.G);
+    }
+
+    @Test
+    void File_A의_이전_file을_호출하면_예외가_발생한다() {
+        File file = File.fromName("a");
+
+        assertThatThrownBy(file::prev)
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("범위를 벗어난 file입니다.");
+    }
 }

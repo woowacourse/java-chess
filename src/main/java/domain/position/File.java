@@ -13,11 +13,11 @@ public enum File {
     H("h", 7);
 
     private final String name;
-    private final int index;
+    private final int order;
 
-    private File(String name, int index) {
+    File(String name, int order) {
         this.name = name;
-        this.index = index;
+        this.order = order;
     }
 
     public static File fromName(String name) {
@@ -26,5 +26,27 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         String.format("rejected value: %s - 존재하지 않은 file입니다.", name)));
+    }
+
+    private static File fromOrder(int order) {
+        return Arrays.stream(values())
+                .filter(file -> file.order == order)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("rejected value: %d - 존재하지 않은 file입니다.", order)));
+    }
+
+    public File next() {
+        if (this == H) {
+            throw new IllegalArgumentException("범위를 벗어난 file입니다.");
+        }
+        return File.fromOrder(this.order + 1);
+    }
+
+    public File prev() {
+        if (this == A) {
+            throw new IllegalArgumentException("범위를 벗어난 file입니다.");
+        }
+        return File.fromOrder(this.order - 1);
     }
 }
