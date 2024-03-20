@@ -22,4 +22,8 @@ public class Board {
     public List<Piece> extractPieces() {
         return squares.values().stream().toList();
     }
+
+    public Piece findPieceByPosition(Position position) {
+        return squares.get(position);
+    }
 }

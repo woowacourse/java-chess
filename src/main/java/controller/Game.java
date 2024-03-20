@@ -28,5 +28,7 @@ public class Game {
         PositionGenerator positionGenerator = new PositionGenerator();
         Position sourcePosition = positionGenerator.generate(rawCommand.get(1));
         Position targetPosition = positionGenerator.generate(rawCommand.get(2));
+
+
     }
 }
