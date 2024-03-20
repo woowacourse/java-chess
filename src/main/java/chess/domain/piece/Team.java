@@ -21,4 +21,8 @@ public enum Team {
     public Direction getDirection() {
         return direction;
     }
+
+    public RowPosition getInitialPawnRow() {
+        return initialPawnRow;
+    }
 }
