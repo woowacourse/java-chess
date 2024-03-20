@@ -17,7 +17,16 @@ public abstract class MoveStrategy {
         this.board = new HashMap<>(board);
     }
 
-    public abstract MoveStrategy changeStrategy(Position from);
+    public MoveStrategy changeStrategy(Position from) {
+        PieceType pieceType = board.get(from).pieceType();
+        if (pieceType == PieceType.NONE) {
+            return new BlankMoveStrategy(board);
+        }
+        if (pieceType == PieceType.BLACK_PAWN || pieceType == PieceType.WHITE_PAWN) {
+            return new PawnMoveStrategy(board);
+        }
+        return new GeneralMoveStrategy(board);
+    }
 
     public abstract void move(Color turnColor, Position from, Position to);
 

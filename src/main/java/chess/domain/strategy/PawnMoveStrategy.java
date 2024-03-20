@@ -16,11 +16,6 @@ public class PawnMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public MoveStrategy changeStrategy(Position from) {
-        return null;
-    }
-
-    @Override
     public void move(Color turnColor, Position from, Position to) {
         Pawn currentPiece = (Pawn) board.get(from);
         checkTurnOf(currentPiece, turnColor);

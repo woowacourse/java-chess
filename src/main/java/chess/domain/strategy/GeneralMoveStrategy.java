@@ -14,11 +14,6 @@ public class GeneralMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public MoveStrategy changeStrategy(Position from) {
-        return null;
-    }
-
-    @Override
     public void move(Color turnColor, Position from, Position to) {
         Piece currentPiece = board.get(from);
         checkTurnOf(currentPiece, turnColor);
