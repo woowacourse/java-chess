@@ -15,6 +15,12 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
+    public void move(Position sourcePosition, Position targetPosition) {
+        if (isNoPieceAt(sourcePosition)) {
+            throw new IllegalArgumentException("source 위치에 말이 없습니다.");
+        }
+    }
+
     public boolean isNoPieceAt(Position position) {
         return !squares.containsKey(position);
     }
