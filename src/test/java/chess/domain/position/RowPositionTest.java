@@ -34,4 +34,15 @@ class RowPositionTest {
 
         assertThat(testRowPosition.reverse()).isEqualTo(new RowPosition(7));
     }
+
+    @DisplayName("두 행 번호의 차이를 반환할 수 있다")
+    @Test
+    void should_ReturnDifferenceWithOtherRowNumber() {
+        RowPosition testRowPosition_1 = new RowPosition(7);
+        RowPosition testRowPosition_2 = new RowPosition(0);
+
+        int expectedDifference = 7;
+
+        assertThat(testRowPosition_1.intervalWith(testRowPosition_2)).isEqualTo(expectedDifference);
+    }
 }

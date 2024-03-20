@@ -47,6 +47,12 @@ public class Position {
         return rowPosition.equals(target.rowPosition);
     }
 
+    public boolean isDiagonalWith(Position target) {
+        int rowInterval = rowPosition.intervalWith(target.rowPosition);
+        int colInterval = columnPosition.intervalWith(target.columnPosition);
+        return rowInterval == colInterval;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

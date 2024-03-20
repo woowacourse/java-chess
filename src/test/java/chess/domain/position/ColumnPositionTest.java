@@ -1,9 +1,11 @@
 package chess.domain.position;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -23,5 +25,16 @@ class ColumnPositionTest {
     void should_MakeColumnObject_When_GiveValidRangeColumnNumber(int validRangedColumnNumber) {
         assertThatCode(() -> new ColumnPosition(validRangedColumnNumber))
                 .doesNotThrowAnyException();
+    }
+
+    @DisplayName("두 열 번호의 차이를 반환할 수 있다")
+    @Test
+    void should_ReturnDifferenceWithOtherColumnNumber() {
+        ColumnPosition testColumnPosition_1 = new ColumnPosition(7);
+        ColumnPosition testColumnPosition_2 = new ColumnPosition(0);
+
+        int expectedDifference = 7;
+
+        assertThat(testColumnPosition_1.intervalWith(testColumnPosition_2)).isEqualTo(expectedDifference);
     }
 }

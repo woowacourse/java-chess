@@ -33,14 +33,14 @@ class PositionTest {
                 () -> assertThat(position.isHorizontalWith(Position.of(2, 1))).isFalse()
         );
     }
-//
-//    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 대각인지 확인할 수 있다")
-//    @Test
-//    void should_CheckDiagonalRelationShipWithPositions() {
-//        Position position = Position.of(1, 1);
-//        assertAll(
-//                () -> assertThat(position.isDiagonalWith(Position.of(2, 2))).isTrue(),
-//                () -> assertThat(position.isDiagonalWith(Position.of(2, 1))).isFalse());
-//        );
-//    }
+
+    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 대각인지 확인할 수 있다")
+    @Test
+    void should_CheckDiagonalRelationShipWithPositions() {
+        Position position = Position.of(1, 1);
+        assertAll(
+                () -> assertThat(position.isDiagonalWith(Position.of(2, 2))).isTrue(),
+                () -> assertThat(position.isDiagonalWith(Position.of(2, 1))).isFalse()
+        );
+    }
 }
