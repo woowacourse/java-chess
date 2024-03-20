@@ -43,8 +43,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected void move() {
-        isMoved = true;
+    public void move() {
     }
 
     @Override

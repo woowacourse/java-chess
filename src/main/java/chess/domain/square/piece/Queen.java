@@ -36,7 +36,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected void move() {
+    public void move() {
     }
 
     @Override

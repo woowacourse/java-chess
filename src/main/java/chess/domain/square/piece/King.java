@@ -31,7 +31,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected void move() {
+    public void move() {
     }
 
     @Override

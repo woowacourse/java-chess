@@ -32,7 +32,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected void move() {
+    public void move() {
     }
 
     @Override

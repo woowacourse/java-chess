@@ -24,4 +24,8 @@ public class Empty implements Square {
     public boolean canAttack(Path path, Map<Position, Square> board) {
         return false;
     }
+
+    @Override
+    public void move() {
+    }
 }
