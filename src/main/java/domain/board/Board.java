@@ -23,9 +23,20 @@ public class Board {
         if (isNoPieceAt(sourcePosition)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
         }
-        if (findPieceColorAt(sourcePosition) == findPieceColorAt(targetPosition)) {
+        if (isPieceAt(targetPosition) && (findPieceColorAt(sourcePosition) == findPieceColorAt(targetPosition))) {
             throw new IllegalArgumentException("한 칸에 말이 2개 존재할 수 없습니다.");
         }
+        Piece piece = squares.get(sourcePosition);
+        if (piece.canMove(sourcePosition, targetPosition)) {
+            squares.remove(sourcePosition);
+            squares.put(targetPosition, piece);
+            return;
+        }
+        throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
+    }
+
+    private boolean isPieceAt(Position position) {
+        return squares.containsKey(position);
     }
 
     private boolean isNoPieceAt(Position position) {

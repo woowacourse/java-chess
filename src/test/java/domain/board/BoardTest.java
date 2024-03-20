@@ -1,7 +1,12 @@
 package domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.piece.Color;
+import domain.piece.Knight;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +18,7 @@ class BoardTest {
      * (공통) sourcePos에 말이 없으면 예외. (o)
      * 모든 말은 targetPos에 자기 팀의 말이 있으면 안 됨. (o)
      * (공통) 출발 위치 == 도착 위치면 예외 (o)
-     * 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다. (sourcePos == targetPos이면 안 됨) 포함
+     * 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다.
      * rook, bishop, queen은 경로에 말이 있으면 안 됨.
      * knight는 경로에 말이 있어도 움직일 수 있음.
      * pawn은 2칸 이동 시 경로에 말이 있으면 안 됨.
@@ -55,5 +60,36 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("source 위치와 target 위치가 같을 수 없습니다.");
+    }
+    //* 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다.
+
+    @Test
+    @DisplayName("성공: 말의 규칙에 맞는 위치로 이동")
+    void move_LegalMove() {
+        Position sourcePosition = new Position(new File(2), new Rank(1));
+        Position targetPosition = new Position(new File(3), new Rank(3));
+        Knight knight = new Knight(Color.WHITE);
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(sourcePosition, knight)
+        ));
+
+        board.move(sourcePosition, targetPosition);
+        assertThat(board.getSquares().get(sourcePosition)).isNull();
+        assertThat(board.getSquares().get(targetPosition)).isEqualTo(knight);
+    }
+
+    @Test
+    @DisplayName("실패: 말의 규칙에 맞지 않는 위치로 이동")
+    void move_IllegalMove() {
+        Position sourcePosition = new Position(new File(2), new Rank(1));
+        Position targetPosition = new Position(new File(3), new Rank(4));
+        Knight knight = new Knight(Color.WHITE);
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(sourcePosition, knight)
+        ));
+
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("말의 규칙에 맞지 않는 이동입니다.");
     }
 }
