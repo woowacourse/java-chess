@@ -1,6 +1,9 @@
 package chess.model;
 
 public class Pawn extends Piece {
+    private static final int DISPLACEMENT = 1;
+    private static final int INITIAL_SPECIAL_DISPLACEMENT = 2;
+
     public Pawn(Side side, ChessPosition chessPosition) {
         super(side, chessPosition);
     }
@@ -9,10 +12,10 @@ public class Pawn extends Piece {
     public boolean canMove(ChessPosition target) {
         Distance distance = target.calculateDistance(this.chessPosition);
         if (chessPosition.isPawnInitialPosition(side)) {
-            return canMoveForwardWith(distance, 1) ||
-                    canMoveForwardWith(distance, 2);
+            return canMoveForwardWith(distance, DISPLACEMENT) ||
+                    canMoveForwardWith(distance, INITIAL_SPECIAL_DISPLACEMENT);
         }
-        return canMoveForwardWith(distance, 1);
+        return canMoveForwardWith(distance, DISPLACEMENT);
     }
 
     private boolean canMoveForwardWith(Distance distance, int displacement) {
