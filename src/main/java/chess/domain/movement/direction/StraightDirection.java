@@ -12,7 +12,7 @@ abstract class StraightDirection implements Direction {
     }
 
     public boolean canReach(Position from, Position to, List<Position> obstacle) {
-        return Stream.iterate(from, this::next)
+        return Stream.iterate(next(from), this::next)
                 .takeWhile(now -> !obstacle.contains(now))
                 .limit(moveCount)
                 .anyMatch(position -> position.equals(to));
