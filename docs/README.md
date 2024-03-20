@@ -22,5 +22,5 @@
 * [x] Knight
 * [ ] King
 * [x] Bishop
-* [ ] Queen
+* [x] Queen
 * [x] Rook

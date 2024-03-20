@@ -62,5 +62,4 @@ class BishopTest {
                 Arguments.of(new Position(Row.FOURTH, Column.THIRD), new Position(Row.SEVENTH, Column.SIXTH), 2)
         );
     }
-
 }
