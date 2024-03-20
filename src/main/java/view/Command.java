@@ -2,7 +2,8 @@ package view;
 
 public enum Command {
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String command;
 
@@ -16,6 +17,9 @@ public enum Command {
         }
         if (command.equals(END.command)) {
             return END;
+        }
+        if (command.equals(MOVE.command)) {
+            return MOVE;
         }
         throw new IllegalArgumentException("잘못된 명령어입니다.");
     }

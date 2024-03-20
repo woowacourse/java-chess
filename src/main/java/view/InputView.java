@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static Command inputCommand() {
+    public static String inputCommand() {
         String command = scanner.nextLine();
         validateCommand(command);
-        return Command.of(command);
+        return command;
     }
 
     private static void validateCommand(final String command) {
