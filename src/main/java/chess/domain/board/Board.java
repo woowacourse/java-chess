@@ -1,8 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.position.Square;
 import chess.domain.piece.Piece;
+import chess.domain.position.Square;
 import chess.dto.BoardOutput;
+import chess.dto.SquareDifferent;
 
 import java.util.Map;
 
@@ -23,6 +24,57 @@ public class Board {
         Piece destinationPiece = board.get(destination);
 
         checkSameColor(sourcePiece, destinationPiece);
+
+        SquareDifferent diff = source.calculateDiff(destination);
+        Square candidate = source;
+
+        while (!candidate.equals(destination)) {
+            if (!source.equals(candidate) && !board.get(candidate).isEmpty()) {
+                throw new IllegalArgumentException("막힌 경로입니다.");
+            }
+
+            if (diff.fileDiff() == 0 && diff.rankDiff() > 0) {
+                candidate = candidate.moveVertical(1);
+                continue;
+            }
+
+            if (diff.fileDiff() == 0 && diff.rankDiff() < 0) {
+                candidate = candidate.moveVertical(-1);
+                continue;
+            }
+
+            if (diff.fileDiff() < 0 && diff.rankDiff() == 0) {
+                candidate = candidate.moveHorizontal(1);
+                continue;
+            }
+
+            if (diff.fileDiff() > 0 && diff.rankDiff() == 0) {
+                candidate = candidate.moveHorizontal(-1);
+                continue;
+            }
+
+            if (diff.fileDiff() < 0 && diff.rankDiff() < 0) {
+                candidate = candidate.moveDiagonal(1, -1);
+                continue;
+            }
+
+            if (diff.fileDiff() < 0 && diff.rankDiff() > 0) {
+                candidate = candidate.moveDiagonal(1, 1);
+                continue;
+            }
+
+            if (diff.fileDiff() > 0 && diff.rankDiff() < 0) {
+                candidate = candidate.moveDiagonal(-1, -1);
+                continue;
+            }
+
+            if (diff.fileDiff() > 0 && diff.rankDiff() > 0) {
+                candidate = candidate.moveDiagonal(-1, 1);
+            }
+        }
+
+        board.replace(source, destinationPiece);
+        board.replace(destination, sourcePiece);
     }
 
     private void checkSameColor(Piece sourcePiece, Piece destinationPiece) {

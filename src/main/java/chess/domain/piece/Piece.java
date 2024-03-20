@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.position.Square;
+
 public class Piece {
 
     private final PieceType pieceType;
@@ -20,5 +22,13 @@ public class Piece {
 
     public boolean isSameColor(Piece whitePiece) {
         return colorType.equals(whitePiece.colorType);
+    }
+
+    public boolean canMove(Square source, Square destination) {
+        return pieceType.canMove(source, destination, colorType);
+    }
+
+    public boolean isEmpty() {
+        return pieceType.equals(PieceType.EMPTY);
     }
 }
