@@ -59,4 +59,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", column=" + file +
+                '}';
+    }
 }
