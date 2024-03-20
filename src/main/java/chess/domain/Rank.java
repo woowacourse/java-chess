@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Rank {
 
@@ -23,6 +24,18 @@ public class Rank {
 
     public int distance(Rank rank) {
         return Math.abs(this.rank - rank.rank);
+    }
+
+    public boolean isFirstRank() {
+        return rank == 2 || rank == 7;
+    }
+
+    public Optional<Rank> add(int directionOfRank) {
+        try {
+            return Optional.of(new Rank(rank + directionOfRank));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

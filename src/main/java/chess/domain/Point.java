@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Point {
 
@@ -30,6 +31,38 @@ public class Point {
             return false;
         }
         return this.file.equals(point.file) || this.rank.equals(point.rank);
+    }
+
+    public boolean isAround(Point point) {
+        if (this.equals(point)) {
+            return false;
+        }
+        int fileDistance = this.file.distance(point.file);
+        int rankDistance = this.rank.distance(point.rank);
+        return getDistance(fileDistance, rankDistance) < 2;
+    }
+
+    private double getDistance(int fileDistance, int rankDistance) {
+        return Math.sqrt(Math.pow(fileDistance, 2) + Math.pow(rankDistance, 2));
+    }
+
+    // TODO: 이름 변경
+    public boolean isFirstPoint() {
+        return rank.isFirstRank();
+    }
+
+    public Point moveRank(int position) {
+        return new Point(file, rank.add(position).orElseThrow());
+    }
+
+    public Optional<Point> add(int directionOfFile, int directionOfRank) {
+        Optional<File> fileOpt = file.add(directionOfFile);
+        Optional<Rank> rankOpt = rank.add(directionOfRank);
+
+        if (fileOpt.isEmpty() || rankOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(new Point(fileOpt.get(), rankOpt.get()));
     }
 
     @Override

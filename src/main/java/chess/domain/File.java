@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class File {
@@ -25,6 +26,15 @@ public class File {
 
     public int distance(File file) {
         return Math.abs(this.file.charAt(0) - file.file.charAt(0));
+    }
+
+    public Optional<File> add(int directionOfFile) {
+        try {
+            String file = String.valueOf((char) (this.file.charAt(0) + directionOfFile));
+            return Optional.of(new File(file));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
