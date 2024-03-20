@@ -162,4 +162,34 @@ public class PositionTest {
             assertThat(source.isNeighbor(target)).isFalse();
         }
     }
+
+    @Nested
+    class ForwardPositionTest {
+
+        private static Stream<Arguments> provideFileAndRank() {
+            return Stream.of(
+                    Arguments.of(File.D, Rank.FIVE),
+                    Arguments.of(File.D, Rank.SIX)
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideFileAndRank")
+        @DisplayName("두 위치가 한 칸 또는 두 칸 앞에 존재하면 참을 반환한다.")
+        void isForwardStraight_True(File file, Rank rank) {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(file, rank);
+
+            assertThat(source.isForwardStraight(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 한 칸 또는 두 칸 앞에 존재하지 않으면 거짓을 반환한다.")
+        void isForwardStraight_False() {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(File.A, Rank.THREE);
+
+            assertThat(source.isForwardStraight(target)).isFalse();
+        }
+    }
 }

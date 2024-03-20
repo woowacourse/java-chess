@@ -14,6 +14,13 @@ public enum Rank {
         return Math.abs(sourceIndex - targetIndex);
     }
 
+    public int forwardDistance(Rank target) {
+        List<Rank> ranks = Arrays.stream(values()).toList();
+        int sourceIndex = ranks.indexOf(this);
+        int targetIndex = ranks.indexOf(target);
+        return sourceIndex - targetIndex;
+    }
+
     public boolean isSame(Rank rank) {
         return this == rank;
     }

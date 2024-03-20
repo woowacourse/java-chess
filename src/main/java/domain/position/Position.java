@@ -42,6 +42,11 @@ public class Position {
         return (fileDistance == 0 && rankDistance == 1) || (fileDistance == 1 && rankDistance == 0);
     }
 
+    public boolean isForwardStraight(Position target) {
+        int forwardDistance = this.rank.forwardDistance(target.rank);
+        return (forwardDistance == 1 || forwardDistance == 2) && this.file.isSame(target.file);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
