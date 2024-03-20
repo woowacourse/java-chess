@@ -7,9 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import point.Column;
 import point.Position;
-import point.Row;
 
 class BishopTest {
 
@@ -35,10 +33,10 @@ class BishopTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.EIGHTH, Column.THIRD), new Position(Row.EIGHTH, Column.FIRST)),
-                Arguments.of(new Position(Row.EIGHTH, Column.THIRD), new Position(Row.THIRD, Column.THIRD)),
-                Arguments.of(new Position(Row.EIGHTH, Column.SIXTH), new Position(Row.EIGHTH, Column.FIFTH)),
-                Arguments.of(new Position(Row.FOURTH, Column.SEVENTH), new Position(Row.THIRD, Column.THIRD))
+                Arguments.of(Position.from("c8"), Position.from("a8")),
+                Arguments.of(Position.from("c8"),Position.from("c3")),
+                Arguments.of(Position.from("f8"), Position.from("e8")),
+                Arguments.of(Position.from("g4"), Position.from("c3"))
         );
     }
 
@@ -55,11 +53,10 @@ class BishopTest {
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.EIGHTH, Column.THIRD), new Position(Row.SIXTH, Column.FIFTH), 1),
-                Arguments.of(new Position(Row.EIGHTH, Column.SIXTH), new Position(Row.THIRD, Column.FIRST), 4),
-
-                Arguments.of(new Position(Row.FOURTH, Column.THIRD), new Position(Row.SIXTH, Column.FIRST), 1),
-                Arguments.of(new Position(Row.FOURTH, Column.THIRD), new Position(Row.SEVENTH, Column.SIXTH), 2)
+                Arguments.of(Position.from("c8"), Position.from("e6"), 1),
+                Arguments.of(Position.from("f8"), Position.from("a3"), 4),
+                Arguments.of(Position.from("c4"), Position.from("a6"), 1),
+                Arguments.of(Position.from("c4"), Position.from("f7"), 2)
         );
     }
 }

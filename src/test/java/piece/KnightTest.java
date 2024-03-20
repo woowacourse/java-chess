@@ -7,9 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import point.Column;
 import point.Position;
-import point.Row;
 
 class KnightTest {
 
@@ -34,9 +32,9 @@ class KnightTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.FIFTH, Column.FOURTH), new Position(Row.FIFTH, Column.FIRST)),
-                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.THIRD, Column.SIXTH)),
-                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.FIFTH, Column.FIFTH))
+                Arguments.of(Position.from("d5"), Position.from("a5")),
+                Arguments.of(Position.from("a8"), Position.from("f3")),
+                Arguments.of(Position.from("a8"), Position.from("e5"))
         );
     }
 
@@ -49,10 +47,11 @@ class KnightTest {
         Assertions.assertThat(knight.canMovable(currentPosition, nextPosition)).isTrue();
     }
 
+    //TODO : 테스트 케이스 추가
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.SEVENTH, Column.THIRD)),
-                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.SIXTH, Column.SECOND))
+                Arguments.of(Position.from("a8"), Position.from("c7")),
+                Arguments.of(Position.from("a8"), Position.from("b6"))
         );
     }
 }

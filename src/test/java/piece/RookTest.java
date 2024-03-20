@@ -8,9 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import point.Column;
 import point.Position;
-import point.Row;
 
 class RookTest {
 
@@ -35,10 +33,10 @@ class RookTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.SEVENTH, Column.SECOND)),
-                Arguments.of(new Position(Row.EIGHTH, Column.FIRST), new Position(Row.FOURTH, Column.THIRD)),
-                Arguments.of(new Position(Row.THIRD, Column.SECOND), new Position(Row.SEVENTH, Column.SIXTH)),
-                Arguments.of(new Position(Row.THIRD, Column.FIFTH), new Position(Row.FIFTH, Column.EIGHTH))
+                Arguments.of(Position.from("a8"), Position.from("b7")),
+                Arguments.of(Position.from("a8"), Position.from("c4")),
+                Arguments.of(Position.from("b3"), Position.from("f7")),
+                Arguments.of(Position.from("e3"), Position.from("h5"))
         );
     }
 

@@ -20,7 +20,7 @@
 ## 기물의 이동 기능
 * [x] Pawn
 * [x] Knight
-* [ ] King
+* [x] King
 * [x] Bishop
 * [x] Queen
 * [x] Rook

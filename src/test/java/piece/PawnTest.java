@@ -7,9 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import point.Column;
 import point.Position;
-import point.Row;
 
 class PawnTest {
 
@@ -34,9 +32,9 @@ class PawnTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.SIXTH, Column.FIRST), new Position(Row.FOURTH, Column.FIRST)),
-                Arguments.of(new Position(Row.SEVENTH, Column.FIRST), new Position(Row.FOURTH, Column.FIRST)),
-                Arguments.of(new Position(Row.SEVENTH, Column.FIRST), new Position(Row.EIGHTH, Column.FIRST))
+                Arguments.of(Position.from("a6"), Position.from("a4")),
+                Arguments.of(Position.from("a7"), Position.from("a4")),
+                Arguments.of(Position.from("a7"), Position.from("a8"))
         );
     }
 
@@ -51,8 +49,8 @@ class PawnTest {
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Position(Row.SEVENTH, Column.FIRST), new Position(Row.FIFTH, Column.FIRST)),
-                Arguments.of(new Position(Row.SIXTH, Column.FIRST), new Position(Row.FIFTH, Column.FIRST))
+                Arguments.of(Position.from("a7"), Position.from("a5")),
+                Arguments.of(Position.from("a6"), Position.from("a5"))
         );
     }
 
