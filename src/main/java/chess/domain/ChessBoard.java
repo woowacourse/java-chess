@@ -16,7 +16,7 @@ public class ChessBoard {
 
     private final Set<Piece> pieces;
 
-    public ChessBoard(final Set<Piece> pieces) {
+    private ChessBoard(final Set<Piece> pieces) {
         this.pieces = pieces;
     }
 
