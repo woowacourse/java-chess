@@ -10,6 +10,9 @@ public enum Direction {
     WEST(-1, 0),
     EAST(1, 0),
 
+    NORTH_NORTH(0, 2),
+    SOUTH_SOUTH(0, -2),
+
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
@@ -50,6 +53,14 @@ public enum Direction {
         return Set.of(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST,
                 SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH,
                 WEST_WEST_NORTH, WEST_WEST_SOUTH);
+    }
+
+    public static Set<Direction> ofBlackPawn() {
+        return Set.of(Direction.SOUTH, Direction.SOUTH_SOUTH, Direction.SOUTH_WEST, Direction.SOUTH_EAST);
+    }
+
+    public static Set<Direction> ofWhitePawn() {
+        return Set.of(Direction.NORTH, Direction.NORTH_NORTH, Direction.NORTH_WEST, Direction.NORTH_EAST);
     }
 
     public int getX() {

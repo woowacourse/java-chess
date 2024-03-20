@@ -27,7 +27,7 @@ class KnightTest {
         Knight knight = new Knight(Color.WHITE);
         Position currentKingPosition = new Position(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
-                new Position(File.A, Rank.FIVE), new Pawn(Color.WHITE),
+                new Position(File.A, Rank.FIVE), Pawn.ofWhite(),
                 new Position(File.B, Rank.SIX), new Queen(Color.WHITE),
                 new Position(File.C, Rank.THREE), new Queen(Color.WHITE)
         );
@@ -45,7 +45,7 @@ class KnightTest {
         Knight knight = new Knight(Color.WHITE);
         Position currentKingPosition = new Position(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
-                new Position(File.A, Rank.FIVE), new Pawn(Color.BLACK),
+                new Position(File.A, Rank.FIVE), Pawn.ofBlack(),
                 new Position(File.B, Rank.SIX), new Queen(Color.WHITE),
                 new Position(File.C, Rank.THREE), new Queen(Color.BLACK)
         );
