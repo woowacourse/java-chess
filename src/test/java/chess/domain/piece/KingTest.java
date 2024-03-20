@@ -34,7 +34,7 @@ public class KingTest {
     void kingMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         King king = new King(pieceInfo, new KingMoveStrategy());
-        Board board = Board.initialize();
+        Board board = new Board();
 
         boolean actualIsMoved = king.move(newPosition, board);
 

@@ -34,7 +34,7 @@ public class QueenTest {
     void queenMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Queen queen = new Queen(pieceInfo, new QueenMoveStrategy());
-        Board board = Board.initialize();
+        Board board = new Board();
 
         boolean actualIsMoved = queen.move(newPosition, board);
 

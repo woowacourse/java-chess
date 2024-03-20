@@ -30,7 +30,7 @@ public class RookTest {
     void rookMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Rook rook = new Rook(pieceInfo, new RookMoveStrategy());
-        Board board = Board.initialize();
+        Board board = new Board();
 
         boolean actualIsMoved = rook.move(newPosition, board);
 
@@ -38,4 +38,15 @@ public class RookTest {
     }
 
     //TODO: True를 반환하는게 진짜 Position이 옮겨지는것인가 - Board 구현 시 해결될 듯?
+
+//    @DisplayName("룩의 이동 경로에 다른 말이 있다면 이동 불가능하다.")
+//    @Test
+//    void rookMoveFailByOtherPieceTest() {
+//        Position currentPosition = Position.of("d4");
+//        Position newPosition = Position.of("d8");
+//
+//        PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
+//        Rook rook = new Rook(pieceInfo, new RookMoveStrategy());
+//        Board board = Board.; // ??????????????????
+//    }
 }

@@ -25,63 +25,61 @@ import java.util.Map;
 public class Board {
     private final Map<Position, Piece> board;
 
-    private Board(Map<Position, Piece> board) {
+    public Board() {
+        Map<Position, Piece> board = new HashMap<>();
+        initialize(board);
+        
         this.board = board;
     }
 
-    public static Board initialize() {
-        Map<Position, Piece> board = new HashMap<>();
-
-        placeBlackPieces(board);
-        placeEmptyPieces(board);
-        placeWhitePieces(board);
-
-        return new Board(board);
+    private void initialize(Map<Position, Piece> board) {
+        placeEmptyPieces(board, createPieceLocationsByIndex(0, 64), Team.NONE);
     }
 
-    private static void placeBlackPieces(Map<Position, Piece> board) {
-        placeRookPieces(board, List.of("a8", "h8"), Team.BLACK);
-        placeKnightPieces(board, List.of("b8", "g8"), Team.BLACK);
-        placeBishopPieces(board, List.of("c8", "f8"), Team.BLACK);
-        placeQueenAndKingPiece(board, "d8", "e8", Team.BLACK);
-        placePawnPieces(board, createPieceLocationsByIndex(48, 56), Team.BLACK, new BlackPawnFirstMoveStrategy());
+    public void placePieces() {
+        placeBlackPieces();
+        placeWhitePieces();
     }
 
-    private static void placeEmptyPieces(Map<Position, Piece> board) {
-        placeEmptyPieces(board, createPieceLocationsByIndex(16, 48), Team.NONE);
+    private void placeBlackPieces() {
+        placeRookPieces(List.of("a8", "h8"), Team.BLACK);
+        placeKnightPieces(List.of("b8", "g8"), Team.BLACK);
+        placeBishopPieces(List.of("c8", "f8"), Team.BLACK);
+        placeQueenAndKingPiece("d8", "e8", Team.BLACK);
+        placePawnPieces(createPieceLocationsByIndex(48, 56), Team.BLACK, new BlackPawnFirstMoveStrategy());
     }
 
-    private static void placeWhitePieces(Map<Position, Piece> board) {
-        placeRookPieces(board, List.of("a1", "h1"), Team.WHITE);
-        placeKnightPieces(board, List.of("b1", "g1"), Team.WHITE);
-        placeBishopPieces(board, List.of("c1", "f1"), Team.WHITE);
-        placeQueenAndKingPiece(board, "d1", "e1", Team.WHITE);
-        placePawnPieces(board, createPieceLocationsByIndex(8, 16), Team.WHITE, new WhitePawnFirstMoveStrategy());
+    private void placeWhitePieces() {
+        placeRookPieces(List.of("a1", "h1"), Team.WHITE);
+        placeKnightPieces(List.of("b1", "g1"), Team.WHITE);
+        placeBishopPieces(List.of("c1", "f1"), Team.WHITE);
+        placeQueenAndKingPiece("d1", "e1", Team.WHITE);
+        placePawnPieces(createPieceLocationsByIndex(8, 16), Team.WHITE, new WhitePawnFirstMoveStrategy());
     }
 
-    private static void placeRookPieces(Map<Position, Piece> board, List<String> locations, Team team) {
+    private void placeRookPieces(List<String> locations, Team team) {
         for (String location : locations) {
             PieceInfo pieceInfo = new PieceInfo(Position.of(location), team);
             board.put(pieceInfo.getPosition(), new Rook(pieceInfo, new RookMoveStrategy()));
         }
     }
 
-    private static void placeKnightPieces(Map<Position, Piece> board, List<String> locations, Team team) {
+    private void placeKnightPieces(List<String> locations, Team team) {
         for (String location : locations) {
             PieceInfo pieceInfo = new PieceInfo(Position.of(location), team);
             board.put(pieceInfo.getPosition(), new Knight(pieceInfo, new KnightMoveStrategy()));
         }
     }
 
-    private static void placeBishopPieces(Map<Position, Piece> board, List<String> locations, Team team) {
+    private void placeBishopPieces(List<String> locations, Team team) {
         for (String location : locations) {
             PieceInfo pieceInfo = new PieceInfo(Position.of(location), team);
             board.put(pieceInfo.getPosition(), new Bishop(pieceInfo, new BishopMoveStrategy()));
         }
     }
 
-    private static void placeQueenAndKingPiece(Map<Position, Piece> board, String queenLocation, String kingLocation,
-                                               Team team) {
+    private void placeQueenAndKingPiece(String queenLocation, String kingLocation,
+                                        Team team) {
         PieceInfo queenInfo = new PieceInfo(Position.of(queenLocation), team);
         board.put(queenInfo.getPosition(), new Queen(queenInfo, new QueenMoveStrategy()));
 
@@ -89,22 +87,22 @@ public class Board {
         board.put(kingInfo.getPosition(), new King(kingInfo, new KingMoveStrategy()));
     }
 
-    private static void placePawnPieces(Map<Position, Piece> board, List<String> locations, Team team,
-                                        MoveStrategy moveStrategy) {
+    private void placePawnPieces(List<String> locations, Team team,
+                                 MoveStrategy moveStrategy) {
         for (String location : locations) {
             PieceInfo pieceInfo = new PieceInfo(Position.of(location), team);
             board.put(pieceInfo.getPosition(), new Pawn(pieceInfo, moveStrategy));
         }
     }
 
-    private static void placeEmptyPieces(Map<Position, Piece> board, List<String> locations, Team team) {
+    private void placeEmptyPieces(Map<Position, Piece> board, List<String> locations, Team team) {
         for (String location : locations) {
             PieceInfo pieceInfo = new PieceInfo(Position.of(location), team);
             board.put(pieceInfo.getPosition(), new EmptyPiece(pieceInfo, new EmptyMoveStrategy()));
         }
     }
 
-    private static List<String> createPieceLocationsByIndex(int startIndex, int endIndex) {
+    private List<String> createPieceLocationsByIndex(int startIndex, int endIndex) {
         List<String> positions = new ArrayList<>();
 
         for (int i = startIndex; i < endIndex; i++) {

@@ -34,7 +34,7 @@ public class KnightTest {
     void knightMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Knight knight = new Knight(pieceInfo, new KnightMoveStrategy());
-        Board board = Board.initialize();
+        Board board = new Board();
 
         boolean actualIsMoved = knight.move(newPosition, board);
 

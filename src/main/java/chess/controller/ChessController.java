@@ -15,12 +15,9 @@ import java.util.Map;
 public class ChessController {
 
     public void startChess() {
-        Board board = makeBoard();
+        Board board = new Board();
+        board.placePieces();
         OutputView.printBoard(makeBoardDto(board.getBoard()));
-    }
-
-    private Board makeBoard() {
-        return Board.initialize();
     }
 
     private BoardDto makeBoardDto(Map<Position, Piece> board) {

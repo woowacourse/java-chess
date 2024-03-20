@@ -30,7 +30,7 @@ public class BishopTest {
     void bishopMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Bishop bishop = new Bishop(pieceInfo, new BishopMoveStrategy());
-        Board board = Board.initialize();
+        Board board = new Board();
 
         boolean actualIsMoved = bishop.move(newPosition, board);
 

@@ -28,7 +28,7 @@ public class WhitePawnNotFirstMoveTest {
     void pawnMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Pawn whitePawnNotFirstMove = new Pawn(pieceInfo, new WhitePawnNotFirstMoveStrategy());
-        Board board = Board.initialize();
+        Board board = new Board();
 
         boolean actualIsMoved = whitePawnNotFirstMove.move(newPosition, board);
 
