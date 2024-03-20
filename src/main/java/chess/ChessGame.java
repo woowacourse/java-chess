@@ -4,6 +4,7 @@ import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.command.CommandExecutor;
 import chess.domain.command.GameCommand;
+import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.ReadyState;
 import chess.view.InputView;
@@ -21,22 +22,30 @@ public class ChessGame {
     private GameState gameState = new ReadyState();
 
     public void run() {
-        List<String> inputCommand = InputView.readGameCommand();
-        GameCommand gameCommand = GameCommand.from(inputCommand);
-
         Board board = BoardFactory.createInitialBoard();
-        OutputView.printGameStartMessage();
+        for (int i = 0; i < 5; i++) {
+            executeCommand();
+        }
         OutputView.printChessBoard(board);
-
     }
 
-    private void move(String source, String target) {
-        // 현재 진영 턴 진행
+    private void executeCommand() {
+        List<String> inputCommand = InputView.readGameCommand();
+        GameCommand gameCommand = GameCommand.from(inputCommand);
+        COMMANDS.get(gameCommand).execute(inputCommand);
+    }
+
+    private void move(String inputSource, String inputTarget) {
+        Position source = Position.convert(inputSource);
+        Position target = Position.convert(inputTarget);
+        System.out.println(source + " " + target);
+        OutputView.printGameStartMessage();
         gameState = gameState.move();
     }
 
     private void start() {
         gameState = gameState.start();
+        OutputView.printGameStartMessage();
     }
 
     private void end() {
