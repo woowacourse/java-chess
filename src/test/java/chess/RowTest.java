@@ -1,6 +1,6 @@
 package chess;
 
-import chess.Row;
+import chess.domain.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,9 @@
-package chess;
+package chess.controller;
+
+import chess.domain.ChessBoard;
+import chess.domain.Command;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public class Controller {
     public void run() {

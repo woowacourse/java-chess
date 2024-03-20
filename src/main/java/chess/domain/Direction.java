@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 public enum Direction {
     //row, column

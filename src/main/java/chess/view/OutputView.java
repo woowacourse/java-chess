@@ -1,8 +1,10 @@
-package chess;
+package chess.view;
+
+import chess.domain.ChessPiece;
+import chess.domain.Column;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
