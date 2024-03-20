@@ -6,16 +6,24 @@ public class Column {
 
     private Position position;
 
-    public Column(int position) {
-        this.position = new Position(position);
+    public Column(Position position) {
+        this.position = position;
     }
 
-    public void move(int nextPosition) {
-        position.move(nextPosition);
+    public Column(int position) {
+        this(new Position(position));
+    }
+
+    public void moveBy(int distance) {
+        position.moveBy(distance);
     }
 
     public int getColumnMinus(Column column) {
         return position.getMinusPosition(column.position);
+    }
+
+    public Column copied() {
+        return new Column(position.copied());
     }
 
     @Override

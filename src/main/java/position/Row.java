@@ -14,8 +14,8 @@ public class Row {
         this(new Position(position));
     }
 
-    public void move(int nextPosition) {
-        position.move(nextPosition);
+    public void moveBy(int distance) {
+        position.moveBy(distance);
     }
 
     public int getPositionValue() {
@@ -24,10 +24,6 @@ public class Row {
 
     public int getRowMinus(Row row) {
         return position.getMinusPosition(row.position);
-    }
-
-    public Row update(int rowDirection) {
-        return new Row(position.update(rowDirection));
     }
 
     public Row copied() {

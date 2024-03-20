@@ -17,15 +17,19 @@ public class Position {
         return position.position - this.position;
     }
 
-    public void move(int nextPosition) {
-        if (nextPosition < MIN_POSITION || MAX_POSITION < nextPosition) {
+    public void moveBy(int distance) {
+        position += distance;
+        if (position < MIN_POSITION || MAX_POSITION < position) {
             throw new IllegalArgumentException("움직일 수 있는 위치가 아닙니다.");
         }
-        position = nextPosition;
     }
 
     public int getPosition() {
         return position;
+    }
+
+    public Position copied() {
+        return new Position(position);
     }
 
     @Override

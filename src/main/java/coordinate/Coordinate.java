@@ -14,11 +14,6 @@ public class Coordinate {
         this.column = column;
     }
 
-    public void move(int rowPosition, int columnPosition) {
-        row.move(rowPosition);
-        column.move(columnPosition);
-    }
-
     public int checkRow(Coordinate coordinate) {
         return row.getRowMinus(coordinate.row);
     }
@@ -29,6 +24,15 @@ public class Coordinate {
 
     public int getRowValue() {
         return row.getPositionValue();
+    }
+
+    public void moveByDistances(int rowDistance, int columnDistance) {
+        row.moveBy(rowDistance);
+        column.moveBy(columnDistance);
+    }
+
+    public Coordinate copied() {
+        return new Coordinate(row.copied(), column.copied());
     }
 
     @Override
