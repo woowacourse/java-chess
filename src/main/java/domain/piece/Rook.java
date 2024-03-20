@@ -5,13 +5,16 @@ import domain.piece.info.Position;
 import domain.piece.info.Type;
 
 public class Rook extends Piece {
-    public Rook(final Color color, final Position position) {
-        super(color, position);
+    public Rook(final Color color, final Type type) {
+        super(color, type);
     }
 
-    @Override
-    public Type shape() {
-        return Type.ROOK;
+    public static Rook black() {
+        return new Rook(Color.BLACK, Type.ROOK);
+    }
+
+    public static Rook white() {
+        return new Rook(Color.WHITE, Type.ROOK);
     }
 
     @Override

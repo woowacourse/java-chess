@@ -5,13 +5,17 @@ import domain.piece.info.Position;
 import domain.piece.info.Type;
 
 public class Bishop extends Piece {
-    public Bishop(final Color color, final Position position) {
-        super(color, position);
+    public Bishop(final Color color, final Type type) {
+        super(color, type);
     }
 
-    @Override
-    public Type shape() {
-        return Type.BISHOP;
+
+    public static Bishop black() {
+        return new Bishop(Color.BLACK, Type.BISHOP);
+    }
+
+    public static Bishop white() {
+        return new Bishop(Color.WHITE, Type.BISHOP);
     }
 
     @Override

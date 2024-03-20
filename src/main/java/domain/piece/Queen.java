@@ -5,13 +5,16 @@ import domain.piece.info.Position;
 import domain.piece.info.Type;
 
 public class Queen extends Piece {
-    public Queen(final Color color, final Position position) {
-        super(color, position);
+    public Queen(final Color color, final Type type) {
+        super(color, type);
     }
 
-    @Override
-    public Type shape() {
-        return Type.QUEEN;
+    public static Queen black() {
+        return new Queen(Color.BLACK, Type.QUEEN);
+    }
+
+    public static Queen white() {
+        return new Queen(Color.WHITE, Type.QUEEN);
     }
 
     @Override

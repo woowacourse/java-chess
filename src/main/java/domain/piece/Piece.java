@@ -6,22 +6,24 @@ import domain.piece.info.Type;
 
 public abstract class Piece {
     private final Color color;
-    private final Position position;
+    private final Type type;
 
-    protected Piece(final Color color, final Position position) {
+    protected Piece(final Color color, final Type type) {
         this.color = color;
-        this.position = position;
+        this.type = type;
     }
 
-    public Position position() {
-        return position;
+    public Type type() {
+        return type;
     }
 
     public Color color() {
         return color;
     }
 
-    public abstract Type shape();
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
 
     public abstract boolean isMovable();
 }

@@ -5,15 +5,17 @@ import domain.piece.info.Position;
 import domain.piece.info.Type;
 
 public class King extends Piece {
-    public King(final Color color, final Position position) {
-        super(color, position);
+    public King(final Color color, final Type type) {
+        super(color, type);
     }
 
-    @Override
-    public Type shape() {
-        return Type.KING;
+    public static King black() {
+        return new King(Color.BLACK, Type.KING);
     }
 
+    public static King white() {
+        return new King(Color.WHITE, Type.KING);
+    }
     @Override
     public boolean isMovable() {
         return false;
