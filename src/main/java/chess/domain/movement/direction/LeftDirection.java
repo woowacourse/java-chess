@@ -4,10 +4,9 @@ import chess.domain.Position;
 
 public class LeftDirection extends StraightDirection {
 
-    LeftDirection(final int moveCount) {
+    public LeftDirection(final int moveCount) {
         super(moveCount);
     }
-
 
     @Override
     Position next(final Position from) {

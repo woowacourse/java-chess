@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 abstract class StraightDirection implements Direction {
     private final int moveCount;
 
-    StraightDirection(int moveCount) {
+    public StraightDirection(int moveCount) {
         this.moveCount = moveCount;
     }
 

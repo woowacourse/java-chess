@@ -3,6 +3,7 @@ package chess.domain.movement.direction;
 import chess.domain.Position;
 
 public class DownLeftDirection extends StraightDirection {
+
     public DownLeftDirection(final int moveCount) {
         super(moveCount);
     }

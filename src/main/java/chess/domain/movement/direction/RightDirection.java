@@ -4,7 +4,7 @@ import chess.domain.Position;
 
 public class RightDirection extends StraightDirection {
 
-    RightDirection(final int moveCount) {
+    public RightDirection(final int moveCount) {
         super(moveCount);
     }
 

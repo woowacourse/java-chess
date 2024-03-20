@@ -4,7 +4,7 @@ import chess.domain.Position;
 
 public class UpLeftDirection extends StraightDirection {
 
-    UpLeftDirection(final int moveCount) {
+    public UpLeftDirection(final int moveCount) {
         super(moveCount);
     }
 
