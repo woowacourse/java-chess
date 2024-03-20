@@ -11,11 +11,9 @@ import java.util.Set;
 public class Pawn extends Piece {
     private static final int DEFAULT_WHITE_RANK = 2;
     private static final int DEFAULT_BLACK_RANK = 7;
-    private final Set<Direction> directions;
 
     private Pawn(Color color, Set<Direction> directions) {
-        super(color, PieceType.PAWN);
-        this.directions = directions;
+        super(color, PieceType.PAWN, directions);
     }
 
     public static Pawn ofBlack() {
@@ -29,6 +27,7 @@ public class Pawn extends Piece {
     }
 
     // 폰이 2칸으로 기물을 건너 뛸 수 있기 때문에 for 2로 처리해야함.
+    @Override
     public Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
         Set<Position> movablePositions = new HashSet<>();
 
