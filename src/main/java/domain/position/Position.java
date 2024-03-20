@@ -1,5 +1,6 @@
 package domain.position;
 
+import domain.game.Gap;
 import java.util.Objects;
 
 public class Position {
@@ -26,5 +27,17 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Gap subtract(Position target) {
+        return new Gap(file.subtract(target.getFile()), rank.subtract(target.getRank()));
     }
 }

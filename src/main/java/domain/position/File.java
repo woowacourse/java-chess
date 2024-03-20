@@ -26,4 +26,12 @@ public class File {
     public int hashCode() {
         return Objects.hash(letter);
     }
+
+    public char getLetter() {
+        return letter;
+    }
+
+    public int subtract(File target) {
+        return letter - target.getLetter();
+    }
 }
