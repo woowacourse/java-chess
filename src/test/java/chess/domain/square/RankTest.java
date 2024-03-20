@@ -1,6 +1,7 @@
 package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
@@ -24,5 +25,29 @@ class RankTest {
                 () -> assertThat(Rank.EIGHT.ordinal()).isEqualTo(7),
                 () -> assertThat(Rank.values()).hasSize(8)
         );
+    }
+
+    @DisplayName("문자로 랭크를 찾을 수 있다")
+    @Test
+    void findRank() {
+        //given
+        String givenRank = "2";
+
+        //when
+        Rank rank = Rank.from(givenRank);
+
+        //then
+        assertThat(rank).isEqualTo(Rank.TWO);
+    }
+
+    @DisplayName("유효하지 않은 랭크면 예외가 발생한다")
+    @Test
+    void invalidRank() {
+        //given
+        String givenRank = "10";
+
+        //when & then
+        assertThatThrownBy(() -> Rank.from(givenRank))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

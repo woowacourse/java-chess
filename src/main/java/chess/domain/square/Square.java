@@ -11,6 +11,14 @@ public class Square {
         this.file = file;
     }
 
+    public static Square from(final String square) {
+        String[] splitSquare = square.split("");
+        File file = File.from(splitSquare[0]);
+        Rank rank = Rank.from(splitSquare[1]);
+
+        return new Square(file, rank);
+    }
+
     public int getFileIndex() {
         return file.ordinal();
     }
