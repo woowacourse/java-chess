@@ -2,6 +2,8 @@ package controller;
 
 import domain.board.Board;
 import domain.command.Command;
+import domain.position.Position;
+import domain.position.PositionGenerator;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -23,5 +25,8 @@ public class Game {
         if (command.isEnd()) {
             return;
         }
+        PositionGenerator positionGenerator = new PositionGenerator();
+        Position sourcePosition = positionGenerator.generate(rawCommand.get(1));
+        Position targetPosition = positionGenerator.generate(rawCommand.get(2));
     }
 }

@@ -2,11 +2,11 @@ package domain.position;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
+    public Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 }

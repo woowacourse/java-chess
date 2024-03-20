@@ -22,7 +22,7 @@ public class SquaresGenerator {
     private void generate(Rank rank, Map<Position, Piece> squares) {
         for (File file : File.values()) {
             Piece piece = settingRule.findPieceByPosition(rank, file);
-            squares.put(new Position(rank, file), piece);
+            squares.put(new Position(file, rank), piece);
         }
     }
 }
