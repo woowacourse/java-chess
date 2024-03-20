@@ -16,12 +16,24 @@ public class Board {
                 board.put(position, new Blank(position));
             }
         }
+
         board.replace(new Position(1, 1), new Rook(new Position(1, 1), Color.WHITE));
-        board.replace(new Position(8, 1), new Rook(new Position(8, 1), Color.WHITE));
-        board.replace(new Position(1, 8), new Rook(new Position(1, 8), Color.BLACK));
-        board.replace(new Position(8, 8), new Rook(new Position(8, 8), Color.BLACK));
+        board.replace(new Position(2, 1), new Knight(new Position(2, 1), Color.WHITE));
+        board.replace(new Position(3, 1), new Bishop(new Position(3, 1), Color.WHITE));
+        board.replace(new Position(4, 1), new Queen(new Position(4, 1), Color.WHITE));
         board.replace(new Position(5, 1), new King(new Position(5, 1), Color.WHITE));
+        board.replace(new Position(6, 1), new Bishop(new Position(6, 1), Color.WHITE));
+        board.replace(new Position(7, 1), new Knight(new Position(7, 1), Color.WHITE));
+        board.replace(new Position(8, 1), new Rook(new Position(8, 1), Color.WHITE));
+
+        board.replace(new Position(1, 8), new Rook(new Position(1, 8), Color.BLACK));
+        board.replace(new Position(2, 8), new Knight(new Position(2, 8), Color.BLACK));
+        board.replace(new Position(3, 8), new Bishop(new Position(3, 8), Color.BLACK));
+        board.replace(new Position(4, 8), new Queen(new Position(4, 8), Color.BLACK));
         board.replace(new Position(5, 8), new King(new Position(5, 8), Color.BLACK));
+        board.replace(new Position(6, 8), new Bishop(new Position(6, 8), Color.BLACK));
+        board.replace(new Position(7, 8), new Knight(new Position(7, 8), Color.BLACK));
+        board.replace(new Position(8, 8), new Rook(new Position(8, 8), Color.BLACK));
     }
 
     public void move(Color turnColor, Position from, Position to) {
@@ -42,7 +54,7 @@ public class Board {
     }
 
     public Map<Position, PieceType> collectBoard() {
-        return   board.entrySet().stream()
+        return board.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().pieceType()
