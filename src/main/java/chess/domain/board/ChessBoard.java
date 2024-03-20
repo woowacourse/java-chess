@@ -12,6 +12,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.Rank;
+import chess.dto.ChessBoardDto;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,6 +25,10 @@ public class ChessBoard {
     public void initialBoard() {
         initializeBlackPieces();
         initializeWhitePieces();
+    }
+
+    public ChessBoardDto convertToDto() {
+        return new ChessBoardDto(chessBoard);
     }
 
     private void initializeBlackPieces() {
