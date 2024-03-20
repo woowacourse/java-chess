@@ -27,15 +27,15 @@ public class Board {
 
     public List<List<String>> getLines() {
         List<List<String>> lines = new ArrayList<>();
-        for (int y = MAX_LENGTH; y >= MIN_LENGTH; y--) {
-            lines.add(getLine(y));
+        for (int rank = MAX_LENGTH; rank >= MIN_LENGTH; rank--) {
+            lines.add(getLine(rank));
         }
         return lines;
     }
 
     private List<String> getLine(int lineIndex) {
         return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
-                .mapToObj(x -> squares.get(Position.from(x, lineIndex)).getSignature())
+                .mapToObj(file -> squares.get(Position.from(file, lineIndex)).getSignature())
                 .toList();
     }
 }

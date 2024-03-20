@@ -9,32 +9,32 @@ public class Position {
     private static final Map<Integer, Position> POSITION_CACHE = new HashMap<>();
 
     static {
-        for (int x = Board.MIN_LENGTH; x <= Board.MAX_LENGTH; x++) {
-            addPositionsBy(x);
+        for (int file = Board.MIN_LENGTH; file <= Board.MAX_LENGTH; file++) {
+            addPositionsBy(file);
         }
     }
 
-    private static void addPositionsBy(int x) {
-        for (int y = Board.MIN_LENGTH; y <= Board.MAX_LENGTH; y++) {
-            POSITION_CACHE.put(convertToKey(x, y), new Position(x, y));
+    private static void addPositionsBy(int file) {
+        for (int rank = Board.MIN_LENGTH; rank <= Board.MAX_LENGTH; rank++) {
+            POSITION_CACHE.put(convertToKey(file, rank), new Position(file, rank));
         }
     }
 
-    private static int convertToKey(int x, int y) {
-        return Objects.hash(x, y);
+    private static int convertToKey(int file, int rank) {
+        return Objects.hash(file, rank);
     }
 
-    private final int x;
+    private final int file;
 
-    private final int y;
+    private final int rank;
 
-    private Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    private Position(int file, int rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    public static Position from(int x, int y) {
-        int key = convertToKey(x, y);
+    public static Position from(int file, int rank) {
+        int key = convertToKey(file, rank);
         if (!POSITION_CACHE.containsKey(key)) {
             throw new IllegalArgumentException("체스판 범위를 벗어난 좌표값입니다.");
         }
