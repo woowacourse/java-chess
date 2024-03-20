@@ -29,6 +29,7 @@ public enum Character {
         return Arrays.stream(values())
                 .filter(character -> character.team == team && character.kind == kind)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("해당 조합의 Character가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalStateException("%s, %s의 Character가 존재하지 않습니다."
+                        .formatted(team.name(), kind.name())));
     }
 }
