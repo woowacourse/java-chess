@@ -19,6 +19,17 @@ public class Square {
         return new Square(file, rank);
     }
 
+    public static Square getNextSquare(final int fileIndex, final int rankIndex) {
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                if (file.ordinal() == fileIndex && rank.ordinal() == rankIndex) {
+                    return new Square(file, rank);
+                }
+            }
+        }
+        throw new IllegalStateException();
+    }
+
     public int getFileIndex() {
         return file.ordinal();
     }
