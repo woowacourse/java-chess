@@ -28,7 +28,7 @@ public class ChessBoard {
         Position target = new Position(to);
 
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isMovable(source, target) || board.containsKey(target)) {
+        if (!sourcePiece.isMovable(source, target) || board.containsKey(target) || source.equals(target)) {
             throw new IllegalArgumentException("이동이 불가능합니다.");
         }
         board.put(target, sourcePiece);
