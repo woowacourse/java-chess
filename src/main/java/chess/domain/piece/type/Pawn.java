@@ -3,6 +3,7 @@ package chess.domain.piece.type;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
@@ -16,6 +17,11 @@ public class Pawn extends Piece {
            return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
         }
         return this.position.isForwardWithDistance(target, 1);
+    }
+
+    @Override
+    public Set<Position> getRoute(Position target) {
+        return null;
     }
 
     private boolean isInitPosition() {

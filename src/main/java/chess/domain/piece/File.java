@@ -28,7 +28,22 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
     }
 
+    public static File from(final int input) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == input)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
+    }
+
     public int getDistance(final File other) {
         return Math.abs(this.index - other.index);
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public int minus(final File other) {
+        return this.index - other.index;
     }
 }

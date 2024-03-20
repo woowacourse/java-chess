@@ -33,4 +33,8 @@ public enum Rank {
     public int getDistance(final Rank other) {
         return Math.abs(this.number - other.number);
     }
+
+    public int getNumber() {
+        return number;
+    }
 }

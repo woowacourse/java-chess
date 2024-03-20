@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Piece {
 
@@ -34,4 +35,6 @@ public abstract class Piece {
     public boolean isPosition(final Position other) {
         return this.position.equals(other);
     }
+
+    public abstract Set<Position> getRoute(final Position target);
 }

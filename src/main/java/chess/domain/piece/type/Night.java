@@ -3,6 +3,7 @@ package chess.domain.piece.type;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.Set;
 
 public class Night extends Piece {
 
@@ -16,5 +17,10 @@ public class Night extends Piece {
             return true;
         }
         return this.position.isVerticalWithDistance(target, 1) && this.position.isHorizontalWithDistance(target, 2);
+    }
+
+    @Override
+    public Set<Position> getRoute(Position target) {
+        return null;
     }
 }
