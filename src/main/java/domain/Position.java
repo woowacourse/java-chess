@@ -34,21 +34,44 @@ public class Position {
         return rank.gap(otherRank);
     }
 
-    public boolean hasOnlyOneRankGap(Position other) {
-        return rankGap(other) == 1 && isSameFile(other);
+//    public boolean hasOnlyOneRankGap(Position other) {
+//        return hasOneRankGap(other) && isSameFile(other);
+//    }
+
+    public boolean hasOneRankGap(Position other) {
+        return rankGap(other) == 1;
     }
 
-    public boolean hasOnlyOneFileGap(Position other) {
-        return hasOneFileGap(other) && isSameRank(other);
-    }
+//    public boolean hasOnlyOneFileGap(Position other) {
+//        return hasOneFileGap(other) && isSameRank(other);
+//    }
 
-    private boolean hasOneFileGap(Position other) {
+    public boolean hasOneFileGap(Position other) {
         return fileGap(other) == 1;
     }
 
-    public boolean hasOnlyOneDiagonalGap(Position other) {
-        return isDiagonal(other) && hasOneFileGap(other);
+//    public boolean hasOnlyOneDiagonalGap(Position other) {
+//        return isDiagonal(other) && hasOneFileGap(other);
+//    }
+
+    public boolean some(Position other) {
+        return (fileGap(other) == 2 && hasOneRankGap(other)) ||
+                (hasOneFileGap(other) && hasTwoRankGap(other));
     }
+
+//    private boolean hasTwoRankGap(Position other) {
+//        return rankGap(other) == 2;
+//    }
+
+
+    public boolean hasTwoFileGap(Position other) {
+        return file.confirmGap(other.file, 2);
+    }
+
+    public boolean hasTwoRankGap(Position other) {
+        return rank.confirmGap(other.rank, 2);
+    }
+
 
     @Override
     public boolean equals(Object object) {

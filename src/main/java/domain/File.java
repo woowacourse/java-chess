@@ -34,7 +34,12 @@ public enum File {
                 .orElseThrow();
     }
 
+    public boolean confirmGap(File other, int gapSize) {
+        return gap(other) == gapSize;
+    }
+
     public int gap(File other) {
-        return Math.abs(this.order - other.order);
+        int otherOrder = other.order;
+        return Math.abs(order - otherOrder);
     }
 }

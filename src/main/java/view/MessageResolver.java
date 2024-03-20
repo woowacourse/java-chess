@@ -8,9 +8,6 @@ public class MessageResolver {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String EMPTY = ".";
 
-    public MessageResolver() {
-    }
-
     public String resolveChessBoardMessage(ChessBoard chessBoard) {
         StringBuilder message = new StringBuilder();
         for (int vertical = File.max(); vertical >= 0; vertical--) {

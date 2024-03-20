@@ -13,6 +13,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target) {
-        return false;
+        return (current.hasTwoFileGap(target) && current.hasOneRankGap(target)) ||
+                (current.hasOneFileGap(target) && current.hasTwoRankGap(target));
     }
 }
