@@ -1,4 +1,5 @@
 import controller.InputController;
+import dto.GameBoardDto;
 import java.util.List;
 import java.util.Scanner;
 import model.Camp;
@@ -31,7 +32,7 @@ public class Application {
             if (command == Command.END) {
                 break;
             }
-            outputView.printGameBoard(gameBoard);
+            outputView.printGameBoard(GameBoardDto.from(gameBoard));
             System.out.println("현재 턴: " + camp.toString());
         }
     }

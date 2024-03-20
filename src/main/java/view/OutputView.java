@@ -1,10 +1,6 @@
 package view;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import model.GameBoard;
-import model.piece.Piece;
-import model.position.Position;
+import dto.GameBoardDto;
 
 public class OutputView {
 
@@ -16,29 +12,10 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printGameBoard(GameBoard gameBoard) {
-        Map<Position, Piece> board = gameBoard.getBoard();
-        String[][] res = new String[8][8];
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                res[i][j] = ".";
-            }
+    public void printGameBoard(GameBoardDto gameBoardDto) {
+        for (String line : gameBoardDto.getValue()) {
+            System.out.println(line);
         }
-
-        for (Entry<Position, Piece> entry : board.entrySet()) {
-            res[entry.getKey().getRowIndex()][entry.getKey().getColumnIndex()] = entry.getValue()
-                    .toString();
-        }
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(res[i][j]);
-            }
-            System.out.print("   " + (8 - i));
-            System.out.println();
-        }
-
-        System.out.printf("%nabcdefgh%n");
     }
 
 
