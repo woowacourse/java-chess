@@ -2,7 +2,6 @@ package model;
 
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -33,8 +32,7 @@ public class GameBoard {
         initPosition.put(Column.EIGHTH, Rook::new);
     }
 
-    private List<List<Square>> board2;
-    private Map<Position, Piece> board;
+    private final Map<Position, Piece> board;
 
 
     public GameBoard() {
@@ -42,7 +40,6 @@ public class GameBoard {
     }
 
     public void setting() {
-
         settingExceptPawn(Camp.BLACK, Row.EIGHTH);
         settingPawn(Camp.BLACK, Row.SEVENTH);
         settingPawn(Camp.WHITE, Row.SECOND);
@@ -54,14 +51,11 @@ public class GameBoard {
             board.put(new Position(row, column), initPosition.get(column).apply(camp));
         }
     }
+
     private void settingPawn(final Camp camp, final Row row) {
         for (Column column : Column.values()) {
             board.put(new Position(row, column), new Pawn(camp));
         }
-    }
-
-    public Piece findPieceByPosition(Position position) {
-        return board.get(position);
     }
 
     public void move(Moving moving) {
@@ -82,10 +76,6 @@ public class GameBoard {
 
         board.put(moving.getNextPosition(), piece);
         board.remove(moving.getCurrentPosition());
-    }
-
-    public List<List<Square>> getBoard2() {
-        return board2;
     }
 
     public Map<Position, Piece> getBoard() {
