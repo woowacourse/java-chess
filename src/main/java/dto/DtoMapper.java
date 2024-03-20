@@ -1,9 +1,8 @@
 package dto;
 
-import domain.Board;
+import domain.board.Board;
+import domain.board.Position;
 import domain.piece.Piece;
-import domain.piece.info.Position;
-import domain.piece.info.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,6 +34,4 @@ public class DtoMapper {
         }
         return new RankInfo(pieceShapes);
     }
-
-
 }
