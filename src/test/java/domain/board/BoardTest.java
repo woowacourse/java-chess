@@ -17,20 +17,6 @@ import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-    /*
-     * 출발점, 도착점
-     * == move(sourcePos, targetPos) 테스트 케이스 ===
-     * (공통) sourcePos에 말이 없으면 예외. (o)
-     * 모든 말은 targetPos에 자기 팀의 말이 있으면 안 됨. (o)
-     * (공통) 출발 위치 == 도착 위치면 예외 (o)
-     * 모든 말은 말의 규칙에 맞는 위치로 이동해야 한다.(o)
-     * rook, bishop, queen은 경로에 말이 있으면 안 됨. (o)
-     * knight는 경로에 말이 있어도 움직일 수 있음. (o)
-     * pawn은 2칸 이동 시 경로에 말이 있으면 안 됨. (o)
-     * pawn은 바로 앞 칸에 기물이 있으면 이동 X
-     * pawn은 대각선 앞 칸에 상대 기물이 있으면 이동 O
-     */
-
     @Test
     @DisplayName("실패: 출발점에 말이 없으면 이동 불가")
     void move_NoPieceAtSourcePosition() {
@@ -198,5 +184,67 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("실패: pawn 전진 시 상대 말이 있으면 이동 불가")
+    void move_Pawn_PieceExistsAtTargetPosition() {
+        Position sourcePosition = new Position(new File(2), new Rank(2));
+        Position targetPosition = new Position(new File(2), new Rank(3));
+
+        Pawn pawn = new Pawn(Color.WHITE);
+        Queen queen = new Queen(Color.BLACK);
+
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(
+                sourcePosition, pawn,
+                targetPosition, queen
+            )
+        ));
+
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("직진으로 잡을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("성공: pawn은 대각선 앞에 상대 기물이 있으면 이동 가능")
+    void move_Pawn_PieceExistsAtTargetPositionWhenDiagonalMove() {
+        Position sourcePosition = new Position(new File(2), new Rank(2));
+        Position targetPosition = new Position(new File(3), new Rank(3));
+
+        Pawn pawn = new Pawn(Color.WHITE);
+        Queen queen = new Queen(Color.BLACK);
+
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(
+                sourcePosition, pawn,
+                targetPosition, queen
+            )
+        ));
+
+        board.move(sourcePosition, targetPosition);
+
+        assertThat(board.getSquares().get(sourcePosition)).isNull();
+        assertThat(board.getSquares().get(targetPosition)).isEqualTo(pawn);
+    }
+
+    @Test
+    @DisplayName("실패: pawn은 대각선 앞에 상대 기물이 없으면 이동 블가능")
+    void move_Pawn_PieceNotExistsAtTargetPositionWhenDiagonalMove() {
+        Position sourcePosition = new Position(new File(2), new Rank(2));
+        Position targetPosition = new Position(new File(3), new Rank(3));
+
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        Board board = Board.generatedBy(() -> new HashMap<>(
+            Map.of(
+                sourcePosition, pawn
+            )
+        ));
+
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
     }
 }

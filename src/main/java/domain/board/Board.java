@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Color;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import java.util.Map;
 
@@ -34,14 +35,23 @@ public class Board {
             // TODO: 인덴트 줄이기, 가독성 개선하기
             if (isStraightMove(sourcePosition, targetPosition) || isDiagonalMove(sourcePosition, targetPosition)) {
                 Direction direction = Direction.of(sourcePosition, targetPosition);
-                Position middlePosition = sourcePosition;
+                Position middlePosition = sourcePosition.nextPosition(direction);
+
                 while (!middlePosition.equals(targetPosition)) {
-                    Position nextPosition = middlePosition.nextPosition(direction);
-                    System.out.println(nextPosition);
-                    if (isPieceAt(nextPosition)) {
+                    if (isPieceAt(middlePosition)) {
                         throw new IllegalArgumentException("경로에 말이 있으면 움직일 수 없습니다.");
                     }
-                    middlePosition = nextPosition;
+                    middlePosition = middlePosition.nextPosition(direction);
+                }
+            }
+
+            if (piece instanceof Pawn) {
+                if (isStraightMove(sourcePosition, targetPosition) && isPieceAt(targetPosition)) {
+                    throw new IllegalArgumentException("직진으로 잡을 수 없습니다.");
+                }
+
+                if (isDiagonalMove(sourcePosition, targetPosition) && isNoPieceAt(targetPosition)) {
+                    throw new IllegalArgumentException("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
                 }
             }
 
