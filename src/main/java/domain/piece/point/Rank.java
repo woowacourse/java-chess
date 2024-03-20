@@ -23,4 +23,17 @@ public enum Rank {
         }
         throw new IllegalArgumentException(String.format("%d는 랭크에 존재하지 않습니다.", value));
     }
+
+    public Rank next() {
+        return values()[this.ordinal() + 1];
+    }
+
+    public Rank prev() {
+        return values()[this.ordinal() - 1];
+    }
+
+    public boolean isAtBoundary() {
+        return this.ordinal() == 0 || this.ordinal() == values().length - 1;
+    }
+
 }

@@ -11,6 +11,18 @@ public enum File {
     H('h');
     private char value;
 
+    public File next() {
+        return values()[this.ordinal() + 1];
+    }
+
+    public File prev() {
+        return values()[this.ordinal() - 1];
+    }
+
+    public boolean isAtBoundary() {
+        return this.ordinal() == 0 || this.ordinal() == values().length - 1;
+    }
+
     File(final char value) {
         this.value = value;
     }
