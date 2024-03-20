@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
@@ -13,11 +12,10 @@ public abstract class UnslidingPiece extends Piece {
         super(color, pieceType);
     }
 
-    protected Set<Square> movableSquaresOf(final Set<Direction> directions, final Square source) {
+    protected Optional<Square> movableSquare(final Collection<Direction> directions, final Square source) {
         return directions.stream()
-                .map(source::move)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toUnmodifiableSet());
+                .reduce(Optional.of(source),
+                        (square, direction) -> square.flatMap(presentSquare -> presentSquare.move(direction)),
+                        (current, next) -> next);
     }
 }

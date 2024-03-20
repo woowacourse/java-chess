@@ -42,6 +42,10 @@ public class Square {
         return file.name() + rank.name();
     }
 
+    public static boolean isInRange(final int column, final int row) {
+        return File.isInRange(column) && Rank.isInRange(row);
+    }
+
     public Optional<Square> move(final Direction direction) {
         int row = rank.getValue() + direction.getRow();
         int column = file.getColumn() + direction.getColumn();
@@ -49,18 +53,6 @@ public class Square {
             return Optional.of(Square.of(File.of(column), Rank.of(row)));
         }
         return Optional.empty();
-    }
-
-    public static boolean isInRange(final int column, final int row) {
-        return File.isInRange(column) && Rank.isInRange(row);
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
     }
 
     @Override
