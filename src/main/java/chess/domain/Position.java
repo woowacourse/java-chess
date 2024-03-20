@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -34,6 +36,19 @@ public class Position {
         int yDifference = this.y - otherPosition.y;
 
         return new PositionDifference(xDifference, yDifference);
+    }
+
+    public List<Position> getInternalPositions(Position otherPosition) {
+        List<Position> internalPositions = new ArrayList<>();
+        int deltaX = otherPosition.x - this.x;
+        int deltaY = otherPosition.y - this.y;
+        int max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+
+        for (int step = 1; step < max; step++) {
+            internalPositions.add(new Position(this.x + (deltaX / max) * step, this.y + (deltaY / max) * step));
+        }
+
+        return internalPositions;
     }
 
     public int getX() {
