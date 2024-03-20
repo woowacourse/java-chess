@@ -7,8 +7,8 @@ public enum Command {
     END,
     ;
 
-    public boolean isStart() {
-        return this == START;
+    public boolean isNotStart() {
+        return this != START;
     }
 
     public boolean isEnd() {

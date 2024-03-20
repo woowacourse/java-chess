@@ -13,7 +13,7 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public void printInitBoard(Board board) {
+    public void printBoard(Board board) {
         List<Piece> pieces = board.extractPieces();
         for (int i = 0; i < pieces.size(); i++) {
             String piece = PieceOutput.asString(pieces.get(i));

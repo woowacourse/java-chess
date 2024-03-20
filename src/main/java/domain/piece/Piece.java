@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.position.Position;
 import java.util.Objects;
 
 public class Piece {
@@ -18,6 +19,10 @@ public class Piece {
 
     public boolean isWhite() {
         return this.color == Color.WHITE;
+    }
+
+    public boolean canMove(Position source, Position target) {
+        return this.type.canMove(source, target);
     }
 
     @Override
