@@ -2,7 +2,7 @@ package chess;
 
 import java.util.Map;
 
-import chess.domain.attribute.Position;
+import chess.domain.attribute.Square;
 import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
@@ -29,7 +29,7 @@ public class ChessGame {
     }
 
     private void play() {
-        Map<Position, Piece> chessboard = Chessboard.create().getChessboard();
+        Map<Square, Piece> chessboard = Chessboard.create().getChessboard();
         ChessboardDto chessboardDto = new ChessboardDto(chessboard);
         resultView.printBoard(chessboardDto);
     }

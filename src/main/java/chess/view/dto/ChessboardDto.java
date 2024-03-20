@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.attribute.File;
-import chess.domain.attribute.Position;
+import chess.domain.attribute.Square;
 import chess.domain.attribute.Rank;
 import chess.domain.piece.Piece;
 
@@ -13,7 +13,7 @@ public class ChessboardDto {
 
     private final List<List<String>> chessboard;
 
-    public ChessboardDto(final Map<Position, Piece> chessboard) {
+    public ChessboardDto(final Map<Square, Piece> chessboard) {
         this.chessboard = new ArrayList<>();
         for (final Rank rank : Rank.values()) {
             List<String> squares = new ArrayList<>();
@@ -22,10 +22,10 @@ public class ChessboardDto {
         }
     }
 
-    private void addSquares(final Map<Position, Piece> chessboard, final Rank rank, final List<String> squares) {
+    private void addSquares(final Map<Square, Piece> chessboard, final Rank rank, final List<String> squares) {
         for (final File file : File.values()) {
-            Position position = Position.of(file, rank);
-            Piece piece = chessboard.get(position);
+            Square square = Square.of(file, rank);
+            Piece piece = chessboard.get(square);
             squares.add(PieceTypeDto.of(piece));
         }
     }

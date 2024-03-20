@@ -36,12 +36,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, pieceType);
     }
-
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "color=" + color +
-                ", pieceType=" + pieceType +
-                '}';
-    }
 }

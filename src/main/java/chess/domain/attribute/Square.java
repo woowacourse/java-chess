@@ -4,34 +4,34 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Position {
+public class Square {
 
-    private static final Map<String, Position> POSITIONS = new HashMap<>();
+    private static final Map<String, Square> SQUARES = new HashMap<>();
 
     private final File file;
     private final Rank rank;
 
-    private Position(final File file, final Rank rank) {
+    private Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(final File file, final Rank rank) {
-        if (POSITIONS.isEmpty()) {
-            createPositions();
+    public static Square of(final File file, final Rank rank) {
+        if (SQUARES.isEmpty()) {
+            createSquares();
         }
-        return POSITIONS.get(keyOf(file, rank));
+        return SQUARES.get(keyOf(file, rank));
     }
 
-    private static void createPositions() {
+    private static void createSquares() {
         for (final Rank rank : Rank.values()) {
-            createPositionsOf(rank);
+            createSquaresOf(rank);
         }
     }
 
-    private static void createPositionsOf(final Rank rank) {
+    private static void createSquaresOf(final Rank rank) {
         for (final File file : File.values()) {
-            POSITIONS.put(keyOf(file, rank), new Position(file, rank));
+            SQUARES.put(keyOf(file, rank), new Square(file, rank));
         }
     }
 
@@ -52,7 +52,7 @@ public class Position {
         if (this == object) {
             return true;
         }
-        return object instanceof Position other
+        return object instanceof Square other
                 && rank == other.rank
                 && file == other.file;
     }

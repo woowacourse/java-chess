@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.attribute.Square;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -27,14 +27,14 @@ import chess.domain.piece.StartingPawn;
 
 public class Chessboard {
 
-    private final Map<Position, Piece> chessboard;
+    private final Map<Square, Piece> chessboard;
 
-    private Chessboard(final Map<Position, Piece> chessboard) {
+    private Chessboard(final Map<Square, Piece> chessboard) {
         this.chessboard = chessboard;
     }
 
     public static Chessboard create() {
-        Map<Position, Piece> chessboard = new HashMap<>();
+        Map<Square, Piece> chessboard = new HashMap<>();
         Set<Piece> pieces = new HashSet<>();
         pieces.addAll(createPieces(WHITE));
         pieces.addAll(createPieces(BLACK));
@@ -42,11 +42,11 @@ public class Chessboard {
         return new Chessboard(chessboard);
     }
 
-    private static void putPieces(final Map<Position, Piece> chessboard, final Piece piece) {
+    private static void putPieces(final Map<Square, Piece> chessboard, final Piece piece) {
         PieceType pieceType = piece.getPieceType();
         for (int index = 0; index < pieceType.getCount(); index++) {
-            Position position = pieceType.startPositionOf(piece.getColor(), index);
-            chessboard.put(position, piece);
+            Square square = pieceType.startSquareOf(piece.getColor(), index);
+            chessboard.put(square, piece);
         }
     }
 
@@ -61,7 +61,7 @@ public class Chessboard {
         return pieces;
     }
 
-    public Map<Position, Piece> getChessboard() {
+    public Map<Square, Piece> getChessboard() {
         return Map.copyOf(chessboard);
     }
 }
