@@ -17,4 +17,8 @@ public class Piece {
     public boolean isSameType(String pieceViewName) {
         return pieceType.name().equals(pieceViewName);
     }
+
+    public boolean isSameColor(Piece whitePiece) {
+        return colorType.equals(whitePiece.colorType);
+    }
 }
