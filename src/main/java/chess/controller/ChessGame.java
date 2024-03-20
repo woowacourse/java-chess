@@ -11,6 +11,13 @@ public final class ChessGame {
 
     public void run() {
         Command command = prepareCommand();
+        while (command.isRunning()) {
+            executeGame(command);
+            command = prepareCommand();
+        }
+    }
+
+    private void executeGame(Command command) {
         if (command == Command.START) {
             Board board = Board.createInitialBoard();
             BoardDto boardDto = BoardDto.from(board);
@@ -20,8 +27,8 @@ public final class ChessGame {
 
     private Command prepareCommand() {
         return retryOnException(() -> {
-           String commandName = InputView.askGameCommand();
-           return Command.findCommand(commandName);
+            String commandName = InputView.askGameCommand();
+            return Command.findCommand(commandName);
         });
     }
 

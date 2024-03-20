@@ -18,4 +18,8 @@ public enum Command {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 게임 명령어입니다."));
     }
+
+    public boolean isRunning() {
+        return this != END;
+    }
 }
