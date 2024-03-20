@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,5 +18,24 @@ public class Board {
     public Optional<Piece> find(Position position) {
         Piece piece = board.get(position);
         return Optional.ofNullable(piece);
+    }
+
+    // TODO 마지막 위치에 적 말이 있을 경우, 잡아먹는다.
+    // TODO 흰색부터 번갈아가며 플레이한다.
+    public void move(Position start, Position end) {
+        Piece piece = find(start).orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+        List<Position> path = piece.findPath(start, end);
+
+        if (isMovable(path)) {
+            throw new IllegalArgumentException("다른 말이 있어 이동 불가능합니다.");
+        }
+
+        board.remove(start);
+        board.put(end, piece);
+    }
+
+    private boolean isMovable(List<Position> path) {
+        return path.stream()
+                .anyMatch(position -> board.get(position) != null);
     }
 }
