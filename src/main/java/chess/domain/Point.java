@@ -7,9 +7,19 @@ public class Point {
     private final File file;
     private final Rank rank;
 
+    public Point(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
+    }
+
     public Point(String file, int rank) {
-        this.file = new File(file);
-        this.rank = new Rank(rank);
+        this(new File(file), new Rank(rank));
+    }
+
+    public boolean isDiagonal(Point point) {
+        int fileDistance = this.file.distance(point.file);
+        int rankDistance = this.rank.distance(point.rank);
+        return (double) fileDistance / rankDistance == 1;
     }
 
     @Override

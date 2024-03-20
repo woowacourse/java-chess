@@ -21,6 +21,10 @@ public class Rank {
         }
     }
 
+    public int distance(Rank rank) {
+        return Math.abs(this.rank - rank.rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

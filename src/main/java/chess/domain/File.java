@@ -23,6 +23,10 @@ public class File {
         }
     }
 
+    public int distance(File file) {
+        return Math.abs(this.file.charAt(0) - file.file.charAt(0));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
