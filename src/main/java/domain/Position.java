@@ -89,4 +89,12 @@ public enum Position {
 	boolean isSameColumn(Position targetPosition) {
 		return targetPosition.column == column;
 	}
+
+	int getColumn() {
+		return column;
+	}
+
+	int getRow() {
+		return row;
+	}
 }

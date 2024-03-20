@@ -35,6 +35,16 @@ abstract class AbstractPiece extends Piece {
 		return team;
 	}
 
+	@Override
+	public int getColumn() {
+		return position.getColumn();
+	}
+
+	@Override
+	public int getRow() {
+		return position.getRow();
+	}
+
 	protected Position getPosition() {
 		return position;
 	}
