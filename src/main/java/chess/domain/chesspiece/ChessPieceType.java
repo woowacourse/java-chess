@@ -1,12 +1,12 @@
-package chess.chesspiece;
+package chess.domain.chesspiece;
 
-import chess.chesspiece.movestrategy.BishopMoveStrategy;
-import chess.chesspiece.movestrategy.KingMoveStrategy;
-import chess.chesspiece.movestrategy.KnightMoveStrategy;
-import chess.chesspiece.movestrategy.MoveStrategy;
-import chess.chesspiece.movestrategy.PawnMoveStrategy;
-import chess.chesspiece.movestrategy.QueenMoveStrategy;
-import chess.chesspiece.movestrategy.RookMoveStrategy;
+import chess.domain.chesspiece.movestrategy.BishopMoveStrategy;
+import chess.domain.chesspiece.movestrategy.KingMoveStrategy;
+import chess.domain.chesspiece.movestrategy.KnightMoveStrategy;
+import chess.domain.chesspiece.movestrategy.MoveStrategy;
+import chess.domain.chesspiece.movestrategy.PawnMoveStrategy;
+import chess.domain.chesspiece.movestrategy.QueenMoveStrategy;
+import chess.domain.chesspiece.movestrategy.RookMoveStrategy;
 import java.util.function.Supplier;
 
 public enum ChessPieceType {

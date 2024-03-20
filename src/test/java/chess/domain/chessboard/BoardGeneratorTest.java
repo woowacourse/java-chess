@@ -1,9 +1,10 @@
-package chess.chessboard;
+package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.chesspiece.ChessPiece;
-import java.util.HashSet;
+import chess.domain.chessboard.BoardGenerator;
+import chess.domain.chessboard.Square;
+import chess.domain.chesspiece.ChessPiece;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;

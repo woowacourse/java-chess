@@ -1,4 +1,4 @@
-package chess.chesspiece;
+package chess.domain.chesspiece;
 
 public class ChessPiece {
 

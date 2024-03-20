@@ -1,6 +1,6 @@
-package chess.chessboard;
+package chess.domain.chessboard;
 
-import chess.chesspiece.ChessPiece;
+import chess.domain.chesspiece.ChessPiece;
 import java.util.Map;
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package chess.chesspiece;
+package chess.domain.chesspiece;
 
-import chess.chesspiece.movestrategy.MoveStrategy;
+import chess.domain.chesspiece.movestrategy.MoveStrategy;
 
 public class ChessPieceProperty {
 

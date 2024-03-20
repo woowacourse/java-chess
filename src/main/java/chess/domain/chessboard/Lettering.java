@@ -1,4 +1,4 @@
-package chess.chessboard;
+package chess.domain.chessboard;
 
 public enum Lettering {
 

@@ -1,9 +1,9 @@
-package chess.chessboard;
+package chess.domain.chessboard;
 
-import chess.chesspiece.ChessPiece;
-import chess.chesspiece.ChessPieceGenerator;
-import chess.chesspiece.ChessPieceStartingPosition;
-import chess.chesspiece.ChessPieceType;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.ChessPieceGenerator;
+import chess.domain.chesspiece.ChessPieceStartingPosition;
+import chess.domain.chesspiece.ChessPieceType;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;

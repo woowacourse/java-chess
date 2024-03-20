@@ -1,9 +1,12 @@
-package chess.chesspiece;
+package chess.domain.chesspiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import chess.chessboard.Numbering;
+import chess.domain.chessboard.Numbering;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.ChessPieceGenerator;
+import chess.domain.chesspiece.ChessPieceType;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

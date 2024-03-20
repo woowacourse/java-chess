@@ -1,8 +1,8 @@
-package chess.chesspiece;
+package chess.domain.chesspiece;
 
-import chess.chessboard.Lettering;
-import chess.chessboard.Numbering;
-import chess.chessboard.Square;
+import chess.domain.chessboard.Lettering;
+import chess.domain.chessboard.Numbering;
+import chess.domain.chessboard.Square;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

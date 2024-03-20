@@ -1,4 +1,4 @@
-package chess.chesspiece.movestrategy;
+package chess.domain.chesspiece.movestrategy;
 
 public class QueenMoveStrategy implements MoveStrategy {
 

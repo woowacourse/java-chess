@@ -1,8 +1,12 @@
-package chess.chesspiece;
+package chess.domain.chesspiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.chesspiece.movestrategy.BishopMoveStrategy;
+import chess.domain.chesspiece.Camp;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.ChessPieceProperty;
+import chess.domain.chesspiece.ChessPieceType;
+import chess.domain.chesspiece.movestrategy.BishopMoveStrategy;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
