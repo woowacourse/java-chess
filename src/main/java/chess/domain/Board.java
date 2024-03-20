@@ -52,7 +52,7 @@ public class Board {
                 throw new IllegalArgumentException("해당 위치에 아군 기물이 존재합니다.");
             }
 
-            pieces.put(newPosition, thisPiece);
+            pieces.put(newPosition, thisPiece.move());
             pieces.remove(oldPosition);
             return;
         }

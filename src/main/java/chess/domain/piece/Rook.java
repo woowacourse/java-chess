@@ -45,4 +45,12 @@ public class Rook extends Piece {
         return positions;
     }
 
+    @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Rook(team, false);
+        }
+        return this;
+    }
+
 }

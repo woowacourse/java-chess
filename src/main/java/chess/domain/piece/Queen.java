@@ -54,4 +54,12 @@ public class Queen extends Piece {
 
         return positions;
     }
+
+    @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Queen(team, false);
+        }
+        return this;
+    }
 }

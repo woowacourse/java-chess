@@ -27,4 +27,12 @@ public class Knight extends Piece {
     protected List<Position> betweenPositions(Position position, int rowDifference, int columnDifference) {
         return new ArrayList<>();
     }
+
+    @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Knight(team, false);
+        }
+        return this;
+    }
 }

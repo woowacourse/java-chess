@@ -36,4 +36,12 @@ public class Bishop extends Piece {
 
         return positions;
     }
+
+    @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Bishop(team, false);
+        }
+        return this;
+    }
 }

@@ -69,4 +69,12 @@ public class Pawn extends Piece {
         }
         return false;
     }
+
+    @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Pawn(team, false);
+        }
+        return this;
+    }
 }

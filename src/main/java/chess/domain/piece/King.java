@@ -26,4 +26,12 @@ public class King extends Piece {
     protected List<Position> betweenPositions(Position position, int rowDifference, int columnDifference) {
         return new ArrayList<>();
     }
+
+    @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new King(team, false);
+        }
+        return this;
+    }
 }
