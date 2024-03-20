@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ChessBoardCreator {
-
     private static final Map<Class<? extends Piece>, List<Position>> INITIAL_PIECE_ARRANGEMENT = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
@@ -41,8 +40,6 @@ public class ChessBoardCreator {
         }
     };
 
-    //체스보드를 만든다. -> 화이트 팀을 배치한 맵을 만든다 -> 검은색 팀을 배치한 맵을 만든다. -> 두 맵을 합친다
-
     public ChessBoard create() {
         Map<Position, Piece> positionPiece = new HashMap<>();
         INITIAL_PIECE_ARRANGEMENT.entrySet().stream()
@@ -53,23 +50,22 @@ public class ChessBoardCreator {
 
 
     //TODO: 의미 있는 메서드명 생각해보기
-    // 특정 기물의 위치를 참조하여 위치 기물 맵을 작성한다.
     private Map<Position, Piece> mapPositionToPiece(Class<? extends Piece> pieceType, List<Position> positions) {
         Map<Position, Piece> positionPiece = new HashMap<>();
         positions.forEach(position -> {
             positionPiece.put(position, createPieceInstance(pieceType, Team.BLACK));
-//            positionPiece.put(position, createPieceInstance(pieceType, Team.BLACK));
+            positionPiece.put(position.verticalReversePosition(), createPieceInstance(pieceType, Team.WHITE));
         });
         return positionPiece;
     }
 
-    //특정 타입의 기물을 만든다
     private Piece createPieceInstance(Class<? extends Piece> clazz, Team team) {
         try {
             return clazz.getDeclaredConstructor(Team.class)
                     .newInstance(team);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException("[INTERNAL ERROR] 기물을 생성하여 배치하는 리플렉션에서 오류가 발생했습니다 ");
         }
     }
 }
