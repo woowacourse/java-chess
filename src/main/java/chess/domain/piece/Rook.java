@@ -15,15 +15,15 @@ public class Rook extends Piece {
         return Character.findCharacter(team, Kind.ROOK);
     }
 
+
     @Override
-    public Piece move(Position newPosition) {
-        int differenceRow = position.differenceRow(newPosition);
-        int differenceColumn = position.differenceColumn(newPosition);
-
-        if (!position.equals(newPosition) && (differenceRow == 0 || differenceColumn == 0)) {
-            return new Rook(newPosition, team);
-        }
-
-        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+    protected Piece movedPiece(Position newPosition) {
+        return new Rook(newPosition, team);
     }
+
+    @Override
+    protected boolean isMovable(int differenceRow, int differenceColumn) {
+        return differenceRow == 0 || differenceColumn == 0;
+    }
+
 }

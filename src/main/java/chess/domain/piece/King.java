@@ -16,14 +16,12 @@ public class King extends Piece {
     }
 
     @Override
-    public Piece move(Position newPosition) {
-        int differenceRow = position.differenceRow(newPosition);
-        int differenceColumn = position.differenceColumn(newPosition);
+    protected Piece movedPiece(Position newPosition) {
+        return new King(newPosition, team);
+    }
 
-        if (!position.equals(newPosition) && (Math.abs(differenceRow) <= 1 && Math.abs(differenceColumn) <= 1)) {
-            return new King(newPosition, team);
-        }
-
-        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+    @Override
+    protected boolean isMovable(int differenceRow, int differenceColumn) {
+        return Math.abs(differenceRow) <= 1 && Math.abs(differenceColumn) <= 1;
     }
 }

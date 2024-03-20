@@ -17,24 +17,23 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Piece move(Position newPosition) {
-        int differenceRow = position.differenceRow(newPosition);
-        int differenceColumn = position.differenceColumn(newPosition);
+    protected Piece movedPiece(Position newPosition) {
+        return new Pawn(newPosition, team);
+    }
 
+    @Override
+    protected boolean isMovable(int differenceRow, int differenceColumn) {
         if (differenceColumn != 0) {
-            throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+            return false;
         }
+
         if (team == Team.WHITE) {
-            if (differenceRow == 1 || (position.isSameRow(2) && differenceRow == 2)) {
-                return new Pawn(newPosition, team);
-            }
+            return differenceRow == 1 || (position.isSameRow(2) && differenceRow == 2);
         }
         if (team == Team.BLACK) {
-            if (differenceRow == -1 || (position.isSameRow(7) && differenceRow == -2)) {
-                return new Pawn(newPosition, team);
-            }
+            return differenceRow == -1 || (position.isSameRow(7) && differenceRow == -2);
         }
 
-        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+        return false;
     }
 }

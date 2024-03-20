@@ -16,7 +16,25 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
-    public abstract Piece move(Position newPosition);
+    public Piece move(Position newPosition) {
+        validateMovable(newPosition);
+        return movedPiece(newPosition);
+    }
+
+    private void validateMovable(Position newPosition) {
+        int differenceRow = position.differenceRow(newPosition);
+        int differenceColumn = position.differenceColumn(newPosition);
+
+        if (!position.equals(newPosition) && isMovable(differenceRow, differenceColumn)) {
+            return;
+        }
+
+        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+    }
+
+    protected abstract boolean isMovable(int differentRow, int differentColumn);
+
+    protected abstract Piece movedPiece(Position newPosition);
 
     public Position position() {
         return position;
