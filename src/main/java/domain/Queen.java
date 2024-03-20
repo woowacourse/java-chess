@@ -13,6 +13,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target) {
-        return false;
+        return current.isSameDiagonal(target) || current.isSameFile(target) || current.isSameRank(target);
     }
 }
