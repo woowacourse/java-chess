@@ -13,8 +13,18 @@ public abstract class Piece {
 
     public abstract Set<Position> findMovablePositions(Position destination);
 
-    public boolean isSameColor(Color other) {
-        return color == other;
+    public boolean isSameColor(Color otherColor) {
+        return color == otherColor;
+    }
+
+    public boolean isOppositeColor(Piece other) {
+        if (color == Color.WHITE) {
+            return other.color == Color.BLACK;
+        }
+        if (color == Color.BLACK) {
+            return other.color == Color.WHITE;
+        }
+        return false;
     }
 
     public abstract Piece update(Position destination);
