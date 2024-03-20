@@ -1,11 +1,14 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -16,5 +19,23 @@ class KingTest {
     void findCharacter(Team team, Character character) {
         assertThat(new King(Position.of(1, 1), team).findCharacter())
                 .isEqualTo(character);
+    }
+
+    @DisplayName("킹은 한칸 내 전 방향으로 움직일 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"4,3", "3,3", "3,4", "3,5", "4,5", "5,5", "5,4", "5,3"})
+    void kingMove(int row, int column) {
+        assertThatCode(() -> new King(Position.of(4, 4), Team.WHITE)
+                .move(Position.of(row, column)))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("킹은 한칸 초과하여 움직인 경우, 예외가 발생한다.")
+    @Test
+    void kingMoveOverOne() {
+        assertThatThrownBy(() -> new King(Position.of(1, 1), Team.WHITE)
+                .move(Position.of(3, 3)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 }
