@@ -149,5 +149,46 @@ class PieceTest {
                     Map.of(new Position(6, 6), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
     }
+
+    @Nested
+    class RookMove {
+
+        @ParameterizedTest
+        @CsvSource({"8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
+                "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
+        @DisplayName("룩은 도착 위치가 비어있는 경우 이동할 수 있다.")
+        void canMoveWhenToPositionIsEmpty(int row, int column) {
+            Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false, Map.of())).isTrue();
+        }
+
+        @ParameterizedTest
+        @CsvSource({"8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
+                "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
+        @DisplayName("룩은 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
+        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+            Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false,
+                    Map.of(new Position(row, column), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+        }
+
+        @ParameterizedTest
+        @CsvSource({"8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
+                "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
+        @DisplayName("룩은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
+        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+            Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(row, column), false,
+                    Map.of(new Position(row, column), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+        }
+
+        @Test
+        @DisplayName("룩은 이동 경로에 말이 있는 경우 이동할 수 없다.")
+        void canNotMoveWhenPieceExistIn() {
+            Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
+            assertThat(piece.canMove(new Position(4, 4), new Position(4, 8), false,
+                    Map.of(new Position(4, 5), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+        }
+    }
 }
 
