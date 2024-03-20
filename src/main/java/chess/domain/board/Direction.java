@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.location.Location;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,13 @@ public enum Direction {
     }
 
 
+    //TODO 이름 바꾸기
+    public static List<Direction> createDirections(Location source, Location target) {
+        int verticalDistance = source.calculateVerticalDistance(target);
+        int horizontalDistance = source.calculateHorizontalDistance(target);
+        return Direction.createDirections(verticalDistance, horizontalDistance);
+    }
+
     public static List<Direction> createDirections(int verticalDistance, int horizontalDistance) {
         validateDistance(verticalDistance, horizontalDistance);
         List<Direction> directions = new ArrayList<>();
@@ -87,11 +95,19 @@ public enum Direction {
         return !isOrthogonal();
     }
 
-    public boolean isUpside() {
+    public boolean isUpSide() {
         return this.vertical == 1;
     }
 
     public boolean isDownside() {
         return this.vertical == -1;
+    }
+
+    public boolean isRightSide() {
+        return this.horizontal == 1;
+    }
+
+    public boolean isLeftSide() {
+        return this.horizontal == -1;
     }
 }

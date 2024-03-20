@@ -1,5 +1,6 @@
 package chess.domain.location;
 
+import chess.domain.board.Direction;
 import java.util.Arrays;
 
 public enum Column {
@@ -12,6 +13,7 @@ public enum Column {
     G(7),
     H(8);
 
+    private static final Column[] columns = new Column[]{A, B, C, D, E, F, G, H};
     private final int index;
 
     Column(int index) {
@@ -23,6 +25,34 @@ public enum Column {
                 .filter(column -> column.isName(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Column 입력입니다."));
+    }
+
+    public Column move(Direction direction) {
+        if (direction.isLeftSide()) {
+            return this.previous();
+        }
+        if (direction.isRightSide()) {
+            return this.next();
+        }
+        return this;
+    }
+
+    private Column next() {
+        int ordinalIndex = this.index - 1;
+        try {
+            return columns[ordinalIndex + 1];
+        } catch (IndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
+        }
+    }
+
+    private Column previous() {
+        int ordinalIndex = this.index - 1;
+        try {
+            return columns[ordinalIndex - 1];
+        } catch (IndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
+        }
     }
 
     private boolean isName(String name) {

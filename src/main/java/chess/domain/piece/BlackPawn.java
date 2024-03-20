@@ -13,7 +13,7 @@ public class BlackPawn extends Piece {
     }
 
     @Override
-    boolean canMove(Path path) {
+    public boolean canMove(Path path) {
         boolean checkMove = checkMovable(path);
         moved = true;
         return checkMove;

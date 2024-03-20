@@ -9,9 +9,13 @@ public abstract class Piece {
         this.color = color;
     }
 
-    abstract boolean canMove(Path path);
+    public abstract boolean canMove(Path path);
 
     public boolean isBlack() {
         return this.color == Color.BLACK;
+    }
+
+    public boolean isAllyPiece(Piece other) {
+        return this.color == other.color;
     }
 }

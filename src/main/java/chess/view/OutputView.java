@@ -43,7 +43,7 @@ public class OutputView {
             return ".";
         }
         String s = getPieceString(piece);
-        if(piece.isBlack()){
+        if (piece.isBlack()) {
             return s.toUpperCase();
         }
         return s.toLowerCase();

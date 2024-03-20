@@ -8,7 +8,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean canMove(Path path) {
+    public boolean canMove(Path path) {
         if (path.hasPiecePathExcludedTarget()) {
             return false;
         }

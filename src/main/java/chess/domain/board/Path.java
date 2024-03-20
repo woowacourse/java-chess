@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Path {
@@ -7,6 +8,22 @@ public class Path {
 
     public Path(List<Step> steps) {
         this.steps = steps;
+    }
+
+    //TODO 정팩매 이름 찾아
+    public static Path of(List<Direction> directions, List<SquareState> squareStates) {
+        validateStepSize(directions, squareStates);
+        List<Step> steps = new ArrayList<>();
+        for (int i = 0; i < directions.size(); i++) {
+            steps.add(new Step(directions.get(i), squareStates.get(i)));
+        }
+        return new Path(steps);
+    }
+
+    private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {
+        if (directions.size() != squareStates.size()) {
+            throw new IllegalArgumentException("방향의 개수와 상태의 개수가 다릅니다.");
+        }
     }
 
 

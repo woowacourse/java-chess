@@ -1,5 +1,6 @@
 package chess.domain.location;
 
+import chess.domain.board.Direction;
 import java.util.Objects;
 
 public class Location {
@@ -12,8 +13,15 @@ public class Location {
         this.row = row;
     }
 
+    public Location move(Direction direction) {
+        Column movedColumn = this.column.move(direction);
+        Row movedRow = this.row.move(direction);
+        return new Location(movedColumn, movedRow);
+    }
+
     //TODO 예쁘게 바꾸기
     //TODO 캐싱
+
     public static Location of(String input) {
         try {
             validateInput(input);
@@ -26,8 +34,8 @@ public class Location {
             throw new IllegalArgumentException("잘못된 위치 입력입니다.");
         }
     }
-
     //TODO 예외 중복 처리
+
     private static void validateInput(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("잘못된 위치 입력입니다.");

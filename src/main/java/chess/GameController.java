@@ -29,7 +29,9 @@ public class GameController {
         if (board == null) {
             throw new IllegalStateException("아직 게임이 시작되지 않았습니다.");
         }
-        // board.move(command)
+        String[] commands = command.split(" ");
+        board.move(commands[1], commands[2]);
+        outputView.printBoard(board.getBoard());
     }
 
     private void createBoard() {

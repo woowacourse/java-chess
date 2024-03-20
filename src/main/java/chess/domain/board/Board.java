@@ -12,8 +12,10 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -88,5 +90,49 @@ public class Board {
 
     public Map<Location, Piece> getBoard() {
         return Collections.unmodifiableMap(map);
+    }
+
+    public void move(String sourceInput, String targetInput) {
+        Location source = Location.of(sourceInput);
+        Location target = Location.of(targetInput);
+        Piece piece = findPieceAt(source);
+        Path path = createPath(source, target);
+        if (piece.canMove(path)) {
+            map.remove(source);
+            map.put(target, piece);
+            return;
+        }
+        throw new IllegalArgumentException("유효하지 않은 움직임입니다.");
+    }
+
+    private Path createPath(Location source, Location target) {
+        Piece movingPiece = findPieceAt(source);
+        List<Direction> directions = Direction.createDirections(source, target);
+        List<SquareState> squareStates = new ArrayList<>();
+        Location currentLocation = source;
+        for (Direction direction : directions) {
+            currentLocation = currentLocation.move(direction);
+            Piece locatedPiece = map.get(currentLocation);
+            squareStates.add(findSquareStates(movingPiece, locatedPiece));
+        }
+        return Path.of(directions, squareStates);
+    }
+
+    private SquareState findSquareStates(Piece movingPiece, Piece locatedPiece) {
+        if (locatedPiece == null) {
+            return SquareState.EMPTY;
+        }
+        if (movingPiece.isAllyPiece(locatedPiece)) {
+            return SquareState.ALLY;
+        }
+        return SquareState.ENEMY;
+    }
+
+    private Piece findPieceAt(Location source) {
+        Piece piece = map.get(source);
+        if (piece == null) {
+            throw new IllegalArgumentException("말이 존재하지 않습니다.");
+        }
+        return piece;
     }
 }

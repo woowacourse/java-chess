@@ -8,7 +8,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    boolean canMove(Path path) {
+    public boolean canMove(Path path) {
         return path.isSizeOf(2)
                 && path.canReach()
                 && path.containsDiagonal()
