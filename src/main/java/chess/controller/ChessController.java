@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -10,7 +11,7 @@ public class ChessController {
     public void play() {
         OutputView.printStartMessage();
         InputView.inputStartCommand();
-        Board board = new Board();
+        Board board = new Board(BoardFactory.generateStartBoard());
         OutputView.printChessBoard(board.mapPositionToCharacter());
         runGame(board);
     }
