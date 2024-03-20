@@ -1,9 +1,11 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.dto.BoardDto;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,9 +35,12 @@ public class ChessController {
             Position position = entrySet.getKey();
             Piece piece = entrySet.getValue();
 
-            // TODO: 무슨 piece인지 검사해서 원하는 출력값 출력하게 하기
+            int realYPosition = position.getY() - 1;
+            int realXPosition = position.getX() - 1;
+            PieceType pieceType = piece.getType();
+            PieceInfo pieceInfo = piece.getPieceInfo();
 
-            rawBoard.get(position.getY() - 1).set(position.getX() - 1, "p");
+            rawBoard.get(realYPosition).set(realXPosition, pieceType.getPieceLetter(pieceInfo.getTeam()));
         }
         return new BoardDto(rawBoard);
     }

@@ -12,4 +12,8 @@ public class PieceInfo {
     public Position getPosition() {
         return position;
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }

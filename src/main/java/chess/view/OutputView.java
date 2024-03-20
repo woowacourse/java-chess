@@ -5,6 +5,7 @@ import java.util.List;
 
 public class OutputView {
 
+    // TODO: 인덴트 줄이기
     public static void printBoard(BoardDto boardDto) {
         List<List<String>> rawBoard = boardDto.getBoard();
 

@@ -8,4 +8,9 @@ public class King extends ChessPiece {
     public King(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KING;
+    }
 }

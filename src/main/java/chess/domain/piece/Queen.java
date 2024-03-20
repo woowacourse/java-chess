@@ -8,4 +8,9 @@ public class Queen extends ChessPiece {
     public Queen(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.QUEEN;
+    }
 }

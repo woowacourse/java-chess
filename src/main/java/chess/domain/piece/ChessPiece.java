@@ -17,7 +17,15 @@ public abstract class ChessPiece implements Piece {
     @Override
     public boolean move(Position newPosition, Board board) {
         Position currentPosition = pieceInfo.getPosition();
-        
+
         return moveStrategy.canMove(currentPosition, newPosition);
+    }
+
+    @Override
+    public abstract PieceType getType();
+
+    @Override
+    public PieceInfo getPieceInfo() {
+        return pieceInfo;
     }
 }

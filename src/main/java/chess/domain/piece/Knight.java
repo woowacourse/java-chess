@@ -8,4 +8,9 @@ public class Knight extends ChessPiece {
     public Knight(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KNIGHT;
+    }
 }

@@ -8,4 +8,9 @@ public class EmptyPiece extends ChessPiece {
     public EmptyPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.EMPTY;
+    }
 }

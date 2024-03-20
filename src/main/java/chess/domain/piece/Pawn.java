@@ -8,4 +8,9 @@ public class Pawn extends ChessPiece {
     public Pawn(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.PAWN;
+    }
 }
