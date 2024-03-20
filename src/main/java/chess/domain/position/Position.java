@@ -15,6 +15,21 @@ public class Position {
         return rank == this.rank && file == this.file;
     }
 
+    public int calculateRankDifference(Position target) {
+        return rank.calculateDifference(target.rank);
+    }
+
+    public int calculateFileDifference(Position target) {
+        return file.calculateDifference(target.file);
+    }
+
+    public Position move(int rankUnit, int fileUnit) {
+        Rank movedRank = rank.move(rankUnit);
+        File movedFile = file.move(fileUnit);
+
+        return Positions.of(movedRank, movedFile);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
