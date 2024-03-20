@@ -14,4 +14,8 @@ public class Piece {
     public Role getRole() {
         return role;
     }
+
+    public Color getColor(){
+        return color;
+    }
 }
