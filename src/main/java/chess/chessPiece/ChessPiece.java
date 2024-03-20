@@ -1,17 +1,14 @@
-package chess.chessPiece;
+package chess.chesspiece;
 
-import chess.chessBoard.Square;
-import java.util.Queue;
-
-public abstract class ChessPiece {
+public class ChessPiece {
 
     private final Camp camp;
+    private final ChessPieceProperty chessPieceProperty;
 
-    public ChessPiece(Camp camp) {
+    public ChessPiece(Camp camp, ChessPieceProperty chessPieceProperty) {
         this.camp = camp;
+        this.chessPieceProperty = chessPieceProperty;
     }
-
-    public abstract Queue<Square> findPath(Square startingPoint, Square endPoint);
 
     public boolean isBlackCamp() {
         return camp == Camp.BLACK;
