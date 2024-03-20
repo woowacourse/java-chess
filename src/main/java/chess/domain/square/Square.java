@@ -11,12 +11,12 @@ public class Square {
         this.file = file;
     }
 
-    public File file() {
-        return file;
+    public int getFileIndex() {
+        return file.ordinal();
     }
 
-    public Rank rank() {
-        return rank;
+    public int getRankIndex() {
+        return rank.ordinal();
     }
 
     @Override

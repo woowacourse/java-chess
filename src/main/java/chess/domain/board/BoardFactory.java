@@ -1,8 +1,7 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -12,27 +11,18 @@ import chess.domain.piece.Rook;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 public class BoardFactory {
     private BoardFactory() {
     }
 
     public static Board createBoard() {
-        Map<Square, Piece> initialArrangement = new TreeMap<>(
-                Comparator.comparing(Square::rank).reversed()
-                        .thenComparing(Square::file)
-        );
+        Map<Square, Piece> initialArrangement = new HashMap<>();
         initialArrangement.putAll(createLine(Rank.ONE, createPieceLine(Color.WHITE)));
         initialArrangement.putAll(createLine(Rank.TWO, createPawnLine(Color.WHITE)));
-        initialArrangement.putAll(createLine(Rank.THREE, createEmptyLine()));
-        initialArrangement.putAll(createLine(Rank.FOUR, createEmptyLine()));
-        initialArrangement.putAll(createLine(Rank.FIVE, createEmptyLine()));
-        initialArrangement.putAll(createLine(Rank.SIX, createEmptyLine()));
         initialArrangement.putAll(createLine(Rank.SEVEN, createPawnLine(Color.BLACK)));
         initialArrangement.putAll(createLine(Rank.EIGHT, createPieceLine(Color.BLACK)));
         return new Board(initialArrangement);
@@ -67,13 +57,5 @@ public class BoardFactory {
             secondLine.put(file, new Pawn(color));
         }
         return secondLine;
-    }
-
-    private static Map<File, Piece> createEmptyLine() {
-        Map<File, Piece> emptyPieces = new HashMap<>();
-        for (File file : File.values()) {
-            emptyPieces.put(file, new EmptyPiece());
-        }
-        return emptyPieces;
     }
 }

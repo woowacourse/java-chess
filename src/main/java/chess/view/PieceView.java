@@ -1,45 +1,34 @@
 package chess.view;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import java.util.Arrays;
-import java.util.function.Predicate;
+import java.util.Objects;
 
 public enum PieceView {
-    R(piece -> piece instanceof Rook, "r"),
-    N(piece -> piece instanceof Knight, "n"),
-    B(piece -> piece instanceof Bishop, "b"),
-    Q(piece -> piece instanceof Queen, "q"),
-    K(piece -> piece instanceof King, "k"),
-    P(piece -> piece instanceof Pawn, "p"),
-    NONE(piece -> piece instanceof EmptyPiece, "."),
-    ;
+    KING('K'),
+    QUEEN('Q'),
+    PAWN('P'),
+    ROOK('R'),
+    BISHOP('B'),
+    KNIGHT('N');
 
-    private final Predicate<Piece> predicate;
-    private final String symbol;
+    private final char display;
 
-    PieceView(final Predicate<Piece> predicate, final String symbol) {
-        this.predicate = predicate;
-        this.symbol = symbol;
+    PieceView(final char display) {
+        this.display = display;
     }
 
-    public static String findValue(final Piece piece) {
+    public static char getDisplayOf(final String type, final String color) {
         return Arrays.stream(PieceView.values())
-                .filter(value -> value.predicate.test(piece))
-                .map(value -> {
-                    if (piece.isWhite()) {
-                        return value.symbol;
-                    }
-                    return value.symbol.toUpperCase();
-                })
+                .filter(value -> value.name().equals(type))
+                .map(value -> value.getDisplayOf(color))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("기물 표식을 찾을 수 없습니다."));
+                .orElseThrow(IllegalAccessError::new);
     }
 
+    public char getDisplayOf(final String color) {
+        if (Objects.equals(color, "WHITE")) {
+            return Character.toLowerCase(display);
+        }
+        return display;
+    }
 }

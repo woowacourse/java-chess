@@ -4,13 +4,19 @@ import java.util.Objects;
 
 public abstract class Piece {
     private final Color color;
+    private final Type type;
 
-    public Piece(final Color color) {
+    public Piece(final Color color, final Type type) {
         this.color = color;
+        this.type = type;
     }
 
-    public boolean isWhite() {
-        return color.isWhite();
+    public Color color() {
+        return color;
+    }
+
+    public Type type() {
+        return type;
     }
 
     @Override
