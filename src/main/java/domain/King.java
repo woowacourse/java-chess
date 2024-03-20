@@ -13,6 +13,8 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target) {
-        return false;
+        return current.hasOnlyOneFileGap(target) ||
+                current.hasOnlyOneRankGap(target) ||
+                current.hasOnlyOneDiagonalGap(target);
     }
 }
