@@ -27,6 +27,10 @@ public class Position {
         }
     }
 
+    public boolean isAvailablePosition(int file, int rank) {
+        return 1 <= file && file <= 8 && 1 <= rank && rank <= 8;
+    }
+
     public static Position of(int file, int rank) {
         return cache.stream()
                 .filter(position -> position.file == file && position.rank == rank)
