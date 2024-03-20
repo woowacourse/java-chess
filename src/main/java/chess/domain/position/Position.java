@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.piece.Color;
 import java.util.Objects;
 
 public class Position {
@@ -45,5 +46,15 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public boolean isPawnFirstTry(Color color) {
+        if (color == Color.BLACK && rank == Rank.SEVEN) {
+            return true;
+        }
+        if (color == Color.WHITE && rank == Rank.TWO) {
+            return true;
+        }
+        return false;
     }
 }
