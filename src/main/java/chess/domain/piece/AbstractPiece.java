@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import java.util.List;
 import java.util.Objects;
+import chess.domain.Coordinate;
 
 abstract class AbstractPiece implements Piece {
 
@@ -11,6 +13,9 @@ abstract class AbstractPiece implements Piece {
         this.type = type;
         this.team = team;
     }
+
+    @Override
+    public abstract List<Coordinate> findAllPossibleCoordinate(Coordinate start);
 
     @Override
     public PieceType getType() {

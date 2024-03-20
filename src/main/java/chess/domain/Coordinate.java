@@ -12,6 +12,14 @@ public class Coordinate {
         this.file = new File(fileValue);
     }
 
+    public char getFile() {
+        return file.getValue();
+    }
+
+    public int getRank() {
+        return rank.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
