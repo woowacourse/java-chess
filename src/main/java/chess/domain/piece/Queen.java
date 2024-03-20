@@ -17,6 +17,15 @@ public class Queen extends Piece {
 
     @Override
     public Piece move(Position newPosition) {
-        return null;
+        int differenceRow = position.differenceRow(newPosition);
+        int differenceColumn = position.differenceColumn(newPosition);
+
+        if (!position.equals(newPosition)
+                && ((differenceRow == 0 || differenceColumn == 0)
+                || Math.abs(differenceRow) == Math.abs(differenceColumn))) {
+            return new Queen(newPosition, team);
+        }
+
+        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 }

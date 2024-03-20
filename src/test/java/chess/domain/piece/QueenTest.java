@@ -1,11 +1,14 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -18,4 +21,21 @@ class QueenTest {
                 .isEqualTo(character);
     }
 
+    @DisplayName("퀸은 직선 및 대각선으로 움직일 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"4,2", "2,2", "2,4", "2,6", "4,6", "6,6", "6,4", "6,2"})
+    void queenMove(int row, int column) {
+        assertThatCode(() -> new Queen(Position.of(4, 4), Team.WHITE)
+                .move(Position.of(row, column)))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("퀸은 직선 혹은 대각선이 아닌 경우, 예외가 발생한다.")
+    @Test
+    void rookMoveOverLineAndDiagonalLine() {
+        assertThatThrownBy(() -> new Queen(Position.of(1, 1), Team.WHITE)
+                .move(Position.of(2, 3)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치로 움직일 수 없습니다.");
+    }
 }
