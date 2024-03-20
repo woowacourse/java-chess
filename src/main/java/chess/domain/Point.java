@@ -19,7 +19,17 @@ public class Point {
     public boolean isDiagonal(Point point) {
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
+        if (this.equals(point) || rankDistance == 0) {
+            return false;
+        }
         return (double) fileDistance / rankDistance == 1;
+    }
+
+    public boolean isStraight(Point point) {
+        if (this.equals(point)) {
+            return false;
+        }
+        return this.file.equals(point.file) || this.rank.equals(point.rank);
     }
 
     @Override
