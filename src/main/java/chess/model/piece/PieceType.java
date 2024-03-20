@@ -42,8 +42,8 @@ public enum PieceType {
         return colorId == 0;
     }
 
-    public boolean isBlack() {
-        return colorId == 1;
+    public boolean isKnight() {
+        return this == BLACK_KNIGHT || this == WHITE_KNIGHT;
     }
 
     public String getDisplayName() {

@@ -66,6 +66,10 @@ public abstract class Piece implements MoveStrategy {
         return type.isSameColor(turnCount);
     }
 
+    public boolean isKnight() {
+        return type.isKnight();
+    }
+
     @Override
     public String toString() {
         return type.getDisplayName();

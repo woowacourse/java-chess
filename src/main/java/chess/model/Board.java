@@ -63,6 +63,7 @@ public class Board {
 
         validatePiecesPosition(sourcePiece, targetPiece);
         validatePieceCanMove(sourcePiece, source, target);
+        validatePieceRoute(sourcePiece, source, target);
     }
 
     private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
@@ -77,6 +78,33 @@ public class Board {
     private void validatePieceCanMove(Piece sourcePiece, Position source, Position target) {
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException("target위치로 기물을 이동할 수 없습니다.");
+        }
+    }
+
+    private void validatePieceRoute(Piece sourcePiece, Position source, Position target) {
+        if (sourcePiece.isKnight()) {
+            return;
+        }
+        int rowDifference = target.getRow() - source.getRow();
+        int columnDifference = target.getColumn() - source.getColumn();
+
+        while (rowDifference != 0 && columnDifference != 0) {
+            if (rowDifference > 0) {
+                rowDifference--;
+            }
+            if (rowDifference < 0) {
+                rowDifference++;
+            }
+            if (columnDifference > 0) {
+                columnDifference--;
+            }
+            if (columnDifference < 0) {
+                columnDifference++;
+            }
+            Position position = new Position(source.getRow() + rowDifference, source.getColumn() + columnDifference);
+            if (!board.get(position).isNone()) {
+                throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
+            }
         }
     }
 

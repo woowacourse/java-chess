@@ -1,6 +1,7 @@
 package chess.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.dto.BoardDto;
@@ -53,5 +54,22 @@ class BoardTest {
         assertThatThrownBy(() -> board.move("c2", "c5"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("target위치로 기물을 이동할 수 없습니다.");
+    }
+
+    @DisplayName("이동 경로 상에 기물이 존재하면 예외가 발생한다.")
+    @Test
+    void obstacleOnRoute() {
+        Board board = Board.createInitialBoard();
+        assertThatThrownBy(() -> board.move("c1", "e3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로 상에 다른 기물이 존재합니다.");
+    }
+
+    @DisplayName("knight는 이동 경로 상에 기물이 존재해도 예외가 발생하지 않는다")
+    @Test
+    void obstacleOnRouteButKnight() {
+        Board board = Board.createInitialBoard();
+        assertThatCode(() -> board.move("b1", "c3"))
+                .doesNotThrowAnyException();
     }
 }
