@@ -56,7 +56,7 @@ class PawnTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 초과 움직일 수 없다.")
+    @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
     void startWhitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Position.of(2, 1), Team.WHITE)
@@ -65,7 +65,7 @@ class PawnTest {
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
-    @DisplayName("검은색 폰은 시작 지점에 있는 경우, 2칸 초과 움직일 수 없다.")
+    @DisplayName("검은색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
     void startBlackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Position.of(7, 1), Team.BLACK)
@@ -74,7 +74,7 @@ class PawnTest {
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
-    @DisplayName("흰색 폰은 1칸 초과 움직일 수 없다.")
+    @DisplayName("흰색 폰은 1칸 초과시 예외가 발생한다.")
     @Test
     void whitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Position.of(3, 1), Team.WHITE)
@@ -83,7 +83,7 @@ class PawnTest {
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
-    @DisplayName("검은색 폰은 1칸 초과 움직일 수 없다.")
+    @DisplayName("검은색 폰은 1칸 초과시 예외가 발생한다.")
     @Test
     void blackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Position.of(6, 1), Team.BLACK)

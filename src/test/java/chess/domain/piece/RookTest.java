@@ -30,7 +30,7 @@ class RookTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("룩은 직선이 아닌 경우, 움직일 수 없다.")
+    @DisplayName("룩은 직선이 아닌 경우, 예외가 발생한다.")
     @Test
     void rookMoveOverLine() {
         assertThatThrownBy(() -> new Rook(Position.of(1, 1), Team.WHITE)

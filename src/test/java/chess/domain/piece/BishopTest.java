@@ -30,7 +30,7 @@ class BishopTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("비숍은 대각선이 아닌 경우, 움직일 수 없다.")
+    @DisplayName("비숍은 대각선이 아닌 경우, 예외가 발생한다.")
     @Test
     void bishopMoveOverDiagonalLine() {
         assertThatThrownBy(() -> new Bishop(Position.of(1, 3), Team.WHITE)
