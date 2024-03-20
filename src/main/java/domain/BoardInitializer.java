@@ -21,7 +21,8 @@ public class BoardInitializer {
     private static final int MAXIMUM_MOVE_BOUND = 8;
     private static final int KING_MAXIMUM_MOVE_BOUND = 1;
 
-    private static final MoveStrategy pawnStrategy = new PawnMoveStrategy();
+    private static final MoveStrategy whitePawnStrategy = new PawnMoveStrategy(TeamColor.WHITE);
+    private static final MoveStrategy blackPawnStrategy = new PawnMoveStrategy(TeamColor.BLACK);
     private static final MoveStrategy knightStrategy = new KnightMoveStrategy();
     private static final MoveStrategy rookStrategy = new ContinuousMoveStrategy(UnitVector.orthogonalVectors(), MAXIMUM_MOVE_BOUND);
     private static final MoveStrategy bishopStrategy = new ContinuousMoveStrategy(UnitVector.diagonalVectors(), MAXIMUM_MOVE_BOUND);
@@ -42,13 +43,13 @@ public class BoardInitializer {
             Map.entry(WHITE_KING, List.of(new Position(E, ONE)))
     );
     private static final Map<PieceType, MoveStrategy> moveStrategies = Map.ofEntries(
-            Map.entry(BLACK_PAWN, pawnStrategy),
+            Map.entry(BLACK_PAWN, blackPawnStrategy),
             Map.entry(BLACK_ROOK, rookStrategy),
             Map.entry(BLACK_KNIGHT, knightStrategy),
             Map.entry(BLACK_BISHOP, bishopStrategy),
             Map.entry(BLACK_QUEEN, queenStrategy),
             Map.entry(BLACK_KING, kingStrategy),
-            Map.entry(WHITE_PAWN, pawnStrategy),
+            Map.entry(WHITE_PAWN, whitePawnStrategy),
             Map.entry(WHITE_ROOK, rookStrategy),
             Map.entry(WHITE_KNIGHT, knightStrategy),
             Map.entry(WHITE_BISHOP, bishopStrategy),
