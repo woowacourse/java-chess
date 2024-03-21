@@ -44,4 +44,8 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public static Rank of(String name) {
+        return of(Integer.parseInt(name));
+    }
 }

@@ -43,4 +43,11 @@ public enum File {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public static File of(String name) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().equals(name))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
 }

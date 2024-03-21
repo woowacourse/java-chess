@@ -24,5 +24,16 @@ public class ChessMachine {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
         outputView.printChessBoard(chessBoard);
+
+        while (true) {
+            List<String> fromTo = inputView.getMoveCommand();
+
+            if (fromTo.size() != 2) {
+                break;
+            }
+
+            chessBoard.move(fromTo.get(0), fromTo.get(1));
+            outputView.printChessBoard(chessBoard);
+        }
     }
 }
