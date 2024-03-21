@@ -18,14 +18,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ChessGame {
-    private final Board board;
+public class ChessGameController {
+    public void play() {
+        Board board = new Board();
+        board.placeInitialPieces();
 
-    public ChessGame(Board board) {
-        this.board = board;
-    }
-
-    public void playGame() {
         boolean checkFirst = true;
         Team turn = Team.WHITE;
         while (true) {
@@ -47,11 +44,11 @@ public class ChessGame {
                 }
                 Position source = Position.of(commands.get(1));
                 Position target = Position.of(commands.get(2));
-                if (source.equals(target) || !checkTurn(source, turn)) {
+                if (source.equals(target) || !checkTurn(board, source, turn)) {
                     System.out.println("잘못된 움직임입니다.");
                     continue;
                 }
-                movePieceAndRenewBoard(source, target);
+                movePieceAndRenewBoard(board, source, target);
                 OutputView.printBoard(makeBoardDto(board.getBoard()));
                 turn = Team.takeTurn(turn);
                 continue;
@@ -62,11 +59,11 @@ public class ChessGame {
         }
     }
 
-    public void movePieceAndRenewBoard(Position source, Position target) {
+    public void movePieceAndRenewBoard(Board board, Position source, Position target) {
         board.movePieceAndRenewBoard(source, target);
     }
 
-    public boolean checkTurn(Position source, Team team) {
+    public boolean checkTurn(Board board, Position source, Team team) {
         return board.getBoard().get(source).isSameTeam(team);
     }
 
@@ -81,14 +78,17 @@ public class ChessGame {
         for (var entrySet : board.entrySet()) {
             Position position = entrySet.getKey();
             Piece piece = entrySet.getValue();
-
-            int realYPosition = position.getY() - 1;
-            int realXPosition = position.getX() - 1;
-            PieceType pieceType = piece.getType();
-            PieceInfo pieceInfo = piece.getPieceInfo();
-
-            rawBoard.get(realYPosition).set(realXPosition, pieceType.getPieceLetter(pieceInfo.getTeam()));
+            makeBoardDtoPiece(position, piece, rawBoard);
         }
         return new BoardDto(rawBoard);
+    }
+
+    private void makeBoardDtoPiece(Position position, Piece piece, List<List<String>> rawBoard) {
+        int realYPosition = position.getY() - 1;
+        int realXPosition = position.getX() - 1;
+        PieceType pieceType = piece.getType();
+        PieceInfo pieceInfo = piece.getPieceInfo();
+
+        rawBoard.get(realYPosition).set(realXPosition, pieceType.getPieceLetter(pieceInfo.getTeam()));
     }
 }
