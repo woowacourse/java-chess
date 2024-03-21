@@ -35,11 +35,9 @@ public class ChessGame {
         Board board = new Board();
         printBoardOutput(board);
 
-        
-        while (true) {
-            if (!RetryUtil.retryUntilNoException(() -> loopWhileEnd(board))) {
-                break;
-            }
+        boolean run = true;
+        while (run) {
+            run = RetryUtil.retryUntilNoException(() -> loopWhileEnd(board));
         }
     }
 

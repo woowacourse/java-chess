@@ -18,6 +18,9 @@ public enum Rank {
     EIGHT(8),
     ;
 
+    private static final String OUT_OF_RANGE_ERROR = "더 이상 전진할 수 없습니다.";
+    private static final String RANK_NOT_FOUND_ERROR = "존재하지 않는 랭크입니다.";
+
     private final int value;
 
     Rank(int value) {
@@ -35,7 +38,7 @@ public enum Rank {
 
     private void validateIndexBound(int targetIndex, List<Rank> ranks) {
         if (targetIndex < 0 || ranks.size() <= targetIndex) {
-            throw new IndexOutOfBoundsException("더 이상 전진할 수 없습니다.");
+            throw new IndexOutOfBoundsException(OUT_OF_RANGE_ERROR);
         }
     }
 
@@ -49,7 +52,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(RANK_NOT_FOUND_ERROR));
     }
 
     public static List<Rank> reverse() {

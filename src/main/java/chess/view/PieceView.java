@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.Arrays;
 
 public enum PieceView {
+
     KING("K", "k"),
     QUEEN("Q", "q"),
     ROOK("R", "r"),
@@ -34,5 +35,4 @@ public enum PieceView {
 
         return pieceView.whiteView;
     }
-
 }

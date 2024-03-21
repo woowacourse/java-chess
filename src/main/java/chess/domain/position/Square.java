@@ -12,8 +12,10 @@ public class Square {
     private static final Pattern INTEGER_FORMAT_REGEX = Pattern.compile("^[1-9][0-9]*$");
 
     private static final Map<String, Square> pool = Arrays.stream(Rank.values())
-            .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Square(file, rank)))
+            .flatMap(rank -> Arrays.stream(File.values())
+                                    .map(file -> new Square(file, rank)))
             .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+    private static final String INVALID_RANK_ERROR = "랭크는 자연수로 입력해야 합니다.";
 
     private final File file;
     private final Rank rank;
@@ -44,7 +46,7 @@ public class Square {
 
     private static void validateRank(String rankValue) {
         if (!INTEGER_FORMAT_REGEX.matcher(rankValue).matches()) {
-            throw new IllegalArgumentException("랭크는 자연수로 입력해야 합니다.");
+            throw new IllegalArgumentException(INVALID_RANK_ERROR);
         }
     }
 

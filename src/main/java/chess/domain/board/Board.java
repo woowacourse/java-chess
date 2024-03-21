@@ -12,10 +12,15 @@ import java.util.Map;
 
 public class Board {
 
-    public static final int VERTICAL_UP_INDEX = 1;
-    public static final int VERTICAL_DOWN_INDEX = -1;
-    public static final int HORIZONTAL_RIGHT_INDEX = 1;
-    public static final int HORIZONTAL_LEFT_INDEX = -1;
+    private static final int VERTICAL_UP_INDEX = 1;
+    private static final int VERTICAL_DOWN_INDEX = -1;
+    private static final int HORIZONTAL_RIGHT_INDEX = 1;
+    private static final int HORIZONTAL_LEFT_INDEX = -1;
+    private static final String NOT_YOUR_TURN_ERROR = "움직이려고 하는 말이 본인 진영의 말이 아닙니다.";
+    private static final String SAME_COLOR_ERROR = "목적지에 같은 편 말이 있어 이동할 수 없습니다.";
+    private static final String CANNOT_MOVE_ERROR = "해당 말의 규칙으로는 도착지로 갈 수 없습니다.";
+    private static final String PATH_BLOCKED_ERROR = "막힌 경로입니다.";
+    public static final String PAWN_CANNOT_CATCH_STRAIGHT_ERROR = "폰은 직선 경로로 상대 말을 잡을 수 없습니다.";
 
     private final Map<Square, Piece> board;
     private final Turn turn;
@@ -37,14 +42,12 @@ public class Board {
         checkSameColor(sourcePiece, destinationPiece);
 
         if (sourcePiece.isSameType(PieceType.PAWN.name())) {
-            // Direction LEFT/RIGHT/DOWN/UP이면 그냥 바꿔치기 & 대각 이동 불가
             SquareDifferent squareDifferent = source.calculateDiff(destination);
             Direction direction = Direction.findDirectionByDiff(squareDifferent);
 
             if (!direction.isDiagonal() && !destinationPiece.isEmpty()) {
-                throw new IllegalArgumentException("폰은 직선 경로로 상대 말을 잡을 수 없습니다.");
+                throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
             }
-            // Direction 대각이면 잡기 & 대각 이동 가능
         }
 
         checkCannotMove(source, destination, sourcePiece);
@@ -54,30 +57,25 @@ public class Board {
         turn.update();
     }
 
-    private void moveOrCatch(Piece sourcePiece, Piece destinationPiece, Square source, Square destination) {
-        if (!destinationPiece.isEmpty()) {
-            board.replace(destination, sourcePiece);
-            board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
-            return;
-        }
-
-        board.replace(source, destinationPiece);
-        board.replace(destination, sourcePiece);
-    }
-
     private void checkTurn(Piece sourcePiece) {
         if (turn.isBlackTurn() && sourcePiece.isWhite()) {
-            throw new IllegalArgumentException("움직이려고 하는 말이 본인 진영의 말이 아닙니다.");
+            throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
         }
 
         if (turn.isWhiteTurn() && sourcePiece.isBlack()) {
-            throw new IllegalArgumentException("움직이려고 하는 말이 본인 진영의 말이 아닙니다.");
+            throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
+        }
+    }
+
+    private void checkSameColor(Piece sourcePiece, Piece destinationPiece) {
+        if (sourcePiece.isSameColor(destinationPiece)) {
+            throw new IllegalArgumentException(SAME_COLOR_ERROR);
         }
     }
 
     private void checkCannotMove(Square source, Square destination, Piece sourcePiece) {
         if (!sourcePiece.canMove(source, destination)) {
-            throw new IllegalArgumentException("해당 말의 규칙으로는 도착지로 갈 수 없습니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_ERROR);
         }
     }
 
@@ -96,7 +94,7 @@ public class Board {
 
         while (!candidate.equals(destination)) {
             if (!source.equals(candidate) && !board.get(candidate).isEmpty()) {
-                throw new IllegalArgumentException("막힌 경로입니다.");
+                throw new IllegalArgumentException(PATH_BLOCKED_ERROR);
             }
 
             if (Direction.findDirectionByDiff(diff).equals(Direction.UP)) {
@@ -140,9 +138,14 @@ public class Board {
         }
     }
 
-    private void checkSameColor(Piece sourcePiece, Piece destinationPiece) {
-        if (sourcePiece.isSameColor(destinationPiece)) {
-            throw new IllegalArgumentException("목적지에 같은 편 말이 있어 이동할 수 없습니다.");
+    private void moveOrCatch(Piece sourcePiece, Piece destinationPiece, Square source, Square destination) {
+        if (!destinationPiece.isEmpty()) {
+            board.replace(destination, sourcePiece);
+            board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
+            return;
         }
+
+        board.replace(source, destinationPiece);
+        board.replace(destination, sourcePiece);
     }
 }

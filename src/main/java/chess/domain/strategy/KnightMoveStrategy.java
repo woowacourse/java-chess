@@ -6,9 +6,6 @@ import chess.dto.SquareDifferent;
 
 public class KnightMoveStrategy implements MoveStrategy {
 
-    /**
-     * 한 칸 전진 후 한 칸 대각선으로 이동할 수 있다.
-     */
     @Override
     public boolean check(Square source, Square destination, ColorType colorType) {
         SquareDifferent diff = source.calculateDiff(destination);
