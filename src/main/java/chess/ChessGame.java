@@ -1,15 +1,18 @@
 package chess;
 
-import chess.domain.position.File;
-import chess.domain.position.Square;
-import chess.domain.position.Rank;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
+import chess.domain.position.Square;
+import chess.dto.MoveCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -23,13 +26,25 @@ public class ChessGame {
 
     public void play() {
         String progressCommand = inputView.readProgressCommand();
-        // TODO: end가 들어올 때까지 게임이 실행되게 변경
+
         if (!inputView.isStartCommand(progressCommand)) {
             return;
         }
 
         Board board = new Board();
         printBoardOutput(board);
+
+        while (true) {
+            List<String> command = inputView.readCommand();
+
+            if (command.size() == 1) {
+                break;
+            }
+
+            MoveCommand moveCommand = new MoveCommand(Square.from(command.get(1)), Square.from(command.get(2)));
+            board.move(moveCommand.source(), moveCommand.destination());
+            printBoardOutput(board);
+        }
     }
 
     private void printBoardOutput(Board board) {

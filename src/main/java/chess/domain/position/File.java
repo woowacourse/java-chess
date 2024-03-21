@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum File {
@@ -33,5 +34,12 @@ public enum File {
         List<File> files = List.of(File.values());
 
         return files.indexOf(this) - files.indexOf(file);
+    }
+
+    public static File findFileByName(String name) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.name().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 파일입니다."));
     }
 }
