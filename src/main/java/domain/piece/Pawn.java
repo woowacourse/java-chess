@@ -26,17 +26,17 @@ public class Pawn extends Piece {
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        Rank rank = Rank.SEVEN;
+        Rank startRank = Rank.SEVEN;
         ChessVector startChessVector = BLACK_START_SQUARE_VECTOR;
         ChessVector moveChessVector = BLACK_MOVE_SQUARE_VECTOR;
 
         if (camp == Camp.WHITE) {
-            rank = Rank.TWO;
+            startRank = Rank.TWO;
             startChessVector = WHITE_START_SQUARE_VECTOR;
             moveChessVector = WHITE_MOVE_SQUARE_VECTOR;
         }
 
-        return (source.isRank(rank) && startChessVector.equals(chessVector))
+        return (source.isRank(startRank) && startChessVector.equals(chessVector))
                 || chessVector.equals(moveChessVector);
     }
 
