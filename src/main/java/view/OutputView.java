@@ -9,6 +9,8 @@ import view.util.PieceTranslator;
 
 public class OutputView {
 
+    private static final int CHESS_BOARD_SIZE = 8;
+
     public void printInfo() {
         System.out.print("""
                 > 체스 게임을 시작합니다.
@@ -19,13 +21,17 @@ public class OutputView {
     }
 
     public void printBoard(Map<Coordinate, Piece> board) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Coordinate coordinate = new Coordinate(new Row(i), new Column(j));
-                Piece piece = board.get(coordinate);
-                System.out.print(PieceTranslator.getName(piece));
-            }
+        for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
+            printRow(board, row);
             System.out.println();
+        }
+    }
+
+    private void printRow(Map<Coordinate, Piece> board, int row) {
+        for (int column = 0; column < CHESS_BOARD_SIZE; column++) {
+            Coordinate coordinate = new Coordinate(new Row(row), new Column(column));
+            Piece piece = board.get(coordinate);
+            System.out.print(PieceTranslator.getName(piece));
         }
     }
 }
