@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Set<Position> getMoveRoute(Moving moving) {
+    public Set<Position> getMoveRoute(final Moving moving) {
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
@@ -21,7 +21,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean canMovable(Moving moving) {
+    protected boolean canMovable(final Moving moving) {
         if (moving.isNotMoved()) {
             return false;
         }

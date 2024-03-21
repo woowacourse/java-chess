@@ -2,10 +2,10 @@ package model.piece;
 
 import java.util.Set;
 import model.Camp;
-import view.message.PieceType;
 import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
+import view.message.PieceType;
 
 public class Pawn extends Piece {
 
@@ -14,9 +14,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Position> getMoveRoute(Moving moving) {
-        Position currentPosition = moving.currentPosition();
-        Position nextPosition = moving.nextPosition();
+    public Set<Position> getMoveRoute(final Moving moving) {
+        final Position currentPosition = moving.getCurrentPosition();
+        final Position nextPosition = moving.getNextPosition();
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
@@ -26,7 +26,7 @@ public class Pawn extends Piece {
         return getTwoStraightRoute(currentPosition);
     }
 
-    private Set<Position> getTwoStraightRoute(Position currentPosition) {
+    private Set<Position> getTwoStraightRoute(final Position currentPosition) {
         if (Camp.BLACK == camp) {
             return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
         }
@@ -34,18 +34,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean canMovable(Moving moving) {
+    protected boolean canMovable(final Moving moving) {
         if (moving.isNotMoved()) {
             return false;
         }
-        Position currentPosition = moving.currentPosition();
-        Position nextPosition = moving.nextPosition();
-        int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        final Position currentPosition = moving.getCurrentPosition();
+        final Position nextPosition = moving.getNextPosition();
+        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
+        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
         return isStraight(currentPosition, dColumn, dRow);
     }
 
-    private boolean isStraight(Position currentPosition, int dColumn, int dRow) {
+    private boolean isStraight(final Position currentPosition, final int dColumn, final int dRow) {
         if (dColumn != 0) {
             return false;
         }
@@ -58,7 +58,7 @@ public class Pawn extends Piece {
         return dRow == 1;
     }
 
-    private boolean isBlackTwoStraight(Position currentPosition, int dRow) {
+    private boolean isBlackTwoStraight(final Position currentPosition, final int dRow) {
         if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
             return true;
         }
@@ -66,25 +66,25 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Position> getAttackRoute(Moving moving) {
+    public Set<Position> getAttackRoute(final Moving moving) {
         if (!canAttack(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
         return Set.of();
     }
 
-    private boolean canAttack(Moving moving) {
+    private boolean canAttack(final Moving moving) {
         if (moving.isNotMoved()) {
             return false;
         }
-        Position currentPosition = moving.currentPosition();
-        Position nextPosition = moving.nextPosition();
-        int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        final Position currentPosition = moving.getCurrentPosition();
+        final Position nextPosition = moving.getNextPosition();
+        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
+        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
         return isDiagonal(dColumn, dRow);
     }
 
-    private boolean isDiagonal(int dColumn, int dRow) {
+    private boolean isDiagonal(final int dColumn, final int dRow) {
         if (Math.abs(dColumn) != 1) {
             return false;
         }

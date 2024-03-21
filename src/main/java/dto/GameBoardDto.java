@@ -17,7 +17,7 @@ public class GameBoardDto {
         this.value = value;
     }
 
-    public static GameBoardDto from(GameBoard gameBoard) {
+    public static GameBoardDto from(final GameBoard gameBoard) {
         List<List<String>> tmp = createEmptyBoard();
         Map<Position, Piece> board = gameBoard.getBoard();
 

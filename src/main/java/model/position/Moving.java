@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public final class Moving {
+public class Moving {
     private final Position currentPosition;
     private final Position nextPosition;
 
@@ -17,25 +17,25 @@ public final class Moving {
     }
 
     public boolean isHorizontal() {
-        int currentRow = currentPosition.getRowIndex();
-        int nextRow = nextPosition.getRowIndex();
+        final int currentRow = currentPosition.getRowIndex();
+        final int nextRow = nextPosition.getRowIndex();
 
         return currentRow == nextRow;
     }
 
     public boolean isVertical() {
-        int currentColumn = currentPosition.getColumnIndex();
-        int nextColumn = nextPosition.getColumnIndex();
+        final int currentColumn = currentPosition.getColumnIndex();
+        final int nextColumn = nextPosition.getColumnIndex();
 
         return currentColumn == nextColumn;
     }
 
     public boolean isDiagonal() {
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
+        final int currentRow = currentPosition.getRowIndex();
+        final int currentColumn = currentPosition.getColumnIndex();
 
-        int nextRow = nextPosition.getRowIndex();
-        int nextColumn = nextPosition.getColumnIndex();
+        final int nextRow = nextPosition.getRowIndex();
+        final int nextColumn = nextPosition.getColumnIndex();
 
         return Math.abs(currentRow - nextRow) == Math.abs(currentColumn - nextColumn);
     }
@@ -45,9 +45,9 @@ public final class Moving {
     }
 
     public Set<Position> route() {
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
-        int index = Direction.from(currentPosition, nextPosition).getIndex();
+        final int currentRow = currentPosition.getRowIndex();
+        final int currentColumn = currentPosition.getColumnIndex();
+        final int index = Direction.from(currentPosition, nextPosition).getIndex();
 
         Set<Position> result = new HashSet<>();
         for (int i = 1; i < distance(); i++) {
@@ -59,33 +59,33 @@ public final class Moving {
     }
 
     private int distance() {
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
+        final int currentRow = currentPosition.getRowIndex();
+        final int currentColumn = currentPosition.getColumnIndex();
 
-        int nextRow = nextPosition.getRowIndex();
-        int nextColumn = nextPosition.getColumnIndex();
+        final int nextRow = nextPosition.getRowIndex();
+        final int nextColumn = nextPosition.getColumnIndex();
+
         return Math.max(Math.abs(currentRow - nextRow), Math.abs(currentColumn - nextColumn));
     }
 
-    public Position currentPosition() {
+    public Position getCurrentPosition() {
         return currentPosition;
     }
 
-    public Position nextPosition() {
+    public Position getNextPosition() {
         return nextPosition;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
+    public boolean equals(Object target) {
+        if (target == this) {
             return true;
         }
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (!(target instanceof Moving moving)) {
             return false;
         }
-        var that = (Moving) obj;
-        return Objects.equals(this.currentPosition, that.currentPosition) &&
-                Objects.equals(this.nextPosition, that.nextPosition);
+        return Objects.equals(currentPosition, moving.currentPosition) && Objects.equals(nextPosition,
+                moving.nextPosition);
     }
 
     @Override

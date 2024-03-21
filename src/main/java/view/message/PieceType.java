@@ -23,7 +23,6 @@ public enum PieceType {
     QUEEN_WHITE(new Queen(Camp.WHITE), "q"),
     ROOK_BLACK(new Rook(Camp.BLACK), "R"),
     ROOK_WHITE(new Rook(Camp.WHITE), "r");
-    ;
 
     private final Piece piece;
     private final String value;

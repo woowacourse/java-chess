@@ -14,11 +14,11 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    public abstract Set<Position> getMoveRoute(Moving moving);
+    public abstract Set<Position> getMoveRoute(final Moving moving);
 
-    protected abstract boolean canMovable(Moving moving);
+    protected abstract boolean canMovable(final Moving moving);
 
-    public Set<Position> getAttackRoute(Moving moving) {
+    public Set<Position> getAttackRoute(final Moving moving) {
         return getMoveRoute(moving);
     }
 
@@ -31,14 +31,14 @@ public abstract class Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(final Object target) {
+        if (this == target) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (target == null || getClass() != target.getClass()) {
             return false;
         }
-        Piece piece = (Piece) o;
+        Piece piece = (Piece) target;
         return camp == piece.camp;
     }
 

@@ -18,7 +18,6 @@ public class OutputView {
         }
     }
 
-
     public void printException(final Exception exception) {
         System.out.printf("[ERROR] %s%n", exception.getMessage());
     }

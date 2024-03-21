@@ -13,16 +13,15 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Set<Position> getMoveRoute(Moving moving) {
+    public Set<Position> getMoveRoute(final Moving moving) {
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
-
         return moving.route();
     }
 
     @Override
-    public boolean canMovable(Moving moving) {
+    public boolean canMovable(final Moving moving) {
         if (moving.isNotMoved()) {
             return false;
         }

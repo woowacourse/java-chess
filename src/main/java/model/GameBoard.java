@@ -61,13 +61,13 @@ public class GameBoard {
     public void move(Moving moving, Camp camp) {
         validate(camp, moving);
 
-        Piece piece = board.get(moving.currentPosition());
-        board.put(moving.nextPosition(), piece);
-        board.remove(moving.currentPosition());
+        Piece piece = board.get(moving.getCurrentPosition());
+        board.put(moving.getNextPosition(), piece);
+        board.remove(moving.getCurrentPosition());
     }
 
     private void validate(Camp camp, Moving moving) {
-        Position currentPosition = moving.currentPosition();
+        Position currentPosition = moving.getCurrentPosition();
         if (!board.containsKey(currentPosition)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
@@ -85,14 +85,14 @@ public class GameBoard {
             }
         }
 
-        Piece target = board.get(moving.nextPosition());
+        Piece target = board.get(moving.getNextPosition());
         if (target != null && target.isSameCamp(piece.getCamp())) {
             throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
         }
     }
 
     private Set<Position> getRoute(final Moving moving, final Piece piece) {
-        if (board.containsKey(moving.nextPosition())) {
+        if (board.containsKey(moving.getNextPosition())) {
             return piece.getAttackRoute(moving);
         }
         return piece.getMoveRoute(moving);

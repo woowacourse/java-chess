@@ -1,7 +1,6 @@
 package model.position;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum Column {
 
