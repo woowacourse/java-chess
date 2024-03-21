@@ -6,14 +6,14 @@ import java.util.function.BiPredicate;
 
 public enum Direction {
 
-    NORTH((file, rank) -> file == 0 && rank > 0),
-    NORTH_EAST((file, rank) -> file > 0 && rank > 0 && file.equals(rank)),
-    EAST((file, rank) -> file > 0 && rank == 0),
-    SOUTH_EAST((file, rank) -> file > 0 && rank < 0 && file == (-1)*rank),
-    SOUTH((file, rank) -> file == 0 && rank < 0),
-    SOUTH_WEST((file, rank) -> file < 0 && rank < 0 && file.equals(rank)),
-    WEST((file, rank) -> file < 0 && rank == 0),
-    NORTH_WEST((file, rank) -> file < 0 && rank > 0 && file == (-1)*rank),
+    NORTH((file, rank) -> file == 0 && rank < 0),
+    NORTH_EAST((file, rank) -> file < 0 && rank < 0 && file.equals(rank)),
+    EAST((file, rank) -> file < 0 && rank == 0),
+    SOUTH_EAST((file, rank) -> file < 0 && rank > 0 && file == (-1) * rank),
+    SOUTH((file, rank) -> file == 0 && rank > 0),
+    SOUTH_WEST((file, rank) -> file > 0 && rank > 0 && file.equals(rank)),
+    WEST((file, rank) -> file > 0 && rank == 0),
+    NORTH_WEST((file, rank) -> file > 0 && rank < 0 && file == (-1) * rank),
 
     // KNIGHT DIRECTION
     UP_RIGHT((file, rank) -> file == -1 && rank == -2),

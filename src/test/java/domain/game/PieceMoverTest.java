@@ -3,8 +3,8 @@ package domain.game;
 import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.piecerole.King;
 import domain.piece.PieceType;
+import domain.piece.piecerole.King;
 import domain.piece.piecerole.Queen;
 import domain.position.Position;
 import org.assertj.core.api.Assertions;
@@ -17,7 +17,7 @@ class PieceMoverTest {
     @Test
     void movePieceToTarget() {
         Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
+        Position targetPosition = PositionFixture.generateB2Position();
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
