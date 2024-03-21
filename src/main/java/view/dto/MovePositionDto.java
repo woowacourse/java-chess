@@ -7,16 +7,12 @@ public record MovePositionDto(Position sourcePosition, Position targetPosition) 
     public static MovePositionDto from(String command) {
         String sourcePositionText = command.split(" ")[1];
         String targetPositionText = command.split(" ")[2];
+        return new MovePositionDto(resolvePosition(sourcePositionText), resolvePosition(targetPositionText));
+    }
 
-        // TODO: PositionResolver에서 한번에 처리
-        int sourceFile = Character.getNumericValue(sourcePositionText.charAt(0));
-        int sourceRank = Character.getNumericValue(sourcePositionText.charAt(1));
-        Position sourcePosition = Position.of(sourceFile, sourceRank);
-
-        int targetFile = Character.getNumericValue(targetPositionText.charAt(0));
-        int targetRank = Character.getNumericValue(targetPositionText.charAt(1));
-        Position targetPosition = Position.of(targetFile, targetRank);
-
-        return new MovePositionDto(sourcePosition, targetPosition);
+    private static Position resolvePosition(String positionText) {
+        int sourceFile = Character.getNumericValue(positionText.charAt(0));
+        int sourceRank = Character.getNumericValue(positionText.charAt(1));
+        return Position.of(sourceFile, sourceRank);
     }
 }
