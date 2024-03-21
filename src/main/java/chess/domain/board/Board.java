@@ -4,11 +4,8 @@ import chess.domain.Movement;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
-import chess.domain.pieces.piece.PieceResponse;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 public class Board {
@@ -70,16 +67,12 @@ public class Board {
     }
 
     private void checkIsEmpty(final Square square) {
-        if (!pieces.containsKey(square)) {
+        if (pieces.containsKey(square)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
     }
 
-    public List<PieceResponse> createBoardStatus() {
-        List<PieceResponse> boardStatus = new ArrayList<>();
-        for (Entry<Square, Piece> positionToPiece : pieces.entrySet()) {
-            boardStatus.add(PieceResponse.of(positionToPiece.getKey(), positionToPiece.getValue()));
-        }
-        return boardStatus;
+    public Map<Square, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }
