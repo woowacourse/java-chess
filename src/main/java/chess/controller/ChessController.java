@@ -16,6 +16,7 @@ public class ChessController {
     }
 
     public void run() {
+        outputView.printStartMessage();
         if (inputView.readStartCommand() == Command.START) {
             startGame();
         }
