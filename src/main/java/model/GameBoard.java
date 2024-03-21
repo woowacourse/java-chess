@@ -19,6 +19,7 @@ import model.position.Row;
 
 public class GameBoard {
 
+    // TODO 처음에 각 기물들을 배치해두는 것이 좋을까 아니면 빈 Map 두고 메서드 실행하면 추가하는게 좋을지 고민하기
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
 
     static {
@@ -61,6 +62,7 @@ public class GameBoard {
     public void move(Moving moving, Camp camp) {
         validate(camp, moving);
 
+        //TODO 여기 테스트 보충
         Piece piece = board.get(moving.getCurrentPosition());
         board.put(moving.getNextPosition(), piece);
         board.remove(moving.getCurrentPosition());
@@ -85,6 +87,7 @@ public class GameBoard {
             }
         }
 
+        // TODO 테스트 보충
         Piece target = board.get(moving.getNextPosition());
         if (target != null && target.isSameCamp(piece.getCamp())) {
             throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
