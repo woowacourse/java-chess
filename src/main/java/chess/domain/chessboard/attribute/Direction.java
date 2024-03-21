@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import chess.domain.attribute.Color;
+
 public enum Direction {
     UP(1, 0),
     UP_LEFT(1, -1),
@@ -29,6 +31,10 @@ public enum Direction {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
+    public static Set<Direction> ofBishop() {
+        return Set.of(UP_LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT);
+    }
+
     public static Set<Set<Direction>> ofKnight() {
         return Set.of(
                 Set.of(UP, UP_LEFT), Set.of(UP, UP_RIGHT),
@@ -38,16 +44,21 @@ public enum Direction {
         );
     }
 
-    public static Set<List<Direction>> ofStartingPawn() {
-        return Set.of(
-                List.of(UP),
-                List.of(UP_LEFT),
-                List.of(UP_RIGHT),
-                List.of(UP, UP)
-        );
+    public static Set<Direction> ofRook() {
+        return Set.of(UP, RIGHT, DOWN, LEFT);
     }
 
-    public static Set<Direction> ofPawn() {
+    public static Set<List<Direction>> ofStartingPawn(final Color color) {
+        if (color == Color.BLACK) {
+            return Set.of(List.of(DOWN), List.of(DOWN_LEFT), List.of(DOWN_RIGHT), List.of(DOWN, DOWN));
+        }
+        return Set.of(List.of(UP), List.of(UP_LEFT), List.of(UP_RIGHT), List.of(UP, UP));
+    }
+
+    public static Set<Direction> ofPawn(final Color color) {
+        if (color == Color.BLACK) {
+            return Set.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
+        }
         return Set.of(UP, UP_LEFT, UP_RIGHT);
     }
 

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
+import chess.domain.chessboard.attribute.Direction;
 
 public class Rook extends SlidingPiece {
     public Rook(final Color color) {
@@ -11,7 +12,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    public Set<Square> movableSquares(final Square currentSquare) {
-        return null;
+    public Set<Square> movableSquaresFrom(final Square source) {
+        return movableSquaresOf(Direction.ofRook(), source);
     }
 }
