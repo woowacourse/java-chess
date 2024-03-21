@@ -1,5 +1,8 @@
 package model.piece;
 
+import static model.position.Moving.dColumn;
+import static model.position.Moving.dRow;
+
 import java.util.HashSet;
 import java.util.Set;
 import model.Camp;
@@ -10,9 +13,6 @@ import model.position.Position;
 import model.position.Row;
 
 public class Rook extends Piece {
-
-    private static final int[] dRow = new int[]{1, -1, 0, 0};
-    private static final int[] dColumn = new int[]{0, 0, 1, -1};
 
     public Rook(final Camp camp) {
         super(camp);
@@ -32,7 +32,7 @@ public class Rook extends Piece {
 
         int nextRow = nextPosition.getRowIndex();
         int nextColumn = nextPosition.getColumnIndex();
-        int index = findIndex(currentPosition, nextPosition);
+        int index = moving.findIndex();
         Set<Position> route = new HashSet<>();
         int d = Math.max(Math.abs(currentRow - nextRow), Math.abs(currentColumn - nextColumn));
         for (int i = 1; i < d; i++) {
@@ -41,28 +41,6 @@ public class Rook extends Piece {
             route.add(new Position(column, row));
         }
         return route;
-    }
-
-    private int findIndex(Position currentPosition, Position nextPosition) {
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
-
-        int nextRow = nextPosition.getRowIndex();
-        int nextColumn = nextPosition.getColumnIndex();
-
-        if (nextRow - currentRow > 0) {
-            return 0;
-        }
-        if (nextRow - currentRow < 0) {
-            return 1;
-        }
-        if (nextColumn - currentColumn > 0) {
-            return 2;
-        }
-        if (nextColumn - currentColumn < 0) {
-            return 3;
-        }
-        throw new IllegalArgumentException("인덱스 없음");
     }
 
     @Override
