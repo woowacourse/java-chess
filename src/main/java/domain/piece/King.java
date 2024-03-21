@@ -3,11 +3,12 @@ package domain.piece;
 import domain.Camp;
 import domain.ChessVector;
 import domain.Square;
+
 import java.util.Objects;
 
 public class King extends Piece {
 
-    public static final int MOVE_DISTANCE = 1;
+    public static final int KING_MOVEMENT_DISTANCE = 1;
 
     public King(final Camp color) {
         super(color);
@@ -17,7 +18,7 @@ public class King extends Piece {
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        return chessVector.isManhattanDistance(MOVE_DISTANCE);
+        return chessVector.isManhattanDistance(KING_MOVEMENT_DISTANCE);
     }
 
     @Override

@@ -1,14 +1,13 @@
 package controller;
 
-import static view.InputView.END_COMMAND;
-import static view.InputView.MOVE_COMMAND;
-import static view.InputView.START_COMMAND;
-
 import domain.ChessBoard;
 import domain.Square;
-import java.util.List;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+
+import static view.InputView.*;
 
 public class ChessController {
 

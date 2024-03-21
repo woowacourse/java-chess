@@ -4,6 +4,7 @@ import domain.Camp;
 import domain.ChessVector;
 import domain.Rank;
 import domain.Square;
+
 import java.util.List;
 import java.util.Objects;
 

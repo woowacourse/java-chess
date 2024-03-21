@@ -3,6 +3,7 @@ package domain.piece;
 import domain.Camp;
 import domain.ChessVector;
 import domain.Square;
+
 import java.util.List;
 import java.util.Objects;
 

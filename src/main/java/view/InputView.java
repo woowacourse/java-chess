@@ -10,9 +10,8 @@ public class InputView {
     public static final String START_COMMAND = "start";
     public static final String END_COMMAND = "end";
     public static final String MOVE_COMMAND = "move";
-    public static final String MOVE_COMMAND_DELIMITER = " ";
 
     public List<String> readCommand() {
-        return Arrays.asList(SCANNER.nextLine().split(MOVE_COMMAND_DELIMITER));
+        return Arrays.asList(SCANNER.nextLine().split(" "));
     }
 }

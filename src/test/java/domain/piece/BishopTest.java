@@ -1,16 +1,17 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.Camp;
 import domain.File;
 import domain.Rank;
 import domain.Square;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {
 

@@ -4,6 +4,7 @@ import domain.File;
 import domain.Rank;
 import domain.Square;
 import domain.piece.Piece;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
