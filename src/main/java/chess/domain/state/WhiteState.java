@@ -4,17 +4,17 @@ import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.position.Position;
 
-public class StartState implements GameState {
-    private static final Color START_COLOR = Color.WHITE;
-
+public class WhiteState implements GameState {
     @Override
     public GameState start() {
-        throw new UnsupportedOperationException("이미 시작 상태입니다.");
+        throw new UnsupportedOperationException("이미 시작한 상태입니다.");
     }
 
     @Override
     public GameState move(Board board, Position source, Position target) {
-        return new MoveState(START_COLOR);
+        board.move(source, target, Color.WHITE);
+
+        return new BlackState();
     }
 
     @Override

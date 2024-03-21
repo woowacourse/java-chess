@@ -21,11 +21,10 @@ public class ChessGame {
     private GameState gameState = new ReadyState();
 
     public void run() {
-
+        OutputView.printGameStartMessage();
         while (gameState.isPlaying()) {
             executeCommand();
         }
-        OutputView.printChessBoard(board);
     }
 
     private void executeCommand() {
@@ -37,13 +36,13 @@ public class ChessGame {
     private void move(String inputSource, String inputTarget) {
         Position source = Position.convert(inputSource);
         Position target = Position.convert(inputTarget);
-        OutputView.printGameStartMessage();
         gameState = gameState.move(board, source, target);
+        OutputView.printChessBoard(board);
     }
 
     private void start() {
         gameState = gameState.start();
-        OutputView.printGameStartMessage();
+        OutputView.printChessBoard(board);
     }
 
     private void end() {

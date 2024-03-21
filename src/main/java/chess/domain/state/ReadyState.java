@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 public class ReadyState implements GameState {
     @Override
     public GameState start() {
-        return new StartState();
+        return new WhiteState();
     }
 
     @Override
