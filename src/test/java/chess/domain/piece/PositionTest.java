@@ -79,7 +79,7 @@ class PositionTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> position.findDirectionTo(new Position(2, 4)))
-                .withMessage("이동할 수 없는 방향입니다.");
+                .withMessage("이동할 수 없습니다.");
     }
 
     @Test

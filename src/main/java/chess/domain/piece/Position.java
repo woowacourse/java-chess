@@ -61,7 +61,7 @@ public class Position {
             dy = calculateMoved(dy);
             return Direction.findDirection(dx, dy);
         }
-        throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+        throw new IllegalArgumentException("이동할 수 없습니다.");
     }
 
     private boolean isInEightDirection(int dx, int dy) {

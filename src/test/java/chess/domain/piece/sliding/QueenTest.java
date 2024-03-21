@@ -44,6 +44,6 @@ class QueenTest {
         Queen queen = new Queen(new Position(1, 1), Color.WHITE);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> queen.findPathTo(new Position(2, 4)))
-                .withMessage("이동할 수 없는 방향입니다.");
+                .withMessage("이동할 수 없습니다.");
     }
 }
