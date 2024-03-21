@@ -12,5 +12,6 @@ public class ChessMachine {
 
     public void run() {
         outputView.printStartGameMessage();
+        outputView.printCommandGuideMessage();
     }
 }
