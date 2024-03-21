@@ -1,4 +1,4 @@
-package position;
+package domain.position;
 
 import java.util.Objects;
 

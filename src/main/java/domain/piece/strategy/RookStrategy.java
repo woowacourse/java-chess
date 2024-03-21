@@ -1,4 +1,4 @@
-package strategy;
+package domain.piece.strategy;
 
 import java.util.Arrays;
 import java.util.List;

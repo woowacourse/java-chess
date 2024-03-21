@@ -1,8 +1,8 @@
-package strategy.pawn;
+package domain.piece.strategy.pawn;
 
+import domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;
-import piece.Color;
 
 public enum PawnAttackStrategy {
 
@@ -24,7 +24,6 @@ public enum PawnAttackStrategy {
     }
 
     public static PawnAttackStrategy getMoveStrategy(int rowDifference, int columnDifference) {
-
         return Arrays.stream(PawnAttackStrategy.values())
                 .filter(enumValue -> enumValue.rowDifference == rowDifference
                         && enumValue.columnDifference == columnDifference)
@@ -32,7 +31,7 @@ public enum PawnAttackStrategy {
                 .orElseThrow(() -> new IllegalArgumentException("존재하는 움직임 전략이 없습니다."));
     }
 
-    public void validatePossibleStrategyColor(Color color) {
+    public void validateMoveBackward(Color color) {
         if (allowedPawnColor != color) {
             throw new IllegalArgumentException("폰은 뒤로 갈 수 없습니다.");
         }

@@ -1,9 +1,10 @@
-package strategy;
+package domain.piece.strategy;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum QueenStrategy {
+public enum KingStrategy {
+
     UP(-1, 0, List.of(-1, 0)),
     DOWN(1, 0, List.of(1, 0)),
     LEFT(0, -1, List.of(0, -1)),
@@ -17,25 +18,18 @@ public enum QueenStrategy {
     private final int columnDifference;
     private final List<Integer> direction;
 
-    QueenStrategy(int rowDifference, int columnDifference, List<Integer> direction) {
+    KingStrategy(int rowDifference, int columnDifference, List<Integer> direction) {
         this.rowDifference = rowDifference;
         this.columnDifference = columnDifference;
         this.direction = direction;
     }
 
-    public static QueenStrategy getMoveStrategy(int rowDifference, int columnDifference) {
-        return Arrays.stream(QueenStrategy.values())
-                .filter(strategy -> strategy.rowDifference == divideValueByAbs(rowDifference)
-                        && strategy.columnDifference == divideValueByAbs(columnDifference))
+    public static KingStrategy getMoveStrategy(int rowDifference, int columnDifference) {
+        return Arrays.stream(KingStrategy.values())
+                .filter(strategy -> strategy.rowDifference == rowDifference
+                        && strategy.columnDifference == columnDifference)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하는 움직임 전략이 없습니다."));
-    }
-
-    private static int divideValueByAbs(int value) {
-        if (value == 0) {
-            return 0;
-        }
-        return value / Math.abs(value);
     }
 
     public List<Integer> getDirection() {
