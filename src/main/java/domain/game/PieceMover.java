@@ -5,6 +5,7 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PieceMover {
@@ -20,6 +21,18 @@ public class PieceMover {
     }
 
     public void move(Square sourceSquare, Square targetSquare) {
+        commonMoveValidate(sourceSquare, targetSquare);
+
+        Piece findPiece = pieceBySquare.get(sourceSquare);
+        pawnMoveValidate(sourceSquare, targetSquare, findPiece);
+        moveValidateExceptKnight(sourceSquare, targetSquare, findPiece);
+
+        if (findPiece.canMove(sourceSquare, targetSquare)) {
+            update(sourceSquare, targetSquare, findPiece);
+        }
+    }
+
+    private void commonMoveValidate(Square sourceSquare, Square targetSquare) {
         if (!pieceBySquare.containsKey(sourceSquare)) {
             throw new IllegalStateException("해당 위치에 Piece가 존재하지 않습니다.");
         }
@@ -29,55 +42,79 @@ public class PieceMover {
         if (sourceSquare.equals(targetSquare)) {
             throw new IllegalStateException("같은 위치로의 이동입니다. 다시 입력해주세요.");
         }
+    }
 
-        Piece findPiece = pieceBySquare.get(sourceSquare);
-        if (findPiece.isPawn()) { // 예외 처리만
+    private void pawnMoveValidate(Square sourceSquare, Square targetSquare, Piece findPiece) {
+        if (findPiece.isPawn()) {
             Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
-            if (findPiece.isEqualColor(Color.BLACK)) {
-                if (direction == Direction.SOUTH && pieceBySquare.containsKey(targetSquare)) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-                if (direction == Direction.SOUTH_EAST && !pieceBySquare.containsKey(targetSquare)) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-                if (direction == Direction.SOUTH_WEST && !pieceBySquare.containsKey(targetSquare)) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-            }
-            if (findPiece.isEqualColor(Color.WHITE)) {
-                if (direction == Direction.NORTH && pieceBySquare.containsKey(targetSquare)) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-                if (direction == Direction.NORTH_WEST && !pieceBySquare.containsKey(targetSquare)) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-                if (direction == Direction.NORTH_EAST && !pieceBySquare.containsKey(targetSquare)) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-            }
+            blackPawnValidate(targetSquare, findPiece, direction);
+            whitePawnValidate(targetSquare, findPiece, direction);
         }
+    }
 
-        if (findPiece.isNotKnight()) { // 예외 처리만
+    private void blackPawnValidate(Square targetSquare, Piece findPiece, Direction direction) {
+        if (findPiece.isEqualColor(Color.BLACK)) {
+            pawnMoveValidate(Direction.SOUTH, List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST), targetSquare,
+                    direction);
+        }
+    }
+
+    private void whitePawnValidate(Square targetSquare, Piece findPiece, Direction direction) {
+        if (findPiece.isEqualColor(Color.WHITE)) {
+            pawnMoveValidate(Direction.NORTH, List.of(Direction.NORTH_EAST, Direction.NORTH_WEST), targetSquare,
+                    direction);
+        }
+    }
+
+    private void pawnMoveValidate(Direction forward, List<Direction> diagonals, Square targetSquare,
+                                  Direction direction) {
+        forwardValidate(forward, direction, targetSquare);
+        diagonalValidate(diagonals, direction, targetSquare);
+    }
+
+    private void forwardValidate(Direction forwardDirection, Direction direction, Square targetSquare) {
+        if (direction == forwardDirection && pieceBySquare.containsKey(targetSquare)) {
+            throw new IllegalStateException("전진하려는 곳에 다른 기물이 있으면 이동할 수 없습니다.");
+        }
+    }
+
+    private void diagonalValidate(List<Direction> diagonals, Direction direction, Square targetSquare) {
+        diagonals.stream()
+                .filter(diagonal -> hasNotPieceAtDiagonal(direction, targetSquare, diagonal))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("대각선에 다른 기물이 없으면 이동할 수 없습니다."));
+    }
+
+    private boolean hasNotPieceAtDiagonal(Direction direction, Square targetSquare, Direction diagonal) {
+        return direction == diagonal && !pieceBySquare.containsKey(targetSquare);
+    }
+
+    private void moveValidateExceptKnight(Square sourceSquare, Square targetSquare, Piece findPiece) {
+        if (findPiece.isNotKnight()) {
             Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
 
             Position here = new Position(sourceSquare.getPosition());
             here.move(direction);
-            while (!here.equals(targetSquare.getPosition())) {
-                if (pieceBySquare.containsKey(new Square(here))) {
-                    throw new IllegalStateException("갈 수 없음");
-                }
-                here.move(direction);
+            checkPieceOnRoute(targetSquare, here, direction);
+        }
+    }
+
+    private void checkPieceOnRoute(Square targetSquare, Position here, Direction direction) {
+        while (!here.equals(targetSquare.getPosition())) {
+            if (pieceBySquare.containsKey(new Square(here))) {
+                throw new IllegalStateException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
             }
+            here.move(direction);
+        }
+    }
+
+    private void update(Square sourceSquare, Square targetSquare, Piece findPiece) {
+        if (pieceBySquare.containsKey(targetSquare)) {
+            pieceBySquare.remove(targetSquare);
         }
 
-        if (findPiece.canMove(sourceSquare, targetSquare)) {
-            if (pieceBySquare.containsKey(targetSquare)) {
-                pieceBySquare.remove(targetSquare);
-            }
-
-            pieceBySquare.put(targetSquare, findPiece);
-            pieceBySquare.remove(sourceSquare);
-        }
+        pieceBySquare.put(targetSquare, findPiece);
+        pieceBySquare.remove(sourceSquare);
     }
 
     private boolean hasSameColorPiece(Square sourceSquare, Square targetSquare) {

@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.position.Position;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public enum Direction {
 
@@ -24,37 +25,46 @@ public enum Direction {
     DOWN_RIGHT(1, -2),
     DOWN_LEFT(-1, -2);
 
-    private final int fileUnit;
-    private final int rankUnit;
+    private final int fileStepSize;
+    private final int rankStepSize;
 
-    Direction(final int fileUnit, final int rankUnit) {
-        this.fileUnit = fileUnit;
-        this.rankUnit = rankUnit;
+    Direction(final int fileStepSize, final int rankStepSize) {
+        this.fileStepSize = fileStepSize;
+        this.rankStepSize = rankStepSize;
     }
 
 
     public static Direction findDirection(Position sourcePosition, Position targetPosition) {
-        Gap gap = targetPosition.subtract(sourcePosition);
+        DirectionVector directionVector = targetPosition.subtract(sourcePosition);
         return Arrays.stream(values())
-                .filter(direction -> direction.isSameDirection(direction, gap))
+                .filter(direction -> isSameDirection(direction, directionVector))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
     }
 
-    private static boolean isSameDirection(final Direction direction, final Gap gap) {
-        for (int i = 1; i <= 8; i++) {
-            if (direction.fileUnit * i == gap.fileGap() && direction.rankUnit * i == gap.rankGap()) {
+    private static boolean isSameDirection(final Direction direction, final DirectionVector directionVector) {
+        for (int step = 1; step <= 8; step++) {
+            if (canReach(findDistance(direction.fileStepSize, step), directionVector.fileVector()) && canReach(findDistance(direction.rankStepSize, step), directionVector.rankVector())){
                 return true;
             }
         }
         return false;
     }
 
-    public int getFileUnit() {
-        return fileUnit;
+    private static int findDistance(int unitVector, int step) {
+        return unitVector * step;
     }
 
-    public int getRankUnit() {
-        return rankUnit;
+    private static boolean canReach(int step, int unitVector) {
+        return step == unitVector;
+    }
+    
+
+    public int getFileStepSize() {
+        return fileStepSize;
+    }
+
+    public int getRankStepSize() {
+        return rankStepSize;
     }
 }
