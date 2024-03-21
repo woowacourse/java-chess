@@ -7,7 +7,7 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class WhiteFirstPawn extends Pawn {
-    private static Set<Direction> DIRECTIONS = Direction.getWhiteFirstPawnDirection();
+    private static final Set<Direction> DIRECTIONS = Direction.getWhiteFirstPawnDirection();
 
     public WhiteFirstPawn(Position position) {
         super(position, Color.WHITE, DIRECTIONS);

@@ -7,7 +7,7 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class King extends NonSlidingPiece {
-    private static Set<Direction> DIRECTIONS = Direction.getEightDirection();
+    private static final Set<Direction> DIRECTIONS = Direction.getEightDirection();
 
     public King(Position position, Color color) {
         super(position, color, DIRECTIONS);

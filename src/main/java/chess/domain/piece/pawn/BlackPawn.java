@@ -7,7 +7,7 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class BlackPawn extends Pawn {
-    private static Set<Direction> DIRECTIONS = Set.of(Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
+    private static final Set<Direction> DIRECTIONS = Set.of(Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
 
     public BlackPawn(Position position) {
         super(position, Color.BLACK, DIRECTIONS);

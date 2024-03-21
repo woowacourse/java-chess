@@ -7,7 +7,7 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class Bishop extends SlidingPiece {
-    private static Set<Direction> DIRECTIONS = Direction.getDiagonalDirection();
+    private static final Set<Direction> DIRECTIONS = Direction.getDiagonalDirection();
 
     public Bishop(Position position, Color color) {
         super(position, color, DIRECTIONS);

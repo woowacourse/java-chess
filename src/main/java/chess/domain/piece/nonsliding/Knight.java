@@ -7,7 +7,7 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class Knight extends NonSlidingPiece {
-    private static Set<Direction> DIRECTIONS = Direction.getKnightDirection();
+    private static final Set<Direction> DIRECTIONS = Direction.getKnightDirection();
 
     public Knight(Position position, Color color) {
         super(position, color, DIRECTIONS);
