@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.chessboard.Square;
+import domain.piece.Color;
 import domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,12 +30,39 @@ public class PieceMover {
         }
 
         Piece findPiece = pieceBySquare.get(sourceSquare);
-        if (pieceBySquare.containsKey(targetSquare)) {
-            pieceBySquare.remove(targetSquare);
+        if (findPiece.isPawn()) { // 예외 처리만
+            Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
+            if (findPiece.isEqualColor(Color.BLACK)) {
+                if (direction == Direction.SOUTH && pieceBySquare.containsKey(targetSquare)) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+                if (direction == Direction.SOUTH_EAST && !pieceBySquare.containsKey(targetSquare)) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+                if (direction == Direction.SOUTH_WEST && !pieceBySquare.containsKey(targetSquare)) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+            }
+            if (findPiece.isEqualColor(Color.WHITE)) {
+                if (direction == Direction.NORTH && pieceBySquare.containsKey(targetSquare)) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+                if (direction == Direction.NORTH_WEST && !pieceBySquare.containsKey(targetSquare)) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+                if (direction == Direction.NORTH_EAST && !pieceBySquare.containsKey(targetSquare)) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+            }
         }
+        if (findPiece.canMove(sourceSquare, targetSquare)) {
+            if (pieceBySquare.containsKey(targetSquare)) {
+                pieceBySquare.remove(targetSquare);
+            }
 
-        pieceBySquare.put(targetSquare, findPiece);
-        pieceBySquare.remove(sourceSquare);
+            pieceBySquare.put(targetSquare, findPiece);
+            pieceBySquare.remove(sourceSquare);
+        }
     }
 
     private boolean hasSameColorPiece(Square sourceSquare, Square targetSquare) {
@@ -53,6 +81,6 @@ public class PieceMover {
     }
 
     public Piece findPieceBySquare(Square targetSquare) {
-       return pieceBySquare.get(targetSquare);
+        return pieceBySquare.get(targetSquare);
     }
 }

@@ -26,4 +26,8 @@ public class Square {
     public int hashCode() {
         return Objects.hash(position);
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

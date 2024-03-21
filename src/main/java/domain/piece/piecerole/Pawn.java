@@ -1,38 +1,61 @@
 package domain.piece.piecerole;
 
-import static domain.game.Direction.NORTH;
-import static domain.game.Direction.SOUTH;
-
+import domain.game.Direction;
+import domain.piece.Color;
 import domain.piece.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;
 
 public class Pawn implements PieceRole {
-    private final List<Movable> routes;
+    protected List<Movable> routes;
+    protected int count;
 
-    public Pawn() {
-        this.routes = List.of(
-                new Movable(1, NORTH),
-                new Movable(1, SOUTH)
-        );
+    public Pawn(final Color color) {
+        count = 1;
+        if (color == Color.BLACK) {
+            this.routes = List.of(
+                    new Movable(getMaxMovement(count), Direction.SOUTH),
+                    new Movable(getMaxMovement(count), Direction.SOUTH_EAST),
+                    new Movable(getMaxMovement(count), Direction.SOUTH_WEST)
+            );
+        } else {
+            this.routes = List.of(
+                    new Movable(getMaxMovement(count), Direction.NORTH),
+                    new Movable(getMaxMovement(count), Direction.NORTH_EAST),
+                    new Movable(getMaxMovement(count), Direction.NORTH_WEST)
+            );
+        }
     }
 
     @Override
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
+        if (count == 1) {
+            for (Movable movable : routes) {
+                movable.decreaseMaxMovement();
+            }
+            count++;
+        }
         return routes.stream()
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
     }
 
+    protected int getMaxMovement(final int count) {
+        if (count == 1) {
+            return 2;
+        }
+        return 1;
+    }
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Pawn pawn = (Pawn) o;
+        final Pawn pawn = (Pawn) o;
         return Objects.equals(routes, pawn.routes);
     }
 

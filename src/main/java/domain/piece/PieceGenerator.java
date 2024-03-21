@@ -20,7 +20,9 @@ import java.util.stream.IntStream;
 public class PieceGenerator {
     private static final List<PieceRole> BACK = List.of(
             new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
-    private static final List<PieceRole> FRONT = Collections.nCopies(8, new Pawn());
+    private static final List<PieceRole> FRONT_BLACK = Collections.nCopies(8, new Pawn(Color.BLACK));
+
+    private static final List<PieceRole> FRONT_WHITE = Collections.nCopies(8, new Pawn(Color.WHITE));
 
     private PieceGenerator() {
     }
@@ -41,10 +43,10 @@ public class PieceGenerator {
             return generateListPiece(BACK, Color.BLACK, row);
         }
         if (row == 7) {
-            return generateListPiece(FRONT, Color.BLACK, row);
+            return generateListPiece(FRONT_BLACK, Color.BLACK, row);
         }
         if (row == 2) {
-            return generateListPiece(FRONT, Color.WHITE, row);
+            return generateListPiece(FRONT_WHITE, Color.WHITE, row);
         }
         if (row == 1) {
             return generateListPiece(BACK, Color.WHITE, row);

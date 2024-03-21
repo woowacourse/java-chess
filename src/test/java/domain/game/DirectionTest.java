@@ -14,6 +14,6 @@ class DirectionTest {
         Position targetPosition = PositionFixture.generateC2Position();
 
         Direction findDirection = Direction.findDirection(sourcePosition, targetPosition);
-        Assertions.assertThat(findDirection).isEqualTo(Direction.SOUTH_EAST);
+        Assertions.assertThat(findDirection).isEqualTo(Direction.NORTH_EAST);
     }
 }

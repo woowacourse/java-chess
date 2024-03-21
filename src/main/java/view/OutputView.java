@@ -28,14 +28,14 @@ public class OutputView {
         pieceSymbol.put(new PieceType(new Bishop(), Color.BLACK), "B");
         pieceSymbol.put(new PieceType(new Queen(), Color.BLACK), "Q");
         pieceSymbol.put(new PieceType(new King(), Color.BLACK), "K");
-        pieceSymbol.put(new PieceType(new Pawn(), Color.BLACK), "P");
+        pieceSymbol.put(new PieceType(new Pawn(Color.BLACK), Color.BLACK), "P");
 
         pieceSymbol.put(new PieceType(new Rook(), Color.WHITE), "r");
         pieceSymbol.put(new PieceType(new Knight(), Color.WHITE), "n");
         pieceSymbol.put(new PieceType(new Bishop(), Color.WHITE), "b");
         pieceSymbol.put(new PieceType(new Queen(), Color.WHITE), "q");
         pieceSymbol.put(new PieceType(new King(), Color.WHITE), "k");
-        pieceSymbol.put(new PieceType(new Pawn(), Color.WHITE), "p");
+        pieceSymbol.put(new PieceType(new Pawn(Color.WHITE), Color.WHITE), "p");
     }
 
     public void printCommandMessage() {
