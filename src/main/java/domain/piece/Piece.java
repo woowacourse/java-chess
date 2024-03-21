@@ -4,7 +4,6 @@ import domain.Camp;
 import domain.Square;
 
 public abstract class Piece {
-
     protected final Camp camp;
 
     protected Piece(final Camp camp) {

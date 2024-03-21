@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Knight extends Piece {
-
     private static final List<ChessVector> SQUARE_VECTORS = List.of(
             new ChessVector(1, 2), new ChessVector(1, -2), new ChessVector(-1, 2), new ChessVector(-1, -2),
             new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));

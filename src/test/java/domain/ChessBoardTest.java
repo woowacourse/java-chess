@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessBoardTest {
-
     @DisplayName("제자리 이동은 못한다.")
     @Test
     void moveSamePlace() {

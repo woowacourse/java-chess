@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-
     private static final List<ChessVector> BLACK_ATTACK_SQUARE_VECTORS = List.of(new ChessVector(1, -1),
             new ChessVector(-1, -1));
     private static final List<ChessVector> WHITE_ATTACK_SQUARE_VECTORS = List.of(new ChessVector(-1, 1),

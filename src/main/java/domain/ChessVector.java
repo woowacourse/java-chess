@@ -1,7 +1,6 @@
 package domain;
 
 public record ChessVector(int x, int y) {
-
     public ChessVector scaleDown() {
         final int gcd = findAbsGCD();
 

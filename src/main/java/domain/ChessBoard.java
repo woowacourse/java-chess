@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class ChessBoard {
-
     private static final Map<File, Piece> BLACK_PIECE_TYPE_ORDERS = Map.of(
             File.A, new Rook(Camp.BLACK), File.B, new Knight(Camp.BLACK),
             File.C, new Bishop(Camp.BLACK), File.D, new Queen(Camp.BLACK),

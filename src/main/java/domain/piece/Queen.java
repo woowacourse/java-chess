@@ -7,7 +7,6 @@ import domain.Square;
 import java.util.Objects;
 
 public class Queen extends Piece {
-
     public Queen(final Camp color) {
         super(color);
     }

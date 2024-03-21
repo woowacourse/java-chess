@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
-
     @DisplayName("나이트는 8방으로 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "squareArguments")

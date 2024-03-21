@@ -3,7 +3,6 @@ package domain;
 import java.util.Objects;
 
 public class Square {
-
     public static final int FILE_INDEX = 0;
     public static final int RANK_INDEX = 1;
 

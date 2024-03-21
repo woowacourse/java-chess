@@ -7,7 +7,6 @@ import domain.Square;
 import java.util.Objects;
 
 public class King extends Piece {
-
     public static final int KING_MOVEMENT_DISTANCE = 1;
 
     public King(final Camp color) {

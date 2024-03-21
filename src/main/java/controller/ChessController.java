@@ -10,7 +10,6 @@ import java.util.List;
 import static view.InputView.*;
 
 public class ChessController {
-
     public static final int COMMAND_INDEX = 0;
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_TARGET_INDEX = 2;

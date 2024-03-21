@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
-
     @DisplayName("폰 움직임")
     @ParameterizedTest
     @MethodSource(value = "squareArgumentsMove")

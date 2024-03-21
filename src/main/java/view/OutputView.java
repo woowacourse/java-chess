@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
     public void printHeader() {
         System.out.println("""
                 > 체스 게임을 시작합니다.
