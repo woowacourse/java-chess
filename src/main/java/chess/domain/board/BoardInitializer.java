@@ -36,9 +36,9 @@ public class BoardInitializer {
                 .collect(generateEntry());
     }
 
-    private Stream<Position> generateHorizontalLine(int row) {
+    private Stream<Position> generateHorizontalLine(final int rank) {
         return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
-                .mapToObj(column -> new Position(column, row));
+                .mapToObj(file -> new Position(file, rank));
     }
 
     private Collector<Position, ?, Map<Position, Piece>> generateEntry() {
@@ -62,31 +62,30 @@ public class BoardInitializer {
         return initialWhitePiecePositions;
     }
 
-    private Map<Position, Piece> getNotPawnsPieces(Color color, int row) {
-        return Map.of(new Position(1, row), new Piece(PieceType.ROOK, color),
-                new Position(2, row), new Piece(PieceType.KNIGHT, color),
-                new Position(3, row), new Piece(PieceType.BISHOP, color),
-                new Position(4, row), new Piece(PieceType.QUEEN, color),
-                new Position(5, row), new Piece(PieceType.KING, color),
-                new Position(6, row), new Piece(PieceType.BISHOP, color),
-                new Position(7, row), new Piece(PieceType.KNIGHT, color),
-                new Position(8, row), new Piece(PieceType.ROOK, color));
+    private Map<Position, Piece> getNotPawnsPieces(final Color color, final int rank) {
+        return Map.of(new Position(1, rank), new Piece(PieceType.ROOK, color),
+                new Position(2, rank), new Piece(PieceType.KNIGHT, color),
+                new Position(3, rank), new Piece(PieceType.BISHOP, color),
+                new Position(4, rank), new Piece(PieceType.QUEEN, color),
+                new Position(5, rank), new Piece(PieceType.KING, color),
+                new Position(6, rank), new Piece(PieceType.BISHOP, color),
+                new Position(7, rank), new Piece(PieceType.KNIGHT, color),
+                new Position(8, rank), new Piece(PieceType.ROOK, color));
     }
 
 
-    private Map<Position, Piece> getPawnsPieces(Color color, int row) {
-        return Map.of(new Position(1, row), new Piece(PieceType.PAWN, color),
-                new Position(2, row), new Piece(PieceType.PAWN, color),
-                new Position(3, row), new Piece(PieceType.PAWN, color),
-                new Position(4, row), new Piece(PieceType.PAWN, color),
-                new Position(5, row), new Piece(PieceType.PAWN, color),
-                new Position(6, row), new Piece(PieceType.PAWN, color),
-                new Position(7, row), new Piece(PieceType.PAWN, color),
-                new Position(8, row), new Piece(PieceType.PAWN, color));
-
+    private Map<Position, Piece> getPawnsPieces(final Color color, final int rank) {
+        return Map.of(new Position(1, rank), new Piece(PieceType.PAWN, color),
+                new Position(2, rank), new Piece(PieceType.PAWN, color),
+                new Position(3, rank), new Piece(PieceType.PAWN, color),
+                new Position(4, rank), new Piece(PieceType.PAWN, color),
+                new Position(5, rank), new Piece(PieceType.PAWN, color),
+                new Position(6, rank), new Piece(PieceType.PAWN, color),
+                new Position(7, rank), new Piece(PieceType.PAWN, color),
+                new Position(8, rank), new Piece(PieceType.PAWN, color));
     }
 
-    public boolean isFirstMove(Position position, Piece piece) {
+    public boolean isFirstMove(final Position position, final Piece piece) {
         Piece initialPiece = initialPiecePositions.getOrDefault(position, new Piece(PieceType.EMPTY, Color.NONE));
         return initialPiece.equals(piece);
     }

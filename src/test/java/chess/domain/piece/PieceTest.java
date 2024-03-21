@@ -20,7 +20,8 @@ class PieceTest {
         @DisplayName("폰이 직선으로 이동할 경우 경로에 어떠한 말도 없다면 이동 가능하다.")
         void canMoveStraight() {
             Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
-            assertAll(() -> assertThat(
+            assertAll(
+                    () -> assertThat(
                             whitePawn.canMove(new Position(1, 1), new Position(1, 2), true, Map.of())).isTrue(),
                     () -> assertThat(
                             whitePawn.canMove(new Position(1, 1), new Position(1, 3), true, Map.of())).isTrue(),
@@ -32,19 +33,21 @@ class PieceTest {
         @DisplayName("폰이 대각선 이동할 경우 도착 위치에 상대방의 말이 있다면 이동 가능하다.")
         void canMoveDiagonal() {
             Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
-            assertAll(() -> assertThat(whitePawn.canMove(new Position(3, 1), new Position(2, 2), false,
-                    Map.of(new Position(2, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue(), () -> assertThat(
-                    whitePawn.canMove(new Position(3, 1), new Position(4, 2), false,
+            assertAll(
+                    () -> assertThat(whitePawn.canMove(new Position(3, 1), new Position(2, 2), false,
+                            Map.of(new Position(2, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue(),
+                    () -> assertThat(whitePawn.canMove(new Position(3, 1), new Position(4, 2), false,
                             Map.of(new Position(4, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue());
         }
 
         @Test
         @DisplayName("폰이 직선으로 이동할 경우 도착 위치에 말이 있다면 이동이 불가능하다.")
-        void canNotMoveStraightWhenPieceExistInToPosition() {
+        void canNotMoveStraightWhenPieceExistInTarget() {
             Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
-            assertAll(() -> assertThat(whitePawn.canMove(new Position(1, 1), new Position(1, 2), true,
-                    Map.of(new Position(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(), () -> assertThat(
-                    whitePawn.canMove(new Position(1, 1), new Position(1, 2), true,
+            assertAll(
+                    () -> assertThat(whitePawn.canMove(new Position(1, 1), new Position(1, 2), true,
+                            Map.of(new Position(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
+                    () -> assertThat(whitePawn.canMove(new Position(1, 1), new Position(1, 2), true,
                             Map.of(new Position(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse());
         }
 
@@ -53,27 +56,30 @@ class PieceTest {
         @DisplayName("폰이 직선으로 이동할 경우 도착 위치 전의 경로에 말이 있다면 이동이 불가능하다.")
         void canNotMoveStraightWhenPieceExistInPath() {
             Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
-            assertAll(() -> assertThat(whitePawn.canMove(new Position(1, 1), new Position(1, 3), true,
-                    Map.of(new Position(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse(), () -> assertThat(
-                    whitePawn.canMove(new Position(1, 1), new Position(1, 3), true,
+            assertAll(
+                    () -> assertThat(whitePawn.canMove(new Position(1, 1), new Position(1, 3), true,
+                            Map.of(new Position(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse(),
+                    () -> assertThat(whitePawn.canMove(new Position(1, 1), new Position(1, 3), true,
                             Map.of(new Position(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
         }
 
         @Test
         @DisplayName("폰이 대각선으로 이동할 경우 도착 위치가 같은 색의 말인 경우 이동이 불가능하다.")
-        void canNotMoveDiagonalWhenToPositionIsSameColor() {
+        void canNotMoveDiagonalWhenTargetIsSameColor() {
             Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
-            assertAll(() -> assertThat(whitePawn.canMove(new Position(3, 1), new Position(2, 2), true,
-                    Map.of(new Position(2, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(), () -> assertThat(
-                    whitePawn.canMove(new Position(3, 1), new Position(4, 2), true,
+            assertAll(
+                    () -> assertThat(whitePawn.canMove(new Position(3, 1), new Position(2, 2), true,
+                            Map.of(new Position(2, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
+                    () -> assertThat(whitePawn.canMove(new Position(3, 1), new Position(4, 2), true,
                             Map.of(new Position(4, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
         }
 
         @Test
         @DisplayName("폰이 대각선으로 이동할 경우 도착 위치가 비어있을 경우 이동이 불가능하다.")
-        void canNotMoveDiagonalWhenToPositionIsEmpty() {
+        void canNotMoveDiagonalWhenTargetIsEmpty() {
             Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
-            assertAll(() -> assertThat(
+            assertAll(
+                    () -> assertThat(
                             whitePawn.canMove(new Position(3, 1), new Position(2, 2), true, Map.of())).isFalse(),
                     () -> assertThat(
                             whitePawn.canMove(new Position(3, 1), new Position(4, 2), true, Map.of())).isFalse());
@@ -86,27 +92,27 @@ class PieceTest {
         @ParameterizedTest
         @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
         @DisplayName("나이트는 도착 위치가 비어있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsEmpty(int row, int column) {
+        void canMoveWhenTargetIsEmpty(int file, int rank) {
             Piece piece = new Piece(PieceType.KNIGHT, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false, Map.of())).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false, Map.of())).isTrue();
         }
 
         @ParameterizedTest
         @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
         @DisplayName("나이트는 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+        void canMoveWhenTargetIsOtherColor(int file, int rank) {
             Piece piece = new Piece(PieceType.KNIGHT, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
         }
 
         @ParameterizedTest
         @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
         @DisplayName("나이트는 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
-        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+        void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.KNIGHT, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
     }
 
@@ -117,29 +123,29 @@ class PieceTest {
         @CsvSource({"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8",
                 "7,1", "6,2", "3,5", "2,6", "1,7"})
         @DisplayName("비숍은 도착 위치가 비어있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsEmpty(int row, int column) {
+        void canMoveWhenTargetIsEmpty(int file, int rank) {
             Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false, Map.of())).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false, Map.of())).isTrue();
         }
 
         @ParameterizedTest
         @CsvSource({"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8",
                 "7,1", "6,2", "3,5", "2,6", "1,7"})
         @DisplayName("비숍은 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+        void canMoveWhenTargetIsOtherColor(int file, int rank) {
             Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
         }
 
         @ParameterizedTest
         @CsvSource({"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8",
                 "7,1", "6,2", "3,5", "2,6", "1,7"})
         @DisplayName("비숍은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
-        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+        void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
 
         @Test
@@ -158,29 +164,29 @@ class PieceTest {
         @CsvSource({"8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
                 "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
         @DisplayName("룩은 도착 위치가 비어있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsEmpty(int row, int column) {
+        void canMoveWhenTargetIsEmpty(int file, int rank) {
             Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false, Map.of())).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false, Map.of())).isTrue();
         }
 
         @ParameterizedTest
         @CsvSource({"8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
                 "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
         @DisplayName("룩은 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+        void canMoveWhenTargetIsOtherColor(int file, int rank) {
             Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
         }
 
         @ParameterizedTest
         @CsvSource({"8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
                 "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
         @DisplayName("룩은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
-        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+        void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
 
         @Test
@@ -201,9 +207,9 @@ class PieceTest {
                 "8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
                 "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
         @DisplayName("퀸은 도착 위치가 비어있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsEmpty(int row, int column) {
+        void canMoveWhenTargetIsEmpty(int file, int rank) {
             Piece piece = new Piece(PieceType.QUEEN, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false, Map.of())).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false, Map.of())).isTrue();
         }
 
         @ParameterizedTest
@@ -212,10 +218,10 @@ class PieceTest {
                 "8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
                 "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
         @DisplayName("퀸은 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+        void canMoveWhenTargetIsOtherColor(int file, int rank) {
             Piece piece = new Piece(PieceType.QUEEN, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
         }
 
         @ParameterizedTest
@@ -224,10 +230,10 @@ class PieceTest {
                 "8,4", "7,4", "6,4", "5,4", "3,4", "2,4", "1,4",
                 "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8"})
         @DisplayName("퀸은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
-        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+        void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.QUEEN, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
 
         @Test
@@ -248,9 +254,9 @@ class PieceTest {
                 "5,4", "3,4",
                 "4,3", "4,5",})
         @DisplayName("킹은 도착 위치가 비어있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsEmpty(int row, int column) {
+        void canMoveWhenTargetIsEmpty(int file, int rank) {
             Piece piece = new Piece(PieceType.KING, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false, Map.of())).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false, Map.of())).isTrue();
         }
 
         @ParameterizedTest
@@ -259,10 +265,10 @@ class PieceTest {
                 "5,4", "3,4",
                 "4,3", "4,5",})
         @DisplayName("킹은 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
-        void canMoveWhenToPositionIsOtherColor(int row, int column) {
+        void canMoveWhenTargetIsOtherColor(int file, int rank) {
             Piece piece = new Piece(PieceType.KING, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue();
         }
 
         @ParameterizedTest
@@ -271,10 +277,10 @@ class PieceTest {
                 "5,4", "3,4",
                 "4,3", "4,5",})
         @DisplayName("킹은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
-        void canNotMoveWhenToPositionIsSameColor(int row, int column) {
+        void canNotMoveWhenTargetIsSameColor(int rank, int file) {
             Piece piece = new Piece(PieceType.KING, Color.WHITE);
-            assertThat(piece.canMove(new Position(4, 4), new Position(column, row), false,
-                    Map.of(new Position(column, row), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+            assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), false,
+                    Map.of(new Position(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
     }
 }

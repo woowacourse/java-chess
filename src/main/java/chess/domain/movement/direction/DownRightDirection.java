@@ -9,11 +9,11 @@ public class DownRightDirection extends StraightDirection {
     }
 
     @Override
-    Position next(final Position from) {
-        if (from.isMinimumRow() || from.isMaximumColumn()) {
-            return from;
+    Position next(final Position position) {
+        if (position.isMinimumRank() || position.isMaximumFile()) {
+            return position;
         }
 
-        return new Position(from.file() + 1, from.rank() - 1);
+        return new Position(position.file() + 1, position.rank() - 1);
     }
 }

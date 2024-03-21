@@ -12,7 +12,8 @@ public enum PieceSymbol {
     BISHOP(PieceType.BISHOP, "b"),
     ROOK(PieceType.ROOK, "r"),
     PAWN(PieceType.PAWN, "p"),
-    EMPTY(PieceType.EMPTY, ".");
+    EMPTY(PieceType.EMPTY, "."),
+    ;
 
     private final PieceType pieceType;
     private final String display;

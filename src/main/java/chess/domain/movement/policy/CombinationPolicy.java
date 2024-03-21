@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CombinationPolicy implements Policy {
 
-    List<Policy> policies;
+    private final List<Policy> policies;
 
     public CombinationPolicy(final Policy... policies) {
         this.policies = List.of(policies);

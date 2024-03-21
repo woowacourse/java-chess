@@ -9,6 +9,7 @@ import chess.view.OutputView;
 import java.awt.Point;
 
 public class ChessGameController {
+
     private final OutputView outputView;
     private final InputView inputView;
 
@@ -44,16 +45,16 @@ public class ChessGameController {
         }
 
         if (gameCommand == GameCommand.MOVE) {
-            Position from = createPosition(inputView.getPosition());
-            Position to = createPosition(inputView.getPosition());
+            Position source = createPosition(inputView.getPosition());
+            Position target = createPosition(inputView.getPosition());
 
-            board.move(from, to);
+            board.move(source, target);
             outputView.printBoard(board);
         }
     }
 
     private Position createPosition(final String fileAndRank) {
-        Point fromPoint = PointConverter.convert(fileAndRank);
-        return new Position(fromPoint.x, fromPoint.y);
+        Point point = PointConverter.convert(fileAndRank);
+        return new Position(point.x, point.y);
     }
 }

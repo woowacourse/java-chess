@@ -5,6 +5,7 @@ import chess.domain.movement.policy.Policy;
 import chess.domain.piece.Color;
 
 public class Movement {
+
     private final Policy policy;
     private final Direction direction;
 
@@ -13,7 +14,7 @@ public class Movement {
         this.direction = direction;
     }
 
-    public boolean isSatisfied(Color color, boolean firstMove, boolean existEnemy) {
+    public boolean isSatisfied(final Color color, final boolean firstMove, final boolean existEnemy) {
         return policy.isSatisfied(color, firstMove, existEnemy);
     }
 

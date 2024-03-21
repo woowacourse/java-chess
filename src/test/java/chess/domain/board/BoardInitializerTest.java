@@ -71,8 +71,8 @@ class BoardInitializerTest {
     void initializeEmptyPieces() {
         Map<Position, Piece> initialPiecePositions = new BoardInitializer().initialize();
         IntStream.rangeClosed(3, 6).boxed()
-                .flatMap(row -> IntStream.rangeClosed(1, 8).boxed()
-                        .map(column -> new Position(column, row)))
+                .flatMap(rank -> IntStream.rangeClosed(1, 8).boxed()
+                        .map(file -> new Position(file, rank)))
                 .forEach(position -> assertThat(initialPiecePositions.get(position)).isEqualTo(
                         new Piece(PieceType.EMPTY, Color.NONE)));
     }

@@ -9,10 +9,10 @@ public class UpDirection extends StraightDirection {
     }
 
     @Override
-    Position next(final Position from) {
-        if (from.isMaximumRow()) {
-            return from;
+    Position next(final Position position) {
+        if (position.isMaximumRank()) {
+            return position;
         }
-        return new Position(from.file(), from.rank() + 1);
+        return new Position(position.file(), position.rank() + 1);
     }
 }

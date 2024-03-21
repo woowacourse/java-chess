@@ -6,10 +6,10 @@ public class PointConverter {
 
     public static Point convert(final String position) {
         String[] fileAndRank = position.split("");
-        int column = convertFile(fileAndRank[0]);
-        int row = Integer.parseInt(fileAndRank[1]);
+        int file = convertFile(fileAndRank[0]);
+        int rank = Integer.parseInt(fileAndRank[1]);
 
-        return new Point(column, row);
+        return new Point(file, rank);
     }
 
     private static int convertFile(final String rawFile) {

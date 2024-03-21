@@ -9,10 +9,10 @@ public class RightDirection extends StraightDirection {
     }
 
     @Override
-    Position next(final Position from) {
-        if (from.isMaximumColumn()) {
-            return from;
+    Position next(final Position position) {
+        if (position.isMaximumFile()) {
+            return position;
         }
-        return new Position(from.file() + 1, from.rank());
+        return new Position(position.file() + 1, position.rank());
     }
 }

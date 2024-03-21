@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Piece {
+
     private final PieceType pieceType;
     private final Color color;
 
@@ -17,54 +18,56 @@ public class Piece {
         this.color = color;
     }
 
-    public boolean canMove(final Position from, final Position to,
+    public boolean canMove(final Position source, final Position target,
                            final boolean firstMove, final Map<Position, Piece> pieces) {
         return pieceType.getMovements()
                 .stream()
-                .filter(movement -> movement.isSatisfied(color, firstMove, existEnemy(to, pieces)))
+                .filter(movement -> movement.isSatisfied(color, firstMove, existEnemy(target, pieces)))
                 .map(Movement::getDirection)
-                .anyMatch(direction -> direction.canReach(from, to, findObstacle(from, to, pieces)));
+                .anyMatch(direction -> direction.canReach(source, target, findObstacle(source, target, pieces)));
     }
 
-    private List<Position> findObstacle(final Position from, final Position to, final Map<Position, Piece> pieces) {
+    private List<Position> findObstacle(final Position source, final Position target,
+                                        final Map<Position, Piece> pieces) {
         List<Position> obstacles = pieces.entrySet().stream()
                 .filter(entry -> entry.getValue().isNotEmpty())
                 .map(Entry::getKey)
                 .collect(Collectors.toList());
 
-        removeKillableDestinationObstacle(to, pieces, obstacles);
-        addObstacleBlockedOnRankMove(from, to, pieces, obstacles);
+        removeKillableDestinationObstacle(target, pieces, obstacles);
+        addObstacleBlockedOnRankMove(source, target, pieces, obstacles);
         return obstacles;
     }
 
-    private void removeKillableDestinationObstacle(final Position to, final Map<Position, Piece> pieces,
+    private void removeKillableDestinationObstacle(final Position source, final Map<Position, Piece> pieces,
                                                    final List<Position> obstacles) {
-        if (obstacles.contains(to) && pieces.get(to).isNotSameColor(color)) {
-            obstacles.remove(to);
+        if (obstacles.contains(source) && pieces.get(source).isNotSameColor(color)) {
+            obstacles.remove(source);
         }
     }
 
-    private void addObstacleBlockedOnRankMove(final Position from, final Position to,
+    private void addObstacleBlockedOnRankMove(final Position source, final Position target,
                                               final Map<Position, Piece> pieces, final List<Position> obstacles) {
-        if (isPawnBlockedOnRankMove(from, to, pieces)) {
-            obstacles.add(to);
+        if (isPawnBlockedOnRankMove(source, target, pieces)) {
+            obstacles.add(target);
         }
     }
 
-    private boolean isPawnBlockedOnRankMove(final Position from, final Position to, final Map<Position, Piece> pieces) {
-        return pieceType == PieceType.PAWN && isRankMove(from, to)
-                && pieces.getOrDefault(to, new Piece(PieceType.EMPTY, Color.NONE)).isNotEmpty();
+    private boolean isPawnBlockedOnRankMove(final Position source, final Position target,
+                                            final Map<Position, Piece> pieces) {
+        return pieceType == PieceType.PAWN && isRankMove(source, target)
+                && pieces.getOrDefault(target, new Piece(PieceType.EMPTY, Color.NONE)).isNotEmpty();
     }
 
-    private boolean isRankMove(final Position from, final Position to) {
-        return from.file() == to.file()
-                && (Math.abs(from.rank() - to.rank()) == 1 || Math.abs(from.rank() - to.rank()) == 2);
+    private boolean isRankMove(final Position source, final Position target) {
+        return source.file() == target.file()
+                && (Math.abs(source.rank() - target.rank()) == 1 || Math.abs(source.rank() - target.rank()) == 2);
     }
 
-    private boolean existEnemy(final Position to, final Map<Position, Piece> pieces) {
-        return pieces.containsKey(to)
-                && pieces.get(to).isNotEmpty()
-                && pieces.get(to).isNotSameColor(color);
+    private boolean existEnemy(final Position target, final Map<Position, Piece> pieces) {
+        return pieces.containsKey(target)
+                && pieces.get(target).isNotEmpty()
+                && pieces.get(target).isNotSameColor(color);
     }
 
     private boolean isNotSameColor(final Color color) {

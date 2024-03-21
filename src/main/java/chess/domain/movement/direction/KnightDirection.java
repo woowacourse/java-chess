@@ -16,18 +16,18 @@ public class KnightDirection implements Direction {
             new Point(-2, -1));
 
     @Override
-    public boolean canReach(final Position from, final Position to, final List<Position> pieces) {
-        return getPossiblePosition(from)
+    public boolean canReach(final Position source, final Position target, final List<Position> pieces) {
+        return getPossiblePosition(source)
                 .stream()
                 .filter(position -> !pieces.contains(position))
-                .anyMatch(position -> position.equals(to));
+                .anyMatch(position -> position.equals(target));
     }
 
-    private List<Position> getPossiblePosition(final Position from) {
+    private List<Position> getPossiblePosition(final Position position) {
         return points.stream()
-                .filter(point -> point.x + from.rank() > 0 && point.x + from.rank() < 9)
-                .filter(point -> point.y + from.file() > 0 && point.y + from.file() < 9)
-                .map(point -> new Position(point.y + from.file(), point.x + from.rank()))
+                .filter(point -> point.x + position.rank() > 0 && point.x + position.rank() < 9)
+                .filter(point -> point.y + position.file() > 0 && point.y + position.file() < 9)
+                .map(point -> new Position(point.y + position.file(), point.x + position.rank()))
                 .toList();
     }
 }

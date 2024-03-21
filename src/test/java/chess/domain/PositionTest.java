@@ -22,40 +22,40 @@ class PositionTest {
     @ParameterizedTest
     @DisplayName("위치는 가로, 세로 범위는 각각 1 ~ 8 이다.")
     @CsvSource({"0,1", "1,0", "1, 9", "9, 1"})
-    void createPositionThrowException(int row, int column) {
-        assertThatThrownBy(() -> new Position(column, row))
+    void createPositionThrowException(int file, int rank) {
+        assertThatThrownBy(() -> new Position(file, rank))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("위치의 가로, 세로 범위는 각각 1 ~ 8이여야 합니다.");
     }
 
     @Test
-    @DisplayName("위치의 column이 최소인 경우 참을 반환한다.")
-    void isMinimumColumn() {
+    @DisplayName("위치의 file이 최소인 경우 참을 반환한다.")
+    void isMinimumFile() {
         Position position = new Position(1, 3);
-        assertThat(position.isMinimumColumn()).isTrue();
+        assertThat(position.isMinimumFile()).isTrue();
     }
 
 
     @Test
-    @DisplayName("위치의 column이 최대인 경우 참을 반환한다.")
-    void isMaximumColumn() {
+    @DisplayName("위치의 file이 최대인 경우 참을 반환한다.")
+    void isMaximumFile() {
         Position position = new Position(8, 3);
-        assertThat(position.isMaximumColumn()).isTrue();
+        assertThat(position.isMaximumFile()).isTrue();
     }
 
     @Test
-    @DisplayName("위치의 row가 최소인 경우 참을 반환한다.")
-    void isMinimumRow() {
+    @DisplayName("위치의 rank가 최소인 경우 참을 반환한다.")
+    void isMinimumRank() {
         Position position = new Position(3, 1);
-        assertThat(position.isMinimumRow()).isTrue();
+        assertThat(position.isMinimumRank()).isTrue();
     }
 
 
     @Test
-    @DisplayName("위치의 row가 최대인 경우 참을 반환한다.")
-    void isMaximumRow() {
+    @DisplayName("위치의 rank가 최대인 경우 참을 반환한다.")
+    void isMaximumRank() {
         Position position = new Position(3, 8);
-        assertThat(position.isMaximumRow()).isTrue();
+        assertThat(position.isMaximumRank()).isTrue();
     }
 
 
@@ -64,10 +64,10 @@ class PositionTest {
     void isNotBoundaryValue() {
         Position position = new Position(3, 3);
         assertAll(
-                () -> assertThat(position.isMinimumColumn()).isFalse(),
-                () -> assertThat(position.isMaximumColumn()).isFalse(),
-                () -> assertThat(position.isMinimumRow()).isFalse(),
-                () -> assertThat(position.isMaximumRow()).isFalse()
+                () -> assertThat(position.isMinimumFile()).isFalse(),
+                () -> assertThat(position.isMaximumFile()).isFalse(),
+                () -> assertThat(position.isMinimumRank()).isFalse(),
+                () -> assertThat(position.isMaximumRank()).isFalse()
         );
     }
 }
