@@ -1,7 +1,7 @@
 package domain.game;
 
 public class Turn {
-    TeamColor currentTurn;
+    private TeamColor currentTurn;
 
     public Turn() {
         this.currentTurn = TeamColor.WHITE;
