@@ -20,7 +20,7 @@ public enum File {
         int targetIndex = files.indexOf(target);
         int minIndex = Math.min(sourceIndex, targetIndex);
         int maxIndex = Math.max(sourceIndex, targetIndex);
-        return files.subList(minIndex, maxIndex + 1);
+        return files.subList(minIndex + 1, maxIndex);
     }
 
     public boolean isSame(File target) {

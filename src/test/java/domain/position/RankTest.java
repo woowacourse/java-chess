@@ -38,7 +38,7 @@ class RankTest {
 
         List<Rank> ranks = source.betweenRanks(target);
 
-        assertThat(ranks).containsOnly(Rank.ONE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE);
+        assertThat(ranks).containsOnly(Rank.TWO, Rank.THREE, Rank.FOUR);
     }
 
     @Test

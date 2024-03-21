@@ -27,7 +27,7 @@ class FileTest {
 
         List<File> files = source.betweenFiles(target);
 
-        assertThat(files).containsOnly(File.A, File.B, File.C, File.D, File.E);
+        assertThat(files).containsOnly(File.B, File.C, File.D);
     }
 
     @Test

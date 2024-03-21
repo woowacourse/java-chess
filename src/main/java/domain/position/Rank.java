@@ -27,7 +27,7 @@ public enum Rank {
         int targetIndex = ranks.indexOf(target);
         int minIndex = Math.min(sourceIndex, targetIndex);
         int maxIndex = Math.max(sourceIndex, targetIndex);
-        return ranks.subList(minIndex, maxIndex + 1);
+        return ranks.subList(minIndex + 1, maxIndex);
     }
 
     public boolean isSame(Rank rank) {

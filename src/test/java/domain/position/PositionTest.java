@@ -206,11 +206,9 @@ public class PositionTest {
             List<Position> positions = source.findBetweenStraightPositions(target);
 
             assertThat(positions).containsExactly(
-                    new Position(File.D, Rank.FOUR),
                     new Position(File.E, Rank.FOUR),
                     new Position(File.F, Rank.FOUR),
-                    new Position(File.G, Rank.FOUR),
-                    new Position(File.H, Rank.FOUR)
+                    new Position(File.G, Rank.FOUR)
             );
         }
     }
