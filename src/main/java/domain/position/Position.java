@@ -36,19 +36,19 @@ public class Position {
         if (file.index() < target.file.index() && rank.index() == target.rank.index()) {
             return Direction.RIGHT;
         }
-        if (file.index() < target.file.index() && rank.index() < target.rank.index() && Math.abs(target.file.index() - file.index()) == Math.abs(target.rank.index() - rank.index())) {
+        if (file.index() < target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
             return Direction.TOP_RIGHT;
         }
-        if (file.index() > target.file.index() && rank.index() < target.rank.index() && Math.abs(target.file.index() - file.index()) == Math.abs(target.rank.index() - rank.index())) {
+        if (file.index() > target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
             return Direction.TOP_LEFT;
         }
-        if (file.index() < target.file.index() && rank.index() > target.rank.index() && Math.abs(target.file.index() - file.index()) == Math.abs(target.rank.index() - rank.index())) {
+        if (file.index() < target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
             return Direction.DOWN_RIGHT;
         }
-        if (file.index() > target.file.index() && rank.index() > target.rank.index() && Math.abs(target.file.index() - file.index()) == Math.abs(target.rank.index() - rank.index())) {
+        if (file.index() > target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
             return Direction.DOWN_LEFT;
         }
-        return null;
+        throw new IllegalArgumentException("올바르지 않은 방향입니다.");
     }
 
     public boolean isRank(ChessRank rank) {
@@ -56,14 +56,23 @@ public class Position {
     }
 
     public int calculateDistanceTo(Position target) {
-        int fileDistance = Math.abs(target.file.index() - file.index());
-        int rankDistance = Math.abs(target.rank.index() - rank.index());
+        int fileDistance = calculateFileDistanceTo(target);
+        int rankDistance = calculateRankDistanceTo(target);
 
         if (fileDistance > 0) {
             return fileDistance;
         }
         return rankDistance;
     }
+
+    public int calculateFileDistanceTo(Position target) {
+        return Math.abs(target.file.index() - file.index());
+    }
+
+    public int calculateRankDistanceTo(Position target) {
+        return Math.abs(target.rank.index() - rank.index());
+    }
+
 
     public int indexOfFile() {
         return file.index();

@@ -12,6 +12,9 @@ public final class Knight extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return false;
+        int fileDistance = source.calculateFileDistanceTo(target);
+        int rankDistance = source.calculateRankDistanceTo(target);
+
+        return (fileDistance == 1 && rankDistance == 2) || (fileDistance == 2 && rankDistance == 1);
     }
 }
