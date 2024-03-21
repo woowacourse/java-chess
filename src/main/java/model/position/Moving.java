@@ -7,8 +7,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-// 클래스로 변경
-public record Moving(Position currentPosition, Position nextPosition) {
+public final class Moving {
+    private final Position currentPosition;
+    private final Position nextPosition;
+
+    public Moving(Position currentPosition, Position nextPosition) {
+        this.currentPosition = currentPosition;
+        this.nextPosition = nextPosition;
+    }
 
     public boolean isHorizontal() {
         int currentRow = currentPosition.getRowIndex();
@@ -59,5 +65,38 @@ public record Moving(Position currentPosition, Position nextPosition) {
         int nextRow = nextPosition.getRowIndex();
         int nextColumn = nextPosition.getColumnIndex();
         return Math.max(Math.abs(currentRow - nextRow), Math.abs(currentColumn - nextColumn));
+    }
+
+    public Position currentPosition() {
+        return currentPosition;
+    }
+
+    public Position nextPosition() {
+        return nextPosition;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (Moving) obj;
+        return Objects.equals(this.currentPosition, that.currentPosition) &&
+                Objects.equals(this.nextPosition, that.nextPosition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentPosition, nextPosition);
+    }
+
+    @Override
+    public String toString() {
+        return "Moving[" +
+                "currentPosition=" + currentPosition + ", " +
+                "nextPosition=" + nextPosition + ']';
     }
 }
