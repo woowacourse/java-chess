@@ -2,6 +2,7 @@ package model.piece;
 
 import java.util.Set;
 import model.Camp;
+import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
 
@@ -12,8 +13,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-        if (!canMovable(currentPosition, nextPosition)) {
+    public Set<Position> getRoute(Moving moving) {
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
+
+        if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
         if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
@@ -26,8 +30,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean canMovable(Position currentPosition, Position nextPosition) {
-        if (currentPosition.equals(nextPosition)) {
+    protected boolean canMovable(Moving moving) {
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
+
+        if (moving.isNotMoved()) {
             return false;
         }
         int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();

@@ -2,6 +2,7 @@ package model.piece;
 
 import java.util.Set;
 import model.Camp;
+import model.position.Moving;
 import model.position.Position;
 
 public class King extends Piece {
@@ -11,16 +12,19 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-        if (!canMovable(currentPosition, nextPosition)) {
+    public Set<Position> getRoute(Moving moving) {
+        if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
         return Set.of();
     }
 
     @Override
-    protected boolean canMovable(Position currentPosition, Position nextPosition) {
-        if (currentPosition.equals(nextPosition)) {
+    protected boolean canMovable(Moving moving) {
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
+
+        if (moving.isNotMoved()) {
             return false;
         }
         int currentRow = currentPosition.getRowIndex();

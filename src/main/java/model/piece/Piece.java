@@ -3,6 +3,7 @@ package model.piece;
 import java.util.Objects;
 import java.util.Set;
 import model.Camp;
+import model.position.Moving;
 import model.position.Position;
 
 public abstract class Piece {
@@ -15,9 +16,9 @@ public abstract class Piece {
 
 
     //TODO : 리턴값 자료구조 정하기
-    public abstract Set<Position> getRoute(Position currentPosition, Position nextPosition);
+    public abstract Set<Position> getRoute(Moving moving);
 
-    protected abstract boolean canMovable(Position currentPosition, Position nextPosition);
+    protected abstract boolean canMovable(Moving moving);
 
     public Camp getCamp() {
         return camp;

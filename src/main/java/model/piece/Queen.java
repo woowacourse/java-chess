@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import model.Camp;
 import model.position.Column;
+import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
 
@@ -20,12 +21,15 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-        if (!canMovable(currentPosition, nextPosition)) {
+    public Set<Position> getRoute(Moving moving) {
+        if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
 
         Set<Position> route = new HashSet<>();
+
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
 
         int currentRow = currentPosition.getRowIndex();
         int currentColumn = currentPosition.getColumnIndex();
@@ -42,7 +46,6 @@ public class Queen extends Piece {
             route.add(new Position(column, row));
         }
         return route;
-
     }
 
     // 하, 우, 상, 좌, 하우, 하좌, 상우, 상좌
@@ -89,24 +92,12 @@ public class Queen extends Piece {
 
 
     @Override
-    public boolean canMovable(Position currentPosition, Position nextPosition) {
-        if (currentPosition.equals(nextPosition)) {
+    public boolean canMovable(Moving moving) {
+        if (moving.isNotMoved()) {
             return false;
         }
 
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
-
-        int nextRow = nextPosition.getRowIndex();
-        int nextColumn = nextPosition.getColumnIndex();
-
-        //룩방향
-        if (nextRow - currentRow == 0 || nextColumn - currentColumn == 0) {
-            return true;
-        }
-
-        //비숍
-        return Math.abs(currentRow - nextRow) == Math.abs(currentColumn - nextColumn);
+        return moving.isDiagonal() || moving.isVertical() || moving.isHorizontal();
     }
 
     @Override

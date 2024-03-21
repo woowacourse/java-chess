@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import model.Camp;
 import model.position.Column;
+import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
 
@@ -18,10 +19,14 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position currentPosition, Position nextPosition) {
-        if (!canMovable(currentPosition, nextPosition)) {
+    public Set<Position> getRoute(Moving moving) {
+
+        if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
+
         Set<Position> route = new HashSet<>();
         int currentRow = currentPosition.getRowIndex();
         int currentColumn = currentPosition.getColumnIndex();
@@ -60,18 +65,11 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean canMovable(Position currentPosition, Position nextPosition) {
-        if (currentPosition.equals(nextPosition)) {
+    protected boolean canMovable(Moving moving) {
+        if (moving.isNotMoved()) {
             return false;
         }
-
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
-
-        int nextRow = nextPosition.getRowIndex();
-        int nextColumn = nextPosition.getColumnIndex();
-
-        return Math.abs(currentRow - nextRow) == Math.abs(currentColumn - nextColumn);
+        return moving.isDiagonal();
     }
 
     @Override

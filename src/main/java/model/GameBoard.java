@@ -68,7 +68,7 @@ public class GameBoard {
             throw new IllegalArgumentException("자신의 기물만 이동 가능합니다.");
         }
 
-        Set<Position> positions = piece.getRoute(moving.currentPosition(), moving.nextPosition());
+        Set<Position> positions = piece.getRoute(moving);
         for (Position position : positions) {
             if (board.containsKey(position)) {
                 throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
@@ -82,10 +82,12 @@ public class GameBoard {
         }
 
         if (board.get(moving.currentPosition()) instanceof Pawn) {
-            if (moving.currentPosition().getColumnIndex() != moving.nextPosition().getColumnIndex() && !board.containsKey(moving.nextPosition())) {
+            if (moving.currentPosition().getColumnIndex() != moving.nextPosition().getColumnIndex()
+                    && !board.containsKey(moving.nextPosition())) {
                 throw new IllegalArgumentException("폰 대각선 이동 불가");
             }
-            if (moving.currentPosition().getColumnIndex() == moving.nextPosition().getColumnIndex() && board.containsKey(moving.nextPosition())) {
+            if (moving.currentPosition().getColumnIndex() == moving.nextPosition().getColumnIndex()
+                    && board.containsKey(moving.nextPosition())) {
                 throw new IllegalArgumentException("폰 직선 이동 불가");
             }
         }
