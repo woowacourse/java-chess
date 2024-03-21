@@ -4,6 +4,7 @@ import domain.game.PositionFixture;
 import domain.piece.piecerole.Bishop;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
+import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
@@ -71,6 +72,17 @@ class PieceRoleTest {
 
             Assertions.assertThat(bishop.canMove(sourcePosition, targetPosition)).isTrue();
         }
+
+        @DisplayName("흰색 폰이 (c,2)에서 (c,3)로 이동한다.")
+        @Test
+        void canPawnMove() {
+            Position sourcePosition = PositionFixture.generateC2Position();
+            Position targetPosition = PositionFixture.generateC3Position();
+
+            PieceRole pawn = new Pawn(Color.WHITE);
+
+            Assertions.assertThat(pawn.canMove(sourcePosition, targetPosition)).isTrue();
+        }
     }
 
     @DisplayName("이동 실패 테스트")
@@ -129,6 +141,17 @@ class PieceRoleTest {
             PieceRole bishop = new Bishop();
 
             Assertions.assertThat(bishop.canMove(sourcePosition, targetPosition)).isFalse();
+        }
+
+        @DisplayName("검은색 폰이 (c,2)에서 (c,3)로 이동하지 못한다.")
+        @Test
+        void canPawnMove() {
+            Position sourcePosition = PositionFixture.generateC2Position();
+            Position targetPosition = PositionFixture.generateC3Position();
+
+            PieceRole pawn = new Pawn(Color.BLACK);
+
+            Assertions.assertThat(pawn.canMove(sourcePosition, targetPosition)).isFalse();
         }
     }
 

@@ -5,6 +5,7 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceType;
 import domain.piece.piecerole.King;
+import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.position.Position;
 import org.assertj.core.api.Assertions;
@@ -80,5 +81,44 @@ class PieceMoverTest {
         Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
+    @DisplayName("앞에 다른 진영의 기물이 있는 경우 폰이 이동하지 못한다.")
+    @Test
+    void movePawnWhenFrontSquareHasOtherPiece() {
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateB2Position();
+        Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
+        Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
+        Piece sourcePiece = new Piece(new PieceType(new Pawn(Color.WHITE), Color.WHITE), sourcePosition);
+        Piece targetPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), targetPosition);
+
+        PieceMover pieceMover = new PieceMover();
+        pieceMover.add(sourceSquare, sourcePiece);
+        pieceMover.add(targetSquare, targetPiece);
+
+        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("대각선에 다른 진영의 기물이 있는 경우 폰이 이동할 수 있다.")
+    @Test
+    void movePawnWhenDiagonalSquareHasOtherPiece() {
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateC2Position();
+        Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
+        Square targetSquare = SquareFixture.generateSquare(targetPosition);
+
+        Piece sourcePiece = new Piece(new PieceType(new Pawn(Color.WHITE), Color.WHITE), sourcePosition);
+        Piece targetPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), targetPosition);
+
+        PieceMover pieceMover = new PieceMover();
+        pieceMover.add(sourceSquare, sourcePiece);
+        pieceMover.add(targetSquare, targetPiece);
+
+        pieceMover.move(sourceSquare, targetSquare);
+
+        Piece findPiece = pieceMover.findPieceBySquare(targetSquare);
+
+        Assertions.assertThat(findPiece).isEqualTo(sourcePiece);
+    }
 }
