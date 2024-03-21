@@ -1,5 +1,0 @@
-package row;
-
-class RowTest {
-
-}
