@@ -2,13 +2,23 @@ package chess.domain;
 
 public enum Direction {
     N(-1, 0),
-    NE(-1, 1),
     E(0, 1),
-    SE(1, 1),
     S(1, 0),
-    SW(1, -1),
     W(0, -1),
-    NW(-1, -1);
+
+    NE(-1, 1),
+    SE(1, 1),
+    SW(1, -1),
+    NW(-1, -1),
+
+    NNE(-2, 1),
+    ENE(-1, 2),
+    ESE(1, 2),
+    SSE(2, 1),
+    SSW(2, -1),
+    WSW(1, -2),
+    WNW(-1, -2),
+    NNW(-2, -1);
 
     private final int rowDirection;
     private final int columnDirection;
