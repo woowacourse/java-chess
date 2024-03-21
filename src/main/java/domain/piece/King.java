@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class King extends Piece {
 
-    public static final int MOVE_DISTANCE = 1;
+    private static final int MOVE_DISTANCE = 1;
 
     public King(final Team color) {
         super(color);

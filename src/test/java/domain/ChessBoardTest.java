@@ -96,7 +96,7 @@ class ChessBoardTest {
     }
 
 
-    @DisplayName("상대방 기물을 잡는다.")
+    @DisplayName("상대방 기물을 공격하면 상대방 기물이 제거되고 해당 위치로 간다.")
     @Test
     void killEnemy() {
         // given
@@ -139,7 +139,7 @@ class ChessBoardTest {
                 .hasMessage("자기 말이 아닙니다.");
     }
 
-    @DisplayName("기물의 공격 동선이 아닌 경우 움직일 수 없다.")
+    @DisplayName("기물(폰)의 공격 동선이 아닌 경우 움직일 수 없다.")
     @Test
     void canAttack() {
         // given

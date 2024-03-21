@@ -26,6 +26,8 @@ public class ChessBoard {
             File.E, new King(Team.WHITE), File.F, new Bishop(Team.WHITE),
             File.G, new Knight(Team.WHITE), File.H, new Rook(Team.WHITE)
     );
+    private static final Piece BLACK_PAWN = new Pawn(Team.BLACK);
+    private static final Piece WHITE_PAWN = new Pawn(Team.WHITE);
 
     private final Map<Square, Piece> pieceSquares;
     private Team team;
@@ -43,8 +45,8 @@ public class ChessBoard {
         final Map<Square, Piece> chessTable = new HashMap<>();
 
         for (final File file : File.values()) {
-            chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Team.BLACK));
-            chessTable.put(new Square(Rank.TWO, file), new Pawn(Team.WHITE));
+            chessTable.put(new Square(Rank.SEVEN, file), BLACK_PAWN);
+            chessTable.put(new Square(Rank.TWO, file), WHITE_PAWN);
             chessTable.put(new Square(Rank.EIGHT, file), BLACK_PIECE_TYPE_ORDERS.get(file));
             chessTable.put(new Square(Rank.ONE, file), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
@@ -79,14 +81,14 @@ public class ChessBoard {
     }
 
     private void validateCamp(final Piece sourcePiece) {
-        if (sourcePiece.isOppositeCamp(team)) {
+        if (sourcePiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException("자기 말이 아닙니다.");
         }
     }
 
     private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
         final Piece targetPiece = pieceSquares.get(target);
-        if (targetPiece.isSameCamp(sourcePiece)) {
+        if (targetPiece.isSameTeam(sourcePiece)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
         if (sourcePiece.canNotAttack(source, target)) {

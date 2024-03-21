@@ -11,13 +11,13 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public boolean canNotMove(final Square source, final Square target) {
+    public final boolean canNotMove(final Square source, final Square target) {
         return !canMove(source, target);
     }
 
     protected abstract boolean canMove(Square source, Square target);
 
-    public boolean canNotAttack(final Square source, final Square target) {
+    public final boolean canNotAttack(final Square source, final Square target) {
         return !canAttack(source, target);
     }
 
@@ -25,11 +25,11 @@ public abstract class Piece {
         return canMove(source, target);
     }
 
-    public boolean isSameCamp(final Piece other) {
+    public final boolean isSameTeam(final Piece other) {
         return this.team == other.team;
     }
 
-    public boolean isOppositeCamp(final Team other) {
+    public final boolean isOppositeTeam(final Team other) {
         return team != other;
     }
 
