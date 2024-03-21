@@ -1,6 +1,8 @@
 package domain.position;
 
 import domain.movement.Direction;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -12,7 +14,18 @@ public class Position {
         this.rank = rank;
     }
 
-    public Direction getDirection(Position target) {
+    public List<Position> route(Position target) {
+        Direction direction = this.getDirection(target);
+        List<Position> positions = new ArrayList<>();
+        Position current = this.next(direction);
+        while (!current.equals(target)) {
+            positions.add(current);
+            current = current.next(direction);
+        }
+        return positions;
+    }
+
+    private Direction getDirection(Position target) {
         validateSamePosition(target);
         int rankDiff = target.rank.subtract(this.rank);
         int fileDiff = target.file.subtract(this.file);

@@ -1,285 +1,186 @@
 package domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.movement.Direction;
-import org.junit.jupiter.api.Nested;
+import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class PositionTest {
-    @Nested
-    class 직선 {
-        @ParameterizedTest
-        @EnumSource(value = Rank.class, names = {"TWO", "EIGHT"})
-        void UP_방향으로_움직인다(Rank rank) {
-            Position resource = new Position(File.A, Rank.ONE);
-            Position target = new Position(File.A, rank);
+    @Test
+    void UP_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.F, Rank.EIGHT);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.UP);
-        }
-
-        @Test
-        void UP_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.A, Rank.ONE);
-            Position nextPosition = position.next(Direction.UP);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.A, Rank.TWO));
-        }
-
-        @ParameterizedTest
-        @EnumSource(value = Rank.class, names = {"SEVEN", "ONE"})
-        void DOWN_방향으로_움직인다(Rank rank) {
-            Position resource = new Position(File.A, Rank.EIGHT);
-            Position target = new Position(File.A, rank);
-
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.DOWN);
-        }
-
-        @Test
-        void DOWN_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.A, Rank.EIGHT);
-            Position nextPosition = position.next(Direction.DOWN);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.A, Rank.SEVEN));
-        }
-
-        @ParameterizedTest
-        @EnumSource(value = File.class, names = {"B", "H"})
-        void RIGHT_방향으로_움직인다(File file) {
-            Position resource = new Position(File.A, Rank.ONE);
-            Position target = new Position(file, Rank.ONE);
-
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.RIGHT);
-        }
-
-        @Test
-        void RIGHT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.A, Rank.ONE);
-            Position nextPosition = position.next(Direction.RIGHT);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.B, Rank.ONE));
-        }
-
-        @ParameterizedTest
-        @EnumSource(value = File.class, names = {"G", "A"})
-        void LEFT_방향으로_움직인다(File file) {
-            Position resource = new Position(File.H, Rank.ONE);
-            Position target = new Position(file, Rank.ONE);
-
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.LEFT);
-        }
-
-        @Test
-        void LEFT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.H, Rank.ONE);
-            Position nextPosition = position.next(Direction.LEFT);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.G, Rank.ONE));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(2);
+        assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
+                new Position(File.F, Rank.SIX),
+                new Position(File.F, Rank.SEVEN)
+        ));
     }
 
-    @Nested
-    class 대각선 {
-        @ParameterizedTest
-        @CsvSource(value = {"G, SEVEN", "A, ONE"})
-        void DOWN_LEFT_방향으로_움직인다(File file, Rank rank) {
-            Position resource = new Position(File.H, Rank.EIGHT);
-            Position target = new Position(file, rank);
+    @Test
+    void UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.H, Rank.SEVEN);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.DOWN_LEFT);
-        }
-
-        @Test
-        void DOWN_LEFT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.H, Rank.EIGHT);
-            Position nextPosition = position.next(Direction.DOWN_LEFT);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.G, Rank.SEVEN));
-        }
-
-        @ParameterizedTest
-        @CsvSource(value = {"G, TWO", "A, EIGHT"})
-        void UP_LEFT_방향으로_움직인다(File file, Rank rank) {
-            Position resource = new Position(File.H, Rank.ONE);
-            Position target = new Position(file, rank);
-
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.UP_LEFT);
-        }
-
-        @Test
-        void UP_LEFT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.H, Rank.ONE);
-            Position nextPosition = position.next(Direction.UP_LEFT);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.G, Rank.TWO));
-        }
-
-        @ParameterizedTest
-        @CsvSource(value = {"B, TWO", "H, EIGHT"})
-        void UP_RIGHT_방향으로_움직인다(File file, Rank rank) {
-            Position resource = new Position(File.A, Rank.ONE);
-            Position target = new Position(file, rank);
-
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.UP_RIGHT);
-        }
-
-        @Test
-        void UP_RIGHT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.A, Rank.ONE);
-            Position nextPosition = position.next(Direction.UP_RIGHT);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.B, Rank.TWO));
-        }
-
-        @ParameterizedTest
-        @CsvSource(value = {"B, SEVEN", "H, ONE"})
-        void DOWN_RIGHT_방향으로_움직인다(File file, Rank rank) {
-            Position resource = new Position(File.A, Rank.EIGHT);
-            Position target = new Position(file, rank);
-
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.DOWN_RIGHT);
-        }
-
-        @Test
-        void DOWN_RIGHT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.A, Rank.EIGHT);
-            Position nextPosition = position.next(Direction.DOWN_RIGHT);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.B, Rank.SEVEN));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(1);
+        assertThat(positions).containsExactly(new Position(File.G, Rank.SIX));
     }
 
-    @Nested
-    class 나이트 {
-        @Test
-        void KNIGHT_UP_LEFT_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.B, Rank.SIX);
+    @Test
+    void RIGHT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.G, Rank.FIVE);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_UP_LEFT);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_UP_LEFT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_UP_LEFT);
+    @Test
+    void DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.H, Rank.THREE);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.B, Rank.SIX));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(1);
+        assertThat(positions).containsExactly(new Position(File.G, Rank.FOUR));
+    }
 
-        @Test
-        void KNIGHT_UP_RIGHT_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.D, Rank.SIX);
+    @Test
+    void DOWN_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.F, Rank.TWO);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_UP_RIGHT);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(2);
+        assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
+                new Position(File.F, Rank.FOUR),
+                new Position(File.F, Rank.THREE)
+        ));
+    }
 
-        @Test
-        void KNIGHT_UP_RIGHT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_UP_RIGHT);
+    @Test
+    void DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.C, Rank.TWO);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.D, Rank.SIX));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(2);
+        assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
+                new Position(File.E, Rank.FOUR),
+                new Position(File.D, Rank.THREE)
+        ));
+    }
 
-        @Test
-        void KNIGHT_RIGHT_UP_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.E, Rank.FIVE);
+    @Test
+    void LEFT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.F, Rank.FIVE);
+        Position target = new Position(File.C, Rank.FIVE);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_RIGHT_UP);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(2);
+        assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
+                new Position(File.E, Rank.FIVE),
+                new Position(File.D, Rank.FIVE)
+        ));
+    }
 
-        @Test
-        void KNIGHT_RIGHT_UP_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_RIGHT_UP);
+    @Test
+    void UP_LEFT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.A, Rank.EIGHT);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.E, Rank.FIVE));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(3);
+        assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
+                new Position(File.D, Rank.FIVE),
+                new Position(File.C, Rank.SIX),
+                new Position(File.B, Rank.SEVEN)
+        ));
+    }
 
-        @Test
-        void KNIGHT_RIGHT_DOWN_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.E, Rank.THREE);
+    @Test
+    void UP_UP_LEFT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.D, Rank.SIX);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_RIGHT_DOWN);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_RIGHT_DOWN_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_RIGHT_DOWN);
+    @Test
+    void UP_UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.F, Rank.SIX);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.E, Rank.THREE));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_DOWN_RIGHT_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.D, Rank.TWO);
+    @Test
+    void RIGHT_RIGHT_UP_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.G, Rank.FIVE);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_DOWN_RIGHT);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_DOWN_RIGHT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_DOWN_RIGHT);
+    @Test
+    void RIGHT_RIGHT_DOWN_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.G, Rank.THREE);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.D, Rank.TWO));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_DOWN_LEFT_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.B, Rank.TWO);
+    @Test
+    void DOWN_DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.F, Rank.TWO);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_DOWN_LEFT);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_DOWN_LEFT_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_DOWN_LEFT);
+    @Test
+    void DOWN_DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.D, Rank.TWO);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.B, Rank.TWO));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_LEFT_DOWN_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.A, Rank.THREE);
+    @Test
+    void LEFT_LEFT_DOWN_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.C, Rank.THREE);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_LEFT_DOWN);
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_LEFT_DOWN_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_LEFT_DOWN);
+    @Test
+    void LEFT_LEFT_UP_방향으로_이동하는_경로를_반환한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.C, Rank.FIVE);
 
-            assertThat(nextPosition).isEqualTo(new Position(File.A, Rank.THREE));
-        }
+        List<Position> positions = resource.route(target);
+        assertThat(positions).hasSize(0);
+    }
 
-        @Test
-        void KNIGHT_LEFT_UP_방향으로_움직인다() {
-            Position resource = new Position(File.C, Rank.FOUR);
-            Position target = new Position(File.A, Rank.FIVE);
+    @Test
+    void LEFT_LEFT_LEFT_UP_방향으로_이동하면_예외가_발생한다() {
+        Position resource = new Position(File.E, Rank.FOUR);
+        Position target = new Position(File.B, Rank.FIVE);
 
-            assertThat(resource.getDirection(target)).isEqualTo(Direction.KNIGHT_LEFT_UP);
-        }
-
-        @Test
-        void KNIGHT_LEFT_UP_방향으로_움직인_포지션을_반환한다() {
-            Position position = new Position(File.C, Rank.FOUR);
-            Position nextPosition = position.next(Direction.KNIGHT_LEFT_UP);
-
-            assertThat(nextPosition).isEqualTo(new Position(File.A, Rank.FIVE));
-        }
+        assertThatThrownBy(() -> resource.route(target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("올바르지 않은 방향입니다.");
     }
 }
