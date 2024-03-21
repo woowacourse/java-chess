@@ -1,7 +1,9 @@
 package chess.model.board;
 
 import chess.model.piece.Empty;
+import chess.model.piece.Movement;
 import chess.model.piece.Piece;
+import chess.model.piece.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,5 +40,37 @@ public class Board {
         return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
                 .mapToObj(file -> squares.get(Position.from(file, lineIndex)).getSignature())
                 .toList();
+    }
+
+    public void move(Position source, Position destination) {
+        Movement movement = new Movement(source, destination);
+        Piece sourcePiece = squares.get(source);
+        Piece targetPiece = squares.get(destination);
+        validateMove(movement, sourcePiece, targetPiece);
+        squares.put(destination, sourcePiece);
+        squares.put(source, Empty.getInstance());
+    }
+
+    private void validateMove(Movement movement, Piece sourcePiece, Piece targetPiece) {
+        if (sourcePiece.isSameColorWith(targetPiece)) {
+            throw new IllegalArgumentException("같은 색깔인 기물은 먹을 수 없습니다.");
+        }
+        if (!sourcePiece.isValid(movement)) {
+            throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
+        }
+        if (sourcePiece.isType(Type.PAWN)) {
+            validatePawn(movement, targetPiece);
+        }
+        List<Position> intermediatePositions = movement.getIntermediatePositions();
+        if (intermediatePositions.stream().anyMatch(position -> !squares.get(position).isEmpty())) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
+        }
+    }
+
+    private void validatePawn(Movement movement, Piece targetPiece) {
+        if (targetPiece.isEmpty() && movement.isVertical() || !targetPiece.isEmpty() && movement.isDiagonal()) {
+            return;
+        }
+        throw new IllegalArgumentException("올바르지 않은 움직임");
     }
 }
