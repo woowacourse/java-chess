@@ -13,18 +13,6 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public void validateMovement(Position resource, Position target, Piece other) {
-        // 화이트인 경우
-        // 방향 확인 (위로)
-        // 직선이면 움직이는 횟수 확인 1 or 2
-        // 타겟위치가 empty인지 확인
-        // 대각이면 움직이는 횟수 확인 1
-        // 타겟위치에 상대말이 있는지 확인
-        // 블랙인 경우
-        // 방향 확인 (아래로)
-        // 직선이면 움직이는 횟수 확인 1 or 2
-        // 타겟위치가 empty인지 확인
-        // 대각이면 움직이는 횟수 확인 1
-        // 타겟위치에 상대말이 있는지 확인
         if (getColor().isWhite()) {
             validateWhiteMovement(resource, target, other);
             return;
@@ -101,5 +89,10 @@ public class Pawn extends AbstractPiece {
         if (other.getColor().isNeutrality()) {
             throw new IllegalArgumentException("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public Type getType() {
+        return Type.PAWN;
     }
 }

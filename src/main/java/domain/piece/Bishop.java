@@ -27,4 +27,9 @@ public class Bishop extends AbstractPiece {
         throw new IllegalArgumentException(String.format("%s은 대각선 방향으로만 이동할 수 있습니다.",
                 this.getClass().getSimpleName()));
     }
+
+    @Override
+    public Type getType() {
+        return Type.BISHOP;
+    }
 }

@@ -25,4 +25,9 @@ public class Rook extends AbstractPiece {
         throw new IllegalArgumentException(String.format("%s은 수평, 수직 방향으로만 이동할 수 있습니다.",
                 this.getClass().getSimpleName()));
     }
+
+    @Override
+    public Type getType() {
+        return Type.ROOK;
+    }
 }

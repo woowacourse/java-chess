@@ -21,4 +21,9 @@ public class King extends AbstractPiece {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
     }
+
+    @Override
+    public Type getType() {
+        return Type.KING;
+    }
 }
