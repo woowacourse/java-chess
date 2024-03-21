@@ -1,5 +1,6 @@
-package domain;
+package domain.piece.kind;
 
+import domain.piece.Piece;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
 

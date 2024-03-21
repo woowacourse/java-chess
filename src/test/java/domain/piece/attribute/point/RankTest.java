@@ -1,3 +1,5 @@
+package domain.piece.attribute.point;
+
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Rank;
 import org.assertj.core.api.Assertions;

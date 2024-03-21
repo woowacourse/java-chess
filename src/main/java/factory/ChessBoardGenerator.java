@@ -1,10 +1,13 @@
 package factory;
 
 import domain.*;
+import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;
+import domain.piece.kind.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package domain;
+package domain.piece;
 
 import domain.piece.attribute.point.Point;
 

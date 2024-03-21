@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.attribute.point;
 
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Index;

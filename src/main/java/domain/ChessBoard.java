@@ -1,5 +1,7 @@
 package domain;
 
+import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.point.Point;
 import dto.RouteDto;
 import factory.ChessBoardGenerator;

@@ -1,12 +1,14 @@
+package domain;
+
 import domain.ChessBoard;
-import domain.PieceStatus;
+import domain.piece.kind.PieceStatus;
 import fixture.PieceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import domain.piece.attribute.Color;
-import domain.Piece;
-import domain.Pieces;
+import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;
@@ -15,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static domain.PieceStatus.*;
+import static domain.piece.kind.PieceStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessBoardTest {

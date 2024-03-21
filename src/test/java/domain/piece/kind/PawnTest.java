@@ -1,7 +1,7 @@
-package piece;
+package domain.piece.kind;
 
 import domain.piece.attribute.Color;
-import domain.Pawn;
+import domain.piece.kind.Pawn;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;

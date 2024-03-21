@@ -1,7 +1,8 @@
-package domain;
+package domain.piece;
 
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
+import domain.piece.kind.PieceStatus;
 
 import java.util.Objects;
 

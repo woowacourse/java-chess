@@ -1,8 +1,8 @@
 package fixture;
 
 import domain.piece.attribute.Color;
-import domain.Piece;
-import domain.PieceStatus;
+import domain.piece.Piece;
+import domain.piece.kind.PieceStatus;
 import domain.piece.attribute.point.Point;
 
 public class PieceImpl extends Piece {

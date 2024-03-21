@@ -1,6 +1,6 @@
-package piece;
+package domain.piece.kind;
 
-import domain.Bishop;
+import domain.piece.kind.Bishop;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
