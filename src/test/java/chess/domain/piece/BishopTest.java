@@ -25,34 +25,34 @@ class BishopTest {
     @Test
     void givenBishopMoveWhenMeetTeamMThenStop() {
         Bishop bishop = new Bishop(Color.WHITE);
-        Position currentBishopPosition = new Position(File.A, Rank.FOUR);
+        Position currentBishopPosition = Position.of(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(
                 currentBishopPosition, bishop,
-                new Position(File.B, Rank.THREE), new Bishop(Color.WHITE),
-                new Position(File.C, Rank.SIX), new Knight(Color.WHITE)
+                Position.of(File.B, Rank.THREE), new Bishop(Color.WHITE),
+                Position.of(File.C, Rank.SIX), new Knight(Color.WHITE)
         );
 
         Set<Position> movablePositions = bishop.calculateMovablePositions(currentBishopPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.B, Rank.FIVE)));
+                Set.of(Position.of(File.B, Rank.FIVE)));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenBishopMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         Bishop bishop = new Bishop(Color.WHITE);
-        Position currentBishopPosition = new Position(File.A, Rank.FOUR);
+        Position currentBishopPosition = Position.of(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(
                 currentBishopPosition, bishop,
-                new Position(File.B, Rank.THREE), new Bishop(Color.BLACK),
-                new Position(File.C, Rank.SIX), new Knight(Color.BLACK)
+                Position.of(File.B, Rank.THREE), new Bishop(Color.BLACK),
+                Position.of(File.C, Rank.SIX), new Knight(Color.BLACK)
         );
 
         Set<Position> movablePositions = bishop.calculateMovablePositions(currentBishopPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.B, Rank.FIVE), new Position(File.C, Rank.SIX),
-                        new Position(File.B, Rank.THREE)));
+                Set.of(Position.of(File.B, Rank.FIVE), Position.of(File.C, Rank.SIX),
+                        Position.of(File.B, Rank.THREE)));
     }
 }

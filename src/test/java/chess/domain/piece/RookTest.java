@@ -25,36 +25,36 @@ class RookTest {
     @Test
     void givenRookMoveWhenMeetTeamMThenStop() {
         Rook rook = new Rook(Color.WHITE);
-        Position currentRookPosition = new Position(File.A, Rank.ONE);
+        Position currentRookPosition = Position.of(File.A, Rank.ONE);
         Map<Position, Piece> board = Map.of(
                 currentRookPosition, rook,
-                new Position(File.A, Rank.FOUR), new Bishop(Color.WHITE),
-                new Position(File.E, Rank.ONE), new Knight(Color.WHITE)
+                Position.of(File.A, Rank.FOUR), new Bishop(Color.WHITE),
+                Position.of(File.E, Rank.ONE), new Knight(Color.WHITE)
         );
 
         Set<Position> movablePositions = rook.calculateMovablePositions(currentRookPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE), new Position(File.B, Rank.ONE),
-                        new Position(File.C, Rank.ONE), new Position(File.D, Rank.ONE)));
+                Set.of(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.THREE), Position.of(File.B, Rank.ONE),
+                        Position.of(File.C, Rank.ONE), Position.of(File.D, Rank.ONE)));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenRookMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         Rook rook = new Rook(Color.WHITE);
-        Position currentRookPosition = new Position(File.H, Rank.EIGHT);
+        Position currentRookPosition = Position.of(File.H, Rank.EIGHT);
         Map<Position, Piece> board = Map.of(
                 currentRookPosition, rook,
-                new Position(File.G, Rank.EIGHT), new Bishop(Color.BLACK),
-                new Position(File.H, Rank.FIVE), new Knight(Color.BLACK)
+                Position.of(File.G, Rank.EIGHT), new Bishop(Color.BLACK),
+                Position.of(File.H, Rank.FIVE), new Knight(Color.BLACK)
         );
 
         Set<Position> movablePositions = rook.calculateMovablePositions(currentRookPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.G, Rank.EIGHT), new Position(File.H, Rank.FIVE),
-                        new Position(File.H, Rank.SIX), new Position(File.H, Rank.SEVEN))
+                Set.of(Position.of(File.G, Rank.EIGHT), Position.of(File.H, Rank.FIVE),
+                        Position.of(File.H, Rank.SIX), Position.of(File.H, Rank.SEVEN))
         );
     }
 }

@@ -47,4 +47,8 @@ public enum File {
     public int getValue() {
         return value;
     }
+
+    public String getCommand() {
+        return command;
+    }
 }

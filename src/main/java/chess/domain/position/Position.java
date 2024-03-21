@@ -1,34 +1,37 @@
 package chess.domain.position;
 
 import chess.domain.Direction;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
-    private static final int FILE_RANK_COUNT = 2;
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
+    private static final Map<String, Position> POOL = new HashMap<>();
 
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    static {
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                POOL.put(toKey(file, rank), new Position(file, rank));
+            }
+        }
+    }
+
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
     public static Position convert(String source) {
-        List<String> parts = Arrays.stream(source.split("")).toList();
+        return POOL.computeIfAbsent(source, ignore -> {
+            throw new IllegalArgumentException("존재하지 않는 위치입니다.");
+        });
+    }
 
-        if (parts.size() != FILE_RANK_COUNT) {
-            throw new IllegalArgumentException();
-        }
-
-        File file = File.from(parts.get(FILE_INDEX));
-        Rank rank = Rank.from(parts.get(RANK_INDEX));
-
-        return new Position(file, rank);
+    public static Position of(File file, Rank rank) {
+        return POOL.get(toKey(file, rank));
     }
 
     public boolean canMoveNext(Direction direction) {
@@ -42,7 +45,12 @@ public class Position {
         int x = direction.getX();
         int y = direction.getY();
 
-        return new Position(file.add(x), rank.add(y));
+        return Position.of(file.add(x), rank.add(y));
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.getCommand() + rank.getCommand();
+
     }
 
     @Override
