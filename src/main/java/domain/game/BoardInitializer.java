@@ -13,6 +13,9 @@ import static domain.position.File.*;
 import static domain.position.Rank.*;
 
 public class BoardInitializer {
+    private  BoardInitializer() {
+    }
+
     private static final Map<PieceType, List<Position>> pieceInitialPositions = Map.ofEntries(
             Map.entry(BLACK_PAWN, Arrays.stream(File.values()).map(file -> new Position(file, SEVEN)).toList()),
             Map.entry(BLACK_ROOK, List.of(new Position(A, EIGHT), new Position(H, EIGHT))),
