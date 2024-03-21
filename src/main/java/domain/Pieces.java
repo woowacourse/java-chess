@@ -30,6 +30,13 @@ public class Pieces {
         };
     }
 
+    public void move(Piece piece, Point point) {
+        final Optional<Piece> optionalPiece = findPieceWithPoint(point);
+        optionalPiece.ifPresent(value::remove);
+        piece.move(point);
+    }
+
+
     public int size() {
         return value.size();
     }
