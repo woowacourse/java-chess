@@ -5,7 +5,7 @@ import static domain.PieceType.BISHOP;
 
 import java.util.Optional;
 
-final class Bishop extends AbstractMoveStraightMovePiece {
+final class Bishop extends AbstractStraightMovePiece {
     Bishop(Position position, Team team) {
         super(position, team);
     }

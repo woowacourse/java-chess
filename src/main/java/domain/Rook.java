@@ -5,7 +5,7 @@ import static domain.PieceType.ROOK;
 
 import java.util.Optional;
 
-final class Rook extends AbstractMoveStraightMovePiece {
+final class Rook extends AbstractStraightMovePiece {
     Rook(Position position, Team team) {
         super(position, team);
     }
