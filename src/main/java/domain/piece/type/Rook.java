@@ -4,6 +4,7 @@ import domain.Direction;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
 import domain.piece.PieceNamePattern;
+import domain.piece.PieceType;
 import domain.position.Position;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public final class Rook extends Piece {
     private static final List<Direction> ROOK_DIRECTION = List.of(Direction.TOP, Direction.DOWN, Direction.RIGHT, Direction.LEFT);
 
     public Rook(PieceColor color) {
-        super(PieceNamePattern.apply(color, "r"), color);
+        super(PieceNamePattern.apply(color, "r"), color, PieceType.ROOK);
     }
 
     @Override

@@ -4,6 +4,7 @@ import domain.Direction;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
 import domain.piece.PieceNamePattern;
+import domain.piece.PieceType;
 import domain.position.Position;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public final class Bishop extends Piece {
     private static final List<Direction> BISHOP_DIRECTION = List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
 
     public Bishop(PieceColor color) {
-        super(PieceNamePattern.apply(color, "b"), color);
+        super(PieceNamePattern.apply(color, "b"), color, PieceType.BISHOP);
     }
 
     @Override

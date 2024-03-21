@@ -4,6 +4,7 @@ import domain.Direction;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
 import domain.piece.PieceNamePattern;
+import domain.piece.PieceType;
 import domain.position.ChessRank;
 import domain.position.Position;
 
@@ -14,7 +15,7 @@ public final class Pawn extends Piece {
     private static final List<Direction> WHITE_DIRECTION = List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT);
 
     public Pawn(PieceColor color) {
-        super(PieceNamePattern.apply(color, "p"), color);
+        super(PieceNamePattern.apply(color, "p"), color, PieceType.PAWN);
     }
 
     @Override
