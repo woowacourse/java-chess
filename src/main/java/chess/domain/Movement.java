@@ -25,7 +25,7 @@ public class Movement {
     }
 
     public Set<Square> findRoute() {
-        if (!(isStraight() || isDiagonal())) {
+        if (!(isCross() || isDiagonal())) {
             return Collections.emptySet();
         }
         int distance = findDistance();
@@ -35,7 +35,7 @@ public class Movement {
         return route;
     }
 
-    public boolean isStraight() {
+    public boolean isCross() {
         return getFileDifference() * getRankDifference() == 0;
     }
 

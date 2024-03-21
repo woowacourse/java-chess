@@ -15,6 +15,7 @@ public class InputView {
     private static final String INVALID_GAME_COMMAND = "start 또는 end만 입력가능합니다.";
     private static final String INVALID_MOVE_COMMAND = "부적절한 명령어입니다. move b2 b3와 같이 입력해주세요.";
     private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String MOVE_COMMAND_DELIMITER = " ";
 
     private final Scanner scanner;
 
@@ -40,7 +41,7 @@ public class InputView {
 
     public List<String> readMovement() {
         String input = scanner.nextLine();
-        List<String> splitInput = Arrays.stream(input.split(" "))
+        List<String> splitInput = Arrays.stream(input.split(MOVE_COMMAND_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
         validateMoveCommand(splitInput.get(0));

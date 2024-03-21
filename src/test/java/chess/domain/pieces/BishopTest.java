@@ -1,28 +1,29 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("룩")
-class RookTest {
+@DisplayName("비숍")
+class BishopTest {
 
     @DisplayName("움직일 수 있다")
     @Test
     void canMove() {
         //given
-        Square source = Square.from("a1");
-        Square destination = Square.from("a3");
+        Square source = Square.from("c1");
+        Square destination = Square.from("d2");
 
-        Piece rook = new Rook(Color.WHITE);
+        Piece bishop = new Bishop(Color.WHITE);
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = rook.canMove(movement, null);
+        boolean canMove = bishop.canMove(movement, null);
 
         //then
         assertThat(canMove).isTrue();
@@ -32,14 +33,14 @@ class RookTest {
     @Test
     void canNotMove() {
         //given
-        Square source = Square.from("a1");
-        Square destination = Square.from("c3");
+        Square source = Square.from("c1");
+        Square destination = Square.from("c2");
 
-        Piece rook = new Rook(Color.WHITE);
+        Piece bishop = new Bishop(Color.WHITE);
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = rook.canMove(movement, null);
+        boolean canMove = bishop.canMove(movement, null);
 
         //then
         assertThat(canMove).isFalse();

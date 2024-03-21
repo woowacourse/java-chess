@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
+import chess.domain.pieces.piece.Type;
 
 public class King extends Piece {
 
@@ -10,6 +13,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(final Movement movement, final Piece destinationPiece) {
-        return (movement.isStraight() || movement.isDiagonal()) && movement.findDistance() == 1;
+        return (movement.isCross() || movement.isDiagonal()) && movement.findDistance() == 1;
     }
 }

@@ -1,8 +1,10 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

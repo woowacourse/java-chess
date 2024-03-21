@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
+import chess.domain.pieces.piece.Type;
 
 public class Bishop extends Piece {
 

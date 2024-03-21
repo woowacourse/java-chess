@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
+import chess.domain.pieces.piece.Type;
 
 public class Pawn extends Piece {
 
@@ -53,11 +56,11 @@ public class Pawn extends Piece {
     }
 
     private boolean isWhiteFirstMove(final Movement movement) {
-        return movement.isStraight() && movement.getRankDifference() == 2;
+        return movement.isCross() && movement.getRankDifference() == 2;
     }
 
     private boolean isWhiteDefaultMove(final Movement movement) {
-        return movement.isStraight() && movement.getRankDifference() == 1;
+        return movement.isCross() && movement.getRankDifference() == 1;
     }
 
     private boolean isBlackMove(final Movement movement) {
@@ -72,12 +75,12 @@ public class Pawn extends Piece {
     }
 
     private boolean isBlackFirstMove(final Movement movement) {
-        System.out.println(movement.isStraight());
+        System.out.println(movement.isCross());
         System.out.println(movement.getRankDifference() == -2);
-        return movement.isStraight() && movement.getRankDifference() == -2;
+        return movement.isCross() && movement.getRankDifference() == -2;
     }
 
     private boolean isBlackDefaultMove(final Movement movement) {
-        return movement.isStraight() && movement.getRankDifference() == -1;
+        return movement.isCross() && movement.getRankDifference() == -1;
     }
 }

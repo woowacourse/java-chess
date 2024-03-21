@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
+import chess.domain.pieces.piece.Type;
 
 public class Rook extends Piece {
 
@@ -10,6 +13,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(final Movement movement, final Piece destinationPiece) {
-        return movement.isStraight();
+        return movement.isCross();
     }
 }

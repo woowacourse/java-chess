@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.pieces.piece;
 
 import chess.domain.Movement;
 import java.util.Objects;
@@ -25,11 +25,11 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public Color color() {
+    protected Color color() {
         return color;
     }
 
-    public Type type() {
+    protected Type type() {
         return type;
     }
 

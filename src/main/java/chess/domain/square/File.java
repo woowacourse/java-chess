@@ -15,18 +15,18 @@ public enum File {
 
     private static final String INVALID_FILE = "일치하지 않은 파일 입니다.";
 
-    public static File from(String file) {
+    public static File from(final String file) {
         return Arrays.stream(File.values())
                 .filter(value -> value.name().equals(file.toUpperCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
     }
 
-    public File move(int fileMoveUnit) {
-        return indexOf(this.ordinal() + fileMoveUnit);
+    public File move(final int fileMoveStep) {
+        return indexOf(this.ordinal() + fileMoveStep);
     }
 
-    private File indexOf(int index) {
+    private File indexOf(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.ordinal() == index)
                 .findFirst()

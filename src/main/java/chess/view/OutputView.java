@@ -1,12 +1,11 @@
 package chess.view;
 
-import chess.dto.PieceResponse;
+import chess.domain.pieces.piece.PieceResponse;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class OutputView {
-
     private static final char EMPTY_SQUARE = '.';
     private static final int BOARD_SIZE = 8;
 

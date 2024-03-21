@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.pieces.piece;
 
 public enum Type {
     KING,

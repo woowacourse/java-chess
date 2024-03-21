@@ -3,11 +3,11 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Type;
+import chess.domain.pieces.piece.Color;
 import chess.domain.square.Square;
+import chess.domain.pieces.piece.PieceResponse;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class BoardTest {
         int expectedSize = 32;
 
         //when & then
-        assertThat(board.getPieces().size()).isEqualTo(expectedSize);
+        assertThat(board.createBoardStatus().size()).isEqualTo(expectedSize);
     }
 
     @DisplayName("기물이 없는 위치를 이동시킬 경우 예외가 발생한다")
@@ -112,11 +112,9 @@ class BoardTest {
 
         //when
         board.move(from, to, Color.WHITE);
+        List<PieceResponse> boardStatus = board.createBoardStatus();
 
         //then
-        assertAll(
-                () -> assertThat(board.getPieces().get(to).type()).isEqualTo(Type.PAWN),
-                () -> assertThat(board.getPieces().get(to).color()).isEqualTo(Color.WHITE)
-        );
+        assertThat(boardStatus).contains(new PieceResponse(0, 2, "WHITE", "PAWN"));
     }
 }

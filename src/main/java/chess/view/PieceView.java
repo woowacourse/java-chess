@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.piece.Color;
+import chess.domain.pieces.piece.Color;
 
 public enum PieceView {
     KING('K'),

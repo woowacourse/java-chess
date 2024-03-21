@@ -1,9 +1,10 @@
-package chess.domain.piece;
+package chess.domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Movement;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class QueenTest {
         Square crossSource = Square.from("d1");
         Square crossDestination = Square.from("d3");
 
-        Square diagonalSource= Square.from("d1");
+        Square diagonalSource = Square.from("d1");
         Square diagonalDestination = Square.from("b3");
 
         Piece queen = new Queen(Color.WHITE);

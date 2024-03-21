@@ -3,6 +3,8 @@ package chess.domain.square;
 import java.util.Objects;
 
 public class Square {
+    private static final String SQUARE_DELIMITER = "";
+
     private final File file;
     private final Rank rank;
 
@@ -12,15 +14,15 @@ public class Square {
     }
 
     public static Square from(final String square) {
-        String[] splitSquare = square.split("");
+        String[] splitSquare = square.split(SQUARE_DELIMITER);
         File file = File.from(splitSquare[0]);
         Rank rank = Rank.from(splitSquare[1]);
         return new Square(file, rank);
     }
 
-    public Square move(int fileMoveUnit, int rankMoveUnit) {
-        File newFile = file.move(fileMoveUnit);
-        Rank newRank = rank.move(rankMoveUnit);
+    public Square move(final int fileMoveStep, final int rankMoveStep) {
+        File newFile = file.move(fileMoveStep);
+        Rank newRank = rank.move(rankMoveStep);
         return new Square(newFile, newRank);
     }
 
