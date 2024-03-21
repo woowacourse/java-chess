@@ -28,7 +28,7 @@ public class Board {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
 
-        if (existObstacleOnPath(source, target)) {
+        if (sourcePiece.getType() != PieceType.KNIGHT && existObstacleOnPath(source, target)) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
 

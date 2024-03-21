@@ -8,18 +8,18 @@ import chess.domain.Rank;
 
 public abstract class Piece {
 
-    private final PieceType name;
+    private final PieceType type;
     private final PieceColor color;
 
-    public Piece(PieceType name, PieceColor color) {
-        this.name = name;
+    public Piece(PieceType type, PieceColor color) {
+        this.type = type;
         this.color = color;
     }
 
     public abstract boolean canMove(Position source, Position target);
 
-    public PieceType getName() {
-        return name;
+    public PieceType getType() {
+        return type;
     }
 
     public PieceColor getColor() {
