@@ -35,15 +35,10 @@ public abstract class Pawn extends Piece {
         if (!path.categoryNumOf(1)) {
             return true;
         }
-        if (isBackward(path)) {
-            return true;
-        }
-        return false;
+        return isBackward(path);
     }
 
     private boolean isFirstMove() {
         return !moved;
     }
-
-
 }
