@@ -1,5 +1,9 @@
 package chess;
 
+import chess.domain.ChessBoard;
+import chess.domain.ChessSpaceGenerator;
+import java.util.List;
+
 public class ChessMachine {
 
     private final OutputView outputView;
@@ -13,5 +17,12 @@ public class ChessMachine {
     public void run() {
         outputView.printStartGameMessage();
         outputView.printCommandGuideMessage();
+
+        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
+
+        if (!inputView.getCommand().equals("start")) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+        outputView.printChessBoard(chessBoard);
     }
 }

@@ -1,5 +1,7 @@
 package chess;
 
+import chess.domain.ChessBoard;
+
 public class OutputView {
 
     public void printStartGameMessage() {
@@ -11,5 +13,19 @@ public class OutputView {
                 "> 게임 시작 : start\n"
                 + "> 게임 종료 : end\n"
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
+    public void printChessBoard(ChessBoard chessBoard) {
+        int count = 0;
+        for (String sign : chessBoard.showBoard()) {
+            System.out.print(sign);
+            count++;
+
+            if (count == 8) {
+                System.out.println();
+                count = 0;
+            }
+        }
+        System.out.println();
     }
 }

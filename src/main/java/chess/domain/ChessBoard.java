@@ -9,4 +9,10 @@ public class ChessBoard {
     public ChessBoard(SpaceGenerator spaceGenerator) {
         this.spaces = spaceGenerator.generateSpaces();
     }
+
+    public List<String> showBoard() {
+        return spaces.stream()
+                .map(Space::pieceCharacter)
+                .toList();
+    }
 }
