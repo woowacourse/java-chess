@@ -15,6 +15,7 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
+        checkBlockingPiece(target, pieces);
         return hasOnlyOneFileGap(current, target) ||
                 hasOnlyOneRankGap(current, target) ||
                 hasOnlyOneDiagonalGap(current, target);

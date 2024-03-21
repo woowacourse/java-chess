@@ -15,6 +15,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
+        checkBlockingPiece(target, pieces);
         return current.isDiagonal(target);
     }
 }

@@ -40,10 +40,6 @@ public abstract class Piece {
         return side.isBlack();
     }
 
-    public boolean isWhite() {
-        return side.isWhite();
-    }
-
     public boolean isOpponent(Piece other) {
         return side != other.side;
     }
