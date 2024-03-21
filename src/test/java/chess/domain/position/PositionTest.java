@@ -1,8 +1,9 @@
 package chess.domain.position;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -67,4 +68,26 @@ class PositionTest {
 
         assertThat(position.rowIs(rowPosition)).isTrue();
     }
+
+    @DisplayName("대각선 상의 포지션끼리 경유 경로를 구할 수 있다")
+    @Test
+    void should_ReturnDiagonalPassingPath() {
+        Position start = Position.of(0, 0);
+        Position destination = Position.of(2, 2);
+        List<Position> path = start.diagonalPath(destination);
+
+        assertThat(path).contains(Position.of(1, 1));
+    }
+
+    @DisplayName("직선 상의 포지션끼리 경유 경로를 구할 수 있다")
+    @Test
+    void should_ReturnStraightPassingPath() {
+        Position start = Position.of(0, 0);
+        Position destination = Position.of(0, 2);
+        List<Position> path = start.straightPath(destination);
+
+        assertThat(path).contains(Position.of(0, 1));
+    }
+
+
 }
