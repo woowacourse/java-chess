@@ -18,8 +18,8 @@ class KnightTest {
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(Moving moving) {
-        Knight knight = new Knight(Camp.BLACK);
+    void invalidRoute(final Moving moving) {
+        final Knight knight = new Knight(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(knight.canMovable(moving)).isFalse(),
@@ -39,8 +39,8 @@ class KnightTest {
     @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
-    void canMovable(Moving moving) {
-        Knight knight = new Knight(Camp.BLACK);
+    void canMovable(final Moving moving) {
+        final Knight knight = new Knight(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(knight.canMovable(moving)).isTrue(),
