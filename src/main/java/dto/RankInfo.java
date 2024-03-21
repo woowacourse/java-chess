@@ -1,9 +1,8 @@
 package dto;
 
 import java.util.List;
-import view.PieceShape;
 
-public class RankInfo{
+public class RankInfo {
 
     private final List<String> piecesOfRank;
 

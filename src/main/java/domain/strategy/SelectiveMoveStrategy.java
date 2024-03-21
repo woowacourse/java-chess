@@ -1,5 +1,8 @@
 package domain.strategy;
 
+import static constants.Bound.BOARD_LOWER_BOUND;
+import static constants.Bound.BOARD_UPPER_BOUND;
+
 import domain.board.Board;
 import domain.board.Position;
 import domain.piece.Piece;
@@ -41,12 +44,14 @@ public class SelectiveMoveStrategy implements MoveStrategy {
     private boolean isNextInboard(final Direction direction, final Position current) {
         final int nextRank = direction.rank() + current.rankIndex();
         final int nextFile = direction.file() + current.fileIndex();
-        if (nextRank < 0 || nextRank > 7) {
-            return false;
-        }
-        if (nextFile < 0 || nextFile > 7) {
-            return false;
-        }
-        return true;
+        return isNextRankInBoard(nextRank) && isNextFileInBoard(nextFile);
+    }
+
+    private boolean isNextRankInBoard(final int nextRank) {
+        return nextRank >= BOARD_LOWER_BOUND.value() && nextRank <= BOARD_UPPER_BOUND.value();
+    }
+
+    private boolean isNextFileInBoard(final int nextFile) {
+        return nextFile >= BOARD_LOWER_BOUND.value() && nextFile <= BOARD_UPPER_BOUND.value();
     }
 }

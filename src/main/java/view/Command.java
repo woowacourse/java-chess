@@ -5,22 +5,24 @@ public enum Command {
     END("end"),
     MOVE("move");
 
-    private final String command;
+    public static final String UNSUPPORTED_COMMAND = "잘못된 명령어 입력입니다.";
 
-    Command(String command) {
-        this.command = command;
+    private final String value;
+
+    Command(String value) {
+        this.value = value;
     }
 
     public static Command of(final String command) {
-        if (command.equals(START.command)) {
+        if (command.equals(START.value)) {
             return START;
         }
-        if (command.equals(END.command)) {
+        if (command.equals(END.value)) {
             return END;
         }
-        if (command.equals(MOVE.command)) {
+        if (command.startsWith(MOVE.value)) {
             return MOVE;
         }
-        throw new IllegalArgumentException("잘못된 명령어입니다.");
+        throw new IllegalArgumentException(UNSUPPORTED_COMMAND);
     }
 }

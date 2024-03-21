@@ -12,6 +12,9 @@ import view.PieceShape;
 
 public class DtoMapper {
 
+    private DtoMapper() {
+    }
+
     public static List<Piece> map(final Board board, final int rank) {
         final Map<Position, Piece> squares = board.squares();
         return squares.entrySet().stream()

@@ -1,11 +1,12 @@
 package domain.strategy;
 
+import static constants.Bound.BOARD_LOWER_BOUND;
+import static constants.Bound.BOARD_UPPER_BOUND;
+
 import domain.board.Board;
 import domain.board.Position;
 import domain.piece.info.Direction;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AbsoluteMoveStrategy implements MoveStrategy {
     @Override
@@ -18,16 +19,16 @@ public class AbsoluteMoveStrategy implements MoveStrategy {
                 .filter(direction -> isRankInBoard(source, direction))
                 .filter(direction -> isFileInBoard(source, direction))
                 .map(source::next)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private boolean isFileInBoard(final Position source, final Direction direction) {
         final int nextFile = direction.file() + source.fileIndex();
-        return nextFile >= 0 && nextFile <= 7;
+        return nextFile >= BOARD_LOWER_BOUND.value() && nextFile <= BOARD_UPPER_BOUND.value();
     }
 
     private boolean isRankInBoard(final Position source, final Direction direction) {
         final int nextRank = direction.rank() + source.rankIndex();
-        return nextRank >= 0 && nextRank <= 7;
+        return nextRank >= BOARD_LOWER_BOUND.value() && nextRank <= BOARD_UPPER_BOUND.value();
     }
 }

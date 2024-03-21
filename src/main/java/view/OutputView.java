@@ -4,6 +4,9 @@ import dto.RankInfo;
 import java.util.List;
 
 public class OutputView {
+    private OutputView() {
+    }
+
     public static void printGameStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -23,5 +26,10 @@ public class OutputView {
         for (final String piece : info.piecesOfRank()) {
             System.out.print(piece);
         }
+    }
+
+    public static void printErrorMessage(final String message) {
+        System.err.println(message);
+        System.out.println();
     }
 }

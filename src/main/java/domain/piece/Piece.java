@@ -27,6 +27,10 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
+    public boolean isNotSameColor(final Color color) {
+        return this.color != color;
+    }
+
     public abstract MoveStrategy strategy();
 
     public boolean isNotNone() {

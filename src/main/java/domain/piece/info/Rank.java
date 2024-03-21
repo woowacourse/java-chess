@@ -14,6 +14,7 @@ public enum Rank {
     TWO(1),
     ONE(0);
 
+    public static final String RANK_NOT_FOUND = "랭크가 잘못되었습니다.";
     private final int index;
 
     Rank(final int index) {
@@ -24,7 +25,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == rankNumber)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("랭크가 잘못되었습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(RANK_NOT_FOUND));
     }
 
     public int index() {

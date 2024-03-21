@@ -2,7 +2,6 @@ package domain.piece.state;
 
 import domain.piece.info.Color;
 import domain.piece.info.Direction;
-import domain.piece.state.State;
 import java.util.ArrayList;
 import java.util.List;
 

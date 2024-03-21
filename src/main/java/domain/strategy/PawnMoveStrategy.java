@@ -1,14 +1,17 @@
 package domain.strategy;
 
+import static constants.Bound.BOARD_LOWER_BOUND;
+import static constants.Bound.BOARD_UPPER_BOUND;
+
 import domain.board.Board;
 import domain.board.Position;
 import domain.piece.Piece;
 import domain.piece.info.Direction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PawnMoveStrategy implements MoveStrategy {
-
     @Override
     public List<Position> movablePositions(final Position source, final List<Direction> directions, final Board board) {
         final List<Position> positions = new ArrayList<>();
@@ -26,8 +29,8 @@ public class PawnMoveStrategy implements MoveStrategy {
     private List<Position> findPositionsPieceNone(final Position source, final List<Direction> directions,
                                                   final Board board) {
         return directions.stream()
-                .filter(direction -> isNotRankOutOfBoard(source, direction))
-                .filter(direction -> isNotFileOutOfBoard(source, direction))
+                .filter(direction -> isNextRankInBoard(source, direction))
+                .filter(direction -> isNextFileInBoard(source, direction))
                 .filter(direction -> isPieceOfPositionNone(source, direction, board))
                 .filter(this::isNotDiagonalMovable)
                 .map(source::next)
@@ -37,8 +40,8 @@ public class PawnMoveStrategy implements MoveStrategy {
     private List<Position> findPositionsPieceNotNone(final Position source, final List<Direction> directions,
                                                      final Board board) {
         return directions.stream()
-                .filter(direction -> isNotRankOutOfBoard(source, direction))
-                .filter(direction -> isNotFileOutOfBoard(source, direction))
+                .filter(direction -> isNextRankInBoard(source, direction))
+                .filter(direction -> isNextFileInBoard(source, direction))
                 .filter(direction -> isMovableUpDown(source, board, direction))
                 .map(source::next)
                 .toList();
@@ -50,8 +53,11 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     private boolean isNotDiagonalMovable(final Direction direction) {
-        return !(direction == Direction.UP_LEFT || direction == Direction.UP_RIGHT || direction == Direction.DOWN_LEFT
-                || direction == Direction.DOWN_RIGHT);
+        return Stream.of(Direction.UP_LEFT,
+                        Direction.UP_RIGHT,
+                        Direction.DOWN_LEFT,
+                        Direction.DOWN_RIGHT)
+                .noneMatch(direction::equals);
     }
 
     private Boolean isMovableUpDown(final Position source, final Board board, final Direction direction) {
@@ -70,11 +76,13 @@ public class PawnMoveStrategy implements MoveStrategy {
         return Direction.DOWN == direction || Direction.UP == direction;
     }
 
-    private boolean isNotFileOutOfBoard(final Position source, final Direction direction) {
-        return !(direction.file() + source.fileIndex() < 0 || direction.file() + source.fileIndex() > 7);
+    private boolean isNextFileInBoard(final Position source, final Direction direction) {
+        int nextFile = direction.file() + source.fileIndex();
+        return nextFile >= BOARD_LOWER_BOUND.value() && nextFile <= BOARD_UPPER_BOUND.value();
     }
 
-    private boolean isNotRankOutOfBoard(final Position source, final Direction direction) {
-        return !(direction.rank() + source.rankIndex() < 0 || direction.rank() + source.rankIndex() > 7);
+    private boolean isNextRankInBoard(final Position source, final Direction direction) {
+        int nextRank = direction.rank() + source.rankIndex();
+        return nextRank >= BOARD_LOWER_BOUND.value() && nextRank <= BOARD_UPPER_BOUND.value();
     }
 }

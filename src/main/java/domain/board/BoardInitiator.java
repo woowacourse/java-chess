@@ -14,11 +14,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 public enum BoardInitiator {
-
     BLACK_PAWN(File.pawnPosition(), Rank.blackPawnRank(), Pawn::black),
     BLACK_ROOK(File.rookPosition(), Rank.blackOtherRank(), Rook::black),
     BLACK_KNIGHT(File.knightPosition(), Rank.blackOtherRank(), Knight::black),

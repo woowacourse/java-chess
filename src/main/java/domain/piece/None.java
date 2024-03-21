@@ -8,18 +8,20 @@ import java.util.List;
 
 public class None extends Piece {
 
+    public static final String EMPTY_SQUARES = "비어 있는 칸입니다.";
+
     public None(final Color color, final Type type) {
         super(color, type);
     }
 
     @Override
     public MoveStrategy strategy() {
-        throw new UnsupportedOperationException("비어 있는 칸입니다.");
+        throw new UnsupportedOperationException(EMPTY_SQUARES);
     }
 
     @Override
     public List<Direction> movableDirections() {
-        throw new UnsupportedOperationException("비어 있는 칸입니다.");
+        throw new UnsupportedOperationException(EMPTY_SQUARES);
     }
 
     public static None none() {

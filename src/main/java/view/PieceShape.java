@@ -1,9 +1,6 @@
 package view;
 
-import domain.piece.Piece;
-import dto.RankInfo;
 import java.util.Arrays;
-import java.util.List;
 
 public enum PieceShape {
     KING("K", "k"),
@@ -14,6 +11,7 @@ public enum PieceShape {
     PAWN("P", "p"),
     NONE(".", ".");
 
+    public static final String PIECE_SHAPE_NOT_FOUND = "잘못된 기물 모양입니다.";
     private final String blackShape;
     private final String whiteShape;
 
@@ -26,24 +24,24 @@ public enum PieceShape {
         return Arrays.stream(PieceShape.values())
                 .filter(pieceShape -> pieceShape.name().equals(shape))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 기물 모양입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PIECE_SHAPE_NOT_FOUND));
     }
 
 
-    public static String whiteShapeOf(final String type) {
+    public static String whiteShapeOf(final String shape) {
         return Arrays.stream(values())
-                .filter(value -> value.name().equals(type))
+                .filter(value -> value.name().equals(shape))
                 .map(value -> value.whiteShape)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 기물 모양입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PIECE_SHAPE_NOT_FOUND));
 
     }
 
-    public static String blackShapeOf(final String type) {
+    public static String blackShapeOf(final String shape) {
         return Arrays.stream(values())
-                .filter(value -> value.name().equals(type))
+                .filter(value -> value.name().equals(shape))
                 .map(value -> value.blackShape)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 기물 모양입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PIECE_SHAPE_NOT_FOUND));
     }
 }

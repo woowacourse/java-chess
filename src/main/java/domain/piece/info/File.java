@@ -13,6 +13,7 @@ public enum File {
     G(6),
     H(7);
 
+    public static final String FILE_NOT_FOUND = "해당하는 파일을 찾을 수 없습니다.";
     private final int index;
 
     File(final int index) {
@@ -23,14 +24,14 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.name().equals(fileName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("파일이 잘못되었습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(FILE_NOT_FOUND));
     }
 
     public static File of(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.index() == index)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("파일이 잘못되었습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(FILE_NOT_FOUND));
     }
 
     public int index() {
