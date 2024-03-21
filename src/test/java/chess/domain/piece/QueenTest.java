@@ -78,9 +78,9 @@ class QueenTest {
         assertThat(canMove).isFalse();
     }
 
-    @DisplayName("퀸의 이동 경로를 반환한다.")
+    @DisplayName("대각선으로 이동한 퀸의 이동 경로를 반환한다.")
     @Test
-    void makePath() {
+    void makePathDiagonal() {
         // given
         Queen queen = new Queen(Color.WHITE);
 
@@ -93,5 +93,39 @@ class QueenTest {
         // then
         assertThat(movingPath).contains(new Position(Rank.TWO, File.D)
                 , new Position(Rank.THREE, File.E));
+    }
+
+    @DisplayName("수직으로 이동한 퀸의 이동 경로를 반환한다.")
+    @Test
+    void makePathVertical() {
+        // given
+        Queen queen = new Queen(Color.WHITE);
+
+        Position source = new Position(Rank.ONE, File.C);
+        Position target = new Position(Rank.FOUR, File.C);
+
+        // when
+        List<Position> movingPath = queen.searchPath(source, target);
+
+        // then
+        assertThat(movingPath).contains(new Position(Rank.TWO, File.C)
+                , new Position(Rank.THREE, File.C));
+    }
+
+    @DisplayName("수평으로 이동한 퀸의 이동 경로를 반환한다.")
+    @Test
+    void makePathHorizon() {
+        // given
+        Queen queen = new Queen(Color.WHITE);
+
+        Position source = new Position(Rank.ONE, File.C);
+        Position target = new Position(Rank.ONE, File.F);
+
+        // when
+        List<Position> movingPath = queen.searchPath(source, target);
+
+        // then
+        assertThat(movingPath).contains(new Position(Rank.ONE, File.D)
+                , new Position(Rank.ONE, File.E));
     }
 }

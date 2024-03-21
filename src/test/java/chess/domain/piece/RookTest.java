@@ -61,9 +61,9 @@ class RookTest {
         assertThat(canMove).isFalse();
     }
 
-    @DisplayName("룩의 이동 경로를 반환한다.")
+    @DisplayName("수직으로 이동한 룩의 이동 경로를 반환한다.")
     @Test
-    void makePath() {
+    void makePathVertical() {
         // given
         Rook rook = new Rook(Color.WHITE);
 
@@ -76,5 +76,22 @@ class RookTest {
         // then
         assertThat(movingPath).contains(new Position(Rank.TWO, File.C)
                 , new Position(Rank.THREE, File.C));
+    }
+
+    @DisplayName("수평으로 이동한 룩의 이동 경로를 반환한다.")
+    @Test
+    void makePathHorizon() {
+        // given
+        Rook rook = new Rook(Color.WHITE);
+
+        Position source = new Position(Rank.ONE, File.C);
+        Position target = new Position(Rank.ONE, File.F);
+
+        // when
+        List<Position> movingPath = rook.searchPath(source, target);
+
+        // then
+        assertThat(movingPath).contains(new Position(Rank.ONE, File.D)
+                , new Position(Rank.ONE, File.E));
     }
 }

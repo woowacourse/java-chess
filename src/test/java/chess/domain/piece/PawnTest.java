@@ -8,6 +8,9 @@ import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.EnumSource.Mode;
 
 class PawnTest {
 
@@ -63,17 +66,17 @@ class PawnTest {
     }
 
     @DisplayName("target 위치가 대각선이 아니고 말이 있다면 색깔에 관계 없이 움직일 수 없다.")
-    @Test
-    void canNotMoveBlack() {
+    @ParameterizedTest
+    @EnumSource(value = Color.class, mode = Mode.EXCLUDE, names = {"NONE"})
+    void canNotMoveBlack(Color targetColor) {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
         Position source = new Position(Rank.SIX, File.C);
         Position target = new Position(Rank.FIVE, File.C);
-        Color color = Color.WHITE;
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, targetColor);
 
         //then
         assertThat(canMove).isFalse();

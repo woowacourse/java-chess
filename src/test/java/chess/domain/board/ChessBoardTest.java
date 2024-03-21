@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Knight;
@@ -28,8 +29,9 @@ public class ChessBoardTest {
                 .satisfies(map -> assertThat((Map<?, ?>) map).hasSize(32));
     }
 
+    @DisplayName("source에 위치한 piece가 움직일 수 있는지 판단한다")
     @Test
-    public void testMove() throws NoSuchFieldException, IllegalAccessException {
+    public void move() throws NoSuchFieldException, IllegalAccessException {
         // given
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.initialBoard();
@@ -51,5 +53,35 @@ public class ChessBoardTest {
                 () -> assertThat(chessBoardMap).containsKey(target),
                 () -> assertThat(piece).isInstanceOf(Knight.class)
         );
+    }
+
+    @DisplayName("source에 위치한 piece가 움직일 수 있는지 판단한다")
+    @Test
+    void moveInvalidTarget() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.initialBoard();
+
+        Position source = new Position(Rank.ONE, File.B);
+        Position target = new Position(Rank.EIGHT, File.C);
+
+        // when, then
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("source에 piece가 없으면 예외를 반환한다")
+    @Test
+    void moveInvalidSource() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.initialBoard();
+
+        Position source = new Position(Rank.THREE, File.B);
+        Position target = new Position(Rank.FOUR, File.B);
+
+        // when, then
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
