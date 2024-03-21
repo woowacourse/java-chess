@@ -17,9 +17,9 @@ import java.util.Map;
 public class OutputView {
     public void printStartingMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.printf("> 게임 시작 : %s%n", START.message());
-        System.out.printf("> 게임 종료 : %s%n", END.message());
-        System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n", MOVE.message(), MOVE.message());
+        System.out.printf("> 게임 시작 : %s%n", START.getName());
+        System.out.printf("> 게임 종료 : %s%n", END.getName());
+        System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n", MOVE.getName(), MOVE.getName());
     }
 
     public void printBoard(ChessBoard chessBoard) {
