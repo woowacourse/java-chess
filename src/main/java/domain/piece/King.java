@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class King extends Piece {
 
+    public static final int MOVE_DISTANCE = 1;
+
     public King(final Camp color) {
         super(color);
     }
@@ -15,7 +17,7 @@ public class King extends Piece {
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        return chessVector.isManhattanDistance(1);
+        return chessVector.isManhattanDistance(MOVE_DISTANCE);
     }
 
     @Override
