@@ -42,6 +42,4 @@ public enum PieceTypeFormat {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("피스 타입이 없습니다."));
     }
-
-
 }
