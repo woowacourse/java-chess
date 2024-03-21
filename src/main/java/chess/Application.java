@@ -14,6 +14,6 @@ public class Application {
         board.placeInitialPieces();
         ChessGame chessGame = new ChessGame(board);
 
-        chessGame.playGame();
+        chessGame.startGame();
     }
 }

@@ -25,67 +25,76 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void playGame() {
-        boolean checkFirst = true;
-        Team turn = Team.WHITE;
-
-        while (true) {
-            List<String> commands = InputView.inputCommand();
-            String command = commands.get(0);
-
-            if (command.equals(START.getCommandType())) {
-                checkFirst = processStartCommand(checkFirst);
-                continue;
-            }
-            if (command.equals(MOVE.getCommandType())) {
-                if (processMoveCommand(checkFirst, turn, commands)) {
-                    turn = Team.takeTurn(turn);
-                }
-                continue;
-            }
-            if (command.equals(END.getCommandType())) {
-                break;
-            }
-        }
-    }
-
-    private boolean processStartCommand(boolean checkFirst) {
-        if (checkFirst) {
-            OutputView.printBoard(makeBoardDto(board.getBoard()));
-        }
-        OutputView.printInputAgainMessage();
-        return false;
-    }
-
-    private boolean processMoveCommand(boolean checkFirst, Team turn, List<String> commands) {
-        if (checkFirst) {
+    public void startGame() {
+        String startCommand = InputView.inputCommand().get(0);
+        while (!isCommandStart(startCommand) && !isCommandEnd(startCommand)) {
             OutputView.printInputAgainMessage();
-            return false;
+            startCommand = InputView.inputCommand().get(0);
         }
+        if (isCommandStart(startCommand)) {
+            OutputView.printBoard(makeBoardDto(board.getBoard()));
+            playGame();
+        }
+    }
 
+    private void playGame() {
+        Team turn = Team.WHITE;
+        while (turn != Team.NONE) {
+            turn = playTurn(turn);
+        }
+    }
+
+    private Team playTurn(Team turn) {
+        List<String> commands = InputView.inputCommand();
+        String command = commands.get(0);
+        while (!isCommandMove(command) && !isCommandEnd(command)) {
+            OutputView.printInputAgainMessage();
+            command = InputView.inputCommand().get(0);
+        }
+        if (isCommandMove(command)) {
+            return playMoveCommand(commands, turn);
+        }
+        return Team.NONE;
+    }
+
+    private Team playMoveCommand(List<String> commands, Team turn) {
+        boolean isMoveNoError = movePieceAndRenewBoard(commands, turn);
+        if (isMoveNoError) {
+            return Team.takeTurn(turn);
+        }
+        return turn;
+    }
+
+    private boolean isCommandStart(String startCommand) {
+        return startCommand.equals(START.getCommandType());
+    }
+
+    private boolean isCommandMove(String startCommand) {
+        return startCommand.equals(MOVE.getCommandType());
+    }
+
+    private boolean isCommandEnd(String startCommand) {
+        return startCommand.equals(END.getCommandType());
+    }
+
+    private boolean movePieceAndRenewBoard(List<String> commands, Team turn) {
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
-
-        if (!validateMove(source, target, turn)) {
+        if (source.equals(target) || !isCorrectTurn(source, turn)) {
             OutputView.printWrongMovementMessage();
             return false;
         }
 
         movePieceAndRenewBoard(source, target);
         OutputView.printBoard(makeBoardDto(board.getBoard()));
-
         return true;
-    }
-
-    private boolean validateMove(Position source, Position target, Team turn) {
-        return !source.equals(target) && checkTurn(source, turn);
     }
 
     public void movePieceAndRenewBoard(Position source, Position target) {
         board.movePieceAndRenewBoard(source, target);
     }
 
-    public boolean checkTurn(Position source, Team team) {
+    public boolean isCorrectTurn(Position source, Team team) {
         return board.getBoard().get(source).isSameTeam(team);
     }
 
