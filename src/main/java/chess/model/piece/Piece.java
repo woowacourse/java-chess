@@ -1,9 +1,17 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.*;
+import static chess.model.piece.PieceType.BLACK_BISHOP;
+import static chess.model.piece.PieceType.BLACK_KING;
+import static chess.model.piece.PieceType.BLACK_KNIGHT;
 import static chess.model.piece.PieceType.BLACK_PAWN;
+import static chess.model.piece.PieceType.BLACK_QUEEN;
 import static chess.model.piece.PieceType.BLACK_ROOK;
+import static chess.model.piece.PieceType.NONE;
+import static chess.model.piece.PieceType.WHITE_BISHOP;
+import static chess.model.piece.PieceType.WHITE_KING;
+import static chess.model.piece.PieceType.WHITE_KNIGHT;
 import static chess.model.piece.PieceType.WHITE_PAWN;
+import static chess.model.piece.PieceType.WHITE_QUEEN;
 import static chess.model.piece.PieceType.WHITE_ROOK;
 
 import chess.model.Position;

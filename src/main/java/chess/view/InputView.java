@@ -22,9 +22,10 @@ public final class InputView {
 
     public static List<String> askGameCommands() {
         System.out.println(COMMAND_MENU);
-        return Arrays.stream(SCANNER.nextLine()
+        String[] commands = SCANNER.nextLine()
                 .strip()
-                .split(COMMAND_DELIMITER))
+                .split(COMMAND_DELIMITER);
+        return Arrays.stream(commands)
                 .toList();
     }
 }

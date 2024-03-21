@@ -23,8 +23,8 @@ class KnightTest {
 
     public static Stream<Arguments> provideSourceAndTargetWithExpected() {
         return Stream.of(
-            Arguments.of(new Position(3, 3), new Position(5, 4), true),
-            Arguments.of(new Position(3, 3), new Position(3, 7), false)
+                Arguments.of(new Position(3, 3), new Position(5, 4), true),
+                Arguments.of(new Position(3, 3), new Position(3, 7), false)
         );
     }
 }
