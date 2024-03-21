@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.Board;
 import chess.domain.BoardFactory;
+import chess.domain.CommandCondition;
 import chess.domain.command.CommandExecutor;
 import chess.domain.command.GameCommand;
 import chess.domain.position.Position;
@@ -28,7 +29,7 @@ public class ChessGame {
     }
 
     private void registerCommands() {
-        commands.put(GameCommand.MOVE, args -> move(args.get(1), args.get(2)));
+        commands.put(GameCommand.MOVE, this::move);
         commands.put(GameCommand.START, args -> start());
         commands.put(GameCommand.END, args -> end());
     }
@@ -44,7 +45,8 @@ public class ChessGame {
     private void executeCommand() {
         List<String> inputCommand = InputView.readGameCommand();
         GameCommand gameCommand = GameCommand.from(inputCommand);
-        commands.get(gameCommand).execute(inputCommand);
+        CommandExecutor commandExecutor = commands.get(gameCommand);
+        commandExecutor.execute(new CommandCondition(inputCommand));
     }
 
     private void start() {
@@ -52,9 +54,9 @@ public class ChessGame {
         OutputView.printChessBoard(board);
     }
 
-    private void move(String inputSource, String inputTarget) {
-        Position source = Position.convert(inputSource);
-        Position target = Position.convert(inputTarget);
+    private void move(CommandCondition commandCondition) {
+        Position source = Position.convert(commandCondition.getSource());
+        Position target = Position.convert(commandCondition.getTarget());
         gameState = gameState.move(board, source, target);
         OutputView.printChessBoard(board);
     }

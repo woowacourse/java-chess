@@ -20,8 +20,7 @@ public enum GameCommand {
 
     public static GameCommand from(List<String> inputCommand) {
         return Arrays.stream(values())
-                .filter(gameCommand -> isSameCommand(inputCommand, gameCommand) && isSameArgsCount(inputCommand,
-                        gameCommand))
+                .filter(gameCommand -> isSameCommand(inputCommand, gameCommand) && isSameArgsCount(inputCommand, gameCommand))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임 명령어입니다."));
     }

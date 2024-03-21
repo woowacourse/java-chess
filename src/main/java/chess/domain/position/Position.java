@@ -22,7 +22,7 @@ public class Position {
         List<String> parts = Arrays.stream(source.split("")).toList();
 
         if (parts.size() != FILE_RANK_COUNT) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("move source위치 target위치를 정확히 입력해 주세요. - 예. move b2 b3");
         }
 
         File file = File.from(parts.get(FILE_INDEX));
