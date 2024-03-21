@@ -13,8 +13,8 @@ public class Piece {
         this.color = color;
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
+    public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
+        return pieceType.calculateAllDirectionPositions(currentPosition);
     }
 
     public boolean isSameTeam(Piece piece) {
@@ -25,7 +25,11 @@ public class Piece {
         return this.color == Color.BLACK;
     }
 
-    public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
-        return pieceType.calculateAllDirectionPositions(currentPosition);
+    public boolean isPawn() {
+        return this.pieceType == PieceType.BLACK_PAWN || this.pieceType == PieceType.WHITE_PAWN;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

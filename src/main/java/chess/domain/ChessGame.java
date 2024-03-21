@@ -21,7 +21,7 @@ public class ChessGame {
     public List<Position> generateMovablePositions(Position position) {
         Piece piece = board.findPieceByPosition(position);
         Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(position); // TODO Map<Direction, List<Position>> 객체 감싸기
-        if (piece.getPieceType() == PieceType.BLACK_PAWN || piece.getPieceType() == PieceType.WHITE_PAWN) { // TODO getter refactor
+        if (piece.isPawn()) {
             return generateValidPositionsWithPawn(expectedAllPositions, piece);
         }
         return generateValidPositions(expectedAllPositions, piece);
