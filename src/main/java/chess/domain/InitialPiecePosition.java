@@ -1,18 +1,43 @@
 package chess.domain;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class InitialPiecePosition {
+
+    private static final int MIN_BOARD_SIZE = 1;
+    private static final int MAX_BOARD_SIZE = 8;
 
     private final Map<Position, Piece> initialPiecePositions;
 
     public InitialPiecePosition() {
-        Map<Position, Piece> initialPiecePositions = new HashMap<>();
+        Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
         initialPiecePositions.putAll(getWhitePieces());
         initialPiecePositions.putAll(getBlackPieces());
         this.initialPiecePositions = initialPiecePositions;
+    }
+
+    private Map<Position, Piece> generateEmptyBoard() {
+        return IntStream.rangeClosed(MIN_BOARD_SIZE, MAX_BOARD_SIZE)
+                .boxed()
+                .flatMap(this::generateHorizontalLine)
+                .collect(generateEntry());
+    }
+
+    private Stream<Position> generateHorizontalLine(int row) {
+        return IntStream.rangeClosed(MIN_BOARD_SIZE, MAX_BOARD_SIZE)
+                .mapToObj(column -> new Position(row, column));
+    }
+
+    private Collector<Position, ?, Map<Position, Piece>> generateEntry() {
+        return Collectors.toMap(
+                position -> position,
+                position -> new Piece(PieceType.EMPTY, Color.NONE)
+        );
     }
 
     private Map<Position, Piece> getWhitePieces() {
@@ -59,6 +84,6 @@ public class InitialPiecePosition {
     }
 
     public Map<Position, Piece> getInitialPiecePositions() {
-        return Collections.unmodifiableMap(initialPiecePositions);
+        return new HashMap<>(initialPiecePositions);
     }
 }
