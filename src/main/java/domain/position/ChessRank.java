@@ -35,6 +35,13 @@ public enum ChessRank {
                 .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 값입니다."));
     }
 
+    public static ChessRank findByIndex(int rankIndex) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == rankIndex)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
+    }
+
     public int index() {
         return index;
     }

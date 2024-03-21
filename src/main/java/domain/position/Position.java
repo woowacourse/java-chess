@@ -2,7 +2,11 @@ package domain.position;
 
 import domain.Direction;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Position {
     // TODO: 8x8 사이즈 포지션 캐싱하기
@@ -93,5 +97,57 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public Set<Position> findBetween(Position target) {
+        Set<Position> positions = new HashSet<>();
+        List<ChessRank> betweenRanks = findRankBetween(this.rank, target.rank);
+        List<ChessFile> betweenFiles = findFileBetween(this.file, target.file);
+        if (betweenRanks.isEmpty()) {
+            for (ChessFile file : betweenFiles) {
+                positions.add(new Position(file, this.rank));
+            }
+            return positions;
+        }
+
+        if (betweenFiles.isEmpty()) {
+            for (ChessRank rank : betweenRanks) {
+                positions.add(new Position(this.file, rank));
+            }
+            return positions;
+        }
+
+        for (int i = 0; i < betweenFiles.size(); i++) {
+            positions.add(new Position(betweenFiles.get(i), betweenRanks.get(i)));
+        }
+        return positions;
+    }
+
+    private List<ChessRank> findRankBetween(ChessRank start, ChessRank end) {
+        List<ChessRank> ranks = new ArrayList<>();
+        if (start.index() < end.index()) {
+            for (int index = start.index() + 1; index < end.index(); index++) {
+                ranks.add(ChessRank.findByIndex(index));
+            }
+            return ranks;
+        }
+        for (int index = start.index() - 1; index > end.index(); index--) {
+            ranks.add(ChessRank.findByIndex(index));
+        }
+        return ranks;
+    }
+
+    private List<ChessFile> findFileBetween(ChessFile start, ChessFile end) {
+        List<ChessFile> files = new ArrayList<>();
+        if (start.index() < end.index()) {
+            for (int index = start.index() + 1; index < end.index(); index++) {
+                files.add(ChessFile.findByIndex(index));
+            }
+            return files;
+        }
+        for (int index = start.index() - 1; index > end.index(); index--) {
+            files.add(ChessFile.findByIndex(index));
+        }
+        return files;
     }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +51,19 @@ public class PositionTest {
                 Arguments.arguments(new Position("d4"), new Position("f5")),
                 Arguments.arguments(new Position("d4"), new Position("b5")),
                 Arguments.arguments(new Position("d4"), new Position("b3"))
+        );
+    }
+
+    static Stream<Arguments> findBetweenArguments() {
+        return Stream.of(
+                Arguments.arguments(new Position("d4"), new Position("d1"), Set.of(new Position("d3"), new Position("d2"))),
+                Arguments.arguments(new Position("d4"), new Position("g4"), Set.of(new Position("e4"), new Position("f4"))),
+                Arguments.arguments(new Position("d4"), new Position("d7"), Set.of(new Position("d5"), new Position("d6"))),
+                Arguments.arguments(new Position("d4"), new Position("a4"), Set.of(new Position("b4"), new Position("c4"))),
+                Arguments.arguments(new Position("d4"), new Position("g7"), Set.of(new Position("e5"), new Position("f6"))),
+                Arguments.arguments(new Position("d4"), new Position("a7"), Set.of(new Position("c5"), new Position("b6"))),
+                Arguments.arguments(new Position("d4"), new Position("g1"), Set.of(new Position("e3"), new Position("f2"))),
+                Arguments.arguments(new Position("d4"), new Position("a1"), Set.of(new Position("c3"), new Position("b2")))
         );
     }
 
@@ -99,5 +113,14 @@ public class PositionTest {
         assertThat(result).isEqualTo(expectedDistance);
     }
 
+    @DisplayName("Source에서 Target사이의 position들을 찾는다.")
+    @ParameterizedTest
+    @MethodSource("findBetweenArguments")
+    void findBetween(Position source, Position target, Set<Position> expected) {
+        // when
+        Set<Position> positions = source.findBetween(target);
 
+        // then
+        assertThat(positions).containsAll(expected);
+    }
 }
