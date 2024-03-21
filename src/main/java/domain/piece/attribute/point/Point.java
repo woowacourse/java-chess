@@ -1,6 +1,6 @@
 package domain.piece.attribute.point;
 
-import factory.DirectionFactory;
+import util.DirectionUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +25,7 @@ public record Point(File file, Rank rank) {
     }
 
     public Direction calculate(Point point) {
-        return DirectionFactory.generate(this, point);
+        return DirectionUtil.determineDirection(this, point);
     }
 
 

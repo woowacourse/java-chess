@@ -6,18 +6,19 @@ import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import util.DirectionUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class DirectionFactoryTest {
+class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Up 방향인지 판단한다")
     void select_up_direction_by_points_position() {
         Point point1 = new Point(File.A, Rank.ONE);
         Point point2 = new Point(File.A, Rank.TWO);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.UP);
     }
@@ -29,7 +30,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.A, Rank.TWO);
         Point point2 = new Point(File.A, Rank.ONE);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.DOWN);
     }
@@ -40,7 +41,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.B, Rank.TWO);
         Point point2 = new Point(File.A, Rank.TWO);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.LEFT);
     }
@@ -51,7 +52,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.A, Rank.TWO);
         Point point2 = new Point(File.C, Rank.TWO);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.RIGHT);
     }
@@ -62,7 +63,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.A, Rank.TWO);
         Point point2 = new Point(File.D, Rank.FIVE);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.UP_RIGHT);
     }
@@ -73,7 +74,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.C, Rank.TWO);
         Point point2 = new Point(File.A, Rank.FOUR);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.UP_LEFT);
     }
@@ -84,7 +85,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.A, Rank.FOUR);
         Point point2 = new Point(File.C, Rank.TWO);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.DOWN_RIGHT);
     }
@@ -95,7 +96,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.C, Rank.FOUR);
         Point point2 = new Point(File.A, Rank.TWO);
 
-        Direction direction = DirectionFactory.generate(point1, point2);
+        Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.DOWN_LEFT);
     }
@@ -106,7 +107,7 @@ class DirectionFactoryTest {
         Point point1 = new Point(File.A, Rank.ONE);
         Point point2 = new Point(File.F, Rank.SEVEN);
 
-        assertThatThrownBy(() -> DirectionFactory.generate(point1, point2))
+        assertThatThrownBy(() -> DirectionUtil.determineDirection(point1, point2))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

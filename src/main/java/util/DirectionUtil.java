@@ -1,15 +1,15 @@
-package factory;
+package util;
 
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
 
 
-public class DirectionFactory {
-    private DirectionFactory() {
+public class DirectionUtil {
+    private DirectionUtil() {
         throw new UnsupportedOperationException("생성할 수 없습니다.");
     }
 
-    public static Direction generate(Point standard, Point comparison) {
+    public static Direction determineDirection(Point standard, Point comparison) {
         if (isUp(standard, comparison)) {
             return Direction.UP;
         }

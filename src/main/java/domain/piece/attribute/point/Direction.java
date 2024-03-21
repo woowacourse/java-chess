@@ -1,7 +1,5 @@
 package domain.piece.attribute.point;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.UnaryOperator;
 
 public enum Direction {
@@ -32,8 +30,4 @@ public enum Direction {
         return this == UP_LEFT || this == UP_RIGHT || this == DOWN_LEFT || this == DOWN_RIGHT;
     }
 
-    public static List<Direction> all() {
-        return Arrays.stream(values())
-                     .toList();
-    }
 }
