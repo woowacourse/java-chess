@@ -6,6 +6,7 @@ import static view.Command.START;
 
 import domain.board.ChessBoard;
 import domain.piece.Piece;
+import domain.piece.Type;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -15,6 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+    private static final Map<Type, String> PIECE_DISPLAY = Map.of(
+            Type.PAWN, "p",
+            Type.KNIGHT, "n",
+            Type.BISHOP, "b",
+            Type.ROOK, "r",
+            Type.QUEEN, "q",
+            Type.KING, "k"
+    );
+
     public void printStartingMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.printf("> 게임 시작 : %s%n", START.getName());
@@ -24,29 +34,30 @@ public class OutputView {
 
     public void printBoard(ChessBoard chessBoard) {
         Map<Position, Piece> board = chessBoard.getBoard();
-        List<String> strings = new ArrayList<>(Collections.nCopies(64, "."));
-
-        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-            Position position = entry.getKey();
-            Rank rank = position.rank();
-            File file = position.file();
-            Piece piece = entry.getValue();
-
-            int row = 8 - rank.number();
-            int column = file.order();
-
-            strings.set(row * 8 + column, pieceDisplay(piece));
-        }
-
-        for (int i = 0; i < 8; i++) {
-            System.out.println(String.join(" ", strings.subList(i * 8, (i + 1) * 8)));
+        for (int rank = 8; rank >= 1; rank--) {
+            printBoardRow(board, Rank.fromNumber(rank));
         }
     }
 
+    private void printBoardRow(Map<Position, Piece> board, Rank targetRank) {
+        List<String> strings = new ArrayList<>(Collections.nCopies(8, "."));
+        for (var positionAndPiece : board.entrySet()) {
+            Position position = positionAndPiece.getKey();
+            Piece piece = positionAndPiece.getValue();
+            Rank rank = position.rank();
+            File file = position.file();
+
+            if (rank == targetRank) {
+                strings.set(file.order(), pieceDisplay(piece));
+            }
+        }
+        System.out.println(String.join("", strings));
+    }
+
     private String pieceDisplay(Piece piece) {
-        String pieceName = piece.getClass().getSimpleName().substring(0, 1);
-        if (piece.getColor().isWhite()) {
-            return pieceName.toLowerCase();
+        String pieceName = PIECE_DISPLAY.get(piece.getType());
+        if (piece.getColor().isBlack()) {
+            return pieceName.toUpperCase();
         }
         return pieceName;
     }

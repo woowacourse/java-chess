@@ -22,21 +22,24 @@ public class ChessController {
         ChessBoard board = ChessBoardFactory.createInitialChessBoard();
         outputView.printStartingMessage();
 
-        String[] commands = inputView.readCommand().split(" ");
-        Command command = Command.findByName(commands[0]);
-        while (command.isNotEnd()) {
-            if (command.isMove()) {
-                Position resource = extracted(commands[1]);
-                Position target = extracted(commands[2]);
-                board.move(resource, target);
-            }
-            outputView.printBoard(board);
-            commands = inputView.readCommand().split(" ");
+        Command command;
+        do {
+            String[] commands = inputView.readCommand().split(" ");
             command = Command.findByName(commands[0]);
+            actMoveCommand(board, commands, command);
+            outputView.printBoard(board);
+        } while (command.isNotEnd());
+    }
+
+    private void actMoveCommand(ChessBoard board, String[] commands, Command command) {
+        if (command.isMove()) {
+            Position resource = generatePosition(commands[1]);
+            Position target = generatePosition(commands[2]);
+            board.move(resource, target);
         }
     }
 
-    private Position extracted(String position) {
+    private Position generatePosition(String position) {
         String resourceFile = position.substring(0, 1);
         String resourceRank = position.substring(1, 2);
         File file = File.fromName(resourceFile);
