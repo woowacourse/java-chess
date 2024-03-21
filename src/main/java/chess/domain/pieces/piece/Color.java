@@ -5,8 +5,8 @@ public enum Color {
     BLACK,
     ;
 
-    public boolean isSame(final String color) {
-        return this.name().equals(color);
+    public boolean isSame(final Color color) {
+        return this == color;
     }
 
     public Color exchangeTurn() {
