@@ -19,13 +19,21 @@ public class Pawn implements PieceRole {
                     new Movable(getMaxMovement(count), Direction.SOUTH_EAST),
                     new Movable(getMaxMovement(count), Direction.SOUTH_WEST)
             );
-        } else {
+        }
+        if (color == Color.WHITE) {
             this.routes = List.of(
                     new Movable(getMaxMovement(count), Direction.NORTH),
                     new Movable(getMaxMovement(count), Direction.NORTH_EAST),
                     new Movable(getMaxMovement(count), Direction.NORTH_WEST)
             );
         }
+    }
+
+    protected int getMaxMovement(final int count) {
+        if (count == 1) {
+            return 2;
+        }
+        return 1;
     }
 
     @Override
@@ -39,13 +47,6 @@ public class Pawn implements PieceRole {
             count++;
         }
         return canMove;
-    }
-
-    protected int getMaxMovement(final int count) {
-        if (count == 1) {
-            return 2;
-        }
-        return 1;
     }
 
     @Override
