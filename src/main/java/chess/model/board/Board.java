@@ -39,7 +39,7 @@ public class Board {
 
     private List<String> getLine(int lineIndex) {
         return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
-                .mapToObj(file -> squares.get(Position.from(file, lineIndex)).getSignature())
+                .mapToObj(file -> squares.get(Position.of(file, lineIndex)).getSignature())
                 .toList();
     }
 

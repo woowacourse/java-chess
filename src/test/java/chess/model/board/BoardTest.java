@@ -24,7 +24,7 @@ public class BoardTest {
         Board board = new InitialBoardGenerator().create();
 
         // when, then
-        assertThatThrownBy(() -> board.move(Position.from(1, 1), Position.from(1, 3)))
+        assertThatThrownBy(() -> board.move(Position.of(1, 1), Position.of(1, 3)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -32,7 +32,7 @@ public class BoardTest {
     void 기물이_특정_위치로_움직일_수_있다면_움직인다() {
         // given
         Board board = new InitialBoardGenerator().create();
-        board.move(Position.from(2, 2), Position.from(2, 3));
+        board.move(Position.of(2, 2), Position.of(2, 3));
 
         // when, then
         List<String> boardLines = board.getLines().stream()

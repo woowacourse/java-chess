@@ -34,7 +34,7 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position from(int file, int rank) {
+    public static Position of(int file, int rank) {
         int key = convertToKey(file, rank);
         if (!POSITION_CACHE.containsKey(key)) {
             throw new IllegalArgumentException("체스판 범위를 벗어난 좌표값입니다.");
@@ -45,19 +45,31 @@ public class Position {
     public Position moveToTargetByStep(Position target) {
         int fileStep = Integer.signum(target.file - file);
         int rankStep = Integer.signum(target.rank - rank);
-        return Position.from(file + fileStep, rank + rankStep);
+        return Position.of(file + fileStep, rank + rankStep);
     }
 
     public static List<Position> values() {
         return List.copyOf(POSITION_CACHE.values());
     }
 
-    public int getFile() {
-        return file;
+    public int getFileGap(Position other) {
+        return other.file - file;
     }
 
-    public int getRank() {
-        return rank;
+    public int getRankGap(Position other) {
+        return other.rank - rank;
+    }
+
+    public boolean isSameFile(Position other) {
+        return file == other.file;
+    }
+
+    public boolean isSameRank(Position other) {
+        return rank == other.rank;
+    }
+
+    public boolean isOnRank(int rank) {
+        return this.rank == rank;
     }
 
     @Override

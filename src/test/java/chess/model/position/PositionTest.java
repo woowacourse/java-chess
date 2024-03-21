@@ -11,7 +11,7 @@ public class PositionTest {
     @CsvSource(value = {"0,0", "9,9", "1,9"})
     void x와_y가_범위_내_값이_아니면_예외가_발생한다(int x, int y) {
         // when, then
-        assertThatThrownBy(() -> Position.from(x, y))
+        assertThatThrownBy(() -> Position.of(x, y))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -19,6 +19,6 @@ public class PositionTest {
     @CsvSource(value = {"1,1", "2,3", "8,8"})
     void x와_y가_범위_내_값이면_예외가_발생하지_않는다(int x, int y) {
         // when, then
-        assertThatCode(() -> Position.from(x, y)).doesNotThrowAnyException();
+        assertThatCode(() -> Position.of(x, y)).doesNotThrowAnyException();
     }
 }

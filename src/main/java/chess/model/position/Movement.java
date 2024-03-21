@@ -16,11 +16,11 @@ public class Movement {
     }
 
     public int getFileGap() {
-        return destination.getFile() - source.getFile();
+        return source.getFileGap(destination);
     }
 
     public int getRankGap() {
-        return destination.getRank() - source.getRank();
+        return source.getRankGap(destination);
     }
 
     public int getFileDistance() {
@@ -36,11 +36,11 @@ public class Movement {
     }
 
     public boolean isSameFile() {
-        return source.getFile() == destination.getFile();
+        return source.isSameFile(destination);
     }
 
     private boolean isSameRank() {
-        return source.getRank() == destination.getRank();
+        return source.isSameRank(destination);
     }
 
     public boolean isDiagonal() {
@@ -48,9 +48,7 @@ public class Movement {
     }
 
     public List<Position> getIntermediatePositions() {
-        if (!isSameFileOrRank() && !isDiagonal()) {
-            throw new IllegalStateException("직선이나 대각선 방향이 아닙니다.");
-        }
+        validateDirection();
         List<Position> positions = new ArrayList<>();
         Position currentPosition = source.moveToTargetByStep(destination);
         while (!currentPosition.equals(destination)) {
@@ -60,7 +58,13 @@ public class Movement {
         return positions;
     }
 
+    private void validateDirection() {
+        if (!isSameFileOrRank() && !isDiagonal()) {
+            throw new IllegalStateException("직선이나 대각선 방향이 아닙니다.");
+        }
+    }
+
     public boolean isSourceRankMatch(int rank) {
-        return source.getRank() == rank;
+        return source.isOnRank(rank);
     }
 }
