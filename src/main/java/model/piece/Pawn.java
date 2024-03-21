@@ -41,7 +41,7 @@ public class Pawn extends Piece {
         int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
         int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
 
-        if (Math.abs(dColumn) > 1) {
+        if (dColumn != 0) {
             return false;
         }
 
@@ -54,6 +54,34 @@ public class Pawn extends Piece {
 
         if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
             return true;
+        }
+        return dRow == 1;
+    }
+
+    @Override
+    public Set<Position> getAttackRoute(Moving moving) {
+        if (!canAttack(moving)) {
+            throw new IllegalArgumentException("이동 불가");
+        }
+        return Set.of();
+    }
+
+    private boolean canAttack(Moving moving) {
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
+
+        if (moving.isNotMoved()) {
+            return false;
+        }
+        int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
+        int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+
+        if (Math.abs(dColumn) != 1) {
+            return false;
+        }
+
+        if (Camp.BLACK == camp) {
+            return dRow == -1;
         }
         return dRow == 1;
     }
