@@ -25,4 +25,12 @@ public abstract class Piece {
     public RowPosition teamInitialPawnRow() {
         return team.getInitialPawnRow();
     }
+
+    public boolean isSameTeam(Piece otherPiece) {
+        return this.team == otherPiece.team;
+    }
+
+    public boolean isOtherTeam(Piece otherPiece) {
+        return !isSameTeam(otherPiece);
+    }
 }
