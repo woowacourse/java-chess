@@ -17,10 +17,10 @@ abstract class AbstractCatchOnMovePiece extends AbstractPiece {
         if (pieceMoveResult.isPresent()) {
             return pieceMoveResult.get();
         }
-        if (isMyTeam(piecesOnChessBoard, targetPosition)) {
+        if (isMyTeam(targetPosition, piecesOnChessBoard)) {
             return FAILURE;
         }
-        if (isOtherTeam(piecesOnChessBoard, targetPosition)) {
+        if (isOtherTeam(targetPosition, piecesOnChessBoard)) {
             return CATCH;
         }
         return SUCCESS;
@@ -29,12 +29,12 @@ abstract class AbstractCatchOnMovePiece extends AbstractPiece {
     protected abstract Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition,
                                                                                  PiecesOnChessBoard piecesOnChessBoard);
 
-    private boolean isMyTeam(PiecesOnChessBoard piecesOnChessBoard, Position targetPosition) {
+    private boolean isMyTeam(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
         Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
         return targetTeam.isPresent() && targetTeam.get().equals(getTeam());
     }
 
-    private boolean isOtherTeam(PiecesOnChessBoard piecesOnChessBoard, Position targetPosition) {
+    private boolean isOtherTeam(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
         Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
         return targetTeam.isPresent() && targetTeam.get().equals(getTeam().otherTeam());
     }
