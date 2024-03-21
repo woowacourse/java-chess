@@ -1,7 +1,7 @@
 package controller;
 
-import domain.chessboard.Square;
 import domain.game.ChessBoard;
+import domain.game.Square;
 import domain.piece.PieceGenerator;
 import domain.position.File;
 import domain.position.Position;
@@ -18,6 +18,7 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
+
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;

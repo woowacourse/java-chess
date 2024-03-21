@@ -1,6 +1,5 @@
-package domain.piece;
+package domain.game;
 
-import domain.game.Direction;
 import domain.position.Position;
 import java.util.Objects;
 

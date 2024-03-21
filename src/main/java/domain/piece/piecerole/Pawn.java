@@ -1,8 +1,8 @@
 package domain.piece.piecerole;
 
 import domain.game.Direction;
+import domain.game.Movable;
 import domain.piece.Color;
-import domain.piece.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package domain.chessboard;
+package domain.game;
 
 import domain.position.File;
 import domain.position.Position;

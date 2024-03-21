@@ -1,4 +1,4 @@
-package domain.chessboard;
+package domain.game;
 
 import domain.position.Position;
 import java.util.Objects;

@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.King;
@@ -9,6 +8,8 @@ import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
 import domain.position.Position;
+import fixture.PositionFixture;
+import fixture.SquareFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -137,7 +138,7 @@ class ChessBoardTest {
 
         Piece sourcePiece = new Piece(new Rook(), Color.WHITE);
         Piece targetPiece = new Piece(new Rook(), Color.WHITE);
-        Piece blockPiece =  new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);

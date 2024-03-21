@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.game.PositionFixture;
 import domain.piece.piecerole.Bishop;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
@@ -9,6 +8,7 @@ import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
 import domain.position.Position;
+import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

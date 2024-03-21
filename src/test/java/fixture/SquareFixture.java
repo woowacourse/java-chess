@@ -1,6 +1,6 @@
-package domain.game;
+package fixture;
 
-import domain.chessboard.Square;
+import domain.game.Square;
 import domain.position.Position;
 
 public final class SquareFixture {

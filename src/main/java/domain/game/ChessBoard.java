@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;

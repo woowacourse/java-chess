@@ -5,7 +5,7 @@ import static domain.game.Direction.NORTH_WEST;
 import static domain.game.Direction.SOUTH_EAST;
 import static domain.game.Direction.SOUTH_WEST;
 
-import domain.piece.Movable;
+import domain.game.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;

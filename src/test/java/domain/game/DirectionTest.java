@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.position.Position;
+import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

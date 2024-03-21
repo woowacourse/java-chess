@@ -1,7 +1,7 @@
 package view;
 
-import domain.chessboard.Square;
 import domain.game.ChessBoard;
+import domain.game.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Bishop;

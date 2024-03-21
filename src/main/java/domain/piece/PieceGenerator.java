@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.chessboard.Square;
 import domain.game.ChessBoard;
+import domain.game.Square;
 import domain.piece.piecerole.Bishop;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
