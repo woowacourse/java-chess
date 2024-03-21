@@ -10,7 +10,7 @@ public enum Direction {
     RIGHT(index -> new Index(index.vertical(), index.nextHorizontal())),
     DOWN_RIGHT(index -> new Index(index.prevVertical(), index.nextHorizontal())),
     DOWN(index -> new Index(index.prevVertical(), index.horizontal())),
-    DOWN_LEFT(index -> new Index(index.prevVertical(), index.prevVertical())),
+    DOWN_LEFT(index -> new Index(index.prevVertical(), index.prevHorizontal())),
     LEFT(index -> new Index(index.vertical(), index.prevHorizontal())),
     UP_LEFT(index -> new Index(index.nextVertical(), index.prevHorizontal()));
     private UnaryOperator<Index> function;

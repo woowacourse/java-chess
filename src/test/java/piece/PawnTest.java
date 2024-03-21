@@ -1,10 +1,10 @@
 package piece;
 
-import domain.piece.Color;
-import domain.piece.Pawn;
-import domain.piece.point.File;
-import domain.piece.point.Point;
-import domain.piece.point.Rank;
+import domain.piece.attribute.Color;
+import domain.Pawn;
+import domain.piece.attribute.point.File;
+import domain.piece.attribute.point.Point;
+import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -72,5 +72,59 @@ class PawnTest {
 
         final var result = sut.canMove(new Point(File.B, Rank.FIVE));
         assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("검은색 폰이 아직 이동하지 않았다면 아래로 두칸 이동할 수 있다.")
+    void black_pawn_can_move_down_double() {
+        final var sut = new Pawn(new Point(File.C, Rank.FOUR), Color.BLACK);
+
+        final var result = sut.canMove(new Point(File.C, Rank.TWO));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void black_pawn_can_not_move_diagonal_left_double() {
+        final var sut = new Pawn(new Point(File.C, Rank.FOUR), Color.BLACK);
+
+        final var result = sut.canMove(new Point(File.A, Rank.TWO));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void black_pawn_can_not_move_diagonal_right_double() {
+        final var sut = new Pawn(new Point(File.C, Rank.FOUR), Color.BLACK);
+
+        final var result = sut.canMove(new Point(File.E, Rank.TWO));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("흰색 폰이 아직 이동하지 않았다면 위로 두칸 이동할 수 있다")
+    void white_pawn_can_move_up_double() {
+        final var sut = new Pawn(new Point(File.C, Rank.FOUR), Color.WHITE);
+
+        final var result = sut.canMove(new Point(File.C, Rank.SIX));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void white_pawn_can_not_move_diagonal_left_double() {
+        final var sut = new Pawn(new Point(File.C, Rank.FOUR), Color.WHITE);
+
+        final var result = sut.canMove(new Point(File.E, Rank.SIX));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void white_pawn_can_not_move_diagonal_right_double() {
+        final var sut = new Pawn(new Point(File.C, Rank.FOUR), Color.WHITE);
+
+        final var result = sut.canMove(new Point(File.A, Rank.SIX));
+        assertThat(result).isFalse();
     }
 }
