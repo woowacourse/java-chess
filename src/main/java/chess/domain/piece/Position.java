@@ -26,8 +26,16 @@ public class Position {
         return isVerticalWith(target) || isHorizontalWith(target);
     }
 
+    public boolean isVerticalWith(final Position target) {
+        return this.file == target.file && this.rank != target.rank;
+    }
+
     public boolean isVerticalWithDistance(final Position target, final int distance) {
         return this.rank.getDistance(target.rank) == distance;
+    }
+
+    public boolean isHorizontalWith(final Position target) {
+        return this.file != target.file && this.rank == target.rank;
     }
 
     public boolean isHorizontalWithDistance(final Position target, final int distance) {
@@ -36,6 +44,19 @@ public class Position {
 
     public boolean isDiagonalWith(final Position target) {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
+    }
+
+    public boolean isRightDiagonalWith(final Position target) {
+        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
+                && ((this.file.getIndex() < target.file.getIndex() && this.rank.getNumber() < target.rank.getNumber())
+                || (this.file.getIndex() > target.file.getIndex() && this.rank.getNumber() > target.rank.getNumber()));
+    }
+
+    public boolean isLeftDiagonalWith(final Position target) {
+        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
+                && ((this.file.getIndex() > target.file.getIndex() && this.rank.getNumber() < target.rank.getNumber())
+                || (this.file.getIndex() < target.file.getIndex() && this.rank.getNumber() > target.rank.getNumber()));
+
     }
 
     public boolean isDiagonalWithDistance(final Position target, final int distance) {
@@ -54,60 +75,90 @@ public class Position {
         return target.rank.minus(this.rank) == distance;
     }
 
-    public Set<Position> getForwardVerticalMiddlePositions(Position target) {
+    public Set<Position> getVerticalMiddlePositions(final Position target) {
+        Position start = this;
+        Position end = target;
+
+        if (this.rank.getNumber() > target.rank.getNumber()) {
+            start = target;
+            end = this;
+        }
+
         final Set<Position> positions = new HashSet<>();
-        for (int rankIndex = this.rank.getNumber() + 1; rankIndex < target.rank.getNumber(); rankIndex++) {
-            positions.add(new Position(this.file, Rank.from(rankIndex)));
+        for (int rankIndex = start.rank.getNumber() + 1; rankIndex < end.rank.getNumber(); rankIndex++) {
+            positions.add(new Position(start.file, Rank.from(rankIndex)));
         }
         return positions;
     }
 
-    public Set<Position> getBackVerticalMiddlePositions(Position target) {
+    public Set<Position> getHorizontalMiddlePositions(final Position target) {
+        Position start = this;
+        Position end = target;
+
+        if (this.file.getIndex() > target.file.getIndex()) {
+            start = target;
+            end = this;
+        }
+
         final Set<Position> positions = new HashSet<>();
-        for (int rankIndex = this.rank.getNumber() - 1; rankIndex > target.rank.getNumber(); rankIndex--) {
-            positions.add(new Position(this.file, Rank.from(rankIndex)));
+        for (int fileIndex = start.file.getIndex() + 1; fileIndex < end.file.getIndex(); fileIndex++) {
+            positions.add(new Position(File.from(fileIndex), start.rank));
         }
         return positions;
     }
 
-    public boolean isForwardVerticalWith(Position target) {
-        return target.rank.minus(this.rank) > 0;
-    }
+    public Set<Position> getRightDiagonalMiddlePositions(final Position target) {
+        Position start = this;
+        Position end = target;
 
-    public boolean isBackwardVerticalWith(final Position target) {
-        return target.rank.minus(this.rank) < 0;
-    }
+        if (this.rank.getNumber() > target.rank.getNumber()) {
+            start = target;
+            end = this;
+        }
 
-    public boolean isRightHorizontalWith(final Position target) {
-        return target.file.minus(this.file) > 0;
-    }
-
-    public Set<Position> getRightHorizontalMiddlePositions(final Position target) {
         final Set<Position> positions = new HashSet<>();
-        for (int fileIndex = this.file.getIndex() + 1; fileIndex < target.file.getIndex(); fileIndex++) {
-            positions.add(new Position(File.from(fileIndex), this.rank));
+
+        int currentRankIndex = start.rank.getNumber() + 1;
+        int currentFileIndex = start.file.getIndex() + 1;
+        int targetRankIndex = end.rank.getNumber();
+
+        while(currentRankIndex < targetRankIndex) {
+            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
+            currentFileIndex++;
+            currentRankIndex++;
         }
         return positions;
     }
 
-    public boolean isLeftHorizontalWith(final Position target) {
-        return target.file.minus(this.file) < 0;
-    }
+    public Set<Position> getLeftDiagonalMiddlePositions(Position target) {
+        Position start = this;
+        Position end = target;
 
-    public Set<Position> getLeftHorizontalMiddlePositions(final Position target) {
+        if (this.rank.getNumber() > target.rank.getNumber()) {
+            start = target;
+            end = this;
+        }
+
         final Set<Position> positions = new HashSet<>();
-        for (int fileIndex = this.file.getIndex() - 1; fileIndex > target.file.getIndex(); fileIndex--) {
-            positions.add(new Position(File.from(fileIndex), this.rank));
+
+        int currentRankIndex = start.rank.getNumber() + 1;
+        int currentFileIndex = start.file.getIndex() - 1;
+        int targetRankIndex = end.rank.getNumber();
+
+        while(currentRankIndex < targetRankIndex) {
+            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
+            currentFileIndex--;
+            currentRankIndex++;
         }
         return positions;
     }
 
-    private boolean isVerticalWith(final Position target) {
-        return this.file != target.file && this.rank == target.rank;
+    public File getFile() {
+        return file;
     }
 
-    private boolean isHorizontalWith(final Position target) {
-        return this.file == target.file && this.rank != target.rank;
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
@@ -127,87 +178,4 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public boolean isRightUpDiagonalWith(final Position target) {
-        return (target.rank.minus(this.rank) == target.file.minus(this.file)) && (target.rank.getNumber() > this.rank.getNumber() && target.file.getIndex() > this.file.getIndex());
-    }
-
-    public Set<Position> getRightUpDiagonalMiddlePositions(final Position target) {
-        final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = this.rank.getNumber() + 1;
-        int currentFileIndex = this.file.getIndex() + 1;
-        int targetRankIndex = target.rank.getNumber();
-
-        while(currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex++;
-            currentRankIndex++;
-        }
-        return positions;
-    }
-
-    public boolean isRightDownDiagonalWith(Position target) {
-        return this.rank.minus(target.rank) == target.file.minus(this.file) && (this.rank.getNumber() > target.rank.getNumber() && target.file.getIndex() > this.file.getIndex());
-    }
-
-    public Set<Position> getRightDownDiagonalMiddlePositions(Position target) {
-        final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = this.rank.getNumber() - 1;
-        int currentFileIndex = this.file.getIndex() + 1;
-        int targetRankIndex = target.rank.getNumber();
-
-        while(currentRankIndex > targetRankIndex) {
-            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex++;
-            currentRankIndex--;
-        }
-        return positions;
-    }
-
-    public boolean isLeftUpDiagonalWith(Position target) {
-        return target.rank.minus(this.rank) == this.file.minus(target.file) && (target.rank.getNumber() > this.rank.getNumber() && this.file.getIndex() > target.file.getIndex());
-    }
-
-    public boolean isLeftDownDiagonalWith(Position target) {
-        return this.rank.minus(target.rank) == this.file.minus(target.file) && (this.rank.getNumber() > target.rank.getNumber() && this.file.getIndex() > target.file.getIndex());
-    }
-
-    public Set<Position> getLeftUpDiagonalMiddlePositions(Position target) {
-        final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = this.rank.getNumber() + 1;
-        int currentFileIndex = this.file.getIndex() - 1;
-        int targetRankIndex = target.rank.getNumber();
-
-        while(currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex--;
-            currentRankIndex++;
-        }
-        return positions;
-    }
-
-    public Set<Position> getLeftDownDiagonalMiddlePositions(final Position target) {
-        final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = this.rank.getNumber() - 1;
-        int currentFileIndex = this.file.getIndex() - 1;
-        int targetRankIndex = target.rank.getNumber();
-
-        while(currentRankIndex > targetRankIndex) {
-            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex--;
-            currentRankIndex--;
-        }
-        return positions;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
 }

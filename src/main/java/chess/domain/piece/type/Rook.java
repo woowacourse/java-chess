@@ -19,19 +19,12 @@ public class Rook extends Piece {
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        if (this.position.isForwardVerticalWith(target)) {
-            return this.position.getForwardVerticalMiddlePositions(target);
-        }
-        if (this.position.isBackwardVerticalWith(target)) {
-            return this.position.getBackVerticalMiddlePositions(target);
+        if (this.position.isVerticalWith(target)) {
+            return this.position.getVerticalMiddlePositions(target);
         }
 
-        if (this.position.isRightHorizontalWith(target)) {
-            return this.position.getRightHorizontalMiddlePositions(target);
-        }
-
-        if (this.position.isLeftHorizontalWith(target)) {
-            return this.position.getLeftHorizontalMiddlePositions(target);
+        if (this.position.isHorizontalWith(target)) {
+            return this.position.getHorizontalMiddlePositions(target);
         }
 
         return new HashSet<>();

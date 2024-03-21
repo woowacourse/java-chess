@@ -11,11 +11,6 @@ public class Pawn extends Piece {
         super(color, position);
     }
 
-
-    private boolean isInitPosition() {
-        return this.position.isTwoRank(); //TODO 네이밍 고려
-    }
-
     @Override
     public boolean canMoveTo(final Position target) {
         if (color.equals(Color.WHITE)) {
@@ -31,15 +26,8 @@ public class Pawn extends Piece {
         return this.position.isForwardWithDistance(target, -1);
     }
 
-    //    @Override
-//    public boolean canMoveTo(final Position target) {
-//        if (isInitPosition()) {
-//           return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
-//        }
-//        return this.position.isForwardWithDistance(target, 1);
-//    }
     @Override
-    public Set<Position> getRoute(Position target) {
-        return this.position.getForwardVerticalMiddlePositions(target);
+    public Set<Position> getRoute(final Position target) {
+        return this.position.getVerticalMiddlePositions(target);
     }
 }

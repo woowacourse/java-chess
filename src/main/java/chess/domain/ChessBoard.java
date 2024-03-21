@@ -53,10 +53,6 @@ public class ChessBoard {
                 new Rook(color, new Position('h', rank)));
     }
 
-    public Set<Piece> getPieces() {
-        return pieces;
-    }
-
     public Piece findBy(final Position other) {
         return pieces.stream()
                 .filter(piece -> piece.isPosition(other))
@@ -106,5 +102,9 @@ public class ChessBoard {
     private boolean existInWay(final Piece currentPiece, final Position nextPosition) {
         final Set<Position> route = currentPiece.getRoute(nextPosition);
         return pieces.stream().anyMatch(piece -> route.contains(piece.getPosition()));
+    }
+
+    public Set<Piece> getPieces() {
+        return pieces;
     }
 }

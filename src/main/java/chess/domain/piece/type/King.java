@@ -3,6 +3,7 @@ package chess.domain.piece.type;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import java.util.HashSet;
 import java.util.Set;
 
 public class King extends Piece {
@@ -17,7 +18,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position target) {
-        return null;
+    public Set<Position> getRoute(final Position target) {
+        return new HashSet<>();
     }
 }

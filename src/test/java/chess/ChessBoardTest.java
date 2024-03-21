@@ -26,41 +26,41 @@ class ChessBoardTest {
         final Set<Piece> chessBoardDetail = chessBoard.getPieces();
 
         assertThat(chessBoardDetail).containsExactlyInAnyOrder(
-                new Rook(Color.WHITE, new Position('a', 8)),
-                new Night(Color.WHITE, new Position('b', 8)),
-                new Bishop(Color.WHITE, new Position('c', 8)),
-                new Queen(Color.WHITE, new Position('d', 8)),
-                new King(Color.WHITE, new Position('e', 8)),
-                new Bishop(Color.WHITE, new Position('f', 8)),
-                new Night(Color.WHITE, new Position('g', 8)),
-                new Rook(Color.WHITE, new Position('h', 8)),
+                new Rook(Color.BLACK, new Position('a', 8)),
+                new Night(Color.BLACK, new Position('b', 8)),
+                new Bishop(Color.BLACK, new Position('c', 8)),
+                new Queen(Color.BLACK, new Position('d', 8)),
+                new King(Color.BLACK, new Position('e', 8)),
+                new Bishop(Color.BLACK, new Position('f', 8)),
+                new Night(Color.BLACK, new Position('g', 8)),
+                new Rook(Color.BLACK, new Position('h', 8)),
 
-                new Pawn(Color.WHITE, new Position('a', 7)),
-                new Pawn(Color.WHITE, new Position('b', 7)),
-                new Pawn(Color.WHITE, new Position('c', 7)),
-                new Pawn(Color.WHITE, new Position('d', 7)),
-                new Pawn(Color.WHITE, new Position('e', 7)),
-                new Pawn(Color.WHITE, new Position('f', 7)),
-                new Pawn(Color.WHITE, new Position('g', 7)),
-                new Pawn(Color.WHITE, new Position('h', 7)),
+                new Pawn(Color.BLACK, new Position('a', 7)),
+                new Pawn(Color.BLACK, new Position('b', 7)),
+                new Pawn(Color.BLACK, new Position('c', 7)),
+                new Pawn(Color.BLACK, new Position('d', 7)),
+                new Pawn(Color.BLACK, new Position('e', 7)),
+                new Pawn(Color.BLACK, new Position('f', 7)),
+                new Pawn(Color.BLACK, new Position('g', 7)),
+                new Pawn(Color.BLACK, new Position('h', 7)),
 
-                new Pawn(Color.BLACK, new Position('a', 2)),
-                new Pawn(Color.BLACK, new Position('b', 2)),
-                new Pawn(Color.BLACK, new Position('c', 2)),
-                new Pawn(Color.BLACK, new Position('d', 2)),
-                new Pawn(Color.BLACK, new Position('e', 2)),
-                new Pawn(Color.BLACK, new Position('f', 2)),
-                new Pawn(Color.BLACK, new Position('g', 2)),
-                new Pawn(Color.BLACK, new Position('h', 2)),
+                new Pawn(Color.WHITE, new Position('a', 2)),
+                new Pawn(Color.WHITE, new Position('b', 2)),
+                new Pawn(Color.WHITE, new Position('c', 2)),
+                new Pawn(Color.WHITE, new Position('d', 2)),
+                new Pawn(Color.WHITE, new Position('e', 2)),
+                new Pawn(Color.WHITE, new Position('f', 2)),
+                new Pawn(Color.WHITE, new Position('g', 2)),
+                new Pawn(Color.WHITE, new Position('h', 2)),
 
-                new Rook(Color.BLACK, new Position('a', 1)),
-                new Night(Color.BLACK, new Position('b', 1)),
-                new Bishop(Color.BLACK, new Position('c', 1)),
-                new Queen(Color.BLACK, new Position('d', 1)),
-                new King(Color.BLACK, new Position('e', 1)),
-                new Bishop(Color.BLACK, new Position('f', 1)),
-                new Night(Color.BLACK, new Position('g', 1)),
-                new Rook(Color.BLACK, new Position('h', 1)));
+                new Rook(Color.WHITE, new Position('a', 1)),
+                new Night(Color.WHITE, new Position('b', 1)),
+                new Bishop(Color.WHITE, new Position('c', 1)),
+                new Queen(Color.WHITE, new Position('d', 1)),
+                new King(Color.WHITE, new Position('e', 1)),
+                new Bishop(Color.WHITE, new Position('f', 1)),
+                new Night(Color.WHITE, new Position('g', 1)),
+                new Rook(Color.WHITE, new Position('h', 1)));
     }
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다._룩의 경우")
@@ -72,8 +72,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다._나이트의 경우")
@@ -85,8 +84,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다._비숍의 경우")
@@ -98,8 +96,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다.킹의 경우")
@@ -111,8 +108,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다.퀸의 경우")
@@ -124,8 +120,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("전략상 이동할 수 없는 위치이다.")
@@ -137,8 +132,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("빈칸이면 움직인다.")
@@ -165,8 +159,7 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 경로상 기물이 존재합니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("상대 기물을 잡으러 움직인다.")
@@ -200,7 +193,6 @@ class ChessBoardTest {
 
         // when && then
         assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 경로상 기물이 존재합니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

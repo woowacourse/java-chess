@@ -18,35 +18,21 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position target) {
-        if (this.position.isRightUpDiagonalWith(target)) {
-            return this.position.getRightUpDiagonalMiddlePositions(target);
-        }
-        if (this.position.isRightDownDiagonalWith(target)) {
-            return this.position.getRightDownDiagonalMiddlePositions(target);
+    public Set<Position> getRoute(final Position target) {
+        if (this.position.isRightDiagonalWith(target)) {
+            return this.position.getRightDiagonalMiddlePositions(target);
         }
 
-        if (this.position.isLeftUpDiagonalWith(target)) {
-            return this.position.getLeftUpDiagonalMiddlePositions(target);
+        if (this.position.isLeftDiagonalWith(target)) {
+            return this.position.getLeftDiagonalMiddlePositions(target);
         }
 
-        if (this.position.isLeftDownDiagonalWith(target)) {
-            return this.position.getLeftDownDiagonalMiddlePositions(target);
+        if (this.position.isVerticalWith(target)) {
+            return this.position.getVerticalMiddlePositions(target);
         }
 
-        if (this.position.isForwardVerticalWith(target)) {
-            return this.position.getForwardVerticalMiddlePositions(target);
-        }
-        if (this.position.isBackwardVerticalWith(target)) {
-            return this.position.getBackVerticalMiddlePositions(target);
-        }
-
-        if (this.position.isRightHorizontalWith(target)) {
-            return this.position.getRightHorizontalMiddlePositions(target);
-        }
-
-        if (this.position.isLeftHorizontalWith(target)) {
-            return this.position.getLeftHorizontalMiddlePositions(target);
+        if (this.position.isHorizontalWith(target)) {
+            return this.position.getHorizontalMiddlePositions(target);
         }
 
         return new HashSet<>();

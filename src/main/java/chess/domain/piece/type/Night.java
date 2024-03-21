@@ -21,7 +21,7 @@ public class Night extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Position target) {
+    public Set<Position> getRoute(final Position target) {
         return new HashSet<>();
     }
 }
