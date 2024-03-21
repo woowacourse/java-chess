@@ -41,14 +41,16 @@ public class Space {
             return;
         }
         List<Position> routes = targetSpace.position.findRoute(position);
-        for (Position position : routes) {
+        for (Position route : routes) {
             for (Space space : spaces) {
-                if (space.position.equals(position)) {
-                    if (space.hasPiece()) {
-                        throw new IllegalArgumentException("루트에 피스가 있습니다.");
-                    }
-                }
+                validateRouteHasPiece(route, space);
             }
+        }
+    }
+
+    private void validateRouteHasPiece(Position route, Space space) {
+        if (space.position.equals(route) && space.hasPiece()) {
+            throw new IllegalArgumentException("루트에 피스가 있습니다.");
         }
     }
 
