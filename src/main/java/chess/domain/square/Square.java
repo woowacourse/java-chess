@@ -40,11 +40,11 @@ public class Square {
     private String generateSquareKey(final int fileMoveStep, final int rankMoveStep) {
         int newFileIndex = Math.max(0, Math.min(7, getFileIndex() + fileMoveStep));
         int newRankIndex = Math.max(0, Math.min(7, getRankIndex() + rankMoveStep));
-        return File.values()[newFileIndex].toString() + Rank.values()[newRankIndex].toString();
+        return File.values()[newFileIndex].name() + Rank.values()[newRankIndex].name();
     }
 
     private static String generateSquareKey(final File file, final Rank rank) {
-        return file.toString() + rank.toString();
+        return file.name() + rank.name();
     }
 
     public int getFileIndex() {
