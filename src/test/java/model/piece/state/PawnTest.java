@@ -2,9 +2,11 @@ package model.piece.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.util.Set;
-import model.Position;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +17,13 @@ class PawnTest {
     void possiblePositions_ReturnPossiblePositions_WhenCurrentPositionIsGiven_AndColorIsWhite() {
         Role pawn = new Pawn(Color.WHITE);
         Position initialPosition = Position.of(5, 2);
-        Set<Position> positions = pawn.possiblePositions(initialPosition);
+        Set<Route> routes = pawn.possibleRoutes(initialPosition);
 
-        Set<Position> expectedPositions = Set.of(
-                Position.of(5, 3),
-                Position.of(5, 4)
+        Set<Route> expectedRoutes = Set.of(
+                new Route(List.of(Position.of(5, 3), Position.of(5, 4)))
         );
 
-        assertEquals(expectedPositions, positions);
+        assertEquals(expectedRoutes, routes);
     }
 
     @Test
@@ -30,13 +31,12 @@ class PawnTest {
     void possiblePositions_ReturnPossiblePositions_WhenCurrentPositionIsGiven_AndColorIsBlack() {
         Role pawn = new Pawn(Color.BLACK);
         Position initialPosition = Position.of(5, 7);
-        Set<Position> positions = pawn.possiblePositions(initialPosition);
+        Set<Route> routes = pawn.possibleRoutes(initialPosition);
 
-        Set<Position> expectedPositions = Set.of(
-                Position.of(5, 6),
-                Position.of(5, 5)
+        Set<Route> expectedRoutes = Set.of(
+                new Route(List.of(Position.of(5, 6), Position.of(5, 5)))
         );
 
-        assertEquals(expectedPositions, positions);
+        assertEquals(expectedRoutes, routes);
     }
 }

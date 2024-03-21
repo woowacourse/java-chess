@@ -9,10 +9,12 @@ import static model.direction.MovingPattern.SSW;
 import static model.direction.MovingPattern.WWN;
 import static model.direction.MovingPattern.WWS;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.Position;
+import model.position.Position;
+import model.position.Route;
 import model.direction.MovingPattern;
 import model.piece.Color;
 
@@ -23,15 +25,21 @@ public final class Knight extends Role {
     }
 
     @Override
-    public Set<Position> possiblePositions(Position position) {
-        Set<Position> positions = new HashSet<>();
+    public Set<Route> possibleRoutes(Position position) {
+        Set<Route> possibleRoutes = new HashSet<>();
         for (MovingPattern movingPattern : movingPatterns) {
-            Position movedPosition = position;
-            if (movedPosition.isAvailablePosition(movingPattern)) {
-                movedPosition = movedPosition.getNextPosition(movingPattern);
-                positions.add(movedPosition);
-            }
+            possibleRoutes.add(getRoute(movingPattern, position));
         }
-        return positions;
+        return possibleRoutes;
+    }
+
+    @Override
+    protected Route getRoute(MovingPattern movingPattern, Position movedPosition) {
+        List<Position> sequentialPositions = new ArrayList<>();
+        if (movedPosition.isAvailablePosition(movingPattern)) {
+            movedPosition = movedPosition.getNextPosition(movingPattern);
+            sequentialPositions.add(movedPosition);
+        }
+        return new Route(sequentialPositions);
     }
 }

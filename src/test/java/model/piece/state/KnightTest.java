@@ -2,11 +2,12 @@ package model.piece.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.util.Set;
-import model.Position;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -18,19 +19,19 @@ class KnightTest {
     void possiblePositions_ReturnsPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
         Role knight = new Knight(color);
         Position initialPosition = Position.of(4, 4);
-        Set<Position> positions = knight.possiblePositions(initialPosition);
+        Set<Route> routes = knight.possibleRoutes(initialPosition);
 
-        Set<Position> expectedPositions = Set.of(
+        Set<Route> expectedRoutes = Set.of(
                 // NN_
-                Position.of(6, 5), Position.of(6, 3),
+                new Route(List.of(Position.of(6, 5))), new Route(List.of(Position.of(6, 3))),
                 // SS_
-                Position.of(2, 5), Position.of(2, 3),
+                new Route(List.of(Position.of(2, 5))), new Route(List.of(Position.of(2, 3))),
                 // EE_
-                Position.of(5, 6), Position.of(3, 6),
-                // WWW_
-                Position.of(5, 2), Position.of(3, 2)
+                new Route(List.of(Position.of(5, 6))), new Route(List.of(Position.of(3, 6))),
+                // WW_
+                new Route(List.of(Position.of(5, 2))), new Route(List.of(Position.of(3, 2)))
         );
 
-        assertEquals(expectedPositions, positions);
+        assertEquals(expectedRoutes, routes);
     }
 }

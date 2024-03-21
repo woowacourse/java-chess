@@ -2,11 +2,12 @@ package model.piece.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.util.Set;
-import model.Position;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -18,27 +19,26 @@ class QueenTest {
     void possiblePositions_ReturnsPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
         Role queen = new Queen(color);
         Position initialPosition = Position.of(4, 4);
-        Set<Position> positions = queen.possiblePositions(initialPosition);
+        Set<Route> routes = queen.possibleRoutes(initialPosition);
 
-        Set<Position> expectedPositions = Set.of(
+        Set<Route> expectedRoutes = Set.of(
                 // North
-                Position.of(5, 4), Position.of(6, 4), Position.of(7, 4), Position.of(8, 4),
+                new Route(List.of(Position.of(5, 4), Position.of(6, 4), Position.of(7, 4), Position.of(8, 4))),
                 // South
-                Position.of(3, 4), Position.of(2, 4), Position.of(1, 4),
+                new Route(List.of(Position.of(3, 4), Position.of(2, 4), Position.of(1, 4))),
                 // East
-                Position.of(4, 5), Position.of(4, 6), Position.of(4, 7), Position.of(4, 8),
+                new Route(List.of(Position.of(4, 5), Position.of(4, 6), Position.of(4, 7), Position.of(4, 8))),
                 // West
-                Position.of(4, 3), Position.of(4, 2), Position.of(4, 1),
+                new Route(List.of(Position.of(4, 3), Position.of(4, 2), Position.of(4, 1))),
                 // North-East
-                Position.of(5, 5), Position.of(6, 6), Position.of(7, 7), Position.of(8, 8),
+                new Route(List.of(Position.of(5, 5), Position.of(6, 6), Position.of(7, 7), Position.of(8, 8))),
                 // South-East
-                Position.of(3, 3), Position.of(2, 2), Position.of(1, 1),
+                new Route(List.of(Position.of(3, 3), Position.of(2, 2), Position.of(1, 1))),
                 // North-West
-                Position.of(5, 3), Position.of(6, 2), Position.of(7, 1),
+                new Route(List.of(Position.of(5, 3), Position.of(6, 2), Position.of(7, 1))),
                 // South-West
-                Position.of(3, 5), Position.of(2, 6), Position.of(1, 7)
-        );
+                new Route(List.of(Position.of(3, 5), Position.of(2, 6), Position.of(1, 7))));
 
-        assertEquals(expectedPositions, positions);
+        assertEquals(expectedRoutes, routes);
     }
 }

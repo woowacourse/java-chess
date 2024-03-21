@@ -2,11 +2,13 @@ package model.piece.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import model.Position;
+import model.position.Position;
 import model.piece.Color;
+import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -18,27 +20,26 @@ class KingTest {
     void possiblePositions_ReturnsPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
         Role king = new King(color);
         Position initialPosition = Position.of(4, 4);
-        Set<Position> positions = king.possiblePositions(initialPosition);
+        Set<Route> routes = king.possibleRoutes(initialPosition);
 
-        Set<Position> expectedPositions = Set.of(
+        Set<Route> expectedRoutes = Set.of(
                 // South-West
-                Position.of(3, 3),
+                new Route(List.of(Position.of(3, 3))),
                 // West
-                Position.of(3, 4),
+                new Route(List.of(Position.of(3, 4))),
                 // North-West
-                Position.of(3, 5),
+                new Route(List.of(Position.of(3, 5))),
                 // South
-                Position.of(4, 3),
+                new Route(List.of(Position.of(4, 3))),
                 // North
-                Position.of(4, 5),
+                new Route(List.of(Position.of(4, 5))),
                 // North-East
-                Position.of(5, 3),
+                new Route(List.of(Position.of(5, 3))),
                 // East
-                Position.of(5, 4),
+                new Route(List.of(Position.of(5, 4))),
                 // South-East
-                Position.of(5, 5)
+                new Route(List.of(Position.of(5, 5)))
         );
-
-        assertEquals(expectedPositions, positions);
+        assertEquals(expectedRoutes, routes);
     }
 }

@@ -3,10 +3,11 @@ package model.piece.state;
 import static model.direction.MovingPattern.N;
 import static model.direction.MovingPattern.S;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import model.Position;
+import model.position.Position;
+import model.position.Route;
 import model.direction.MovingPattern;
 import model.piece.Color;
 
@@ -20,21 +21,21 @@ public final class Pawn extends Role {
     }
 
     @Override
-    public Set<Position> possiblePositions(Position position) {
-        if(color == Color.WHITE){
+    public Set<Route> possibleRoutes(Position position) {
+        if (color == Color.WHITE) {
             return possiblePawnMovingPostions(N, position);
         }
         return possiblePawnMovingPostions(S, position);
     }
 
-    private Set<Position> possiblePawnMovingPostions(MovingPattern movingPattern, Position position){
-        Set<Position> positions = new HashSet<>();
+    private Set<Route> possiblePawnMovingPostions(MovingPattern movingPattern, Position position) {
+        List<Position> positions = new ArrayList<>();
         Position nextPosition = position.getNextPosition(movingPattern);
         positions.add(nextPosition);
         if (isInitialMove) {
             Position doubleMovePosition = nextPosition.getNextPosition(movingPattern);
             positions.add(doubleMovePosition);
         }
-        return positions;
+        return Set.of(new Route(positions));
     }
 }

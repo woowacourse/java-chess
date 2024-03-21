@@ -12,9 +12,10 @@ import static model.direction.MovingPattern.W;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.Position;
 import model.direction.MovingPattern;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 
 public final class Queen extends Role {
     private static final List<MovingPattern> movingPatterns = List.of(W, E, S, N, NW, SW, NE, SE);
@@ -23,15 +24,11 @@ public final class Queen extends Role {
     }
 
     @Override
-    public Set<Position> possiblePositions(Position position) {
-        Set<Position> positions = new HashSet<>();
+    public Set<Route> possibleRoutes(Position position) {
+        Set<Route> possibleRoutes = new HashSet<>();
         for (MovingPattern movingPattern : movingPatterns) {
-            Position movedPosition = position;
-            while (movedPosition.isAvailablePosition(movingPattern)) {
-                movedPosition = movedPosition.getNextPosition(movingPattern);
-                positions.add(movedPosition);
-            }
+            possibleRoutes.add(getRoute(movingPattern, position));
         }
-        return positions;
+        return possibleRoutes;
     }
 }
