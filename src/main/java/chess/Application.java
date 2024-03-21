@@ -42,8 +42,8 @@ public class Application {
         }).toList();
     }
 
-    private static boolean isEndCommand(Command startOrEnd) {
-        return startOrEnd.equals(END_COMMAND);
+    private static boolean isEndCommand(Command command) {
+        return command.equals(END_COMMAND);
     }
 
     private static void playGame(Command moveCommand, ChessGame chessGame) {
