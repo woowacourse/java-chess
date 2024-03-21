@@ -25,7 +25,7 @@ public class ChessGame {
         outputView.printInitMessage();
         outputView.printCommandRequestMessage();
         if (inputView.isCommandStart()) {
-            List<RankDisplay> rankDisplays = converter.convert(board.getPieces());
+            List<RankDisplay> rankDisplays = converter.convert(board.pieces());
             outputView.printBoard(rankDisplays);
         }
     }
