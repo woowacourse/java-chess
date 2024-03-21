@@ -1,27 +1,31 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.position.ChessPosition;
+import chess.model.position.Distance;
 
 import java.util.List;
 
-public class Bishop extends Piece {
+public class King extends Piece {
+    private static final int DISPLACEMENT = 1;
 
-    public Bishop(Side side) {
+    public King(Side side) {
         super(side);
     }
 
     @Override
     public String getText() {
         if (side.isWhite()) {
-            return "b";
+            return "k";
         }
-        return "B";
+        return "K";
     }
 
     @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
-        if (distance.isDiagonalMovement()) {
-            return distance.findPath(source);
+        if (distance.hasSame(DISPLACEMENT)) {
+            return List.of(target);
         }
         return List.of();
     }

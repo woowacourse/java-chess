@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.model.ChessBoard;
-import chess.model.ChessPosition;
-import chess.model.Piece;
+import chess.model.board.ChessBoard;
+import chess.model.position.ChessPosition;
+import chess.model.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

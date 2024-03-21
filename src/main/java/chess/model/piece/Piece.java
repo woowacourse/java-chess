@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.piece;
 
 public abstract class Piece implements MoveStrategy {
     protected final Side side;

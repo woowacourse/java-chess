@@ -1,26 +1,29 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.position.ChessPosition;
+import chess.model.position.Distance;
 
 import java.util.List;
 
-public class Rook extends Piece {
+public class Bishop extends Piece {
 
-    public Rook(Side side) {
+    public Bishop(Side side) {
         super(side);
     }
 
     @Override
     public String getText() {
         if (side.isWhite()) {
-            return "r";
+            return "b";
         }
-        return "R";
+        return "B";
     }
 
     @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
-        if (distance.isCrossMovement()) {
+        if (distance.isDiagonalMovement()) {
             return distance.findPath(source);
         }
         return List.of();

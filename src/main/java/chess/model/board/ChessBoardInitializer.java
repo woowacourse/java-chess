@@ -1,4 +1,9 @@
-package chess.model;
+package chess.model.board;
+
+import chess.model.piece.*;
+import chess.model.position.ChessPosition;
+import chess.model.position.File;
+import chess.model.position.Rank;
 
 import java.util.HashMap;
 import java.util.Map;

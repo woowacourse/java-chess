@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.model.ChessPosition;
-import chess.model.File;
-import chess.model.Rank;
+import chess.model.position.ChessPosition;
+import chess.model.position.File;
+import chess.model.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;

@@ -1,12 +1,17 @@
-package chess.model;
+package chess.model.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.Map;
+import chess.model.piece.Piece;
+import chess.model.position.ChessPosition;
+import chess.model.position.File;
+import chess.model.position.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
 

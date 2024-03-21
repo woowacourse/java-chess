@@ -1,4 +1,7 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.position.ChessPosition;
+import chess.model.position.Distance;
 
 import java.util.List;
 

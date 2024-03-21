@@ -1,19 +1,23 @@
-package chess.model;
+package chess.model.piece;
+
+import chess.model.position.ChessPosition;
+import chess.model.position.Distance;
 
 import java.util.List;
 
-public class Queen extends Piece {
+public class Knight extends Piece {
+    private static final int DISPLACEMENT = 3;
 
-    public Queen(Side side) {
+    public Knight(Side side) {
         super(side);
     }
 
     @Override
     public String getText() {
         if (side.isWhite()) {
-            return "q";
+            return "n";
         }
-        return "Q";
+        return "N";
     }
 
     @Override
@@ -21,12 +25,12 @@ public class Queen extends Piece {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
         if (canMove(distance)) {
-            return distance.findPath(source);
+            return List.of(target);
         }
         return List.of();
     }
 
     private boolean canMove(Distance distance) {
-        return distance.isCrossMovement() || distance.isDiagonalMovement();
+        return distance.hasSame(DISPLACEMENT) && !distance.isCrossMovement() && !distance.isDiagonalMovement();
     }
 }

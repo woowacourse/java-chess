@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
