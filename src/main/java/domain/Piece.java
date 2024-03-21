@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class Piece implements Movable {
 
-    protected final Point point;
+    protected Point point;
     protected final Color color;
 
     protected Piece(final Point point, final Color color) {
@@ -16,6 +16,10 @@ public abstract class Piece implements Movable {
     }
 
     public abstract PieceStatus getStatus();
+
+    public void move(Point point) {
+        this.point = point;
+    }
 
     public boolean isEqualPoint(final Point point) {
         return this.point.equals(point);
@@ -31,6 +35,16 @@ public abstract class Piece implements Movable {
 
     public boolean isWhite() {
         return this.color == Color.WHITE;
+    }
+
+    public boolean isDirectionStraight(Point point) {
+        return this.point.calculate(point)
+                         .isStraight();
+    }
+
+    public boolean isDirectionDiagonal(Point point) {
+        return this.point.calculate(point)
+                         .isDiagonal();
     }
 
 

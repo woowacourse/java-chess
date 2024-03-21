@@ -29,56 +29,223 @@ class PiecesTest {
     }
 
     @Test
-    @DisplayName("위치에 있는 기물이 아군이면 거짓으로 반환한다.")
-    void false_if_piece_in_point_is_friend() {
+    @DisplayName("해당 기물이 특정 기물들 사이에서 이동할 수 없으면 거짓을 반환한다.")
+    void false_if_bishop_piece_can_move() {
         final var sut = new Pieces(List.of(
-                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Bishop(new Point(File.B, Rank.FIVE), Color.BLACK),
-                new Queen(new Point(File.C, Rank.FIVE), Color.WHITE)));
-
-        final var piece = sut.getPieceWithPoint(new Point(File.C, Rank.FIVE))
-                             .get();
-
-        assertThat(sut.isFriend(piece, new Point(File.B, Rank.FIVE))).isFalse();
-    }
-
-    @Test
-    @DisplayName("위치에 있는 기물이 아군이면 참으로 반환한다.")
-    void true_if_piece_in_point_is_friend() {
-        final var sut = new Pieces(List.of(
-                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Bishop(new Point(File.B, Rank.FIVE), Color.WHITE),
-                new Queen(new Point(File.C, Rank.FIVE), Color.WHITE)));
-
-        final var piece = sut.getPieceWithPoint(new Point(File.C, Rank.FIVE))
-                             .get();
-
-        assertThat(sut.isFriend(piece, new Point(File.B, Rank.FIVE))).isTrue();
-    }
-
-    @Test
-    @DisplayName("포인트에서 포인트 까지 기물이 있으면 참을 반환한다.")
-    void true_if_exist_piece_in_start_point_to_end_point() {
-        final var sut = new Pieces(List.of(
-                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.A, Rank.ONE), Color.BLACK),
                 new Bishop(new Point(File.C, Rank.THREE), Color.WHITE),
                 new Queen(new Point(File.E, Rank.FIVE), Color.WHITE)));
 
-        final var result = sut.hasAnyPiece(new Point(File.A, Rank.ONE), new Point(File.E, Rank.FIVE));
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
 
+        final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 기물이 특정 기물들 사이에서 이동할 수 없으면 거짓을 반환한다.")
+    void false_if_rook_piece_can_move() {
+        final var sut = new Pieces(List.of(
+                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.C, Rank.ONE), Color.WHITE),
+                new Queen(new Point(File.E, Rank.FIVE), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.E, Rank.ONE));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 기물이 특정 기물들 사이에서 이동할 수 없으면 거짓을 반환한다.")
+    void false_if_queen_piece_can_move() {
+        final var sut = new Pieces(List.of(
+                new Queen(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.C, Rank.THREE), Color.WHITE),
+                new Queen(new Point(File.E, Rank.FIVE), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("해당 기물이 특정 기물들 사이에서 이동할 수 있으면 참을 반환한다.")
+    void true_if_rook_piece_can_move() {
+
+        final var sut = new Pieces(List.of(
+                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.C, Rank.ONE), Color.WHITE),
+                new Queen(new Point(File.E, Rank.ONE), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.A, Rank.SIX));
+        assertThat(result).isTrue();
+
+    }
+
+
+    @Test
+    @DisplayName("해당 퀸이 특정 기물들 사이에서 이동할 수 있으면 참을 반환한다.")
+    void true_if_queen_piece_can_move() {
+
+        final var sut = new Pieces(List.of(
+                new Queen(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.C, Rank.ONE), Color.WHITE),
+                new Queen(new Point(File.E, Rank.ONE), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.A, Rank.THREE));
+        assertThat(result).isTrue();
+    }
+
+
+    @Test
+    @DisplayName("해당 비숍이 특정 기물들 사이에서 이동할 수 있으면 참을 반환한다.")
+    void true_if_bishop_piece_can_move() {
+
+        final var sut = new Pieces(List.of(
+                new Bishop(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Queen(new Point(File.F, Rank.SIX), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
         assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("포인트에서 포인트 까지 기물이 없으면 거짓을 반환한다.")
-    void false_if_not_exist_piece_in_start_point_to_end_point() {
+    @DisplayName("나이트는 도착하는 위치에 적 기물이 있으면 참을 반환한다.")
+    void true_if_knight_piece_move_not_existed_enemy_point() {
         final var sut = new Pieces(List.of(
-                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Bishop(new Point(File.C, Rank.THREE), Color.WHITE),
-                new Queen(new Point(File.E, Rank.FIVE), Color.WHITE)));
+                new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Queen(new Point(File.C, Rank.TWO), Color.WHITE)));
 
-        final var result = sut.hasAnyPiece(new Point(File.A, Rank.ONE), new Point(File.C, Rank.THREE));
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
 
+        final var result = sut.check(piece, new Point(File.C, Rank.TWO));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("나이트는 도착하는 위치에 기물이 없으면 참을 반환한다.")
+    void true_if_knight_piece_move_not_existed_empty_point() {
+        final var sut = new Pieces(List.of(
+                new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Queen(new Point(File.C, Rank.TWO), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.B, Rank.THREE));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("나이트는 도착하는 위치에 아군 기물이 있으면 거짓을 반환한다.")
+    void false_if_knight_piece_move_friend_point() {
+        final var sut = new Pieces(List.of(
+                new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Queen(new Point(File.C, Rank.TWO), Color.BLACK)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.C, Rank.TWO));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("킹은 도착하는 위치에 아군 기물이 있으면 거짓을 반환한다.")
+    void false_if_king_piece_move_friend_point() {
+        final var sut = new Pieces(List.of(
+                new King(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Queen(new Point(File.B, Rank.TWO), Color.BLACK)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.B, Rank.TWO));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("킹은 도착하는 위치에 아군 기물이 아니면 참을 반환한다.")
+    void true_if_king_piece_move_friend_point() {
+        final var sut = new Pieces(List.of(
+                new King(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Queen(new Point(File.B, Rank.TWO), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.B, Rank.TWO));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 직진 하는 위치에 기물이 있으면 거짓을 반환한다.")
+    void false_if_pawn_piece_move_point_in_any_piece() {
+        final var sut = new Pieces(List.of(
+                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
+                new Queen(new Point(File.A, Rank.THREE), Color.BLACK)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.A, Rank.THREE));
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("폰은 직진 하는 위치에 기물이 없으면 참을 반환한다")
+    void true_if_pawn_piece_move_point_not_in_piece() {
+        final var sut = new Pieces(List.of(
+                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
+                new Queen(new Point(File.A, Rank.ONE), Color.BLACK)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.A, Rank.THREE));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 대각선 위치에 적 기물이 있으면 참을 반환한다.")
+    void true_if_pawn_piece_move_diagonal_enemy_point() {
+        final var sut = new Pieces(List.of(
+                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
+                new Queen(new Point(File.B, Rank.THREE), Color.WHITE)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.B, Rank.THREE));
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 대각선 위치에 아군 기물이 있으면 거짓을 반환한다.")
+    void false_if_pawn_piece_move_diagonal_enemy_point() {
+        final var sut = new Pieces(List.of(
+                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
+                new Queen(new Point(File.B, Rank.THREE), Color.BLACK)));
+
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
+                             .get();
+
+        final var result = sut.check(piece, new Point(File.B, Rank.THREE));
         assertThat(result).isFalse();
     }
 }

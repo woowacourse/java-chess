@@ -28,6 +28,10 @@ public enum Direction {
         return this == UP || this == DOWN;
     }
 
+    public boolean isDiagonal() {
+        return this == UP_LEFT || this == UP_RIGHT || this == DOWN_LEFT || this == DOWN_RIGHT;
+    }
+
     public static List<Direction> all() {
         return Arrays.stream(values())
                      .toList();
