@@ -97,23 +97,13 @@ public class Board {
     }
 
     private void validateCasePawn(Coordinate source, Coordinate target) {
-        Piece sourcePiece = pieces.get(source);
-        if (!isMovablePawn(source, target, sourcePiece)) {
+        if (!(pieces.get(source) instanceof Pawn)) {
+            return;
+        }
+
+        if (Math.abs(source.getRank() - target.getRank()) == 2 &&
+                !(source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK)) {
             throw new IllegalStateException("폰이 초기 위치가 아니면, 2칸 전진할 수 없습니다.");
         }
-    }
-
-    private boolean isMovablePawn(Coordinate source, Coordinate target, Piece sourcePiece) {
-        return sourcePiece instanceof Pawn &&
-                isInitialRank(source) &&
-                isTwoStep(source, target);
-    }
-
-    private boolean isInitialRank(Coordinate source) {
-        return source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK;
-    }
-
-    private boolean isTwoStep(Coordinate source, Coordinate target) {
-        return Math.abs(source.getRank() - target.getRank()) != 1;
     }
 }

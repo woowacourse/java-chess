@@ -24,7 +24,6 @@ class Controller {
     private void play(Board board) {
         String command = inputView.readCommand();
         if (command.equals("start")) {
-            outputView.printStartMessage();
             playChess(board);
             return;
         }
