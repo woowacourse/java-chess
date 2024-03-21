@@ -19,6 +19,9 @@ public class ChessBoard {
 
         Piece targetPiece = board.get(targetPosition);
         List<ChessPosition> path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
+        if (path.isEmpty()) {
+            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+        }
         for (int i = 0; i < path.size() - 1; i++) {
             ChessPosition chessPosition = path.get(i);
             Piece found = board.get(chessPosition);
