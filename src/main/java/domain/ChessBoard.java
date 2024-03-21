@@ -1,8 +1,9 @@
 package domain;
 
-import static domain.InitialPieces.*;
-import static domain.PieceMoveResult.*;
-import static domain.Team.*;
+import static domain.InitialPieces.INITIAL_PIECES;
+import static domain.PieceMoveResult.CATCH;
+import static domain.PieceMoveResult.FAILURE;
+import static domain.Team.WHITE;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,66 +11,73 @@ import java.util.List;
 import java.util.Optional;
 
 class ChessBoard {
-	private final List<Piece> piecesOnBoard;
-	private Team currentTeam = WHITE;
+    private final List<Piece> piecesOnBoard;
+    private Team currentTeam = WHITE;
 
-	ChessBoard() {
-		piecesOnBoard = new ArrayList<>(INITIAL_PIECES);
-	}
+    ChessBoard() {
+        piecesOnBoard = new ArrayList<>(INITIAL_PIECES);
+    }
 
-	ChessBoard(Piece... pieces) {
-		piecesOnBoard = new ArrayList<>(List.of(pieces));
-	}
+    ChessBoard(Piece... pieces) {
+        piecesOnBoard = new ArrayList<>(List.of(pieces));
+    }
 
-	//Todo: 메서드 분리
-	boolean move(Position from, Position to) {
-		if (isEmptyPosition(from) || isOtherTeamTurn(from)) {
-			return false;
-		}
-		Piece piece = findPiece(from);
-		PieceMoveResult moveResult = piece.move(to, new PiecesOnChessBoard(piecesOnBoard));
-		if (moveResult.equals(CATCH)) {
-			removeDeadPiece(to);
-		}
-		if (!moveResult.equals(FAILURE)) {
-			currentTeam = currentTeam.otherTeam();
-		}
-		return moveResult.toBoolean();
-	}
+    boolean move(Position from, Position to) {
+        if (isEmptyPosition(from) || isOtherTeamTurn(from)) {
+            return false;
+        }
+        Piece piece = findPiece(from);
+        PieceMoveResult moveResult = piece.move(to, new PiecesOnChessBoard(piecesOnBoard));
+        removePieceIfCaught(to, moveResult);
+        changeCurrentTeamIfNotFail(moveResult);
+        return moveResult.toBoolean();
+    }
 
-	private void removeDeadPiece(Position to) {
-		Piece needToRemovePiece = piecesOnBoard.stream()
-			.filter(piece -> piece.isOn(to))
-			.filter(piece -> {
-				Team pieceTeam = piece.getTeam();
-				Team otherTeam = currentTeam.otherTeam();
-				return pieceTeam.equals(otherTeam);
-			})
-			.findFirst().orElseThrow();
-		piecesOnBoard.remove(needToRemovePiece);
-	}
+    private boolean isEmptyPosition(Position from) {
+        Optional<Piece> optionalPiece = piecesOnBoard.stream()
+                .filter(piece1 -> piece1.isOn(from))
+                .findFirst();
+        return optionalPiece.isEmpty();
+    }
 
-	private boolean isEmptyPosition(Position from) {
-		Optional<Piece> optionalPiece = piecesOnBoard.stream()
-			.filter(piece1 -> piece1.isOn(from))
-			.findFirst();
-		return optionalPiece.isEmpty();
-	}
+    private boolean isOtherTeamTurn(Position from) {
+        Piece piece = findPiece(from);
+        Team otherTeam = currentTeam.otherTeam();
+        Team pieceTeam = piece.getTeam();
+        return pieceTeam.equals(otherTeam);
+    }
 
-	private boolean isOtherTeamTurn(Position from) {
-		Piece piece = findPiece(from);
-		Team otherTeam = currentTeam.otherTeam();
-		Team pieceTeam = piece.getTeam();
-		return pieceTeam.equals(otherTeam);
-	}
+    private Piece findPiece(Position from) {
+        return piecesOnBoard.stream()
+                .filter(piece -> piece.isOn(from))
+                .findFirst().orElseThrow();
+    }
 
-	private Piece findPiece(Position from) {
-		return piecesOnBoard.stream()
-			.filter(piece -> piece.isOn(from))
-			.findFirst().orElseThrow();
-	}
+    private void removePieceIfCaught(Position to, PieceMoveResult moveResult) {
+        if (moveResult.equals(CATCH)) {
+            removeDeadPiece(to);
+        }
+    }
 
-	List<Piece> getPiecesOnBoard() {
-		return Collections.unmodifiableList(piecesOnBoard);
-	}
+    private void removeDeadPiece(Position to) {
+        Piece needToRemovePiece = piecesOnBoard.stream()
+                .filter(piece -> piece.isOn(to))
+                .filter(piece -> {
+                    Team pieceTeam = piece.getTeam();
+                    Team otherTeam = currentTeam.otherTeam();
+                    return pieceTeam.equals(otherTeam);
+                })
+                .findFirst().orElseThrow();
+        piecesOnBoard.remove(needToRemovePiece);
+    }
+
+    private void changeCurrentTeamIfNotFail(PieceMoveResult moveResult) {
+        if (!moveResult.equals(FAILURE)) {
+            currentTeam = currentTeam.otherTeam();
+        }
+    }
+
+    List<Piece> getPiecesOnBoard() {
+        return Collections.unmodifiableList(piecesOnBoard);
+    }
 }
