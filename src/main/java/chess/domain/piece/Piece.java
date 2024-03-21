@@ -6,7 +6,7 @@ import java.util.Set;
 public abstract class Piece {
 
     protected final Color color;
-    protected final Position position;
+    protected Position position;
 
     public Piece(final Color color, final Position position) {
         this.color = color;
@@ -14,6 +14,10 @@ public abstract class Piece {
     }
 
     public abstract boolean canMoveTo(final Position target);
+
+    public void move(final Position target) {
+        this.position = target;
+    }
 
     public Position getPosition() {
         return position;

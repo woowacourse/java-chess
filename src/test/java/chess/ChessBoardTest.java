@@ -127,4 +127,80 @@ class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
     }
+
+    @DisplayName("전략상 이동할 수 없는 위치이다.")
+    @Test
+    void canNotMoveTo() {
+        // given
+        final Position currentPosition = new Position('a', 2); //폰
+        final Position nextPosition = new Position('a', 5);
+
+        // when && then
+        assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+    }
+
+    @DisplayName("빈칸이면 움직인다.")
+    @Test
+    void moveWhenEmpty() {
+        // given
+        final Position currentPosition = new Position('a', 2); //폰
+        final Position nextPosition = new Position('a', 4);
+        final Piece currentPiece = chessBoard.findBy(currentPosition);
+
+        // when
+        chessBoard.move(currentPosition, nextPosition);
+
+        // then
+        assertThat(currentPiece.getPosition()).isEqualTo(nextPosition);
+    }
+
+    @DisplayName("빈칸인데 경로상에 기물이 존재하면 움직일 수 없다.")
+    @Test
+    void canNotMoveByExistingPiece() {
+        // given
+        final Position currentPosition = new Position('a', 1); //룩
+        final Position nextPosition = new Position('a', 5);
+
+        // when && then
+        assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 경로상 기물이 존재합니다.");
+    }
+
+    @DisplayName("상대 기물을 잡으러 움직인다.")
+    @Test
+    void moveToCatch() {
+        // given
+        Position currentPosition = new Position('b', 1); //나이트
+        final Piece originPiece = chessBoard.findBy(currentPosition);
+        Position nextPosition = new Position('c', 3);
+        chessBoard.move(currentPosition, nextPosition);
+
+        currentPosition = nextPosition;
+        nextPosition = new Position('d', 5);
+        chessBoard.move(currentPosition, nextPosition);
+
+        currentPosition = nextPosition;
+        nextPosition = new Position('e', 7);
+        chessBoard.move(currentPosition, nextPosition);
+
+        // when && then
+        final Piece currentPiece = chessBoard.findBy(nextPosition);
+        assertThat(currentPiece).isEqualTo(originPiece);
+    }
+
+    @DisplayName("상대 기물을 잡으러 움직이는 도중에 기물이 존재하면 움직일 수 없다.")
+    @Test
+    void canNotMoveToCatchByExistingPiece() {
+        // given
+        final Position currentPosition = new Position('a', 1); //룩
+        final Position nextPosition = new Position('a', 8);
+
+        // when && then
+        assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 경로상 기물이 존재합니다.");
+    }
 }

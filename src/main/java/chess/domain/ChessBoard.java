@@ -67,20 +67,35 @@ public class ChessBoard {
     public void move(final Position currentPosition, final Position nextPosition) {
         final Piece currentPiece = findBy(currentPosition);
 
-        if (currentPiece instanceof Pawn) {
-            if (canCatch(currentPiece, nextPosition)) {
-
-            }
-
-            return;
+        if (currentPiece instanceof Pawn && canCatch(currentPiece, nextPosition)) {
+                final Piece targetPiece = findBy(nextPosition);
+                pieces.remove(targetPiece);
+                currentPiece.move(nextPosition);
         }
 
         if (!currentPiece.canMoveTo(nextPosition)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
         }
+
         if (existInWay(currentPiece, nextPosition)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 경로상 기물이 존재합니다.");
         }
+
+        if (isExist(nextPosition)) {
+            final Piece targetPiece = findBy(nextPosition);
+            if (!currentPiece.isOtherColor(targetPiece)) {
+                throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
+            }
+
+            pieces.remove(targetPiece);
+            currentPiece.move(nextPosition);
+        }
+
+        currentPiece.move(nextPosition);
+    }
+
+    private boolean isExist(final Position other) {
+        return pieces.stream().anyMatch(piece -> piece.isPosition(other));
     }
 
     private boolean canCatch(final Piece currentPiece, final Position nextPosition) {
@@ -88,16 +103,7 @@ public class ChessBoard {
         currentPiece.isOtherColor(findBy(nextPosition));
     }
 
-    private boolean exist(final Position other) {
-        return pieces.stream()
-                .anyMatch(piece -> piece.isPosition(other));
-    }
-
     private boolean existInWay(final Piece currentPiece, final Position nextPosition) {
-        if (exist(nextPosition)) {
-           return true;
-        }
-
         final Set<Position> route = currentPiece.getRoute(nextPosition);
         return pieces.stream().anyMatch(piece -> route.contains(piece.getPosition()));
     }
