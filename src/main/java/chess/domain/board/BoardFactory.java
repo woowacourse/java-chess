@@ -10,7 +10,6 @@ import chess.domain.piece.PieceType;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: 코드 리팩토링
 public class BoardFactory {
 
     public BoardFactory() {
@@ -31,19 +30,25 @@ public class BoardFactory {
             Square square = Square.of(file, rank);
             Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
 
-            if (rank.equals(Rank.ONE) || rank.equals(Rank.EIGHT)) {
-                piece = makePiece(file, piece, rank);
-            }
-
-            if (rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN)) {
-                piece = decideColorType(rank, PieceType.PAWN);
-            }
+            piece = makePiece(rank, file, piece);
 
             board.put(square, piece);
         }
     }
 
-    private Piece makePiece(File file, Piece piece, Rank rank) {
+    private Piece makePiece(Rank rank, File file, Piece piece) {
+        if (rank.equals(Rank.ONE) || rank.equals(Rank.EIGHT)) {
+            piece = decideType(file, piece, rank);
+        }
+
+        if (rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN)) {
+            piece = decideColorType(rank, PieceType.PAWN);
+        }
+
+        return piece;
+    }
+
+    private Piece decideType(File file, Piece piece, Rank rank) {
         if (file.equals(File.a) || file.equals(File.h)) {
             return decideColorType(rank, PieceType.ROOK);
         }

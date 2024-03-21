@@ -32,10 +32,21 @@ public class ChessGame {
             return;
         }
 
+        Board board = initBoard();
+
+        playUntilEnd(board);
+    }
+
+    private Board initBoard() {
         Board board = new Board();
         printBoardOutput(board);
 
+        return board;
+    }
+
+    private void playUntilEnd(Board board) {
         boolean run = true;
+
         while (run) {
             run = RetryUtil.retryUntilNoException(() -> loopWhileEnd(board));
         }
@@ -49,10 +60,14 @@ public class ChessGame {
         }
 
         MoveCommand moveCommand = new MoveCommand(Square.from(command.get(1)), Square.from(command.get(2)));
-        board.move(moveCommand.source(), moveCommand.destination());
-        printBoardOutput(board);
+        movePiece(board, moveCommand);
 
         return true;
+    }
+
+    private void movePiece(Board board, MoveCommand moveCommand) {
+        board.move(moveCommand.source(), moveCommand.destination());
+        printBoardOutput(board);
     }
 
     private void printBoardOutput(Board board) {

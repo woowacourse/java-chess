@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static final String INVALID_COMMAND_ERROR = "잘못된 명령어 입력입니다. 'end' 혹은 'move source 위치 target 위치'로 입력해주세요.";
+    private static final String INVALID_COMMAND_ERROR = "잘못된 명령어 입력입니다. 'end' 혹은 'move source 위치 target 위치'로 입력해주세요.";
+    private static final String COMMAND_SEPARATOR = " ";
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
     private static final String MOVE_COMMAND = "move";
@@ -42,7 +43,7 @@ public class InputView {
     }
 
     public List<String> readCommand() {
-        List<String> command = List.of(scanner.nextLine().split(" "));
+        List<String> command = List.of(scanner.nextLine().split(COMMAND_SEPARATOR));
 
         if (!List.of(MOVE_COMMAND, END_COMMAND).contains(command.get(0))) {
             throw new IllegalArgumentException(INVALID_COMMAND_ERROR);

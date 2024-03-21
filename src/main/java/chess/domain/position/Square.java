@@ -10,12 +10,11 @@ import java.util.stream.Collectors;
 
 public class Square {
     private static final Pattern INTEGER_FORMAT_REGEX = Pattern.compile("^[1-9][0-9]*$");
-
+    private static final String INVALID_RANK_ERROR = "랭크는 자연수로 입력해야 합니다.";
     private static final Map<String, Square> pool = Arrays.stream(Rank.values())
             .flatMap(rank -> Arrays.stream(File.values())
                                     .map(file -> new Square(file, rank)))
             .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
-    private static final String INVALID_RANK_ERROR = "랭크는 자연수로 입력해야 합니다.";
 
     private final File file;
     private final Rank rank;
@@ -50,10 +49,6 @@ public class Square {
         }
     }
 
-    public boolean isPawnStartSquare() {
-        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
-    }
-
     public Square moveVertical(int index) {
         return Square.of(file, rank.moveVertical(index));
     }
@@ -70,7 +65,7 @@ public class Square {
         return new SquareDifferent(rank.calculateDiff(another.rank), file.calculateDiff(another.file));
     }
 
-    public boolean isPawnFirstMove() {
+    public boolean isPawnStartSquare() {
         return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
     }
 }

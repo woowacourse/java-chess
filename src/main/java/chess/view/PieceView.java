@@ -29,6 +29,10 @@ public enum PieceView {
                 .findFirst()
                 .orElseThrow();
 
+        return selectByColor(piece, pieceView);
+    }
+
+    private static String selectByColor(Piece piece, PieceView pieceView) {
         if (piece.isBlack()) {
             return pieceView.blackView;
         }

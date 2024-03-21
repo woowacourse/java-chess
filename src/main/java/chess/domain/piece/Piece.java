@@ -24,15 +24,19 @@ public class Piece {
         return pieceType.name().equals(pieceViewName);
     }
 
+    public boolean isSameType(PieceType pieceType) {
+        return this.pieceType.equals(pieceType);
+    }
+
     public boolean isSameColor(Piece whitePiece) {
         return colorType.equals(whitePiece.colorType);
     }
 
-    public boolean canMove(Square source, Square destination) {
-        return pieceType.canMove(source, destination, colorType);
+    public boolean isNotEmpty() {
+        return !pieceType.equals(PieceType.EMPTY);
     }
 
-    public boolean isEmpty() {
-        return pieceType.equals(PieceType.EMPTY);
+    public boolean canMove(Square source, Square destination) {
+        return pieceType.canMove(source, destination, colorType);
     }
 }

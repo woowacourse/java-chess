@@ -12,10 +12,6 @@ import java.util.Map;
 
 public class Board {
 
-    private static final int VERTICAL_UP_INDEX = 1;
-    private static final int VERTICAL_DOWN_INDEX = -1;
-    private static final int HORIZONTAL_RIGHT_INDEX = 1;
-    private static final int HORIZONTAL_LEFT_INDEX = -1;
     private static final String NOT_YOUR_TURN_ERROR = "움직이려고 하는 말이 본인 진영의 말이 아닙니다.";
     private static final String SAME_COLOR_ERROR = "목적지에 같은 편 말이 있어 이동할 수 없습니다.";
     private static final String CANNOT_MOVE_ERROR = "해당 말의 규칙으로는 도착지로 갈 수 없습니다.";
@@ -38,23 +34,32 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece destinationPiece = board.get(destination);
 
+        checkMovable(source, destination, sourcePiece, destinationPiece);
+
+        moveOrCatch(sourcePiece, destinationPiece, source, destination);
+
+        turn.update();
+    }
+
+    private void checkMovable(Square source, Square destination, Piece sourcePiece, Piece destinationPiece) {
         checkTurn(sourcePiece);
         checkSameColor(sourcePiece, destinationPiece);
 
-        if (sourcePiece.isSameType(PieceType.PAWN.name())) {
-            SquareDifferent squareDifferent = source.calculateDiff(destination);
-            Direction direction = Direction.findDirectionByDiff(squareDifferent);
-
-            if (!direction.isDiagonal() && !destinationPiece.isEmpty()) {
-                throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
-            }
+        if (sourcePiece.isSameType(PieceType.PAWN)) {
+            pawnCheck(source, destination, destinationPiece);
         }
 
         checkCannotMove(source, destination, sourcePiece);
         checkPathBlocked(source, destination, sourcePiece);
-        moveOrCatch(sourcePiece, destinationPiece, source, destination);
+    }
 
-        turn.update();
+    private void pawnCheck(Square source, Square destination, Piece destinationPiece) {
+        SquareDifferent squareDifferent = source.calculateDiff(destination);
+        Direction direction = Direction.findDirectionByDiff(squareDifferent);
+
+        if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
+            throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
+        }
     }
 
     private void checkTurn(Piece sourcePiece) {
@@ -82,64 +87,35 @@ public class Board {
     private void checkPathBlocked(Square source, Square destination, Piece sourcePiece) {
         SquareDifferent diff = source.calculateDiff(destination);
 
-        if (!sourcePiece.isSameType(PieceType.KNIGHT.name())
-                && !(sourcePiece.isSameType(PieceType.PAWN.name()) && source.isPawnFirstMove())
-                && !sourcePiece.isSameType(PieceType.KING.name())) {
+        if (checkNeedFindPath(source, sourcePiece)) {
             findPath(source, destination, diff);
         }
     }
 
+    private boolean checkNeedFindPath(Square source, Piece sourcePiece) {
+        return !sourcePiece.isSameType(PieceType.KNIGHT)
+                && !(sourcePiece.isSameType(PieceType.PAWN) && source.isPawnStartSquare())
+                && !sourcePiece.isSameType(PieceType.KING);
+    }
+
     private void findPath(Square source, Square destination, SquareDifferent diff) {
         Square candidate = source;
+        Direction direction = Direction.findDirectionByDiff(diff);
 
         while (!candidate.equals(destination)) {
-            if (!source.equals(candidate) && !board.get(candidate).isEmpty()) {
-                throw new IllegalArgumentException(PATH_BLOCKED_ERROR);
-            }
+            checkBlocked(source, candidate);
+            candidate = direction.nextSquare(candidate);
+        }
+    }
 
-            if (Direction.findDirectionByDiff(diff).equals(Direction.UP)) {
-                candidate = candidate.moveVertical(VERTICAL_UP_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.DOWN)) {
-                candidate = candidate.moveVertical(VERTICAL_DOWN_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.RIGHT)) {
-                candidate = candidate.moveHorizontal(HORIZONTAL_RIGHT_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.LEFT)) {
-                candidate = candidate.moveHorizontal(HORIZONTAL_LEFT_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.RIGHT_DOWN)) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_RIGHT_INDEX, VERTICAL_DOWN_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.RIGHT_UP)) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_RIGHT_INDEX, VERTICAL_UP_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.LEFT_DOWN)) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_LEFT_INDEX, VERTICAL_DOWN_INDEX);
-                continue;
-            }
-
-            if (Direction.findDirectionByDiff(diff).equals(Direction.LEFT_UP)) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_LEFT_INDEX, VERTICAL_UP_INDEX);
-            }
+    private void checkBlocked(Square source, Square candidate) {
+        if (!source.equals(candidate) && board.get(candidate).isNotEmpty()) {
+            throw new IllegalArgumentException(PATH_BLOCKED_ERROR);
         }
     }
 
     private void moveOrCatch(Piece sourcePiece, Piece destinationPiece, Square source, Square destination) {
-        if (!destinationPiece.isEmpty()) {
+        if (destinationPiece.isNotEmpty()) {
             board.replace(destination, sourcePiece);
             board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
             return;
