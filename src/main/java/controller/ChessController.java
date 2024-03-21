@@ -12,4 +12,8 @@ public class ChessController {
         board.move(movePositionDto.sourcePosition(), movePositionDto.targetPosition());
         return board;
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }

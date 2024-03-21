@@ -1,6 +1,5 @@
 import controller.ChessController;
 import domain.board.Board;
-import domain.board.InitialBoardGenerator;
 import view.InputView;
 import view.OutputView;
 import view.dto.MovePositionDto;
@@ -19,20 +18,20 @@ public class ChessApplication {
         outputView.printStartMessage();
         String command = inputView.readCommand();
         if (command.equals(START_COMMAND)) {
-            outputView.printBoard(Board.generatedBy(new InitialBoardGenerator()));
-
-            boolean isEnd = false;
-            while (!isEnd) {
-                String gameCommand = inputView.readCommand();
-                if (gameCommand.equals(END_COMMAND)) {
-                    isEnd = true;
-                }
-                if (gameCommand.startsWith(MOVE_COMMAND)) {
-                    MovePositionDto movePositionDto = MovePositionDto.from(gameCommand);
-                    Board board = controller.move(movePositionDto);
-                    outputView.printBoard(board);
-                }
-            }
+            outputView.printBoard(controller.getBoard());
+            startTurn();
         }
+    }
+
+    private static void startTurn() {
+        String gameCommand = inputView.readCommand();
+        if (gameCommand.equals(END_COMMAND)) {
+            return;
+        }
+        if (gameCommand.startsWith(MOVE_COMMAND)) {
+            Board board = controller.move(MovePositionDto.from(gameCommand));
+            outputView.printBoard(board);
+        }
+        startTurn();
     }
 }
