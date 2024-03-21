@@ -12,6 +12,6 @@ public class Application {
 
         ChessGameController controller = new ChessGameController();
 
-        controller.play();
+        controller.run();
     }
 }
