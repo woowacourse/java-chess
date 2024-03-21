@@ -13,7 +13,7 @@ public class Position {
     }
 
     public static Position of(int file, int rank) {
-        return new Position(new File(file), new Rank(rank));
+        return new Position(File.valueOf(file), Rank.valueOf(rank));
     }
 
     public Position nextPosition(Direction direction) {

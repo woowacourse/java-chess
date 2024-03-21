@@ -1,15 +1,25 @@
 package domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class File {
 
+    private static final Map<Integer, File> CACHE = new HashMap<>();
     private final int value;
 
-    public File(int value) {
+    private File(int value) {
         this.value = value;
     }
-    // TODO: 시간 나면 캐싱
+
+    public static File valueOf(int value) {
+        if (CACHE.containsKey(value)) {
+            return CACHE.get(value);
+        }
+        CACHE.put(value, new File(value));
+        return CACHE.get(value);
+    }
 
     public int subtract(File otherFile) {
         return this.value - otherFile.value;

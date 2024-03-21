@@ -10,8 +10,8 @@ class FileTest {
     @Test
     @DisplayName("File 간의 차이 계산")
     void subtract() {
-        File file1 = new File(1);
-        File file2 = new File(2);
+        File file1 = File.valueOf(1);
+        File file2 = File.valueOf(2);
 
         assertThat(file1.subtract(file2)).isEqualTo(-1);
     }

@@ -1,15 +1,25 @@
 package domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Rank {
 
+    private static final Map<Integer, Rank> CACHE = new HashMap<>();
     private final int value;
 
-    public Rank(int value) {
+    private Rank(int value) {
         this.value = value;
     }
-    // TODO: 시간 나면 캐싱
+
+    public static Rank valueOf(int value) {
+        if (CACHE.containsKey(value)) {
+            return CACHE.get(value);
+        }
+        CACHE.put(value, new Rank(value));
+        return CACHE.get(value);
+    }
 
     public int subtract(Rank otherRank) {
         return this.value - otherRank.value;
