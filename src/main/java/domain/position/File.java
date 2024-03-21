@@ -14,6 +14,15 @@ public enum File {
         return Math.abs(sourceIndex - targetIndex);
     }
 
+    public List<File> betweenFiles(File target) {
+        List<File> files = Arrays.stream(values()).toList();
+        int sourceIndex = files.indexOf(this);
+        int targetIndex = files.indexOf(target);
+        int minIndex = Math.min(sourceIndex, targetIndex);
+        int maxIndex = Math.max(sourceIndex, targetIndex);
+        return files.subList(minIndex, maxIndex + 1);
+    }
+
     public boolean isSame(File target) {
         return this == target;
     }
