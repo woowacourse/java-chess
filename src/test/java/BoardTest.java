@@ -124,6 +124,19 @@ public class BoardTest {
         assertThat(board.isCheckmate(Team.WHITE)).isFalse();
     }
 
+    @DisplayName("체크된 상태에서 체크하는 기물을 제거할 수 있으면, 체크메이트가 아니다.")
+    @Test
+    void isNotCheckmateAttackingAttackPiece() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE, true),
+                Position.of(1, 7), new Pawn(Team.WHITE, true),
+                Position.of(2, 7), new Knight(Team.WHITE, true),
+                Position.of(4, 8), new Rook(Team.BLACK, true)
+        ));
+
+        assertThat(board.isCheckmate(Team.WHITE)).isFalse();
+    }
+
     @DisplayName("Board에서 위치와 Character를 알 수 있다.")
     @Test
     void mapPositionToCharacter() {

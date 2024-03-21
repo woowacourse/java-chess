@@ -72,12 +72,16 @@ public class Board {
         if (attackingPiecePositions.size() > 1 && isCheckAndImmovable) {
             return true;
         }
+        Position attackingPiecePosition = attackingPiecePositions.get(0);
 
-        // 나를 공격하는 유닛의 경로를 막을 수 있는 경우
-        boolean isNotBlockable = isNotBlockable(attackedTeam, attackingPiecePositions.get(0), kingPosition);
+        // 나를 공격하는 유닛의 경로를 막을 수 없는 경우
+        boolean isNotBlockable = isNotBlockable(attackedTeam, attackingPiecePosition, kingPosition);
+
+        // 나를 공격하는 유닛을 공격할 수 없는 경우
+        boolean cannotAttackAttackingPiece = !isBeingAttacked(attackedTeam.opponent(), attackingPiecePosition);
 
         // 자신이 공격받고 있는데 움직일 데도 없음, 나를 공격하는 유닛의 경로를 막을 수 없음
-        return isCheckAndImmovable && isNotBlockable;
+        return isCheckAndImmovable && isNotBlockable && cannotAttackAttackingPiece;
     }
 
     private Position getKingPosition(Team team) {
