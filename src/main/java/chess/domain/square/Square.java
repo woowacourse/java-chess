@@ -5,6 +5,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Square {
 
+    private static final int MIN_BOARD_INDEX = 0;
+    private static final int MAX_BOARD_INDEX = 7;
+
     private static final ConcurrentHashMap<String, Square> squareCache = new ConcurrentHashMap<>();
     private final File file;
     private final Rank rank;
@@ -38,8 +41,8 @@ public class Square {
     }
 
     private String generateSquareKey(final int fileMoveStep, final int rankMoveStep) {
-        int newFileIndex = Math.max(0, Math.min(7, getFileIndex() + fileMoveStep));
-        int newRankIndex = Math.max(0, Math.min(7, getRankIndex() + rankMoveStep));
+        int newFileIndex = Math.max(MIN_BOARD_INDEX, Math.min(MAX_BOARD_INDEX, getFileIndex() + fileMoveStep));
+        int newRankIndex = Math.max(MIN_BOARD_INDEX, Math.min(MAX_BOARD_INDEX, getRankIndex() + rankMoveStep));
         return File.values()[newFileIndex].name() + Rank.values()[newRankIndex].name();
     }
 

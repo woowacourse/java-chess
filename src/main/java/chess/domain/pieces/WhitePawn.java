@@ -7,6 +7,10 @@ import chess.domain.square.Movement;
 
 public class WhitePawn extends Piece {
 
+    private static final int INITIAL_WHITE_PAWN_RANK = 1;
+    private static final int DEFAULT_WHITE_PAWN_MOVE = 1;
+    private static final int INITIAL_WHITE_PAWN_MOVE = 2;
+
     public WhitePawn() {
         super(Color.WHITE, Type.PAWN);
     }
@@ -24,7 +28,7 @@ public class WhitePawn extends Piece {
     }
 
     private boolean isAttack(final Movement movement) {
-        return movement.isDiagonal() && movement.getRankDifference() == 1;
+        return movement.isDiagonal() && movement.getRankDifference() == DEFAULT_WHITE_PAWN_MOVE;
     }
 
     private boolean isMove(final Movement movement) {
@@ -35,14 +39,14 @@ public class WhitePawn extends Piece {
     }
 
     private boolean isInitialSquare(final Movement movement) {
-        return movement.getSourceRankIndex() == 1;
+        return movement.getSourceRankIndex() == INITIAL_WHITE_PAWN_RANK;
     }
 
     private boolean isFirstMove(final Movement movement) {
-        return movement.isCross() && movement.getRankDifference() == 2;
+        return movement.isCross() && movement.getRankDifference() == INITIAL_WHITE_PAWN_MOVE;
     }
 
     private boolean isDefaultMove(final Movement movement) {
-        return movement.isCross() && movement.getRankDifference() == 1;
+        return movement.isCross() && movement.getRankDifference() == DEFAULT_WHITE_PAWN_MOVE;
     }
 }
