@@ -16,6 +16,13 @@ public class ChessGame {
         this.players = new Players(new Player(Team.WHITE), new Player(Team.BLACK));
     }
 
+    public void move(Point departure, Point destination) {
+        Player player = players.currentTurnOfPlayer();
+
+        board.move(player, departure, destination);
+        players.turnOver();
+    }
+
     public Map<Point, Piece> getBoard() {
         return board.getBoard();
     }
