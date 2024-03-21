@@ -37,8 +37,18 @@ public class Position {
         return rank.subtract(otherPosition.rank);
     }
 
-    // TODO: isOnSameDiagonal, smaeLine 이런거 만들어서 더  메소드에 의미 부여하기
-    // TODO: 정팩메 만들고  -- 나중에 시간 나면 캐싱
+    public boolean isOnSameDiagonalAs(Position targetPosition) {
+        return Math.abs(file.subtract(targetPosition.file))
+            == Math.abs(rank.subtract(targetPosition.rank));
+    }
+
+    public boolean isOnSameFileAs(Position targetPosition) {
+        return file.equals(targetPosition.file);
+    }
+
+    public boolean isOnSameRankAs(Position targetPosition) {
+        return rank.equals(targetPosition.rank);
+    }
 
     @Override
     public boolean equals(Object o) {

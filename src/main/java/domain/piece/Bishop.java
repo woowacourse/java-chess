@@ -13,8 +13,6 @@ public class Bishop extends Piece {
         if (sourcePosition.equals(targetPosition)) {
             return false;
         }
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        return Math.abs(rankDifference) == Math.abs(fileDifference);
+        return sourcePosition.isOnSameDiagonalAs(targetPosition);
     }
 }

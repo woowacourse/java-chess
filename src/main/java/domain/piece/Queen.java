@@ -13,10 +13,8 @@ public class Queen extends Piece {
         if (sourcePosition.equals(targetPosition)) {
             return false;
         }
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        return Math.abs(rankDifference) == Math.abs(fileDifference)
-            || rankDifference == 0
-            || fileDifference == 0;
+        return sourcePosition.isOnSameDiagonalAs(targetPosition)
+            || sourcePosition.isOnSameRankAs(targetPosition)
+            || sourcePosition.isOnSameFileAs(targetPosition);
     }
 }

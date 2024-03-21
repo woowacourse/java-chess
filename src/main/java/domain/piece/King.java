@@ -10,6 +10,7 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
+        // TODO: 다 지우자 이미 있어
         if (sourcePosition.equals(targetPosition)) {
             return false;
         }

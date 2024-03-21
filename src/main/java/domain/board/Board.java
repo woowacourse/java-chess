@@ -101,15 +101,12 @@ public class Board {
     }
 
     private boolean isStraightMove(Position sourcePosition, Position targetPosition) {
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        return rankDifference == 0 || fileDifference == 0;
+        return sourcePosition.isOnSameRankAs(targetPosition)
+            || sourcePosition.isOnSameFileAs(targetPosition);
     }
 
     private boolean isDiagonalMove(Position sourcePosition, Position targetPosition) {
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        return Math.abs(rankDifference) == Math.abs(fileDifference);
+        return sourcePosition.isOnSameDiagonalAs(targetPosition);
     }
 
     private boolean isPieceAt(Position position) {

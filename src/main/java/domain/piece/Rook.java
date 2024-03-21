@@ -13,8 +13,7 @@ public class Rook extends Piece {
         if (sourcePosition.equals(targetPosition)) {
             return false;
         }
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
-        return fileDifference == 0 || rankDifference == 0;
+        return sourcePosition.isOnSameRankAs(targetPosition)
+            || sourcePosition.isOnSameFileAs(targetPosition);
     }
 }
