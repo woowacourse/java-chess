@@ -1,5 +1,10 @@
 package chess.controller;
 
+import static chess.view.GameExecutionCommand.END;
+import static chess.view.GameExecutionCommand.MOVE;
+import static chess.view.GameExecutionCommand.START;
+import static chess.view.GameExecutionCommand.from;
+
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardCreator;
 import chess.domain.position.Position;
@@ -18,27 +23,45 @@ public class ChessGameController {
     }
 
     public void run() {
-        if (inputView.readGameCommand().equals("start")) {
-            ChessBoardCreator chessBoardCreator = new ChessBoardCreator();
-            ChessBoard chessBoard = chessBoardCreator.create();
-            outputView.printChessBoardMessage(chessBoard);
 
+        outputView.printStartMessage();
+        if (!startGame()) {
+            return;
+        }
+
+        ChessBoard chessBoard = initializeChessBoard();
+
+        while (true) {
             String inputCommand = inputView.readGameCommand();
-            GameExecutionCommand gameCommand = GameExecutionCommand.from(inputCommand);
+            GameExecutionCommand gameCommand = from(inputCommand);
 
-            while (gameCommand != GameExecutionCommand.END) {
-                if (gameCommand == GameExecutionCommand.MOVE) {
-                    MoveCommand moveCommand = MoveCommand.of(inputCommand);
-                    Position startPosition = moveCommand.getStart();
-                    Position destinationPosition = moveCommand.getDestination();
+            if (gameCommand == END) {
+                break;
+            }
 
-                    chessBoard.move(startPosition, destinationPosition);
-                    outputView.printChessBoardMessage(chessBoard);
-                }
-
-                inputCommand = inputView.readGameCommand();
-                gameCommand = GameExecutionCommand.from(inputCommand);
+            if (gameCommand == MOVE) {
+                executeMoveCommand(inputCommand, chessBoard);
             }
         }
+    }
+
+    private void executeMoveCommand(String inputCommand, ChessBoard chessBoard) {
+        MoveCommand moveCommand = MoveCommand.of(inputCommand);
+        Position startPosition = moveCommand.getStart();
+        Position destinationPosition = moveCommand.getDestination();
+
+        chessBoard.move(startPosition, destinationPosition);
+        outputView.printChessBoardMessage(chessBoard);
+    }
+
+    private ChessBoard initializeChessBoard() {
+        ChessBoardCreator chessBoardCreator = new ChessBoardCreator();
+        ChessBoard chessBoard = chessBoardCreator.create();
+        outputView.printChessBoardMessage(chessBoard);
+        return chessBoard;
+    }
+
+    private boolean startGame() {
+        return inputView.readGameCommand().equals(START.getCode());
     }
 }
