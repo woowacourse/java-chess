@@ -2,6 +2,7 @@ package model.piece;
 
 import java.util.Set;
 import model.Camp;
+import model.PieceType;
 import model.position.Moving;
 import model.position.Position;
 
@@ -38,9 +39,6 @@ public class King extends Piece {
 
     @Override
     public String toString() {
-        if (camp == Camp.WHITE) {
-            return "k";
-        }
-        return "K";
+        return PieceType.from(this).getValue();
     }
 }

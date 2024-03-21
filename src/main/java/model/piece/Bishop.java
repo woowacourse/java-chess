@@ -3,6 +3,7 @@ package model.piece;
 import java.util.HashSet;
 import java.util.Set;
 import model.Camp;
+import model.PieceType;
 import model.position.Column;
 import model.position.Moving;
 import model.position.Position;
@@ -74,9 +75,6 @@ public class Bishop extends Piece {
 
     @Override
     public String toString() {
-        if (camp == Camp.WHITE) {
-            return "b";
-        }
-        return "B";
+        return PieceType.from(this).getValue();
     }
 }
