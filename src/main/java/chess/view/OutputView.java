@@ -11,15 +11,12 @@ import java.util.Map;
 public class OutputView {
 
     private static final List<Rank> RANK_ORDER = List.of(
-            Rank.EIGHT, Rank.SEVEN, Rank.SIX, Rank.FIVE, Rank.FOUR, Rank.THREE, Rank.TWO, Rank.ONE
-    );
+            Rank.EIGHT, Rank.SEVEN, Rank.SIX, Rank.FIVE, Rank.FOUR, Rank.THREE, Rank.TWO, Rank.ONE);
     private static final List<File> FILE_ORDER = List.of(
-            File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H
-    );
+            File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H);
     private static final Map<PieceType, String> PIECE_DISPLAY = Map.of(
             PieceType.KING, "K", PieceType.QUEEN, "Q", PieceType.KNIGHT, "N",
-            PieceType.BISHOP, "B", PieceType.ROOK, "R", PieceType.PAWN, "P"
-    );
+            PieceType.BISHOP, "B", PieceType.ROOK, "R", PieceType.PAWN, "P");
     private static final String EMPTY_SPACE = ".";
     private static final String ERROR_PREFIX = "[ERROR] ";
 

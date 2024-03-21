@@ -13,6 +13,11 @@ public enum File {
     G(7),
     H(8);
 
+    private static final int MIN_WEST_TO_EAST = 1;
+    private static final int MAX_WEST_TO_EAST = 8;
+    private static final int TO_EAST = 1;
+    private static final int TO_WEST = -1;
+
     private final int westToEast;
 
     File(int westToEast) {
@@ -20,17 +25,17 @@ public enum File {
     }
 
     public File toEast() {
-        if (westToEast >= 8) {
+        if (westToEast >= MAX_WEST_TO_EAST) {
             throw new IllegalStateException("동쪽으로 이동할 수 없습니다.");
         }
-        return find(westToEast + 1);
+        return find(westToEast + TO_EAST);
     }
 
     public File toWest() {
-        if (westToEast <= 1) {
+        if (westToEast <= MIN_WEST_TO_EAST) {
             throw new IllegalStateException("서쪽으로 이동할 수 없습니다.");
         }
-        return find(westToEast - 1);
+        return find(westToEast + TO_WEST);
     }
 
     private File find(int westToEast) {

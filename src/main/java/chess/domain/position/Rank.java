@@ -13,6 +13,11 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final int MIN_SOUTH_TO_NORTH = 1;
+    private static final int MAX_SOUTH_TO_NORTH = 8;
+    private static final int TO_NORTH = 1;
+    private static final int TO_SOUTH = -1;
+
     private final int southToNorth;
 
     Rank(int southToNorth) {
@@ -20,17 +25,17 @@ public enum Rank {
     }
 
     public Rank toNorth() {
-        if (southToNorth >= 8) {
+        if (southToNorth >= MAX_SOUTH_TO_NORTH) {
             throw new IllegalStateException("북쪽으로 이동할 수 없습니다.");
         }
-        return find(southToNorth + 1);
+        return find(southToNorth + TO_NORTH);
     }
 
     public Rank toSouth() {
-        if (southToNorth <= 1) {
+        if (southToNorth <= MIN_SOUTH_TO_NORTH) {
             throw new IllegalStateException("남쪽으로 이동할 수 없습니다.");
         }
-        return find(southToNorth - 1);
+        return find(southToNorth + TO_SOUTH);
     }
 
     private Rank find(int southToNorth) {
