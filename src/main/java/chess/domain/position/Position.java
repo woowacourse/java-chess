@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Position {
-    // TODO: 8x8 사이즈 포지션 캐싱하기
     private static final Map<String, Position> CACHE = new ConcurrentHashMap<>();
 
     private final ChessFile file;
@@ -20,13 +19,6 @@ public class Position {
     private Position(ChessFile file, ChessRank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    private Position(String position) {
-        this(
-                ChessFile.findByValue(String.valueOf(position.charAt(0))),
-                ChessRank.findByValue(String.valueOf(position.charAt(1)))
-        );
     }
 
     public static Position of(String position) {
