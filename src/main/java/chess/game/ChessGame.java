@@ -25,7 +25,6 @@ public class ChessGame {
         outputView.printInitMessage();
         Board board = BoardInitializer.createBoard();
         BoardDisplayConverter converter = new BoardDisplayConverter();
-        List<RankDisplay> rankDisplays = converter.convert(board.pieces());
 
         Command command = inputView.readCommand();
         if (command.isStart()) {

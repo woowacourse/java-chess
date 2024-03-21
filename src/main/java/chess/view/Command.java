@@ -34,10 +34,6 @@ public enum Command {
         return this == MOVE;
     }
 
-    public boolean isSameAs(Command command) {
-        return this == command;
-    }
-
     public String getValue() {
         return value;
     }
