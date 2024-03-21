@@ -10,6 +10,10 @@ public class RankDifference {
         this.difference = difference;
     }
 
+    public boolean hasDistance(int distance) {
+        return Math.abs(difference) == distance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

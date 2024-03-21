@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Rook;
@@ -8,6 +9,7 @@ public enum PieceSign {
 
     PAWN(Pawn.class, "p"),
     ROOK(Rook.class, "r"),
+    KNIGHT(Knight.class, "n"),
     ;
 
     private final Class<? extends Piece> pieceClass;
