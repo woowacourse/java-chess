@@ -19,7 +19,6 @@ public class ChessManager {
 
     public void start() {
         Command command = inputView.readInitCommand();
-
         if (command == Command.END) {
             return;
         }
@@ -28,6 +27,10 @@ public class ChessManager {
         chessBoard.init();
         outputView.printChessBoard(chessBoard);
 
+        play(chessBoard);
+    }
+
+    private void play(ChessBoard chessBoard) {
         Turn turn = new Turn();
         while (inputView.readMoveCommand() == Command.MOVE) {
             Position current = inputView.readPosition();
@@ -35,10 +38,8 @@ public class ChessManager {
             inputView.readNextLine();
 
             turn.check(chessBoard, current);
-
             chessBoard.move(current, target);
             outputView.printChessBoard(chessBoard);
-
             turn.end();
         }
     }
