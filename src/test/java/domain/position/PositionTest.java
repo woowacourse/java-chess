@@ -1,9 +1,5 @@
-package domain.game;
+package domain.position;
 
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
-import domain.position.UnitVector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
