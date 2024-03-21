@@ -13,7 +13,7 @@ class ChessGameTest {
     @Test
     @DisplayName("현재 턴의 플레이어가 기물을 움직인다.")
     void move() {
-        Map<Point, Piece> board = BoardFactory.create();
+        Map<Point, Piece> board = BoardFactory.createInitialChessBoard();
         ChessGame chessGame = new ChessGame(board);
 
         Point departure = new Point('b', 2);

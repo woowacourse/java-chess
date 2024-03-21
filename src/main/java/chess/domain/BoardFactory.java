@@ -14,7 +14,18 @@ import java.util.stream.IntStream;
 
 public class BoardFactory {
 
-    public static Map<Point, Piece> create() {
+    public static Map<Point, Piece> createEmptyBoard() {
+        Map<Point, Piece> board = new HashMap<>();
+
+        IntStream.rangeClosed(1, 8)
+                .boxed()
+                .map(BoardFactory::lineOfEmpty)
+                .forEach(board::putAll);
+
+        return board;
+    }
+
+    public static Map<Point, Piece> createInitialChessBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
         board.putAll(createEighthLine());

@@ -13,7 +13,7 @@ class BoardFactoryTest {
     @Test
     @DisplayName("기물들을 생성할 수 있다.")
     void create() {
-        Map<Point, Piece> pieces = BoardFactory.create();
+        Map<Point, Piece> pieces = BoardFactory.createInitialChessBoard();
 
         assertThat(pieces).hasSize(64);
     }
