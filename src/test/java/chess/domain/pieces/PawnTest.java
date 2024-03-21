@@ -136,5 +136,28 @@ class PawnTest {
             assertThat(whiteCanMove).isFalse();
             assertThat(blackCanMove).isFalse();
         }
+
+        @DisplayName("상대 기물이 바로 앞에 있을 경우 공격할 수 없다")
+        @Test
+        void canNotAttackOneStep() {
+            //given
+            Square whiteSource = Square.from("a2");
+            Square whiteDestination = Square.from("a3");
+            Piece whitePawn = new Pawn(Color.WHITE);
+            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+
+            Square blackSource = Square.from("d7");
+            Square blackDestination = Square.from("d6");
+            Piece blackPawn = new Pawn(Color.BLACK);
+            Movement blackMovement = new Movement(blackSource, blackDestination);
+
+            //when
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new Pawn(Color.BLACK));
+            boolean blackCanMove = blackPawn.canMove(blackMovement, new Pawn(Color.WHITE));
+
+            //then
+            assertThat(whiteCanMove).isFalse();
+            assertThat(blackCanMove).isFalse();
+        }
     }
 }
