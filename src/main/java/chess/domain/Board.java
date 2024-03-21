@@ -34,7 +34,7 @@ public class Board {
     }
 
     private void initialize(Map<Position, Piece> board) {
-        placeEmptyPieces(board, createPieceLocationsByIndex(0, 64), Team.NONE);
+        placeEmptyPieces(board, createPieceLocationsByIndex(0, 64));
     }
 
     public void placeInitialPieces() {
@@ -96,9 +96,9 @@ public class Board {
         }
     }
 
-    private void placeEmptyPieces(Map<Position, Piece> board, List<String> locations, Team team) {
+    private void placeEmptyPieces(Map<Position, Piece> board, List<String> locations) {
         for (String location : locations) {
-            PieceInfo pieceInfo = new PieceInfo(Position.of(location), team);
+            PieceInfo pieceInfo = new PieceInfo(Position.of(location), Team.NONE);
             board.put(pieceInfo.getPosition(), new EmptyPiece(pieceInfo, new EmptyMoveStrategy()));
         }
     }
