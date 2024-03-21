@@ -2,7 +2,6 @@ package domain;
 
 import domain.piece.ChessBoardGenerator;
 import domain.piece.Piece;
-import domain.piece.PieceColor;
 import domain.position.Position;
 import dto.BoardStatus;
 
@@ -28,32 +27,47 @@ public class ChessBoard {
         Position source = new Position(from);
         Position target = new Position(to);
 
+        validate(source, target);
+
         Piece sourcePiece = board.get(source);
-        if (isSamePosition(source, target)
-                || isMovablePosition(target, sourcePiece.color())
-                || !sourcePiece.isInMovableRange(source, target)) {
-            throw new IllegalArgumentException("이동이 불가능합니다.");
-        }
         board.put(target, sourcePiece);
         board.remove(source);
     }
 
-    private boolean isMovablePosition(Position target, PieceColor color) {
-        if (!isExist(target)) {
-            return false;
-        }
-        return isSameColor(target, color);
+    private void validate(Position source, Position target) {
+        validatePosition(source, target);
+        validateTarget(source, target);
+        validateMovement(source, target);
     }
 
-    private static boolean isSamePosition(Position source, Position target) {
+    private void validatePosition(Position source, Position target) {
+        if (!isExist(source) || isSamePosition(source, target)) {
+            throw new IllegalArgumentException("입력하신 이동 위치가 올바르지 않습니다.");
+        }
+    }
+
+    private boolean isSamePosition(Position source, Position target) {
         return source.equals(target);
     }
 
-    private boolean isSameColor(Position target, PieceColor color) {
-        return board.get(target).isColor(color);
+    private void validateTarget(Position source, Position target) {
+        if (isExist(target) && isSameColor(board.get(source), board.get(target))) {
+            throw new IllegalArgumentException("이동할 수 없는 target입니다.");
+        }
+    }
+
+    private boolean isSameColor(Piece sourcePiece, Piece targetPiece) {
+        return targetPiece.isColor(sourcePiece.color());
     }
 
     private boolean isExist(Position target) {
         return board.containsKey(target);
+    }
+
+    private void validateMovement(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        if (!sourcePiece.isInMovableRange(source, target)) {
+            throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
+        }
     }
 }

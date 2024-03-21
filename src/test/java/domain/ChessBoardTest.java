@@ -62,7 +62,7 @@ public class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동이 불가능합니다.");
+                .hasMessage("이동할 수 없는 target입니다.");
     }
 
     @DisplayName("Source와 Target이 같으면 이동할 수 없다.")
@@ -79,7 +79,7 @@ public class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b2"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동이 불가능합니다.");
+                .hasMessage("입력하신 이동 위치가 올바르지 않습니다.");
     }
 
     @DisplayName("Source와 Target이 같은 색이면 이동할 수 없다.")
@@ -97,6 +97,40 @@ public class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동이 불가능합니다.");
+                .hasMessage("이동할 수 없는 target입니다.");
+    }
+
+    @DisplayName("Source에 기물이 존재하지 않으면 이동할 수 없다.")
+    @Test
+    void notExistSource() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+
+        generatorStub.setBoard(board);
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b3", "b2"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("입력하신 이동 위치가 올바르지 않습니다.");
+    }
+
+    @DisplayName("기물이 이동할 수 없는 방식으로 움직이면 예외를 발생한다.")
+    @Test
+    void validatePieceMovement() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+
+        generatorStub.setBoard(board);
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b2", "b7"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("기물이 이동할 수 없는 방식입니다.");
     }
 }
