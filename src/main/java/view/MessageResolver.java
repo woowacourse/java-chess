@@ -10,7 +10,7 @@ public class MessageResolver {
 
     public String resolveChessBoardMessage(ChessBoard chessBoard) {
         StringBuilder message = new StringBuilder();
-        for (int vertical = File.max(); vertical >= 0; vertical--) {
+        for (int vertical = File.max(); vertical > 0; vertical--) {
             StringBuilder rank = resolveRankMessage(Rank.find(vertical), chessBoard);
             message.append(rank);
         }
@@ -19,7 +19,7 @@ public class MessageResolver {
 
     private StringBuilder resolveRankMessage(Rank rank, ChessBoard chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int horizontal = 0; horizontal <= File.max(); horizontal++) {
+        for (int horizontal = 1; horizontal <= File.max(); horizontal++) {
             Position position = new Position(File.find(horizontal), rank);
             String square = resolveSquareMessage(chessBoard, position);
             stringBuilder.append(square);
